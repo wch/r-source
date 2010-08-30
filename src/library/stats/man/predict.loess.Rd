@@ -48,6 +48,9 @@
   If \code{newdata} was the result of a call to
   \code{\link{expand.grid}}, the predictions (and s.e.'s if requested)
   will be an array of the appropriate dimensions.
+  
+  Predictions from infinite inputs will be \code{NA} since \code{loess}
+  does not support extrapolation.
 }
 \author{
   B. D. Ripley, based on the \code{cloess} package of Cleveland,

@@ -362,7 +362,14 @@ predLoess <-
 	    }
 	}
     }
-    if(se) list(fit = fit, se.fit = drop(se.fit), residual.scale = s) else fit
+    rn <- rownames(newx)
+    if(se) {
+        if(!is.null(rn)) names(fit) <- names(se.fit) <- rn
+        list(fit = fit, se.fit = drop(se.fit), residual.scale = s)
+    } else {
+        if(!is.null(rn)) names(fit) <- rn
+        fit
+    }
 }
 
 pointwise <- function(results, coverage)

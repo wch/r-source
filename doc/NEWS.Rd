@@ -334,6 +334,9 @@
       \item The \code{predict} method for \code{"loess"} fits gains an
       \code{na.action} argument which defaults to \code{na.pass} rather
       than the previous default of \code{na.omit}.
+
+      Predictions from \code{"loess"} fits are now named from the row
+      names of \code{newdata}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
