@@ -115,8 +115,7 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL)
 {
-    ## this requires on Windows
-    ## sh make tar gzip
+    ## this requires on Windows make tar gzip
 
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -132,31 +131,15 @@ get_exclude_patterns <- function()
 
     ## This version of shell_with_capture merges stdout and stderr
     ## Used to install package and build vignettes.
-    if (WINDOWS) {
-        shell_with_capture <- function (command) {
-            Rin <- tempfile("Rin")
-            Rout <- tempfile("Rout")
-            writeLines(paste(command, ">", shQuote(Rout), "2>&1"), Rin)
-            status <- system(paste("sh", shQuote(Rin)))
-            list(status = status, stdout = readLines(Rout, warn = FALSE))
-        }
-        ## Run silently
-        Ssystem <- function(command, ...) {
-            Rin <- tempfile("Rin")
-            writeLines(paste(command, ">/dev/null 2>&1"), Rin)
-            system(paste("sh", shQuote(Rin)), ...)
-        }
-    } else {
-        shell_with_capture <- function (command) {
-            outfile <- tempfile("xshell")
-            on.exit(unlink(outfile))
-            status <- system(sprintf("%s > %s 2>&1", command, shQuote(outfile)))
-            list(status = status, stdout = readLines(outfile, warn = FALSE))
-        }
-        ## Run silently
-        Ssystem <- function(command, ...)
-            system(paste(command, ">/dev/null 2>&1"), ...)
+    shell_with_capture <- function (command, args) {
+        outfile <- tempfile("xshell")
+        on.exit(unlink(outfile))
+        status <- system2(command, args, outfile, outfile)
+        list(status = status, stdout = readLines(outfile, warn = FALSE))
     }
+    ## Run silently
+    Ssystem <- function(command, ...)
+        system2(command, stdout=NULL, stderr=NULL, ...)
 
 
     .file_test <- function(op, x)
@@ -211,10 +194,14 @@ get_exclude_patterns <- function()
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755")
-	cmd <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
-	else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-	cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
-	res <- shell_with_capture(cmd)
+        if (WINDOWS) {
+            cmd <- file.path(R.home("bin"), "Rcmd.exe")
+            args <- c("INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+        } else {
+            cmd <- file.path(R.home("bin"), "R")
+            args <- c("CMD", "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+        }
+	res <- shell_with_capture(cmd, args)
 	if (res$status) {
 	    printLog(Log, "      -----------------------------------\n")
 	    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
@@ -223,10 +210,10 @@ get_exclude_patterns <- function()
 	    printLog(Log, "Removing installation dir\n")
 	    unlink(libdir, recursive = TRUE)
 	    do_exit(1)
-	}   
+	}
 	TRUE
     }
-    
+
     prepare_pkg <- function(pkgdir, desc, Log)
     {
         pkgname <- basename(pkgdir)
@@ -243,11 +230,11 @@ get_exclude_patterns <- function()
             } else resultLog(Log, "OK")
         }
         cleanup_pkg(pkgdir, Log)
-        
-        libdir <- tempfile("Rinst")        
-        
+
+        libdir <- tempfile("Rinst")
+
         pkgInstalled <- build_Rd_db(pkgdir, libdir)
-        
+
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
         if (vignettes && dir.exists(file.path("inst", "doc")) &&
            length(list_files_with_type(file.path("inst", "doc"),
@@ -255,7 +242,7 @@ get_exclude_patterns <- function()
             if (!pkgInstalled) {
 		messageLog(Log, "installing the package to re-build vignettes")
 		pkgInstalled <- temp_install_pkg(pkgdir, libdir)
-	    }	
+	    }
 
             ## Better to do this in a separate process: it might die
             creatingLog(Log, "vignettes")
@@ -269,11 +256,11 @@ get_exclude_patterns <- function()
             }
             ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
             Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
-            cmd <- paste(shQuote(file.path(R.home("bin"), "Rscript")),
-                         "--vanilla",
-                         "--default-packages=", # some vignettes assume methods
-                         "-e", shQuote("tools::buildVignettes(dir = '.')"))
-            res <- shell_with_capture(cmd)
+            cmd <- file.path(R.home("bin"), "Rscript")
+            args <- c("--vanilla",
+                      "--default-packages=", # some vignettes assume methods
+                      "-e", shQuote("tools::buildVignettes(dir = '.')"))
+            res <- shell_with_capture(cmd, args)
             if (res$status) {
                 resultLog(Log, "ERROR")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
@@ -282,7 +269,7 @@ get_exclude_patterns <- function()
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
-	
+
 	    ## And finally, clean up again.
             cleanup_pkg(pkgdir, Log)
         }
@@ -386,24 +373,24 @@ get_exclude_patterns <- function()
             file.rename(newindex, oldindex)
         }
     }
-    
+
     build_Rd_db <- function(pkgdir, libdir) {
     	db <- .build_Rd_db(pkgdir, stages=NULL, os=c("unix", "windows"), step=1)
     	if (!length(db)) return(FALSE)
-    	
+
     	# Strip the pkgdir off the names
     	names(db) <- substring(names(db), nchar(file.path(pkgdir, "man", ""))+1)
-    	
+
 	containsSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
 	if (!length(containsSexprs)) return(FALSE)
-	
+
 	messageLog(Log, "installing the package to process help pages")
 	temp_install_pkg(pkgdir, libdir)
-	
+
 	containsBuildSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
-	    
+
 	if (length(containsBuildSexprs)) {
-	    for (i in containsBuildSexprs) 
+	    for (i in containsBuildSexprs)
 		db[[i]] <- prepare_Rd(db[[i]], stages="build", stage2=FALSE, stage3=FALSE)
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
@@ -414,13 +401,13 @@ get_exclude_patterns <- function()
 	if (needRefman) {
 	    messageLog(Log, "building the package manual")
 	    refman <- file.path(pkgdir, "build", paste(basename(pkgdir), ".pdf", sep = ""))
-	    ..Rd2dvi(c("--pdf", "--force", "--no-preview", 
+	    ..Rd2dvi(c("--pdf", "--force", "--no-preview",
 	               paste("--output=", refman, sep=""),
 	               pkgdir), quit = FALSE)
-        }	
+        }
 	return(TRUE)
     }
-    
+
     ## These also fix up missing final NL
     fix_nonLF_in_source_files <- function(pkgname, Log)
     {
@@ -527,7 +514,6 @@ get_exclude_patterns <- function()
     gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this
     ## enables people to use Cygwin or MSYS tar.
-
     TAR <- Sys.getenv("TAR", NA)
     TAR <- if (is.na(TAR)) {if (WINDOWS) "tar --force-local" else "tar"}
     else shQuote(TAR)
