@@ -16,6 +16,7 @@
 
 #### R based engine for R CMD check
 
+## NB: need to be able to set environment on R_EXE for run_examples/run_tests
 R_system <- function(cmd, env = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -25,6 +26,15 @@ R_system <- function(cmd, env = "")
         on.exit(unlink(Tfile))
         system(paste("sh", shQuote(Tfile)))
     } else system(paste(env, cmd))
+}
+
+## Used for INSTALL and Rd2pdf
+run_Rcmd <- function(args, out = "")
+{
+    if(.Platform$OS.type == "windows")
+        system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out)
+    else
+        system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out)
 }
 
 R_runR <- function(cmd, Ropts="", env = "", arch = "")
@@ -1509,14 +1519,12 @@ R_run_R <- function(cmd, Ropts, env)
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-            cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                         " --build-dir=", shQuote(build_dir),
-                         " --no-clean",
-                         " -o ", pkgname, "-manual.pdf ",
-                         topdir,
-                         " > Rdlatex.log 2>&1 ",
-                         sep="")
-            res <- R_system(cmd)
+            args <- c( "Rd2pdf ", Rd2pdf_opts,
+                      paste("--build-dir=", shQuote(build_dir), sep = ""),
+                      "--no-clean",
+                      "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
+                      topdir)
+            res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
@@ -1547,12 +1555,13 @@ R_run_R <- function(cmd, Ropts, env)
                 ## for Windows' sake: errors can make it unwritable
                 build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
                 checkingLog(Log, "PDF version of manual without index")
-                cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                             " --build-dir=", shQuote(build_dir),
-                             " --no-clean --no-index",
-                             " -o ", pkgname, "-manual.pdf  > Rdlatex.log 2>&1 ",
-                             topdir, sep="")
-                if (R_system(cmd)) {
+                args <- c( "Rd2pdf ", Rd2pdf_opts,
+                          paste("--build-dir=", shQuote(build_dir), sep = ""),
+                          "--no-clean", "--no-index",
+                          "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
+                          topdir)
+                if (run_Rcmd(args, "Rdlatex.log")) {
+                    ## FIXME: the info is almost certainly in Rdlatex.log
                     errorLog(Log)
                     latex_log <- file.path(build_dir, "Rd2.log")
                     if (file.exists(latex_log))
@@ -1562,17 +1571,18 @@ R_run_R <- function(cmd, Ropts, env)
                         ## what went wrong.  Hence, re-run without
                         ## redirecting stdout/stderr and hope that this
                         ## gives the same problem ...
-                        printLog(Log, "LaTeX error when running command:\n")
-                        printLog(Log, strwrap(cmd, indent = 2, exdent = 4), "\n")
+                        # printLog(Log, "Error when running command:\n")
+                        # cmd <- paste(c("R CMD", args), collapse = " ")
+                        # printLog(Log, strwrap(cmd, indent = 2, exdent = 4), "\n")
                         printLog(Log, "Re-running with no redirection of stdout/stderr.\n")
                         unlink(build_dir, recursive = TRUE)
                         build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-                        cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                                     " --build-dir=", shQuote(build_dir),
-                                     " --no-clean --no-index",
-                                     " -o ", pkgname, "-manual.pdf ",
-                                     topdir, sep="")
-                        R_system(cmd)
+                        args <- c( "Rd2pdf ", Rd2pdf_opts,
+                                  paste("--build-dir=", shQuote(build_dir), sep = ""),
+                                  "--no-clean", "--no-index",
+                                  "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
+                                  topdir)
+                        run_Rcmd(args)
                     }
                     unlink(build_dir, recursive = TRUE)
                     do_exit(1L)
@@ -1597,11 +1607,9 @@ R_run_R <- function(cmd, Ropts, env)
         ## see http://www.darwinsys.com/file/
         ## (Solaris has a different 'file' without --version)
         ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
-        Tfile <- tempfile("file")
         ## version 4.21 writes to stdout, 4.23 to stderr
         ## and sets an error status code
-        R_system(paste("file --version > ", shQuote(Tfile), " 2>&1"))
-        lines <- readLines(Tfile)
+        lines <- system2("file", "--version", TRUE, TRUE)
         ## a reasonable check -- it does not identify itself well
         have_free_file <-
             any(grepl("^(file-[45]|magic file from)", lines))
@@ -1610,9 +1618,7 @@ R_run_R <- function(cmd, Ropts, env)
             execs <- character()
             for (f in allfiles) {
                 ## watch out for spaces in file names here
-                ## FIXME: use intern = TRUE
-                R_system(sprintf("file '%s' > %s", f, shQuote(Tfile)))
-                line <- readLines(Tfile, n = 1L)
+                line <- system2("file", shQuote(f), TRUE, TRUE)
                 if (grepl("executable", line, useBytes=TRUE) &&
                     !grepl("script text", line, useBytes=TRUE))
                     execs <- c(execs, f)
@@ -1678,16 +1684,14 @@ R_run_R <- function(cmd, Ropts, env)
             else if (!multiarch)
                 INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             INSTALL_opts <- paste(INSTALL_opts, collapse = " ")
-            cmd <-
-                paste(R_CMD,
-                      "INSTALL -l", shQuote(libdir), INSTALL_opts,
+            args <- c("INSTALL", "-l", shQuote(libdir), INSTALL_opts,
                       shQuote(if (WINDOWS) shortPathName(pkgdir) else pkgdir))
             if (!use_install_log) {
                 ## Case A: No redirection of stdout/stderr from installation.
                 ## This is very rare: needs _R_CHECK_USE_INSTALL_LOG_ set
                 ## to false.
                 message("")
-                if (R_system(cmd)) {
+                if (run_Rcmd(args)) {
                     errorLog(Log, "Installation failed.")
                     do_exit(1L)
                 }
@@ -1725,8 +1729,7 @@ R_run_R <- function(cmd, Ropts, env)
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
-                    cmd <- paste(cmd, ">>", shQuote(outfile), "2>&1")
-                    install_error <- R_system(cmd)
+                    install_error <- run_Rcmd(args, outfile)
                     lines <- readLines(outfile, warn = FALSE)
                 }
                 if (install_error) {
@@ -2039,8 +2042,6 @@ R_run_R <- function(cmd, Ropts, env)
     WINDOWS <- .Platform$OS.type == "windows"
 
     R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
-    R_CMD <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
-    else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
 
     .file_test <- function(op, x)
         switch(op,
