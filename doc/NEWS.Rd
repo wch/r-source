@@ -466,7 +466,7 @@
       part of the installation.  The primary source for changes is now
       \file{doc/NEWS.Rd}.
 
-      \item The \code{popen} system call is not required to build \R.
+      \item The \code{popen} system call is now required to build \R.
     }
   }
   \subsection{BUG FIXES}{
