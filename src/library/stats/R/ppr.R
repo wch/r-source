@@ -200,7 +200,7 @@ predict.ppr <- function(object, newdata, ...)
         x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
     } else {
         x <- as.matrix(newdata)
-        keep <- 1L:nrow(x)
+        keep <- seq_len(nrow(x))
         rn <- dimnames(x)[[1L]]
     }
     if(ncol(x) != object$p) stop("wrong number of columns in 'x'")
