@@ -397,6 +397,14 @@
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
                 if (!WINDOWS) Sys.chmod(file.path(dest, files), "755")
+		## OS X does not keep debugging symbols in binaries anymore so
+		## optionally we can create dSYMs. This is important since we
+		## will blow away .o files so there is no way to create it later.
+		if (nzchar(Sys.getenv("PKG_MAKE_DSYM")) && length(grep("^darwin", R.version$os))) {
+		    message('generating debug symbols (dSYM)')
+		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
+		    if (length(dylib)) for (file in dylib) system(paste0("dsymutil ", file))
+		}
             }
         }
 
