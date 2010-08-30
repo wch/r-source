@@ -79,6 +79,10 @@ system2(command, args = character(),
   allows redirection of output without needing to invoke a shell on
   Windows.  It is more flexible, for example allowing either or both of
   stderr and stdout to be captured in a character vector.
+
+  At present there is no guarantee that if \code{stdout} and
+  \code{stderr} are both \code{TRUE} or the same file that the two
+  streams will be interleaved in order.
 }
 
 \seealso{
