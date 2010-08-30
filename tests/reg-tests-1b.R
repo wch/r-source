@@ -1278,6 +1278,7 @@ cn <- gsub(" ", "", colnames(summary(DF)), useBytes = TRUE)
 stopifnot(identical(cn, c("a", paste("m.", nm, sep="", collapse=""))))
 ##  Had NAs in < 2.12.0
 
+
 ## [[<- could create invalid objects,
 ## https://stat.ethz.ch/pipermail/r-devel/2010-August/058312.html
 z0 <- z <- factor(c("Two","Two","Three"), levels=c("One","Two","Three"))
@@ -1286,6 +1287,22 @@ stopifnot(typeof(z) == "integer")
 z[[2]] <- "Two"
 stopifnot(identical(z, z0))
 ## failed < 2.12.0
+
+
+## predict.loess with NAs
+cars.lo <- loess(dist ~ speed, cars)
+res <- predict(cars.lo, data.frame(speed = c(5, NA, 25)))
+stopifnot(length(res) == 3L, is.na(res[2]))
+res <- predict(cars.lo, data.frame(speed = c(5, NA, 25)), se = TRUE)
+stopifnot(length(res$fit) == 3L, is.na(res$fit[2]),
+          length(res$se.fit) == 3L, is.na(res$se.fit[2]))
+cars.lo2 <- loess(dist ~ speed, cars, control = loess.control(surface = "direct"))
+res <- predict(cars.lo2, data.frame(speed = c(5, NA, 25)))
+stopifnot(length(res) == 3L, is.na(res[2]))
+res <- predict(cars.lo2, data.frame(speed = c(5, NA, 25)), se = TRUE)
+stopifnot(length(res$fit) == 3L, is.na(res$fit[2]),
+          length(res$se.fit) == 3L, is.na(res$se.fit[2]))
+## Used na.omit prior to 2.12.0
 
 
 proc.time()

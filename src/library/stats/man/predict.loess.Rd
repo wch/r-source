@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.loess.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{predict.loess}
@@ -10,15 +10,18 @@
  Predictions from a \code{loess} fit, optionally with standard errors.
 }
 \usage{
-\method{predict}{loess}(object, newdata = NULL, se = FALSE, \dots)
+\method{predict}{loess}(object, newdata = NULL, se = FALSE,
+        na.action = na.pass, \dots)
 }
 \arguments{
- \item{object}{an object fitted by \code{loess}.}
- \item{newdata}{an optional data frame in which to look for variables with
+  \item{object}{an object fitted by \code{loess}.}
+  \item{newdata}{an optional data frame in which to look for variables with
     which to predict, or a matrix or vector containing exactly the variables
     needs for prediction.  If missing, the original data points are used.}
- \item{se}{should standard errors be computed?}
- \item{\dots}{arguments passed to or from other methods.}
+  \item{se}{should standard errors be computed?}
+  \item{na.action}{function determining what should be done with missing
+    values in data frame \code{newdata}.  The default is to predict \code{NA}.}
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
   The standard errors calculation is slower than prediction.
@@ -27,6 +30,9 @@
   default), \code{predict.loess} will not extrapolate -- so points outside
   an axis-aligned hypercube enclosing the original data will have
   missing (\code{NA}) predictions and standard errors.
+
+  The default for \code{na.action} prior to \R 2.12.0 was
+  \code{\link{na.omit}}.
 }
 \value{
   If \code{se = FALSE}, a vector giving the prediction for each row of

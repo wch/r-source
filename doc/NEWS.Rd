@@ -327,9 +327,13 @@
       \item \code{Sys.which()} has been altered to return \code{""} if
       the command is not found (even on Solaris).
 
-      \item A facility for defining reference-based classes (in the
-        OOP style of Java, C++, etc.) has been added experimentally;
-        see ?ReferenceClasses.
+      \item A facility for defining reference-based S4 classes (in the
+      OOP style of Java, C++, etc.) has been added experimentally to
+      package \pkg{methods}; see \code{?ReferenceClasses}.
+	
+      \item The \code{predict} method for \code{"loess"} fits gains an
+      \code{na.action} argument which defaults to \code{na.pass} rather
+      than the previous default of \code{na.omit}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

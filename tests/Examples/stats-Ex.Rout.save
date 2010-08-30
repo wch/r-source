@@ -1,8 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-17 r52756)
+R version 2.12.0 Under development (unstable) (2010-08-30 r52829)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13674,7 +13674,7 @@ predict.lda :
 predict.lm :
 	 function (object, newdata, se.fit = FALSE, scale = NULL, df = Inf,      interval = c("none", "confidence", "prediction"), level = 0.95,      type = c("response", "terms"), terms = NULL, na.action = na.pass,      pred.var = res.var/weights, weights = 1, ...)  NULL 
 predict.loess :
-	 function (object, newdata = NULL, se = FALSE, ...)  NULL 
+	 function (object, newdata = NULL, se = FALSE, na.action = na.pass,      ...)  NULL 
 predict.lqs :
 	 function (object, newdata, na.action = na.pass, ...)  NULL 
 predict.mca :
