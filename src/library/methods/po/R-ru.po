@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:39\n"
 "PO-Revision-Date: 2010-04-09 19:48-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1584,6 +1584,58 @@ msgstr ""
 "нет определения класса \"%s\" в указанной позиции, %s, определение(-я): %s"
 
 msgid ""
+"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a reference class"
+msgstr "\"%s\" не является определенным классом"
+
+#, fuzzy
+msgid "\"%s\" is not a field in class \"%s\""
+msgstr "\"%s\" не является слотом в классе \"%s\""
+
+#, fuzzy
+msgid ""
+"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+"required class \"%s\""
+msgstr ""
+"инициализированный метод возвратил объект класса \"%s\" вместо необходимого "
+"класса \"%s\""
+
+msgid "Some elements of the list (e.g., %d) are not functions"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "нет определения класса \"%s\""
+
+#, fuzzy
+msgid "\"%s\" is not a known reference class"
+msgstr "\"%s\" не является определенным классом"
+
+#, fuzzy
+msgid "Invalid accessor function list: %s"
+msgstr "неверный индекс для аргумента функции"
+
+msgid "Prototypes supplied for non-fields: %s"
+msgstr ""
+
+#, fuzzy
+msgid "Field classes undefined: %s"
+msgstr "Значения классов различаются: %s, %s"
+
+#, fuzzy
+msgid "Not a reference class:"
+msgstr "\"%s\" не является определенным классом"
+
+msgid "(class \"%s\")"
+msgstr ""
+
+msgid "for method %s()"
+msgstr ""
+
+msgid ""
 "invalid ignore= argument; should be a class definition or a character "
 "vector, got an object of class %s"
 msgstr ""
@@ -1718,7 +1770,7 @@ msgstr ""
 msgid "New functions aren't currently inserted (not untraceable): %s"
 msgstr ""
 
-msgid "Functions inserted through trace(): %s"
+msgid "Modified functions inserted through trace(): %s"
 msgstr ""
 
 #, fuzzy

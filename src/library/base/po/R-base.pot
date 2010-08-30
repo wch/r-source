@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -597,6 +597,9 @@ msgid "level sets of factors are different"
 msgstr ""
 
 msgid "invalid factor level, NAs generated"
+msgstr ""
+
+msgid "invalid factor level, NA generated"
 msgstr ""
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1421,6 +1424,9 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr ""
 
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr ""
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
@@ -1428,6 +1434,18 @@ msgid "'wait' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'input' must be a character vector or 'NULL'"
+msgstr ""
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+
+msgid "setting stdout = TRUE"
+msgstr ""
+
+msgid "'stdout' must be of length 1"
+msgstr ""
+
+msgid "'stderr' must be of length 1"
 msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"

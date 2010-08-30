@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -638,6 +638,10 @@ msgid "level sets of factors are different"
 msgstr "установки уровней для факторов различны"
 
 msgid "invalid factor level, NAs generated"
+msgstr "неправильный уровень фактора, получились NA"
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr "неправильный уровень фактора, получились NA"
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1516,6 +1520,10 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' должен быть TRUE или FALSE"
 
+#, fuzzy
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stderr' должен быть TRUE или FALSE"
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr' должен быть TRUE или FALSE"
 
@@ -1524,6 +1532,24 @@ msgstr "'wait' должен быть TRUE или FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
+
+#, fuzzy
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+"аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
+"Windows"
+
+#, fuzzy
+msgid "setting stdout = TRUE"
+msgstr "T использовано вместо TRUE"
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr "'to' должен быть длиной 1"
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr "'to' должен быть длиной 1"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' должен быть TRUE или FALSE"

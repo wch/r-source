@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2010-03-23 11:26+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -642,6 +642,10 @@ msgid "level sets of factors are different"
 msgstr "Levelmengen für Faktoren unterscheiden sich"
 
 msgid "invalid factor level, NAs generated"
+msgstr "ungültige Faktorniveaus, NAs erzeugt"
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr "ungültige Faktorniveaus, NAs erzeugt"
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1527,6 +1531,10 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' muss TRUE oder FALSE sein"
 
+#, fuzzy
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
 
@@ -1535,6 +1543,24 @@ msgstr "'wait' muss TRUE oder FALSE sein"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'  muss ein Zeichenkettenvektor oder 'NULL' sein"
+
+#, fuzzy
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+"Argumente 'show.output.on.console', 'minimized' und 'invisible' sind nur für "
+"Windows"
+
+#, fuzzy
+msgid "setting stdout = TRUE"
+msgstr "T statt TRUE benutzt"
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr "'to' muss Länge 1 haben"
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr "'to' muss Länge 1 haben"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' muss TRUE oder FALSE sein"

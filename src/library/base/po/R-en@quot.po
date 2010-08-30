@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
-"PO-Revision-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
+"PO-Revision-Date: 2010-08-30 08:38\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -648,6 +648,9 @@ msgstr "level sets of factors are different"
 
 msgid "invalid factor level, NAs generated"
 msgstr "invalid factor level, NAs generated"
+
+msgid "invalid factor level, NA generated"
+msgstr "invalid factor level, NA generated"
 
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "‘%s’ is not meaningful for ordered factors"
@@ -1509,6 +1512,9 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "‘intern’ must be TRUE or FALSE"
 
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "‘ignore.stdout’ must be TRUE or FALSE"
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "‘ignore.stderr’ must be TRUE or FALSE"
 
@@ -1517,6 +1523,18 @@ msgstr "‘wait’ must be TRUE or FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "‘input’ must be a character vector or ‘NULL’"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr "arguments ‘minimized’ and ‘invisible’ are for Windows only"
+
+msgid "setting stdout = TRUE"
+msgstr "setting stdout = TRUE"
+
+msgid "'stdout' must be of length 1"
+msgstr "‘stdout’ must be of length 1"
+
+msgid "'stderr' must be of length 1"
+msgstr "‘stderr’ must be of length 1"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "‘show.output.on.console’ must be TRUE or FALSE"

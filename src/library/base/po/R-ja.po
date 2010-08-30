@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2010-04-03 18:36+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -641,6 +641,10 @@ msgid "level sets of factors are different"
 msgstr " 因子の水準セットが異なっています "
 
 msgid "invalid factor level, NAs generated"
+msgstr " 不正な因子水準です。NA が発生しました "
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr " 不正な因子水準です。NA が発生しました "
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1540,6 +1544,10 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr " 'intern' は 'TRUE' か 'FALSE' でなければなりません "
 
+#, fuzzy
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr " 'ignore.stderr' は 'TRUE' か 'FALSE' でなければなりません "
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr " 'ignore.stderr' は 'TRUE' か 'FALSE' でなければなりません "
 
@@ -1548,6 +1556,24 @@ msgstr " 'wait' は 'TRUE' か 'FALSE' でなければなりません "
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr " 'input' は文字ベクトルまたは NULL でなければなりません "
+
+#, fuzzy
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+" 引数 'show.output.on.console', 'minimized' そして 'invisible' は Windows 専"
+"用です "
+
+#, fuzzy
+msgid "setting stdout = TRUE"
+msgstr " TRUE の代わりに T が使われました "
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr " 'to' は長さ 1 でなければなりません "
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr " 'to' は長さ 1 でなければなりません "
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr " 'show.output.on.console' は 'TRUE' か 'FALSE' でなければなりません "

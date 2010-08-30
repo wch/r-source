@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:39\n"
 "PO-Revision-Date: 2010-04-05 15:45+0900 \n"
 "Last-Translator: Ryota Suzuki <suzuki@ef-prime.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1590,6 +1590,57 @@ msgid ""
 msgstr ""
 " クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です "
 
+msgid ""
+"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a reference class"
+msgstr " \"%s\" は定義されたクラスではありません "
+
+#, fuzzy
+msgid "\"%s\" is not a field in class \"%s\""
+msgstr " \"%s\" はクラス \"%s\" 中のスロットではありません "
+
+#, fuzzy
+msgid ""
+"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+"required class \"%s\""
+msgstr ""
+" クラス \"%s\" のオブジェクト(要求されたクラス \"%s\" ではなく)を初期化 "
+
+msgid "Some elements of the list (e.g., %d) are not functions"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr " クラス %s に対する定義はありません "
+
+#, fuzzy
+msgid "\"%s\" is not a known reference class"
+msgstr " \"%s\" は定義されたクラスではありません "
+
+#, fuzzy
+msgid "Invalid accessor function list: %s"
+msgstr " 関数引数に対する不正なインデックスです "
+
+msgid "Prototypes supplied for non-fields: %s"
+msgstr ""
+
+#, fuzzy
+msgid "Field classes undefined: %s"
+msgstr "値のクラスが異なります： %s, %s "
+
+#, fuzzy
+msgid "Not a reference class:"
+msgstr " \"%s\" は定義されたクラスではありません "
+
+msgid "(class \"%s\")"
+msgstr ""
+
+msgid "for method %s()"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1728,7 +1779,7 @@ msgstr ""
 msgid "New functions aren't currently inserted (not untraceable): %s"
 msgstr ""
 
-msgid "Functions inserted through trace(): %s"
+msgid "Modified functions inserted through trace(): %s"
 msgstr ""
 
 #, fuzzy

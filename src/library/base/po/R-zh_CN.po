@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -628,6 +628,10 @@ msgid "level sets of factors are different"
 msgstr "因子的层次集不同"
 
 msgid "invalid factor level, NAs generated"
+msgstr "因子层次有错，产生NA"
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr "因子层次有错，产生NA"
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1492,6 +1496,10 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern'的值必需是'TRUE'或'FALSE'值"
 
+#, fuzzy
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr "'ignore.stderr'的值必需是'TRUE'或'FALSE'值"
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr'的值必需是'TRUE'或'FALSE'值"
 
@@ -1500,6 +1508,23 @@ msgstr "'wait'的值必需是'TRUE'或'FALSE'值"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'只能为字符矢量或NULL值"
+
+#, fuzzy
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+"参数'show.output.on.console', 'minimized' 和'invisible'只适用在Windows上"
+
+#, fuzzy
+msgid "setting stdout = TRUE"
+msgstr "用T代替TRUE"
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr "'to'的长度必需为一"
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr "'to'的长度必需为一"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console'的值必需是'TRUE'或'FALSE'值"

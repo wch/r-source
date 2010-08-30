@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
-"PO-Revision-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:39\n"
+"PO-Revision-Date: 2010-08-30 08:39\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1565,6 +1565,51 @@ msgstr ""
 "on : %s"
 
 msgid ""
+"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+msgstr ""
+"Field “%s” is not a valid field or method name for reference class “%s”"
+
+msgid "\"%s\" is not a reference class"
+msgstr "“%s” is not a reference class"
+
+msgid "\"%s\" is not a field in class \"%s\""
+msgstr "“%s” is not a field in class “%s”"
+
+msgid ""
+"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+"required class \"%s\""
+msgstr ""
+"Value supplied for field “%s” (with class “%s”) is not a subclass of "
+"required class “%s”"
+
+msgid "Some elements of the list (e.g., %d) are not functions"
+msgstr "Some elements of the list (e.g., %d) are not functions"
+
+msgid "No definition found for inherited class: %s"
+msgstr "No definition found for inherited class: %s"
+
+msgid "\"%s\" is not a known reference class"
+msgstr "“%s” is not a known reference class"
+
+msgid "Invalid accessor function list: %s"
+msgstr "Invalid accessor function list: %s"
+
+msgid "Prototypes supplied for non-fields: %s"
+msgstr "Prototypes supplied for non-fields: %s"
+
+msgid "Field classes undefined: %s"
+msgstr "Field classes undefined: %s"
+
+msgid "Not a reference class:"
+msgstr "Not a reference class:"
+
+msgid "(class \"%s\")"
+msgstr "(class “%s”)"
+
+msgid "for method %s()"
+msgstr "for method %s()"
+
+msgid ""
 "invalid ignore= argument; should be a class definition or a character "
 "vector, got an object of class %s"
 msgstr ""
@@ -1697,8 +1742,8 @@ msgstr "Non-function objects aren't currently inserted (not traceable): %s"
 msgid "New functions aren't currently inserted (not untraceable): %s"
 msgstr "New functions aren't currently inserted (not untraceable): %s"
 
-msgid "Functions inserted through trace(): %s"
-msgstr "Functions inserted through trace(): %s"
+msgid "Modified functions inserted through trace(): %s"
+msgstr "Modified functions inserted through trace(): %s"
 
 msgid ""
 "%s() is not a generic function in the target environment--methods will not "

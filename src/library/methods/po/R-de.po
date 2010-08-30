@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:39\n"
 "PO-Revision-Date: 2010-03-23 16:16+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1643,6 +1643,58 @@ msgstr ""
 "keine Definiton der Klasse \"%s\" an der angegebenen Position, %s, "
 "Definitinen bei: %s"
 
+msgid ""
+"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a reference class"
+msgstr "\"%s\" ist keine definierte Klasse"
+
+#, fuzzy
+msgid "\"%s\" is not a field in class \"%s\""
+msgstr "\"%s\" ist kein Slot in Klasse \"%s\""
+
+#, fuzzy
+msgid ""
+"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+"required class \"%s\""
+msgstr ""
+"Initialisierungsmethode gibt ein Objekt der Klasse \"%s\" zurück anstelle "
+"der verlangten Klasse \"%s\""
+
+msgid "Some elements of the list (e.g., %d) are not functions"
+msgstr ""
+
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "keine Definition der Klasse \"%s\" gefunden"
+
+#, fuzzy
+msgid "\"%s\" is not a known reference class"
+msgstr "\"%s\" ist keine definierte Klasse"
+
+#, fuzzy
+msgid "Invalid accessor function list: %s"
+msgstr "unzulässiger Index für Funktionsargument"
+
+msgid "Prototypes supplied for non-fields: %s"
+msgstr ""
+
+#, fuzzy
+msgid "Field classes undefined: %s"
+msgstr "Beide Klassen müssen definiert sein"
+
+#, fuzzy
+msgid "Not a reference class:"
+msgstr "\"%s\" ist keine definierte Klasse"
+
+msgid "(class \"%s\")"
+msgstr ""
+
+msgid "for method %s()"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1784,7 +1836,7 @@ msgstr ""
 msgid "New functions aren't currently inserted (not untraceable): %s"
 msgstr ""
 
-msgid "Functions inserted through trace(): %s"
+msgid "Modified functions inserted through trace(): %s"
 msgstr ""
 
 #, fuzzy

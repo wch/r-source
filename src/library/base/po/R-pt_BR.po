@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -664,6 +664,10 @@ msgid "level sets of factors are different"
 msgstr "conjunto de níveis dos fatores são diferentes"
 
 msgid "invalid factor level, NAs generated"
+msgstr "nível de fator inválido, NAs gerados"
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr "nível de fator inválido, NAs gerados"
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1566,6 +1570,9 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr ""
 
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr ""
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
@@ -1575,6 +1582,20 @@ msgstr ""
 #, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' e 'target' devem ser vetores de caracteres"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+
+msgid "setting stdout = TRUE"
+msgstr ""
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr "'to' deve ter comprimento 1"
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr "'to' deve ter comprimento 1"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr ""

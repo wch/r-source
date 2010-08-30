@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-30 08:38\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -651,6 +651,10 @@ msgid "level sets of factors are different"
 msgstr "인자의 수준 세트 차이가 납니다"
 
 msgid "invalid factor level, NAs generated"
+msgstr "효과인 인자 수준입니다. NAs가 발생했습니다"
+
+#, fuzzy
+msgid "invalid factor level, NA generated"
 msgstr "효과인 인자 수준입니다. NAs가 발생했습니다"
 
 msgid "'%s' is not meaningful for ordered factors"
@@ -1564,6 +1568,9 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr ""
 
+msgid "'ignore.stdout' must be TRUE or FALSE"
+msgstr ""
+
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr ""
 
@@ -1573,6 +1580,20 @@ msgstr ""
 #, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
+
+msgid "arguments 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+
+msgid "setting stdout = TRUE"
+msgstr ""
+
+#, fuzzy
+msgid "'stdout' must be of length 1"
+msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'stderr' must be of length 1"
+msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr ""
