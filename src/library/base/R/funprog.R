@@ -113,7 +113,10 @@ function(f, ...)
 
 Negate <-
 function(f)
-    function(...) ! match.fun(f)(...)
+{  
+    f <- match.fun(f) # effectively force f, avoid lazy eval. 
+    function(...) ! f(...)
+}
 
 Position <-
 function(f, x, right = FALSE, nomatch = NA_integer_)

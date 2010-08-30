@@ -566,6 +566,10 @@
 
       \item \code{[[} sub-assignment for factors could create an invalid
       factor (reported by Bill Dunlap).
+
+      \item \code{Negate(f)} would not evaluate argument \code{f}
+      until first 
+      use of returned function (reported by Olaf Mersmann).
     }
   }
 }
