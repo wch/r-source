@@ -49,6 +49,7 @@ system <- function(command, intern = FALSE,
 
 system2 <- function(command, args = character(),
                     stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    env = character(),
                     minimized = FALSE, invisible = TRUE)
 {
     if(!missing(minimized) || !missing(invisible))
@@ -57,7 +58,7 @@ system2 <- function(command, args = character(),
         stop("'wait' must be TRUE or FALSE")
 
     intern <- FALSE
-    command <- paste(c(shQuote(command), args), collapse = " ")
+    command <- paste(c(env, shQuote(command), args), collapse = " ")
 
     if(is.null(stdout)) stdout <- FALSE
     if(is.null(stderr)) stderr <- FALSE

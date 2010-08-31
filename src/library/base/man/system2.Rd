@@ -12,6 +12,7 @@
 \usage{
 system2(command, args = character(),
         stdout = "", stderr = "", wait = TRUE, input = NULL,
+        env = character(),
         minimized = FALSE, invisible = TRUE)
 }
 \arguments{
@@ -29,6 +30,8 @@ system2(command, args = character(),
   \item{input}{if a character vector is supplied, this is copied one
     string per line to a temporary file, and the standard input of
     \code{command} is redirected to the file.}
+  \item{env}{character vector of name=value strings to set environment
+    variables.}
 #ifdef unix
   \item{minimized, invisible}{arguments
     that are accepted on Windows but ignored on this platform, with a

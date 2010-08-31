@@ -57,6 +57,7 @@ system <- function(command, intern = FALSE,
 
 system2 <- function(command, args = character(),
                     stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    env = character(),
                     minimized = FALSE, invisible = TRUE)
 {
     if(!is.logical(wait) || is.na(wait))
@@ -65,7 +66,7 @@ system2 <- function(command, args = character(),
         stop("'minimized' must be TRUE or FALSE")
     if(!is.logical(invisible) || is.na(invisible))
         stop("'invisible' must be TRUE or FALSE")
-    command <- paste(c(shQuote(command), args), collapse = " ")
+    command <- paste(c(shQuote(command), env, args), collapse = " ")
 
     if(is.null(stdout)) stdout <- FALSE
     if(is.null(stderr)) stderr <- FALSE
