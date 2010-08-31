@@ -8,7 +8,7 @@
 \alias{[.factor}
 \alias{[<-.factor}
 \alias{[[.factor}
-\alias{[[<.factor}
+\alias{[[<-.factor}
 \description{
   Extract or replace subsets of factors.
 }

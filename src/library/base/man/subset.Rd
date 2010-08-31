@@ -56,7 +56,7 @@ subset(x, \dots)
 
   It can happen that factors have empty levels after subsetting. They
   are not removed, because that could be undesirable. Notice the
-  \code{\link{dropLevels}} function introduced in R version 2.12.0.
+  \code{\link{droplevels}} function introduced in R version 2.12.0.
 
 }
 \value{
