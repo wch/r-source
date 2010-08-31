@@ -433,8 +433,8 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 }
 
 .assignOverBinding <- function(what, value, where, verbose = TRUE) {
-    pname <- getPackageName(where)
     if(verbose) {
+        pname <- getPackageName(where)
         msg <-
             gettextf("assigning over the binding of symbol \"%s\" in environment/package \"%s\"",
                      what, pname)
