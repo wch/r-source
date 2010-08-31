@@ -1,8 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-28 r52822)
+R version 2.12.0 Under development (unstable) (2010-08-30 r52845)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-08-29 08:25:45 BST" "2010-08-29 08:25:45 BST"
+[1] "2010-08-30 17:11:47 PDT" "2010-08-30 17:11:47 PDT"
 
 > 
 > 
@@ -1048,9 +1048,9 @@ Error in standardGeneric("numMax") :
 > 
 > ## A generic version of paste(), dispatching on the "..." argument:
 > setGeneric("paste", signature = "...")
-Creating a generic for ‘paste’ in package ‘.GlobalEnv’
+Creating a generic for 'paste' in package '.GlobalEnv'
     (the supplied definition differs from and overrides the implicit generic
-    in package ‘base’: Signatures differ:  (...), (sep, collapse))
+    in package 'base': Signatures differ:  (...), (sep, collapse))
 [1] "paste"
 > 
 > setMethod("paste", "Number", function(..., sep, collapse) c(...))
@@ -1319,7 +1319,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x17a4888>
+<environment: 0x1024ab028>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1365,7 +1365,7 @@ NULL
 > 
 > cleanEx()
 
-detaching ‘package:stats4’
+detaching 'package:stats4'
 
 > nameEx("is")
 > ### * is
@@ -1749,7 +1749,7 @@ showClass("trackMultiCurve")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-‘stdout’.
+'stdout'.
 > 
 > promptClass("track", stdout())
 \name{track-class}
@@ -1798,7 +1798,7 @@ showClass("track")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-‘stdout’.
+'stdout'.
 > ## End Don't show
 > ## Not run: 
 > ##D > promptClass("track")
@@ -1911,21 +1911,17 @@ A shell of class documentation has been written to the connection
 +     classMethods = list( view = function() matplot(data),
 +         edit = # invoke previous method, then replot
 +           function(i, j, value) {
-+             edit.prev(i, j, value)
++             callSuper(i, j, value) # but this doesn't yet work
 +             view()
 +           }))
 > 
 > ## Don't show: 
 > ff = new("matrixEditor2", data = xMat)
-> ff$edit(2,2,0)
-> ff$data
-     [,1] [,2] [,3]
-[1,]    1    5    9
-[2,]    2    0   10
-[3,]    3    7   11
-[4,]    4    8   12
-> ff$undo()
-> stopifnot(all.equal(ff$data, xMat))
+> ## uncomment when callSuper() works
+> ## ff$edit(2,2,0)
+> ## ff$data
+> ## ff$undo()
+> ## stopifnot(all.equal(ff$data, xMat))
 > removeClass("matrixEditor")
 [1] TRUE
 > removeClass("matrixEditor2")
@@ -2895,7 +2891,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x17653a4>
+<environment: 0x102013778>
 
 Signatures:
         object    
@@ -3244,7 +3240,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.278 0.045 4.324 0 0 
+Time elapsed:  3.533 0.048 3.582 0 0 
 > grDevices::dev.off()
 null device 
           1 

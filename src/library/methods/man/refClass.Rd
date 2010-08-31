@@ -7,10 +7,11 @@
 \alias{refClass-class}
 \alias{refObject-class}
 \alias{classMethodDef-class}
+\alias{SuperClassMethod-class}
 \alias{show,classMethodDef-method}
 \alias{show,refClassRepresentation-method}
 \title{
-Creating Classes With Fields Treated by Reference
+Creating Classes With Fields Treated by Reference (OOP-style)
 }
 \description{
 A call to \code{setRefClass} defines an \R class with
@@ -30,6 +31,15 @@ version 2.12.0) is preliminary and subject to change, and currently
 includes only the \R-only implementation.  Developers are encouraged
 to experiment with the software, but the description here is more than
 usually subject to change.
+
+A comment on terminology.  Some terms are needed to distinguish the
+OOP-style structure from the similar functional classes and methods
+structure.  For the moment, the terms \dQuote{field} and
+\dQuote{class-based method} are used in distinction to \dQuote{slot}
+and \dQuote{method} for the usual S4 things.
+Other suggestions are welcome, but there are  arguments for and
+against most obvious terminology borrowed from other languages.  And,
+as mentioned below, even the term \dQuote{OOP} is potentially confusing.
 }
 \usage{
 setRefClass(Class, fieldClasses = , contains = , classMethods =,
@@ -51,11 +61,11 @@ standard \R{} object management.
 }
   \item{contains}{
 optional vector of superclasses for this class.  If a superclass is
-also a reference class, the fields and class methods will be inherited.
+also a reference class, the fields and class-based methods will be inherited.
 }
   \item{classMethods}{
 a named list of function definitions that can be invoked on objects
-from this class.  See the section on class methods below, and in
+from this class.  See the section on class-based methods below, and in
 particular the comments on accessor methods for fields.
 }
   \item{fieldPrototypes}{
@@ -142,7 +152,7 @@ throughout this document.
 If we need to make the distinction, we will refer to class-based
 methods versus functional methods.
 }
-\section{Fields and Class Methods}{
+\section{Fields and Class-Based Methods}{
 All the widely used languages implementing class-based methods provide
 for named \dQuote{pieces} of an object.
 The term for these pieces varies with the language; in the \R
@@ -154,7 +164,9 @@ convention of starting hidden files with \code{"."} was taken over in
 S).
 
 Instead, and rather than introduce yet another operator into the
-grammar, we use the \code{"$"} operator. %$
+grammar, we use the \code{$} operator, %$
+as has been done in a number of related \R packages, including
+inter-system interfaces to languages such as Java and C++.
 A field is extracted by this operator and modified by the operator
 appearing on the left of an assignment.
 In terms of implementation, any class representing reference objects
@@ -165,20 +177,20 @@ these methods from a basic reference class, either using \R (the
 standard being class \linkS4class{stdRefClass}) or interfacing to
 another system.
 
-Similarly, a class method is invoked on an object using the \code{$}
-operator.  To invoke a class method \code{undo} on an object \code{x},
+Similarly, a class-based method is invoked on an object using the \code{$}
+operator.  To invoke a class-based method \code{undo} on an object \code{x},
 call \code{x$undo()}.
 }
 
-\section{Writing Class Methods}{
-Class methods are functions supplied as elements of a named list as
+\section{Writing Class-Based Methods}{
+Class-based methods are functions supplied as elements of a named list as
 the argument \code{classMethods} in a call to \code{setRefClass}.
 They are written as ordinary \R functions but have some special
 features and restrictions.
-The body of the function can contain calls to any other class method,
+The body of the function can contain calls to any other class-based method,
 including those inherited from other reference classes.
 
-Class methods also need to refer to fields in the object.
+Class-based methods also need to refer to fields in the object.
 A number of
 class-based systems recommend or enforce \emph{accessor methods}
 corresponding to each field.
@@ -187,7 +199,7 @@ as well), a field named \code{abc} of an object \code{x} would be
 extracted by \code{x$getAbc()} and assigned by
 \code{x$setAbc(value)}.
 Aside from other reasons, using accessor methods in the standard \R
-implementation allows class methods to be defined independently of the
+implementation allows class-based methods to be defined independently of the
 precise mechanism currently used to implement fields (see the
 implementation section below).
 A requirement for defining reference classes in \R is that methods be
@@ -199,12 +211,12 @@ reference class, the use of accessor methods is optional.
 An alternative is to use the field name directly for getting the field
 and assignments of the field name using the
 non-local assignment operator, \code{<<-}, to set the field.  See the
-second version of class methods in the example below.
+second version of class-based methods in the example below.
 Notice that non-local assignment is required:  a local assignment with
 the \code{<-} operator just creates a local object in the function
 call, as it would in any \R function.
 
-Direct access to fields in a class method usually gives a simpler and slightly faster
+Direct access to fields in a class-based method usually gives a simpler and slightly faster
 implementation.
 However, using accessor methods is required if the reference
 object is a proxy for an object in another language.
@@ -215,23 +227,22 @@ one of the main goals for the software described here is to provide a
 consistent programming interface both for \R-only software and for
 inter-system interfaces.
 
-Class methods should be kept simple; if they need to do some
+class-based methods should be kept simple; if they need to do some
 specialized \R computation, put that into a separate, ordinary
-function and write the class method to call that.
-Specifically, class methods can not use special features of the
+function and write the method to call that.
+Specifically, methods can not use special features of the
 enclosing environment mechanism.
-Class methods can not themselves be generic functions; if you want
+methods can not themselves be generic functions; if you want
 additional functional method dispatch, write a separate generic
-function and call that from the class method.
+function and call that from the method.
 The implementation section explains the reason for these restrictions.
 
-The entire object can be referred to in a class method by the reserved
-name \code{.self}, as shown in the \code{save=} class method of the
+The entire object can be referred to in a method by the reserved
+name \code{.self}, as shown in the \code{save=} method of the
 example.
 
-Class methods include inherited class methods.  See the section on
-inheritance for a (tentative) approach to addressing inherited
-versions of methods.
+The methods defined in the class include methods from superclasses, as
+discussed in the next section.
 }
 \section{Inheritance}{
 Reference classes inherit from other reference classes by using the
@@ -250,16 +261,18 @@ Class fields are inherited.  Currently the new class definition can
 override any inherited fields:  the previous field definition is no
 longer available.
 
-Class methods are inherited and installed in the same way as directly
+Inherited methods are installed in the same way as directly
 specified class methods.
-If a directly specified method overrides an inherited one, the current
-mechanism is to include a \code{".prev"} version of the method.  So if
-a class inherited an \code{edit()} method but also defined one
-directly, the previous method can be called as \code{edit.prev()}.
+The code in a method can refer to  inherited methods in the same
+way as directly specified methods.
+
+A method may override a method of the same name in a superclass.  For
+this purpose, a special method name will be provided, to be translated
+into a call to the superclass method overridden.  This mechanism has
+not yet been implemented, but the current plan is that
+\code{callSuper(...)} will translate into a call to the superclass
+version of the current method.
 See the matrix viewer example below.
-One serious drawback is that only one level of inherited method can be used.
-(As with other details, we don't guarantee that this mechanism will
-persist if a better approach comes along.)
 
 }
 \section{Implementation}{
@@ -394,16 +407,17 @@ setRefClass("matrixViewer", contains = "matrixEditor",
     classMethods = list( view = function() matplot(data),
         edit = # invoke previous method, then replot
           function(i, j, value) {
-            edit.prev(i, j, value)
+            callSuper(i, j, value) # but this doesn't yet work
             view()
           }))
 
 \dontshow{
 ff = new("matrixEditor2", data = xMat)
-ff$edit(2,2,0)
-ff$data
-ff$undo()
-stopifnot(all.equal(ff$data, xMat))
+## uncomment when callSuper() works
+## ff$edit(2,2,0)
+## ff$data
+## ff$undo()
+## stopifnot(all.equal(ff$data, xMat))
 removeClass("matrixEditor")
 removeClass("matrixEditor2")
 removeClass("matrixViewer")
