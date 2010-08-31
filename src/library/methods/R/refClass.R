@@ -105,7 +105,9 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
 
 makeClassMethod <- function(def, name, Class, superClassMethod = "", allMethods) {
     ## NB:  recomended package codetools must be present
-    depends <- codetools::findGlobals(def, merge = FALSE)$functions
+    xx <- try(depends <- codetools::findGlobals(def, merge = FALSE)$functions)
+    if(is(xx, "try-error"))
+        depends <- allMethods
     ## find the field methods called ...
     depends <- depends[match(depends, allMethods, 0) > 0]
     new("classMethodDef", def, mayCall = depends, name = name,
