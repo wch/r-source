@@ -4283,7 +4283,7 @@ Numeric constants follow a similar syntax to that of the @C{} language.
 They consist of an integer part consisting of zero or more digits,
 followed optionally by @samp{.} and a fractional part of zero or more
 digits optionally followed by an exponent part consisting of an @samp{E}
-or an @samp{e}, an optional sign and a string of zero or more digits.
+or an @samp{e}, an optional sign and a string of one or more digits.
 Either the fractional or the decimal part can be empty, but not both at
 once.
 

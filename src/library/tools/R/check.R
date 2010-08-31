@@ -16,7 +16,7 @@
 
 #### R based engine for R CMD check
 
-## NB: need to be able to set environment on R_EXE for run_examples/run_tests
+## Used for examples and tests, currently with a pipe
 R_system <- function(cmd, env = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -40,40 +40,31 @@ run_Rcmd <- function(args, out = "")
 R_runR <- function(cmd, Ropts="", env = "", arch = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    R_EXE <- if (nzchar(arch)) {
-        if (WINDOWS)
-            shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
-        else
-            paste(shQuote(file.path(R.home("bin"), "R")),
-                  " --arch=", arch, sep = "")
-    } else
-        shQuote(file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R"))
-    Rin <- tempfile("Rin")
-    Rout <- tempfile("Rout")
-    writeLines(cmd, Rin)
-    R_system(paste(R_EXE, paste(Ropts, collapse = " "),
-                   "<", shQuote(Rin), ">", shQuote(Rout), "2>&1"), env)
-    readLines(Rout, warn = FALSE)
+    if (WINDOWS) {
+        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+        else file.path(R.home("bin"), "Rterm.exe")
+        system2(R_EXE, Ropts, TRUE, TRUE, input = cmd, env = env)
+    } else {
+        system2(file.path(R.home("bin"), "R"),
+                c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
+                TRUE, TRUE, input = cmd, env = env)
+    }
 }
 
 ## used for .createDotR
 R_run_R <- function(cmd, Ropts, env)
 {
-    WINDOWS <- .Platform$OS.type == "windows"
-    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
-    Rin <- tempfile("Rin")
     Rout <- tempfile("Rout")
-    writeLines(cmd, Rin)
-    status <-
-        R_system(paste(shQuote(R_EXE), paste(Ropts, collapse = " "),
-                       "<", shQuote(Rin), ">", shQuote(Rout), "2>&1"), env)
+    WINDOWS <- .Platform$OS.type == "windows"
+    R_EXE <- file.path(R.home("bin"), if(WINDOWS) "Rterm.exe" else "R")
+    status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
     list(status = status, out = readLines(Rout, warn = FALSE))
 }
 
 .check_packages <- function(args = NULL)
 {
-    ## this requires on Windows
-    ## sh file (optional)
+    WINDOWS <- .Platform$OS.type == "windows"
+    ## this requires on Windows: sh file (optional)
 
     wrapLog <- function(...) {
         text <- paste(..., collapse=" ")
@@ -91,14 +82,20 @@ R_run_R <- function(cmd, Ropts, env)
     }
 
     R_runR2 <-
-        function(cmd, env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-        {
-            out <- R_runR(cmd, R_opts2, env)
-            if (R_check_suppress_RandR_message)
-                grep('^Xlib: *extension "RANDR" missing on display', out,
-                     invert = TRUE, value = TRUE)
-            else out
-        }
+        if(WINDOWS)
+            function(cmd,
+                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
+                R_runR(cmd, R_opts2, env)
+        else
+            function(cmd,
+                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+            {
+                out <- R_runR(cmd, R_opts2, env)
+                if (R_check_suppress_RandR_message)
+                    grep('^Xlib: *extension "RANDR" missing on display', out,
+                         invert = TRUE, value = TRUE)
+                else out
+            }
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
@@ -1232,7 +1229,6 @@ R_run_R <- function(cmd, Ropts, env)
                 paste("(echo 'gctorture(TRUE)'; cat", exfile,
                       ") | LANGUAGE=en", R_EXE1,
                       if(nzchar(arch)) R_opts3 else R_opts,
-                      R_opts,
                       enc, ">", exout, "2>&1")
             else
                 paste("LANGUAGE=en", R_EXE1,
@@ -2038,8 +2034,6 @@ R_run_R <- function(cmd, Ropts, env)
             if (!any) resultLog(Log, "OK")
         } else resultLog(Log, "OK")
     }
-
-    WINDOWS <- .Platform$OS.type == "windows"
 
     R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
 
