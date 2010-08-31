@@ -39,7 +39,8 @@ system <- function(command, intern = FALSE,
     if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input, file = f, sep="\n")
+        # cat(input, file = f, sep="\n")
+        writeLines(input, f)
     }
     if (intern)
         flag <- 3L
@@ -56,9 +57,9 @@ system <- function(command, intern = FALSE,
 }
 
 system2 <- function(command, args = character(),
-                    stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    stdout = "", stderr = "", stdin = "", input = NULL,
                     env = character(),
-                    minimized = FALSE, invisible = TRUE)
+                    wait = TRUE, minimized = FALSE, invisible = TRUE)
 {
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
@@ -74,8 +75,9 @@ system2 <- function(command, args = character(),
     if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input, file = f, sep="\n")
-    } else f <- ""
+        # cat(input, file = f, sep="\n")
+        writeLines(input, f)
+    } else f <- stdin
     flag <- if (isTRUE(stdout) || isTRUE(stderr)) 3L
     else if (wait) ifelse(identical(stdout, ""), 2L, 1L)
     else 0L

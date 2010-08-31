@@ -11,9 +11,9 @@
 }
 \usage{
 system2(command, args = character(),
-        stdout = "", stderr = "", wait = TRUE, input = NULL,
+        stdout = "", stderr = "", stdin = "", input = NULL,
         env = character(),
-        minimized = FALSE, invisible = TRUE)
+        wait = TRUE, minimized = FALSE, invisible = TRUE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a character string.}
@@ -22,16 +22,19 @@ system2(command, args = character(),
     \file{stderr} should be sent.  Possible values are \code{""}, to the \R
     console (the default), \code{NULL} or \code{FALSE} (discard output),
     \code{TRUE} (capture the output in a character vector) or a
-    character string naming a file.} 
-  \item{wait}{a logical (not \code{NA}) indicating whether the \R
-    interpreter should wait for the command to finish, or run it
-    asynchronously.  This will be ignored (and the interpreter will
-    always wait) if \code{stdout = TRUE}.}
+    character string naming a file.}
+  \item{stdin}{should input be diverted?  \code{""} means the default,
+    alternatively a character string naming a file.  Ignored
+    if \code{input} is supplied.}
   \item{input}{if a character vector is supplied, this is copied one
     string per line to a temporary file, and the standard input of
     \code{command} is redirected to the file.}
   \item{env}{character vector of name=value strings to set environment
     variables.}
+  \item{wait}{a logical (not \code{NA}) indicating whether the \R
+    interpreter should wait for the command to finish, or run it
+    asynchronously.  This will be ignored (and the interpreter will
+    always wait) if \code{stdout = TRUE}.}
 #ifdef unix
   \item{minimized, invisible}{arguments
     that are accepted on Windows but ignored on this platform, with a

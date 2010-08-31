@@ -40,7 +40,8 @@ system <- function(command, intern = FALSE,
             stop("'input' must be a character vector or 'NULL'")
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input, file=f, sep="\n")
+        writeLines(input, f)
+        # cat(input, file=f, sep="\n")
         command <- paste(command, "<", f)
     }
     if(!wait && !intern) command <- paste(command, "&")
@@ -48,9 +49,9 @@ system <- function(command, intern = FALSE,
 }
 
 system2 <- function(command, args = character(),
-                    stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    stdout = "", stderr = "", stdin = "", input = NULL,
                     env = character(),
-                    minimized = FALSE, invisible = TRUE)
+                    wait = TRUE, minimized = FALSE, invisible = TRUE)
 {
     if(!missing(minimized) || !missing(invisible))
         warning("arguments 'minimized' and 'invisible' are for Windows only")
@@ -92,9 +93,10 @@ system2 <- function(command, args = character(),
             stop("'input' must be a character vector or 'NULL'")
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input, file=f, sep="\n")
+        writeLines(input, f)
+        # cat(input, file=f, sep="\n")
         command <- paste(command, "<", f)
-    }
+    } else if (nzchar(stdin)) command <- paste(command, "<", stdin)
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
 }

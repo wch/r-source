@@ -73,7 +73,7 @@ subset(x, \dots)
 \seealso{
   \code{\link{[}}, % = ./Extract.Rd
   \code{\link{transform}}
-  \code{\link{dropLevels}}
+  \code{\link{droplevels}}
 }
 \examples{
 subset(airquality, Temp > 80, select = c(Ozone, Temp))
