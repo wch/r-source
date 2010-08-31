@@ -103,11 +103,23 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
     def
    }
 
+..hasCodeTools <- FALSE
+.hasCodeTools <- function() {
+    if(!identical(..hasCodeTools, TRUE)) # will be FALSE when methods is built, keep checking
+        ..hasCodeTools <- length(list.files(system.file(package = "codetools"))) > 0
+    ..hasCodeTools
+}
+
+.getGlobalFuns <- function(def) {
+    if(.hasCodeTools())
+        codetools::findGlobals(def, merge = FALSE)$functions
+    else
+        unique(unlist(lapply(def, all.names)))
+}
+
 makeClassMethod <- function(def, name, Class, superClassMethod = "", allMethods) {
     ## NB:  recomended package codetools must be present
-    xx <- try(depends <- codetools::findGlobals(def, merge = FALSE)$functions)
-    if(is(xx, "try-error"))
-        depends <- allMethods
+    depends <- .getGlobalFuns(def)
     ## find the field methods called ...
     depends <- depends[match(depends, allMethods, 0) > 0]
     new("classMethodDef", def, mayCall = depends, name = name,
