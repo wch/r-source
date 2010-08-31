@@ -16,7 +16,7 @@ Creating Classes With Fields Treated by Reference (OOP-style)
 \description{
 A call to \code{setRefClass} defines an \R class with
 fields that
-are accessed by reference and with class methods to be invoked on objects
+are accessed by reference and with class-based methods to be invoked on objects
 from the class, in the style of languages such as Java and
 C++, commonly referred to as OOP languages.
 The application interface provided is designed to deal consistently
@@ -33,7 +33,7 @@ to experiment with the software, but the description here is more than
 usually subject to change.
 
 A comment on terminology.  Some terms are needed to distinguish the
-OOP-style structure from the similar functional classes and methods
+OOP-style structure from the similar function-based classes and methods
 structure.  For the moment, the terms \dQuote{field} and
 \dQuote{class-based method} are used in distinction to \dQuote{slot}
 and \dQuote{method} for the usual S4 things.
@@ -81,7 +81,7 @@ through a set of basic reference classes.
 The default, \code{"stdRefClass"}, implements reference objects
 entirely in \R{} (currently by using environments); other choices of
 basic reference class might use an interface to another language.  See
-the section on relations to other languages.
+the section on inter-system interfaces.
 }
   \item{refClassName}{
 optionally, a name for the class to be used in interfacing to another
@@ -135,7 +135,7 @@ languages.
 Several implications follow for the \R software.
 Methods in this model are associated with the object, or more
 precisely with the class of the object, as opposed to methods in a
-functional class/method system, which are fundamentally associated
+function-based class/method system, which are fundamentally associated
 with the function (in \R, for example, a generic function in an \R
 session has a table of all its currently known methods).
 
@@ -144,13 +144,13 @@ often referred to as Object Oriented Programming (OOP).  While there
 is nothing incorrect about the term, it has been the cause of
 confusion, particularly when programmers come to \R from one of the
 other systems.
-In a normal use of the words, the functional class/method system in \R
+In a normal use of the words, the function-based class/method system in \R
 is just as object-oriented as Java, say, if not more so.
 But the systems are fundamentally different.
 To avoid propagating the confusion, we will avoid the term OOP
 throughout this document.
 If we need to make the distinction, we will refer to class-based
-methods versus functional methods.
+methods versus function-based methods.
 }
 \section{Fields and Class-Based Methods}{
 All the widely used languages implementing class-based methods provide
@@ -233,7 +233,7 @@ function and write the method to call that.
 Specifically, methods can not use special features of the
 enclosing environment mechanism.
 methods can not themselves be generic functions; if you want
-additional functional method dispatch, write a separate generic
+additional function-based method dispatch, write a separate generic
 function and call that from the method.
 The implementation section explains the reason for these restrictions.
 
@@ -262,7 +262,7 @@ override any inherited fields:  the previous field definition is no
 longer available.
 
 Inherited methods are installed in the same way as directly
-specified class methods.
+specified methods.
 The code in a method can refer to  inherited methods in the same
 way as directly specified methods.
 
@@ -277,7 +277,7 @@ See the matrix viewer example below.
 }
 \section{Implementation}{
 Reference class definitions need to store the definition of the fields
-and also the class methods (since these belong to the class in the
+and also the class-based methods (since these belong to the class in the
 class-based paradigm).
 These and some other properties are defined in the class
 \code{refClassRepresentation}, which is a subclass of the ordinary
@@ -296,19 +296,36 @@ Class method definitions are also supported as documented here.
 
 The implementation for both purposes works by delivering a function
 object for the method with an environment containing the fields and
-class methods as objects, specifically
+class-based methods as objects, specifically
 the environment of the object itself.
 The \code{initialize} method for standard reference class objects
 installs an environment in the object with the initial contents of the
 class fields (either the defaults from the prototype or values
 supplied explicitly in the call to \code{\link{new}}).
-Class methods are inserted into the environment when they are called,
-including other class methods they may call.
+Methods are inserted into the environment when they are called,
+including other methods they may call.
 These dependencies are searched heuristically when the reference class
 is defined, using the \code{findGlobals} function in recommended
 package \code{codeTools}.
 This recommended package must be available to define a reference class
 (but is not required to use reference classes defined in an installed package).
+}
+\section{Inter-System Interfaces}{
+A number of \R packages currently support interfaces to other
+languages using a similar reference-based programming model.
+Aside from differences in choice of terminology and other details,
+many of these are largely compatible with the programming style
+described here.
+
+The inter-system interface approach could also be added to the
+reference class approach here, for example by having a basic reference
+class that was a subclass of \code{stdRefClass} but assembled methods
+and field accessors that were proxies to the facilities in the other
+language.  Such an implementation would allow users to write \R
+software that extended methods and fields in the other language with
+additional ones implemented in \R.  Users of such packages should see
+a consistent interface to both sets of fields and methods.  As of
+version 2.12.0 of \R, this remains a topic for future development.
 }
 \value{
 \code{setRefClass} returns the class definition, invisibly, but the function is mainly
