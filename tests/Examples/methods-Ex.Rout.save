@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-08-30 17:11:47 PDT" "2010-08-30 17:11:47 PDT"
+[1] "2010-08-30 17:37:18 PDT" "2010-08-30 17:37:18 PDT"
 
 > 
 > 
@@ -1319,7 +1319,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x1024ab028>
+<environment: 0x10232f9f0>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1818,11 +1818,11 @@ A shell of class documentation has been written to the connection
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: ReferenceClasses
-> ### Title: Creating Classes With Fields Treated by Reference
+> ### Title: Creating Classes With Fields Treated by Reference (OOP-style)
 > ### Aliases: ReferenceClasses setRefClass refClassFields refClassMethods
 > ###   refClassRepresentation-class refClass-class refObject-class
-> ###   classMethodDef-class show,classMethodDef-method
-> ###   show,refClassRepresentation-method
+> ###   classMethodDef-class SuperClassMethod-class
+> ###   show,classMethodDef-method show,refClassRepresentation-method
 > ### Keywords: programming classes
 > 
 > ### ** Examples
@@ -2891,7 +2891,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x102013778>
+<environment: 0x101e7a178>
 
 Signatures:
         object    
@@ -3240,7 +3240,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.533 0.048 3.582 0 0 
+Time elapsed:  3.56 0.046 3.608 0 0 
 > grDevices::dev.off()
 null device 
           1 
