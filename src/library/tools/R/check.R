@@ -45,9 +45,9 @@ R_runR <- function(cmd, Ropts="", env = "", arch = "")
         else file.path(R.home("bin"), "Rterm.exe")
         system2(R_EXE, Ropts, TRUE, TRUE, input = cmd, env = env)
     } else {
-        system2(file.path(R.home("bin"), "R"),
-                c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
-                TRUE, TRUE, input = cmd, env = env)
+        suppressWarnings(system2(file.path(R.home("bin"), "R"),
+                                 c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
+                                 TRUE, TRUE, input = cmd, env = env))
     }
 }
 
@@ -1223,17 +1223,17 @@ R_run_R <- function(cmd, Ropts, env)
                     paste(shQuote(file.path(R.home("bin"), "R")),
                           " --arch=", arch, sep = "")
             } else shQuote(R_EXE)
+            Ropts <- if (nzchar(arch)) R_opts3 else R_opts
+            if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             cmd <- if(use_gct)
                 paste("(echo 'gctorture(TRUE)'; cat", exfile,
-                      ") | LANGUAGE=en", R_EXE1,
-                      if(nzchar(arch)) R_opts3 else R_opts,
-                      enc, ">", exout, "2>&1")
+                      ") | LANGUAGE=en", R_EXE1, Ropts, enc,
+                      ">", exout, "2>&1")
             else
-                paste("LANGUAGE=en", R_EXE1,
-                      if(nzchar(arch)) R_opts3 else R_opts,
-                      enc, "<", exfile, ">", exout, "2>&1")
+                paste("LANGUAGE=en", R_EXE1, Ropts, enc,
+                      "<", exfile, ">", exout, "2>&1")
             if (R_system(cmd)) {
                 errorLog(Log, "Running examples in ", sQuote(exfile),
                          " failed")
@@ -1297,8 +1297,6 @@ R_run_R <- function(cmd, Ropts, env)
                 resultLog(Log, "OK")
             }
         }
-
-        if (use_valgrind) R_opts <- c(R_opts, "-d valgrind")
 
         checkingLog(Log, "examples")
         if (!do_examples) resultLog(Log, "SKIPPED")
@@ -1374,8 +1372,6 @@ R_run_R <- function(cmd, Ropts, env)
                          sprintf("unable to create %s", sQuote(testdir)))
                 do_exit(1L)
             }
-##            print(testdir)
-##            file.copy(testsrcdir, ".", recursive = TRUE)
             file.copy(Sys.glob(paste(testsrcdir, "/*", sep = "")),
                       testdir, recursive = TRUE)
             setwd(testdir)
@@ -1438,8 +1434,6 @@ R_run_R <- function(cmd, Ropts, env)
             !length(vf <- list_files_with_type(vignette_dir, "vignette")))
             return()
 
-        if (use_valgrind) R_opts <- c(R_opts, "-d valgrind")
-
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE
         ## Do PDFs exist for all package vignettes?
@@ -1480,7 +1474,12 @@ R_run_R <- function(cmd, Ropts, env)
                           if (R_check_latex_vignettes) ", latex = TRUE",
                           ")\n", sep = "")
             ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems if set
-            out <- R_runR2(Rcmd, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
+            out <- R_runR(Rcmd,
+                          if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
+                          "SWEAVE_STYLEPATH_DEFAULT=FALSE")
+            if (R_check_suppress_RandR_message)
+                out <- grep('^Xlib: *extension "RANDR" missing on display', out,
+                            invert = TRUE, value = TRUE)
             ## Vignette could redefine the prompt, e.g. to 'R>' ...
             out <- grep("^[[:alnum:]]*[>]", out,
                         invert = TRUE, value = TRUE)
