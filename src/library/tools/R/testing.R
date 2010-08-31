@@ -16,7 +16,8 @@
 
 ## functions principally for testing R and packages
 
-massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
+massageExamples <-
+    function(pkg, files, outFile = stdout(), use_gct = FALSE, addTiming = FALSE)
 {
     if(file_test("-d", files[1L])) {
         old <- Sys.setlocale("LC_COLLATE", "C")
@@ -31,6 +32,7 @@ massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
 
     lines <- c(paste('pkgname <- "', pkg, '"', sep =""),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
+               if (use_gct) "gctorture(TRUE)",
                "options(warn = 1)")
     cat(lines, sep = "\n", file = out)
     if(.Platform$OS.type == "windows")
@@ -354,7 +356,8 @@ testInstalledPackage <-
     return(nfail)
 }
 
-.createExdotR <- function(pkg, pkgdir, silent = FALSE, addTiming = FALSE)
+.createExdotR <-
+    function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE)
 {
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
@@ -387,7 +390,7 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, addTiming)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming)
     invisible(Rfile)
 }
 
