@@ -16,18 +16,6 @@
 
 #### R based engine for R CMD check
 
-## Used for examples and tests, currently with a pipe
-R_system <- function(cmd, env = "")
-{
-    WINDOWS <- .Platform$OS.type == "windows"
-    if (WINDOWS) {
-        Tfile <- tempfile()
-        cat(env, " ", cmd, "\n", file = Tfile)
-        on.exit(unlink(Tfile))
-        system(paste("sh", shQuote(Tfile)))
-    } else system(paste(env, cmd))
-}
-
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "")
 {
@@ -37,7 +25,7 @@ run_Rcmd <- function(args, out = "")
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out)
 }
 
-R_runR <- function(cmd, Ropts="", env = "", arch = "")
+R_runR <- function(cmd, Ropts = "", env = "", arch = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
     if (WINDOWS) {
@@ -51,20 +39,27 @@ R_runR <- function(cmd, Ropts="", env = "", arch = "")
     }
 }
 
-## used for .createDotR
-R_run_R <- function(cmd, Ropts, env)
+## used for .createDotR and to run tests
+R_run_R <- function(cmd, Ropts, env = "", arch = "")
 {
     Rout <- tempfile("Rout")
     WINDOWS <- .Platform$OS.type == "windows"
-    R_EXE <- file.path(R.home("bin"), if(WINDOWS) "Rterm.exe" else "R")
-    status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
+    if (WINDOWS) {
+        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+        else file.path(R.home("bin"), "Rterm.exe")
+        status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
+    } else {
+        status <- system2(file.path(R.home("bin"), "R"),
+                          c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
+                          Rout, Rout, input = cmd, env = env)
+    }
     list(status = status, out = readLines(Rout, warn = FALSE))
 }
 
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    ## this requires on Windows: sh file (optional)
+    ## this requires on Windows: file.exe (optional)
 
     wrapLog <- function(...) {
         text <- paste(..., collapse=" ")
@@ -1214,27 +1209,21 @@ R_run_R <- function(cmd, Ropts, env)
 
     run_examples <- function()
     {
-        run_one_arch <- function(exout, arch = "")
+        run_one_arch <- function(exfile, exout, arch = "")
         {
-            R_EXE1 <- if (nzchar(arch)) {
-                if (WINDOWS)
-                    shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
-                else
-                    paste(shQuote(file.path(R.home("bin"), "R")),
-                          " --arch=", arch, sep = "")
-            } else shQuote(R_EXE)
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            cmd <- if(use_gct)
-                paste("(echo 'gctorture(TRUE)'; cat", exfile,
-                      ") | LANGUAGE=en", R_EXE1, Ropts, enc,
-                      ">", exout, "2>&1")
+            status <- if (WINDOWS)
+                system2(if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe") else file.path(R.home("bin"), "Rterm.exe"),
+                        c(Ropts, enc),
+                        exout, exout, exfile, env = "LANGUAGE=en")
             else
-                paste("LANGUAGE=en", R_EXE1, Ropts, enc,
-                      "<", exfile, ">", exout, "2>&1")
-            if (R_system(cmd)) {
+                system2(file.path(R.home("bin"), "R"),
+                        c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts, enc),
+                        exout, exout, exfile, env = "LANGUAGE=en")
+            if (status) {
                 errorLog(Log, "Running examples in ", sQuote(exfile),
                          " failed")
                 ## Try to spot the offending example right away.
@@ -1302,7 +1291,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (!do_examples) resultLog(Log, "SKIPPED")
         else {
             pkgtopdir <- file.path(libdir, pkgname)
-            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, addTiming = %s)', pkgname, pkgtopdir, do_timings)
+            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
             exfile <- paste(pkgname, "-Ex.R", sep = "")
             out <- R_run_R(cmd, R_opts2, "LC_ALL=C")
             if (out$status) {
@@ -1322,7 +1311,7 @@ R_run_R <- function(cmd, Ropts, env)
                 } else ""
                 if (!this_multiarch) {
                     exout <- paste(pkgname, "-Ex.Rout", sep = "")
-                    run_one_arch(exout)
+                    run_one_arch(exfile, exout)
                 } else {
                     printLog(Log, "\n")
                     Log$stars <<-  "**"
@@ -1330,7 +1319,7 @@ R_run_R <- function(cmd, Ropts, env)
                         printLog(Log, "** running examples for arch ",
                                  sQuote(arch), " ...")
                         exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
-                        run_one_arch(exout, arch)
+                        run_one_arch(exfile, exout, arch)
                     }
                     Log$stars <<-  "*"
                 }
@@ -1356,13 +1345,6 @@ R_run_R <- function(cmd, Ropts, env)
         checkingLog(Log, "tests")
         run_one_arch <- function(arch = "")
         {
-            R_EXE1 <- if (nzchar(arch)) {
-                if (WINDOWS)
-                    shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
-                else
-                    paste(shQuote(file.path(R.home("bin"), "R")),
-                          " --arch=", arch, sep = "")
-            } else shQuote(R_EXE)
             testsrcdir <- file.path(pkgdir, "tests")
             testdir <- file.path(pkgoutdir, "tests")
             if(nzchar(arch)) testdir <- paste(testdir, arch, sep = "_")
@@ -1380,12 +1362,14 @@ R_run_R <- function(cmd, Ropts, env)
             if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
-            cmd <- paste("(echo 'tools:::.runPackageTestsR(",
+            cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
-                         ")' | LANGUAGE=en", R_EXE1,
-                         if(nzchar(arch)) R_opts4 else R_opts2,
-                         ")")
-            if (R_system(cmd)) {
+                         ")", sep = "")
+            res <- R_run_R(cmd,
+                           if(nzchar(arch)) R_opts4 else R_opts2,
+                           env = "LANGUAGE=en", arch = arch)
+            writeLines(res$out)
+            if (res$status) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
                 ## First, find the test which failed.
