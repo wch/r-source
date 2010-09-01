@@ -330,17 +330,20 @@
       \item A facility for defining reference-based S4 classes (in the
       OOP style of Java, C++, etc.) has been added experimentally to
       package \pkg{methods}; see \code{?ReferenceClasses}.
-	
+
       \item The \code{predict} method for \code{"loess"} fits gains an
       \code{na.action} argument which defaults to \code{na.pass} rather
       than the previous default of \code{na.omit}.
 
       Predictions from \code{"loess"} fits are now named from the row
       names of \code{newdata}.
-      
+
       \item Parsing errors detected during \code{Sweave()} processing
       will now be reported referencing their original location in the
-      source file.      
+      source file.
+
+      \item new \code{adjustcolor()} utility, e.g., for simple
+      translucent color schemes.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -579,7 +582,7 @@
       factor (reported by Bill Dunlap).
 
       \item \code{Negate(f)} would not evaluate argument \code{f}
-      until first 
+      until first
       use of returned function (reported by Olaf Mersmann).
     }
   }

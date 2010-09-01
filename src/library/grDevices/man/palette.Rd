@@ -37,6 +37,7 @@ palette(value)
   \code{\link{hsv}}, \code{\link{gray}}, \code{\link{rainbow}},
   \code{\link{terrain.colors}},\dots to construct colors.
 
+  \code{\link{adjustcolor}}, e.g., for tweaking existing palettes;
   \code{\link{colorRamp}} to interpolate colors, making custom palettes;
   \code{\link{col2rgb}} for translating colors to RGB 3-vectors.
 }
@@ -54,8 +55,7 @@ palette("default")      # reset back to the default
 
 ## on a device where alpha-transparency is supported,
 ##  use 'alpha = 0.3' transparency with the default palette :
-opal <- col2rgb(palette(), alpha=TRUE)/255; opal["alpha",] <- 0.3
-mycols <- do.call(rgb, as.list(as.data.frame(t(opal))))
+mycols <- adjustcolor(palette(), alpha.f = 0.3)
 opal <- palette(mycols)
 x <- rnorm(1000); xy <- cbind(x, 3*x + rnorm(1000))
 plot (xy, lwd=2,
