@@ -281,3 +281,25 @@ convertColor <-
   else
       rval*scale.out
 }
+
+##' @title Modify a vector of colors by "screwing" any of (r,g,b,alpha)
+##'   by multification by a factor
+##' @param col vector of colors, in any format that col2rgb() accepts
+##' @param alpha.f factor modifying the opacity alpha; typically in [0,1]
+##' @param red.f   factor modifying "red"ness
+##' @param green.f factor modifying "green"ness
+##' @param blue.f  factor modifying "blue"ness
+##' @return From rgb(), a color vector of the same length as 'col'.
+##' @author Thomas Lumley, Luke Tierney, Martin Maechler, Duncan Murdoch...
+adjustcolor <- function(col, alpha.f = 1, red.f = 1, green.f = 1,
+                        blue.f = 1, offset = c(0,0,0,0),
+                        transform = diag(c(red.f, green.f, blue.f, alpha.f)))
+{
+    stopifnot(length(offset) %% 4 == 0,
+              !is.null(d <- dim(transform)), d == c(4,4))
+    x <- col2rgb(col, alpha=TRUE)/255
+    x[] <- pmax(0, pmin(1,
+                        transform %*% x +
+                        matrix(offset, nrow=4, ncol=ncol(x))))
+    rgb(x[1,], x[2,], x[3,], x[4,])
+}
