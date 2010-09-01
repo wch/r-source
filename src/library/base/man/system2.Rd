@@ -57,8 +57,7 @@ system2(command, args = character(),
     TRUE} implies \code{stdout = TRUE}.
 }
 
-\value{
-  
+\value{  
   If \code{stdout = TRUE} or \code{stderr = TRUE}, a character vector
   giving the output of the command, one line per character string.
   (Output lines of more than 8095 bytes will be split.)  If the command
@@ -81,15 +80,24 @@ system2(command, args = character(),
 }
 
 \note{
-  \code{system2} is the beginnings of a more portable approach which
-  allows redirection of output without needing to invoke a shell on
-  Windows.  It is more flexible, for example allowing either or both of
-  stderr and stdout to be captured in a character vector.
+  \code{system2} is the beginnings of a more portable interface than
+  \code{\link{system}} which allows redirection of output without
+  needing to invoke a shell on Windows.  It is more flexible.
 
-  At present there is no guarantee that if \code{stdout} and
-  \code{stderr} are both \code{TRUE} or the same file that the two
-  streams will be interleaved in order.
+  There is no guarantee that if \code{stdout} and \code{stderr} are both
+  \code{TRUE} or the same file that the two streams will be interleaved
+  in order.  This depends on both the buffering used by the command and
+  the OS.
 }
+
+#ifdef windows
+\section{Warning}{
+  On Windows, using non-null \code{stdin} or \code{input} suppresses
+  output to the console (both standard output and standard error) unless
+  redirected, e.g. by \code{intern = TRUE}.  This is a long-standing
+  feature of the implementation.
+}
+#endif
 
 \seealso{
   \code{\link{system}}.

@@ -171,8 +171,14 @@ system(command, intern = FALSE,
   possibility of losing unsaved work, etc.
 
   Do not try to run console applications that require user
-  input from \code{Rgui} setting \code{intern = TRUE} and/or
+  input from \code{Rgui} setting \code{intern = TRUE} or
   \code{show.output.on.console = TRUE}.  They will not work.
+}
+\section{Warning}{
+  On Windows, using non-null\code{input} suppresses output to the
+  console (both standard output and standard error) unless redirected,
+  e.g. by \code{intern = TRUE} and/or \code{show.output.on.console =
+  TRUE}.  This is a long-standing feature of the implementation.
 }
 #endif
 
