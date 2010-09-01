@@ -49,9 +49,10 @@ function(x, by, FUN, ..., simplify = TRUE)
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
 
-    ## Could also use interaction(drop = TRUE) ...
+    ## Similar to interaction(drop = TRUE), but using integer arithmetic
+    ## is definitely a bad idea for boundary cases ...
     nrx <- NROW(x)
-    grp <- integer(nrx)
+    grp <- double(nrx)
     for(ind in rev(by)) {
         if(length(ind) != nrx)
             stop("arguments must have same length")
