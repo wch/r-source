@@ -6,7 +6,7 @@
 \alias{$<-,stdRefClass-method}
 \alias{initialize,stdRefClass-method}
 
-\title{Class "stdRefClass"}
+\title{Class \code{"stdRefClass"}}
 \description{
 Support Class to Implement R Objects using Reference Semantics
 }

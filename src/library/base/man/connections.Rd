@@ -151,7 +151,7 @@ isIncomplete(con)
 
   For \code{fifo} the description is the path of the fifo.  (Windows
   does not have fifos, so attempts to use this function there are an
-  error.  It was possile to use \code{file} with fifos prior to \R
+  error.  It was possible to use \code{file} with fifos prior to \R
   2.10.0, but no longer for reading, and \code{fifo} was always the
   documented interface.) % PR#14366
 

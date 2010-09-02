@@ -27,7 +27,6 @@ adjustcolor(col, alpha.f = 1, red.f = 1, green.f = 1, blue.f = 1,
   \item{transform}{
   }
 }
-}
 \value{a color vector of the same length as \code{col}, effectively the
   result of \code{\link{rgb}()}.
 }

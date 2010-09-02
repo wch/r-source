@@ -250,7 +250,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 }
 
 \section{Memory usage}{
-  These functions can use a suprising amount of memory when reading
+  These functions can use a surprising amount of memory when reading
   large files.  There is extensive discussion in the \sQuote{R Data
   Import/Export} manual, supplementing the notes here.
   
