@@ -342,6 +342,10 @@ Rboolean (Rf_isObject)(SEXP s);
 
 #endif /* USE_RINTERNALS */
 
+/* experimental argument type macros */
+#define SET_ARGTYPE(x, type) Rf_setAttrib(x, R_TypeSymbol, type)
+#define GET_ARGTYPE(x) Rf_getAttrib(x, R_TypeSymbol)
+    
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
    The function STRING_ELT is used as an argument to arrayAssign even
@@ -534,6 +538,7 @@ LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
 LibExtern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
 LibExtern SEXP	R_SourceSymbol;     /* "source" */
 LibExtern SEXP	R_TspSymbol;	    /* "tsp" */
+LibExtern SEXP	R_TypeSymbol;	    /* "type" */
 
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString

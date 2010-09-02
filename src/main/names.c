@@ -1075,6 +1075,7 @@ static void SymbolShortcuts(void)
     R_SeedsSymbol = install(".Random.seed");
     R_SourceSymbol = install("source");
     R_TspSymbol = install("tsp");
+    R_TypeSymbol = install("type");
     /* ../include/Defn.h , i.e. non-public : */
     R_CommentSymbol = install("comment");
     R_DotEnvSymbol = install(".Environment");

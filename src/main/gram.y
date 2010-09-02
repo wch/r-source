@@ -80,12 +80,14 @@ typedef struct yyltype
 
 static void	CheckFormalArgs(SEXP, SEXP, YYLTYPE *);
 static SEXP	FirstArg(SEXP, SEXP);
+static SEXP	FirstArgWithType(SEXP, SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
 static SEXP	Insert(SEXP, SEXP);
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
+static SEXP	NextArgWithType(SEXP, SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
 static int 	processLineDirective();
 
@@ -177,8 +179,12 @@ int		R_fgetc(FILE*);
 static SEXP	xxnullformal(void);
 static SEXP	xxfirstformal0(SEXP);
 static SEXP	xxfirstformal1(SEXP, SEXP);
+static SEXP	xxfirstformal2(SEXP, SEXP);
+static SEXP	xxfirstformal3(SEXP, SEXP, SEXP);
 static SEXP	xxaddformal0(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxaddformal1(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxaddformal2(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxaddformal3(SEXP, SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxexprlist0();
 static SEXP	xxexprlist1(SEXP, YYLTYPE *);
 static SEXP	xxexprlist2(SEXP, SEXP, YYLTYPE *);
@@ -357,9 +363,13 @@ sub	:					{ $$ = xxsub0(); }
 
 formlist:					{ $$ = xxnullformal(); }
 	|	SYMBOL				{ $$ = xxfirstformal0($1); }
-	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxfirstformal1($1,$3); }
+	|	SYMBOL EQ_ASSIGN expr		{ $$ = xxfirstformal1($1,$3); }
+	|	SYMBOL SYMBOL 			{ $$ = xxfirstformal2($2,$1); } 
+	|	SYMBOL SYMBOL EQ_ASSIGN expr	{ $$ = xxfirstformal3($2,$4,$1); }
 	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3, &@3); }
 	|	formlist ',' SYMBOL EQ_ASSIGN expr	{ $$ = xxaddformal1($1,$3,$5,&@3); }
+	|	formlist ',' SYMBOL SYMBOL		{ $$ = xxaddformal2($1,$4,$3,&@3); }
+	|	formlist ',' SYMBOL SYMBOL EQ_ASSIGN expr	{ $$ = xxaddformal3($1,$4,$6,$3,&@3); }
 	;
 
 cr	:					{ EatLines = 1; }
@@ -535,6 +545,31 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
     return ans;
 }
 
+static SEXP xxfirstformal2(SEXP sym, SEXP type)
+{
+    SEXP ans;
+    if (GenerateCode)
+	PROTECT(ans = FirstArgWithType(R_MissingArg, sym, type));
+    else
+	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(type);
+    return ans;
+}
+
+static SEXP xxfirstformal3(SEXP sym, SEXP expr, SEXP type)
+{
+    SEXP ans;
+    if (GenerateCode)
+	PROTECT(ans = FirstArgWithType(expr, sym, type));
+    else
+	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(type);
+    return ans;
+}
+
 static SEXP xxaddformal0(SEXP formlist, SEXP sym, YYLTYPE *lloc)
 {
     SEXP ans;
@@ -560,6 +595,37 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr, YYLTYPE *lloc)
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
     UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(formlist);
+    return ans;
+}
+
+static SEXP xxaddformal2(SEXP formlist, SEXP sym, SEXP type, YYLTYPE *lloc)
+{
+    SEXP ans;
+    if (GenerateCode) {
+	CheckFormalArgs(formlist, sym, lloc);
+	PROTECT(ans = NextArgWithType(formlist, R_MissingArg, sym, type));
+    }
+    else
+	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(type);
+    UNPROTECT_PTR(formlist);
+    return ans;
+}
+
+static SEXP xxaddformal3(SEXP formlist, SEXP sym, SEXP expr, SEXP type, YYLTYPE *lloc)
+{
+    SEXP ans;
+    if (GenerateCode) {
+	CheckFormalArgs(formlist, sym, lloc);
+	PROTECT(ans = NextArgWithType(formlist, expr, sym, type));
+    }
+    else
+	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(type);
     UNPROTECT_PTR(formlist);
     return ans;
 }
@@ -1045,12 +1111,38 @@ static SEXP FirstArg(SEXP s, SEXP tag)
     return tmp;
 }
 
+static SEXP FirstArgWithType(SEXP s, SEXP tag, SEXP type)
+{
+    SEXP tmp;
+    PROTECT(s);
+    PROTECT(tag);
+    PROTECT(type);
+    PROTECT(tmp = NewList());
+    tmp = GrowList(tmp, s);
+    SET_TAG(CAR(tmp), tag);
+    SET_ARGTYPE(CAR(tmp),type);
+    UNPROTECT(4);
+    return tmp;
+}
+
 static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
 {
     PROTECT(tag);
     PROTECT(l);
     l = GrowList(l, s);
     SET_TAG(CAR(l), tag);
+    UNPROTECT(2);
+    return l;
+}
+
+static SEXP NextArgWithType(SEXP l, SEXP s, SEXP tag, SEXP type)
+{
+    PROTECT(tag);
+    PROTECT(l);
+    PROTECT(type);
+    l = GrowList(l, s);
+    SET_TAG(CAR(l), tag);
+    SET_ARGTYPE(CAR(l), type);
     UNPROTECT(2);
     return l;
 }
