@@ -30,7 +30,7 @@ testPlatformEquivalence <- function(built, run)
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"),
+	 quietly = FALSE, keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"))
 {
     paste0 <- function(...) paste(..., sep="")
@@ -224,6 +224,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         bindtextdomain(paste("R", pkgname, sep="-"), popath)
     }
 
+    if(verbose && quietly)
+	message("'verbose' and 'quietly' are both true; being verbose then ..")
     if(!missing(package)) {
         if (is.null(lib.loc)) lib.loc <- .libPaths()
         ## remove any non-existent directories
@@ -281,7 +283,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     pos <- 2
                 } else pos <- npos
             }
-            .getRequiredPackages2(pkgInfo)
+            .getRequiredPackages2(pkgInfo, quietly = quietly)
             deps <- unique(names(pkgInfo$Depends))
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
@@ -664,6 +666,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   character.only = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
+				  quietly = quietly,
                                   keep.source = keep.source),
                           error = function(e) e)
         if (inherits(value, "error")) {

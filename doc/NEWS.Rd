@@ -582,8 +582,12 @@
       factor (reported by Bill Dunlap).
 
       \item \code{Negate(f)} would not evaluate argument \code{f}
-      until first
-      use of returned function (reported by Olaf Mersmann).
+      until first use of returned function (reported by Olaf Mersmann).
+
+      \item \code{quietly=FALSE} is now also an optional argument of
+      \code{library()}, and consequently, \code{quietly} is now
+      propagated also for loading dependent packages, e.g., in
+      \code{require(*, quietly=TRUE)}.
     }
   }
 }

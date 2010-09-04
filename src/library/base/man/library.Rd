@@ -21,7 +21,7 @@
 \usage{
 library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE,
+        warn.conflicts = TRUE, quietly = FALSE,
         keep.source = getOption("keep.source.pkgs"),
         verbose = getOption("verbose"))
 
