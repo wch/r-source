@@ -21,10 +21,6 @@ self from reference class thisClass.'
             stop(gettextf("Field \"%s\" is not a valid field or method name for reference class \"%s\"",
                           field, thisClass@refClassName),
                  domain = NA)
-        ## make a copy with the instance as environmen
-        ## This is expensive & should be replaced, e.g., by
-        ## special evaluator code for functions that are classMethods
-        environment(value) <- selfEnv
     }
     value
 }
@@ -97,9 +93,29 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
     ## process those that are not in the instance environment, now that
     ## this method has been assigned.
     done <- objects(selfEnv, all.names = TRUE)
-    notdone <- depends[is.na(match(depends, done))]
-    for(what in notdone)
+    notDone <- depends[is.na(match(depends, done))]
+    superCase <- match("callSuper", notDone, 0)
+    if(superCase > 0) {
+        if(nzchar(def@superClassMethod))
+            notDone[[superCase]] <- def@superClassMethod
+        else
+            stop(gettextf(
+            "a call to superClass() is in the method \"%s\" but there is no superclass definition of this method for class \"%s\"",
+               me, thisClass@refClassName), domain = NA)
+    }
+    for(what in notDone)
         installClassMethod(get(what, envir = thisClass@classMethods), self, what, selfEnv, thisClass)
+    if(superCase > 0) {
+        ## provide an environment with the correct callSuper() definition,
+        ## with selfEnv as its parent (can't override the definition of "callSuper"
+        ## in selfEnv--there may  be other methods with a callSuper() in them
+        newEnv <- new.env(parent = selfEnv)
+        assign("callSuper", get(def@superClassMethod, envir = selfEnv),
+               envir = newEnv)
+        environment(def) <- newEnv
+        assign(me, def, envir = selfEnv)
+        ## the callSuper() inside def now goes to the right method
+    }
     def
    }
 
