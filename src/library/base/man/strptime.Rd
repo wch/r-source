@@ -26,9 +26,9 @@ strptime(x, format, tz = "")
 }
 \arguments{
   \item{x}{An object to be converted.}
-  \item{tz}{A timezone specification to be used for the conversion.
-    System-specific (see \code{\link{as.POSIXlt}}), but \code{""} is the
-    current time zone, and \code{"GMT"} is UTC.}
+  \item{tz}{A character string specifying the timezone to be used for
+    the conversion.  System-specific (see \code{\link{as.POSIXlt}}), but
+    \code{""} is the current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default for the \code{format}
     methods is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
@@ -45,13 +45,13 @@ strptime(x, format, tz = "")
   convert objects from the classes \code{"POSIXlt"} and \code{"POSIXct"}
   (not \code{strftime}) to character vectors.
   
-  \code{strptime} converts character strings to class \code{"POSIXlt"}:
-  its input \code{x} is first coerced to character if necessary.  Each
-  string is processed as far as necessary for the format specified: any
-  trailing characters are ignored.
+  \code{strptime} converts character vectors to class \code{"POSIXlt"}:
+  its input \code{x} is first converted by \code{\link{as.character}}.
+  Each input string is processed as far as necessary for the format
+  specified: any trailing characters are ignored.
 
   \code{strftime} is a wrapper for \code{format.POSIXlt}, and it and
-  \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
+  \code{format.POSIXct} first convert to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}}.  Note that only that conversion
   depends on the time zone.
 
@@ -111,9 +111,8 @@ strptime(x, format, tz = "")
     \item{\code{\%y}}{Year without century (00--99). Values 00 to 68 are
       prefixed by 20 and 69 to 99 by 19 -- that is the behaviour specified
       by the 2004 POSIX standard, but it does also say \sQuote{it is
-	expected that in a future version of IEEE Std 1003.1-2001 the default
-	century inferred from a 2-digit year will change}.
-    }
+  expected that in a future version the default century inferred from a
+  2-digit year will change}.}
     \item{\code{\%Y}}{Year with century.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
