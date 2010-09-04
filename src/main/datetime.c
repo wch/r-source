@@ -378,6 +378,10 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 
     if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
 	t = (time_t) d;
+	/* if d is negative and non-integer then t will be off by one day
+	   since we really need floor(). But floor() is slow, so we just
+	   fix t instead as needed. */
+	if (d < 0.0 && (double) t != d) t--;
 #ifndef HAVE_POSIX_LEAPSECONDS
 	if (n_leapseconds < 0) set_n_leapseconds();
 	for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;

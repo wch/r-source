@@ -103,6 +103,10 @@ BUG FIXES
     o	tools::undoc() again detects undocumented data
 	objects.  Of course, this also affects R CMD check.
 
+    o	as.POSIXlt() now handles negative sub-second POSIXct times
+	properly - they were off by exactly one day. (Reported by
+	Daniel Murphy.)
+
 
 
 		CHANGES IN R VERSION 2.11.1
