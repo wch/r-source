@@ -405,9 +405,9 @@ function(dir, drop = "\\references", control = list(), program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
     
-    man_dir <- file.path(dir, "man")
-    files <- if(file_test("-d", man_dir))
-        tools::list_files_with_type(man_dir,
+    subdir <- file.path(dir, "man")
+    files <- if(file_test("-d", subdir))
+        tools::list_files_with_type(subdir,
                                     "docs",
                                     OS_subdirs = c("unix", "windows"))
     else character()
@@ -490,9 +490,11 @@ aspell_control_package_vignettes <-
 aspell_package_vignettes <-
 function(dir, control = list(), program = NULL)
 {
-    dir <- file.path(dir, "inst", "doc")
-    files <- if(file_test("-d", dir))
-        tools::list_files_with_type(dir, "vignette")
+    dir <- tools::file_path_as_absolute(dir)
+    
+    subdir <- file.path(dir, "inst", "doc")
+    files <- if(file_test("-d", subdir))
+        tools::list_files_with_type(subdir, "vignette")
     else character()
 
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
