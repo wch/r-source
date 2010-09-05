@@ -1028,12 +1028,12 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int dbg, nm;
-    volatile int i, n, bgn;
-    SEXP sym, body;
-    volatile SEXP ans, v, val;
+    volatile int i;        /* Need to declare volatile variables whose */
+    volatile SEXP v, val;  /* changing values are relied on after goto */
+                           /* for_next or for_break.                   */
+    int n, dbg, bgn, val_type;
+    SEXP sym, body, tmp;
     RCNTXT cntxt;
-    PROTECT_INDEX vpi, api;
 
     sym = CAR(args);
     val = CADR(args);
@@ -1049,22 +1049,18 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* deal with the case where we are iterating over a factor
        we need to coerce to character - then iterate */
 
-    if( inherits(val, "factor") ) {
-        PROTECT(ans = asCharacterFactor(val));
-	val = ans;
-	UNPROTECT(2);  /* ans and val from above */
-        PROTECT(val);
+    if ( inherits(val, "factor") ) {
+        tmp = asCharacterFactor(val);
+	UNPROTECT(1); /* val from above */
+        PROTECT(val = tmp);
     }
 
-    if (isList(val) || isNull(val)) {
+    if (isList(val) || isNull(val))
 	n = length(val);
-	PROTECT_WITH_INDEX(v = R_NilValue, &vpi);
-    }
-    else {
+    else
 	n = LENGTH(val);
-	PROTECT_WITH_INDEX(v = allocVector(TYPEOF(val), 1), &vpi);
-    }
-    ans = R_NilValue;
+
+    val_type = TYPEOF(val);
 
     dbg = RDEBUG(rho);
     bgn = BodyHasBraces(body);
@@ -1072,11 +1068,10 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* bump up NAMED count of sequence to avoid modification by loop code */
     if (NAMED(val) < 2) SET_NAMED(val, NAMED(val) + 1);
 
-    /***** nm may not be needed anymore now that NAMED(val) is at
-	   least 1.  LT */
-    nm = NAMED(val);
+    PROTECT(v = R_NilValue); /* Must be protected even though assigned to   */
+                             /* loop var, since needed even if var changes. */
+                             /* Must do first protect before begincontext.  */
 
-    PROTECT_WITH_INDEX(ans, &api);  /**** ans should no longer be needed. LT */
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     switch (SETJMP(cntxt.cjmpbuf)) {
@@ -1085,59 +1080,71 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     for (i = 0; i < n; i++) {
 	DO_LOOP_RDEBUG(call, op, args, rho, bgn);
-	switch (TYPEOF(val)) {
-	case LGLSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    LOGICAL(v)[0] = LOGICAL(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case INTSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    INTEGER(v)[0] = INTEGER(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case REALSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    REAL(v)[0] = REAL(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case CPLXSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    COMPLEX(v)[0] = COMPLEX(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case STRSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    SET_STRING_ELT(v, 0, STRING_ELT(val, i));
-	    setVar(sym, v, rho);
-	    break;
-	case RAWSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    RAW(v)[0] = RAW(val)[i];
-	    setVar(sym, v, rho);
-	    break;
+
+	switch (val_type) {
+
 	case EXPRSXP:
 	case VECSXP:
-	    /* make sure loop variable is a copy if needed */
-	    if(nm > 0) SET_NAMED(VECTOR_ELT(val, i), 2);
-	    setVar(sym, VECTOR_ELT(val, i), rho);
+	    /* make sure loop variable is not modified via other vars */
+	    SET_NAMED(VECTOR_ELT(val, i), 2);
+	    defineVar(sym, VECTOR_ELT(val, i), rho);
 	    break;
+
 	case LISTSXP:
-	    /* make sure loop variable is a copy if needed */
-	    if(nm > 0) SET_NAMED(CAR(val), 2);
-	    setVar(sym, CAR(val), rho);
+	    /* make sure loop variable is not modified via other vars */
+	    SET_NAMED(CAR(val), 2);
+	    defineVar(sym, CAR(val), rho);
 	    val = CDR(val);
 	    break;
+
 	default:
-	    errorcall(call, _("invalid for() loop sequence"));
+
+            /* Allocate space for loop variable if first time needed, or
+               other vars have linked to previous space so can't modify */
+
+            if (v==R_NilValue || NAMED(v)==2) {
+                UNPROTECT(1);
+                PROTECT(v = allocVector(val_type, 1));
+            }
+
+            defineVar(sym, v, rho);  /* Always necessary, since the body can  */
+                                     /* change the value of the loop variable */
+                                     /* or even remove it                     */
+            SET_NAMED(v,1);          /* Previous code got away without this,  */
+                                     /* since done elsewhere, but better here */
+            switch (val_type) {
+            case LGLSXP:
+                LOGICAL(v)[0] = LOGICAL(val)[i];
+                break;
+            case INTSXP:
+                INTEGER(v)[0] = INTEGER(val)[i];
+                break;
+            case REALSXP:
+                REAL(v)[0] = REAL(val)[i];
+                break;
+            case CPLXSXP:
+                COMPLEX(v)[0] = COMPLEX(val)[i];
+                break;
+            case STRSXP:
+                SET_STRING_ELT(v, 0, STRING_ELT(val, i));
+                break;
+            case RAWSXP:
+                RAW(v)[0] = RAW(val)[i];
+                break;
+            default:
+                errorcall(call, _("invalid for() loop sequence"));
+            }
+            break;
 	}
-	REPROTECT(ans = eval(body, rho), api);
+
+	eval(body, rho);
+
     for_next:
 	; /* needed for strict ISO C compliance, according to gcc 2.95.2 */
     }
- for_break:
+for_break:
     endcontext(&cntxt);
-    UNPROTECT(5);
+    UNPROTECT(4);
     SET_RDEBUG(rho, dbg);
     return R_NilValue;
 }

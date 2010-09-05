@@ -588,6 +588,10 @@
       \code{library()}, and consequently, \code{quietly} is now
       propagated also for loading dependent packages, e.g., in
       \code{require(*, quietly=TRUE)}.
+      
+      \item If the loop variable in a \code{for} loop was deleted, it
+      would be recreated as a global variable.  (Reported by Radford
+      Neal; the fix includes his optimizations as well.)
     }
   }
 }
