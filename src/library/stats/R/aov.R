@@ -154,7 +154,8 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         cat("Call:\n   ")
         dput(cl, control=NULL)
     }
-    asgn <- x$assign[x$qr$pivot[1L:x$rank]]
+    qrx <- if(x$rank) qr(x)
+    asgn <- x$assign[qrx$pivot[1L:x$rank]]
     effects <- x$effects
     if(!is.null(effects))
         effects <- as.matrix(effects)[seq_along(asgn),,drop=FALSE]
@@ -226,7 +227,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             cat("Residual standard error:", sapply(rs, format), "\n")
         }
         coef <- as.matrix(x$coefficients)[, 1L]
-        R <- x$qr$qr
+        R <- qrx$qr
         R <- R[1L:min(dim(R)), ,drop=FALSE]
         R[lower.tri(R)] <- 0
         if(rank < (nc <- length(coef))) {
@@ -428,7 +429,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
     Model <- object$terms
     attributes(Model) <- NULL
     value <- list(Model = Model)
-    R <- object$qr$qr
+    R <- qr(object)$qr
     R <- R[1L:min(dim(R)), , drop=FALSE]
     R[lower.tri(R)] <- 0
     d <- dim(R)
@@ -532,12 +533,13 @@ se.contrast.aov <-
 {
     contrast.weight.aov <- function(object, contrast)
     {
-        asgn <- object$assign[object$qr$pivot[1L:object$rank]]
+        qro <- qr(object)
+        asgn <- object$assign[qro$pivot[1L:object$rank]]
         uasgn <- unique(asgn)
         nterms <- length(uasgn)
         nmeffect <- c("(Intercept)",
                       attr(object$terms, "term.labels"))[1L + uasgn]
-        effects <- as.matrix(qr.qty(object$qr, contrast))
+        effects <- as.matrix(qr.qty(qro, contrast))
         res <- matrix(0, nrow = nterms, ncol = ncol(effects),
                       dimnames = list(nmeffect, colnames(contrast)))
         for(i in seq(nterms)) {

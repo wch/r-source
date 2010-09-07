@@ -50,19 +50,20 @@ lm.influence <- function (model, do.coef = TRUE)
         ## if we have a point with hat = 1, the corresponding e should be
         ## exactly zero.  Protect against returning Inf by forcing this
         e[abs(e) < 100 * .Machine$double.eps * median(abs(e))] <- 0
-        n <- as.integer(nrow(model$qr$qr))
-        k <- as.integer(model$qr$rank)
+        mqr <- qr(model)
+        n <- as.integer(nrow(mqr$qr))
+        k <- as.integer(mqr$rank)
         ## in na.exclude case, omit NAs; also drop 0-weight cases
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
         res <- .Fortran("lminfl",
-                        model$qr$qr,
+                        mqr$qr,
                         n,
                         n,
                         k,
                         as.integer(do.coef),
-                        model$qr$qraux,
+                        mqr$qraux,
                         wt.res = e,
                         hat = double(n),
                         coefficients= if(do.coef) matrix(0, n, k) else double(0L),
@@ -178,14 +179,15 @@ dfbetas <- function(model, ...) UseMethod("dfbetas")
 dfbetas.lm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
 {
     ## for lm & glm
-    xxi <- chol2inv(model$qr$qr, model$qr$rank)
+    qrm <- qr(model)
+    xxi <- chol2inv(qrm$qr, qrm$rank)
     dfbeta(model, infl) / outer(infl$sigma, sqrt(diag(xxi)))
 }
 
 covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
 		     res = weighted.residuals(model))
 {
-    n <- nrow(model$qr$qr)
+    n <- nrow(qr(model)$qr)
     p <- model$rank
     omh <- 1-infl$hat
     e.star <- res/(infl$sigma*sqrt(omh))
@@ -241,7 +243,8 @@ influence.measures <- function(model)
     p <- model$rank
     e <- weighted.residuals(model)
     s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
-    xxi <- chol2inv(model$qr$qr, model$qr$rank)
+    mqr <- qr(model)
+    xxi <- chol2inv(mqr$qr, mqr$rank)
     si <- infl$sigma
     h <- infl$hat
     dfbetas <- infl$coefficients / outer(infl$sigma, sqrt(diag(xxi)))
@@ -256,7 +259,7 @@ influence.measures <- function(model)
             (infl$pear.res/(1-h))^2 * h/(summary(model)$dispersion * p)
         else # lm
             ((e/(s * (1 - h)))^2 * h)/p
-#    dn <- dimnames(model$qr$qr)
+#    dn <- dimnames(mqr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
     infmat[is.infinite(infmat)] <- NaN

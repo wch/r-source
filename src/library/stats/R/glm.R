@@ -591,7 +591,7 @@ summary.glm <- function(object, dispersion = NULL,
     p <- object$rank
     if (p > 0) {
         p1 <- 1L:p
-        Qr <- object$qr
+        Qr <- qr(object)
         ## WATCHIT! doesn't this rely on pivoting not permuting 1L:p? -- that's quaranteed
         coef.p <- object$coefficients[Qr$pivot[p1]]
         covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
