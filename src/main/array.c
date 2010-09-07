@@ -927,36 +927,49 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	goto not_matrix;
     PROTECT(r = allocVector(TYPEOF(a), len));
+    int j, l_1 = len-1;
     switch (TYPEOF(a)) {
     case LGLSXP:
     case INTSXP:
-	for (i = 0; i < len; i++)
-	    INTEGER(r)[i] = INTEGER(a)[(i / ncol) + (i % ncol) * nrow];
-	break;
+	// filling in columnwise, "accessing row-wise":
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            INTEGER(r)[i] = INTEGER(a)[j];
+        }
+        break;
     case REALSXP:
-	for (i = 0; i < len; i++)
-	    REAL(r)[i] = REAL(a)[(i / ncol) + (i % ncol) * nrow];
-	break;
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            REAL(r)[i] = REAL(a)[j];
+        }
+        break;
     case CPLXSXP:
-	for (i = 0; i < len; i++)
-	    COMPLEX(r)[i] = COMPLEX(a)[(i / ncol) + (i % ncol) * nrow];
-	break;
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            COMPLEX(r)[i] = COMPLEX(a)[j];
+        }
+        break;
     case STRSXP:
-	for (i = 0; i < len; i++)
-	    SET_STRING_ELT(r, i,
-			   STRING_ELT(a, (i / ncol) + (i % ncol) * nrow));
-	break;
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            SET_STRING_ELT(r, i, STRING_ELT(a,j));
+        }
+        break;
     case VECSXP:
-	for (i = 0; i < len; i++)
-	    SET_VECTOR_ELT(r, i,
-			   VECTOR_ELT(a, (i / ncol) + (i % ncol) * nrow));
-	break;
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            SET_VECTOR_ELT(r, i, VECTOR_ELT(a,j));
+        }
+        break;
     case RAWSXP:
-	for (i = 0; i < len; i++)
-	    RAW(r)[i] = RAW(a)[(i / ncol) + (i % ncol) * nrow];
-	break;
+        for (i = 0, j = 0; i < len; i++, j += nrow) {
+            if (j > l_1) j -= l_1;
+            RAW(r)[i] = RAW(a)[j];
+        }
+        break;
     default:
-	goto not_matrix;
+        UNPROTECT(1);
+        goto not_matrix;
     }
     PROTECT(dims = allocVector(INTSXP, 2));
     INTEGER(dims)[0] = ncol;
@@ -1086,28 +1099,28 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (TYPEOF(a)) {
 
     case INTSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    INTEGER(r)[i] = INTEGER(a)[j];
 	    CLICKJ;
 	}
 	break;
 
     case LGLSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    LOGICAL(r)[i] = LOGICAL(a)[j];
 	    CLICKJ;
 	}
 	break;
 
     case REALSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    REAL(r)[i] = REAL(a)[j];
 	    CLICKJ;
 	}
 	break;
 
     case CPLXSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    COMPLEX(r)[i].r = COMPLEX(a)[j].r;
 	    COMPLEX(r)[i].i = COMPLEX(a)[j].i;
 	    CLICKJ;
@@ -1115,21 +1128,21 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
 
     case STRSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    SET_STRING_ELT(r, i, STRING_ELT(a, j));
 	    CLICKJ;
 	}
 	break;
 
     case VECSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    SET_VECTOR_ELT(r, i, VECTOR_ELT(a, j));
 	    CLICKJ;
 	}
 	break;
 
     case RAWSXP:
-	for (j=0, i=0; i<len; i++) {
+	for (j=0, i=0; i < len; i++) {
 	    RAW(r)[i] = RAW(a)[j];
 	    CLICKJ;
 	}
