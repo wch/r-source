@@ -448,6 +448,13 @@
 
       \item \command{R CMD Sweave} now runs \R with \code{--vanilla} so
        the environment setting of \env{R_LIBS} will always be used.
+       
+      \item \command{R CMD check} will skip the check for non-ascii
+       characters in code or data if the environment variables 
+       \env{_R_CHECK_ASCII_CODE_} or \env{_R_CHECK_ASCII_DATA_}
+       are respectively set to \env{FALSE}. (Suggestion of Vince
+       Carey.)
+       
     }
   }
   \subsection{C-LEVEL FACILITIES}{

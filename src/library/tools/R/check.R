@@ -123,7 +123,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             check_subdirectories(haveR, subdirs)
             ## Check R code for non-ASCII chars which
             ## might be syntax errors in some locales.
-            if (!is_base_pkg && haveR) check_non_ASCII()
+            if (!is_base_pkg && haveR && R_check_ascii_code) check_non_ASCII()
         } # end of !extra_arch
 
         ## Check we can actually load the package: base is always loaded
@@ -1037,7 +1037,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         } ## FIXME, what if no install?
 
         ## Check for non-ASCII characters in data
-        if (!is_base_pkg && dir.exists("data") && !extra_arch) {
+        if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
             out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
             out <- grep("Loading required package", out,
@@ -2282,6 +2282,10 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE"))
     R_check_Rd_contents <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
+    R_check_ascii_code <- 
+    	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
+    R_check_ascii_data <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
@@ -2294,7 +2298,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
-                    R_check_dot_internal <- FALSE
+                    R_check_dot_internal <- R_check_ascii_code <- 
+                    	R_check_ascii_data <- FALSE
 
     startdir <- getwd()
     if (!nzchar(outdir)) outdir <- startdir
