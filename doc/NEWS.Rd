@@ -572,7 +572,7 @@
       the \samp{\usage} section.  (Reported by Claudia Beleites.)
 
       \item \code{writeBin()} disallows attempts to write 2GB or
-      more in a single call. (PR#14362)
+      more in a single call. (\PR{14362})
 
       \item \code{new()} and \code{getClass()} will now work if Class
       is a subclass of \code{"classRepresentation"} and should also be
@@ -595,6 +595,9 @@
       \item If the loop variable in a \code{for} loop was deleted, it
       would be recreated as a global variable.  (Reported by Radford
       Neal; the fix includes his optimizations as well.)
+      
+      \item Task callbacks could report the wrong expression when
+      the task involved parsing new code. (\PR{14368})
     }
   }
 }

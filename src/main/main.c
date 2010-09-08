@@ -202,7 +202,7 @@ int
 Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 {
     int c, browsevalue;
-    SEXP value;
+    SEXP value, thisExpr;
     Rboolean wasDisplayed = FALSE;
 
     if(!*state->bufp) {
@@ -257,16 +257,16 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	R_Visible = FALSE;
 	R_EvalDepth = 0;
 	resetTimeLimits();
-	PROTECT(R_CurrentExpr);
+	PROTECT(thisExpr = R_CurrentExpr);
 	R_Busy(1);
-	value = eval(R_CurrentExpr, rho);
+	value = eval(thisExpr, rho);
 	SET_SYMVALUE(R_LastvalueSymbol, value);
 	wasDisplayed = R_Visible;
 	if (R_Visible)
 	    PrintValueEnv(value, rho);
 	if (R_CollectWarnings)
 	    PrintWarnings();
-	Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
+	Rf_callToplevelHandlers(thisExpr, value, TRUE, wasDisplayed);
 	R_CurrentExpr = value; /* Necessary? Doubt it. */
 	UNPROTECT(1);
 	R_IoBufferWriteReset(&R_ConsoleIob);
