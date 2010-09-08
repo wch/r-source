@@ -1305,6 +1305,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     attributes.backing_store = Always;
     attributes.event_mask = ButtonPressMask 
       | ButtonMotionMask 
+      | PointerMotionHintMask
       | ButtonReleaseMask
       | ExposureMask
       | StructureNotifyMask
@@ -1478,7 +1479,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	if(alreadyCreated == 0) {
 	    XSelectInput(display, xd->window,
 			 ExposureMask | ButtonPressMask | StructureNotifyMask 
-			 | ButtonReleaseMask | ButtonMotionMask | KeyPressMask);
+			 | ButtonReleaseMask | ButtonMotionMask  
+                         | PointerMotionHintMask | KeyPressMask);
 	    XMapWindow(display, xd->window);
 	    XSync(display, 0);
 
@@ -2334,11 +2336,26 @@ static void X11_eventHelper(pDevDesc dd, int code)
 			 devPtrContext, &temp);
 	    ddEvent = (pDevDesc) temp;
 	    if (ddEvent == dd && dd->gettingEvent) {
-        	doMouseEvent(dd, event.type == ButtonRelease ? meMouseUp :
+		if (event.type == MotionNotify) { /* Because of PointerMotionHintMask, need to update */
+		    Window root, child;
+		    int rootX, rootY, winX, winY;
+		    unsigned int mask;
+		    if (!XQueryPointer(display, event.xbutton.window,
+                                      &root, &child, &rootX, &rootY,
+				      &winX, &winY, &mask)) {
+			done = 1;
+		    } else {
+			event.xbutton.x = winX;
+			event.xbutton.y = winY;
+		    }
+		}
+		if (!done) {
+        	    doMouseEvent(dd, event.type == ButtonRelease ? meMouseUp :
         	                 event.type == ButtonPress ? meMouseDown : meMouseMove, 
         	                 event.xbutton.button, event.xbutton.x, event.xbutton.y);
-                XSync(display, 0);
-                done = 1;
+                    XSync(display, 0);
+                    done = 1;
+		}
     	    }
 	} else if (event.type == KeyPress) {
 	    char keybuffer[13] = "";
@@ -2363,8 +2380,11 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	if (!done) 
 	    handleEvent(event);
     } else if (code == 0) {
-	XStoreName(display, xd->window, xd->title);
-	XSync(display, 0);
+	/* Restore the default title */
+	if (ndevNumber(dd) == curDevice())
+	    X11_Activate(dd);
+	else
+	    X11_Deactivate(dd);  
     }
 
     return;

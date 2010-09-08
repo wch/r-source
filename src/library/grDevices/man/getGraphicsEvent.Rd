@@ -36,8 +36,9 @@ setGraphicsEventEnv(which = dev.cur(), env)
 }
 \details{
 These functions allow user input from some graphics devices (currently
-only the Windows screen display).  Event handlers may be 
-installed to respond to events involving the mouse or keyboard. 
+only the \code{windows()} and \code{X11(type="Xlib")} screen displays
+in base \R{}). Event handlers may be installed to respond to events
+involving the mouse or keyboard.
 
 The functions are related as follows.  If any of the first five
 arguments to \code{getGraphicsEvent} are given, then it uses those
@@ -153,7 +154,7 @@ dragplot <- function(..., xlim=NULL, ylim=NULL, xaxs="r", yaxs="r") {
 }
 
 dragplot(rnorm(1000), rnorm(1000))
-# This currently only works on the Windows and X11 screen devices...
+# This currently only works on the Windows and X11(type="Xlib") screen devices...
 getGraphicsEvent()
 par(savepar)
 }

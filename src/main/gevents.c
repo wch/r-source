@@ -29,6 +29,18 @@
 #include <Rmath.h>
 #include <R_ext/GraphicsEngine.h>
 
+static const char * mouseHandlers[] =
+{"onMouseDown", "onMouseUp", "onMouseMove"};
+
+static const char * keybdHandler = "onKeybd";
+
+static checkHandler(const char * name, SEXP eventEnv)
+{
+    SEXP handler = findVar(install(name), eventEnv);
+    if (TYPEOF(handler) == CLOSXP) 
+	warning(_("'%s' events not supported in this device"), name);
+}
+
 SEXP attribute_hidden
 do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -51,7 +63,18 @@ do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     eventEnv = CAR(args);
     if (TYPEOF(eventEnv) != ENVSXP) 
         error(_("internal error"));
+        
+    if (!dd->canGenMouseDown &&
+    	!dd->canGenMouseUp &&
+    	!dd->canGenMouseMove &&
+    	!dd->canGenKeybd)
+    	error(_("this graphics device does not support event handling"));
     
+    if (!dd->canGenMouseDown) checkHandler(mouseHandlers[0], eventEnv);
+    if (!dd->canGenMouseUp)   checkHandler(mouseHandlers[1], eventEnv);
+    if (!dd->canGenMouseMove) checkHandler(mouseHandlers[1], eventEnv);
+    if (!dd->canGenKeybd)     checkHandler(keybdHandler, eventEnv);
+
     dd->eventEnv = eventEnv;
 	
     return(R_NilValue);
@@ -148,9 +171,6 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     return(result);
 }
 
-static const char * mouseHandlers[] =
-{"onMouseDown", "onMouseUp", "onMouseMove"};
-
 /* used in devWindows.c and cairoDevice */
 void doMouseEvent(pDevDesc dd, R_MouseEvent event,
 		  int buttons, double x, double y)
@@ -198,7 +218,7 @@ void doKeybd(pDevDesc dd, R_KeyName rkey,
 
     dd->gettingEvent = FALSE; /* avoid recursive calls */
 
-    handler = findVar(install("onKeybd"), dd->eventEnv);
+    handler = findVar(install(keybdHandler), dd->eventEnv);
     if (TYPEOF(handler) == PROMSXP)
 	handler = eval(handler, dd->eventEnv);
 
