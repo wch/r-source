@@ -178,7 +178,8 @@ typedef struct httpd_conn {
     char line_buf[LINE_BUF_SIZE];  /* line buffer (used for request and headers) */
     char *url, *body;              /* URL and request body */
     char *content_type;            /* content type (if set) */
-    unsigned int line_pos, body_pos, content_length; /* positions in the buffers and desired content length */
+    unsigned int line_pos, body_pos; /* positions in the buffers */
+    long content_length;           /* desired content length */
     char part, method, attr;       /* request part, method and connection attributes */
 } httpd_conn_t;
 
@@ -723,8 +724,9 @@ static void worker_input_handler(void *data) {
 		    return;
 		}
 		if (c->attr & CONTENT_LENGTH && c->content_length) {
-		    c->body = (char*) malloc(c->content_length + 1); /* allocate an extra termination byte */
-		    if (!c->body) { /* uh oh - out of memory - refuse */
+		    if (c->content_length < 0 ||  /* we are parsing signed so negative numbers are bad */
+			c->content_length > 2147483640 || /* R will currently have issues with body around 2Gb or more, so better to not go there */
+			!(c->body = (char*) malloc(c->content_length + 1 /* allocate an extra termination byte */ ))) {
 			send_http_response(c, " 413 Request Entity Too Large (request body too big)\r\nConnection: close\r\n\r\n");
 			remove_worker(c);
 			return;
@@ -824,7 +826,7 @@ static void worker_input_handler(void *data) {
 			    DBG(printf("header '%s' => '%s'\n", bol, k));
 			    if (!strcmp(bol, "content-length")) {
 				c->attr |= CONTENT_LENGTH;
-				c->content_length = atoi(k);
+				c->content_length = atol(k);
 			    }
 			    if (!strcmp(bol, "content-type")) {
 				char *l = k;
@@ -856,9 +858,9 @@ static void worker_input_handler(void *data) {
     }
     if (c->part == PART_BODY && c->body) { /* BODY  - this branch always returns */
 	if (c->body_pos < c->content_length) { /* need to receive more ? */
-	    DBG(printf("BODY: body_pos=%d, content_length=%d\n", c->body_pos, c->content_length));
+	    DBG(printf("BODY: body_pos=%d, content_length=%ld\n", c->body_pos, c->content_length));
 	    n = recv(c->sock, c->body + c->body_pos, c->content_length - c->body_pos, 0);
-	    DBG(printf("      [recv n=%d - had %u of %u]\n", n, c->body_pos, c->content_length));
+	    DBG(printf("      [recv n=%d - had %u of %lu]\n", n, c->body_pos, c->content_length));
 	    c->line_pos = 0;
 	    if (n < 0) { /* error, scrap this worker */
 		remove_worker(c);
