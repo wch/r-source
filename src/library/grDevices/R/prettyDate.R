@@ -16,27 +16,27 @@
 
 ## Original code Copyright (C) 2010 Felix Andrews <felix@nfrac.org>
 
-pretty.Date <- function(x, n = 5, min.n = n %/% 2, ...)
+pretty.Date <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 {
-    prettyDate(x = x, n = n, min.n = min.n, ...)
+    prettyDate(x = x, n = n, min.n = min.n, sep = sep, ...)
 }
 
-pretty.POSIXt <- function(x, n = 5, min.n = n %/% 2, ...)
+pretty.POSIXt <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 {
-    prettyDate(x = x, n = n, min.n = min.n, ...)
+    prettyDate(x = x, n = n, min.n = min.n, sep = sep, ...)
 }
 
 
-prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
+prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 {
     isDate <- inherits(x, "Date")
     x <- as.POSIXct(x)
     if (isDate) # the timezone *does* matter
 	attr(x, "tzone") <- "GMT"
     zz <- range(x, na.rm = TRUE)
-    if (diff(as.numeric(zz)) == 0)# one value only
+    xspan <- as.numeric(diff(zz), units = "secs")
+    if (diff(as.numeric(zz)) == 0) # one value only
 	zz <- zz + c(0,60)
-
     ## specify the set of pretty timesteps
     MIN <- 60
     HOUR <- MIN * 60
@@ -56,15 +56,17 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
              "10 mins" = list(10*MIN),
              "15 mins" = list(15*MIN),
              "30 mins" = list(30*MIN),
-             "1 hour" = list(1*HOUR),
+             ## "1 hour" = list(1*HOUR),
+             "1 hour" = list(1*HOUR, format = if (xspan <= DAY) "%H:%M" else paste("%b %d", "%H:%M", sep = sep)),
              "3 hours" = list(3*HOUR, start = "days"),
-             "6 hours" = list(6*HOUR, format = "%b %d %H:%M"),
+             "6 hours" = list(6*HOUR, format = paste("%b %d", "%H:%M", sep = sep)),
              "12 hours" = list(12*HOUR),
-             "1 DSTday" = list(1*DAY, format = "%b %d"),
+             "1 DSTday" = list(1*DAY, format = paste("%b", "%d", sep = sep)),
              "2 DSTdays" = list(2*DAY),
              "1 week" = list(7*DAY, start = "weeks"),
              "halfmonth" = list(MONTH/2, start = "months"),
-             "1 month" = list(1*MONTH, format = "%b"),
+             ## "1 month" = list(1*MONTH, format = "%b"),
+             "1 month" = list(1*MONTH, format = if (xspan < YEAR) "%b" else paste("%b", "%Y", sep = sep)),
              "3 months" = list(3*MONTH, start = "years"),
              "6 months" = list(6*MONTH, format = "%Y-%m"),
              "1 year" = list(1*YEAR, format = "%Y"),
@@ -86,7 +88,6 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
         steps[[i]]$spec <- names(steps)[i]
     }
     ## crudely work out number of steps in the given interval
-    xspan <- diff(as.numeric(zz))
     nsteps <- sapply(steps, function(s) {
         xspan / s[[1]]
     })

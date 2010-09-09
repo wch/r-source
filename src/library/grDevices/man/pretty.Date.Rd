@@ -8,8 +8,8 @@
 \alias{pretty.Date}
 \alias{pretty.POSIXt}
 \usage{
-\method{pretty}{Date}(x, n = 5, min.n = n \%/\% 2, \dots)
-\method{pretty}{POSIXt}(x, n = 5, min.n = n \%/\% 2, \dots)
+\method{pretty}{Date}(x, n = 5, min.n = n \%/\% 2, sep = " ", \dots)
+\method{pretty}{POSIXt}(x, n = 5, min.n = n \%/\% 2, sep = " ", \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"Date"} or \code{"POSIXt"} (i.e.,
@@ -18,6 +18,8 @@
     intervals.  }
   \item{min.n}{nonnegative integer giving the \emph{minimal} number of
     intervals.  }
+  \item{sep}{character string, serving as a separator for certain
+    formats (e.g., between month and year). }
   \item{\dots}{further arguments for compatibility with the generic,
     ignored.}
 }
