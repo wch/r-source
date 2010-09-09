@@ -321,6 +321,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         pkgInfoFP <- file.path(pkgpath, "Meta", "package.rds")
         if(file.exists(pkgInfoFP)) {
             pkgInfo <- .readRDS(pkgInfoFP)
+            version <- pkgInfo$DESCRIPTION["Version"]
             if(is.null(built <- pkgInfo$Built))
                 stop(gettextf("package '%s' has not been installed properly\n",
                               basename(pkgpath)),

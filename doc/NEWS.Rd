@@ -605,6 +605,9 @@
 
       \item Task callbacks could report the wrong expression when
       the task involved parsing new code. (\PR{14368})
+      
+      \item \code{getNamespaceVersion()} failed; this was an
+      accidental change in 2.11.0. (\PR{14374})
     }
   }
 }
