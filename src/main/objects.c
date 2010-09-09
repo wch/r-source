@@ -564,7 +564,11 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (defenv == R_UnboundValue) defenv = R_GlobalEnv;
 
     /* set up the arglist */
-    s = R_LookupMethod(CAR(cptr->call), env, callenv, defenv);
+    if (TYPEOF(CAR(cptr->call)) == CLOSXP)
+	// e.g., in do.call(function(x) NextMethod('foo'),list())
+	s = CAR(cptr->call);
+    else
+	s = R_LookupMethod(CAR(cptr->call), env, callenv, defenv);
     if (TYPEOF(s) == SYMSXP && s == R_UnboundValue)
 	error(_("no calling generic was found: was a method called directly?"));
     if (TYPEOF(s) != CLOSXP){ /* R_LookupMethod looked for a function */
