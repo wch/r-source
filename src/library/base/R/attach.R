@@ -179,11 +179,12 @@ ls <- objects <-
               pattern)
 {
     if (!missing(name)) {
-        nameValue <- try(name)
+        nameValue <- try(name, silent = TRUE)
         if(identical(class(nameValue), "try-error")) {
             name <- substitute(name)
             if (!is.character(name))
                 name <- deparse(name)
+            warning(sQuote(name), " converted to character string")
             pos <- name
         }
         else
