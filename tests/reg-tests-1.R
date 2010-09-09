@@ -4889,3 +4889,8 @@ julian(as.POSIXlt("1999-2-1"), origin=as.POSIXlt("1999-1-1"))
 ## student typo
 try( ksmooth(cars$speed, cars$dists) )
 ## now error about y (== NULL);  segfaulted <= 2.11.1
+
+
+## do.call()ing NextMethod and empty args:
+try( do.call(function(x) NextMethod('foo'),list()) )
+## segfaulted <= 2.11.1

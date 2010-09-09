@@ -448,13 +448,13 @@
 
       \item \command{R CMD Sweave} now runs \R with \code{--vanilla} so
        the environment setting of \env{R_LIBS} will always be used.
-       
+
       \item \command{R CMD check} will skip the check for non-ascii
-       characters in code or data if the environment variables 
+       characters in code or data if the environment variables
        \env{_R_CHECK_ASCII_CODE_} or \env{_R_CHECK_ASCII_DATA_}
        are respectively set to \env{FALSE}. (Suggestion of Vince
        Carey.)
-       
+
     }
   }
   \subsection{C-LEVEL FACILITIES}{
@@ -602,7 +602,7 @@
       \item If the loop variable in a \code{for} loop was deleted, it
       would be recreated as a global variable.  (Reported by Radford
       Neal; the fix includes his optimizations as well.)
-      
+
       \item Task callbacks could report the wrong expression when
       the task involved parsing new code. (\PR{14368})
     }
@@ -839,7 +839,10 @@
        width for \code{\\tabular}.
 
       \item \code{na.action()} did not extract the \code{na.action}
-       component as documented.
+      component as documented.
+
+      \item \code{do.call()}ing \code{NextMethod} in erronous ways no
+      longer segfaults. (\PR{13487})
     }
   }
 }
