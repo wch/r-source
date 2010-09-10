@@ -27,11 +27,11 @@ pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
     \code{"greater"} or \code{"less"}.  }
  \item{\dots}{ additional arguments to pass to \code{t.test}. }
 }
-\details{ The \code{pool.SD} switch calculates a common SD for all
-  groups and used that for all comparisons (this can be useful if some
+\details{ The \code{pool.sd} switch calculates a common SD for all
+  groups and uses that for all comparisons (this can be useful if some
   groups are small). This method does not actually call \code{t.test},
   so extra arguments are ignored. Pooling does not generalize to paired tests
-  so \code{pool.SD} and \code{paired} cannot both be \code{TRUE}.
+  so \code{pool.sd} and \code{paired} cannot both be \code{TRUE}.
 
   Only the lower triangle of the matrix of possible comparisons is being
   calculated, so setting \code{alternative} to anything other than
