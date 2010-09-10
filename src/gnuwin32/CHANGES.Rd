@@ -125,6 +125,10 @@
       rather than an error status if the command could not be found, if
       run from \code{Rterm} or from \code{Rgui} with
       \code{show.output.on.console = FALSE}.
+      
+      \item \code{memory.limit()} did not allow sizes greater than
+      4095 even on 64 bit builds. (\PR{14372})
+    	
     }
   }
 }
