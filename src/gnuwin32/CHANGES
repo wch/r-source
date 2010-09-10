@@ -38,6 +38,9 @@ BUG FIXES
     o	system(intern=TRUE) often returned 0 rather than an error
 	status if the command could not be found, if run from Rterm or
 	from Rgui with show.output.on.console = FALSE.
+	
+    o	memory.limit() did not allow sizes greater than 4095 even on
+    	64 bit builds. (PR#14372)
 
 
 

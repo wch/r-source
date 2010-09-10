@@ -711,7 +711,7 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isLogical(CAR(args))) 
 	maxmem = asLogical(CAR(args));
     else if(isReal(CAR(args))) {
-	unsigned int newmax;
+	R_size_t newmax;
 	double mem = asReal(CAR(args));
 	if (!R_FINITE(mem))
 	    errorcall(call, _("incorrect argument"));
