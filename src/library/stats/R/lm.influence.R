@@ -50,7 +50,7 @@ lm.influence <- function (model, do.coef = TRUE)
         ## if we have a point with hat = 1, the corresponding e should be
         ## exactly zero.  Protect against returning Inf by forcing this
         e[abs(e) < 100 * .Machine$double.eps * median(abs(e))] <- 0
-        mqr <- qr(model)
+        mqr <- qr.lm(model)
         n <- as.integer(nrow(mqr$qr))
         k <- as.integer(mqr$rank)
         ## in na.exclude case, omit NAs; also drop 0-weight cases
@@ -187,7 +187,7 @@ dfbetas.lm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
 covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
 		     res = weighted.residuals(model))
 {
-    n <- nrow(qr(model)$qr)
+    n <- nrow(qr.lm(model)$qr)
     p <- model$rank
     omh <- 1-infl$hat
     e.star <- res/(infl$sigma*sqrt(omh))
@@ -243,7 +243,7 @@ influence.measures <- function(model)
     p <- model$rank
     e <- weighted.residuals(model)
     s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
-    mqr <- qr(model)
+    mqr <- qr.lm(model)
     xxi <- chol2inv(mqr$qr, mqr$rank)
     si <- infl$sigma
     h <- infl$hat

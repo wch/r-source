@@ -298,7 +298,9 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     }
     if (is.null(z$terms))
 	stop("invalid 'lm' object:  no 'terms' component")
-    Qr <- qr(object)
+    if(!inherits(object, "lm"))
+	warning("calling summary.lm(<fake-lm-object>) ...")
+    Qr <- qr.lm(object)
     n <- NROW(Qr$qr)
     if(is.na(z$df.residual) || n - p != z$df.residual)
         warning("residual degrees of freedom in object suggest this is not an \"lm\" fit")
@@ -539,8 +541,8 @@ model.frame.lm <- function(formula, ...)
 
 variable.names.lm <- function(object, full = FALSE, ...)
 {
-    if(full)	dimnames(qr(object)$qr)[[2L]]
-    else if(object$rank) dimnames(qr(object)$qr)[[2L]][seq_len(object$rank)]
+    if(full) dimnames(qr.lm(object)$qr)[[2L]]
+    else if(object$rank) dimnames(qr.lm(object)$qr)[[2L]][seq_len(object$rank)]
     else character(0L)
 }
 
@@ -555,6 +557,8 @@ anova.lm <- function(object, ...)
 {
     if(length(list(object, ...)) > 1L)
 	return(anova.lmlist(object, ...))
+    if(!inherits(object, "lm"))
+	warning("calling anova.lm(<fake-lm-object>) ...")
     w <- object$weights
     ssr <- sum(if(is.null(w)) object$residuals^2 else w*object$residuals^2)
     mss <- sum(if(is.null(w)) object$fitted.values^2 else w*object$fitted.values^2)
@@ -565,7 +569,7 @@ anova.lm <- function(object, ...)
     if(p > 0L) {
         p1 <- 1L:p
         comp <- object$effects[p1]
-        asgn <- object$assign[qr(object)$pivot][p1]
+        asgn <- object$assign[qr.lm(object)$pivot][p1]
         nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
         tlabels <- nmeffects[1 + unique(asgn)]
         ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
@@ -651,6 +655,8 @@ predict.lm <-
              weights = 1, ...)
 {
     tt <- terms(object)
+    if(!inherits(object, "lm"))
+	warning("calling predict.lm(<fake-lm-object>) ...")
     if(missing(newdata) || is.null(newdata)) {
 	mm <- X <- model.matrix(object)
 	mmDone <- TRUE
@@ -673,7 +679,7 @@ predict.lm <-
     n <- length(object$residuals) # NROW(qr(object)$qr)
     p <- object$rank
     p1 <- seq_len(p)
-    piv <- if(p) qr(object)$pivot[p1]
+    piv <- if(p) qr.lm(object)$pivot[p1]
     if(p < ncol(X) && !(missing(newdata) || is.null(newdata)))
 	warning("prediction from a rank-deficient fit may be misleading")
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
@@ -721,11 +727,11 @@ predict.lm <-
             if(p > 0) {
                 XRinv <-
                     if(missing(newdata) && is.null(w))
-                        qr.Q(qr(object))[, p1, drop = FALSE]
+                        qr.Q(qr.lm(object))[, p1, drop = FALSE]
                     else
-                        X[, piv] %*% qr.solve(qr.R(qr(object))[p1, p1])
+                        X[, piv] %*% qr.solve(qr.R(qr.lm(object))[p1, p1])
 #	NB:
-#	 qr.Q(qr(object))[, p1, drop = FALSE] / sqrt(w)
+#	 qr.Q(qr.lm(object))[, p1, drop = FALSE] / sqrt(w)
 #	looks faster than the above, but it's slower, and doesn't handle zero
 #	weights properly
 #
@@ -759,7 +765,7 @@ predict.lm <-
             if (se.fit || interval != "none") {
                 ip <- matrix(ncol = nterms, nrow = NROW(X))
                 dimnames(ip) <- list(rownames(X), names(asgn))
-                Rinv <- qr.solve(qr.R(qr(object))[p1, p1])
+                Rinv <- qr.solve(qr.R(qr.lm(object))[p1, p1])
             }
             if(hasintercept)
                 X <- sweep(X, 2L, avx, check.margin=FALSE)
@@ -880,7 +886,7 @@ predict.mlm <-
 	else if (!is.null(object$offset))
 	    eval(object$call$offset, newdata)
     }
-    piv <- qr(object)$pivot[seq(object$rank)]
+    piv <- qr.lm(object)$pivot[seq(object$rank)]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
     if ( !is.null(offset) ) pred <- pred + offset
     if(inherits(object, "mlm")) pred else pred[, 1L]
@@ -890,6 +896,6 @@ predict.mlm <-
 labels.lm <- function(object, ...)
 {
     tl <- attr(object$terms, "term.labels")
-    asgn <- object$assign[qr(object)$pivot[1L:object$rank]]
+    asgn <- object$assign[qr.lm(object)$pivot[1L:object$rank]]
     tl[unique(asgn)]
 }
