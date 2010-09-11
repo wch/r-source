@@ -608,6 +608,10 @@
       
       \item \code{getNamespaceVersion()} failed; this was an
       accidental change in 2.11.0. (\PR{14374})
+
+      \item \code{approxfun()} and \code{approx()} could be confused
+      by \code{x} values that were different but so close as to print
+      identically. (\PR{14377})
     }
   }
 }
