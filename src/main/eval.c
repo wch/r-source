@@ -1028,10 +1028,10 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    volatile int i;        /* Need to declare volatile variables whose */
-    volatile SEXP v, val;  /* changing values are relied on after goto */
-                           /* for_next or for_break.                   */
-    int n, dbg, bgn, val_type;
+    volatile int i, n, bgn; /* Need to declare volatile variables whose */
+    volatile SEXP v, val;   /* changing values are relied on after goto */
+                            /* for_next or for_break.                   */
+    int dbg, val_type;
     SEXP sym, body, tmp;
     RCNTXT cntxt;
 
