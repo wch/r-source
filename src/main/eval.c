@@ -1105,13 +1105,12 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
             if (v==R_NilValue || NAMED(v)==2) {
                 UNPROTECT(1);
                 PROTECT(v = allocVector(val_type, 1));
+		SET_NAMED(v, 1);
             }
 
             defineVar(sym, v, rho);  /* Always necessary, since the body can  */
                                      /* change the value of the loop variable */
                                      /* or even remove it                     */
-            SET_NAMED(v,1);          /* Previous code got away without this,  */
-                                     /* since done elsewhere, but better here */
             switch (val_type) {
             case LGLSXP:
                 LOGICAL(v)[0] = LOGICAL(val)[i];
