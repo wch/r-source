@@ -1025,6 +1025,15 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	do_browser(call, op, R_NilValue, rho); \
     } } while (0)
 
+/* Allocate space for loop variable if first time needed, or
+   other vars have linked to previous space so can't modify */
+#define ALLOC_LOOP_VAR(v, val_type) do { \
+        if (v == R_NilValue || NAMED(v) == 2) { \
+	    UNPROTECT(1); \
+	    PROTECT(v = allocVector(val_type, 1)); \
+	    SET_NAMED(v, 1); \
+	} \
+    } while(0)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1087,6 +1096,8 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case VECSXP:
 	    /* make sure loop variable is not modified via other vars */
 	    SET_NAMED(VECTOR_ELT(val, i), 2);
+	    /* defineVar is used here and below rather than setVar in
+	       case the loop code removes the variable. */
 	    defineVar(sym, VECTOR_ELT(val, i), rho);
 	    break;
 
@@ -1099,41 +1110,35 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	default:
 
-            /* Allocate space for loop variable if first time needed, or
-               other vars have linked to previous space so can't modify */
-
-            if (v==R_NilValue || NAMED(v)==2) {
-                UNPROTECT(1);
-                PROTECT(v = allocVector(val_type, 1));
-		SET_NAMED(v, 1);
-            }
-
-            defineVar(sym, v, rho);  /* Always necessary, since the body can  */
-                                     /* change the value of the loop variable */
-                                     /* or even remove it                     */
             switch (val_type) {
             case LGLSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 LOGICAL(v)[0] = LOGICAL(val)[i];
                 break;
             case INTSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 INTEGER(v)[0] = INTEGER(val)[i];
                 break;
             case REALSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 REAL(v)[0] = REAL(val)[i];
                 break;
             case CPLXSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 COMPLEX(v)[0] = COMPLEX(val)[i];
                 break;
             case STRSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 SET_STRING_ELT(v, 0, STRING_ELT(val, i));
                 break;
             case RAWSXP:
+                ALLOC_LOOP_VAR(v, val_type);
                 RAW(v)[0] = RAW(val)[i];
                 break;
             default:
                 errorcall(call, _("invalid for() loop sequence"));
             }
-            break;
+            defineVar(sym, v, rho);
 	}
 
 	eval(body, rho);
