@@ -43,6 +43,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
+	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
 	} else {
 	    o <- order(x)
 	    x <- x[o]
@@ -99,6 +100,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    n <- length(x)
+	    stopifnot(length(y) == n)# (did happen in 2.9.0-2.11.x)
 	    rm(ux)
 	} else {
 	    o <- order(x)
