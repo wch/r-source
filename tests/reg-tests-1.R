@@ -4894,3 +4894,12 @@ try( ksmooth(cars$speed, cars$dists) )
 ## do.call()ing NextMethod and empty args:
 try( do.call(function(x) NextMethod('foo'),list()) )
 ## segfaulted <= 2.11.1
+
+## identical() returned FALSE on external ptr with
+## identical addresses <= 2.11.1
+stopifnot(identical(
+      getNativeSymbolInfo("R_getSymbolInfo", "base"),
+      getNativeSymbolInfo("R_getSymbolInfo", "base")))
+stopifnot(!identical(
+      getNativeSymbolInfo("R_getSymbolInfo", "base"),
+      getNativeSymbolInfo("R_getRegisteredRoutines", "base")))

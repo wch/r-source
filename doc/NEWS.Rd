@@ -612,6 +612,9 @@
       \item \code{approxfun()} and \code{approx()} could be confused
       by \code{x} values that were different but so close as to print
       identically. (\PR{14377})
+
+      \item \code{identical()} returned \code{FALSE} for external
+      pointer objects even when the pointer addresses were the same.
     }
   }
 }
