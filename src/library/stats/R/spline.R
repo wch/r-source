@@ -39,9 +39,11 @@ spline <-
 	if (length(ux <- unique(x)) < nx) {
 	    if (missing(ties))
 		warning("collapsing to unique 'x' values")
-	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
+	    ## tapply(.,match(..) ): see ./approx.R
+	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
+	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
 	} else {
 	    o <- order(x)
 	    x <- x[o]

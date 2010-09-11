@@ -38,9 +38,12 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	if (length(ux <- unique(x)) < nx) {
 	    if (missing(ties))
 		warning("collapsing to unique 'x' values")
-	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
+	    # tapply bases its uniqueness judgement on character representations;
+	    # we want to use values (PR#14377)
+	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
+	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
 	} else {
 	    o <- order(x)
 	    x <- x[o]
@@ -92,9 +95,12 @@ approxfun <- function(x, y = NULL, method = "linear",
 	if (length(ux <- unique(x)) < n) {
 	    if (missing(ties))
 		warning("collapsing to unique 'x' values")
-	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
+	    # tapply bases its uniqueness judgement on character representations;
+	    # we want to use values (PR#14377)
+	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    n <- length(x)
+	    stopifnot(length(y) == n)# (did happen in 2.9.0-2.11.x)
 	    rm(ux)
 	} else {
 	    o <- order(x)
