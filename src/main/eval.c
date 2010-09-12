@@ -1025,8 +1025,10 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	do_browser(call, op, R_NilValue, rho); \
     } } while (0)
 
-/* Allocate space for loop variable if first time needed, or
-   other vars have linked to previous space so can't modify */
+/* Allocate space for the loop variable value the first time through
+   (when v == R_NilValue) and when the value has been assigned to
+   another variable (NAMED(v) == 2). This should be safe and avoid
+   allocation in many cases. */
 #define ALLOC_LOOP_VAR(v, val_type) do { \
         if (v == R_NilValue || NAMED(v) == 2) { \
 	    UNPROTECT(1); \
@@ -1146,7 +1148,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     for_next:
 	; /* needed for strict ISO C compliance, according to gcc 2.95.2 */
     }
-for_break:
+ for_break:
     endcontext(&cntxt);
     UNPROTECT(4);
     SET_RDEBUG(rho, dbg);
