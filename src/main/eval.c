@@ -1029,10 +1029,9 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
    (when v == R_NilValue) and when the value has been assigned to
    another variable (NAMED(v) == 2). This should be safe and avoid
    allocation in many cases. */
-#define ALLOC_LOOP_VAR(v, val_type) do { \
+#define ALLOC_LOOP_VAR(v, val_type, vpi) do { \
         if (v == R_NilValue || NAMED(v) == 2) { \
-	    UNPROTECT(1); \
-	    PROTECT(v = allocVector(val_type, 1)); \
+	    REPROTECT(v = allocVector(val_type, 1), vpi); \
 	    SET_NAMED(v, 1); \
 	} \
     } while(0)
@@ -1045,6 +1044,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     int dbg, val_type;
     SEXP sym, body, tmp;
     RCNTXT cntxt;
+    PROTECT_INDEX vpi;
 
     sym = CAR(args);
     val = CADR(args);
@@ -1079,9 +1079,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* bump up NAMED count of sequence to avoid modification by loop code */
     if (NAMED(val) < 2) SET_NAMED(val, NAMED(val) + 1);
 
-    PROTECT(v = R_NilValue); /* Must be protected even though assigned to   */
-                             /* loop var, since needed even if var changes. */
-                             /* Must do first protect before begincontext.  */
+    PROTECT_WITH_INDEX(v = R_NilValue, &vpi);
 
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
@@ -1114,27 +1112,27 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
             switch (val_type) {
             case LGLSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 LOGICAL(v)[0] = LOGICAL(val)[i];
                 break;
             case INTSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 INTEGER(v)[0] = INTEGER(val)[i];
                 break;
             case REALSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 REAL(v)[0] = REAL(val)[i];
                 break;
             case CPLXSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 COMPLEX(v)[0] = COMPLEX(val)[i];
                 break;
             case STRSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 SET_STRING_ELT(v, 0, STRING_ELT(val, i));
                 break;
             case RAWSXP:
-                ALLOC_LOOP_VAR(v, val_type);
+                ALLOC_LOOP_VAR(v, val_type, vpi);
                 RAW(v)[0] = RAW(val)[i];
                 break;
             default:
