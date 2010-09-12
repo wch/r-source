@@ -1,4 +1,4 @@
-/*
+ /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2009	The R Development Core Team.
@@ -3193,7 +3193,8 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
       }
-    OP(SETLOOPVAL, 0): BCNPOP(); R_BCNodeStackTop[-1] = R_NilValue; NEXT();
+    OP(SETLOOPVAL, 0):
+      BCNPOP_IGNORE_VALUE(); R_BCNodeStackTop[-1] = R_NilValue; NEXT();
     OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
     OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(value); NEXT();
     OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT();
