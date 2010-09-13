@@ -28,15 +28,16 @@
 \details{
   The method for class \code{"factor"} is essentially equivalent to \code{factor(x)}. 
 
-  The \code{exclude} argument follow the usual indexing rules.
+  The \code{except} argument follow the usual indexing rules.
 }
 
-\note{ This is primarily intended for cases where one or more factors
-  in a data frame contains only elements from a reduced level set
-  after subsetting. (Notice that subsetting does \emph{not} in general
-  drop unused levels). By default, levels are dropped from all factors
-  in a data frame, but the \code{except} argument allows you to
-  specify columns for which this is undesirable.  
+\note{ This function was introduced in R 2.12.0. It is primarily
+  intended for cases where one or more factors in a data frame
+  contains only elements from a reduced level set after
+  subsetting. (Notice that subsetting does \emph{not} in general drop
+  unused levels). By default, levels are dropped from all factors in a
+  data frame, but the \code{except} argument allows you to specify
+  columns for which this is not wanted.  
 }
 
 \seealso{

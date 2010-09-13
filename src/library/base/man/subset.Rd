@@ -54,9 +54,9 @@ subset(x, \dots)
   matrices and data frames: note that the default for matrices is
   different from that for indexing.
 
-  It can happen that factors have empty levels after subsetting. They
-  are not removed, because that could be undesirable. Notice the
-  \code{\link{droplevels}} function introduced in R version 2.12.0.
+  Factors may have empty levels after subsetting; unused levels are
+  not automatically removed. See \code{\link{droplevels}} for a way to
+  drop all unused levels from a data frame.
 
 }
 \value{
