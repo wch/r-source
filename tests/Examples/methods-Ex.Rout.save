@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-30 r52845)
+R version 2.12.0 Under development (unstable) (2010-09-13 r52902)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-08-30 17:37:18 PDT" "2010-08-30 17:37:18 PDT"
+[1] "2010-09-13 16:01:32 PDT" "2010-09-13 16:01:32 PDT"
 
 > 
 > 
@@ -1048,9 +1048,9 @@ Error in standardGeneric("numMax") :
 > 
 > ## A generic version of paste(), dispatching on the "..." argument:
 > setGeneric("paste", signature = "...")
-Creating a generic for 'paste' in package '.GlobalEnv'
+Creating a generic for ‘paste’ in package ‘.GlobalEnv’
     (the supplied definition differs from and overrides the implicit generic
-    in package 'base': Signatures differ:  (...), (sep, collapse))
+    in package ‘base’: Signatures differ:  (...), (sep, collapse))
 [1] "paste"
 > 
 > setMethod("paste", "Number", function(..., sep, collapse) c(...))
@@ -1319,7 +1319,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x10232f9f0>
+<environment: 0x102858878>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1365,7 +1365,7 @@ NULL
 > 
 > cleanEx()
 
-detaching 'package:stats4'
+detaching ‘package:stats4’
 
 > nameEx("is")
 > ### * is
@@ -1749,7 +1749,7 @@ showClass("trackMultiCurve")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-'stdout'.
+‘stdout’.
 > 
 > promptClass("track", stdout())
 \name{track-class}
@@ -1798,7 +1798,7 @@ showClass("track")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-'stdout'.
+‘stdout’.
 > ## End Don't show
 > ## Not run: 
 > ##D > promptClass("track")
@@ -1820,20 +1820,22 @@ A shell of class documentation has been written to the connection
 > ### Name: ReferenceClasses
 > ### Title: Creating Classes With Fields Treated by Reference (OOP-style)
 > ### Aliases: ReferenceClasses setRefClass refClassFields refClassMethods
-> ###   refClassRepresentation-class refClass-class refObject-class
-> ###   classMethodDef-class SuperClassMethod-class
-> ###   show,classMethodDef-method show,refClassRepresentation-method
+> ###   referenceMethods refClassRepresentation-class
+> ###   refObjectGenerator-class refClass-class refObject-class
+> ###   refMethodDef-class SuperClassMethod-class show,refMethodDef-method
+> ###   show,refClassRepresentation-method
 > ### Keywords: programming classes
 > 
 > ### ** Examples
 > 
 > ## a simple editor for matrix objects.  Method  edit() changes some
 > ## range of values; method undo() undoes the last edit.
-> setRefClass("matrixEditor",
+> mEditor <- setRefClass("matrixEditor",
 +       fieldClasses = list( data = "matrix",
 +         edits = "list"),
-+       classMethods = list(
++       refMethods = list(
 +         edit = function(i, j, value) {
++          "Replace the elements in rows i, columns j with value"
 +           x <- getData()
 +           backup <-
 +             list(i, j, x[i,j])
@@ -1844,6 +1846,7 @@ A shell of class documentation has been written to the connection
 +           invisible(value)
 +         },
 +         undo = function() {
++           "Undo the previous call to method edit()"
 +           prev <- getEdits()
 +           if(length(prev)) prev <- prev[[1]]
 +           else stop("No more edits to undo")
@@ -1859,7 +1862,7 @@ A shell of class documentation has been written to the connection
 +       )
 +     )
 > xMat <- matrix(1:12,4,3)
-> xx <- new("matrixEditor", data = xMat)
+> xx <- mEditor$new(data = xMat)
 > xx$edit(2, 2, 0)
 > xx$data
      [,1] [,2] [,3]
@@ -1868,6 +1871,11 @@ A shell of class documentation has been written to the connection
 [3,]    3    7   11
 [4,]    4    8   12
 > xx$undo()
+> mEditor$help("undo")
+Call: $undo()
+ 
+Undo the previous call to method edit()
+
 > stopifnot(all.equal(xx$data, xMat))
 > ## Don't show: 
 > tf <- tempfile()
@@ -1876,7 +1884,7 @@ A shell of class documentation has been written to the connection
 > unlink(tf)
 > stopifnot(identical(xx$data, .self$data))
 > ## End Don't show
-> ## A version of the classMethods= argument above that
+> ## A version of the refMethods= argument above that
 > ## is a little simpler and faster but only works with
 > ## the implementation in R, not with interfaces:
 > localMethods <- list(
@@ -1904,24 +1912,30 @@ A shell of class documentation has been written to the connection
 > setRefClass("matrixEditor2",
 +       fieldClasses = list( data = "matrix",
 +         edits = "list"),
-+       classMethods = localMethods)
++       refMethods = localMethods)
+An object of class "refObjectGenerator"
+<environment: 0x10255cd90>
 > 
 > ## Inheriting a reference class:  a matrix viewer
-> setRefClass("matrixViewer", contains = "matrixEditor",
-+     classMethods = list( view = function() matplot(data),
+> mv <- setRefClass("matrixViewer", contains = "matrixEditor",
++     refMethods = list( view = function() matplot(data),
 +         edit = # invoke previous method, then replot
 +           function(i, j, value) {
-+             callSuper(i, j, value) # but this doesn't yet work
++             callSuper(i, j, value)
 +             view()
 +           }))
 > 
 > ## Don't show: 
-> ff = new("matrixEditor2", data = xMat)
-> ## uncomment when callSuper() works
-> ## ff$edit(2,2,0)
-> ## ff$data
-> ## ff$undo()
-> ## stopifnot(all.equal(ff$data, xMat))
+> ff = new("matrixViewer", data = xMat)
+> ff$edit(2,2,0)
+> ff$data
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    0   10
+[3,]    3    7   11
+[4,]    4    8   12
+> ff$undo()
+> stopifnot(all.equal(ff$data, xMat))
 > removeClass("matrixEditor")
 [1] TRUE
 > removeClass("matrixEditor2")
@@ -2891,7 +2905,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x101e7a178>
+<environment: 0x102676c08>
 
 Signatures:
         object    
@@ -3240,7 +3254,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.56 0.046 3.608 0 0 
+Time elapsed:  3.629 0.049 3.679 0 0 
 > grDevices::dev.off()
 null device 
           1 
