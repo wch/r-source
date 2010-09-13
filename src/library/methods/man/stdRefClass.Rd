@@ -1,12 +1,12 @@
-\name{stdRefClass-class}
+\name{envRefClass-class}
 \Rdversion{1.1}
 \docType{class}
-\alias{stdRefClass-class}
-\alias{$,stdRefClass-method}
-\alias{$<-,stdRefClass-method}
-\alias{initialize,stdRefClass-method}
+\alias{envRefClass-class}
+\alias{$,envRefClass-method}
+\alias{$<-,envRefClass-method}
+\alias{initialize,envRefClass-method}
 
-\title{Class \code{"stdRefClass"}}
+\title{Class \code{"envRefClass"}}
 \description{
 Support Class to Implement R Objects using Reference Semantics
 }
@@ -48,7 +48,7 @@ The mechanism needs to be consistent with reference semantics; that
 is, changes made to the contents of an object are global, seen by any
 code accessing that object, rather than only local to the function
 call where the change takes place.
-As described below, class \code{stdRefClass} implements reference
+As described below, class \code{envRefClass} implements reference
 semantics through specialized use of \linkS4class{environment}
 objects.
 Other basic reference classes may use an interface to a language such
@@ -75,7 +75,7 @@ set operation will be invoked with a single argument, the value to be
 assigned to the field.
 The implementation needs to supply the object, since that is not an
 argument in the method invocation.
-The mechanism used currently by \code{stdRefClass} is described below.
+The mechanism used currently by \code{envRefClass} is described below.
 }
 \section{Support Classes}{
 Two virtual classes are supplied to test for reference objects:

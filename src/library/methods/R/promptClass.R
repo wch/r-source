@@ -223,6 +223,9 @@ function (clName, filename = NULL, type = "class",
 	     "}"),
 	     keywords = .keywords)
 
+    if(is(clDef, "refClassRepresentation"))
+        Rdtxt <- refClassPrompt(clDef, Rdtxt, nmeths, nslots, .meths.head)
+
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
@@ -245,6 +248,81 @@ function (clName, filename = NULL, type = "class",
     else "" # what, indeed?
 }
 
+refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
+    ## exclude some sections that are usually irrelevant
+    sections <- names(Rdtxt)
+    exclude <- grep("Objects from the Class", sections)
+    if(nmeths < 1)
+        exclude <- c(exclude, grep("Methods", sections))
+    else
+        .meths.head <- "\\section{Class-Based Methods}{"
+    if(nslots < 2) # just the data slot, usually
+        exclude <- c(exclude, grep("Slots", sections))
+    Rdtxt <- Rdtxt[-exclude]
+    paste0 <- function(...) paste(..., sep = "")
+    fieldClasses <- refClassFields(clDef)
+    nfields <- length(fieldClasses)
+    .fields <- if (nfields > 0) {
+	fieldnames <- names(fieldClasses)
+	.fields.head <- c("\\section{Fields}{", "  \\describe{")
+	.fields.body <-	paste0("    \\item{\\code{", fieldnames,
+                               "}:}", "{Object of class \\code{",
+                               fieldClasses, "} ~~ }")
+	.fields.tail <- c("  }","}")
+	c(.fields.head,  .fields.body,	.fields.tail)
+    } else character()
+    methodDefs <- as.list(clDef@classMethods)
+    nmethods <- length(methodDefs)
+    if(nmethods > 0) {
+        thisClassDefs <- match(sapply(methodDefs, function(x) x@refClassName), clDef@refClassName, 0) > 0
+        methodDefs <- methodDefs[thisClassDefs]
+        nmethods <-length(methodDefs)
+    }
+    .methods <- if (nmethods > 0) {
+        c(.meths.head, .refMethodDescription(methodDefs, fieldnames))
+    } else character()
+    c(Rdtxt,
+      list("section{Fields}" = .fields,
+           "section{ClassMethods}" = .methods)
+      )
+}
+
+.refMethodDescription <- function(methodDefs, fieldnames) {
+    paste0 <- function(...) paste(..., sep = "")
+    methodnames <- names(methodDefs)
+    methodargs <- sapply(methodDefs, function(x)paste("(", paste(formalArgs(x), collapse=", "), ")", sep=""))
+    ## separate out accessors and superclass methods
+    accessorNames <- names(envRefMakeAccessors(fieldnames))
+    accessors <- match(methodnames, accessorNames, 0) > 0
+    superclassMethods <- grepl("#", methodnames, fixed = TRUE)
+    realMethods <- !(accessors | superclassMethods)
+    if(any(realMethods)) {
+        .methods.head <- "  \\describe{"
+        .methods.body <-
+            paste0("    \\item{\\code{",
+                   methodnames[realMethods], methodargs[realMethods],
+                   "}:}", "{ ~~ }")
+        .methods.tail <- c("  }","}")
+        .methods <- c(.methods.head,  .methods.body)
+    }
+    else
+        .methods <- character()
+    if(any(superclassMethods)) { # these are eliminated in refClassPrompt
+        info <- matrix(unlist(strsplit( methodnames[superclassMethods],"#", fixed = TRUE)), nrow=2)
+        .methods <- c(.methods,
+                      "\nSuperclass methods are available for the following methods, from the corresponding classes:\n",
+                      paste0('"',info[1,], '" (from class "', info[2,],
+                             '")', collapse = ", ")
+                      )
+    }
+    if(any(accessors)) {
+        methodnames <- sort(paste0(methodnames[accessors], methodargs[accessors]))
+        .methods <- c(.methods, paste0( "\nField accessor methods: ",
+                      paste0(methodnames, collapse = ", ")
+                      ))
+    }
+    c(.methods, .methods.tail)
+}
 
 .makeCallString <- function (def, name = substitute(def), args = formalArgs(def))
 {

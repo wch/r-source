@@ -256,7 +256,8 @@
 .InitStructureMethods <- function(where) {
     ## these methods need to be cached (for the sake of the primitive
     ## functions in the group) if a class is loaded that extends
-    ## one of the classes structure, vector, or array.
+    ## one of the classes in `needed` (other classes than "structure" now
+    ## also require generics for some primitives).
     if(!exists(".NeedPrimitiveMethods", where))
       needed <- list()
     else
@@ -266,7 +267,7 @@
           .environment = "$<-", .environment = "[[<-"),
           array = "[", structure = "[", nonStructure = "[",
           structure = "Math", nonStructure = "Math",
-          stdRefClass = "$"
+          refClass = "$"
                 )
     assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,

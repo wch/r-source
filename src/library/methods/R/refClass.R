@@ -1,8 +1,9 @@
-## methods for the standard reference class (using R environments)
-## Several of these are candidates for implementing in C since they
-## will be called frequently.
+## Classes to support OOP-style classes with reference-semantics for fields
+## and class-based methods.
+## Implementation of the R-based version of these classes (using environments)
 
-stdRefInferField <- function(self, field, thisClass, selfEnv = as.environment(self)) {
+
+envRefInferField <- function(self, field, thisClass, selfEnv = as.environment(self)) {
     'Install a field method into the environment of object
 self from reference class thisClass.'
     fields <- thisClass@fieldPrototypes
@@ -11,7 +12,7 @@ self from reference class thisClass.'
         value <- get(field, envir = fields)
     }
     else {
-        methods <- thisClass@classMethods
+        methods <- thisClass@refMethods
         if(exists(field, envir = methods, inherits = FALSE)) {
             value <- get(field, envir = methods)
             ## install this method and any methods it may call
@@ -19,14 +20,14 @@ self from reference class thisClass.'
         }
         else
             stop(gettextf("Field \"%s\" is not a valid field or method name for reference class \"%s\"",
-                          field, thisClass@refClassName),
+                          field, thisClass@className),
                  domain = NA)
     }
     value
 }
 
-stdRefAs <- function(Class) {
-    if(match(.refClassDef@refClassName, Class, 0) > 0)
+envRefAs <- function(Class) {
+    if(match(.refClassDef@className, Class, 0) > 0)
         return(.self)
     classDef <- getClass(Class)
     if(is(classDef, "refClassRepresentation") &&
@@ -54,7 +55,7 @@ stdRefAs <- function(Class) {
         stop("Invalid Class argument:  should be a single string")
 }
 
-stdRefImport <- function(value, Class = class(value)) {
+envRefImport <- function(value, Class = class(value)) {
     if(!missing(Class))
         value <- as(value, Class)
     classDef <- getClass(Class)
@@ -79,13 +80,13 @@ stdRefImport <- function(value, Class = class(value)) {
 }
 
 installClassMethod <- function(def, self, me, selfEnv, thisClass) {
-    if(!is(def, "classMethodDef")) {  #should not happen? => need warning
+    if(!is(def, "refMethodDef")) {  #should not happen? => need warning
         warning(gettextf("Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
-                         me, thisClass@refClassName),
+                         me, thisClass@className),
                 domain = NA)
-        def <-makeClassMethod(def, me, thisClass@refClassName, "", objects(thisClass@classMethods, all.names = TRUE))
+        def <-makeClassMethod(def, me, thisClass@className, "", objects(thisClass@refMethods, all.names = TRUE))
         ## cache the analysed method definition
-        assign(me, def, envir = thisClass@classMethods)
+        assign(me, def, envir = thisClass@refMethods)
     }
     depends <- def@mayCall
     environment(def) <- selfEnv # for access to fields and methods
@@ -101,10 +102,10 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
         else
             stop(gettextf(
             "a call to superClass() is in the method \"%s\" but there is no superclass definition of this method for class \"%s\"",
-               me, thisClass@refClassName), domain = NA)
+               me, thisClass@className), domain = NA)
     }
     for(what in notDone)
-        installClassMethod(get(what, envir = thisClass@classMethods), self, what, selfEnv, thisClass)
+        installClassMethod(get(what, envir = thisClass@refMethods), self, what, selfEnv, thisClass)
     if(superCase > 0) {
         ## provide an environment with the correct callSuper() definition,
         ## with selfEnv as its parent (can't override the definition of "callSuper"
@@ -135,11 +136,10 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
 }
 
 makeClassMethod <- function(def, name, Class, superClassMethod = "", allMethods) {
-    ## NB:  recomended package codetools must be present
     depends <- .getGlobalFuns(def)
     ## find the field methods called ...
     depends <- depends[match(depends, allMethods, 0) > 0]
-    new("classMethodDef", def, mayCall = depends, name = name,
+    new("refMethodDef", def, mayCall = depends, name = name,
         refClassName = Class, superClassMethod = superClassMethod)
 }
 
@@ -153,15 +153,17 @@ refObjectClass <- function(object) {
              domain = NA)
 }
 
-stdRefSetField <- function(object, field, thisClass = refObjectClass(object), value) {
+envRefSetField <- function(object, field,
+                           thisClass = refObjectClass(object),
+                           env = as.environment(object), value) {
     fieldClass <- thisClass@fieldClasses[[field]]
     if(is.null(fieldClass))
-        stop(gettextf("\"%s\" is not a field in class \"%s\"",field, thisClass@refClassName),
+        stop(gettextf("\"%s\" is not a field in class \"%s\"",field, thisClass@className),
              domain = NA)
     else {
         if(is(value, fieldClass)) {
             value <- as(value, fieldClass, strict = FALSE)
-            assign(field, value, envir = as.environment(object))
+            assign(field, value, envir = env)
         }
         else
            stop(gettextf("Value supplied for field \"%s\" (with class \"%s\") is not a subclass of required class \"%s\"",
@@ -171,11 +173,11 @@ stdRefSetField <- function(object, field, thisClass = refObjectClass(object), va
     object
 }
 
-.initForStdRefClass <- function(.Object, ...) {
+.initForEnvRefClass <- function(.Object, ...) {
     args <- list(...)
     Class <- class(.Object)
-    ClassDef <- getClass(Class)
-    selfEnv <- new.env(TRUE, .NamespaceOrPackage(ClassDef@package))
+    classDef <- getClass(Class)
+    selfEnv <- new.env(TRUE, .NamespaceOrPackage(classDef@package))
     ## the parent environment will be used by field methods, to make
     ## them consistent with functions in this class's package
     .Object@.xData <- selfEnv
@@ -185,16 +187,18 @@ stdRefSetField <- function(object, field, thisClass = refObjectClass(object), va
         elements <- args[which]
         elNames <- names(elements)
         supers <- args[!which]
-        fieldDefs <- ClassDef@fieldClasses
+        fieldDefs <- classDef@fieldClasses
         fieldNames <- names(fieldDefs)
         whichFields <- match(elNames, fieldNames, 0) > 0
         whichProto <- is.na(match(fieldNames, elNames))
         for(field in elNames[whichFields])
-            stdRefSetField(.Object, field, ClassDef, elements[[field]])
-        prototypes <- ClassDef@fieldPrototypes
+            envRefSetField(.Object, field, classDef, selfEnv, elements[[field]])
+        prototypes <- classDef@fieldPrototypes
         for(field in fieldNames[whichProto])
-            stdRefSetField(.Object, field, ClassDef,
+            envRefSetField(.Object, field, classDef, selfEnv,
                            get(field, envir = prototypes))
+        for(readOnly in classDef@fieldReadOnly)
+            lockBinding(readOnly, selfEnv)
         other <- c(supers, elements[!whichFields])
         if(length(other))
             ## invoke the default method for superclasses & slots
@@ -203,11 +207,11 @@ stdRefSetField <- function(object, field, thisClass = refObjectClass(object), va
     }
     ## assign references to the object and to its class definition
     assign(".self", .Object, envir = selfEnv)
-    assign(".refClassDef", ClassDef, envir = selfEnv)
+    assign(".refClassDef", classDef, envir = selfEnv)
     .Object
 }
 
-.dollarForStdRefClass <- function(x, name) {
+.dollarForEnvRefClass <- function(x, name) {
     what <- substitute(name)
     if(is.symbol(what))
         what <- as.character(what)
@@ -219,17 +223,17 @@ stdRefSetField <- function(object, field, thisClass = refObjectClass(object), va
         get(what, envir = selfEnv)
     else
         ## infer (usually) the method, cache it and return it
-        stdRefInferField(x, what, getClass(class(x)), selfEnv)
+        envRefInferField(x, what, getClass(class(x)), selfEnv)
 }
 
-.dollarGetsForStdRefClass <- function(x, name, value) {
+.dollarGetsForEnvRefClass <- function(x, name, value) {
     what <- substitute(name)
     if(is.symbol(what))
         what <- as.character(what)
     else
         what <- name
     selfEnv <- as.environment(x)
-    stdRefSetField(x, what, refObjectClass(x), value)
+    envRefSetField(x, what, refObjectClass(x), selfEnv, value)
     invisible(x)
 }
 
@@ -248,20 +252,14 @@ stdRefSetField <- function(object, field, thisClass = refObjectClass(object), va
         TRUE
 }
 
-## should retrieve the superClassMethod from the method's
-## environment and call it.
-stdRefCallSuper <- function(...) {
-    stop("sorry, the callSuper() feature has not yet been implemented")
-}
-
-## construct a list of class methods for stdRefClass
-makeStdRefMethods <- function() {
-    methods <- list( export = stdRefAs, import = stdRefImport,
-                    callSuper = stdRefCallSuper)
+## construct a list of class methods for envRefClass
+makeEnvRefMethods <- function() {
+    methods <- list( export = envRefAs, import = envRefImport,
+                    callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"))
     allMethods <- names(methods)
     for(method in allMethods) {
         methods[[method]] <- makeClassMethod(methods[[method]],
-                   method, "stdRefClass", "", allMethods)
+                   method, "envRefClass", "", allMethods)
     }
     methods
 }
@@ -277,10 +275,10 @@ makeStdRefMethods <- function() {
     setClass("refClassRepresentation",
              representation(fieldClasses = "list",
                             fieldPrototypes = "environment",
-                            classMethods = "environment",
-                            refClassName = "character",
+                            fieldReadOnly = "character",
+                            refMethods = "environment",
                             refSuperClasses = "character",
-                            fieldAccessorGenerator = "optionalMethod"),
+                            interfaceClasses = "list"),
              contains = "classRepresentation", where = envir)
     ## the virtual class from which all true reference clases
     ## inherit.  Its subclasses require methods
@@ -292,28 +290,41 @@ makeStdRefMethods <- function() {
     ## a class for field methods, with a slot for their dependencies,
     ## allowing installation of all required instance methods
     setClassUnion("SuperClassMethod", "character")
-    setClass("classMethodDef",
+    setClass("refMethodDef",
              representation(mayCall = "character", name = "character",
                             refClassName = "character",
                             superClassMethod = "SuperClassMethod"),
              contains = "function", where = envir)
-    setIs("classMethodDef", "SuperClassMethod", where = envir)
-    ## the standard R ref class just uses an environment
+    setIs("refMethodDef", "SuperClassMethod", where = envir)
+    ## the standard R ref class extends "environment" to store fields
     ## but the API allows a different implementation in the future
-    setClass("stdRefClass", contains = c("environment"), where =envir)
-    ## bootstrap stdRefClass as a refClass
-    def <- new("refClassRepresentation", refClassName = "stdRefClass",
-               classMethods = as.environment(makeStdRefMethods()),
-               fieldAccessorGenerator = stdRefMakeAccessors)
-    as(def, "classRepresentation") <- getClassDef("stdRefClass", where = envir)
-    assignClassDef("stdRefClass", def, where = envir)
-    setMethod("initialize", "stdRefClass", methods:::.initForStdRefClass,
+    setClass("envRefClass", contains = c("environment","refClass"), where =envir)
+    ## bootstrap envRefClass as a refClass
+    def <- new("refClassRepresentation",
+               refMethods = as.environment(makeEnvRefMethods()))
+    as(def, "classRepresentation") <- getClassDef("envRefClass", where = envir)
+    assignClassDef("envRefClass", def, where = envir)
+    setMethod("initialize", "envRefClass", methods:::.initForEnvRefClass,
               where = envir)
     ## NOTE:  "$" method requires setting in methods:::.InitStructureMethods
-    setMethod("$", "stdRefClass", .dollarForStdRefClass, where = envir)
-    setMethod("$<-", "stdRefClass", .dollarGetsForStdRefClass, where = envir)
+    setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
+    setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
+    ## next call is touchy:  setRefClass() returns an object of class
+    ## refObjectGenerator, but the class should have been defined before
+    ## the return value is constructed.
+    setRefClass("refObjectGenerator",
+                fieldClasses = list(def = "refClassRepresentation", className = "character"),
+                refMethods = list(methods = .refMethods,
+                new = .newRefObject, fields = .refFields,
+                help = .helpRefMethod))
     setMethod("show", "refClassRepresentation", showRefClassDef, where = envir)
-    setMethod("show", "classMethodDef", showClassMethod, where = envir)
+    setMethod("show", "refMethodDef", showClassMethod, where = envir)
+    ## a generic function whose methods allow inter-system interface
+    ## classes to deliver methods to a reference class
+    setGeneric("referenceMethods", function(classDef, where)
+               standardGeneric("referenceMethods"), where = envir)
+    setMethod("referenceMethods", "ANY", function(classDef, where)
+              list(), where = envir)
 }
 
 getRefSuperClasses <- function(classes, classDefs) {
@@ -324,6 +335,89 @@ getRefSuperClasses <- function(classes, classDefs) {
     }
     unique(supers)
 }
+
+.refMethods <- function(...) {
+    methodsEnv <- def@refMethods
+    if(nargs() == 0)
+        return(objects(methodsEnv, all.names = TRUE))
+    methodDefs <- list(...)
+    ## allow either name=function, ... or a single list
+    if(length(methodDefs) == 1 && is.list(methodDefs[[1]]))
+        methodDefs <- methodDefs[[1]]
+    mnames <- names(methodDefs)
+    if(is.null(mnames) || !all(nzchar(mnames)))
+        stop("Arguments to methods() must be named, or one named list")
+    ## look for methods to remove (new definition is NULL)
+    removeThese <- sapply(methodDefs, is.null)
+    if(any(removeThese)) {
+        rmNames <- mnames[removeThese]
+        mnames <- mnames[!removeThese]
+        methodDefs <- methodDefs[!removeThese]
+        remove(list = rmNames, envir = methodsEnv)
+        if(length(mnames) == 0)
+            return(invisible(methodsEnv))
+    }
+    allMethods <- as.list(methodsEnv)
+    insertClassMethods(allMethods, className) <- methodDefs
+    for(what in mnames)
+        assign(what, allMethods[[what]], envir = methodsEnv)
+    invisible(methodsEnv)
+}
+
+.refFields <- function()
+    unlist(def@fieldClasses)
+
+.newRefObject <- function(...) {
+    methods::new(def, ...)
+}
+
+.helpRefMethod <- function(topic) {
+    if(missing(topic)) {
+        writeLines(
+c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
+  paste('The definition of class', className, 'follows.')))
+        show(def)
+    }
+    else {
+        if(is.name(substitute(topic)))
+            topic <- as.character(substitute(topic))
+        else
+            topic <- as.character(topic)
+        env <- def@refMethods
+        if(exists(topic, envir = env)) {
+            f <- get(topic, envir = env)
+            cat("Call:",.makeCall(topic, f), "\n")
+            bb <- body(f)
+            ## look for self-documentation
+            if(is(bb, "{") && length(bb) > 1 && is(bb[[2]], "character"))
+                writeLines(c(bb[[2]], ""))
+        }
+        else {
+            cat(gettextf("Topic \"%s\" is not a method name in class \"%s\"\nThe class definition follows\n",
+                         topic, className))
+            show(def)
+        }
+    }
+}
+
+.makeCall <- function(name, x) {
+    paste0 <- function(...)paste(..., sep = "")
+    n <- length(argls <- formals(x))
+    noDeflt <- if(n > 0) sapply(argls,function(x)  !is.name(x) || nzchar(as.character(x)))
+    if (n) {
+        arg.names <- arg.n <- names(argls)
+    }
+    Call <- paste0("$", name, "(")
+    for (i in seq_len(n)) {
+        Call <- paste0(Call, arg.names[i], if (noDeflt[[i]]) " = "
+            )
+        if (i != n)
+            Call <- paste0(Call, ", ")
+    }
+    Call <- paste0(Call, ")\n")
+    Call
+}
+
 
 `insertFields<-` <- function(fieldList, value) {
     newNames <- names(value)
@@ -341,7 +435,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     fieldList
 }
 
-refClassInheritance <- function(Class, contains, fieldClasses, fieldPrototypes, classMethods, where) {
+refClassInheritance <- function(Class, contains, interfaceClasses, fieldClasses, fieldPrototypes, fieldReadOnly, refMethods, where) {
     superClassDefs <- lapply(contains,
                              function(what) {
                                  if(is(what, "classRepresentation"))
@@ -354,43 +448,84 @@ refClassInheritance <- function(Class, contains, fieldClasses, fieldPrototypes, 
         stop(gettextf("No definition found for inherited class: %s",
                       paste('"',contains[missingDefs], '"', sep = "", collapse = ", ")),
              domain = NA)
-    isRefSuperClass <- sapply(superClassDefs, function(def)
-                              is(def, "refClassRepresentation"))
     superClasses <- unlist(lapply(superClassDefs,
                                   function(def) def@className), FALSE)
-    refSuperClasses <- superClasses[isRefSuperClass]
-    ## get the indirectly inherited ref classes:  for consistent
-    ## superclass ordering these must precede any other indirectly inherited
-    ## classes
-    otherRefClasses <- getRefSuperClasses(refSuperClasses, superClassDefs[isRefSuperClass])
-    superClasses <- unique(c(superClasses, otherRefClasses))
-    refSuperClasses <- unique(c(refSuperClasses, otherRefClasses))
+    ## interfaceClasses is NULL, or a class definition, or a list of
+    ## class definitions.  .
+    if(is.null(interfaceClasses)) {}
+    else if(is.character(interfaceClasses))
+        interfaceClasses <- lapply(interfaceClasses, function(x)getClassDef(x, where = where))
+    else if(!is.list(interfaceClasses))
+        interfaceClasses <- list(interfaceClasses)
+    if(length(interfaceClasses) > 0) {
+        for(cl in interfaceClasses) {
+            if(is(cl, "classRepresentation")) {
+                clName <- cl@className
+                if(is.na(match(clName,superClasses)))
+                    superClassDefs[[clName]] <- cl
+                else
+                    warning(gettextf("Interface class \"%s\"  was an explicitly specified superclass as well", clName),
+                            domain = NA)
+                ## obtain any methods that the interface class wants
+                ## included. Standard R reference methods
+                ## will be obtained in the loop over refSuperClasses
+                ## and so need not be supplied here.
+                clMethods <- referenceMethods(cl, where)
+                refMethods <- c(refMethods, clMethods)
+            }
+            ## else ? is there another way to supply reference methods
+        }
+        superClasses <- unlist(lapply(superClassDefs,
+                                      function(def) def@className), FALSE)
+    }
+    if(length(superClassDefs) > 0) {
+        isRefSuperClass <- sapply(superClassDefs, function(def)
+                                  is(def, "refClassRepresentation"))
+        refSuperClasses <- superClasses[isRefSuperClass]
+        ## get the indirectly inherited ref classes:  for consistent
+        ## superclass ordering these must precede any other indirectly inherited
+        ## classes
+        otherRefClasses <- getRefSuperClasses(refSuperClasses, superClassDefs[isRefSuperClass])
+        superClasses <- unique(c(superClasses, otherRefClasses))
+        refSuperClasses <- unique(c(refSuperClasses, otherRefClasses))
+    }
+    else {
+        superClasses <- refSuperClasses <- character()
+        isRefSuperClass <- 0
+    }
     ## assemble inherited information
-    fc <- fp <- cm <- list()
+    fc <- fp <- cm <- list(); fr <- character()
     ## assign in reverse order so nearer superclass overrides
     for(cl in rev(superClassDefs[isRefSuperClass])) {
         fcl <- cl@fieldClasses
         fpl <- as.list(cl@fieldPrototypes) # turn env into list
-        cml <- as.list(cl@classMethods) # ditto
+        cml <- as.list(cl@refMethods) # ditto
+        frl <- as.character(cl@fieldReadOnly)
         insertFields(fc) <- fcl
         fp[names(fpl)] <- fpl
+        fr <- unique(c(fr, frl))
         cm[names(cml)] <- cml
     }
     insertFields(fc) <- fieldClasses
+    if(length(fieldReadOnly) > 0)
+        fr <- unique(c(fieldReadOnly, fr))
     fp[names(fieldPrototypes)] <- fieldPrototypes
-    ## process and insert class methods
-    insertClassMethods(cm, Class) <- classMethods
+
+    ## process and insert reference methods
+    insertClassMethods(cm, Class) <- refMethods
     list(superClasses = superClasses, refSuperClasses = refSuperClasses,
-         fieldClasses = fc, fieldPrototypes = fp, classMethods = cm)
+         fieldClasses = fc, fieldPrototypes = fp,
+         fieldReadOnly = fr, refMethods = cm,
+         interfaceClasses = interfaceClasses)
 }
 
 superClassMethodName <- function(def)
     paste(def@name, def@refClassName, sep = "#")
 
-`insertClassMethods<-` <- function(methods, Class, value) { # `value' is classMethods
+`insertClassMethods<-` <- function(methods, Class, value) { # `value' is refMethods
     ## process the class methods to include references
     ## (this information is needed for the instance environment as used
-    ## in stdRefClass, and conceivably might not be needed for other
+    ## in envRefClass, and conceivably might not be needed for other
     ## implementations of class methods.  This step could then be optional.)
     theseMethods <- names(value)
     prevMethods <- names(methods) # catch refs to inherited methods as well
@@ -412,34 +547,36 @@ superClassMethodName <- function(def)
 
 setRefClass <- function(Class, fieldClasses = list(),
                         contains = character(),
-                        classMethods = list(),
+                        refMethods = list(),
                         fieldPrototypes = list(),
-                        basicRefClass = "stdRefClass",
-                        refClassName = Class,
+                        fieldReadOnly = character(),
+                        interfaceClasses = NULL,
                         where = topenv(parent.frame()),
                         ...) {
-    ## validate the basicRefClass and get its accessor generator
-    basicDef <- getClassDef(basicRefClass, where = where)
-    if(!is(basicDef, "refClassRepresentation"))
-        stop(gettextf("\"%s\" is not a known reference class", basicRefClass),
-             domain = NA)
-    fieldGenerator = basicDef@fieldAccessorGenerator
+    fieldNames <- names(fieldClasses)
+    if(length(fieldReadOnly) > 0) {
+        if(!is(fieldReadOnly, "character"))
+            stop(gettextf("The fieldReadOnly argument must be the names of the read-only fields; got an object of class \"%s\"", class(fieldReadOnly)),
+                 domain = NA)
+        fieldReadOnly <- as(fieldReadOnly, "character")
+        if(any(is.na(match(fieldReadOnly, fieldNames)))) {
+            bad <- paste('"',
+                        fieldReadOnly[is.na(match(fieldReadOnly, fieldNames))],
+                        '"', sep = "", collapse = ", ")
+            stop(gettextf("Some fieldReadOnly names are not fields: %s", bad),
+                domain = NA)
+        }
+    }
     ## generate the field access methods, but allow explicit methods to
     ## override
-    if(is.function(fieldGenerator) && length(fieldClasses) > 0) {
-        accessorList <- fieldGenerator(names(fieldClasses))
-        ## validate the methods
-        if(!identical(.checkAccessorList(accessorList), TRUE))
-            stop(gettextf("Invalid accessor function list: %s",
-                          .checkAccessorList(accessorList)),
-                 domain = NA)
-        if(length(classMethods) > 0) {
-            notExplicit <- is.na(match(names(accessorList), names(classMethods)))
+    if(length(fieldClasses) > 0) {
+        accessorList <- envRefMakeAccessors(fieldClasses, fieldReadOnly, where)
+        if(length(refMethods) > 0) {
+            notExplicit <- is.na(match(names(accessorList), names(refMethods)))
             accessorList <- accessorList[notExplicit]
         }
-        classMethods <- c(classMethods, accessorList)
+        refMethods <- c(refMethods, accessorList)
     }
-    fieldNames <- names(fieldClasses)
     if(length(fieldPrototypes)) {
         which <- names(fieldPrototypes)
         if(any(is.na(match(which, fieldNames)))) {
@@ -462,27 +599,31 @@ setRefClass <- function(Class, fieldClasses = list(),
     if(length(undef))
         stop(gettextf("Field classes undefined: %s", paste(undef, collapse = ", ")),
              domain = NA)
-    theseMethods <- names(classMethods) # non-inherited, for processing later
-    ## collect the superclass definitions, including basicRefClass
-    info <- refClassInheritance(Class, c(contains, basicRefClass), fieldClasses, fieldPrototypes, classMethods, where)
+    theseMethods <- names(refMethods) # non-inherited, for processing later
+    ## include envRefClass automatically (and so refClass indirectly).
+    contains <- unique(c(contains, "envRefClass"))
+    ## collect the method and field definitions, including interfaceClasses
+    info <- refClassInheritance(Class, contains, interfaceClasses, fieldClasses, fieldPrototypes, fieldReadOnly, refMethods, where)
     ## think Python's multiple assignment operator
     for(what in c("superClasses", "refSuperClasses", "fieldClasses",
-                  "fieldPrototypes", "classMethods"))
+                  "fieldPrototypes", "fieldReadOnly", "refMethods",
+                  "interfaceClasses"))
         assign(what, info[[what]])
     ## temporarily assign an ordinary class definition
     ## to allow the checks and defaults from setClass to be applied
-    setClass(Class, contains = c(superClasses, "refClass"),
+    setClass(Class, contains = superClasses,
              where = where, ...)
     ## now, override that with the complete definition
     classDef <- new("refClassRepresentation",
                     getClassDef(Class, where = where),
                     fieldClasses = fieldClasses,
-                    classMethods = as.environment(classMethods),
+                    refMethods = as.environment(refMethods),
                     fieldPrototypes = as.environment(fieldPrototypes),
-                    refClassName = refClassName,
+                    fieldReadOnly = fieldReadOnly,
                     refSuperClasses = refSuperClasses)
     assignClassDef(Class, classDef, where)
-    invisible(classDef)
+    value <- new("refObjectGenerator", def = classDef, className = Class)
+    value
 }
 
 refClassFields <- function(Class) {
@@ -496,7 +637,7 @@ refClassFields <- function(Class) {
 refClassMethods <- function(Class) {
     ClassDef <- getClass(Class)
     if(is(ClassDef, "refClassRepresentation"))
-        value <- as.list(ClassDef@classMethods)
+        value <- as.list(ClassDef@refMethods)
     else
         stop("Not a reference class:", ClassDef@name)
     ## possibly temporary:  return methods to pure functions
@@ -508,7 +649,7 @@ refClassMethods <- function(Class) {
 showClassMethod <- function(object) {
     cl <- class(object)
     cat("Class method definition")
-    if(!.identC(cl, "classMethodDef"))
+    if(!.identC(cl, "refMethodDef"))
         cat(gettextf(" (class \"%s\")", cl))
     cat(gettextf(" for method %s()\n", object@name))
     show(as(object, "function"))
@@ -523,13 +664,13 @@ showClassMethod <- function(object) {
     }
 
 showRefClassDef <- function(object) {
-    cat("Reference Class \"", object@refClassName,"\":\n")
+    cat("Reference Class \"", object@className,"\":\n")
     fields <- object@fieldClasses
     if(length(fields))
         printPropertiesList(fields, "Class fields")
     else
         cat("\nNo fields defined\n")
-    methods <- objects(object@classMethods, all.names = TRUE)
+    methods <- objects(object@refMethods, all.names = TRUE)
     if(length(methods))
         .printNames("Class Methods: ", methods)
     else
@@ -548,17 +689,55 @@ firstCap <- function(names) {
 }
 
 
-stdRefMakeAccessors <- function(fields, generator = firstCap, env = .GlobalEnv) {
-    methodNames <- generator(fields)
+envRefMakeAccessors <- function(fieldClasses, readOnly, env = .GlobalEnv) {
+    fieldNames <- names(fieldClasses)
+    methodNames <- firstCap(fieldNames)
     getters <- methodNames$get
     setters <- methodNames$set
     methods <- list()
-    for(i in seq_along(fields)) {
-        field <- as.name(fields[[i]])
+    for(i in seq_along(fieldNames)) {
+        field <- as.name(fieldNames[[i]])
+        CLASS <- fieldClasses[[i]]
         methods[[getters[[i]] ]] <- eval(substitute(function() X,
                                           list(X = field)), env)
-        methods[[setters[[i]] ]] <- eval(substitute(function(value) X <<- value,
-                                          list(X = field)), env)
+        if(is.na(match(fieldNames[[i]], readOnly)))
+            methods[[setters[[i]] ]] <-
+                eval(substitute(function(value) {
+                    value <- as(value, CLASS, strict = FALSE)
+                    X <<- value
+                    value
+                    },
+                                list(X = field, CLASS = CLASS)), env)
+        else
+            methods[[setters[[i]] ]] <-
+                eval(substitute(function(value)
+                     stop("Trying to set a read-only field (", X, ")"),
+                                list(X = fieldNames[[i]])), env)
     }
     methods
+}
+
+## all.equal and identical both screw up on environments
+## but a bigger change is needed to all.equal than the following
+## because it also screws up on, e.g., externalptr objects
+if(FALSE) {
+all.equal.environment <- function(target, current, ...) {
+    nt <- sort(objects(target, all.names = TRUE))
+    nc <- sort(objects(current, all.names = TRUE))
+    tmp <- all.equal(nt, nc, ...)
+    if(!identical(tmp, TRUE))
+        return(paste("Different objects in target, current:", tmp))
+    if(length(nt) == 0)
+        return(TRUE)
+    differ <- sapply(nt, function(what) {
+        tmp <- all.equal(get(what, envir = target),
+                         get(what, envir = current), ...)
+        if(identical(tmp, TRUE)) FALSE
+        else TRUE
+    })
+    if(any(differ))
+        paste("Objects differ: ", paste(nt[differ], collapse = ", "))
+    else
+        TRUE
+}
 }
