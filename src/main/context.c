@@ -773,3 +773,19 @@ R_tryEval(SEXP e, SEXP env, int *ErrorOccurred)
 
     return(data.val);
 }
+
+/* Temporary hack to suppress error message printing around a
+   R_tryEval call for use in methods_list_dispatch.c; should be
+   replaced once we have a way of establishing error handlers from C
+   code (probably would want a calling handler if we want to allow
+   user-defined calling handlers to enter a debugger, for
+   example). LT */
+SEXP R_tryEvalSilent(SEXP e, SEXP env, int *ErrorOccurred)
+{
+    SEXP val;
+    Rboolean oldshow = R_ShowErrorMessages;
+    R_ShowErrorMessages = FALSE;
+    val = R_tryEval(e, env, ErrorOccurred);
+    R_ShowErrorMessages = oldshow;
+    return val;
+}

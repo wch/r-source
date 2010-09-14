@@ -353,7 +353,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
 	    val = CDR(val);
 	    SETCAR(val, f_env);
     }
-    val = R_tryEval(e, Methods_Namespace, &check_err);
+    val = R_tryEvalSilent(e, Methods_Namespace, &check_err);
     if(check_err)
 	error(_("S language method selection got an error when called from internal dispatch for function '%s'"),
 	      check_symbol_or_string(fname, TRUE,
@@ -599,7 +599,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	else {
 	    /*  get its class */
 	    SEXP arg, class_obj; int check_err;
-	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
+	    PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
 	    if(check_err)
 		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
@@ -610,7 +610,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     else {
 	/* the arg contains the class as a string */
 	SEXP arg; int check_err;
-	PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
+	PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
 	if(check_err)
 	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		  CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
@@ -697,7 +697,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	argsp = args; args = CDR(args);
     }
     if(prim_case) {
-	val = R_tryEval(e, ev, &error_flag);
+	val = R_tryEvalSilent(e, ev, &error_flag);
 	/* reset the methods:  R_NilValue for the mlist argument
 	   leaves the previous function, methods list unchanged */
 	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
@@ -867,7 +867,7 @@ static SEXP dots_class(SEXP ev, int *checkerrP)
 	SETCAR(call,f); ee = CDR(call);
 	SETCAR(ee, R_dots);
     }
-    return R_tryEval(call, ev, checkerrP);
+    return R_tryEvalSilent(call, ev, checkerrP);
 }
 
 static SEXP do_mtable(SEXP fdef, SEXP ev)
@@ -946,7 +946,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		thisClass = dots_class(ev, &check_err);
 	    }
 	    else {
-		PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
+		PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err));
 		if(!check_err)
 		    thisClass = R_data_class(arg, TRUE);
 		UNPROTECT(1); /* for arg */
