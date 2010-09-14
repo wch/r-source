@@ -149,8 +149,8 @@ F77_NAME(dtrsv)(const char *uplo, const char *trans,
 /* DGER - perform the rank 1 operation   A := alpha*x*y' + A */
 BLAS_extern void
 F77_NAME(dger)(const int *m, const int *n, const double *alpha,
-	       double *x, const int *incx,
-	       double *y, const int *incy,
+	       const double *x, const int *incx,
+	       const double *y, const int *incy,
 	       double *a, const int *lda);
 /* DSYR - perform the symmetric rank 1 operation A := alpha*x*x' + A */
 BLAS_extern void
