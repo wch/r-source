@@ -40,6 +40,9 @@ determinant.matrix <- function(x, logarithm = TRUE, ...)
 			 class = "det"))
     if (is.complex(x))
         stop("determinant not currently defined for complex matrices")
+    ## FIXME: should not be so hard to implement; see
+    ##      moddet_ge_real() in ../../../modules/lapack/Lapack.c
+    ## the 'sign' would have to be complex z, with |z|=1
     storage.mode(x) <- "double"
     .Call("det_ge_real", x, logarithm, PACKAGE = "base")
 }

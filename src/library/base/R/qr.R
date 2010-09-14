@@ -56,6 +56,9 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     res
 }
 
+## + qr.lm  method defined in ../../stats/R/lm.R
+
+
 qr.coef <- function(qr, y)
 {
     if( !is.qr(qr) )

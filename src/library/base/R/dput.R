@@ -24,11 +24,13 @@ dput <-
             on.exit(close(file))
         } else file <- stdout()
     opts <- .deparseOpts(control)
+    ## FIXME: this should happen in C {deparse2() in ../../../main/deparse.c}
+    ##        but we are missing a C-level slotNames()
+    ## Fails e.g. if an S3 list-like object has S4 components
     if(isS4(x)) {
-        ## FIXME: this should happen in C {deparse2() in main/deparse.c}
-        ##        but we are missing a C-level slotNames()
-	cat('new("', class(x),'"\n', file = file, sep = '')
-	for(n in slotNames(x)) {
+        clx <- class(x)
+	cat('new("', clx,'"\n', file = file, sep = '')
+	for(n in .slotNames(clx)) {
 	    cat("    ,", n, "= ", file = file)
 	    dput(slot(x, n), file = file, control = control)
 	}

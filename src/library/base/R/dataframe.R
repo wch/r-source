@@ -1134,7 +1134,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 			 row.names = integer()))
     nms <- names(allargs)
     if(is.null(nms))
-	nms <- character(length(allargs))
+	nms <- character(n)
     cl <- NULL
     perm <- rows <- rlabs <- vector("list", n)
     nrow <- 0L
