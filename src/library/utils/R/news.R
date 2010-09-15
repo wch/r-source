@@ -59,9 +59,10 @@ function(query, package = "R", lib.loc = NULL,
 print.news_db <-
 function(x, ...)
 {
-    if(!(is.null(bad <- attr(x, "bad")))
-       && (length(bad) == NROW(x))
-       && all(!bad)) {
+    if(inherits(x, "news_db_from_Rd") ||
+       (!(is.null(bad <- attr(x, "bad")))
+        && (length(bad) == NROW(x))
+        && all(!bad))) {
         ## Output news in the preferred input format:
         ##   Changes in $VERSION [($DATE)]:
         ##   [$CATEGORY$]

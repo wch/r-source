@@ -282,7 +282,7 @@ function(file)
 }
 
 .make_news_db <-
-function(x, bad = NULL)
+function(x, bad = NULL, classes = NULL)
 {
     ## Expect x to be a 4 column
     ##   version date category text
@@ -296,7 +296,7 @@ function(x, bad = NULL)
     colnames(out) <- c("Version", "Date", "Category", "Text")
     if(!is.null(bad))
         attr(out, "bad") <- bad
-    class(out) <- c("news_db", "data.frame")
+    class(out) <- unique(c(classes, "news_db", "data.frame"))
     out
 }
 
@@ -514,7 +514,8 @@ function(file = NULL)
                         NA_character_,
                         db[, 2L],
                         sub("\n*$", "", db[, 3L])),
-                  logical(nrow(db)))
+                  logical(nrow(db)),
+                  "news_db_from_Rd")
 }
 
 .build_news_db_from_package_NEWS_Rd <-
@@ -543,7 +544,8 @@ function(file)
                                NA_character_),
                         db[, 2L],
                         sub("\n*$", "", db[, 3L])),
-                  logical(nrow(db)))
+                  logical(nrow(db)),
+                  "news_db_from_Rd")
 }
 
 .extract_news_from_Rd <-
