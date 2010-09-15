@@ -1357,6 +1357,22 @@ static void tmp_cleanup(void *data)
     unbindVar(R_TmpvalSymbol, (SEXP) data);
 }
 
+/* This macro stores the current assignment target in the saved
+   binding location. It duplicates if necessary to make sure
+   assignment functions are always called with a target with NAMED ==
+   1. The SET_CAR is intended to protect against possible GC in
+   R_SetVarLocValue; this might occur it the binding is an active
+   binding. */
+#define SET_TEMPVARLOC_FROM_CAR(loc, lhs) do { \
+	SEXP __lhs__ = (lhs); \
+	SEXP __v__ = CAR(__lhs__); \
+	if (NAMED(__v__) == 2) { \
+	    __v__ = duplicate(__v__); \
+	    SET_NAMED(__v__, 1); \
+	    SETCAR(__lhs__, __v__); \
+	} \
+	R_SetVarLocValue(loc, __v__); \
+    } while(0)
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1416,7 +1432,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
-	R_SetVarLocValue(tmploc, CAR(lhs));
+	SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
 	SET_PRVALUE(tmp2, rhs);
 	PROTECT(rhs = replaceCall(tmp, R_GetVarLocSymbol(tmploc), CDDR(expr),
@@ -1432,7 +1448,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
 	error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
-    R_SetVarLocValue(tmploc, CAR(lhs));
+    SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
     SET_PRVALUE(tmp, rhs);
     PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
