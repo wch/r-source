@@ -900,6 +900,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 	    PROTECT(vl = duplicate(vl));
 	    defineVar(symbol, vl, rho);
 	    UNPROTECT(1);
+	    SET_NAMED(vl, 1);
 	}
 	return vl;
     }
