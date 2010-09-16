@@ -576,3 +576,14 @@ stopifnot(is(qqplot, "standardGeneric"),
 	  identical(qqplot@signature, c("x","y")))
 ## failed for a day ~ 2005-05-26, for R-devel only
 
+
+##  'L$A@x <- ..'
+setClass("foo", representation(x = "numeric"))
+f <- new("foo", x = pi*1:2)
+L <- list()
+L$A <- f
+L$A@x[] <- 7
+if( identical(f, L$A) )
+    stop("Oops! f is identical to L$A, even though not touched!")
+## did not duplicate in 2.0.0 <= Rversion <= 2.11.1
+
