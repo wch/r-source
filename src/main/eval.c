@@ -1039,10 +1039,15 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    volatile int i, n, bgn;      /* Need to declare volatile variables whose */
-    volatile SEXP v, val;        /* values are relied on after for_next or   */
-    volatile int dbg, val_type;  /* for_break longjmps.                      */
-    volatile SEXP sym, body;
+    /* Need to declare volatile variables whose values are relied on
+       after for_next or for_break longjmps and might change between
+       the setjmp and longjmp calls. Theoretically this does not
+       include n and bgn, but gcc -O2 -Wclobbered warns about these so
+       to be safe we declare them volatile as well. */
+    volatile int i, n, bgn;
+    volatile SEXP v, val;
+    int dbg, val_type;
+    SEXP sym, body;
     RCNTXT cntxt;
     PROTECT_INDEX vpi;
 
