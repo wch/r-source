@@ -4885,28 +4885,6 @@ stopifnot(identical(m, sweep(m, 2, apply(m,2, min))))
 julian(as.POSIXlt("1999-2-1"), origin=as.POSIXlt("1999-1-1"))
 ## failed < 2.6.0
 
+### continued in reg-tests-1b.R ###
 
-## student typo
-try( ksmooth(cars$speed, cars$dists) )
-## now error about y (== NULL);  segfaulted <= 2.11.1
-
-
-## do.call()ing NextMethod and empty args:
-try( do.call(function(x) NextMethod('foo'),list()) )
-## segfaulted <= 2.11.1
-
-
-## identical() returned FALSE on external ptr with
-## identical addresses <= 2.11.1
-stopifnot(identical(
-      getNativeSymbolInfo("R_getSymbolInfo", "base"),
-      getNativeSymbolInfo("R_getSymbolInfo", "base")))
-stopifnot(!identical(
-      getNativeSymbolInfo("R_getSymbolInfo", "base"),
-      getNativeSymbolInfo("R_getRegisteredRoutines", "base")))
-
-
-## getNamespaceVersion() etc
-stopifnot(getNamespaceVersion("stats") == getRversion())
-## failed in R 2.11.x
-
+proc.time()

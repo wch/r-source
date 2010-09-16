@@ -1184,7 +1184,7 @@ stopifnot(px[1] == "2008-04-22", length(px) == 6)
 ## did depend on the local timezone  at first
 
 
-## cut( d, breaks = n) - for d a  'Date' or 'POSIXt'
+## cut( d, breaks = n) - for d of class  'Date' or 'POSIXt'
 x <- seq(as.POSIXct("2000-01-01"), by = "days", length = 20)
 stopifnot(nlevels(c1 <- cut(x, breaks = 3)) == 3,
 	  nlevels(c2 <- cut(as.POSIXlt(x), breaks = 3)) == 3,
@@ -1238,6 +1238,7 @@ blah <- file("ex.gz", "r")
 stopifnot(seek(blah) == 0)
 ## gave random large multiple of 2^32 on Linux systems attempting to
 ## use LFS support.
+
 
 ## pre-2.12.0 wrongly accessed 0-length entries
 o0 <- as.octmode(integer(0))
@@ -1303,6 +1304,33 @@ res <- predict(cars.lo2, data.frame(speed = c(5, NA, 25)), se = TRUE)
 stopifnot(length(res$fit) == 3L, is.na(res$fit[2]),
           length(res$se.fit) == 3L, is.na(res$se.fit[2]))
 ## Used na.omit prior to 2.12.0
+
+
+## student typo
+try( ksmooth(cars$speed, cars$dists) )
+## now error about y (== NULL);  segfaulted <= 2.11.1
+
+
+## do.call()ing NextMethod and empty args:
+try( do.call(function(x) NextMethod('foo'),list()) )
+## segfaulted <= 2.11.1
+
+
+## identical() returned FALSE on external ptr with
+## identical addresses <= 2.11.1
+stopifnot(identical(
+                    getNativeSymbolInfo("R_getSymbolInfo", "base"),
+                    getNativeSymbolInfo("R_getSymbolInfo", "base")
+                    ))
+stopifnot(!identical(
+                     getNativeSymbolInfo("R_getSymbolInfo", "base"),
+                     getNativeSymbolInfo("R_getRegisteredRoutines", "base")
+                     ))
+
+
+## getNamespaceVersion() etc
+stopifnot(getNamespaceVersion("stats") == getRversion())
+## failed in R 2.11.x
 
 
 proc.time()
