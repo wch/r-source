@@ -1582,9 +1582,9 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 {
-    SEXP ans, h, tail;
+    SEXP head, tail, ev, h;
 
-    PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
+    head = R_NilValue;
 
     while (el != R_NilValue) {
 	n++;
@@ -1601,9 +1601,13 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-		    SETCDR(tail, CONS(eval(CAR(h), rho), R_NilValue));
-		    tail = CDR(tail);
-		    COPY_TAG(tail, h);
+                    ev = CONS(eval(CAR(h), rho), R_NilValue);
+                    if (head==R_NilValue)
+                        PROTECT(head = ev);
+                    else
+                        SETCDR(tail, ev);
+                    COPY_TAG(ev, h);
+                    tail = ev;
 		    h = CDR(h);
 		}
 	    }
@@ -1617,14 +1621,22 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    /* It was missing */
 	    errorcall(call, _("'%s' is missing"), CHAR(PRINTNAME(CAR(el)))); 
 	} else {
-	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
-	    tail = CDR(tail);
-	    COPY_TAG(tail, el);
+            ev = CONS(eval(CAR(el), rho), R_NilValue);
+            if (head==R_NilValue)
+                PROTECT(head = ev);
+            else
+                SETCDR(tail, ev);
+            COPY_TAG(ev, el);
+            tail = ev;
 	}
 	el = CDR(el);
     }
-    UNPROTECT(1);
-    return CDR(ans);
+
+    if (head!=R_NilValue) 
+        UNPROTECT(1);
+
+    return head;
+
 } /* evalList() */
 
 
@@ -1633,9 +1645,9 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 /* used in evalArgs, arithmetic.c, seq.c */
 SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 {
-    SEXP ans, h, tail;
+    SEXP head, tail, ev, h;
 
-    PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
+    head = R_NilValue;
 
     while (el != R_NilValue) {
 
@@ -1651,33 +1663,42 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-		    if (CAR(h) == R_MissingArg)
-			SETCDR(tail, CONS(R_MissingArg, R_NilValue));
-		    else
-			SETCDR(tail, CONS(eval(CAR(h), rho), R_NilValue));
-		    tail = CDR(tail);
-		    COPY_TAG(tail, h);
+                    if (CAR(h) == R_MissingArg) 
+                        ev = CONS(R_MissingArg, R_NilValue);
+                    else
+                        ev = CONS(eval(CAR(h), rho), R_NilValue);
+                    if (head==R_NilValue)
+                        PROTECT(head = ev);
+                    else
+                        SETCDR(tail, ev);
+                    COPY_TAG(ev, h);
+                    tail = ev;
 		    h = CDR(h);
 		}
 	    }
 	    else if(h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
 	}
-	else if (CAR(el) == R_MissingArg ||
-                 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho))) {
-	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
-	    tail = CDR(tail);
-	    COPY_TAG(tail, el);
-	}
 	else {
-	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
-	    tail = CDR(tail);
-	    COPY_TAG(tail, el);
+            if (CAR(el) == R_MissingArg ||
+                 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))
+                ev = CONS(R_MissingArg, R_NilValue);
+            else
+                ev = CONS(eval(CAR(el), rho), R_NilValue);
+            if (head==R_NilValue)
+                PROTECT(head = ev);
+            else
+                SETCDR(tail, ev);
+            COPY_TAG(ev, el);
+            tail = ev;
 	}
 	el = CDR(el);
     }
-    UNPROTECT(1);
-    return CDR(ans);
+
+    if (head!=R_NilValue) 
+        UNPROTECT(1);
+
+    return head;
 }
 
 
