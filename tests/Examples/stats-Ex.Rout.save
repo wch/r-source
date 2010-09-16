@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-30 r52829)
+R version 2.12.0 Under development (unstable) (2010-09-16 r52918)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -3403,7 +3403,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > x <- c(2,2:4,4,4,5,5,7,7,7)
 > y <- c(1:6, 5:4, 3:1)
 > approx(x,y, xout=x)$y # warning
-Warning in approx(x, y, xout = x) : collapsing to unique 'x' values
  [1] 1.5 1.5 3.0 5.0 5.0 5.0 4.5 4.5 2.0 2.0 2.0
 > (ay <- approx(x,y, xout=x, ties = "ordered")$y)
  [1] 2 2 3 6 6 6 4 4 1 1 1
@@ -16684,7 +16683,7 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > y <- sin((x-0.5)*pi)
 > f <- splinefun(x, y)
 > ls(envir = environment(f))
-[1] "ties" "z"   
+[1] "z"
 > splinecoef <- get("z", envir = environment(f))
 > curve(f(x), 1, 10, col = "green", lwd = 1.5)
 > points(splinecoef, col = "purple", cex = 2)
@@ -16707,7 +16706,6 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > set.seed(1); x <- round(rnorm(30), 1); y <- sin(pi * x) + rnorm(30)/10
 > plot(x,y, main="spline(x,y)  when x has ties")
 > lines(spline(x,y, n= 201), col = 2)
-Warning in spline(x, y, n = 201) : collapsing to unique 'x' values
 > ## visualizes the non-unique ones:
 > tx <- table(x); mx <- as.numeric(names(tx[tx > 1]))
 > ry <- matrix(unlist(tapply(y, match(x,mx), range, simplify=FALSE)),
