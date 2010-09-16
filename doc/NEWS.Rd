@@ -605,12 +605,14 @@
 
       \item Task callbacks could report the wrong expression when
       the task involved parsing new code. (\PR{14368})
-      
+
       \item \code{getNamespaceVersion()} failed; this was an
       accidental change in 2.11.0. (\PR{14374})
 
       \item \code{identical()} returned \code{FALSE} for external
       pointer objects even when the pointer addresses were the same.
+
+      \item \code{L$a@x[] <- val} did not duplicate in a case it should have.
     }
   }
 }
@@ -719,11 +721,11 @@
       objects.  Of course, this also affects \command{R CMD check}.
 
       \item \code{ksmooth(x,NULL)} no longer segfaults.
-      
+
       \item \code{approxfun()}, \code{approx()}, \code{splinefun()}
       and \code{spline()} could be confused by \code{x} values that
       were different but so close as to print identically.
-      (\PR{14377})      
+      (\PR{14377})
 
     }
   }
