@@ -5999,6 +5999,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	free(dd);
 	error(_("failed to allocate rasters"));
     }
+    pd->numMasks = 0;
     pd->masks = initMaskArray(pd->maxRasters);
     if (!pd->masks) {
 	PDFcleanup(5, pd);
