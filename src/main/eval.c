@@ -1234,7 +1234,7 @@ SEXP attribute_hidden do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* this function gets the srcref attribute from a statement block, 
    and confirms it's in the expected format */
    
-static SEXP getSrcrefs(SEXP call, SEXP args)
+static R_INLINE SEXP getSrcrefs(SEXP call, SEXP args)
 {
     SEXP srcrefs = getAttrib(call, R_SrcrefSymbol);
     if (   TYPEOF(srcrefs) == VECSXP
