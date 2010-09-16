@@ -21,32 +21,10 @@ splinefun <- function(x, y=NULL,
                       method = c("fmm", "periodic", "natural", "monoH.FC"),
                       ties = mean)
 {
-    x <- xy.coords(x, y)
+    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     nx <- length(x)
-    if(any(o <- is.na(x) | is.na(y))) {
-	o <- !o
-	x <- x[o]
-	y <- y[o]
-	nx <- length(x)
-    }
-    if (!identical(ties, "ordered")) {
-	if (length(ux <- unique(x)) < nx) {
-	    if (missing(ties))
-		warning("collapsing to unique 'x' values")
-	    ## tapply(.,match(..) ): see ./approx.R
-	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
-	    x <- sort(ux)
-	    nx <- length(x)
-	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
-	} else {
-	    o <- order(x)
-	    x <- x[o]
-	    y <- y[o]
-	}
-        rm(ux)
-    }
     if(nx == 0) stop("zero non-NA points")
     method <- match.arg(method)
     if(method == "periodic" && y[1L] != y[nx]) {
@@ -80,7 +58,7 @@ splinefun <- function(x, y=NULL,
 	    d=double(nx),
 	    e=double(if(iMeth == 1) nx else 0),
 	    PACKAGE="stats")
-    rm(x,y,nx,o,method,iMeth)
+    rm(x,y,nx,method,iMeth,ties)
     z$e <- NULL
     function(x, deriv = 0) {
 	deriv <- as.integer(deriv)

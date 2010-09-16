@@ -22,35 +22,15 @@ spline <-
     function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x),
              xout, ties = mean)
 {
-    x <- xy.coords(x, y)
-    y <- x$y
-    x <- x$x
-    nx <- length(x)
     method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("invalid interpolation method")
-    if(any(o <- is.na(x) | is.na(y))) {
-	o <- !o
-	x <- x[o]
-	y <- y[o]
-	nx <- length(x)
-    }
-    if (!identical(ties, "ordered")) {
-	if (length(ux <- unique(x)) < nx) {
-	    if (missing(ties))
-		warning("collapsing to unique 'x' values")
-	    ## tapply(.,match(..) ): see ./approx.R
-	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
-	    x <- sort(ux)
-	    nx <- length(x)
-	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
-	} else {
-	    o <- order(x)
-	    x <- x[o]
-	    y <- y[o]
-	}
-        rm(ux)
-    }
+	
+    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    y <- x$y
+    x <- x$x
+    nx <- length(x)
+	
     if(nx == 0) stop("zero non-NA points")
     if(method == 1 && y[1L] != y[nx]) { # periodic
         warning("spline: first and last y values differ - using y[1] for both")
