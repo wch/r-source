@@ -16,40 +16,50 @@
 
 ### approx() and approxfun() are *very similar* -- keep in sync!
 
-approx <- function(x, y = NULL, xout, method = "linear", n = 50,
-		   yleft, yright, rule = 1, f = 0, ties = mean)
-{
+## This function is used in approx, approxfun, spline, and splinefun
+## to massage the input (x,y) pairs into standard form:  
+## x values unique and increasing, y values collapsed to match
+## (except if ties=="ordered", then not unique)
+
+regularize.values <- function(x, y, ties) {
     x <- xy.coords(x, y) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    nx <- length(x)
-    method <- pmatch(method, c("linear", "constant"))
-    if (is.na(method))
-	stop("invalid interpolation method")
-    stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
-    if(lenR == 1) rule <- rule[c(1,1)]
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
 	x <- x[ok]
 	y <- y[ok]
-	nx <- length(x)
     }
-    if (!identical(ties, "ordered")) {
+    nx <- length(x)
+    if (!identical(ties, "ordered")) {	    
+    	o <- order(x)
+	x <- x[o]
+	y <- y[o]	
 	if (length(ux <- unique(x)) < nx) {
 	    if (missing(ties))
 		warning("collapsing to unique 'x' values")
 	    # tapply bases its uniqueness judgement on character representations;
 	    # we want to use values (PR#14377)
 	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
-	    x <- sort(ux)
-	    nx <- length(x)
-	    stopifnot(length(y) == nx)# (did happen in 2.9.0-2.11.x)
-	} else {
-	    o <- order(x)
-	    x <- x[o]
-	    y <- y[o]
+	    x <- ux
+	    stopifnot(length(y) == length(x))# (did happen in 2.9.0-2.11.x)
 	}
     }
+    list(x=x, y=y)
+}
+
+approx <- function(x, y = NULL, xout, method = "linear", n = 50,
+		   yleft, yright, rule = 1, f = 0, ties = mean)
+{
+    method <- pmatch(method, c("linear", "constant"))
+    if (is.na(method))
+	stop("invalid interpolation method")
+    stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
+    if(lenR == 1) rule <- rule[c(1,1)]    
+    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    y <- x$y
+    x <- x$x
+    nx <- length(x)
     if (nx <= 1) {
 	if(method == 1)# linear
 	    stop("need at least two non-NA values to interpolate")
@@ -76,38 +86,16 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 approxfun <- function(x, y = NULL, method = "linear",
 		   yleft, yright, rule = 1, f = 0, ties = mean)
 {
-    x <- xy.coords(x, y)
-    y <- x$y
-    x <- x$x
-    n <- length(x)
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
-    if(any(o <- is.na(x) | is.na(y))) {
-	o <- !o
-	x <- x[o]
-	y <- y[o]
-	n <- length(x)
-    }
-    if (!identical(ties, "ordered")) {
-	if (length(ux <- unique(x)) < n) {
-	    if (missing(ties))
-		warning("collapsing to unique 'x' values")
-	    # tapply bases its uniqueness judgement on character representations;
-	    # we want to use values (PR#14377)
-	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
-	    x <- sort(ux)
-	    n <- length(x)
-	    stopifnot(length(y) == n)# (did happen in 2.9.0-2.11.x)
-	    rm(ux)
-	} else {
-	    o <- order(x)
-	    x <- x[o]
-	    y <- y[o]
-	}
-    }
+    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    y <- x$y
+    x <- x$x
+    n <- length(x)
+
     if (n <= 1) {
 	if(method == 1)# linear
 	    stop("need at least two non-NA values to interpolate")
@@ -119,7 +107,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 	yright <- if (rule[2L] == 1) NA else y[length(y)]
     force(f)
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
-    rm(o, rule, ties)
+    rm(rule, ties, lenR)
 
 ## Changed here:
 ## suggestion:
