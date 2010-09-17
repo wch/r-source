@@ -271,10 +271,10 @@ refClassPrompt <- function(clDef, Rdtxt, nmeths, nslots, .meths.head) {
 	.fields.tail <- c("  }","}")
 	c(.fields.head,  .fields.body,	.fields.tail)
     } else character()
-    methodDefs <- as.list(clDef@classMethods)
+    methodDefs <- as.list(clDef@refMethods)
     nmethods <- length(methodDefs)
     if(nmethods > 0) {
-        thisClassDefs <- match(sapply(methodDefs, function(x) x@refClassName), clDef@refClassName, 0) > 0
+        thisClassDefs <- match(sapply(methodDefs, function(x) x@refClassName), clDef@className, 0) > 0
         methodDefs <- methodDefs[thisClassDefs]
         nmethods <-length(methodDefs)
     }

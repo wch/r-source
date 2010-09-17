@@ -689,8 +689,14 @@ firstCap <- function(names) {
 }
 
 
-envRefMakeAccessors <- function(fieldClasses, readOnly, env = .GlobalEnv) {
-    fieldNames <- names(fieldClasses)
+envRefMakeAccessors <- function(fieldClasses, readOnly = character(), env = .GlobalEnv) {
+    ## temporary?  if no class information given, assume "ANY"
+    if(is.character(fieldClasses)) {
+        fieldNames <- fieldClasses
+        fieldClasses <- rep("ANY", length(fieldNames))
+    }
+    else
+        fieldNames <- names(fieldClasses)
     methodNames <- firstCap(fieldNames)
     getters <- methodNames$get
     setters <- methodNames$set
