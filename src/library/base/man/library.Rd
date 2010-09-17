@@ -28,7 +28,7 @@ library(package, help, pos = 2, lib.loc = NULL,
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        character.only = FALSE)
+        character.only = FALSE, save = FALSE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -72,6 +72,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed, and most often, no errors/warnings are
     printed if package loading fails.}
+  \item{save}{For back-compatibility: only \code{FALSE} is allowed.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}

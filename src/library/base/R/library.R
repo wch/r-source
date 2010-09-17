@@ -651,8 +651,11 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"), character.only = FALSE)
+         keep.source = getOption("keep.source.pkgs"),
+         character.only = FALSE, save = FALSE)
 {
+    if(!missing(save)) warning("use of 'save' is deprecated")
+    if(!identical(save, FALSE)) stop("save != FALSE is defunct")
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
     loaded <- paste("package", package, sep = ":") %in% search()

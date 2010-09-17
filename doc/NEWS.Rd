@@ -13,7 +13,8 @@
   
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
-      \item The \code{save} argument of \code{require()} is defunct.
+      \item The \code{require(save = TRUE)} is defunct, and use of the
+      \code{save} argument is deprecated.
 
       \item \command{R CMD check --no-latex} is defunct: use
       \option{--no-manual} instead.
