@@ -4,6 +4,28 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.0}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Dummy
+    }
+  }
+  
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item The \code{save} argument of \code{require()} is defunct.
+
+      \item \command{R CMD check --no-latex} is defunct: use
+      \option{--no-manual} instead.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Dummy
+    }
+  }
+}
 
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
@@ -361,7 +383,7 @@
       files containing Perl configuration variables: use the environment
       variables documented in \sQuote{R Internals} instead.
 
-      \item The \code{save} argument of \code{detach()} now defaults to
+      \item The \code{save} argument of \code{require()} now defaults to
       \code{FALSE} and \code{save = TRUE} is now deprecated.  (This
       facility is very rarely actually used, and was superseded by the
       \samp{Depends} field of the \file{DESCRIPTION} file long ago.)

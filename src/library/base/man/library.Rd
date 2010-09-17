@@ -28,7 +28,7 @@ library(package, help, pos = 2, lib.loc = NULL,
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        character.only = FALSE, save = FALSE)
+        character.only = FALSE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -72,9 +72,6 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed, and most often, no errors/warnings are
     printed if package loading fails.}
-  \item{save}{logical or environment: see section \sQuote{Packages that
-    require other packages}.  Use of any value other than the default is
-    deprecated.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
@@ -168,17 +165,6 @@ require(package, lib.loc = NULL, quietly = FALSE,
 
   There can also be a site-wide file \file{R_HOME/etc/licensed.site} of
   packages (one per line).
-}
-\section{Packages that require other packages}{
-  The usual way for a package to require other packages is to list them
-  in the \samp{Depends:} field of the \file{DESCRIPTION} file.  Such
-  packages are checked by \code{\link{detach}}.
-
-  An alternative way to record that a package is required is to use a
-  call to \code{require(save = TRUE)} in the \code{.First.lib} function
-  of the package (but only for a package without a namespace): this
-  mechanism was used more widely in earlier versions of \R and is now
-  deprecated.
 }
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}

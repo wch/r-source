@@ -651,8 +651,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"),
-         character.only = FALSE, save = FALSE)
+         keep.source = getOption("keep.source.pkgs"), character.only = FALSE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -680,51 +679,6 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
         }
         if (!value) return(invisible(FALSE))
     } else value <- TRUE
-
-    if(identical(save, FALSE)) {}
-    else {
-        warning("use of 'save' is deprecated")
-        ## update the ".Depends" variable
-        ## We no longer use '.required' since some packages set that.
-        if(identical(save, TRUE)) {
-            save <- topenv(parent.frame())
-            ## (a package namespace, topLevelEnvironment option or
-            ## .GlobalEnv)
-            if(identical(save, .GlobalEnv)) {
-                ## try to detect call from .First.lib in a package
-                ## <FIXME>
-                ## Although the docs have long and perhaps always had
-                ##   .First.lib(libname, pkgname)
-                ## the majority of CRAN packages seems to use arguments
-                ## 'lib' and 'pkg'.
-                objectsInParentFrame <- sort(objects(parent.frame()))
-                if(identical(sort(c("libname", "pkgname")),
-                             objectsInParentFrame))
-                    save <-
-                        as.environment(paste("package:",
-                                             get("pkgname",
-                                                 parent.frame()),
-                                             sep = ""))
-                else if(identical(sort(c("lib", "pkg")),
-                                  objectsInParentFrame))
-                    save <-
-                        as.environment(paste("package:",
-                                             get("pkg",
-                                                 parent.frame()),
-                                             sep = ""))
-                ## </FIXME>
-            }
-        }
-        else
-            save <- as.environment(save)
-        ## detach() only uses .Depends from a package environment.
-        ## so only save it there
-        if(!is.null(nm <- attr(save, "name")) && grepl("^package:", nm)) {
-            hasDotDepends <- exists(".Depends", save, inherits=FALSE)
-            packages <- if(hasDotDepends) unique(c(package, get(".Depends", save))) else package
-            assign(".Depends", packages, save)
-        }
-    }
     invisible(value)
 }
 
