@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -132,6 +132,10 @@ msgstr ""
 #, fuzzy
 msgid "name space cannot be unloaded:"
 msgstr "name space '%s'가 적재 되었습니다"
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "'file' NULL, connection, 또는 문자열이 아니면 되지 않습니다"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -809,6 +813,9 @@ msgstr ""
 msgid "Attaching package: '%s'"
 msgstr "다음의 패키지를 첨가합니다: '%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 #, fuzzy
 msgid "invalid package name"
 msgstr "부적절한 이름입니다"
@@ -898,10 +905,6 @@ msgstr "dyn.unload(\"%s\")중입니다..."
 
 msgid "Loading required package: %s"
 msgstr "요구된 패키지 %s를 로드중입니다"
-
-#, fuzzy
-msgid "use of 'save' is deprecated"
-msgstr "'%s'는 없어져 버릴 예정입니다"
 
 msgid "none of the packages are loaded"
 msgstr "어느 패키지도 로드 되지 않습니다"
@@ -1466,6 +1469,9 @@ msgstr "'x' 그리고 'y'는 동일 길이를 가지지 않으면 안됩니다"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "'indent'와 'width'에 대한 부정확한 값입니다"
 
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv'는 0 또는 ncol(x)가 나오지 않으면 되지 않습니다"
 
@@ -1709,6 +1715,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr "'%s'는 없어져 버릴 예정입니다"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "공용 라이브러리 '%s'가 검색되지 않습니다"

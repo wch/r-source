@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2010-04-09 19:48-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1587,6 +1587,35 @@ msgid ""
 "Field \"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
+msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a defined class in this environment"
+msgstr "класс \"%s\" не определен в этом окружении"
+
+#, fuzzy
+msgid "Invalid Class argument:  should be a single string"
+msgstr ""
+"для элемента %d установлен неверный класс (должен быть односимвольной "
+"строкой)"
+
+#, fuzzy
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr "\"%s\" не является одним из имен элемента"
+
+msgid ""
+"Method %s from class %s was not processed into a class method until being "
+"installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid ""
+"a call to superClass() is in the method \"%s\" but there is no superclass "
+"definition of this method for class \"%s\""
+msgstr ""
+
 #, fuzzy
 msgid "\"%s\" is not a reference class"
 msgstr "\"%s\" не является определенным классом"
@@ -1606,17 +1635,42 @@ msgstr ""
 msgid "Some elements of the list (e.g., %d) are not functions"
 msgstr ""
 
+msgid ""
+"direct calls to callSuper() are invalid:  should only be called from another "
+"method"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments to methods() must be named, or one named list"
+msgstr "Аргументы в методе и общей функции не в одинаковом порядке"
+
+msgid ""
+"Topic \"%s\" is not a method name in class \"%s\"\n"
+"The class definition follows"
+msgstr ""
+
+msgid ""
+"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
+"existing field definition (\"%s\")"
+msgstr ""
+
 #, fuzzy
 msgid "No definition found for inherited class: %s"
 msgstr "нет определения класса \"%s\""
 
-#, fuzzy
-msgid "\"%s\" is not a known reference class"
-msgstr "\"%s\" не является определенным классом"
+msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgstr ""
 
 #, fuzzy
-msgid "Invalid accessor function list: %s"
-msgstr "неверный индекс для аргумента функции"
+msgid ""
+"The fieldReadOnly argument must be the names of the read-only fields; got an "
+"object of class \"%s\""
+msgstr ""
+"первый аргумент должен быть именем(-ами) общих функций (получен объект "
+"класса \"%s\")"
+
+msgid "Some fieldReadOnly names are not fields: %s"
+msgstr ""
 
 msgid "Prototypes supplied for non-fields: %s"
 msgstr ""
@@ -1634,6 +1688,13 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
+
+#, fuzzy
+msgid "Trying to set a read-only field ("
+msgstr "пытаюсь установить отношение 'as' от \"%s\" на себя"
+
+msgid ")"
+msgstr ")"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1817,6 +1878,14 @@ msgstr[0] "нет определения класса \"%s\""
 msgstr[1] "нет определений классов \"%s\""
 msgstr[2] "нет определений классов \"%s\""
 
+#, fuzzy
+#~ msgid "\"%s\" is not a known reference class"
+#~ msgstr "\"%s\" не является определенным классом"
+
+#, fuzzy
+#~ msgid "Invalid accessor function list: %s"
+#~ msgstr "неверный индекс для аргумента функции"
+
 #~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
 #~ msgstr "Определяю тип \"%s\" как суперкласс через класс \"%s\""
 
@@ -1827,9 +1896,6 @@ msgstr[2] "нет определений классов \"%s\""
 #~ msgstr ""
 #~ "неверный аргумент \"f\", ожидается функция или ее имя, получен объект "
 #~ "класса \"%s\""
-
-#~ msgid "Arguments of method and generic are not in the same order"
-#~ msgstr "Аргументы в методе и общей функции не в одинаковом порядке"
 
 #~ msgid ""
 #~ "in the method signature for function \"%s\" no definition for class: %s"
@@ -1935,9 +2001,6 @@ msgstr[2] "нет определений классов \"%s\""
 
 #~ msgid "\") has defined subclasses that should also be removed: ("
 #~ msgstr "\") содержит определенные подклассы, которые должны быть удалены: ("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -133,6 +133,10 @@ msgstr ""
 
 msgid "name space cannot be unloaded:"
 msgstr "无法载入名字空间："
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "...要么含名字，要么是字符串"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "正规表现'['被换成'\\\\['"
@@ -776,6 +780,9 @@ msgstr "程辑包'％s'的许可证没有被接受"
 msgid "Attaching package: '%s'"
 msgstr "载入程辑包：'%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr "程辑包名字不对"
 
@@ -861,10 +868,6 @@ msgstr "现在dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
 msgstr "载入需要的程辑包：%s"
-
-#, fuzzy
-msgid "use of 'save' is deprecated"
-msgstr "%s不再有用。"
 
 msgid "none of the packages are loaded"
 msgstr "没有载入任何程辑包"
@@ -1397,6 +1400,9 @@ msgstr "'x'和'y'的长度必需一致"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "'indent'和'width'的值有错"
 
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv'的值必需为零或为ncol(x)"
 
@@ -1613,6 +1619,10 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr "%s不再有用。"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "找不到共享图书馆'%s'"

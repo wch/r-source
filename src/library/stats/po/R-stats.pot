@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,10 +233,10 @@ msgstr ""
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 
-msgid "invalid interpolation method"
+msgid "collapsing to unique 'x' values"
 msgstr ""
 
-msgid "collapsing to unique 'x' values"
+msgid "invalid interpolation method"
 msgstr ""
 
 msgid "need at least two non-NA values to interpolate"
@@ -1214,16 +1214,25 @@ msgstr ""
 msgid "missing or negative weights not allowed"
 msgstr ""
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+msgid "invalid 'lm' object:  no 'terms' component"
+msgstr ""
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
 msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
+msgstr ""
+
+msgid "lm object does not have a proper 'qr' component.\n Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
 
 msgid "family '"
 msgstr ""
 
 msgid "' not implemented"
+msgstr ""
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
 msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
@@ -1233,6 +1242,9 @@ msgid "removed because response differs from"
 msgstr ""
 
 msgid "model 1"
+msgstr ""
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"

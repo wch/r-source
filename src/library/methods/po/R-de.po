@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2010-03-23 16:16+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1647,6 +1647,34 @@ msgid ""
 "Field \"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
+msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a defined class in this environment"
+msgstr "Klasse \"%s\" ist in dieser Umgebung nicht definiert"
+
+#, fuzzy
+msgid "Invalid Class argument:  should be a single string"
+msgstr ""
+"ungültige Klasse für Element %d spezifiziert (sollte eine Zeichenkette sein)"
+
+#, fuzzy
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr "\"%s\" ist kein Elementname"
+
+msgid ""
+"Method %s from class %s was not processed into a class method until being "
+"installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid ""
+"a call to superClass() is in the method \"%s\" but there is no superclass "
+"definition of this method for class \"%s\""
+msgstr ""
+
 #, fuzzy
 msgid "\"%s\" is not a reference class"
 msgstr "\"%s\" ist keine definierte Klasse"
@@ -1666,17 +1694,44 @@ msgstr ""
 msgid "Some elements of the list (e.g., %d) are not functions"
 msgstr ""
 
+msgid ""
+"direct calls to callSuper() are invalid:  should only be called from another "
+"method"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments to methods() must be named, or one named list"
+msgstr ""
+"Argumente in Methode und generischer Funktion sind nicht in der gleichen "
+"Reihenfolge"
+
+msgid ""
+"Topic \"%s\" is not a method name in class \"%s\"\n"
+"The class definition follows"
+msgstr ""
+
+msgid ""
+"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
+"existing field definition (\"%s\")"
+msgstr ""
+
 #, fuzzy
 msgid "No definition found for inherited class: %s"
 msgstr "keine Definition der Klasse \"%s\" gefunden"
 
-#, fuzzy
-msgid "\"%s\" is not a known reference class"
-msgstr "\"%s\" ist keine definierte Klasse"
+msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgstr ""
 
 #, fuzzy
-msgid "Invalid accessor function list: %s"
-msgstr "unzulässiger Index für Funktionsargument"
+msgid ""
+"The fieldReadOnly argument must be the names of the read-only fields; got an "
+"object of class \"%s\""
+msgstr ""
+"erstes Argument sollte(n) Name(n) generischer Funktion(en) sein (bekam "
+"Objekt der Klasse \"%s\""
+
+msgid "Some fieldReadOnly names are not fields: %s"
+msgstr ""
 
 msgid "Prototypes supplied for non-fields: %s"
 msgstr ""
@@ -1694,6 +1749,13 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
+
+#, fuzzy
+msgid "Trying to set a read-only field ("
+msgstr "Versuch eine 'as' Relation von \"%s\" auf sich selbst zu setzen"
+
+msgid ")"
+msgstr ")"
 
 #, fuzzy
 msgid ""
@@ -1885,6 +1947,14 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "keine Definition der Klasse \"%s\" gefunden"
 msgstr[1] "keine Definition der Klasse \"%s\" gefunden"
 
+#, fuzzy
+#~ msgid "\"%s\" is not a known reference class"
+#~ msgstr "\"%s\" ist keine definierte Klasse"
+
+#, fuzzy
+#~ msgid "Invalid accessor function list: %s"
+#~ msgstr "unzulässiger Index für Funktionsargument"
+
 #~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
 #~ msgstr "Definiere den Typ \"%s\" als eine Superklasse über Klasse \"%s\""
 
@@ -1895,11 +1965,6 @@ msgstr[1] "keine Definition der Klasse \"%s\" gefunden"
 #~ msgstr ""
 #~ "unzulässiges Argument \"f\", erwartet ist eine Funktion oder deren Name, "
 #~ "bekam Objekt der Klasse \"%s\""
-
-#~ msgid "Arguments of method and generic are not in the same order"
-#~ msgstr ""
-#~ "Argumente in Methode und generischer Funktion sind nicht in der gleichen "
-#~ "Reihenfolge"
 
 #~ msgid ""
 #~ "in the method signature for function \"%s\" no definition for class: %s"
@@ -2005,9 +2070,6 @@ msgstr[1] "keine Definition der Klasse \"%s\" gefunden"
 #~ msgid "\") has defined subclasses that should also be removed: ("
 #~ msgstr ""
 #~ "\" hat Unterklassen definiert, die ebenfalls entfernt werden sollten ("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2010-04-05 15:45+0900 \n"
 "Last-Translator: Ryota Suzuki <suzuki@ef-prime.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1594,6 +1594,35 @@ msgid ""
 "Field \"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
+msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a defined class in this environment"
+msgstr " この環境ではクラス \"%s\" は定義されていません "
+
+#, fuzzy
+msgid "Invalid Class argument:  should be a single string"
+msgstr ""
+" 要素 %d に対して間違ったクラスが指定されました(単一の文字列である必要があり"
+"ます) "
+
+#, fuzzy
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr " \"%s\" は要素名中にありません "
+
+msgid ""
+"Method %s from class %s was not processed into a class method until being "
+"installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid ""
+"a call to superClass() is in the method \"%s\" but there is no superclass "
+"definition of this method for class \"%s\""
+msgstr ""
+
 #, fuzzy
 msgid "\"%s\" is not a reference class"
 msgstr " \"%s\" は定義されたクラスではありません "
@@ -1612,17 +1641,42 @@ msgstr ""
 msgid "Some elements of the list (e.g., %d) are not functions"
 msgstr ""
 
+msgid ""
+"direct calls to callSuper() are invalid:  should only be called from another "
+"method"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments to methods() must be named, or one named list"
+msgstr " メソッドと総称関数の引数が同じ順序で現れていません "
+
+msgid ""
+"Topic \"%s\" is not a method name in class \"%s\"\n"
+"The class definition follows"
+msgstr ""
+
+msgid ""
+"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
+"existing field definition (\"%s\")"
+msgstr ""
+
 #, fuzzy
 msgid "No definition found for inherited class: %s"
 msgstr " クラス %s に対する定義はありません "
 
-#, fuzzy
-msgid "\"%s\" is not a known reference class"
-msgstr " \"%s\" は定義されたクラスではありません "
+msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgstr ""
 
 #, fuzzy
-msgid "Invalid accessor function list: %s"
-msgstr " 関数引数に対する不正なインデックスです "
+msgid ""
+"The fieldReadOnly argument must be the names of the read-only fields; got an "
+"object of class \"%s\""
+msgstr ""
+" 最初の引数は総称的関数の名前であるべきです(クラス \"%s\" のオブジェクトを得"
+"ました) "
+
+msgid "Some fieldReadOnly names are not fields: %s"
+msgstr ""
 
 msgid "Prototypes supplied for non-fields: %s"
 msgstr ""
@@ -1640,6 +1694,13 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
+
+#, fuzzy
+msgid "Trying to set a read-only field ("
+msgstr " \"%s\" からそれ自体への 'as' 関係を設定しようとしています "
+
+msgid ")"
+msgstr " ) "
 
 #, fuzzy
 msgid ""
@@ -1827,6 +1888,14 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
 
+#, fuzzy
+#~ msgid "\"%s\" is not a known reference class"
+#~ msgstr " \"%s\" は定義されたクラスではありません "
+
+#, fuzzy
+#~ msgid "Invalid accessor function list: %s"
+#~ msgstr " 関数引数に対する不正なインデックスです "
+
 #~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
 #~ msgstr "タイプ \"%s\" をクラス \"%s\" を経たスーパークラスと定義すること"
 
@@ -1837,9 +1906,6 @@ msgstr[0] " クラス %s に対する定義はありません "
 #~ msgstr ""
 #~ " 不正な引数 \"f\" です。関数かその名前が期待されていますが、クラス \"%s\" "
 #~ "のオブジェクトが得られました "
-
-#~ msgid "Arguments of method and generic are not in the same order"
-#~ msgstr " メソッドと総称関数の引数が同じ順序で現れていません "
 
 #~ msgid ""
 #~ "in the method signature for function \"%s\" no definition for class: %s"
@@ -1939,9 +2005,6 @@ msgstr[0] " クラス %s に対する定義はありません "
 
 #~ msgid "\") has defined subclasses that should also be removed: ("
 #~ msgstr " \") は同様に取り除かれるべきサブクラスを定義しました： ( "
-
-#~ msgid ")"
-#~ msgstr " ) "
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2010-03-28 14:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -137,6 +137,10 @@ msgstr ""
 
 msgid "name space cannot be unloaded:"
 msgstr "l'espace de noms ne peut être déchargé :"
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "... doit contenir des noms ou des chaînes de caractères"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "le motif d'expression régulière '[' est remplacé par '\\\\['"
@@ -822,6 +826,9 @@ msgstr "La licence du package '%s' n'est pas acceptée"
 msgid "Attaching package: '%s'"
 msgstr "Attachement du package : '%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr "nom de package incorrect"
 
@@ -909,10 +916,6 @@ msgstr "dyn.unload(\"%s\") en cours ..."
 
 msgid "Loading required package: %s"
 msgstr "Le chargement a nécessité le package : %s"
-
-#, fuzzy
-msgid "use of 'save' is deprecated"
-msgstr "'%s' est obsolète."
 
 msgid "none of the packages are loaded"
 msgstr "aucun des packages n'est chargé"
@@ -1474,6 +1477,9 @@ msgstr "'x' et 'y' doivent avoir la même longueur"
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "valeurs incorrectes de 'indent' et 'width'"
 
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
+
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' doit être 0 ou ncol(x)"
 
@@ -1704,6 +1710,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr "'%s' est obsolète."
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "la librairie partagée '%s' est introuvable"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-17 16:04\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -707,6 +707,9 @@ msgid ""
 msgstr ""
 
 msgid "installing to"
+msgstr ""
+
+msgid "generating debug symbols (dSYM)"
 msgstr ""
 
 msgid ""

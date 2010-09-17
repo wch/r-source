@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2010-04-03 10:39+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -244,11 +244,11 @@ msgstr " 射影を許容するためにモデルの再当てはめを行いま�
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr " 'contrast.obj' の列は対比(総和が 0)を定義しなければなりません "
 
-msgid "invalid interpolation method"
-msgstr " 無効な補間法です "
-
 msgid "collapsing to unique 'x' values"
 msgstr " ユニークな 'x' 値を得るため縮小します "
+
+msgid "invalid interpolation method"
+msgstr " 無効な補間法です "
 
 msgid "need at least two non-NA values to interpolate"
 msgstr " 補間のためには少なくとも 2 つの非 NA 値が必要です "
@@ -1278,17 +1278,29 @@ msgstr " 特異な当てはめに遭遇しました "
 msgid "missing or negative weights not allowed"
 msgstr " 欠損もしくは負の重みは許されません "
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr " 無効な 'lm' オブジェクト: 項('terms')もしくは 'qr' 成分がありません "
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr " オブジェクト中の残り自由度はこの 'lm'ではないと示唆します "
+
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
 
 msgid "family '"
 msgstr " ファミリ ' "
 
 msgid "' not implemented"
 msgstr " 実装されていません "
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr " 完全なフィットに対するANOVA F検定には信頼性がありません "
@@ -1298,6 +1310,9 @@ msgstr " を持つモデルを取り除きました。応答が以下と異な�
 
 msgid "model 1"
 msgstr " モデル 1 "
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
