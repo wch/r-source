@@ -245,6 +245,11 @@ double R_pow(double x, double y) /* = x ^ y */
 				   non-int}; (neg)^{+-Inf} */
 }
 
+static R_INLINE double R_POW(double x, double y) /* handle x ^ 2 inline */
+{
+    return y == 2.0 ? x * x : R_pow(x, y);
+}
+
 double R_pow_di(double x, int n)
 {
     double xn = 1.0;
@@ -252,7 +257,7 @@ double R_pow_di(double x, int n)
     if (ISNAN(x)) return x;
     if (n == NA_INTEGER) return NA_REAL;
     if (n != 0) {
-	if (!R_FINITE(x)) return R_pow(x, (double)n);
+	if (!R_FINITE(x)) return R_POW(x, (double)n);
 	if (n < 0) { n = -n; x = 1/x; }
 	for(;;) {
 	    if(n & 01) xn *= x;
@@ -733,7 +738,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		REAL(ans)[i] = NA_REAL;
 	    else {
-		REAL(ans)[i] = R_pow((double) x1, (double) x2);
+		REAL(ans)[i] = R_POW((double) x1, (double) x2);
 	    }
 	}
 	break;
@@ -885,15 +890,15 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     case POWOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
 	   mod_iterate(n1, n2, i1, i2) {
-	       REAL(ans)[i] = R_pow(REAL(s1)[i1], REAL(s2)[i2]);
+	       REAL(ans)[i] = R_POW(REAL(s1)[i1], REAL(s2)[i2]);
 	    }
 	} else if(TYPEOF(s1) == INTSXP ) {
 	   mod_iterate(n1, n2, i1, i2) {
-	       REAL(ans)[i] = R_pow( R_INTEGER(s1, i1), REAL(s2)[i2]);
+	       REAL(ans)[i] = R_POW( R_INTEGER(s1, i1), REAL(s2)[i2]);
 	   }
 	} else	if(TYPEOF(s2) == INTSXP ) {
 	   mod_iterate(n1, n2, i1, i2) {
-	       REAL(ans)[i] = R_pow(REAL(s1)[i1], R_INTEGER(s2, i2));
+	       REAL(ans)[i] = R_POW(REAL(s1)[i1], R_INTEGER(s2, i2));
 	   }
 	}
 	break;
