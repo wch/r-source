@@ -196,6 +196,10 @@ static R_INLINE double R_log(double x) {
 
 double R_pow(double x, double y) /* = x ^ y */
 {
+    /* squaring is the most common of the specially handled cases so
+       check for it first. */
+    if(y == 2.0)
+	return x * x;
     if(x == 1. || y == 0.)
 	return(1.);
     if(x == 0.) {
@@ -210,6 +214,9 @@ double R_pow(double x, double y) /* = x ^ y */
    100^0.5 as 3.162278.  -g is needed, as well as -O2 or higher.
    example(pbirthday) will fail.
  */
+/* FIXME: with the y == 2.0 test now at the top that case isn't
+   reached here, but i have left it for someone who understands the
+   bug fix issue here to remove. LT */
 #if __GNUC__ == 4 && __GNUC_MINOR__ >= 3
 	return (y == 2.0) ? x*x : pow(x, y);
 #else
