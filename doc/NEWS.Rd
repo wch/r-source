@@ -361,7 +361,7 @@
       files containing Perl configuration variables: use the environment
       variables documented in \sQuote{R Internals} instead.
 
-      \item The \code{save} argument of \code{detach()} now defaults to
+      \item The \code{save} argument of \code{require()} now defaults to
       \code{FALSE} and \code{save = TRUE} is now deprecated.  (This
       facility is very rarely actually used, and was superseded by the
       \samp{Depends} field of the \file{DESCRIPTION} file long ago.)
