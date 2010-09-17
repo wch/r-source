@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-03-23 11:26+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -135,6 +135,10 @@ msgstr ""
 
 msgid "name space cannot be unloaded:"
 msgstr "Namensraum kann nicht entladen werden:"
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "... muss Namen oder Zeichenketten enthalten"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "reguläres Ausdruckmuster '[' durch '\\\\[' ersetzt"
@@ -793,6 +797,9 @@ msgstr "Lizenz für Paket '%s' nicht akzeptiert"
 msgid "Attaching package: '%s'"
 msgstr "Attache Paket: '%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr "ungültiger Paketname"
 
@@ -1430,6 +1437,9 @@ msgstr "'x' und 'y' müssen die selbe Länge haben"
 
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "falsche Werte für 'indent' und 'width'"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' muss 0 oder ncol(x) sein"

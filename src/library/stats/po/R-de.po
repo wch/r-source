@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-03-23 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -249,11 +249,11 @@ msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 "Spalten von 'contrast.obj' müssen einen Kontrast definieren (Summe = 0)"
 
-msgid "invalid interpolation method"
-msgstr "unzulässige Interpolationsmehtode"
-
 msgid "collapsing to unique 'x' values"
 msgstr "Reduktion auf einmalige 'x' Werte"
+
+msgid "invalid interpolation method"
+msgstr "unzulässige Interpolationsmehtode"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "benötige mindestens zwei nicht-NA Werte zur Interpolation"
@@ -1283,19 +1283,31 @@ msgstr "singlärer Fit aufgetreten"
 msgid "missing or negative weights not allowed"
 msgstr "fehlende oder negative Gewichte nicht erlaubt"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "unzulässiges 'lm' Objekt: keine 'terms' und keine 'qr' Komponente"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "Freiheitsgrade der Residuen legt nahe, dass es sich nicht um einen \"lm\" "
 "Fit handelt"
 
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
+
 msgid "family '"
 msgstr "Familie '"
 
 msgid "' not implemented"
 msgstr "' nicht implementiert"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
@@ -1306,6 +1318,9 @@ msgstr "enfernt, da die Response sich von"
 
 msgid "model 1"
 msgstr "Modell 1 unterscheidet"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "Vorhersage durch Fit ohne vollen Rang mag täuschen"

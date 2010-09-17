@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-04-09 19:52-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -257,11 +257,11 @@ msgstr "Подгонка модели для того чтобы сделать возможной проекцию"
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "колонки 'контраст.obj' должны определять контраст (с нулевой суммой)"
 
-msgid "invalid interpolation method"
-msgstr "неправильный метод интерполяции"
-
 msgid "collapsing to unique 'x' values"
 msgstr "свертывается в уникальные значения 'x'"
+
+msgid "invalid interpolation method"
+msgstr "неправильный метод интерполяции"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "для интерполяции нужны по крайней мере два не-NA значения"
@@ -1287,18 +1287,30 @@ msgstr "обнаружено сингулярное сглаживание"
 msgid "missing or negative weights not allowed"
 msgstr "пропущенные или отрицательные веса не разрешены"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "неправильный 'lm'-объект:  нет ни 'terms', ни компонента 'qr'"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "остаточные степени свободы в объекте указывают, что это не подгонка \"lm\""
+
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
 
 msgid "family '"
 msgstr "семейство '"
 
 msgid "' not implemented"
 msgstr "' не реализовано"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
@@ -1308,6 +1320,9 @@ msgstr "удалено, потому что зависимость отличалась от"
 
 msgid "model 1"
 msgstr "модель 1"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "предсказание от вырожденной подгонки может быть неправильным"

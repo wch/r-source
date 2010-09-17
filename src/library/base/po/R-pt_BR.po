@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -138,6 +138,10 @@ msgstr ""
 #, fuzzy
 msgid "name space cannot be unloaded:"
 msgstr "espaço de nomes '%s' não carregado"
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "'file' deve ser NULL, uma conexão ou uma string de caracteres"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -818,6 +822,9 @@ msgstr ""
 msgid "Attaching package: '%s'"
 msgstr "Anexando pacote: '%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 #, fuzzy
 msgid "invalid package name"
 msgstr "nome inválido"
@@ -1467,6 +1474,9 @@ msgstr "'x' e 'y' devem ter o mesmo comprimento"
 
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "valores incorretos de 'indent' e 'width'"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' deve ser 0 ou ncol(x)"

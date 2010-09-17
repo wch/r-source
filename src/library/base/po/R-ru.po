@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -137,6 +137,10 @@ msgstr ""
 
 msgid "name space cannot be unloaded:"
 msgstr "пространство имен  нельзя выгрузить:"
+
+#, fuzzy
+msgid "converted to character string"
+msgstr "... должен содержать имена или текстовые строки"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "образец регулярного выражения '[' заменен на  '\\\\['"
@@ -788,6 +792,9 @@ msgstr "Лицензия для пакета '%s' не принята"
 msgid "Attaching package: '%s'"
 msgstr "Присоединяю пакет: '%s'"
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr "неправильное имя пакета"
 
@@ -1419,6 +1426,9 @@ msgstr "'x' и 'y' должны иметь одинаковую длину"
 
 msgid "incorrect values of 'indent' and 'width'"
 msgstr "неправильные значения 'indent' и 'width'"
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' должен быть 0 или ncol(x)"

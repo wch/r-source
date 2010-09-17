@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
-"PO-Revision-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
+"PO-Revision-Date: 2010-09-17 09:19\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -260,11 +260,11 @@ msgstr "Refitting model to allow projection"
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "columns of ‘contrast.obj’ must define a contrast(sum to zero)"
 
-msgid "invalid interpolation method"
-msgstr "invalid interpolation method"
-
 msgid "collapsing to unique 'x' values"
 msgstr "collapsing to unique ‘x’ values"
+
+msgid "invalid interpolation method"
+msgstr "invalid interpolation method"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "need at least two non-NA values to interpolate"
@@ -1269,17 +1269,30 @@ msgstr "singular fit encountered"
 msgid "missing or negative weights not allowed"
 msgstr "missing or negative weights not allowed"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
-msgstr "invalid ‘lm’ object:  no ‘terms’ nor ‘qr’ component"
+msgid "invalid 'lm' object:  no 'terms' component"
+msgstr "invalid ‘lm’ object:  no ‘terms’ component"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr "calling summary.lm(<fake-lm-object>) ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "residual degrees of freedom in object suggest this is not an “lm” fit"
+
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
+"lm object does not have a proper ‘qr’ component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
 
 msgid "family '"
 msgstr "family '"
 
 msgid "' not implemented"
 msgstr "' not implemented"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr "calling anova.lm(<fake-lm-object>) ..."
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "ANOVA F-tests on an essentially perfect fit are unreliable"
@@ -1289,6 +1302,9 @@ msgstr "removed because response differs from"
 
 msgid "model 1"
 msgstr "model 1"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr "calling predict.lm(<fake-lm-object>) ..."
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "prediction from a rank-deficient fit may be misleading"

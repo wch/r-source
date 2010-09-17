@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1010,6 +1010,24 @@ msgstr ""
 msgid "Field \"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
+msgid "The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target"
+msgstr ""
+
+msgid "\"%s\" is not a defined class in this environment"
+msgstr ""
+
+msgid "Invalid Class argument:  should be a single string"
+msgstr ""
+
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr ""
+
+msgid "Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid "a call to superClass() is in the method \"%s\" but there is no superclass definition of this method for class \"%s\""
+msgstr ""
+
 msgid "\"%s\" is not a reference class"
 msgstr ""
 
@@ -1022,13 +1040,28 @@ msgstr ""
 msgid "Some elements of the list (e.g., %d) are not functions"
 msgstr ""
 
+msgid "direct calls to callSuper() are invalid:  should only be called from another method"
+msgstr ""
+
+msgid "Arguments to methods() must be named, or one named list"
+msgstr ""
+
+msgid "Topic \"%s\" is not a method name in class \"%s\"\nThe class definition follows"
+msgstr ""
+
+msgid "The overriding class(\"%s\") of field \"%s\" is not a subclass of the existing field definition (\"%s\")"
+msgstr ""
+
 msgid "No definition found for inherited class: %s"
 msgstr ""
 
-msgid "\"%s\" is not a known reference class"
+msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
 msgstr ""
 
-msgid "Invalid accessor function list: %s"
+msgid "The fieldReadOnly argument must be the names of the read-only fields; got an object of class \"%s\""
+msgstr ""
+
+msgid "Some fieldReadOnly names are not fields: %s"
 msgstr ""
 
 msgid "Prototypes supplied for non-fields: %s"
@@ -1044,6 +1077,12 @@ msgid "(class \"%s\")"
 msgstr ""
 
 msgid "for method %s()"
+msgstr ""
+
+msgid "Trying to set a read-only field ("
+msgstr ""
+
+msgid ")"
 msgstr ""
 
 msgid "invalid ignore= argument; should be a class definition or a character vector, got an object of class %s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,6 +120,9 @@ msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
 msgstr ""
 
 msgid "name space cannot be unloaded:"
+msgstr ""
+
+msgid "converted to character string"
 msgstr ""
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -737,6 +740,9 @@ msgstr ""
 msgid "Attaching package: '%s'"
 msgstr ""
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr ""
 
@@ -1326,6 +1332,9 @@ msgid "'x' and 'y' must have the same length"
 msgstr ""
 
 msgid "incorrect values of 'indent' and 'width'"
+msgstr ""
+
+msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"

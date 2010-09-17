@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -252,11 +252,11 @@ msgstr ""
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'의 열은 대비(총계가 0)를 정의하지 않으면 되지 않습니다"
 
-msgid "invalid interpolation method"
-msgstr "무효인 보간법입니다"
-
 msgid "collapsing to unique 'x' values"
 msgstr "유일한 'x'값을 얻기 위해서 축소했습니다"
+
+msgid "invalid interpolation method"
+msgstr "무효인 보간법입니다"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "보간을 위해서 적어도 2개의 non-NA값이 필요합니다"
@@ -1321,11 +1321,20 @@ msgstr "특이한 적용시켜 조우했습니다"
 msgid "missing or negative weights not allowed"
 msgstr "결손 또는 negative의 중량감은 허용되지 않습니다"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "무효인 'lm'오브젝트: 항('terms') 혹은 'qr'성분이 없습니다"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "오브젝트중의 나머지 자유도는 이 'lm'가 아니라고 시사합니다"
+
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
 
 msgid "family '"
 msgstr ""
@@ -1333,6 +1342,9 @@ msgstr ""
 #, fuzzy
 msgid "' not implemented"
 msgstr "유형 '%s'는 실제 적용되지 않습니다"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
@@ -1342,6 +1354,9 @@ msgstr "(을)를 가지는 모델을 제거 했습니다. 응답이하와 다르
 
 msgid "model 1"
 msgstr "모델 1"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""

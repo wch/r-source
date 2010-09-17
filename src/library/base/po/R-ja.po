@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:38\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-04-03 18:36+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -131,6 +131,10 @@ msgstr ""
 
 msgid "name space cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません "
+
+#, fuzzy
+msgid "converted to character string"
+msgstr " ... は名前あるいは文字列を含んでいなくてはなりません "
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr " 正規表現パターン '[' を '\\\\[' で置き換えました "
@@ -794,6 +798,9 @@ msgstr "パッケージ '%s' のライセンスは受け入れられていませ
 msgid "Attaching package: '%s'"
 msgstr " 次のパッケージを付け加えます: '%s' "
 
+msgid "'verbose' and 'quietly' are both true; being verbose then .."
+msgstr ""
+
 msgid "invalid package name"
 msgstr " 不当なパッケージ名です "
 
@@ -1443,6 +1450,9 @@ msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 
 msgid "incorrect values of 'indent' and 'width'"
 msgstr " 'indent' と 'width' に対する値が不正です "
+
+msgid "probably wrong encoding in names(.) of column"
+msgstr ""
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr " 'nv' は 0 か ncol(x) でなければなりません "

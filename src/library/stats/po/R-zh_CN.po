@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -242,11 +242,11 @@ msgstr "重新拟合模型以提供射影"
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'列必需设定对比(总和为零)"
 
-msgid "invalid interpolation method"
-msgstr "内插方法不对"
-
 msgid "collapsing to unique 'x' values"
 msgstr "折拢'x'成相互不同的值"
+
+msgid "invalid interpolation method"
+msgstr "内插方法不对"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "调用内插至少需要两个非NA值的数据"
@@ -1246,17 +1246,29 @@ msgstr "遇到了奇异拟合"
 msgid "missing or negative weights not allowed"
 msgstr "权数不允许是遺漏值或负值"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "'lm'对象不对: 不包含'terms'或'qr'组件"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "对象的残差自由度表明这不是\"lm\" 拟合"
+
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
 
 msgid "family '"
 msgstr "族'"
 
 msgid "' not implemented"
 msgstr "'还没有实现"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
@@ -1266,6 +1278,9 @@ msgstr "删除了，因为反应不同与"
 
 msgid "model 1"
 msgstr "第一模型"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"

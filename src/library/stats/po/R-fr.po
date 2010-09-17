@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2010-03-26 13:14-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -261,11 +261,11 @@ msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
 "les colonnes de 'contrast.obj' doivent définir un contraste (somme nulle)"
 
-msgid "invalid interpolation method"
-msgstr "méthode d'interpolation incorrecte"
-
 msgid "collapsing to unique 'x' values"
 msgstr "suppression des ex-aequos de 'x'"
+
+msgid "invalid interpolation method"
+msgstr "méthode d'interpolation incorrecte"
 
 msgid "need at least two non-NA values to interpolate"
 msgstr "il faut au moins deux valeurs non manquantes pour interpoler"
@@ -1319,19 +1319,31 @@ msgstr "ajustement singulier rencontré"
 msgid "missing or negative weights not allowed"
 msgstr "les poids manquants ou négatifs ne sont pas autorisés"
 
-msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
+#, fuzzy
+msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "object 'lm' incorrect : pas de composantes 'terms' ni 'qr'"
+
+msgid "calling summary.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "les degrés de liberté résiduels de l'objet suggère que ce n'est pas un "
 "ajustement \"lm\""
 
+msgid ""
+"lm object does not have a proper 'qr' component.\n"
+" Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
+
 msgid "family '"
 msgstr "famille '"
 
 msgid "' not implemented"
 msgstr "' non implémenté"
+
+msgid "calling anova.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr ""
@@ -1343,6 +1355,9 @@ msgstr "supprimés car la réponse diffère de"
 
 msgid "model 1"
 msgstr "modèle 1"
+
+msgid "calling predict.lm(<fake-lm-object>) ..."
+msgstr ""
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""

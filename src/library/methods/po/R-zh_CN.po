@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1380,6 +1380,33 @@ msgid ""
 "Field \"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
+msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a defined class in this environment"
+msgstr "类别\"%s\"在这个环境里没有定义"
+
+#, fuzzy
+msgid "Invalid Class argument:  should be a single string"
+msgstr "为單元%d所设定的类别不对(应当是条单字符字串)"
+
+#, fuzzy
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr "'%s'不是單元名字中的一个"
+
+msgid ""
+"Method %s from class %s was not processed into a class method until being "
+"installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid ""
+"a call to superClass() is in the method \"%s\" but there is no superclass "
+"definition of this method for class \"%s\""
+msgstr ""
+
 #, fuzzy
 msgid "\"%s\" is not a reference class"
 msgstr "\"%s\"不是有定义的类别"
@@ -1397,17 +1424,40 @@ msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%
 msgid "Some elements of the list (e.g., %d) are not functions"
 msgstr ""
 
+msgid ""
+"direct calls to callSuper() are invalid:  should only be called from another "
+"method"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments to methods() must be named, or one named list"
+msgstr "方法里的参数和泛型函数里的参数之顺序不同"
+
+msgid ""
+"Topic \"%s\" is not a method name in class \"%s\"\n"
+"The class definition follows"
+msgstr ""
+
+msgid ""
+"The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
+"existing field definition (\"%s\")"
+msgstr ""
+
 #, fuzzy
 msgid "No definition found for inherited class: %s"
 msgstr "类别%s的定义不存在"
 
-#, fuzzy
-msgid "\"%s\" is not a known reference class"
-msgstr "\"%s\"不是有定义的类别"
+msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgstr ""
 
 #, fuzzy
-msgid "Invalid accessor function list: %s"
-msgstr "函数参数的索引不对"
+msgid ""
+"The fieldReadOnly argument must be the names of the read-only fields; got an "
+"object of class \"%s\""
+msgstr "第一个参数应当为泛型函数的名称(现在却是类别为\"%s\"的对象)"
+
+msgid "Some fieldReadOnly names are not fields: %s"
+msgstr ""
 
 msgid "Prototypes supplied for non-fields: %s"
 msgstr ""
@@ -1425,6 +1475,13 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
+
+#, fuzzy
+msgid "Trying to set a read-only field ("
+msgstr "无法为\"%s\"与自己设立'as'关系"
+
+msgid ")"
+msgstr ")"
 
 #, fuzzy
 msgid ""
@@ -1592,6 +1649,14 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
 
+#, fuzzy
+#~ msgid "\"%s\" is not a known reference class"
+#~ msgstr "\"%s\"不是有定义的类别"
+
+#, fuzzy
+#~ msgid "Invalid accessor function list: %s"
+#~ msgstr "函数参数的索引不对"
+
 #~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
 #~ msgstr "将种类\"%s\"通过类别\"%s\"定义为超类"
 
@@ -1600,9 +1665,6 @@ msgstr[0] "类别%s的定义不存在"
 #~ "invalid argument 'f', expected a function or its name, got an object of "
 #~ "class %s"
 #~ msgstr "参数'f'不对，应该是函数或函数的名字，但得到的却是类别为\"%s\"的对象"
-
-#~ msgid "Arguments of method and generic are not in the same order"
-#~ msgstr "方法里的参数和泛型函数里的参数之顺序不同"
 
 #~ msgid ""
 #~ "in the method signature for function \"%s\" no definition for class: %s"
@@ -1651,9 +1713,6 @@ msgstr[0] "类别%s的定义不存在"
 
 #~ msgid "\") has defined subclasses that should also be removed: ("
 #~ msgstr "\")带定义了的子类别，这些子类别也应该被删除：("
-
-#~ msgid ")"
-#~ msgstr ")"
 
 #~ msgid ""
 #~ "'NextMethod' not defined because the current method is not a "
