@@ -613,6 +613,8 @@
       pointer objects even when the pointer addresses were the same.
 
       \item \code{L$a@x[] <- val} did not duplicate in a case it should have.
+
+      \item \code{tempfile()} initializes the RNG if not done so already to make sure that the returned files are random even directly after startup. (\PR{14381})
     }
   }
 }
