@@ -97,6 +97,13 @@
        portable way to find the binaries such as \file{Rscript.exe}.
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \command{R.exe} when used in place of \command{Rterm.exe} used to
+      set the environment variables set by \command{R CMD}.  Conversely,
+      \command{R CMD BATCH} did not.
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.11.1 patched}{

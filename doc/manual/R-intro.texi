@@ -7169,11 +7169,11 @@ Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger
 a break to the debugger during command line processing.
 @end table
 
-In Windows with @code{R CMD} you may also specify your own @file{.bat},
-@file{.exe}, @file{.sh} or @file{.pl} file.  It will be run under the
-appropriate interpreter (Perl for @file{.pl}) with several environment
-variables set appropriately, including @env{R_HOME}, @env{R_VERSION},
-@env{R_CMD}, @env{R_OSTYPE}, @env{PATH} and @env{TEXINPUTS}.  For
+Under Windows with @code{R CMD} you may also specify your own
+@file{.bat}, @file{.exe}, @file{.sh} or @file{.pl} file.  It will be run
+under the appropriate interpreter (Perl for @file{.pl}) with several
+environment variables set appropriately, including @env{R_HOME},
+@env{R_OSTYPE}, @env{PATH}, @env{BSTINPUTS} and @env{TEXINPUTS}.  For
 example, if you already have @file{latex.exe} on your path, then
 
 @example
@@ -7182,7 +7182,8 @@ R CMD latex.exe mydoc
 @noindent
 will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
 @file{share/texmf} macros appended to @env{TEXINPUTS}.  (Unfortunately,
-this does not help with the MiKTeX build of @LaTeX{}.)
+this does not help with the MiKTeX build of @LaTeX{}, but
+@command{R CMD texify mydoc} will work in that case.)
 
 @node Invoking R under Mac OS X, Scripting with R, Invoking R under Windows, Invoking R
 @appendixsec Invoking R under Mac OS X
