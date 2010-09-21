@@ -164,9 +164,11 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
         ## FIXME: use C code, or something like merge?
         ## The files can be very big.
         if(!useDiff) cat("\nfiles differ in number of lines:\n")
-        a <- tempfile()
-        b <- tempfile()
+        ## at one point in pre-2.12.0, two calls to tempfile() gave the
+        ## same value, so work around this.
+        a <- tempfile("Rdiffa")
         writeLines(left, a)
+        b <- tempfile("Rdiffb")
         writeLines(right, b)
         return(system(paste("diff -bw", shQuote(a), shQuote(b))))
     }
