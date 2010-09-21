@@ -55,7 +55,7 @@ static int isDir(char *path)
 {
     struct stat sb;
     int isdir = 0;
-    if(path[0] && stat(path, &sb) == 0) 
+    if(path[0] && stat(path, &sb) == 0)
 	isdir = (sb.st_mode & S_IFDIR) > 0;
     return isdir;
 }
@@ -90,7 +90,7 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
-#define PROCESS_CMD(ARG) 	for (i = cmdarg + 1; i < argc; i++) {\
+#define PROCESS_CMD(ARG)	for (i = cmdarg + 1; i < argc; i++) {\
 	    strcat(cmd, ARG);\
 	    if (strlen(cmd) + strlen(argv[i]) > 9900) {\
 		fprintf(stderr, "command line too long\n");\
@@ -241,9 +241,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(27);
 	}
 	strcat(cmd, cmd_extra);
-	if(timing) 
-	    putenv("R_BATCH=1234"); 
+
 	/* to get .Last.sys run: see profile/Common.R */
+	if(timing) putenv("R_BATCH=1234");
 
 	/* fprintf(stderr, "%s->%s\n", infile, outfile);
 	   fprintf(stderr, "%s\n", cmd); */
@@ -276,15 +276,15 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	CloseHandle(pi.hThread);
 	return(pwait(pi.hProcess));
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "INSTALL")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "REMOVE")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
 		 getRHOME(3), BINDIR, getRHOME(3));
 	for (i = cmdarg + 1; i < argc; i++){
@@ -301,25 +301,25 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else strcat(cmd, argv[i]);
 	}
 	return(system(cmd));
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "build")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.build_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "check")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.check_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rprof")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.Rprof() R_DEFAULT_PACKAGES=utils LC_COLLATE=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-   } else if (cmdarg > 0 && argc > cmdarg && 
+   } else if (cmdarg > 0 && argc > cmdarg &&
 	      !strcmp(argv[cmdarg], "texify")) {
 	if (argc < cmdarg+2) {
 	    fprintf(stderr, "\nUsage: %s texify [options] filename\n", RCMD);
@@ -328,59 +328,59 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	snprintf(cmd, CMD_LEN,
 		 "texify.exe -I %s/share/texmf/tex/latex -I %s/share/texmf/bibtex/bst", getRHOME(3), getRHOME(3));
 	PROCESS_CMD(" ");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "SHLIB")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.SHLIB() R_DEFAULT_PACKAGES=NULL --no-restore --slave --no-site-file --no-init-file --args",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD(" ");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rdiff")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.Rdiff() R_DEFAULT_PACKAGES=NULL --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rdconv")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rd2txt")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args nextArg-tnextArgtxt",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rd2dvi")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Rd2pdf")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args nextArg--pdf",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Sweave")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Sweave('%s')\"",
 		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
 	return(system(cmd));
-    } else if (cmdarg > 0 && argc > cmdarg && 
+    } else if (cmdarg > 0 && argc > cmdarg &&
 	       !strcmp(argv[cmdarg], "Stangle")) {
-	snprintf(cmd, CMD_LEN, 
+	snprintf(cmd, CMD_LEN,
 		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Stangle('%s')\"",
 		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
 	return(system(cmd));
     } else {
-	char RHOME[MAX_PATH], Rarch[30], Bindir[30], 
+	char RHOME[MAX_PATH], Rarch[30], Bindir[30],
 	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
 	char *RHome = getRHOME(3), *Path;
-	if (argc > cmdarg+1 && 
+	if (argc > cmdarg+1 &&
 	    strcmp(argv[cmdarg+1], "RHOME") == 0) {
 	    fprintf(stdout, "%s", RHome);
 	    return(0);
@@ -395,20 +395,16 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	putenv("R_CMD=R CMD");
 
-        Path = malloc( strlen(getenv("PATH")) + MAX_PATH + 10 );
-        if (!Path) {
-            fprintf(stderr, "PATH too long\n");
-            return(4);
-        }
-        
+	Path = malloc(strlen(getenv("PATH")) + MAX_PATH + 10);
+	if (!Path) {fprintf(stderr, "PATH too long\n"); return(4);}
+
 	strcpy(Path, "PATH=");
 	strcat(Path, RHome);
-	strcat(Path, "\\"); 
+	strcat(Path, "\\");
 	strcat(Path, BINDIR);
-	strcat(Path, ";"); 
+	strcat(Path, ";");
 	strcat(Path, getenv("PATH"));
-	putenv(Path);
-	free(Path);
+	putenv(Path); /* don't free arg of putenv */
 
 	if (!getenv("R_ARCH")) {
 	    strcpy(Rarch, "R_ARCH=/");
@@ -444,7 +440,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    putenv(HOME);
 	}
 
-	strcpy(env_path, RHome); strcat(env_path, "/etc/rcmd_environ");
+	strcpy(env_path, RHome); strcat(env_path, "/etc/Rcmd_environ");
 	process_Renviron(env_path);
 
 	if (cmdarg > 0 && argc > cmdarg) {
