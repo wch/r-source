@@ -401,6 +401,9 @@
        only if \code{install-info} is not found) and some
        maintainer-mode-only scripts.
 
+       \command{R CMD} no longer manipulates the environment variables
+       \env{PERL5LIB} and \env{PERLLIB}.
+
       \item \command{R CMD check} has a new argument \option{--extra-arch}
        to confine tests to those needed to check an additional
        sub-architecture.
