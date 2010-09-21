@@ -1598,9 +1598,11 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             for (f in allfiles) {
                 ## watch out for spaces in file names here
                 line <- suppressWarnings(system2("file", shQuote(f), TRUE, TRUE))
-                if (grepl("executable", line, useBytes=TRUE) &&
-                    !grepl("script text", line, useBytes=TRUE))
-                    execs <- c(execs, f)
+                ## Some versions of 'file' put out information lines
+                ## The result line is usually the last.
+                ex <- grepl("executable", line, useBytes=TRUE)
+                ex2 <- grepl("script text", line, useBytes=TRUE)
+                if (any(ex & !ex2)) execs <- c(execs, f)
             }
             known <- rep(FALSE, length(execs))
             pexecs <- file.path(pkgname, execs)
@@ -1614,21 +1616,15 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             checkingLog(Log, "for .dll and .exe files")
             execs <- grep("\\.(exe|dll)$", allfiles, value = TRUE)
         }
-        if (R_check_executables_exclusions &&
-            file.exists("BinaryFiles")) {
+        if (R_check_executables_exclusions && file.exists("BinaryFiles")) {
             excludes <- readLines("BinaryFiles")
             execs <- execs[!execs %in% excludes]
         }
-        if (grepl("^check", install) &&
-            file.exists(".install_timestamp")) {
-            execs <-
-                execs[file_test("-ot", execs, ".install_timestamp")]
-        }
+        if (grepl("^check", install) && file.exists(".install_timestamp"))
+            execs <- execs[file_test("-ot", execs, ".install_timestamp")]
         if (length(execs)) {
             warnLog("Found the following executable file(s):")
-            printLog(Log,
-                     paste("  ", execs, sep="", collapse = "\n"),
-                     "\n")
+            printLog(Log, paste("  ", execs, sep="", collapse = "\n"), "\n")
             wrapLog("Source packages should not contain undeclared executable files.\n",
                     "See section 'Package structure'",
                     "in manual 'Writing R Extensions'.\n")
