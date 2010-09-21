@@ -3,7 +3,10 @@
 \alias{setRefClass}
 \alias{refClassFields}
 \alias{refClassMethods}
-\alias{referenceMethods}
+\alias{initFieldArgs}
+\alias{activeBindingFunction-class}
+\alias{defaultBindingFunction-class}
+\alias{uninitializedField-class}
 \alias{refClassRepresentation-class}
 \alias{refObjectGenerator-class}
 \alias{refClass-class}
@@ -28,64 +31,44 @@ intention is that inter-system interfaces will use the software
 transparently to allow \R methods.
 }
 \usage{
-setRefClass(Class, fieldClasses = , contains = , refMethods =,
-   fieldPrototypes =, fieldReadOnly =,
-   interfaceClasses = , where =, ...)
+setRefClass(Class, fields = , contains = , methods =,
+     where =, ...)
 
 refClassFields(Class)
 refClassMethods(Class)
 
-referenceMethods(classDef, where) #see "Inter-System Interfaces"
 }
 \arguments{
   \item{Class}{
 character string name for the class.
 }
-  \item{fieldClasses}{
-a named list of the fields, to be handled by reference semantics (see
-the corresponding section below).  Note that these are distinct from
+  \item{fields}{
+either a character vector of field names or
+a named list of the fields.  The resulting fields will be accessed with reference semantics (see
+the  section on dQuote{Reference Objects}).  If the argument is a list, the
+elements of the list can be the character string name of a class, in
+which case the field must be from that class or a subclass.
+Alternatively, the element can be an accessor function that returns
+the field if called with no argument or sets it if given a single
+arguments.  See the section on \dQuote{Accessor Functions}.
+
+
+Note that fields are distinct from
 the slots, if any, in the object.  Slots are, as always, handled by
-standard \R{} object management.
+standard \R{} object management.  Slots for the class can be included
+(as the \code{representation=} argument) in the \dots argument.
 }
   \item{contains}{
 optional vector of superclasses for this class.  If a superclass is
 also a reference class, the fields and class-based methods will be inherited.
 }
-  \item{refMethods}{
+  \item{methods}{
 a named list of function definitions that can be invoked on objects
-from this class.  See the section on class-based methods below, and in
-particular the comments on accessor methods for fields.
+from this class.  These can also be created by invoking the
+\code{$methods} method on the generator object returned. %$
+See the section on \dQuote{Writing Reference Methods} for details.
 }
-  \item{fieldPrototypes}{
-an optional named list of prototype objects for a subset of the
-fields.  By default, each field will be initialized to the prototype
-object of the corresponding class.
-}
-
-  \item{fieldReadOnly}{
-      optional character vector specifying fields that should be read-only; that
-      is, their values will typically be set when an object from the
-      class is generated, but may not then be reset.
-}
-
-  \item{interfaceClasses}{
-      When a reference class is used to extend an inter-system
-      interface to another language, the proxy methods from that
-      language, such as methods defined in \code{C++}, \code{Java},
-      etc., can be made available for use in \R.  The software
-      supporting the interface must provide the method definitions
-      through the generic function \code{referenceMethods} (see the
-      section  "Inter-System Interfaces").
-
-      This argument is usually supplied via code for the inter-system
-      interface. The end user accesses a class from the interface, and
-      the code supporting the interface creates the corresponding \R
-      reference class.
-
-      If supplied, the argument must be a single class definition (of
-      whatever actual class the interface uses) or a list of such
-      definitions.
-}
+ 
   \item{where}{
 the environment in which to store the class definition.  Defaults to
 the package namespace or environment for code that is part of an \R{}
@@ -95,12 +78,6 @@ the session top level.
   \item{\dots}{
 other arguments to be passed to \code{\link{setClass}}.
 }
-
-\item{classDef}{ For \code{referenceMethods()} the definition of a class
-    in an inter-system interface (see the corresponding section).  The
-    calls to this function come from \code{setRefClass()}, not
-    directly from the user.
-  }
 }
 
 \section{Reference Objects}{
@@ -427,11 +404,6 @@ fields.
 \code{refClassMethods} returns a list of the class method functions,
 including those inherited and accessor methods generated.
 
-\code{referenceMethods} is a generic function.  Methods written for a
-particular inter-system interface package will return the list of
-reference methods supported by that interface for writing additional
-methods in \R for a particular reference class.
-
 }
 \section{NOTE:}{
 The software described here remains under development.  The current implementation (\R
@@ -449,36 +421,31 @@ John Chambers
 ## a simple editor for matrix objects.  Method  edit() changes some
 ## range of values; method undo() undoes the last edit.
 mEditor <- setRefClass("matrixEditor",
-      fieldClasses = list( data = "matrix",
+      fields = list( data = "matrix",
         edits = "list"),
-      refMethods = list(
-        edit = function(i, j, value) {
-         "Replace the elements in rows i, columns j with value"
-          x <- getData()
-          backup <-
-            list(i, j, x[i,j])
-          setEdits(c(list(backup),
-            getEdits()))
-          x[i,j] <- value
-          setData(x)
-          invisible(value)
-        },
-        undo = function() {
-          "Undo the previous call to method edit()"
-          prev <- getEdits()
-          if(length(prev)) prev <- prev[[1]]
-          else stop("No more edits to undo")
-          edit(prev[[1]], prev[[2]], prev[[3]])
-          ## trim the edits list
-          setEdits(
-            getEdits()[-(1:2)])
-          invisible(prev)
-        },
-        save = function(file) {
-          base::save(.self, file = file)
-        }
-      )
-    )
+      methods = list(
+     edit = function(i, j, value) {
+         backup <-
+             list(i, j, data[i,j])
+         edits <<- c(list(backup),
+                     edits)
+         data[i,j] <<- value
+         invisible(value)
+     },
+     undo = function() {
+         prev <- edits
+         if(length(prev)) prev <- prev[[1]]
+         else stop("No more edits to undo")
+         edit(prev[[1]], prev[[2]], prev[[3]])
+         ## trim the edits list
+         length(edits) <<- length(edits) - 2
+         invisible(prev)
+     },
+     save = function(file) {
+         base::save(.self, file = file)
+     }
+     ))
+    
 xMat <- matrix(1:12,4,3)
 xx <- mEditor$new(data = xMat)
 xx$edit(2, 2, 0)
@@ -493,39 +460,10 @@ load(tf)
 unlink(tf)
 stopifnot(identical(xx$data, .self$data))
 }
-## A version of the refMethods= argument above that
-## is a little simpler and faster but only works with
-## the implementation in R, not with interfaces:
-localMethods <- list(
-     edit = function(i, j, value) {
-         backup <-
-             list(i, j, data[i,j])
-         edits <<- c(list(backup),
-                     edits)
-         data[i,j] <<- value
-         invisible(value)
-     },
-     undo = function() {
-         prev <- getEdits()
-         if(length(prev)) prev <- prev[[1]]
-         else stop("No more edits to undo")
-         edit(prev[[1]], prev[[2]], prev[[3]])
-         ## trim the edits list
-         length(edits) <<- length(edits) - 2
-         invisible(prev)
-     },
-     save = function(file) {
-         base::save(.self, file = file)
-     }
-)
-setRefClass("matrixEditor2",
-      fieldClasses = list( data = "matrix",
-        edits = "list"),
-      refMethods = localMethods)
 
 ## Inheriting a reference class:  a matrix viewer
 mv <- setRefClass("matrixViewer", contains = "matrixEditor",
-    refMethods = list( view = function() matplot(data),
+    methods = list( view = function() matplot(data),
         edit = # invoke previous method, then replot
           function(i, j, value) {
             callSuper(i, j, value)
@@ -539,7 +477,6 @@ ff$data
 ff$undo()
 stopifnot(all.equal(ff$data, xMat))
 removeClass("matrixEditor")
-removeClass("matrixEditor2")
 removeClass("matrixViewer")
 }
 }

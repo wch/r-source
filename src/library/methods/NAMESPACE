@@ -228,4 +228,4 @@ export(registerImplicitGenerics)
 export(setRefClass)
 export(refClassFields)
 export(refClassMethods)
-export(referenceMethods)
+export(initFieldArgs) # used in initialize methods
