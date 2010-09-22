@@ -90,7 +90,7 @@ quantile.default <-
             ## also h*x might be invalid ... e.g. Dates and ordered factors
             qs <- x[j+2L]
             qs[h == 1] <- x[j+3L][h == 1]
-            other <- (h > 0) && (h < 1)
+            other <- (h > 0) & (h < 1)
             if(any(other)) qs[other] <- ((1-h)*x[j+2L] + h*x[j+3L])[other]
         }
     } else {
