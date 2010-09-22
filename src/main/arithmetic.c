@@ -940,6 +940,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case POWOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+            if (n2 == 1) {
+                double tmp = REAL(s2)[0];
+                for (i = 0; i < n; i++)
+		    REAL(ans)[i] = R_POW(REAL(s1)[i], tmp); 
+            }
+            else if (n1 == 1) {
+                double tmp = REAL(s1)[0];
+                for (i = 0; i < n; i++)
+		    REAL(ans)[i] = R_POW(tmp, REAL(s2)[i]);
+            }
+            else if (n1 == n2)            
+                for (i = 0; i < n; i++)
+		    REAL(ans)[i] = R_POW(REAL(s1)[i], REAL(s2)[i]);
+            else
 	   mod_iterate(n1, n2, i1, i2) {
 	       REAL(ans)[i] = R_POW(REAL(s1)[i1], REAL(s2)[i2]);
 	    }
