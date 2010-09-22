@@ -2315,8 +2315,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
     ## do run Renviron[.site] for some multiarch runs
-    R_opts3 <- "--no-site-file --no-init-file --no-restore --no-save --no-restore"
-    R_opts4 <- "--no-site-file --no-init-file --no-restore --no-save --no-restore --slave"
+    R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
+    R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
