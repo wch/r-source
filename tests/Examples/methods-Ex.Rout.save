@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-09-13 16:01:32 PDT" "2010-09-13 16:01:32 PDT"
+[1] "2010-09-22 08:48:45 BST" "2010-09-22 08:48:45 BST"
 
 > 
 > 
@@ -1820,10 +1820,11 @@ A shell of class documentation has been written to the connection
 > ### Name: ReferenceClasses
 > ### Title: Creating Classes With Fields Treated by Reference (OOP-style)
 > ### Aliases: ReferenceClasses setRefClass refClassFields refClassMethods
-> ###   referenceMethods refClassRepresentation-class
-> ###   refObjectGenerator-class refClass-class refObject-class
-> ###   refMethodDef-class SuperClassMethod-class show,refMethodDef-method
-> ###   show,refClassRepresentation-method
+> ###   initFieldArgs activeBindingFunction-class
+> ###   defaultBindingFunction-class uninitializedField-class
+> ###   refClassRepresentation-class refObjectGenerator-class refClass-class
+> ###   refObject-class refMethodDef-class SuperClassMethod-class
+> ###   show,refMethodDef-method show,refClassRepresentation-method
 > ### Keywords: programming classes
 > 
 > ### ** Examples
@@ -1831,36 +1832,31 @@ A shell of class documentation has been written to the connection
 > ## a simple editor for matrix objects.  Method  edit() changes some
 > ## range of values; method undo() undoes the last edit.
 > mEditor <- setRefClass("matrixEditor",
-+       fieldClasses = list( data = "matrix",
++       fields = list( data = "matrix",
 +         edits = "list"),
-+       refMethods = list(
-+         edit = function(i, j, value) {
-+          "Replace the elements in rows i, columns j with value"
-+           x <- getData()
-+           backup <-
-+             list(i, j, x[i,j])
-+           setEdits(c(list(backup),
-+             getEdits()))
-+           x[i,j] <- value
-+           setData(x)
-+           invisible(value)
-+         },
-+         undo = function() {
-+           "Undo the previous call to method edit()"
-+           prev <- getEdits()
-+           if(length(prev)) prev <- prev[[1]]
-+           else stop("No more edits to undo")
-+           edit(prev[[1]], prev[[2]], prev[[3]])
-+           ## trim the edits list
-+           setEdits(
-+             getEdits()[-(1:2)])
-+           invisible(prev)
-+         },
-+         save = function(file) {
-+           base::save(.self, file = file)
-+         }
-+       )
-+     )
++       methods = list(
++      edit = function(i, j, value) {
++          backup <-
++              list(i, j, data[i,j])
++          edits <<- c(list(backup),
++                      edits)
++          data[i,j] <<- value
++          invisible(value)
++      },
++      undo = function() {
++          prev <- edits
++          if(length(prev)) prev <- prev[[1]]
++          else stop("No more edits to undo")
++          edit(prev[[1]], prev[[2]], prev[[3]])
++          ## trim the edits list
++          length(edits) <<- length(edits) - 2
++          invisible(prev)
++      },
++      save = function(file) {
++          base::save(.self, file = file)
++      }
++      ))
+>     
 > xMat <- matrix(1:12,4,3)
 > xx <- mEditor$new(data = xMat)
 > xx$edit(2, 2, 0)
@@ -1874,8 +1870,6 @@ A shell of class documentation has been written to the connection
 > mEditor$help("undo")
 Call: $undo()
  
-Undo the previous call to method edit()
-
 > stopifnot(all.equal(xx$data, xMat))
 > ## Don't show: 
 > tf <- tempfile()
@@ -1884,41 +1878,10 @@ Undo the previous call to method edit()
 > unlink(tf)
 > stopifnot(identical(xx$data, .self$data))
 > ## End Don't show
-> ## A version of the refMethods= argument above that
-> ## is a little simpler and faster but only works with
-> ## the implementation in R, not with interfaces:
-> localMethods <- list(
-+      edit = function(i, j, value) {
-+          backup <-
-+              list(i, j, data[i,j])
-+          edits <<- c(list(backup),
-+                      edits)
-+          data[i,j] <<- value
-+          invisible(value)
-+      },
-+      undo = function() {
-+          prev <- getEdits()
-+          if(length(prev)) prev <- prev[[1]]
-+          else stop("No more edits to undo")
-+          edit(prev[[1]], prev[[2]], prev[[3]])
-+          ## trim the edits list
-+          length(edits) <<- length(edits) - 2
-+          invisible(prev)
-+      },
-+      save = function(file) {
-+          base::save(.self, file = file)
-+      }
-+ )
-> setRefClass("matrixEditor2",
-+       fieldClasses = list( data = "matrix",
-+         edits = "list"),
-+       refMethods = localMethods)
-An object of class "refObjectGenerator"
-<environment: 0x10255cd90>
 > 
 > ## Inheriting a reference class:  a matrix viewer
 > mv <- setRefClass("matrixViewer", contains = "matrixEditor",
-+     refMethods = list( view = function() matplot(data),
++     methods = list( view = function() matplot(data),
 +         edit = # invoke previous method, then replot
 +           function(i, j, value) {
 +             callSuper(i, j, value)
@@ -1937,8 +1900,6 @@ An object of class "refObjectGenerator"
 > ff$undo()
 > stopifnot(all.equal(ff$data, xMat))
 > removeClass("matrixEditor")
-[1] TRUE
-> removeClass("matrixEditor2")
 [1] TRUE
 > removeClass("matrixViewer")
 [1] TRUE

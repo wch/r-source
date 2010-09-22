@@ -617,7 +617,11 @@
 
       \item \code{L$a@x[] <- val} did not duplicate in a case it should have.
 
-      \item \code{tempfile()} initializes the RNG if not done so already to make sure that the returned files are random even directly after startup. (\PR{14381})
+      \item \code{tempfile()} now always gives a random file name (even
+      if the directory is specified) when called directly after
+      startup and before the \R RNG had been used.  (\PR{14381})
+
+      \item \code{quantile(type=6)} behaved inconsistently.  (\PR{14383})
     }
   }
 }

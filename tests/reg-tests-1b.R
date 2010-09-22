@@ -1333,4 +1333,12 @@ stopifnot(getNamespaceVersion("stats") == getRversion())
 ## failed in R 2.11.x
 
 
+## PR#14383
+x <- rnorm(100)
+z1 <- quantile(x, type = 6, probs = c(0, .5))
+z2 <- quantile(x, type = 6, probs = c(.5, 0))
+stopifnot(z1 == rev(z2))
+## differed in 2.11.x
+
+
 proc.time()
