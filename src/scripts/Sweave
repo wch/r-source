@@ -1,5 +1,7 @@
-#
-# ${R_HOME}/bin/Sweave
+# ${R_HOME}/bin/Sweave -*- sh -*-
 
 R_EXE="${R_HOME}/bin/R"
-echo "utils:::.Sweave(\"$1\")" | "${R_EXE}" --vanilla --slave
+
+R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-save --no-restore --slave'}
+
+echo "utils:::.Sweave(\"$1\")" | "${R_EXE}" $R_SWEAVE_OPTIONS
