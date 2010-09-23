@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2009-1010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.11.0\n"
+"Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20+0100\n"
-"PO-Revision-Date: 2010-03-24 12:29+0100\n"
+"POT-Creation-Date: 2010-09-17 09:19+0100\n"
+"PO-Revision-Date: 2010-09-21 14:32+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -175,24 +175,24 @@ msgid "only gray colors are allowed in this color model"
 msgstr "in diesem Farbmodell sind nur Graustufen zulässig"
 
 #: devPS.c:3084 devPS.c:4706 devPS.c:5802
-#, fuzzy, c-format
+#, c-format
 msgid "filename too long in %s()"
-msgstr "Dateiname im Aufruf von %s() zu lang"
+msgstr "Dateiname in %s() zu lang"
 
 #: devPS.c:3090 devPS.c:4712 devPS.c:5808
 #, c-format
 msgid "memory allocation problem in %s()"
-msgstr ""
+msgstr "Speicherreservierungsproblem in %s()"
 
 #: devPS.c:3106 devPS.c:5850
-#, fuzzy, c-format
+#, c-format
 msgid "encoding path is too long in %s()"
-msgstr "Kodierungspfad ist zu lang"
+msgstr "Kodierungspfad ist zu lang in %s()"
 
 #: devPS.c:3120 devPS.c:4752
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file in %s()"
-msgstr "Laden der Kodierungsdatei '%s' fehlgeschlagen"
+msgstr "Laden der Kodierungsdatei in %s() fehlgeschlagen"
 
 #: devPS.c:3165 devPS.c:3228 devPS.c:5909 devPS.c:5964 devPS.c:7423
 msgid "Invalid font type"
@@ -377,14 +377,12 @@ msgid "failed to load default encoding"
 msgstr "konnte Standardkodierung nicht laden"
 
 #: devPS.c:5932
-#, fuzzy
 msgid "Failed to initialise default PDF font"
-msgstr "Konnte den Standard-Zeichensatz für XFig nicht initialisieren"
+msgstr "Konnte den Standard-Zeichensatz für PDF nicht initialisieren"
 
 #: devPS.c:5987
-#, fuzzy
 msgid "Failed to initialise additional PDF fonts"
-msgstr "Konnte zusätzliche PostScript Zeichensätze nicht initialisieren"
+msgstr "Konnte zusätzliche PDF Zeichensätze nicht initialisieren"
 
 #: devPS.c:6000
 msgid "failed to allocate rasters"
@@ -463,9 +461,9 @@ msgid "invalid value of '%s'"
 msgstr "unzulässiger Wert von '%s'"
 
 #: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3709
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start %s() device"
-msgstr "kann Gerät nicht starten"
+msgstr "kann %s()-Gerät nicht starten"
 
 #: devPS.c:8191
 #, c-format

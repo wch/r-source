@@ -1,15 +1,15 @@
 # German translation of
 # src/library/methods/po/methods.pot
 #
-# Copyright (C) 2007-2009 The R Foundation
+# Copyright (C) 2007-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-08-30 08:39+0100\n"
-"PO-Revision-Date: 2009-10-07 14:27+0200\n"
+"PO-Revision-Date: 2010-09-21 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -205,7 +205,7 @@ msgstr ""
 
 #: methods_list_dispatch.c:833
 msgid "Class should be either a character-string name or a class definition"
-msgstr ""
+msgstr "Class sollte entweder ein Zeichenkettenname oder eine Klassendefinition sein"
 
 #: methods_list_dispatch.c:914
 #, c-format

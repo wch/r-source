@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -866,6 +866,14 @@ msgstr "没有'%s'文件"
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "现在dyn.unload(\"%s\") ..."
 
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "%s不再有用。"
+
+#, fuzzy
+msgid "save != FALSE is defunct"
+msgstr "'%s'不再有用。"
+
 msgid "Loading required package: %s"
 msgstr "载入需要的程辑包：%s"
 
@@ -1619,10 +1627,6 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
-
-#, fuzzy
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "%s不再有用。"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "找不到共享图书馆'%s'"

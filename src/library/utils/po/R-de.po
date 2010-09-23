@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-08-17 16:04\n"
-"PO-Revision-Date: 2010-03-24 12:26+0100\n"
+"PO-Revision-Date: 2010-09-22 15:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,18 +85,16 @@ msgid "%d occurrences in %s"
 msgstr "%d Vorkommen in %s"
 
 msgid "No suitable spell check program found."
-msgstr ""
+msgstr "Keine passende Rechtschreibprüfung gefunden."
 
-#, fuzzy
 msgid "Filter '%s' is not available."
-msgstr "test '%s' ist nicht verfügbar"
+msgstr "Filter '%s' ist nicht verfügbar"
 
 msgid "Invalid 'filter' argument."
 msgstr "unzulässiges 'filter' Argument"
 
-#, fuzzy
 msgid "Processing file %s"
-msgstr "Verarbeite Datei"
+msgstr "Verarbeite Datei %s"
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -134,58 +132,59 @@ msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
 msgstr ""
+"Nicht alle Argumente haben dieselbe Länge. Die folgenden werden recycled:\n"
+"%s"
 
 msgid ","
 msgstr ","
 
 msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr ""
+msgstr "Benutze entweder 'given' oder 'first'/'middle' aber nicht beide."
 
 msgid "It is recommended to use 'given' instead of 'first'."
-msgstr ""
+msgstr "Es ist empfohlen 'given' anstelle von 'first' zu nutzen."
 
 msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr ""
+msgstr "Es ist empfohlen 'given' anstelle von 'middle' zu nutzen."
 
 msgid "Use either 'family' or 'last' but not both."
-msgstr ""
+msgstr "Nutze entweder 'family' oder 'last' aber nicht beide."
 
 msgid "It is recommended to use 'family' instead of 'last'."
-msgstr ""
+msgstr "Es ist empfohlen 'family' statt 'last' zu nutzen."
 
-#, fuzzy
 msgid "Invalid role specification(s): %s."
-msgstr "unzulässige Spezifikation für 'quote'"
+msgstr "unzulässige Spezifikation(en) für role: %s."
 
 msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr ""
+msgstr "Es ist empfohlen given/family statt first/middle/last zu nutzen."
 
 msgid "method is just applicable to 'person' objects"
-msgstr ""
+msgstr "Methode kann nur auf Objekte vom Typ 'person' angewendet werden"
 
 msgid "all arguments must be of class \"person\""
 msgstr "Alle Argumente müssen zur Klasse \"person\" gehören"
 
 msgid "at least one field has to be specified"
-msgstr ""
+msgstr "mindestens ein feld muss angegeben werden"
 
 msgid "all fields have to be named"
-msgstr ""
+msgstr "alle Felder müssen Namen haben"
 
 msgid "'bibtype' has to be one of"
-msgstr ""
+msgstr "'bibtype' muss aus Folgenden sein"
 
 msgid "A bibentry of bibtype '"
-msgstr ""
+msgstr "Ein bibentry mit bibtype '"
 
 msgid "' has to correctly specify the field(s):"
-msgstr ""
+msgstr "' muss die Felder korrekt spezifizieren:"
 
 msgid "' has to specify the field(s):"
-msgstr ""
+msgstr "' muss folgende Felder spezifizieren:"
 
 msgid "method is just applicable to 'bibentry' objects"
-msgstr ""
+msgstr "Methode nur anwendbar auf 'bibentry' Objekte"
 
 msgid "package '%s' not found"
 msgstr "Paket '%s' nicht gefunden"
@@ -201,7 +200,7 @@ msgstr ""
 "konnte das Jahr für '%s' aus der DESCRIPTION des Paketes nicht bestimmen"
 
 msgid "Enhanced author specification provides no authors."
-msgstr ""
+msgstr "Verbesserte Autorenspezifikation liefert keiner Autoren"
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -473,13 +472,11 @@ msgstr "'DESCRIPTION' hat Feld 'Encoding' und rekodieren ist nicht möglich"
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTIN von Paket '%s' fehlt oder zerstört"
 
-#, fuzzy
 msgid "package"
 msgstr "Paket"
 
-#, fuzzy
 msgid "not found"
-msgstr "Dokument nicht gefunden"
+msgstr " nicht gefunden"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
@@ -606,6 +603,8 @@ msgid ""
 "Removing package(s) from %s\n"
 "(as %s is unspecified)"
 msgstr ""
+"Entferne Paket(e) von %s\n"
+"(da %s nicht spezifiziert)"
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir' ist kein Verzeichnis"
@@ -660,6 +659,8 @@ msgid ""
 "Installing package(s) into %s\n"
 "(as %s is unspecified)"
 msgstr ""
+"Installiere Paket(e) nach %s\n"
+"(da %s nicht spezifiziert)"
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\" ist nicht schreibbar"
@@ -993,7 +994,7 @@ msgid "appending column names to file"
 msgstr "hänge Spaltennamen an Datei an"
 
 msgid "attempt to set '%s' ignored"
-msgstr "Versuch '%s' auf ignoriert zu setzen"
+msgstr "Versuch ignoriert '%s' zu setzen"
 
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' muss ein einzelne Zeichenkette sein"
@@ -1074,7 +1075,7 @@ msgid "failed to create '%s'"
 msgstr "Erzeugen von '%s' fehlgeschlagen"
 
 msgid "there is no 'libs' directory in package '%s'"
-msgstr ""
+msgstr "kein 'libs' Verzeichnis in paket '%s'"
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "kann alte Installation von Paket '%s' nicht entfernen"
@@ -1122,7 +1123,6 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installiere auch Abhängigkeit %s"
 msgstr[1] "installiere auch Abhängigkeiten %s"
 
-#, fuzzy
 msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'lib' Element '%s' ist keine schreibbares Verzeichnis"

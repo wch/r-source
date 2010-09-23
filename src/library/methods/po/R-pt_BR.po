@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1539,17 +1539,6 @@ msgstr "'%s' não é uma das funções básicas"
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr "classe \"%s\" extende uma classe não definida, \"%s\""
 
-#, fuzzy
-msgid ""
-"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
-"required class \"%s\""
-msgstr ""
-"inicialização do método retornou um objeto de classe \"%s\" ao invés da "
-"classe necessária \"%s\""
-
-msgid "Some elements of the list (e.g., %d) are not functions"
-msgstr ""
-
 msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
@@ -1568,30 +1557,54 @@ msgid ""
 "existing field definition (\"%s\")"
 msgstr ""
 
-#, fuzzy
-msgid "No definition found for inherited class: %s"
-msgstr "nenhuma definição existente para função '%s'"
+msgid "Field \""
+msgstr ""
 
-msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgid "\" is read-only"
+msgstr ""
+
+msgid "Arguments must all be character string names of fieds"
+msgstr ""
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"The fieldReadOnly argument must be the names of the read-only fields; got an "
-"object of class \"%s\""
+"The contains= argument should be the names of superclasses:  got an element "
+"of class \"%s\""
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
 
-msgid "Some fieldReadOnly names are not fields: %s"
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "nenhuma definição existente para função '%s'"
+
+msgid ""
+"Single class name needed for field \"%s\", got a character vector of length %"
+"d"
 msgstr ""
 
-msgid "Prototypes supplied for non-fields: %s"
+msgid "Class \"%s\" for field \"%s\" is not defined"
+msgstr ""
+
+msgid ""
+"Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
+"or a binding function"
+msgstr ""
+
+msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
 #, fuzzy
-msgid "Field classes undefined: %s"
-msgstr "classes de slot não definidas na definição de \"%s\": %s"
+msgid ""
+"Argument fields must be a list of the field classes or definitions, or else "
+"just the names of the fields; got an object of class \"%s\""
+msgstr ""
+"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
+"objeto de classe  \"%s\""
 
 msgid "Not a reference class:"
 msgstr ""
@@ -1601,13 +1614,6 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
-
-msgid "Trying to set a read-only field ("
-msgstr ""
-
-#, fuzzy
-msgid ")"
-msgstr "\""
 
 #, fuzzy
 msgid ""
@@ -1782,6 +1788,30 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+#~ "required class \"%s\""
+#~ msgstr ""
+#~ "inicialização do método retornou um objeto de classe \"%s\" ao invés da "
+#~ "classe necessária \"%s\""
+
+#, fuzzy
+#~ msgid ""
+#~ "The fieldReadOnly argument must be the names of the read-only fields; got "
+#~ "an object of class \"%s\""
+#~ msgstr ""
+#~ "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
+#~ "especificado objeto de classe \"%s\""
+
+#, fuzzy
+#~ msgid "Field classes undefined: %s"
+#~ msgstr "classes de slot não definidas na definição de \"%s\": %s"
+
+#, fuzzy
+#~ msgid ")"
+#~ msgstr "\""
 
 #, fuzzy
 #~ msgid "\"%s\" is not a known reference class"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
 "PO-Revision-Date: 2010-04-09 19:48-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1624,17 +1624,6 @@ msgstr "\"%s\" не является определенным классом"
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr "\"%s\" не является слотом в классе \"%s\""
 
-#, fuzzy
-msgid ""
-"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
-"required class \"%s\""
-msgstr ""
-"инициализированный метод возвратил объект класса \"%s\" вместо необходимого "
-"класса \"%s\""
-
-msgid "Some elements of the list (e.g., %d) are not functions"
-msgstr ""
-
 msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
@@ -1654,30 +1643,55 @@ msgid ""
 "existing field definition (\"%s\")"
 msgstr ""
 
-#, fuzzy
-msgid "No definition found for inherited class: %s"
-msgstr "нет определения класса \"%s\""
+msgid "Field \""
+msgstr ""
 
-msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgid "\" is read-only"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments must all be character string names of fieds"
+msgstr "'file' должен быть текстовой строкой или соединением"
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"The fieldReadOnly argument must be the names of the read-only fields; got an "
-"object of class \"%s\""
+"The contains= argument should be the names of superclasses:  got an element "
+"of class \"%s\""
 msgstr ""
 "первый аргумент должен быть именем(-ами) общих функций (получен объект "
 "класса \"%s\")"
 
-msgid "Some fieldReadOnly names are not fields: %s"
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "нет определения класса \"%s\""
+
+msgid ""
+"Single class name needed for field \"%s\", got a character vector of length %"
+"d"
 msgstr ""
 
-msgid "Prototypes supplied for non-fields: %s"
+msgid "Class \"%s\" for field \"%s\" is not defined"
+msgstr ""
+
+msgid ""
+"Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
+"or a binding function"
+msgstr ""
+
+msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
 #, fuzzy
-msgid "Field classes undefined: %s"
-msgstr "Значения классов различаются: %s, %s"
+msgid ""
+"Argument fields must be a list of the field classes or definitions, or else "
+"just the names of the fields; got an object of class \"%s\""
+msgstr ""
+"аргумент 'classDef' должен быть строкой либо представлением класса; получен "
+"объект класса \"%s\""
 
 #, fuzzy
 msgid "Not a reference class:"
@@ -1688,13 +1702,6 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
-
-#, fuzzy
-msgid "Trying to set a read-only field ("
-msgstr "пытаюсь установить отношение 'as' от \"%s\" на себя"
-
-msgid ")"
-msgstr ")"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1877,6 +1884,33 @@ msgid_plural "no definition for classes %s"
 msgstr[0] "нет определения класса \"%s\""
 msgstr[1] "нет определений классов \"%s\""
 msgstr[2] "нет определений классов \"%s\""
+
+#, fuzzy
+#~ msgid ""
+#~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+#~ "required class \"%s\""
+#~ msgstr ""
+#~ "инициализированный метод возвратил объект класса \"%s\" вместо "
+#~ "необходимого класса \"%s\""
+
+#, fuzzy
+#~ msgid ""
+#~ "The fieldReadOnly argument must be the names of the read-only fields; got "
+#~ "an object of class \"%s\""
+#~ msgstr ""
+#~ "первый аргумент должен быть именем(-ами) общих функций (получен объект "
+#~ "класса \"%s\")"
+
+#, fuzzy
+#~ msgid "Field classes undefined: %s"
+#~ msgstr "Значения классов различаются: %s, %s"
+
+#, fuzzy
+#~ msgid "Trying to set a read-only field ("
+#~ msgstr "пытаюсь установить отношение 'as' от \"%s\" на себя"
+
+#~ msgid ")"
+#~ msgstr ")"
 
 #, fuzzy
 #~ msgid "\"%s\" is not a known reference class"

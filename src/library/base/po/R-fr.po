@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
 "PO-Revision-Date: 2010-03-28 14:16+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -914,6 +914,14 @@ msgstr "fichier '%s' introuvable"
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "dyn.unload(\"%s\") en cours ..."
 
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "'%s' est obsolète."
+
+#, fuzzy
+msgid "save != FALSE is defunct"
+msgstr "'%s' est obsolète et retiré de R."
+
 msgid "Loading required package: %s"
 msgstr "Le chargement a nécessité le package : %s"
 
@@ -1710,10 +1718,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
-
-#, fuzzy
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "'%s' est obsolète."
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "la librairie partagée '%s' est introuvable"

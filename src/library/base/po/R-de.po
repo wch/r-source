@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
-"PO-Revision-Date: 2010-03-23 11:26+0100\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
+"PO-Revision-Date: 2010-09-21 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,12 +89,11 @@ msgstr "falsch aufgebaute Versionszeichenkette"
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
 
-#, fuzzy
 msgid "'X' must have named dimnames"
-msgstr "'x' muss Länge 1 haben"
+msgstr "'X' muss benannte Dimensionen besitzten"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "nicht alle Elemente von 'MARGIN' sind Namen von Dimensionen"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' spezifiziert ein zu großes Array"
@@ -136,9 +135,8 @@ msgstr ""
 msgid "name space cannot be unloaded:"
 msgstr "Namensraum kann nicht entladen werden:"
 
-#, fuzzy
 msgid "converted to character string"
-msgstr "... muss Namen oder Zeichenketten enthalten"
+msgstr "in Zeichenkette konvertiert"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "reguläres Ausdruckmuster '[' durch '\\\\[' ersetzt"
@@ -648,9 +646,8 @@ msgstr "Levelmengen für Faktoren unterscheiden sich"
 msgid "invalid factor level, NAs generated"
 msgstr "ungültige Faktorniveaus, NAs erzeugt"
 
-#, fuzzy
 msgid "invalid factor level, NA generated"
-msgstr "ungültige Faktorniveaus, NAs erzeugt"
+msgstr "ungültiges Faktorniveau, NA erzeugt"
 
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
@@ -799,6 +796,8 @@ msgstr "Attache Paket: '%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
 msgstr ""
+"'verbose' und 'quietly' sind beide gesetzt; bin sicherheitshalber "
+"'verbose' ..."
 
 msgid "invalid package name"
 msgstr "ungültiger Paketname"
@@ -844,44 +843,44 @@ msgstr "R Pakete vorhanden"
 
 msgid "DLL '%s' not found: maybe not installed for this architecture?"
 msgstr ""
+"DLL '%s' nicht gefunden: vielleicht für diese Architektur nicht installiert?"
 
-#, fuzzy
 msgid "shared object '%s' not found"
-msgstr "Objekt %s nicht gefunden"
+msgstr "shared object %s nicht gefunden"
 
-#, fuzzy
 msgid "DLL '%s' already loaded"
-msgstr "shared library '%s' bereits geladen"
+msgstr "DLL '%s' bereits geladen"
 
-#, fuzzy
 msgid "shared object '%s' already loaded"
-msgstr "shared library '%s' bereits geladen"
+msgstr "shared object '%s' bereits geladen"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "nun dyn.load(\"%s\") ..."
 
-#, fuzzy
 msgid "no DLL was specified"
-msgstr "keine shared library angegeben"
+msgstr "keine DLL angegeben"
 
-#, fuzzy
 msgid "no shared object was specified"
-msgstr "keine shared library angegeben"
+msgstr "keine shared object angegeben"
 
-#, fuzzy
 msgid "DLL '%s' was not loaded"
-msgstr "shared library '%s' nicht geladen"
+msgstr "DLL '%s' nicht geladen"
 
-#, fuzzy
 msgid "shared object '%s' was not loaded"
-msgstr "shared library '%s' nicht geladen"
+msgstr "shared object '%s' nicht geladen"
 
-#, fuzzy
 msgid "DLL '%s' not found"
-msgstr "Datei '%s' nicht gefunden"
+msgstr "DLL '%s' nicht gefunden"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "nun dyn.unload(\"%s\") ..."
+
+msgid "use of 'save' is deprecated"
+msgstr "Benutzung von 'save' ist veraltet."
+
+#, fuzzy
+msgid "save != FALSE is defunct"
+msgstr "'%s' ist nicht mehr gültig."
 
 msgid "Loading required package: %s"
 msgstr "Lade nötiges Paket: %s"
@@ -1055,9 +1054,8 @@ msgstr ""
 msgid "Expected a single logical value for the S4 state flag"
 msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
 
-#, fuzzy
 msgid "Expected a single logical value for the S3 state flag"
-msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
+msgstr "Erwarte einzelnen logischen Wert für das S3 Status-Flag"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
@@ -1435,7 +1433,7 @@ msgid "incorrect values of 'indent' and 'width'"
 msgstr "falsche Werte für 'indent' und 'width'"
 
 msgid "probably wrong encoding in names(.) of column"
-msgstr ""
+msgstr "wahrscheinlich die falsche Kodierung in den names(.) der Spalte"
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' muss 0 oder ncol(x) sein"
@@ -1537,9 +1535,8 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'ignore.stdout' must be TRUE or FALSE"
-msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
+msgstr "'ignore.stdout' muss TRUE oder FALSE sein"
 
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
@@ -1550,23 +1547,17 @@ msgstr "'wait' muss TRUE oder FALSE sein"
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'  muss ein Zeichenkettenvektor oder 'NULL' sein"
 
-#, fuzzy
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
-msgstr ""
-"Argumente 'show.output.on.console', 'minimized' und 'invisible' sind nur für "
-"Windows"
+msgstr "Argumente 'minimized' und 'invisible' sind nur für Windows"
 
-#, fuzzy
 msgid "setting stdout = TRUE"
-msgstr "T statt TRUE benutzt"
+msgstr "setzt stdout = TRUE"
 
-#, fuzzy
 msgid "'stdout' must be of length 1"
-msgstr "'to' muss Länge 1 haben"
+msgstr "'stdout' muss Länge 1 haben"
 
-#, fuzzy
 msgid "'stderr' must be of length 1"
-msgstr "'to' muss Länge 1 haben"
+msgstr "'stderr' muss Länge 1 haben"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' muss TRUE oder FALSE sein"
@@ -1665,10 +1656,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
-
-#, fuzzy
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "'%s' ist veraltet."
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "shared library '%s' nicht gefunden"

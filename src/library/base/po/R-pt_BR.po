@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-23 07:22\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -910,6 +910,14 @@ msgstr "arquivo '%s' não encontrado"
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "agora dyn.unload(\"%s\") ..."
 
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "'%s' é obsoleto."
+
+#, fuzzy
+msgid "save != FALSE is defunct"
+msgstr "'%s' foi extinto."
+
 msgid "Loading required package: %s"
 msgstr "Carregando pacotes exigidos: %s"
 
@@ -1709,10 +1717,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
-
-#, fuzzy
-#~ msgid "use of 'save' is deprecated"
-#~ msgstr "'%s' é obsoleto."
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "biblioteca compartilhada '%s' não encontrada"
