@@ -172,13 +172,24 @@ envRefSetField <- function(object, field,
     ## the parent environment will be used by field methods, to make
     ## them consistent with functions in this class's package
     .Object@.xData <- selfEnv
-    ## install active bindings
+    ## install prototypes and active bindings
     prototypes <- classDef@fieldPrototypes
-    for(field in objects(prototypes, all.names = TRUE)) {
-        fp <- prototypes[[field]]
+    fieldClasses <- classDef@fieldClasses
+    fields <- names(fieldClasses)
+    for(field in fields) {
+        fp <- prototypes[[field]] # prototype or NULL
         if(is(fp, "activeBindingFunction")) {
             environment(fp) <- selfEnv
             makeActiveBinding(field, fp, selfEnv)
+            if(is(fp, "defaultBindingFunction")) {
+                ## ensure an initial value
+                class <- fieldClasses[[field]]
+                if(isVirtualClass(class))
+                    value <- NULL
+                else
+                    value <- new(class)
+                assign(.bindingMetaName(field), value, envir = selfEnv)
+            }
         }
         else
             assign(field, fp, envir = selfEnv)
@@ -439,7 +450,7 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
 }
 
 .bindingMetaName <- function(fieldName)
-    paste(".", fieldName, sep="")
+    paste(".->", fieldName, sep="")
 
 .makeDefaultBinding <- function(fieldName, fieldClass, readOnly = FALSE, where) {
     metaName <- .bindingMetaName(fieldName)
@@ -579,7 +590,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
         }
         else if(is.function(thisField)) {
             fieldClasses[[i]] <- "activeBindingFunction"
-            fieldPrototypes[[i]] <-
+            fieldPrototypes[[thisName]] <-
                 new("activeBindingFunction", thisField)
         }
         else

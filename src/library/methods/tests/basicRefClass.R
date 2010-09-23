@@ -128,3 +128,16 @@ fg4 <- setRefClass("foo4",
 
 f4 <- new("foo4", flag = "another test", bar = 1:3)
 stopifnot(identical(f4@made, R.version))
+
+## simple active binding test
+abGen <- setRefClass("ab",
+                  fields = list(a = "ANY",
+                  b = function(x) if(missing(x)) a else {a <<- x; x}))
+
+ab1 <- abGen$new(a = 1)
+
+stopifnot(identical(ab1$a, 1), identical(ab1$b, 1))
+
+ab1$b <- 2
+
+stopifnot(identical(ab1$a, 2), identical(ab1$b, 2))

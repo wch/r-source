@@ -45,7 +45,7 @@ character string name for the class.
   \item{fields}{
 either a character vector of field names or
 a named list of the fields.  The resulting fields will be accessed with reference semantics (see
-the  section on dQuote{Reference Objects}).  If the argument is a list, the
+the  section on \dQuote{Reference Objects}).  If the argument is a list, the
 elements of the list can be the character string name of a class, in
 which case the field must be from that class or a subclass.
 Alternatively, the element can be an accessor function that returns
