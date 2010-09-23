@@ -954,9 +954,7 @@ case "${host_os}" in
 	    esac
           fi
         fi
-	## -mp is the preferred form of -mieee-fp
-        R_PROG_CC_FLAG([-mp],
-                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mp]))
+	## used to set IEEE flag, but this is version-dependent.
         ;;
     esac
     case  "${F77}" in
@@ -1006,8 +1004,6 @@ case "${host_os}" in
 	    esac
           fi
         fi
-        R_PROG_CC_FLAG([-mp],
-                       R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mp]))
         ;;
     esac
     case  "${CXX}" in
@@ -1034,8 +1030,6 @@ case "${host_os}" in
 	    esac
           fi
         fi
-        R_PROG_CC_FLAG([-mp],
-                       R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mp]))
         ;;
     esac
     ;;
