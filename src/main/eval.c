@@ -654,13 +654,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 			tmp = findFun(CAR(body), rho);
 		else
 			tmp = eval(CAR(body), rho);
-		if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-		   && !strcmp( PRIMNAME(tmp), "for")
-		   && !strcmp( PRIMNAME(tmp), "{")
-		   && !strcmp( PRIMNAME(tmp), "repeat")
-		   && !strcmp( PRIMNAME(tmp), "while")
-			)
-			goto regdb;
 	}
 	SrcrefPrompt("debug", getAttrib(body, R_SrcrefSymbol));
 	PrintValue(body);
@@ -744,13 +737,6 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	    tmp = findFun(CAR(body), rho);
 	else
 	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-	   && !strcmp( PRIMNAME(tmp), "for")
-	   && !strcmp( PRIMNAME(tmp), "{")
-	   && !strcmp( PRIMNAME(tmp), "repeat")
-	   && !strcmp( PRIMNAME(tmp), "while")
-	   )
-	    goto regdb;
 	SrcrefPrompt("debug", getAttrib(body, R_SrcrefSymbol));
 	PrintValue(body);
 	do_browser(call, op, R_NilValue, newrho);
