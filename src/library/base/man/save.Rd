@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -32,8 +32,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     character strings).}
   \item{list}{A character vector containing the names of objects to be
     saved.}
-  \item{file}{a connection or the name of the file where the data will be
-    saved.  Must be a file name for workspace format version 1.}
+  \item{file}{a (writeable binary-mode) connection or the name of the
+    file where the data will be saved.  Must be a file name for
+    \code{version = 1}.} 
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
     leads to a more compact binary file being written.}
