@@ -1,13 +1,13 @@
 # Translation of /src/library/stats/po/stats.pot
-# Copyright (C) 2008-2009 The R Foundation
+# Copyright (C) 2008-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.10.0\n"
+"Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2009-10-07 14:29+0200\n"
+"PO-Revision-Date: 2010-09-22 13:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,9 +60,9 @@ msgid "distance(): invalid distance"
 msgstr "distance(): unzulässige distance"
 
 #: family.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Value %g out of range (0, 1)"
-msgstr "Wert %d liegt außerhalb des Bereichs (0, 1)"
+msgstr "Wert %g liegt außerhalb des Bereichs (0, 1)"
 
 #: family.c:42 family.c:56 family.c:74
 #, c-format
@@ -99,24 +99,20 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's Algorithmus konnte keine partielle Korrelation finden"
 
 #: monoSpl.c:40
-#, fuzzy
 msgid "n must be at least two"
-msgstr "m nuss eine Liste sein"
+msgstr "n muss mindestes zwei sein"
 
 #: monoSpl.c:73
-#, fuzzy
 msgid "Argument m must be numeric"
-msgstr "Argument %s muss ein nichtleerer numerischer Vektor sein"
+msgstr "Argument m muss numerisch sein"
 
 #: monoSpl.c:76
-#, fuzzy
 msgid "length(m) must be at least two"
-msgstr "m nuss eine Liste sein"
+msgstr "length(m) nuss mindestens zwei sein"
 
 #: monoSpl.c:78
-#, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
+msgstr "Argument Sx muss ein numerischer Vektor einen Eintrag kürzer als m[] sein"
 
 #: nls.c:97
 msgid "'control' must be a list"

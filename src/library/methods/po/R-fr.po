@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2010-09-23 07:21\n"
 "PO-Revision-Date: 2010-04-06 00:24-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1720,17 +1720,6 @@ msgstr "\"%s\" n'est pas une classe définie"
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr "\"%s\" n'est pas un slot de la classe \"%s\""
 
-#, fuzzy
-msgid ""
-"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
-"required class \"%s\""
-msgstr ""
-"la méthode d'initialisation a renvoyé un objet de classe \"%s\" au lieu de "
-"la classe requise \"%s\""
-
-msgid "Some elements of the list (e.g., %d) are not functions"
-msgstr ""
-
 msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
@@ -1749,30 +1738,55 @@ msgid ""
 "existing field definition (\"%s\")"
 msgstr ""
 
-#, fuzzy
-msgid "No definition found for inherited class: %s"
-msgstr "aucune définition de la classe %s n'est trouvée"
+msgid "Field \""
+msgstr ""
 
-msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgid "\" is read-only"
+msgstr ""
+
+#, fuzzy
+msgid "Arguments must all be character string names of fieds"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"The fieldReadOnly argument must be the names of the read-only fields; got an "
-"object of class \"%s\""
+"The contains= argument should be the names of superclasses:  got an element "
+"of class \"%s\""
 msgstr ""
 "le premier argument doit être le ou les nom(s) des fonctions génériques (un "
 "objet de classe \"%s\" est fourni)"
 
-msgid "Some fieldReadOnly names are not fields: %s"
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "aucune définition de la classe %s n'est trouvée"
+
+msgid ""
+"Single class name needed for field \"%s\", got a character vector of length %"
+"d"
 msgstr ""
 
-msgid "Prototypes supplied for non-fields: %s"
+msgid "Class \"%s\" for field \"%s\" is not defined"
+msgstr ""
+
+msgid ""
+"Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
+"or a binding function"
+msgstr ""
+
+msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
 #, fuzzy
-msgid "Field classes undefined: %s"
-msgstr "Les classes valeur diffèrent : %s, %s"
+msgid ""
+"Argument fields must be a list of the field classes or definitions, or else "
+"just the names of the fields; got an object of class \"%s\""
+msgstr ""
+"l'argument 'classDef' doit être une chaîne de caractères ou une "
+"représentation de classe ; Un objet de classe \"%s\" est obtenu"
 
 #, fuzzy
 msgid "Not a reference class:"
@@ -1783,14 +1797,6 @@ msgstr ""
 
 msgid "for method %s()"
 msgstr ""
-
-#, fuzzy
-msgid "Trying to set a read-only field ("
-msgstr "tentative de définition d'une relation 'as' de \"%s\" vers lui-même"
-
-#, fuzzy
-msgid ")"
-msgstr "\")"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1986,6 +1992,34 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "aucune définition de la classe %s n'est trouvée"
 msgstr[1] "aucune définition des classes %s n'est trouvée"
+
+#, fuzzy
+#~ msgid ""
+#~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+#~ "required class \"%s\""
+#~ msgstr ""
+#~ "la méthode d'initialisation a renvoyé un objet de classe \"%s\" au lieu "
+#~ "de la classe requise \"%s\""
+
+#, fuzzy
+#~ msgid ""
+#~ "The fieldReadOnly argument must be the names of the read-only fields; got "
+#~ "an object of class \"%s\""
+#~ msgstr ""
+#~ "le premier argument doit être le ou les nom(s) des fonctions génériques "
+#~ "(un objet de classe \"%s\" est fourni)"
+
+#, fuzzy
+#~ msgid "Field classes undefined: %s"
+#~ msgstr "Les classes valeur diffèrent : %s, %s"
+
+#, fuzzy
+#~ msgid "Trying to set a read-only field ("
+#~ msgstr "tentative de définition d'une relation 'as' de \"%s\" vers lui-même"
+
+#, fuzzy
+#~ msgid ")"
+#~ msgstr "\")"
 
 #, fuzzy
 #~ msgid "\"%s\" is not a known reference class"

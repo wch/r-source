@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-08-11 09:24\n"
-"PO-Revision-Date: 2010-03-24 11:02+0100\n"
+"PO-Revision-Date: 2010-09-21 14:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -213,7 +213,7 @@ msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
 msgid "range too small for min.n"
-msgstr ""
+msgstr "Spannweite zu klein für min.n"
 
 msgid "A raster matrix must be character, or numeric, or logical"
 msgstr ""
@@ -229,7 +229,7 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Ein Rater-Array muss genau 3 oder 4 Ebenen haben"
 
 msgid "Operator not meaningful for raster objects"
-msgstr ""
+msgstr "Operator hat für Rasterobjekte keine Bedeutung"
 
 msgid "no current device to record from"
 msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
@@ -259,7 +259,7 @@ msgid "invalid first argument"
 msgstr "ungültiges erstes Argument"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr ""
+msgstr "'x' ist eine Liste, hat aber keine Komponenten 'x' und 'y'"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "Längen von 'x' nud 'y' unterscheiden sich"
@@ -271,7 +271,7 @@ msgid "at least 2 columns needed"
 msgstr "mindestens 2 Spalten nötig"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr ""
+msgstr "'x' ist eine Liste, hat aber keine Komponenten 'x', 'y' und 'z'"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "Längen von 'x', 'y' und 'z' unterscheiden sich"
@@ -283,7 +283,7 @@ msgid "sorry, 'gs' cannot be found"
 msgstr "'gs' kann leider nicht gefunden werden"
 
 msgid "unrecognized format of gs -help"
-msgstr ""
+msgstr "unbekanntes Format von gs -help"
 
 msgid "device '%s' is not available"
 msgstr "Device '%s' steht nicht zur Verfügung"

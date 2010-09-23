@@ -1,16 +1,16 @@
-# # German translation of 
-# # src/library/graphics/po/grid.pot
-# # Copyright (C) 2009 The R Foundation
-# # This file is distributed under the same license as the R package.
-# # Detlef Steuer <steuer@hsu-hh.de>, 2009.
+# German translation of 
+# src/library/graphics/po/grid.pot
+# Copyright (C) 2009-2010 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2010.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.10.0\n"
+"Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2009-10-07 14:22+0200\n"
+"PO-Revision-Date: 2010-09-21 14:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
 
 #: grid.c:2786
 msgid "non-finite x or y in graphics path"
-msgstr ""
+msgstr "unendliches x oder y im Grafikpfad"
 
 #: grid.c:3270
 msgid "invalid plotting symbol"

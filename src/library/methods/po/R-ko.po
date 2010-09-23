@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2010-09-23 07:21\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1658,17 +1658,6 @@ msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
-#, fuzzy
-msgid ""
-"Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
-"required class \"%s\""
-msgstr ""
-"initialize 메소드는 필수의 클래스 \"%s\"를 대신에 클래스\n"
-"\"%s\"의 오브젝트를 돌려주었습니다"
-
-msgid "Some elements of the list (e.g., %d) are not functions"
-msgstr ""
-
 msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
@@ -1688,31 +1677,56 @@ msgid ""
 "existing field definition (\"%s\")"
 msgstr ""
 
-#, fuzzy
-msgid "No definition found for inherited class: %s"
-msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+msgid "Field \""
+msgstr ""
 
-msgid "Interface class \"%s\"  was an explicitly specified superclass as well"
+msgid "\" is read-only"
+msgstr ""
+
+msgid "Arguments must all be character string names of fieds"
+msgstr ""
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"The fieldReadOnly argument must be the names of the read-only fields; got an "
-"object of class \"%s\""
+"The contains= argument should be the names of superclasses:  got an element "
+"of class \"%s\""
 msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
 "합니다"
 
-msgid "Some fieldReadOnly names are not fields: %s"
+#, fuzzy
+msgid "No definition found for inherited class: %s"
+msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+msgid ""
+"Single class name needed for field \"%s\", got a character vector of length %"
+"d"
 msgstr ""
 
-msgid "Prototypes supplied for non-fields: %s"
+msgid "Class \"%s\" for field \"%s\" is not defined"
+msgstr ""
+
+msgid ""
+"Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
+"or a binding function"
+msgstr ""
+
+msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
 #, fuzzy
-msgid "Field classes undefined: %s"
-msgstr "양쪽 모두의 클래스는 정해지지 않으면 안됩니다"
+msgid ""
+"Argument fields must be a list of the field classes or definitions, or else "
+"just the names of the fields; got an object of class \"%s\""
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
 
 #, fuzzy
 msgid "Not a reference class:"
@@ -1722,13 +1736,6 @@ msgid "(class \"%s\")"
 msgstr ""
 
 msgid "for method %s()"
-msgstr ""
-
-#, fuzzy
-msgid "Trying to set a read-only field ("
-msgstr "\"%s\"로부터 그 자체에의 'as' 관계로 세트하려고 합니다"
-
-msgid ")"
 msgstr ""
 
 #, fuzzy
@@ -1909,6 +1916,31 @@ msgstr ""
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "
+#~ "required class \"%s\""
+#~ msgstr ""
+#~ "initialize 메소드는 필수의 클래스 \"%s\"를 대신에 클래스\n"
+#~ "\"%s\"의 오브젝트를 돌려주었습니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "The fieldReadOnly argument must be the names of the read-only fields; got "
+#~ "an object of class \"%s\""
+#~ msgstr ""
+#~ "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 "
+#~ "이름이어야만\n"
+#~ "합니다"
+
+#, fuzzy
+#~ msgid "Field classes undefined: %s"
+#~ msgstr "양쪽 모두의 클래스는 정해지지 않으면 안됩니다"
+
+#, fuzzy
+#~ msgid "Trying to set a read-only field ("
+#~ msgstr "\"%s\"로부터 그 자체에의 'as' 관계로 세트하려고 합니다"
 
 #, fuzzy
 #~ msgid "\"%s\" is not a known reference class"

@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-07-12 18:52\n"
-"PO-Revision-Date: 2010-03-24 10:52+0100\n"
+"PO-Revision-Date: 2010-09-21 14:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,8 @@ msgstr ""
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' wird überschrieben durch 'reg'"
 
-#, fuzzy
 msgid "only using the first two of %d regression coefficients"
-msgstr "nutze nur die ersten beiden aus"
+msgstr "nutze nur die ersten beiden von %d Regressionskoeffizienten"
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a' und 'b' werden überschrieben durch 'coef'"
@@ -42,7 +41,7 @@ msgid "incorrect 'col': must be length 2"
 msgstr "ungültiger Wert für 'col': muss Länge 2 haben"
 
 msgid "only for 1-D table"
-msgstr ""
+msgstr "nur für 1-D Tabelle"
 
 msgid "'side' must be in {1:4}"
 msgstr "'side' muss in {1:4} liegen"
@@ -138,9 +137,8 @@ msgstr " Zeilen * Spalten zu klein"
 msgid "Missing rows"
 msgstr "fehlende Zeilen"
 
-#, fuzzy
 msgid "'expr' must be a function, call or an expression containing 'x'"
-msgstr "'expr' muss eine Funktion sein oder ein Ausdruck, der 'x' enthält"
+msgstr "'expr' muss eine Funktion, ein Call oder ein Ausdruck sein, der 'x' enthält"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' und 'to' müssen > 0 sein mit log=\"x\""
@@ -341,7 +339,7 @@ msgid "cannot hatch with logarithmic scale active"
 msgstr "bei logarithmischer Skala hatch nicht möglich"
 
 msgid "Invalid fill rule for graphics path"
-msgstr ""
+msgstr "unzulässige Füllregel für den Grafikpfad"
 
 msgid "invalid rectangle specification"
 msgstr "unzulässige Spezifikation des Rechecks"
