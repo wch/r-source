@@ -3751,9 +3751,8 @@ the additional flags being needed to resolve problems linking against
 @subsection Intel compilers
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
-Linux and @R{} contains code to set the FPU options suitably.  Brian
-Ripley tried version 9.0 of the compilers for @cputype{ix86} on
-Fedora Core 3 @emph{via}
+Linux.  Brian Ripley tried version 9.0 of the compilers for
+@cputype{ix86} on Fedora Core 3 @emph{via}
 
 @example
 CC=icc
@@ -3788,13 +3787,16 @@ SHLIB_CXXLD=icpc
 @noindent
 @command{configure} will add @samp{-c99} to @code{CC} for
 C99-compliance.  This causes warnings with @code{icc} 10, so use
-@code{CC="icc -std=c99"} there.  @R{} will add @samp{-mp} in
-@code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain correct
-@acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
+@code{CC="icc -std=c99"} there.  The flag @option{-wd188}
 suppresses a large number of warnings about the enumeration type
 @samp{Rboolean}.  Because the Intel C compiler sets @samp{__GNUC__}
 without complete emulation of @command{gcc}, we suggest adding
 @code{CPPFLAGS=-no-gcc}.
+
+To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
+need add further flags to @code{CFLAGS}, @code{FFLAGS} and
+@code{CXXFLAGS} such as @option{-mp} or @option{-fp-model precise
+-fp-model source}, depending on the compiler version.
 
 For some comments on building on an Itanium (@cputype{ia64}) Linux
 system with @command{gcc} or the Intel compilers see
