@@ -10,7 +10,7 @@
       \item Dummy
     }
   }
-  
+
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item The \code{require(save = TRUE)} is defunct, and use of the
@@ -20,7 +20,7 @@
       \option{--no-manual} instead.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Dummy
@@ -645,6 +645,9 @@
       startup and before the \R RNG had been used.  (\PR{14381})
 
       \item \code{quantile(type=6)} behaved inconsistently.  (\PR{14383})
+
+      \item \code{backSpline(.)} behaved incorrectly when the knot sequence
+      was decreasing.  (\PR{14386})
     }
   }
 }

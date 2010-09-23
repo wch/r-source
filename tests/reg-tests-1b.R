@@ -1340,5 +1340,20 @@ z2 <- quantile(x, type = 6, probs = c(.5, 0))
 stopifnot(z1 == rev(z2))
 ## differed in 2.11.x
 
+## backspline() with decreasing knot locations
+require(splines)
+d1 <- c(616.1, 570.1, 523.7, 477.3, 431.3, 386.2, 342.4, 300.4, 260.4,
+        222.7, 187.8, 155.7, 126.7, 100.8,  78.1,  58.6,  42.2,  28.7,
+         18.1,  10.2)
+r1 <- c(104.4, 110  , 115.5, 121,   126.6, 132.1, 137.7, 143.2, 148.8,
+        154.3, 159.9, 165.4, 170.9, 176.5, 182,   187.6, 193.1, 198.7,
+        204.2, 209.8)
+sp1 <- interpSpline(r1,d1)# 'x' as function of 'y' (!)
+psp1 <- predict(sp1)
+bsp1 <- backSpline(sp1)
+dy <- diff(predict(bsp1, .5 + 18:30)$y)
+stopifnot(-.9 < dy, dy < -.35)
+## failed in R <= 2.11.x: "bizarre jumps"
+detach("package:splines")
 
 proc.time()
