@@ -352,7 +352,11 @@ isIncomplete(con)
   encoding, that is the internal encoding of the current locale and
   hence no translation is done.
 
-  Re-encoding only works for connections in text mode.
+  Re-encoding only works for connections in text mode: reading from a
+  connection with re-encoding specified in binary mode will read the
+  stream of bytes, but mixing text and binary mode reads (e.g. mixing
+  calls to \code{\link{readLines}} and \code{\link{readChar}}) is likely
+  to lead to incorrect results.
 
   The encodings \code{"UCS-2LE"} and \code{"UTF-16LE"} are treated
   specially, as they are appropriate values for Windows \sQuote{Unicode}
@@ -472,13 +476,13 @@ isIncomplete(con)
   \code{\link{textConnection}}, \code{\link{seek}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
   
-  Functions making direct use of connections are \code{\link{readLines}},
-  \code{\link{readBin}}, \code{\link{readChar}},
-  \code{\link{writeLines}}, \code{\link{writeBin}},
-  \code{\link{writeChar}}, \code{\link{cat}}, \code{\link{sink}},
-  \code{\link{scan}}, \code{\link{parse}}, \code{\link{read.dcf}},
-  \code{\link{load}}, \code{\link{save}}, \code{\link{dput}} and
-  \code{\link{dump}}.
+  Functions making direct use of connections are (text-mode)
+  \code{\link{readLines}}, \code{\link{writeLines}}, \code{\link{cat}},
+  \code{\link{sink}}, \code{\link{scan}}, \code{\link{parse}},
+  \code{\link{read.dcf}}, \code{\link{dput}}, \code{\link{dump}} and
+  (binary-mode) \code{\link{readBin}}, \code{\link{readChar}},
+  \code{\link{writeBin}}, \code{\link{writeChar}}, \code{\link{load}}
+  and \code{\link{save}}.
   
   \code{\link{capabilities}} to see if HTTP/FTP \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.

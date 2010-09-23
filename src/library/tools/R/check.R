@@ -27,8 +27,7 @@ run_Rcmd <- function(args, out = "")
 
 R_runR <- function(cmd, Ropts = "", env = "", arch = "")
 {
-    WINDOWS <- .Platform$OS.type == "windows"
-    if (WINDOWS) {
+    if (.Platform$OS.type == "windows") {
         R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
         else file.path(R.home("bin"), "Rterm.exe")
         system2(R_EXE, Ropts, TRUE, TRUE, input = cmd, env = env)
@@ -43,8 +42,7 @@ R_runR <- function(cmd, Ropts = "", env = "", arch = "")
 R_run_R <- function(cmd, Ropts, env = "", arch = "")
 {
     Rout <- tempfile("Rout")
-    WINDOWS <- .Platform$OS.type == "windows"
-    if (WINDOWS) {
+    if (.Platform$OS.type == "windows") {
         R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
         else file.path(R.home("bin"), "Rterm.exe")
         status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
@@ -2458,7 +2456,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                     messageLog(Log, "will not attempt to install this package on Windows")
                     do_install <- FALSE
                 }
-                if (!WINDOWS && OS_type == "windows" && do_install) {
+                if (!WINDOWS && OS_type == "windows") {
                     messageLog(Log, "this is a Windows-only package, skipping installation")
                     do_install <- FALSE
                 }

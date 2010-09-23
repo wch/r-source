@@ -1,6 +1,6 @@
 % File src/library/base/man/readChar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readChar}
@@ -39,9 +39,10 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
   can optionally write an end-of-string mark.  They are intended only
   for character strings valid in the current locale.
   
+  These functions are intended to be used with binary-mode connections.
   If \code{con} is a character string, the functions call
-  \code{\link{file}} to obtain an file connection which is opened for
-  the duration of the function call.
+  \code{\link{file}} to obtain a binary-mode file connection which is
+  opened for the duration of the function call.
 
   If the connection is open it is read/written from its current
   position.  If it is not open, it is opened for the duration of the
@@ -85,6 +86,10 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
   non-UTF-8 multi-byte locale, with a warning.
 
   There is little validity checking of UTF-8 reads.
+  
+  Using these functions on a text-mode connection may work but should
+  not be mixed with text-mode access to the connection, especially if
+  the connection was opened with an \code{encoding} argument. 
 }
 
 \seealso{
