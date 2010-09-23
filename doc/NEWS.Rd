@@ -4,6 +4,29 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.0}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Dummy
+    }
+  }
+
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item The \code{require(save = TRUE)} is defunct, and use of the
+      \code{save} argument is deprecated.
+
+      \item \command{R CMD check --no-latex} is defunct: use
+      \option{--no-manual} instead.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Dummy
+    }
+  }
+}
 
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
@@ -622,6 +645,9 @@
       startup and before the \R RNG had been used.  (\PR{14381})
 
       \item \code{quantile(type=6)} behaved inconsistently.  (\PR{14383})
+
+      \item \code{backSpline(.)} behaved incorrectly when the knot sequence
+      was decreasing.  (\PR{14386})
     }
   }
 }
