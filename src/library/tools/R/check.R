@@ -30,7 +30,9 @@ R_runR <- function(cmd, Ropts = "", env = "", arch = "")
     if (.Platform$OS.type == "windows") {
         R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
         else file.path(R.home("bin"), "Rterm.exe")
-        system2(R_EXE, Ropts, TRUE, TRUE, input = cmd, env = env)
+        ## workaround Windows problem with input = cmd
+        Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
+        system2(R_EXE, c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
