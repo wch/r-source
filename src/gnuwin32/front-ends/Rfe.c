@@ -21,14 +21,17 @@
 #include <string.h>
 #include <stdio.h>
 
-/* FIXME
-
- * add --help/Usage
- * use R_ARCH to set the default architecture.
- * add something similar for Rscript, via basename.
- */
-
 extern char *getRHOME(int); /* in ../rhome.c */
+
+static void Usage (char *RCMD, char *arch)
+{
+    fprintf(stderr, "%s %s %s", "Usage:", RCMD, "[command args]\n\n");
+    fprintf(stderr, "%s%s%s",
+	    "where 'command args' can be\n\n",
+	    "  --arch n   for n=i386, x64, 32 or 64\n",
+	    "  any other arguments listed by ");
+    fprintf(stderr, "%s --arch %s --help\n", RCMD, arch);
+}
 
 #define CMD_LEN 10000
 int main (int argc, char **argv)
@@ -36,8 +39,17 @@ int main (int argc, char **argv)
     int cmdarg = 1;
     char arch[10] = R_ARCH, cmd[CMD_LEN], *p;
 
-    if (argc > 2 && strcmp(argv[1], "--arch") == 0) {
+    if (argc > 1 && strcmp(argv[1], "--help") == 0) {
+	Usage(argv[0], arch);
+	exit(0);
+    }
+    
+    if (argc > 1 && strcmp(argv[1], "--arch") == 0) {
 	cmdarg = 3;
+	if(argc < 3) {
+	    Usage(argv[0], arch);
+	    exit(0);
+	}
 	strncpy(arch, argv[2], 10); arch[9] = '\0';
 	if(strcmp(arch, "32") == 0) strcpy(arch, "i386");
 	if(strcmp(arch, "64") == 0) strcpy(arch, "x64");
