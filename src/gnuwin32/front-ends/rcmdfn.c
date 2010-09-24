@@ -157,7 +157,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
     if (cmdarg == 0) {
 	/* use of R.exe without CMD, -h, --help */
-	if (argc > 0 && !strcmp(argv[1], "RHOME")) {
+	if (argc > 1 && !strcmp(argv[1], "RHOME")) {
 	    /* An historical special case */
 	    fprintf(stdout, "%s", getRHOME(3));
 	    return(0);
