@@ -35,14 +35,14 @@ function(formula, data = list(),
     require(stats, quietly=TRUE)
     m[[1L]] <- as.name("model.frame")
     mf <- eval.parent(m)
-    if(NCOL(mf) != 2)
+    if(NCOL(mf) != 2L)
         stop("'formula' should specify exactly two variables")
-    y <- mf[,1]
+    y <- mf[,1L]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
     if(!is.null(ylevels))
       y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
-    x <- mf[,2]
+    x <- mf[,2L]
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2L]
@@ -66,7 +66,7 @@ function(x, y = NULL,
     ## or two variables (y has to be categorical - x can be categorical
     ## or numerical)
     if(missing(y)) {
-        if(length(dim(x)) != 2)
+        if(length(dim(x)) != 2L)
             stop("a 2-way table has to be specified")
         tab <- x
         x.categorical <- TRUE
@@ -81,7 +81,6 @@ function(x, y = NULL,
 	if(!is.null(ylevels))
           y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
         x.categorical <- is.factor(x)
-        if(!x.categorical) stopifnot(is.numeric(x), is.vector(x))
         if(is.null(xlab)) xlab <- deparse(substitute(x))
         if(is.null(ylab)) ylab <- deparse(substitute(y))
         if(x.categorical) {
@@ -104,8 +103,17 @@ function(x, y = NULL,
         xat <- c(0, cumsum(prop.table(margin.table(tab, 1)) + off))
         xaxlabels <- if(is.null(xaxlabels)) xnam else rep(xaxlabels, length.out = nx)
     } else {
-        ## compute breaks for x
-        if(is.null(breaks)) breaks <- list()
+        ## handle non-numeric x
+	if(!(xnumeric <- is.numeric(x))) {
+	    xorig <- x
+	    x <- as.numeric(x)
+	}
+        ## compute breaks for x	
+        if(is.null(breaks)) {
+	    breaks <- list()
+	} else {
+	    breaks <- as.numeric(breaks)
+	}
         if(!is.list(breaks)) breaks <- list(breaks = breaks)
         breaks <- c(list(x = x), breaks)
         breaks$plot <- FALSE
@@ -117,13 +125,17 @@ function(x, y = NULL,
         ## construct table
         tab <- table(x1, y)
         nx <- NROW(tab)
-        xaxlabels <- if(is.null(xaxlabels)) breaks else rep(xaxlabels, length.out = (nx+1))
+        xaxlabels <- if(is.null(xaxlabels)) {
+	  if(xnumeric) breaks else c(xorig[1L], xorig[c(diff(as.numeric(x1)) > 0, TRUE)])
+	} else {
+	    rep(xaxlabels, length.out = (nx + 1L))
+	}
     }
 
     ## compute rectangle positions on y axis
     yat <- rbind(0, apply(prop.table(tab, 1), 1L, cumsum))
 
-    if(is.null(xlim)) xlim <- c(0, 1 + off * (nx-1))
+    if(is.null(xlim)) xlim <- c(0, 1 + off * (nx-1L))
     else if(any(xlim < 0) || any(xlim > 1)) {
         warning("x axis is on a cumulative probability scale, 'xlim' must be in [0,1]")
         if(min(xlim) > 1 || max(xlim) < 0) xlim <- c(0, 1)
@@ -140,10 +152,10 @@ function(x, y = NULL,
          xaxs = "i", yaxs = "i", main = main, xlab = xlab, ylab = ylab)
 
     ## compute coordinates
-    ybottom <- as.vector(yat[-(ny+1),])
-    ytop <- as.vector(yat[-1,])
+    ybottom <- as.vector(yat[-(ny + 1L),])
+    ytop <- as.vector(yat[-1L,])
     xleft <- rep(xat[1L:nx], rep(ny, nx))
-    xright <- rep(xat[2:(nx+1)] - off, rep(ny, nx))
+    xright <- rep(xat[2L:(nx+1L)] - off, rep(ny, nx))
     col <- rep(col, nx)
 
     ## plot rectangles
@@ -154,13 +166,13 @@ function(x, y = NULL,
         ## side --
         ## 1: either numeric or level names
         if(x.categorical)
-            axis(1, at = (xat[1L:nx] + xat[2:(nx+1)] - off)/2,
+            axis(1, at = (xat[1L:nx] + xat[2L:(nx+1L)] - off)/2,
                  labels = xaxlabels, tick = FALSE)
         else
             axis(1, at = xat, labels = xaxlabels)
 
         ## 2: axis with level names of y
-        yat <- yat[,1]
+        yat <- yat[,1L]
         equidist <- any(diff(yat) < tol.ylab)
         yat <- if(equidist) seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny)
         else (yat[-1L] + yat[-length(yat)])/2

@@ -30,7 +30,8 @@ cdplot(x, \dots)
   subset = NULL)
 }
 \arguments{
-  \item{x}{an object, the default method expects either a single numerical variable.}
+  \item{x}{an object, the default method expects a single numerical
+    variable (or an object coercible to this).}
   \item{y}{a \code{"factor"} interpreted to be the dependent variable}
   \item{formula}{a \code{"formula"} of type \code{y ~ x} with a single dependent
     \code{"factor"} and a single numerical explanatory variable.}    
