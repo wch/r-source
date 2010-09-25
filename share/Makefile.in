@@ -39,6 +39,7 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/make"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/sh"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf/bibtex/bib"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf/bibtex/bst"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf/tex/latex"
 install-message:
@@ -61,6 +62,9 @@ install-sources: installdirs
 	done
 	@for f in $(srcdir)/sh/*.sh; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/sh"; \
+	done
+	@for f in $(srcdir)/texmf/bibtex/bib/*; do \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf/bibtex/bib"; \
 	done
 	@for f in $(srcdir)/texmf/bibtex/bst/*; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf/bibtex/bst"; \
