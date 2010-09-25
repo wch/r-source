@@ -140,10 +140,6 @@ function(x, i)
 print.person <- 
 function(x, ...)
 {
-    ## <COMMENT Z>
-    ## something simple, just for now, leverage the proper format()
-    ## function when it is there...
-    ## </COMMENT>
     x_char <- sapply(x, format, ...)
     print(x_char)
     invisible(x)
@@ -233,15 +229,23 @@ function(x)
     x <- x[!sapply(x, .is_not_nonempty_text)]
 
     as_person1 <- function(x) {
+        comment <- if(grepl("\\(.*\\)", x))
+            sub(".*\\(([^)]*)\\).*", "\\1", x)
+        else NULL
+        x <- sub("[[:space:]]*\\([^)]*\\)", "", x)
         email <- if(grepl("<.*>", x))
             sub(".*<([^>]*)>.*", "\\1", x)
-        else
-            email <- NULL
-        name <- sub("[[:space:]]*<[^>]*>", "", x)
-        name <- unlist(strsplit(name, "[[:space:]]+"))
-        z <- person(given = name[-length(name)],
-                    family = name[length(name)],
-                    email = email)
+        else NULL
+        x <- sub("[[:space:]]*<[^>]*>", "", x)
+        role <- if(grepl("\\[.*\\]", x))
+            unlist(strsplit(gsub("[[:space:]]*", "",
+                                 sub(".*\\[([^]]*)\\].*", "\\1", x)),
+                            ",", fixed = TRUE))
+        else NULL
+        x <- sub("[[:space:]]*\\[[^)]*\\]", "", x)
+        x <- unlist(strsplit(x, "[[:space:]]+"))
+        z <- person(given = x[-length(x)], family = x[length(x)],
+                    email = email, role = role, comment = comment)
         return(z)
     }
 
@@ -435,18 +439,20 @@ function(x, i)
 }
 
 print.bibentry <- 
-function(x, style = c("text", "textVersion", "Bibtex", "citation", "html", "latex"), 
-            .bibstyle = "JSS", ...)
+function(x,
+         style = c("text", "Bibtex", "citation", "html", "latex",
+                   "textVersion"), 
+         .bibstyle = "JSS", ...)
 {
     style <- match.arg(style)
 
     ## styles
     ## text: render using toRd and Rd2txt
-    ## textVersion: simply print the textVersions
     ## Bibtex: print list of Bibtex objects
     ## citation: mimic old behavior
     ## html: render using toRd and Rd2HTML
-    ## latex: render using toRd and Rd2Latex
+    ## latex: render using toRd and Rd2latex
+    ## textVersion: simply print the textVersions
     
     switch(style,
 
