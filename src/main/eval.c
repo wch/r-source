@@ -660,8 +660,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	do_browser(call, op, R_NilValue, newrho);
     }
 
- regdb:
-
     /*  It isn't completely clear that this is the right place to do
 	this, but maybe (if the matchArgs above reverses the
 	arguments) it might just be perfect.
@@ -741,8 +739,6 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	PrintValue(body);
 	do_browser(call, op, R_NilValue, newrho);
     }
-
- regdb:
 
     /*  It isn't completely clear that this is the right place to do
 	this, but maybe (if the matchArgs above reverses the
