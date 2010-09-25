@@ -10,8 +10,8 @@
 bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
          key = NULL, ..., other = list(),
          mheader = NULL, mfooter = NULL)
-\method{print}{bibentry}(x, style = c("text", "textVersion", "Bibtex",
-                   "citation", "html", "latex"),
+\method{print}{bibentry}(x, style = c("text", "Bibtex", "citation",
+                   "html", "latex", "textVersion"),
       .bibstyle = "JSS", ...)
 }
 \arguments{
@@ -39,9 +39,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{mfooter}{a character string with optional \dQuote{outer} footer
     text.}
   \item{x}{an object inheriting from class \code{"bibentry"}.}
-  \item{style}{a character string with a unique abbreviation of
-    \code{"text"}, \code{"Bibtex"} or \code{"citation"} specifying the
-    print style.}
+  \item{style}{a character string specifying the print style.
+    Must be a unique abbreviation of the choices indicated in the usage.}
   \item{.bibstyle}{a character string naming a bibliography style.}
 }
 \details{
@@ -54,15 +53,20 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   instead of character strings.
 
   The \code{\link{print}} method for bibentry objects provides a choice
-  between six different styles: plain text (style \code{"text"}), a simple copy
-  of the \code{textVersion} elements (style \code{"textVersion"}), BibTeX
-  (\code{"Bibtex"}), a mixture of plain text and BibTeX as
-  traditionally used for citations (\code{"citation"}), HTML (style \code{"html"},
-  and LaTeX (style \code{"latex"}).  
+  between six different styles:
+  plain text (style \code{"text"}),
+  BibTeX (\code{"Bibtex"}),
+  a mixture of plain text and BibTeX as traditionally used for citations
+  (\code{"citation"}),
+  HTML (style \code{"html"}),
+  LaTeX (style \code{"latex"}),
+  and a simple copy of the \code{textVersion} elements (style
+  \code{"textVersion"}).
   The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
-  of the \code{.bibstyle} argument using the \code{\link{bibstyle}} function.
-  There is also a
-  \code{\link{toBibtex}} method for direct conversion to BibTeX.
+  of the \code{.bibstyle} argument using the \code{\link{bibstyle}}
+  function. 
+  There is also a \code{\link{toBibtex}} method for direct conversion to
+  BibTeX.
 }
 \value{
   \code{bibentry} produces an object of class \code{"bibentry"}.
@@ -90,7 +94,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   }
 }
 \section{Entry Fields}{
-  The \code{\dots} argument of \code{citEntry} can be any number of
+  The \code{\dots} argument of \code{bibentry} can be any number of
   BibTeX fields, including
   \describe{
     \item{address:}{The address of the publisher or other type of
@@ -134,14 +138,64 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   The bibentry functionality is still experimental.
 }
 \examples{
-bibentry(bibtype = "manual",
-    title = "R: A Language and Environment for Statistical Computing",
-    author = person("R Development Core Team"),
-    organization = "R Foundation for Statistical Computing",
-    address = "Vienna, Austria",
-    year = 2010,
-    isbn = "3-900051-07-0",
-    url = "http://www.R-project.org")
+## R reference
+rref <- bibentry(
+   bibtype = "Manual",
+   title = "R: A Language and Environment for Statistical Computing",
+   author = person("R Development Core Team"),
+   organization = "R Foundation for Statistical Computing",
+   address = "Vienna, Austria",
+   year = 2010,
+   isbn = "3-900051-07-0",
+   url = "http://www.R-project.org/")
+
+## Different printing styles
+print(rref)
+print(rref, style = "Bibtex")
+print(rref, style = "citation")
+print(rref, style = "html")
+print(rref, style = "latex")
+
+## References for boot package and associated book
+bref <- c(
+   bibentry(
+     bibtype = "Manual",
+     title = "boot: Bootstrap R (S-PLUS) Functions",
+     author = c(
+       person("Angelo", "Canty", role = "aut", comment = "S original"),
+       person(c("Brian", "D."), "Ripley", role = c("aut", "trl", "cre"),
+         comment = "R port", email = "ripley@stats.ox.ac.uk")
+     ),
+     year = "2010",
+     note = "R package version 1.2-42",
+     url = "http://CRAN.R-project.org/package=boot",
+     key = "boot-package"
+   ),
+
+   bibentry(
+     bibtype = "Book",
+     title = "Bootstrap Methods and Their Applications",
+     author = as.person("Anthony C. Davison [aut], David V. Hinkley [aut]"),
+     year = "1997",
+     publisher = "Cambridge University Press",
+     address = "Cambridge",
+     isbn = "0-521-57391-2",
+     url = "http://statwww.epfl.ch/davison/BMA/",
+     key = "boot-book"
+   )
+)
+
+## Combining and subsetting
+c(rref, bref)
+bref[2]
+
+## Extracting fields
+bref$author
+bref[1]$author
+bref[1]$author[2]$email
+
+## Convert to BibTeX
+toBibtex(bref)
 }
 \keyword{ utilities }
 \keyword{ documentation }
