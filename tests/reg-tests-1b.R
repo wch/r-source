@@ -1362,7 +1362,9 @@ x <- matrix(c(1, 0, NA, 1), 2, 2)
 y <- matrix(c(1, 0, 0, 2, 1, 0), 3, 2)
 (z <- tcrossprod(x, y))
 stopifnot(identical(z, x %*% t(y)))
-## depended on the BLAS in use: some (including the reference BLAS) had z[1,3] == 0
+stopifnot(is.nan(log(0) %*% 0))
+## depended on the BLAS in use: some (including the reference BLAS)
+## had z[1,3] == 0 and log(0) %*% 0 as as.matrix(0).
 
 
 proc.time()
