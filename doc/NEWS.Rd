@@ -648,6 +648,11 @@
 
       \item \code{backSpline(.)} behaved incorrectly when the knot sequence
       was decreasing.  (\PR{14386})
+
+      \item The reference BLAS included in \R was assuming that
+      \code{0*x} was always zero (whereas it could be \code{NA} or
+      \code{NaN} in IEC 60559 arithmetic).  This was seen in results
+      from \code{tcrossprod}.
     }
   }
 }

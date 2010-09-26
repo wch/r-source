@@ -1356,4 +1356,13 @@ stopifnot(-.9 < dy, dy < -.35)
 ## failed in R <= 2.11.x: "bizarre jumps"
 detach("package:splines")
 
+
+## found from fallback test in slam 0.1-15
+x <- matrix(c(1, 0, NA, 1), 2, 2)
+y <- matrix(c(1, 0, 0, 2, 1, 0), 3, 2)
+(z <- tcrossprod(x, y))
+stopifnot(identical(z, x %*% t(y)))
+## depended on the BLAS in use: some (including the reference BLAS) had z[1,3] == 0
+
+
 proc.time()
