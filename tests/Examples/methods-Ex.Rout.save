@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-09-13 r52902)
+R version 2.13.0 Under development (unstable) (2010-09-26 r53002)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-09-22 08:48:45 BST" "2010-09-22 08:48:45 BST"
+[1] "2010-09-26 15:35:32 PDT" "2010-09-26 15:35:32 PDT"
 
 > 
 > 
@@ -1048,9 +1048,9 @@ Error in standardGeneric("numMax") :
 > 
 > ## A generic version of paste(), dispatching on the "..." argument:
 > setGeneric("paste", signature = "...")
-Creating a generic for ‘paste’ in package ‘.GlobalEnv’
+Creating a generic for 'paste' in package '.GlobalEnv'
     (the supplied definition differs from and overrides the implicit generic
-    in package ‘base’: Signatures differ:  (...), (sep, collapse))
+    in package 'base': Signatures differ:  (...), (sep, collapse))
 [1] "paste"
 > 
 > setMethod("paste", "Number", function(..., sep, collapse) c(...))
@@ -1319,7 +1319,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x102858878>
+<environment: 0x102a24ab0>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1365,7 +1365,7 @@ NULL
 > 
 > cleanEx()
 
-detaching ‘package:stats4’
+detaching 'package:stats4'
 
 > nameEx("is")
 > ### * is
@@ -1749,7 +1749,7 @@ showClass("trackMultiCurve")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-‘stdout’.
+'stdout'.
 > 
 > promptClass("track", stdout())
 \name{track-class}
@@ -1798,7 +1798,7 @@ showClass("track")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-‘stdout’.
+'stdout'.
 > ## End Don't show
 > ## Not run: 
 > ##D > promptClass("track")
@@ -1818,32 +1818,39 @@ A shell of class documentation has been written to the connection
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: ReferenceClasses
-> ### Title: Creating Classes With Fields Treated by Reference (OOP-style)
-> ### Aliases: ReferenceClasses setRefClass refClassFields refClassMethods
-> ###   initFieldArgs activeBindingFunction-class
-> ###   defaultBindingFunction-class uninitializedField-class
-> ###   refClassRepresentation-class refObjectGenerator-class refClass-class
-> ###   refObject-class refMethodDef-class SuperClassMethod-class
-> ###   show,refMethodDef-method show,refClassRepresentation-method
+> ### Title: Objects With Fields Treated by Reference (OOP-style)
+> ### Aliases: ReferenceClasses setRefClass getRefClass initFieldArgs
+> ###   activeBindingFunction-class defaultBindingFunction-class
+> ###   uninitializedField-class refClassRepresentation-class
+> ###   refObjectGenerator-class refClass-class refObject-class
+> ###   refMethodDef-class SuperClassMethod-class show,refMethodDef-method
+> ###   show,refClassRepresentation-method
 > ### Keywords: programming classes
 > 
 > ### ** Examples
 > 
-> ## a simple editor for matrix objects.  Method  edit() changes some
-> ## range of values; method undo() undoes the last edit.
+> ## a simple editor for matrix objects.  Method  $edit() changes some
+> ## range of values; method $undo() undoes the last edit.
 > mEditor <- setRefClass("matrixEditor",
 +       fields = list( data = "matrix",
 +         edits = "list"),
 +       methods = list(
 +      edit = function(i, j, value) {
++        ## the following string documents the edit method
++        'Replaces the range [i, j] of the
++         object by value.
++         '
 +          backup <-
 +              list(i, j, data[i,j])
++          data[i,j] <<- value
 +          edits <<- c(list(backup),
 +                      edits)
-+          data[i,j] <<- value
 +          invisible(value)
 +      },
 +      undo = function() {
++        'Undoes the last edit() operation
++         and update the edits field accordingly.
++         '
 +          prev <- edits
 +          if(length(prev)) prev <- prev[[1]]
 +          else stop("No more edits to undo")
@@ -1851,9 +1858,6 @@ A shell of class documentation has been written to the connection
 +          ## trim the edits list
 +          length(edits) <<- length(edits) - 2
 +          invisible(prev)
-+      },
-+      save = function(file) {
-+          base::save(.self, file = file)
 +      }
 +      ))
 >     
@@ -1870,10 +1874,25 @@ A shell of class documentation has been written to the connection
 > mEditor$help("undo")
 Call: $undo()
  
+Undoes the last edit() operation
+        and update the edits field accordingly.
+        
+
 > stopifnot(all.equal(xx$data, xMat))
-> ## Don't show: 
+> 
+> ## add a method to save the object
+> mEditor$methods(
++      save = function(file) {
++        'Save the current object on the file
++         in R external object format.
++        '
++          base::save(.self, file = file)
++      }
++ )  
+> 
 > tf <- tempfile()
 > xx$save(tf) #$
+> ## Don't show: 
 > load(tf)
 > unlink(tf)
 > stopifnot(identical(xx$data, .self$data))
@@ -2866,7 +2885,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x102676c08>
+<environment: 0x1024fe340>
 
 Signatures:
         object    
@@ -3215,7 +3234,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.629 0.049 3.679 0 0 
+Time elapsed:  3.358 0.05 3.409 0 0 
 > grDevices::dev.off()
 null device 
           1 

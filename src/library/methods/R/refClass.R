@@ -27,6 +27,10 @@ self from reference class thisClass.'
 }
 
 envRefAs <- function(Class) {
+    '
+Returns the result of coercing the object to
+Class.  No effect on the object itself.
+'
     if(match(.refClassDef@className, Class, 0) > 0)
         return(.self)
     classDef <- getClass(Class)
@@ -56,6 +60,13 @@ envRefAs <- function(Class) {
 }
 
 envRefImport <- function(value, Class = class(value)) {
+    '
+Imports value, replacing the part of the current object
+corresponding to Class (if argument Class is missing
+it is taken to be class(value)).  The Class must be one
+of the reference superclasses of the current class (or
+that class itself, but then you could just overrwite the object).
+'
     if(!missing(Class))
         value <- value$export(Class)
     classDef <- getClass(Class)
@@ -337,7 +348,11 @@ makeEnvRefMethods <- function() {
                 help = .helpRefMethod,
                 lock = .lockField,
                 accessors = .envRefMakeAccessors))
-    setMethod("show", "refClassRepresentation", showRefClassDef, where = envir)
+    setMethod("show", "refClassRepresentation",
+              function(object) showRefClassDef(object), where = envir)
+    setMethod("show", "refObjectGenerator",
+              function(object) showRefClassDef(object$def, "Generator object for class"),
+                where = envir)
     setMethod("show", "refMethodDef", showClassMethod, where = envir)
 }
 
@@ -378,14 +393,57 @@ getRefSuperClasses <- function(classes, classDefs) {
     invisible(methodsEnv)
 }
 
-.refFields <- function()
+.refFields <- function() {
+    '
+Returns the named vector of classes
+for the fields in this class.  Fields
+defined with accessor functions have
+class "activeBindingFunction".
+'
     unlist(def@fieldClasses)
+}
+
+.refObjectFields <- function(...) {
+    if(nargs() < 1)
+        unlist(.refClassDef@fieldClasses)
+    else {
+        fieldDefs <- list(...)
+        fieldNames <- names(fieldDefs)
+        fieldClasses <- .refClassDef@fieldClasses
+        allNames <- names(fieldClasses)
+        if(length(fieldNames != fieldDefs))
+            stop("must give named list of refdefined fields")
+        for(i in seq_along(fieldNames)) {
+            field <- fieldNames[[i]]
+            old <- match(field, allNames)
+            if(is.na(old))
+                stop(gettextf("\"%s\" is not a field in class \"%s\"",
+                     field, .refClassDef@className), domain = NA)
+            thisClass <- fieldClasses[[old]]
+            if(is.na(match("activeBindingFunction", extends(thisClass))))
+                stop(gettextf("Only accessor fields can be replaced:  field \"%s\" has class \"%s\"",
+                      field, thisClass), domain = NA)
+            f <- fieldDefs[[i]]
+            if(!is.function(f))
+                stop(gettextf("replacement for field \"%s\" must be an accessor function: got an object of class \"%s\"",
+                      field, class(f)), domain = NA)
+            .refClassDef@fieldPrototypes[[field]] <-
+                .makeActiveBinding(f)
+        }
+    }
+}
 
 .newRefObject <- function(...) {
     methods::new(def, ...)
 }
 
 .helpRefMethod <- function(topic) {
+    '
+Prints simple documentation for the method or field
+specified by argument topic, which should be the name
+of the method or field, quoted or not.  With no topic,
+prints the definition of the class.
+'
     if(missing(topic)) {
         writeLines(
 c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
@@ -451,6 +509,13 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
 
 .bindingMetaName <- function(fieldName)
     paste(".->", fieldName, sep="")
+
+.makeActiveBinding <- function(thisField) {
+    if(is(thisField, "activeBindingFunction"))
+     thisField
+    else
+     new("activeBindingFunction", thisField)
+}
 
 .makeDefaultBinding <- function(fieldName, fieldClass, readOnly = FALSE, where) {
     metaName <- .bindingMetaName(fieldName)
@@ -591,7 +656,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
         else if(is.function(thisField)) {
             fieldClasses[[i]] <- "activeBindingFunction"
             fieldPrototypes[[thisName]] <-
-                new("activeBindingFunction", thisField)
+                .makeActiveBinding(thisField)
         }
         else
             stop(gettextf("Field \"%s\" was supplied as an object of class \"%s\"; must be a class name or a binding function",
@@ -707,6 +772,18 @@ setRefClass <- function(Class, fields = character(),
     value
 }
 
+getRefClass <- function(Class, where = topenv(parent.frame())) {
+    classDef <- getClass(Class, where = where)
+    if(!is(classDef, "refClassRepresentation"))
+        stop(gettextf("Class \"%s\" is defined but is not a reference class",
+                      Class), domain = NA)
+    value <- new("refObjectGenerator")
+    env <- as.environment(value)
+    env$def <- classDef
+    env$className <- Class
+    value
+}
+
 refClassFields <- function(Class) {
     ClassDef <- getClass(Class)
     if(is(ClassDef, "refClassRepresentation"))
@@ -744,8 +821,8 @@ showClassMethod <- function(object) {
         cat("\n")
     }
 
-showRefClassDef <- function(object) {
-    cat("Reference Class \"", object@className,"\":\n")
+showRefClassDef <- function(object, title = "Reference Class") {
+    cat(title," \"", object@className,"\":\n", sep="")
     fields <- object@fieldClasses
     if(length(fields))
         printPropertiesList(fields, "Class fields")
