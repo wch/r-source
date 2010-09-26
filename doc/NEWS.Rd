@@ -370,6 +370,11 @@
 
       \item \code{qr()} now has a trivial \code{lm} method with a
       simple (fast) validity check.
+
+      \item An experimental new programming model has been added for
+      reference (OOP-style) classes and methods.  See
+      \code{?ReferenceClasses}.
+
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

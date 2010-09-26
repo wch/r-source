@@ -1,8 +1,7 @@
 \name{ReferenceClasses}
 \alias{ReferenceClasses}
 \alias{setRefClass}
-\alias{refClassFields}
-\alias{refClassMethods}
+\alias{getRefClass}
 \alias{initFieldArgs}
 \alias{activeBindingFunction-class}
 \alias{defaultBindingFunction-class}
@@ -16,26 +15,27 @@
 \alias{show,refMethodDef-method}
 \alias{show,refClassRepresentation-method}
 \title{
-Creating Classes With Fields Treated by Reference (OOP-style)
+Objects With Fields Treated by Reference (OOP-style)
 }
 \description{
-The software described here supports objects with
-fields that
-are accessed by reference and with  methods to be invoked on such objects, in the style of languages such as Java and
-C++, commonly referred to as OOP languages.
-The software can be used to program in \R directly or in combination
-with an interface to such a language, allowing \R-written methods to
+The software described here supports reference classes whose objects have
+fields
+accessed by reference in the style of \dQuote{OOP} languages such as Java and
+C++.
+Computations with these objects invoke methods on them and
+extract or set their fields.
+The field and method computations potentially modify the object.
+All computations referring to the objects see the modifications, in contrast to
+the usual functional programming model in \R.
+Reference classes can be used to program in \R directly or in combination
+with an interface to an OOP-style language, allowing \R-written methods to
 extend the interface.
-The function \code{setRefClass} supports the \R software; the
-intention is that inter-system interfaces will use the software
-transparently to allow \R methods.
 }
 \usage{
 setRefClass(Class, fields = , contains = , methods =,
      where =, ...)
 
-refClassFields(Class)
-refClassMethods(Class)
+getRefClass(Class, where =)
 
 }
 \arguments{
@@ -48,9 +48,18 @@ a named list of the fields.  The resulting fields will be accessed with referenc
 the  section on \dQuote{Reference Objects}).  If the argument is a list, the
 elements of the list can be the character string name of a class, in
 which case the field must be from that class or a subclass.
-Alternatively, the element can be an accessor function that returns
-the field if called with no argument or sets it if given a single
-arguments.  See the section on \dQuote{Accessor Functions}.
+
+ The element in the list can alternatively be an \emph{accessor
+   function}, a function of one argument that returns
+the field if called with no argument or sets it to the value of the
+argument otherwise.
+Accessor functions are used internally and for inter-system interface
+applications.
+Their definition follows the rules for writing methods for the class:
+they can refer to other fields and can call other methods for this
+class or its superclasses.
+See the section on \dQuote{Implementation} for the internal mechanism
+used by accessor functions.
 
 
 Note that fields are distinct from
@@ -101,141 +110,129 @@ semantics.
 Typically, the basic programming mechanism in these languages
 is to invoke a method on an object, with
 different interpretation from a function call in \R.
-In the \R syntax we use for this operation, one invokes a method,
+In the \R syntax that we use for this operation, one invokes a method,
 \code{m1} say, on an object \code{x} by the expression
 \code{x$m1(...)}. %$
-Objects in this programming model usually have named fields on which
-the methods operate.
-In particular, methods are usually included that modify the content of
-the fields.
-
-The goal of the software described here is to provide a uniform
-programming style in \R to deal with such software, whether it is
-implemented directly in \R or through an interface to one of the other
-languages.
-Several implications follow for the \R software.
 Methods in this model are associated with the object, or more
 precisely with the class of the object, as opposed to methods in a
 function-based class/method system, which are fundamentally associated
 with the function (in \R, for example, a generic function in an \R
 session has a table of all its currently known methods).
+In this document \dQuote{methods for a class} as opposed to
+\dQuote{methods for a function} will make the distinction.
 
-This relation of methods to objects is one reason such systems are
-often referred to as Object Oriented Programming (OOP).  While there
-is nothing incorrect about the term, it has been the cause of
-confusion, particularly when programmers come to \R from one of the
-other systems.
-In a normal use of the words, the function-based class/method system in \R
-is just as object-oriented as Java, say, if not more so.
-But the systems are fundamentally different.
-To avoid propagating the confusion, we will avoid the term OOP
-throughout this document.
+Objects in this programming model usually have named fields on which
+the methods operate.
+In the \R implementation, the fields are defined when the class is
+created.
+The field itself can optionally have a specified class, meaning that only objects
+from this class or one of its subclasses can be assigned to the field.
+By default, fields have class \code{"ANY"}.
+Fields may also be defined by supplying an accessor function which
+will be called to get or set the field.
+Accessor functions are likely when reference classes are part of an
+inter-system interface.
+The interface will usually supply the accessor functions automatically
+based on the definition of the corresponding class in the other language.
 
-Some terms are needed to distinguish the
-OOP-style structure from the similar function-based classes and methods
-structure.  The terms \dQuote{field} and
-\dQuote{reference method} are used in distinction to \dQuote{slot}
-and \dQuote{functional method} for the usual S4 classes.
-There are  arguments for and
-against most obvious terminology borrowed from other languages.  And,
-as mentioned above, even the term \dQuote{OOP} is potentially
-confusing.
+Fields in this programming model are accessed by reference.
+In particular, invoking a method may modify the content of
+the fields.
 
-In this document, \dQuote{method} unqualified usually means a
-reference method.
+Programming for such classes involves writing new methods for a
+particular class.
+In the \R implementation, these methods are \R functions, optionally
+with additional arguments.
+The object on which the methods are invoked is not an explicit
+argument to the method.
+Instead, fields and methods for the class can be referred to by name
+in the method definition.
+The implementation uses \R environments to make fields and methods
+available by name.
+A few additional special names allow reference to the complete object,
+to its class and to the definition of the class.
+
+The goal of the software described here is to provide a uniform
+programming style in \R to deal with such software, whether it is
+implemented directly in \R or through an interface to one of the other
+languages.
 }
-\section{Fields and Reference Methods}{
-All the widely used languages implementing reference methods provide
-for named \dQuote{pieces} of an object.
-The term for these pieces varies with the language; in the \R
-implementations they will be called \emph{fields}.
-In many languages, a field is accessed by using the operator
-\code{"."}, but this is not available to us in \R because the
-character can be part of a name (blame it on the Unix system whose
-convention of starting hidden files with \code{"."} was taken over in
-S).
 
-Instead, and rather than introduce yet another operator into the
-grammar, we use the \code{$} operator, %$
-as has been done in a number of related \R packages, including
-inter-system interfaces to languages such as Java and C++.
-A field is extracted by this operator and modified by the operator
-appearing on the left of an assignment.
-In terms of implementation, any class representing reference objects
-of this form will have or inherit methods for \code{"$"} and
-\code{"$<-"}.
-Objects from reference classes will inherit
-these methods from a basic reference class, either using \R (the
-standard being class \linkS4class{envRefClass}) or interfacing to
-another system.
+% \section{Fields and Reference Methods}{
+% All the widely used languages implementing reference methods provide
+% for named \dQuote{pieces} of an object.
+% The term for these pieces varies with the language; in the \R
+% implementations they will be called \emph{fields}.
+% In many languages, a field is accessed by using the operator
+% \code{"."}, but this is not available to us in \R because the
+% character can be part of a name (blame it on the Unix system whose
+% convention of starting hidden files with \code{"."} was taken over in
+% S).
 
-Similarly, a reference method is invoked on an object using the \code{$}
-operator.  To invoke a reference method \code{undo} on an object \code{x},
-call \code{x$undo()}.
-}
+% Instead, and rather than introduce yet another operator into the
+% grammar, we use the \code{$} operator, %$
+% as has been done in a number of related \R packages, including
+% inter-system interfaces to languages such as Java and C++.
+% A field is extracted by this operator and modified by the operator
+% appearing on the left of an assignment.
+% In terms of implementation, any class representing reference objects
+% of this form will have or inherit methods for \code{"$"} and
+% \code{"$<-"}.
+% Objects from reference classes will inherit
+% these methods from a basic reference class, either using \R (the
+% standard being class \linkS4class{envRefClass}) or interfacing to
+% another system.
+
+% Similarly, a reference method is invoked on an object using the \code{$}
+% operator.  To invoke a reference method \code{undo} on an object \code{x},
+% call \code{x$undo()}.
+% }
 
 \section{Writing Reference Methods}{
-Reference methods are functions supplied as elements of a named list as
-the argument \code{refMethods} in a call to \code{setRefClass}.
+Reference methods are functions supplied as elements of a named list,
+either
+when invoking \code{g$methods()} %$}
+on a generator object \code{g} or as
+the argument \code{methods} in a call to \code{setRefClass}.
 They are written as ordinary \R functions but have some special
 features and restrictions.
 The body of the function can contain calls to any other reference method,
-including those inherited from other reference classes.
+including those inherited from other reference classes and may refer
+to fields in the object by name.
 
-Reference methods also need to refer to fields in the object.
-A number of
-systems using this programming paradigm recommend or enforce \emph{accessor methods}
-corresponding to each field.
-In the \R version presented here (and fairly often elsewhere
-as well), a field named \code{abc} of an object \code{x} would be
-extracted by \code{x$getAbc()} and assigned by
-\code{x$setAbc(value)}.
-Aside from other reasons, using accessor methods in the standard \R
-implementation allows class-based methods to be defined independently of the
-precise mechanism currently used to implement fields (see the
-implementation section below).
-A requirement for defining reference classes in \R is that methods be
-available to get any field and to set any field, although an error
-may be generated if a field is defined to be read-only.
-
-For reference classes using the \linkS4class{envRefClass} basic
-reference class, the use of accessor methods is optional.
-An alternative is to use the field name directly for getting the field
-and assignments of the field name using the
-non-local assignment operator, \code{<<-}, to set the field.  See the
-second version of class-based methods in the example below.
-Notice that non-local assignment is required:  a local assignment with
+Fields may be modified in a method by using the
+non-local assignment operator, \code{<<-}, as in the \code{$edit} and \code{$undo}
+methods in the example below.
+Note that non-local assignment is required:  a local assignment with
 the \code{<-} operator just creates a local object in the function
 call, as it would in any \R function.
-
-Direct access to fields in a class-based method usually gives a simpler and slightly faster
-implementation.
-However, using accessor methods may be required if the reference
-object is a proxy for an object in another language.
-Using them in the \R-only case as well has the advantage of being compatible
-with the external case, so the same method definition applies to both.
-That's an important advantage in principle, because
-one of the main goals for the software described here is to provide a
-consistent programming interface both for \R-only software and for
-inter-system interfaces.
 
 Reference methods should be kept simple; if they need to do some
 specialized \R computation, that computation should use a separate \R
 function that is called from the reference method.
 Specifically, methods can not use special features of the
-enclosing environment mechanism.
+enclosing environment mechanism, since the method's environment is
+used to access fields and other methods.
 Reference methods can not themselves be generic functions; if you want
 additional function-based method dispatch, write a separate generic
 function and call that from the method.
-(The restrictions arise because the method's environment is used to
-implement references: see the \dQuote{Implementation} section.)
 
 The entire object can be referred to in a method by the reserved
 name \code{.self}, as shown in the \code{save=} method of the
 example.
+The special object \code{.refClassDef} contains the definition of the
+class of the object.
 
-The methods defined in the class include methods from superclasses, as
+The methods available include methods inherited from superclasses, as
 discussed in the next section.
+
+Documentation for the methods can be obtained by the \code{$help} %$}
+method for the generator object.
+Self-documentation can be included in method definitions.
+If the first element of the body of the method is a literal character
+vector object, that vector is interpreted as documentation and printed
+by the help method.
+See the methods in the example.
 }
 \section{Inheritance}{
 Reference classes inherit from other reference classes by using the
@@ -250,70 +247,41 @@ superclasses may be ambiguous).
 The names of the reference superclasses are in slot
 \code{refSuperClasses} of the class definition.
 
-Class fields are inherited.  Currently the new class definition can
-override any inherited fields:  the previous field definition is no
-longer available.
+Class fields are inherited.  A class definition can override a field
+of the same name in a superclass only if the overriding class is a
+subclass of the class of the inherited field.  This ensures that a
+valid object in the field remains valid for the superclass as well.
 
 Inherited methods are installed in the same way as directly
 specified methods.
 The code in a method can refer to  inherited methods in the same
 way as directly specified methods.
 
-A method may override a method of the same name in a superclass.  For
-this purpose, a special method name will be provided, to be translated
-into a call to the superclass method overridden.  This mechanism has
-not yet been implemented, but the current plan is that
-\code{callSuper(...)} will translate into a call to the superclass
-version of the current method.
+A method may override a method of the same name in a superclass.
+The overriding method can call the superclass method by 
+\code{callSuper(...)}.
+The arguments to \code{$callSuper} %$}
+are passed to the superclass version.
 See the matrix viewer example below.
+Note that the intended arguments for the superclass method must be
+supplied explicitly; there is no convention for supplying the
+arguments automatically, in contrast to the similar mechanism for
+functional methods.
 
-}
-\section{Implementation}{
-Reference class definitions need to store the definition of the fields
-and also the class-based methods (since these belong to the class in the
-class-based paradigm).
-These and some other properties are defined in the class
-\code{refClassRepresentation}, which is a subclass of the ordinary
-class definition class, \linkS4class{classRepresentation}.
-As of version 2.12.0 of \R, the details of this class are not part of
-the API.
-Helper functions \code{refClassFields} and \code{refClassMethods} will
-extract class field and method information.
-It's a bad idea to count on the specific slots as currently documented
-(to satisfy package checking).
-
-The implementation provides for field and class method access through
-the \code{$} operator. %$
-This includes replacement of field values in a reference class object.
-Class method definitions are also supported as documented here.
-
-The implementation for both purposes works by delivering a function
-object for the method with an environment containing the fields and
-class-based methods as objects, specifically
-the environment of the object itself.
-The \code{initialize} method for standard reference class objects
-installs an environment in the object with the initial contents of the
-class fields (either the defaults from the prototype or values
-supplied explicitly in the call to \code{\link{new}}).
-Methods are inserted into the environment when they are called,
-including other methods they may call.
-These dependencies are searched heuristically when the reference class
-is defined, using the \code{findGlobals} function in recommended
-package \code{codeTools}.
-This recommended package must be available to define a reference class
-(but is not required to use reference classes defined in an installed package).
 }
 
 \section{Reference Class Generator Objects}{
-The definition of a reference class, by a call to \code{setRefClass},
+The call to \code{setRefClass} defines the specified class and
 returns a \dQuote{generator} object for that class.
-This object is itself a reference object (of class
+The generator object is itself a reference object (of class
 \code{"refObjectGenerator"}).
-Its fields are\code{def}, the class definition, and \code{className}.
+Its fields are \code{def}, the class definition, and \code{className},
+the character string name of the class.
 
-More importantly, generator objects have methods to generate objects
-from the class, to access help on reference methods, and optionally to
-define new reference methods for the class:
+Methods for generator objects exist to generate objects
+from the class, to access help on reference methods, and to
+define new reference methods for the class.
+The currently available methods are:
 \describe{
 \item{\code{$new(...)}}{ %$
 This method is equivalent to the function \code{\link{new}} with the
@@ -335,9 +303,13 @@ If no topic is given or if the topic is not a method name, the
 definition of the class is printed.
 }
 \item{\code{$methods(...)}}{ %$
-The named arguments should be method definitions, which will be
+With no arguments, returns a list of the reference methods for this
+class.
+
+Named arguments
+are method definitions, which will be
 installed in the class, as if they had been supplied in the
-\code{refMethods} argument to \code{setRefClass()}.
+\code{methods} argument to \code{setRefClass()}.
 
 The new methods can refer to any currently defined method by name
 (including other methods supplied in this call to
@@ -348,7 +320,77 @@ existing method of the same name).
 
 To remove a method, supply \code{NULL} as its new definition.
 }
+
+\item{\code{$fields()}}{ %$}{
+Returns a list of the fields, each with its corresponding class.
+Fields for which an accessor function was supplied in the definition
+have class \code{"activeBindingFunction"}.
 }
+
+\item{\code{$lock(...)}}{ %$}{
+The fields named in the arguments are locked; specifically, after the
+lock method is called, the field may be set once.  Any further attempt
+to set it will generate an error.
+
+Fields that are defined by an explicit accessor function can not be
+locked (on the other hand, the accessor function can be defined to
+generate an error if called with an argument).
+}
+
+\item{\code{$accessors(...)}}{ %$}{
+A number of
+systems using the OOP programming paradigm recommend or enforce
+\emph{getter and setter methods}
+corresponding to each field, rather than direct access by name.
+In the \R version presented here (and fairly often elsewhere
+as well), a field named \code{abc} of an object \code{x} would be
+extracted by \code{x$getAbc()} and assigned by
+\code{x$setAbc(value)}.
+The \code{$accessors} %$}
+method is a convenience function that creates getter and setter methods for the
+specified fields.
+}
+} %% end of \describe
+} %% end of \section
+
+\section{Implementation}{
+Reference classes are implemented as S4 classes with a data part of
+type \code{"environment"}.
+An object generated from a reference class has this type.
+Fields correspond to named objects in the environment.
+A field associated with an accessor function is implemented as an
+\link[=bindenv]{active binding}.
+In addition, fields with a specified class are implemented as a
+special form of active binding to enforce valid assignment to the
+field.
+A field, say \code{data}, can be accessed generally by an expression
+of the form \code{x$data} %$}
+for any object from the relevant class.
+In a method for this class, the field can be accessed by the name
+\code{data}.
+A field that is not locked can be set by an expression of the form
+\code{x$data <- value}.%$
+Inside a method, a field can be assigned by an expresion of the form
+\code{x <<- value}.
+Note the \link[=assignOps]{non-local assignment} operator.
+The standard \R interpretation of this operator works to assign it in
+the environment of the object.
+Fields with accessor functions will call this function via the active
+binding mechanism in all cases.
+
+When a method is invoked on an object, the corresponding function is
+installed in the environment, with the object's environment as the
+environment of the function.
+In addition, the object's environment has the following special
+pseudo-fields:
+\describe{
+\item{\code{.self}}{
+a reference to the entire object;
+}
+\item{\code{.refClassDef}}{
+the class definition.
+}
+} % end \describe
 }
 
 \section{Inter-System Interfaces}{
@@ -360,49 +402,35 @@ described here.
 
 The reference class definitions defined here provide a hook for
 methods defined in the interface to be made available in \R.
-The interface (typically, a package) implements a method for the
-generic function \code{referenceMethods()} for the definition of the
-class in the foreign language. In the \code{Rcpp} package for example,
-an object of class \code{"C++Class"} is generated for each C++ class
-exposed.  Depending on the information about the class exposed,
-\R-callable versions of the C++ methods and of getter and setter
-accessor methods for the properties may be made available.
+Access to fields and/or methods in the foreign language can be
+implemented by defining an \R reference class corresponding to each
+class made available through the interface.
+Typically, the inter-system interface will take care of the details of
+such methods, given a description of the foreign class (what fields
+and methods it has, the classes for the fields, whether any are
+read-only, etc.)
+The specifics for the fields and methods can be implemented via
+reference methods for the \R class.
+In particular, the use of active bindings allows field access for
+getting and setting to follow the standard model described here, with
+actual access handled by the inter-system interface.
 
-The S4 method defined for \code{referenceMethods()} should return a named list of functions to be
-called directly by the user (\code{x$f(...)}) %$
-or from within class-based method definitions.
-Calls to \code{referenceMethods()} will be made from
-\code{setRefClass()} if argument \code{interfaceClasses} is a class
-definition object (or a list of them), passing down the class
-definition object.
-The methods returned will be made available in the reference class.
+\R methods and/or fields can be included in the class definition as for any
+reference class.
 
-Typically, if the designers of the inter-system interface want users
-to be able to write \R methods using the same reference style, the
-interface will include a call to \code{setRefClass()} including the
-\code{interfaceClasses} argument.
-If the interface wants to modify any of the methods (for example, to
-use information not included in the class definition), it can do so by
-invoking the \code{methods()} method on the generator object.
-But all relevant methods should have some definition returned by
-\code{referenceMethods()}, in order for the code analysis to recognize
-that calls to them are method calls.
-
-%%  For an example, see the code for package \code{Rcpp}, version
-%%  0.8.7 or later.
+For an inter-system interface using this approach, see the code for package \code{Rcpp}, version
+0.8.7 or later.
 }
 \value{
-\code{setRefClass} returns a generator object for the class. This is
+\code{setRefClass} and \code{getRefClass} both return a generator object for the class. This is
 itself a reference object, with methods to generate objects from the
 class and also for defining new methods and for help-style
 documentation. See the
 section on generator objects for details.
 
-\code{refClassFields} returns a list of the classes for all the class
-fields.
-
-\code{refClassMethods} returns a list of the class method functions,
-including those inherited and accessor methods generated.
+\code{setRefClass} defines the class and stores its class definition.
+\code{getRefClass} requires that the class has been defined as a
+reference class.
 
 }
 \section{NOTE:}{
@@ -418,21 +446,28 @@ John Chambers
 
 
  \examples{
-## a simple editor for matrix objects.  Method  edit() changes some
-## range of values; method undo() undoes the last edit.
+## a simple editor for matrix objects.  Method  $edit() changes some
+## range of values; method $undo() undoes the last edit.
 mEditor <- setRefClass("matrixEditor",
       fields = list( data = "matrix",
         edits = "list"),
       methods = list(
      edit = function(i, j, value) {
+       ## the following string documents the edit method
+       'Replaces the range [i, j] of the
+        object by value.
+        '
          backup <-
              list(i, j, data[i,j])
+         data[i,j] <<- value
          edits <<- c(list(backup),
                      edits)
-         data[i,j] <<- value
          invisible(value)
      },
      undo = function() {
+       'Undoes the last edit() operation
+        and update the edits field accordingly.
+        '
          prev <- edits
          if(length(prev)) prev <- prev[[1]]
          else stop("No more edits to undo")
@@ -440,9 +475,6 @@ mEditor <- setRefClass("matrixEditor",
          ## trim the edits list
          length(edits) <<- length(edits) - 2
          invisible(prev)
-     },
-     save = function(file) {
-         base::save(.self, file = file)
      }
      ))
     
@@ -453,9 +485,20 @@ xx$data
 xx$undo()
 mEditor$help("undo")
 stopifnot(all.equal(xx$data, xMat))
-\dontshow{
+
+## add a method to save the object
+mEditor$methods(
+     save = function(file) {
+       'Save the current object on the file
+        in R external object format.
+       '
+         base::save(.self, file = file)
+     }
+)  
+
 tf <- tempfile()
 xx$save(tf) #$
+\dontshow{
 load(tf)
 unlink(tf)
 stopifnot(identical(xx$data, .self$data))
