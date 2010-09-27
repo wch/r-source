@@ -568,7 +568,8 @@ function(x)
                c(Rd2txt_NEWS_in_Rd_options,
                  list(itemBullet = "\036  ")))
         s <- gsub("^    ", "", out)
-        s <- gsub("^  \036 ", "\036", s)
+        # Number of blanks is system dependent
+        s <- gsub("^ *\036 ", "\036", s)
         s <- paste(s, collapse = "\n")
         s <- sub("^[[:space:]]*\036", "", s)
         s <- sub("[[:space:]]*$", "", s)
