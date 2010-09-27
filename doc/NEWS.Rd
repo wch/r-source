@@ -382,6 +382,12 @@
 
       \item bzip2 has been updated to version 1.0.6 (bug-fix release).
       \option{--with-system-bzlib} now requires at least version 1.0.6.
+
+      \item R now provides \file{jss.cls} and \file{jss.bst} (the class
+      and bib style file for the Journal of Statistical Software) as
+      well as \file{RJournal.bib} and \file{Rnews.bib}, and
+      \command{R CMD} ensures that the \file{.bst} and \file{.bib} files
+      are found by BibTeX.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
