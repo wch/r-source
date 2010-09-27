@@ -426,18 +426,18 @@ c
          JX = KX
          IF( INCY.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   K    = KUP1 - J
                   DO 50, I = MAX( 1, J - KU ), MIN( M, J + KL )
                      Y( I ) = Y( I ) + TEMP*A( K + I, J )
    50             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   IY   = KY
                   K    = KUP1 - J
@@ -445,7 +445,7 @@ c
                      Y( IY ) = Y( IY ) + TEMP*A( K + I, J )
                      IY      = IY      + INCY
    70             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
                IF( J.GT.KU )
      $            KY = KY + INCY
@@ -726,12 +726,12 @@ c
    60             CONTINUE
                END IF
                DO 80, L = 1, K
-                  IF( B( L, J ).NE.ZERO )THEN
+c                  IF( B( L, J ).NE.ZERO )THEN
                      TEMP = ALPHA*B( L, J )
                      DO 70, I = 1, M
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
    70                CONTINUE
-                  END IF
+c                  END IF
    80          CONTINUE
    90       CONTINUE
          ELSE
@@ -768,12 +768,12 @@ c
   140             CONTINUE
                END IF
                DO 160, L = 1, K
-                  IF( B( J, L ).NE.ZERO )THEN
+c                  IF( B( J, L ).NE.ZERO )THEN
                      TEMP = ALPHA*B( J, L )
                      DO 150, I = 1, M
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
   150                CONTINUE
-                  END IF
+c                  END IF
   160          CONTINUE
   170       CONTINUE
          ELSE
@@ -1008,24 +1008,24 @@ c
          JX = KX
          IF( INCY.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   DO 50, I = 1, M
                      Y( I ) = Y( I ) + TEMP*A( I, J )
    50             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   IY   = KY
                   DO 70, I = 1, M
                      Y( IY ) = Y( IY ) + TEMP*A( I, J )
                      IY      = IY      + INCY
    70             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    80       CONTINUE
          END IF

@@ -629,6 +629,12 @@
 
       \item \code{backSpline(.)} behaved incorrectly when the knot sequence
       was decreasing.  (\PR{14386})
+
+      \item The reference BLAS included in \R was assuming that
+      \code{0*x} and \code{x*0} were always zero (whereas they could be
+      \code{NA} or \code{NaN} in IEC 60559 arithmetic).  This was seen
+      in results from \code{tcrossprod}, and for example that
+      \code{log(0) \%*\% 0} gave \code{0}.
     }
   }
 }

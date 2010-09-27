@@ -533,24 +533,24 @@ c
          JX = KX
          IF( INCY.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   DO 50, I = 1, M
                      Y( I ) = Y( I ) + TEMP*A( I, J )
    50             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   IY   = KY
                   DO 70, I = 1, M
                      Y( IY ) = Y( IY ) + TEMP*A( I, J )
                      IY      = IY      + INCY
    70             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    80       CONTINUE
          END IF
@@ -725,12 +725,12 @@ c
       END IF
       IF( INCX.EQ.1 )THEN
          DO 20, J = 1, N
-            IF( Y( JY ).NE.ZERO )THEN
+c            IF( Y( JY ).NE.ZERO )THEN
                TEMP = ALPHA*DCONJG( Y( JY ) )
                DO 10, I = 1, M
                   A( I, J ) = A( I, J ) + X( I )*TEMP
    10          CONTINUE
-            END IF
+c            END IF
             JY = JY + INCY
    20    CONTINUE
       ELSE
@@ -740,14 +740,14 @@ c
             KX = 1 - ( M - 1 )*INCX
          END IF
          DO 40, J = 1, N
-            IF( Y( JY ).NE.ZERO )THEN
+c            IF( Y( JY ).NE.ZERO )THEN
                TEMP = ALPHA*DCONJG( Y( JY ) )
                IX   = KX
                DO 30, I = 1, M
                   A( I, J ) = A( I, J ) + X( IX )*TEMP
                   IX        = IX        + INCX
    30          CONTINUE
-            END IF
+c            END IF
             JY = JY + INCY
    40    CONTINUE
       END IF
@@ -1191,7 +1191,7 @@ c
 *
          IF( ( INCX.EQ.1 ).AND.( INCY.EQ.1 ) )THEN
             DO 20, J = 1, N
-               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
+c               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
                   TEMP1 = ALPHA*DCONJG( Y( J ) )
                   TEMP2 = DCONJG( ALPHA*X( J ) )
                   DO 10, I = 1, J - 1
@@ -1199,13 +1199,13 @@ c
    10             CONTINUE
                   A( J, J ) = DBLE( A( J, J ) ) +
      $                        DBLE( X( J )*TEMP1 + Y( J )*TEMP2 )
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
    20       CONTINUE
          ELSE
             DO 40, J = 1, N
-               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
+c               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
                   TEMP1 = ALPHA*DCONJG( Y( JY ) )
                   TEMP2 = DCONJG( ALPHA*X( JX ) )
                   IX    = KX
@@ -1218,9 +1218,9 @@ c
    30             CONTINUE
                   A( J, J ) = DBLE( A( J, J ) ) +
      $                        DBLE( X( JX )*TEMP1 + Y( JY )*TEMP2 )
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
                JX = JX + INCX
                JY = JY + INCY
    40       CONTINUE
@@ -1231,7 +1231,7 @@ c
 *
          IF( ( INCX.EQ.1 ).AND.( INCY.EQ.1 ) )THEN
             DO 60, J = 1, N
-               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
+c               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
                   TEMP1     = ALPHA*DCONJG( Y( J ) )
                   TEMP2     = DCONJG( ALPHA*X( J ) )
                   A( J, J ) = DBLE( A( J, J ) ) +
@@ -1239,13 +1239,13 @@ c
                   DO 50, I = J + 1, N
                      A( I, J ) = A( I, J ) + X( I )*TEMP1 + Y( I )*TEMP2
    50             CONTINUE
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
+c               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
                   TEMP1     = ALPHA*DCONJG( Y( JY ) )
                   TEMP2     = DCONJG( ALPHA*X( JX ) )
                   A( J, J ) = DBLE( A( J, J ) ) +
@@ -1258,9 +1258,9 @@ c
                      A( I, J ) = A( I, J ) + X( IX )*TEMP1
      $                                     + Y( IY )*TEMP2
    70             CONTINUE
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
                JX = JX + INCX
                JY = JY + INCY
    80       CONTINUE
@@ -1533,7 +1533,7 @@ c
                   C( J, J ) = DBLE( C( J, J ) )
                END IF
                DO 120 L = 1, K
-                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
+c                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
      $                 THEN
                      TEMP1 = ALPHA*DCONJG( B( J, L ) )
                      TEMP2 = DCONJG( ALPHA*A( J, L ) )
@@ -1543,7 +1543,7 @@ c
   110                CONTINUE
                      C( J, J ) = DBLE( C( J, J ) ) +
      $                           DBLE( A( J, L )*TEMP1+B( J, L )*TEMP2 )
-                  END IF
+c                  END IF
   120          CONTINUE
   130       CONTINUE
          ELSE
@@ -1561,7 +1561,7 @@ c
                   C( J, J ) = DBLE( C( J, J ) )
                END IF
                DO 170 L = 1, K
-                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
+c                  IF( ( A( J, L ).NE.ZERO ) .OR. ( B( J, L ).NE.ZERO ) )
      $                 THEN
                      TEMP1 = ALPHA*DCONJG( B( J, L ) )
                      TEMP2 = DCONJG( ALPHA*A( J, L ) )
@@ -1571,7 +1571,7 @@ c
   160                CONTINUE
                      C( J, J ) = DBLE( C( J, J ) ) +
      $                           DBLE( A( J, L )*TEMP1+B( J, L )*TEMP2 )
-                  END IF
+c                  END IF
   170          CONTINUE
   180       CONTINUE
          END IF
@@ -1920,7 +1920,7 @@ c       code for both increments equal to 1
             IF( UPPER )THEN
                DO 50, J = 1, N
                   DO 40, K = 1, M
-                     IF( B( K, J ).NE.ZERO )THEN
+c                     IF( B( K, J ).NE.ZERO )THEN
                         TEMP = ALPHA*B( K, J )
                         DO 30, I = 1, K - 1
                            B( I, J ) = B( I, J ) + TEMP*A( I, K )
@@ -1928,13 +1928,13 @@ c       code for both increments equal to 1
                         IF( NOUNIT )
      $                     TEMP = TEMP*A( K, K )
                         B( K, J ) = TEMP
-                     END IF
+c                     END IF
    40             CONTINUE
    50          CONTINUE
             ELSE
                DO 80, J = 1, N
                   DO 70 K = M, 1, -1
-                     IF( B( K, J ).NE.ZERO )THEN
+c                     IF( B( K, J ).NE.ZERO )THEN
                         TEMP      = ALPHA*B( K, J )
                         B( K, J ) = TEMP
                         IF( NOUNIT )
@@ -1942,7 +1942,7 @@ c       code for both increments equal to 1
                         DO 60, I = K + 1, M
                            B( I, J ) = B( I, J ) + TEMP*A( I, K )
    60                   CONTINUE
-                     END IF
+c                     END IF
    70             CONTINUE
    80          CONTINUE
             END IF
@@ -2006,12 +2006,12 @@ c       code for both increments equal to 1
                      B( I, J ) = TEMP*B( I, J )
   170             CONTINUE
                   DO 190, K = 1, J - 1
-                     IF( A( K, J ).NE.ZERO )THEN
+c                     IF( A( K, J ).NE.ZERO )THEN
                         TEMP = ALPHA*A( K, J )
                         DO 180, I = 1, M
                            B( I, J ) = B( I, J ) + TEMP*B( I, K )
   180                   CONTINUE
-                     END IF
+c                     END IF
   190             CONTINUE
   200          CONTINUE
             ELSE
@@ -2023,12 +2023,12 @@ c       code for both increments equal to 1
                      B( I, J ) = TEMP*B( I, J )
   210             CONTINUE
                   DO 230, K = J + 1, N
-                     IF( A( K, J ).NE.ZERO )THEN
+c                     IF( A( K, J ).NE.ZERO )THEN
                         TEMP = ALPHA*A( K, J )
                         DO 220, I = 1, M
                            B( I, J ) = B( I, J ) + TEMP*B( I, K )
   220                   CONTINUE
-                     END IF
+c                     END IF
   230             CONTINUE
   240          CONTINUE
             END IF
@@ -2067,7 +2067,7 @@ c       code for both increments equal to 1
             ELSE
                DO 320, K = N, 1, -1
                   DO 300, J = K + 1, N
-                     IF( A( J, K ).NE.ZERO )THEN
+c                     IF( A( J, K ).NE.ZERO )THEN
                         IF( NOCONJ )THEN
                            TEMP = ALPHA*A( J, K )
                         ELSE
@@ -2076,7 +2076,7 @@ c       code for both increments equal to 1
                         DO 290, I = 1, M
                            B( I, J ) = B( I, J ) + TEMP*B( I, K )
   290                   CONTINUE
-                     END IF
+c                     END IF
   300             CONTINUE
                   TEMP = ALPHA
                   IF( NOUNIT )THEN
@@ -2269,19 +2269,19 @@ c       code for both increments equal to 1
          IF( LSAME( UPLO, 'U' ) )THEN
             IF( INCX.EQ.1 )THEN
                DO 20, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      DO 10, I = 1, J - 1
                         X( I ) = X( I ) + TEMP*A( I, J )
    10                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*A( J, J )
-                  END IF
+c                  END IF
    20          CONTINUE
             ELSE
                JX = KX
                DO 40, J = 1, N
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      DO 30, I = 1, J - 1
@@ -2290,27 +2290,27 @@ c       code for both increments equal to 1
    30                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*A( J, J )
-                  END IF
+c                  END IF
                   JX = JX + INCX
    40          CONTINUE
             END IF
          ELSE
             IF( INCX.EQ.1 )THEN
                DO 60, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      DO 50, I = N, J + 1, -1
                         X( I ) = X( I ) + TEMP*A( I, J )
    50                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*A( J, J )
-                  END IF
+c                  END IF
    60          CONTINUE
             ELSE
                KX = KX + ( N - 1 )*INCX
                JX = KX
                DO 80, J = N, 1, -1
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      DO 70, I = N, J + 1, -1
@@ -2319,7 +2319,7 @@ c       code for both increments equal to 1
    70                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*A( J, J )
-                  END IF
+c                  END IF
                   JX = JX - INCX
    80          CONTINUE
             END IF
@@ -2640,13 +2640,13 @@ c       code for both increments equal to 1
    30                CONTINUE
                   END IF
                   DO 50, K = M, 1, -1
-                     IF( B( K, J ).NE.ZERO )THEN
+c                     IF( B( K, J ).NE.ZERO )THEN
                         IF( NOUNIT )
      $                     B( K, J ) = B( K, J )/A( K, K )
                         DO 40, I = 1, K - 1
                            B( I, J ) = B( I, J ) - B( K, J )*A( I, K )
    40                   CONTINUE
-                     END IF
+c                     END IF
    50             CONTINUE
    60          CONTINUE
             ELSE
@@ -2657,13 +2657,13 @@ c       code for both increments equal to 1
    70                CONTINUE
                   END IF
                   DO 90 K = 1, M
-                     IF( B( K, J ).NE.ZERO )THEN
+c                     IF( B( K, J ).NE.ZERO )THEN
                         IF( NOUNIT )
      $                     B( K, J ) = B( K, J )/A( K, K )
                         DO 80, I = K + 1, M
                            B( I, J ) = B( I, J ) - B( K, J )*A( I, K )
    80                   CONTINUE
-                     END IF
+c                     END IF
    90             CONTINUE
   100          CONTINUE
             END IF
@@ -2727,11 +2727,11 @@ c       code for both increments equal to 1
   190                CONTINUE
                   END IF
                   DO 210, K = 1, J - 1
-                     IF( A( K, J ).NE.ZERO )THEN
+c                     IF( A( K, J ).NE.ZERO )THEN
                         DO 200, I = 1, M
                            B( I, J ) = B( I, J ) - A( K, J )*B( I, K )
   200                   CONTINUE
-                     END IF
+c                     END IF
   210             CONTINUE
                   IF( NOUNIT )THEN
                      TEMP = ONE/A( J, J )
@@ -2748,11 +2748,11 @@ c       code for both increments equal to 1
   240                CONTINUE
                   END IF
                   DO 260, K = J + 1, N
-                     IF( A( K, J ).NE.ZERO )THEN
+c                     IF( A( K, J ).NE.ZERO )THEN
                         DO 250, I = 1, M
                            B( I, J ) = B( I, J ) - A( K, J )*B( I, K )
   250                   CONTINUE
-                     END IF
+c                     END IF
   260             CONTINUE
                   IF( NOUNIT )THEN
                      TEMP = ONE/A( J, J )
@@ -2780,12 +2780,12 @@ c       code for both increments equal to 1
   290                CONTINUE
                   END IF
                   DO 310, J = 1, K - 1
-                     IF( A( J, K ).NE.ZERO )THEN
+c                     IF( A( J, K ).NE.ZERO )THEN
                         IF( NOCONJ )THEN
                            TEMP = A( J, K )
                         ELSE
                            TEMP = DCONJG( A( J, K ) )
-                        END IF
+c                        END IF
                         DO 300, I = 1, M
                            B( I, J ) = B( I, J ) - TEMP*B( I, K )
   300                   CONTINUE
@@ -2810,7 +2810,7 @@ c       code for both increments equal to 1
   340                CONTINUE
                   END IF
                   DO 360, J = K + 1, N
-                     IF( A( J, K ).NE.ZERO )THEN
+c                     IF( A( J, K ).NE.ZERO )THEN
                         IF( NOCONJ )THEN
                            TEMP = A( J, K )
                         ELSE
@@ -2819,7 +2819,7 @@ c       code for both increments equal to 1
                         DO 350, I = 1, M
                            B( I, J ) = B( I, J ) - TEMP*B( I, K )
   350                   CONTINUE
-                     END IF
+c                     END IF
   360             CONTINUE
                   IF( ALPHA.NE.ONE )THEN
                      DO 370, I = 1, M
@@ -3007,19 +3007,19 @@ c       code for both increments equal to 1
          IF( LSAME( UPLO, 'U' ) )THEN
             IF( INCX.EQ.1 )THEN
                DO 20, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( J ) = X( J )/A( J, J )
                      TEMP = X( J )
                      DO 10, I = J - 1, 1, -1
                         X( I ) = X( I ) - TEMP*A( I, J )
    10                CONTINUE
-                  END IF
+c                  END IF
    20          CONTINUE
             ELSE
                JX = KX + ( N - 1 )*INCX
                DO 40, J = N, 1, -1
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )/A( J, J )
                      TEMP = X( JX )
@@ -3028,26 +3028,26 @@ c       code for both increments equal to 1
                         IX      = IX      - INCX
                         X( IX ) = X( IX ) - TEMP*A( I, J )
    30                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX - INCX
    40          CONTINUE
             END IF
          ELSE
             IF( INCX.EQ.1 )THEN
                DO 60, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( J ) = X( J )/A( J, J )
                      TEMP = X( J )
                      DO 50, I = J + 1, N
                         X( I ) = X( I ) - TEMP*A( I, J )
    50                CONTINUE
-                  END IF
+c                  END IF
    60          CONTINUE
             ELSE
                JX = KX
                DO 80, J = 1, N
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )/A( J, J )
                      TEMP = X( JX )
@@ -3056,7 +3056,7 @@ c       code for both increments equal to 1
                         IX      = IX      + INCX
                         X( IX ) = X( IX ) - TEMP*A( I, J )
    70                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX + INCX
    80          CONTINUE
             END IF
@@ -3445,18 +3445,18 @@ c
          JX = KX
          IF( INCY.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   K    = KUP1 - J
                   DO 50, I = MAX( 1, J - KU ), MIN( M, J + KL )
                      Y( I ) = Y( I ) + TEMP*A( K + I, J )
    50             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*X( JX )
                   IY   = KY
                   K    = KUP1 - J
@@ -3464,7 +3464,7 @@ c
                      Y( IY ) = Y( IY ) + TEMP*A( K + I, J )
                      IY      = IY      + INCY
    70             CONTINUE
-               END IF
+c               END IF
                JX = JX + INCX
                IF( J.GT.KU )
      $            KY = KY + INCY
@@ -3645,12 +3645,12 @@ c
       END IF
       IF( INCX.EQ.1 )THEN
          DO 20, J = 1, N
-            IF( Y( JY ).NE.ZERO )THEN
+c            IF( Y( JY ).NE.ZERO )THEN
                TEMP = ALPHA*Y( JY )
                DO 10, I = 1, M
                   A( I, J ) = A( I, J ) + X( I )*TEMP
    10          CONTINUE
-            END IF
+c            END IF
             JY = JY + INCY
    20    CONTINUE
       ELSE
@@ -3660,14 +3660,14 @@ c
             KX = 1 - ( M - 1 )*INCX
          END IF
          DO 40, J = 1, N
-            IF( Y( JY ).NE.ZERO )THEN
+c            IF( Y( JY ).NE.ZERO )THEN
                TEMP = ALPHA*Y( JY )
                IX   = KX
                DO 30, I = 1, M
                   A( I, J ) = A( I, J ) + X( IX )*TEMP
                   IX        = IX        + INCX
    30          CONTINUE
-            END IF
+c            END IF
             JY = JY + INCY
    40    CONTINUE
       END IF
@@ -4435,20 +4435,20 @@ c
 *
          IF( INCX.EQ.1 )THEN
             DO 20, J = 1, N
-               IF( X( J ).NE.ZERO )THEN
+c               IF( X( J ).NE.ZERO )THEN
                   TEMP = ALPHA*DCONJG( X( J ) )
                   DO 10, I = 1, J - 1
                      A( I, J ) = A( I, J ) + X( I )*TEMP
    10             CONTINUE
                   A( J, J ) = DBLE( A( J, J ) ) + DBLE( X( J )*TEMP )
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
    20       CONTINUE
          ELSE
             JX = KX
             DO 40, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*DCONJG( X( JX ) )
                   IX   = KX
                   DO 30, I = 1, J - 1
@@ -4456,9 +4456,9 @@ c
                      IX        = IX        + INCX
    30             CONTINUE
                   A( J, J ) = DBLE( A( J, J ) ) + DBLE( X( JX )*TEMP )
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
                JX = JX + INCX
    40       CONTINUE
          END IF
@@ -4468,20 +4468,20 @@ c
 *
          IF( INCX.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( J ).NE.ZERO )THEN
+c               IF( X( J ).NE.ZERO )THEN
                   TEMP      = ALPHA*DCONJG( X( J ) )
                   A( J, J ) = DBLE( A( J, J ) ) + DBLE( TEMP*X( J ) )
                   DO 50, I = J + 1, N
                      A( I, J ) = A( I, J ) + X( I )*TEMP
    50             CONTINUE
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
    60       CONTINUE
          ELSE
             JX = KX
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP      = ALPHA*DCONJG( X( JX ) )
                   A( J, J ) = DBLE( A( J, J ) ) + DBLE( TEMP*X( JX ) )
                   IX        = JX
@@ -4489,9 +4489,9 @@ c
                      IX        = IX        + INCX
                      A( I, J ) = A( I, J ) + X( IX )*TEMP
    70             CONTINUE
-               ELSE
-                  A( J, J ) = DBLE( A( J, J ) )
-               END IF
+c               ELSE
+c                  A( J, J ) = DBLE( A( J, J ) )
+c               END IF
                JX = JX + INCX
    80       CONTINUE
          END IF
@@ -5242,7 +5242,7 @@ c
 *
          IF( INCX.EQ.1 )THEN
             DO 20, J = 1, N
-               IF( X( J ).NE.ZERO )THEN
+c               IF( X( J ).NE.ZERO )THEN
                   TEMP = ALPHA*DCONJG( X( J ) )
                   K    = KK
                   DO 10, I = 1, J - 1
@@ -5251,15 +5251,15 @@ c
    10             CONTINUE
                   AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
      $                               + DBLE( X( J )*TEMP )
-               ELSE
-                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
-               END IF
+c               ELSE
+c                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
+c               END IF
                KK = KK + J
    20       CONTINUE
          ELSE
             JX = KX
             DO 40, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP = ALPHA*DCONJG( X( JX ) )
                   IX   = KX
                   DO 30, K = KK, KK + J - 2
@@ -5268,9 +5268,9 @@ c
    30             CONTINUE
                   AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
      $                               + DBLE( X( JX )*TEMP )
-               ELSE
-                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
-               END IF
+c               ELSE
+c                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
+c               END IF
                JX = JX + INCX
                KK = KK + J
    40       CONTINUE
@@ -5281,7 +5281,7 @@ c
 *
          IF( INCX.EQ.1 )THEN
             DO 60, J = 1, N
-               IF( X( J ).NE.ZERO )THEN
+c               IF( X( J ).NE.ZERO )THEN
                   TEMP     = ALPHA*DCONJG( X( J ) )
                   AP( KK ) = DBLE( AP( KK ) ) + DBLE( TEMP*X( J ) )
                   K        = KK               + 1
@@ -5289,15 +5289,15 @@ c
                      AP( K ) = AP( K ) + X( I )*TEMP
                      K       = K       + 1
    50             CONTINUE
-               ELSE
-                  AP( KK ) = DBLE( AP( KK ) )
-               END IF
+c               ELSE
+c                  AP( KK ) = DBLE( AP( KK ) )
+c               END IF
                KK = KK + N - J + 1
    60       CONTINUE
          ELSE
             JX = KX
             DO 80, J = 1, N
-               IF( X( JX ).NE.ZERO )THEN
+c               IF( X( JX ).NE.ZERO )THEN
                   TEMP    = ALPHA*DCONJG( X( JX ) )
                   AP( KK ) = DBLE( AP( KK ) ) + DBLE( TEMP*X( JX ) )
                   IX      = JX
@@ -5305,9 +5305,9 @@ c
                      IX      = IX      + INCX
                      AP( K ) = AP( K ) + X( IX )*TEMP
    70             CONTINUE
-               ELSE
-                  AP( KK ) = DBLE( AP( KK ) )
-               END IF
+c               ELSE
+c                  AP( KK ) = DBLE( AP( KK ) )
+c               END IF
                JX = JX + INCX
                KK = KK + N - J + 1
    80       CONTINUE
@@ -5482,7 +5482,7 @@ c
 *
          IF( ( INCX.EQ.1 ).AND.( INCY.EQ.1 ) )THEN
             DO 20, J = 1, N
-               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
+c               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
                   TEMP1 = ALPHA*DCONJG( Y( J ) )
                   TEMP2 = DCONJG( ALPHA*X( J ) )
                   K     = KK
@@ -5492,14 +5492,14 @@ c
    10             CONTINUE
                   AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) ) +
      $                               DBLE( X( J )*TEMP1 + Y( J )*TEMP2 )
-               ELSE
-                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
-               END IF
+c               ELSE
+c                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
+c               END IF
                KK = KK + J
    20       CONTINUE
          ELSE
             DO 40, J = 1, N
-               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
+c               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
                   TEMP1 = ALPHA*DCONJG( Y( JY ) )
                   TEMP2 = DCONJG( ALPHA*X( JX ) )
                   IX    = KX
@@ -5512,9 +5512,9 @@ c
                   AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) ) +
      $                               DBLE( X( JX )*TEMP1 +
      $                                     Y( JY )*TEMP2 )
-               ELSE
-                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
-               END IF
+c               ELSE
+c                  AP( KK + J - 1 ) = DBLE( AP( KK + J - 1 ) )
+c               END IF
                JX = JX + INCX
                JY = JY + INCY
                KK = KK + J
@@ -5526,7 +5526,7 @@ c
 *
          IF( ( INCX.EQ.1 ).AND.( INCY.EQ.1 ) )THEN
             DO 60, J = 1, N
-               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
+c               IF( ( X( J ).NE.ZERO ).OR.( Y( J ).NE.ZERO ) )THEN
                   TEMP1   = ALPHA*DCONJG( Y( J ) )
                   TEMP2   = DCONJG( ALPHA*X( J ) )
                   AP( KK ) = DBLE( AP( KK ) ) +
@@ -5536,14 +5536,14 @@ c
                      AP( K ) = AP( K ) + X( I )*TEMP1 + Y( I )*TEMP2
                      K       = K       + 1
    50             CONTINUE
-               ELSE
-                  AP( KK ) = DBLE( AP( KK ) )
-               END IF
+c               ELSE
+c                  AP( KK ) = DBLE( AP( KK ) )
+c               END IF
                KK = KK + N - J + 1
    60       CONTINUE
          ELSE
             DO 80, J = 1, N
-               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
+c               IF( ( X( JX ).NE.ZERO ).OR.( Y( JY ).NE.ZERO ) )THEN
                   TEMP1    = ALPHA*DCONJG( Y( JY ) )
                   TEMP2    = DCONJG( ALPHA*X( JX ) )
                   AP( KK ) = DBLE( AP( KK ) ) +
@@ -5555,9 +5555,9 @@ c
                      IY      = IY      + INCY
                      AP( K ) = AP( K ) + X( IX )*TEMP1 + Y( IY )*TEMP2
    70             CONTINUE
-               ELSE
-                  AP( KK ) = DBLE( AP( KK ) )
-               END IF
+c               ELSE
+c                  AP( KK ) = DBLE( AP( KK ) )
+c               END IF
                JX = JX + INCX
                JY = JY + INCY
                KK = KK + N - J + 1
@@ -6131,15 +6131,15 @@ c
   100             CONTINUE
                END IF
                DO 120, L = 1, K
-                  IF( ( A( J, L ).NE.ZERO ).OR.
-     $                ( B( J, L ).NE.ZERO )     )THEN
+c                  IF( ( A( J, L ).NE.ZERO ).OR.
+c     $                ( B( J, L ).NE.ZERO )     )THEN
                      TEMP1 = ALPHA*B( J, L )
                      TEMP2 = ALPHA*A( J, L )
                      DO 110, I = 1, J
                         C( I, J ) = C( I, J ) + A( I, L )*TEMP1 +
      $                                          B( I, L )*TEMP2
   110                CONTINUE
-                  END IF
+c                  END IF
   120          CONTINUE
   130       CONTINUE
          ELSE
@@ -6154,15 +6154,15 @@ c
   150             CONTINUE
                END IF
                DO 170, L = 1, K
-                  IF( ( A( J, L ).NE.ZERO ).OR.
-     $                ( B( J, L ).NE.ZERO )     )THEN
+c                  IF( ( A( J, L ).NE.ZERO ).OR.
+c     $                ( B( J, L ).NE.ZERO )     )THEN
                      TEMP1 = ALPHA*B( J, L )
                      TEMP2 = ALPHA*A( J, L )
                      DO 160, I = J, N
                         C( I, J ) = C( I, J ) + A( I, L )*TEMP1 +
      $                                          B( I, L )*TEMP2
   160                CONTINUE
-                  END IF
+c                  END IF
   170          CONTINUE
   180       CONTINUE
          END IF
@@ -6436,12 +6436,12 @@ c
   100             CONTINUE
                END IF
                DO 120, L = 1, K
-                  IF( A( J, L ).NE.ZERO )THEN
+c                  IF( A( J, L ).NE.ZERO )THEN
                      TEMP = ALPHA*A( J, L )
                      DO 110, I = 1, J
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
   110                CONTINUE
-                  END IF
+c                  END IF
   120          CONTINUE
   130       CONTINUE
          ELSE
@@ -6456,12 +6456,12 @@ c
   150             CONTINUE
                END IF
                DO 170, L = 1, K
-                  IF( A( J, L ).NE.ZERO )THEN
+c                  IF( A( J, L ).NE.ZERO )THEN
                      TEMP      = ALPHA*A( J, L )
                      DO 160, I = J, N
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
   160                CONTINUE
-                  END IF
+c                  END IF
   170          CONTINUE
   180       CONTINUE
          END IF
@@ -6713,7 +6713,7 @@ c
             KPLUS1 = K + 1
             IF( INCX.EQ.1 )THEN
                DO 20, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      L    = KPLUS1 - J
                      DO 10, I = MAX( 1, J - K ), J - 1
@@ -6721,12 +6721,12 @@ c
    10                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*A( KPLUS1, J )
-                  END IF
+c                  END IF
    20          CONTINUE
             ELSE
                JX = KX
                DO 40, J = 1, N
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      L    = KPLUS1  - J
@@ -6736,7 +6736,7 @@ c
    30                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*A( KPLUS1, J )
-                  END IF
+c                  END IF
                   JX = JX + INCX
                   IF( J.GT.K )
      $               KX = KX + INCX
@@ -6745,7 +6745,7 @@ c
          ELSE
             IF( INCX.EQ.1 )THEN
                DO 60, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      L    = 1      - J
                      DO 50, I = MIN( N, J + K ), J + 1, -1
@@ -6753,13 +6753,13 @@ c
    50                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*A( 1, J )
-                  END IF
+c                  END IF
    60          CONTINUE
             ELSE
                KX = KX + ( N - 1 )*INCX
                JX = KX
                DO 80, J = N, 1, -1
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      L    = 1       - J
@@ -6769,7 +6769,7 @@ c
    70                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*A( 1, J )
-                  END IF
+c                  END IF
                   JX = JX - INCX
                   IF( ( N - J ).GE.K )
      $               KX = KX - INCX
@@ -7094,7 +7094,7 @@ c
             KPLUS1 = K + 1
             IF( INCX.EQ.1 )THEN
                DO 20, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      L = KPLUS1 - J
                      IF( NOUNIT )
      $                  X( J ) = X( J )/A( KPLUS1, J )
@@ -7102,14 +7102,14 @@ c
                      DO 10, I = J - 1, MAX( 1, J - K ), -1
                         X( I ) = X( I ) - TEMP*A( L + I, J )
    10                CONTINUE
-                  END IF
+c                  END IF
    20          CONTINUE
             ELSE
                KX = KX + ( N - 1 )*INCX
                JX = KX
                DO 40, J = N, 1, -1
                   KX = KX - INCX
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IX = KX
                      L  = KPLUS1 - J
                      IF( NOUNIT )
@@ -7119,14 +7119,14 @@ c
                         X( IX ) = X( IX ) - TEMP*A( L + I, J )
                         IX      = IX      - INCX
    30                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX - INCX
    40          CONTINUE
             END IF
          ELSE
             IF( INCX.EQ.1 )THEN
                DO 60, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      L = 1 - J
                      IF( NOUNIT )
      $                  X( J ) = X( J )/A( 1, J )
@@ -7134,13 +7134,13 @@ c
                      DO 50, I = J + 1, MIN( N, J + K )
                         X( I ) = X( I ) - TEMP*A( L + I, J )
    50                CONTINUE
-                  END IF
+c                  END IF
    60          CONTINUE
             ELSE
                JX = KX
                DO 80, J = 1, N
                   KX = KX + INCX
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IX = KX
                      L  = 1  - J
                      IF( NOUNIT )
@@ -7150,7 +7150,7 @@ c
                         X( IX ) = X( IX ) - TEMP*A( L + I, J )
                         IX      = IX      + INCX
    70                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX + INCX
    80          CONTINUE
             END IF
@@ -7427,7 +7427,7 @@ c
             KK = 1
             IF( INCX.EQ.1 )THEN
                DO 20, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      K    = KK
                      DO 10, I = 1, J - 1
@@ -7436,13 +7436,13 @@ c
    10                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*AP( KK + J - 1 )
-                  END IF
+c                  END IF
                   KK = KK + J
    20          CONTINUE
             ELSE
                JX = KX
                DO 40, J = 1, N
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      DO 30, K = KK, KK + J - 2
@@ -7451,7 +7451,7 @@ c
    30                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*AP( KK + J - 1 )
-                  END IF
+c                  END IF
                   JX = JX + INCX
                   KK = KK + J
    40          CONTINUE
@@ -7460,7 +7460,7 @@ c
             KK = ( N*( N + 1 ) )/2
             IF( INCX.EQ.1 )THEN
                DO 60, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      TEMP = X( J )
                      K    = KK
                      DO 50, I = N, J + 1, -1
@@ -7469,14 +7469,14 @@ c
    50                CONTINUE
                      IF( NOUNIT )
      $                  X( J ) = X( J )*AP( KK - N + J )
-                  END IF
+c                  END IF
                   KK = KK - ( N - J + 1 )
    60          CONTINUE
             ELSE
                KX = KX + ( N - 1 )*INCX
                JX = KX
                DO 80, J = N, 1, -1
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      TEMP = X( JX )
                      IX   = KX
                      DO 70, K = KK, KK - ( N - ( J + 1 ) ), -1
@@ -7485,7 +7485,7 @@ c
    70                CONTINUE
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )*AP( KK - N + J )
-                  END IF
+c                  END IF
                   JX = JX - INCX
                   KK = KK - ( N - J + 1 )
    80          CONTINUE
@@ -7768,7 +7768,7 @@ c
             KK = ( N*( N + 1 ) )/2
             IF( INCX.EQ.1 )THEN
                DO 20, J = N, 1, -1
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( J ) = X( J )/AP( KK )
                      TEMP = X( J )
@@ -7777,13 +7777,13 @@ c
                         X( I ) = X( I ) - TEMP*AP( K )
                         K      = K      - 1
    10                CONTINUE
-                  END IF
+c                  END IF
                   KK = KK - J
    20          CONTINUE
             ELSE
                JX = KX + ( N - 1 )*INCX
                DO 40, J = N, 1, -1
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )/AP( KK )
                      TEMP = X( JX )
@@ -7792,7 +7792,7 @@ c
                         IX      = IX      - INCX
                         X( IX ) = X( IX ) - TEMP*AP( K )
    30                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX - INCX
                   KK = KK - J
    40          CONTINUE
@@ -7801,7 +7801,7 @@ c
             KK = 1
             IF( INCX.EQ.1 )THEN
                DO 60, J = 1, N
-                  IF( X( J ).NE.ZERO )THEN
+c                  IF( X( J ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( J ) = X( J )/AP( KK )
                      TEMP = X( J )
@@ -7810,13 +7810,13 @@ c
                         X( I ) = X( I ) - TEMP*AP( K )
                         K      = K      + 1
    50                CONTINUE
-                  END IF
+c                  END IF
                   KK = KK + ( N - J + 1 )
    60          CONTINUE
             ELSE
                JX = KX
                DO 80, J = 1, N
-                  IF( X( JX ).NE.ZERO )THEN
+c                  IF( X( JX ).NE.ZERO )THEN
                      IF( NOUNIT )
      $                  X( JX ) = X( JX )/AP( KK )
                      TEMP = X( JX )
@@ -7825,7 +7825,7 @@ c
                         IX      = IX      + INCX
                         X( IX ) = X( IX ) - TEMP*AP( K )
    70                CONTINUE
-                  END IF
+c                  END IF
                   JX = JX + INCX
                   KK = KK + ( N - J + 1 )
    80          CONTINUE
@@ -8186,12 +8186,12 @@ c
    60             CONTINUE
                END IF
                DO 80, L = 1, K
-                  IF( B( L, J ).NE.ZERO )THEN
+c                  IF( B( L, J ).NE.ZERO )THEN
                      TEMP = ALPHA*B( L, J )
                      DO 70, I = 1, M
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
    70                CONTINUE
-                  END IF
+c                  END IF
    80          CONTINUE
    90       CONTINUE
          ELSE IF( CONJA )THEN
@@ -8245,12 +8245,12 @@ c
   170             CONTINUE
                END IF
                DO 190, L = 1, K
-                  IF( B( J, L ).NE.ZERO )THEN
+c                  IF( B( J, L ).NE.ZERO )THEN
                      TEMP = ALPHA*DCONJG( B( J, L ) )
                      DO 180, I = 1, M
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
   180                CONTINUE
-                  END IF
+c                  END IF
   190          CONTINUE
   200       CONTINUE
          ELSE
@@ -8268,12 +8268,12 @@ c
   220             CONTINUE
                END IF
                DO 240, L = 1, K
-                  IF( B( J, L ).NE.ZERO )THEN
+c                  IF( B( J, L ).NE.ZERO )THEN
                      TEMP = ALPHA*B( J, L )
                      DO 230, I = 1, M
                         C( I, J ) = C( I, J ) + TEMP*A( I, L )
   230                CONTINUE
-                  END IF
+c                  END IF
   240          CONTINUE
   250       CONTINUE
          END IF
