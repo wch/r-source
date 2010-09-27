@@ -63,7 +63,7 @@ static int isDir(char *path)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages\n",
 	    "  REMOVE   Remove add-on packages\n",
@@ -77,7 +77,6 @@ void rcmdusage (char *RCMD)
 	    "  Rd2dvi   Convert Rd format to DVI\n",
 	    "  Rd2pdf   Convert Rd format to PDF\n",
 	    "  Rd2txt   Convert Rd format to pretty text\n",
-	    "  Sd2Rd    Convert S documentation to Rd format\n",
 	    "  Stangle  Extract S/R code from Sweave documentation\n",
 	    "  Sweave   Process Sweave documentation\n",
 	    "  config   Obtain configuration information about R\n"
@@ -467,13 +466,11 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     } else {
 	/* not one of those handled internally */
 	p = argv[cmdarg];
-	if (!strcmp(p, "config")) {
+	if (!strcmp(p, "config"))
 	    snprintf(cmd, CMD_LEN, "sh %s/bin/config.sh", RHome);
-	} else if (!strcmp(p, "Sd2Rd")) {
-	    snprintf(cmd, CMD_LEN, "perl %s/bin/Sd2Rd.pl", RHome);
-	} else if (!strcmp(p, "open")) {
+	else if (!strcmp(p, "open"))
 	    snprintf(cmd, CMD_LEN, "%s/%s/open.exe", RHome, BINDIR);
-	} else {
+	else {
 	    /* RHOME/BINDIR is first in the path, so looks there first */
 	    if (!strcmp(".sh", p + strlen(p) - 3)) strcpy(cmd, "sh ");
 	    else if (!strcmp(".pl", p + strlen(p) - 3)) strcpy(cmd, "perl ");

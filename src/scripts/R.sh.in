@@ -103,7 +103,6 @@ Commands:
   Rd2dvi		Convert Rd format to DVI
   Rd2pdf		Convert Rd format to PDF
   Rd2txt		Convert Rd format to pretty text
-  Sd2Rd			Convert S documentation to Rd format
   Stangle		Extract S/R code from Sweave documentation
   Sweave		Process Sweave documentation
   Rdiff			Diff R output ignoring headers etc

@@ -1,13 +1,12 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
 \alias{Rdconv}
 \alias{Rd2dvi}
 \alias{Rd2pdf}
-\alias{Sd2Rd}
 \title{Utilities for Processing Rd Files}
 \description{
   Utilities for converting files in R documentation (Rd) format to other
@@ -18,7 +17,6 @@
 \special{R CMD Rdconv [options] file}
 \special{R CMD Rd2dvi [options] files}
 \special{R CMD Rd2pdf [options] files}
-\special{R CMD Sd2Rd [options] file}
 }
 \arguments{
   \item{file}{the path to a file to be processed.}
@@ -48,10 +46,6 @@
   \env{R_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
   \code{executive}.)  \command{Rd2pdf} is shorthand for \command{Rd2dvi
   --pdf}.
-
-  \command{R CMD Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
-  format: it is no longer supported and the results may need
-  hand-tuning.  (It requires Perl.)
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on utility
   \code{\var{foo}}.

@@ -18,6 +18,8 @@
 
       \item \command{R CMD check --no-latex} is defunct: use
       \option{--no-manual} instead.
+
+      \item \command{R CMD Sd2Rd} is defunct.
     }
   }
 

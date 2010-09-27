@@ -1,14 +1,10 @@
 #-*- Makefile -*-
-include ../gnuwin32/MkRules
 R_HOME = ../..
 
 ## COMPILE LINK javareconf rtags are Unix-only
 
 all: \
-  $(R_HOME)/bin/config.sh  $(R_HOME)/bin/Sd2Rd.pl
+  $(R_HOME)/bin/config.sh
 
 $(R_HOME)/bin/config.sh: config
 	@cp $< $@
-
-$(R_HOME)/bin/Sd2Rd.pl: Sd2Rd.in
-	@$(SED) -e 1d $< > $@
