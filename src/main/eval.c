@@ -3467,6 +3467,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	}
 	R_BCNodeStackTop -= 2;
 	R_BCNodeStackTop[-1] = value;
+	ftype = 0;
 	NEXT();
       }
     OP(CALLBUILTIN, 1):
