@@ -4489,8 +4489,8 @@ use an extended Nroff format) and @Sl{} version 4 documentation (which
 uses SGML markup) to @file{Rd} format.  This is useful when porting a
 package originally written for the @Sl{} system to @R{}.  @Sl{} version
 3 files usually have extension @file{.d}, whereas version 4 ones have
-extension @file{.sgml} or @file{.sgm}.  (This command is unsupported, and
-requires Perl to be installed.)
+extension @file{.sgml} or @file{.sgm}.  (This command is no longer
+supported, and requires Perl to be installed.)
 
 @findex R CMD Sweave
 @findex R CMD Stangle

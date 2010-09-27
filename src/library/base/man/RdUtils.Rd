@@ -50,7 +50,7 @@
   --pdf}.
 
   \command{R CMD Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
-  format: it is no longer much used and the results may need
+  format: it is no longer supported and the results may need
   hand-tuning.  (It requires Perl.)
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on utility

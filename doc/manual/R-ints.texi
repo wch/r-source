@@ -3584,8 +3584,7 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is needed for a few less common tools, in particular
-@command{Rprof}.
+Perl version 5 is needed for a few uncommon tools.
 @findex Perl
 
 The @R{} Core Team decided that Perl (version 5) can safely be assumed
@@ -3593,7 +3592,7 @@ for building @R{} from source, building and checking add-on packages,
 and for installing add-on packages from source.  On the other hand, Perl
 cannot be assumed at all for installing @emph{binary} (pre-built)
 versions of add-on packages, or at run time.  (As from @R{} 2.12.0 Perl
-is needed for almost none of these purposes.)
+is not normally needed for any of these purposes.)
 
 @item
 Makeinfo version 4.7 or later is needed to build the Info files for the
