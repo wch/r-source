@@ -34,11 +34,11 @@ ffile=${1}
 tfile=${2}
 exitstatus=${3}
 
-## These are set in Renviron if run from R CMD
 ## 'grep -E' is POSIX, but not AT&T Unix, so not supported
 ## by the default grep on Solaris, for example
-EGREP=${EGREP-egrep}
-SED=${SED-sed}
+EGREP=${EGREP-'@EGREP@'}
+SED=${SED-'@SED@'}
+TR=${TR-'@TR@'}
 
 ## sed scripts to get rid of the startup message
 scriptold='/^R : Copyright /,/quit R.$/{d;}'

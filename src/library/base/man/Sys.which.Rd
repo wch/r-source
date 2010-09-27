@@ -23,6 +23,10 @@ Sys.which(names)
   \file{.exe}, \file{.com}, \file{.cmd} or \file{.bat}.  Such files need
   not actually be executable, but they are what \code{\link{system}}
   tries.
+  
+  On a Unix-alike the full path to \code{which} (usually
+  \file{/usr/bin/which}) is found when \R is installed and (currently)
+  stored in environment variable \code{WHICH}.
 }
 \value{
   A character vector of the same length as \code{names}, named by

@@ -525,7 +525,7 @@ R_MISSING_PROG(ACLOCAL, aclocal)
 R_MISSING_PROG(AUTOCONF, autoconf)
 R_MISSING_PROG(AUTOMAKE, automake)
 R_MISSING_PROG(AUTOHEADER, autoheader)
-AC_PROG_AWK
+## AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S
 ## AC_PROG_RANLIB
@@ -546,7 +546,7 @@ AC_SUBST(MAKE)
 ## Pager
 R_PROG_PAGER
 ## Perl
-R_PROG_PERL
+## R_PROG_PERL
 ## Tar -- we prefer a GNU version
 AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
 ## TeXMF stuff

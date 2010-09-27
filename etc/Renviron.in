@@ -29,19 +29,20 @@ EDITOR=${EDITOR-${VISUAL-vi}}
 PAGER=${PAGER-'@PAGER@'}
 ## Default PDF viewer
 R_PDFVIEWER=${R_PDFVIEWER-'@R_PDFVIEWER@'}
-## Used in 'R CMD'
-AWK=${AWK-'@AWK@'}
-## used in Rdiff
-EGREP=${EGREP-'@EGREP@'}
+## Used by libtool
 LN_S='@LN_S@'
 MAKE=${MAKE-'@MAKE@'}
-PERL=${PERL-'@PERL@'}
 ## Prefer a POSIX-compliant sed on e.g. Solaris
 SED=${SED-'@SED@'}
-TR=${TR-'@TR@'}
-WHICH=${WHICH-'@WHICH@'}
 ## Prefer a tar that can automagically read compressed archives
+## Used in tar(), untar(), R CMD INSTALL|build|check
 TAR=${TAR-'@TAR@'}
+## Used by Sys.which
+WHICH=${WHICH-'@WHICH@'}
+
+## No longer used in R
+AWK=${AWK-'awk'}
+PERL=${PERL-'perl'}
 
 @BUILD_AQUA_FALSE@R_LIBS_USER=${R_LIBS_USER-'~/R/@R_PLATFORM@-library/@MAJ_MIN_VERSION@'}
 @BUILD_AQUA_TRUE@R_LIBS_USER=${R_LIBS_USER-'~/Library/R/@MAJ_MIN_VERSION@/library'}

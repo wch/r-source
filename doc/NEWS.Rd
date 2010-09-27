@@ -7,7 +7,10 @@
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Dummy
+      \item Installing \R no longer tries to find \command{perl} nor
+      \command{awk}, and \command{R CMD} no longer tries to substitute a
+      full path for these commands -- this was a legacy from the days
+      when they were used by \R.
     }
   }
 

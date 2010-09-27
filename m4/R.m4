@@ -124,41 +124,11 @@ if test "${PAGER}" = false; then
 fi
 ])# R_PROG_PAGER
 
-## R_PROG_PERL
-## -----------
-AC_DEFUN([R_PROG_PERL],
-[AC_PATH_PROGS(PERL, [${PERL} perl])
-if test -n "${PERL}"; then
-  _R_PROG_PERL_VERSION
-fi
-if test "${r_cv_prog_perl_v5}" != yes; then
-  ## in case available at runtime: 'false' is an alternative
-  PERL="/usr/bin/env perl"
-fi
-])# R_PROG_PERL
-
-## _R_PROG_PERL_VERSION
-## --------------------
-
-## Building the R documentation system (Rdconv and friends) requires
-## Perl version 5.8.0 or better.
-## [2.10.0: probably no longer true, but 5.8.0 is ancient now.]
-## Set shell variable r_cv_prog_perl_v5 to 'yes' if a recent enough
-## Perl is found, and to 'no' otherwise.
-AC_DEFUN([_R_PROG_PERL_VERSION],
-[AC_CACHE_CHECK([whether perl version is at least 5.8.0],
-                [r_cv_prog_perl_v5],
-[if ${PERL} -e 'require 5.8.0 or exit 1'; then
-  r_cv_prog_perl_v5=yes
-else
-  r_cv_prog_perl_v5=no
-fi])
-])# _R_PROG_PERL_VERSION
 
 ## R_PROG_TEXMF
 ## ------------
 AC_DEFUN([R_PROG_TEXMF],
-[AC_REQUIRE([R_PROG_PERL])
+[
 ## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
 ## TEXI2DVICMD sets default for R_TEXI2DVICMD, used for options('texi2dvi')
 AC_PATH_PROGS(TEX, [${TEX} tex], )
@@ -204,7 +174,7 @@ if test -n "${MAKEINFO}"; then
   AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   if test "ac_cv_path_INSTALL_INFO" = "false"; then
     if test "${r_cv_prog_perl_v5}" = yes; then
-      INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
+      INSTALL_INFO="perl \$(top_srcdir)/tools/install-info.pl"
     fi
   fi
   AC_SUBST(INSTALL_INFO)

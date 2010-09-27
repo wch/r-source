@@ -18,7 +18,7 @@ DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 NEWS.Rd
 NON_SVN_INSTFILES = FAQ RESOURCES
 SUBDIRS = html manual
 
-HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
+HELP2MAN = perl $(top_srcdir)/tools/help2man.pl
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 

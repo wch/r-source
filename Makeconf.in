@@ -11,7 +11,6 @@ ACLOCAL = @ACLOCAL@
 AUTOCONF = @AUTOCONF@
 AUTOMAKE = @AUTOMAKE@
 AUTOHEADER = @AUTOHEADER@
-AWK = @AWK@
 BLAS_LIBS = @BLAS_LIBS@
 BUILDDIR_IS_SRCDIR = @BUILDDIR_IS_SRCDIR@
 ## next two for future support of cross-compiling, not actually used
@@ -64,7 +63,6 @@ MAIN_LDFLAGS = @MAIN_LDFLAGS@ @WANT_R_SHLIB_FALSE@ @USE_EXPORTFILES_TRUE@ -Wl,-b
 MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 ## need this for bootstrapping
 MKINSTALLDIRS = @R_SHELL@ $(top_srcdir)/src/scripts/mkinstalldirs.in
-PERL = @PERL@
 OBJC = @OBJC@
 OBJCFLAGS = @OBJCFLAGS@
 R_ARCH = @R_ARCH@
