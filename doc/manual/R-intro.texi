@@ -7104,12 +7104,10 @@ R CMD @var{cmd} @var{args}
 @noindent
 for any other executable @command{@var{cmd}} on the path: this is useful
 to have the same environment as @R{} or the specific commands run under,
-for example to run @command{ldd} or @command{pdflatex}.  Under a
-Unix-alike, if @var{cmd} is @samp{perl} or @samp{awk} it is replaced by
-the full path to the Perl or AWK command found when @R{} was configured.
-Under Windows @var{cmd} can be an executable or a batch file, or if it
-has extension @code{.sh} or @code{.pl} the appropriate interpreter (if
-available) is called to run it.
+for example to run @command{ldd} or @command{pdflatex}.  Under Windows
+@var{cmd} can be an executable or a batch file, or if it has extension
+@code{.sh} or @code{.pl} the appropriate interpreter (if available) is
+called to run it.
 
 
 @node Invoking R under Windows, Invoking R under Mac OS X, Invoking R from the command line, Invoking R
