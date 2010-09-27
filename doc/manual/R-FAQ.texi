@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2010
-@set FAQ_DATE @value{FAQ_YEAR}-07-27
+@set FAQ_DATE @value{FAQ_YEAR}-09-27
 @set REL_YEAR 2010
 @set REL_MAJOR 2
 @set REL_MINOR 11
@@ -401,10 +401,7 @@ and Administration'' guide (@pxref{What documentation exists for R?})
 has full details.
 
 Note that you need a @FORTRAN{} compiler or perhaps @command{f2c} in
-addition to a C compiler to build R.  Also, you need Perl version 5 to
-build the R object documentations.  (If this is not available on your
-system, you can obtain a PDF version of the object reference manual via
-@CRAN{}.)
+addition to a C compiler to build R.
 
 In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
