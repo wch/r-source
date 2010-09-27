@@ -32427,8 +32427,8 @@ else
   have_bzlib=no
 fi
 if test "x${have_bzlib}" = xyes; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if bzip2 version >= 1.0.5" >&5
-$as_echo_n "checking if bzip2 version >= 1.0.5... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if bzip2 version >= 1.0.6" >&5
+$as_echo_n "checking if bzip2 version >= 1.0.6... " >&6; }
 if test "${r_cv_have_bzlib+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
@@ -32451,7 +32451,7 @@ else
 #endif
 int main() {
     char *ver = BZ2_bzlibVersion();
-    exit(strcmp(ver, "1.0.5") < 0);
+    exit(strcmp(ver, "1.0.6") < 0);
 }
 
 _ACEOF
