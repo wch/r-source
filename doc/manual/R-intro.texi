@@ -7067,8 +7067,6 @@ shorthand for @code{Rd2conv -t txt}.
 @itemx Rd2pdf
 Convert Rd format to DVI/PDF.  @code{Rd2pdf} can be used as shorthand
 for @code{Rd2dvi --pdf}.
-@item Sd2Rd
-Convert S documentation to Rd format. (Deprecated, requires Perl.)
 @item Stangle
 Extract S/R code from Sweave documentation
 @item Sweave

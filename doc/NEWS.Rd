@@ -372,6 +372,9 @@
 
       \item \command{R CMD check --no-latex} is deprecated in favour of
       \option{--no-manual}.
+
+      \item \command{R CMD Sd2Rd} is formally deprecated will be removed
+      in \R 2.13.0.
     }
   }
   \subsection{PACKAGE INSTALLATION}{
@@ -401,8 +404,8 @@
     \itemize{
       \item \command{R CMD Rprof|build|check} are now based on \R rather
        than Perl scripts.  The only remaining Perl scripts are the
-       rarely used \command{R CMD Sd2Rd}, \code{install-info.pl} (used
-       only if \code{install-info} is not found) and some
+       deprecated \command{R CMD Sd2Rd} and \code{install-info.pl} (used
+       only if \code{install-info} is not found) as well as some
        maintainer-mode-only scripts.
 
        \command{R CMD} no longer manipulates the environment variables

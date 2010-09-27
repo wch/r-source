@@ -388,9 +388,10 @@ There is a set of manuals that can be built from the sources,
 
 @table @samp
 @item refman
-Printed versions of the help pages for the commonly-used packages.
+Printed versions of the help pages for the most-commonly-used base packages.
 @item fullrefman
-Printed versions of all the help pages.
+Printed versions of all the help pages for base and recommended packages
+(over 3000 pages).
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -3761,39 +3762,23 @@ the additional flags being needed to resolve problems linking against
 
 @menu
 * Intel compilers::             
-* PGI compilers::               
 * Sun Studio compilers::        
 @end menu
 
-@node Intel compilers, PGI compilers, Linux, Linux
+@node Intel compilers, Sun Studio compilers, Linux, Linux
 @subsection Intel compilers
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
-Linux.  Brian Ripley tried version 9.0 of the compilers for
-@cputype{ix86} on Fedora Core 3 @emph{via}
+Linux.  Brian Ripley used version 9.0 of the compilers for
+@cputype{x86_64} on Fedora Core 5 with
 
 @example
 CC=icc
+CFLAGS="-g -O3 -wd188 -ip -mp"
 F77=ifort
+FLAGS="-g -O3 -mp"
 CXX=icpc
-ICC_LIBS=/opt/compilers/intel/cc/9.0/lib
-IFC_LIBS=/opt/compilers/intel/fc/9.0/lib
-LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
-SHLIB_CXXLD=icpc
-@end example
-
-@noindent
-and adding optimization flags failed: at least @file{src/@/main/@/regex.c}
-and @file{src/@/modules/@/lapack/@/dlamc.f} needed to be compiled without
-optimization.  For @cputype{x86_64} on Fedora Core 5 he used
-
-@example
-CC=icc
-CFLAGS="-g -O3 -wd188 -ip"
-F77=ifort
-FLAGS="-g -O3"
-CXX=icpc
-CXXFLAGS="-g -O3"
+CXXFLAGS="-g -O3 -mp"
 FC=ifort
 FCFLAGS="-g -O3 -mp"
 ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
@@ -3804,55 +3789,25 @@ SHLIB_CXXLD=icpc
 
 @noindent
 @command{configure} will add @samp{-c99} to @code{CC} for
-C99-compliance.  This causes warnings with @code{icc} 10, so use
-@code{CC="icc -std=c99"} there.  The flag @option{-wd188}
-suppresses a large number of warnings about the enumeration type
-@samp{Rboolean}.  Because the Intel C compiler sets @samp{__GNUC__}
-without complete emulation of @command{gcc}, we suggest adding
-@code{CPPFLAGS=-no-gcc}.
+C99-compliance.  This causes warnings with @code{icc} 10 and later, so
+use @code{CC="icc -std=c99"} there.  The flag @option{-wd188} suppresses
+a large number of warnings about the enumeration type @samp{Rboolean}.
+Because the Intel C compiler sets @samp{__GNUC__} without complete
+emulation of @command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
 
 To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
-need add further flags to @code{CFLAGS}, @code{FFLAGS} and
-@code{CXXFLAGS} such as @option{-mp} or @option{-fp-model precise
--fp-model source}, depending on the compiler version.
+need add flags to @code{CFLAGS}, @code{FFLAGS} and @code{CXXFLAGS} such
+as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
+source}, depending on the compiler version.
 
 For some comments on building on an Itanium (@cputype{ia64}) Linux
 system with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/@/memo/@/ia64_linux/}.
 
-Others have reported success with version 10.0.
+Others have reported success with versions 10.x and 11.x.
 
 
-@node PGI compilers, Sun Studio compilers, Intel compilers, Linux
-@subsection PGI compilers
-
-Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
-build pre-2.2.0.  Updated versions of the settings she used are
-
-@example
-PG_HOME=/usr/pgi/linux86-64/6.0
-CC=pgcc
-CFLAGS="-g -O2 -Kieee"
-CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
-F77=pgf77
-FFLAGS="-g -O2 -Kieee"
-CXX=pgCC
-CXXFLAGS="-g -O2 -Kieee"
-FC=pgf95
-FCFLAGS="-g -O2 -Kieee"
-SHLIB_CXXLDFLAGS=-shared
-SHLIB_LDFLAGS=-shared
-LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
-@end example
-
-@noindent
-Note particularly the last, which is needed to ensure that a shared
-version of @code{libc} is found.  The flag @option{-Kieee} ensures strict
-compliance to IEC60559.  Also,
-@uref{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
-suggests that @option{-pc64} may be desirable.
-
-@node Sun Studio compilers,  , PGI compilers, Linux
+@node Sun Studio compilers,  , Intel compilers, Linux
 @subsection Sun Studio compilers
 
 Brian Ripley tested the Sun Studio 12 compilers
@@ -3900,9 +3855,10 @@ on 6.x in the past).  Since Darwin (the base OS of Mac OS X) is based on
 FreeBSD we find testing on Darwin tends to pick up any potential
 problems on FreeBSD problems quite early.
 
-The native BSD @command{make} suffices to build @R{} but a small number
-of packages require @acronym{GNU} @command{make}.  (The BSD version is
-@command{bsdmake} on Darwin.)
+The native BSD @command{make} suffices to build @R{} but a number of
+packages require @acronym{GNU} @command{make}, despite the
+recommendations of the ``Writing R Extensions'' manual.  (The BSD
+version is @command{bsdmake} on Darwin.)
 
 @node Mac OS X, Solaris, FreeBSD, Platform notes
 @section Mac OS X

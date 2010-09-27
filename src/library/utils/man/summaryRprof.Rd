@@ -28,40 +28,39 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   
 }
 \details{
-This function is an alternative to \command{R CMD Rprof}. It provides
-the convenience of an all-\R implementation but will be slower for large
-files.
+  This function provides the analysis code for \code{\link{Rprof}} files
+  used by \command{R CMD Rprof}.
 
-As the profiling output file could be larger than available memory, it
-is read in blocks of \code{chunksize} lines. Increasing \code{chunksize}
-will make the function run faster if sufficient memory is available.
+  As the profiling output file could be larger than available memory, it
+  is read in blocks of \code{chunksize} lines.  Increasing \code{chunksize}
+  will make the function run faster if sufficient memory is available.
 
-When called with \code{memory.profiling=TRUE}, the profiler writes
-information on three aspects of memory use: vector memory in small
-blocks on the R heap, vector memory in large blocks (from
-\code{malloc}), memory in nodes on the R heap.  It also records the number of
-calls to the internal function \code{duplicate} in the time
-interval. \code{duplicate} is called by C code when arguments need to be
-copied. Note that the profiler does not track which function actually
-allocated the memory.
+  When called with \code{memory.profiling = TRUE}, the profiler writes
+  information on three aspects of memory use: vector memory in small
+  blocks on the R heap, vector memory in large blocks (from
+  \code{malloc}), memory in nodes on the R heap.  It also records the number of
+  calls to the internal function \code{duplicate} in the time
+  interval.  \code{duplicate} is called by C code when arguments need to be
+  copied.  Note that the profiler does not track which function actually
+  allocated the memory.
 
-With \code{memory="both"} the change in total memory (truncated at zero)
-is reported in addition to timing data. 
+  With \code{memory = "both"} the change in total memory (truncated at zero)
+  is reported in addition to timing data. 
 
-With \code{memory="tseries"} or \code{memory="stats"} the \code{index}
-argument specifies how to summarize the stack trace. A positive number
-specifies that many calls from the bottom of the stack; a negative
-number specifies the number of calls from the top of the stack.  With
-\code{memory="tseries"} the index is used to construct labels and may be
-a vector to give multiple sets of labels. With \code{memory="stats"} the
-index must be a single number and specifies how to aggregate the data to
-the maximum and average of the memory statistics.  With both
-\code{memory="tseries"} and \code{memory="stats"} the argument
-\code{diff=TRUE} asks for summaries of the increase in memory use over
-the sampling interval and \code{diff=FALSE} asks for the memory use at
-the end of the interval.
-
+  With \code{memory = "tseries"} or \code{memory = "stats"} the \code{index}
+  argument specifies how to summarize the stack trace.  A positive number
+  specifies that many calls from the bottom of the stack; a negative
+  number specifies the number of calls from the top of the stack.  With
+  \code{memory = "tseries"} the index is used to construct labels and may be
+  a vector to give multiple sets of labels.  With \code{memory = "stats"} the
+  index must be a single number and specifies how to aggregate the data to
+  the maximum and average of the memory statistics.  With both
+  \code{memory = "tseries"} and \code{memory = "stats"} the argument
+  \code{diff = TRUE} asks for summaries of the increase in memory use over
+  the sampling interval and \code{diff = FALSE} asks for the memory use at
+  the end of the interval.
 }
+
 \value{
   If \code{memory = "none"}, a list with components
   \item{by.self}{Timings sorted by \sQuote{self} time}
@@ -79,7 +78,6 @@ the end of the interval.
   by function.
 }
 
-
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
   \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory
@@ -90,7 +88,7 @@ the end of the interval.
   \code{\link{tracemem}} traces copying of an object via the C function
   \code{duplicate}.
 
-  \code{\link{Rprofmem}} is a non-sampling memory use profiler.
+  \code{\link{Rprofmem}} is a non-sampling memory-use profiler.
 
   \url{http://developer.r-project.org/memory-profiling.html}
 }
