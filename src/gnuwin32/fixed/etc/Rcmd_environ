@@ -35,7 +35,7 @@ R_BROWSER=${R_BROWSER-'open'}
 R_PDFVIEWER=${R_PDFVIEWER-'open'}
 ## Use configure values
 AWK=gawk
-GREP='grep -E'
+EGREP='grep -E'
 # MAKE=${MAKE-make}
 # PERL=${PERL-perl}
 SED=${SED-sed}
