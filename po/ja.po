@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21+0100\n"
+"POT-Creation-Date: 2010-09-27 09:34+0100\n"
 "PO-Revision-Date: 2010-04-03 09:42+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -8050,9 +8050,9 @@ msgstr ""
 "せん "
 
 #: src/unix/sys-unix.c:298
-#, c-format
-msgid "error in running command: %s'"
-msgstr ""
+#, fuzzy, c-format
+msgid "error in running command: '%s'"
+msgstr " unz コードで内部エラーが起きました "
 
 #: src/unix/sys-unix.c:300
 #, fuzzy
@@ -8061,7 +8061,7 @@ msgstr " unz コードで内部エラーが起きました "
 
 #: src/unix/sys-unix.c:304
 #, c-format
-msgid "running command '%s' had status %d: and error message '%s'"
+msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
 
 #: src/unix/sys-unix.c:309

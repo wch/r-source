@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21+0100\n"
+"POT-Creation-Date: 2010-09-27 09:34+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -8208,9 +8208,9 @@ msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr ""
 
 #: src/unix/sys-unix.c:298
-#, c-format
-msgid "error in running command: %s'"
-msgstr ""
+#, fuzzy, c-format
+msgid "error in running command: '%s'"
+msgstr "unz 코드로 인해 내부에러가 발생했습니다"
 
 #: src/unix/sys-unix.c:300
 #, fuzzy
@@ -8219,7 +8219,7 @@ msgstr "unz 코드로 인해 내부에러가 발생했습니다"
 
 #: src/unix/sys-unix.c:304
 #, c-format
-msgid "running command '%s' had status %d: and error message '%s'"
+msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
 
 #: src/unix/sys-unix.c:309

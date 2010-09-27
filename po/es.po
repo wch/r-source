@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21+0100\n"
+"POT-Creation-Date: 2010-09-27 09:34+0100\n"
 "PO-Revision-Date: 2010-04-13 13:35+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -8175,9 +8175,9 @@ msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr "linea  %d puede ser truncada en la llamada a  system(, intern = TRUE)"
 
 #: src/unix/sys-unix.c:298
-#, c-format
-msgid "error in running command: %s'"
-msgstr ""
+#, fuzzy, c-format
+msgid "error in running command: '%s'"
+msgstr "error interno en el código unz"
 
 #: src/unix/sys-unix.c:300
 #, fuzzy
@@ -8186,7 +8186,7 @@ msgstr "error interno en el código unz"
 
 #: src/unix/sys-unix.c:304
 #, c-format
-msgid "running command '%s' had status %d: and error message '%s'"
+msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
 
 #: src/unix/sys-unix.c:309

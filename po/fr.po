@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21+0100\n"
+"POT-Creation-Date: 2010-09-27 09:34+0100\n"
 "PO-Revision-Date: 2010-03-28 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -8210,9 +8210,9 @@ msgstr ""
 "TRUE)"
 
 #: src/unix/sys-unix.c:298
-#, c-format
-msgid "error in running command: %s'"
-msgstr ""
+#, fuzzy, c-format
+msgid "error in running command: '%s'"
+msgstr "erreur interne dans le code unz"
 
 #: src/unix/sys-unix.c:300
 #, fuzzy
@@ -8221,7 +8221,7 @@ msgstr "erreur interne dans le code unz"
 
 #: src/unix/sys-unix.c:304
 #, c-format
-msgid "running command '%s' had status %d: and error message '%s'"
+msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
 
 #: src/unix/sys-unix.c:309

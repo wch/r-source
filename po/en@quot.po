@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21+0100\n"
-"PO-Revision-Date: 2010-09-23 07:21+0100\n"
+"POT-Creation-Date: 2010-09-27 09:34+0100\n"
+"PO-Revision-Date: 2010-09-27 09:34+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -7986,8 +7986,8 @@ msgstr "line %d may be truncated in call to system(, intern = TRUE)"
 
 #: src/unix/sys-unix.c:298
 #, c-format
-msgid "error in running command: %s'"
-msgstr "error in running command: %s'"
+msgid "error in running command: '%s'"
+msgstr "error in running command: ‘%s’"
 
 #: src/unix/sys-unix.c:300
 msgid "error in running command"
@@ -7995,8 +7995,8 @@ msgstr "error in running command"
 
 #: src/unix/sys-unix.c:304
 #, c-format
-msgid "running command '%s' had status %d: and error message '%s'"
-msgstr "running command ‘%s’ had status %d: and error message ‘%s’"
+msgid "running command '%s' had status %d and error message '%s'"
+msgstr "running command ‘%s’ had status %d and error message ‘%s’"
 
 #: src/unix/sys-unix.c:309
 #, c-format
