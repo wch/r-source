@@ -13,7 +13,7 @@
   encodings: the \sQuote{i} stands for \sQuote{internationalization}.
 }
 \usage{
-iconv(x, from ="", to = "", sub = NA, mark = TRUE)
+iconv(x, from = "", to = "", sub = NA, mark = TRUE)
 
 iconvlist()
 }

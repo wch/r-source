@@ -27,7 +27,7 @@ file.path(\dots, fsep = .Platform$file.sep)
 \value{
   A character vector of the arguments concatenated term-by-term and
   separated by \code{fsep} if all arguments have positive length;
-  otherwise, an empty character vector.
+  otherwise, an empty character vector (unlike \code{\link{paste}).
 }
 \note{
   The components are separated by \code{/} (not \code{\\}) on Windows.

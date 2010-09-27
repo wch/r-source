@@ -2604,7 +2604,7 @@ function(dfile)
     if("Encoding" %in% names(db)) {
         encoding <- db["Encoding"]
         if((! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")))
-            db <- iconv(db, encoding, "")
+            db <- iconv(db, encoding, sub = "byte")
     }
     else if(!all(.is_ISO_8859(db))) {
         ## No valid Encoding metadata.
@@ -2616,7 +2616,7 @@ function(dfile)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        db <- iconv(db, "latin1", "")
+        db <- iconv(db, "latin1")
     }
 
     ## Mandatory entries in DESCRIPTION:
