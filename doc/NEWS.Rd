@@ -347,10 +347,12 @@
       \item \code{qr()} now has a trivial \code{lm} method with a
       simple (fast) validity check.
 
-      \item An experimental new programming model has been added for
-      reference (OOP-style) classes and methods.  See
-      \code{?ReferenceClasses}.
+      \item An experimental new programming model has been added to
+      package \pkg{methods} for reference (OOP-style) classes and
+      methods.  See \code{?ReferenceClasses}.
 
+      \item bzip2 has been updated to version 1.0.6 (bug-fix release).
+      \option{--with-system-bzlib} now requires at least version 1.0.6.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -373,8 +375,8 @@
       \item \command{R CMD check --no-latex} is deprecated in favour of
       \option{--no-manual}.
 
-      \item \command{R CMD Sd2Rd} is formally deprecated will be removed
-      in \R 2.13.0.
+      \item \command{R CMD Sd2Rd} is formally deprecated and will be
+      removed in \R 2.13.0.
     }
   }
   \subsection{PACKAGE INSTALLATION}{
