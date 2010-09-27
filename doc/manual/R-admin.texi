@@ -2072,6 +2072,10 @@ information and lists can be found at
 
 It offers only one encoding per language.
 
+Some care is needed with Windows' locale names.  For example,
+@code{chinese} is Traditional Chinese and not Simplified Chinese as used
+in most of the Chinese-speaking world.
+
 @node Locales under Mac OS X,  , Locales under Windows, Locales
 @subsection Locales under Mac OS X
 
