@@ -1423,14 +1423,14 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
-	UNPROTECT(1);
 	SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
 	SET_PRVALUE(tmp2, rhs);
 	PROTECT(rhs = replaceCall(tmp, R_GetVarLocSymbol(tmploc), CDDR(expr),
 				  tmp2));
 	rhs = eval(rhs, rho);
-	UNPROTECT(2);
+	UNPROTECT(3); /* the two PROTECTs from this iteration and the
+			 old rhs from the previous one */
 	PROTECT(rhs);
 	lhs = CDR(lhs);
 	expr = CADR(expr);
