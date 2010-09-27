@@ -37,7 +37,7 @@
 
 #define UNICODE_FLAG_USE_BOM_ENDIAN 1
 
-#define return_error(code)  \
+#define return_seterror(code)  \
     do {                    \
 	errno = code;       \
 	return -1;          \
@@ -192,7 +192,9 @@ static struct {
     {1200, "UTF-16"},
     {1200, "UCS-2"},
     {12000, "UTF32"},
+    {12000, "UTF-32"},
 #endif
+    /* R additions */
     {12000, "UCS-4LE"},
     {12001, "UCS-4BE"},
 
@@ -320,6 +322,7 @@ static struct {
 
     {950, "CP950"},
     {950, "BIG5"},
+    /* R additions */
     {950, "BIG-5"},
     {950, "BIG-FIVE"},
 
@@ -705,6 +708,9 @@ iconv_open(const char *tocode, const char *fromcode)
 	return (iconv_t)(-1);
     }
 
+    /* reset the errno to prevent reporting wrong error code.
+     * 0 for unsorted error. */
+    errno = 0;
     if (win_iconv_open(cd, tocode, fromcode))
 	return (iconv_t)cd;
 
@@ -1094,7 +1100,7 @@ dbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 {
     int len = IsDBCSLeadByteEx(cv->codepage, buf[0]) ? 2 : 1;
     if (bufsize < len)
-	return_error(EINVAL);
+	return_seterror(EINVAL);
     return len;
 }
 
@@ -1113,11 +1119,11 @@ mbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 		 bufsize >= 4 &&
 		 buf[1] >= 0x30 && buf[1] <= 0x39) len = 4;
 	else
-	    return_error(EINVAL);
+	    return_seterror(EINVAL);
 	return len;
     }
     else
-	return_error(EINVAL);
+	return_seterror(EINVAL);
 }
 
 static int
@@ -1133,9 +1139,9 @@ utf8_mblen(csconv_t *cv, const uchar *buf, int bufsize)
     else if ((buf[0] & 0xFE) == 0xFC) len = 6;
 
     if (len == 0)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     else if (bufsize < len)
-	return_error(EINVAL);
+	return_seterror(EINVAL);
     return len;
 }
 
@@ -1147,27 +1153,27 @@ eucjp_mblen(csconv_t *cv, const uchar *buf, int bufsize)
     else if (buf[0] == 0x8E) /* JIS X 0201 */
     {
 	if (bufsize < 2)
-	    return_error(EINVAL);
+	    return_seterror(EINVAL);
 	else if (!(0xA1 <= buf[1] && buf[1] <= 0xDF))
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
 	return 2;
     }
     else if (buf[0] == 0x8F) /* JIS X 0212 */
     {
 	if (bufsize < 3)
-	    return_error(EINVAL);
+	    return_seterror(EINVAL);
 	else if (!(0xA1 <= buf[1] && buf[1] <= 0xFE)
 		|| !(0xA1 <= buf[2] && buf[2] <= 0xFE))
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
 	return 3;
     }
     else /* JIS X 0208 */
     {
 	if (bufsize < 2)
-	    return_error(EINVAL);
+	    return_seterror(EINVAL);
 	else if (!(0xA1 <= buf[0] && buf[0] <= 0xFE)
 		|| !(0xA1 <= buf[1] && buf[1] <= 0xFE))
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
 	return 2;
     }
 }
@@ -1183,7 +1189,7 @@ kernel_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wb
     *wbufsize = MultiByteToWideChar(cv->codepage, mbtowc_flags (cv->codepage),
 	    (const char *)buf, len, (wchar_t *)wbuf, *wbufsize);
     if (*wbufsize == 0)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     return len;
 }
 
@@ -1195,7 +1201,7 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     int len;
 
     if (bufsize == 0)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
 #ifdef WC_NO_BEST_FIT_CHARS
 	/* http://msdn.microsoft.com/en-us/library/dd374130%28VS.85%29.aspx
 	   says this cannot be used for 65001 and 54936, but it also
@@ -1211,13 +1217,13 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     if (len == 0)
     {
 	if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
-	    return_error(E2BIG);
-	return_error(EILSEQ);
+	    return_seterror(E2BIG);
+	return_seterror(EILSEQ);
     }
     else if (usedDefaultChar)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     else if (cv->mblen(cv, buf, len) != len) /* validate result */
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     return len;
 }
 
@@ -1243,7 +1249,7 @@ mlang_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbu
     hr = ConvertINetMultiByteToUnicode(&cv->mode, cv->codepage,
 	    (const char *)buf, &insize, (wchar_t *)wbuf, wbufsize);
     if (hr != S_OK || insize != len)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     return len;
 }
 
@@ -1258,11 +1264,11 @@ mlang_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     hr = ConvertINetUnicodeToMultiByte(&cv->mode, cv->codepage,
 	    (const wchar_t *)wbuf, &wbufsize, tmpbuf, &tmpsize);
     if (hr != S_OK || insize != wbufsize)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     else if (bufsize < tmpsize)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
     else if (cv->mblen(cv, (uchar *)tmpbuf, tmpsize) != tmpsize)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     memcpy(buf, tmpbuf, tmpsize);
     return tmpsize;
 }
@@ -1271,23 +1277,23 @@ static int
 utf16_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize)
 {
     if (bufsize < 2)
-	return_error(EINVAL);
+	return_seterror(EINVAL);
     if (cv->codepage == 1200) /* little endian */
 	wbuf[0] = (buf[1] << 8) | buf[0];
     else if (cv->codepage == 1201) /* big endian */
 	wbuf[0] = (buf[0] << 8) | buf[1];
     if (0xDC00 <= wbuf[0] && wbuf[0] <= 0xDFFF)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     if (0xD800 <= wbuf[0] && wbuf[0] <= 0xDBFF)
     {
 	if (bufsize < 4)
-	    return_error(EINVAL);
+	    return_seterror(EINVAL);
 	if (cv->codepage == 1200) /* little endian */
 	    wbuf[1] = (buf[3] << 8) | buf[2];
 	else if (cv->codepage == 1201) /* big endian */
 	    wbuf[1] = (buf[2] << 8) | buf[3];
 	if (!(0xDC00 <= wbuf[1] && wbuf[1] <= 0xDFFF))
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
 	*wbufsize = 2;
 	return 4;
     }
@@ -1299,7 +1305,7 @@ static int
 utf16_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 {
     if (bufsize < 2)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
     if (cv->codepage == 1200) /* little endian */
     {
 	buf[0] = (wbuf[0] & 0x00FF);
@@ -1313,7 +1319,7 @@ utf16_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     if (0xD800 <= wbuf[0] && wbuf[0] <= 0xDBFF)
     {
 	if (bufsize < 4)
-	    return_error(E2BIG);
+	    return_seterror(E2BIG);
 	if (cv->codepage == 1200) /* little endian */
 	{
 	    buf[2] = (wbuf[1] & 0x00FF);
@@ -1336,13 +1342,13 @@ utf32_mbtowc(csconv_t *cv, const uchar *buf, int bufsize,
     uint wc = 0;
 
     if (bufsize < 4)
-	return_error(EINVAL);
+	return_seterror(EINVAL);
     if (cv->codepage == 12000) /* little endian */
 	wc = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
     else if (cv->codepage == 12001) /* big endian */
 	wc = (buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3];
     if ((0xD800 <= wc && wc <= 0xDFFF) || 0x10FFFF < wc)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     ucs4_to_utf16(wc, wbuf, wbufsize);
     return 4;
 }
@@ -1353,7 +1359,7 @@ utf32_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     uint wc;
 
     if (bufsize < 4)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
     wc = utf16_to_ucs4(wbuf);
     if (cv->codepage == 12000) /* little endian */
     {
@@ -1444,7 +1450,7 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int 
 	    if (bufsize < esc_len)
 	    {
 		if (strncmp((char *)buf, iesc[i].esc, bufsize) == 0)
-		    return_error(EINVAL);
+		    return_seterror(EINVAL);
 	    }
 	    else
 	    {
@@ -1457,7 +1463,7 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int 
 	    }
 	}
 	/* not supported escape sequence */
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     }
     else if (buf[0] == iso2022_SO_seq[0])
     {
@@ -1484,10 +1490,10 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int 
 
     len = iesc[cs].len;
     if (bufsize < len)
-	return_error(EINVAL);
+	return_seterror(EINVAL);
     for (i = 0; i < len; ++i)
 	if (!(buf[i] < 0x80))
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
     esc_len = iesc[cs].esc_len;
     memcpy(tmp, iesc[cs].esc, esc_len);
     if (shift == ISO2022_SO)
@@ -1511,13 +1517,13 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int 
     hr = ConvertINetMultiByteToUnicode(&dummy, cv->codepage,
 	    (const char *)tmp, &insize, (wchar_t *)wbuf, wbufsize);
     if (hr != S_OK || insize != len + esc_len)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
 
     /* Check for conversion error.  Assuming defaultChar is 0x3F. */
     /* ascii should be converted from ascii */
     if (wbuf[0] == buf[0]
 	    && cv->mode != ISO2022_MODE(ISO2022JP_CS_ASCII, ISO2022_SI))
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
 
     /* reset the mode for informal sequence */
     if (cv->mode != ISO2022_MODE(cs, shift))
@@ -1550,9 +1556,9 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsi
     hr = ConvertINetUnicodeToMultiByte(&dummy, cv->codepage,
 	    (const wchar_t *)wbuf, &wbufsize, tmp, &tmpsize);
     if (hr != S_OK || insize != wbufsize)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     else if (bufsize < tmpsize)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
 
     if (tmpsize == 1)
     {
@@ -1572,7 +1578,7 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsi
 	}
 	if (iesc[i].esc == NULL)
 	    /* not supported escape sequence */
-	    return_error(EILSEQ);
+	    return_seterror(EILSEQ);
     }
 
     shift = ISO2022_SI;
@@ -1587,9 +1593,9 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsi
     /* Check for converting error.  Assuming defaultChar is 0x3F. */
     /* ascii should be converted from ascii */
     if (cs == ISO2022JP_CS_ASCII && !(wbuf[0] < 0x80))
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
     else if (tmpsize < esc_len + len)
-	return_error(EILSEQ);
+	return_seterror(EILSEQ);
 
     if (cv->mode == ISO2022_MODE(cs, shift))
     {
@@ -1616,7 +1622,7 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsi
     }
 
     if (bufsize < len + esc_len)
-	return_error(E2BIG);
+	return_seterror(E2BIG);
     memcpy(buf, tmp, len + esc_len);
     cv->mode = ISO2022_MODE(cs, shift);
     return len + esc_len;
@@ -1636,7 +1642,7 @@ iso2022jp_flush(csconv_t *cv, uchar *buf, int bufsize)
 	if (ISO2022_MODE_CS(cv->mode) != ISO2022JP_CS_ASCII)
 	    esc_len += iesc[ISO2022JP_CS_ASCII].esc_len;
 	if (bufsize < esc_len)
-	    return_error(E2BIG);
+	    return_seterror(E2BIG);
 
 	esc_len = 0;
 	if (ISO2022_MODE_SHIFT(cv->mode) != ISO2022_SI)
