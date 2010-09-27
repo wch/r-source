@@ -826,8 +826,8 @@ This re-runs all the tests relevant to the installed @R{} (including for
 example code in the package vignettes), but not for example the ones
 checking the example code in the manuals nor making the standalone Rmath
 library.  This can occasionally be useful when the operating environment
-has been changed, for example by OS updates or by substituting the BLAS
-(@pxref{Shared BLAS}).
+has been changed, for example by OS updates or by substituting the
+@acronym{BLAS} (@pxref{Shared BLAS}).
 
 Alternatively, the installed @R{} can be run, preferably with
 @option{--vanilla}.  Then
@@ -2766,57 +2766,66 @@ Some of the above variables can be queried using @code{R CMD config}.
 @node BLAS, LAPACK, Linear algebra, Linear algebra
 @subsection BLAS
 
-The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
-Linear Algebra Subprograms,
+The linear algebra routines in @R{} can make use of enhanced
+@acronym{BLAS} (Basic Linear Algebra Subprograms,
 @uref{http://www.netlib.org/@/blas/@/faq.html}) routines.  However,
 these have to be explicitly requested at configure time: @R{} provides
-an internal BLAS which is well-tested and will be adequate for most uses
-of @R{}.
+an internal @acronym{BLAS} which is well-tested and will be adequate for
+most uses of @R{}.
 
-You can specify a particular BLAS library @emph{via} a value for the
-configuration option @option{--with-blas} and not to use an external
-BLAS library by @option{--without-blas} (the default).  If
-@option{--with-blas} is given with no, its value is taken from the
+You can specify a particular @acronym{BLAS} library @emph{via} a value
+for the configuration option @option{--with-blas} and not to use an
+external @acronym{BLAS} library by @option{--without-blas} (the
+default).  If @option{--with-blas} is given with no @code{=}, its value
+is taken from the
 @enindex BLAS_LIBS
 environment variable @env{BLAS_LIBS}, set for example in
 @file{config.site}.  If neither the option nor the environment variable
-supply a value, a search is made for a suitable BLAS.  If the value is
-not obviously a linker command (starting with a dash or giving the path
-to a library), it is prefixed by @samp{-l}, so 
+supply a value, a search is made for a suitable @acronym{BLAS}.  If the
+value is not obviously a linker command (starting with a dash or giving
+the path to a library), it is prefixed by @samp{-l}, so
 
 @example
 --with-blas="foo"
 @end example
 
 @noindent
-is an instruction to link against @samp{-lfoo} to find an external BLAS
-(which needs to be found both at link time and run time).
+is an instruction to link against @samp{-lfoo} to find an external
+@acronym{BLAS} (which needs to be found both at link time and run time).
 
-The configure code checks that the external BLAS is complete (it must
-include all double precision and double complex routines@footnote{unless
-FORTRAN double complex is not supported on the platform}, as well as
-@code{LSAME}), and appears to be usable.  However, an external BLAS has
-to be usable from a shared object (so must contain position-independent
-code), and that is not checked.
+The configure code checks that the external @acronym{BLAS} is complete
+(it must include all double precision and double complex
+routines@footnote{unless FORTRAN double complex is not supported on the
+platform}, as well as @code{LSAME}), and appears to be usable.  However,
+an external @acronym{BLAS} has to be usable from a shared object (so
+must contain position-independent code), and that is not checked.
 
-Some enhanced BLASes are compiler-system-specific (@code{libsunperf} on
-Sun Sparc@footnote{Using the Sun Studio @command{cc} and @command{f95}
-compilers}, @code{libessl} on IBM, @code{vecLib} on Mac OS X).  The
-correct incantation for these is usually found @emph{via}
-@option{--with-blas} with no value on the appropriate platforms.
+Some enhanced @acronym{BLAS}es are compiler-system-specific
+(@code{libsunperf} on Sun Sparc@footnote{Using the Sun Studio
+@command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
+@code{vecLib} on Mac OS X).  The correct incantation for these is
+usually found @emph{via} @option{--with-blas} with no value on the
+appropriate platforms.
 
-Some of the external BLASes are multi-threaded.  One issue is that @R{}
-profiling (which uses the @code{SIGPROF} signal) may cause problems, and
-you may want to disable profiling if you use a multi-threaded BLAS.
-Note that using a multi-threaded BLAS can result in taking more
-@acronym{CPU} time and even more elapsed time (occasionally dramatically
-so) than using a similar single-threaded BLAS.
+Some of the external @acronym{BLAS}es are multi-threaded.  One issue is
+that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
+problems, and you may want to disable profiling if you use a
+multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
+@acronym{BLAS} can result in taking more @acronym{CPU} time and even
+more elapsed time (occasionally dramatically so) than using a similar
+single-threaded @acronym{BLAS}.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
-a non-default BLAS and @option{--enable-BLAS-shlib} is @strong{not}
-used, then all BLAS-using packages must also be.  So if @R{} is re-built
-to use an enhanced BLAS then packages such as @pkg{quantreg} will need
-to be re-installed.
+a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
+@strong{not} used, then all @acronym{BLAS}-using packages must also be.
+So if @R{} is re-built to use an enhanced @acronym{BLAS} then packages
+such as @pkg{quantreg} will need to be re-installed.
+
+@R{} relies on @acronym{IEC}@tie{}60559 compliance of an external
+@acronym{BLAS}.  This can be broken if for example the code assumes that
+terms with a zero factor are always zero and do not need to be
+computed---whereas @code{x*0} can be @code{NaN}.  (The version of the
+reference @acronym{BLAS} used prior to @R{} 2.12.0 did so.)
 
 
 @menu
@@ -2830,12 +2839,12 @@ to be re-installed.
 @node ATLAS, ACML, BLAS, BLAS
 @subsubsection ATLAS
 
-ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS
-that runs on a wide range of Unix-alike platforms.  Unfortunately it is
-usually built as a static library that on some platforms cannot be used
-with shared objects such as are used in @R{} packages.  Be careful
-when using pre-built versions of ATLAS (they seem to work on
-@cputype{ix86} platforms, but not on @cputype{x86_64} ones).
+ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
+@acronym{BLAS} that runs on a wide range of Unix-alike platforms.
+Unfortunately it is usually built as a static library that on some
+platforms cannot be used with shared objects such as are used in @R{}
+packages.  Be careful when using pre-built versions of ATLAS (they seem
+to work on @cputype{ix86} platforms, but not on @cputype{x86_64} ones).
 
 The usual way to specify ATLAS will be via
 
@@ -2897,8 +2906,9 @@ way to use ACML.
 @node Goto BLAS, MKL, ACML, BLAS
 @subsubsection Goto BLAS
 
-Dr Kazushige Goto has written another tuned BLAS which is available for
-several processors and OSes.  The current version is known as GotoBLAS2.
+Dr Kazushige Goto has written another tuned @acronym{BLAS} which is
+available for several processors and OSes.  The current version is known
+as GotoBLAS2.
 
 This has been made available in several formats, but is currently
 available only as source code.  For @emph{academic use only} (after
@@ -2913,10 +2923,10 @@ Once this is built and installed, it can be used by configuring with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
-Note that currently a multi-threaded Goto BLAS will be built by default
-if and only if the building is on a multi-processor system (counting
-multiple cores and hyperthreading), and at run time the default number
-of threads is the number of @acronym{CPU}s detected.
+Note that currently a multi-threaded Goto @acronym{BLAS} will be built
+by default if and only if the building is on a multi-processor system
+(counting multiple cores and hyperthreading), and at run time the
+default number of threads is the number of @acronym{CPU}s detected.
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
@@ -2950,7 +2960,7 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_sequential -lmkl_lapack -lmkl_core"
 @noindent
 The order of the libraries is important.  The option
 @option{--with-lapack} is used since MKL contains a copy of LAPACK as
-well as BLAS (@pxref{LAPACK}).
+well as @acronym{BLAS} (@pxref{LAPACK}).
 
 Threaded MKL may be used by replacing the line defining the variable @code{MKL} 
 with
@@ -2995,59 +3005,60 @@ Andy Liaw for the information.)
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
 
-Note that the BLAS library will be used for many of the add-on packages
-as well as for @R{} itself.  This means that it is better to use a
-shared/dynamic BLAS library, as most of a static library will be
-compiled into the @R{} executable and each BLAS-using package.
+Note that the @acronym{BLAS} library will be used for many of the add-on
+packages as well as for @R{} itself.  This means that it is better to
+use a shared/dynamic @acronym{BLAS} library, as most of a static library
+will be compiled into the @R{} executable and each @acronym{BLAS}-using
+package.
 
-@R{} offers the option of compiling the BLAS into a dynamic library
-@code{libRblas} stored in @file{@var{R_HOME}/lib} and linking both @R{}
-itself and all the add-on packages against that library.
+@R{} offers the option of compiling the @acronym{BLAS} into a dynamic
+library @code{libRblas} stored in @file{@var{R_HOME}/lib} and linking
+both @R{} itself and all the add-on packages against that library.
 
-This is the default on all platforms except AIX unless an external BLAS
-is specified and found: for the latter it can be used by specifying the
-option @option{--enable-BLAS-shlib}, and it can always be disabled via
-@option{--disable-BLAS-shlib}.
+This is the default on all platforms except AIX unless an external
+@acronym{BLAS} is specified and found: for the latter it can be used by
+specifying the option @option{--enable-BLAS-shlib}, and it can always be
+disabled via @option{--disable-BLAS-shlib}.
 
 This has both advantages and disadvantages.
 
 @itemize
 @item
-It saves space by having only a single copy of the BLAS routines, which
-is helpful if there is an external static BLAS such as is standard for
-ATLAS.
+It saves space by having only a single copy of the @acronym{BLAS}
+routines, which is helpful if there is an external static @acronym{BLAS}
+such as is standard for ATLAS.
 
 @item
-There may be performance disadvantages in using a shared BLAS.  Probably
-the most likely is when @R{}'s internal BLAS is used and @R{} is
-@emph{not} built as a shared library, when it is possible to build the
-BLAS into @file{R.bin} (and @file{libR.a}) without using
-position-independent code.  However, experiments showed that in many
-cases using a shared BLAS was as fast, provided high levels (e.g.,
-@option{-O3}) of compiler optimization are used.
+There may be performance disadvantages in using a shared @acronym{BLAS}.
+Probably the most likely is when @R{}'s internal @acronym{BLAS} is used
+and @R{} is @emph{not} built as a shared library, when it is possible to
+build the @acronym{BLAS} into @file{R.bin} (and @file{libR.a}) without
+using position-independent code.  However, experiments showed that in
+many cases using a shared @acronym{BLAS} was as fast, provided high
+levels (e.g., @option{-O3}) of compiler optimization are used.
 
 @item
-It is easy to change the BLAS without needing to re-install @R{} and all
-the add-on packages, since all references to the BLAS go through
-@code{libRblas}, and that can be replaced.  Note though that any dynamic
-libraries the replacement links to will need to be found by the linker:
-this may need the library path to be changed in
-@file{@var{R_HOME}/etc/ldpaths}.
+It is easy to change the @acronym{BLAS} without needing to re-install
+@R{} and all the add-on packages, since all references to the
+@acronym{BLAS} go through @code{libRblas}, and that can be replaced.
+Note though that any dynamic libraries the replacement links to will
+need to be found by the linker: this may need the library path to be
+changed in @file{@var{R_HOME}/etc/ldpaths}.
 @end itemize
 
-Another option to change the BLAS in use is to symlink a dynamic BLAS
-library (such as ACML or Goto's) to @file{@var{R_HOME}/lib/libRblas.so}.
-For example, just
+Another option to change the @acronym{BLAS} in use is to symlink a
+dynamic @acronym{BLAS} library (such as ACML or Goto's) to
+@file{@var{R_HOME}/lib/libRblas.so}.  For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
 ln -s /opt/acml4.4.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 
-will change the BLAS in use to multithreaded ACML.  A similar link works
-for recent versions of the Goto BLAS and perhaps for MKL (provided the
-appropriate @file{lib} directory is in the run-time library path or
-@command{ld.so} cache).
+will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
+link works for recent versions of the Goto @acronym{BLAS} and perhaps
+for MKL (provided the appropriate @file{lib} directory is in the
+run-time library path or @command{ld.so} cache).
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3055,15 +3066,15 @@ appropriate @file{lib} directory is in the run-time library path or
 
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
-cope with BLAS libraries which contain a copy of LAPACK (such as
-@code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
+cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
+as @code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
 @cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
 gains are thought to be small (and may be negative), and the default is
 not to search for a suitable LAPACK library, and this is definitely
 @strong{not} recommended.  You can specify a specific LAPACK library or
 a search for a generic library by the configuration option
 @option{--with-lapack}.  The default for @option{--with-lapack} is to
-check the BLAS library and then look for an external library
+check the @acronym{BLAS} library and then look for an external library
 @samp{-llapack}.  Sites searching for the fastest possible linear
 algebra may want to build a LAPACK library using the ATLAS-optimized
 subset of LAPACK.  To do so specify something like
@@ -3078,11 +3089,11 @@ for @option{--with-lapack} can be set @emph{via} the environment
 variable
 @enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
-is specified (as the default value is @code{no}) and the BLAS library
+is specified (as the default value is @code{no}) and the @acronym{BLAS} library
 does not contain LAPACK.
 
-Since ACML contains a full LAPACK, if selected as the BLAS it can be
-used as the LAPACK @emph{via} @option{--with-lapack}.
+Since ACML contains a full LAPACK, if selected as the @acronym{BLAS} it
+can be used as the LAPACK @emph{via} @option{--with-lapack}.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
@@ -3099,7 +3110,7 @@ Fedora Core 4 Extras @samp{-llapack} in September 2005 and 64-bit
 @code{libsunperf} in Forte 7).  Other potential problems are incomplete
 versions of the libraries: for example @code{libsunperf} from Sun Forte
 6.x was missing the entry point for @code{DLANGE} and @code{vecLib} has
-omitted the BLAS routine @code{LSAME}.  For problems compiling LAPACK
+omitted the @acronym{BLAS} routine @code{LSAME}.  For problems compiling LAPACK
 using recent versions of @code{gcc} on @cputype{ix86} Linux, see
 @ref{New platforms}.
 
@@ -3115,9 +3126,12 @@ compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
 @option{-dalign} is needed so @code{libsunperf} can be used.
 
-On some systems it is necessary that an external BLAS/LAPACK was built
-with the same FORTRAN compiler used to build @R{}: known problems are
-with @R{} built with @command{gfortran}, @pxref{Using gfortran}.
+On some systems it is necessary that an external @acronym{BLAS}/LAPACK
+was built with the same FORTRAN compiler used to build @R{}: known
+problems are with @R{} built with @command{gfortran}, @pxref{Using
+gfortran}.
+
+
 
 @node Configuration on a Unix-alike, Platform notes, Essential and useful other programs under a Unix-alike, Top
 @appendix Configuration on a Unix-alike
@@ -3161,7 +3175,7 @@ attempt to compile support for @code{Rprofmem()} and @code{tracemem()} [no]
 @item --enable-R-shlib
 build @R{} as a shared/dynamic library [no]
 @item --enable-BLAS-shlib
-build the BLAS as a shared/dynamic library [yes, except on AIX]
+build the @acronym{BLAS} as a shared/dynamic library [yes, except on AIX]
 @end table
 
 @noindent
@@ -3226,7 +3240,7 @@ command line as
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
 and both will be read (in that order).  In addition, if there is a file
-@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} was
+@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} wer
 supported (but undocumented) in versions of @R{} prior to 2.10.0.}
 @code{~/.Rconfig}), it is read between the @file{config.site} files in
 the source and the build directories.
@@ -3425,7 +3439,7 @@ compiler flags@footnote{In particular, avoid @command{g77}'s
 FORTRAN 77 compliance.
 
 @cindex BLAS library
-For performance reasons@footnote{e.g., to use an optimized BLAS on
+For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
 It is possible to use @command{f2c}, the FORTRAN-to-C converter
@@ -3455,7 +3469,7 @@ pre-releases, but these are resolved in later versions.
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
 @command{gfortran} and @command{g77} which results in the final example
-in @code{example(eigen)} hanging or segfaulting under external BLASs
+in @code{example(eigen)} hanging or segfaulting under external @acronym{BLAS}s
 built under @command{g77}.  This should be detected by a
 @command{configure} test.
 
@@ -3689,11 +3703,11 @@ what is needed.
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
 libraries, but this is not necessarily so on other platforms, in
 particular on 64-bit @acronym{CPU}s such as @cputype{x86_64}.  So care
-can be needed with BLAS libraries and when building @R{} as a shared
+can be needed with @acronym{BLAS} libraries and when building @R{} as a shared
 library to ensure that position-independent code is used in any static
 libraries (such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg}
 and @code{zlib}) which might be linked against.  Fortunately these are
-normally built as shared libraries with the exception of the ATLAS BLAS
+normally built as shared libraries with the exception of the ATLAS @acronym{BLAS}
 libraries.
 
 For platforms with both 64- and 32-bit support, it is likely that
@@ -3921,7 +3935,7 @@ configuration options
 @end example
 
 @noindent
-to provide higher-performance versions of the BLAS and LAPACK
+to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  Building @R{} without these options @emph{via}
 
 @example
@@ -4116,7 +4130,7 @@ CXXFLAGS="-features=tmplrefstatic"
 @cindex LAPACK library
 
 The Sun performance library @code{libsunperf} is available for use with
-the Sun Studio compilers.  If selected as a BLAS, it must also be
+the Sun Studio compilers.  If selected as a @acronym{BLAS}, it must also be
 selected as LAPACK via
 
 @example
