@@ -21,6 +21,12 @@ else
   TEXINPUTS=".:${TEXINPUTS}:${R_SHARE_DIR}/texmf/tex/latex:"
 fi
 export TEXINPUTS
+if test -z "${BIBINPUTS}"; then
+  BIBINPUTS=".:${R_SHARE_DIR}/texmf/bibtex/bib:"
+else
+  BIBINPUTS=".:${BIBINPUTS}:${R_SHARE_DIR}/texmf/bibtex/bib:"
+fi
+export BIBINPUTS
 if test -z "${BSTINPUTS}"; then
   BSTINPUTS=".:${R_SHARE_DIR}/texmf/bibtex/bst:"
 else
