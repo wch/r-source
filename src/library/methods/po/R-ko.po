@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21\n"
+"POT-Creation-Date: 2010-09-27 09:37\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1667,6 +1667,21 @@ msgstr ""
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
+msgid "must give named list of refdefined fields"
+msgstr ""
+
+msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"replacement for field \"%s\" must be an accessor function: got an object of "
+"class \"%s\""
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
+
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
 "The class definition follows"
@@ -1727,6 +1742,10 @@ msgstr ""
 "인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
 "스 \"%s\"\n"
 "의 오브젝트를 얻었습니다"
+
+#, fuzzy
+msgid "Class \"%s\" is defined but is not a reference class"
+msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 #, fuzzy
 msgid "Not a reference class:"

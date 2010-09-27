@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21\n"
+"POT-Creation-Date: 2010-09-27 09:37\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1424,6 +1424,18 @@ msgstr ""
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "方法里的参数和泛型函数里的参数之顺序不同"
 
+msgid "must give named list of refdefined fields"
+msgstr ""
+
+msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"replacement for field \"%s\" must be an accessor function: got an object of "
+"class \"%s\""
+msgstr "参数S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
+
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
 "The class definition follows"
@@ -1481,6 +1493,10 @@ msgid ""
 msgstr ""
 "参数'classDef'要么是个字串要么是个类别表现；现在得到的却是类别为\"%s\"的目标"
 "对象"
+
+#, fuzzy
+msgid "Class \"%s\" is defined but is not a reference class"
+msgstr "\"%s\"不是有定义的类别"
 
 #, fuzzy
 msgid "Not a reference class:"

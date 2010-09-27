@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:21\n"
+"POT-Creation-Date: 2010-09-27 09:37\n"
 "PO-Revision-Date: 2010-04-09 19:48-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1633,6 +1633,20 @@ msgstr ""
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "Аргументы в методе и общей функции не в одинаковом порядке"
 
+msgid "must give named list of refdefined fields"
+msgstr ""
+
+msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"replacement for field \"%s\" must be an accessor function: got an object of "
+"class \"%s\""
+msgstr ""
+"аргумент S4Class должен быть определением класса; получен объект класса \"%s"
+"\""
+
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
 "The class definition follows"
@@ -1692,6 +1706,10 @@ msgid ""
 msgstr ""
 "аргумент 'classDef' должен быть строкой либо представлением класса; получен "
 "объект класса \"%s\""
+
+#, fuzzy
+msgid "Class \"%s\" is defined but is not a reference class"
+msgstr "\"%s\" не является определенным классом"
 
 #, fuzzy
 msgid "Not a reference class:"
