@@ -39,8 +39,8 @@ RESCOMP = $(BINPREF)windres
 LINKER=$(MAIN_LD)
 
 ## Things defined in Renviron on Unix
-# AWK = gawk
 # EGREP = grep -e
+# LN_S = cp -p
 # PERL = perl
 SED = sed
 TAR = tar
@@ -48,7 +48,6 @@ TAR = tar
 ## Things defined in MkRules
 CAT = cat
 CP = cp
-# LN_S = cp -p
 MKDIR = mkdir
 RM = rm -f
 SORT = sort
@@ -59,6 +58,8 @@ TCL_VERSION = 85
 ZLIB_LIBS = -lRzlib
 
 AR = $(BINPREF)ar
+## Used by packages 'maps' and 'mapdata'
+AWK = gawk
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)gcc

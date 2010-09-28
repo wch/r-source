@@ -525,10 +525,9 @@ R_MISSING_PROG(ACLOCAL, aclocal)
 R_MISSING_PROG(AUTOCONF, autoconf)
 R_MISSING_PROG(AUTOMAKE, automake)
 R_MISSING_PROG(AUTOHEADER, autoheader)
-## AC_PROG_AWK
+AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S
-## AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
 R_PROG_INSTALL
@@ -545,8 +544,6 @@ AC_PATH_PROGS(WHICH, which, which)
 AC_SUBST(MAKE)
 ## Pager
 R_PROG_PAGER
-## Perl
-## R_PROG_PERL
 ## Tar -- we prefer a GNU version
 AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
 ## TeXMF stuff
@@ -1680,7 +1677,7 @@ AC_CHECK_DECLS([alloca], , ,
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
 
 ## fseeko/ftello may be macros, matherr is redefined
-## is.blank should be a macro according to C99
+## isblank should be a macro according to C99
 AC_CHECK_FUNCS(fseeko ftello isblank matherr)
 
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
