@@ -4522,12 +4522,10 @@ location where Inno Setup was installed.
 
 This item is installed by the @file{Rtools*.exe} installer.
 
-@c INSTALL uses sh make zip
-@c build used sh make tar gzip
-@c check uses sh make
+@c INSTALL may use sh make zip
+@c build uses make tar gzip
 @c Rdiff.sh USED to use diff echo grep sed tr
-@c Rd2dvi uses basename echo mkdir rm sed
-@c Rdconv Sweave Stangle use echo
+@c Rd2dvi USED to use basename echo mkdir rm sed
 
 @c src/library/Recommended/Makefile.win uses basename and tar
 
@@ -4549,25 +4547,24 @@ This item is installed by the @file{Rtools*.exe} installer.
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
-@code{grep}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
-@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
-@code{sort}, @code{tar}, @code{texindex}, @code{touch}, @code{tr} and
-@code{uniq}; we use those from the Cygwin distribution
-(@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
-also need @code{zip} and @code{unzip} from the Info-ZIP project
-(@uref{http://www.info-zip.org/}).  All of these tools are in
-@file{Rtools*.exe}.
+@code{gzip}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
+@code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh}, @code{sort},
+@code{tar}, @code{texindex}, @code{touch} and @code{uniq}; we use those
+from the Cygwin distribution (@uref{http://www.cygwin.com/}) or compiled
+from the sources.  You will also need @code{zip} and @code{unzip} from
+the Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these
+tools are in @file{Rtools*.exe}.
 
-@c So needed to for end users:
+@c So needed for end users:
 @c basename comm cp echo gzip make mkdir rm sh sort tar uniq zip
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that called `MinGW make' at the MinGW SourceForge site).
-There were also problems with several earlier versions of the Cygwin
-tools and DLLs.  To avoid frustration, please use our tool set, and make
-sure it is at the front of your path (including before the Windows
-system directories).  If you are using a Windows shell, type @code{PATH}
-at the prompt to find out.
+There were also problems with other versions of the Cygwin tools and
+DLLs.  To avoid frustration, please use our tool set, and make sure it
+is at the front of your path (including before the Windows system
+directories).  If you are using a Windows shell, type @code{PATH} at the
+prompt to find out.
 
 @node The MinGW toolchain, Useful additional programs, The command line tools, The Windows toolset
 @section The MinGW toolchain
