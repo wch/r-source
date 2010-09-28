@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-17 09:19\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -458,19 +458,17 @@ msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
 msgid "some of the first %d eigenvalues are < 0"
 msgstr "%d个特征值小于零"
 
-#, fuzzy
 msgid "initial value is not in the interior of the feasible region"
-msgstr "初始值不可用"
+msgstr "初始值不是在可行区域内"
 
-#, fuzzy
 msgid "Barrier algorithm ran out of iterations and did not converge"
-msgstr "算法没有聚合"
+msgstr "壁垒算法超过了迭代但没有收敛"
 
 msgid "Objective function increased at outer iteration %d"
-msgstr ""
+msgstr "目标函数在外部循环增加了%d"
 
 msgid "Objective function decreased at outer iteration %d"
-msgstr ""
+msgstr "目标函数在外部循环减少了%d"
 
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr "对比不适用于%d自由度"
@@ -1208,12 +1206,11 @@ msgstr "在有连结的情况下无法正确計算p值"
 msgid "'y' must be numeric or a string naming a valid function"
 msgstr "'y'必需是数值，否则的话请用字符串指定适当的函数"
 
-#, fuzzy
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
 msgstr ""
-"y必需存在。\n"
+"y数值必需存在。\n"
 "用density()来估计密度"
 
 msgid "'k' is not an integer"
@@ -1246,12 +1243,11 @@ msgstr "遇到了奇异拟合"
 msgid "missing or negative weights not allowed"
 msgstr "权数不允许是遺漏值或负值"
 
-#, fuzzy
 msgid "invalid 'lm' object:  no 'terms' component"
-msgstr "'lm'对象不对: 不包含'terms'或'qr'组件"
+msgstr "'lm'对象不对: 不包含'term'组件"
 
 msgid "calling summary.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "调用summary.lm(<fake-lm-object>) ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "对象的残差自由度表明这不是\"lm\" 拟合"
@@ -1260,6 +1256,8 @@ msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
+"lm对象的'qr'组件不对。\n"
+" 其秩零，要么不应该调用lm(.., qr=FALSE)."
 
 msgid "family '"
 msgstr "族'"
@@ -1268,7 +1266,7 @@ msgid "' not implemented"
 msgstr "'还没有实现"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "调用anova.lm(<fake-lm-object>) ..."
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
 msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
@@ -1280,7 +1278,7 @@ msgid "model 1"
 msgstr "第一模型"
 
 msgid "calling predict.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "调用predict.lm(<fake-lm-object>) ..."
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
@@ -1875,9 +1873,8 @@ msgstr "参数'r'和'c'的和必需是一样的"
 msgid "'relevel' only for factors"
 msgstr "'relevel'只适用于因子"
 
-#, fuzzy
 msgid "'ref' must be of length one"
-msgstr "'acf'的长度必需是一或二"
+msgstr "'ref'的长度必需是一"
 
 msgid "'ref' must be an existing level"
 msgstr "'ref'必需是存在的层次"
@@ -2237,9 +2234,8 @@ msgstr "(有限)'x'观察量数目不够"
 msgid "Requested conf.level not achievable"
 msgstr "无法达到所要求的conf.level"
 
-#, fuzzy
 msgid "cannot compute confidence interval when all observations are tied"
-msgstr "有零时无法計算精確的置信区间"
+msgstr "所有观察数据值都是一样的话无法計算精確的置信区间"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "有连结时无法計算精確的置信区间"
@@ -2400,3 +2396,4 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
+

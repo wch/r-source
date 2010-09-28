@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -98,10 +98,6 @@ msgstr ""
 
 msgid "dependent variable should be a factor"
 msgstr ""
-
-#, fuzzy
-msgid "explanatory variable should be numeric"
-msgstr "una variabile in 'y' non è numerica"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
@@ -427,3 +423,7 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "explanatory variable should be numeric"
+#~ msgstr "una variabile in 'y' non è numerica"

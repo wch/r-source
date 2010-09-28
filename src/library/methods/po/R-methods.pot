@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1040,6 +1040,15 @@ msgstr ""
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 
+msgid "must give named list of refdefined fields"
+msgstr ""
+
+msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+msgstr ""
+
+msgid "replacement for field \"%s\" must be an accessor function: got an object of class \"%s\""
+msgstr ""
+
 msgid "Topic \"%s\" is not a method name in class \"%s\"\nThe class definition follows"
 msgstr ""
 
@@ -1077,6 +1086,9 @@ msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
 msgid "Argument fields must be a list of the field classes or definitions, or else just the names of the fields; got an object of class \"%s\""
+msgstr ""
+
+msgid "Class \"%s\" is defined but is not a reference class"
 msgstr ""
 
 msgid "Not a reference class:"

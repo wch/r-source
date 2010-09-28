@@ -177,7 +177,7 @@ msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
 #: methods_list_dispatch.c:833
 msgid "Class should be either a character-string name or a class definition"
-msgstr ""
+msgstr "类别必需是字符串名字或类别定义"
 
 #: methods_list_dispatch.c:914
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: 2009-10-10 13:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -102,9 +102,6 @@ msgstr "'formula' doit spécifier exactement deux variables"
 
 msgid "dependent variable should be a factor"
 msgstr "la variable dépendante doit être de type facteur"
-
-msgid "explanatory variable should be numeric"
-msgstr "la variable explicative doit être numérique"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
@@ -438,6 +435,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argument %s n'est pas utilisé par"
 msgstr[1] "les arguments %s ne sont pas utilisés par"
+
+#~ msgid "explanatory variable should be numeric"
+#~ msgstr "la variable explicative doit être numérique"
 
 #~ msgid "regression coefficients"
 #~ msgstr "coefficients de régression"

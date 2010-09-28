@@ -212,7 +212,7 @@ msgid "status %d in running command '%s'"
 msgstr "调用命令'%s'的运行状况为%d"
 
 msgid "range too small for min.n"
-msgstr ""
+msgstr "min.n的范围太小了"
 
 msgid "A raster matrix must be character, or numeric, or logical"
 msgstr "光栅矩阵必需是字符，数字或逻辑"
@@ -227,7 +227,7 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "栅格阵列必需有三个或四个平面"
 
 msgid "Operator not meaningful for raster objects"
-msgstr ""
+msgstr "这种操作对光栅对象没有意义"
 
 msgid "no current device to record from"
 msgstr "没有可用来记载的装置"
@@ -257,7 +257,7 @@ msgid "invalid first argument"
 msgstr "第一个参数不对"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr ""
+msgstr "'x'是串列，但没有'x'和'y'这两个组件"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x'和'y'的长度不一样"
@@ -269,7 +269,7 @@ msgid "at least 2 columns needed"
 msgstr "至少需要两列"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr ""
+msgstr "'x'是串列，但没有'x'，'y'和'z'这三个组件"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "'x', 'y'和'z'的长度不一样"
@@ -281,7 +281,7 @@ msgid "sorry, 'gs' cannot be found"
 msgstr "对不起，'gs'不存在"
 
 msgid "unrecognized format of gs -help"
-msgstr ""
+msgstr "gs -help的格式不对"
 
 msgid "device '%s' is not available"
 msgstr "没有'%s'这样的装置"
@@ -368,3 +368,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1547,6 +1547,20 @@ msgstr ""
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 
+msgid "must give named list of refdefined fields"
+msgstr ""
+
+msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid ""
+"replacement for field \"%s\" must be an accessor function: got an object of "
+"class \"%s\""
+msgstr ""
+"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
+"objeto de classe  \"%s\""
+
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
 "The class definition follows"
@@ -1605,6 +1619,10 @@ msgid ""
 msgstr ""
 "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
 "objeto de classe  \"%s\""
+
+#, fuzzy
+msgid "Class \"%s\" is defined but is not a reference class"
+msgstr "'%s' não é uma das funções básicas"
 
 msgid "Not a reference class:"
 msgstr ""

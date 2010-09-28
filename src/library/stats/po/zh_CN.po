@@ -61,9 +61,9 @@ msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 
 #: family.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Value %g out of range (0, 1)"
-msgstr "%d个值出界在(0, 1)外"
+msgstr "%g值出界在(0, 1)外"
 
 #: family.c:42 family.c:56 family.c:74
 #, c-format
@@ -100,24 +100,20 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg的算法没有能够找到偏相关数"
 
 #: monoSpl.c:40
-#, fuzzy
 msgid "n must be at least two"
-msgstr "m必需为串列"
+msgstr "n至少需要是二"
 
 #: monoSpl.c:73
-#, fuzzy
 msgid "Argument m must be numeric"
-msgstr "参数%s必需为非空数字向量"
+msgstr "参数m必需为数值"
 
 #: monoSpl.c:76
-#, fuzzy
 msgid "length(m) must be at least two"
-msgstr "m必需为串列"
+msgstr "length(m)的值必需为二"
 
 #: monoSpl.c:78
-#, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr "参数%s必需为长度为一或长度为%d的数字向量"
+msgstr "参数Sx必需是长度比m[]小一的数值向量"
 
 #: nls.c:97
 msgid "'control' must be a list"

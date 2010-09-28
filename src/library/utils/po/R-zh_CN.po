@@ -83,18 +83,16 @@ msgid "%d occurrences in %s"
 msgstr "%2$s里出现了%1$d个具體值"
 
 msgid "No suitable spell check program found."
-msgstr ""
+msgstr "没有可用的拼写查对器"
 
-#, fuzzy
 msgid "Filter '%s' is not available."
-msgstr "没有'%s'这种测试"
+msgstr "没有'%s'这种过滤器"
 
 msgid "Invalid 'filter' argument."
 msgstr "'filter'参数不对"
 
-#, fuzzy
 msgid "Processing file %s"
-msgstr "处理文件"
+msgstr "处理文件%s"
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -132,58 +130,59 @@ msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
 msgstr ""
+"不是所有的参数的长度都一样，下面这些需要被再循环："
+"%s"
 
 msgid ","
 msgstr ","
 
 msgid "Use either 'given' or 'first'/'middle' but not both."
-msgstr ""
+msgstr "要么用'given'，要么用'first'/'middle'，但不能两者都用"
 
 msgid "It is recommended to use 'given' instead of 'first'."
-msgstr ""
+msgstr "我们建议你用'given'而不用'first'。"
 
 msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr ""
+msgstr "我们建议你用'given'而不用'middle'。"
 
 msgid "Use either 'family' or 'last' but not both."
-msgstr ""
+msgstr "要么用'family'，要么用'last'，但不能两者都用"
 
 msgid "It is recommended to use 'family' instead of 'last'."
-msgstr ""
+msgstr "我们建议你用'family'而不用'last'。"
 
-#, fuzzy
 msgid "Invalid role specification(s): %s."
-msgstr "'quote'设定得不对"
+msgstr "角色设定得不对: %s"
 
 msgid "It is recommended to use given/family instead of first/middle/last."
-msgstr ""
+msgstr "我们建议用名/姓而不是名/中间名/姓"
 
 msgid "method is just applicable to 'person' objects"
-msgstr ""
+msgstr "这个方法不适用于'person'对象"
 
 msgid "all arguments must be of class \"person\""
 msgstr "所有的参数都必需是\"person\"类别"
 
 msgid "at least one field has to be specified"
-msgstr ""
+msgstr "你至少需要填一项"
 
 msgid "all fields have to be named"
-msgstr ""
+msgstr "所有的项都必需有名字"
 
 msgid "'bibtype' has to be one of"
-msgstr ""
+msgstr "'bibtype'必需是这些中的一个"
 
 msgid "A bibentry of bibtype '"
-msgstr ""
+msgstr "参考项参考种类为'"
 
 msgid "' has to correctly specify the field(s):"
-msgstr ""
+msgstr "'必需正确地设定这些项："
 
 msgid "' has to specify the field(s):"
-msgstr ""
+msgstr "'必需设定这些项："
 
 msgid "method is just applicable to 'bibentry' objects"
-msgstr ""
+msgstr "这个方法不适用于'bibentry'对象"
 
 msgid "package '%s' not found"
 msgstr "没有'%s'这一个程序包"
@@ -198,7 +197,7 @@ msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
 
 msgid "Enhanced author specification provides no authors."
-msgstr ""
+msgstr "详细作者规范中没有作者信息"
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -461,13 +460,11 @@ msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "程序包'%d'里要么没有DESCRIPTION这个文件，要么出了错"
 
-#, fuzzy
 msgid "package"
 msgstr "程序包"
 
-#, fuzzy
 msgid "not found"
-msgstr "找不到这个说明书"
+msgstr "找不到"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()不能在非互交形式下使用"
@@ -590,6 +587,8 @@ msgid ""
 "Removing package(s) from %s\n"
 "(as %s is unspecified)"
 msgstr ""
+"从%s中删除程序包\n"
+"(因为没有指定%s)"
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir'不是目录"
@@ -644,6 +643,8 @@ msgid ""
 "Installing package(s) into %s\n"
 "(as %s is unspecified)"
 msgstr ""
+"将程序包安装入%s\n"
+"(因为%s没有被指定)"
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib=\"%s\"'不可写"
@@ -1050,7 +1051,7 @@ msgid "failed to create '%s'"
 msgstr "无法建立'%s'"
 
 msgid "there is no 'libs' directory in package '%s'"
-msgstr ""
+msgstr "在程序字'%s'里找不到'libs'这个目录"
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "无法将拆除原来安装的程序包 '%s'"
@@ -1093,7 +1094,6 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "还安装相依关系%s"
 
-#, fuzzy
 msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'lib'元素'%s'不是可写的目录"
@@ -1287,3 +1287,4 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
+

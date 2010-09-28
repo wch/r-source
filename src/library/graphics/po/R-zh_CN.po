@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -19,9 +19,8 @@ msgstr ""
 msgid "'a' is overridden by 'reg'"
 msgstr "'a'被'reg'覆盖"
 
-#, fuzzy
 msgid "only using the first two of %d regression coefficients"
-msgstr "只用第一和第二个"
+msgstr "只用两个%d回归系数中的第一个"
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a'和'b'被' coef'覆盖"
@@ -42,7 +41,7 @@ msgid "incorrect 'col': must be length 2"
 msgstr "'col'不对: 长度必需为二"
 
 msgid "only for 1-D table"
-msgstr ""
+msgstr "只适用于1-D表"
 
 msgid "'side' must be in {1:4}"
 msgstr "'side'的值必需在{1:4}中"
@@ -98,9 +97,6 @@ msgstr "'formula'只能设定两个变量"
 msgid "dependent variable should be a factor"
 msgstr "因变量应当为因子"
 
-msgid "explanatory variable should be numeric"
-msgstr "说明变量应当为数值"
-
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr "因为y轴的尺度为累计概率, 'ylim'的值必需在[0,1] 之间"
 
@@ -134,9 +130,8 @@ msgstr "行 * 列的结果太小"
 msgid "Missing rows"
 msgstr "缺少行"
 
-#, fuzzy
 msgid "'expr' must be a function, call or an expression containing 'x'"
-msgstr "'expr'要么是函数，要么是包含'x'的表达式"
+msgstr "'expr'要么是函数，要么调用，要么是包含'x'的表达式"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "log=\"x\"意味着'from'和'to'的值必需大于零"
@@ -330,7 +325,7 @@ msgid "cannot hatch with logarithmic scale active"
 msgstr "对数尺度设定时不能进行策劃"
 
 msgid "Invalid fill rule for graphics path"
-msgstr ""
+msgstr "图形填充路径规则不对"
 
 msgid "invalid rectangle specification"
 msgstr "长方形定义不对"
@@ -414,6 +409,9 @@ msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个参数"
+
+#~ msgid "explanatory variable should be numeric"
+#~ msgstr "说明变量应当为数值"
 
 #~ msgid "regression coefficients"
 #~ msgstr "回归系数"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-09-28 22:26\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,9 +90,6 @@ msgid "'formula' should specify exactly two variables"
 msgstr ""
 
 msgid "dependent variable should be a factor"
-msgstr ""
-
-msgid "explanatory variable should be numeric"
 msgstr ""
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
