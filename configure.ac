@@ -1680,7 +1680,7 @@ AC_CHECK_DECLS([alloca], , ,
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
 
 ## fseeko/ftello may be macros, matherr is redefined
-## is.blank should be a macro according to C99
+## isblank should be a macro according to C99
 AC_CHECK_FUNCS(fseeko ftello isblank matherr)
 
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
