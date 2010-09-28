@@ -19,7 +19,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     See \bold{Entry Types} for details.
   }
   \item{textVersion}{a character string with a text representation of
-    the reference.}
+    the reference to optionally be employed for printing.}
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
@@ -64,7 +64,10 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \code{"textVersion"}).
   The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
   of the \code{.bibstyle} argument using the \code{\link{bibstyle}}
-  function. 
+  function.  When printing bibentry objects in citation style, a
+  \code{header}/\code{footer} for each item can be displayed as well as
+  a \code{mheader}/\code{mfooter} for the whole vector of references.
+
   There is also a \code{\link{toBibtex}} method for direct conversion to
   BibTeX.
 }
@@ -76,20 +79,20 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   after BibTeX entries.  The entry should be a valid BibTeX entry type,
   e.g.,
   \describe{
-    \item{article:}{An article from a journal or magazine.}
-    \item{book:}{A book with an explicit publisher.}
-    \item{inbook:}{A part of a book, which may be a chapter (or section
+    \item{Article:}{An article from a journal or magazine.}
+    \item{Book:}{A book with an explicit publisher.}
+    \item{InBook:}{A part of a book, which may be a chapter (or section
       or whatever) and/or a range of pages.}  
-    \item{incollection:}{A part of a book having its own title.}
-    \item{inproceedings:}{An article in a conference proceedings.}
-    \item{manual:}{Technical documentation like a software manual.}
-    \item{mastersthesis:}{A Master's thesis.}
-    \item{misc:}{Use this type when nothing else fits.}
-    \item{phdthesis:}{A PhD thesis.}
-    \item{proceedings:}{The proceedings of a conference.}
-    \item{techreport:}{A report published by a school or other
+    \item{InCollection:}{A part of a book having its own title.}
+    \item{InProceedings:}{An article in a conference proceedings.}
+    \item{Manual:}{Technical documentation like a software manual.}
+    \item{MastersThesis:}{A Master's thesis.}
+    \item{Misc:}{Use this type when nothing else fits.}
+    \item{PhdThesis:}{A PhD thesis.}
+    \item{Proceedings:}{The proceedings of a conference.}
+    \item{TechReport:}{A report published by a school or other
       institution, usually numbered within a series.}
-    \item{unpublished:}{A document having an author and title, but not
+    \item{Unpublished:}{A document having an author and title, but not
       formally published.}
   }
 }

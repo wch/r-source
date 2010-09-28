@@ -97,17 +97,17 @@ person(given = NULL, family = NULL, middle = NULL,
   Personal names are rather tricky, e.g.,
   \url{http://en.wikipedia.org/wiki/Personal_name}.
 
-  The current implementation of the \code{"person"} class uses the
-  notions of \emph{given} (including middle names) and \emph{family}
-  names, as specified by \code{given} and \code{family} respectively.
-  Earlier versions used a scheme based on first, middle and last names,
-  as appropriate for most of Western culture where the given name
-  precedes the family name, but not universal, as some other cultures
-  place it after the family name, or use no family name.  To smooth the
-  transition to the new scheme, arguments \code{first}, \code{middle}
-  and \code{last} are still supported, but their use is deprecated and
-  they must not be given in combination with the corresponding new style
-  arguments.
+  The current implementation (starting from R 2.12.0) of the
+  \code{"person"} class uses the notions of \emph{given} (including
+  middle names) and \emph{family} names, as specified by \code{given}
+  and \code{family} respectively.  Earlier versions used a scheme based
+  on first, middle and last names, as appropriate for most of Western
+  culture where the given name precedes the family name, but not
+  universal, as some other cultures place it after the family name, or
+  use no family name.  To smooth the transition to the new scheme,
+  arguments \code{first}, \code{middle} and \code{last} are still
+  supported, but their use is deprecated and they must not be given in
+  combination with the corresponding new style arguments.
 
   The new scheme also adds the possibility of specifying \emph{roles}
   based on a subset of the MARC Value List for Relators and Roles
@@ -128,9 +128,8 @@ person(given = NULL, family = NULL, middle = NULL,
     \item{\code{"cre"}}{(Creator) Use for the package maintainer.}
     \item{\code{"ths"}}{(Thesis advisor) If the package is part of a
       thesis, use for the thesis advisor.}
-    \item{\code{"trl"}}{(Translator) If the R code is merely a
-      translation from another language (typically S), use for the
-      translator to R.}
+    \item{\code{"trl"}}{(Translator) If the R code is a translation from
+      another language (typically S), use for the translator to R.}
   }
 
   In the old scheme, person objects were used for single persons, and a

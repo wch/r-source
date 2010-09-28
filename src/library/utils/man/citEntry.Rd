@@ -36,6 +36,9 @@ citFooter(...)
     For \code{citHeader} and \code{citFooter}, character strings.
   }
 }
+\value{
+  \code{citEntry} produces an object of class \code{"bibentry"}.
+}
 \seealso{
   \code{\link{citation}} for more information about citing R and R
   packages and \file{CITATION} files;
