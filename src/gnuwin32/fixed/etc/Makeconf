@@ -39,17 +39,16 @@ RESCOMP = $(BINPREF)windres
 LINKER=$(MAIN_LD)
 
 ## Things defined in Renviron on Unix
-AWK = gawk
-EGREP = grep -e
-PERL = perl
+# AWK = gawk
+# EGREP = grep -e
+# PERL = perl
 SED = sed
 TAR = tar
 
 ## Things defined in MkRules
 CAT = cat
 CP = cp
-FIND = find
-LN_S = cp -p
+# LN_S = cp -p
 MKDIR = mkdir
 RM = rm -f
 SORT = sort
