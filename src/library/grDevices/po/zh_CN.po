@@ -168,24 +168,24 @@ msgid "only gray colors are allowed in this color model"
 msgstr "这个颜色模型只能用灰色"
 
 #: devPS.c:3084 devPS.c:4706 devPS.c:5802
-#, fuzzy, c-format
+#, c-format
 msgid "filename too long in %s()"
-msgstr "%s()調用里的文本名字太长"
+msgstr "%s()里的文本名字太长"
 
 #: devPS.c:3090 devPS.c:4712 devPS.c:5808
 #, c-format
 msgid "memory allocation problem in %s()"
-msgstr ""
+msgstr "%s()内存分配出了问题"
 
 #: devPS.c:3106 devPS.c:5850
-#, fuzzy, c-format
+#, c-format
 msgid "encoding path is too long in %s()"
-msgstr "编码路径太长"
+msgstr "%s()里的编码路径太长"
 
 #: devPS.c:3120 devPS.c:4752
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file in %s()"
-msgstr "无法载入编码文本'%s'"
+msgstr "%s()中载入编码文本失败了'"
 
 #: devPS.c:3165 devPS.c:3228 devPS.c:5909 devPS.c:5964 devPS.c:7423
 msgid "Invalid font type"
@@ -368,14 +368,12 @@ msgid "failed to load default encoding"
 msgstr "无法载入默认编码"
 
 #: devPS.c:5932
-#, fuzzy
 msgid "Failed to initialise default PDF font"
-msgstr "无法初始化XFig字体默认值"
+msgstr "无法初始化PDF字体默认值"
 
 #: devPS.c:5987
-#, fuzzy
 msgid "Failed to initialise additional PDF fonts"
-msgstr "无法初始化外加的PostScript字体"
+msgstr "无法初始化外加的PDF字体"
 
 #: devPS.c:6000
 msgid "failed to allocate rasters"
@@ -453,9 +451,9 @@ msgid "invalid value of '%s'"
 msgstr "'%s'的值不对"
 
 #: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3709
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start %s() device"
-msgstr "无法启动装置"
+msgstr "无法启动%s()装置"
 
 #: devPS.c:8191
 #, c-format

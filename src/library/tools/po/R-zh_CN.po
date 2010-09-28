@@ -171,43 +171,35 @@ msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 msgid "Packages required but not available:"
 msgstr "需要有程辑包但它却不存在:"
 
-#, fuzzy
 msgid "Package required but not available: %s"
-msgstr "需要有程辑包但它却不存在:"
+msgstr "需要有程辑包但它却不存在: %s"
 
-#, fuzzy
 msgid "Packages required and available but unsuitable versions:"
 msgstr "虽然有需要的程辑包，但其版本不对:"
 
-#, fuzzy
 msgid "Package required and available but unsuitable version: %s"
-msgstr "虽然有需要的程辑包，但其版本不对:"
+msgstr "虽然有需要的程辑包，但其版本不对: %s"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "原来需要的标准程辑包现在不要了:"
 
-#, fuzzy
 msgid "Packages suggested but not available for checking:"
-msgstr "需要有程辑包但它却不存在:"
+msgstr "无法检查建议用的程辑包:"
 
-#, fuzzy
 msgid "Package suggested but not available for checking: %s"
-msgstr "需要有程辑包但它却不存在:"
+msgstr "无法检查建议用的程辑包: %s"
 
-#, fuzzy
 msgid "Packages which this enhances but not available for checking:"
-msgstr "需要有程辑包但它却不存在:"
+msgstr "无法检查被加强功能的程辑包:"
 
-#, fuzzy
 msgid "Package which this enhances but not available for checking: %s"
-msgstr "需要有程辑包但它却不存在:"
+msgstr "无法检查被加强功能的程辑包:%s"
 
 msgid "Vignette dependencies not required:"
 msgstr "不需要标头从属:"
 
-#, fuzzy
 msgid "Vignette dependencies not required: %s"
-msgstr "不需要标头从属:"
+msgstr "不需要标头从属: %s"
 
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
@@ -219,9 +211,8 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "不需要名字空间从属:"
 
-#, fuzzy
 msgid "Namespace dependency not required: %s"
-msgstr "不需要名字空间从属:"
+msgstr "不需要名字空间从属: %s"
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -358,16 +349,14 @@ msgstr "用了'methods'这个程辑包却没有被声明"
 msgid "'::' or ':::' imports not declared from:"
 msgstr "'::'或':::'引进没有被声明:"
 
-#, fuzzy
 msgid "'::' or ':::' import not declared from: %s"
-msgstr "'::'或':::'引进没有被声明:"
+msgstr "'::'或':::'引进没有被声明: %s"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
-#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
-msgstr "'library'或'require'调用没有被声明:"
+msgstr "'library'或'require'调用没有被声明: %s"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "有重复名字'%s'的Rd文件:"
@@ -463,10 +452,10 @@ msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
 
 msgid "no inputs"
-msgstr ""
+msgstr "没有输入"
 
 msgid "Error in running tools::texi2dvi"
-msgstr ""
+msgstr "调用tools::texi2dvi时出了错"
 
 msgid "more than one \\examples section, using the first"
 msgstr "多个\\example段，取用第一段"
@@ -572,47 +561,43 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
 msgid "Changes require specified 'style'"
-msgstr ""
+msgstr "改动需要特别'style'"
 
 msgid "The default JSS style may not be modified."
-msgstr ""
+msgstr "不能对缺省JSS式样进行修改"
 
 msgid "** Options"
-msgstr ""
+msgstr "**选项"
 
 msgid "are only for '--binary'  and will be ignored"
-msgstr ""
+msgstr "只能在'--binary'时用，现在略过不用"
 
-#, fuzzy
 msgid "Error: cannot rename directory to"
-msgstr "无法建立目录'%s'"
+msgstr "错误：无法改变目录名字为"
 
-#, fuzzy
 msgid "cannot coerce"
-msgstr "打不开"
+msgstr "无法强迫改变"
 
 msgid "to logical"
-msgstr ""
+msgstr "为逻辑值"
 
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
 
 msgid "configuration files are not supported as from R 2.12.0"
-msgstr ""
+msgstr "R 2.12.0以后的版本不支持设置文件"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
-msgstr ""
+msgstr "'--multiarch'只设定了一个可以用的子体系结构"
 
-#, fuzzy
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"
 
 msgid "package dir"
-msgstr ""
+msgstr "程序包目录"
 
-#, fuzzy
 msgid "does not exist"
-msgstr "不存在'%s'这一文件"
+msgstr "不存在"
 
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
@@ -704,7 +689,7 @@ msgid "installing to"
 msgstr "安装至"
 
 msgid "generating debug symbols (dSYM)"
-msgstr ""
+msgstr "产生调试符号(dSYM)"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -723,19 +708,17 @@ msgstr "空的'data'目录"
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'只在Windows上有用"
 
-#, fuzzy
 msgid "--merge-multiarch is Windows-only"
-msgstr "'--auto-zip'只在Windows上有用"
+msgstr "--merge-multiarch只在Windows上有用"
 
 msgid "cannot create temporary directory"
 msgstr "无法建立临时性目录"
 
-#, fuzzy
 msgid "ERROR: --merge-multiarch applies only to a single tarball"
-msgstr "--pkglock只适用于单独程序包"
+msgstr "错误：--merge-multiarch只适用于单独压缩包"
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-msgstr ""
+msgstr "错误：--merge-multiarch只适用i386/x64安装"
 
 msgid "invalid package"
 msgstr "程辑包无效."
@@ -812,28 +795,29 @@ msgstr ""
 "%s"
 
 msgid "No news found in given file using old-style R-like format."
-msgstr ""
+msgstr "在所提供的文件中用老式R类的格式找不到任何新信息。"
 
 msgid "No news found in given file using package default format."
-msgstr ""
+msgstr "在所提供的文件中用缺省格式找不到任何新信息。"
 
 msgid "Could not extract news from the following text chunks:"
-msgstr ""
+msgstr "无法从下面的文本块中找到新的信息"
 
 msgid ""
 "Chunk %s:\n"
 "%s"
 msgstr ""
+"文本块%s:\n"
+"%s"
 
 msgid "Cannot extract version info from the following section titles:"
-msgstr ""
+msgstr "无法从下面的段标题找到关于版本的信息"
 
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
-#, fuzzy
 msgid "Malformed NEWS.Rd file."
-msgstr "畸形维修人员域."
+msgstr "NEWS.Rd文件格式不对。"
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
@@ -848,32 +832,31 @@ msgid "cannot create HTML package index"
 msgstr "无法建立HTML程辑包索引"
 
 msgid "Internal error, no tag"
-msgstr ""
+msgstr "内部错误，没有标签"
 
 msgid "Argument for"
-msgstr ""
+msgstr "参数用于"
 
-#, fuzzy
 msgid "not found."
-msgstr "找不到'%s'这个文件"
+msgstr "找不到"
 
 msgid "Internal error:  NULL tag"
-msgstr ""
+msgstr "内部错误：NULL标签"
 
 msgid "internal error"
-msgstr ""
+msgstr "内部错误"
 
 msgid "Inconsistent arg count for"
-msgstr ""
+msgstr "参数数目有矛盾"
 
 msgid "Entry for"
-msgstr ""
+msgstr "项目为"
 
 msgid "="
-msgstr ""
+msgstr "="
 
 msgid "already defined to be"
-msgstr ""
+msgstr "已经定义为"
 
 msgid "found encoding"
 msgstr "找到编码"
@@ -1013,9 +996,8 @@ msgstr "给'%s'调用'texi2dvi'失败了"
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "给'%s'调用'texi2dvi'失败了"
 
-#, fuzzy
 msgid "unable to run '%s' on '%s'"
-msgstr "无法在'%2$s'上调用%1$s"
+msgstr "无法在'%2$s'上调用'%1$s'"
 
 msgid "unable to run %s on '%s'"
 msgstr "无法在'%2$s'上调用%1$s"
@@ -1207,3 +1189,4 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
+

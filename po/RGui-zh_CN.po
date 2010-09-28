@@ -622,9 +622,9 @@ msgid "Select 'Rconsole' file"
 msgstr "选择'Rconsole'文件"
 
 #: preferences.c:687
-#, fuzzy, c-format
+#, c-format
 msgid "Ignored '%s' at line %d of file %s"
-msgstr "文件%2$s的第%1$d行出错"
+msgstr "文件%3$s的第%2$d行'%1$s'略过不用"
 
 #: preferences.c:788
 msgid "Rgui Configuration Editor"
