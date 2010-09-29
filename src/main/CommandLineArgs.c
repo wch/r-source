@@ -239,12 +239,12 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		}
 		lval = strtol(p, &p, 10);
 		if (lval < 0)
-		    R_ShowMessage(_("WARNING: '-max-ppsize' value is negative: ignored\n"));
+		    R_ShowMessage(_("WARNING: '--max-ppsize' value is negative: ignored\n"));
 		else if (lval < 10000)
-		    R_ShowMessage(_("WARNING: '-max-ppsize' value is too small: ignored\n"));
+		    R_ShowMessage(_("WARNING: '--max-ppsize' value is too small: ignored\n"));
 
 		else if (lval > 500000)
-		    R_ShowMessage(_("WARNING: '-max-ppsize' value is too large: ignored\n"));
+		    R_ShowMessage(_("WARNING: '--max-ppsize' value is too large: ignored\n"));
 		else Rp->ppsize = lval;
 	    }
 	    else { /* unknown -option */
