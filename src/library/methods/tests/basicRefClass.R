@@ -141,3 +141,102 @@ stopifnot(identical(ab1$a, 1), identical(ab1$b, 1))
 ab1$b <- 2
 
 stopifnot(identical(ab1$a, 2), identical(ab1$b, 2))
+
+## a simple editor for matrix objects.  Method  $edit() changes some
+## range of values; method $undo() undoes the last edit.
+mEditor <- setRefClass("matrixEditor",
+      fields = list( data = "matrix",
+        edits = "list"),
+      methods = list(
+     edit = function(i, j, value) {
+       ## the following string documents the edit method
+       'Replaces the range [i, j] of the
+        object by value.
+        '
+         backup <-
+             list(i, j, data[i,j])
+         data[i,j] <<- value
+         edits <<- c(list(backup),
+                     edits)
+         invisible(value)
+     },
+     undo = function() {
+       'Undoes the last edit() operation
+        and update the edits field accordingly.
+        '
+         prev <- edits
+         if(length(prev)) prev <- prev[[1]]
+         else stop("No more edits to undo")
+         edit(prev[[1]], prev[[2]], prev[[3]])
+         ## trim the edits list
+         length(edits) <<- length(edits) - 2
+         invisible(prev)
+     }
+     ))
+xMat <- matrix(1:12,4,3)
+xx <- mEditor$new(data = xMat)
+xx$edit(2, 2, 0)
+xx$data
+xx$undo()
+mEditor$help("undo")
+stopifnot(all.equal(xx$data, xMat))
+
+## add a method to save the object
+mEditor$methods(
+     save = function(file) {
+       'Save the current object on the file
+        in R external object format.
+       '
+         base::save(.self, file = file)
+     }
+)
+
+tf <- tempfile()
+xx$save(tf) #$
+load(tf)
+unlink(tf)
+stopifnot(identical(xx$data, .self$data))
+
+markViewer <- ""
+setMarkViewer <- function(what)
+    markViewer <<- what
+
+## Inheriting a reference class:  a matrix viewer
+mv <- setRefClass("matrixViewer",
+    fields = c("viewerDevice", "viewerFile"),
+    contains = "matrixEditor",
+    methods = list( view = function() {
+        dd <- dev.cur(); dev.set(viewerDevice)
+        devAskNewPage(FALSE)
+        matplot(data, main = paste("After",length(edits),"edits"))
+        dev.set(dd)},
+        edit = # invoke previous method, then replot
+          function(i, j, value) {
+            callSuper(i, j, value)
+            view()
+          }))
+
+## initialize and finalize methods
+mv$methods( initialize = function(...) {
+    viewerFile <<- tempfile("matrixView")
+    pdf(viewerFile)
+    viewerDevice <<- dev.cur()
+    message("Plotting to ", viewerFile)
+    dev.set(dev.prev())
+    setMarkViewer("ON")
+    initFields(...)
+  },
+  finalize = function() {
+    dev.off(viewerDevice)
+    setMarkViewer("OFF")
+  })
+
+ff = new("matrixViewer", data = xMat)
+stopifnot(identical(markViewer, "ON")) # check initialize
+ff$edit(2,2,0)
+ff$data
+ff$undo()
+stopifnot(all.equal(ff$data, xMat))
+rm(ff)
+gc()
+stopifnot(identical(markViewer, "OFF")) #check finalize

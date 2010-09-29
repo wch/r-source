@@ -61,7 +61,6 @@ class or its superclasses.
 See the section on \dQuote{Implementation} for the internal mechanism
 used by accessor functions.
 
-
 Note that fields are distinct from
 the slots, if any, in the object.  Slots are, as always, handled by
 standard \R{} object management.  Slots for the class can be included
@@ -76,7 +75,20 @@ a named list of function definitions that can be invoked on objects
 from this class.  These can also be created by invoking the
 \code{$methods} method on the generator object returned. %$
 See the section on \dQuote{Writing Reference Methods} for details.
-}
+
+Two optional method names are interpreted specially, \code{initialize}
+and \code{finalize}. If an \code{initialize} method is defined, it
+will be invoked when an object is generated from the class.  See the
+discussion of method \code{$new(...)} %$
+in the section \dQuote{Reference Object Generators}.
+
+If a \code{finalize} method is defined, a function will be
+\link[=reg.finalizer]{registered} to invoke it before the environment
+in the object is discarded by the garbage collector. See the matrix
+viewer example for both initialize and finalize methods.
+
+
+ }
  
   \item{where}{
 the environment in which to store the class definition.  Defaults to
@@ -107,13 +119,13 @@ reality, such as a window in a user interface.
 In addition, commonly used languages, including Java, C++ and many
 others, support a version of classes and methods assuming reference
 semantics.
-Typically, the basic programming mechanism in these languages
-is to invoke a method on an object, with
-different interpretation from a function call in \R.
+The corresponding programming mechanism
+is to invoke a method on an object.
 In the \R syntax that we use for this operation, one invokes a method,
 \code{m1} say, on an object \code{x} by the expression
 \code{x$m1(...)}. %$
-Methods in this model are associated with the object, or more
+
+Methods in this paradigm are associated with the object, or more
 precisely with the class of the object, as opposed to methods in a
 function-based class/method system, which are fundamentally associated
 with the function (in \R, for example, a generic function in an \R
@@ -121,7 +133,7 @@ session has a table of all its currently known methods).
 In this document \dQuote{methods for a class} as opposed to
 \dQuote{methods for a function} will make the distinction.
 
-Objects in this programming model usually have named fields on which
+Objects in this paradigm usually have named fields on which
 the methods operate.
 In the \R implementation, the fields are defined when the class is
 created.
@@ -135,58 +147,29 @@ inter-system interface.
 The interface will usually supply the accessor functions automatically
 based on the definition of the corresponding class in the other language.
 
-Fields in this programming model are accessed by reference.
+Fields are accessed by reference.
 In particular, invoking a method may modify the content of
 the fields.
 
 Programming for such classes involves writing new methods for a
 particular class.
-In the \R implementation, these methods are \R functions, optionally
-with additional arguments.
+In the \R implementation, these methods are \R functions, with zero or
+more formal arguments.
 The object on which the methods are invoked is not an explicit
 argument to the method.
 Instead, fields and methods for the class can be referred to by name
 in the method definition.
 The implementation uses \R environments to make fields and methods
 available by name.
-A few additional special names allow reference to the complete object,
-to its class and to the definition of the class.
+Additional special fields allow reference to the complete object and
+to the definition of the class.  See the section on \dQuote{Inheritance}.
 
 The goal of the software described here is to provide a uniform
-programming style in \R to deal with such software, whether it is
-implemented directly in \R or through an interface to one of the other
+programming style in \R for software dealing with reference classes, whether
+implemented directly in \R or through an interface to one of the OOP
 languages.
 }
 
-% \section{Fields and Reference Methods}{
-% All the widely used languages implementing reference methods provide
-% for named \dQuote{pieces} of an object.
-% The term for these pieces varies with the language; in the \R
-% implementations they will be called \emph{fields}.
-% In many languages, a field is accessed by using the operator
-% \code{"."}, but this is not available to us in \R because the
-% character can be part of a name (blame it on the Unix system whose
-% convention of starting hidden files with \code{"."} was taken over in
-% S).
-
-% Instead, and rather than introduce yet another operator into the
-% grammar, we use the \code{$} operator, %$
-% as has been done in a number of related \R packages, including
-% inter-system interfaces to languages such as Java and C++.
-% A field is extracted by this operator and modified by the operator
-% appearing on the left of an assignment.
-% In terms of implementation, any class representing reference objects
-% of this form will have or inherit methods for \code{"$"} and
-% \code{"$<-"}.
-% Objects from reference classes will inherit
-% these methods from a basic reference class, either using \R (the
-% standard being class \linkS4class{envRefClass}) or interfacing to
-% another system.
-
-% Similarly, a reference method is invoked on an object using the \code{$}
-% operator.  To invoke a reference method \code{undo} on an object \code{x},
-% call \code{x$undo()}.
-% }
 
 \section{Writing Reference Methods}{
 Reference methods are functions supplied as elements of a named list,
@@ -228,11 +211,14 @@ discussed in the next section.
 
 Documentation for the methods can be obtained by the \code{$help} %$}
 method for the generator object.
-Self-documentation can be included in method definitions.
+Methods for classes are not documented in the \code{Rd} format used
+for \R functions.
+Instead, the \code{$help} %$}
+method prints the calling sequence of the method, followed by
+self-documentation from the method definition, in the style of Python.
 If the first element of the body of the method is a literal character
-vector object, that vector is interpreted as documentation and printed
-by the help method.
-See the methods in the example.
+string (possibly multi-line), that string is interpreted as documentation.
+See the method definitions in the example.
 }
 \section{Inheritance}{
 Reference classes inherit from other reference classes by using the
@@ -259,14 +245,67 @@ way as directly specified methods.
 
 A method may override a method of the same name in a superclass.
 The overriding method can call the superclass method by 
-\code{callSuper(...)}.
+\code{callSuper(...)} as described below.
+
+All reference classes inheit from the class \code{"envRefClass"},
+including the following methods.
+
+\describe{
+\item{\code{$callSuper(...)}}{ %$
+Calls the method inherited from a reference superclass.
+The call is meaningful only from within another method, and will be
+resolved to call the inherited method of the same name.
 The arguments to \code{$callSuper} %$}
 are passed to the superclass version.
-See the matrix viewer example below.
+See the matrix viewer class in the example.
+
 Note that the intended arguments for the superclass method must be
 supplied explicitly; there is no convention for supplying the
 arguments automatically, in contrast to the similar mechanism for
 functional methods.
+}
+
+\item{\code{$export(Class)}}{ %$
+Returns the result of coercing the object to \code{Class} (typically
+one of the superclasses of the object's class).  Calling the method
+has no side effect on the object itself.
+}
+
+\item{\code{$import(value, Class = class(value))}}{ %$
+Import the object \code{value} into the current object, replacing the
+corresponding fields in the current object.
+Object \code{value} must come from one of the superclasses of the
+current object's class.
+If argument \code{Class} is supplied, \code{value} is first coerced to
+that class.
+}
+
+\item{\code{$initFields(...)}}{ %$
+Initialize the fields of the object from the supplied arguments.  This
+method is usually only called from a class with a \code{$initialize()}% $
+method.  It corresponds to the default initialization for reference
+classes.  If there are slots and non-reference superclasses, these may
+be supplied in the \dots argument as well.
+
+Typically, a specialized \code{$initialize()}% $
+method carries out its own computations, then invokes \code{$initFields()}% $
+to perform standard initialization, as shown in the
+\code{matrixViewer} class in the example below.
+}
+} % end describe
+
+Objects also inherit two reserved fields:
+\describe{
+\item{\code{.self}}{
+a reference to the entire object;
+}
+\item{\code{.refClassDef}}{
+the class definition.
+}
+} % end \describe
+The defined fields should not override these, and in general it is
+unwise to define a field whose name begins with \code{"."}, since the
+implementation may use such names for special purposes.
 
 }
 
@@ -287,6 +326,18 @@ The currently available methods are:
 This method is equivalent to the function \code{\link{new}} with the
 class name as an argument.  The \dots arguments are values for the
 named fields.
+If the class has a method defined for \code{$initialize(...)}, %$
+this method will be called once the reference object has been
+created.  You should write such a method for a class that needs to do
+some special initialization.
+In particular, a reference method is recommended rather than a method
+for the S4 generic function, because some special initialization is
+required for reference objects \emph{before} the initialization of fields.
+
+In the absence of a method for \code{intialize}, a computation
+equivalent to invoking the method \code{$initFields(...)} %$
+will take place.  It is possible (and usually a good idea) to invoke
+this method from within a special initialization method.
 }
 \item{\code{$help(topic)}}{ %$
 Prints brief help on the topic.  The topics recognized
@@ -297,7 +348,7 @@ self-documentation if any.
 Reference methods can have an initial character string or vector as
 the first element in the body of the function defining the method.
 If so, this string is taken as self-documentation for the method (see
-the section on Writing Reference Methods for details.
+the section on \dQuote{Writing Reference Methods} for details).
 
 If no topic is given or if the topic is not a method name, the
 definition of the class is printed.
@@ -375,36 +426,29 @@ Inside a method, a field can be assigned by an expresion of the form
 Note the \link[=assignOps]{non-local assignment} operator.
 The standard \R interpretation of this operator works to assign it in
 the environment of the object.
-Fields with accessor functions will call this function via the active
-binding mechanism in all cases.
+If the field has an accessor function defined, getting and setting
+will call that function.
 
-When a method is invoked on an object, the corresponding function is
-installed in the environment, with the object's environment as the
+When a method is invoked on an object, the function defining the method is
+installed in the object's environment, with the same environment as the
 environment of the function.
-In addition, the object's environment has the following special
-pseudo-fields:
-\describe{
-\item{\code{.self}}{
-a reference to the entire object;
-}
-\item{\code{.refClassDef}}{
-the class definition.
-}
-} % end \describe
+
 }
 
 \section{Inter-System Interfaces}{
-A number of \R packages currently support interfaces to other
-languages using a similar reference-based programming model.
+A number of 
+languages use a similar reference-based programming model with classes
+and class-based methods.
 Aside from differences in choice of terminology and other details,
-many of these are largely compatible with the programming style
+many of these languages are compatible with the programming style
 described here.
+\R interfaces to the languages exist in a number of packages.
 
-The reference class definitions defined here provide a hook for
-methods defined in the interface to be made available in \R.
+The reference class definitions here provide a hook for
+methods defined in the interface to used and extended in \R.
 Access to fields and/or methods in the foreign language can be
-implemented by defining an \R reference class corresponding to each
-class made available through the interface.
+implemented by defining an \R reference class corresponding to
+classes made available through the interface.
 Typically, the inter-system interface will take care of the details of
 such methods, given a description of the foreign class (what fields
 and methods it has, the classes for the fields, whether any are
@@ -412,7 +456,7 @@ read-only, etc.)
 The specifics for the fields and methods can be implemented via
 reference methods for the \R class.
 In particular, the use of active bindings allows field access for
-getting and setting to follow the standard model described here, with
+getting and setting, with
 actual access handled by the inter-system interface.
 
 \R methods and/or fields can be included in the class definition as for any
@@ -426,7 +470,7 @@ For an inter-system interface using this approach, see the code for package \cod
 itself a reference object, with methods to generate objects from the
 class and also for defining new methods and for help-style
 documentation. See the
-section on generator objects for details.
+section on \dQuote{Reference Class Generator Objects} for details.
 
 \code{setRefClass} defines the class and stores its class definition.
 \code{getRefClass} requires that the class has been defined as a
@@ -504,24 +548,39 @@ unlink(tf)
 stopifnot(identical(xx$data, .self$data))
 }
 
+\dontrun{
 ## Inheriting a reference class:  a matrix viewer
-mv <- setRefClass("matrixViewer", contains = "matrixEditor",
-    methods = list( view = function() matplot(data),
+mv <- setRefClass("matrixViewer", 
+    fields = c("viewerDevice", "viewerFile"),
+    contains = "matrixEditor",
+    methods = list( view = function() {
+        dd <- dev.cur(); dev.set(viewerDevice)
+        devAskNewPage(FALSE)
+        matplot(data, main = paste("After",length(edits),"edits"))
+        dev.set(dd)},
         edit = # invoke previous method, then replot
           function(i, j, value) {
             callSuper(i, j, value)
             view()
           }))
 
-\dontshow{
-ff = new("matrixViewer", data = xMat)
-ff$edit(2,2,0)
-ff$data
-ff$undo()
-stopifnot(all.equal(ff$data, xMat))
-removeClass("matrixEditor")
-removeClass("matrixViewer")
+## initialize and finalize methods
+mv$methods( initialize = function(...) {
+    viewerFile <<- "./matrixView.pdf"
+    pdf(viewerFile)
+    viewerDevice <<- dev.cur()
+    dev.set(dev.prev())
+    initFields(...)
+  },
+  finalize = function() {
+    dev.off(viewerDevice)
+  })
 }
+\dontshow{
+removeClass("matrixEditor")
+resetGeneric("$")
+resetGeneric("initialize")
+} %$
 }
 \keyword{ programming }
 \keyword{ classes }
