@@ -39,6 +39,11 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 # include <config.h>
 #endif
 
+#ifdef WIN32
+#include <psignal.h>
+/* on some systems needs to be included before <sys/types.h> */
+#endif
+
 #include <stdio.h>
 #include <limits.h> /* for PATH_MAX */
 #include <string.h>
