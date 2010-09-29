@@ -4597,7 +4597,7 @@ collected from the files at
 @url{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
 @example
-binutils-2.20.1-2-mingw32-bin.tar.gz
+binutils-2.20.51-1-mingw32-bin.tar.lzma
 gcc-c++-4.5.0-1-mingw32-bin.tar.lzma
 gcc-core-4.5.0-1-mingw32-bin.tar.lzma
 gcc-fortran-4.5.0-1-mingw32-bin.tar.lzma
@@ -4609,7 +4609,7 @@ libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
 libssp-4.5.0-1-mingw32-dll-0.tar.lzma
 mingwrt-3.18-mingw32-dev.tar.gz
 mingwrt-3.18-mingw32-dll.tar.gz
-w32api-3.14-mingw32-dev.tar.gz
+w32api-3.15-1-mingw32-dev.tar.lzma
 @end example
 
 with the import libraries in @file{lib/gcc/mingw32/4.5.0} moved to a
@@ -4636,10 +4636,9 @@ Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages
 unless @option{--no-test-load} is used.}  This comes from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100702.zip}.
+and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip}.
 However, this has been patched to use static Fortran and C++ runtime
-libraries and to correct some header files: a suitable toolchain can be
-found at
+libraries: a suitable toolchain can be found at
 @url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/Win64No_toolchain.zip}.
 
 @strong{NB:} toolchains from late April 2010 on at that site generate
