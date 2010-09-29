@@ -1436,31 +1436,43 @@ static int clipTextCode(double x, double y, const char *str, cetype_t enc,
     double length, theta2;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
+    double widthInches, heightInches, xInches, yInches;
 
     if (!R_FINITE(width)) width = GEStrWidth(str, enc, gc, dd);
     if (!R_FINITE(height)) height = GEStrHeight(str, enc, gc, dd);
-#ifdef HAVE_HYPOT
-    length = hypot(width, height);
-#else
-    length = pythag(width, height);
-#endif
-    theta2 = angle + atan2(height, width);
 
-    x -= hadj*width*cos(angle);
-    y -= hadj*width*sin(angle);
-    x0 = x + height*cos(theta1);
+    /* Work in inches */
+    widthInches = fromDeviceWidth(width, GE_INCHES, dd);
+    heightInches = fromDeviceHeight(height, GE_INCHES, dd);
+    xInches = fromDeviceX(x, GE_INCHES, dd);
+    yInches = fromDeviceY(y, GE_INCHES, dd);
+
+#ifdef HAVE_HYPOT
+    length = hypot(widthInches, heightInches);
+#else
+    length = pythag(widthInches, heightInches);
+#endif
+    theta2 = angle + atan2(heightInches, widthInches);
+
+    x  = xInches - hadj*widthInches*cos(angle);
+    y  = yInches - hadj*widthInches*sin(angle);
+    x0 = x + heightInches*cos(theta1);
     x1 = x;
     x2 = x + length*cos(theta2);
-    x3 = x + width*cos(angle);
-    y0 = y + height*sin(theta1);
+    x3 = x + widthInches*cos(angle);
+    y0 = y + heightInches*sin(theta1);
     y1 = y;
     y2 = y + length*sin(theta2);
-    y3 = y + width*sin(angle);
+    y3 = y + widthInches*sin(angle);
     left = fmin2(fmin2(x0, x1), fmin2(x2, x3));
     right = fmax2(fmax2(x0, x1), fmax2(x2, x3));
     bottom = fmin2(fmin2(y0, y1), fmin2(y2, y3));
     top = fmax2(fmax2(y0, y1), fmax2(y2, y3));
-    return clipRectCode(left, bottom, right, top, toDevice, dd);
+    return clipRectCode(toDeviceX(left, GE_INCHES, dd),
+                        toDeviceY(bottom, GE_INCHES, dd),
+                        toDeviceX(right, GE_INCHES, dd),
+                        toDeviceY(top, GE_INCHES, dd), 
+                        toDevice, dd);
 }
 
 static void clipText(double x, double y, const char *str, cetype_t enc,
