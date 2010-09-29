@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-#### R based engine for R CMD check
+###- R based engine for R CMD check
 
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "")
@@ -25,14 +25,20 @@ run_Rcmd <- function(args, out = "")
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out)
 }
 
+##' @title R executable (full PATH) for windows (as the name suggests)
+##' @param arch
+##' @return
+.R_EXE <- function(arch) {
+    if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+    else file.path(R.home("bin"), "Rterm.exe")
+}
+
 R_runR <- function(cmd, Ropts = "", env = "", arch = "")
 {
     if (.Platform$OS.type == "windows") {
-        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-        else file.path(R.home("bin"), "Rterm.exe")
         ## workaround Windows problem with input = cmd
         Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
-        system2(R_EXE, c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
+        system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -45,9 +51,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
 {
     Rout <- tempfile("Rout")
     if (.Platform$OS.type == "windows") {
-        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-        else file.path(R.home("bin"), "Rterm.exe")
-        status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
+        status <- system2(.R_EXE(arch), Ropts, Rout, Rout, input = cmd, env = env)
     } else {
         status <- system2(file.path(R.home("bin"), "R"),
                           c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -56,6 +60,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
     list(status = status, out = readLines(Rout, warn = FALSE))
 }
 
+###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -1216,8 +1221,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- if (WINDOWS)
-                system2(if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe") else file.path(R.home("bin"), "Rterm.exe"),
-                        c(Ropts, enc),
+                system2(.R_EXE(arch), c(Ropts, enc),
                         exout, exout, exfile, env = "LANGUAGE=en")
             else
                 system2(file.path(R.home("bin"), "R"),
@@ -2014,8 +2018,6 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         } else resultLog(Log, "OK")
     }
 
-    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
-
     .file_test <- function(op, x)
         switch(op,
                "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
@@ -2088,6 +2090,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
+
+###--- begin{.check_packages()} "main" ---
 
     options(showErrorCalls=FALSE, warn = 1)
 
@@ -2489,9 +2493,11 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                         inst_archs <- inst_archs[inst_archs %in% archs]
                         if (!identical(inst_archs, archs)) {
                             if (length(inst_archs) > 1)
-                                printLog(Log, "NB: this package is only installed for sub-architectures ", paste(sQuote(inst_archs), collapse=", "), "\n")
-                            else {
-                                printLog(Log, "NB: this package is only installed for sub-architecture ", sQuote(inst_archs), "\n")
+				printLog(Log, "NB: this package is only installed for sub-architectures ",
+					 paste(sQuote(inst_archs), collapse=", "), "\n")
+			    else {
+				printLog(Log, "NB: this package is only installed for sub-architecture ",
+					 sQuote(inst_archs), "\n")
                                 if(inst_archs == .Platform$r_arch)
                                     this_multiarch <- FALSE
                             }
@@ -2520,3 +2526,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
     } ## end for (pkg in pkgs)
 
 } ## end{ .check_packages }
+
+### Local variables:
+### mode: R
+### page-delimiter: "^###[#-]"
+### End:
