@@ -509,6 +509,9 @@
       \file{doc/NEWS.Rd}.
 
       \item The \code{popen} system call is now required to build \R.
+
+      \item The \command{pkg-config} file \file{libR.pc} now also works
+      when \R is installed using a sub-architecture.
     }
   }
   \subsection{BUG FIXES}{
