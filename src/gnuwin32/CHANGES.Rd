@@ -41,6 +41,10 @@
        \item \code{system(intern = FALSE)} now return \code{127} (the
        same as Unix-alikes) rather than \code{-1} if the command cannot
        be run, and (like Unix-alikes) no longer gives a warning.
+
+       \item \command{Rscript -e} and similar use a temporary file, and
+       now work harder to ensure that filename is not the same as some
+       other simultaneous \R process.
     }
   }
   \subsection{INSTALLATION}{
