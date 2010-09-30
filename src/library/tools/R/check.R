@@ -1139,7 +1139,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
     {
         checkingLog(Log, "whether the package can be loaded")
         Rcmd <- sprintf("library(%s)", pkgname)
-        out <- R_runR(Rcmd, if(nzchar(arch)) R_opts4 else R_opts2, arch = arch)
+        opts <- if(nzchar(arch)) R_opts4 else R_opts2
+        out <- R_runR(Rcmd, opts, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1150,7 +1151,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+        out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
         if (any(grepl("^Error", out))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1164,7 +1165,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+        out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
             warnLog()
             ll <- grep("---- unloading", out)
@@ -1180,7 +1181,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "whether the name space can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+            out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
             if (any(grepl("^Error", out))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1198,8 +1199,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
-                R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
-            else R_runR(Rcmd, R_opts2)
+                R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+            else R_runR(Rcmd, opts)
             if (any(grepl("^(Error|\\.onUnload failed)", out))) {
                 warnLog()
                 ll <- grep("---- unloading", out)
