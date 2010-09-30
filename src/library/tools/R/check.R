@@ -46,7 +46,7 @@ R_runR <- function(cmd, Ropts = "", env = "", arch = "")
     }
 }
 
-## used for .createDotR and to run tests
+## used for .createDotR
 R_run_R <- function(cmd, Ropts, env = "", arch = "")
 {
     Rout <- tempfile("Rout")
@@ -1369,11 +1369,20 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")", sep = "")
-            res <- R_run_R(cmd,
-                           if(nzchar(arch)) R_opts4 else R_opts2,
-                           env = "LANGUAGE=en", arch = arch)
-            writeLines(res$out)
-            if (res$status) {
+            status <- if (.Platform$OS.type == "windows") {
+                Rin <- tempfile("Rin"); on.exit(unlink(Rin))
+                writeLines(cmd, Rin)
+                system2(.R_EXE(arch),
+                        c(if(nzchar(arch)) R_opts4 else R_opts2,
+                          paste("-f", Rin)),
+                        env = "LANGUAGE=en")
+            } else
+                system2(file.path(R.home("bin"), "R"),
+                        c(if(nzchar(arch)) paste("--arch=", arch, sep = ""),
+                          if(nzchar(arch)) R_opts4 else R_opts2),
+                        input = cmd,
+                        env = "LANGUAGE=en")
+            if (status) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
                 ## First, find the test which failed.
@@ -1598,23 +1607,23 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             any(grepl("^(file-[45]|magic file from)", lines))
         if (have_free_file) {
             checkingLog(Log, "for executable files")
-            execs <- character()
-            for (f in allfiles) {
-                ## watch out for spaces in file names here
-                line <- suppressWarnings(system2("file", shQuote(f), TRUE, TRUE))
-                ## Some versions of 'file' put out information lines
-                ## The result line is usually the last.
-                ex <- grepl("executable", line, useBytes=TRUE)
-                ex2 <- grepl("script text", line, useBytes=TRUE)
-                if (any(ex & !ex2)) execs <- c(execs, f)
-            }
-            known <- rep(FALSE, length(execs))
-            pexecs <- file.path(pkgname, execs)
-            for(fp in  c("foreign/tests/datefactor.dta",
-                         "msProcess/inst/data[12]/.*.txt",
-                         "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
-                known <- known | grepl(fp, pexecs)
-            execs <- execs[!known]
+            ## watch out for spaces in file names here
+            ## do in parallel for speed on Windows
+            lines <- suppressWarnings(system2("file", shQuote(allfiles), TRUE, TRUE))
+            ex <- grepl("executable", lines, useBytes=TRUE)
+            ex2 <- grepl("script text", lines, useBytes=TRUE)
+            lines <- lines[ex & !ex2]
+            execs <- if(length(lines)) {
+                execs <- sub(":[[:space:]].*$", "", lines, useBytes = TRUE)
+                known <- rep(FALSE, length(execs))
+                pexecs <- file.path(pkgname, execs)
+                ## known false positives
+                for(fp in  c("foreign/tests/datefactor.dta",
+                             "msProcess/inst/data[12]/.*.txt",
+                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
+                    known <- known | grepl(fp, pexecs)
+                execs[!known]
+            } else character()
         } else {
             ## no 'file', so just check extensions
             checkingLog(Log, "for .dll and .exe files")
