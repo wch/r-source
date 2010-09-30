@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:28+0100\n"
+"POT-Creation-Date: 2010-09-30 13:37+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -483,8 +483,8 @@ msgstr ""
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:547
+#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1022
+#: src/gnuwin32/system.c:1034 src/main/connections.c:547
 #: src/main/connections.c:552 src/main/dounzip.c:114 src/main/saveload.c:1948
 #: src/main/serialize.c:2111 src/main/serialize.c:2116
 #: src/main/serialize.c:2197 src/main/serialize.c:2242 src/unix/system.c:312
@@ -498,58 +498,58 @@ msgstr ""
 msgid "file.show(): file '%s' does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:986
+#: src/gnuwin32/system.c:985
 msgid "WARNING: no max-mem-size given\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:991
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:993
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:998
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1046 src/unix/system.c:342
+#: src/gnuwin32/system.c:1045 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1050 src/unix/system.c:356
+#: src/gnuwin32/system.c:1049 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1072 src/unix/system.c:360
+#: src/gnuwin32/system.c:1071 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1078 src/unix/system.c:367
+#: src/gnuwin32/system.c:1077 src/unix/system.c:367
 msgid "cannot use -e with -f or --file"
 msgstr ""
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1097
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:417
+#: src/gnuwin32/system.c:1116 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1121
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -597,15 +597,15 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:242
-msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
+msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:244
-msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
+msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
 msgstr ""
 
 #: src/main/RNG.c:140
@@ -1266,7 +1266,7 @@ msgstr ""
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2851
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1668 src/main/envir.c:1735
 #: src/main/envir.c:1856 src/main/envir.c:2529 src/main/envir.c:2589
@@ -1675,7 +1675,7 @@ msgstr "unknown palette (need >= 2 colours)"
 msgid "maximum number of colors exceeded"
 msgstr "maximum number of colours exceeded"
 
-#: src/main/colors.c:1319 src/main/engine.c:2978
+#: src/main/colors.c:1319 src/main/engine.c:2990
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
@@ -2818,78 +2818,78 @@ msgstr ""
 msgid "Invalid graphics path"
 msgstr ""
 
-#: src/main/engine.c:1608
+#: src/main/engine.c:1620
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 
-#: src/main/engine.c:1920
+#: src/main/engine.c:1932
 msgid "no graphics device is active"
 msgstr ""
 
-#: src/main/engine.c:1998
+#: src/main/engine.c:2010
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: src/main/engine.c:2255
+#: src/main/engine.c:2267
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: src/main/engine.c:2278
+#: src/main/engine.c:2290
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr ""
 
-#: src/main/engine.c:2282
+#: src/main/engine.c:2294
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
-#: src/main/engine.c:2320
+#: src/main/engine.c:2332
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ""
 
-#: src/main/engine.c:2322
+#: src/main/engine.c:2334
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ""
 
-#: src/main/engine.c:2651
+#: src/main/engine.c:2663
 msgid "Display list redraw incomplete"
 msgstr ""
 
-#: src/main/engine.c:2835
+#: src/main/engine.c:2847
 msgid "'expr' argument must be an expression"
 msgstr ""
 
-#: src/main/engine.c:2837
+#: src/main/engine.c:2849
 msgid "'list' argument must be a list"
 msgstr ""
 
-#: src/main/engine.c:2843
+#: src/main/engine.c:2855
 msgid "'env' argument must be an environment"
 msgstr ""
 
-#: src/main/engine.c:2865 src/main/graphics.c:2395
+#: src/main/engine.c:2877 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr ""
 
-#: src/main/engine.c:2923 src/main/engine.c:2931
+#: src/main/engine.c:2935 src/main/engine.c:2943
 msgid "invalid multibyte char in pch=\"c\""
 msgstr ""
 
-#: src/main/engine.c:3001
+#: src/main/engine.c:3013
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/engine.c:3005
+#: src/main/engine.c:3017
 msgid "invalid line type: zeroes are not allowed"
 msgstr ""
 
-#: src/main/engine.c:3014 src/main/engine.c:3022 src/main/engine.c:3029
+#: src/main/engine.c:3026 src/main/engine.c:3034 src/main/engine.c:3041
 msgid "invalid line type"
 msgstr ""
 

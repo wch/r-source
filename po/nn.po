@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:28+0100\n"
+"POT-Creation-Date: 2010-09-30 13:37+0100\n"
 "PO-Revision-Date: 2010-09-26 10:06+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -485,8 +485,8 @@ msgstr "kjenner ikkje teiknkodinga «%s»"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<FEIL: Feil ved omkoding frå teiknkodinga «%s»>\n"
 
-#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:547
+#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1022
+#: src/gnuwin32/system.c:1034 src/main/connections.c:547
 #: src/main/connections.c:552 src/main/dounzip.c:114 src/main/saveload.c:1948
 #: src/main/serialize.c:2111 src/main/serialize.c:2116
 #: src/main/serialize.c:2197 src/main/serialize.c:2242 src/unix/system.c:312
@@ -500,62 +500,62 @@ msgstr "klarte ikkje opna fila «%s»: %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): fila «%s» finst ikkje\n"
 
-#: src/gnuwin32/system.c:986
+#: src/gnuwin32/system.c:985
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ÅTVARING: ingen «max-mem-size» vald\n"
 
-#: src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:991
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ÅTVARING: «--max-mem-size»-verdien er ugyldig, og vert ikkje brukt\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:993
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr ""
 "ÅTVARING: «--max-mem-size=%lu%c»-verdien er for høg, og vert ikkje brukt\n"
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:998
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr ""
 "ÅTVARING: «--max-mem-size=%4.1fM»-verdien er for låg, og vert ikkje brukt\n"
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr ""
 "ÅTVARING: «--max-mem-size=%4.0fM»-verdien er for låg, og %uM vert brukt i "
 "staden for\n"
 
-#: src/gnuwin32/system.c:1046 src/unix/system.c:342
+#: src/gnuwin32/system.c:1045 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "ÅTVARING: «-e %s»-argumentet utelate, sidan inndata er for stor\n"
 
-#: src/gnuwin32/system.c:1050 src/unix/system.c:356
+#: src/gnuwin32/system.c:1049 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ÅTVARING: ukjent val («%s»)\n"
 
-#: src/gnuwin32/system.c:1072 src/unix/system.c:360
+#: src/gnuwin32/system.c:1071 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTET «%s» __ikkje brukt__\n"
 
-#: src/gnuwin32/system.c:1078 src/unix/system.c:367
+#: src/gnuwin32/system.c:1077 src/unix/system.c:367
 msgid "cannot use -e with -f or --file"
 msgstr "kan ikkje bruka «-e» med «-f» eller «--file»"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1097
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "klarte ikkje lagra «tmpfile». Prøv å definera «TMPDIR»."
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:417
+#: src/gnuwin32/system.c:1116 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "du må velja «--save», «--no-save» eller «--vanilla»"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1121
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -604,15 +604,18 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "ÅTVARING: ingen verdi vald for «--max-ppsize»\n"
 
 #: src/main/CommandLineArgs.c:242
-msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
 msgstr "ÅTVARING: «-max-ppsize»-verdien er negativ, og vert ikkje brukt\n"
 
 #: src/main/CommandLineArgs.c:244
-msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
 msgstr "ÅTVARING: «-max-ppsize»-verdien er for låg, og vert ikkje brukt\n"
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
 msgstr "ÅTVARING: «-max-ppsize»-verdien er for høg, og vert ikkje brukt\n"
 
 #: src/main/RNG.c:140
@@ -1293,7 +1296,7 @@ msgstr "den oppgjevne vektorstorleiken er for stor"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2851
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1668 src/main/envir.c:1735
 #: src/main/envir.c:1856 src/main/envir.c:2529 src/main/envir.c:2589
@@ -1711,7 +1714,7 @@ msgstr "ukjend palett (treng minst 2 fargar)"
 msgid "maximum number of colors exceeded"
 msgstr "meir enn maks tal på fargar brukt"
 
-#: src/main/colors.c:1319 src/main/engine.c:2978
+#: src/main/colors.c:1319 src/main/engine.c:2990
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "ugyldig heksadesimal-siffer i «color» eller «lty»"
 
@@ -2872,78 +2875,78 @@ msgstr "ikkje nok minne til klipping av polylinje"
 msgid "Invalid graphics path"
 msgstr "Ugyldig grafikkstig"
 
-#: src/main/engine.c:1608
+#: src/main/engine.c:1620
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "skriftsnittet «%d» er ikkje støtta for skrifta «%s»"
 
-#: src/main/engine.c:1920
+#: src/main/engine.c:1932
 msgid "no graphics device is active"
 msgstr "ingen verksame grafikkeiningar"
 
-#: src/main/engine.c:1998
+#: src/main/engine.c:2010
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "pch-verdien «%d» er ugyldig i dette lokalet"
 
-#: src/main/engine.c:2255
+#: src/main/engine.c:2267
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "ikkje-implementert pch-verdi «%d»"
 
-#: src/main/engine.c:2278
+#: src/main/engine.c:2290
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "ugyldig aksestorleik [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2282
+#: src/main/engine.c:2294
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "uendeleg aksestorleik [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2320
+#: src/main/engine.c:2332
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo = %g < %g = x1"
 
-#: src/main/engine.c:2322
+#: src/main/engine.c:2334
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up = %g > %g = x2"
 
-#: src/main/engine.c:2651
+#: src/main/engine.c:2663
 msgid "Display list redraw incomplete"
 msgstr "Ufullstendig oppteikning av visingsliste"
 
-#: src/main/engine.c:2835
+#: src/main/engine.c:2847
 msgid "'expr' argument must be an expression"
 msgstr "«expr»-argumentet må vera eit uttrykk"
 
-#: src/main/engine.c:2837
+#: src/main/engine.c:2849
 msgid "'list' argument must be a list"
 msgstr "«list»-argumentet må vera ei liste"
 
-#: src/main/engine.c:2843
+#: src/main/engine.c:2855
 msgid "'env' argument must be an environment"
 msgstr "«env»-argumentet må vera ein omgjevnad"
 
-#: src/main/engine.c:2865 src/main/graphics.c:2395
+#: src/main/engine.c:2877 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr "ugyldig grafikktilstand"
 
-#: src/main/engine.c:2923 src/main/engine.c:2931
+#: src/main/engine.c:2935 src/main/engine.c:2943
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "ugyldig multibyte-teikn i pch=\"c\""
 
-#: src/main/engine.c:3001
+#: src/main/engine.c:3013
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "ugyldig linjetype: må ha lengd 2,4 6 eller 8"
 
-#: src/main/engine.c:3005
+#: src/main/engine.c:3017
 msgid "invalid line type: zeroes are not allowed"
 msgstr "ugyldig linjetype: nullar er ikkje tilletne"
 
-#: src/main/engine.c:3014 src/main/engine.c:3022 src/main/engine.c:3029
+#: src/main/engine.c:3026 src/main/engine.c:3034 src/main/engine.c:3041
 msgid "invalid line type"
 msgstr "ugyldig linjetype"
 
