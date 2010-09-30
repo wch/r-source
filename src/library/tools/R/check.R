@@ -1592,7 +1592,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
         ## version 4.21 writes to stdout, 4.23 to stderr
         ## and sets an error status code
-        lines <- suppressWarnings(system2("file", "--version", TRUE, TRUE))
+        lines <- suppressWarnings(tryCatch(system2("file", "--version", TRUE, TRUE), error = function(e) "error"))
         ## a reasonable check -- it does not identify itself well
         have_free_file <-
             any(grepl("^(file-[45]|magic file from)", lines))
