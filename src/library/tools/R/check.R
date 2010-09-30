@@ -25,14 +25,20 @@ run_Rcmd <- function(args, out = "")
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out)
 }
 
+##' @title R executable (full PATH) for windows (as the name suggests)
+##' @param arch
+##' @return
+.R_EXE <- function(arch) {
+    if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+    else file.path(R.home("bin"), "Rterm.exe")
+}
+
 R_runR <- function(cmd, Ropts = "", env = "", arch = "")
 {
     if (.Platform$OS.type == "windows") {
-        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-        else file.path(R.home("bin"), "Rterm.exe")
         ## workaround Windows problem with input = cmd
         Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
-        system2(R_EXE, c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
+        system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -45,9 +51,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
 {
     Rout <- tempfile("Rout")
     if (.Platform$OS.type == "windows") {
-        R_EXE <- if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
-        else file.path(R.home("bin"), "Rterm.exe")
-        status <- system2(R_EXE, Ropts, Rout, Rout, input = cmd, env = env)
+        status <- system2(.R_EXE(arch), Ropts, Rout, Rout, input = cmd, env = env)
     } else {
         status <- system2(file.path(R.home("bin"), "R"),
                           c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -1217,8 +1221,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- if (WINDOWS)
-                system2(if (nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe") else file.path(R.home("bin"), "Rterm.exe"),
-                        c(Ropts, enc),
+                system2(.R_EXE(arch), c(Ropts, enc),
                         exout, exout, exfile, env = "LANGUAGE=en")
             else
                 system2(file.path(R.home("bin"), "R"),
@@ -2024,8 +2027,6 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         } else resultLog(Log, "OK")
     }
 
-    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
-
     .file_test <- function(op, x)
         switch(op,
                "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
@@ -2288,7 +2289,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE"))
     R_check_Rd_contents <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
-    R_check_ascii_code <- 
+    R_check_ascii_code <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
@@ -2304,7 +2305,7 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
-                    R_check_dot_internal <- R_check_ascii_code <- 
+                    R_check_dot_internal <- R_check_ascii_code <-
                     	R_check_ascii_data <- FALSE
 
     startdir <- getwd()
@@ -2327,8 +2328,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
     ## do run Renviron[.site] for some multiarch runs
-    R_opts3 <- "--no-site-file --no-init-file --no-restore --no-save --no-restore"
-    R_opts4 <- "--no-site-file --no-init-file --no-restore --no-save --no-restore --slave"
+    R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
+    R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
