@@ -208,6 +208,8 @@ envRefSetField <- function(object, field,
     ## assign references to the object and to its class definition
     assign(".self", .Object, envir = selfEnv)
     assign(".refClassDef", classDef, envir = selfEnv)
+    if(is.function(classDef@refMethods$finalize))
+        reg.finalizer(selfEnv, function(x) x$.self$finalize())
     if(is.function(classDef@refMethods$initialize))
         .Object$initialize(...)
     else {

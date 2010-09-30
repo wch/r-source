@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-09-26 r53002)
+R version 2.13.0 Under development (unstable) (2010-09-28 r53054)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-09-26 15:35:32 PDT" "2010-09-26 15:35:32 PDT"
+[1] "2010-09-29 09:13:08 PDT" "2010-09-29 09:13:08 PDT"
 
 > 
 > 
@@ -1319,7 +1319,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x102a24ab0>
+<environment: 0x100bbb548>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1898,31 +1898,42 @@ Undoes the last edit() operation
 > stopifnot(identical(xx$data, .self$data))
 > ## End Don't show
 > 
-> ## Inheriting a reference class:  a matrix viewer
-> mv <- setRefClass("matrixViewer", contains = "matrixEditor",
-+     methods = list( view = function() matplot(data),
-+         edit = # invoke previous method, then replot
-+           function(i, j, value) {
-+             callSuper(i, j, value)
-+             view()
-+           }))
-> 
+> ## Not run: 
+> ##D ## Inheriting a reference class:  a matrix viewer
+> ##D mv <- setRefClass("matrixViewer", 
+> ##D     fields = c("viewerDevice", "viewerFile"),
+> ##D     contains = "matrixEditor",
+> ##D     methods = list( view = function() {
+> ##D         dd <- dev.cur(); dev.set(viewerDevice)
+> ##D         devAskNewPage(FALSE)
+> ##D         matplot(data, main = paste("After",length(edits),"edits"))
+> ##D         dev.set(dd)},
+> ##D         edit = # invoke previous method, then replot
+> ##D           function(i, j, value) {
+> ##D             callSuper(i, j, value)
+> ##D             view()
+> ##D           }))
+> ##D 
+> ##D ## initialize and finalize methods
+> ##D mv$methods( initialize = function(...) {
+> ##D     viewerFile <<- "./matrixView.pdf"
+> ##D     pdf(viewerFile)
+> ##D     viewerDevice <<- dev.cur()
+> ##D     dev.set(dev.prev())
+> ##D     initFields(...)
+> ##D   },
+> ##D   finalize = function() {
+> ##D     dev.off(viewerDevice)
+> ##D   })
+> ## End(Not run)
 > ## Don't show: 
-> ff = new("matrixViewer", data = xMat)
-> ff$edit(2,2,0)
-> ff$data
-     [,1] [,2] [,3]
-[1,]    1    5    9
-[2,]    2    0   10
-[3,]    3    7   11
-[4,]    4    8   12
-> ff$undo()
-> stopifnot(all.equal(ff$data, xMat))
 > removeClass("matrixEditor")
 [1] TRUE
-> removeClass("matrixViewer")
-[1] TRUE
-> ## End Don't show
+> resetGeneric("$")
+[1] "$"
+> resetGeneric("initialize")
+[1] "initialize"
+> ## End Don't show 
 > 
 > 
 > 
@@ -2885,7 +2896,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x1024fe340>
+<environment: 0x101b7cb40>
 
 Signatures:
         object    
@@ -3234,7 +3245,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.358 0.05 3.409 0 0 
+Time elapsed:  3.311 0.049 3.369 0 0 
 > grDevices::dev.off()
 null device 
           1 
