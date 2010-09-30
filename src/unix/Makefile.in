@@ -73,7 +73,9 @@ install-Rscript:
 ## substitute at install time to allow 'prefix' to be overridden
 install-pc:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
-	-@$(SED) -e "s:@rhome:$(rhome):" -e "s:@rincludedir:$(rincludedir):" \
+	-@$(SED) -e "s:@rhome:$(rhome):" \
+	  -e "s:@rincludedir:$(rincludedir):" \
+	  -e "s:@rarch:$(R_ARCH):" \
 	  -e 's:@libsprivate:$(STATIC_LIBR_PC):' \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
 	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
