@@ -71,6 +71,7 @@
  * single int, which is the signal it handles.
 */
 typedef	void (*sighandler_t)(int nSig);
+/* mingw-w64's sys/types.h also defines this and we want this defn */ 
 #ifndef _SIGSET_T_
 #define	_SIGSET_T_
 typedef int sigset_t;
