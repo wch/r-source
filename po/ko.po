@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:25+0100\n"
+"POT-Creation-Date: 2010-09-30 13:43+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -491,8 +491,8 @@ msgstr "'%s'라고하는 인코딩은 인식할수가 없습니다"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<에러: 인코딩에서 부적절한 입력>"
 
-#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:547
+#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1022
+#: src/gnuwin32/system.c:1034 src/main/connections.c:547
 #: src/main/connections.c:552 src/main/dounzip.c:114 src/main/saveload.c:1948
 #: src/main/serialize.c:2111 src/main/serialize.c:2116
 #: src/main/serialize.c:2197 src/main/serialize.c:2242 src/unix/system.c:312
@@ -506,59 +506,59 @@ msgstr "파일 '%s'를 열수가 없습니다"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 파일'%s'는 존재하지 않습니다\n"
 
-#: src/gnuwin32/system.c:986
+#: src/gnuwin32/system.c:985
 msgid "WARNING: no max-mem-size given\n"
 msgstr "경고: max-mem-size가 주어지고 있지 않습니다\n"
 
-#: src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:991
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "경고:  --max-mem-size 값이 부적절해서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:993
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "경고:  --max-mem-size=%lu'%c'는 너무 커서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:998
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1002
 #, fuzzy, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:1046 src/unix/system.c:342
+#: src/gnuwin32/system.c:1045 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1050 src/unix/system.c:356
+#: src/gnuwin32/system.c:1049 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "경고: 알수 없는 '%s'옵션입니다\n"
 
-#: src/gnuwin32/system.c:1072 src/unix/system.c:360
+#: src/gnuwin32/system.c:1071 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "인수'%s'는 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:1078 src/unix/system.c:367
+#: src/gnuwin32/system.c:1077 src/unix/system.c:367
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "벡터가 non-Vector이지만 길이는 설정할수 없습니다"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1097
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:417
+#: src/gnuwin32/system.c:1116 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'-- save', '--no-save', '--vanilia' 어느쪽이든을 지정해 주십시오"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1121
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -608,15 +608,18 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "경고: '--max-ppsize'값이 주어지고 있지 않습니다\n"
 
 #: src/main/CommandLineArgs.c:242
-msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
 msgstr "경고: '-max-ppsize'값이 negative입니다: 무시되었습니다\n"
 
 #: src/main/CommandLineArgs.c:244
-msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
 msgstr "경고: '-max-ppsize'값이 너무 작습니다: 무시되었습니다\n"
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
 msgstr "경고: '--vsize'값이 너무 큽니다: 무시되었습니다\n"
 
 #: src/main/RNG.c:140
@@ -1315,7 +1318,7 @@ msgstr "지정된 벡터의 사이즈가 너무 깁니다"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2851
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1669 src/main/envir.c:1736
 #: src/main/envir.c:1857 src/main/envir.c:2530 src/main/envir.c:2590
@@ -1746,7 +1749,7 @@ msgstr "알수 없는 팔레트입니다 (2색이상이 필요합니다)"
 msgid "maximum number of colors exceeded"
 msgstr "색의 수가 최대치를 초과해 버렸습니다"
 
-#: src/main/colors.c:1319 src/main/engine.c:2978
+#: src/main/colors.c:1319 src/main/engine.c:2990
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "'color' 또는 'lty'에서 16진수가 부적절합니다"
 
@@ -2938,80 +2941,80 @@ msgstr "polyline를 자르고 있는 동안에 메모리가 전부 소모 되었
 msgid "Invalid graphics path"
 msgstr "무효한 graphics 상태입니다"
 
-#: src/main/engine.c:1608
+#: src/main/engine.c:1620
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "font 페이스 %d는 font 패밀리 '%s'에서 서포트 되어있지 않습니다"
 
-#: src/main/engine.c:1920
+#: src/main/engine.c:1932
 msgid "no graphics device is active"
 msgstr "유효한 graphics 디바이스가 없습니다"
 
-#: src/main/engine.c:1998
+#: src/main/engine.c:2010
 #, fuzzy, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "'pattern'는 현재의 locale에서 부적절합니다"
 
-#: src/main/engine.c:2255
+#: src/main/engine.c:2267
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "pch의 값'%d'는 실제 적용되지 않습니다"
 
-#: src/main/engine.c:2278
+#: src/main/engine.c:2290
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "부적절한 축범위입니다 [GEPretty(..,n=%d)"
 
-#: src/main/engine.c:2282
+#: src/main/engine.c:2294
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "무한하게 축이 펴지고 있습니다 [GEPretty(%g, %g, %d)]"
 
-#: src/main/engine.c:2320
+#: src/main/engine.c:2332
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr "GEPretty(.):  new  * lo = %g < %g = x1"
 
-#: src/main/engine.c:2322
+#: src/main/engine.c:2334
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr "GEPretty(.):  new *up = %g > %g =  x2"
 
-#: src/main/engine.c:2651
+#: src/main/engine.c:2663
 msgid "Display list redraw incomplete"
 msgstr "디스플레이 리스트가 불완전하게 재묘화 되었습니다"
 
-#: src/main/engine.c:2835
+#: src/main/engine.c:2847
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 인수는 식이 아니면 안됩니다"
 
-#: src/main/engine.c:2837
+#: src/main/engine.c:2849
 msgid "'list' argument must be a list"
 msgstr "'list' 인수는 리스트가 아니면 안됩니다"
 
-#: src/main/engine.c:2843
+#: src/main/engine.c:2855
 msgid "'env' argument must be an environment"
 msgstr "'env' 인수는 환경이 아니면 안됩니다"
 
-#: src/main/engine.c:2865 src/main/graphics.c:2395
+#: src/main/engine.c:2877 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr "graphics의 상태가 부적절합니다"
 
-#: src/main/engine.c:2923 src/main/engine.c:2931
+#: src/main/engine.c:2935 src/main/engine.c:2943
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\"에 부적절한 multibyte의 char가 있습니다"
 
-#: src/main/engine.c:3001
+#: src/main/engine.c:3013
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 "행이 유형이 부적절합니다: 행의 길이 2, 4, 6 8 의 어느 쪽인가에 해 주십시오"
 
-#: src/main/engine.c:3005
+#: src/main/engine.c:3017
 #, fuzzy
 msgid "invalid line type: zeroes are not allowed"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/engine.c:3014 src/main/engine.c:3022 src/main/engine.c:3029
+#: src/main/engine.c:3026 src/main/engine.c:3034 src/main/engine.c:3041
 msgid "invalid line type"
 msgstr "행의 유형이 부적절합니다"
 

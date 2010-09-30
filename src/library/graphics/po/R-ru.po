@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:26\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -107,6 +107,9 @@ msgstr "'formula' должна определять в точности две переменные"
 
 msgid "dependent variable should be a factor"
 msgstr "зависимая переменная должна быть фактором"
+
+msgid "explanatory variable should be numeric"
+msgstr "независимая переменная должна быть числовой"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
@@ -434,9 +437,6 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
-
-#~ msgid "explanatory variable should be numeric"
-#~ msgstr "независимая переменная должна быть числовой"
 
 #~ msgid "regression coefficients"
 #~ msgstr "коэффициенты регресии"

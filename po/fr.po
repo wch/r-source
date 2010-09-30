@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:25+0100\n"
+"POT-Creation-Date: 2010-09-30 13:43+0100\n"
 "PO-Revision-Date: 2010-03-28 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -491,8 +491,8 @@ msgstr "l'encodage '%s' n'est pas reconnu"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERREUR : réencodage erroné pour l'encodage '%s'>\n"
 
-#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:547
+#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1022
+#: src/gnuwin32/system.c:1034 src/main/connections.c:547
 #: src/main/connections.c:552 src/main/dounzip.c:114 src/main/saveload.c:1948
 #: src/main/serialize.c:2111 src/main/serialize.c:2116
 #: src/main/serialize.c:2197 src/main/serialize.c:2242 src/unix/system.c:312
@@ -506,58 +506,58 @@ msgstr "impossible d'ouvrir le fichier '%s' : %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show() : fichier '%s' inexistant\n"
 
-#: src/gnuwin32/system.c:986
+#: src/gnuwin32/system.c:985
 msgid "WARNING: no max-mem-size given\n"
 msgstr "AVIS : max-mem-size absent\n"
 
-#: src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:991
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "AVIS : valeur --max-mem-size incorrecte : ignorée\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:993
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "AVIS : --max-mem-size = %lu%c : trop grande et ignorée\n"
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:998
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "AVIS : --max-mem-size = %4.1fM : trop petite et ignorée\n"
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "AVIS : --max-mem-size = %4.0fM : trop petite et considérée comme %uM\n"
 
-#: src/gnuwin32/system.c:1046 src/unix/system.c:342
+#: src/gnuwin32/system.c:1045 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "AVIS : '-e %s' omis comme entrée trop longue\n"
 
-#: src/gnuwin32/system.c:1050 src/unix/system.c:356
+#: src/gnuwin32/system.c:1049 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "AVIS : option inconnue '%s'\n"
 
-#: src/gnuwin32/system.c:1072 src/unix/system.c:360
+#: src/gnuwin32/system.c:1071 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT '%s' __ignoré__\n"
 
-#: src/gnuwin32/system.c:1078 src/unix/system.c:367
+#: src/gnuwin32/system.c:1077 src/unix/system.c:367
 msgid "cannot use -e with -f or --file"
 msgstr "utilisation de -e avec -f ou --file interdite "
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1097
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "la création de tmpfile a échoué -- redéfinir TMPDIR ? "
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:417
+#: src/gnuwin32/system.c:1116 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "vous devez spécifier '--save', '--no-save' ou '--vanilla'"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1121
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -608,15 +608,18 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'\n"
 
 #: src/main/CommandLineArgs.c:242
-msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
 msgstr "AVIS : valeur de '-max-ppsize' strictement négative : ignorée\n"
 
 #: src/main/CommandLineArgs.c:244
-msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
 msgstr "AVIS : valeur de '-max-ppsize' trop petite : ignorée\n"
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+#, fuzzy
+msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
 msgstr "AVIS : valeur de '-max-ppsize' trop grande : ignorée\n"
 
 #: src/main/RNG.c:140
@@ -1322,7 +1325,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2851
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1669 src/main/envir.c:1736
 #: src/main/envir.c:1857 src/main/envir.c:2530 src/main/envir.c:2590
@@ -1748,7 +1751,7 @@ msgstr "palette de couleurs inconnue (nécessite >= 2 couleurs)"
 msgid "maximum number of colors exceeded"
 msgstr "nombre maximum de couleurs dépassé"
 
-#: src/main/colors.c:1319 src/main/engine.c:2978
+#: src/main/colors.c:1319 src/main/engine.c:2990
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "nombre hexadécimal incorrect dans 'color' ou 'lty'"
 
@@ -2945,79 +2948,79 @@ msgstr "manque de mémoire lors de la coupure d'une ligne brisée"
 msgid "Invalid graphics path"
 msgstr "État des graphiques incorrect"
 
-#: src/main/engine.c:1608
+#: src/main/engine.c:1620
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr ""
 "la police de caractère %d n'est pas disponible pour la famille de fontes '%s'"
 
-#: src/main/engine.c:1920
+#: src/main/engine.c:1932
 msgid "no graphics device is active"
 msgstr "aucun périphérique graphiques actif"
 
-#: src/main/engine.c:1998
+#: src/main/engine.c:2010
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "valeur pch '%d' incorrecte dans cet environnement linguistique"
 
-#: src/main/engine.c:2255
+#: src/main/engine.c:2267
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "valeur '%d' de pch non implémentée"
 
-#: src/main/engine.c:2278
+#: src/main/engine.c:2290
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "étendue de l'axe incorrecte [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2282
+#: src/main/engine.c:2294
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "étendue de l'axe infinie [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2320
+#: src/main/engine.c:2332
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.) : nouveau *lo = %g < %g = x1"
 
-#: src/main/engine.c:2322
+#: src/main/engine.c:2334
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.) : nouveau *up = %g > %g = x2"
 
-#: src/main/engine.c:2651
+#: src/main/engine.c:2663
 msgid "Display list redraw incomplete"
 msgstr "Liste de retraçage des affichages incomplète"
 
-#: src/main/engine.c:2835
+#: src/main/engine.c:2847
 msgid "'expr' argument must be an expression"
 msgstr "l'argument 'expr' doit être une expression"
 
-#: src/main/engine.c:2837
+#: src/main/engine.c:2849
 msgid "'list' argument must be a list"
 msgstr "l'argument 'list' doit être une liste"
 
-#: src/main/engine.c:2843
+#: src/main/engine.c:2855
 msgid "'env' argument must be an environment"
 msgstr "l'argument 'env' doit être un environnement"
 
-#: src/main/engine.c:2865 src/main/graphics.c:2395
+#: src/main/engine.c:2877 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr "état des graphiques incorrect"
 
-#: src/main/engine.c:2923 src/main/engine.c:2931
+#: src/main/engine.c:2935 src/main/engine.c:2943
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "caractère multioctet incorrect dans pch=\"c\""
 
-#: src/main/engine.c:3001
+#: src/main/engine.c:3013
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
-#: src/main/engine.c:3005
+#: src/main/engine.c:3017
 msgid "invalid line type: zeroes are not allowed"
 msgstr "type de ligne incorrect : les zéros ne sont pas autorisés"
 
-#: src/main/engine.c:3014 src/main/engine.c:3022 src/main/engine.c:3029
+#: src/main/engine.c:3026 src/main/engine.c:3034 src/main/engine.c:3041
 msgid "invalid line type"
 msgstr "type de ligne incorrect"
 

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:25+0100\n"
-"PO-Revision-Date: 2010-04-09 02:06-0500\n"
+"POT-Creation-Date: 2010-09-30 13:43+0100\n"
+"PO-Revision-Date: 2010-09-30 01:42-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -415,9 +415,9 @@ msgid "file choice cancelled"
 msgstr "выбор файла отменен"
 
 #: src/gnuwin32/run.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "CreateProcess failed to run '%s'"
-msgstr "на %s не удалось прочитать"
+msgstr "CreateProcess не удалось запустить '%s'"
 
 #: src/gnuwin32/run.c:322
 msgid "Child process not responding.  R will terminate it."
@@ -490,8 +490,8 @@ msgstr "кодировка '%s' не распознана"
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ОШИБКА: неудачная перекодировка из '%s'>\n"
 
-#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:547
+#: src/gnuwin32/system.c:544 src/gnuwin32/system.c:1022
+#: src/gnuwin32/system.c:1034 src/main/connections.c:547
 #: src/main/connections.c:552 src/main/dounzip.c:114 src/main/saveload.c:1948
 #: src/main/serialize.c:2111 src/main/serialize.c:2116
 #: src/main/serialize.c:2197 src/main/serialize.c:2242 src/unix/system.c:312
@@ -505,58 +505,58 @@ msgstr "не могу открыть файл '%s': %s"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): файл '%s' не существует\n"
 
-#: src/gnuwin32/system.c:986
+#: src/gnuwin32/system.c:985
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ВНИМАНИЕ: не задан max-mem-size\n"
 
-#: src/gnuwin32/system.c:992
+#: src/gnuwin32/system.c:991
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: значение --max-mem-size неверное: пропущено\n"
 
-#: src/gnuwin32/system.c:994
+#: src/gnuwin32/system.c:993
 #, c-format
 msgid "WARNING: --max-mem-size=%lu%c: too large and ignored\n"
 msgstr "ВНИМАНИЕ: --max-mem-size=%lu%c: слишком велик и пропущен\n"
 
-#: src/gnuwin32/system.c:999
+#: src/gnuwin32/system.c:998
 #, c-format
 msgid "WARNING: --max-mem-size=%4.1fM: too small and ignored\n"
 msgstr "ВНИМАНИЕ: --max-mem-size =%4.1fM слишком мал и пропущен\n"
 
-#: src/gnuwin32/system.c:1003
+#: src/gnuwin32/system.c:1002
 #, c-format
 msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "ВНИМАНИЕ: --max-mem-size =%4.0fM: слишком велик, установлен в %uM\n"
 
-#: src/gnuwin32/system.c:1046 src/unix/system.c:342
+#: src/gnuwin32/system.c:1045 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr "WARNING: '-e %s', пропущенная при вводе, слишком длинная\n"
 
-#: src/gnuwin32/system.c:1050 src/unix/system.c:356
+#: src/gnuwin32/system.c:1049 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ВНИМАНИЕ: неизвестный параметр '%s'\n"
 
-#: src/gnuwin32/system.c:1072 src/unix/system.c:360
+#: src/gnuwin32/system.c:1071 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "АРГУМЕНТ '%s' __пропущен__\n"
 
-#: src/gnuwin32/system.c:1078 src/unix/system.c:367
+#: src/gnuwin32/system.c:1077 src/unix/system.c:367
 msgid "cannot use -e with -f or --file"
 msgstr "не могу использовать -e вместе с -f или --file"
 
-#: src/gnuwin32/system.c:1098
+#: src/gnuwin32/system.c:1097
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr "создание временного файла не удалось -- установить подходящую TMPDIR?"
 
-#: src/gnuwin32/system.c:1117 src/unix/system.c:417
+#: src/gnuwin32/system.c:1116 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "Вы должны задать '--save', '--no-save' или '--vanilla'"
 
-#: src/gnuwin32/system.c:1122
+#: src/gnuwin32/system.c:1121
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -606,16 +606,16 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "ВНИМАНИЕ: не задано значение '--max-ppsize'\n"
 
 #: src/main/CommandLineArgs.c:242
-msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
-msgstr "ВНИМАНИЕ: значение '-max-ppsize' отрицательное: пропущено\n"
+msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
+msgstr "ВНИМАНИЕ: значение '--max-ppsize' отрицательное: пропущено\n"
 
 #: src/main/CommandLineArgs.c:244
-msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
-msgstr "ВНИМАНИЕ: значение '-max-ppsize' слишком мало: пропущено\n"
+msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
+msgstr "ВНИМАНИЕ: значение '--max-ppsize' слишком мало: пропущено\n"
 
 #: src/main/CommandLineArgs.c:247
-msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
-msgstr "ВНИМАНИЕ: значение '-max-ppsize' слишком велико: пропущено\n"
+msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
+msgstr "ВНИМАНИЕ: значение '--max-ppsize' слишком велико: пропущено\n"
 
 #: src/main/RNG.c:140
 #, c-format
@@ -716,18 +716,18 @@ msgid "character argument expected"
 msgstr "нужен текстовый аргумент"
 
 #: src/main/Rdynload.c:903 src/main/Rdynload.c:936
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "unable to load shared object '%s':\n"
 "  %s"
 msgstr ""
-"не могу загрузить разделяемую библиотеку '%s':\n"
+"не могу загрузить разделяемый объект '%s':\n"
 "  %s"
 
 #: src/main/Rdynload.c:916
-#, fuzzy, c-format
+#, c-format
 msgid "shared object '%s' was not loaded"
-msgstr "динамическая/разделяемая библиотека '%s' не загружена"
+msgstr "разделяемый объект '%s' не был загружен"
 
 #: src/main/Rdynload.c:976
 #, c-format
@@ -1006,12 +1006,12 @@ msgstr "неправильный первый аргумент, должна быть многомерная матрица"
 
 #: src/main/array.c:1051 src/main/array.c:1054
 msgid "'a' does not have named dimnames"
-msgstr ""
+msgstr "'a' не имеет именованных измерений"
 
 #: src/main/array.c:1061
 #, c-format
 msgid "perm[%d] does not match a dimension name"
-msgstr ""
+msgstr "perm[%d] не соответствует имени измерения"
 
 #: src/main/array.c:1068
 msgid "'perm' is of wrong length"
@@ -1022,9 +1022,8 @@ msgid "value out of range in 'perm'"
 msgstr "'perm': значение за пределами"
 
 #: src/main/array.c:1157
-#, fuzzy
 msgid "'resize' must be TRUE or FALSE"
-msgstr "'decreasing' должен быть TRUE или FALSE"
+msgstr "'resize' должен быть TRUE или FALSE"
 
 #: src/main/array.c:1218
 msgid "'x' must be numeric"
@@ -1198,9 +1197,8 @@ msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
 #: src/main/attrib.c:1535
-#, fuzzy
 msgid "attempt to set slot on NULL object"
-msgstr "попытка присвоения атрибута на NULL"
+msgstr "попытка установить слот на NULL объект"
 
 #: src/main/attrib.c:1576
 msgid "formal classes cannot be used without the methods package"
@@ -1288,7 +1286,7 @@ msgstr "указанный размер вектора слишком велик"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2746 src/main/engine.c:2851
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1669 src/main/envir.c:1736
 #: src/main/envir.c:1857 src/main/envir.c:2530 src/main/envir.c:2590
@@ -1708,7 +1706,7 @@ msgstr "неизвестная палитра (нужно >= 2 цветов)"
 msgid "maximum number of colors exceeded"
 msgstr "превышено максимальное количество цветов"
 
-#: src/main/colors.c:1319 src/main/engine.c:2978
+#: src/main/colors.c:1319 src/main/engine.c:2990
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "неправильное шестнадцатеричное число в 'color' или 'lty'"
 
@@ -1915,7 +1913,7 @@ msgstr "выделение gzfile-соединения не удалось"
 
 #: src/main/connections.c:1325
 msgid "append mode may not do what you expect"
-msgstr ""
+msgstr "возможно, состояние добавления -- не то что Вы ожидали"
 
 #: src/main/connections.c:1333
 #, c-format
@@ -2159,13 +2157,12 @@ msgid "can only write to a binary connection"
 msgstr "могу только писать в бинарное соединение"
 
 #: src/main/connections.c:3703
-#, fuzzy
 msgid "only 2^31-1 bytes can be written to a raw vector"
-msgstr "только формат 'ascii' может быть записан в текстовые соединения"
+msgstr "только 2^31-1 байтов можно записать в простой вектор"
 
 #: src/main/connections.c:3705
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
-msgstr ""
+msgstr "только 2^31-1 байта можно записать в один вызов readBin()"
 
 #: src/main/connections.c:3750 src/main/connections.c:3903
 #: src/main/connections.c:4171 src/main/connections.c:4211
@@ -2293,6 +2290,8 @@ msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr ""
+"не могу создать соединение gzcon из textConnection, открытого для записи; "
+"возможно, поможет rawConnection"
 
 #: src/main/connections.c:5036 src/main/connections.c:5040
 #: src/main/connections.c:5047 src/main/connections.c:5061
@@ -2866,82 +2865,81 @@ msgid "out of memory while clipping polyline"
 msgstr "не хватает памяти во время вырезания ломаной линии"
 
 #: src/main/engine.c:1377
-#, fuzzy
 msgid "Invalid graphics path"
-msgstr "Неправильное графическое состояние"
+msgstr "Неправильный графический путь"
 
-#: src/main/engine.c:1608
+#: src/main/engine.c:1620
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "начертание %d не поддерживается семейством шрифтов '%s'"
 
-#: src/main/engine.c:1920
+#: src/main/engine.c:1932
 msgid "no graphics device is active"
 msgstr "нет активных графических устройств"
 
-#: src/main/engine.c:1998
+#: src/main/engine.c:2010
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "неправильное значение pch '%d' для этой локали"
 
-#: src/main/engine.c:2255
+#: src/main/engine.c:2267
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "не разработанное pch-значение '%d'"
 
-#: src/main/engine.c:2278
+#: src/main/engine.c:2290
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "неправильная протяженность оси [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2282
+#: src/main/engine.c:2294
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "неопределенная протяженность оси [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2320
+#: src/main/engine.c:2332
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): новая *lo = %g < %g = x1"
 
-#: src/main/engine.c:2322
+#: src/main/engine.c:2334
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): новая *up = %g > %g = x2"
 
-#: src/main/engine.c:2651
+#: src/main/engine.c:2663
 msgid "Display list redraw incomplete"
 msgstr "Отражение списка перерисовки неполное"
 
-#: src/main/engine.c:2835
+#: src/main/engine.c:2847
 msgid "'expr' argument must be an expression"
 msgstr "аргумент 'expr' должен быть выражением"
 
-#: src/main/engine.c:2837
+#: src/main/engine.c:2849
 msgid "'list' argument must be a list"
 msgstr "аргумент 'list' должен быть списком"
 
-#: src/main/engine.c:2843
+#: src/main/engine.c:2855
 msgid "'env' argument must be an environment"
 msgstr "аргумент 'env' должен быть окружением"
 
-#: src/main/engine.c:2865 src/main/graphics.c:2395
+#: src/main/engine.c:2877 src/main/graphics.c:2395
 msgid "invalid graphics state"
 msgstr "неправильное графическое состояние"
 
-#: src/main/engine.c:2923 src/main/engine.c:2931
+#: src/main/engine.c:2935 src/main/engine.c:2943
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "неправильный многобайтный знак в pch=\"c\""
 
-#: src/main/engine.c:3001
+#: src/main/engine.c:3013
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "неправильный тип линии: должен быть длиной 2, 4, 6 или 8"
 
-#: src/main/engine.c:3005
+#: src/main/engine.c:3017
 msgid "invalid line type: zeroes are not allowed"
 msgstr "неправильный тип линии: нули не разрешены"
 
-#: src/main/engine.c:3014 src/main/engine.c:3022 src/main/engine.c:3029
+#: src/main/engine.c:3026 src/main/engine.c:3034 src/main/engine.c:3041
 msgid "invalid line type"
 msgstr "неправильный тип линии"
 
@@ -3010,9 +3008,8 @@ msgid "cannot add binding of '%s' to the base environment"
 msgstr "не могу добавить связи '%s' в базовое окружение"
 
 #: src/main/envir.c:1554
-#, fuzzy
 msgid "first argument must be a named list"
-msgstr "первый аргумент должен быть списком"
+msgstr "первый аргумент должен быть именованным списком"
 
 #: src/main/envir.c:1559
 #, fuzzy
@@ -3020,14 +3017,14 @@ msgid "names(x) must be a character vector of the same length as x"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
 #: src/main/envir.c:1566
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be an environment"
-msgstr "'enclos' должен быть окружением"
+msgstr "'%s' должен быть окружением"
 
 #: src/main/envir.c:1579
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument: must be NULL or environment"
-msgstr "аргумент 'env' должен быть окружением"
+msgstr "неправильный '%s' аргумент: должен быть NULL или окружением"
 
 #: src/main/envir.c:1610
 msgid "cannot remove variables from base namespace"
@@ -3193,9 +3190,9 @@ msgstr "экспортируемый символ '%s' не имеет значения"
 
 # fuzzy, c-format
 #: src/main/envir.c:3559
-#, fuzzy, c-format
+#, c-format
 msgid "unknown encoding: %d"
-msgstr "неизвестная кодировка '%s'"
+msgstr "неизвестная кодировка: %d"
 
 #: src/main/envir.c:3575
 #, c-format
@@ -3688,33 +3685,29 @@ msgid "invalid factors"
 msgstr "неправильные факторы"
 
 #: src/main/gevents.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' events not supported in this device"
-msgstr "savePlot() не поддерживается в этой сборке"
+msgstr "события '%s' не поддерживаются на этом устройстве"
 
 #: src/main/gevents.c:65
-#, fuzzy
 msgid "internal error"
-msgstr "внутренняя ошибка в 'do_sys'"
+msgstr "внутренняя ошибка"
 
 #: src/main/gevents.c:71
-#, fuzzy
 msgid "this graphics device does not support event handling"
-msgstr "графическое устройство не поддерживает графические события"
+msgstr "это графическое устройство не поддерживает обработку событий"
 
 #: src/main/gevents.c:111
 msgid "invalid prompt"
 msgstr "неправильное приглашение"
 
 #: src/main/gevents.c:123
-#, fuzzy
 msgid "recursive use of getGraphicsEvent not supported"
-msgstr "использование '%s' для ввода не поддерживается"
+msgstr "рекурсивное использование getGraphicsEvent не поддерживается"
 
 #: src/main/gevents.c:133
-#, fuzzy
 msgid "no graphics event handlers set"
-msgstr "нет активных графических устройств"
+msgstr "нет графических обработчиков событий"
 
 #: src/main/gram.y:137 src/main/gram.y:152 src/main/gram.y:2007
 #: src/main/gram.y:2021
@@ -3855,7 +3848,7 @@ msgstr ""
 
 #: src/main/gram.y:2282
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
-msgstr ""
+msgstr "смешивание Юникода и octal/hex escapes в строке не позволяется"
 
 #: src/main/gram.y:2286
 #, c-format
@@ -5253,9 +5246,8 @@ msgid "'%ls' already exists"
 msgstr "'%ls' уже существует"
 
 #: src/main/platform.c:2105
-#, fuzzy
 msgid "'mode' must be of length at least one"
-msgstr "'hadj' должен быть единичной длины"
+msgstr "длина 'mode' должна быть не меньше единицы"
 
 #: src/main/platform.c:2161
 msgid "insufficient OS support on this platform"
@@ -5385,14 +5377,12 @@ msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
 #: src/main/plot.c:1955
-#, fuzzy
 msgid "unable to allocate memory (in GPath)"
-msgstr "не могу разместить память (в GPolygon)"
+msgstr "не могу разместить память (в GPath)"
 
 #: src/main/plot.c:1961
-#, fuzzy
 msgid "invalid x or y (in GPath)"
-msgstr "у RNGkind неправильный Normal-тип"
+msgstr "неправильный x или y (в GPath)"
 
 #: src/main/plot.c:2084
 msgid "invalid arrow head length"
@@ -6499,7 +6489,7 @@ msgstr "длина данных не является произведением разделенной переменной"
 
 #: src/main/split.c:56
 msgid "factor has bad level"
-msgstr ""
+msgstr "у фактора -- неправильный уровень"
 
 #: src/main/sprintf.c:93
 #, c-format
@@ -7695,9 +7685,9 @@ msgid "could not open file '%s'"
 msgstr "не могу открыть файл '%s'"
 
 #: src/modules/X11/devX11.c:1978
-#, fuzzy, c-format
+#, c-format
 msgid "%s not available for this device"
-msgstr "Метрическая информация для этого устройства недоступна"
+msgstr "%s недоступен на этом устройстве"
 
 #: src/modules/X11/devX11.c:2060
 msgid "Unable to create XImage"
@@ -8032,24 +8022,23 @@ msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr "строка %d может быть обрезана в вызове system(, intern = TRUE)"
 
 #: src/unix/sys-unix.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "error in running command: '%s'"
-msgstr "внутренняя ошибка в коде unz"
+msgstr "ошибка запуска команды: '%s'"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "error in running command"
-msgstr "внутренняя ошибка в коде unz"
+msgstr "ошибка запуска команды"
 
 #: src/unix/sys-unix.c:304
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr ""
+msgstr "запуск команды '%s' вывел статус %d и сообщение об ошибке '%s'"
 
 #: src/unix/sys-unix.c:309
 #, c-format
 msgid "running command '%s' had status %d"
-msgstr ""
+msgstr "работающая команда '%s' имеет статус %d"
 
 #: src/unix/sys-unix.c:390
 msgid "Sys.info() is not implemented on this system"
@@ -8096,9 +8085,8 @@ msgstr "модуль X11 нельзя загрузить"
 msgid "X11 is not available"
 msgstr "X11 недоступен"
 
-#, fuzzy
 #~ msgid "names(x) must be valid character(length(x))."
-#~ msgstr "'names' должны быть текстовым вектором"
+#~ msgstr "names(x) должны быть правильным character(length(x))."
 
 #~ msgid "Insufficient memory (expandcmd)"
 #~ msgstr "Недостаточно памяти (expandcmd)"
