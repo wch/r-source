@@ -42,8 +42,7 @@ undoc(package, dir, lib.loc = NULL)
 \value{
   An object of class \code{"undoc"} which is a list of character vectors
   containing the names of the undocumented objects split according to
-  documentation type.  This representation is still experimental, and
-  might change in future versions.
+  documentation type.
 
   There is a \code{print} method for nicely displaying the information
   contained in such objects.

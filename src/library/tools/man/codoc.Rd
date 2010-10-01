@@ -103,9 +103,4 @@ codocData(package, lib.loc = NULL)
 \seealso{
   \code{\link{undoc}}, \code{\link{QC}}
 }
-\section{Warning}{
-  Both \code{codocClasses} and \code{codocData} are still somewhat
-  experimental.  Names, interfaces and values might change in future
-  versions.
-}
 \keyword{documentation}

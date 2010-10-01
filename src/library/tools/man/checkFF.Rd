@@ -56,10 +56,6 @@ checkFF(package, dir, file, lib.loc = NULL,
   \code{\link{.Fortran}};
   \code{\link{Foreign}}.
 }
-\section{Warning}{
-  This function is still experimental.  Both name and interface might
-  change in future versions.
-}
 \examples{\donttest{ # order is pretty much random
 checkFF(package = "stats", verbose = TRUE)
 }}
