@@ -35,16 +35,14 @@ function(formula, data = list(),
     require(stats, quietly=TRUE)
     m[[1L]] <- as.name("model.frame")
     mf <- eval.parent(m)
-    if(NCOL(mf) != 2)
+    if(NCOL(mf) != 2L)
         stop("'formula' should specify exactly two variables")
-    y <- mf[,1]
+    y <- mf[,1L]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
     if(!is.null(ylevels))
       y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
-    x <- mf[,2]
-    if(!is.numeric(x))
-        stop("explanatory variable should be numeric")
+    x <- mf[,2L]
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2L]
@@ -65,18 +63,19 @@ function(x, y,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
          yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...)
 {
-    ## check x and y
-    if(!is.numeric(x)) stop("explanatory variable should be numeric")
-    if(!is.factor(y)) stop("dependent variable should be a factor")
-    if(!is.null(ylevels))
-      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
-
     ## graphical parameters
     if(is.null(xlab)) xlab <- deparse(substitute(x))
     if(is.null(ylab)) ylab <- deparse(substitute(y))
     if(is.null(col)) col <- gray.colors(length(levels(y)))
     col <- rep(col, length.out = length(levels(y)))
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
+
+    ## coerce x and check y
+    xorig <- x
+    x <- as.numeric(x)
+    if(!is.factor(y)) stop("dependent variable should be a factor")
+    if(!is.null(ylevels))
+      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
 
     ## unconditional density of x
     dx <- if(is.null(from) & is.null(to))
@@ -88,7 +87,7 @@ function(x, y,
     ## setup conditional values
     ny <- length(levels(y))
     yprop <- cumsum(prop.table(table(y)))
-    y1 <- matrix(rep(0, n*(ny-1)), nrow = (ny-1))
+    y1 <- matrix(rep(0, n * (ny - 1L)), nrow = (ny - 1L))
 
     ## setup return value
     rval <- list()
@@ -117,11 +116,11 @@ function(x, y,
     if(plot) {
         plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
              xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab, main = main)
-        for(i in seq_len(NROW(y1)-1))
+        for(i in seq_len(NROW(y1) - 1L))
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i],
                     border = border)
-        axis(1)
-
+        Axis(xorig, side = 1)
+	
         equidist <- any(diff(y1[,1L]) < tol.ylab)
         if(equidist)
             axis(2, at = seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
