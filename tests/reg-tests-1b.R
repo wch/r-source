@@ -1352,4 +1352,11 @@ stopifnot(is.nan(log(0) %*% 0))
 ## had z[1,3] == 0 and log(0) %*% 0 as as.matrix(0).
 
 
+## PR#14393
+f <- factor(c(NA, 1, 2), levels = 1:3, labels = 1:3)
+mf <- model.frame(~ f, na.action = na.pass, drop.unused.levels = TRUE)
+stopifnot(identical(mf$f, f[,drop=TRUE]))
+## failed to drop < 2.12.0
+
+
 proc.time()
