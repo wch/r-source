@@ -438,7 +438,44 @@ function(x, i)
     rval
 }
 
-print.bibentry <- 
+format.bibentry <-
+function(x,
+         style = c("text", "html", "latex", "Bibtex", "textVersion"), 
+         .bibstyle = "JSS", ...)
+{
+    style <- match.arg(style)
+
+    .format_bibentry_via_Rd <- function(f) {
+        out <- file()
+        on.exit(close(out))
+        sapply(x,
+               function(y) {
+                   rd <- tools::toRd(y, style = .bibstyle)
+                   con <- textConnection(rd)
+                   on.exit(close(con))
+                   f(con, fragment = TRUE, out = out, ...)
+                   paste(readLines(out), collapse = "\n")
+               })
+    }
+
+    switch(style,
+           "text" = .format_bibentry_via_Rd(tools::Rd2txt),
+           "html" = .format_bibentry_via_Rd(tools::Rd2HTML),
+           "latex" = .format_bibentry_via_Rd(tools::Rd2latex),
+           "Bibtex" = {
+               unlist(lapply(x,
+                             function(y)
+                             paste(toBibtex(y), collapse = "\n")))
+           },
+           "textVersion" = {
+               out <- lapply(unclass(x), attr, "textVersion")
+               out[!sapply(out, length)] <- ""
+               unlist(out)
+           }
+           )
+}
+
+print.bibentry <-
 function(x,
          style = c("text", "Bibtex", "citation", "html", "latex",
                    "textVersion"), 
@@ -446,81 +483,44 @@ function(x,
 {
     style <- match.arg(style)
 
-    ## styles
-    ## text: render using toRd and Rd2txt
-    ## Bibtex: print list of Bibtex objects
-    ## citation: mimic old behavior
-    ## html: render using toRd and Rd2HTML
-    ## latex: render using toRd and Rd2latex
-    ## textVersion: simply print the textVersions
-    
-    switch(style,
+    ## Printing in citation style does extra headers/footers and more,
+    ## so is handled directly.
 
-    "text" = {
-    	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
-    	cat(tools::Rd2txt(con <- textConnection(rd), fragment=TRUE, ...))
-    	close(con)
-    },
-    
-    "textVersion" = { 
-    	print(sapply(unclass(x), attr, "textVersion"))
-    },
+    .format_bibentry_as_citation <- function(x) {
+        bibtex <- length(x) < 2L
+        c("",
+          if(!is.null(attr(x, "mheader")))
+          c(strwrap(attr(x, "mheader")), ""),
+          do.call(paste,
+                  c(lapply(x, function(y) {
+                      paste(c(if(!is.null(y$header))
+                              c(strwrap(y$header), ""),
+                              if(!is.null(y$textVersion)) {
+                                  strwrap(y$textVersion, prefix = "  ")
+                              } else {
+                                  format(y)
+                              },
+                              if(bibtex) {
+                                  c("\nA BibTeX entry for LaTeX users is\n",
+                                    paste("  ", unclass(toBibtex(y)),
+                                          sep = ""))
+                              },
+                              if(!is.null(y$footer))
+                              c("", strwrap(y$footer))),
+                            collapse = "\n")
+                  }),
+                    list(sep = "\n\n"))),
+          if(!is.null(attr(x, "mfooter")))
+          c("", strwrap(attr(x, "mfooter"))),
+          "")
+    }
 
-    "Bibtex" = {
-    	print(lapply(x, toBibtex))
-    },
+    if(style == "citation")
+        writeLines(.format_bibentry_as_citation(x))
+    else
+        writeLines(paste(format(x, style), collapse = "\n\n"))
 
-    "citation" = {
-    	bibtex <- length(x) < 2L
-
-    	cat("\n")
-    	if(!is.null(attr(x, "mheader"))) {
-    	    writeLines(strwrap(attr(x, "mheader")))
-    	    cat("\n")
-    	}
-    	for(i in seq_along(x)) {
-	    y <- x[i]
-	    
-    	    if(!is.null(y$header)) {
-    		writeLines(strwrap(y$header))
-    		cat("\n")
-    	    }
-
-    	    if(!is.null(y$textVersion)) {
-    		writeLines(strwrap(y$textVersion, prefix = "  "))
-    		cat("\n")
-    	    }
-
-    	    if(bibtex){
-    		cat("A BibTeX entry for LaTeX users is\n\n")
-    		print(toBibtex(y), prefix = "  ")
-    	    }
-
-    	    if(!is.null(y$footer)) {
-    		cat("\n")
-    		writeLines(strwrap(y$footer))
-    	    }
-    	}
-    	if(!is.null(attr(x, "mfooter"))) {
-    	    cat("\n")
-    	    writeLines(strwrap(attr(x, "mfooter")))
-    	}
-    	cat("\n")
-    },
-    
-    "html" = {
-       	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
-       	cat(tools::Rd2HTML(con <- textConnection(rd), fragment=TRUE, ...))
-       	close(con)
-    },
-        
-    "latex" = {
-    	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
-    	cat(tools::Rd2latex(con <- textConnection(rd), fragment=TRUE, ...))
-    	close(con)
-    } )
-
-    invisible(x)
+    invisible(x)    
 }
 
 "$.bibentry" <- 
