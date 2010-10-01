@@ -45,9 +45,5 @@ checkTnF(package, dir, file, lib.loc = NULL)
   There is a \code{print} method for nicely displaying the information
   contained in such objects.
 }
-\section{Warning}{
-  This function is still experimental.  Both name and interface might
-  change in future versions.
-}
 \keyword{utilities}
 \keyword{documentation}

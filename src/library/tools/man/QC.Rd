@@ -86,9 +86,5 @@ checkS3methods(package, dir, lib.loc = NULL)
   There are \code{print} methods for nicely displaying the information
   contained in such objects.
 }
-\section{Warning}{
-  These functions are still experimental.  Names, interfaces and values
-  might change in future versions.
-}
 \keyword{utilities}
 \keyword{documentation}

@@ -26,10 +26,6 @@ Rd_db(package, dir, lib.loc = NULL)
   as a list of the results of running \code{\link{parse_Rd}} on the Rd
   source files in the package and processing platform conditionals.
 }
-\section{Warning}{
-  \code{Rd_db} is still experimental.  Names, interface and value might
-  change in future versions.
-}
 \seealso{
   \code{\link{parse_Rd}}
 }
