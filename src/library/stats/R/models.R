@@ -424,7 +424,7 @@ model.frame.default <-
 	for(nm in names(data)) {
 	    x <- data[[nm]]
 	    if(is.factor(x) &&
-	       length(unique(x)) < length(levels(x)))
+	       length(unique(x[!is.na(x)])) < length(levels(x)))
 		data[[nm]] <- data[[nm]][, drop = TRUE]
 	}
     }

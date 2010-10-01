@@ -686,6 +686,10 @@
       was wrong for screen devices (which have [0, 0] at top-left).
       The symptom was (long) text disappearing when
       resizing a screen window (to make it smaller).  (\PR{14391})
+
+      \item \code{model.frame(drop.unused.levels = TRUE)} did not
+      take into account \code{NA} values of factors when deciding to
+      drop levels. (\PR{14393})
     }
   }
 }
