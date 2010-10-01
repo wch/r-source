@@ -2392,7 +2392,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 #ifdef BYTECODE
-static int R_bcVersion = 4;
+static int R_bcVersion = 5;
 static int R_bcMinVersion = 4;
 
 static SEXP R_AddSym = NULL;
@@ -2555,6 +2555,10 @@ enum {
   NMATELT_OP,
   SETNVECELT_OP,
   SETNMATELT_OP,
+  AND1ST_OP,
+  AND2ND_OP,
+  OR1ST_OP,
+  OR2ND_OP,
   OPCOUNT
 };
 
@@ -3070,6 +3074,15 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
     UNPROTECT(1);
     return mat;
 }
+
+#define FIXUP_SCALAR_LOGICAL(arg, op) do { \
+	SEXP val = R_BCNodeStackTop[-1]; \
+	if (TYPEOF(val) != LGLSXP || LENGTH(val) != 1) { \
+	    if (!isNumber(val))	\
+		error(_("invalid %s type in 'x %s y'"), arg, op); \
+	    R_BCNodeStackTop[-1] = ScalarLogical(asLogical(val)); \
+	} \
+    } while(0)
 
 static SEXP bcEval(SEXP body, SEXP rho)
 {
@@ -3658,6 +3671,46 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	value = setNumMatElt(mat, idx, jdx, value);
 	R_BCNodeStackTop -= 3;
 	R_BCNodeStackTop[-1] = value;
+	NEXT();
+    }
+    OP(AND1ST, 1): {
+	int label = GETOP();
+        FIXUP_SCALAR_LOGICAL("'x'", "&&");
+        value = R_BCNodeStackTop[-1];
+	if (LOGICAL(value)[0] == FALSE)
+	    pc = codebase + label;
+	NEXT();
+    }
+    OP(AND2ND, 0): {
+        FIXUP_SCALAR_LOGICAL("'y'", "&&");
+        value = R_BCNodeStackTop[-1];
+	/* The first argument is TRUE or NA. If the second argument is
+	   not TRUE then its value is the result. If the second
+	   argument is TRUE, then the first argument's value is the
+	   result. */
+	if (LOGICAL(value)[0] != TRUE)
+	    R_BCNodeStackTop[-2] = value;
+	R_BCNodeStackTop -= 1;
+	NEXT();
+    }
+    OP(OR1ST, 1):  {
+	int label = GETOP();
+        FIXUP_SCALAR_LOGICAL("'x'", "||");
+        value = R_BCNodeStackTop[-1];
+	if (LOGICAL(value)[0] == TRUE)
+	    pc = codebase + label;
+	NEXT();
+    }
+    OP(OR2ND, 0):  {
+        FIXUP_SCALAR_LOGICAL("'y'", "||");
+        value = R_BCNodeStackTop[-1];
+	/* The first argument is FALSE or NA. If the second argument is
+	   not FALSE then its value is the result. If the second
+	   argument is FALSE, then the first argument's value is the
+	   result. */
+	if (LOGICAL(value)[0] != FALSE)
+	    R_BCNodeStackTop[-2] = value;
+	R_BCNodeStackTop -= 1;
 	NEXT();
     }
     LASTOP;
