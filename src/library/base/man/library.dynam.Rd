@@ -1,6 +1,6 @@
 % File src/library/base/man/library.dynam.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
@@ -70,25 +70,28 @@ library.dynam.unload(chname, libpath,
 
   \code{.dynLibs} is used for getting (with no argument) or setting the
   DLLs which are currently loaded by packages (using \code{library.dynam}).
+  
+  \code{lib.loc} should contain absolute paths: versions of \R prior to
+  2.12.0 may get confused by relative paths.
 }
 \value{
-  If \code{chname} is not specified, \code{library.dynam} returns an
-  object of class \code{"DLLInfoList"} corresponding to the DLLs loaded
-  by packages.
+   If \code{chname} is not specified, \code{library.dynam} returns an
+  object of class \code{"\link{DLLInfoList}"} corresponding to the DLLs
+  loaded by packages.
 
-  If \code{chname} is specified, an object of class \code{"DLLInfo"} that
-  identifies the DLL and can be used in future calls is returned
-  invisibly.  For packages that have name spaces, a list of these objects
-  is stored in the name space's environment for use at run-time.
+  If \code{chname} is specified, an object of class
+  \code{"\link{DLLInfo}"} that identifies the DLL and can be used in
+  future calls is returned invisibly.  For packages that have name
+  spaces, a list of these objects is stored in the name space's
+  environment for use at run-time.
 
-  Note that the class \code{DLLInfo} has an overloaded method for
-  \code{$} which can be used to resolve native symbols within that
-  DLL.
+  Note that the class \code{"\link{DLLInfo}"} has a method for \code{$}
+  which can be used to resolve native symbols within that DLL.
   
   \code{library.dynam.unload} invisibly returns an object of class
-  \code{"DLLInfo"} identifying the DLL successfully unloaded.
+  \code{"\link{DLLInfo}"} identifying the DLL successfully unloaded.
 
-  \code{.dynLibs} returns an object of class \code{"DLLInfoList"}
+  \code{.dynLibs} returns an object of class \code{"\link{DLLInfoList}"}
   corresponding corresponding to its current value.
 }
 \section{Warning}{
