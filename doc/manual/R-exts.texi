@@ -244,6 +244,10 @@ Package: pkgname
 Version: 0.5-1
 Date: 2004-01-01
 Title: My First Collection of Functions
+Author@@R: c(person("Joe", "Developer",
+                    email = "Joe.Developer@@some.domain.net"),
+             person("A.", "User", role = "ctb",
+	            email = "A.User@@whereever.net"))
 Author: Joe Developer <Joe.Developer@@some.domain.net>, with
   contributions from A. User <A.User@@whereever.net>.
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
@@ -359,7 +363,13 @@ lines, and not end in a period.
 The mandatory @samp{Author} field describes who wrote the package.  It
 is a plain text field intended for human readers, but not for automatic
 processing (such as extracting the email addresses of all listed
-contributors).
+contributors).  The @samp{Author@@R} field can be used to provide a
+refined, machine-readable description of the package ``authors'' (in
+particular specifying their precise @emph{roles}), via suitable @R{}
+code (see @code{?citation} for more information).  In @R{} 2.12.0 or
+later, auto-generated citation information takes advantage of this
+specification, and eventually, Author and Maintainer fields will be
+auto-generated from it if needed.
 
 The mandatory @samp{Maintainer} field should give a @emph{single} name
 with a @emph{valid} (RFC 2822) email address in angle brackets (for
@@ -783,7 +793,7 @@ needed by the package, and the convention has grown up to use directory
 
 Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
-or @file{.csv}, see @command{?data} for the file formats, and note that
+or @file{.csv}, see @code{?data} for the file formats, and note that
 @file{.csv} is @strong{not} the
 standard@footnote{e.g@: @uref{http://tools.ietf.org/html/rfc4180}.} CSV
 format), or @code{save()} images (@file{.RData} or @file{.rda}). Note
@@ -1535,7 +1545,7 @@ users may want to supplement this by examining the output of
 intention were to always use a @code{PACKAGE} argument)
 
 @item
-The @file{Rd} files are checked for correct syntax and meta data,
+The @file{Rd} files are checked for correct syntax and metadata,
 including the presence of the mandatory (@code{\name}, @code{\alias},
 @code{\title} and @code{\description}) fields.  The @file{Rd} name and
 title are checked for being non-empty, and there is a check for missing
@@ -2973,21 +2983,26 @@ An installed file named @file{CITATION} will be used by the
 The @file{CITATION} file is parsed as @R{} code (in the package's
 declared encoding@footnote{as from @R{} 2.8.0: this used to default to
 Latin-1 but no longer does so}, or in ASCII if note is declared).  If no
-such file is present, @code{citation} generates a standard contents, and
-an example of what that would look like as a @file{CITATION} file can be
-seen in recommended package @pkg{nlme} (see below): recommended packages
+such file is present, @code{citation} auto-generates citation
+information from the package @file{DESCRIPTION} metadata, and an example
+of what that would look like as a @file{CITATION} file can be seen in
+recommended package @pkg{nlme} (see below): recommended packages
 @pkg{boot}, @pkg{cluster} and @pkg{mgcv} have further examples.
 
-A @file{CITATION} file will contain calls to the functions
-@code{citHeader}, @code{citEntry} and (optionally)
-@code{citFooter}. Here is that for @pkg{nlme}, re-formatted:
+A @file{CITATION} file will contain calls to function @code{bibentry}
+(new style, only works with @R{} 2.12.0 or later), or to the functions
+@code{citHeader}, @code{citEntry} and (optionally) @code{citFooter} (old
+style).
+
+Here is that for @pkg{nlme}, re-formatted:
 
 @example
 citHeader("To cite package 'nlme' in publications use:")
 
-desc <- packageDescription("nlme")
-year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", desc$Date)
-vers <- paste("R package version", desc$Version)
+## R >= 2.8.0 passes package metadata to citation().
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("nlme")
+year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
 
 citEntry(entry="Manual",
          title = "nlme: Linear and Nonlinear Mixed Effects Models",
@@ -2995,13 +3010,13 @@ citEntry(entry="Manual",
                              as.person("Douglas Bates"),
                              as.person("Saikat DebRoy"),
                              as.person("Deepayan Sarkar"),
-                             as.person("the R Core team")),
+                             person("R Development Core Team")),
          year = year,
          note = vers,
 
          textVersion =
          paste("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
-               "Deepayan Sarkar and the R Core team (",
+               "Deepayan Sarkar and the R Development Core Team (",
                year,
                "). nlme: Linear and Nonlinear Mixed Effects Models. ",
                vers, ".", sep=""))
@@ -3009,7 +3024,7 @@ citEntry(entry="Manual",
 
 Note the way that information that may need to be updated is picked up
 from the @file{DESCRIPTION} file -- it is tempting to hardcode such
-information, but it normally then gets outdated.  See @code{?citEntry}
+information, but it normally then gets outdated.  See @code{?bibentry}
 for further details of the information which can be provided.
 
 The @file{CITATION} file should itself produce no output when

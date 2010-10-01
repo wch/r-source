@@ -4,13 +4,16 @@
 % Distributed under GPL 2 or later
 
 \name{citation}
-\title{Citing R and R Packages in Publications}
+\alias{CITATION}
 \alias{citation}
+\alias{readCitationFile}
+\title{Citing R and R Packages in Publications}
 \description{
   How to cite \R and \R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL, auto = NULL)
+readCitationFile(file, meta = NULL)
 }
 \arguments{
   \item{package}{a character string with the name of a single package.
@@ -23,38 +26,64 @@ citation(package = "base", lib.loc = NULL, auto = NULL)
     auto-generated from the package \file{DESCRIPTION} metadata should
     be used or not, or \code{NULL} (default), indicating that a
     \file{CITATION} file is used if it exists.}
+  \item{file}{a file name.}
+  \item{meta}{a list of package metadata as obtained by
+    \code{\link{packageDescription}}, or \code{NULL} (the default).}
 }
 \details{
   The \R core development team and the very active community of package
   authors have invested a lot of time and effort in creating \R as it is
-  today. Please give credit where credit is due and cite \R and \R
+  today.  Please give credit where credit is due and cite \R and \R
   packages when you use them for data analysis.
   
   Execute function \code{citation()} for information on how to cite the
-  base R system in publications. If the name of a non-base package is
+  base R system in publications.  If the name of a non-base package is
   given, the function either returns the information contained in the
-  \file{\link{CITATION}} file of the package or auto-generates citation
-  information. In the latter case the package \file{DESCRIPTION} file is
-  parsed, the resulting citation object may be arbitrarily bad, but is
-  quite useful (at least as a starting point) in most cases.
+  \file{CITATION} file of the package or auto-generates citation
+  information.  In the latter case the package \file{DESCRIPTION} file
+  is parsed, the resulting citation object may be arbitrarily bad, but
+  is quite useful (at least as a starting point) in most cases.
 
   In \R 2.12.0, one can use a \code{Author@R} field in
-  \file{DESCRIPTION} to provide a (\R code giving a)
+  \file{DESCRIPTION} to provide (\R code giving) a
   \code{\link{person}} object with a refined, machine-readable
   description of the package \dQuote{authors} (in particular specifying
   their precise roles).  Only those with an actual author role will be
   included in the auto-generated citation.
 
-  If only one reference is given, the print method shows both a text
-  version and a BibTeX entry for it, if a package has more than one
-  reference then only the text versions are shown. The BibTeX versions
-  can be obtained using function \code{toBibtex} (see the examples below).
+  If only one reference is given, the print method for the object
+  returned by \code{citation()} shows both a text version and a BibTeX
+  entry for it, if a package has more than one reference then only the
+  text versions are shown.  The BibTeX versions can be obtained using
+  function \code{toBibtex()} (see the examples below).
+
+  The \file{CITATION} file of an R package should be placed in the
+  \file{inst} subdirectory of the package source.  The file is an R
+  source file and may contain arbitrary R commands including
+  conditionals and computations.  Function \code{readCitationFile()} is
+  used by \code{citation()} to extract the information in
+  \file{CITATION} files.  The file is \code{source()}ed by the R 
+  parser in a temporary environment and all resulting bibliographic
+  objects (specifically, of class \code{"\link{bibentry}"}) are
+  collected.
+
+  Traditionally, the \file{CITATION} file contained zero or more calls
+  to \code{citHeader}, then one or more calls to \code{\link{citEntry}},
+  and finally zero or more calls to \code{citFooter}, where in fact
+  \code{citHeader} and \code{citFooter} are simply wrappers to
+  \code{\link{paste}}, with their \code{\dots} argument passed on to
+  \code{\link{paste}} as is.  \R 2.12.0 adds a new
+  \code{"\link{bibentry}"} class for improved representation and
+  manipulation of bibliographic information (in fact, the old mechanism
+  is implemented using the new one), and one can write \file{CITATION}
+  files using the unified \code{\link{bibentry}} interface.  Such files
+  are not usable with versions of \R prior to 2.12.0.
+
+  \code{readCitationFile} makes use of the \code{Encoding} element (if
+  any) of \code{meta} to determine the encoding of the file.
 }
 \value{
   An object inheriting from class \code{"\link{bibentry}"}.
-}
-\seealso{
-  \code{\link{citEntry}}
 }
 \keyword{misc}
 \examples{
