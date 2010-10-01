@@ -1056,6 +1056,7 @@ handles internationalization slightly odd.
 * How do I add to the list of repositories?::  
 * Help is not shown for some of the packages::  
 * How do I get static HTML pages?::  
+* How can I get a binary version of a package?::  
 @end menu
 
 
@@ -1264,7 +1265,7 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 
 This was about Compiled HTML help, which is not supported since R 2.10.0.
 
-@node How do I get static HTML pages?,  , Help is not shown for some of the packages, Packages
+@node How do I get static HTML pages?, How can I get a binary version of a package?, Help is not shown for some of the packages, Packages
 @section How do I get static HTML pages?
 
 We presume you want to do this for some special purpose: R's help system
@@ -1295,6 +1296,29 @@ BUILD_HTML = NO
 and them all packages installed by that build of R will be installed
 with static HTML pages.
 
+@node How can I get a binary version of a package?,  , How do I get static HTML pages?, Packages
+@section How can I get a binary version of a package?
+
+Presumably one not available on CRAN, BioC or a similar repository.
+
+If you have a source package that is known to work on a Unix-alike
+system, you can try the automated Windows binary package builder
+documented at @url{http://win-builder.r-project.org}.  If the package is
+not yours, please remember to change the maintainer address so the
+results go to you and not the author(s)!
+
+However, if a CRAN package is not available in binary form or only
+available for 32-bit R, this usually means that there is a problem
+with some dependent package or external software (often mentioned in the
+@file{@@ReadMe} file in the binary repository directory).  You can email
+@email{R-windows@@r-project.org} expressing a wish for such a package to
+be ported---the maintainers will take such wishes into account when
+prioritizing work on binary packages.
+
+In many cases installing packages from the sources is not at all
+difficult (especially if the package contains no compiled code), so
+please attempt that for yourself before requesting help from the busy
+volunteers.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
