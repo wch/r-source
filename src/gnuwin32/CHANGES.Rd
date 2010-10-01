@@ -87,9 +87,12 @@
         default filters (see \code{?available.packages}) packages will
         only be offered if they are available for the current
         architecture.
+
+	The default personal library, e.g. \file{~/R/win-library/2.12}
+	is now the same for both 32- and 64-bit \R.
 	
-      \item The recommended toolchain has been changed to one that does
-      not add leading underscores. See
+      \item The recommended 64-bit toolchain has been changed to one
+      that does not add leading underscores. See
       \url{http://www.murdoch-sutherland.com/Rtools/} or
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.  Any static or import
       libraries for external software used in installing packages will
