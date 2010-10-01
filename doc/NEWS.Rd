@@ -651,7 +651,7 @@
       \code{log(0) \%*\% 0} gave \code{0}.
 
       \item The calculation of whether text was completely outside
-      the device extent (in which case, you draw nothing)
+      the device region (in which case, you draw nothing)
       was wrong for screen devices (which have [0, 0] at top-left).
       The symptom was (long) text disappearing when
       resizing a screen window (to make it smaller).  (\PR{14391})
