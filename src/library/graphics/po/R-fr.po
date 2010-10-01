@@ -5,23 +5,23 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.1\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
-"PO-Revision-Date: 2009-10-10 13:36+0100\n"
+"POT-Creation-Date: 2010-10-01 21:26\n"
+"PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: French\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a' est ignoré au bénéfice de 'reg'"
 
-#, fuzzy
 msgid "only using the first two of %d regression coefficients"
-msgstr "utilisation de seulement les deux premiers de"
+msgstr "utilisation des deux premiers des %d coefficients de régression"
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a' et 'b' sont ignorés au bénéfice de 'coef'"
@@ -42,7 +42,7 @@ msgid "incorrect 'col': must be length 2"
 msgstr "'col' incorrect : doit être de longueur 2"
 
 msgid "only for 1-D table"
-msgstr ""
+msgstr "seulement pour des tableaux 1-D"
 
 msgid "'side' must be in {1:4}"
 msgstr "'side' doit être dans {1:4}"
@@ -103,9 +103,6 @@ msgstr "'formula' doit spécifier exactement deux variables"
 msgid "dependent variable should be a factor"
 msgstr "la variable dépendante doit être de type facteur"
 
-msgid "explanatory variable should be numeric"
-msgstr "la variable explicative doit être numérique"
-
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
 "l'axe y a une échelle de probabilités cumulées, 'ylim' doit être dans "
@@ -141,9 +138,9 @@ msgstr "rows * columns trop petit"
 msgid "Missing rows"
 msgstr "Lignes manquantes"
 
-#, fuzzy
 msgid "'expr' must be a function, call or an expression containing 'x'"
-msgstr "'expr' doit être une fonction ou une expression contenant 'x'"
+msgstr ""
+"'expr' doit être une fonction, un appel ou une expression contenant 'x'"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' et 'to' doivent être > 0 avec log=\"x\""
@@ -347,7 +344,7 @@ msgid "cannot hatch with logarithmic scale active"
 msgstr "le hachurage n'est pas réalisable avec une échelle logarithmique"
 
 msgid "Invalid fill rule for graphics path"
-msgstr ""
+msgstr "Règle de remplissage incorrecte pour le chemin graphique"
 
 msgid "invalid rectangle specification"
 msgstr "spécification de rectangle incorrecte"
@@ -438,6 +435,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argument %s n'est pas utilisé par"
 msgstr[1] "les arguments %s ne sont pas utilisés par"
+
+#~ msgid "explanatory variable should be numeric"
+#~ msgstr "la variable explicative doit être numérique"
 
 #~ msgid "regression coefficients"
 #~ msgstr "coefficients de régression"

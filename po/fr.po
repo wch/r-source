@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.6.0\n"
+"Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-09-30 13:37+0100\n"
-"PO-Revision-Date: 2010-03-28 15:14+0100\n"
+"PO-Revision-Date: 2010-10-01 20:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -416,9 +416,9 @@ msgid "file choice cancelled"
 msgstr "choix de fichier annulé"
 
 #: src/gnuwin32/run.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "CreateProcess failed to run '%s'"
-msgstr "échec de lecture sur %s"
+msgstr "CreateProcess a échoué au lancement de %s"
 
 #: src/gnuwin32/run.c:322
 msgid "Child process not responding.  R will terminate it."
@@ -608,19 +608,16 @@ msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "AVIS : aucune valeur donnée pour '--max-ppsize'\n"
 
 #: src/main/CommandLineArgs.c:242
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
-msgstr "AVIS : valeur de '-max-ppsize' strictement négative : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' strictement négative : ignorée\n"
 
 #: src/main/CommandLineArgs.c:244
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is too small: ignored\n"
-msgstr "AVIS : valeur de '-max-ppsize' trop petite : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' trop petite : ignorée\n"
 
 #: src/main/CommandLineArgs.c:247
-#, fuzzy
 msgid "WARNING: '--max-ppsize' value is too large: ignored\n"
-msgstr "AVIS : valeur de '-max-ppsize' trop grande : ignorée\n"
+msgstr "AVIS : valeur de '--max-ppsize' trop grande : ignorée\n"
 
 #: src/main/RNG.c:140
 #, c-format
@@ -734,18 +731,18 @@ msgid "character argument expected"
 msgstr "argument de type caractère attendu"
 
 #: src/main/Rdynload.c:903 src/main/Rdynload.c:936
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "unable to load shared object '%s':\n"
 "  %s"
 msgstr ""
-"impossible de charger la bibliothèque partagée '%s':\n"
+"impossible de charger l'objet partagé '%s':\n"
 "  %s"
 
 #: src/main/Rdynload.c:916
-#, fuzzy, c-format
+#, c-format
 msgid "shared object '%s' was not loaded"
-msgstr "la bibliothèque dynamique / partagée '%s' n'a pas été chargée"
+msgstr "l'objet partagé '%s' n'a pas été chargé"
 
 #: src/main/Rdynload.c:976
 #, c-format
@@ -1035,12 +1032,12 @@ msgstr "premier argument incorrect, doit être un tableau"
 
 #: src/main/array.c:1051 src/main/array.c:1054
 msgid "'a' does not have named dimnames"
-msgstr ""
+msgstr "'a' n'a pas de noms de dimensions"
 
 #: src/main/array.c:1061
 #, c-format
 msgid "perm[%d] does not match a dimension name"
-msgstr ""
+msgstr "perm[%d] ne correspond pas à une dimension de nom"
 
 #: src/main/array.c:1068
 msgid "'perm' is of wrong length"
@@ -1051,9 +1048,8 @@ msgid "value out of range in 'perm'"
 msgstr "valeur de 'perm' hors intervalle"
 
 #: src/main/array.c:1157
-#, fuzzy
 msgid "'resize' must be TRUE or FALSE"
-msgstr "'decreasing' doit être TRUE ou FALSE"
+msgstr "'resize' doit être TRUE ou FALSE"
 
 #: src/main/array.c:1218
 msgid "'x' must be numeric"
@@ -1232,9 +1228,8 @@ msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
 
 #: src/main/attrib.c:1535
-#, fuzzy
 msgid "attempt to set slot on NULL object"
-msgstr "tentative de changer un attribut en NULL"
+msgstr "tentative de changer le slot d'un objet en NULL"
 
 #: src/main/attrib.c:1576
 msgid "formal classes cannot be used without the methods package"
@@ -1962,7 +1957,7 @@ msgstr "l'allocation d'une connexion gzfile a échoué"
 
 #: src/main/connections.c:1325
 msgid "append mode may not do what you expect"
-msgstr ""
+msgstr "le mode 'append' peut ne pas réaliser ce à quoi vous vous attendez"
 
 #: src/main/connections.c:1333
 #, c-format
@@ -2216,13 +2211,13 @@ msgid "can only write to a binary connection"
 msgstr "l'écriture est seulement possible vers une connexion binaire"
 
 #: src/main/connections.c:3703
-#, fuzzy
 msgid "only 2^31-1 bytes can be written to a raw vector"
-msgstr "seul le format ascii peut être écrit dans les connexions en mode texte"
+msgstr "seuls 2^31-1 octets peuvent être écrits dans un vecteur 'raw'"
 
 #: src/main/connections.c:3705
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
 msgstr ""
+"seuls 2^31-1 octets peuvent être écrits lors d'un appel unique readBin()"
 
 #: src/main/connections.c:3750 src/main/connections.c:3903
 #: src/main/connections.c:4171 src/main/connections.c:4211
@@ -2356,6 +2351,8 @@ msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr ""
+"impossible de créer une connexion 'gzcon' à partir d'une 'textConnection' "
+"ouverte en écriture ; Essayez peut-être une 'rawConnection'"
 
 #: src/main/connections.c:5036 src/main/connections.c:5040
 #: src/main/connections.c:5047 src/main/connections.c:5061
@@ -2944,9 +2941,8 @@ msgid "out of memory while clipping polyline"
 msgstr "manque de mémoire lors de la coupure d'une ligne brisée"
 
 #: src/main/engine.c:1377
-#, fuzzy
 msgid "Invalid graphics path"
-msgstr "État des graphiques incorrect"
+msgstr "Chemin graphique incorrect"
 
 #: src/main/engine.c:1620
 #, c-format
@@ -3091,24 +3087,22 @@ msgid "cannot add binding of '%s' to the base environment"
 msgstr "impossible d'ajouter des liens de '%s' à l'environnement de base"
 
 #: src/main/envir.c:1554
-#, fuzzy
 msgid "first argument must be a named list"
-msgstr "le premier argument doit être une liste"
+msgstr "le premier argument doit être une liste nommée"
 
 #: src/main/envir.c:1559
-#, fuzzy
 msgid "names(x) must be valid character(length(x))."
-msgstr "'names' doit être un vecteur de caractères"
+msgstr "names(x) doit être un vecteur de caractères de même longueur que x"
 
 #: src/main/envir.c:1566
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be an environment"
-msgstr "'enclos' doit être un environnement"
+msgstr "'%s' doit être un environnement"
 
 #: src/main/envir.c:1579
-#, fuzzy, c-format
+#, c-format
 msgid "invalid '%s' argument: must be NULL or environment"
-msgstr "l'argument 'env' doit être un environnement"
+msgstr "l'argument '%s' est incorrect : il doit être NULL ou un environnement"
 
 #: src/main/envir.c:1609
 msgid "cannot remove variables from base namespace"
@@ -3773,17 +3767,15 @@ msgid "invalid factors"
 msgstr "variables facteur incorrectes"
 
 #: src/main/gevents.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' events not supported in this device"
-msgstr "savePlot() ne fonctionne pas dans cette compilation"
+msgstr "l'événement '%s' n'est pas supporté sur ce périphérique"
 
 #: src/main/gevents.c:65
-#, fuzzy
 msgid "internal error"
-msgstr "erreur interne dans 'do_sys'"
+msgstr "erreur interne"
 
 #: src/main/gevents.c:71
-#, fuzzy
 msgid "this graphics device does not support event handling"
 msgstr "le périphérique graphique ne supporte pas les événements graphiques"
 
@@ -3792,14 +3784,12 @@ msgid "invalid prompt"
 msgstr "invite de commande incorrecte (prompt)"
 
 #: src/main/gevents.c:123
-#, fuzzy
 msgid "recursive use of getGraphicsEvent not supported"
-msgstr "l'utilisation de %s pour entrée n'est pas permise"
+msgstr "l'utilisation récursive de getGraphicsEvent n'est pas permise"
 
 #: src/main/gevents.c:133
-#, fuzzy
 msgid "no graphics event handlers set"
-msgstr "aucun périphérique graphiques actif"
+msgstr "aucun manipulateur graphiques (handler) défini"
 
 #: src/main/gram.y:137 src/main/gram.y:152 src/main/gram.y:2007
 #: src/main/gram.y:2021
@@ -3949,6 +3939,8 @@ msgstr ""
 #: src/main/gram.y:2282
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
+"le mélange de texte Unicode et des caractères à échappement octaux ou "
+"décimaux n'est pas autorisée dans une chaîne de caractères"
 
 #: src/main/gram.y:2286
 #, c-format
@@ -5380,9 +5372,8 @@ msgid "'%ls' already exists"
 msgstr "'%ls' existe déjà"
 
 #: src/main/platform.c:2105
-#, fuzzy
 msgid "'mode' must be of length at least one"
-msgstr "'hadj' doit être de longueur unitaire"
+msgstr "'mode' doit être de longueur unitaire ou plus"
 
 #: src/main/platform.c:2161
 msgid "insufficient OS support on this platform"
@@ -5514,14 +5505,12 @@ msgstr ""
 "impossible de mélanger des coordonnées de longueur nulle avec des autres"
 
 #: src/main/plot.c:1955
-#, fuzzy
 msgid "unable to allocate memory (in GPath)"
-msgstr "impossible d'allouer de la mémoire (dans GPolygon)"
+msgstr "impossible d'allouer de la mémoire (dans GPath)"
 
 #: src/main/plot.c:1961
-#, fuzzy
 msgid "invalid x or y (in GPath)"
-msgstr "type Normal incorrect dans RNGkind"
+msgstr "x ou y incorrect (dans GPath)"
 
 #: src/main/plot.c:2084
 msgid "invalid arrow head length"
@@ -6654,7 +6643,7 @@ msgstr "la taille de données n'est pas un multiple de la variable découpée"
 
 #: src/main/split.c:56
 msgid "factor has bad level"
-msgstr ""
+msgstr "la variable 'factor' a des niveaux erronés"
 
 #: src/main/sprintf.c:93
 #, c-format
@@ -7869,9 +7858,9 @@ msgid "could not open file '%s'"
 msgstr "impossible d'ouvrir le fichier '%s'"
 
 #: src/modules/X11/devX11.c:1978
-#, fuzzy, c-format
+#, c-format
 msgid "%s not available for this device"
-msgstr "Information de métrique non disponible pour ce périphérique"
+msgstr "%s non disponible pour ce périphérique"
 
 #: src/modules/X11/devX11.c:2060
 msgid "Unable to create XImage"
@@ -8213,24 +8202,25 @@ msgstr ""
 "TRUE)"
 
 #: src/unix/sys-unix.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "error in running command: '%s'"
-msgstr "erreur interne dans le code unz"
+msgstr "erreur lors de l'exécution de la commande : '%s'"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "error in running command"
-msgstr "erreur interne dans le code unz"
+msgstr "erreur lors de l'exécution d'une commande"
 
 #: src/unix/sys-unix.c:304
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
+"l'exécution de la commande '%s' renvoie un statut %d et le message d'erreur "
+"'%s'"
 
 #: src/unix/sys-unix.c:309
 #, c-format
 msgid "running command '%s' had status %d"
-msgstr ""
+msgstr "l'exécution de la commande '%s' renvoie un statut %d"
 
 #: src/unix/sys-unix.c:390
 msgid "Sys.info() is not implemented on this system"
