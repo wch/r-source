@@ -195,7 +195,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             assign("spec", c(name = name,version = version), envir = info)
             setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
             setNamespaceInfo(env, "imports", list("base" = TRUE))
-            setNamespaceInfo(env, "path", file.path(lib, name))
+            ## this should be an absolute path
+            abs_path <- function(x) {cwd <- setwd(x);on.exit(setwd(cwd));getwd()}
+            setNamespaceInfo(env, "path", abs_path(file.path(lib, name)))
             setNamespaceInfo(env, "dynlibs", NULL)
             setNamespaceInfo(env, "S3methods", matrix(NA_character_, 0L, 3L))
             assign(".__S3MethodsTable__.",

@@ -659,6 +659,13 @@
       \item \code{model.frame(drop.unused.levels = TRUE)} did not
       take into account \code{NA} values of factors when deciding to
       drop levels. (\PR{14393})
+
+      \item \code{library.dynam.unload} required an absolute path for
+      \code{libpath}.  (\PR{14393})
+
+      Both \code{library()} and \code{loadNamespace()} now record
+      absolute paths for use by \code{searchpaths()} and
+      \code{getNamespaceInfo(ns, "path")}.
     }
   }
 }
