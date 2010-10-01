@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-10-01 07:42+0100\n"
+"POT-Creation-Date: 2010-10-01 21:30+0100\n"
 "PO-Revision-Date: 2010-04-13 13:35+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -562,7 +562,7 @@ msgstr ""
 "es imposible crear 'reader thread'; usted debe liberar algún recurso del "
 "sistema"
 
-#: src/include/Errormsg.h:25 src/main/eval.c:2974 src/main/subscript.c:312
+#: src/include/Errormsg.h:25 src/main/eval.c:2978 src/main/subscript.c:312
 #: src/main/subscript.c:353 src/main/subscript.c:457 src/main/subscript.c:554
 msgid "subscript out of bounds"
 msgstr "subíndice fuera de  los límites"
@@ -650,49 +650,49 @@ msgstr ""
 msgid "RNG_Init: unimplemented RNG kind %d"
 msgstr "RNG_Init: tipo RNG %d no implementado"
 
-#: src/main/RNG.c:300
+#: src/main/RNG.c:309
 msgid ".Random.seed is a missing argument with no default"
 msgstr "el argumento .Random.seed no existe y no tiene valor por defecto"
 
-#: src/main/RNG.c:301
+#: src/main/RNG.c:310
 #, c-format
 msgid ".Random.seed is not an integer vector but of type '%s'"
 msgstr ".Random.seed no es un vector de números enteros pero es de tipo '%s'"
 
-#: src/main/RNG.c:307
+#: src/main/RNG.c:316
 msgid ".Random.seed[1] is not a valid integer"
 msgstr ".Random.seed[1] no es un entero válido"
 
-#: src/main/RNG.c:311
+#: src/main/RNG.c:320
 msgid ".Random.seed[0] is not a valid Normal type"
 msgstr ".Random.seed[0] no es un tipo Normal válido"
 
-#: src/main/RNG.c:322
+#: src/main/RNG.c:331
 msgid ".Random.seed[1] = 5 but no user-supplied generator"
 msgstr ".Random.seed[1] = 5 pero el usuario no ha especificado un generador"
 
-#: src/main/RNG.c:325
+#: src/main/RNG.c:334
 msgid ".Random.seed[1] is not a valid RNG kind (code)"
 msgstr ".Random.seed[1] no es un tipo RNG válido (código)"
 
-#: src/main/RNG.c:347
+#: src/main/RNG.c:356
 msgid ".Random.seed has wrong length"
 msgstr ".Random.seed tiene una longitud no válida"
 
-#: src/main/RNG.c:400
+#: src/main/RNG.c:409
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
 msgstr "RNGkind: tipo RNG %d no implementado"
 
-#: src/main/RNG.c:412
+#: src/main/RNG.c:421
 msgid "invalid Normal type in RNGkind"
 msgstr "tipo Normal no válido en RNGkind"
 
-#: src/main/RNG.c:415
+#: src/main/RNG.c:424
 msgid "'user_norm_rand' not in load table"
 msgstr "'user_norm_rand' no está en la tabla de carga"
 
-#: src/main/RNG.c:458
+#: src/main/RNG.c:467
 msgid "supplied seed is not a valid integer"
 msgstr "la semilla especificada no es un entero válido"
 
@@ -1313,7 +1313,7 @@ msgstr "tamaño del vector especificado es muy grande"
 #: src/main/envir.c:1857 src/main/envir.c:2530 src/main/envir.c:2590
 #: src/main/envir.c:2909 src/main/envir.c:2938 src/main/envir.c:2959
 #: src/main/envir.c:2982 src/main/envir.c:3016 src/main/envir.c:3036
-#: src/main/envir.c:3341 src/main/envir.c:3345 src/main/eval.c:3839
+#: src/main/envir.c:3341 src/main/envir.c:3345 src/main/eval.c:3845
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2057
 #: src/main/saveload.c:2338 src/main/serialize.c:2264
 msgid "use of NULL environment is defunct"
@@ -1396,7 +1396,7 @@ msgstr "valor faltante para 'length'"
 
 #: src/main/builtin.c:877 src/main/eval.c:417 src/main/eval.c:521
 #: src/main/eval.c:1598 src/main/eval.c:1664 src/main/eval.c:1724
-#: src/main/eval.c:2055 src/main/eval.c:3430 src/main/eval.c:3538
+#: src/main/eval.c:2055 src/main/eval.c:3434 src/main/eval.c:3542
 msgid "'...' used in an incorrect context"
 msgstr "'...' usado en un contexto incorrecto"
 
@@ -1548,7 +1548,7 @@ msgstr "intento de coaccionar un objeto diferente a un factor"
 msgid "list argument expected"
 msgstr "argumento de lista esperado"
 
-#: src/main/coerce.c:1440 src/main/eval.c:3836 src/main/eval.c:3843
+#: src/main/coerce.c:1440 src/main/eval.c:3842 src/main/eval.c:3849
 msgid "invalid environment"
 msgstr "entorno inválido"
 
@@ -2535,7 +2535,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' debe ser un entero no negativo pequeño"
 
 #: src/main/deparse.c:365 src/main/envir.c:1693 src/main/envir.c:1775
-#: src/main/eval.c:423 src/main/eval.c:897 src/main/eval.c:2841
+#: src/main/eval.c:423 src/main/eval.c:897 src/main/eval.c:2843
 #: src/main/saveload.c:1965 src/main/saveload.c:2282 src/main/serialize.c:2282
 #, c-format
 msgid "object '%s' not found"
@@ -3014,7 +3014,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d usado en un contexto incorreto, ningún ... para examinar"
 
 #: src/main/envir.c:1300 src/main/envir.c:1771 src/main/eval.c:427
-#: src/main/eval.c:2844
+#: src/main/eval.c:2847
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "el argumento \"%s\" está ausente, sin valor por omisión"
@@ -3428,11 +3428,11 @@ msgstr ""
 "evaluación anidada demasiado profunda; recursión infinita options"
 "(expressions= )?"
 
-#: src/main/eval.c:429 src/main/eval.c:2845
+#: src/main/eval.c:429 src/main/eval.c:2848
 msgid "argument is missing, with no default"
 msgstr "argumento ausente, sin argumento por omisión"
 
-#: src/main/eval.c:517 src/main/eval.c:3378
+#: src/main/eval.c:517 src/main/eval.c:3382
 msgid "attempt to apply non-function"
 msgstr "tentativa de aplicar una no-función"
 
@@ -3564,135 +3564,135 @@ msgstr "Métodos incompatibles (\"%s\", \"%s\") para \"%s\""
 msgid "dispatch error in group dispatch"
 msgstr "expedición de error en el envío de grupo"
 
-#: src/main/eval.c:2768
+#: src/main/eval.c:2770
 msgid "node stack overflow"
 msgstr "stack central desbordado"
 
-#: src/main/eval.c:2774
+#: src/main/eval.c:2776
 msgid "integer stack overflow"
 msgstr "stack de enteros desbordado"
 
-#: src/main/eval.c:2827
+#: src/main/eval.c:2829
 msgid "Bad opcode"
 msgstr "Código de operador defectuoso"
 
-#: src/main/eval.c:2976
+#: src/main/eval.c:2980
 msgid "not a vector object"
 msgstr "no es un objeto vetorial"
 
-#: src/main/eval.c:2984 src/main/eval.c:3006 src/main/eval.c:3030
-#: src/main/eval.c:3054
+#: src/main/eval.c:2988 src/main/eval.c:3010 src/main/eval.c:3034
+#: src/main/eval.c:3058
 msgid "can only handle simple real vectors"
 msgstr "solo soporta vectores reales simples"
 
-#: src/main/eval.c:2993 src/main/eval.c:3040
+#: src/main/eval.c:2997 src/main/eval.c:3044
 msgid "not a simple vector"
 msgstr "no es un vector simple"
 
-#: src/main/eval.c:3010 src/main/eval.c:3058 src/main/subassign.c:982
+#: src/main/eval.c:3014 src/main/eval.c:3062 src/main/subassign.c:982
 #: src/main/subset.c:815
 msgid "incorrect number of subscripts"
 msgstr "número incorrecto de subíndices"
 
-#: src/main/eval.c:3021 src/main/eval.c:3072
+#: src/main/eval.c:3025 src/main/eval.c:3076
 msgid "not a simple matrix"
 msgstr "no es una matriz simple"
 
-#: src/main/eval.c:3082
+#: src/main/eval.c:3086
 #, fuzzy, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "tipo de 'x' inválido en 'x %s y'"
 
-#: src/main/eval.c:3118
+#: src/main/eval.c:3122
 msgid "bytecode version mismatch; using eval"
 msgstr "versión de bytecode incompatible; usando eval"
 
-#: src/main/eval.c:3123
+#: src/main/eval.c:3127
 msgid "bytecode version is too old"
 msgstr "versión de bytecode muy vieja"
 
-#: src/main/eval.c:3124
+#: src/main/eval.c:3128
 msgid "bytecode version is too new"
 msgstr "versión de bytecode muy nueva"
 
-#: src/main/eval.c:3129
+#: src/main/eval.c:3133
 msgid "byte code version mismatch"
 msgstr "versión de bytecode incompatible"
 
-#: src/main/eval.c:3145
+#: src/main/eval.c:3149
 msgid "missing value where logical needed"
 msgstr "reemplazar por valores perdidos donde se esperan lógicos"
 
-#: src/main/eval.c:3146
+#: src/main/eval.c:3150
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "argumento de if(*) no se interpreta como lógico"
 
-#: src/main/eval.c:3180 src/main/eval.c:3231
+#: src/main/eval.c:3184 src/main/eval.c:3235
 msgid "invalid sequence argument in for loop"
 msgstr "secuencia inválida de argumentos en el ciclo for"
 
-#: src/main/eval.c:3340 src/main/eval.c:3361 src/main/eval.c:3476
+#: src/main/eval.c:3344 src/main/eval.c:3365 src/main/eval.c:3480
 msgid "not a BUILTIN function"
 msgstr "no es una función NATIVA"
 
-#: src/main/eval.c:3461
+#: src/main/eval.c:3465
 msgid "bad function"
 msgstr "función defectuosa"
 
-#: src/main/eval.c:3502
+#: src/main/eval.c:3506
 msgid "not a SPECIAL function"
 msgstr "no es una función ESPECIAL"
 
-#: src/main/eval.c:3776
+#: src/main/eval.c:3782
 msgid "cannot find index for threaded code address"
 msgstr "índice de encadenamiento del código no encontrado"
 
-#: src/main/eval.c:3856
+#: src/main/eval.c:3862
 msgid "invalid symbol"
 msgstr "símbolo inválido"
 
-#: src/main/eval.c:3900
+#: src/main/eval.c:3906
 msgid "argument is not a byte code object"
 msgstr "el argumento no es un objeto bytecode"
 
-#: src/main/eval.c:3921
+#: src/main/eval.c:3927
 msgid "bad file name"
 msgstr "nombre de archivo inválido"
 
-#: src/main/eval.c:3925 src/main/eval.c:3946
+#: src/main/eval.c:3931 src/main/eval.c:3952
 msgid "unable to open 'file'"
 msgstr "imposible abrir 'file'"
 
-#: src/main/eval.c:3940 src/main/saveload.c:1929
+#: src/main/eval.c:3946 src/main/saveload.c:1929
 msgid "'file' must be non-empty string"
 msgstr "'file' debe ser un string no vacío"
 
-#: src/main/eval.c:3942 src/main/saveload.c:1931 src/main/saveload.c:2221
+#: src/main/eval.c:3948 src/main/saveload.c:1931 src/main/saveload.c:2221
 #: src/main/serialize.c:1790
 msgid "'ascii' must be logical"
 msgstr "'ascii' debe ser un valor lógico"
 
-#: src/main/eval.c:3971 src/main/eval.c:3978
+#: src/main/eval.c:3977 src/main/eval.c:3984
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: buffer muy pequeño"
 
-#: src/main/eval.c:4011
+#: src/main/eval.c:4017
 msgid "code must be a generic vector"
 msgstr "code debe ser un vector genérico"
 
-#: src/main/eval.c:4050
+#: src/main/eval.c:4056
 msgid "profile timer in use"
 msgstr "cronómetro de desempeño en uso"
 
-#: src/main/eval.c:4052
+#: src/main/eval.c:4058
 msgid "already byte code profiling"
 msgstr "byte code ya en desarrollo"
 
-#: src/main/eval.c:4070
+#: src/main/eval.c:4076
 msgid "setting profile timer failed"
 msgstr "falló la definición del cronómetro de desempeño"
 
-#: src/main/eval.c:4087
+#: src/main/eval.c:4093
 msgid "not byte code profiling"
 msgstr "byte code no se está desarrollando"
 
@@ -4170,63 +4170,63 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Error: C produce desborde de pila en 'segfault'\n"
 
-#: src/main/main.c:849
+#: src/main/main.c:858
 msgid "unable to open the base package\n"
 msgstr "imposible abrir el paquete base package\n"
 
-#: src/main/main.c:925
+#: src/main/main.c:934
 msgid "unable to restore saved data in .RData\n"
 msgstr "imposible restaurar datos guardados en .RData\n"
 
-#: src/main/main.c:971
+#: src/main/main.c:980
 msgid "During startup - "
 msgstr "Durante la inicialización - "
 
-#: src/main/main.c:1197
+#: src/main/main.c:1206
 msgid "cannot quit from browser"
 msgstr "no se puede salir del navegador"
 
-#: src/main/main.c:1201
+#: src/main/main.c:1210
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "se espera una de las siguientes respuestas: \"yes\", \"no\", \"ask\" o "
 "\"default\""
 
-#: src/main/main.c:1206
+#: src/main/main.c:1215
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "guardar=\"ask\" en uso no-interactivo: se usará por defecto la línea de "
 "comando"
 
-#: src/main/main.c:1214
+#: src/main/main.c:1223
 msgid "unrecognized value of 'save'"
 msgstr "no se reconoce el valor 'save'"
 
-#: src/main/main.c:1217
+#: src/main/main.c:1226
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' inválido, se supone el valor 0"
 
-#: src/main/main.c:1222
+#: src/main/main.c:1231
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' no es válida, se asume el valor FALSE"
 
-#: src/main/main.c:1253
+#: src/main/main.c:1262
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "no fue posible asignar espacio para el elemento de retorno de llamada de "
 "nivel superior"
 
-#: src/main/main.c:1331
+#: src/main/main.c:1340
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "índice negativo pasado a R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1439
+#: src/main/main.c:1448
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "mensajes de advertencia desde la llamada de tarea de nivel superior '%s'\n"
 
-#: src/main/main.c:1495
+#: src/main/main.c:1504
 msgid "top-level task callback did not return a logical value"
 msgstr "la llamada de tarea de nivel superior no devuelve un valor lógico"
 

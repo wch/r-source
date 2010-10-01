@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.1\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-09-23 07:22\n"
-"PO-Revision-Date: 2010-03-28 14:16+0100\n"
+"PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: French\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' est obsolète et retiré de R."
@@ -89,12 +90,11 @@ msgstr "chaîne de caractères de version incorrecte"
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) doit avoir un longueur positive"
 
-#, fuzzy
 msgid "'X' must have named dimnames"
-msgstr "'x' doit être de longueur 1"
+msgstr "'x' doit avoir des dimensions nommées"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "les éléments de 'MARGIN' ne sont pas tous les noms des dimensions"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' est trop large pour un tableau"
@@ -138,9 +138,8 @@ msgstr ""
 msgid "name space cannot be unloaded:"
 msgstr "l'espace de noms ne peut être déchargé :"
 
-#, fuzzy
 msgid "converted to character string"
-msgstr "... doit contenir des noms ou des chaînes de caractères"
+msgstr "convertis en chaînes de caractères"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "le motif d'expression régulière '[' est remplacé par '\\\\['"
@@ -671,7 +670,6 @@ msgstr "les niveaux des facteurs diffèrent"
 msgid "invalid factor level, NAs generated"
 msgstr "niveau de facteur incorrect, NAs générés"
 
-#, fuzzy
 msgid "invalid factor level, NA generated"
 msgstr "niveau de facteur incorrect, NAs générés"
 
@@ -828,6 +826,8 @@ msgstr "Attachement du package : '%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
 msgstr ""
+"'verbose' et 'quietly' sont tous les deux vrais ; nous serons \"verbeux\" "
+"alors ..."
 
 msgid "invalid package name"
 msgstr "nom de package incorrect"
@@ -875,48 +875,41 @@ msgstr "Packages R disponibles"
 
 msgid "DLL '%s' not found: maybe not installed for this architecture?"
 msgstr ""
+"La DLL '%s' est introuvable : elle n'est peut-être pas installée pour cette "
+"architecture ?"
 
-#, fuzzy
 msgid "shared object '%s' not found"
-msgstr "objet %s introuvable"
+msgstr "objet partagé '%s' introuvable"
 
-#, fuzzy
 msgid "DLL '%s' already loaded"
 msgstr "la librairie partagée '%s' est déjà chargée"
 
-#, fuzzy
 msgid "shared object '%s' already loaded"
-msgstr "la librairie partagée '%s' est déjà chargée"
+msgstr "l'objet partagé '%s' est déjà chargé"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "dyn.load(\"%s\") en cours ..."
 
-#, fuzzy
 msgid "no DLL was specified"
-msgstr "aucune librarie partagée n'est spécifiée"
+msgstr "aucune librarie partagée (DLL) n'est spécifiée"
 
-#, fuzzy
 msgid "no shared object was specified"
-msgstr "aucune librarie partagée n'est spécifiée"
+msgstr "aucun objet partagé n'est spécifié"
 
-#, fuzzy
 msgid "DLL '%s' was not loaded"
-msgstr "la librarie partagée '%s' n'est pas chargée"
+msgstr "la librarie partagée (DLL) '%s' n'est pas chargée"
 
-#, fuzzy
 msgid "shared object '%s' was not loaded"
-msgstr "la librarie partagée '%s' n'est pas chargée"
+msgstr "l'objet partagé '%s' n'est pas chargé"
 
-#, fuzzy
 msgid "DLL '%s' not found"
-msgstr "fichier '%s' introuvable"
+msgstr "DLL '%s' introuvable"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "dyn.unload(\"%s\") en cours ..."
 
-#, fuzzy
 msgid "use of 'save' is deprecated"
-msgstr "'%s' est obsolète."
+msgstr "l'utilisation de 'save' est obsolète"
 
 #, fuzzy
 msgid "save != FALSE is defunct"
@@ -1095,9 +1088,8 @@ msgstr ""
 msgid "Expected a single logical value for the S4 state flag"
 msgstr "Une valeur logique unique est attendue pour l'état de l'objet S4"
 
-#, fuzzy
 msgid "Expected a single logical value for the S3 state flag"
-msgstr "Une valeur logique unique est attendue pour l'état de l'objet S4"
+msgstr "Une valeur logique unique est attendue pour l'état de l'objet S3"
 
 msgid "invalid to change the storage mode of a factor"
 msgstr "le mode de stockage d'un objet \"factor\" ne peut être modifié"
@@ -1486,7 +1478,7 @@ msgid "incorrect values of 'indent' and 'width'"
 msgstr "valeurs incorrectes de 'indent' et 'width'"
 
 msgid "probably wrong encoding in names(.) of column"
-msgstr ""
+msgstr "encodage probablement erroné dans les noms de colonnes 'names(.)'"
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' doit être 0 ou ncol(x)"
@@ -1588,9 +1580,8 @@ msgstr ""
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' doit être TRUE ou FALSE"
 
-#, fuzzy
 msgid "'ignore.stdout' must be TRUE or FALSE"
-msgstr "'ignore.stderr' doit être TRUE ou FALSE"
+msgstr "'ignore.stdout' doit être TRUE ou FALSE"
 
 msgid "'ignore.stderr' must be TRUE or FALSE"
 msgstr "'ignore.stderr' doit être TRUE ou FALSE"
@@ -1601,23 +1592,17 @@ msgstr "'wait' doit être TRUE ou FALSE"
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' doit être un vecteur de chaînes de caractères ou 'NULL'"
 
-#, fuzzy
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
-msgstr ""
-"les arguments 'show.output.on.console', 'minimized' et 'invisible' sont "
-"seulement pour Windows"
+msgstr "les arguments 'minimized' et 'invisible' sont seulement pour Windows"
 
-#, fuzzy
 msgid "setting stdout = TRUE"
-msgstr "T utilisé à la place de TRUE"
+msgstr "stdout = TRUE est utilisé"
 
-#, fuzzy
 msgid "'stdout' must be of length 1"
-msgstr "'to' doit être de longeur 1"
+msgstr "'stdout' doit être de longeur 1"
 
-#, fuzzy
 msgid "'stderr' must be of length 1"
-msgstr "'to' doit être de longeur 1"
+msgstr "'stderr' doit être de longeur 1"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' doit être TRUE ou FALSE"

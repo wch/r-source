@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-10-01 07:42+0100\n"
+"POT-Creation-Date: 2010-10-01 21:30+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -554,7 +554,7 @@ msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 
-#: src/include/Errormsg.h:25 src/main/eval.c:2974 src/main/subscript.c:312
+#: src/include/Errormsg.h:25 src/main/eval.c:2978 src/main/subscript.c:312
 #: src/main/subscript.c:353 src/main/subscript.c:457 src/main/subscript.c:554
 msgid "subscript out of bounds"
 msgstr ""
@@ -635,49 +635,49 @@ msgstr ""
 msgid "RNG_Init: unimplemented RNG kind %d"
 msgstr ""
 
-#: src/main/RNG.c:300
+#: src/main/RNG.c:309
 msgid ".Random.seed is a missing argument with no default"
 msgstr ""
 
-#: src/main/RNG.c:301
+#: src/main/RNG.c:310
 #, c-format
 msgid ".Random.seed is not an integer vector but of type '%s'"
 msgstr ""
 
-#: src/main/RNG.c:307
+#: src/main/RNG.c:316
 msgid ".Random.seed[1] is not a valid integer"
 msgstr ""
 
-#: src/main/RNG.c:311
+#: src/main/RNG.c:320
 msgid ".Random.seed[0] is not a valid Normal type"
 msgstr ""
 
-#: src/main/RNG.c:322
+#: src/main/RNG.c:331
 msgid ".Random.seed[1] = 5 but no user-supplied generator"
 msgstr ""
 
-#: src/main/RNG.c:325
+#: src/main/RNG.c:334
 msgid ".Random.seed[1] is not a valid RNG kind (code)"
 msgstr ""
 
-#: src/main/RNG.c:347
+#: src/main/RNG.c:356
 msgid ".Random.seed has wrong length"
 msgstr ""
 
-#: src/main/RNG.c:400
+#: src/main/RNG.c:409
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
 msgstr ""
 
-#: src/main/RNG.c:412
+#: src/main/RNG.c:421
 msgid "invalid Normal type in RNGkind"
 msgstr ""
 
-#: src/main/RNG.c:415
+#: src/main/RNG.c:424
 msgid "'user_norm_rand' not in load table"
 msgstr ""
 
-#: src/main/RNG.c:458
+#: src/main/RNG.c:467
 msgid "supplied seed is not a valid integer"
 msgstr ""
 
@@ -1272,7 +1272,7 @@ msgstr ""
 #: src/main/envir.c:1857 src/main/envir.c:2530 src/main/envir.c:2590
 #: src/main/envir.c:2909 src/main/envir.c:2938 src/main/envir.c:2959
 #: src/main/envir.c:2982 src/main/envir.c:3016 src/main/envir.c:3036
-#: src/main/envir.c:3341 src/main/envir.c:3345 src/main/eval.c:3839
+#: src/main/envir.c:3341 src/main/envir.c:3345 src/main/eval.c:3845
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2057
 #: src/main/saveload.c:2338 src/main/serialize.c:2264
 msgid "use of NULL environment is defunct"
@@ -1355,7 +1355,7 @@ msgstr ""
 
 #: src/main/builtin.c:877 src/main/eval.c:417 src/main/eval.c:521
 #: src/main/eval.c:1598 src/main/eval.c:1664 src/main/eval.c:1724
-#: src/main/eval.c:2055 src/main/eval.c:3430 src/main/eval.c:3538
+#: src/main/eval.c:2055 src/main/eval.c:3434 src/main/eval.c:3542
 msgid "'...' used in an incorrect context"
 msgstr ""
 
@@ -1505,7 +1505,7 @@ msgstr ""
 msgid "list argument expected"
 msgstr ""
 
-#: src/main/coerce.c:1440 src/main/eval.c:3836 src/main/eval.c:3843
+#: src/main/coerce.c:1440 src/main/eval.c:3842 src/main/eval.c:3849
 msgid "invalid environment"
 msgstr ""
 
@@ -2467,7 +2467,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr ""
 
 #: src/main/deparse.c:365 src/main/envir.c:1693 src/main/envir.c:1775
-#: src/main/eval.c:423 src/main/eval.c:897 src/main/eval.c:2841
+#: src/main/eval.c:423 src/main/eval.c:897 src/main/eval.c:2843
 #: src/main/saveload.c:1965 src/main/saveload.c:2282 src/main/serialize.c:2282
 #, c-format
 msgid "object '%s' not found"
@@ -2934,7 +2934,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr ""
 
 #: src/main/envir.c:1300 src/main/envir.c:1771 src/main/eval.c:427
-#: src/main/eval.c:2844
+#: src/main/eval.c:2847
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr ""
@@ -3340,11 +3340,11 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr ""
 
-#: src/main/eval.c:429 src/main/eval.c:2845
+#: src/main/eval.c:429 src/main/eval.c:2848
 msgid "argument is missing, with no default"
 msgstr ""
 
-#: src/main/eval.c:517 src/main/eval.c:3378
+#: src/main/eval.c:517 src/main/eval.c:3382
 msgid "attempt to apply non-function"
 msgstr ""
 
@@ -3473,135 +3473,135 @@ msgstr ""
 msgid "dispatch error in group dispatch"
 msgstr ""
 
-#: src/main/eval.c:2768
+#: src/main/eval.c:2770
 msgid "node stack overflow"
 msgstr ""
 
-#: src/main/eval.c:2774
+#: src/main/eval.c:2776
 msgid "integer stack overflow"
 msgstr ""
 
-#: src/main/eval.c:2827
+#: src/main/eval.c:2829
 msgid "Bad opcode"
 msgstr ""
 
-#: src/main/eval.c:2976
+#: src/main/eval.c:2980
 msgid "not a vector object"
 msgstr ""
 
-#: src/main/eval.c:2984 src/main/eval.c:3006 src/main/eval.c:3030
-#: src/main/eval.c:3054
+#: src/main/eval.c:2988 src/main/eval.c:3010 src/main/eval.c:3034
+#: src/main/eval.c:3058
 msgid "can only handle simple real vectors"
 msgstr ""
 
-#: src/main/eval.c:2993 src/main/eval.c:3040
+#: src/main/eval.c:2997 src/main/eval.c:3044
 msgid "not a simple vector"
 msgstr ""
 
-#: src/main/eval.c:3010 src/main/eval.c:3058 src/main/subassign.c:982
+#: src/main/eval.c:3014 src/main/eval.c:3062 src/main/subassign.c:982
 #: src/main/subset.c:815
 msgid "incorrect number of subscripts"
 msgstr ""
 
-#: src/main/eval.c:3021 src/main/eval.c:3072
+#: src/main/eval.c:3025 src/main/eval.c:3076
 msgid "not a simple matrix"
 msgstr ""
 
-#: src/main/eval.c:3082
+#: src/main/eval.c:3086
 #, fuzzy, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "invalid colour specification '%s'"
 
-#: src/main/eval.c:3118
+#: src/main/eval.c:3122
 msgid "bytecode version mismatch; using eval"
 msgstr ""
 
-#: src/main/eval.c:3123
+#: src/main/eval.c:3127
 msgid "bytecode version is too old"
 msgstr ""
 
-#: src/main/eval.c:3124
+#: src/main/eval.c:3128
 msgid "bytecode version is too new"
 msgstr ""
 
-#: src/main/eval.c:3129
+#: src/main/eval.c:3133
 msgid "byte code version mismatch"
 msgstr ""
 
-#: src/main/eval.c:3145
+#: src/main/eval.c:3149
 msgid "missing value where logical needed"
 msgstr ""
 
-#: src/main/eval.c:3146
+#: src/main/eval.c:3150
 msgid "argument of if(*) is not interpretable as logical"
 msgstr ""
 
-#: src/main/eval.c:3180 src/main/eval.c:3231
+#: src/main/eval.c:3184 src/main/eval.c:3235
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:3340 src/main/eval.c:3361 src/main/eval.c:3476
+#: src/main/eval.c:3344 src/main/eval.c:3365 src/main/eval.c:3480
 msgid "not a BUILTIN function"
 msgstr ""
 
-#: src/main/eval.c:3461
+#: src/main/eval.c:3465
 msgid "bad function"
 msgstr ""
 
-#: src/main/eval.c:3502
+#: src/main/eval.c:3506
 msgid "not a SPECIAL function"
 msgstr ""
 
-#: src/main/eval.c:3776
+#: src/main/eval.c:3782
 msgid "cannot find index for threaded code address"
 msgstr ""
 
-#: src/main/eval.c:3856
+#: src/main/eval.c:3862
 msgid "invalid symbol"
 msgstr ""
 
-#: src/main/eval.c:3900
+#: src/main/eval.c:3906
 msgid "argument is not a byte code object"
 msgstr ""
 
-#: src/main/eval.c:3921
+#: src/main/eval.c:3927
 msgid "bad file name"
 msgstr ""
 
-#: src/main/eval.c:3925 src/main/eval.c:3946
+#: src/main/eval.c:3931 src/main/eval.c:3952
 msgid "unable to open 'file'"
 msgstr ""
 
-#: src/main/eval.c:3940 src/main/saveload.c:1929
+#: src/main/eval.c:3946 src/main/saveload.c:1929
 msgid "'file' must be non-empty string"
 msgstr ""
 
-#: src/main/eval.c:3942 src/main/saveload.c:1931 src/main/saveload.c:2221
+#: src/main/eval.c:3948 src/main/saveload.c:1931 src/main/saveload.c:2221
 #: src/main/serialize.c:1790
 msgid "'ascii' must be logical"
 msgstr ""
 
-#: src/main/eval.c:3971 src/main/eval.c:3978
+#: src/main/eval.c:3977 src/main/eval.c:3984
 msgid "R_CompiledFileName: buffer too small"
 msgstr ""
 
-#: src/main/eval.c:4011
+#: src/main/eval.c:4017
 msgid "code must be a generic vector"
 msgstr ""
 
-#: src/main/eval.c:4050
+#: src/main/eval.c:4056
 msgid "profile timer in use"
 msgstr ""
 
-#: src/main/eval.c:4052
+#: src/main/eval.c:4058
 msgid "already byte code profiling"
 msgstr ""
 
-#: src/main/eval.c:4070
+#: src/main/eval.c:4076
 msgid "setting profile timer failed"
 msgstr ""
 
-#: src/main/eval.c:4087
+#: src/main/eval.c:4093
 msgid "not byte code profiling"
 msgstr ""
 
@@ -4052,56 +4052,56 @@ msgstr ""
 msgid "Error: segfault from C stack overflow\n"
 msgstr ""
 
-#: src/main/main.c:849
+#: src/main/main.c:858
 msgid "unable to open the base package\n"
 msgstr ""
 
-#: src/main/main.c:925
+#: src/main/main.c:934
 msgid "unable to restore saved data in .RData\n"
 msgstr ""
 
-#: src/main/main.c:971
+#: src/main/main.c:980
 msgid "During startup - "
 msgstr ""
 
-#: src/main/main.c:1197
+#: src/main/main.c:1206
 msgid "cannot quit from browser"
 msgstr ""
 
-#: src/main/main.c:1201
+#: src/main/main.c:1210
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:1206
+#: src/main/main.c:1215
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:1214
+#: src/main/main.c:1223
 msgid "unrecognized value of 'save'"
 msgstr ""
 
-#: src/main/main.c:1217
+#: src/main/main.c:1226
 msgid "invalid 'status', 0 assumed"
 msgstr ""
 
-#: src/main/main.c:1222
+#: src/main/main.c:1231
 msgid "invalid 'runLast', FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:1253
+#: src/main/main.c:1262
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:1331
+#: src/main/main.c:1340
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1439
+#: src/main/main.c:1448
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1495
+#: src/main/main.c:1504
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
