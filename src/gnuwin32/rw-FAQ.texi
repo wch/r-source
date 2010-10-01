@@ -124,7 +124,7 @@ The information here applies only to recent versions of R for Windows,
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
 @section Where can I find the latest version?
 
-Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
+Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
 installer @samp{@RWVER@-win.exe} of about 37Mb.  This contains all the
@@ -177,6 +177,10 @@ will have a shortcut to @file{Rgui.exe} on your desktop
 and/or somewhere on the Start menu file tree, and perhaps also in the
 Quick Launch part of the taskbar.  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
+
+On some systems you will have two shortcuts, one for 32-bit with a label
+starting @code{R} and one for 64-bit starting @code{R x64}
+(@pxref{Should I run 32-bit or 64-bit R?})
 
 You may also want to add command-line arguments at the end of the
 Target field (@emph{after} any final double quote, and separated by a
@@ -235,7 +239,7 @@ after having checked the command line.
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup
-(@uref{http://jrsoftware.org/ishelp.php}) for details.
+(@uref{http://jrsoftware.org/@/ishelp.php}) for details.
 
 We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
@@ -278,8 +282,8 @@ Control Panel.  If it does not appear there, run @file{unins000.exe} in
 the top-level installation directory.  (There should be a separate
 uninstall item in the R group on the Start Menu for each installed
 version of R.  On recent versions of Windows you may well be asked to
-confirm that you wish to run a program from an `unidentified
-publisher'.)
+confirm that you wish to run a program from an `unknown' or
+`unidentified' publisher.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -323,8 +327,8 @@ usage.  The limit can be raised (if possible) by calling
 The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
 to 3GB of user address space per process under suitably enabled versions
 of 32-bit Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx},
-@uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
+@uref{http://www.microsoft.com/@/whdc/@/system/@/platform/@/server/@/PAE/@/PAEmem.mspx},
+@uref{http://msdn.microsoft.com/@/en-us/@/library/@/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
 all but the earliest 64-bit versions of Windows the user address space
@@ -628,9 +632,9 @@ it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
 CPUs even though there is only one physical CPU.
 
 Hyper-threading has been re-introduced for Intel i3/i5/i7 CPUs and some
-Xeons: these will usually be reported as 4 or 8 or 12 CPUs and so R be
-shown as using 25% or less.  You can see how many `CPU's are assumed by
-looking at the number of graphs of `CPU Usage History' on the
+Xeons: these will usually be reported as 4 or 8 or 12 CPUs and so R will
+be shown as using 25% or less.  You can see how many `CPU's are assumed
+by looking at the number of graphs of `CPU Usage History' on the
 `Performance' tab of the Windows Task manager.
 
 
@@ -657,7 +661,7 @@ Administrator account by default has it turned off.)  Unlike (say)
 Windows XP, such accounts do not run programs with full administrator
 privileges, and this is where the issues arise.  (For background
 information consult e.g.@:
-@url{http://windowsvistablog.com/blogs/windowsvista/archive/2007/01/23/security-features-vs-convenience.aspx}.)
+@url{http://windowsvistablog.com/@/blogs/@/windowsvista/@/archive/@/2007/01/23/@/security-features-vs-convenience.aspx}.)
 These OSes have the concept of `over-the-shoulder' credentials: if you
 are running without full administrator privileges and do something which
 needs them you may be prompted with one or more security-check dialog
@@ -772,7 +776,7 @@ lack directional double quotes on all the systems we tried.
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
 directional quotes by including in the LaTeX preamble e.g.@: (for a
-Latin-1 locale)
+Western European locale)
 
 @example
 \usepackage[cp1252]@{inputenc@}
@@ -790,7 +794,7 @@ This is @code{]} in Canadian (multilingual), German and Scandinavian
 layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
 @code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  For
 some keyboards the uses of AltGr are at
-@url{http://office.microsoft.com/en-us/word/HP052590631033.aspx}: you
+@url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}: you
 can explore those for your keyboard via the `On-Screen Keyboard' (under
 Accessories, Accessibility on XP).
 
@@ -841,14 +845,14 @@ extra features of all x86-64 chips (more registers, SSE2/3 instructions,
 For advanced users the choice may be dictated by whether the contributed
 packages needed are available in 64-bit builds (and if they are not that
 is some indication that installing them from sources is problematic).
-At the time of writing the main CRAN packages without 64-bit versions
-were @code{BRugs}, @code{GDD}, @code{rggobi} and some of the
-database-connectivity packages.  The considerations can be more complex:
-for example 32/64-bit @code{RODBC} need 32/64 ODBC drivers respectively,
-and where both exist they may not be able to be installed together.  An
-extreme example is the Microsoft Access/Excel ODBC drivers: if you have
-installed 64-bit Microsoft Office you can only install the 64-bit
-drivers and so need to use 64-bit @code{RODBC} and hence R.
+At the time of writing the most commonly-used CRAN packages without
+64-bit versions were @code{BRugs} and @code{rggobi}. The considerations
+can be more complex: for example 32/64-bit @code{RODBC} need 32/64 ODBC
+drivers respectively, and where both exist they may not be able to be
+installed together.  An extreme example is the Microsoft Access/Excel
+ODBC drivers: if you have installed 64-bit Microsoft Office you can only
+install the 64-bit drivers and so need to use 64-bit @code{RODBC} and
+hence R.
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
@@ -856,14 +860,6 @@ drivers and so need to use 64-bit @code{RODBC} and hence R.
 Obviously, only relevant if the machine is running a 64-bit version of
 Windows -- simply select both when using the installer.  You can also go
 back and add 64-bit components to a 32-bit install.
-
-The default personal library directories are different.  If you set the
-library path in a personal (rather than site) startup file it will need
-to choose one depending on the build, e.g.@:
-
-@example
-.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs/i386")
-@end example
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
@@ -953,16 +949,16 @@ You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
 language characters always being available, which is the case for
 so-called `Unicode' Windows applications.  However, R is primarily
-written for Unix-alikes and is not therefore `Unicode'.)  You can find
-suitable locale names from
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
+written for Unix-alikes and is not therefore `Unicode' in the Windows
+sense.)  You can find suitable locale names from
+@uref{http://msdn.microsoft.com/@/library/@/default.asp?url=/@/library/@/en-us/@/vccore98/@/html/@/_crt_language_and_country_strings.asp}:
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
-GB2312).  Note that this can be rather tricky: on International versions
-of Windows XP there are several places to select the language under the
-`Regional and Language Options' part of the control panel, and the
-appropriate language has to be set under @emph{both} the `Regional
-Options' and `Advanced' tabs.
+GB2312).  Note that this can be rather tricky: for example, on
+International versions of Windows XP there are several places to select
+the language under the `Regional and Language Options' part of the
+control panel, and the appropriate language has to be set under
+@emph{both} the `Regional Options' and `Advanced' tabs.
 
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. Lucida Console, not the OEM raster
@@ -1037,7 +1033,7 @@ settings are likely to be consistent.  However, if you try to run
 Windows in one language and R in another, you may find the way Windows
 handles internationalization slightly odd.
 @c For further details see
-@c @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
+@c @uref{http://msdn.microsoft.com/@/library/@/default.asp?url=/@/library/@/en-us/@/intl/@/nls_0ddl.asp}.
 
 @newchap{}
 @node Packages, Windows Features, Languages and Internationalization, Top
@@ -1078,8 +1074,8 @@ each minor (2.x) version will be stored in a separate area, so for R
 2.12.? the files are in @file{bin/windows/contrib/2.12}.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
-gives the locations of a few other pre-compiled packages.
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/ReadMe},
+which also gives the locations of a few other pre-compiled packages.
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, read the `R Installation and
@@ -1181,7 +1177,7 @@ For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found (except
 on Windows 2000).  See
-@uref{http://cran.r-project.org/bin/windows/contrib/2.12/ReadMe} for a
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1210,19 +1206,20 @@ need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0, and you do need
 the architecture to match, that is a 32-bit or 64-bit build of Tcl/Tk to
 match the R build in use.
 
-Several package authors have suggested using ActiveTcl
-(@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
-Tcl/Tk extensions (but the support files do contain the most commonly
-used @code{TkTable} and @code{BWidget} extensions).  This could be used
-by setting (for a default install)
+In the past several package authors have suggested using ActiveTcl
+(@uref{http://www.activestate.com/@/Products/@/activetcl/}) as a way to
+get Tcl/Tk extensions (but the support files do contain the most
+commonly used @code{TkTable} and @code{BWidget} extensions).  This could
+be used by setting (for a default install)
 
 @example
 MY_TCLTK=c:/Tcl/bin
 @end example
 
 @noindent
-@strong{but} current versions do not contain any extra extensions
-(although they may be downloaded via the @code{Teacup} facility).
+@strong{but} current versions do not by default contain any extra
+extensions (although they may be downloaded via the @code{Teacup}
+facility).
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -1263,7 +1260,8 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 @node Help is not shown for some of the packages, How do I get static HTML pages?, How do I add to the list of repositories?, Packages
 @section Help is not shown for some of the packages
 
-This was about Compiled HTML help, which is not supported since R 2.10.0.
+This was about Compiled HTML help, which has not been supported since R
+2.10.0.
 
 @node How do I get static HTML pages?, How can I get a binary version of a package?, Help is not shown for some of the packages, Packages
 @section How do I get static HTML pages?
@@ -1566,7 +1564,7 @@ you want to install).
 @section  Can I use a fast BLAS?
 
 Fast BLAS (Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/blas/faq.html}) routines are used to speed
+@uref{http://www.netlib.org/@/blas/@/faq.html}) routines are used to speed
 up numerical linear algebra.  There is support in the R sources for the
 `tuned' BLAS called ATLAS (@uref{http://math-atlas.sourceforge.net}).
 The savings can be appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix
@@ -1576,28 +1574,29 @@ the optimal routines for a P4 or an Athlon XP are quite different and
 neither will run at all on a PII.
 
 BLAS support is supplied by the single DLL
-@file{R_HOME\bin\i386\Rblas.dll}, and you can add a fast BLAS
-just by replacing that.  Replacements for 32-bit R and some of the older
-common chips are available on CRAN in directory
+@file{R_HOME\bin\i386\Rblas.dll}, and you can add a fast BLAS just by
+replacing that.  Replacements for 32-bit R and some of the older common
+chips are available on CRAN in directory
 @file{bin/windows/contrib/ATLAS}.  See the R Installation and
 Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
 to your system using the R sources.  Unfortunately the process has been
-less successful when tried for the common current chips such as Core 2.
+less successful when tried for the common current chips such as Intel's
+Core 2.
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
 
 We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
-install the parts of the R system for building R packages (installed by
-default), and get and install the tools and compilers mentioned in the
-`R Installation and Administration' manual.  Then you can use
+get and install the tools and toolchain mentioned in the `R Installation
+and Administration' manual.  Then you can use
 @example
 ...\bin\i386\R CMD SHLIB foo.c bar.f
 @end example
 @noindent
 to make @file{foo.dll}.  Use @command{...\bin\i386\R CMD SHLIB --help} for
-further options, or see @code{?SHLIB}.
+further options, or see @code{?SHLIB}.  (Replace @code{i386} by
+@code{x64} for 64-bit R.)
 
 If you want to use Visual C++, Borland C++ or other compilers, see the
 appropriate section in @file{README.packages}.
@@ -1607,14 +1606,12 @@ appropriate section in @file{README.packages}.
 @node How do I debug code that I have compiled and dyn.load-ed?, How do I include C++ code?, How do I include compiled C code?, Building from Source
 @section How do I debug code that I have compiled and dyn.load-ed?
 
-You will need a suitable version of @command{gdb}: we normally use that
-from the Cygwin distribution.  Debugging under Windows is often a
-fraught process, and sometimes does not work at all.  If all you need is
-a @emph{just-in-time} debugger to catch crashes, consider
-@code{Dr. Mingw} from the @code{mingw-utils} bundle on
-@uref{http://www.mingw.org}.  That will be able to pinpoint the error,
-most effectively if you build a version of R with debugging information
-as described below.
+Debugging under Windows is often a fraught process, and sometimes does
+not work at all.  If all you need is a @emph{just-in-time} debugger to
+catch crashes, consider (32-bit) @code{Dr. Mingw} from the
+@code{mingw-utils} bundle on @uref{http://www.mingw.org}.  That will be
+able to pinpoint the error, most effectively if you build a version of R
+with debugging information as described below.
 
 First, build a version of the R system with debugging information by
 
@@ -1641,7 +1638,8 @@ Rcmd install mypkg
 @end example
 
 @noindent
-Then you can debug by
+You will need a suitable version of @command{gdb} which matches your
+compiler.  Then you can debug by
 
 @example
 gdb /path/to/@RWVER@/bin/i386/Rgui.exe
@@ -1699,14 +1697,14 @@ drop control back to the debugger does not work with a MinGW version of
 @item
 Other debuggers than @command{gdb} can be used.  We have successfully
 used the @command{insight} front-end to @command{gdb} (see
-@uref{http://sources.redhat.com/insight/}: there is a MinGW port on
+@uref{http://sources.redhat.com/@/insight/}: there is a MinGW port on
 their site), and Borland's debugger with a DLL compiled in a Borland
 compiler.
 
 @end itemize
 
 See
-@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}
+@uref{http://www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/debuggingR/@/gdb.shtml}
 for some further details.
 
 
@@ -1791,7 +1789,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-07-21
+@set LASTEDIT 2010-10-01
 @ifhtml
 @html
 <hr WIDTH="100%">
