@@ -697,6 +697,9 @@
       Both \code{library()} and \code{loadNamespace()} now record
       absolute paths for use by \code{searchpaths()} and
       \code{getNamespaceInfo(ns, "path")}.
+
+      \item The self-staring model \code{NLSstClosestX} failed if some
+      deviation was exactly zero.  (\PR{14384})
     }
   }
 }
