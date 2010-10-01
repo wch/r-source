@@ -1,6 +1,6 @@
 % File src/library/utils/man/combn.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{combn}
@@ -21,7 +21,7 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 }
 \arguments{
   \item{x}{vector source for combinations, or integer \code{n} for
-    \code{x <- \link{seq}(n)}.}
+    \code{x <- \link{seq_len}(n)}.}
   \item{m}{number of elements to choose.}
   \item{FUN}{function to be applied to each combination; default
     \code{NULL} means the identity, i.e., to return the combination

@@ -26,7 +26,7 @@ tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
     one <- 1L
     group <- rep.int(one, nx)#- to contain the splitting vector
     ngroup <- one
-    for (i in seq.int(INDEX)) {
+    for (i in seq_along(INDEX)) {
 	index <- as.factor(INDEX[[i]])
 	if (length(index) != nx)
 	    stop("arguments must have same length")
