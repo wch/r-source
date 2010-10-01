@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-08-17 16:04\n"
-"PO-Revision-Date: 2010-04-03 09:55+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2010-09-29 17:12+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -81,23 +81,23 @@ msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
 
 msgid "No suitable spell check program found."
-msgstr ""
+msgstr "適当なスペルチェックプログラムが見つかりません．"
 
-#, fuzzy
 msgid "Filter '%s' is not available."
-msgstr " テスト '%s' が利用できません "
+msgstr " フィルタ '%s' が利用できません "
 
 msgid "Invalid 'filter' argument."
 msgstr " 不正な 'filter' 引数 "
 
-#, fuzzy
 msgid "Processing file %s"
-msgstr "ファイルを処理中"
+msgstr "ファイル %s を処理中"
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
-msgstr " aspellの実行は失敗しました: %s "
+msgstr ""
+" aspellの実行は失敗しました: \n"
+" %s "
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -128,58 +128,60 @@ msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
 msgstr ""
+" 引数の長さが等しくありません．以下をリサイクル使用する必要があります：%s "
 
 msgid ","
 msgstr " , "
 
 msgid "Use either 'given' or 'first'/'middle' but not both."
 msgstr ""
+" 'given' か 'first'/'middle' のどちらかを使いますが、両方ではありません．"
 
 msgid "It is recommended to use 'given' instead of 'first'."
-msgstr ""
+msgstr " 'first' の代わりに 'given' を使うことをおすすめします．"
 
 msgid "It is recommended to use 'given' instead of 'middle'."
-msgstr ""
+msgstr " 'middle' の代わりに 'given' を使うことをおすすめします．"
 
 msgid "Use either 'family' or 'last' but not both."
-msgstr ""
+msgstr " 'family' か 'last' のどちらかを使いますが，両方ではありません．"
 
 msgid "It is recommended to use 'family' instead of 'last'."
-msgstr ""
+msgstr " 'last' の代わりに 'family' を使うことをおすすめします．"
 
-#, fuzzy
 msgid "Invalid role specification(s): %s."
-msgstr " 不正な 'quote' 指定です "
+msgstr " 不正な role 指定です：%s "
 
 msgid "It is recommended to use given/family instead of first/middle/last."
 msgstr ""
+" first/middle/last の代わりに given/family を使うことをおすすめします．"
 
 msgid "method is just applicable to 'person' objects"
-msgstr ""
+msgstr " メソッドは 'person' オブジェクトだけに適用可能です．"
 
 msgid "all arguments must be of class \"person\""
 msgstr " 全ての引数がクラス \"person\" でなければなりません "
 
 msgid "at least one field has to be specified"
-msgstr ""
+msgstr " 少なくとも一つの欄を指定しなければなりません "
 
 msgid "all fields have to be named"
-msgstr ""
+msgstr " すべての欄は名前を持つ必要があります "
 
 msgid "'bibtype' has to be one of"
-msgstr ""
+msgstr " 'bibtype' は以下のどれかである必要があります "
 
 msgid "A bibentry of bibtype '"
-msgstr ""
+msgstr " 以下の bibtype の bibentry ' "
 
 msgid "' has to correctly specify the field(s):"
-msgstr ""
+msgstr " ' は欄を正確に指定しなければなりません： "
 
 msgid "' has to specify the field(s):"
-msgstr ""
+msgstr " ' は欄を指定しなければなりません： "
 
 msgid "method is just applicable to 'bibentry' objects"
-msgstr ""
+msgstr " メソッドは 'bibentry' オブジェクトだけに適用可能です "
 
 msgid "package '%s' not found"
 msgstr " パッケージ '%s' が見付かりません "
@@ -197,7 +199,7 @@ msgstr ""
 "た "
 
 msgid "Enhanced author specification provides no authors."
-msgstr ""
+msgstr " 拡張作者指定が作者を指定していません．"
 
 msgid "m < 0"
 msgstr " m < 0 "
@@ -475,13 +477,11 @@ msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 " パッケージ '%s' に対する DESCRIPTION ファイルは存在しないか壊れています "
 
-#, fuzzy
 msgid "package"
 msgstr " パッケージ "
 
-#, fuzzy
 msgid "not found"
-msgstr " ドキュメントが見付かりません "
+msgstr " 見付かりません "
 
 msgid "menu() cannot be used non-interactively"
 msgstr " menu() は対話的にしか使用できません "
@@ -607,6 +607,8 @@ msgid ""
 "Removing package(s) from %s\n"
 "(as %s is unspecified)"
 msgstr ""
+" パッケージを %s から取り除きます \n"
+" (%s が指定されていないので) "
 
 msgid "'destdir' is not a directory"
 msgstr " 'destdir' はディレクトリではありません "
@@ -662,6 +664,8 @@ msgid ""
 "Installing package(s) into %s\n"
 "(as %s is unspecified)"
 msgstr ""
+" パッケージを %s 中にインストールします \n"
+" (%s が指定されていないので) "
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
@@ -1093,7 +1097,7 @@ msgid "failed to create '%s'"
 msgstr " '%s' を生成できませんでした "
 
 msgid "there is no 'libs' directory in package '%s'"
-msgstr ""
+msgstr "いかなる 'libs' ディレクトリもパッケージ '%s' 中にはありません "
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr " パッケージ '%s' の前のインストールを取り除くことが出来ませんでした "
@@ -1136,10 +1140,9 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象(dependency)　%s もインストールします "
 
-#, fuzzy
 msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリではありません "
+msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリではありません "
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"

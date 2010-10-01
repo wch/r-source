@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-09-17 09:19\n"
-"PO-Revision-Date: 2010-04-03 10:33+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2010-09-29 21:37+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
@@ -180,43 +180,36 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
 
-#, fuzzy
 msgid "Package required but not available: %s"
-msgstr " パッケージが必要ですが，利用可能ではありません "
+msgstr " パッケージが必要ですが，利用可能ではありません：%s "
 
-#, fuzzy
 msgid "Packages required and available but unsuitable versions:"
-msgstr " パッケージが必要で，利用可能ですが，適切なバージョンではありません "
+msgstr " パッケージが必要で利用可能ですが，適切なバージョンではありません "
 
-#, fuzzy
 msgid "Package required and available but unsuitable version: %s"
-msgstr " パッケージが必要で，利用可能ですが，適切なバージョンではありません "
+msgstr ""
+" パッケージが必要で，利用可能ですが，適切なバージョンではありません:%s "
 
 msgid "Former standard packages required but now defunct:"
 msgstr " 以前の標準パッケージが必要ですが，このパッケージは現存しません： "
 
-#, fuzzy
 msgid "Packages suggested but not available for checking:"
-msgstr " パッケージが必要ですが，利用可能ではありません "
+msgstr " パッケージが示唆されていますが，チェック可能ではありません "
 
-#, fuzzy
 msgid "Package suggested but not available for checking: %s"
-msgstr " パッケージが必要ですが，利用可能ではありません "
+msgstr " パッケージが示唆されていますが，チェック可能ではありません：%s "
 
-#, fuzzy
 msgid "Packages which this enhances but not available for checking:"
-msgstr " パッケージが必要ですが，利用可能ではありません "
+msgstr " これが拡張するパッケージがチェック可能ではありません： "
 
-#, fuzzy
 msgid "Package which this enhances but not available for checking: %s"
-msgstr " パッケージが必要ですが，利用可能ではありません "
+msgstr " これが拡張するパッケージがチェック可能ではありません：%s "
 
 msgid "Vignette dependencies not required:"
 msgstr " ビニエットの依存性は不要です: "
 
-#, fuzzy
 msgid "Vignette dependencies not required: %s"
-msgstr " ビニエットの依存性は不要です: "
+msgstr " ビニエットの依存性は不要です: %s "
 
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
@@ -228,9 +221,8 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr " Namespaceの依存性は必要ありません： "
 
-#, fuzzy
 msgid "Namespace dependency not required: %s"
-msgstr " Namespaceの依存性は必要ありません： "
+msgstr " Namespaceの依存性は必要ありません： %s "
 
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
@@ -378,18 +370,17 @@ msgstr " パッケージ \"methods\" が使われていますが、宣言され�
 msgid "'::' or ':::' imports not declared from:"
 msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません: "
 
-#, fuzzy
 msgid "'::' or ':::' import not declared from: %s"
-msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません: "
+msgstr ""
+" '::' もしくは ':::'　によるインポートが以下から宣言されていません: %s "
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
-#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
-" 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
+" 'library' もしくは 'requires' 呼出しが以下から宣言されていません： ％ｓ "
 
 msgid "Rd files with duplicated name '%s':"
 msgstr " 名前 '%s' が重複する Rd ファイル: "
@@ -494,10 +485,10 @@ msgstr ""
 " 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
 
 msgid "no inputs"
-msgstr ""
+msgstr " 入力がありません "
 
 msgid "Error in running tools::texi2dvi"
-msgstr ""
+msgstr " tools::texi2dvi を実行中にエラーがありました "
 
 msgid "more than one \\examples section, using the first"
 msgstr " 2つ以上の\\examples節があります、1番目を用います "
@@ -605,47 +596,44 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
 msgid "Changes require specified 'style'"
-msgstr ""
+msgstr " 指定された 'style' の変更が必要です "
 
 msgid "The default JSS style may not be modified."
-msgstr ""
+msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
 msgid "** Options"
-msgstr ""
+msgstr " ** オプション"
 
 msgid "are only for '--binary'  and will be ignored"
-msgstr ""
+msgstr " 　は '--binary' 専用ですから無視されます "
 
-#, fuzzy
 msgid "Error: cannot rename directory to"
-msgstr " ディレクトリ '%s' を生成することが出来ません "
+msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
-#, fuzzy
 msgid "cannot coerce"
-msgstr "オープンできません "
+msgstr " 強制変換できません "
 
 msgid "to logical"
-msgstr ""
+msgstr " 論理値へ"
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション"
 
 msgid "configuration files are not supported as from R 2.12.0"
-msgstr ""
+msgstr " コンフィギュレーションファイルは R 2.12.0 からはサポートされません "
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
+" ただ一つの使用可能なサブアーキテクチャで '--multiarch' が指定されました "
 
-#, fuzzy
 msgid "Error: no packages were specified"
-msgstr "パッケージが特定できません "
+msgstr "エラー：パッケージが指定されていません "
 
 msgid "package dir"
-msgstr ""
+msgstr " パッケージ dir "
 
-#, fuzzy
 msgid "does not exist"
-msgstr " ファイル '%s' が存在しません "
+msgstr " は存在しません "
 
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
@@ -739,7 +727,7 @@ msgid "installing to"
 msgstr "にインストールしています "
 
 msgid "generating debug symbols (dSYM)"
-msgstr ""
+msgstr " デバッグシンボル (dSYM) を生成中"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -760,19 +748,18 @@ msgstr " 'data' ディレクトリが空です "
 msgid "'--auto-zip' is for Windows only"
 msgstr " --auto-zip'  は Windows 専用です "
 
-#, fuzzy
 msgid "--merge-multiarch is Windows-only"
-msgstr " --auto-zip'  は Windows 専用です "
+msgstr " --merge-multiarch は Windows 専用です "
 
 msgid "cannot create temporary directory"
 msgstr " 一時ディレクトリを生成することが出来ません "
 
-#, fuzzy
 msgid "ERROR: --merge-multiarch applies only to a single tarball"
-msgstr " --pkglock は単一のパッケージだけに適用されます "
+msgstr " エラー: --merge-multiarch は単一の tarball だけに適用可能です "
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 msgstr ""
+" エラー: --merge-multiarch は i386/x64 へのインストールだけで利用可能です "
 
 msgid "invalid package"
 msgstr " 不正なパッケージです "
@@ -850,28 +837,31 @@ msgstr ""
 " %s "
 
 msgid "No news found in given file using old-style R-like format."
-msgstr ""
+msgstr " 旧来のR風の書式を使ったニュースは与えられたファイル中にはありません．"
 
 msgid "No news found in given file using package default format."
 msgstr ""
+"  ペッケージの既定の書式を使ったニュースは与えられたファイル中にはありませ"
+"ん．"
 
 msgid "Could not extract news from the following text chunks:"
-msgstr ""
+msgstr " 以下のテキストの集まりからニュースを取り出せませんでした： "
 
 msgid ""
 "Chunk %s:\n"
 "%s"
 msgstr ""
+"集まり %s: \n"
+" %s "
 
 msgid "Cannot extract version info from the following section titles:"
-msgstr ""
+msgstr " 以下のセクションタイトルからバージョン情報を取り出せません "
 
 msgid "%s"
-msgstr ""
+msgstr " %s "
 
-#, fuzzy
 msgid "Malformed NEWS.Rd file."
-msgstr " 不正な　maintainer field　です． "
+msgstr " 不正な NEWS.Rd ファイルです． "
 
 msgid "Processing packages:"
 msgstr " パッケージを処理中： "
@@ -886,32 +876,31 @@ msgid "cannot create HTML package index"
 msgstr " HTMLパッケージのインデックスを生成することが出来ません "
 
 msgid "Internal error, no tag"
-msgstr ""
+msgstr " 内部エラー、タグがありません "
 
 msgid "Argument for"
-msgstr ""
+msgstr " 以下に対する引数 "
 
-#, fuzzy
 msgid "not found."
-msgstr " ファイル '%s' が見つかりません "
+msgstr " が見つかりません "
 
 msgid "Internal error:  NULL tag"
-msgstr ""
+msgstr " 内部エラー： NULL タグ"
 
 msgid "internal error"
-msgstr ""
+msgstr " 内部エラー"
 
 msgid "Inconsistent arg count for"
-msgstr ""
+msgstr " 以下に対する不整合な引数の数"
 
 msgid "Entry for"
-msgstr ""
+msgstr " 以下に対する項目　 "
 
 msgid "="
-msgstr ""
+msgstr " = "
 
 msgid "already defined to be"
-msgstr ""
+msgstr " は既に以下のように定義されています "
 
 msgid "found encoding"
 msgstr " 見つけられたエンコーディング"
@@ -1053,9 +1042,8 @@ msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 
-#, fuzzy
 msgid "unable to run '%s' on '%s'"
-msgstr " %s を '%s' に対して実行出来ません "
+msgstr " '%s' を '%s' に対して実行出来ません "
 
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "

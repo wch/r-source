@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2008-09-30 10:57+0900 \n"
-"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
+"PO-Revision-Date: 2010-09-29 20:43+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 0.10.1 \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 #: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
@@ -61,9 +61,9 @@ msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 
 #: family.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Value %g out of range (0, 1)"
-msgstr " 値 %d は範囲 (0, 1) 外です "
+msgstr " 値 %g は範囲 (0, 1) 外です "
 
 #: family.c:42 family.c:56 family.c:74
 #, c-format
@@ -100,24 +100,20 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
 
 #: monoSpl.c:40
-#, fuzzy
 msgid "n must be at least two"
-msgstr " m はリストでなければなりません "
+msgstr " n は最低でも２でなければなりません "
 
 #: monoSpl.c:73
-#, fuzzy
 msgid "Argument m must be numeric"
-msgstr " 引数 %s は空でない数値ベクトルでなければなりません  "
+msgstr " 引数 ｍ は数値でなければなりません  "
 
 #: monoSpl.c:76
-#, fuzzy
 msgid "length(m) must be at least two"
-msgstr " m はリストでなければなりません "
+msgstr " length(m) は少なくとも２でなければなりません "
 
 #: monoSpl.c:78
-#, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
+msgstr " 引数 Sx は長さが m[] より 1 だけ短い数値ベクトルでなければなりません "
 
 #: nls.c:97
 msgid "'control' must be a list"
