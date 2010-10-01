@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seq}
@@ -94,11 +94,16 @@ seq(length.out= )
 % We used to explain some of the circumstances when integer was
 % returned, but people read that carelessly, so no longer.
 \value{
-  \code{seq.int} and the default method of \code{seq} return a vector of
-  type \code{"integer"} or \code{"double"}: programmers should not rely
-  on which.
+  \code{seq.int} and the default method of \code{seq} for numeric
+  arguments return a vector of type \code{"integer"} or \code{"double"}:
+  programmers should not rely on which.
 
   \code{seq_along} and \code{seq_len} always return an integer vector.
+}
+% PR#14388
+\note{
+  In its current implementation \code{seq.int} may evaluate its
+  arguments twice.
 }
 
 \references{
