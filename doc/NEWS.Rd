@@ -692,7 +692,7 @@
       drop levels. (\PR{14393})
 
       \item \code{library.dynam.unload} required an absolute path for
-      \code{libpath}.  (\PR{14393})
+      \code{libpath}.  (\PR{14385})
 
       Both \code{library()} and \code{loadNamespace()} now record
       absolute paths for use by \code{searchpaths()} and
