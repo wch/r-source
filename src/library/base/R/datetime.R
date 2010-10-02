@@ -771,7 +771,7 @@ cut.POSIXt <-
         } else {                        # weeks or shorter
             if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
             maxx <- max(x, na.rm = TRUE)
-            breaks <- seq.int(start, maxx + incr, breaks)
+            breaks <- seq(start, maxx + incr, breaks)
             breaks <- breaks[seq_len(1+max(which(breaks <= maxx)))]
         }
     } else stop("invalid specification of 'breaks'")
