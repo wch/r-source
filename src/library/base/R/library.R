@@ -564,8 +564,6 @@ function(chname, package = NULL, lib.loc = NULL,
     for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
         DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")
-        ## for consistency with library.dyn.unload:
-        DLLpath <- abs_path(DLLpath)
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
     }
@@ -574,6 +572,8 @@ function(chname, package = NULL, lib.loc = NULL,
             stop(gettextf("DLL '%s' not found: maybe not installed for this architecture?", chname), domain = NA)
         else
             stop(gettextf("shared object '%s' not found", chname), domain = NA)
+    ## for consistency with library.dyn.unload:
+    file <- file.path(abs_path(DLLpath), paste(chname, file.ext, sep = ""))
     ind <- sapply(dll_list, function(x) x[["path"]] == file)
     if(length(ind) && any(ind)) {
         if(verbose)
