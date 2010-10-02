@@ -667,8 +667,14 @@
       absolute paths for use by \code{searchpaths()} and
       \code{getNamespaceInfo(ns, "path")}.
 
-      \item The self-staring model \code{NLSstClosestX} failed if some
+      \item The self-starting model \code{NLSstClosestX} failed if some
       deviation was exactly zero.  (\PR{14384})
+
+      \item \code{X11(type = "cairo")} (and other devices such as
+      \code{png} using cairographics) and which use Pango font selection
+      now work around a bug in Pango when very small fonts (those with
+      sizes between 0 and 1 in Pango's internal units) are requested.
+      (\PR{14369})
     }
   }
 }
@@ -782,7 +788,6 @@
       and \code{spline()} could be confused by \code{x} values that
       were different but so close as to print identically.
       (\PR{14377})
-
     }
   }
 }

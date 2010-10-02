@@ -430,7 +430,7 @@ static PangoFontDescription *PG_getFont(const pGEcontext gc, double fs)
 {
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
-    double size = gc->cex * gc->ps * fs;
+    double size = gc->cex * gc->ps * fs, ssize = PANGO_SCALE * size;
 
     if (face < 1 || face > 5) face = 1;
 
@@ -448,7 +448,9 @@ static PangoFontDescription *PG_getFont(const pGEcontext gc, double fs)
 	if(face == 3 || face == 4)
 	    pango_font_description_set_style(fontdesc, PANGO_STYLE_OBLIQUE);
     }
-    pango_font_description_set_size(fontdesc, PANGO_SCALE * size);
+    /* seems a ssize < 1 gums up pango, PR#14369 */
+    if (ssize < 1) ssize = 1.0;
+    pango_font_description_set_size(fontdesc, ssize);
 
     return fontdesc;
 }
