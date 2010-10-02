@@ -662,7 +662,7 @@ SEXP static intern_getwd(void)
 	}
     }
 #elif defined(HAVE_GETCWD)
-    char *res = getcwd(buf, PATH_MAX);
+    char *res = getcwd(buf, PATH_MAX); /* can return NULL */
     if(res) rval = mkString(buf);
 #endif
     return(rval);

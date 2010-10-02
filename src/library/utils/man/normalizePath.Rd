@@ -1,6 +1,6 @@
 % File src/library/utils/man/normalizePath.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{normalizePath}
@@ -28,17 +28,19 @@ normalizePath(path)
 \value{
   A character vector.
 
-  If a path is not a real path the result is undefined. On 
+  If a path is not a real path the result is undefined.  On 
   Unix-alikes, this will likely be the corresponding input element.
   On Windows, a warning will be issued, and the result will be either
   the corresponding input element, or a transformation of it
   into an absolute path.
 }
-#ifdef windows
 \seealso{
+  \code{\link{file_path_as_absolute}} in package \pkg{tools}.
+#ifdef windows
+  
   \code{\link{shortPathName}}
-}
 #endif
+}
 \examples{\donttest{ # random tempdir
 cat(normalizePath(c(R.home(), tempdir())), sep = "\n")
 }}

@@ -36,10 +36,14 @@ function(x)
     ## expansion if necessary.
     ## Seems the only way we can do this is 'temporarily' change the
     ## working dir and see where this takes us.
+    if(length(x) != 1L)
+        stop("'x' must be a single character string")
     if(!file.exists(epath <- path.expand(x)))
         stop(gettextf("file '%s' does not exist", x),
              domain = NA)
     cwd <- getwd()
+    if (is.null(cwd))
+        stop("current working directory cannot be ascertained")
     on.exit(setwd(cwd))
     if(file_test("-d", epath)) {
         ## Combining dirname and basename does not work for e.g. '.' or
