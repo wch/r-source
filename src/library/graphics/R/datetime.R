@@ -147,7 +147,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 breaks <- seq(start, end, "3 months") - 86400
             } else { # "days" or "weeks"
                 maxx <- max(x, na.rm = TRUE)
-                breaks <- seq.int(start, maxx + incr, breaks)
+                breaks <- seq(start, maxx + incr, breaks)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         }
@@ -287,7 +287,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             } else { ## "days" (or "weeks")
                 start <- as.Date(start)
                 maxx <- max(x, na.rm = TRUE)
-                breaks <- seq.int(start, maxx + incr, breaks)
+                breaks <- seq(start, maxx + incr, breaks)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]
             }
         } else stop("invalid specification of 'breaks'")
