@@ -138,8 +138,8 @@ get_exclude_patterns <- function()
         list(status = status, stdout = readLines(outfile, warn = FALSE))
     }
     ## Run silently
-    Ssystem <- function(command, ...)
-        system2(command, stdout=NULL, stderr=NULL, ...)
+    Ssystem <- function(command, args, ...)
+        system2(command, args, stdout = NULL, stderr = NULL, ...)
 
 
     .file_test <- function(op, x)
@@ -283,14 +283,16 @@ get_exclude_patterns <- function()
             messageLog(Log, "cleaning src")
             if (WINDOWS) {
                 if (file.exists("Makefile.win")) {
-                    Ssystem(paste(Sys.getenv("MAKE", "make"), "-f Makefile.win clean"))
+                    Ssystem(Sys.getenv("MAKE", "make"),
+                            "-f Makefile.win clean")
                 } else {
                     if (file.exists("Makevars.win")) {
                         makefiles <- paste()
                         makefiles <- paste("-f",
                                            shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars.win")
-                        Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                        Ssystem(Sys.getenv("MAKE", "make"),
+                                c(makefiles, "clean"))
                     }
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
@@ -301,14 +303,15 @@ get_exclude_patterns <- function()
                                                      "Makeconf")))
                 if (file.exists("Makefile")) {
                     makefiles <- paste(makefiles, "-f", "Makefile")
-                    Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                    Ssystem(Sys.getenv("MAKE", "make"), c(makefiles, "clean"))
                 } else {
                     if (file.exists("Makevars")) {
                         ## ensure we do have a 'clean' target.
                         makefiles <- paste(makefiles, "-f",
                                        shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars")
-                        Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                        Ssystem(Sys.getenv("MAKE", "make"),
+                                c(makefiles, "clean"))
                     }
                     ## Also cleanup possible Windows leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
