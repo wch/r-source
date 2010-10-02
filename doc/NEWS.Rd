@@ -503,7 +503,6 @@
        \env{_R_CHECK_ASCII_CODE_} or \env{_R_CHECK_ASCII_DATA_}
        are respectively set to \env{FALSE}. (Suggestion of Vince
        Carey.)
-
     }
   }
   \subsection{C-LEVEL FACILITIES}{
@@ -706,6 +705,10 @@
       now work around a bug in Pango when very small fonts (those with
       sizes between 0 and 1 in Pango's internal units) are requested.
       (\PR{14369})
+
+      \item Workaround font problem with \code{X11(type = "cairo")} and
+      similar on Mac OS X whereby italic and bold styles were
+      interchanged.  (PR{13463} amongst many other reports.)
     }
   }
 }

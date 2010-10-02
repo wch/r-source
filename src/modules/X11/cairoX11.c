@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  R Development Core Team
+ *  Copyright (C) 1997--2010  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -674,6 +674,8 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 		    FcFontSetDestroy (fs);
 #ifdef __APPLE__ /* FreeType is broken on OS X in that face index is often wrong (unfortunately
 		    even for Helvetica!) - we try to find the best match through enumeration */
+		    /* And italic and bold are swapped */
+		    if (style == 2) style = 1; else if (style == 1) style = 2;
 		    if (face->num_faces > 1 && (face->style_flags & 3) != style) {
 			FT_Face alt_face;
 			int i = 0;
