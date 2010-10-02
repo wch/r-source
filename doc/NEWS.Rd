@@ -13,6 +13,12 @@
       the days when they were used by \R itself.  Because a couple of
       packages do use \command{awk}, it is set as \command{make} (rather
       than environment) variable.
+
+      \item \code{normalizePath()} has been moved to the \pkg{base} package
+      (from \pkg{utils}).
+
+      This is so a future enhanced version can be used by
+      \code{library()} and friends.
     }
   }
 

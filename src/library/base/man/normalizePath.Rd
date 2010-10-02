@@ -8,22 +8,27 @@
 \title{Express File Paths in Canonical Form}
 \description{
   Convert file paths to canonical form for the platform, to display them
-  in a user-understandable form.
+  in a user-understandable form and so relative and absolute paths can
+  be compared.
 }
 \usage{
-normalizePath(path)
+normalizePath(path, winslash = "\\\\", mustWork = FALSE)
 }
 \arguments{
   \item{path}{character vector of file paths.}
+  \item{winslash}{the path separator to be used on Windows -- ignored
+    elsewhere.}
+  \item{mustWork}{logical: if true then an error is given if the result
+    cannot be determined.}
 }
 \details{  
   Where the Unix-alike platform supports it this turns paths into
   absolute paths in their canonical form (no \samp{./}, \samp{../} nor
-  symbolic links).
+  symbolic links).  Every attempt is made to ensure that the path
+  returned is unique, using the \code{realpath} system call where available.
 
   On Windows it converts relative paths to absolute paths, and converts
-  short names to long names.  It will always use backslashes as the path
-  separator.
+  short names to long names.
 }
 \value{
   A character vector.

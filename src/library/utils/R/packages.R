@@ -744,7 +744,6 @@ setRepositories <-
     }
 }
 
-normalizePath <- function(path) .Internal(normalizePath(path))
 
 
 ## used in some BioC packages and their support in tools.

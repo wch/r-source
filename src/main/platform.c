@@ -2047,6 +2047,7 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 extern char *realpath(const char *path, char *resolved_path);
 #endif
 
+/* FIXME: interpret mustWork argument */
 SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #if defined(HAVE_GETCWD) && defined(HAVE_REALPATH)
