@@ -547,6 +547,7 @@ function(chname, package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"),
          file.ext = .Platform$dynlib.ext, ...)
 {
+    abs_path <- function(x) {cwd <- setwd(x);on.exit(setwd(cwd));getwd()}
     dll_list <- .dynLibs()
 
     if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
@@ -563,6 +564,8 @@ function(chname, package = NULL, lib.loc = NULL,
     for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
         DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")
+        ## for consistency with library.dyn.unload:
+        DLLpath <- abs_path(DLLpath)
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
     }
