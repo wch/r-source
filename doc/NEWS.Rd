@@ -23,6 +23,14 @@
       path cannot be found.
     }
   }
+  
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item System functions \code{access}, \code{chdir} and
+      \code{getcwd} are now essential to configure \R.  (In practice
+      they have been required for some time.)
+      }
+  }
 
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{

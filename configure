@@ -26967,9 +26967,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_VASPRINTF $ac_have_decl
 _ACEOF
 
-## mempcpy is a GNU extension used by regex.c.  That defines
-## _GNU_SOURCE, so should be declared on glibc systems.
-## gettext will also check for this.
+## mempcpy is a GNU extension used by the included gettext
 for ac_func in mempcpy
 do :
   ac_fn_c_check_func "$LINENO" "mempcpy" "ac_cv_func_mempcpy"
@@ -26981,7 +26979,7 @@ _ACEOF
 fi
 done
 
-## realpath is a BSD extension.
+## realpath is a POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 for ac_func in realpath
 do :
@@ -27070,13 +27068,22 @@ fi
 if test "${ac_cv_search_opendir}" = "no"; then
    as_fn_error "Building R requires the 'opendir' system call" "$LINENO" 5
 fi
-## Lots of uses of Sys.glob, e.g. install.packages
+## Lots of uses of getwd(), file.access(), Sys.glob()
 case "${host_os}" in
   mingw*)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
        as_fn_error "Building R requires the 'glob' system call" "$LINENO" 5
+    fi
+    if test "${ac_cv_search_access}" = "no"; then
+       as_fn_error "Building R requires the 'access' system call" "$LINENO" 5
+    fi
+    if test "${ac_cv_search_getcwd}" = "no"; then
+       as_fn_error "Building R requires the 'getcwd' system call" "$LINENO" 5
+    fi
+    if test "${ac_cv_search_chdir}" = "no"; then
+       as_fn_error "Building R requires the 'chdir' system call" "$LINENO" 5
     fi
   ;;
 esac
@@ -34862,11 +34869,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:34865: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:34872: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:34869: \$? = $ac_status" >&5
+   echo "$as_me:34876: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -34961,11 +34968,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:34964: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:34971: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:34968: \$? = $ac_status" >&5
+   echo "$as_me:34975: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35013,11 +35020,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35016: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35023: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35020: \$? = $ac_status" >&5
+   echo "$as_me:35027: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
