@@ -2890,7 +2890,7 @@ the @command{gcc} version we could use
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRARY_PATH
-@file{/opt/acml4.4.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+@file{/opt/acml4.4.0/gfortran64/lib}) is in the @env{LD_LIBRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
 multithreaded Linux version of ACML available for recent versions of
 @command{gfortran}.  To make use of this you will need something like
