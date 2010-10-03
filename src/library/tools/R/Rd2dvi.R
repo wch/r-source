@@ -194,7 +194,7 @@
                 latexEncodings <-
                     c(latexEncodings,
                       attr(Rd2latex(f, file.path(latexdir, out),
-                                    stages = c("build", "install", "render"), 
+                                    stages = c("build", "install", "render"),
                                     encoding = encoding,
                                     outputEncoding = outputEncoding),
                            "latexEncoding"))
@@ -603,6 +603,8 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     startdir <- getwd()
+    if (is.null(startdir))
+        stop("current working directory cannot be ascertained")
     build_dir <- paste(".Rd2dvi", Sys.getpid(), sep = "")
     title <- ""
     batch <- FALSE

@@ -41,7 +41,7 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
     paths <- .find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
         paths <- c(.path.package(package, TRUE),
-                   if(!length(package)) getwd(),
+                   if(!length(package)) getwd(), # ignored if NULL
                    paths)
     paths <- unique(paths[file.exists(paths)])
 

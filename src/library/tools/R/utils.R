@@ -49,7 +49,7 @@ function(x)
         ## Combining dirname and basename does not work for e.g. '.' or
         ## '..' on Unix ...
         setwd(epath)
-        getwd()
+        getwd() # might be NULL, but very unlikely if setwd succeeded
     }
     else {
         setwd(dirname(epath))
