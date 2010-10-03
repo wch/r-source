@@ -27,9 +27,11 @@ setwd(dir)
   directory and on some OSes the value returned can differ after
   changing directories and changing back to the same directory.
 }
+
 \seealso{
   \code{\link{list.files}} for the \emph{contents} of a directory.
 }
+
 \value{
   \code{getwd} returns a character string or \code{NULL} if the working
   directory is not available (or if \code{getwd} is not implemented).
@@ -39,8 +41,9 @@ setwd(dir)
   
   \code{setwd} returns the current directory before the change,
   invisibly and with the same conventions as \code{getwd}.  It will give
-  an error if it does not succeed.
+  an error if it does not succeed (including if it is not implemented).
 }
+
 \examples{
 (WD <- getwd())
 if (!is.null(WD)) setwd(WD)

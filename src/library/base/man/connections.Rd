@@ -155,11 +155,11 @@ isIncomplete(con)
   2.10.0, but no longer for reading, and \code{fifo} was always the
   documented interface.) % PR#14366
 
-  All platforms support \code{file}, \code{gzfile}, \code{bzfile},
-  \code{xzfile} \code{unz} and \code{url("file://")} connections.  The
-  other types may be partially implemented or not implemented at all.
-  (They do work on most Unix platforms, and all but \code{fifo} on
-  Windows.)
+  All platforms support \code{file}, \code{pipe}, \code{gzfile},
+  \code{bzfile}, \code{xzfile}, \code{unz} and \code{url("file://")}
+  connections.  The other connections may be partially implemented or
+  not implemented at all.  (They do work on most Unix platforms, and all
+  but \code{fifo} on Windows.)
 
   The intention is that \code{file} and \code{gzfile} can be used
   generally for text input (from files and URLs) and binary input
