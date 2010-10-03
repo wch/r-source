@@ -661,7 +661,7 @@ SEXP static intern_getwd(void)
 	    UNPROTECT(1);
 	}
     }
-#elif defined(HAVE_GETCWD)
+#else
     char *res = getcwd(buf, PATH_MAX); /* can return NULL */
     if(res) rval = mkString(buf);
 #endif
@@ -703,9 +703,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     {
 	const char *path
 	    = R_ExpandFileName(translateChar(STRING_ELT(s, 0)));
-# ifdef HAVE_CHDIR
     if(chdir(path) < 0)
-# endif
 	error(_("cannot change working directory"));
     }
 #endif

@@ -498,6 +498,10 @@
 
       \item Tcl/Tk >= 8.4 is now required (increased from 8.3).
 
+      \item System functions \code{access}, \code{chdir} and
+       \code{getcwd} are now essential to configure \R.  (In practice
+       they have been required for some time.)
+      
       \item \command{make check} compares the output of the examples
        from several of the base packages to reference output rather than
        the previous output (if any).  Expect some differences due to

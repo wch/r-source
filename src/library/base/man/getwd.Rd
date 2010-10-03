@@ -20,12 +20,11 @@ setwd(dir)
   the working directory to \code{dir}.
 }
 \note{
-  These functions are not implemented on all platforms.
-
   Note that the return value is said to be \strong{an} absolute
   filepath: there can be more than one representation of the path to a
   directory and on some OSes the value returned can differ after
-  changing directories and changing back to the same directory.
+  changing directories and changing back to the same directory (for
+  example if symbolic links have been traversed).
 }
 
 \seealso{

@@ -1737,13 +1737,22 @@ fi
 if test "${ac_cv_search_opendir}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'opendir' system call])
 fi
-## Lots of uses of Sys.glob, e.g. install.packages
+## Lots of uses of getwd(), file.access(), Sys.glob()
 case "${host_os}" in
   mingw*)
   ;;
   *)
     if test "${ac_cv_search_glob}" = "no"; then
        AC_MSG_ERROR([Building R requires the 'glob' system call])
+    fi
+    if test "${ac_cv_search_access}" = "no"; then
+       AC_MSG_ERROR([Building R requires the 'access' system call])
+    fi
+    if test "${ac_cv_search_getcwd}" = "no"; then
+       AC_MSG_ERROR([Building R requires the 'getcwd' system call])
+    fi
+    if test "${ac_cv_search_chdir}" = "no"; then
+       AC_MSG_ERROR([Building R requires the 'chdir' system call])
     fi
   ;;
 esac

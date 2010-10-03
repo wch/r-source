@@ -1048,7 +1048,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 extern int winAccessW(const wchar_t *path, int mode);
 #endif
 
-#ifdef HAVE_ACCESS
+/* require 'access' as from 2.12.0 */
 SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
@@ -1079,13 +1079,6 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
-#else
-SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("file.access() is not implemented on this system"));
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 #ifdef Win32
 #include <windows.h>

@@ -52,8 +52,6 @@ file.access(names, mode = 0)
 }
 
 \note{
-  This function is not implemented on all platforms.
-  
   This is intended as a replacement for the S-PLUS function
   \code{access}, a wrapper for the C function of the same name, which
   explains the return value encoding.  Note that
