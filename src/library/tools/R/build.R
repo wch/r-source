@@ -183,6 +183,7 @@ get_exclude_patterns <- function()
         lines <- lines[nzchar(lines)] # Remove blank lines.
         ## Do not keep previous build stamps.
         lines <- lines[!grepl("^Packaged:", lines)]
+        ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if (user == "unknown") user <- Sys.getenv("LOGNAME")
         lines <- c(lines,
