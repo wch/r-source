@@ -31,7 +31,8 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 
   On Windows it converts relative paths to absolute paths, converts
   short names for path elements to long names and ensures the separator
-  is that specified by \code{winslash}.
+  is that specified by \code{winslash}.  It will match paths
+  case-insensitively and return the canonical case.
 }
 
 \value{
@@ -52,8 +53,8 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
     determined.
     \item A symbolic link points to a non-existent place or links form a
     loop.
-    \item The canonicalized path would be exceed the maximum length of a
-    file path.
+    \item The canonicalized path would be exceed the maximum supported
+    length of a file path.
   }
 }
 \seealso{

@@ -1132,7 +1132,6 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strcmp(sl, "/") == 0) fslash = 1;
     
     mustWork = asLogical(CADDR(args));
-    if (mustWork == NA_LOGICAL) mustWork = 0;
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -1148,7 +1147,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
 		    if(fslash) R_UTF8fixslash(longpath);
 	    	    result = mkCharCE(longpath, CE_UTF8);
-		} else if(mustWork) {
+		} else if(mustWork == 1) {
 		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
 			      translateChar(el), 
 			      formatError(GetLastError()));	
@@ -1158,7 +1157,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    	    result = mkCharCE(tmp, CE_UTF8);
 	    	    warn = 1;
 	    	}
-	    } else if(mustWork) {
+	    } else if(mustWork == 1) {
 		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
 			  translateChar(el), 
 			  formatError(GetLastError()));	
@@ -1170,7 +1169,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    	warn = 1;
 	    }
-	    if (warn)
+	    if (warn && (mustWork == NA_LOGICAL))
 	    	warningcall(call, "path[%d]=\"%ls\": %s", i+1, 
 			    filenameToWchar(el,FALSE), 
 			    formatError(GetLastError()));
@@ -1180,7 +1179,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    	if (GetLongPathName(tmp, longpath, MAX_PATH)) {
 		    if(fslash) R_fixslash(longpath);
 	    	    result = mkChar(longpath);
-		} else if(mustWork) {
+		} else if(mustWork == 1) {
 		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
 			      translateChar(el), 
 			      formatError(GetLastError()));	
@@ -1189,7 +1188,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    	    result = mkChar(tmp);
 	    	    warn = 1;
 	    	}
-	    } else if(mustWork) {
+	    } else if(mustWork == 1) {
 		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
 			  translateChar(el), 
 			  formatError(GetLastError()));	
@@ -1201,7 +1200,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    	warn = 1;
 	    }
-	    if (warn)
+	    if (warn && (mustWork == NA_LOGICAL))
 		warningcall(call, "path[%d]=\"%s\": %s", i+1, 
 			    translateChar(el), 
 			    formatError(GetLastError()));	
