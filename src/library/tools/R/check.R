@@ -1607,14 +1607,22 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             any(grepl("^(file-[45]|magic file from)", lines))
         if (have_free_file) {
             checkingLog(Log, "for executable files")
-            ## watch out for spaces in file names here
-            ## do in parallel for speed on Windows
-            lines <- suppressWarnings(system2("file", shQuote(allfiles), TRUE, TRUE))
-            ex <- grepl("executable", lines, useBytes=TRUE)
-            ex2 <- grepl("script text", lines, useBytes=TRUE)
-            lines <- lines[ex & !ex2]
-            execs <- if(length(lines)) {
-                execs <- sub(":[[:space:]].*$", "", lines, useBytes = TRUE)
+            ## Watch out for spaces in file names here
+            ## Do in parallel for speed on Windows, but in batches
+            ## since there may be a line-length limit.
+            execs <- character()
+            files <- allfiles
+            while(ll <- length(files)) {
+                chunk <- seq_len(min(100, ll))
+                these <- files[chunk]
+                files <- files[-chunk]
+                lines <- suppressWarnings(system2("file", shQuote(these), TRUE, TRUE))
+                ex <- grepl("executable", lines, useBytes=TRUE)
+                ex2 <- grepl("script text", lines, useBytes=TRUE)
+                execs <- c(execs, lines[ex & !ex2])
+            }
+            if(length(execs)) {
+                execs <- sub(":[[:space:]].*$", "", execs, useBytes = TRUE)
                 known <- rep(FALSE, length(execs))
                 pexecs <- file.path(pkgname, execs)
                 ## known false positives
@@ -1622,8 +1630,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                              "msProcess/inst/data[12]/.*.txt",
                              "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
                     known <- known | grepl(fp, pexecs)
-                execs[!known]
-            } else character()
+                execs <- execs[!known]
+            }
         } else {
             ## no 'file', so just check extensions
             checkingLog(Log, "for .dll and .exe files")

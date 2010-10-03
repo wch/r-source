@@ -38,7 +38,7 @@
        MiKTeX's \file{texify.exe} with arguments to find files such as
        \file{Sweave.sty}.  See the examples in \code{?Sweave}.
 
-       \item \code{system(intern = FALSE)} now return \code{127} (the
+       \item \code{system(intern = FALSE)} now returns \code{127} (the
        same as Unix-alikes) rather than \code{-1} if the command cannot
        be run, and (like Unix-alikes) no longer gives a warning.
 
@@ -106,7 +106,7 @@
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item \command{R.exe} when used in place of \command{Rterm.exe} used to
+      \item \command{R.exe} when used in place of \command{Rterm.exe}
       set the environment variables set by \command{R CMD}.  Conversely,
       \command{R CMD BATCH} did not.
     }
@@ -132,8 +132,8 @@
       clipboard data.
 
       \item A fix intended for Mac OS X was incorrectly applied to
-      Windows, so \code{iconv(x, from, "")} in a C locale was interpreted as
-      requesting translation to UTF-8.
+      Windows, so \code{iconv(x, from, "")} in a C locale was
+      interpreted as requesting translation to UTF-8.
 
       \item \code{system(intern=TRUE)} often returned \code{0}
       rather than an error status if the command could not be found, if
@@ -141,8 +141,7 @@
       \code{show.output.on.console = FALSE}.
       
       \item \code{memory.limit()} did not allow sizes greater than
-      4095 even on 64 bit builds. (\PR{14372})
-    	
+      4095 on 64 bit builds. (\PR{14372})
     }
   }
 }
