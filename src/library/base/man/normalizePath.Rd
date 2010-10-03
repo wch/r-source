@@ -33,6 +33,9 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   short names for path elements to long names and ensures the separator
   is that specified by \code{winslash}.  It will match paths
   case-insensitively and return the canonical case.
+
+  \code{mustWork = FALSE} is useful for expressing paths for use in
+  messages.
 }
 
 \value{

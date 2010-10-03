@@ -135,13 +135,13 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 					  ver = names(versions)[i])
 	versions
     }
-    
+
     # Check if the lines are in a native encoding
     # but have a UTF-8 byte-order mark
-    
+
     hasBOM <- function(lines) {
         length(lines) >= 1L &&
-    	Encoding(line <- lines[1L]) == "unknown" && 
+    	Encoding(line <- lines[1L]) == "unknown" &&
     	nchar(line, type="bytes") >= 3 &&
     	identical( as.integer(charToRaw(line)[1:3]),
     	                         c(0xefL, 0xbbL, 0xbfL) )
@@ -149,7 +149,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 
     tfile <- file
     if(is.character(file)) {
-        tfile <- normalizePath(file)
+        tfile <- normalizePath(file) # used for trace message.
         file <- file(file, "r")
         on.exit(close(file))
     }
@@ -162,7 +162,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     ## We could read in parts ...
     ll <- readLines(file)
     if (hasBOM(ll)) Encoding(ll) <- "UTF-8"
-    
+
     nl <- length(ll)
     if(trace) {
         if(is.character(tfile))

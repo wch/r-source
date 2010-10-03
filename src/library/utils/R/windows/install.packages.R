@@ -20,11 +20,11 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
     ## Create a temporary directory and unpack the zip to it
     ## then get the real package name, copying the
     ## dir over to the appropriate install dir.
-    lib <- normalizePath(lib)
+    lib <- normalizePath(lib, mustWork = TRUE)
     tmpDir <- tempfile(, lib)
     if (!dir.create(tmpDir))
         stop(gettextf("unable to create temporary directory '%s'",
-                      normalizePath(tmpDir)),
+                      normalizePath(tmpDir, mustWork = FALSE)),
              domain = NA, call. = FALSE)
     cDir <- getwd()
     on.exit(setwd(cDir), add = TRUE)
@@ -100,8 +100,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
                                      recursive = TRUE)
                     if(any(!ret))
                         warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                         normalizePath(file.path(tmpDir, pkgname, "libs", sub)),
-                                         normalizePath(file.path(instPath, "libs"))),
+                                         normalizePath(file.path(tmpDir, pkgname, "libs", sub), mustWork = FALSE),
+                                         normalizePath(file.path(instPath, "libs")), mustWork = FALSE ),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
                 }
             ## update 'Archs': copied from tools:::.install.packages
@@ -127,8 +127,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
                 ret <- file.rename(file.path(tmpDir, pkgname), instPath)
                 if(!ret)
                     warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                     normalizePath(file.path(tmpDir, pkgname)),
-                                     normalizePath(instPath)),
+                                     normalizePath(file.path(tmpDir, pkgname), mustWork = FALSE),
+                                     normalizePath(instPath, mustWork = FALSE)),
                             domain = NA, call. = FALSE, immediate. = TRUE)
             } else {
                 warning(gettextf("cannot remove prior installation of package '%s'",
@@ -190,7 +190,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
             stop(gettextf("unable to create temporary directory '%s'",
-                          normalizePath(tmpd)),
+                          normalizePath(tmpd, mustWork = FALSE)),
                  domain = NA)
     }
 
@@ -219,7 +219,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
         if(!is.null(tmpd) && is.null(destdir))
             ## tends to be a long path on Windows
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
-                               normalizePath(tmpd)), "\n", sep = "")
+                               normalizePath(tmpd, mustWork = FALSE)),
+                "\n", sep = "")
         link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
