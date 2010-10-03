@@ -34,7 +34,10 @@ Sys.sleep(time)
 \value{
   Invisible \code{NULL}.
 }
-\note{This function may not be implemented on all systems.}
+\note{
+  This function may not be implemented on all systems.  Where it is not
+  implemented calling it given an error.
+}
 
 \examples{\donttest{
 testit <- function(x)

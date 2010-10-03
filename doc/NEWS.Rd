@@ -508,6 +508,8 @@
       \file{doc/NEWS.Rd}.
 
       \item The \code{popen} system call is now required to build \R.
+      This ensures the availability of \code{system(intern = TRUE)},
+      \code{pipe()} connections and printing from \code{postscript()}.
 
       \item The \command{pkg-config} file \file{libR.pc} now also works
       when \R is installed using a sub-architecture.
