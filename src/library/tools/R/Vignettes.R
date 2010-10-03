@@ -29,6 +29,8 @@ function(package, dir, lib.loc = NULL,
 
     workdir <- match.arg(workdir)
     wd <- getwd()
+    if (is.null(wd))
+        stop("current working directory cannot be ascertained")
     if(workdir == "tmp") {
         tmpd <- tempfile("Sweave")
         if(!dir.create(tmpd))
@@ -64,7 +66,10 @@ function(package, dir, lib.loc = NULL,
 
     if(tangle) {
         ## Tangling can create several source files if splitting is on.
-        sources <- list_files_with_exts(getwd(), c("r", "s", "R", "S"))
+        cwd <- getwd()
+        if (is.null(cwd))
+            stop("current working directory cannot be ascertained")
+        sources <- list_files_with_exts(cwd, c("r", "s", "R", "S"))
         sources <- sources[file_test("-nt", sources, ".check.timestamp")]
         for(f in sources)
             .eval_with_capture(tryCatch(source(f),
@@ -178,6 +183,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     if(is.null(vigns)) return(invisible())
 
     wd <- getwd()
+    if (is.null(wd))
+        stop("current working directory cannot be ascertained")
     on.exit(setwd(wd))
     setwd(vigns$dir)
 

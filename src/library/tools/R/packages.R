@@ -131,6 +131,8 @@ function(dir, fields = NULL,
         dir <- file_path_as_absolute(dir)
         files <- file.path(dir, files)
         cwd <- getwd()
+        if (is.null(cwd))
+            stop("current working directory cannot be ascertained")
         td <- tempfile("PACKAGES")
         if(!dir.create(td)) stop("unable to create ", td)
         on.exit(unlink(td, recursive = TRUE), add = TRUE)

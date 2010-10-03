@@ -513,6 +513,8 @@ get_exclude_patterns <- function()
 
     Sys.unsetenv("R_DEFAULT_PACKAGES")
     startdir <- getwd()
+    if (is.null(startdir))
+        stop("current working directory cannot be ascertained")
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
     gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this

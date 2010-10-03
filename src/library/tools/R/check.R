@@ -16,6 +16,8 @@
 
 ###- R based engine for R CMD check
 
+## we assume that getwd() after setwd() is safe
+
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "")
 {
@@ -2318,6 +2320,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                     	R_check_ascii_data <- FALSE
 
     startdir <- getwd()
+    if (is.null(startdir))
+        stop("current working directory cannot be ascertained")
     if (!nzchar(outdir)) outdir <- startdir
     setwd(outdir)
     outdir <- getwd()

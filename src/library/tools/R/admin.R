@@ -305,10 +305,10 @@ function(dir, outDir)
         for(f in codeFiles) {
             tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
             if(length(bad <- which(is.na(tmp)))) {
-               warning(gettextf("unable to re-encode '%s' line(s) %s", 
+               warning(gettextf("unable to re-encode '%s' line(s) %s",
                                 basename(f), paste(bad, collapse=",")),
                     domain = NA, call. = FALSE)
-               tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "", 
+               tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
                             sub = "byte")
             }
             writeLines(paste("#line 1 \"", f, "\"", sep=""), con)
@@ -515,6 +515,8 @@ function(dir, outDir)
 
         ## install tangled versions of all vignettes
         cwd <- getwd()
+        if (is.null(cwd))
+            stop("current working directory cannot be ascertained")
         setwd(outVignetteDir)
         for(srcfile in vignetteIndex$File)
             tryCatch(utils::Stangle(srcfile, quiet = TRUE),
@@ -605,6 +607,8 @@ function(dir, outDir, keep.source = FALSE)
     ## a temp dir:
     ## this allows inspection of problems and automatic cleanup via Make.
     cwd <- getwd()
+    if (is.null(cwd))
+        stop("current working directory cannot be ascertained")
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
         stop(gettextf("cannot create directory '%s'", buildDir), domain = NA)

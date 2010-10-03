@@ -716,9 +716,12 @@
       sizes between 0 and 1 in Pango's internal units) are requested.
       (\PR{14369})
 
-      \item Workaround font problem with \code{X11(type = "cairo")} and
-      similar on Mac OS X whereby italic and bold styles were
-      interchanged.  (PR{13463} amongst many other reports.)
+      \item Added workaround for the font problem with \code{X11(type =
+      "cairo")} and similar on Mac OS X whereby italic and bold styles
+      were interchanged.  (PR{13463} amongst many other reports.)
+      
+      \item \code{source(chdir = TRUE)} failed to reset the working
+      directory if it could not be determined -- that is now an error.
     }
   }
 }

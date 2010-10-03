@@ -98,7 +98,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     }
     if (verbose)
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
-	
+
     if (chdir){
         if(is.character(ofile)) {
             isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0L
@@ -107,8 +107,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             if(!isURL && (path <- dirname(ofile)) != ".") {
                 owd <- getwd()
                 if(is.null(owd))
-                    warning("cannot 'chdir' as current directory is unknown")
-                else on.exit(setwd(owd), add=TRUE)
+                    error("cannot 'chdir' as current directory is unknown")
+                on.exit(setwd(owd), add=TRUE)
                 setwd(path)
             }
         } else {
@@ -140,7 +140,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    if (tail)
 	    	srcref <- attr(exprs, "wholeSrcref")
 	    else if (i <= length(srcrefs))
-	    	srcref <- srcrefs[[i]] 
+	    	srcref <- srcrefs[[i]]
 	    if (is.null(srcref)) {
 	    	if (!tail) {
 		    # Deparse.  Must drop "expression(...)"
@@ -222,6 +222,8 @@ function(file, envir = baseenv(), chdir = FALSE,
 	return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {
 	owd <- getwd()
+        if(is.null(owd))
+            error("cannot 'chdir' as current directory is unknown")
 	on.exit(setwd(owd), add = TRUE)
 	setwd(path)
     }
