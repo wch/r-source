@@ -15,16 +15,18 @@
       than environment) variable.
 
       \item \code{normalizePath()} has been moved to the \pkg{base} package
-      (from \pkg{utils}).
+      (from \pkg{utils}): this is so it can be used by \code{library()}
+      and friends.
 
-      This is so a future enhanced version can be used by
-      \code{library()} and friends.
+      It gains new arguments \code{winslash} (to select the separator on
+      Windows) and \code{mustWork} to control the action if a canonical
+      path cannot be found.
     }
   }
 
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
-      \item The \code{require(save = TRUE)} is defunct, and use of the
+      \item \code{require(save = TRUE)} is defunct, and use of the
       \code{save} argument is deprecated.
 
       \item \command{R CMD check --no-latex} is defunct: use

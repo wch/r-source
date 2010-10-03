@@ -1109,37 +1109,65 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 const char *formatError(DWORD res);
 
-/* FIXME interpret winslash, mustWork */
+
+void R_UTF8fixslash(char *s); /* from main/util.c */
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, paths = CAR(args), el;
+    SEXP ans, paths = CAR(args), el, slash;
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH], longpath[MAX_PATH], *tmp2;
     wchar_t wtmp[MAX_PATH], wlongpath[MAX_PATH], *wtmp2;
+    int mustWork, fslash = 0;
 
     checkArity(op, args);
     if(!isString(paths))
 	errorcall(call, _("'path' must be a character vector"));
 
+    slash = CADR(args);
+    if(!isString(slash) || LENGTH(slash) != 1)
+	errorcall(call, "'winslash' must be a character string");
+    const char *sl = CHAR(STRING_ELT(slash, 0));
+    if (strcmp(sl, "/") && strcmp(sl, "\\"))
+	errorcall(call, "'winslash' must be '/' or '\\\\'");
+    if (strcmp(sl, "/") == 0) fslash = 1;
+    
+    mustWork = asLogical(CADDR(args));
+    if (mustWork == NA_LOGICAL) mustWork = 0;
+
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-    	int warn=0;
+    	int warn = 0;
     	SEXP result;
 	el = STRING_ELT(paths, i);
+	result = el;
 	if(getCharCE(el) == CE_UTF8) {
+	    /* FIXME: return values > 0 can indicate the required length in wchars */
 	    if (GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
 	    		         wtmp, &wtmp2)) {
 		if (GetLongPathNameW(wtmp, wlongpath, MAX_PATH)) {
 	    	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
+		    if(fslash) R_UTF8fixslash(longpath);
 	    	    result = mkCharCE(longpath, CE_UTF8);
+		} else if(mustWork) {
+		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
+			      translateChar(el), 
+			      formatError(GetLastError()));	
 	    	} else {
 	    	    wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
-		    /* R_UTF8fixslash(tmp); */
+		    if(fslash) R_UTF8fixslash(tmp);
 	    	    result = mkCharCE(tmp, CE_UTF8);
 	    	    warn = 1;
 	    	}
+	    } else if(mustWork) {
+		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
+			  translateChar(el), 
+			  formatError(GetLastError()));	
 	    } else {
-	    	result = el;
+		if (fslash) {
+		    strcpy(tmp, translateCharUTF8(el));
+		    R_UTF8fixslash(tmp);
+	    	    result = mkCharCE(tmp, CE_UTF8);
+		}
 	    	warn = 1;
 	    }
 	    if (warn)
@@ -1147,16 +1175,30 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    filenameToWchar(el,FALSE), 
 			    formatError(GetLastError()));
 	} else {
+	    /* FIXME: return values > 0 can indicate the required length in wchars */
 	    if (GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)) {
-	    	if (GetLongPathName(tmp, longpath, MAX_PATH)) 
-		    /* R_fixslash(longpath); */
+	    	if (GetLongPathName(tmp, longpath, MAX_PATH)) {
+		    if(fslash) R_fixslash(longpath);
 	    	    result = mkChar(longpath);
-	    	else {
+		} else if(mustWork) {
+		    errorcall(call, "path[%d]=\"%s\": %s", i+1, 
+			      translateChar(el), 
+			      formatError(GetLastError()));	
+	    	} else {
+		    if(fslash) R_fixslash(tmp);
 	    	    result = mkChar(tmp);
 	    	    warn = 1;
 	    	}
+	    } else if(mustWork) {
+		errorcall(call, "path[%d]=\"%s\": %s", i+1, 
+			  translateChar(el), 
+			  formatError(GetLastError()));	
 	    } else {
-	    	result = el;
+		if (fslash) {
+		    strcpy(tmp, translateChar(el));
+		    R_fixslash(tmp);
+		    result = mkChar(tmp);
+		}
 	    	warn = 1;
 	    }
 	    if (warn)

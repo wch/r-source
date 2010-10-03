@@ -9,7 +9,7 @@
 if(!nzchar(Sys.getenv("R_LIBS_USER")))
     Sys.setenv(R_LIBS_USER=
                file.path(Sys.getenv("R_USER"), "R",
-                         if(.Machine$sizeof.pointer == 8) "win64-library" else "win-library",
+                         "win-library",
                          paste(R.version$major,
                                sub("\\..*$", "", R.version$minor),
                                sep=".")

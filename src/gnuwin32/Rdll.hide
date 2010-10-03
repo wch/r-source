@@ -176,6 +176,7 @@
  R_TextBufferGetc
  R_TextBufferInit
  R_TmpvalSymbol
+ R_UTF8fixslash
  R_UseNamesSymbol
  R_VSize
  R_Verbose

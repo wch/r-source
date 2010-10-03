@@ -259,8 +259,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    return(FALSE)
 		} else stop(txt, domain = NA)
             }
-            abs_path <- function(x) {cwd <- setwd(x);on.exit(setwd(cwd));getwd()}
-            which.lib.loc <- abs_path(dirname(pkgpath))
+            which.lib.loc <- normalizePath(dirname(pkgpath), "/", TRUE)
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
             if(!nzchar(pfile))
@@ -547,7 +546,6 @@ function(chname, package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"),
          file.ext = .Platform$dynlib.ext, ...)
 {
-    abs_path <- function(x) {cwd <- setwd(x);on.exit(setwd(cwd));getwd()}
     dll_list <- .dynLibs()
 
     if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
@@ -573,7 +571,8 @@ function(chname, package = NULL, lib.loc = NULL,
         else
             stop(gettextf("shared object '%s' not found", chname), domain = NA)
     ## for consistency with library.dyn.unload:
-    file <- file.path(abs_path(DLLpath), paste(chname, file.ext, sep = ""))
+    file <- file.path(normalizePath(DLLpath, "/", TRUE),
+                      paste(chname, file.ext, sep = ""))
     ind <- sapply(dll_list, function(x) x[["path"]] == file)
     if(length(ind) && any(ind)) {
         if(verbose)
@@ -611,7 +610,6 @@ library.dynam.unload <-
 function(chname, libpath, verbose = getOption("verbose"),
          file.ext = .Platform$dynlib.ext)
 {
-    abs_path <- function(x) {cwd <- setwd(x);on.exit(setwd(cwd));getwd()}
     dll_list <- .dynLibs()
 
     if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
@@ -628,8 +626,8 @@ function(chname, libpath, verbose = getOption("verbose"),
        == file.ext)
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
 
-    ## We need an absolute path here.
-    libpath <- abs_path(libpath)
+    ## We need an absolute path here, and separators consistent with library.dynam.unload
+    libpath <- normalizePath(libpath, "/", TRUE)
     file <- if(nzchar(.Platform$r_arch))
              file.path(libpath, "libs", .Platform$r_arch,
                        paste(chname, file.ext, sep = ""))
