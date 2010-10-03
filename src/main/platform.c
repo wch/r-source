@@ -1048,7 +1048,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 extern int winAccessW(const wchar_t *path, int mode);
 #endif
 
-/* require 'access' as from 2.13.0 */
+/* require 'access' as from 2.12.0 */
 SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
