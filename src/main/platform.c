@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-10 The R Development Core Team
+ *  Copyright (C) 1998--2010 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2042,52 +2042,7 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#ifndef Win32 /* in src/gnuwin32/extra.c */
-#ifndef HAVE_DECL_REALPATH
-extern char *realpath(const char *path, char *resolved_path);
-#endif
-
-/* FIXME: interpret mustWork argument */
-SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-#if defined(HAVE_GETCWD) && defined(HAVE_REALPATH)
-    SEXP ans, paths = CAR(args);
-    int i, n = LENGTH(paths);
-    const char *path;
-    char tmp[PATH_MAX+1], abspath[PATH_MAX+1], *res = NULL;
-    Rboolean OK;
-
-    checkArity(op, args);
-    if (!isString(paths))
-	error("'path' must be a character vector");
-    PROTECT(ans = allocVector(STRSXP, n));
-    for (i = 0; i < n; i++) {
-	path = translateChar(STRING_ELT(paths, i));
-	OK = strlen(path) <= PATH_MAX;
-	if (OK) {
-	    if (path[0] == '/') strncpy(abspath, path, PATH_MAX);
-	    else {
-		OK = getcwd(abspath, PATH_MAX) != NULL;
-		OK = OK && (strlen(path) + strlen(abspath) + 1 <= PATH_MAX);
-		if (OK) {
-		    strcat(abspath, "/");
-		    strcat(abspath, path);
-		}
-	    }
-	}
-	if (OK) res = realpath(abspath, tmp);
-	if (OK && res) SET_STRING_ELT(ans, i, mkChar(tmp));
-	else SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
-    }
-    UNPROTECT(1);
-    return ans;
-#else
-    checkArity(op, args);
-    warning("insufficient OS support on this platform");
-    return CAR(args);
-#endif
-}
-#endif
+/* do_normalizepath moved to util.c in R 2.13.0 */
 
 SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {

@@ -1711,11 +1711,9 @@ AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
 ## this is a GNU extension so usually hidden
 AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
-## mempcpy is a GNU extension used by regex.c.  That defines
-## _GNU_SOURCE, so should be declared on glibc systems.
-## gettext will also check for this.
+## mempcpy is a GNU extension used by the included gettext
 AC_CHECK_FUNCS(mempcpy)
-## realpath is a BSD extension. 
+## realpath is a POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 AC_CHECK_FUNCS(realpath)
 AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>

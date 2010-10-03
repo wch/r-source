@@ -16,28 +16,45 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 }
 \arguments{
   \item{path}{character vector of file paths.}
-  \item{winslash}{the path separator to be used on Windows -- ignored
+  \item{winslash}{the separator to be used on Windows -- ignored
     elsewhere.  Must be one of \code{c("/", "\\\\")}.}
   \item{mustWork}{logical: if \code{TRUE} then an error is given if the result
     cannot be determined; if \code{NA} then a warning.}
 }
 \details{  
-  Where the Unix-alike platform supports it this turns paths into
+  Where the Unix-alike platform supports it attempts to turn paths into
   absolute paths in their canonical form (no \samp{./}, \samp{../} nor
-  symbolic links).  Every attempt is made to ensure that the path
-  returned is unique, using the \code{realpath} system call where available.
+  symbolic links).  It relies on the POSIX system function
+  \code{realpath}: if the platform does not have that (we know of no
+  current example) then the result will be an absolute path but might
+  not be canonical.
 
-  On Windows it converts relative paths to absolute paths, and converts
-  short names for path elements to long names.
+  On Windows it converts relative paths to absolute paths, converts
+  short names for path elements to long names and ensures the separator
+  is that specified by \code{winslash}.
 }
+
 \value{
   A character vector.
 
-  If a path is not a real path the result is system-dependent (unless
-  \code{mustWork = TRUE}, when this is an error).
-  On Unix-alikes, this will likely be the corresponding input
-  element.  On Windows, the result will be either the corresponding input
-  element or a transformation of it into an absolute path.
+  If an input is not a real path the result is system-dependent (unless
+  \code{mustWork = TRUE}, when this should be an error).  It will be
+  either the corresponding input element or a transformation of it into
+  an absolute path.
+
+  Converting to an absolute file path can fail for a large number of
+  reasons.  The most common are
+  \itemize{
+    \item One of more components of the file path does not exist.
+    \item A component before the last is not a directory, or there is
+    insufficient permission to read the directory.
+    \item For a relative path, the current directory cannot be
+    determined.
+    \item A symbolic link points to a non-existent place or links form a
+    loop.
+    \item The canonicalized path would be exceed the maximum length of a
+    file path.
+  }
 }
 \seealso{
   \code{\link{file_path_as_absolute}} in package \pkg{tools}.

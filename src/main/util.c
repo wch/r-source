@@ -662,6 +662,7 @@ SEXP static intern_getwd(void)
 	}
     }
 #elif defined(HAVE_GETCWD)
+    /* can we really function without getcwd?  */
     char *res = getcwd(buf, PATH_MAX); /* can return NULL */
     if(res) rval = mkString(buf);
 #endif
@@ -866,6 +867,86 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 #endif
+
+
+#ifndef Win32 /* Windows version is in src/gnuwin32/extra.c */
+#ifndef HAVE_DECL_REALPATH
+extern char *realpath(const char *path, char *resolved_path);
+#endif
+
+SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, paths = CAR(args);
+    int i, n = LENGTH(paths);
+    const char *path;
+    char abspath[PATH_MAX+1];
+
+    checkArity(op, args);
+    if (!isString(paths))
+	error(_("'path' must be a character vector"));
+
+    int mustWork = asLogical(CADDR(args)); /* 1, NA_LOGICAL or 0 */
+
+/* Does any platform not have this? */
+#ifdef HAVE_REALPATH
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++) {
+	path = translateChar(STRING_ELT(paths, i));
+	char *res = realpath(path, abspath);
+	if (res) 
+	    SET_STRING_ELT(ans, i, mkChar(abspath));
+	else {
+	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    /* and report the problem */
+	    if (mustWork == 1)
+		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	    else if (mustWork == NA_LOGICAL)
+		warning("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+#elif defined(HAVE_GETCWD)
+    Rboolean OK;
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++) {
+	path = translateChar(STRING_ELT(paths, i));
+	OK = strlen(path) <= PATH_MAX;
+	if (OK) {
+	    if (path[0] == '/') strncpy(abspath, path, PATH_MAX);
+	    else {
+		OK = getcwd(abspath, PATH_MAX) != NULL;
+		OK = OK && (strlen(path) + strlen(abspath) + 1 <= PATH_MAX);
+		if (OK) {strcat(abspath, "/"); strcat(abspath, path);}
+	    }
+	}
+	/* we need to check that this exists */
+#ifdef HAVE_ACCESS
+	if (OK) OK = (access(abspath, 0 /* F_OK */) == 0);
+#endif
+	if (OK) SET_STRING_ELT(ans, i, mkChar(abspath));
+	else {
+	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    /* and report the problem */
+	    if (mustWork == 1)
+		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	    else if (mustWork == NA_LOGICAL)
+		warning("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    /* can we really function without getcwd?  */
+    if (mustWork == 1)
+	error("insufficient OS support on this platform");
+    else if (mustWork == NA_LOGICAL)
+	warning("insufficient OS support on this platform");
+    return CAR(args);
+#endif
+}
+#endif
+
 
 /* encodeString(x, w, quote, justify) */
 SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
