@@ -138,7 +138,7 @@ get_exclude_patterns <- function()
         list(status = status, stdout = readLines(outfile, warn = FALSE))
     }
     ## Run silently
-    Ssystem <- function(command, args, ...)
+    Ssystem <- function(command, args = character(), ...)
         system2(command, args, stdout = NULL, stderr = NULL, ...)
 
 
