@@ -1977,16 +1977,9 @@ Infant.Mortality  1       409 2514 197    7.96  0.0073 **
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
-> example(glm)
-
-glm> ## Dobson (1990) Page 93: Randomized Controlled Trial :
-glm> counts <- c(18,17,15,20,10,20,25,13,12)
-
-glm> outcome <- gl(3,1,9)
-
-glm> treatment <- gl(3,3)
-
-glm> print(d.AD <- data.frame(treatment, outcome, counts))
+> ## following example(glm)
+> ## Don't show: 
+> example(glm, echo = FALSE)
   treatment outcome counts
 1         1       1     18
 2         1       2     17
@@ -1997,153 +1990,7 @@ glm> print(d.AD <- data.frame(treatment, outcome, counts))
 7         3       1     25
 8         3       2     13
 9         3       3     12
-
-glm> glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
-
-glm> anova(glm.D93)
-Analysis of Deviance Table
-
-Model: poisson, link: log
-
-Response: counts
-
-Terms added sequentially (first to last)
-
-
-          Df Deviance Resid. Df Resid. Dev
-NULL                          8      10.58
-outcome    2     5.45         6       5.13
-treatment  2     0.00         4       5.13
-
-glm> ## No test: 
-glm> summary(glm.D93)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = poisson())
-
-Deviance Residuals: 
-      1        2        3        4        5        6        7        8  
--0.6712   0.9627  -0.1696  -0.2200  -0.9555   1.0494   0.8472  -0.0917  
-      9  
--0.9666  
-
-Coefficients:
-             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.04e+00   1.71e-01   17.81   <2e-16 ***
-outcome2    -4.54e-01   2.02e-01   -2.25    0.025 *  
-outcome3    -2.93e-01   1.93e-01   -1.52    0.128    
-treatment2   1.34e-15   2.00e-01    0.00    1.000    
-treatment3   1.42e-15   2.00e-01    0.00    1.000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: 56.76
-
-Number of Fisher Scoring iterations: 4
-
-
-glm> ## End(No test)
-glm> 
-glm> ## an example with offsets from Venables & Ripley (2002, p.189)
-glm> utils::data(anorexia, package="MASS")
-
-glm> anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-glm+                 family = gaussian, data = anorexia)
-
-glm> summary(anorex.1)
-
-Call:
-glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
-    data = anorexia)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--14.108   -4.277   -0.548    5.484   15.292  
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   49.771     13.391    3.72  0.00041 ***
-Prewt         -0.566      0.161   -3.51  0.00080 ***
-TreatCont     -4.097      1.893   -2.16  0.03400 *  
-TreatFT        4.563      2.133    2.14  0.03604 *  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for gaussian family taken to be 48.695)
-
-    Null deviance: 4525.4  on 71  degrees of freedom
-Residual deviance: 3311.3  on 68  degrees of freedom
-AIC: 490
-
-Number of Fisher Scoring iterations: 2
-
-
-glm> # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
-glm> clotting <- data.frame(
-glm+     u = c(5,10,15,20,30,40,60,80,100),
-glm+     lot1 = c(118,58,42,35,27,25,21,19,18),
-glm+     lot2 = c(69,35,26,21,18,16,13,12,12))
-
-glm> summary(glm(lot1 ~ log(u), data=clotting, family=Gamma))
-
-Call:
-glm(formula = lot1 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--0.0401  -0.0376  -0.0264   0.0290   0.0864  
-
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.016554   0.000928   -17.9  4.3e-07 ***
-log(u)       0.015343   0.000415    37.0  2.8e-09 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for Gamma family taken to be 0.0024461)
-
-    Null deviance: 3.512826  on 8  degrees of freedom
-Residual deviance: 0.016730  on 7  degrees of freedom
-AIC: 37.99
-
-Number of Fisher Scoring iterations: 3
-
-
-glm> summary(glm(lot2 ~ log(u), data=clotting, family=Gamma))
-
-Call:
-glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--0.0557  -0.0293   0.0103   0.0171   0.0637  
-
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.023908   0.001326   -18.0  4.0e-07 ***
-log(u)       0.023599   0.000577    40.9  1.4e-09 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for Gamma family taken to be 0.0018134)
-
-    Null deviance: 3.118557  on 8  degrees of freedom
-Residual deviance: 0.012672  on 7  degrees of freedom
-AIC: 27.03
-
-Number of Fisher Scoring iterations: 3
-
-
-glm> ## Not run: 
-glm> ##D ## for an example of the use of a terms object as a formula
-glm> ##D demo(glm.vr)
-glm> ## End(Not run)
-glm> 
-glm> 
+> ## End Don't show
 > drop1(glm.D93, test="Chisq")
 Single term deletions
 
@@ -3834,7 +3681,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x101820a38>
+<environment: 0x1024f0718>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -6928,7 +6775,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x1057b86b0>
+<environment: 0x106e8eb80>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7341,7 +7188,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x107494520>
+<environment: 0x1050a7260>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10707,241 +10554,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### ** Examples
 > 
-> ## Don't show: 
-> od <- options(digits = 5)
-> ## End Don't show
-> require(graphics)
-> 
-> fr <- function(x) {   ## Rosenbrock Banana function
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
-+ }
-> grr <- function(x) { ## Gradient of 'fr'
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
-+        200 *      (x2 - x1 * x1))
-+ }
-> optim(c(-1.2,1), fr)
-$par
-[1] 1.0003 1.0005
-
-$value
-[1] 8.8252e-08
-
-$counts
-function gradient 
-     195       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> optim(c(-1.2,1), fr, grr, method = "BFGS")
-$par
-[1] 1 1
-
-$value
-[1] 9.595e-18
-
-$counts
-function gradient 
-     110       43 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)
-$par
-[1] 0.9998 0.9996
-
-$value
-[1] 3.8274e-08
-
-$counts
-function gradient 
-     118       38 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$hessian
-        [,1]    [,2]
-[1,]  801.69 -399.92
-[2,] -399.92  200.00
-
-> optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
-$par
-[1] 1 1
-
-$value
-[1] 2.2676e-13
-
-$counts
-function gradient 
-      47       47 
-
-$convergence
-[1] 0
-
-$message
-[1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
-
-> 
-> flb <- function(x)
-+     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
-> ## 25-dimensional box constrained
-> optim(rep(3, 25), flb, NULL, method = "L-BFGS-B",
-+       lower=rep(2, 25), upper=rep(4, 25)) # par[24] is *not* at boundary
-$par
- [1] 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000
-[11] 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000
-[21] 2.0000 2.0000 2.0000 2.1091 4.0000
-
-$value
-[1] 368.11
-
-$counts
-function gradient 
-       6        6 
-
-$convergence
-[1] 0
-
-$message
-[1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
-
-> 
-> ## "wild" function , global minimum at about -15.81515
-> fw <- function (x)
-+     10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
-> plot(fw, -50, 50, n=1000, main = "optim() minimising 'wild function'")
-> 
-> res <- optim(50, fw, method="SANN",
-+              control=list(maxit=20000, temp=20, parscale=20))
-> res
-$par
-[1] -15.815
-
-$value
-[1] 67.468
-
-$counts
-function gradient 
-   20000       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> ## Now improve locally {typically only by a small bit}:
-> (r2 <- optim(res$par, fw, method="BFGS"))
-$par
-[1] -15.815
-
-$value
-[1] 67.468
-
-$counts
-function gradient 
-      19        2 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> points(r2$par, r2$value, pch = 8, col = "red", cex = 2)
-> 
-> ## Combinatorial optimization: Traveling salesman problem
-> library(stats) # normally loaded
-> 
-> eurodistmat <- as.matrix(eurodist)
-> 
-> distance <- function(sq) {  # Target function
-+     sq2 <- embed(sq, 2)
-+     return(sum(eurodistmat[cbind(sq2[,2],sq2[,1])]))
-+ }
-> 
-> genseq <- function(sq) {  # Generate new candidate sequence
-+     idx <- seq(2, NROW(eurodistmat)-1, by=1)
-+     changepoints <- sample(idx, size=2, replace=FALSE)
-+     tmp <- sq[changepoints[1]]
-+     sq[changepoints[1]] <- sq[changepoints[2]]
-+     sq[changepoints[2]] <- tmp
-+     return(sq)
-+ }
-> 
-> sq <- c(1,2:NROW(eurodistmat),1)  # Initial sequence
-> distance(sq)
-[1] 29625
-> 
-> set.seed(123) # chosen to get a good soln relatively quickly
-> res <- optim(sq, distance, genseq, method="SANN",
-+              control = list(maxit=30000, temp=2000, trace=TRUE, REPORT=500))
-sann objective function values
-initial       value 29625.000000
-iter     5000 value 13585.000000
-iter    10000 value 13092.000000
-iter    15000 value 13063.000000
-iter    20000 value 12919.000000
-iter    25000 value 12907.000000
-iter    29999 value 12842.000000
-final         value 12842.000000
-sann stopped after 29999 iterations
-> res  # Near optimum distance around 12842
-$par
- [1]  1 19 16  8 15  2 14  9 12 13 18  5  4  3 11  7 20 10  6 17 21  1
-
-$value
-[1] 12842
-
-$counts
-function gradient 
-   30000       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> 
-> loc <- cmdscale(eurodist)
-> rx <- range(x <- loc[,1])
-> ry <- range(y <- -loc[,2])
-> tspinit <- loc[sq,]
-> tspres <- loc[res$par,]
-> s <- seq(NROW(tspres)-1)
-> 
-> plot(x, y, type="n", asp=1, xlab="", ylab="",
-+      main="initial solution of traveling salesman problem")
-> arrows(tspinit[s,1], -tspinit[s,2], tspinit[s+1,1], -tspinit[s+1,2],
-+        angle=10, col="green")
-> text(x, y, labels(eurodist), cex=0.8)
-> 
-> plot(x, y, type="n", asp=1, xlab="", ylab="",
-+      main="optim() 'solving' traveling salesman problem")
-> arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
-+        angle=10, col="red")
-> text(x, y, labels(eurodist), cex=0.8)
-> ## Don't show: 
-> options(od)
-> ## End Don't show
-> 
-> 
 > 
 > cleanEx()
 > nameEx("optimize")
@@ -11952,22 +11564,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x105b01510>
+<environment: 0x105d4d3f8>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x105b01510>
+<environment: 0x105d4d3f8>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x105b01510>
+<environment: 0x105d4d3f8>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x105b01510>
+<environment: 0x105d4d3f8>
 
 $name
 [1] "identity"
@@ -11978,12 +11590,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x105af6698>
+<environment: 0x10589bf08>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x105af6698>
+<environment: 0x10589bf08>
 
 > 
 > 
@@ -15571,106 +15183,6 @@ treatment  2   0.0000         4     5.1291
 > 
 > ### ** Examples
 > 
-> ## following on from example(lm)
-> ## Don't show: 
-> utils::example("lm", echo = FALSE)
-> ## End Don't show
-> step(lm.D9)  
-Start:  AIC=-12.58
-weight ~ group
-
-        Df Sum of Sq    RSS     AIC
-- group  1    0.6882 9.4175 -13.063
-<none>               8.7292 -12.581
-
-Step:  AIC=-13.06
-weight ~ 1
-
-
-Call:
-lm(formula = weight ~ 1)
-
-Coefficients:
-(Intercept)  
-      4.847  
-
-> 
-> summary(lm1 <- lm(Fertility ~ ., data = swiss))
-
-Call:
-lm(formula = Fertility ~ ., data = swiss)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--15.2743  -5.2617   0.5032   4.1198  15.3213 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)      66.91518   10.70604   6.250 1.91e-07 ***
-Agriculture      -0.17211    0.07030  -2.448  0.01873 *  
-Examination      -0.25801    0.25388  -1.016  0.31546    
-Education        -0.87094    0.18303  -4.758 2.43e-05 ***
-Catholic          0.10412    0.03526   2.953  0.00519 ** 
-Infant.Mortality  1.07705    0.38172   2.822  0.00734 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 7.165 on 41 degrees of freedom
-Multiple R-squared: 0.7067,	Adjusted R-squared: 0.671 
-F-statistic: 19.76 on 5 and 41 DF,  p-value: 5.594e-10 
-
-> slm1 <- step(lm1)
-Start:  AIC=190.69
-Fertility ~ Agriculture + Examination + Education + Catholic + 
-    Infant.Mortality
-
-                   Df Sum of Sq    RSS    AIC
-- Examination       1     53.03 2158.1 189.86
-<none>                          2105.0 190.69
-- Agriculture       1    307.72 2412.8 195.10
-- Infant.Mortality  1    408.75 2513.8 197.03
-- Catholic          1    447.71 2552.8 197.75
-- Education         1   1162.56 3267.6 209.36
-
-Step:  AIC=189.86
-Fertility ~ Agriculture + Education + Catholic + Infant.Mortality
-
-                   Df Sum of Sq    RSS    AIC
-<none>                          2158.1 189.86
-- Agriculture       1    264.18 2422.2 193.29
-- Infant.Mortality  1    409.81 2567.9 196.03
-- Catholic          1    956.57 3114.6 205.10
-- Education         1   2249.97 4408.0 221.43
-> summary(slm1)
-
-Call:
-lm(formula = Fertility ~ Agriculture + Education + Catholic + 
-    Infant.Mortality, data = swiss)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--14.6765  -6.0522   0.7514   3.1664  16.1422 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)      62.10131    9.60489   6.466 8.49e-08 ***
-Agriculture      -0.15462    0.06819  -2.267  0.02857 *  
-Education        -0.98026    0.14814  -6.617 5.14e-08 ***
-Catholic          0.12467    0.02889   4.315 9.50e-05 ***
-Infant.Mortality  1.07844    0.38187   2.824  0.00722 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 7.168 on 42 degrees of freedom
-Multiple R-squared: 0.6993,	Adjusted R-squared: 0.6707 
-F-statistic: 24.42 on 4 and 42 DF,  p-value: 1.717e-10 
-
-> slm1$anova
-           Step Df Deviance Resid. Df Resid. Dev      AIC
-1               NA       NA        41   2105.043 190.6913
-2 - Examination  1 53.02656        42   2158.069 189.8606
-> 
-> 
 > 
 > cleanEx()
 > nameEx("stepfun")
@@ -15714,7 +15226,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x106423b40>
+<environment: 0x1073ed7b8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))

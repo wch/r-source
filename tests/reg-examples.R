@@ -46,6 +46,8 @@ example(ls.diag)
 example(model.tables)
 example(nlminb)
 example(optim)
+example(step)
+example(summary.manova)
 example(uniroot)
 
 library(tools)
