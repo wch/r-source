@@ -122,7 +122,9 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   \code{\link{predict.HoltWinters}}, \code{\link{optim}}.
 }
 
+% Differences seen on 32-bit Linux at -O3
 \examples{
+\testonly{od <- options(digits=5)}
 require(graphics)
 
 ## Seasonal Holt-Winters
@@ -141,5 +143,6 @@ plot(m)
 ## Exponential Smoothing
 m2 <- HoltWinters(x, gamma = FALSE, beta = FALSE)
 lines(fitted(m2)[,1], col = 3)
+\testonly{options(od)}
 }
 \keyword{ts}

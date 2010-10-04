@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-04 r53167)
+R version 2.13.0 Under development (unstable) (2010-10-04 r53173)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -373,6 +373,9 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> od <- options(digits=5)
+> ## End Don't show
 > require(graphics)
 > 
 > ## Seasonal Holt-Winters
@@ -383,26 +386,26 @@ Call:
  HoltWinters(x = co2) 
 
 Smoothing parameters:
- alpha:  0.5126484 
- beta :  0.009497669 
- gamma:  0.4728868 
+ alpha:  0.51265 
+ beta :  0.0094977 
+ gamma:  0.47289 
 
 Coefficients:
-           [,1]
-a   364.7616237
-b     0.1247438
-s1    0.2215275
-s2    0.9552801
-s3    1.5984744
-s4    2.8758029
-s5    3.2820088
-s6    2.4406990
-s7    0.8969433
-s8   -1.3796428
-s9   -3.4112376
-s10  -3.2570163
-s11  -1.9134850
-s12  -0.5844250
+         [,1]
+a   364.76162
+b     0.12474
+s1    0.22153
+s2    0.95528
+s3    1.59847
+s4    2.87580
+s5    3.28201
+s6    2.44070
+s7    0.89694
+s8   -1.37964
+s9   -3.41124
+s10  -3.25702
+s11  -1.91349
+s12  -0.58442
 > plot(m)
 > plot(fitted(m))
 > 
@@ -413,26 +416,26 @@ Call:
  HoltWinters(x = AirPassengers, seasonal = "mult") 
 
 Smoothing parameters:
- alpha:  0.2755925 
- beta :  0.03269295 
- gamma:  0.8707292 
+ alpha:  0.27559 
+ beta :  0.032693 
+ gamma:  0.87073 
 
 Coefficients:
-           [,1]
-a   469.3232206
-b     3.0215391
-s1    0.9464611
-s2    0.8829239
-s3    0.9717369
-s4    1.0304825
-s5    1.0476884
-s6    1.1805272
-s7    1.3590778
-s8    1.3331706
-s9    1.1083381
-s10   0.9868813
-s11   0.8361333
-s12   0.9209877
+         [,1]
+a   469.32322
+b     3.02154
+s1    0.94646
+s2    0.88292
+s3    0.97174
+s4    1.03048
+s5    1.04769
+s6    1.18053
+s7    1.35908
+s8    1.33317
+s9    1.10834
+s10   0.98688
+s11   0.83613
+s12   0.92099
 > plot(m)
 > 
 > ## Non-Seasonal Holt-Winters
@@ -443,6 +446,9 @@ s12   0.9209877
 > ## Exponential Smoothing
 > m2 <- HoltWinters(x, gamma = FALSE, beta = FALSE)
 > lines(fitted(m2)[,1], col = 3)
+> ## Don't show: 
+> options(od)
+> ## End Don't show
 > 
 > 
 > 
@@ -17421,7 +17427,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  18.66 0.376 19.064 0.002 0.023 
+Time elapsed:  19.571 0.523 25.695 0 0 
 > grDevices::dev.off()
 null device 
           1 
