@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2010-10-04 10:51\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -450,6 +450,9 @@ msgstr "没有设定'type'"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
+
+msgid "current working directory cannot be ascertained"
+msgstr ""
 
 msgid "no inputs"
 msgstr "没有输入"
@@ -978,6 +981,10 @@ msgstr "执行正规表现回归检验"
 msgid "running tests to possibly trigger segfaults"
 msgstr "执行触发程序段故障检验"
 
+#, fuzzy
+msgid "'x' must be a single character string"
+msgstr "参数'txt'必需为字符串"
+
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
@@ -1163,9 +1170,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgid "unterminated section 'section{%s}'"
 #~ msgstr "'section{%s}'这一段没有结局"
 
-#~ msgid "argument 'txt' must be a character string"
-#~ msgstr "参数'txt'必需为字符串"
-
 #~ msgid "unmatched \\item name in '\\item{%s'"
 #~ msgstr "在'\\item{%s'里的\\item名字对不上"
 
@@ -1189,4 +1193,3 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
-

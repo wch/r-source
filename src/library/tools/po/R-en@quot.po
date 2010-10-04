@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
-"PO-Revision-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2010-10-04 10:51\n"
+"PO-Revision-Date: 2010-10-04 10:51\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -478,6 +478,9 @@ msgstr "no ‘type’ specified"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "‘type’ must be one of 'txt', 'html', ‘latex’ or ‘example’"
+
+msgid "current working directory cannot be ascertained"
+msgstr "current working directory cannot be ascertained"
 
 msgid "no inputs"
 msgstr "no inputs"
@@ -1010,6 +1013,9 @@ msgstr "running regexp regression tests"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "running tests to possibly trigger segfaults"
+
+msgid "'x' must be a single character string"
+msgstr "‘x’ must be a single character string"
 
 msgid "test '%s' is not available"
 msgstr "test ‘%s’ is not available"

@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
-"PO-Revision-Date: 2010-03-26 13:32-0400\n"
+"POT-Creation-Date: 2010-10-04 10:51\n"
+"PO-Revision-Date: 2010-10-03 18:49-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: French\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "l'argument 'package' doit être de longueur 1"
@@ -185,43 +186,39 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr "Packages requis mais non disponibles :"
 
-#, fuzzy
 msgid "Package required but not available: %s"
-msgstr "Packages requis mais non disponibles :"
+msgstr "Package requis mais non disponible : %s"
 
-#, fuzzy
 msgid "Packages required and available but unsuitable versions:"
-msgstr "Packages requis et disponibles mais de version incompatible :"
+msgstr "Packages requis et disponibles mais de versions incompatibles :"
 
-#, fuzzy
 msgid "Package required and available but unsuitable version: %s"
-msgstr "Packages requis et disponibles mais de version incompatible :"
+msgstr "Package requis et disponible mais de version incompatible :"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "Packages standard requis, mais maintenant obsolètes :"
 
-#, fuzzy
 msgid "Packages suggested but not available for checking:"
-msgstr "Packages requis mais non disponibles :"
+msgstr "Packages suggérés mais non disponibles pour la vérification :"
 
-#, fuzzy
 msgid "Package suggested but not available for checking: %s"
-msgstr "Packages requis mais non disponibles :"
+msgstr "Package suggéré mais non disponible pour la vérification :"
 
-#, fuzzy
 msgid "Packages which this enhances but not available for checking:"
-msgstr "Packages requis mais non disponibles :"
+msgstr ""
+"Packages qui seraient améliorés mais qui ne sont pas disponibles pour la "
+"vérification :"
 
-#, fuzzy
 msgid "Package which this enhances but not available for checking: %s"
-msgstr "Packages requis mais non disponibles :"
+msgstr ""
+"Package qui serait amélioré mais qui n'est pas disponible pour la "
+"vérification :"
 
 msgid "Vignette dependencies not required:"
 msgstr "Dependences de vignette non requises :"
 
-#, fuzzy
 msgid "Vignette dependencies not required: %s"
-msgstr "Dependences de vignette non requises :"
+msgstr "Dépendences de vignette non requises :"
 
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
@@ -233,7 +230,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "Dépendances d'espaces de noms non requises :"
 
-#, fuzzy
 msgid "Namespace dependency not required: %s"
 msgstr "Dépendances d'espaces de noms non requises :"
 
@@ -383,16 +379,14 @@ msgstr "le package 'methods' est utilisé mais pas déclaré"
 msgid "'::' or ':::' imports not declared from:"
 msgstr "importations '::' ou ':::' non déclarées depuis :"
 
-#, fuzzy
 msgid "'::' or ':::' import not declared from: %s"
-msgstr "importations '::' ou ':::' non déclarées depuis :"
+msgstr "importations '::' ou ':::' non déclarées depuis : %s"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "appels 'library' ou 'require' non déclarés depuis :"
 
-#, fuzzy
 msgid "'library' or 'require' call not declared from: %s"
-msgstr "appels 'library' ou 'require' non déclarés depuis :"
+msgstr "appels 'library' ou 'require' non déclarés depuis : %s"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "Fichiers Rd avec nom dupliqué '%s' :"
@@ -492,11 +486,14 @@ msgstr "aucun 'type' spécifié"
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type' doit être 'txt', 'html', 'latex' ou 'example'"
 
-msgid "no inputs"
+msgid "current working directory cannot be ascertained"
 msgstr ""
 
+msgid "no inputs"
+msgstr "pas d'entrées"
+
 msgid "Error in running tools::texi2dvi"
-msgstr ""
+msgstr "Erreur lors de l'exécution de tools:texi2dvi"
 
 msgid "more than one \\examples section, using the first"
 msgstr "plus d'une section \\example, utilisation de la première"
@@ -606,47 +603,45 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
 msgid "Changes require specified 'style'"
-msgstr ""
+msgstr "Les modifications nécessite le 'style' spécifié"
 
 msgid "The default JSS style may not be modified."
-msgstr ""
+msgstr "Le style par défaut JSS ne peut être modifié."
 
 msgid "** Options"
-msgstr ""
+msgstr "** Les options"
 
 msgid "are only for '--binary'  and will be ignored"
-msgstr ""
+msgstr "sont valides avec --binary seulement et seront ignorées"
 
-#, fuzzy
 msgid "Error: cannot rename directory to"
-msgstr "impossible de créer le répertoire '%s'"
+msgstr "Erreur: impossible de renommer le répertoire"
 
-#, fuzzy
 msgid "cannot coerce"
-msgstr "ne peut être ouvert"
+msgstr "impossible de transformer"
 
 msgid "to logical"
-msgstr ""
+msgstr "en valeur logique"
 
 msgid "-l option without value"
 msgstr "option -l sans valeur"
 
 msgid "configuration files are not supported as from R 2.12.0"
 msgstr ""
+"les fichiers de configuration se sont pas plus supportés depuis R 2.12.0"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
+"--multiarch spécifié alors qu'une seule sous-architecture est utilisable"
 
-#, fuzzy
 msgid "Error: no packages were specified"
-msgstr "ERREUR : aucun package spécifié"
+msgstr "Erreur : aucun package spécifié"
 
 msgid "package dir"
-msgstr ""
+msgstr "le répertoire"
 
-#, fuzzy
 msgid "does not exist"
-msgstr "le fichier '%s' n'existe pas"
+msgstr "n'existe pas"
 
 msgid "No files in this directory"
 msgstr "Pas de fichiers dans ce répertoire"
@@ -742,7 +737,7 @@ msgid "installing to"
 msgstr "installation dans"
 
 msgid "generating debug symbols (dSYM)"
-msgstr ""
+msgstr "génération des symboles de débogage (dSYM)"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -763,19 +758,17 @@ msgstr "répertoire 'data' vide"
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'  est pour Windows seulement"
 
-#, fuzzy
 msgid "--merge-multiarch is Windows-only"
-msgstr "'--auto-zip'  est pour Windows seulement"
+msgstr "'--merge-multiarch est pour Windows seulement"
 
 msgid "cannot create temporary directory"
 msgstr "impossible de créer un répertoire temporaire"
 
-#, fuzzy
 msgid "ERROR: --merge-multiarch applies only to a single tarball"
-msgstr "--pkglock est valide pour un seul package"
+msgstr "ERREUR : --merge-multiarch est valide pour un seul package"
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-msgstr ""
+msgstr "ERREUR : --merge-multiarch valide seulement sur les systèmes i386/x64"
 
 msgid "invalid package"
 msgstr "package incorrect"
@@ -853,27 +846,33 @@ msgstr ""
 
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
+"Pas de nouvelles trouvées dans le fichier en usant de l'ancien format de "
+"type R"
 
 msgid "No news found in given file using package default format."
 msgstr ""
+"Pas de nouvelles trouvées dans le fichier en usant du format par défaut du "
+"package"
 
 msgid "Could not extract news from the following text chunks:"
 msgstr ""
+"Impossible de trouver des nouvelles dans les extraits de texte suivants :"
 
 msgid ""
 "Chunk %s:\n"
 "%s"
 msgstr ""
+"Extrait %s :\n"
+"%s"
 
 msgid "Cannot extract version info from the following section titles:"
-msgstr ""
+msgstr "Impossible d'extraire la version des titres de sections suivants :"
 
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
-#, fuzzy
 msgid "Malformed NEWS.Rd file."
-msgstr "Champ 'maintainer' mal orthographié."
+msgstr "Fichier NEWS.Rd malformé."
 
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
@@ -889,32 +888,31 @@ msgid "cannot create HTML package index"
 msgstr "impossible de créer l'index HTML du package"
 
 msgid "Internal error, no tag"
-msgstr ""
+msgstr "Erreur interne, pas d'étiquette"
 
 msgid "Argument for"
-msgstr ""
+msgstr "Argument pour"
 
-#, fuzzy
 msgid "not found."
-msgstr "le fichier '%s' est introuvable"
+msgstr "introuvable"
 
 msgid "Internal error:  NULL tag"
-msgstr ""
+msgstr "Erreur interne : étiquette NULL"
 
 msgid "internal error"
-msgstr ""
+msgstr "erreur interne"
 
 msgid "Inconsistent arg count for"
-msgstr ""
+msgstr "Nombre d'arguments incohérent pour"
 
 msgid "Entry for"
-msgstr ""
+msgstr "Entrée pour"
 
 msgid "="
-msgstr ""
+msgstr "="
 
 msgid "already defined to be"
-msgstr ""
+msgstr "déjà définie pour être"
 
 msgid "found encoding"
 msgstr "encodage trouvé"
@@ -1040,6 +1038,10 @@ msgstr "exécution des tests de régression regexp"
 msgid "running tests to possibly trigger segfaults"
 msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
 
+#, fuzzy
+msgid "'x' must be a single character string"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
 
@@ -1058,9 +1060,8 @@ msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué."
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué"
 
-#, fuzzy
 msgid "unable to run '%s' on '%s'"
-msgstr "impossible d'exécuter %s sur '%s'"
+msgstr "impossible d'exécuter '%s' sur '%s'"
 
 msgid "unable to run %s on '%s'"
 msgstr "impossible d'exécuter %s sur '%s'"
