@@ -42,6 +42,16 @@ seq_len(length.out)
   name the arguments when programming.
 
   \code{seq} is  generic, and only the default method is described here.
+  Note that it dispatches on the class of the \strong{first} argument
+  irrespective of argument names.  This can have unintended consequences
+  if it is called with just one argument intending this to be taken as
+  \code{along.with}: it is much better to use \code{seg_along} in that
+  case.
+
+  \code{seq.int} is an \link{internal generic} which dispatches on
+  methods for \code{"seq"} based on the class of the first supplied
+  argument (before argument matching).
+  
   Typical usages are
 \preformatted{
 seq(from, to)
@@ -76,6 +86,8 @@ seq(length.out= )
   (as if argument \code{along.with} had been specified), \emph{unless}
   the argument is numeric of length 1 when it is interpreted as
   \code{1:from} (even for \code{seq(0)} for compatibility with S).
+  Using either \code{seq_along} or \code{seq_len} is much preferred
+  (unless strict S compatibility is essential).
 
   The final form generates the integer sequence \code{1, 2, \dots,
   length.out} unless \code{length.out = 0}, when it generates
