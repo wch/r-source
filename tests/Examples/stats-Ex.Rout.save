@@ -6786,17 +6786,6 @@ function (eta)
 > treatment <- gl(3,3)
 > d.AD <- data.frame(treatment, outcome, counts)
 > glm.qD93 <- glm(counts ~ outcome + treatment, family=quasipoisson())
-> glm.qD93
-
-Call:  glm(formula = counts ~ outcome + treatment, family = quasipoisson())
-
-Coefficients:
-(Intercept)     outcome2     outcome3   treatment2   treatment3  
-  3.045e+00   -4.543e-01   -2.930e-01    1.338e-15    1.421e-15  
-
-Degrees of Freedom: 8 Total (i.e. Null);  4 Residual
-Null Deviance:	    10.58 
-Residual Deviance: 5.129 	AIC: NA 
 > 
 > ## Example of user-specified link, a logit model for p^days
 > ## See Shaffer, T.  2004. Auk 121(2): 526-540.
@@ -15488,62 +15477,6 @@ groupTrt    4.661  0.2202177 21.16542 3.615345e-14
 > ### Keywords: models
 > 
 > ### ** Examples
-> 
-> ## Example on producing plastic film from Krzanowski (1998, p. 381)
-> tear <- c(6.5, 6.2, 5.8, 6.5, 6.5, 6.9, 7.2, 6.9, 6.1, 6.3,
-+           6.7, 6.6, 7.2, 7.1, 6.8, 7.1, 7.0, 7.2, 7.5, 7.6)
-> gloss <- c(9.5, 9.9, 9.6, 9.6, 9.2, 9.1, 10.0, 9.9, 9.5, 9.4,
-+            9.1, 9.3, 8.3, 8.4, 8.5, 9.2, 8.8, 9.7, 10.1, 9.2)
-> opacity <- c(4.4, 6.4, 3.0, 4.1, 0.8, 5.7, 2.0, 3.9, 1.9, 5.7,
-+              2.8, 4.1, 3.8, 1.6, 3.4, 8.4, 5.2, 6.9, 2.7, 1.9)
-> Y <- cbind(tear, gloss, opacity)
-> rate <- factor(gl(2,10), labels=c("Low", "High"))
-> additive <- factor(gl(2, 5, length=20), labels=c("Low", "High"))
-> 
-> fit <- manova(Y ~ rate * additive)
-> summary.aov(fit)           # univariate ANOVA tables
- Response tear :
-              Df Sum Sq Mean Sq F value   Pr(>F)   
-rate           1 1.7405 1.74050 15.7868 0.001092 **
-additive       1 0.7605 0.76050  6.8980 0.018330 * 
-rate:additive  1 0.0005 0.00050  0.0045 0.947143   
-Residuals     16 1.7640 0.11025                    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
- Response gloss :
-              Df Sum Sq Mean Sq F value  Pr(>F)  
-rate           1 1.3005 1.30050  7.9178 0.01248 *
-additive       1 0.6125 0.61250  3.7291 0.07139 .
-rate:additive  1 0.5445 0.54450  3.3151 0.08740 .
-Residuals     16 2.6280 0.16425                  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
- Response opacity :
-              Df Sum Sq Mean Sq F value Pr(>F)
-rate           1  0.421  0.4205  0.1036 0.7517
-additive       1  4.901  4.9005  1.2077 0.2881
-rate:additive  1  3.960  3.9605  0.9760 0.3379
-Residuals     16 64.924  4.0578               
-
-> summary(fit, test="Wilks") # ANOVA table of Wilks' lambda
-              Df   Wilks approx F num Df den Df   Pr(>F)   
-rate           1 0.38186   7.5543      3     14 0.003034 **
-additive       1 0.52303   4.2556      3     14 0.024745 * 
-rate:additive  1 0.77711   1.3385      3     14 0.301782   
-Residuals     16                                           
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> summary(fit)               # same F statistics as single-df terms
-              Df  Pillai approx F num Df den Df   Pr(>F)   
-rate           1 0.61814   7.5543      3     14 0.003034 **
-additive       1 0.47697   4.2556      3     14 0.024745 * 
-rate:additive  1 0.22289   1.3385      3     14 0.301782   
-Residuals     16                                           
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> 
 > 
 > 
 > cleanEx()

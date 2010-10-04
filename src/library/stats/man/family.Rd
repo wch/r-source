@@ -183,8 +183,8 @@ outcome <- gl(3,1,9)
 treatment <- gl(3,3)
 d.AD <- data.frame(treatment, outcome, counts)
 glm.qD93 <- glm(counts ~ outcome + treatment, family=quasipoisson())
-glm.qD93
 \donttest{
+glm.qD93
 anova(glm.qD93, test="F")
 summary(glm.qD93)
 ## for Poisson results use

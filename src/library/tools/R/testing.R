@@ -216,15 +216,14 @@ testInstalledPackage <-
     on.exit(setwd(owd))
 
     if (1 %in% types) {
-        message("\nCollecting examples for package ", sQuote(pkg))
-        Rfile <- .createExdotR(pkg, pkgdir)
+        message("Examples for package ", sQuote(pkg))
+        Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE)
         if (length(Rfile)) {
             outfile <- paste(pkg, "-Ex.Rout", sep = "")
             failfile <- paste(outfile, "fail", sep = "." )
             savefile <- paste(outfile, "prev", sep = "." )
             if (file.exists(outfile)) file.rename(outfile, savefile)
             unlink(failfile)
-            message("Running examples in package ", sQuote(pkg))
             ## Create as .fail in case this R session gets killed
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "CMD BATCH --vanilla --no-timing",

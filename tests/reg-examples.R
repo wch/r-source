@@ -25,7 +25,6 @@ example(tempfile)
 example(weekdays)
 library(help="splines")
 
-
 ## utils
 example(packageDescription)
 example(sessionInfo)
@@ -49,6 +48,9 @@ example(optim)
 example(step)
 example(summary.manova)
 example(uniroot)
+
+## datasets
+example(JohnsonJohnson)
 
 library(tools)
 example(Rdutils)

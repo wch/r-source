@@ -78,7 +78,7 @@
   \code{\link{manova}}, \code{\link{aov}}
 }
 
-\examples{
+\examples{\donttest{
 ## Example on producing plastic film from Krzanowski (1998, p. 381)
 tear <- c(6.5, 6.2, 5.8, 6.5, 6.5, 6.9, 7.2, 6.9, 6.1, 6.3,
           6.7, 6.6, 7.2, 7.1, 6.8, 7.1, 7.0, 7.2, 7.5, 7.6)
@@ -94,5 +94,5 @@ fit <- manova(Y ~ rate * additive)
 summary.aov(fit)           # univariate ANOVA tables
 summary(fit, test="Wilks") # ANOVA table of Wilks' lambda
 summary(fit)               # same F statistics as single-df terms
-}
+}}
 \keyword{models}
