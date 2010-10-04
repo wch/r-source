@@ -38,7 +38,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Dummy.
+      \item \code{seq.int} no longer sometimes evaluates arguments
+      twice.  (\PR{14388})
     }
   }
 }
