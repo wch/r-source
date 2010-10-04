@@ -483,8 +483,12 @@
 
        Unless multiple sub-architectures are selected, the install done
        by \code{check} for testing purposes is only of the current
-       sub-architecture (\emph{via} \command{R CMD INSTALL
-       --no-multiarch}.
+       sub-architecture (\emph{via} \command{R CMD INSTALL --no-multiarch}.
+
+       It will skip the check for non-ascii characters in code or data
+       if the environment variables \env{_R_CHECK_ASCII_CODE_} or
+       \env{_R_CHECK_ASCII_DATA_} are respectively set to \env{FALSE}.
+       (Suggestion of Vince Carey.)
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes
@@ -493,8 +497,10 @@
        It supports file \file{~/.R/build.Renviron} analogously to
        \command{check}.
 
-      \item \command{R CMD build} now runs build-time \code{\\Sexpr}
-       expressions.
+       It no longer cleans the supplied directory but rather a copy used
+       to create the tarball.
+
+       It now runs build-time \code{\\Sexpr} expressions.
 
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
        to process the package manual.  It is now implemented entirely in
@@ -506,12 +512,6 @@
 
       \item \command{R CMD Sweave} now runs \R with \code{--vanilla} so
        the environment setting of \env{R_LIBS} will always be used.
-
-      \item \command{R CMD check} will skip the check for non-ascii
-       characters in code or data if the environment variables
-       \env{_R_CHECK_ASCII_CODE_} or \env{_R_CHECK_ASCII_DATA_}
-       are respectively set to \env{FALSE}. (Suggestion of Vince
-       Carey.)
     }
   }
   \subsection{C-LEVEL FACILITIES}{
