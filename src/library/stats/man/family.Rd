@@ -184,12 +184,13 @@ treatment <- gl(3,3)
 d.AD <- data.frame(treatment, outcome, counts)
 glm.qD93 <- glm(counts ~ outcome + treatment, family=quasipoisson())
 glm.qD93
+\donttest{
 anova(glm.qD93, test="F")
 summary(glm.qD93)
 ## for Poisson results use
 anova(glm.qD93, dispersion = 1, test="Chisq")
 summary(glm.qD93, dispersion = 1)
-
+}
 
 ## Example of user-specified link, a logit model for p^days
 ## See Shaffer, T.  2004. Auk 121(2): 526-540.

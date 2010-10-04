@@ -1940,171 +1940,8 @@ ar(3) 0.6000000 0.3000 -0.2
 > od <- options(digits=5)
 > ## End Don't show
 > require(graphics); require(utils)
-> example(step)#-> swiss
-
-step> utils::example(lm)
-
-lm> require(graphics)
-
-lm> ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
-lm> ## Page 9: Plant Weight Data.
-lm> ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-
-lm> trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-
-lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
-
-lm> weight <- c(ctl, trt)
-
-lm> lm.D9 <- lm(weight ~ group)
-
-lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
-
-lm> ## No test: 
-lm> anova(lm.D9)
-Analysis of Variance Table
-
-Response: weight
-          Df Sum Sq Mean Sq F value Pr(>F)
-group      1   0.69   0.688    1.42   0.25
-Residuals 18   8.73   0.485               
-
-lm> summary(lm.D90)
-
-Call:
-lm(formula = weight ~ group - 1)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
-
-Coefficients:
-         Estimate Std. Error t value Pr(>|t|)    
-groupCtl     5.03       0.22    22.9  9.5e-15 ***
-groupTrt     4.66       0.22    21.2  3.6e-14 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.696 on 18 degrees of freedom
-Multiple R-squared: 0.982,	Adjusted R-squared: 0.98 
-F-statistic:  485 on 2 and 18 DF,  p-value: <2e-16 
-
-
-lm> ## End(No test)
-lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
-
-lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
-
-lm> par(opar)
-
-lm> ## Don't show: 
-lm> ## model frame :
-lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
-lm+                     model.frame(lm.D9)))
-
-lm> ## End Don't show
-lm> ### less simple examples in "See Also" above
-lm> 
-lm> 
-lm> 
-
-step> step(lm.D9)  
-Start:  AIC=-12.58
-weight ~ group
-
-        Df Sum of Sq  RSS   AIC
-- group  1     0.688 9.42 -13.1
-<none>               8.73 -12.6
-
-Step:  AIC=-13.06
-weight ~ 1
-
-
-Call:
-lm(formula = weight ~ 1)
-
-Coefficients:
-(Intercept)  
-       4.85  
-
-
-step> summary(lm1 <- lm(Fertility ~ ., data = swiss))
-
-Call:
-lm(formula = Fertility ~ ., data = swiss)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--15.274  -5.262   0.503   4.120  15.321 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)       66.9152    10.7060    6.25  1.9e-07 ***
-Agriculture       -0.1721     0.0703   -2.45   0.0187 *  
-Examination       -0.2580     0.2539   -1.02   0.3155    
-Education         -0.8709     0.1830   -4.76  2.4e-05 ***
-Catholic           0.1041     0.0353    2.95   0.0052 ** 
-Infant.Mortality   1.0770     0.3817    2.82   0.0073 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 7.17 on 41 degrees of freedom
-Multiple R-squared: 0.707,	Adjusted R-squared: 0.671 
-F-statistic: 19.8 on 5 and 41 DF,  p-value: 5.59e-10 
-
-
-step> slm1 <- step(lm1)
-Start:  AIC=190.69
-Fertility ~ Agriculture + Examination + Education + Catholic + 
-    Infant.Mortality
-
-                   Df Sum of Sq  RSS AIC
-- Examination       1        53 2158 190
-<none>                          2105 191
-- Agriculture       1       308 2413 195
-- Infant.Mortality  1       409 2514 197
-- Catholic          1       448 2553 198
-- Education         1      1163 3268 209
-
-Step:  AIC=189.86
-Fertility ~ Agriculture + Education + Catholic + Infant.Mortality
-
-                   Df Sum of Sq  RSS AIC
-<none>                          2158 190
-- Agriculture       1       264 2422 193
-- Infant.Mortality  1       410 2568 196
-- Catholic          1       957 3115 205
-- Education         1      2250 4408 221
-
-step> summary(slm1)
-
-Call:
-lm(formula = Fertility ~ Agriculture + Education + Catholic + 
-    Infant.Mortality, data = swiss)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--14.676  -6.052   0.751   3.166  16.142 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)       62.1013     9.6049    6.47  8.5e-08 ***
-Agriculture       -0.1546     0.0682   -2.27   0.0286 *  
-Education         -0.9803     0.1481   -6.62  5.1e-08 ***
-Catholic           0.1247     0.0289    4.31  9.5e-05 ***
-Infant.Mortality   1.0784     0.3819    2.82   0.0072 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 7.17 on 42 degrees of freedom
-Multiple R-squared: 0.699,	Adjusted R-squared: 0.671 
-F-statistic: 24.4 on 4 and 42 DF,  p-value: 1.72e-10 
-
-
-step> slm1$anova
-           Step Df Deviance Resid. Df Resid. Dev    AIC
-1               NA       NA        41     2105.0 190.69
-2 - Examination  1   53.027        42     2158.1 189.86
+> ## following example(swiss)
+> lm1 <- lm(Fertility ~ ., data = swiss)
 > add1(lm1, ~ I(Education^2) + .^2)
 Single term additions
 
@@ -3997,7 +3834,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2e9b760>
+<environment: 0x101820a38>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -6803,177 +6640,6 @@ attr(,"class")
 > 
 > ### ** Examples
 > 
-> utils::example(glm)
-
-glm> ## Dobson (1990) Page 93: Randomized Controlled Trial :
-glm> counts <- c(18,17,15,20,10,20,25,13,12)
-
-glm> outcome <- gl(3,1,9)
-
-glm> treatment <- gl(3,3)
-
-glm> print(d.AD <- data.frame(treatment, outcome, counts))
-  treatment outcome counts
-1         1       1     18
-2         1       2     17
-3         1       3     15
-4         2       1     20
-5         2       2     10
-6         2       3     20
-7         3       1     25
-8         3       2     13
-9         3       3     12
-
-glm> glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
-
-glm> anova(glm.D93)
-Analysis of Deviance Table
-
-Model: poisson, link: log
-
-Response: counts
-
-Terms added sequentially (first to last)
-
-
-          Df Deviance Resid. Df Resid. Dev
-NULL                          8    10.5814
-outcome    2   5.4523         6     5.1291
-treatment  2   0.0000         4     5.1291
-
-glm> ## No test: 
-glm> summary(glm.D93)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = poisson())
-
-Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
-
-Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01   0.000   1.0000    
-treatment3   1.421e-15  2.000e-01   0.000   1.0000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: 56.761
-
-Number of Fisher Scoring iterations: 4
-
-
-glm> ## End(No test)
-glm> 
-glm> ## an example with offsets from Venables & Ripley (2002, p.189)
-glm> utils::data(anorexia, package="MASS")
-
-glm> anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-glm+                 family = gaussian, data = anorexia)
-
-glm> summary(anorex.1)
-
-Call:
-glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
-    data = anorexia)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--14.1083   -4.2773   -0.5484    5.4838   15.2922  
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  49.7711    13.3910   3.717 0.000410 ***
-Prewt        -0.5655     0.1612  -3.509 0.000803 ***
-TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
-TreatFT       4.5631     2.1333   2.139 0.036035 *  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for gaussian family taken to be 48.69504)
-
-    Null deviance: 4525.4  on 71  degrees of freedom
-Residual deviance: 3311.3  on 68  degrees of freedom
-AIC: 489.97
-
-Number of Fisher Scoring iterations: 2
-
-
-glm> # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
-glm> clotting <- data.frame(
-glm+     u = c(5,10,15,20,30,40,60,80,100),
-glm+     lot1 = c(118,58,42,35,27,25,21,19,18),
-glm+     lot2 = c(69,35,26,21,18,16,13,12,12))
-
-glm> summary(glm(lot1 ~ log(u), data=clotting, family=Gamma))
-
-Call:
-glm(formula = lot1 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.04008  -0.03756  -0.02637   0.02905   0.08641  
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
-log(u)       0.0153431  0.0004150   36.98 2.75e-09 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for Gamma family taken to be 0.002446059)
-
-    Null deviance: 3.512826  on 8  degrees of freedom
-Residual deviance: 0.016730  on 7  degrees of freedom
-AIC: 37.99
-
-Number of Fisher Scoring iterations: 3
-
-
-glm> summary(glm(lot2 ~ log(u), data=clotting, family=Gamma))
-
-Call:
-glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
-
-Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06371  
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.0239085  0.0013265  -18.02 4.00e-07 ***
-log(u)       0.0235992  0.0005768   40.91 1.36e-09 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for Gamma family taken to be 0.001813354)
-
-    Null deviance: 3.118557  on 8  degrees of freedom
-Residual deviance: 0.012672  on 7  degrees of freedom
-AIC: 27.032
-
-Number of Fisher Scoring iterations: 3
-
-
-glm> ## Not run: 
-glm> ##D ## for an example of the use of a terms object as a formula
-glm> ##D demo(glm.vr)
-glm> ## End(Not run)
-glm> 
-glm> 
-> extractAIC(glm.D93)  #>>  5  15.129
-[1]  5.00000 56.76132
-> 
-> 
 > 
 > cleanEx()
 > nameEx("factanal")
@@ -7262,7 +6928,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x9f00a80>
+<environment: 0x1057b86b0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7284,96 +6950,6 @@ Coefficients:
 Degrees of Freedom: 8 Total (i.e. Null);  4 Residual
 Null Deviance:	    10.58 
 Residual Deviance: 5.129 	AIC: NA 
-> anova(glm.qD93, test="F")
-Analysis of Deviance Table
-
-Model: quasipoisson, link: log
-
-Response: counts
-
-Terms added sequentially (first to last)
-
-
-          Df Deviance Resid. Df Resid. Dev      F Pr(>F)
-NULL                          8    10.5814              
-outcome    2   5.4523         6     5.1291 2.1079 0.2370
-treatment  2   0.0000         4     5.1291 0.0000 1.0000
-> summary(glm.qD93)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = quasipoisson())
-
-Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  3.045e+00  1.944e-01  15.665  9.7e-05 ***
-outcome2    -4.543e-01  2.299e-01  -1.976    0.119    
-outcome3    -2.930e-01  2.192e-01  -1.337    0.252    
-treatment2   1.338e-15  2.274e-01   0.000    1.000    
-treatment3   1.421e-15  2.274e-01   0.000    1.000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for quasipoisson family taken to be 1.293300)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: NA
-
-Number of Fisher Scoring iterations: 4
-
-> ## for Poisson results use
-> anova(glm.qD93, dispersion = 1, test="Chisq")
-Analysis of Deviance Table
-
-Model: quasipoisson, link: log
-
-Response: counts
-
-Terms added sequentially (first to last)
-
-
-          Df Deviance Resid. Df Resid. Dev P(>|Chi|)  
-NULL                          8    10.5814            
-outcome    2   5.4523         6     5.1291   0.06547 .
-treatment  2   0.0000         4     5.1291   1.00000  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> summary(glm.qD93, dispersion = 1)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = quasipoisson())
-
-Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
-
-Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01   0.000   1.0000    
-treatment3   1.421e-15  2.000e-01   0.000   1.0000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for quasipoisson family taken to be 1)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: NA
-
-Number of Fisher Scoring iterations: 4
-
-> 
 > 
 > ## Example of user-specified link, a logit model for p^days
 > ## See Shaffer, T.  2004. Auk 121(2): 526-540.
@@ -7765,7 +7341,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x5ccf058>
+<environment: 0x107494520>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12376,22 +11952,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x517d8f8>
+<environment: 0x105b01510>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x517d8f8>
+<environment: 0x105b01510>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x517d8f8>
+<environment: 0x105b01510>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x517d8f8>
+<environment: 0x105b01510>
 
 $name
 [1] "identity"
@@ -12402,12 +11978,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x5161f88>
+<environment: 0x105af6698>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x5161f88>
+<environment: 0x105af6698>
 
 > 
 > 
@@ -15995,71 +15571,10 @@ treatment  2   0.0000         4     5.1291
 > 
 > ### ** Examples
 > 
-> utils::example(lm)
-
-lm> require(graphics)
-
-lm> ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
-lm> ## Page 9: Plant Weight Data.
-lm> ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-
-lm> trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-
-lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
-
-lm> weight <- c(ctl, trt)
-
-lm> lm.D9 <- lm(weight ~ group)
-
-lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
-
-lm> ## No test: 
-lm> anova(lm.D9)
-Analysis of Variance Table
-
-Response: weight
-          Df Sum Sq Mean Sq F value Pr(>F)
-group      1 0.6882 0.68820  1.4191  0.249
-Residuals 18 8.7292 0.48496               
-
-lm> summary(lm.D90)
-
-Call:
-lm(formula = weight ~ group - 1)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.0710 -0.4938  0.0685  0.2462  1.3690 
-
-Coefficients:
-         Estimate Std. Error t value Pr(>|t|)    
-groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
-groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.6964 on 18 degrees of freedom
-Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
-F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
-
-
-lm> ## End(No test)
-lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
-
-lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
-
-lm> par(opar)
-
-lm> ## Don't show: 
-lm> ## model frame :
-lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
-lm+                     model.frame(lm.D9)))
-
-lm> ## End Don't show
-lm> ### less simple examples in "See Also" above
-lm> 
-lm> 
-lm> 
+> ## following on from example(lm)
+> ## Don't show: 
+> utils::example("lm", echo = FALSE)
+> ## End Don't show
 > step(lm.D9)  
 Start:  AIC=-12.58
 weight ~ group
@@ -16199,7 +15714,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x51e66e8>
+<environment: 0x106423b40>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17590,34 +17105,6 @@ Frequency = 1
 > 
 > ### ** Examples
 > 
-> require(utils) # for str
-> 
-> ## some platforms hit zero exactly on the first step:
-> ## if so the estimated precision is 2/3.
-> f <- function (x,a) x - a
-> str(xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3))
-List of 4
- $ root      : num 0.333
- $ f.root    : num 0
- $ iter      : int 1
- $ estim.prec: num 0.667
-> 
-> str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-+             tol = 0.0001), dig = 10)
-List of 4
- $ root      : num -1.191487962
- $ f.root    : num -2.549728179e-07
- $ iter      : int 7
- $ estim.prec: num 5e-05
-> str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
-+             tol = 1e-10 ), dig = 10)
-List of 4
- $ root      : num -1.191487884
- $ f.root    : num 5.66574565e-11
- $ iter      : int 8
- $ estim.prec: num 5.000044823e-11
-> 
-> 
 > 
 > cleanEx()
 > nameEx("update")
@@ -17843,71 +17330,10 @@ $rotmat
 > 
 > ### ** Examples
 > 
-> utils::example("lm")
-
-lm> require(graphics)
-
-lm> ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
-lm> ## Page 9: Plant Weight Data.
-lm> ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-
-lm> trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-
-lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
-
-lm> weight <- c(ctl, trt)
-
-lm> lm.D9 <- lm(weight ~ group)
-
-lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
-
-lm> ## No test: 
-lm> anova(lm.D9)
-Analysis of Variance Table
-
-Response: weight
-          Df Sum Sq Mean Sq F value Pr(>F)
-group      1 0.6882 0.68820  1.4191  0.249
-Residuals 18 8.7292 0.48496               
-
-lm> summary(lm.D90)
-
-Call:
-lm(formula = weight ~ group - 1)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.0710 -0.4938  0.0685  0.2462  1.3690 
-
-Coefficients:
-         Estimate Std. Error t value Pr(>|t|)    
-groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
-groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.6964 on 18 degrees of freedom
-Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
-F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
-
-
-lm> ## End(No test)
-lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
-
-lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
-
-lm> par(opar)
-
-lm> ## Don't show: 
-lm> ## model frame :
-lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
-lm+                     model.frame(lm.D9)))
-
-lm> ## End Don't show
-lm> ### less simple examples in "See Also" above
-lm> 
-lm> 
-lm> 
+> ## following on from example(lm)
+> ## Don't show: 
+> utils::example("lm", echo = FALSE)
+> ## End Don't show
 > all.equal(weighted.residuals(lm.D9),
 +           residuals(lm.D9))
 [1] TRUE

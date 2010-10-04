@@ -75,7 +75,7 @@ uniroot(f, interval, \dots,
   \code{\link{polyroot}} for all complex roots of a polynomial;
   \code{\link{optimize}}, \code{\link{nlm}}.
 }
-\examples{
+\examples{\donttest{
 require(utils) # for str
 
 ## some platforms hit zero exactly on the first step:
@@ -88,7 +88,6 @@ str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
 str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
             tol = 1e-10 ), dig = 10)
 
-\donttest{
 ## Find the smallest value x for which exp(x) > 0 (numerically):
 r <- uniroot(function(x) 1e80*exp(x)-1e-300, c(-1000,0), tol = 1e-15)
 str(r, digits= 15) ##> around -745, depending on the platform.
