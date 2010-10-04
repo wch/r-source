@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-09-16 r52918)
+R version 2.13.0 Under development (unstable) (2010-10-04 r53167)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -1029,40 +1029,6 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > ### Keywords: models
 > 
 > ### ** Examples
-> 
-> Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
-> SSasympOrig(Lob.329$age, 100, -3.2)  # response only
-[1] 11.51053 18.43835 33.47697 45.74272 55.74687 63.90642
-> Asym <- 100; lrc <- -3.2
-> SSasympOrig(Lob.329$age, Asym, lrc) # response and gradient
-[1] 11.51053 18.43835 33.47697 45.74272 55.74687 63.90642
-attr(,"gradient")
-          Asym      lrc
-[1,] 0.1151053 10.82108
-[2,] 0.1843835 16.62316
-[3,] 0.3347697 27.11625
-[4,] 0.4574272 33.17469
-[5,] 0.5574687 36.07710
-[6,] 0.6390642 36.78135
-> print(getInitial(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329),
-+       digits = 3)
-  Asym    lrc 
-315.05  -4.81 
-> ## Initial values are in fact the converged values
-> fm1 <- nls(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
-> summary(fm1)
-
-Formula: height ~ SSasympOrig(age, Asym, lrc)
-
-Parameters:
-     Estimate Std. Error t value Pr(>|t|)  
-Asym  315.046    443.071   0.711   0.5163  
-lrc    -4.814      1.527  -3.153   0.0344 *
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 2.822 on 4 degrees of freedom
-
 > ## Don't show: 
 > require(graphics)
 > 
@@ -1401,54 +1367,6 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > ### Keywords: models
 > 
 > ### ** Examples
-> 
-> ## Don't show: 
-> od <- options(digits=5)
-> ## End Don't show
-> Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
-> SSlogis(Chick.1$Time, 368, 14, 6)  # response only
- [1]  32.531  43.867  58.464  76.768  98.970 124.842 153.614 184.000 214.386
-[10] 243.158 269.030 280.615
-> Asym <- 368; xmid <- 14; scal <- 6
-> SSlogis(Chick.1$Time, Asym, xmid, scal) # response and gradient
- [1]  32.531  43.867  58.464  76.768  98.970 124.842 153.614 184.000 214.386
-[10] 243.158 269.030 280.615
-attr(,"gradient")
-         Asym     xmid     scal
- [1,] 0.08840  -4.9426  11.5326
- [2,] 0.11920  -6.4396  12.8792
- [3,] 0.15887  -8.1960  13.6599
- [4,] 0.20861 -10.1256  13.5008
- [5,] 0.26894 -12.0589  12.0589
- [6,] 0.33924 -13.7483   9.1655
- [7,] 0.41743 -14.9152   4.9717
- [8,] 0.50000 -15.3333   0.0000
- [9,] 0.58257 -14.9152  -4.9717
-[10,] 0.66076 -13.7483  -9.1655
-[11,] 0.73106 -12.0589 -12.0589
-[12,] 0.76254 -11.1057 -12.9567
-> getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
-   Asym    xmid    scal 
-937.021  35.223  11.405 
-> ## Initial values are in fact the converged values
-> fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
-> summary(fm1)
-
-Formula: weight ~ SSlogis(Time, Asym, xmid, scal)
-
-Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym  937.021    465.858    2.01   0.0752 .  
-xmid   35.223      8.312    4.24   0.0022 ** 
-scal   11.405      0.905   12.60  5.1e-07 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 2.92 on 9 degrees of freedom
-
-> ## Don't show: 
-> options(od)
-> ## End Don't show
 > ## Don't show: 
 > require(graphics)
 > 
@@ -1474,7 +1392,6 @@ Residual standard error: 2.92 on 9 degrees of freedom
 >   arrows(2.7, 3.8, 3.0, 3.8, length = 0.08, angle = 25)
 >   text(2.5, 3.8, expression(phi[3]), adj = c(0.5, 0.5))
 > ## End Don't show
-> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
@@ -2039,7 +1956,12 @@ lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
 
 lm> weight <- c(ctl, trt)
 
-lm> anova(lm.D9 <- lm(weight ~ group))
+lm> lm.D9 <- lm(weight ~ group)
+
+lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
+
+lm> ## No test: 
+lm> anova(lm.D9)
 Analysis of Variance Table
 
 Response: weight
@@ -2047,7 +1969,7 @@ Response: weight
 group      1   0.69   0.688    1.42   0.25
 Residuals 18   8.73   0.485               
 
-lm> summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
+lm> summary(lm.D90)
 
 Call:
 lm(formula = weight ~ group - 1)
@@ -2068,16 +1990,19 @@ Multiple R-squared: 0.982,	Adjusted R-squared: 0.98
 F-statistic:  485 on 2 and 18 DF,  p-value: <2e-16 
 
 
+lm> ## End(No test)
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 
 lm> par(opar)
 
+lm> ## Don't show: 
 lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
 
+lm> ## End Don't show
 lm> ### less simple examples in "See Also" above
 lm> 
 lm> 
@@ -2253,6 +2178,7 @@ NULL                          8      10.58
 outcome    2     5.45         6       5.13
 treatment  2     0.00         4       5.13
 
+glm> ## No test: 
 glm> summary(glm.D93)
 
 Call:
@@ -2283,6 +2209,8 @@ AIC: 56.76
 Number of Fisher Scoring iterations: 4
 
 
+glm> ## End(No test)
+glm> 
 glm> ## an example with offsets from Venables & Ripley (2002, p.189)
 glm> utils::data(anorexia, package="MASS")
 
@@ -3268,18 +3196,6 @@ Deg. of Freedom        12
 Residual standard error: 3.929447 
 1 out of 13 effects not estimable
 Estimated effects are balanced
-> summary(npk.aov)
-            Df Sum Sq Mean Sq F value   Pr(>F)   
-block        5 343.29  68.659  4.4467 0.015939 * 
-N            1 189.28 189.282 12.2587 0.004372 **
-P            1   8.40   8.402  0.5441 0.474904   
-K            1  95.20  95.202  6.1657 0.028795 * 
-N:P          1  21.28  21.282  1.3783 0.263165   
-N:K          1  33.14  33.135  2.1460 0.168648   
-P:K          1   0.48   0.482  0.0312 0.862752   
-Residuals   12 185.29  15.441                    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > coefficients(npk.aov)
 (Intercept)      block1      block2      block3      block4      block5 
  54.8750000   1.7125000   1.6791667  -1.8229167  -1.0137500   0.2950000 
@@ -4718,177 +4634,6 @@ treatment3  -0.3919928  0.39199279
 > ### Keywords: optimize
 > 
 > ### ** Examples
-> 
-> ## Don't show: 
-> od <- options(digits=5)
-> ## End Don't show
-> ## from optim
-> fr <- function(x) {   ## Rosenbrock Banana function
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
-+ }
-> grr <- function(x) { ## Gradient of 'fr'
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
-+        200 *      (x2 - x1 * x1))
-+ }
-> 
-> optim(c(-1.2,1), fr, grr)
-$par
-[1] 1.0003 1.0005
-
-$value
-[1] 8.8252e-08
-
-$counts
-function gradient 
-     195       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-> #Box-constraint, optimum on the boundary
-> constrOptim(c(-1.2,0.9), fr, grr, ui=rbind(c(-1,0),c(0,-1)), ci=c(-1,-1))
-$par
-[1] 0.99998 0.99995
-
-$value
-[1] 5.7341e-10
-
-$counts
-function gradient 
-     297       94 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$outer.iterations
-[1] 12
-
-$barrier.value
-[1] -0.00019992
-
-> #  x<=0.9,  y-x>0.1
-> constrOptim(c(.5,0), fr, grr, ui=rbind(c(-1,0),c(1,-1)), ci=c(-0.9,0.1))
-$par
-[1] 0.88913 0.78913
-
-$value
-[1] 0.012494
-
-$counts
-function gradient 
-     254       48 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$outer.iterations
-[1] 4
-
-$barrier.value
-[1] -7.4e-05
-
-> 
-> 
-> ## Solves linear and quadratic programming problems
-> ## but needs a feasible starting value
-> #
-> # from example(solve.QP) in 'quadprog'
-> # no derivative
-> fQP <- function(b) {-sum(c(0,5,0)*b)+0.5*sum(b*b)}
-> Amat       <- matrix(c(-4,-3,0,2,1,0,0,-2,1),3,3)
-> bvec       <- c(-8,2,0)
-> constrOptim(c(2,-1,-1), fQP, NULL, ui=t(Amat),ci=bvec)
-$par
-[1] 0.47614 1.04773 2.09545
-
-$value
-[1] -2.3810
-
-$counts
-function gradient 
-     510       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$outer.iterations
-[1] 3
-
-$barrier.value
-[1] -0.00062438
-
-> # derivative
-> gQP <- function(b) {-c(0,5,0)+b}
-> constrOptim(c(2,-1,-1), fQP, gQP, ui=t(Amat), ci=bvec)
-$par
-[1] 0.47619 1.04762 2.09524
-
-$value
-[1] -2.3810
-
-$counts
-function gradient 
-     406       81 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$outer.iterations
-[1] 3
-
-$barrier.value
-[1] -0.00062439
-
-> 
-> ## Now with maximisation instead of minimisation
-> hQP <- function(b) {sum(c(0,5,0)*b)-0.5*sum(b*b)}
-> constrOptim(c(2,-1,-1), hQP, NULL, ui=t(Amat), ci=bvec,
-+             control=list(fnscale=-1))
-$par
-[1] 0.47614 1.04773 2.09545
-
-$value
-[1] 2.3810
-
-$counts
-function gradient 
-     510       NA 
-
-$convergence
-[1] 0
-
-$message
-NULL
-
-$outer.iterations
-[1] 3
-
-$barrier.value
-[1] 0.00062438
-
-> ## Don't show: 
-> options(od)
-> ## End Don't show
-> 
 > 
 > 
 > cleanEx()
@@ -7096,6 +6841,7 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
 
+glm> ## No test: 
 glm> summary(glm.D93)
 
 Call:
@@ -7126,6 +6872,8 @@ AIC: 56.761
 Number of Fisher Scoring iterations: 4
 
 
+glm> ## End(No test)
+glm> 
 glm> ## an example with offsets from Venables & Ripley (2002, p.189)
 glm> utils::data(anorexia, package="MASS")
 
@@ -8381,35 +8129,6 @@ Terms added sequentially (first to last)
 NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
-> summary(glm.D93)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = poisson())
-
-Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
-
-Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01   0.000   1.0000    
-treatment3   1.421e-15  2.000e-01   0.000   1.0000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: 56.761
-
-Number of Fisher Scoring iterations: 4
-
 > 
 > ## an example with offsets from Venables & Ripley (2002, p.189)
 > utils::data(anorexia, package="MASS")
@@ -8516,26 +8235,6 @@ Number of Fisher Scoring iterations: 3
 > ### Keywords: optimize models
 > 
 > ### ** Examples
-> 
-> ### A variation on  example(glm) :
-> 
-> ## Annette Dobson's example ...
-> counts <- c(18,17,15,20,10,20,25,13,12)
-> outcome <- gl(3,1,9)
-> treatment <- gl(3,3)
-> oo <- options(digits = 12) # to see more when tracing :
-> glm.D93X <- glm(counts ~ outcome + treatment, family=poisson(),
-+                 trace = TRUE, epsilon = 1e-14)
-Deviance = 5.17971906292 Iterations - 1 
-Deviance = 5.12914710976 Iterations - 2 
-Deviance = 5.129141077 Iterations - 3 
-Deviance = 5.129141077 Iterations - 4 
-Deviance = 5.129141077 Iterations - 5 
-> options(oo)
-> coef(glm.D93X) # the last two are closer to 0 than in ?glm's  glm.D93
-  (Intercept)      outcome2      outcome3    treatment2    treatment3 
- 3.044522e+00 -4.542553e-01 -2.929871e-01  7.019758e-16  7.549517e-16 
-> 
 > 
 > 
 > cleanEx()
@@ -8753,278 +8452,6 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > ### Keywords: regression
 > 
 > ### ** Examples
-> 
-> require(graphics)
-> 
-> ## Analysis of the life-cycle savings data
-> ## given in Belsley, Kuh and Welsch.
-> lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
-> 
-> inflm.SR <- influence.measures(lm.SR)
-> which(apply(inflm.SR$is.inf, 1, any))
-        Chile United States        Zambia         Libya 
-            7            44            46            49 
-> # which observations 'are' influential
-> summary(inflm.SR) # only these
-Potentially influential observations of
-	 lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings) :
-
-              dfb.1_ dfb.pp15 dfb.pp75 dfb.dpi dfb.ddpi dffit   cov.r   cook.d
-Chile         -0.20   0.13     0.22    -0.02    0.12    -0.46    0.65_*  0.04 
-United States  0.07  -0.07     0.04    -0.23   -0.03    -0.25    1.66_*  0.01 
-Zambia         0.16  -0.08    -0.34     0.09    0.23     0.75    0.51_*  0.10 
-Libya          0.55  -0.48    -0.38    -0.02   -1.02_*  -1.16_*  2.09_*  0.27 
-              hat    
-Chile          0.04  
-United States  0.33_*
-Zambia         0.06  
-Libya          0.53_*
-> inflm.SR          # all
-Influence measures of
-	 lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings) :
-
-                 dfb.1_  dfb.pp15 dfb.pp75  dfb.dpi  dfb.ddpi   dffit cov.r
-Australia       0.01232 -0.010436 -0.02653  0.04534 -0.000159  0.0627 1.193
-Austria        -0.01005  0.005944  0.04084 -0.03672 -0.008182  0.0632 1.268
-Belgium        -0.06416  0.051496  0.12070 -0.03472 -0.007265  0.1878 1.176
-Bolivia         0.00578 -0.012703 -0.02253  0.03185  0.040642 -0.0597 1.224
-Brazil          0.08973 -0.061626 -0.17907  0.11997  0.068457  0.2646 1.082
-Canada          0.00541 -0.006750  0.01021 -0.03531 -0.002649 -0.0390 1.328
-Chile          -0.19941  0.132652  0.21979 -0.01998  0.120007 -0.4554 0.655
-China           0.02112 -0.005726 -0.08311  0.05180  0.110627  0.2008 1.150
-Colombia        0.03910 -0.052261 -0.02464  0.00168  0.009084 -0.0960 1.167
-Costa Rica     -0.23367  0.284279  0.14243  0.05638 -0.032824  0.4049 0.968
-Denmark        -0.04051  0.020927  0.04653  0.15220  0.048854  0.3845 0.934
-Ecuador         0.07176 -0.095239 -0.06067  0.01950  0.047786 -0.1695 1.139
-Finland        -0.11350  0.111328  0.11695 -0.04364 -0.017132 -0.1464 1.203
-France         -0.16600  0.147054  0.21900 -0.02942  0.023952  0.2765 1.226
-Germany        -0.00802  0.008224  0.00835 -0.00697 -0.000293 -0.0152 1.226
-Greece         -0.14820  0.163938  0.02861  0.15713 -0.059599 -0.2811 1.140
-Guatamala       0.01552 -0.054853  0.00614  0.00585  0.097217 -0.2305 1.085
-Honduras       -0.00226  0.009845 -0.01020  0.00812 -0.001887  0.0482 1.186
-Iceland         0.24789 -0.273549 -0.23265 -0.12555  0.184698 -0.4768 0.866
-India           0.02105 -0.015769 -0.01439 -0.01374 -0.018958  0.0381 1.202
-Ireland        -0.31001  0.296238  0.48156 -0.25733 -0.093317  0.5216 1.268
-Italy           0.06619 -0.070974  0.00307 -0.06999 -0.028648  0.1388 1.162
-Japan           0.63987 -0.656139 -0.67390  0.14610  0.388603  0.8597 1.085
-Korea          -0.16897  0.135087  0.21895  0.00511 -0.169492 -0.4303 0.870
-Luxembourg     -0.06827  0.068883  0.04380 -0.02797  0.049134 -0.1401 1.196
-Malta           0.03652 -0.048756  0.00791 -0.08659  0.153014  0.2386 1.128
-Norway          0.00222 -0.000350 -0.00611 -0.01594 -0.001462 -0.0522 1.168
-Netherlands     0.01395 -0.016738 -0.01186  0.00433  0.022591  0.0366 1.229
-New Zealand    -0.06002  0.065105  0.09412 -0.02638 -0.064740  0.1469 1.134
-Nicaragua      -0.01209  0.017904  0.00972 -0.00474 -0.010467  0.0397 1.174
-Panama          0.02828 -0.053342  0.01446 -0.03467 -0.007889 -0.1775 1.067
-Paraguay       -0.23227  0.164160  0.15826  0.14361  0.270478 -0.4655 0.873
-Peru           -0.07182  0.146695  0.09148 -0.08585 -0.287184  0.4811 0.831
-Philippines    -0.15707  0.226807  0.15743 -0.11140 -0.170674  0.4884 0.818
-Portugal       -0.02140  0.025514 -0.00380  0.03991 -0.028011 -0.0690 1.233
-South Africa    0.02218 -0.020296 -0.00672 -0.02049 -0.016326  0.0343 1.195
-South Rhodesia  0.14390 -0.134719 -0.09245 -0.06956 -0.057920  0.1607 1.313
-Spain          -0.03035  0.031311  0.00394  0.03512  0.005340 -0.0526 1.208
-Sweden          0.10098 -0.081623 -0.06166 -0.25528 -0.013316 -0.4526 1.086
-Switzerland     0.04323 -0.046492 -0.04364  0.09093 -0.018828  0.1903 1.147
-Turkey         -0.01092 -0.011985  0.02645  0.00161  0.025138 -0.1445 1.100
-Tunisia         0.07377 -0.104998 -0.07727  0.04439  0.103058 -0.2177 1.131
-United Kingdom  0.04671 -0.035840 -0.17129  0.12554  0.100314 -0.2722 1.189
-United States   0.06910 -0.072886  0.03745 -0.23312 -0.032729 -0.2510 1.655
-Venezuela      -0.05083  0.100805 -0.03366  0.11366 -0.124486  0.3071 1.095
-Zambia          0.16361 -0.079172 -0.33899  0.09406  0.228232  0.7482 0.512
-Jamaica         0.10958 -0.100223 -0.05722 -0.00703 -0.295461 -0.3456 1.200
-Uruguay        -0.13403  0.128805  0.02953  0.13132  0.099591 -0.2051 1.187
-Libya           0.55074 -0.483244 -0.37974 -0.01937 -1.024477 -1.1601 2.091
-Malaysia        0.03684 -0.061126  0.03235 -0.04956 -0.072294 -0.2126 1.113
-                 cook.d    hat inf
-Australia      8.04e-04 0.0677    
-Austria        8.18e-04 0.1204    
-Belgium        7.15e-03 0.0875    
-Bolivia        7.28e-04 0.0895    
-Brazil         1.40e-02 0.0696    
-Canada         3.11e-04 0.1584    
-Chile          3.78e-02 0.0373   *
-China          8.16e-03 0.0780    
-Colombia       1.88e-03 0.0573    
-Costa Rica     3.21e-02 0.0755    
-Denmark        2.88e-02 0.0627    
-Ecuador        5.82e-03 0.0637    
-Finland        4.36e-03 0.0920    
-France         1.55e-02 0.1362    
-Germany        4.74e-05 0.0874    
-Greece         1.59e-02 0.0966    
-Guatamala      1.07e-02 0.0605    
-Honduras       4.74e-04 0.0601    
-Iceland        4.35e-02 0.0705    
-India          2.97e-04 0.0715    
-Ireland        5.44e-02 0.2122    
-Italy          3.92e-03 0.0665    
-Japan          1.43e-01 0.2233    
-Korea          3.56e-02 0.0608    
-Luxembourg     3.99e-03 0.0863    
-Malta          1.15e-02 0.0794    
-Norway         5.56e-04 0.0479    
-Netherlands    2.74e-04 0.0906    
-New Zealand    4.38e-03 0.0542    
-Nicaragua      3.23e-04 0.0504    
-Panama         6.33e-03 0.0390    
-Paraguay       4.16e-02 0.0694    
-Peru           4.40e-02 0.0650    
-Philippines    4.52e-02 0.0643    
-Portugal       9.73e-04 0.0971    
-South Africa   2.41e-04 0.0651    
-South Rhodesia 5.27e-03 0.1608    
-Spain          5.66e-04 0.0773    
-Sweden         4.06e-02 0.1240    
-Switzerland    7.33e-03 0.0736    
-Turkey         4.22e-03 0.0396    
-Tunisia        9.56e-03 0.0746    
-United Kingdom 1.50e-02 0.1165    
-United States  1.28e-02 0.3337   *
-Venezuela      1.89e-02 0.0863    
-Zambia         9.66e-02 0.0643   *
-Jamaica        2.40e-02 0.1408    
-Uruguay        8.53e-03 0.0979    
-Libya          2.68e-01 0.5315   *
-Malaysia       9.11e-03 0.0652    
-> plot(rstudent(lm.SR) ~ hatvalues(lm.SR)) # recommended by some
-> 
-> ## The 'infl' argument is not needed, but avoids recomputation:
-> rs <- rstandard(lm.SR)
-> iflSR <- influence(lm.SR)
-> identical(rs, rstandard(lm.SR, infl = iflSR))
-[1] TRUE
-> ## to "see" the larger values:
-> 1000 * round(dfbetas(lm.SR, infl = iflSR), 3)
-               (Intercept) pop15 pop75  dpi  ddpi
-Australia               12   -10   -27   45     0
-Austria                -10     6    41  -37    -8
-Belgium                -64    51   121  -35    -7
-Bolivia                  6   -13   -23   32    41
-Brazil                  90   -62  -179  120    68
-Canada                   5    -7    10  -35    -3
-Chile                 -199   133   220  -20   120
-China                   21    -6   -83   52   111
-Colombia                39   -52   -25    2     9
-Costa Rica            -234   284   142   56   -33
-Denmark                -41    21    47  152    49
-Ecuador                 72   -95   -61   20    48
-Finland               -113   111   117  -44   -17
-France                -166   147   219  -29    24
-Germany                 -8     8     8   -7     0
-Greece                -148   164    29  157   -60
-Guatamala               16   -55     6    6    97
-Honduras                -2    10   -10    8    -2
-Iceland                248  -274  -233 -126   185
-India                   21   -16   -14  -14   -19
-Ireland               -310   296   482 -257   -93
-Italy                   66   -71     3  -70   -29
-Japan                  640  -656  -674  146   389
-Korea                 -169   135   219    5  -169
-Luxembourg             -68    69    44  -28    49
-Malta                   37   -49     8  -87   153
-Norway                   2     0    -6  -16    -1
-Netherlands             14   -17   -12    4    23
-New Zealand            -60    65    94  -26   -65
-Nicaragua              -12    18    10   -5   -10
-Panama                  28   -53    14  -35    -8
-Paraguay              -232   164   158  144   270
-Peru                   -72   147    91  -86  -287
-Philippines           -157   227   157 -111  -171
-Portugal               -21    26    -4   40   -28
-South Africa            22   -20    -7  -20   -16
-South Rhodesia         144  -135   -92  -70   -58
-Spain                  -30    31     4   35     5
-Sweden                 101   -82   -62 -255   -13
-Switzerland             43   -46   -44   91   -19
-Turkey                 -11   -12    26    2    25
-Tunisia                 74  -105   -77   44   103
-United Kingdom          47   -36  -171  126   100
-United States           69   -73    37 -233   -33
-Venezuela              -51   101   -34  114  -124
-Zambia                 164   -79  -339   94   228
-Jamaica                110  -100   -57   -7  -295
-Uruguay               -134   129    30  131   100
-Libya                  551  -483  -380  -19 -1024
-Malaysia                37   -61    32  -50   -72
-> 
-> ## Huber's data [Atkinson 1985]
-> xh <- c(-4:0, 10)
-> yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
-> summary(lmH <- lm(yh ~ xh))
-
-Call:
-lm(formula = yh ~ xh)
-
-Residuals:
-      1       2       3       4       5       6 
- 2.0858  0.4173 -0.2713 -1.5898 -1.3883  0.7463 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept)  0.06833    0.63279   0.108    0.919
-xh          -0.08146    0.13595  -0.599    0.581
-
-Residual standard error: 1.55 on 4 degrees of freedom
-Multiple R-squared: 0.08237,	Adjusted R-squared: -0.147 
-F-statistic: 0.3591 on 1 and 4 DF,  p-value: 0.5813 
-
-> (im <- influence.measures(lmH))
-Influence measures of
-	 lm(formula = yh ~ xh) :
-
-   dfb.1_    dfb.xh   dffit cov.r   cook.d   hat inf
-1  1.1124 -9.56e-01  1.4667 0.329  0.52004 0.290   *
-2  0.1261 -8.13e-02  0.1500 2.218  0.01464 0.236    
-3 -0.0775  3.33e-02 -0.0843 2.173  0.00469 0.197    
-4 -0.5320  1.14e-01 -0.5442 1.000  0.13454 0.174    
-5 -0.4361  1.78e-17 -0.4361 1.230  0.09627 0.167    
-6  8.5733  1.84e+01 20.3160 0.255 26.39859 0.936   *
-> plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
-> abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch=20, col=2)
-> 
-> ## Irwin's data [Williams 1987]
-> xi <- 1:5
-> yi <- c(0,2,14,19,30) # number of mice responding to does xi
-> mi <- rep(40, 5)      # number of mice exposed
-> summary(lmI <- glm(cbind(yi, mi -yi) ~ xi, family = binomial))
-
-Call:
-glm(formula = cbind(yi, mi - yi) ~ xi, family = binomial)
-
-Deviance Residuals: 
-      1        2        3        4        5  
--1.4507  -0.8039   1.6653  -0.4025  -0.3948  
-
-Coefficients:
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  -4.8420     0.6731  -7.194 6.28e-13 ***
-xi            1.2173     0.1761   6.913 4.74e-12 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 84.2169  on 4  degrees of freedom
-Residual deviance:  5.8421  on 3  degrees of freedom
-AIC: 24.486
-
-Number of Fisher Scoring iterations: 4
-
-> signif(cooks.distance(lmI), 3)# ~= Ci in Table 3, p.184
-     1      2      3      4      5 
-0.2520 0.2610 1.2900 0.0845 0.3640 
-> (imI <- influence.measures(lmI))
-Influence measures of
-	 glm(formula = cbind(yi, mi - yi) ~ xi, family = binomial) :
-
-    dfb.1_  dfb.xi  dffit cov.r cook.d   hat inf
-1 -0.81080  0.7561 -0.815 0.801 0.2522 0.259    
-2 -0.47926  0.4205 -0.500 2.427 0.2611 0.370    
-3  1.29804 -0.9219  1.739 0.246 1.2899 0.354   *
-4  0.00388 -0.0727 -0.246 3.357 0.0845 0.389   *
-5  0.29253 -0.3982 -0.511 5.213 0.3636 0.628   *
-> stopifnot(all.equal(imI$infmat[,"cook.d"],
-+           cooks.distance(lmI)))
-> 
 > 
 > 
 > cleanEx()
@@ -9652,42 +9079,16 @@ Coefficients:
 > trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
 > group <- gl(2,10,20, labels=c("Ctl","Trt"))
 > weight <- c(ctl, trt)
-> anova(lm.D9 <- lm(weight ~ group))
-Analysis of Variance Table
-
-Response: weight
-          Df Sum Sq Mean Sq F value Pr(>F)
-group      1 0.6882 0.68820  1.4191  0.249
-Residuals 18 8.7292 0.48496               
-> summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
-
-Call:
-lm(formula = weight ~ group - 1)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.0710 -0.4938  0.0685  0.2462  1.3690 
-
-Coefficients:
-         Estimate Std. Error t value Pr(>|t|)    
-groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
-groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.6964 on 18 degrees of freedom
-Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
-F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
-
-> 
+> lm.D9 <- lm(weight ~ group)
+> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 > plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 > par(opar)
-> 
+> ## Don't show: 
 > ## model frame :
 > stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 +                     model.frame(lm.D9)))
-> 
+> ## End Don't show
 > ### less simple examples in "See Also" above
 > 
 > 
@@ -10046,30 +9447,6 @@ $margin[[3]]
 > ### Keywords: regression
 > 
 > ### ** Examples
-> 
-> ## Don't show: 
-> utils::example("lm", echo = FALSE)
-> ## End Don't show
-> ##-- Using the same data as the lm(.) example:
-> lsD9 <- lsfit(x = as.numeric(gl(2, 10, 20)), y = weight)
-> dlsD9 <- ls.diag(lsD9)
-> utils::str(dlsD9, give.attr=FALSE)
-List of 10
- $ std.dev     : num 0.696
- $ hat         : num [1:20] 0.1 0.1 0.1 0.1 0.1 ...
- $ std.res     : num [1:20] -1.305 0.829 0.224 1.632 -0.805 ...
- $ stud.res    : num [1:20] -1.333 0.822 0.218 1.718 -0.797 ...
- $ cooks       : num [1:20] 0.09458 0.03822 0.00279 0.14792 0.03602 ...
- $ dfits       : num [1:20] -0.4442 0.274 0.0727 0.5726 -0.2657 ...
- $ correlation : num [1:2, 1:2] 1 -0.949 -0.949 1
- $ std.err     : num [1:2, 1] 0.492 0.311
- $ cov.scaled  : num [1:2, 1:2] 0.242 -0.145 -0.145 0.097
- $ cov.unscaled: num [1:2, 1:2] 0.5 -0.3 -0.3 0.2
-> abs(1 - sum(dlsD9$hat) / 2) < 10*.Machine$double.eps # sum(h.ii) = p
-[1] TRUE
-> plot(dlsD9$hat, dlsD9$stud.res, xlim=c(0,0.11))
-> abline(h = 0, lty = 2, col = "lightgray")
-> 
 > 
 > 
 > cleanEx()
@@ -10942,174 +10319,6 @@ b4                    3  0  0  0  0  3
 > ### Keywords: models
 > 
 > ### ** Examples
-> 
-> ## From Venables and Ripley (2002) p.165.
-> utils::data(npk, package="MASS")
-> 
-> options(contrasts=c("contr.helmert", "contr.treatment"))
-> npk.aov <- aov(yield ~ block + N*P*K, npk)
-> model.tables(npk.aov, "means", se = TRUE)
-Tables of means
-Grand mean
-       
-54.875 
-
- block 
-block
-    1     2     3     4     5     6 
-54.02 57.45 60.77 50.12 50.52 56.35 
-
- N 
-N
-    0     1 
-52.07 57.68 
-
- P 
-P
-    0     1 
-55.47 54.28 
-
- K 
-K
-    0     1 
-56.87 52.88 
-
- N:P 
-   P
-N   0     1    
-  0 51.72 52.42
-  1 59.22 56.15
-
- N:K 
-   K
-N   0     1    
-  0 52.88 51.25
-  1 60.85 54.52
-
- P:K 
-   K
-P   0     1    
-  0 57.60 53.33
-  1 56.13 52.43
-
-Standard errors for differences of means
-        block     N     P     K   N:P   N:K   P:K
-        2.779 1.604 1.604 1.604 2.269 2.269 2.269
-replic.     4    12    12    12     6     6     6
-> 
-> ## as a test, not particularly sensible statistically
-> npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
-> model.tables(npk.aovE, se=TRUE)
-Tables of effects
-
- N 
-N
-      0       1 
--2.8083  2.8083 
-
- P 
-P
-      0       1 
- 0.5917 -0.5917 
-
- K 
-K
-      0       1 
- 1.9917 -1.9917 
-
- N:P 
-   P
-N   0       1      
-  0 -0.9417  0.9417
-  1  0.9417 -0.9417
-
- N:K 
-   K
-N   0      1     
-  0 -1.175  1.175
-  1  1.175 -1.175
-
- P:K 
-   K
-P   0        1       
-  0  0.14167 -0.14167
-  1 -0.14167  0.14167
-
- N:P:K 
-, , K = 0
-
-   P
-N   0       1      
-  0 -1.2417  1.2417
-  1  1.2417 -1.2417
-
-, , K = 1
-
-   P
-N   0       1      
-  0  1.2417 -1.2417
-  1 -1.2417  1.2417
-
-
-Standard errors of effects
-            N     P     K   N:P   N:K   P:K N:P:K
-        1.134 1.134 1.134 1.604 1.604 1.604 5.052
-replic.    12    12    12     6     6     6     3
-> model.tables(npk.aovE, "means")
-Tables of means
-Grand mean
-       
-54.875 
-
- N 
-N
-    0     1 
-52.07 57.68 
-
- P 
-P
-    0     1 
-55.47 54.28 
-
- K 
-K
-    0     1 
-56.87 52.88 
-
- N:P 
-   P
-N   0     1    
-  0 51.72 52.42
-  1 59.22 56.15
-
- N:K 
-   K
-N   0     1    
-  0 52.88 51.25
-  1 60.85 54.52
-
- P:K 
-   K
-P   0     1    
-  0 57.60 53.33
-  1 56.13 52.43
-
- N:P:K 
-, , K = 0
-
-   P
-N   0     1    
-  0 51.43 54.33
-  1 63.77 57.93
-
-, , K = 1
-
-   P
-N   0     1    
-  0 52.00 50.50
-  1 54.67 54.37
-
-> 
 > 
 > 
 > options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
@@ -16800,7 +16009,12 @@ lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
 
 lm> weight <- c(ctl, trt)
 
-lm> anova(lm.D9 <- lm(weight ~ group))
+lm> lm.D9 <- lm(weight ~ group)
+
+lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
+
+lm> ## No test: 
+lm> anova(lm.D9)
 Analysis of Variance Table
 
 Response: weight
@@ -16808,7 +16022,7 @@ Response: weight
 group      1 0.6882 0.68820  1.4191  0.249
 Residuals 18 8.7292 0.48496               
 
-lm> summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
+lm> summary(lm.D90)
 
 Call:
 lm(formula = weight ~ group - 1)
@@ -16829,16 +16043,19 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
+lm> ## End(No test)
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 
 lm> par(opar)
 
+lm> ## Don't show: 
 lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
 
+lm> ## End Don't show
 lm> ### less simple examples in "See Also" above
 lm> 
 lm> 
@@ -18640,7 +17857,12 @@ lm> group <- gl(2,10,20, labels=c("Ctl","Trt"))
 
 lm> weight <- c(ctl, trt)
 
-lm> anova(lm.D9 <- lm(weight ~ group))
+lm> lm.D9 <- lm(weight ~ group)
+
+lm> lm.D90 <- lm(weight ~ group - 1) # omitting intercept
+
+lm> ## No test: 
+lm> anova(lm.D9)
 Analysis of Variance Table
 
 Response: weight
@@ -18648,7 +17870,7 @@ Response: weight
 group      1 0.6882 0.68820  1.4191  0.249
 Residuals 18 8.7292 0.48496               
 
-lm> summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
+lm> summary(lm.D90)
 
 Call:
 lm(formula = weight ~ group - 1)
@@ -18669,16 +17891,19 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
+lm> ## End(No test)
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
 
 lm> par(opar)
 
+lm> ## Don't show: 
 lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
 
+lm> ## End Don't show
 lm> ### less simple examples in "See Also" above
 lm> 
 lm> 

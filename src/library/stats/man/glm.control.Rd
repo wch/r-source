@@ -48,7 +48,7 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
 \seealso{
   \code{\link{glm.fit}}, the fitting procedure used by \code{\link{glm}}.
 }
-\examples{
+\examples{\donttest{
 ### A variation on  example(glm) :
 
 ## Annette Dobson's example ...
@@ -60,7 +60,7 @@ glm.D93X <- glm(counts ~ outcome + treatment, family=poisson(),
                 trace = TRUE, epsilon = 1e-14)
 options(oo)
 coef(glm.D93X) # the last two are closer to 0 than in ?glm's  glm.D93
-}
+}}
 \keyword{optimize}
 \keyword{models}
 
