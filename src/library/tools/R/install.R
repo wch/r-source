@@ -269,7 +269,7 @@
         .Internal(dirchmod(instdir))
         is_first_package <<- FALSE
 
-        if (tar_up) {
+        if (tar_up) { # Unix only
             version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, "_R_",
                                Sys.getenv("R_PLATFORM"), ".tar")
@@ -295,7 +295,7 @@
             setwd(owd)
         }
 
-        if (zip_up) {
+        if (zip_up) { # Windows only
             starsmsg(stars, "MD5 sums")
             .installMD5sums(instdir)
             ZIP <- "zip"                # Windows only
@@ -644,7 +644,7 @@
                             warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
                     }
                     if(force_biarch) one_only <- FALSE
-                    if(one_only)
+                    if(one_only || length(archs) < 2L)
                         has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                     else {
                         setwd(owd)
