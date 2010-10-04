@@ -12,7 +12,7 @@
 \alias{seq_len}
 \description{
   Generate regular sequences.  \code{seq} is a standard generic with a
-  default method.  \code{seq.int} is an internal generic which can be
+  default method.  \code{seq.int} is a primitive which can be
   much faster but has a few restrictions.  \code{seq_along} and
   \code{seq_len} are very fast primitives for two common cases.
 }
@@ -41,8 +41,8 @@ seq_len(length.out)
   \code{seq.int} is \emph{not} standard, and it is recommended always to
   name the arguments when programming.
 
-  Both \code{seq} are \code{seq.int} are generic, and only the default
-  method is described here.  Typical usages are
+  \code{seq} is  generic, and only the default method is described here.
+  Typical usages are
 \preformatted{
 seq(from, to)
 seq(from, to, by= )
@@ -86,7 +86,9 @@ seq(length.out= )
 
   For \code{seq} (only), up to two of \code{from}, \code{to} and
   \code{by} can be supplied as complex values provided \code{length.out}
-  or \code{along.with} is specified.
+  or \code{along.with} is specified.  More generally, the default method
+  of \code{seq} will handle classed objects for which arithmetic and
+  \code{abs} are defined.
 
   \code{seq.int}, \code{seq_along} and \code{seq_len} are
   \link{primitive}.
@@ -122,11 +124,11 @@ seq(length.out= )
 }
 \examples{
 seq(0, 1, length.out=11)
-seq(stats::rnorm(20))
-seq(1, 9, by = 2) # match
-seq(1, 9, by = pi)# stay below
+seq(stats::rnorm(20)) # effectively 'along'
+seq(1, 9, by = 2)     # matches 'end'
+seq(1, 9, by = pi)    # stays below 'end'
 seq(1, 6, by = 3)
 seq(1.575, 5.125, by=0.05)
-seq(17) # same as 1:17
+seq(17) # same as 1:17, or even better seq_len(17)
 }
 \keyword{manip}
