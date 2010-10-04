@@ -2881,12 +2881,27 @@ static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
   RCNTXT cntxt;
   SEXP pargs, rho1;
   int dispatched = FALSE;
+  SEXP op = SYMVALUE(install(generic)); /**** avoid this */
 
   PROTECT(pargs = promiseArgs(CDR(call), rho));
+  SET_PRVALUE(CAR(pargs), x);
+
+  /**** Minimal hack to try to handle the S4 case.  If we do the check
+	and do not dispatch then some arguments beyond the first might
+	have been evaluated; these will then be evaluated again by the
+	compiled argument code. */
+  if (IS_S4_OBJECT(x) && R_has_methods(op)) {
+    SEXP val = R_possible_dispatch(call, op, pargs, rho, TRUE);
+    if (val) {
+      *pv = val;
+      UNPROTECT(1);
+      return TRUE;
+    }
+  }
+
   /* See comment at first usemethod() call in this file. LT */
   PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
-  SET_PRVALUE(CAR(pargs), x);
-  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
+  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, op);
   if (usemethod(generic, x, call, pargs, rho1, rho, R_BaseEnv, pv))
     dispatched = TRUE;
   endcontext(&cntxt);
