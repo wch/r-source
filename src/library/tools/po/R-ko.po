@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-10-04 10:56\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -460,6 +460,9 @@ msgid "no 'type' specified"
 msgstr ""
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr ""
+
+msgid "current working directory cannot be ascertained"
 msgstr ""
 
 msgid "no inputs"
@@ -1005,6 +1008,10 @@ msgstr ""
 msgid "running tests to possibly trigger segfaults"
 msgstr ""
 
+#, fuzzy
+msgid "'x' must be a single character string"
+msgstr "인수의'txt'는 문자열이어야만 합니다"
+
 msgid "test '%s' is not available"
 msgstr "test '%s'는 이용 가능하지 않습니다"
 
@@ -1148,9 +1155,6 @@ msgstr[0] "하나를 넘어가는 데이터 호출에 의해 작성됩니다"
 
 #~ msgid "unterminated section 'section{%s}'"
 #~ msgstr "'section{%s}' section는 무한했습니다"
-
-#~ msgid "argument 'txt' must be a character string"
-#~ msgstr "인수의'txt'는 문자열이어야만 합니다"
 
 #~ msgid "unmatched \\item name in '\\item{%s'"
 #~ msgstr "'\\\\item{%s'에서 \\\\item명은 match이 되지 않습니다"

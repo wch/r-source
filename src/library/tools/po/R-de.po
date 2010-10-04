@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2010-10-04 10:56\n"
 "PO-Revision-Date: 2010-09-22 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -191,10 +191,12 @@ msgid "Package suggested but not available for checking: %s"
 msgstr "Vorgeschlagenes, aber nicht zur Überprüfung verfügbares Paket:"
 
 msgid "Packages which this enhances but not available for checking:"
-msgstr "Pakete, welche dieses erweitern, aber nicht für Überprüfung bereit stehen:"
+msgstr ""
+"Pakete, welche dieses erweitern, aber nicht für Überprüfung bereit stehen:"
 
 msgid "Package which this enhances but not available for checking: %s"
-msgstr "Paket, welches dieses erweitern, aber nicht für Überprüfung bereit steht:"
+msgstr ""
+"Paket, welches dieses erweitern, aber nicht für Überprüfung bereit steht:"
 
 msgid "Vignette dependencies not required:"
 msgstr "nicht benötigte Vignettenabhängigkeiten "
@@ -466,6 +468,9 @@ msgstr "kein 'type' angegeben"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type' muss entweder 'txt', 'html', 'latex' oder 'example' sein"
+
+msgid "current working directory cannot be ascertained"
+msgstr ""
 
 msgid "no inputs"
 msgstr "keine Eingaben"
@@ -742,7 +747,8 @@ msgid "ERROR: --merge-multiarch applies only to a single tarball"
 msgstr "Fehler: --merge-multiarch bezieht sich nur auf einen tarball"
 
 msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-msgstr "ERROR: --merge-multiarch can nur auf i386/x64 Installationen angewandt werden"
+msgstr ""
+"ERROR: --merge-multiarch can nur auf i386/x64 Installationen angewandt werden"
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -819,10 +825,13 @@ msgstr ""
 "\"%s\" nicht verarbeiten"
 
 msgid "No news found in given file using old-style R-like format."
-msgstr "Keine Neuigkeiten in angegebener Datei mit dem alten R-ähnlichen Format gefunden"
+msgstr ""
+"Keine Neuigkeiten in angegebener Datei mit dem alten R-ähnlichen Format "
+"gefunden"
 
 msgid "No news found in given file using package default format."
-msgstr "Keine Neuigkeiten in gegebener Datei mit dem Paket-Standardformat gefunden"
+msgstr ""
+"Keine Neuigkeiten in gegebener Datei mit dem Paket-Standardformat gefunden"
 
 msgid "Could not extract news from the following text chunks:"
 msgstr "Konnte aus folgenden Textteilen keine Neuigkeiten extrahieren:"
@@ -835,7 +844,9 @@ msgstr ""
 "\"%s\""
 
 msgid "Cannot extract version info from the following section titles:"
-msgstr "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation extrahieren<:"
+msgstr ""
+"Kann aus den folgenden Abschnittsüberschriften keine Versioninformation "
+"extrahieren<:"
 
 msgid "%s"
 msgstr "%s"
@@ -1004,6 +1015,10 @@ msgstr "Ausführen von Rgressions-Tests für reguläre Ausdrücke"
 
 msgid "running tests to possibly trigger segfaults"
 msgstr "Ausführen von Tests, um Segfaults zu provozieren"
+
+#, fuzzy
+msgid "'x' must be a single character string"
+msgstr "Argument 'txt' muss eine Zeichenkette sein"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
@@ -1212,9 +1227,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "unterminated section 'section{%s}'"
 #~ msgstr "unbeendeter Abschnitt 'section[%s]'"
-
-#~ msgid "argument 'txt' must be a character string"
-#~ msgstr "Argument 'txt' muss eine Zeichenkette sein"
 
 #~ msgid "unmatched \\item name in '\\item{%s'"
 #~ msgstr "kein passender \\item Name in '\\item[%s'"
