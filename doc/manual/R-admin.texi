@@ -220,11 +220,11 @@ Unix-alike platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c Actually, see http://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd, ix86 <=> i386.
-@samp{powerpc-@/apple-@/darwin}, @samp{i386-@/apple-@/darwin},
-@samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris},
-@samp{sparc-@/sun-@/solaris}, @samp{x86_64-@/*-@/freebsd}, and
-@samp{powerpc-@/ibm-@/aix6*} as well as perhaps (it is tested less
-frequently on these platforms) @samp{i386-@/*-@/freebsd},
+@samp{i386-@/apple-@/darwin}, @samp{x86_64-@/apple-@/darwin},
+@samp{i386-@/sun-@/solaris}, @samp{sparc-@/sun-@/solaris},
+@samp{x86_64-@/*-@/freebsd}, and @samp{powerpc-@/ibm-@/aix6*} as well as
+perhaps (it is tested less frequently on these platforms)
+@samp{powerpc-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd} and @samp{i386-@/*-@/openbsd}.
 
 @cindex Linux
@@ -720,7 +720,7 @@ architecture-specific versions will be available in e.g.@:
 @file{/usr/lib64/R/bin/exec$@{@var{R_ARCH}@}}.  Normally all installed
 architectures will run on the platform so the architecture of
 @command{Rscript} itself does not matter.  The executable
-@command{Rscript} will run the @command{R} script, and at the time the
+@command{Rscript} will run the @command{R} script, and at that time the
 setting of the @env{R_ARCH} environment variable determines the
 architecture which is run.
 
@@ -1653,7 +1653,7 @@ repository areas for 32- and 64-bit binary packages).
 
 
 A few of the binary packages need other software to be installed on your
-system.  For 32-bit builds see for example
+system: see for example
 @url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
 @pkg{cairoDevice} and those that depend on them) need the @file{bin}
@@ -3376,8 +3376,8 @@ variable @code{MAKE} at configure time, for example
 ./configure MAKE=gmake
 @end example
 
-Note the comment in @ref{Installation} about using a parallel
-@command{make}.
+@c Note the comment in @ref{Installation} about using a parallel
+@c @command{make}.
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on a Unix-alike
 @section Using FORTRAN
@@ -3844,10 +3844,10 @@ the configure flag @option{--disable-largefile} was needed (since
 @section FreeBSD
 @cindex FreeBSD
 
-Rainer Hurling has reported success on @cputype{x86_64} FreeBSD 7.2 (and
-on 6.x in the past).  Since Darwin (the base OS of Mac OS X) is based on
-FreeBSD we find testing on Darwin tends to pick up any potential
-problems on FreeBSD problems quite early.
+Rainer Hurling has reported success on @cputype{x86_64} FreeBSD 9.0 (and
+on earlier versions in the past).  Since Darwin (the base OS of Mac OS
+X) is based on FreeBSD we find testing on Darwin tends to pick up most
+potential problems on FreeBSD.
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the
@@ -4464,9 +4464,10 @@ PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
 
 It is essential that the directory containing the command line tools
 comes first or second in the path: there are typically like-named
-tools in other directories, and they will @strong{not} work.  The
-ordering of the other directories is less important, but if in doubt,
-use the order above.
+tools@footnote{such as @command{sort}, @command{find} and
+@command{make}.} in other directories, and they will @strong{not} work.
+The ordering of the other directories is less important, but if in
+doubt, use the order above.
 
 Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
@@ -4611,7 +4612,7 @@ subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
 are linked statically.
 
 We have also tested using the 32-bit toolchain from the @code{mingw-w64}
-project (which are currently using pre-releases of @command{gcc 4.5.1})
+project (which are currently using pre-releases of @command{gcc 4.5.2})
 and options to use that are documented in file @file{MkRules.dist}.
 
 @node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
@@ -4620,7 +4621,7 @@ and options to use that are documented in file @file{MkRules.dist}.
 Several versions of the MinGW-w64 toolchain are available: use one of
 them to replace the 32-bit toolchain's @file{bin} directory in your
 path.  Then copy file @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64},
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
 @code{BINPREF64} and @code{SYMPAT64} appropriate to your toolchain, then
 make @R{} in the usual way.
 
@@ -4635,7 +4636,7 @@ However, this has been patched to use static Fortran and C++ runtime
 libraries: a suitable toolchain can be found at
 @url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/Win64No_toolchain.zip}.
 
-@strong{NB:} toolchains from late April 2010 on at that site generate
+@strong{NB:} toolchains after late April 2010 at that site generate
 objects with symbols without a leading underscore.  Other toolchains
 (including that used for @R{} 2.11.x) may use leading underscores, in
 which case @code{SYMPAT64} in @file{src/gnuwin32/MkRules.dist} needs to
@@ -4648,8 +4649,8 @@ libraries but not linking directly to DLLs.
 
 Other toolchains are available: for example under
 @uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
-is a native x64 Windows toolchain that may be useful when building
-external software.
+contains a native x64 Windows toolchain by `sezero' that may be useful
+when building external software.
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset

@@ -8,7 +8,7 @@
 \title{Express File Paths in Canonical Form}
 \description{
   Convert file paths to canonical form for the platform, to display them
-  in a user-understandable form and so relative and absolute paths can
+  in a user-understandable form and so that relative and absolute paths can
   be compared.
 }
 \usage{
@@ -27,7 +27,9 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   symbolic links).  It relies on the POSIX system function
   \code{realpath}: if the platform does not have that (we know of no
   current example) then the result will be an absolute path but might
-  not be canonical.
+  not be canonical.  Even where \code{realpath} is used the canonical
+  path need not be unique, for example \emph{via} hard links or
+  multiple mounts.
 
   On Windows it converts relative paths to absolute paths, converts
   short names for path elements to long names and ensures the separator
