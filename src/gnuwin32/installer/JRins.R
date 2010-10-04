@@ -134,6 +134,8 @@
             component <- "x64"
 	else
             component <- "main"
+            
+        if (component == "x64" && !have64bit) next
 
         f <- gsub("/", "\\", f, fixed = TRUE)
         cat('Source: "', srcdir, '\\', f, '"; ',
