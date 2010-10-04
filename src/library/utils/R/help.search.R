@@ -474,7 +474,9 @@ printhsearchInternal  <- function(x, ...)
 	writeLines(formatDL(dbnam, dbtit), outConn)
 	writeLines(c("\n",
 		     strwrap(paste("Type '?PKG::FOO' to",
-				   "inspect entry 'PKG::FOO TITLE'."))),
+				   "inspect entries 'PKG::FOO',",
+				   "or 'TYPE?PKG::FOO' for entries like",
+				   "'PKG::FOO-TYPE'."))),
 		   outConn)
 	close(outConn)
 	file.show(outFile, delete.file = TRUE)
