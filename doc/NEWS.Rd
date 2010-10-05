@@ -38,10 +38,16 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item Dummy
+    }
+  }
+}
+
+\section{CHANGES IN R VERSION 2.12.0 PATCHED}{
+  \subsection{BUG FIXES}{
+    \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
-
-      \item Fix for crash of example(rasterImage) on x11(type="Xlib").
     }
   }
 }
@@ -696,7 +702,7 @@
       \code{NA} or \code{NaN} in IEC 60559 arithmetic).  This was seen
       in results from \code{tcrossprod}, and for example that
       \code{log(0) \%*\% 0} gave \code{0}.
-      
+
       \item The calculation of whether text was completely outside
       the device region (in which case, you draw nothing)
       was wrong for screen devices (which have [0, 0] at top-left).
@@ -729,6 +735,9 @@
       
       \item \code{source(chdir = TRUE)} failed to reset the working
       directory if it could not be determined -- that is now an error.
+      
+      \item Fix for crash of \code{example(rasterImage)} on
+      \code{x11(type="Xlib")}.
     }
   }
 }
