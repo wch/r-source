@@ -687,6 +687,9 @@
       
       \item \code{source(chdir = TRUE)} failed to reset the working
       directory if it could not be determined -- that is now an error.
+      
+      \item Fix for crash of \code{example(rasterImage)} on
+      \code{x11(type="Xlib")}.
     }
   }
 }
