@@ -927,9 +927,9 @@ extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @file{@var{R_HOME}} below.
 
-For a 64-bit build you will need a 64-bit toolchain
-and the appropriate 64-bit version of
-Tcl/Tk: both of these are now contained in @file{Rtools212.exe}.
+For a 64-bit build you will need a 64-bit toolchain and the appropriate
+64-bit version of Tcl/Tk: both of these are contained in
+@file{Rtools212.exe}.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -968,16 +968,11 @@ make rsync-recommended
 
 @end itemize
 
-The following additional items are normally installed (for 32-bit
-builds) by @file{Rtools*.exe}.  If instead you choose to do a completely
-manual build you will also need
+The following additional items are normally installed by
+@file{Rtools*.exe}.  If instead you choose to do a completely manual
+build you will also need
 
 @itemize
-
-@c @item
-@c Get @file{iconv.dll} from
-@c @uref{http://www.stats.ox.ac.uk/pub/Rtools/iconv.dll} and put it in
-@c @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
 The Tcl/Tk support files are contained in @file{Rtools*.exe}.
@@ -4457,11 +4452,10 @@ use filepaths containing spaces: you can always use the short forms
 (found by @code{dir /x} at the Windows command line).  Network shares
 (with paths starting @code{\\}) are not supported.
 
-For example, all on
-one line,
+For example for a 32-bit build, all on one line,
 
 @smallexample
-PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
+PATH=c:\Rtools\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
      c:\R\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
@@ -4577,8 +4571,8 @@ referred to as a `toolchain'.
 
 In each case you need to put the @file{bin} directory of the toolchain
 early in your @env{PATH}: if you use the recommended toolchains you can
-have both in the path, and need to if you want to install 32/64-bit
-packages.
+have both in the path (in either order), and need to if you want to
+install 32/64-bit packages.
 
 @menu
 * 32-bit toolchain::            
@@ -4594,7 +4588,7 @@ where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
 
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain is part of @file{Rtools212.exe}, and was
+@code{4.5.0}.  The toolchain included in @file{Rtools212.exe}, and was
 collected from the files at
 @url{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
@@ -4618,41 +4612,43 @@ with the import libraries in @file{lib/gcc/mingw32/4.5.0} moved to a
 subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
 are linked statically.
 
-The @file{Rtools212.exe} collection also includes 
-the 32-bit toolchain from the @code{mingw-w64}
-project (which are currently using pre-releases of @command{gcc 4.5.2})
-and options to use that are documented in file @file{MkRules.dist}.
+It is also possible to use the 32-bit toolchain from the
+@code{mingw-w64} project (which is currently using pre-releases of
+@command{gcc 4.5.2}) and options to use that are documented in file
+@file{MkRules.dist}.
 
 @node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
 @subsection 64-bit toolchain
 
 Several versions of the MinGW-w64 toolchain are available: use one of
-them to replace (or supplement) the 32-bit toolchain's @file{bin} directory in your
-path.  Then copy file @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
-@code{BINPREF64} and @code{SYMPAT64} appropriate to your toolchain, then
-make @R{} in the usual way.
+them to replace (or supplement) the 32-bit toolchain's @file{bin}
+directory in your path.  Then copy file @file{src/gnuwin32/MkRules.dist}
+to @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64}
+and @code{BINPREF64} and @code{SYMPAT64} appropriate to your toolchain,
+then make @R{} in the usual way.
 
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages
-unless @option{--no-test-load} is used.}  This comes from
+unless @option{--no-test-load} is used.}  This is based on files from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip}.
-However, this has been patched to use static Fortran and C++ runtime
-libraries: a suitable toolchain is included in @file{Rtools212.exe}.
+and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
+including a pre-release of @command{gcc 4.5.2}.  However, this has been
+patched to use static Fortran and C++ runtime libraries: a suitable
+toolchain is included in @file{Rtools212.exe}.
 
-@strong{NB:} toolchains after late April 2010 at that site generate
-objects with symbols without a leading underscore.  Other toolchains
-(including that used for @R{} 2.11.x) may use leading underscores, in
-which case @code{SYMPAT64} in @file{src/gnuwin32/MkRules.dist} needs to
-be set (see the comments in that file).  If you are using a binary
-distribution of @R{}, check that the settings of @code{BINPREF} and
-@code{SYMPAT} in file @file{etc/x64/Makeconf} are appropriate to your
-toolchain (following the comments in the file).  The use or not of
-leading underscores affects linking to external static and import
-libraries but not linking directly to DLLs.
+@strong{NB:} 64-bit toolchains after late April 2010 at that site
+generate objects with symbols without a leading underscore.  Other
+toolchains (including that used for @R{} 2.11.x) may use leading
+underscores, in which case @code{SYMPAT64} in
+@file{src/gnuwin32/MkRules.dist} needs to be set (see the comments in
+that file).  If you are using a binary distribution of @R{}, check that
+the settings of @code{BINPREF} and @code{SYMPAT} in file
+@file{etc/x64/Makeconf} are appropriate to your toolchain (following the
+comments in the file).  The use or not of leading underscores affects
+linking to external static and import libraries but not linking directly
+to DLLs.
 
 Other toolchains are available: for example under
 @uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}

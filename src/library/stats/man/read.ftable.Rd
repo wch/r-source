@@ -85,7 +85,7 @@ cat("             Intercourse\n",
     "Black Male        29  23\n",
     "      Female      22  36\n",
     file = file)
-file.show(file)
+\donttest{file.show(file)}
 ft <- read.ftable(file)
 ft
 unlink(file)
@@ -98,7 +98,7 @@ cat("                      \"Tonsil Size\"\n",
     "Noncarriers       497     560           269\n",
     "Carriers           19      29            24\n",
     file = file)
-file.show(file)
+\donttest{file.show(file)}
 ft <- read.ftable(file, skip = 2,
                   row.var.names = "Status",
                   col.vars = list("Tonsil Size" =

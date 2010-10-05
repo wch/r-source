@@ -15129,14 +15129,6 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 +     "Black Male        29  23\n",
 +     "      Female      22  36\n",
 +     file = file)
-> file.show(file)
-             Intercourse
- Race  Gender     Yes  No
- White Male        43 134
-       Female      26 149
- Black Male        29  23
-       Female      22  36
-
 > ft <- read.ftable(file)
 > ft
              Intercourse Yes  No
@@ -15155,12 +15147,6 @@ Black Male                29  23
 +     "Noncarriers       497     560           269\n",
 +     "Carriers           19      29            24\n",
 +     file = file)
-> file.show(file)
-                      "Tonsil Size"
-             "Not Enl." "Enl." "Greatly Enl."
- Noncarriers       497     560           269
- Carriers           19      29            24
-
 > ft <- read.ftable(file, skip = 2,
 +                   row.var.names = "Status",
 +                   col.vars = list("Tonsil Size" =
