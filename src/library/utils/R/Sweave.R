@@ -39,6 +39,10 @@ Sweave <- function(file, driver=RweaveLatex(),
 
     text <- SweaveReadFile(file, syntax)
     syntax <- attr(text, "syntax")
+    if (identical(attr(text, "hasSweaveInput"), TRUE)) {
+        file <- "SweaveInput"
+    	drobj$srcfile <- srcfilecopy(file, text)
+    }
 
     mode <- "doc"
     chunknr <- 0L
@@ -183,6 +187,8 @@ SweaveReadFile <- function(file, syntax)
                 text <- c(text[-pos], itext)
             else
                 text <- c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
+                
+            attr(text, "hasSweaveInput") <- TRUE
         }
     }
 
