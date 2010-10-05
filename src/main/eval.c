@@ -2668,10 +2668,10 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
     return R_binary(R_NilValue, op, x, y);
 }
 
-#define Builtin1(do_fun,which) do { \
+#define Builtin1(do_fun,which,rho) do {				 \
   R_BCNodeStackTop[-1] = CONS(R_BCNodeStackTop[-1], R_NilValue); \
   R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), \
-				R_BCNodeStackTop[-1], R_NilValue); \
+				R_BCNodeStackTop[-1], rho); \
   NEXT(); \
 } while(0)
 
@@ -2681,12 +2681,12 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
   NEXT(); \
 } while(0)
 
-#define Builtin2(do_fun,which) do { \
+#define Builtin2(do_fun,which,rho) do {		     \
   SEXP tmp = CONS(R_BCNodeStackTop[-1], R_NilValue); \
   R_BCNodeStackTop[-2] = CONS(R_BCNodeStackTop[-2], tmp); \
   R_BCNodeStackTop--; \
   R_BCNodeStackTop[-1] = do_fun(FakeCall2, SYMVALUE(which), \
-				R_BCNodeStackTop[-1], R_NilValue); \
+				R_BCNodeStackTop[-1], rho); \
   NEXT(); \
 } while(0)
 
@@ -2700,7 +2700,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 
 #define Arith1(which) NewBuiltin1(cmp_arith1,which)
 #define Arith2(opval,opsym) NewBuiltin2(cmp_arith2,opval,opsym)
-#define Math1(which) Builtin1(do_math1,which)
+#define Math1(which) Builtin1(do_math1,which,rho)
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym)
 
 # define DO_FAST_BINOP(op,a,b) do { \
@@ -3551,9 +3551,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(LE, 0): FastRelop2(<=, LEOP, R_LeSym);
     OP(GE, 0): FastRelop2(>=, GEOP, R_GeSym);
     OP(GT, 0): FastRelop2(>, GTOP, R_GtSym);
-    OP(AND, 0): Builtin2(do_logic, R_AndSym);
-    OP(OR, 0): Builtin2(do_logic, R_OrSym);
-    OP(NOT, 0): Builtin1(do_logic, R_NotSym);
+    OP(AND, 0): Builtin2(do_logic, R_AndSym, rho);
+    OP(OR, 0): Builtin2(do_logic, R_OrSym, rho);
+    OP(NOT, 0): Builtin1(do_logic, R_NotSym, rho);
     OP(DOTSERR, 0): error(_("'...' used in an incorrect context"));
     OP(STARTASSIGN, 2):
       {
