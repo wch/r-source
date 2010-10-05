@@ -3649,11 +3649,16 @@ static SEXP bcEval(SEXP body, SEXP rho)
       }
     OP(ISNULL, 0): DO_ISTEST(isNull);
     OP(ISLOGICAL, 0): DO_ISTYPE(LGLSXP);
-    OP(ISINTEGER, 0): DO_ISTYPE(INTSXP);
+    OP(ISINTEGER, 0): {
+	SEXP arg = R_BCNodeStackTop[-1];
+	Rboolean test = (TYPEOF(arg) == INTSXP) && ! inherits(arg, "factor");
+	R_BCNodeStackTop[-1] = test ? mkTrue() : mkFalse();
+	NEXT();
+      }
     OP(ISDOUBLE, 0): DO_ISTYPE(REALSXP);
     OP(ISCOMPLEX, 0): DO_ISTYPE(CPLXSXP);
     OP(ISCHARACTER, 0): DO_ISTYPE(STRSXP);
-    OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP);
+    OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP); /**** S4 thingy allowed now???*/
     OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
     OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
     OP(NVECELT, 2): {
