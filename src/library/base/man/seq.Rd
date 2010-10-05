@@ -99,8 +99,8 @@ seq(length.out= )
   For \code{seq} (only), up to two of \code{from}, \code{to} and
   \code{by} can be supplied as complex values provided \code{length.out}
   or \code{along.with} is specified.  More generally, the default method
-  of \code{seq} will handle classed objects for which arithmetic and
-  \code{abs} are defined.
+  of \code{seq} will handle classed objects with methods for
+  the \code{Math}, \code{Ops} and \code{Summary} group generics.
 
   \code{seq.int}, \code{seq_along} and \code{seq_len} are
   \link{primitive}.
