@@ -2053,10 +2053,10 @@ static void X11_Raster(unsigned int *raster, int w, int h,
                           */
                          (char *) rasterImage,
                          imageWidth, imageHeight,
-                         depth, /* bitmap_pad */
+                         depth >= 24 ? 32 : 16, /* bitmap_pad */
                          0); /* bytes_per_line: 0 means auto-calculate*/
 
-    if (XInitImage(image) == 0)
+    if (image == NULL || XInitImage(image) == 0)
         error(_("Unable to create XImage"));
 
     for (i=0; i < imageHeight ;i++) {

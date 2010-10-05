@@ -40,6 +40,8 @@
     \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
+
+      \item Fix for crash of example(rasterImage) on x11(type="Xlib").
     }
   }
 }
