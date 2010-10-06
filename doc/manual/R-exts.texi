@@ -723,7 +723,8 @@ space. (Note that it is not possible to generate this index file
 automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory.  Subdirectories of @file{inst} should not
+to the installation directory (except perhaps hidden files with names
+starting with @samp{.}).  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of

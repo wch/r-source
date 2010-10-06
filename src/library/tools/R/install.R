@@ -876,7 +876,7 @@
 	    }
 	}
 
-	if (install_inst && dir.exists("inst")) {
+	if (install_inst && dir.exists("inst") && length(dir("inst"))) {
 	    starsmsg(stars, "inst")
 	    ## FIXME avoid installing .svn etc?
 	    cp_r("inst", instdir)
