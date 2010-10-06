@@ -17,7 +17,7 @@ INSTFILES = \
   stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
 DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 
-R_EXE = $(top_builddir)/bin/R --slave --vanilla
+R_EXE = LANGUAGE=en LC_TIME=C $(top_builddir)/bin/R --slave --vanilla
 
 all: Makefile test-Examples-Base
 
