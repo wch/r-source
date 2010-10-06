@@ -389,9 +389,11 @@ getRefSuperClasses <- function(classes, classDefs) {
             return(invisible(methodsEnv))
     }
     allMethods <- as.list(methodsEnv)
-    insertClassMethods(allMethods, className) <- methodDefs
-    for(what in mnames)
-        assign(what, allMethods[[what]], envir = methodsEnv)
+    ## get a list of processed methods, plus any
+    ## overriden superclass methods
+    newMethods <- insertClassMethods(allMethods, className, methodDefs, FALSE)
+    for(what in names(newMethods))
+        assign(what, newMethods[[what]], envir = methodsEnv)
     invisible(methodsEnv)
 }
 
@@ -680,7 +682,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
     fp[names(fieldPrototypes)] <- fieldPrototypes
 
     ## process and insert reference methods
-    insertClassMethods(cm, Class) <- refMethods
+    cm <- insertClassMethods(cm, Class, refMethods, TRUE)
     list(superClasses = superClasses, refSuperClasses = refSuperClasses,
          fieldClasses = fc, fieldPrototypes = fp,
          refMethods = cm)
@@ -689,27 +691,31 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
 superClassMethodName <- function(def)
     paste(def@name, def@refClassName, sep = "#")
 
-`insertClassMethods<-` <- function(methods, Class, value) { # `value' is refMethods
-    ## process the class methods to include references
-    ## (this information is needed for the instance environment as used
-    ## in envRefClass, and conceivably might not be needed for other
-    ## implementations of class methods.  This step could then be optional.)
+insertClassMethods <- function(methods, Class, value, returnAll) {
+    ## process reference methods, return either the entire updated methods
+    ## or the processed new methods in value, plus superclass versions
     theseMethods <- names(value)
     prevMethods <- names(methods) # catch refs to inherited methods as well
     allMethods <- unique(c(theseMethods, prevMethods))
+    if(returnAll)
+        returnMethods <- methods
+    else
+        returnMethods <- value
     for(method in theseMethods) {
         prevMethod <- methods[[method]] # NULL or superClass method
         if(is.null(prevMethod))
             superClassMethod <- ""
+        else if(identical(prevMethod@refClassName, Class))
+            superClassMethod <- prevMethod@superClassMethod
         else {
             superClassMethod <- superClassMethodName(prevMethod)
-            methods[[superClassMethod]] <- prevMethod
+            returnMethods[[superClassMethod]] <- prevMethod
         }
-        methods[[method]] <-
+        returnMethods[[method]] <-
                makeClassMethod(value[[method]], method, Class,
                                superClassMethod, allMethods)
     }
-    methods
+    returnMethods
 }
 
 

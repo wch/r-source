@@ -240,3 +240,16 @@ stopifnot(all.equal(ff$data, xMat))
 rm(ff)
 gc()
 stopifnot(identical(markViewer, "OFF")) #check finalize
+
+## deal correctly with inherited methods and overriding existing
+## methods from $methods(...)
+refClassA <- setRefClass("refClassA", methods=list(foo=function() "A"))
+refClassB <- setRefClass("refClassB", contains="refClassA")
+mnames <- objects(getClass("refClassB")@refMethods)
+refClassB$methods(foo=function() callSuper())
+stopifnot(identical(refClassB$new()$foo(), "A"))
+mnames2 <- objects(getClass("refClassB")@refMethods)
+stopifnot(identical(mnames2[is.na(match(mnames2,mnames))], "foo#refClassA"))
+refClassB$methods(foo=function() paste(callSuper(), "Version 2"))
+stopifnot(identical(refClassB$new()$foo(), "A Version 2"))
+stopifnot(identical(mnames2, objects(getClass("refClassB")@refMethods)))
