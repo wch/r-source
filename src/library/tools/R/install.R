@@ -45,8 +45,8 @@
     paste0 <- function(...) paste(..., sep="")
 
     MAKE <- Sys.getenv("MAKE")
-    TAR <- shQuote(Sys.getenv("TAR"))
-    GZIP <- Sys.getenv("R_GZIPCMD")
+    TAR <- Sys.getenv("TAR", 'tar') # used on Unix only
+    GZIP <- Sys.getenv("R_GZIPCMD") # ditto
     if (!nzchar(GZIP)) GZIP <- "gzip"
     if (WINDOWS) zip <- "zip"
     rarch <- Sys.getenv("R_ARCH") # unix only

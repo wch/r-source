@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -31,7 +31,9 @@ tar(tarfile, files = NULL,
   \item{compression_level}{integer: the level of compression.  Only used
     for the internal method.}
 
-  \item{tar}{character string: the path to the command to be used.}
+  \item{tar}{character string: the path to the command to be used.  If
+    the command itself contains spaces it needs to be quoted -- but
+    \code{tar} can also contain flags separated from the command by spaces.}
 }
 
 \details{
