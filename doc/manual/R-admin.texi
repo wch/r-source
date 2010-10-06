@@ -857,6 +857,14 @@ It is possible to test the installed packages (but not the
 package-specific tests) by @code{testInstalledPackages} even if
 @command{make install-tests} was not run.
 
+Note that the results may depend on the language set for times and
+messages: for maximal similarity to reference results you may want to
+try setting
+
+@example
+LANGUAGE=en LC_TIME=C
+@end example
+
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
