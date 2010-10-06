@@ -24,6 +24,13 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD Rdiff} is now implemented in \R on
+      Unix-alikes (as it has been on Windows for some time).
+    }
+  } 
+
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item \code{require(save = TRUE)} is defunct, and use of the

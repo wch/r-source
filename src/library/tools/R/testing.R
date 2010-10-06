@@ -124,7 +124,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
         ## remove BATCH footer
         nl <- length(txt)
         if(grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
-        ## regularize fancy quotes.
+        ## regularize fancy quotes.  First UTF-8 ones:
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
         if(.Platform$OS.type == "windows") {
@@ -562,7 +562,6 @@ detachPackages <- function(pkgs, verbose = TRUE)
         q("no", status = status, runLast = FALSE)
 
     args <- commandArgs(TRUE)
-
     if (!length(args)) {
         Usage()
         do_exit(1L)
@@ -586,6 +585,11 @@ detachPackages <- function(pkgs, verbose = TRUE)
         do_exit(1L)
     }
 
+
+    if (length(args) < 2L) {
+        Usage()
+        do_exit(1L)
+    }
     exitstatus <- as.integer(args[3L])
     if(is.na(exitstatus)) exitstatus <- 0L
 

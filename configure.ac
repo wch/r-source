@@ -526,7 +526,6 @@ R_MISSING_PROG(AUTOCONF, autoconf)
 R_MISSING_PROG(AUTOMAKE, automake)
 R_MISSING_PROG(AUTOHEADER, autoheader)
 AC_PROG_AWK
-AC_PROG_EGREP
 AC_PROG_LN_S
 AC_PROG_YACC
 R_PROG_AR
@@ -534,8 +533,6 @@ R_PROG_INSTALL
 
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
-## we need an tr that interprets \r for Rdiff
-AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/bin:$PATH])
 ## 'which' is not POSIX, and might be a shell builtin or alias
 ##  (but should not be in 'sh')
 AC_PATH_PROGS(WHICH, which, which)
@@ -2456,7 +2453,6 @@ AC_CONFIG_FILES(
   src/scripts/Makefile
   src/scripts/R.sh
   src/scripts/Rcmd
-  src/scripts/Rdiff
   src/scripts/f77_f2c
   src/scripts/mkinstalldirs
   src/scripts/pager
