@@ -105,7 +105,8 @@ Sys.which <- function(names)
 {
     res <- character(length(names)); names(res) <- names
     ## hopefully configure found /usr/bin/which
-    which <- Sys.getenv("WHICH", "which")
+#    which <- Sys.getenv("WHICH", "which")
+    which <- "@WHICH@"
     for(i in names) {
         ans <- suppressWarnings(system(paste(which, i), intern=TRUE,
                                        ignore.stderr=TRUE))

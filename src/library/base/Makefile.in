@@ -22,7 +22,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc2 mkdemos2 mkpo
+	@WHICH="@WHICH@" $(MAKE) mkRbase mkdesc2 mkdemos2 mkpo
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
 	@cat $(srcdir)/makebasedb.R | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null

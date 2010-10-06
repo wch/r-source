@@ -37,11 +37,6 @@ SED=${SED-'@SED@'}
 ## Prefer a tar that can automagically read compressed archives
 ## Used in tar(), untar(), R CMD INSTALL|build|check
 TAR=${TAR-'@TAR@'}
-## Used by Sys.which
-WHICH=${WHICH-'@WHICH@'}
-
-## No longer used in R
-# PERL=${PERL-'perl'}
 
 @BUILD_AQUA_FALSE@R_LIBS_USER=${R_LIBS_USER-'~/R/@R_PLATFORM@-library/@MAJ_MIN_VERSION@'}
 @BUILD_AQUA_TRUE@R_LIBS_USER=${R_LIBS_USER-'~/Library/R/@MAJ_MIN_VERSION@/library'}
