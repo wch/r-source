@@ -1,5 +1,6 @@
 ## For examples skipped in testing because they are 'random'
 
+set.seed(1)
 if(.Platform$OS.type == "windows") options(pager = "console")
 
 ## base
