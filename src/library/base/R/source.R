@@ -107,7 +107,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             if(!isURL && (path <- dirname(ofile)) != ".") {
                 owd <- getwd()
                 if(is.null(owd))
-                    error("cannot 'chdir' as current directory is unknown")
+                    stop("cannot 'chdir' as current directory is unknown")
                 on.exit(setwd(owd), add=TRUE)
                 setwd(path)
             }
@@ -223,7 +223,7 @@ function(file, envir = baseenv(), chdir = FALSE,
     if (chdir && (path <- dirname(file)) != ".") {
 	owd <- getwd()
         if(is.null(owd))
-            error("cannot 'chdir' as current directory is unknown")
+            stop("cannot 'chdir' as current directory is unknown")
 	on.exit(setwd(owd), add = TRUE)
 	setwd(path)
     }
