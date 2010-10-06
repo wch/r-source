@@ -414,8 +414,14 @@
       well as \file{RJournal.bib} and \file{Rnews.bib}, and
       \command{R CMD} ensures that the \file{.bst} and \file{.bib} files
       are found by BibTeX.
+
+      \item Functions using the \env{TAR} environment variable no longer
+      quote the value when making \code{system} calls.  This allows
+      values such as \samp{tar --force-local}, but does require
+      additional quotes in, e.g., \code{TAR = "'/path with spaces/mytar'"}.
     }
   }
+  
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item Supplying the parser with a character string containing both

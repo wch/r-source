@@ -238,7 +238,7 @@ tar <- function(tarfile, files = NULL,
                             "gzip" = "zcf",
                             "bzip2" = "jcf",
                             "xz" = "Jcf")
-            cmd <- paste(shQuote(TAR), flags, shQuote(tarfile),
+            cmd <- paste(TAR, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
         }

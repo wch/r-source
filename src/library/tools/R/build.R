@@ -520,11 +520,8 @@ get_exclude_patterns <- function()
     gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this
     ## enables people to use Cygwin or MSYS tar.
-    TAR <- Sys.getenv("TAR", NA)
-    TAR <- if (is.na(TAR)) {if (WINDOWS) "tar --force-local" else "tar"}
-    else shQuote(TAR)
-    GZIP <- Sys.getenv("R_GZIPCMD")
-    if (!nzchar(GZIP)) GZIP <- "gzip"
+    TAR <- Sys.getenv("TAR", if (WINDOWS) "tar --force-local" else "tar")
+    GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
     libdir <- tempfile("Rinst");
 
     for(pkg in pkgs) {

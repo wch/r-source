@@ -44,7 +44,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   \item{verbose}{logical: if true echo the command used.}
 
-  \item{tar}{character string: the path to the command to be used.}
+  \item{tar}{character string: the path to the command to be used.  If
+    the command itself contains spaces it needs to be quoted -- but
+    \code{tar} can also contain flags separated from the command by spaces.}
 }
 
 \details{
