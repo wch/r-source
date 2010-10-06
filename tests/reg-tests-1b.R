@@ -1343,6 +1343,7 @@ stopifnot(z1 == rev(z2))
 
 
 ## found from fallback test in slam 0.1-15
+## most likely indicates an inaedquate BLAS.
 x <- matrix(c(1, 0, NA, 1), 2, 2)
 y <- matrix(c(1, 0, 0, 2, 1, 0), 3, 2)
 (z <- tcrossprod(x, y))
