@@ -552,6 +552,7 @@
        respectively if included from a C++ source file.
     }
   }
+  
   \subsection{INSTALLATION}{
     \itemize{
       \item A C99 compiler is now required, and more C99 language features
@@ -578,8 +579,14 @@
 
       \item The \command{pkg-config} file \file{libR.pc} now also works
       when \R is installed using a sub-architecture.
+
+      \item \R has always required a BLAS that conforms to IE60559
+      arithmetic, but after discovery of more real-world problems caused
+      by a BLAS that did not, this is tested more thoroughly in this
+      version.
     }
   }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item Calls to \code{selectMethod()} by default no longer cache
