@@ -13,7 +13,7 @@ INSTFILES = \
 
 ECHO = echo
 
-R_EXE = $(RHOME)/$(BINDIR)/Rterm --slave --vanilla
+R_EXE = $(RHOME)/$(BINDIR)/Rterm --slave --vanilla LANGUAGE=en LC_TIME=C
 
 all: test-Examples-Base
 
