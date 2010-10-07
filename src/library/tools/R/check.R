@@ -1325,8 +1325,12 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                     for (arch in inst_archs) {
                         printLog(Log, "** running examples for arch ",
                                  sQuote(arch), " ...")
-                        exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
-                        run_one_arch(exfile, exout, arch)
+                        if (arch %in% R_check_skip_examples_arch) {
+                            resultLog(Log, "SKIPPED")
+                        } else {
+                            exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
+                            run_one_arch(exfile, exout, arch)
+                        }
                     }
                     Log$stars <<-  "*"
                 }
@@ -1416,14 +1420,16 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         if (do_install && do_tests) {
             if (!this_multiarch) {
                 run_one_arch()
+                resultLog(Log, "OK")
             } else {
                 printLog(Log, "\n")
-                for (arch in inst_archs) {
-                    printLog(Log, "** running tests for arch ", sQuote(arch))
-                    run_one_arch(arch)
-                }
+                for (arch in inst_archs)
+                    if (!(arch %in% R_check_skip_tests_arch)) {
+                        printLog(Log, "** running tests for arch ", sQuote(arch))
+                        run_one_arch(arch)
+                        resultLog(Log, "OK")
+                    }
             }
-            resultLog(Log, "OK")
         } else resultLog(Log, "SKIPPED")
     }
 
@@ -2309,6 +2315,12 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
     R_check_force_suggests <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE"))
+    R_check_skip_tests_arch <-
+        unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_TESTS_ARCH_"), ",")[[1]])
+    R_check_skip_examples_arch <-
+        unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_EXAMPLES_ARCH_"), ",")[[1]])
+    R_check_skip_arch <-
+        unlist(strsplit(Sys.getenv("_R_CHECK_SKIP_ARCH_"), ",")[[1]])
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -2526,6 +2538,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                         }
                     } else this_multiarch <- FALSE  # no compiled code
                 }
+                if (this_multiarch && length(R_check_skip_arch))
+                    inst_archs <- inst_archs[!(inst_archs %in% R_check_skip_arch)]
             }
         }   ## end of if (!is_base_pkg)
 

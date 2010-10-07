@@ -3506,6 +3506,18 @@ Default: true.
 @item _R_CHECK_ASCII_DATA_
 If true, check data for non-ascii characters.
 Default: true.
+@item _R_CHECK_SKIP_ARCH_
+Comma-separated list of architectutes that will be omitted from
+checking in a multi-arch setup.
+Default: none.
+@item _R_CHECK_SKIP_TESTS_ARCH_
+Comma-separated list of architectutes that will be omitted from
+running tests in a multi-arch setup.
+Default:none.
+@item _R_CHECK_SKIP_EXAMPLES_ARCH_
+Comma-separated list of architectutes that will be omitted from
+running examples in a multi-arch setup.
+Default:none.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top
