@@ -755,6 +755,9 @@ static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
         NSSize size = [ci->view frame].size;
 	pixels = size.width * size.height;
 	
+	// make sure the view is up-to-date (fix for PR#14260)
+	[ci->view display];
+
         if (![ci->view canDraw])
             warning("View not able to draw!?");
 
