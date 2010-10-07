@@ -4468,9 +4468,10 @@ tools@footnote{such as @command{sort}, @command{find} and
 work. The ordering of the other directories is less important, but if
 in doubt, use the order above.  If you install both the 32 bit and 64
 bit toolchains from @file{Rtools*.exe}, it should work to list both in
-the path (as the automatic installer does), but we recommend only
-including the one that you plan to use.  Other toolchains are more
-likely to conflict.
+the path (as the automatic installer does), and this is needed if you
+want to install or build binary packages containing both architectures
+using the @command{--merge-multiarch} option as described in
+@ref{Windows packages}.  Other toolchains are more likely to conflict.
 
 Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
