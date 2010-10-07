@@ -41,9 +41,9 @@ unserialize(connection, refhook = NULL)
   non-system reference objects (all external pointers and weak
   references, and all environments other than name space and package
   environments and \code{.GlobalEnv}).  The hook function for
-  \code{serialize} should return a raw vector for references it
+  \code{serialize} should return a character vector for references it
   wants to handle; otherwise it should return \code{NULL}.  The hook for
-  \code{unserialize} will be called with raw vectors supplied to
+  \code{unserialize} will be called with character vectors supplied to
   \code{serialize} and should return an appropriate object.
 
   For a text-mode connection, the default value of \code{ascii} is set
