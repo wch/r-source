@@ -1,6 +1,6 @@
 % File src/library/base/man/strtoi.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strtoi}
@@ -8,7 +8,7 @@
 \title{Convert Strings to Integers}
 \description{
   Convert strings to integers according to the given base using the C
-  function \code{strtol}.
+  function \code{strtol}, or choose a suitable base following the C rules.
 }
 \usage{strtoi(x, base = 0L)}
 \arguments{
@@ -35,6 +35,9 @@
   An integer vector of the same length as \code{x}.  Values which cannot
   be interpreted as integers or would overflow are returned as
   \code{\link{NA_integer_}}.
+}
+\seealso{
+  For decimal strings \code{\link{as.integer}} is equally useful.
 }
 \examples{
 strtoi(c("0xff", "077", "123"))
