@@ -761,7 +761,7 @@
 
       \item Force Quartz to bring the on-screen display up-to-date
       immediately before the snapshot is taken by \code{grid.cap()}
-      in the Cocoa implementation. (\PR{14269})
+      in the Cocoa implementation. (\PR{14260})
     }
   }
 }
