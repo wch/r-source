@@ -22,6 +22,9 @@
 
 #ifdef  __cplusplus
 # include <cstdarg>
+# ifdef __SUNPRO_CC
+using _STLP_VENDOR_CSTD::va_list;
+# endif
 extern "C" {
 #else
 # include <stdarg.h>

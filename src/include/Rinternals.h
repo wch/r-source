@@ -22,12 +22,15 @@
 #define R_INTERNALS_H_
 
 #ifdef __cplusplus
-#include <cstdio>
-#include <climits>
+# include <cstdio>
+# ifdef __SUNPRO_CC
+using std::FILE;
+# endif
+# include <climits>
 extern "C" {
 #else
-#include <stdio.h>
-#include <limits.h> /* for INT_MAX */
+# include <stdio.h>
+# include <limits.h> /* for INT_MAX */
 #endif
 
 #include <R_ext/Arith.h>
