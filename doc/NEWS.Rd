@@ -696,13 +696,17 @@
 
       \item Added workaround for the font problem with \code{X11(type =
       "cairo")} and similar on Mac OS X whereby italic and bold styles
-      were interchanged.  (PR{13463} amongst many other reports.)
+      were interchanged.  (\PR{13463} amongst many other reports.)
       
       \item \code{source(chdir = TRUE)} failed to reset the working
       directory if it could not be determined -- that is now an error.
       
       \item Fix for crash of \code{example(rasterImage)} on
       \code{x11(type="Xlib")}.
+
+      \item Force Quartz to bring the on-screen display up-to-date
+      immediately before the snapshot is taken by \code{grid.cap()}
+      in the Cocoa implementation. (\PR{14260})
     }
   }
 }
