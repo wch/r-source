@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2009  The R Development Core Team
+ *  Copyright (C) 2005--2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1112,9 +1112,9 @@ const char *formatError(DWORD res);
 SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args), el;
-    int i, n = LENGTH(paths);
+    int i, n = LENGTH(paths), res;
     char tmp[MAX_PATH], longpath[MAX_PATH], *tmp2;
-    wchar_t wtmp[MAX_PATH], wlongpath[MAX_PATH], *wtmp2;
+    wchar_t wtmp[32768], wlongpath[32768], *wtmp2;
 
     checkArity(op, args);
     if(!isString(paths))
@@ -1126,9 +1126,10 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     	SEXP result;
 	el = STRING_ELT(paths, i);
 	if(getCharCE(el) == CE_UTF8) {
-	    if (GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
-	    		         wtmp, &wtmp2)) {
-		if (GetLongPathNameW(wtmp, wlongpath, MAX_PATH)) {
+	    if ((res = GetFullPathNameW(filenameToWchar(el, FALSE), 32768, 
+					wtmp, &wtmp2)) && res <= 32768) {
+		if ((res = GetLongPathNameW(wtmp, wlongpath, 32768))
+		    && res <= 32768) {
 	    	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
 	    	    result = mkCharCE(longpath, CE_UTF8);
 	    	} else {
@@ -1144,8 +1145,10 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    	warningcall(call, "path[%d]=\"%ls\": %s", i+1, filenameToWchar(el,FALSE), 
 	    	          formatError(GetLastError()));
 	} else {
-	    if (GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)) {
-	    	if (GetLongPathName(tmp, longpath, MAX_PATH)) 
+	    if ((res = GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2))
+		&& res <= MAX_PATH) {
+	    	if ((res = GetLongPathName(tmp, longpath, MAX_PATH))
+		    && res <= MAX_PATH)
 	    	    result = mkChar(longpath);
 	    	else {
 	    	    result = mkChar(tmp);
@@ -1170,7 +1173,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, paths = CAR(args), el;
     int i, n = LENGTH(paths);
     char tmp[MAX_PATH];
-    wchar_t wtmp[MAX_PATH];
+    wchar_t wtmp[32768];
     DWORD res;
 
     checkArity(op, args);
@@ -1181,8 +1184,8 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	el = STRING_ELT(paths, i);
 	if(getCharCE(el) == CE_UTF8) {
-	    res = GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, MAX_PATH);
-	    if (res)
+	    res = GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, 32768);
+	    if (res && res <= 32768)
 		wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
 	    else
 		strcpy(tmp, translateChar(el));
@@ -1192,7 +1195,7 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, mkCharCE(tmp, CE_UTF8));
 	} else {
 	    res = GetShortPathName(translateChar(el), tmp, MAX_PATH);
-	    if (res == 0) strcpy(tmp, translateChar(el));
+	    if (res == 0 || res > MAX_PATH) strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
@@ -1225,7 +1228,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, def, caption, filters;
     wchar_t *temp, *res, *cfilters;
     const wchar_t *p;
-    wchar_t path[MAX_PATH], filename[MAX_PATH];
+    wchar_t path[32768], filename[32768];
     int multi, filterindex, i, count, lfilters, pathlen;
 
     checkArity(op, args);
@@ -1237,7 +1240,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(length(def) != 1 )
 	errorcall(call, _("'default' must be a character string"));
     p = filenameToWchar(STRING_ELT(def, 0), 1);
-    if(wcslen(p) >= MAX_PATH) errorcall(call, _("'default' is overlong"));
+    if(wcslen(p) >= 32768) errorcall(call, _("'default' is overlong"));
     wcscpy(path, p);
     for(temp = path; *temp; temp++) if(*temp == L'/') *temp = L'\\';
     if(length(caption) != 1 )
@@ -1278,7 +1281,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 1: SET_STRING_ELT(ans, 0, mkCharUTF8(res));
 	break;
     default:
-	wcsncpy(path, res, MAX_PATH);
+	wcsncpy(path, res, 32768);
 	pathlen = wcslen(path);
 	if (path[pathlen-1] == L'\\') path[--pathlen] = L'\0';
 	temp = res;
@@ -1287,9 +1290,9 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (wcschr(temp,L':') || *temp == L'\\' || *temp == L'/')
 		SET_STRING_ELT(ans, i, mkCharUTF8(temp));
 	    else {
-		wcsncpy(filename, path, MAX_PATH);
+		wcsncpy(filename, path, 32768);
 		filename[pathlen] = L'\\';
-		wcsncpy(filename+pathlen+1, temp, MAX_PATH-pathlen-1);
+		wcsncpy(filename+pathlen+1, temp, 32768-pathlen-1);
 		SET_STRING_ELT(ans, i, mkCharUTF8(filename));
 	    }
 	}
