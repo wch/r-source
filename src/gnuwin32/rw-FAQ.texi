@@ -1082,13 +1082,14 @@ prefer compiling from source, read the `R Installation and
 Administration' manual section on `Add-on Packages'.  Source packages
 which contain no C/C++/Fortran code which needs compilation can simply
 be installed by @code{install.packages(type = "source")} or @command{R
-CMD INSTALL pkgname}.  Otherwise you will need to collect and install
-several tools: you can download them via the portal at
+CMD INSTALL pkgname} at a Windows command prompt.  For packages with
+code that needs compilation you will need to collect and install several
+tools: you can download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
-so, just run @command{R CMD INSTALL pkgname}.  To check the package
-(including running all the examples on its help pages and in its test
-suite, if any) use @command{R CMD check pkgname}: see the @emph{`Writing
-R Extensions'} manual.
+so, just run @command{R CMD INSTALL pkgname} at a Windows command
+prompt.  To check the package (including running all the examples on its
+help pages and in its test suite, if any) use @command{R CMD check
+pkgname}: see the @emph{`Writing R Extensions'} manual.
 
 Note that setting up Windows to install a source package that needs
 compilation is rather tricky; please do ensure that you have followed
