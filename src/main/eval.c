@@ -2577,6 +2577,8 @@ enum {
   AND2ND_OP,
   OR1ST_OP,
   OR2ND_OP,
+  GETVAR_MISSOK_OP,
+  DDVAL_MISSOK_OP,
   OPCOUNT
 };
 
@@ -2851,16 +2853,18 @@ typedef int BCODE;
 #define BCCODE(e) INTEGER(BCODE_CODE(e))
 #endif
 
-#define DO_GETVAR(dd) do { \
+#define DO_GETVAR(dd,keepmiss) do {			\
   SEXP symbol = VECTOR_ELT(constants, GETOP()); \
   value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho); \
   R_Visible = TRUE; \
   if (value == R_UnboundValue) \
     error(_("object '%s' not found"), CHAR(PRINTNAME(symbol))); \
   else if (value == R_MissingArg) { \
-    const char *n = CHAR(PRINTNAME(symbol)); \
-    if(*n) error(_("argument \"%s\" is missing, with no default"), n); \
-    else error(_("argument is missing, with no default")); \
+    if (! keepmiss) { \
+      const char *n = CHAR(PRINTNAME(symbol)); \
+      if(*n) error(_("argument \"%s\" is missing, with no default"), n); \
+      else error(_("argument is missing, with no default")); \
+    } \
   } \
   else if (TYPEOF(value) == PROMSXP) { \
     value = forcePromise(value); \
@@ -3268,8 +3272,8 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT();
     OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT();
     OP(LDFALSE, 0):  BCNPUSH(R_FalseValue); NEXT();
-    OP(GETVAR, 1): DO_GETVAR(FALSE);
-    OP(DDVAL, 1): DO_GETVAR(TRUE);
+    OP(GETVAR, 1): DO_GETVAR(FALSE, FALSE);
+    OP(DDVAL, 1): DO_GETVAR(TRUE, FALSE);
     OP(SETVAR, 1):
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
@@ -3731,6 +3735,8 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop -= 1;
 	NEXT();
     }
+    OP(GETVAR_MISSOK, 1): DO_GETVAR(FALSE, TRUE);
+    OP(DDVAL_MISSOK, 1): DO_GETVAR(TRUE, TRUE);
     LASTOP;
   }
 
