@@ -27,6 +27,7 @@ example(weekdays)
 library(help="splines")
 
 ## utils
+example(news)
 example(packageDescription)
 example(sessionInfo)
 
