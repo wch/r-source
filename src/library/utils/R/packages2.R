@@ -241,8 +241,7 @@ install.packages <-
     ## check if we should infer repos=NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
-           (type %in% c("win.binary", "win64.binary")
-            && length(grep("\\.zip$", pkgs))) ||
+           (type %in% "win.binary" && length(grep("\\.zip$", pkgs))) ||
            (substr(type, 1L, 10L) == "mac.binary"
             && length(grep("\\.tgz$", pkgs)))) {
             repos <- NULL
@@ -255,7 +254,7 @@ install.packages <-
         if(type == "mac.binary")
             stop("cannot install MacOS X binary packages on Windows")
 
-        if(type %in% c("win.binary", "win64.binary")) {
+        if(type %in% "win.binary") {
             ## include local .zip files
             .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
@@ -287,7 +286,7 @@ install.packages <-
             return(invisible())
         }
 
-        if(type %in% c("win.binary", "win64.binary"))
+        if(type %in% "win.binary")
             stop("cannot install Windows binary packages on this plaform")
 
         if(!file.exists(file.path(R.home("bin"), "INSTALL")))

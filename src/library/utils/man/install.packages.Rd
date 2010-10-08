@@ -92,9 +92,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     install.
 
     Possible values are \code{"source"}, \code{"mac.binary"},
-    \code{"mac.binary.leopard"}, \code{"win.binary"} and
-    \code{"win64.binary"}: the binary types can be listed and downloaded
-    but not installed on other platforms.
+    \code{"mac.binary.leopard"} and \code{"win.binary"}: the binary
+    types can be listed and downloaded but not installed on other
+    platforms.
 
     The default is the appropriate binary type on Windows and on
     the CRAN binary Mac OS X distribution, otherwise \code{"source"}.

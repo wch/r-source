@@ -50,7 +50,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.0 PATCHED}{
+\section{CHANGES IN R VERSION 2.12.0 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments

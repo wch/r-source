@@ -1873,12 +1873,6 @@ can be used, e.g.@: @file{.tar.bz2} or @file{.tar.xz} files.
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"win64.binary"}: located at @file{bin/windows64/contrib/@var{x.y}}
-for @R{} versions @var{x.y.z} and containing @file{.zip} files for
-64-bit Windows.  (This was used for @R{} 2.11.x, but is no longer the
-default for 64-bit Windows.)
-
-@item 
 @code{"mac.binary"}: located at
 @file{bin/macosx/universal/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
 and containing @file{.tgz} files.  If the repository contains only

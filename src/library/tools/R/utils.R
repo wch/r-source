@@ -1200,9 +1200,7 @@ function(file)
     db <- utils::read.delim(file, header = TRUE, comment.char = "#",
                             colClasses =
                             c(rep.int("character", 3L),
-                              rep.int("logical", 4L)))
-    if("win64.binary" %in% names(db))
-        db[["win64.binary"]] <- as.logical(db[["win64.binary"]])
+                              rep.int("logical", 4L))) # allow for win64.binary
     db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
     db
 }

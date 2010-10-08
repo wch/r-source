@@ -11,6 +11,9 @@
       removes BOMs when reading and adds them when writing.  (This is
       consistent with MicroSoft applications, but Unix versions of
       \code{iconv} usually ignore them.)
+
+      \item Support for repository type \samp{win64.binary} (used for
+      64-bit Windows binaries for \R 2.11.x) has been removed.
     }
   }
 }
