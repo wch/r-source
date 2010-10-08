@@ -707,6 +707,9 @@
       \item Force Quartz to bring the on-screen display up-to-date
       immediately before the snapshot is taken by \code{grid.cap()}
       in the Cocoa implementation. (\PR{14260})
+
+      \item \code{model.frame} had an unstated 500 byte limit on
+      variable names.  (Example reported by Terry Therneau.)
     }
   }
 }

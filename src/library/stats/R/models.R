@@ -370,7 +370,10 @@ model.frame.default <-
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
-    varnames <- sapply(vars, deparse, width.cutoff=500)[-1L]
+    ## Some people have generated longer variable names
+    ## https://stat.ethz.ch/pipermail/r-devel/2010-October/058756.html
+    varnames <- sapply(vars, function(x) paste(deparse(x,width.cutoff=500),
+                                               collapse=' '))[-1L]
     variables <- eval(predvars, data, env)
     resp <- attr(formula, "response")
     if(is.null(rownames) && resp > 0L) {
