@@ -2872,6 +2872,7 @@ typedef int BCODE;
    and once load is set to make the constants NAMED--basically once
    there is a proper code data type with appropriate support. */
 #define DO_LDCONST(v) do { \
+  R_Visible = TRUE; \
   v = VECTOR_ELT(constants, GETOP()); \
   if (! NAMED(v)) SET_NAMED(v, 1); \
 } while (0)
@@ -3266,9 +3267,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
       BCNPOP_IGNORE_VALUE(); R_BCNodeStackTop[-1] = R_NilValue; NEXT();
     OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
     OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(value); NEXT();
-    OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT();
-    OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT();
-    OP(LDFALSE, 0):  BCNPUSH(R_FalseValue); NEXT();
+    OP(LDNULL, 0): R_Visible = TRUE; BCNPUSH(R_NilValue); NEXT();
+    OP(LDTRUE, 0): R_Visible = TRUE; BCNPUSH(R_TrueValue); NEXT();
+    OP(LDFALSE, 0): R_Visible = TRUE; BCNPUSH(R_FalseValue); NEXT();
     OP(GETVAR, 1): DO_GETVAR(FALSE, FALSE);
     OP(DDVAL, 1): DO_GETVAR(TRUE, FALSE);
     OP(SETVAR, 1):
