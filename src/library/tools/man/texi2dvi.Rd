@@ -59,5 +59,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   PDF file in the current working directory (and maybe other files,
   especially if \code{clean = FALSE}. 
 }
-\author{Achim Zeileis and R-core}
+\author{
+  Originally, Achim Zeileis but largely rewritten by R-core.
+}
 \keyword{utilities}

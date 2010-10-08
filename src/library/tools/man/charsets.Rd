@@ -1,6 +1,6 @@
 % File src/library/tools/man/charsets.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{charsets}
@@ -30,7 +30,7 @@ Adobe_glyphs
 
   \code{Adobe_glyphs} include all the Adobe glyph names which correspond to
   single Unicode characters.  It is sorted by Unicode point and within a
-  point alphabetically on the glyph(there can be more than one name for
+  point alphabetically on the glyph (there can be more than one name for
   a Unicode point).  The data are in the file
   \file{\var{\link{R_HOME}}/share/encodings/Adobe_glyphlist}.
 }

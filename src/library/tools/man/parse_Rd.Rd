@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008, 2009 R Core Development Team
+% Copyright 2008-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -36,14 +36,11 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
 }
 \details{
   This function parses \file{Rd} files according to the specification given
-  in \url{http://developer.r-project.org/parseRd.pdf}.  This is not
-  identical to the rules used before version 2.10.x: it is somewhat
-  stricter.
+  in \url{http://developer.r-project.org/parseRd.pdf}.
   
-  As from \R 2.10.0, \code{parse_Rd} generates a warning for each parse
-  error and attempts to continue parsing.  In order to continue, it is
-  generally necessary to drop some parts of the file, so such warnings
-  should not be ignored.
+  It generates a warning for each parse error and attempts to continue
+  parsing.  In order to continue, it is generally necessary to drop some
+  parts of the file, so such warnings should not be ignored.
 }
 \value{
   \code{parse_Rd} returns an object of class \code{"Rd"}.  The

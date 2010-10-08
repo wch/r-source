@@ -1,13 +1,13 @@
 % File src/library/tools/man/read.00Index.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.00Index}
 \alias{read.00Index}
 \title{Read 00Index-style Files}
 \description{
-  Read item/description information from 00Index-style files.  Such
+  Read item/description information from \file{00Index}-like files.  Such
   files are description lists rendered in tabular form, and currently
   used for the \file{INDEX} and \file{demo/00Index} files of add-on
   packages.

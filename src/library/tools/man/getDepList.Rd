@@ -69,7 +69,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
   If \code{reduce} is \code{TRUE}, the system will collapse the fields in the
   \code{DependsList} object such that a minimal set of dependencies
   are specified (for instance if there was
-  \samp{foo, foo (>= 1.0.0), foo (>= 1.3.0}, it would only return
+  \samp{foo, foo (>= 1.0.0), foo (>= 1.3.0)}, it would only return
   \samp{foo (>= 1.3.0)}).
 }
 \value{
