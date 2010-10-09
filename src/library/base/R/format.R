@@ -246,6 +246,10 @@ format.data.frame <- function(x, ..., justify = "none")
     cn <- names(x)
     m <- match(c("row.names", "check.rows", "check.names"), cn, 0L)
     if(any(m)) cn[m] <- paste("..dfd.", cn[m], sep="")
+    ## This requires valid symbols for the columns, so we need to
+    ## truncate any of more than 256 bytes.
+    long <- nchar(cn, "bytes") > 256L
+    cn[long] <- paste(substr(cn[long], 1L, 250L), "...")
     names(rval) <- cn
     rval$check.names <- FALSE
     rval$row.names <- row.names(x)

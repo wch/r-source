@@ -55,6 +55,10 @@
     \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
+      
+      \item The \code{data.frame} method of \code{format} failed if a
+      column name was longer than 256 bytes (the maximum length allowed
+      for an \R name).
     }
   }
 }
