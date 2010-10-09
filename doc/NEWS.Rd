@@ -491,7 +491,11 @@
        deprecated \command{R CMD Sd2Rd} and \code{install-info.pl} (used
        only if \code{install-info} is not found) as well as some
        maintainer-mode-only scripts.
-
+       
+       \strong{NB:} because these have been completely rewritten, users
+       should not expect undocumented details of previous
+       implementations to have been duplicated.
+       
        \command{R CMD} no longer manipulates the environment variables
        \env{PERL5LIB} and \env{PERLLIB}.
 
@@ -533,10 +537,7 @@
        It supports file \file{~/.R/build.Renviron} analogously to
        \command{check}.
 
-       It no longer cleans the supplied directory but rather a copy used
-       to create the tarball.
-
-       It now runs build-time \code{\\Sexpr} expressions.
+       It now runs build-time \code{\\Sexpr} expressions in help files.
 
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
        to process the package manual.  It is now implemented entirely in
