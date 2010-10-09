@@ -1,6 +1,6 @@
 % File src/library/base/man/expression.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{expression}
@@ -28,11 +28,12 @@ as.expression(x, \dots)
   \sQuote{Expression} here is not being used in its colloquial sense,
   that of mathematical expressions.  Those are calls (see
   \code{\link{call}}) in \R, and an \R expression vector is a list of
-  calls, symbols etc, typically as returned by \code{\link{parse}}.
+  calls, symbols etc, for example as returned by \code{\link{parse}}.
 
   As an object of mode \code{"expression"} is a list, it can be
-  subsetted by both \code{[} and by \code{[[}, the latter extracting
-  individual calls etc.
+  subsetted by \code{[}, \code{[[} or \code{$}, the latter two extracting
+  individual calls etc.  The replacement forms of these operators can be
+  used to replace or delete elements.
   
   \code{expression} and \code{is.expression} are \link{primitive} functions.
   \code{expression} is \sQuote{special}: it does not evaluate its arguments.

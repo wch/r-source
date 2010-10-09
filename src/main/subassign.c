@@ -36,7 +36,7 @@
  *  the side.  (Note: the lack of 11 and 12 indices here is due to the
  *  removal of built-in factors).
  *
- *  NB these tables are out of date, and exclude tupes 21, 22, 23, 24 ...
+ *  NB these tables are out of date, and exclude types 21, 22, 23, 24 ...
  *
  x \ y   NIL  SYM CLOS  ENV PROM LANG SPE- BUI-  LGL  INT REAL CPLX  STR  VEC EXPR  FUN
 				      CIAL LTIN
@@ -393,7 +393,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	UNPROTECT(1);
 	return x;
     }
-    PROTECT(xnew = allocVector(VECSXP, ii));
+    PROTECT(xnew = allocVector(TYPEOF(x), ii));
     ii = 0;
     for (i = 0; i < len; i++) {
 	if (INTEGER(include)[i] == 1) {
@@ -1415,7 +1415,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
     int i, k, n;
     n = length(x);
     if (0 <= which && which < n) {
-	PROTECT(y = allocVector(VECSXP, n - 1));
+	PROTECT(y = allocVector(TYPEOF(x), n - 1));
 	k = 0;
 	for (i = 0 ; i < n; i++)
 	    if(i != which)
@@ -1502,11 +1502,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* ENVSXP special case first */
     if( TYPEOF(x) == ENVSXP) {
-      if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
-	error(_("wrong args for environment subassignment"));
-      defineVar(install(translateChar(STRING_ELT(CAR(subs), 0))), y, x);
-      UNPROTECT(1);
-      return(x);
+	if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
+	    error(_("wrong args for environment subassignment"));
+	defineVar(install(translateChar(STRING_ELT(CAR(subs), 0))), y, x);
+	UNPROTECT(1);
+	return(x);
     }
     
     /* new case in 1.7.0, one vector index for a list, more general as of 2.10.0 */
@@ -1877,7 +1877,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     }
     /* cannot use isEnvironment since we do not want NULL here */
     else if( TYPEOF(x) == ENVSXP ) {
-      defineVar(nlist, val, x);
+	defineVar(nlist, val, x);
     }
     else if( TYPEOF(x) == SYMSXP || /* Used to 'work' in R < 2.8.0 */
 	     TYPEOF(x) == CLOSXP ||
@@ -1888,8 +1888,11 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     else {
 	int i, imatch, nx;
 	SEXP names;
+	int type = VECSXP;
 
-	if (!(isNewList(x) || isExpression(x))) {
+	if (isExpression(x)) 
+	    type = EXPRSXP;
+	else if (!isNewList(x)) {
 	    warning(_("Coercing LHS to a list"));
 	    REPROTECT(x = coerceVector(x, VECSXP), pxidx);
 	}
@@ -1910,7 +1913,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		if (imatch >= 0) {
 		    SEXP ans, ansnames;
 		    int ii;
-		    PROTECT(ans = allocVector(VECSXP, nx - 1));
+		    PROTECT(ans = allocVector(type, nx - 1));
 		    PROTECT(ansnames = allocVector(STRSXP, nx - 1));
 		    for (i = 0, ii = 0; i < nx; i++)
 			if (i != imatch) {
