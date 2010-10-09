@@ -333,7 +333,7 @@ get_exclude_patterns <- function()
                 Sys.setenv(R_PACKAGE_DIR = pkgdir)
                 Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
                 messageLog(Log, "running cleanup.win")
-                Ssystem("./cleanup.win")
+                Ssystem("sh", "./cleanup.win")
             }
         } else if (.file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
@@ -385,26 +385,31 @@ get_exclude_patterns <- function()
     	# Strip the pkgdir off the names
     	names(db) <- substring(names(db), nchar(file.path(pkgdir, "man", ""))+1)
 
-	containsSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
+	containsSexprs <-
+            which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
 	if (!length(containsSexprs)) return(FALSE)
 
 	messageLog(Log, "installing the package to process help pages")
 	temp_install_pkg(pkgdir, libdir)
 
-	containsBuildSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
+	containsBuildSexprs <-
+            which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
 
 	if (length(containsBuildSexprs)) {
 	    for (i in containsBuildSexprs)
-		db[[i]] <- prepare_Rd(db[[i]], stages="build", stage2=FALSE, stage3=FALSE)
+		db[[i]] <- prepare_Rd(db[[i]], stages="build",
+                                      stage2=FALSE, stage3=FALSE)
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings=FALSE)
 	    .saveRDS(partial, file.path("build", "partial.rdb"))
 	}
-	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install","render")])))
+	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
 	if (needRefman) {
 	    messageLog(Log, "building the package manual")
-	    refman <- file.path(pkgdir, "build", paste(basename(pkgdir), ".pdf", sep = ""))
+	    dir.create("build", showWarnings=FALSE)
+	    refman <- file.path(pkgdir, "build",
+                                paste(basename(pkgdir), ".pdf", sep = ""))
 	    ..Rd2dvi(c("--pdf", "--force", "--no-preview",
 	               paste("--output=", refman, sep=""),
 	               pkgdir), quit = FALSE)
