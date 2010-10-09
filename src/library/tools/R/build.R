@@ -296,6 +296,11 @@ get_exclude_patterns <- function()
                                 c(makefiles, "clean"))
                     }
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
+                    ## Also cleanup possible Unix leftovers ...
+                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
+                             paste(pkgname, c(".a", ".dll", ".def"), sep="")))
+                    if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
+                    if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
             } else {
                 makefiles <- paste("-f",
