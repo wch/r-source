@@ -295,6 +295,8 @@ get_exclude_patterns <- function()
                         Ssystem(Sys.getenv("MAKE", "make"),
                                 c(makefiles, "clean"))
                     }
+                    unlink(c(Sys.glob(c("*.o")),
+                             paste(pkgname, c(".a", ".dll", ".def"), sep="")))
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
             } else {
