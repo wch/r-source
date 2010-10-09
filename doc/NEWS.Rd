@@ -718,8 +718,8 @@
 
       \item \code{quantile(type=6)} behaved inconsistently.  (\PR{14383})
 
-      \item \code{backSpline(.)} behaved incorrectly when the knot sequence
-      was decreasing.  (\PR{14386})
+      \item \code{backSpline(.)} behaved incorrectly when the knot
+      sequence was decreasing.  (\PR{14386})
 
       \item The reference BLAS included in \R was assuming that
       \code{0*x} and \code{x*0} were always zero (whereas they could be
@@ -769,6 +769,8 @@
 
       \item \code{model.frame} had an unstated 500 byte limit on
       variable names.  (Example reported by Terry Therneau.)
+      
+      \item The 256-byte limit on names is now documented.
     }
   }
 }
