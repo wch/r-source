@@ -40,7 +40,9 @@ R_runR <- function(cmd, Ropts = "", env = "", arch = "")
     if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
-        system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE, env = env)
+        ## This was called from Rcmd which set R_ARCH, so we need to reset it.
+        system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE,
+                env = c(env, paste("R_ARCH=/", arch, sep="")))
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -1225,7 +1227,9 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             ## so force LANGUAGE=en
             status <- if (WINDOWS)
                 system2(.R_EXE(arch), c(Ropts, enc),
-                        exout, exout, exfile, env = "LANGUAGE=en")
+                        exout, exout, exfile,
+                        env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
+
             else
                 system2(file.path(R.home("bin"), "R"),
                         c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts, enc),
@@ -1382,7 +1386,8 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
                 system2(.R_EXE(arch),
                         c(if(nzchar(arch)) R_opts4 else R_opts2,
                           paste("-f", Rin)),
-                        env = "LANGUAGE=en")
+                        env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
+
             } else
                 system2(file.path(R.home("bin"), "R"),
                         c(if(nzchar(arch)) paste("--arch=", arch, sep = ""),
