@@ -203,4 +203,4 @@ readRenviron <- function(path)
     .Internal(readRenviron(path))
 
 normalizePath <- function(path, winslash = "\\", mustWork = NA)
-    .Internal(normalizePath(path, winslash, mustWork))
+    .Internal(normalizePath(path.expand(path), winslash, mustWork))

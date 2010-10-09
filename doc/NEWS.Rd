@@ -18,6 +18,8 @@
       (from \pkg{utils}): this is so it can be used by \code{library()}
       and friends.
 
+      It now does tilde expansion.
+
       It gains new arguments \code{winslash} (to select the separator on
       Windows) and \code{mustWork} to control the action if a canonical
       path cannot be found.

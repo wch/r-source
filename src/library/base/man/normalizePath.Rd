@@ -21,7 +21,10 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   \item{mustWork}{logical: if \code{TRUE} then an error is given if the result
     cannot be determined; if \code{NA} then a warning.}
 }
-\details{  
+\details{
+  Tilde-expansion (see \code{\link{path.expand}}) is first done on
+  \code{paths} (as from \R 2.13.0).
+  
   Where the Unix-alike platform supports it attempts to turn paths into
   absolute paths in their canonical form (no \samp{./}, \samp{../} nor
   symbolic links).  It relies on the POSIX system function
