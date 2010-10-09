@@ -9016,6 +9016,10 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are
 analogues using the @code{vprintf} interface.
 
+Because @code{Rvprintf} and @code{REvprintf} use a C99 interface, they
+are only defined by @file{R_ext/Print.h} in C++ code if the macro
+@code{R_USE_C99_IN_CXX} is defined when it is included.
+
 @menu
 * Printing from FORTRAN::
 @end menu

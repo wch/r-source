@@ -25,7 +25,16 @@
       path cannot be found.
     }
   }
-
+  
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Because they use a C99 interface which a C++ compiler is not
+      required to support, \code{Rvprintf} and \code{REvprintf} are only
+    defined by \file{R_ext/Print.h} in C++ code if the macro
+    \code{R_USE_C99_IN_CXX} is defined when it is included.
+    }
+  }
+  
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD Rdiff} is now implemented in \R on
