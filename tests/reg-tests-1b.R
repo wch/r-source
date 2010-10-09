@@ -1360,4 +1360,19 @@ stopifnot(identical(mf$f, f[,drop=TRUE]))
 ## failed to drop < 2.12.0
 
 
+## subassignment to expressions sometimes coerced them to lists.
+x1 <- x2 <- x3 <- expression(a = pi, b = pi^2)
+x1["b"] <- expression(pi^3)
+stopifnot(is.expression(x1)) # OK
+x1["a"] <- NULL
+stopifnot(is.expression(x1))
+x2[["b"]] <- quote(pi^3)
+stopifnot(is.expression(x2)) # OK
+x2[["a"]] <- NULL
+stopifnot(is.expression(x2))
+x3$a <- NULL
+stopifnot(is.expression(x3))
+## coerced to lists
+
+
 proc.time()

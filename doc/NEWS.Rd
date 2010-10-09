@@ -713,6 +713,10 @@
       variable names.  (Example reported by Terry Therneau.)
       
       \item The 256-byte limit on names is now documented.
+
+      \item Subassignment by \code{[}, \code{[[} or \code{$} on an
+      expression object with value \code{NULL} coerced the object to a
+      list.
     }
   }
 }
