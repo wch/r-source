@@ -49,7 +49,10 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
 
   \code{testInstalledBasic} runs the basic tests, if installed.  This
   should be run with \code{LC_COLLATE=C} set: the function tries to set
-  this by it may not work on all OSes.
+  this by it may not work on all OSes.  For non-English locales it may
+  be desirable to set environment variables \env{LANGUAGE} to \samp{en}
+  and \env{LC_TIME} to \samp{C} to reduce the number of differences from
+  reference results.
   
 #ifdef unix
   The package-specific tests for the base and recommended packages are
