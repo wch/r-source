@@ -457,7 +457,8 @@ be used in @R{} packages) only A--Za--z0--9 should be used.} (and in
 some countries this includes accented letters) plus @samp{@code{.}} and
 @samp{@code{_}}, with the restriction that a name must start with
 @samp{@code{.}} or a letter, and if it starts with @samp{@code{.}} the
-second character must not be a digit.
+second character must not be a digit.  Names are currently limited to
+256 bytes.
 
 Elementary commands consist of either @emph{expressions} or
 @emph{assignments}.  If an expression is given as a command, it is
