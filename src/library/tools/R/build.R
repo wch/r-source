@@ -333,7 +333,7 @@ get_exclude_patterns <- function()
                 Sys.setenv(R_PACKAGE_DIR = pkgdir)
                 Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
                 messageLog(Log, "running cleanup.win")
-                Ssystem("./cleanup.win")
+                Ssystem("sh", "./cleanup.win")
             }
         } else if (.file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
