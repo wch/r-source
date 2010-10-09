@@ -692,7 +692,7 @@ void setup_Rmainloop(void)
     char localedir[PATH_MAX+20];
 #endif
     char deferred_warnings[6][250];
-    int ndeferred_warnings = 0;
+    volatile int ndeferred_warnings = 0;
 
     InitConnections(); /* needed to get any output at all */
 
