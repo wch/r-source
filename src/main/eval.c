@@ -2044,9 +2044,13 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 	    if (CAR(args) == R_DotsSymbol) {
 		SEXP h = findVar(R_DotsSymbol, rho);
 		if (TYPEOF(h) == DOTSXP) {
+#ifdef DODO
+		    /**** any self-evaluating value should be OK; this
+			  is used in byte compiled code. LT */
 		    /* just a consistency check */
 		    if (TYPEOF(CAR(h)) != PROMSXP)
 			error(_("value in '...' is not a promise"));
+#endif
 		    dots = TRUE;
 		    x = eval(CAR(h), rho);
 		break;
