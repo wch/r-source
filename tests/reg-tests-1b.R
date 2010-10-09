@@ -1375,4 +1375,15 @@ stopifnot(identical(mf$f, f[,drop=TRUE]))
 ## failed to drop < 2.12.0
 
 
+## problem with deparsing variable names of > 500 bytes in model.frame
+## reported by Terry Therneau to R-devel, 2010-10-07
+tname <- paste('var', 1:50, sep='')
+tmat <- matrix(rnorm(500), ncol=50, dimnames=list(NULL, tname))
+tdata <- data.frame(tmat)
+temp1 <- paste( paste(tname, tname, sep='='), collapse=', ')
+temp2 <- paste("~1 + cbind(", temp1, ")")
+foo <- model.frame(as.formula(temp2), tdata)
+## gave invalid variable name.
+
+
 proc.time()
