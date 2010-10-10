@@ -980,6 +980,11 @@ void setup_Rmainloop(void)
 	REprintf(_("During startup - "));
 	PrintWarnings();
     }
+
+#ifdef BYTECODE
+    /* trying to do this earlier seems to run into bootstrapping issues. */
+    R_init_jit_enabled();
+#endif
 }
 
 extern SA_TYPE SaveAction; /* from src/main/startup.c */

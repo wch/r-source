@@ -928,6 +928,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"load.from.file", do_loadfile, 0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
 {"save.to.file", do_savefile,   0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
 {"putconst", do_putconst,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
+{"enableJIT",    do_enablejit,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
 #endif
 
 /* Connections */
