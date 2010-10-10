@@ -1,8 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-22 r52792)
+R version 2.13.0 Under development (unstable) (2010-10-08 r53245)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.4.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3636,8 +3636,12 @@ probability of success
 > 
 > ## Misleading error messages on integer overflow
 > ## Uwe Ligges, R-devel, 2004-02-19
-> try(numeric(2^31))
-Error in vector("double", length) : vector size specified is too large
+> ## (modified to make printed result the same whether numeric() is
+> ##  compiled or interpreted)
+> ## try(numeric(2^31))
+> tryCatch(numeric(2^31),
++          error = function(e) paste("Error:", conditionMessage(e)))
+[1] "Error: vector size specified is too large"
 > try(matrix( , 2^31, 1))
 Error in matrix(, 2^31, 1) : invalid 'nrow' value (too large or NA)
 In addition: Warning message:
