@@ -164,7 +164,7 @@ section on @ref{Package name spaces}.
 The optional files @file{configure} and @file{cleanup} are (Bourne
 shell) script files which are executed before and (provided that option
 @option{--clean} was given) after installation on Unix-alikes, see
-@ref{Configure and cleanup}.  For use on Windows there may be analogues
+@ref{Configure and cleanup}.  The analogues on Windows are
 @file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
@@ -1166,7 +1166,13 @@ directory for some purpose other than building a DLL, use a
 @file{Makefile.win} file.
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
-or @file{Makevars.win}: this will be used by @command{R CMD build}.
+or @file{Makevars.win}: this will be used by @command{R CMD build} to
+clean up (a copy of) the package sources.  When it is run by
+@command{build} it will have fewer macros set, in particular not
+@code{$(SHLIB)}, nor @code{$(OBJECTS)} unless set in the file itself.
+It would also be possible to add tasks to the target @samp{shlib-clean}
+which is run by @command{R CMD INSTALL} and @command{R CMD SHLIB} with
+options @option{--clean} and @option{--preclean}.
 
 If you want to run @R{} code in @file{Makevars}, e.g.@: to find
 configuration information, please do ensure that you use the correct
@@ -1183,7 +1189,7 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example
+32- and 64-bit code, for example (GNU syntax, allowed on Windows)
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
@@ -1209,7 +1215,7 @@ On Windows there is normally a choice between linking to an import
 library or directly to a DLL.  Where possible, the latter is much more
 reliable: import libraries are tied to a specific toolchain, and in
 particular on 64-bit Windows two different conventions are common, and
-@R{} 2.11.x and 2.12.x use different ones. So for example instead of
+@R{} 2.11.x and 2.12.x use different ones.  So for example instead of
 
 @example
 PKG_LIBS = -L$(XML_DIR)/lib -lxml2
