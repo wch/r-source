@@ -253,3 +253,11 @@ stopifnot(identical(mnames2[is.na(match(mnames2,mnames))], "foo#refClassA"))
 refClassB$methods(foo=function() paste(callSuper(), "Version 2"))
 stopifnot(identical(refClassB$new()$foo(), "A Version 2"))
 stopifnot(identical(mnames2, objects(getClass("refClassB")@refMethods)))
+
+if(methods:::.hasCodeTools()) {
+    ## code warnings assigning locally to, or hiding, field names
+    stopifnot(is(tryCatch(mv$methods(test = function(x) {data <- x[!is.na(x)]; mean(data)}), warning = function(e)e), "warning"))
+
+    stopifnot(is(tryCatch(mv$methods(test2 = function(data) {data[!is.na(x)]}), warning = function(e)e), "warning"))
+} else
+    warning("Can't run some tests:  recommended package codetools is not available")

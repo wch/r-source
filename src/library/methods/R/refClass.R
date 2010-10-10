@@ -96,6 +96,7 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
                          me, thisClass@className),
                 domain = NA)
         def <-makeClassMethod(def, me, thisClass@className, "", objects(thisClass@refMethods, all.names = TRUE))
+        .checkFieldsInMethod(def, names(thisClass@fieldClasses))
         ## cache the analysed method definition
         assign(me, def, envir = thisClass@refMethods)
     }
@@ -391,7 +392,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     allMethods <- as.list(methodsEnv)
     ## get a list of processed methods, plus any
     ## overriden superclass methods
-    newMethods <- insertClassMethods(allMethods, className, methodDefs, FALSE)
+    newMethods <- insertClassMethods(allMethods, className, methodDefs, names(def@fieldClasses), FALSE)
     for(what in names(newMethods))
         assign(what, newMethods[[what]], envir = methodsEnv)
     invisible(methodsEnv)
@@ -682,7 +683,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
     fp[names(fieldPrototypes)] <- fieldPrototypes
 
     ## process and insert reference methods
-    cm <- insertClassMethods(cm, Class, refMethods, TRUE)
+    cm <- insertClassMethods(cm, Class, refMethods, names(fc), TRUE)
     list(superClasses = superClasses, refSuperClasses = refSuperClasses,
          fieldClasses = fc, fieldPrototypes = fp,
          refMethods = cm)
@@ -691,7 +692,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
 superClassMethodName <- function(def)
     paste(def@name, def@refClassName, sep = "#")
 
-insertClassMethods <- function(methods, Class, value, returnAll) {
+insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
     ## process reference methods, return either the entire updated methods
     ## or the processed new methods in value, plus superclass versions
     theseMethods <- names(value)
@@ -711,9 +712,10 @@ insertClassMethods <- function(methods, Class, value, returnAll) {
             superClassMethod <- superClassMethodName(prevMethod)
             returnMethods[[superClassMethod]] <- prevMethod
         }
-        returnMethods[[method]] <-
-               makeClassMethod(value[[method]], method, Class,
+        def <- makeClassMethod(value[[method]], method, Class,
                                superClassMethod, allMethods)
+        .checkFieldsInMethod(def, fieldNames)
+        returnMethods[[method]] <- def
     }
     returnMethods
 }
@@ -915,4 +917,32 @@ all.equal.environment <- function(target, current, ...) {
     else
         TRUE
 }
+}
+
+.checkFieldsInMethod <- function(methodDef, fieldNames) {
+    if(!.hasCodeTools())
+        return(NA)
+    if(length(fieldNames) == 0)
+        return(TRUE)
+    paste0 <- function(x) paste('"', x, '"', sep = "", collapse = ", ")
+    if(is(methodDef, "refMethodDef")) {
+        methodName <- paste0(methodDef@name)
+        className <- paste0(methodDef@refClassName)
+    }
+    else {
+        methodName <- className <- ""
+    }
+    argNames <- names(formals(methodDef))
+    argsAreFields <- match(fieldNames, argNames, 0) > 0
+    if(any(argsAreFields))
+        warning(gettextf("Field %s masked by argument of the same name in method %s for class %s",
+                paste0(fieldNames[argsAreFields]), methodName, className),
+                domain = NA)
+    locals <- codetools::findLocals(body(methodDef), environment(methodDef))
+    localsAreFields <- match(fieldNames, locals, 0) > 0
+    if(any(localsAreFields))
+        warning(gettextf("Local assignment to field name (%s) will not change the field: Did you mean to use \"<<-\"? \n( in method %s for class %s)",
+                paste0(fieldNames[localsAreFields]), methodName, className),
+                domain = NA)
+    !any(argsAreFields | localsAreFields)
 }
