@@ -40,9 +40,13 @@ R_runR <- function(cmd, Ropts = "", env = "", arch = "")
     if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
-        ## This was called from Rcmd which set R_ARCH, so we need to reset it.
-        system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE,
-                env = c(env, paste("R_ARCH=/", arch, sep="")))
+        ## This was called from Rcmd which set R_ARCH, so we may need to reset it.
+        if(nzchar(arch))
+            system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE,
+                    env = c(env, paste("R_ARCH=/", arch, sep="")))
+        else
+            system2(.R_EXE(arch), c(Ropts, paste("-f", Rin)), TRUE, TRUE,
+                    env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
@@ -1225,12 +1229,14 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            status <- if (WINDOWS)
-                system2(.R_EXE(arch), c(Ropts, enc),
-                        exout, exout, exfile,
-                        env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
-
-            else
+            status <- if (WINDOWS) {
+                if (nzchar(arch))
+                    system2(.R_EXE(arch), c(Ropts, enc), exout, exout, exfile,
+                            env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
+                else
+                    system2(.R_EXE(arch), c(Ropts, enc), exout, exout, exfile,
+                            env = "LANGUAGE=en")
+            } else
                 system2(file.path(R.home("bin"), "R"),
                         c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts, enc),
                         exout, exout, exfile, env = "LANGUAGE=en")
@@ -1383,17 +1389,17 @@ R_run_R <- function(cmd, Ropts, env = "", arch = "")
             status <- if (.Platform$OS.type == "windows") {
                 Rin <- tempfile("Rin"); on.exit(unlink(Rin))
                 writeLines(cmd, Rin)
-                system2(.R_EXE(arch),
-                        c(if(nzchar(arch)) R_opts4 else R_opts2,
-                          paste("-f", Rin)),
-                        env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
-
+                if (nzchar(arch))
+                    system2(.R_EXE(arch), c(R_opts4, paste("-f", Rin)),
+                            env = c("LANGUAGE=en", paste("R_ARCH=/", arch, sep="")))
+                else
+                    system2(.R_EXE(arch), c(R_opts2, paste("-f", Rin)),
+                            env = "LANGUAGE=en")
             } else
                 system2(file.path(R.home("bin"), "R"),
                         c(if(nzchar(arch)) paste("--arch=", arch, sep = ""),
                           if(nzchar(arch)) R_opts4 else R_opts2),
-                        input = cmd,
-                        env = "LANGUAGE=en")
+                        input = cmd, env = "LANGUAGE=en")
             if (status) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
