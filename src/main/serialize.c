@@ -797,6 +797,27 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
     int i;
     SEXP t;
 
+#ifdef BYTECODE
+    static int compile_pkgs = -1;
+
+    if (compile_pkgs == -1) {
+	if (getenv("R_COMPILE_PKGS") != NULL)
+	    compile_pkgs = 1;
+	else
+	    compile_pkgs = 0;
+    }
+
+    if (compile_pkgs && TYPEOF(s) == CLOSXP && TYPEOF(BODY(s)) != BCODESXP) {
+	SEXP new_s;
+	compile_pkgs = FALSE;
+	PROTECT(new_s = R_cmpfun(s));
+	WriteItem (new_s, ref_table, stream);
+	UNPROTECT(1);
+	compile_pkgs = TRUE;
+	return;
+    }
+#endif
+
  tailcall:
     R_CheckStack();
     if ((t = GetPersistentName(stream, s)) != R_NilValue) {
