@@ -38,7 +38,10 @@
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD Rdiff} is now implemented in \R on
-      Unix-alikes (as it has been on Windows for some time).
+      Unix-alikes (as it has been on Windows since \R 2.12.0).
+
+      \item \command{R CMD build} no longer does any cleaning in the
+      supplied package directory: all the cleaning is done in the copy.
     }
   } 
 
