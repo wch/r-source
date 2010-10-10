@@ -143,8 +143,8 @@ names(Filter(function(f) length(formals(args(f))) > 10, funs))
 length(Filter(function(f)
               any(names(formals(args(f))) \%in\% "..."),
               funs))
-
+\donttest{
 ## Find all objects in the base environment which are *not* functions:
 Filter(Negate(is.function),  sapply(ls(baseenv()), get, baseenv()))
-}
+}}
 \keyword{programming}

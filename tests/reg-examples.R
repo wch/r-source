@@ -4,6 +4,7 @@ set.seed(1)
 if(.Platform$OS.type == "windows") options(pager = "console")
 
 ## base
+example(Cstack_info)
 example(DateTimeClasses)
 example(Dates)
 example(Ops.Date)
@@ -14,6 +15,7 @@ example(Sys.time)
 example(as.POSIXlt)
 example(difftime)
 example(format.Date)
+example(Reduce) # funprog.Rd
 example(gc)
 example(memory.profile)
 paste("Today is", date()) # from paste.Rd

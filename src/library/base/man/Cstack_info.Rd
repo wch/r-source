@@ -1,6 +1,6 @@
 % File src/library/base/man/Cstack_info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Cstack_info}
@@ -34,8 +34,8 @@ Cstack_info()
   \item{eval_depth}{The current evaluation depth (including two calls
     for the call to \code{Cstack_info}).}
 }
-\examples{
+\examples{\donttest{
 Cstack_info()
-}
+}}
 \keyword{ utilities }
 
