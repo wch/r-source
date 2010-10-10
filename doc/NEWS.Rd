@@ -73,6 +73,9 @@
       \item The \code{data.frame} method of \code{format} failed if a
       column name was longer than 256 bytes (the maximum length allowed
       for an \R name).
+
+      \item Reference class methods using \code{callSuper()} now work
+        when installed by invoking \code{methods()} on the generator.
     }
   }
 }
