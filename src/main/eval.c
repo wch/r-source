@@ -640,6 +640,9 @@ SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_jit_enabled = new;
     return ScalarInteger(old);
 }
+
+/* forward declaration */
+static SEXP bytecodeExpr(SEXP);
 #endif
 
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
@@ -751,6 +754,11 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	int old_bl = R_BrowseLines,
 	    blines = asInteger(GetOption(install("deparse.max.lines"),
 					 R_BaseEnv));
+#ifdef BYTECODE
+	/* switch to interpreted version when debugging compiled code */
+	if (TYPEOF(body) == BCODESXP)
+	    body = bytecodeExpr(body);
+#endif
 	Rprintf("debugging in: ");
 	if(blines != NA_INTEGER && blines > 0)
 	    R_BrowseLines = blines;
@@ -855,6 +863,11 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     SET_RDEBUG(newrho, RDEBUG(op) || RSTEP(op));
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(op)) {
+#ifdef BYTECODE
+	/* switch to interpreted version when debugging compiled code */
+	if (TYPEOF(body) == BCODESXP)
+	    body = bytecodeExpr(body);
+#endif
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
 	/* Find out if the body is function with only one statement. */
