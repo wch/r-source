@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -13,13 +13,13 @@
   them.
 }
 \usage{
-\special{R CMD build [options] pkgdirs}
 \special{R CMD check [options] pkgdirs}
+\special{R CMD build [options] pkgdirs}
 }
 \arguments{
   \item{pkgdirs}{a list of names of directories with sources of \R
-    add-on packages.  For \code{check} this can also be the filename of
-    a compressed \command{tar} archive with extension \file{.tar.gz} or
+    add-on packages.  For \code{check} these can also be the filenames of
+    compressed \command{tar} archives with extension \file{.tar.gz} or
     \file{.tgz} or \file{.tar.bz2}.}
   \item{options}{further options to control the processing, or for
     obtaining information about usage and version of the utility.}

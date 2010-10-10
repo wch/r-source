@@ -164,7 +164,7 @@ section on @ref{Package name spaces}.
 The optional files @file{configure} and @file{cleanup} are (Bourne
 shell) script files which are executed before and (provided that option
 @option{--clean} was given) after installation on Unix-alikes, see
-@ref{Configure and cleanup}.  For use on Windows there may be analogues
+@ref{Configure and cleanup}.  The analogues on Windows are
 @file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
@@ -1166,7 +1166,13 @@ directory for some purpose other than building a DLL, use a
 @file{Makefile.win} file.
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
-or @file{Makevars.win}: this will be used by @command{R CMD build}.
+or @file{Makevars.win}: this will be used by @command{R CMD build} to
+clean up (a copy of) the package sources.  When it is run by
+@command{build} it will have fewer macros set, in particular not
+@code{$(SHLIB)}, nor @code{$(OBJECTS)} unless set in the file itself.
+It would also be possible to add tasks to the target @samp{shlib-clean}
+which is run by @command{R CMD INSTALL} and @command{R CMD SHLIB} with
+options @option{--clean} and @option{--preclean}.
 
 If you want to run @R{} code in @file{Makevars}, e.g.@: to find
 configuration information, please do ensure that you use the correct
@@ -1183,7 +1189,7 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example
+32- and 64-bit code, for example (GNU syntax, allowed on Windows)
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
@@ -1666,17 +1672,19 @@ using @code{R CMD check} prior to invoking the build procedure.
 
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
-directory.  These patterns should be Perl regexps, one per line, to be
+directory.  These patterns should be Perl-like regexps (see the help for
+@code{regexp} in @R{} for the precise details), one per line, to be
 matched against the file names relative to the top-level source
 directory.  In addition, directories from source control
 systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
-@file{.bzr} or @file{.git} or @file{.hg}.}, directories with names ending
-@file{.Rcheck} or @file{Old} or @file{old} and files @file{GNUMakefile},
-@file{Read-and-delete-me} or with base names starting with @samp{.#}, or
-starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
-@samp{.swp}, are excluded by default.  In addition, those files in the
-@file{R}, @file{demo} and @file{man} directories which are flagged by
-@code{R CMD check} as having invalid names will be excluded.
+@file{.bzr} or @file{.git} or @file{.hg}.}, directories with names
+ending @file{.Rcheck} or @file{Old} or @file{old} and files
+@file{GNUMakefile}, @file{Read-and-delete-me} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
+addition, those files in the @file{R}, @file{demo} and @file{man}
+directories which are flagged by @code{R CMD check} as having invalid
+names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -1707,6 +1715,9 @@ built tarball as a final check on the contents.
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and
 is considerably more flexible).
+
+@code{R CMD build} currently does some cleaning in the supplied source
+directory, but this was will no longer happen in @R 2.13.0.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
@@ -1745,7 +1756,7 @@ PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
 use private @LaTeX{} extensions which are only available on his
 machine.@footnote{provided the conditions of the package's licence are
-met: many would see this as incompatible with an Open Source licence.}
+met: many would see these as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
