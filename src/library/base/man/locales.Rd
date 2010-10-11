@@ -30,11 +30,10 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 }
 \arguments{
   \item{category}{character string.  The following categories should
-    always be supported: \code{"LC_ALL"},
-    \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"},
-    \code{"LC_NUMERIC"} and \code{"LC_TIME"}.  Some systems (not Windows)
-    will also support \code{"LC_MESSAGES"}, \code{"LC_PAPER"}
-    and \code{"LC_MEASUREMENT"}.
+    always be supported: \code{"LC_ALL"}, \code{"LC_COLLATE"},
+    \code{"LC_CTYPE"}, \code{"LC_MONETARY"}, \code{"LC_NUMERIC"} and
+    \code{"LC_TIME"}.  Some systems (not Windows) will also support
+    \code{"LC_MESSAGES"}, \code{"LC_PAPER"} and \code{"LC_MEASUREMENT"}.
   }
   \item{locale}{character string.  A valid locale name on the system in
     use.  Normally \code{""} (the default) will pick up the default
@@ -60,8 +59,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
 
-  Note that setting \code{"LC_ALL"} sets only \code{"LC_COLLATE"},
-  \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and \code{"LC_TIME"}.
+  Note that setting category \code{"LC_ALL"} sets only
+  \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
+  \code{"LC_TIME"}.
 
   Attempts to set an invalid locale are ignored.  There may or may not
   be a warning, depending on the OS.

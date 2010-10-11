@@ -225,7 +225,7 @@ strptime(x, format, tz = "")
 }
 \seealso{
   \link{DateTimeClasses} for details of the date-time classes;
-  \code{\link{locales}} to query or set a locale.
+  \link{locales} to query or set a locale.
 
   Your system's help pages on \code{strftime} and \code{strptime} to
   see how to specify their formats.
