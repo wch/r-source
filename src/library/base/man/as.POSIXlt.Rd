@@ -68,7 +68,13 @@ as.POSIXlt(x, tz = "", \dots)
   Alternatively, \code{format} can be specified for character vectors or
   factors: if it is not specified and no standard format works for the
   first non-\code{NA} input an error is thrown.
-
+  
+  If \code{format} is specified, remember that some of the format
+  specifications are locale-specific, and you may need to set the
+  \code{LC_TIME} category appropriately \emph{via}
+  \code{\link{Sys.setlocale}}.  This most often affecs the use of
+  \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
+  
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.
 
@@ -98,7 +104,9 @@ as.POSIXlt(x, tz = "", \dots)
   \link{DateTimeClasses} for details of the classes;
   \code{\link{strptime}} for conversion to and from character
   representations. \code{\link{Sys.timezone}} for details of the
-  (system-specific)naming of time zones.
+  (system-specific) naming of time zones.
+  
+  \link{locales} for locale-specific aspects.  
 }
 \examples{\donttest{
 (z <- Sys.time())             # the current datetime, as class "POSIXct"
