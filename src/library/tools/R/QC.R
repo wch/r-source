@@ -3937,7 +3937,7 @@ function(package, dir, lib.loc = NULL)
 
     ## it is OK to refer to yourself and standard packages
     standard_package_names <- .get_standard_package_names()$base
-    depends_suggests <- c(depends, suggests, enhances,  pkg_name,
+    depends_suggests <- c(depends, imports, suggests, enhances, pkg_name,
                           standard_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
@@ -4038,7 +4038,7 @@ function(dir, lib.loc = NULL)
 
     ## it is OK to refer to yourself and standard packages
     standard_package_names <- .get_standard_package_names()$base
-    depends_suggests <- c(depends, suggests, enhances,  pkg_name,
+    depends_suggests <- c(depends, imports, suggests, enhances, pkg_name,
                           standard_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
