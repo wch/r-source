@@ -58,7 +58,7 @@ R_RD4PDF = times,hyper
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
-R_PKGS_refman = base datasets grDevices graphics grid methods stats tools utils
+R_PKGS_refman = base datasets grDevices graphics grid methods splines stats stats4 tcltk tools utils
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
@@ -156,11 +156,8 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  $(ECHO) "\\part{}"; \
-	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
+	  texinputs=`(for f in $(texinputs_RECOMMENDED); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
-	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
@@ -215,11 +212,8 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  $(ECHO) "\\part{}"; \
-	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
+	  texinputs=`(for f in $(texinputs_RECOMMENDED); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $(refman_TEXINPUTS); do \
-	    texinputs=`$(ECHO) "$${texinputs}" | sed "/$${f}/d"`; \
-	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind

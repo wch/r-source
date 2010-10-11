@@ -65,6 +65,14 @@
 }
 
 \section{CHANGES IN R VERSION 2.12.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{    
+      \item The DVI/PDF reference manual now includes the help page for
+      all the standard packages: \pkg{splines}, \pkg{stats4} and
+      \pkg{tcltk} were previously omitted.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments
