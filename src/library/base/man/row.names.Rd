@@ -1,6 +1,6 @@
 % File src/library/base/man/row.names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{row.names}
@@ -38,10 +38,10 @@ row.names(x) <- value
   added by the software to meet this requirement, they are regarded as
   \sQuote{automatic}.
 
-  Row names were character are allowed to be integer or character, but
+  Row names are currently allowed to be integer or character, but
   for backwards compatibility (with \R <= 2.4.0) \code{row.names} will
   always return a character vector.  (Use \code{attr(x, "row.names")} if
-  you need an integer value.)
+  you need to retrieve an integer-valued set of row names.)
 
   Using \code{NULL} for the value resets the row names to
   \code{seq_len(nrow(x))}, regarded as \sQuote{automatic}.
@@ -73,7 +73,7 @@ row.names(x) <- value
 \seealso{
   \code{\link{data.frame}}, \code{\link{rownames}}, \code{\link{names}}.
 
-  \code{\link{.row_names_info}} for the internal representations.
+  \code{.row_names_info} for the internal representations.
 }
 \keyword{classes}
 \keyword{methods}
