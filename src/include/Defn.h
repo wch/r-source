@@ -290,7 +290,10 @@ extern int putenv(char *string);
 #endif
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
-#define MAXIDSIZE   256	/* Largest symbol size, in bytes excluding terminator */
+#define MAXIDSIZE 10000	/* Largest symbol size, 
+			   in bytes excluding terminator.
+			   Was 256 prior to 2.13.0, now just a sanity check.
+			*/
 
 /* The type of the do_xxxx functions. */
 /* These are the built-in R functions. */

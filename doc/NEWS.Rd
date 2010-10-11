@@ -23,6 +23,11 @@
       It gains new arguments \code{winslash} (to select the separator on
       Windows) and \code{mustWork} to control the action if a canonical
       path cannot be found.
+
+      \item The previously almost undocumented limit of 256 bytes on a
+      symbol name has been raised to 10,000 bytes (a sanity check).
+      Long symbol names can sometimes occur when deparsing expressions
+      (for example, in \code{model.frame}).
     }
   }
   
