@@ -163,14 +163,6 @@ print insfile <<END;
                Name="RHelp" LongName="R $RVER Help" Target="[!$rhelp]" 
                WorkingDirectory="INSTALLDIR" />
             </Component>
-            <Component Id="shortcut2" 
-             Guid="$uuids{$nc++}" KeyPath="yes">
-              <Shortcut Id="UninstallStartMenuShortcut" Directory="RMENU" 
-               Name="RUninst" LongName="Uninstall R $RVER" 
-               Target="[SystemFolder]\msiexec.exe" 
-               Arguments="/x [ProductCode]" Icon="shell32.dll" 
-               IconIndex="32" WorkingDirectory="INSTALLDIR" />
-            </Component>
           </Directory>
         </Directory>
       </Directory>
@@ -400,7 +392,6 @@ print insfile <<END;
        ConfigurableDirectory='RMENU' InstallDefault='local' AllowAdvertise='no'>
         <ComponentRef Id='shortcut0' />
         <ComponentRef Id='shortcut1' />
-        <ComponentRef Id='shortcut2' />
       </Feature>
       <Feature Id='dshortcut' Title='Desktop Shortcut' Description='Install Desktop shortcut' Level='1'
        InstallDefault='local' AllowAdvertise='no'>

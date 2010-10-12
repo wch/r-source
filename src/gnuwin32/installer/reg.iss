@@ -1,6 +1,5 @@
 [Icons]
 Name: "{group}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
-Name: "{group}\Uninstall R @RVER@"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 Name: "{group}\R @RVER@ Help"; Filename: "{app}\doc\html\index.html"; Components: html

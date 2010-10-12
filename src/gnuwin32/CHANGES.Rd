@@ -14,6 +14,9 @@
 
       \item Support for repository type \samp{win64.binary} (used for
       64-bit Windows binaries for \R 2.11.x) has been removed.
+
+      \item The installers no longer put an \sQuote{Uninstall} item on
+      the start menu (to conform to current Microsoft UI guidelines).
     }
   }
 }

@@ -276,14 +276,12 @@ without creating a shortcut starting in a writable folder.
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
-Normally you can do this from the R group on the Start Menu or from the
-@samp{Add/Remove Programs} or @samp{Programs and Features} group in the
-Control Panel.  If it does not appear there, run @file{unins000.exe} in
-the top-level installation directory.  (There should be a separate
-uninstall item in the R group on the Start Menu for each installed
-version of R.  On recent versions of Windows you may well be asked to
-confirm that you wish to run a program from an `unknown' or
-`unidentified' publisher.)
+Normally you can do this from the @samp{Add/Remove Programs} (XP) or
+@samp{Programs and Features} (Vista/7) group in the Control Panel.  If
+it does not appear there, run @file{unins000.exe} in the top-level
+installation directory.  On recent versions of Windows you may well be
+asked to confirm that you wish to run a program from an `unknown' or
+`unidentified' publisher.
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.

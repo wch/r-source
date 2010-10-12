@@ -1,6 +1,4 @@
 [Icons]
-Name: "{group}\Uninstall R @RVER@"; Filename: "{uninstallexe}"
-
 Name: "{group}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('i386')
 Name: "{group}\R x64 @RVER@"; Filename: "{app}\bin\x64\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}; Check: isComponentSelected('x64')
 
