@@ -1,6 +1,19 @@
 \usepackage{makeidx}
 \pagestyle{headings}
 
+\ifx\pdfoutput\undefined
+\else
+  \ifx\pdfoutput\relax
+  \else
+    \ifnum\pdfoutput>0
+      % PDF output
+      \pdfminorversion=5
+      \pdfcompresslevel=9
+      \pdfobjcompresslevel=3
+    \fi
+  \fi
+\fi
+
 \makeatletter
 \renewcommand\@pnumwidth{2.05em} % over 1000 pages
 \makeatother

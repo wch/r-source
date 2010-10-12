@@ -619,6 +619,10 @@
       arithmetic, but after discovery of more real-world problems caused
       by a BLAS that did not, this is tested more thoroughly in this
       version.
+
+      \item The PDF reference manual is now built as PDF version 1.5
+      with object compression, which on platforms for which this is the
+      the default (notably MiKTeX) halves its size.
     }
   }
   
