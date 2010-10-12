@@ -3939,8 +3939,6 @@ function(package, dir, lib.loc = NULL)
     standard_package_names <- .get_standard_package_names()$base
     depends_suggests <- c(depends, imports, suggests, enhances, pkg_name,
                           standard_package_names)
-    imports <- c(imports, depends, suggests, enhances, pkg_name,
-                 standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos")
@@ -3976,11 +3974,11 @@ function(package, dir, lib.loc = NULL)
                         bad_exprs <<- c(bad_exprs, pkg)
                 }
             } else if(Call %in%  "::") {
-                if(! pkg %in% imports)
+                if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in%  ":::") {
                 ## <FIXME> fathom out if this package has a namespace
-                if(! pkg %in% imports)
+                if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             }
             for(i in seq_along(e)) Recall(e[[i]])
@@ -4040,8 +4038,6 @@ function(dir, lib.loc = NULL)
     standard_package_names <- .get_standard_package_names()$base
     depends_suggests <- c(depends, imports, suggests, enhances, pkg_name,
                           standard_package_names)
-    imports <- c(imports, depends, suggests, enhances, pkg_name,
-                 standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos")
@@ -4077,11 +4073,11 @@ function(dir, lib.loc = NULL)
                         bad_exprs <<- c(bad_exprs, pkg)
                 }
             } else if(Call %in%  "::") {
-                if(! pkg %in% imports)
+                if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in%  ":::") {
                 ## <FIXME> fathom out if this package has a namespace
-                if(! pkg %in% imports)
+                if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
             }
             for(i in seq_along(e)) Recall(e[[i]])
