@@ -34,28 +34,12 @@ function(x)
 {
     ## Turn a possibly relative file path absolute, performing tilde
     ## expansion if necessary.
-    ## Seems the only way we can do this is 'temporarily' change the
-    ## working dir and see where this takes us.
     if(length(x) != 1L)
         stop("'x' must be a single character string")
     if(!file.exists(epath <- path.expand(x)))
         stop(gettextf("file '%s' does not exist", x),
              domain = NA)
-    cwd <- getwd()
-    if (is.null(cwd))
-        stop("current working directory cannot be ascertained")
-    on.exit(setwd(cwd))
-    if(file_test("-d", epath)) {
-        ## Combining dirname and basename does not work for e.g. '.' or
-        ## '..' on Unix ...
-        setwd(epath)
-        getwd() # might be NULL, but very unlikely if setwd succeeded
-    }
-    else {
-        setwd(dirname(epath))
-        ## getwd() can be "/" or "d:/"
-        file.path(sub("/$", "", getwd()), basename(epath))
-    }
+    normalizePath(epath, "/", TRUE)
 }
 
 ### ** file_path_sans_ext

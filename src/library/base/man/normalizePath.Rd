@@ -65,13 +65,13 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
     length of a file path.
   }
 }
-\seealso{
-  \code{\link{file_path_as_absolute}} in package \pkg{tools}.
+
 #ifdef windows
-  
+\seealso{  
   \code{\link{shortPathName}}
-#endif
 }
+#endif
+
 \examples{\donttest{ # random tempdir
 cat(normalizePath(c(R.home(), tempdir())), sep = "\n")
 }}

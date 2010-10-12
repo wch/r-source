@@ -49,12 +49,9 @@ list_files_with_type(dir, type, all.files = FALSE,
   (Only purely alphanumeric extensions are recognized.)
   
   \code{file_path_as_absolute} turns a possibly relative file path
-  absolute, performing tilde expansion if necessary.  Note that this
-  will fail if the path does not exist or the current working directory
-  cannot be ascertained (see \code{\link{getwd}}), and that the result
-  is one representation of the absolute path and there may be others,
-  for example as given by \code{\link{normalizePath}}.
-  Currently, \code{x} must be a single existing path.
+  absolute, performing tilde expansion if necessary. As from \R 2.13.0
+  this is a wrapper for \code{\link{normalizePath}}.  Currently,
+  \code{x} must be a single existing path.
 
   \code{file_path_sans_ext} returns the file paths without extensions.
   (Only purely alphanumeric extensions are recognized.)
