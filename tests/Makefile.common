@@ -39,9 +39,9 @@ test-src-random = p-r-random-tests.R
 test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
-## added to on Windows
+## replaced on Windows
 test-src-reg-1 = reg-tests-1.R reg-tests-1b.R reg-tests-2.R \
-  reg-examples.R reg-packages.R \
+  reg-examples1.R reg-examples2.R reg-packages.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
@@ -89,7 +89,7 @@ FORCE:
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
 	  $(ECHO) $(ECHO_N) \
-	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
+	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  $(ECHO) "$(ECHO_T) OK"; \
@@ -102,7 +102,7 @@ reg-plot.Rout: reg-plot.R
 	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@$(ECHO) "$(ECHO_T) OK"
 	@$(ECHO) $(ECHO_N) \
-	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	  "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
 	-@diff -b reg-plot.ps $(srcdir)/reg-plot.ps.save
 	@$(ECHO) "$(ECHO_T) OK"
 
@@ -119,7 +119,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	else \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	  $(ECHO) $(ECHO_N) \
-	  "comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
+	  "  comparing 'reg-plot-latin1.ps' to '$(srcdir)/reg-plot-latin1.ps.save' ...$(ECHO_C)"; \
 	  diff -b reg-plot-latin1.ps $(srcdir)/reg-plot-latin1.ps.save && exitstatus=0; \
 	  $(ECHO) "$(ECHO_T) OK"; \
 	fi
@@ -130,7 +130,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
-	  $(ECHO) $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
+	  $(ECHO) $(ECHO_N) "  comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
 	  mv $@.fail $@; \
 	  $(ECHO) "$(ECHO_T) OK"
