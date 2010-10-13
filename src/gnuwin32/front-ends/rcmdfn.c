@@ -106,7 +106,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
        find R_HOME, set as env variable (with / as separator)
-       set R_ARCH if not already set
+       set R_ARCH
        set PATH to include R_HOME\bin
        set TMPDIR if unset
        set HOME if unset
@@ -339,11 +339,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     free(Path);
 
     char Rarch[30];
-    if (!getenv("R_ARCH")) {
-	strcpy(Rarch, "R_ARCH=/");
-	strcat(Rarch, R_ARCH);
-	putenv(Rarch);
-    }
+    strcpy(Rarch, "R_ARCH=/");
+    strcat(Rarch, R_ARCH);
+    putenv(Rarch);
 
     char Bindir[30];
     strcpy(Bindir, "BINDIR=");
