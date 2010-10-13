@@ -214,9 +214,10 @@ testInstalledPackage <-
     exdir <- file.path(pkgdir, "R-ex")
     owd <- setwd(outDir)
     on.exit(setwd(owd))
+    strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
 
     if (1 %in% types) {
-        message("Examples for package ", sQuote(pkg))
+        message("Testing examples for package ", sQuote(pkg))
         Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE)
         if (length(Rfile)) {
             outfile <- paste(pkg, "-Ex.Rout", sep = "")
@@ -240,13 +241,23 @@ testInstalledPackage <-
                 if(!file.exists(savefile) && file.exists(tfile))
                     savefile <- tfile
             }
-            if (!file.exists(savefile))
-                savefile <- paste(outfile, "prev", sep = "." )
             if (file.exists(savefile)) {
-                message("  Comparing ", sQuote(outfile), " to ",
-                        sQuote(basename(savefile)), " ...", appendLF = FALSE)
-                res <- Rdiff(outfile, savefile)
-                if (!res) message(" OK")
+               if (file.exists(savefile)) {
+                    message("  comparing ", sQuote(outfile), " to ",
+                            sQuote(basename(savefile)), " ...", appendLF = FALSE)
+                    res <- Rdiff(outfile, savefile)
+                    if (!res) message(" OK")
+                    else if(strict)
+                        stop("  ", "results differ from reference results")
+                }
+            } else {
+                prevfile <- paste(outfile, "prev", sep = "." )
+                if (file.exists(prevfile)) {
+                    message("  comparing ", sQuote(outfile), " to ",
+                            sQuote(basename(prevfile)), " ...", appendLF = FALSE)
+                    res <- Rdiff(outfile, prevfile)
+                    if (!res) message(" OK")
+                }
             }
         } else warning("no examples found")
     }
@@ -276,7 +287,7 @@ testInstalledPackage <-
             }
             savefile <- paste(outfile, "save", sep = "." )
             if (file.exists(savefile)) {
-                message("  Comparing ", sQuote(outfile), " to ",
+                message("  comparing ", sQuote(outfile), " to ",
                         sQuote(savefile), " ...", appendLF = FALSE)
                 res <- Rdiff(outfile, savefile)
                 if (!res) message(" OK")

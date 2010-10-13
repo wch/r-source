@@ -35,8 +35,8 @@
     \itemize{
       \item Because they use a C99 interface which a C++ compiler is not
       required to support, \code{Rvprintf} and \code{REvprintf} are only
-    defined by \file{R_ext/Print.h} in C++ code if the macro
-    \code{R_USE_C99_IN_CXX} is defined when it is included.
+      defined by \file{R_ext/Print.h} in C++ code if the macro
+      \code{R_USE_C99_IN_CXX} is defined when it is included.
     }
   }
   
@@ -48,7 +48,16 @@
       \item \command{R CMD build} no longer does any cleaning in the
       supplied package directory: all the cleaning is done in the copy.
     }
-  } 
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{make check} will now fail if there are differences
+      from the reference output when testing package examples and
+      environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
+      value.
+    }
+  }
 
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
