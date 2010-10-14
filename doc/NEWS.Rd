@@ -239,7 +239,6 @@
       slightly different format: it will be in UTF-8 on platforms using
       UTF-8, and otherwise in ASCII.  There is also a PDF version,
       \file{NEWS.pdf}, installed at the top-level of the R distribution.
-      [The format of these files is preliminary.]
 
       \item \code{kmeans(x, 1)} now works.  Further, \code{kmeans} now
       returns between and total sum of squares.
@@ -254,7 +253,7 @@
 
       \item A new facility has been added for inserting code into a
       package without re-installing it, to facilitate testing
-      changes which can be selectively added and backed out. See
+      changes which can be selectively added and backed out.  See
       \code{?insertSource}.
 
       \item New function \code{readRenviron} to (re-)read files in the
@@ -307,8 +306,8 @@
 
       \item New function \code{droplevels()} to remove unused factor levels.
 
-      \item \code{system(intern = TRUE)} now gives an error on a
-      Unix-alike (as well as on Windows) if \code{command} cannot be
+      \item \code{system(command, intern = TRUE)} now gives an error on
+      a Unix-alike (as well as on Windows) if \code{command} cannot be
       run.  It reports a non-success exit status from running
       \code{command} as a warning.
 
@@ -341,7 +340,7 @@
       will now be reported referencing their original location in the
       source file.
 
-      \item new \code{adjustcolor()} utility, e.g., for simple
+      \item New \code{adjustcolor()} utility, e.g., for simple
       translucent color schemes.
 
       \item \code{qr()} now has a trivial \code{lm} method with a
@@ -464,7 +463,7 @@
        (\command{R CMD INSTALL} does so), and \code{--force} removes
        (rather than overwrites) an existing \file{INDEX} file.
 
-       It supports file \file{~/.R/build.Renviron} analogously to
+       It supports a file \file{~/.R/build.Renviron} analogously to
        \command{check}.
 
        It now runs build-time \code{\\Sexpr} expressions in help files.
