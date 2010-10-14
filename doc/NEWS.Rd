@@ -6,17 +6,17 @@
 
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{NEW FEATURES}{
-    \itemize{    
+    \itemize{
       \item Installing \R no longer tries to find \command{perl}, and
       \command{R CMD} no longer tries to substitute a full path for
-      these \command{awk} nor \command{perl} -- this was a legacy from
-      the days when they were used by \R itself.  Because a couple of
-      packages do use \command{awk}, it is set as \command{make} (rather
-      than environment) variable.
+      \command{awk} nor \command{perl} -- this was a legacy from the
+      days when they were used by \R itself.  Because a couple of
+      packages do use \command{awk}, it is set as a \command{make}
+      (rather than environment) variable.
 
-      \item \code{normalizePath()} has been moved to the \pkg{base} package
-      (from \pkg{utils}): this is so it can be used by \code{library()}
-      and friends.
+      \item \code{normalizePath()} has been moved to the \pkg{base}
+      package (from \pkg{utils}): this is so it can be used by
+      \code{library()} and friends.
 
       It now does tilde expansion.
 
@@ -53,7 +53,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item \command{make check} will now fail if there are differences
-      from the reference output when testing package examples and
+      from the reference output when testing package examples and if
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
     }
@@ -554,12 +554,12 @@
        \option{--no-multiarch} to confine checking to the
        sub-architecture under which \command{check} is invoked.  If
        neither option is supplied, a test is done of installed
-       sub-architectures and those which can be run on the current OS
-       are used.
+       sub-architectures and all those which can be run on the current
+       OS are used.
 
        Unless multiple sub-architectures are selected, the install done
        by \code{check} for testing purposes is only of the current
-       sub-architecture (\emph{via} \command{R CMD INSTALL --no-multiarch}.
+       sub-architecture (\emph{via} \command{R CMD INSTALL --no-multiarch}).
 
        It will skip the check for non-ascii characters in code or data
        if the environment variables \env{_R_CHECK_ASCII_CODE_} or
