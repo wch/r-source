@@ -1686,7 +1686,10 @@ not the other architecture was successfully installed.
 
 The exceptions are packages with a non-empty @file{configure.win} script
 or which make use of @file{src/Makefile.win}.  If @file{configure.win}
-does something appropriate to both architectures use option
+does something appropriate to both architectures use@footnote{for a
+small number of @acronym{CRAN} packages where this is known to be safe
+and is needed by the autobuilder this is the default.  Look at the
+source of @file{tools:::.install_packages} for the list.} option
 @option{--force-biarch}: otherwise @command{R CMD INSTALL
 --merge-multiarch} can be applied to a source tarball to merge separate
 32- and 64-bit installs.  (This can only be applied to a tarball, and
@@ -4569,6 +4572,10 @@ DLLs.  To avoid frustration, please use our tool set, and make sure it
 is at the front of your path (including before the Windows system
 directories).  If you are using a Windows shell, type @code{PATH} at the
 prompt to find out.
+
+You may need to set the environment variable @env{CYGWIN} to a value
+including @samp{nodosfilewarning} to suppress messages about
+Windows-style paths.
 
 @node The MinGW toolchain, Useful additional programs, The command line tools, The Windows toolset
 @section The MinGW toolchain
