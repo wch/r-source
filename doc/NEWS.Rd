@@ -105,7 +105,14 @@
       for an \R name).
 
       \item Reference class methods using \code{callSuper()} now work
-        when installed by invoking \code{methods()} on the generator.
+      when installed by invoking \code{methods()} on the generator.
+
+      \item \code{predict(<lm object>, type ="terms", ...)} failed if
+      both \code{terms} and \code{interval} were specified.  (Reported
+      by Bill Dunlap.)
+
+      Also, if \code{se.fit = TRUE} the standard errors were reported
+      for all terms, not just those selected by a non-null \code{terms}.
     }
   }
 }

@@ -1401,4 +1401,17 @@ stopifnot(is.expression(x3))
 ## coerced to lists
 
 
+## predict on an lm object with type = "terms" and 'terms' specified
+dat <- data.frame(y=log(1:10), x=1:10, fac=rep(LETTERS[11:13],c(3,3,4)))
+fit <- lm(y~fac*x, data=dat)
+pfit <- predict(fit, type="terms", interval="confidence", newdata=dat[7:5,])
+pfit2 <- predict(fit, type="terms", terms=c("x","fac"),
+                 interval="confidence", newdata=dat[7:5,])
+pfit2Expected <- lapply(pfit,
+                        function(x)if(is.matrix(x))
+                        structure(x[, c("x","fac")], constant=attr(x, "constant"))
+                        else x)
+stopifnot(identical(pfit2, pfit2Expected))
+## pfit2 failed, and without 'interval' gave se's for all terms.
+
 proc.time()

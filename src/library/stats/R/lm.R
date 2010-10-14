@@ -741,19 +741,22 @@ predict.lm <-
     }
 
     if (type == "terms") { ## type == "terms" ------------
-
-	if(!mmDone) { mm <- model.matrix(object); mmDone <- TRUE }
-	## asgn <- attrassign(mm, tt) :
+	if(!mmDone) {
+            mm <- model.matrix(object)
+            mmDone <- TRUE
+        }
 	aa <- attr(mm, "assign")
 	ll <- attr(tt, "term.labels")
 	hasintercept <- attr(tt, "intercept") > 0L
-	if (hasintercept)
-	    ll <- c("(Intercept)", ll)
+	if (hasintercept) ll <- c("(Intercept)", ll)
 	aaa <- factor(aa, labels = ll)
 	asgn <- split(order(aa), aaa)
 	if (hasintercept) {
 	    asgn$"(Intercept)" <- NULL
-	    if(!mmDone) { mm <- model.matrix(object); mmDone <- TRUE }
+	    if(!mmDone) {
+                mm <- model.matrix(object)
+                mmDone <- TRUE
+            }
 	    avx <- colMeans(mm)
 	    termsconst <- sum(avx[piv] * beta[piv])
 	}
@@ -793,7 +796,7 @@ predict.lm <-
                 if (se.fit)
                     ip <- ip[, terms, drop = FALSE]
             }
-        } else { # no terms
+        } else {                        # no terms
             predictor <- ip <- matrix(0, n, 0L)
         }
 	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
@@ -810,13 +813,16 @@ predict.lm <-
 	if(type != "terms") {
 	    predictor <- cbind(predictor, predictor + hwid %o% c(1, -1))
 	    colnames(predictor) <- c("fit", "lwr", "upr")
-	}
-	else {
+	} else {
+            if (!is.null(terms)) hwid <- hwid[, terms, drop = FALSE]
 	    lwr <- predictor + hwid
 	    upr <- predictor - hwid
 	}
     }
-    if(se.fit || interval != "none") se <- sqrt(ip)
+    if(se.fit || interval != "none") {
+        se <- sqrt(ip)
+        if (type == "terms" && !is.null(terms)) se <- se[, terms, drop = FALSE]
+    }
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
 	predictor <- napredict(na.act, predictor)
 	if(se.fit) se <- napredict(na.act, se)
