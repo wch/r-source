@@ -113,6 +113,10 @@
 
       Also, if \code{se.fit = TRUE} the standard errors were reported
       for all terms, not just those selected by a non-null \code{terms}.
+
+      \item The TRE regular expressions engine could terminate \R rather
+      than give an error when given certain invalid regular expressions.
+      (\PR{14398})
     }
   }
 }

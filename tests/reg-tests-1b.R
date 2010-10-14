@@ -1414,4 +1414,10 @@ pfit2Expected <- lapply(pfit,
 stopifnot(identical(pfit2, pfit2Expected))
 ## pfit2 failed, and without 'interval' gave se's for all terms.
 
+
+## TRE called assert() on an invalid regexp (PR#14398)
+try(regexpr("a{2-}", ""))
+## terminated R <= 2.12.0
+
+
 proc.time()

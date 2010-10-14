@@ -17,10 +17,20 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
-#include <assert.h>
+//#include <assert.h>
 #include <stdio.h>
 #define XMALLOC_INTERNAL 1
 #include "xmalloc.h"
+
+/* fake definition */
+extern void error(const char *str);
+#define assert(a) R_assert(a)
+
+static void assert(int expr)
+{
+    if(expr == 0)
+	error("internal allocation error in TRE");
+}
 
 
 /*
