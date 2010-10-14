@@ -30,13 +30,13 @@
 #include "xmalloc.h"
 
 /* fake definition */
-extern void error(const char *str);
+extern void Rf_error(const char *str);
 #define assert(a) R_assert(a)
 
 static void assert(int expr)
 {
     if(expr == 0)
-	error("internal error in compiling regexp");
+	Rf_error("internal error in compiling regexp");
 }
 
 

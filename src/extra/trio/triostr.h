@@ -22,7 +22,7 @@
  * Documentation is located in triostr.c
  */
 
-#include <assert.h>
+//#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
