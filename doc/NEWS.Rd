@@ -448,12 +448,12 @@
        \option{--no-multiarch} to confine checking to the
        sub-architecture under which \command{check} is invoked.  If
        neither option is supplied, a test is done of installed
-       sub-architectures and those which can be run on the current OS
-       are used.
+       sub-architectures and all those which can be run on the current
+       OS are used.
 
        Unless multiple sub-architectures are selected, the install done
        by \code{check} for testing purposes is only of the current
-       sub-architecture (\emph{via} \command{R CMD INSTALL --no-multiarch}.
+       sub-architecture (\emph{via} \command{R CMD INSTALL --no-multiarch}).
 
        It will skip the check for non-ascii characters in code or data
        if the environment variables \env{_R_CHECK_ASCII_CODE_} or
