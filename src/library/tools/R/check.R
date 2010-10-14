@@ -34,17 +34,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!is.null(cmd)) {
             Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
-        ## This was called from Rcmd which set R_ARCH,
-        ## so we may need to reset it.  (This used to be necessary for
-        ## nested calls of Rcmd in 2.12.x, but no longer.)
-        if(nzchar(arch))
-            system2(file.path(R.home(), "bin", arch, "Rterm.exe"),
-                    c(Ropts, paste("-f", Rin)), stdout, stderr,
-                    env = c(env, paste("R_ARCH=/", arch, sep="")))
-        else
-            system2(file.path(R.home("bin"), "Rterm.exe"),
-                    c(Ropts, paste("-f", Rin)), stdout, stderr,
-                    env = env)
+        system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
+                else file.path(R.home("bin"), "Rterm.exe"),
+                c(Ropts, paste("-f", Rin)), stdout, stderr, env = env)
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste("--arch=", arch, sep = ""), Ropts),
