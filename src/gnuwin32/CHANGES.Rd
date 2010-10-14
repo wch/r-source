@@ -17,6 +17,9 @@
 
       \item The installers no longer put an \sQuote{Uninstall} item on
       the start menu (to conform to current Microsoft UI guidelines).
+
+      \item Running \R always set the environment variable \env{R_ARCH}
+      (as it does on a Unix-alike from the shell-script front-end).
     }
   }
 }
