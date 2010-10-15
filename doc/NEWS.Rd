@@ -76,7 +76,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{drop.terms} and the \code{[} method for class
-      \code{"terms"} no longer add back an intercept.
+      \code{"terms"} no longer add back an intercept.  (Reported by
+      Niels Hansen.)
     }
   }
 }
