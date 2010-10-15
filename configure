@@ -27121,9 +27121,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_VASPRINTF $ac_have_decl
 _ACEOF
 
-## mempcpy is a GNU extension used by regex.c.  That defines
-## _GNU_SOURCE, so should be declared on glibc systems.
-## gettext will also check for this.
+## mempcpy is a GNU extension used by the included gettext
 for ac_func in mempcpy
 do :
   ac_fn_c_check_func "$LINENO" "mempcpy" "ac_cv_func_mempcpy"
@@ -27135,7 +27133,7 @@ _ACEOF
 fi
 done
 
-## realpath is a BSD extension.
+## realpath is a POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 for ac_func in realpath
 do :
@@ -35087,11 +35085,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35090: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35088: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35094: \$? = $ac_status" >&5
+   echo "$as_me:35092: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35186,11 +35184,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35189: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35187: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35193: \$? = $ac_status" >&5
+   echo "$as_me:35191: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35238,11 +35236,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35241: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35239: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35245: \$? = $ac_status" >&5
+   echo "$as_me:35243: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
