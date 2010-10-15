@@ -39,9 +39,6 @@ RESCOMP = $(BINPREF)windres
 LINKER=$(MAIN_LD)
 
 ## Things defined in Renviron on Unix
-# EGREP = grep -e
-# LN_S = cp -p
-# PERL = perl
 SED = sed
 TAR = tar
 
