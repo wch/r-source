@@ -39,5 +39,4 @@ EGREP='grep -E'
 # MAKE=${MAKE-make}
 # PERL=${PERL-perl}
 SED=${SED-sed}
-# TR=${TR-tar'}
 # TAR=${TAR-tar}
