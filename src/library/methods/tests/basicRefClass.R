@@ -261,3 +261,11 @@ if(methods:::.hasCodeTools()) {
     stopifnot(is(tryCatch(mv$methods(test2 = function(data) {data[!is.na(x)]}), warning = function(e)e), "warning"))
 } else
     warning("Can't run some tests:  recommended package codetools is not available")
+
+## tests (fragmentary by necessity) of promptClass for reference class
+suppressMessages(promptClass("refClassB", filename = textConnection("ctxt", "w")))
+## look for a method, inheritance, inherited method
+stopifnot(length(c(grep("foo.*refClassA", ctxt),
+                   grep("code{foo()}", ctxt, fixed = TRUE),
+                   grep("linkS4class{refClassA", ctxt, fixed = TRUE))) >= 3)
+rm(ctxt)
