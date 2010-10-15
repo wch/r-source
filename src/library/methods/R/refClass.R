@@ -932,17 +932,21 @@ all.equal.environment <- function(target, current, ...) {
     else {
         methodName <- className <- ""
     }
-    argNames <- names(formals(methodDef))
-    argsAreFields <- match(fieldNames, argNames, 0) > 0
-    if(any(argsAreFields))
-        warning(gettextf("Field %s masked by argument of the same name in method %s for class %s",
-                paste0(fieldNames[argsAreFields]), methodName, className),
-                domain = NA)
+### this warning is currently suppressed--seems some people
+### actually like using field names as argument names.
+    ## argNames <- names(formals(methodDef))
+    ## argsAreFields <- match(fieldNames, argNames, 0) > 0
+    ## if(any(argsAreFields))
+    ##     warning(gettextf("Field %s masked by argument of the same name in method %s for class %s",
+    ##             paste0(fieldNames[argsAreFields]), methodName, className),
+    ##             domain = NA)
+###
     locals <- codetools::findLocals(body(methodDef), environment(methodDef))
     localsAreFields <- match(fieldNames, locals, 0) > 0
     if(any(localsAreFields))
         warning(gettextf("Local assignment to field name (%s) will not change the field: Did you mean to use \"<<-\"? \n( in method %s for class %s)",
                 paste0(fieldNames[localsAreFields]), methodName, className),
                 domain = NA)
-    !any(argsAreFields | localsAreFields)
+    ## !any(argsAreFields | localsAreFields)
+    !any(localsAreFields)
 }

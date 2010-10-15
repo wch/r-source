@@ -258,7 +258,8 @@ if(methods:::.hasCodeTools()) {
     ## code warnings assigning locally to, or hiding, field names
     stopifnot(is(tryCatch(mv$methods(test = function(x) {data <- x[!is.na(x)]; mean(data)}), warning = function(e)e), "warning"))
 
-    stopifnot(is(tryCatch(mv$methods(test2 = function(data) {data[!is.na(x)]}), warning = function(e)e), "warning"))
+### formal arg test suppressed--see comment in .checkFieldsInMethod
+    ## stopifnot(is(tryCatch(mv$methods(test2 = function(data) {data[!is.na(x)]}), warning = function(e)e), "warning"))
 } else
     warning("Can't run some tests:  recommended package codetools is not available")
 
