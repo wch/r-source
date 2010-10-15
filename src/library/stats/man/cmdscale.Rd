@@ -1,6 +1,6 @@
 % File src/library/stats/man/cmdscale.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
@@ -16,7 +16,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
     or a full symmetric matrix containing the dissimilarities.}
-  \item{k}{the dimension of the space which the data are to be
+  \item{k}{the maximum dimension of the space which the data are to be
     represented in; must be in \eqn{\{1, 2, \ldots, n-1\}}{{1, 2, \dots, n-1}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
   \item{add}{logical indicating if an additive constant \eqn{c*} should
@@ -29,6 +29,12 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   Multidimensional scaling takes a set of dissimilarities and returns a
   set of points such that the distances between the points are
   approximately equal to the dissimilarities.
+
+  A set of Euclidean distances on \eqn{n} points can be represented
+  exactly in at most \eqn{n-1} dimensions.  \code{cmdscale} follows the
+  analysis of Mardia (1978), and returns the best-fitting
+  \eqn{k}-dimensional representation, where \eqn{k} may be less than the
+  argument \code{k}.
 
   The functions \code{isoMDS} and \code{sammon} in package \pkg{MASS}
   provide alternative ordination techniques.
@@ -70,8 +76,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   The analytical solution of the additive constant problem.
   \emph{Psychometrika} \bold{48}, 343--349.
 
-  Cox, T. F. and Cox, M. A. A. (1994)
-  \emph{Multidimensional Scaling}.
+  Cox, T. F. and Cox, M. A. A. (2001)
+  \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
 
   Gower, J. C. (1966)  
@@ -79,6 +85,15 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   methods used in multivariate analysis.  
   \emph{Biometrika} \bold{53}, 325--328.
 
+  Krzanowski, W. J. and Marriott, F. H. C. (1994)
+  \emph{Multivariate Analysis. Part I. Distributions, Ordination and
+  Inference.}  London: Edward Arnold. (Especially pp. 108--111.)
+
+  Mardia, K.V. (1978)
+  Some properties of classical multidimensional scaling.
+  \emph{Communications on Statistics -- Theory and Methods}, \bold{A7},
+  1233--41.
+  
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
   \emph{Multivariate Analysis}, London: Academic Press.
 

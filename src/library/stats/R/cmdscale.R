@@ -56,14 +56,18 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         x[non.diag] <- (d[non.diag] + add.c)^2
     }
     e <- eigen(-x/2, symmetric = TRUE)
-    ev <- e$values[1L:k]
-    if(any(ev < 0))
+    ev <- e$values[seq_len(k)]
+    evec <- e$vectors[, seq_len(k), drop = FALSE]
+    if(any(ev < 0)) {
         warning(gettextf("some of the first %d eigenvalues are < 0", k),
                 domain = NA)
-    points <- e$vectors[, 1L:k, drop = FALSE] %*% diag(sqrt(ev), k)
+        evec <- evec[, ev > 0,  drop = FALSE]
+        ev <- ev[ev > 0]
+    }
+    points <- evec %*% diag(sqrt(ev), k)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
-        evalus <- e$values[-n]
+        evalus <- e$values[e$values > 0]
         list(points = points, eig = if(eig) ev, x = if(x.ret) x,
              ac = if(add) add.c else 0,
              GOF = sum(ev)/c(sum(abs(evalus)), sum(evalus[evalus > 0])))
