@@ -64,7 +64,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         evec <- evec[, ev > 0,  drop = FALSE]
         ev <- ev[ev > 0]
     }
-    points <- evec %*% diag(sqrt(ev), k)
+    points <- evec %*% diag(sqrt(ev), length(ev))
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[e$values > 0]
