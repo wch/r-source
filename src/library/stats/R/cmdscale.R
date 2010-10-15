@@ -67,7 +67,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     points <- evec %*% diag(sqrt(ev), length(ev))
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
-        evalus <- e$values[e$values > 0]
+        evalus <- e$values # Cox & Cox have sum up to n-1, though
         list(points = points, eig = if(eig) ev, x = if(x.ret) x,
              ac = if(add) add.c else 0,
              GOF = sum(ev)/c(sum(abs(evalus)), sum(evalus[evalus > 0])))

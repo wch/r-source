@@ -1429,4 +1429,10 @@ stopifnot(identical(tt[1:2], tt))
 ## reset intercept term < R 2.13.0
 
 
+## Test new defn of cmdscale()
+mds <- cmdscale(eurodist, eig = TRUE, k = 14)
+stopifnot(ncol(mds$points) == 11L)
+## Used negative eigenvalues in 2.12.0
+
+
 proc.time()
