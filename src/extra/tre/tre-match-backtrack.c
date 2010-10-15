@@ -73,13 +73,13 @@ char *alloca ();
 #include "tre.h"
 #include "xmalloc.h"
 /* fake definition */
-extern void error(const char *str);
+extern void Rf_error(const char *str);
 #define assert(a) R_assert(a)
 
 static void assert(void * expr)
 {
     if(!expr)
-	error("internal error in executing regexp");
+	Rf_error("internal error in executing regexp");
 }
 
 typedef struct {
