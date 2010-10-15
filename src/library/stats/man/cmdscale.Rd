@@ -45,7 +45,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 
   Whereas S (Becker \emph{et al.}, 1988) computes this constant using
   an approximation suggested by Torgerson, \R uses the analytical
-  solution of Cailliez (1983), see also Cox and Cox (1994).
+  solution of Cailliez (1983), see also Cox and Cox (2001).
 }
 \value{
   If \code{eig = FALSE} and \code{x.ret = FALSE} (default), a matrix
@@ -53,10 +53,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   chosen to represent the dissimilarities.
 
   Otherwise, a list containing the following components.
-  \item{points}{a matrix with \code{k} columns whose rows give the
+  \item{points}{a matrix with up to \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
-  \item{eig}{the \eqn{n-1} eigenvalues computed during the scaling process if
-    \code{eig} is true.}
+  \item{eig}{the \eqn{n} eigenvalues computed during the scaling process if
+    \code{eig} is true.  \strong{NB}: versions of \R before 2.12.1
+    returned only \code{k} but were documented to return \eqn{n-1}.}
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
   \item{GOF}{a numeric vector of length 2, equal to say
     \eqn{(g_1,g_2)}{(g.1,g.2)}, where
