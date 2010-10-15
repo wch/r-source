@@ -33,7 +33,7 @@ On Linux the first is intended to be used only with GCC.
 #undef __NO_INLINE__
 */
 
-#include <assert.h>
+// #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
@@ -54,6 +54,16 @@ On Linux the first is intended to be used only with GCC.
 #include "tre-match-utils.h"
 #include "tre.h"
 #include "xmalloc.h"
+
+/* fake definition */
+extern void Rf_error(const char *str);
+#define assert(a) R_assert(a)
+
+static void assert(int expr)
+{
+    if(expr == 0)
+	Rf_error("internal error in executing regexp");
+}
 
 #define TRE_M_COST	0
 #define TRE_M_NUM_INS	1

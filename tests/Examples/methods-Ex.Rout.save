@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-09-28 r53054)
+R version 2.13.0 Under development (unstable) (2010-10-04 r53167)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
@@ -138,8 +138,6 @@ function (x, y, ...)
 > 
 > ### ** Examples
 > 
-> 
-> 
 > ## A class that extends a registered S3 class inherits that class' S3
 > ## methods.
 > 
@@ -172,14 +170,6 @@ function (x, y, ...)
 + )
 [1] "["
 > 
-> mydf1[1:2, ]
-Object of class "myFrame"
-  x          y z
-1 1 -0.6264538 y
-2 2  0.1836433 f
-Slot "timestamps":
-[1] "2010-09-29 09:13:08 PDT" "2010-09-29 09:13:08 PDT"
-
 > 
 > 
 > setClass("myDateTime", contains = "POSIXt")

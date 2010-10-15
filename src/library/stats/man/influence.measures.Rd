@@ -164,7 +164,7 @@ hat(x, intercept = TRUE)
 
   \sQuote{\link{plotmath}} for the use of \code{hat} in plot annotation.
 }
-\examples{
+\examples{\donttest{
 require(graphics)
 
 ## Analysis of the life-cycle savings data
@@ -202,5 +202,5 @@ signif(cooks.distance(lmI), 3)# ~= Ci in Table 3, p.184
 (imI <- influence.measures(lmI))
 stopifnot(all.equal(imI$infmat[,"cook.d"],
           cooks.distance(lmI)))
-}
+}}
 \keyword{regression}

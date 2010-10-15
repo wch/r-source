@@ -4,6 +4,46 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.12.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{    
+      \item The DVI/PDF reference manual now includes the help page for
+      all the standard packages: \pkg{splines}, \pkg{stats4} and
+      \pkg{tcltk} were previously omitted.
+    }
+  }
+  
+  \subsection{INSTALLATION}{
+    \itemize{    
+      \item The PDF reference manual is now built as PDF version 1.5
+      with object compression, which on platforms for which this is not
+      the default (notably MiKTeX) halves its size.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{seq.int} no longer sometimes evaluates arguments
+      twice.  (\PR{14388})
+      
+      \item The \code{data.frame} method of \code{format} failed if a
+      column name was longer than 256 bytes (the maximum length allowed
+      for an \R name).
+
+      \item \code{predict(<lm object>, type ="terms", ...)} failed if
+      both \code{terms} and \code{interval} were specified.  (Reported
+      by Bill Dunlap.)
+
+      Also, if \code{se.fit = TRUE} the standard errors were reported
+      for all terms, not just those selected by a non-null \code{terms}.
+
+      \item The TRE regular expressions engine could terminate \R rather
+      than give an error when given certain invalid regular expressions.
+      (\PR{14398})
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
     \itemize{

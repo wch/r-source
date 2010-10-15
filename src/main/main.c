@@ -677,6 +677,11 @@ int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 # include <sys/time.h>
 #endif
 
+#ifdef Win32
+# include <windows.h> /* for GetTickCount */
+# include <process.h> /* for getpid */
+#endif
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;
@@ -778,6 +783,10 @@ void setup_Rmainloop(void)
 	    gettimeofday (&tv, NULL);
 	    seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
 	}
+#elif defined(Win32)
+	/* Try to avoid coincidence for processes launched almost
+	   simultaneously */
+	seed = (int) GetTickCount() + getpid();
 #elif HAVE_TIME
 	seed = time(NULL);
 #else

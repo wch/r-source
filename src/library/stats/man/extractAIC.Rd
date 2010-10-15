@@ -84,8 +84,8 @@ extractAIC(fit, scale, k = 2, \dots)
   \code{\link{AIC}}, \code{\link{deviance}}, \code{\link{add1}},
   \code{\link{step}}
 }
-\examples{
+\examples{\donttest{
 utils::example(glm)
 extractAIC(glm.D93)  #>>  5  15.129
-}
+}}
 \keyword{models}

@@ -91,7 +91,7 @@ utils::data(npk, package="MASS")
 ## Set orthogonal contrasts.
 op <- options(contrasts=c("contr.helmert", "contr.poly"))
 ( npk.aov <- aov(yield ~ block + N*P*K, npk) )
-summary(npk.aov)
+\donttest{summary(npk.aov)}
 coefficients(npk.aov)
 
 ## to show the effects of re-ordering terms contrast the two fits

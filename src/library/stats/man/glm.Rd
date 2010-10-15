@@ -334,7 +334,7 @@ treatment <- gl(3,3)
 print(d.AD <- data.frame(treatment, outcome, counts))
 glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
 anova(glm.D93)
-summary(glm.D93)
+\donttest{summary(glm.D93)}
 
 ## an example with offsets from Venables & Ripley (2002, p.189)
 utils::data(anorexia, package="MASS")

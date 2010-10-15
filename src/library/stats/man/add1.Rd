@@ -125,11 +125,13 @@ drop1(object, scope, \dots)
 \examples{
 \testonly{od <- options(digits=5)}
 require(graphics); require(utils)
-example(step)#-> swiss
+## following example(swiss)
+lm1 <- lm(Fertility ~ ., data = swiss)
 add1(lm1, ~ I(Education^2) + .^2)
 drop1(lm1, test="F")  # So called 'type II' anova
 
-example(glm)
+## following example(glm)
+\dontshow{example(glm, echo = FALSE)}
 drop1(glm.D93, test="Chisq")
 drop1(glm.D93, test="F")
 \testonly{options(od)}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2008  The R Development Core Team.
+ *  Copyright (C) 1999-2010  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1556,7 +1556,7 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = LENGTH(x);
     xnms = getAttrib(x, R_NamesSymbol);
     if (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n)
-	error(_("names(x) must be valid character(length(x))."));
+	error(_("names(x) must be a character vector of the same length as x"));
     envir = CAR(args);  args = CDR(args);
     if (TYPEOF(envir) == NILSXP) {
 	/* "copied" from do_newenv()  [ ./builtin.c ] */
@@ -1576,7 +1576,8 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     } else { /* assign into existing environment */
 	if (TYPEOF(envir) != ENVSXP)
-	    error(_("invalid '%s' argument: must be NULL or environment"), "envir");
+	    error(_("invalid '%s' argument: must be NULL or environment"), 
+		  "envir");
     }
 
     for(int i = 0; i < n ; i++) {

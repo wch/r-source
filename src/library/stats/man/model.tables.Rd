@@ -57,7 +57,7 @@ model.tables(x, \dots)
   \code{\link{se.contrast}}
 }
 
-\examples{
+\examples{\donttest{
 ## From Venables and Ripley (2002) p.165.
 utils::data(npk, package="MASS")
 
@@ -69,5 +69,5 @@ model.tables(npk.aov, "means", se = TRUE)
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 model.tables(npk.aovE, se=TRUE)
 model.tables(npk.aovE, "means")
-}
+}}
 \keyword{models}

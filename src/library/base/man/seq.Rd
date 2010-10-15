@@ -114,11 +114,6 @@ seq(length.out= )
 
   \code{seq_along} and \code{seq_len} always return an integer vector.
 }
-% PR#14388
-\note{
-  In its current implementation \code{seq.int} may evaluate its
-  arguments twice.
-}
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
