@@ -139,7 +139,7 @@ delete.response <- function (termobj)
     termobj
 }
 
-reformulate <- function (termlabels, response=NULL)
+reformulate <- function (termlabels, response=NULL, intercept = TRUE)
 {
     if(!is.character(termlabels) || !length(termlabels))
         stop("'termlabels' must be a character vector of length at least one")
@@ -147,6 +147,7 @@ reformulate <- function (termlabels, response=NULL)
     termtext <- paste(if(has.resp) "response", "~",
 		      paste(termlabels, collapse = "+"),
 		      collapse = "")
+    if(!intercept) termtext <- paste(termtext, "- 1")
     rval <- eval(parse(text = termtext)[[1L]])
     if(has.resp) rval[[2L]] <-
         if(is.character(response)) as.symbol(response) else response
@@ -163,7 +164,8 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
         if(!inherits(termobj, "terms"))
             stop("'termobj' must be a object of class \"terms\"")
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
-				  if (keep.response) termobj[[2L]] else NULL)
+				  if (keep.response) termobj[[2L]] else NULL,
+                                  attr(termobj, "intercept"))
         environment(newformula) <- environment(termobj)
 	terms(newformula, specials=names(attr(termobj, "specials")))
     }
@@ -175,7 +177,7 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
     resp <- if (attr(termobj, "response")) termobj[[2L]] else NULL
     newformula <- attr(termobj, "term.labels")[i]
     if (length(newformula) == 0L) newformula <- "1"
-    newformula <- reformulate(newformula, resp)
+    newformula <- reformulate(newformula, resp, attr(termobj, "intercept"))
     environment(newformula)<-environment(termobj)
     terms(newformula, specials = names(attr(termobj, "specials")))
 }

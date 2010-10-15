@@ -1,6 +1,6 @@
 % File src/library/stats/man/delete.response.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{delete.response}
@@ -8,7 +8,7 @@
 \usage{
 delete.response(termobj)
 
-reformulate(termlabels, response = NULL)
+reformulate(termlabels, response = NULL, intercept = TRUE)
 
 drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 }
@@ -22,6 +22,8 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
     model formula.  Cannot be zero-length.}
   \item{response}{character string, symbol or call giving the left-hand side of
     a model formula, or \code{NULL}.}
+  \item{intercept}{logical: should the formula have an intercept?  New
+    in \R 2.13.0.}
   \item{dropx}{vector of positions of variables to drop from the
     right-hand side of the model.}
   \item{keep.response}{Keep the response in the resulting object?}

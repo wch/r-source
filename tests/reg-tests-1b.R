@@ -1420,4 +1420,13 @@ try(regexpr("a{2-}", ""))
 ## terminated R <= 2.12.0
 
 
+## Preserve intercepts in drop.terms
+tt <- terms(~a+b-1)
+tt2 <- terms(~b-1)
+stopifnot(identical(drop.terms(tt, 1), tt2))
+stopifnot(identical(tt[2], tt2))
+stopifnot(identical(tt[1:2], tt))
+## reset intercept term < R 2.13.0
+
+
 proc.time()

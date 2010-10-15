@@ -28,6 +28,8 @@
       symbol name has been raised to 10,000 bytes (a sanity check).
       Long symbol names can sometimes occur when deparsing expressions
       (for example, in \code{model.frame}).
+
+      \item \code{reformulate()} gains a \code{intercept} argument.
     }
   }
   
@@ -73,7 +75,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Dummy
+      \item \code{drop.terms} and the \code{[} method for class
+      \code{"terms"} no longer add back an intercept.
     }
   }
 }
