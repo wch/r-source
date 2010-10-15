@@ -175,7 +175,7 @@ system(command, intern = FALSE,
   \code{show.output.on.console = TRUE}.  They will not work.
 }
 \section{Warning}{
-  On Windows, using non-null\code{input} suppresses output to the
+  On Windows, using non-null \code{input} suppresses output to the
   console (both standard output and standard error) unless redirected,
   e.g. by \code{intern = TRUE} and/or \code{show.output.on.console =
   TRUE}.  This is a long-standing feature of the implementation.
