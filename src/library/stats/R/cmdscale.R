@@ -64,7 +64,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[-n]
-        list(points = points, eig = if(eig) ev, x = if(x.ret) x,
+        list(points = points, eig = if(eig) e$values, x = if(x.ret) x,
              ac = if(add) add.c else 0,
              GOF = sum(ev)/c(sum(abs(evalus)), sum(evalus[evalus > 0])))
     } else points

@@ -30,6 +30,12 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   set of points such that the distances between the points are
   approximately equal to the dissimilarities.
 
+  A set of Euclidean distances on \eqn{n} points can be represented
+  exactly in at most \eqn{n-1} dimensions.  However, the approximation
+  given by classical scaling for non-Eucliean distances can be poor for
+  large \code{k}, and warnings about negative eigenvalues should be
+  heeded.
+
   The functions \code{isoMDS} and \code{sammon} in package \pkg{MASS}
   provide alternative ordination techniques.
 
@@ -39,7 +45,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 
   Whereas S (Becker \emph{et al.}, 1988) computes this constant using
   an approximation suggested by Torgerson, \R uses the analytical
-  solution of Cailliez (1983), see also Cox and Cox (1994).
+  solution of Cailliez (1983), see also Cox and Cox (2001).
 }
 \value{
   If \code{eig = FALSE} and \code{x.ret = FALSE} (default), a matrix
@@ -50,7 +56,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \item{points}{a matrix with \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
   \item{eig}{the \eqn{n-1} eigenvalues computed during the scaling process if
-    \code{eig} is true.}
+    \code{eig} is true.  \strong{NB}: versions of \R before 2.12.1
+    returned only \code{k} but were documented to return \eqn{n-1}.}
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
   \item{GOF}{a numeric vector of length 2, equal to say
     \eqn{(g_1,g_2)}{(g.1,g.2)}, where
@@ -70,14 +77,18 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   The analytical solution of the additive constant problem.
   \emph{Psychometrika} \bold{48}, 343--349.
 
-  Cox, T. F. and Cox, M. A. A. (1994)
-  \emph{Multidimensional Scaling}.
+  Cox, T. F. and Cox, M. A. A. (2001)
+  \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
 
   Gower, J. C. (1966)  
   Some distance properties of latent root and vector 
   methods used in multivariate analysis.  
   \emph{Biometrika} \bold{53}, 325--328.
+
+  Krzanowski, W. J. and Marriott, F. H. C. (1994)
+  \emph{Multivariate Analysis. Part I. Distributions, Ordination and
+  Inference.}  London: Edward Arnold. (Especially pp. 108--111.)
 
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
   \emph{Multivariate Analysis}, London: Academic Press.
