@@ -23,8 +23,9 @@ test-Examples-Base:
 	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
 
 
+## nlme suggests 'Hmisc'
 test-Examples-Recommended: test-Examples-Base
-	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='recommended', types='examples')" | $(R_EXE) _R_CHECK_FORCE_SUGGESTS_=FALSE
 ## </NOTE>
 
 mostlyclean: clean

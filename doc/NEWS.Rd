@@ -30,6 +30,11 @@
       (for example, in \code{model.frame}).
 
       \item \code{reformulate()} gains a \code{intercept} argument.
+
+      \item \code{cmdscale(add = FALSE)} now uses the more common
+      definition that there is a representation in \code{n-1} or less
+      dimensions, and only dimensions corresponding to positive
+      eigenvalues are used.  (Avoids confusion such as \PR{14397}.)
     }
   }
   
@@ -88,11 +93,6 @@
       \item The DVI/PDF reference manual now includes the help page for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
-
-      \item \code{cmdscale(add = FALSE)} now uses the more common
-      definition that there is a representation in \code{n-1} or less
-      dimensions, and only dimensions corresponding to positive
-      eigenvalues are used.  (Avoids confusion such as \PR{14397}.)
     }
   }
   
