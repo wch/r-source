@@ -126,6 +126,10 @@
       \item The TRE regular expressions engine could terminate \R rather
       than give an error when given certain invalid regular expressions.
       (\PR{14398})
+
+      \item \code{cmdscale(eig=TRUE)} was documented to return \eqn{n-1}
+      eigenvalues but in fact only returned \code{k}.  It now returns
+      all \eqn{n} eigenvalues.
     }
   }
 }
