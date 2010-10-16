@@ -14,7 +14,14 @@ documentation (effectively R CMD check on each of the base packages).
 make check-all
 
 runs all the checks, those in check-devel plus tests of the recommended
-packages. 
+packages.
+
+Note that for complete testing you will need a number of other
+packages installed and available, so if you have a CRAN installation,
+set R_LIBS (perhaps in ~/.R/check.Renviron) to include it before
+running these tests.  For example, some of the tests on 'nlme' depend
+on 'Hmisc', and there are a number of cross references from help page
+to CRAN packages.
 
 
 		--- Historical Information ----
