@@ -103,7 +103,7 @@ The simplest way is to download the most recent
 @file{R-@var{x}.@var{y}.@var{z}.tar.gz} file, and unpack it with
 
 @example
-tar xf R-@var{x}.@var{y}.@var{z}.tar.gz
+tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
@@ -114,7 +114,7 @@ installed.  On other systems you need to have the @command{gzip} program
 installed, when you can use
 
 @example
-gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar xf -
+gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
 @end example
 
 The pathname of the directory into which the sources are unpacked should
@@ -125,6 +125,23 @@ If you want the build to be usable by a group of users, set @code{umask}
 before unpacking so that the files will be readable by the target group
 (e.g.,@: @code{umask 022} to be usable by all users).  (Keep this
 setting of @code{umask} whilst building and installing.)
+
+If you use the GNU version of @command{tar} and do this as a root
+account (which on Windows includes accounts with administrator
+privileges) you may seem many warnings about changing ownership.  In
+which case you can use
+
+@example
+tar -xf --no-same-owner R-@var{x}.@var{y}.@var{z}.tar.gz
+@end example
+
+@noindent
+and perhaps also include the option @option{--no-same-permissions}.
+@enindex TAR_OPTIONS
+(These options can also be set in the @env{TAR_OPTIONS} environment
+variable: if more than one option is included they should be separated
+by spaces.)
+
 
 
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
@@ -721,6 +738,7 @@ architecture-specific versions will be available in e.g.@:
 architectures will run on the platform so the architecture of
 @command{Rscript} itself does not matter.  The executable
 @command{Rscript} will run the @command{R} script, and at that time the
+@enindex R_ARCH
 setting of the @env{R_ARCH} environment variable determines the
 architecture which is run.
 
@@ -739,6 +757,7 @@ within the appropriate @file{bin} directory,
 backwards compatibility with @R{} < 2.12.0, there are executables
 @file{@var{R_HOME}/bin/R.exe} or @file{@var{R_HOME}/bin/Rscript.exe}:
 these will run an executable from one of the subdirectories, which being
+@enindex R_ARCH
 taken first from the @env{R_ARCH} environment variable, then from the
 @option{--arch} command-line option@footnote{with possible values
 @samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
@@ -852,6 +871,7 @@ Windows users) is in the path, and on some systems need the collation
 locale set manually (the @R{} code tries to do so but it may not be
 possible to reset it): so if needed try setting the environment variable
 @env{LC_COLLATE} to @samp{C} before starting @R{}.
+@enindex LC_COLLATE
 
 It is possible to test the installed packages (but not the
 package-specific tests) by @code{testInstalledPackages} even if
@@ -951,13 +971,24 @@ Get the @R{} source code tarball @file{R-@value{VERSIONno}.tar.gz} from
 @var{R_HOME}, and run
 
 @example
-tar xf R-@value{VERSIONno}.tar.gz
+tar -xf R-@value{VERSIONno}.tar.gz
 @end example
 
 @noindent
 to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
 @command{tar} to extract the sources rather than tools such as WinZip
-that do not understand symbolic links.
+that do not understand symbolic links.  If you are using an account with
+administrative privileges you may get a lot of messages which can be
+suppressed by
+
+@example
+tar -xf --no-same-owner R-@value{VERSIONno}.tar.gz
+@end example
+
+@noindent
+@enindex TAR_OPTIONS
+or perhaps better, set the environment variable @env{TAR_OPTIONS} to the
+value @samp{--no-same-owner --no-same-permissions}.
 
 It is also possible to obtain the source code using Subversion; see 
 @ref{Obtaining R} for details.
@@ -1006,19 +1037,23 @@ and edit the definition of @code{JPEGDIR}: the names of the
 Example:
 
 @example
-> tar zxf libpng-1.4.1.tar.gz
+> tar -zxf libpng-1.4.1.tar.gz
 > mv libpng-1.4.1 libpng
-> tar zxf jpegsrc.v8a.tar.gz
-> tar zxf tiff-3.9.4.tar.gz
+> tar -zxf jpegsrc.v8a.tar.gz
+> tar -zxf tiff-3.9.4.tar.gz
 > mv tiff-3.9.4/libtiff .
 > rm -rf tiff-3.9.4
 @end example
+
+@noindent
+(and see the comment about about @option{--no-same-owner}.
 
 @end itemize
 
 @node Building the core files, Building the bitmap files, Getting the source files, Building from source
 @subsection Building the core files
 
+@enindex TMPDIR
 Set the environment variable @env{TMPDIR} to point to a writable
 directory, with a path specified with forward slashes and no spaces.
 (The default is @file{/tmp}, which may not be useful on Windows.)
@@ -1364,7 +1399,7 @@ explained in the document.  Then you have to expand the @R{} sources and
 configure @R{} appropriately, for example
 
 @example
-tar zxvf R-@value{VERSIONno}.tar.gz
+tar -zxvf R-@value{VERSIONno}.tar.gz
 cd R-@value{VERSIONno}
 ./configure --with-blas='-framework vecLib' --with-lapack \
   --with-aqua --enable-R-framework
@@ -1580,6 +1615,7 @@ The part @samp{-l /path/to/library} can be omitted, in which case the
 first library of a normal @R{} session is used (that shown by
 @code{.libPaths()[1]}).
 
+@enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
 a valid temporary directory.
@@ -1672,6 +1708,7 @@ We have seen occasional permission problems after unpacking source
 packages on some Vista/Windows 7/Server 2008 systems: these have been
 circumvented by setting the environment variable @env{R_INSTALL_TAR} to
 @samp{tar.exe}.
+@enindex R_INSTALL_TAR
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
@@ -2581,6 +2618,7 @@ If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
 @cindex Subversion
 
+@enindex PATH
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
@@ -2663,6 +2701,7 @@ The @code{bitmap} and @code{dev2bitmap} devices and also
 (@uref{http://www.cs.wisc.edu/@/~ghost}).  This should either be in your
 path when the command is run, or its full path specified by the
 environment variable @env{R_GSCMD} at that time.
+@enindex R_GSCMD
 
 
 @menu
@@ -4561,6 +4600,7 @@ is at the front of your path (including before the Windows system
 directories).  If you are using a Windows shell, type @code{PATH} at the
 prompt to find out.
 
+@enindex CYGWIN
 You may need to set the environment variable @env{CYGWIN} to a value
 including @samp{nodosfilewarning} to suppress messages about
 Windows-style paths.
