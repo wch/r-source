@@ -45,8 +45,8 @@
     paste0 <- function(...) paste(..., sep="")
 
     MAKE <- Sys.getenv("MAKE")
-    TAR <- Sys.getenv("TAR", 'tar') # used on Unix only
-    GZIP <- Sys.getenv("R_GZIPCMD") # ditto
+    TAR <- Sys.getenv("TAR", 'tar') # used by default on Unix only
+    GZIP <- Sys.getenv("R_GZIPCMD") # used on Unix only
     if (!nzchar(GZIP)) GZIP <- "gzip"
     if (WINDOWS) zip <- "zip"
     rarch <- Sys.getenv("R_ARCH") # unix only
@@ -330,7 +330,7 @@
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         res <- system(paste("cp -r .", shQuote(instdir),
-                            "|| (", TAR, "cd - .| (cd", shQuote(instdir), "&&", TAR, "xf-))"
+                            "|| (", TAR, "cd - .| (cd", shQuote(instdir), "&&", TAR, "-xf -))"
                             ))
         if (res) errmsg("installing binary package failed")
 
@@ -381,8 +381,8 @@
                 from <- shQuote(from)
                 to <- shQuote(to)
                 system(paste0("cp -r ", from, "/* ", to,
-                              " || (cd ", from, " && ", TAR, " cf - . | (cd '",
-                              to, "' && ", TAR, " xf - ))"))
+                              " || (cd ", from, " && ", TAR, " -cf - . | (cd '",
+                              to, "' && ", TAR, " -xf - ))"))
             }
         }
 

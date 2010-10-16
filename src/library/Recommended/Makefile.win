@@ -36,7 +36,7 @@ RCMD = ../../../$(BINDIR)/Rcmd
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
-	@R_INSTALL_TAR=tar.exe $(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
+	@R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' $(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
 	@touch $@
 
 clean:
