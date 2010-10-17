@@ -130,6 +130,9 @@
       \item \code{cmdscale(eig=TRUE)} was documented to return \eqn{n-1}
       eigenvalues but in fact only returned \code{k}.  It now returns
       all \eqn{n} eigenvalues.
+
+      It failed to centre the return configuration and sometimes lost
+      the labels on the points if \code{add = TRUE}.
     }
   }
 }

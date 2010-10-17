@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-04 r53173)
+R version 2.13.0 Under development (unstable) (2010-10-16 r53339)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -4212,12 +4212,12 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > require(graphics)
 > 
 > loc <- cmdscale(eurodist)
-> x <- loc[,1]
-> y <- -loc[,2]
-> plot(x, y, type="n", xlab="", ylab="", main="cmdscale(eurodist)")
-> text(x, y, rownames(loc), cex=0.8)
-> 
-> cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
+> x <- loc[, 1]
+> y <- -loc[, 2]
+> ## note asp = 1, to ensure Euclidean distances are represented correctly
+> plot(x, y, type = "n", xlab = "", ylab = "", asp = 1, axes = FALSE,
++      main="cmdscale(eurodist)")
+> text(x, y, rownames(loc), cex=0.6)
 > 
 > 
 > 

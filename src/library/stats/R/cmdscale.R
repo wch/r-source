@@ -25,6 +25,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	    stop("distances must be result of 'dist' or a square matrix")
         rn <- rownames(x)
     } else {
+        rn <- attr(d, "Labels")
 	x <- matrix(0, n, n)
         if(add) d0 <- x
 	x[row(x) > col(x)] <- d^2
@@ -33,7 +34,6 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
             d0[row(x) > col(x)] <- d
             d <- d0 + t(d0)
         }
-        rn <- attr(d, "Labels")
     }
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
@@ -54,22 +54,24 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
+        .C(R_dblcen, x, as.integer(n), DUP = FALSE)
     }
     e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[seq_len(k)]
     evec <- e$vectors[, seq_len(k), drop = FALSE]
-    if(any(ev < 0)) {
-        warning(gettextf("some of the first %d eigenvalues are < 0", k),
+    k1 <- sum(ev > 0)
+    if(k1 < k) {
+        warning(gettextf("only %d of the first %d eigenvalues are > 0", k1, k),
                 domain = NA)
         evec <- evec[, ev > 0,  drop = FALSE]
         ev <- ev[ev > 0]
     }
-    points <- evec %*% diag(sqrt(ev), length(ev))
+    points <- evec * rep.int(sqrt(ev), n)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values # Cox & Cox have sum up to n-1, though
         list(points = points, eig = if(eig) evalus, x = if(x.ret) x,
              ac = if(add) add.c else 0,
-             GOF = sum(ev)/c(sum(abs(evalus)), sum(evalus[evalus > 0])))
+             GOF = sum(ev)/c(sum(abs(evalus)), sum(pmax(evalus, 0))) )
     } else points
 }

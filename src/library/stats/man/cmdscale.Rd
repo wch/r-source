@@ -35,7 +35,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   analysis of Mardia (1978), and returns the best-fitting
   \eqn{k}-dimensional representation, where \eqn{k} may be less than the
   argument \code{k}.
-
+  
+  The representation is only determined up to location (\code{cmdscale}
+  takes the column means of the configuration to be at the origin),
+  rotations and reflections.
+  
   The functions \code{isoMDS} and \code{sammon} in package \pkg{MASS}
   provide alternative ordination techniques.
 
@@ -108,6 +112,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 }
 \seealso{
   \code{\link{dist}}.
+
   Also \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
   in package \pkg{MASS}.
 }
@@ -115,12 +120,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 require(graphics)
 
 loc <- cmdscale(eurodist)
-x <- loc[,1]
-y <- -loc[,2]
-plot(x, y, type="n", xlab="", ylab="", main="cmdscale(eurodist)")
-text(x, y, rownames(loc), cex=0.8)
-
-cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
-\donttest{utils::str(cmdsE)}
+x <- loc[, 1]
+y <- -loc[, 2]
+## note asp = 1, to ensure Euclidean distances are represented correctly
+plot(x, y, type = "n", xlab = "", ylab = "", asp = 1, axes = FALSE,
+     main="cmdscale(eurodist)")
+text(x, y, rownames(loc), cex=0.6)
 }
 \keyword{multivariate}
