@@ -230,8 +230,7 @@ system(command, intern = FALSE,
 # list all files in the current directory using the -F flag
 \dontrun{system("ls -F")}
 
-# t1 is a character vector, each one
-# representing a separate line of output from who
+# t1 is a character vector, each element giving a line of output from who
 # (if the platform has who)
 t1 <- try(system("who", intern = TRUE))
 

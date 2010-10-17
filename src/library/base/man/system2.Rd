@@ -36,9 +36,8 @@ system2(command, args = character(),
     asynchronously.  This will be ignored (and the interpreter will
     always wait) if \code{stdout = TRUE}.}
 #ifdef unix
-  \item{minimized, invisible}{arguments
-    that are accepted on Windows but ignored on this platform, with a
-    warning.}
+  \item{minimized, invisible}{arguments that are accepted on Windows but
+    ignored on this platform, with a warning.}
 #endif
 #ifdef windows
   \item{minimized}{logical (not \code{NA}), indicates whether the
@@ -50,12 +49,14 @@ system2(command, args = character(),
 \details{
   Unlike \code{\link{system}}, \code{command} is always quoted by
   \code{\link{shQuote}}.
-
+  
   For details of how \code{command} is found see \code{\link{system}}.
 
   Because of the way it is implemented, on a Unix-alike \code{stderr =
-    TRUE} implies \code{stdout = TRUE}.
+    TRUE} implies \code{stdout = TRUE}: a warning is given if this is
+  not what was specified.
 }
+%% We use popen, and that pipes stdout only
 
 \value{  
   If \code{stdout = TRUE} or \code{stderr = TRUE}, a character vector
@@ -80,9 +81,9 @@ system2(command, args = character(),
 }
 
 \note{
-  \code{system2} is the beginnings of a more portable interface than
-  \code{\link{system}} which allows redirection of output without
-  needing to invoke a shell on Windows.  It is more flexible.
+  \code{system2} is a more portable and flexible interface than
+  \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
+  of output without needing to invoke a shell on Windows.
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
   \code{TRUE} or the same file that the two streams will be interleaved
