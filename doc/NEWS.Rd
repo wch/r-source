@@ -35,6 +35,10 @@
       definition that there is a representation in \code{n-1} or less
       dimensions, and only dimensions corresponding to positive
       eigenvalues are used.  (Avoids confusion such as \PR{14397}.)
+
+      \item Names used by \code{c()}, \code{unlist()}, \code{cbind()}
+      and \code{rbind()} are marked with an encoding when this can be
+      ascertained.
     }
   }
   
