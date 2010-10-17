@@ -5,6 +5,8 @@
 
 \name{cmdscale}
 \alias{cmdscale}
+\concept{ordination}
+\concept{MDS}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
 cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
@@ -28,7 +30,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 \details{
   Multidimensional scaling takes a set of dissimilarities and returns a
   set of points such that the distances between the points are
-  approximately equal to the dissimilarities.
+  approximately equal to the dissimilarities.  (It is a major part of
+  what ecologists call \sQuote{ordination}.)
 
   A set of Euclidean distances on \eqn{n} points can be represented
   exactly in at most \eqn{n-1} dimensions.  \code{cmdscale} follows the
@@ -38,11 +41,10 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   
   The representation is only determined up to location (\code{cmdscale}
   takes the column means of the configuration to be at the origin),
-  rotations and reflections.
+  rotations and reflections.  The configuration returned is given in
+  principal-component axes, so the reflection chosen may differ between
+  \R platforms (see \code{\link{prcomp}}).
   
-  The functions \code{isoMDS} and \code{sammon} in package \pkg{MASS}
-  provide alternative ordination techniques.
-
   When \code{add = TRUE}, an additive constant \eqn{c*} is computed, and
   the dissimilarities \eqn{d_{ij} + c*}{d[i,j] + c*} are used instead of
   the original \eqn{d_{ij}}{d[i,j]}'s.
@@ -113,18 +115,19 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 \seealso{
   \code{\link{dist}}.
 
-  Also \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
-  in package \pkg{MASS}.
+  \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
+  in package \pkg{MASS} provide alternative methods of multidimensional
+  scaling.
 }
 \examples{
 require(graphics)
 
 loc <- cmdscale(eurodist)
 x <- loc[, 1]
-y <- -loc[, 2]
+y <- -loc[, 2] # reflect so North is at the top
 ## note asp = 1, to ensure Euclidean distances are represented correctly
 plot(x, y, type = "n", xlab = "", ylab = "", asp = 1, axes = FALSE,
-     main="cmdscale(eurodist)")
-text(x, y, rownames(loc), cex=0.6)
+     main = "cmdscale(eurodist)")
+text(x, y, rownames(loc), cex = 0.6)
 }
 \keyword{multivariate}
