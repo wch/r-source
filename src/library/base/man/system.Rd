@@ -39,9 +39,9 @@ system(command, intern = FALSE,
     whether to capture the output of the command and show it on the \R
     console (not used by \code{Rterm}, which shows the output in the
     terminal unless \code{wait} is false).}
-  \item{minimized}{logical (not \code{NA}), indicates whether the
+  \item{minimized}{logical (not \code{NA}), indicates whether a
     command window should be displayed initially as a minimized window.}
-  \item{invisible}{logical (not \code{NA}), indicates whether the
+  \item{invisible}{logical (not \code{NA}), indicates whether a
     command window should be visible on the screen.}
 #endif
 }
@@ -96,10 +96,8 @@ system(command, intern = FALSE,
   Under the \code{Rgui} console \code{intern = TRUE} also captures
   \code{stderr} unless \code{ignore.stderr = TRUE}.
 #endif
-#ifdef Unix
   If \code{command} runs but gives a non-zero exit status this will be
   reported with a warning. 
-#endif
 
   If \code{intern = FALSE}, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed
@@ -173,12 +171,6 @@ system(command, intern = FALSE,
   Do not try to run console applications that require user
   input from \code{Rgui} setting \code{intern = TRUE} or
   \code{show.output.on.console = TRUE}.  They will not work.
-}
-\section{Warning}{
-  On Windows, using non-null \code{input} suppresses output to the
-  console (both standard output and standard error) unless redirected,
-  e.g. by \code{intern = TRUE} and/or \code{show.output.on.console =
-  TRUE}.  This is a long-standing feature of the implementation.
 }
 #endif
 

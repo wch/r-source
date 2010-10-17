@@ -62,11 +62,8 @@ system2(command, args = character(),
   If \code{stdout = TRUE} or \code{stderr = TRUE}, a character vector
   giving the output of the command, one line per character string.
   (Output lines of more than 8095 bytes will be split.)  If the command
-  could not be run an \R error is generated.
-#ifdef Unix
-  If \code{command} runs but gives a non-zero exit status this will be
-  reported with a warning. 
-#endif
+  could not be run an \R error is generated.  If \code{command} runs but
+  gives a non-zero exit status this will be reported with a warning.
 
   In other cases, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed
