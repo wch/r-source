@@ -25,6 +25,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	    stop("distances must be result of 'dist' or a square matrix")
         rn <- rownames(x)
     } else {
+        rn <- attr(d, "Labels")
 	x <- matrix(0, n, n)
         if(add) d0 <- x
 	x[row(x) > col(x)] <- d^2
@@ -33,7 +34,6 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
             d0[row(x) > col(x)] <- d
             d <- d0 + t(d0)
         }
-        rn <- attr(d, "Labels")
     }
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
@@ -54,13 +54,14 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
+        .C(R_dblcen, x, as.integer(n), DUP = FALSE)
     }
     e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[1L:k]
     if(any(ev < 0))
         warning(gettextf("some of the first %d eigenvalues are < 0", k),
                 domain = NA)
-    points <- e$vectors[, 1L:k, drop = FALSE] %*% diag(sqrt(ev), k)
+    points <- e$vectors[, 1L:k, drop = FALSE] * rep.int(sqrt(ev), n)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[-n]
