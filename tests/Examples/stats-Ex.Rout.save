@@ -1,5 +1,5 @@
 
-R version 2.12.0 Patched (2010-10-16 r53339)
+R version 2.12.0 Patched (2010-10-17 r53349)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -4213,11 +4213,11 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > loc <- cmdscale(eurodist)
 > x <- loc[, 1]
-> y <- -loc[, 2]
+> y <- -loc[, 2] # reflect so North is at the top
 > ## note asp = 1, to ensure Euclidean distances are represented correctly
 > plot(x, y, type = "n", xlab = "", ylab = "", asp = 1, axes = FALSE,
-+      main="cmdscale(eurodist)")
-> text(x, y, rownames(loc), cex=0.6)
++      main = "cmdscale(eurodist)")
+> text(x, y, rownames(loc), cex = 0.6)
 > 
 > 
 > 
@@ -17427,7 +17427,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  19.571 0.523 25.695 0 0 
+Time elapsed:  18.393 0.77 19.362 0 0 
 > grDevices::dev.off()
 null device 
           1 
