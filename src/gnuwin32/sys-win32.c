@@ -195,6 +195,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     Stderr = CAR(args);
 
     if (CharacterMode == RGui) {
+	/* This is a rather conservative approach: if
+	   Rgui is launched from a console window it does have
+	   standard handles -- but users might well not expect that.
+	*/
 	SetStdHandle(STD_INPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_OUTPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
@@ -219,7 +223,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ll = runcmd(CHAR(STRING_ELT(cmd, 0)),
 		    getCharCE(STRING_ELT(cmd, 0)),
 		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr);
-	// if (ll == NOLAUNCH) warning(runerror());
     } else {
 	/* read stdout +/- stderr from pipe */
 	int m = 0;
@@ -233,7 +236,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
 	    if (flag == 3) error(runerror());
-	    // warning(runerror());
 	    ll = NOLAUNCH;
 	} else {
 	    /* FIXME: use REPROTECT */
@@ -249,6 +251,11 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    R_WriteConsole(buf, strlen(buf));
 	    }
 	    ll = rpipeClose(fp);
+	    if(ll) {
+		warningcall(R_NilValue, 
+			    _("running command '%s' had status %d"), 
+			    CHAR(STRING_ELT(cmd, 0)), ll);
+	    }
 	}
     }
     /* restore stdout/stderr if we changed it */

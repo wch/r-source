@@ -3,6 +3,18 @@
 \name{CHANGES}
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
+
+\section{CHANGES IN R VERSION 2.12.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{system()} and \code{system2()} with output redirected
+      to a character vector now give a warning if the command returns a
+      non-zero error code.  (This is what a Unix-alike does as from \R
+      2.12.0.)
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
     \itemize{
