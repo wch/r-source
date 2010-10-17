@@ -39,6 +39,11 @@
       \item Names used by \code{c()}, \code{unlist()}, \code{cbind()}
       and \code{rbind()} are marked with an encoding when this can be
       ascertained.
+
+      \item R colours are now defined to refer to the sRGB colorspace.
+
+      The PDF, PostScript, and Quartz graphics devices record this fact.
+      X11 (and Cairo) and Windows just assume that your screen conforms.
     }
   }
   
@@ -79,6 +84,10 @@
       \option{--no-manual} instead.
 
       \item \command{R CMD Sd2Rd} is defunct.
+
+      \item The \code{gamma} argument to \code{hsv()},
+      \code{rainbow()}, and \code{rgb2hsv()} is deprecated
+      and no longer has any effect.
     }
   }
 

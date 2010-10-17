@@ -712,14 +712,32 @@ static void RQuartz_SetFont(CGContextRef ctx, const pGEcontext gc, QuartzDesc *x
     CGContextSetFontSize(ctx, gc->cex * gc->ps);
 }
 
+/* pre-10.5 doesn't have kCGColorSpaceGenericRGB so fall back to kCGColorSpaceGenericRGB */
+#if MAC_OS_X_VERSION_10_4 >= MAC_OS_X_VERSION_MAX_ALLOWED
+#define kCGColorSpaceSRGB kCGColorSpaceGenericRGB
+#endif
+
 void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
+    CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
     if(flags & RQUARTZ_FILL) {
         int fill = gc->fill;
-        CGContextSetRGBFillColor(ctx, R_RED(fill)/255.0, R_GREEN(fill)/255.0, R_BLUE(fill)/255.0, R_ALPHA(fill)/255.0);
+        CGFloat fillColor[] = { R_RED(fill)/255.0, 
+                                R_GREEN(fill)/255.0, 
+                                R_BLUE(fill)/255.0, 
+                                R_ALPHA(fill)/255.0 };
+        CGColorRef fillColorRef = CGColorCreate(cs, fillColor);
+        CGContextSetFillColorWithColor(ctx, fillColorRef);
+        CGColorRelease(fillColorRef);
     }
     if(flags & RQUARTZ_STROKE) {
         int stroke = gc->col;
-        CGContextSetRGBStrokeColor(ctx, R_RED(stroke)/255.0, R_GREEN(stroke)/255.0, R_BLUE(stroke)/255.0, R_ALPHA(stroke)/255.0);
+        CGFloat strokeColor[] = { R_RED(stroke)/255.0, 
+                                  R_GREEN(stroke)/255.0, 
+                                  R_BLUE(stroke)/255.0, 
+                                  R_ALPHA(stroke)/255.0 };
+        CGColorRef strokeColorRef = CGColorCreate(cs, strokeColor);
+        CGContextSetStrokeColorWithColor(ctx, strokeColorRef);
+        CGColorRelease(strokeColorRef);
     }
     if(flags & RQUARTZ_LINE) {
         CGFloat dashlist[8];
@@ -749,6 +767,7 @@ void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
         CGContextSetLineJoin(ctx, join);
         CGContextSetMiterLimit(ctx, gc->lmitre);
     }
+    CGColorSpaceRelease(cs);
 }
 
 #define SET(X) RQuartz_Set(ctx, gc, (X))
@@ -969,11 +988,6 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
     CGContextDrawPath(ctx, kCGPathFillStroke);
 }
-
-/* pre-10.5 doesn't have kCGColorSpaceGenericRGB so fall back to kCGColorSpaceGenericRGB */
-#if MAC_OS_X_VERSION_10_4 >= MAC_OS_X_VERSION_MAX_ALLOWED
-#define kCGColorSpaceSRGB kCGColorSpaceGenericRGB
-#endif
 
 static void RQuartz_Raster(unsigned int *raster, int w, int h,
                            double x, double y, 

@@ -32,10 +32,11 @@ X11.options(\dots, reset = FALSE)
     not specified there defaults to \code{7} inches.  See also
     \sQuote{Resources}.}
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
-  \item{gamma}{the gamma correction factor.  This value is used
-    to help ensure that the colours perceived are linearly related to
-    RGB values (see \code{\link{hsv}}).  By default 1 (default
-    correction).}
+  \item{gamma}{gamma correction fudge factor.
+    Colours in R are sRGB;  if your monitor does not conform to
+    sRGB, you might be able to improve things by tweaking this
+    parameter to apply additional gamma correction to the RGB channels.
+    By default 1 (no additional gamma correction).}
   \item{bg}{colour, the initial background colour.  Default
     \code{"transparent"}.}
   \item{canvas}{colour.  The colour of the canvas, which is visible only

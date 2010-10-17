@@ -12,7 +12,8 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 \description{
   This function creates colors corresponding to the given
   intensities (between 0 and \code{max}) of the red, green and blue
-  primaries.
+  primaries.  The colour specification refers to the
+  standard sRGB colorspace  (IEC standard 61966).
 
   An alpha transparency value can also be specified
   (0 means fully transparent and \code{max} means opaque).

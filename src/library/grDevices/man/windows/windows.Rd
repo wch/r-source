@@ -59,9 +59,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.  Should be a solid color
     (and any alpha value will be ignored).  Default \code{"white"}.}
-  \item{gamma}{the gamma correction factor to assume for the display.
-    This value is used to ensure that the colors perceived are linearly
-    related to RGB values (see \code{\link{hsv}}).  Default \code{1}.}
+  \item{gamma}{gamma correction fudge factor.
+    Colours in R are sRGB;  if your monitor does not conform to
+    sRGB, you might be able to improve things by tweaking this
+    parameter to apply additional gamma correction to the RGB channels.
+    By default 1 (no additional gamma correction).}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values (the default) mean take the default from the

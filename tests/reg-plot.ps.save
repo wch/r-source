@@ -38,7 +38,21 @@
 /cl  { grestore gsave newpath 3 index 3 index moveto 1 index
        4 -1 roll lineto  exch 1 index lineto lineto
        closepath clip newpath } def
-/rgb { setrgbcolor } def
+/srgb { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } def
+/setrgb { srgb setcolor } def
 /s   { scalefont setfont } def
 % end   .ps.prolog
 %%IncludeResource: font Helvetica
@@ -83,6 +97,13 @@ dup length dict begin
 %%EndProlog
 %%Page: 1 1
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 0 setgray
 0.75 setlinewidth
@@ -173,6 +194,13 @@ o
 ep
 %%Page: 2 2
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 221.95 91.44 648.74 518.24 cl
 18.00 18.00 823.89 577.28 cl
 0 setgray
@@ -575,6 +603,13 @@ o
 ep
 %%Page: 3 3
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 47.52 54.72 808.77 547.76 cl
 18.00 18.00 823.89 577.28 cl
 /Font1 findfont 6 s
@@ -779,6 +814,13 @@ o
 ep
 %%Page: 4 4
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 106.56 128.16 778.53 488.72 cl
 18.00 18.00 823.89 577.28 cl
 /Font1 findfont 18 s
@@ -983,6 +1025,13 @@ o
 ep
 %%Page: 5 5
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -1189,6 +1238,13 @@ o
 ep
 %%Page: 6 6
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -1595,6 +1651,13 @@ o
 ep
 %%Page: 7 7
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 0 setgray
@@ -1676,18 +1739,25 @@ o
 -0.360 (x) tb gr
 30.96 304.84 (1:10) .5 90 t
 77.04 91.44 793.65 518.24 cl
-/bg { 1 1 0 rgb } def
+/bg { 1 1 0 setrgb } def
 np
  103.58 107.25 m
 147.45 0 l
 0 87.82 l
 -147.45 0 l
 cp p2
-/bg { 0 0 1 rgb } def
+/bg { 0 0 1 setrgb } def
 472.21 326.79 294.90 175.64 r p2
 ep
 %%Page: 8 8
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 0 setgray
@@ -1774,7 +1844,7 @@ o
 30.96 284.50 (V) 90 ta
 -0.960 (olume) tb gr
 77.04 91.44 793.65 518.24 cl
-/bg { 0 0 1 rgb } def
+/bg { 0 0 1 setrgb } def
 320.15 140.67 7.97 c p2
 204.95 140.67 8.26 c p2
 158.88 140.18 8.45 c p2
@@ -1809,9 +1879,16 @@ o
 ep
 %%Page: 9 9
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
-1 0 0 rgb
+1 0 0 setrgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -2873,7 +2950,7 @@ o
 /Font1 findfont 12 s
 117.36 304.84 (x^2 - 1.2) .5 90 t
 77.04 91.44 793.65 518.24 cl
-0 0.8039 0 rgb
+0 0.8039 0 setrgb
 2.25 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -2904,7 +2981,7 @@ np
 0 342.49 l
 o
 18.00 18.00 823.89 577.28 cl
-0 0 1 rgb
+0 0 1 setrgb
 0.75 setlinewidth
 [ 1.50 1.50] 0 setdash
 1 setlinecap
@@ -2931,7 +3008,7 @@ o
 236.29 177.22 (-1) .5 0 t
 368.99 177.22 (0) .5 0 t
 501.70 177.22 (1) .5 0 t
-0 0 1 rgb
+0 0 1 setrgb
 np
 103.58 159.94 m
 663.53 0 l
@@ -2956,6 +3033,13 @@ o
 ep
 %%Page: 10 10
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 /Font2 findfont 14 s
@@ -3138,6 +3222,13 @@ cp p3
 ep
 %%Page: 11 11
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 /Font2 findfont 14 s
@@ -3320,6 +3411,13 @@ cp p3
 ep
 %%Page: 12 12
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -3362,6 +3460,13 @@ o
 ep
 %%Page: 13 13
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -3464,6 +3569,13 @@ o
 ep
 %%Page: 14 14
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 0 setgray
@@ -3614,6 +3726,13 @@ o
 ep
 %%Page: 15 15
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 0 setgray
@@ -3699,33 +3818,33 @@ o
 0 setgray
 103.58 104.10 (o) .5 0 t
 251.03 191.93 (x) .5 0 t
-/bg { 0.8471 0.7490 0.8471 rgb } def
+/bg { 0.8471 0.7490 0.8471 setrgb } def
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
 1 setlinejoin
 10.00 setmiterlimit
 103.58 502.43 60.38 -43.20 r p3
-1 0 0 rgb
+1 0 0 setrgb
 1.50 setlinewidth
 [] 0 setdash
 np
 106.82 488.03 m
 21.60 0 l
 o
-0 0.8039 0 rgb
+0 0.8039 0 setrgb
 2.25 setlinewidth
 [] 0 setdash
 np
 106.82 473.63 m
 21.60 0 l
 o
-/bg { 0.5294 0.8078 0.9216 rgb } def
-1 0 0 rgb
+/bg { 0.5294 0.8078 0.9216 setrgb } def
+1 0 0 setrgb
 1.50 setlinewidth
 [] 0 setdash
 117.62 488.03 2.70 c p3
-0 0.8039 0 rgb
+0 0.8039 0 setrgb
 2.25 setlinewidth
 [] 0 setdash
 115.23 471.24 4.79 4.79 r p3
@@ -3735,6 +3854,13 @@ o
 ep
 %%Page: 16 16
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -3846,6 +3972,13 @@ o
 ep
 %%Page: 17 17
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -3931,6 +4064,13 @@ o
 ep
 %%Page: 18 18
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 59.33 69.41 802.72 535.95 cl
 59.33 69.41 802.72 535.95 cl
 0.7451 setgray
@@ -4019,6 +4159,13 @@ o
 ep
 %%Page: 19 19
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4059,6 +4206,13 @@ o
 ep
 %%Page: 20 20
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4123,6 +4277,13 @@ o
 ep
 %%Page: 21 21
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4152,6 +4313,13 @@ o
 ep
 %%Page: 22 22
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4181,6 +4349,13 @@ o
 ep
 %%Page: 23 23
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 78.81 91.44 793.65 518.24 cl
 78.81 91.44 793.65 518.24 cl
 0 setgray
@@ -4265,6 +4440,13 @@ o
 ep
 %%Page: 24 24
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
 /Font1 findfont 12 s
@@ -4293,6 +4475,13 @@ o
 ep
 %%Page: 25 25
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4311,7 +4500,7 @@ o
 0 setgray
 435.34 36.72 (x) .5 0 t
 77.04 91.44 793.65 518.24 cl
-1 0 0 rgb
+1 0 0 setrgb
 2.25 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -4325,6 +4514,13 @@ o
 ep
 %%Page: 26 26
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4391,6 +4587,13 @@ o
 ep
 %%Page: 27 27
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray
@@ -4456,6 +4659,13 @@ o
 ep
 %%Page: 28 28
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 77.04 91.44 793.65 518.24 cl
 77.04 91.44 793.65 518.24 cl
 0 setgray

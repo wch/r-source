@@ -38,7 +38,21 @@
 /cl  { grestore gsave newpath 3 index 3 index moveto 1 index
        4 -1 roll lineto  exch 1 index lineto lineto
        closepath clip newpath } def
-/rgb { setrgbcolor } def
+/srgb { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } def
+/setrgb { srgb setcolor } def
 /s   { scalefont setfont } def
 % end   .ps.prolog
 %%IncludeResource: font Helvetica
@@ -83,6 +97,13 @@ dup length dict begin
 %%EndProlog
 %%Page: 1 1
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 168.94 45.64 672.94 549.64 cl
 0 setgray
 0.75 setlinewidth
@@ -163,7 +184,7 @@ o
 181.90 304.84 (Im) .5 90 t
 227.98 119.08 642.70 490.60 cl
 /Font1 findfont 12 s
-1 0 0 rgb
+1 0 0 setrgb
 612.73 366.44 (1) .5 0 t
 571.11 422.24 (2) .5 0 t
 508.82 459.64 (3) .5 0 t
@@ -183,6 +204,13 @@ o
 ep
 %%Page: 2 2
 bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
 227.98 119.08 642.70 490.60 cl
 227.98 119.08 642.70 490.60 cl
 0 setgray
@@ -291,7 +319,7 @@ o
 0 setgray
 435.34 493.48 («Latin-1 accented chars»: éè øØ å<Å æ<Æ) .5 0 t
 227.98 119.08 642.70 490.60 cl
-1 0 0 rgb
+1 0 0 setrgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap

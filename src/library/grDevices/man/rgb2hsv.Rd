@@ -22,8 +22,7 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
     \code{r} is a matrix.}
   \item{b}{vector of \sQuote{blue} values, or \code{\link{NULL}} when
     \code{r} is a matrix.}
-  \item{gamma}{a gamma-correction (supposedly applied to the
-    r,g,b values previously), see \code{\link{hsv}(...., gamma)}.}
+  \item{gamma}{a gamma-correction exponent, \eqn{\gamma}. Deprecated.}
   \item{maxColorValue}{number giving the maximum of the RGB color values
     range.  The default \code{255} corresponds to the typical \code{0:255}
     RGB coding as in \code{\link{col2rgb}()}.}
@@ -37,6 +36,12 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
   A matrix with a column for each color.  The three rows of the matrix
   indicate hue, saturation and value and are named \code{"h"},
   \code{"s"}, and \code{"v"} accordingly.
+}
+\section{Gamma correction}{
+  The \code{gamma} argument is deprecated and has no effect.
+
+  An HSV colorspace is relative to an RGB colorspace, which in R
+  is sRGB, which has an implicit gamma correction.
 }
 \seealso{
   \code{\link{hsv}}, \code{\link{col2rgb}}, \code{\link{rgb}}.

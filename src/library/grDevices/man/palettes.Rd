@@ -30,15 +30,14 @@ cm.colors(n, alpha = 1)
     begins.}
   \item{end}{the (corrected) hue in [0,1] at which the rainbow ends.}
   \item{gamma}{the gamma correction, see argument \code{gamma} in
-    \code{\link{hsv}}.}
+    \code{\link{hsv}}. Deprecated.}
   \item{alpha}{the alpha transparency, a number in [0,1], see argument
     \code{alpha} in \code{\link{hsv}}.}
 }
 \details{
   Conceptually, all of these functions actually use (parts of) a line
   cut out of the 3-dimensional color space, parametrized by
-  \code{\link{hsv}(h,s,v, gamma)}, where \code{gamma}\eqn{=1} for the
-  \emph{foo}\code{.colors} function, and hence,
+  \code{\link{hsv}(h,s,v)}, and hence,
   equispaced hues in RGB space tend to cluster at
   the red, green and blue primaries.
 

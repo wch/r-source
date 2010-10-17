@@ -18,7 +18,7 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
     \sQuote{hue}, \sQuote{saturation} and \sQuote{value} to be combined
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
-  \item{gamma}{a gamma-correction exponent, \eqn{\gamma}}
+  \item{gamma}{a gamma-correction exponent, \eqn{\gamma}. Deprecated.}
   \item{alpha}{numeric vector of values in the range \code{[0, 1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
@@ -33,9 +33,10 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   \code{par}.
 }
 \section{Gamma correction}{
-  For each color, \eqn{(r ,g, b)} in RGB space (with all values in
-  \eqn{[0, 1]}), the final color corresponds to
-  \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}{r^gamma, g^gamma, b^gamma)}.
+  The \code{gamma} argument is deprecated and has no effect.
+
+  An HSV colorspace is relative to an RGB colorspace, which in R
+  is sRGB, which has an implicit gamma correction.
 }
 \seealso{
   \code{\link{hcl}} for a perceptually based version of \code{hsv()},
@@ -48,14 +49,13 @@ require(graphics)
 
 hsv(.5,.5,.5)
 
-## Look at gamma effect:
+## Red tones:
 n <- 20;  y <- -sin(3*pi*((1:n)-1/2)/n)
-op <- par(mfrow=c(3,2),mar=rep(1.5,4))
-for(gamma in c(.4, .6, .8, 1, 1.2, 1.5))
-  plot(y, axes = FALSE, frame.plot = TRUE,
-       xlab = "", ylab = "", pch = 21, cex = 30,
-       bg = rainbow(n, start=.85, end=.1, gamma = gamma),
-       main = paste("Red tones;  gamma=",format(gamma)))
+op <- par(mar=rep(1.5,4))
+plot(y, axes = FALSE, frame.plot = TRUE,
+     xlab = "", ylab = "", pch = 21, cex = 30,
+     bg = rainbow(n, start=.85, end=.1),
+     main = "Red tones")
 par(op)
 }
 \keyword{color}

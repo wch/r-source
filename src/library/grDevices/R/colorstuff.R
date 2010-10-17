@@ -59,6 +59,8 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 hsv <- function(h=1, s=1, v=1, gamma = 1, alpha = 1)
 {
     alphaspec <- !missing(alpha)
+    if (gamma != 1) 
+        warning("The 'gamma' argument is deprecated and has no effect")
     result <- .Internal(hsv(h, s, v, gamma, alpha))
     ## If alpha not specified only return #RRGGBB
     if (!alphaspec)
@@ -89,8 +91,8 @@ rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
         return(cbind(c(h=1,s=1,v=1))[,0])
     ## else:
     rgb <- rgb/maxColorValue
-    if(gamma != 1)# revert gamma corrected hsv values
-        rgb <- rgb ^ (1/gamma)
+    if (gamma != 1) 
+        warning("The 'gamma' argument is deprecated and has no effect")
     if(any(0 > rgb) || any(rgb > 1))
         stop("rgb values must be in [0, maxColorValue]")
 
@@ -108,6 +110,8 @@ palette <- function(value)
 rainbow <-
     function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1, alpha = 1)
 {
+    if (gamma != 1) 
+        warning("The 'gamma' argument is deprecated and has no effect")
     if ((n <- as.integer(n[1L])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
