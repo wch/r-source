@@ -189,6 +189,8 @@ methods in the example below.
 Note that non-local assignment is required:  a local assignment with
 the \code{<-} operator just creates a local object in the function
 call, as it would in any \R function.
+When methods are installed, a heuristic check is made for local
+assignments to field names and a warning issued if any are detected.
 
 Reference methods should be kept simple; if they need to do some
 specialized \R computation, that computation should use a separate \R

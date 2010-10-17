@@ -40,6 +40,13 @@
       \item The TRE regular expressions engine could terminate \R rather
       than give an error when given certain invalid regular expressions.
       (\PR{14398})
+
+      \item promptClass() now works for reference classes and gives a
+      suitably specialized skeleton of documentation.
+
+      Also, callSuper() now works via the methods() invocation as well
+      as for initially specified methods.
+
     }
   }
 }
