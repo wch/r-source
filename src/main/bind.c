@@ -482,15 +482,12 @@ static SEXP NewBase(SEXP base, SEXP tag)
     base = EnsureString(base);
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) { /* test of length */
-	int ienc = 0;
-	const char *sb = translateChar(base), *st = translateChar(tag);
+	const char *sb = translateCharUTF8(base), *st = translateCharUTF8(tag);
 	cbuf = R_AllocStringBuffer(strlen(st) + strlen(sb) + 1, &cbuff);
 	sprintf(cbuf, "%s.%s", sb, st);
 	/* This isn't strictly correct as we do not know that all the
 	   components of the name were correctly translated. */
-	if(known_to_be_latin1) ienc = CE_LATIN1;
-	if(known_to_be_utf8) ienc = CE_UTF8;
-	ans = mkCharCE(cbuf, ienc);
+	ans = mkCharCE(cbuf, CE_UTF8);
     }
     else if (*CHAR(tag)) {
 	ans = tag;
@@ -513,34 +510,27 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno)
 
     SEXP ans;
     char *cbuf;
-    int ienc = 0;
     base = EnsureString(base);
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) {
-	const char *sb = translateChar(base), *st = translateChar(tag);
+	const char *sb = translateCharUTF8(base), *st = translateCharUTF8(tag);
 	cbuf = R_AllocStringBuffer(strlen(sb) + strlen(st) + 1, &cbuff);
 	sprintf(cbuf, "%s.%s", sb, st);
-	if(known_to_be_latin1) ienc = CE_LATIN1;
-	if(known_to_be_utf8) ienc = CE_UTF8;
-	ans = mkCharCE(cbuf, ienc);
+	ans = mkCharCE(cbuf, CE_UTF8);
     }
     else if (*CHAR(base)) {
 	const char *sb = translateChar(base);
 	cbuf = R_AllocStringBuffer(strlen(sb) + IndexWidth(seqno), &cbuff);
 	sprintf(cbuf, "%s%d", sb, seqno);
-	if(known_to_be_latin1) ienc = CE_LATIN1;
-	if(known_to_be_utf8) ienc = CE_UTF8;
-	ans = mkCharCE(cbuf, ienc);
+	ans = mkCharCE(cbuf, CE_UTF8);
     }
     else if (*CHAR(tag)) {
 	if(tag == NA_STRING) ans = NA_STRING;
 	else {
-	    const char *st = translateChar(tag);
+	    const char *st = translateCharUTF8(tag);
 	    cbuf = R_AllocStringBuffer(strlen(st), &cbuff);
 	    sprintf(cbuf, "%s", st);
-	    if(known_to_be_latin1) ienc = CE_LATIN1;
-	    if(known_to_be_utf8) ienc = CE_UTF8;
-	    ans = mkCharCE(cbuf, ienc);
+	    ans = mkCharCE(cbuf, CE_UTF8);
 	}
     }
     else ans = R_BlankString;
