@@ -61,7 +61,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     if(any(ev < 0))
         warning(gettextf("some of the first %d eigenvalues are < 0", k),
                 domain = NA)
-    points <- e$vectors[, 1L:k, drop = FALSE] * rep.int(sqrt(ev), n)
+    points <- e$vectors[, 1L:k, drop = FALSE] * rep(sqrt(ev), each=n)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[-n]
