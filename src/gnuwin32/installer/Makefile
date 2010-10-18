@@ -47,7 +47,7 @@ GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
 
 
-# we don't want share/{Makefile.in,java,perl,sh} installed
+# we don't want share/{Makefile.in,java,sh} installed
 SHARE_DIRS = R encodings licenses locale make texmf zoneinfo
 
 all: $(RPREFIX)-$(SUFF).exe
