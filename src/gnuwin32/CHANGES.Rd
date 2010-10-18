@@ -10,20 +10,21 @@
       \item \code{win_iconv} has been updated: this version has a change
       in the behaviour with BOMs on UTF-16 and UTF-32 files -- it
       removes BOMs when reading and adds them when writing.  (This is
-      consistent with MicroSoft applications, but Unix versions of
+      consistent with Microsoft applications, but Unix versions of
       \code{iconv} usually ignore them.)
 
       \item Support for repository type \samp{win64.binary} (used for
-      64-bit Windows binaries for \R 2.11.x) has been removed.
+      64-bit Windows binaries for \R 2.11.x only) has been removed.
 
       \item The installers no longer put an \sQuote{Uninstall} item on
       the start menu (to conform to current Microsoft UI guidelines).
 
-      \item Running \R always set the environment variable \env{R_ARCH}
+      \item Running \R always sets the environment variable \env{R_ARCH}
       (as it does on a Unix-alike from the shell-script front-end).
 
       \item \code{system()} and \code{system2()} no longer discard
-      output to standard error as often as they used to.
+      output from the command to stdout and stderr as often as they used
+      to.
     }
   }
 }
@@ -105,7 +106,7 @@
       
         The default package type is \code{"win.binary"} on both 32- and
         64-bit builds: a single repository contains binary packages for
-        both architectures.  This is in place for CRAN, CRANextras and
+        both architectures.  This is in place for CRAN, CRAN extras and
         BioC: \code{type = "win64.binary"} can still be used for any
         repositories which follow the \R 2.11.x convention.  With the
         default filters (see \code{?available.packages}) packages will
@@ -116,7 +117,7 @@
 	is now the same for both 32- and 64-bit \R.
 	
       \item The recommended 64-bit toolchain has been changed to one
-      that does not add leading underscores. See
+      that does not add leading underscores.  See
       \url{http://www.murdoch-sutherland.com/Rtools/} or
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.  Any static or import
       libraries for external software used in installing packages will
@@ -285,12 +286,13 @@
        did not return the focus to the console if the user cancelled the
        action.
        
-      \item \code{system()} (and hence \code{shell()}) did not set the
-        standard file handles properly, so some programs would not run.
+      \item \code{system()} (and hence \code{shell()}) did not always
+        set the standard file handles properly, so some programs would
+        not run.
       
       \item \code{setWinProgressBar()} did not check the type of its
        \code{'title'} and \code{'label'} arguments and might have
-       crashed if they were mis-specified.  It now does, thanks to a
+       crashed if they were mis-specified.  It checks does, thanks to a
        report by Greg Snow.
     }
   }

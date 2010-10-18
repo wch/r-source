@@ -34,7 +34,7 @@ mkR:
 	  fi; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg) "$${f}"
+	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@if test -f $(srcdir)/NAMESPACE;  then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
 	fi
@@ -77,7 +77,7 @@ mkRbase:
 	  sed -e "s:@WHICH@:${WHICH}:" "$${f}" > "$${f2}"; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f2}" all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg) "$${f2}"
+	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 
 mkdesc:
