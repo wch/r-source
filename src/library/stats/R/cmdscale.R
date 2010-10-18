@@ -66,7 +66,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         evec <- evec[, ev > 0,  drop = FALSE]
         ev <- ev[ev > 0]
     }
-    points <- evec * rep.int(sqrt(ev), n)
+    points <- evec * rep(sqrt(ev), each=n)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values # Cox & Cox have sum up to n-1, though
