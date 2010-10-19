@@ -2789,7 +2789,8 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
     Relop2(opval, opsym); \
 } while (0)
 
-static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
+static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
+		      SEXP rho)
 {
     SEXP op = SYMVALUE(opsym);
     if (TYPEOF(op) == PROMSXP) {
@@ -2800,7 +2801,7 @@ static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 	SEXP args, ans;
 	args = CONS(x, CONS(y, R_NilValue));
 	PROTECT(args);
-	if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+	if (DispatchGroup("Ops", call, op, args, rho, &ans)) {
 	    UNPROTECT(1);
 	    return ans;
 	}
@@ -2809,13 +2810,13 @@ static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
     return do_relop_dflt(R_NilValue, op, x, y);
 }
 
-static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x)
+static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x, SEXP rho)
 {
   if (isObject(x)) {
     SEXP args, ans;
     args = CONS(x, R_NilValue);
     PROTECT(args);
-    if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+    if (DispatchGroup("Ops", call, op, args, rho, &ans)) {
       UNPROTECT(1);
       return ans;
     }
@@ -2824,7 +2825,8 @@ static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x)
   return R_unary(R_NilValue, op, x);
 }
 
-static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
+static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
+		       SEXP rho)
 {
     SEXP op = SYMVALUE(opsym);
     if (TYPEOF(op) == PROMSXP) {
@@ -2835,7 +2837,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 	SEXP args, ans;
 	args = CONS(x, CONS(y, R_NilValue));
 	PROTECT(args);
-	if (DispatchGroup("Ops", call, op, args, R_GlobalEnv, &ans)) {
+	if (DispatchGroup("Ops", call, op, args, rho, &ans)) {
 	    UNPROTECT(1);
 	    return ans;
 	}
@@ -2851,9 +2853,9 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
   NEXT(); \
 } while(0)
 
-#define NewBuiltin1(do_fun,which) do { \
+#define NewBuiltin1(do_fun,which,rho) do {		\
   SEXP x = R_BCNodeStackTop[-1]; \
-  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), x); \
+  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), x, rho);	\
   NEXT(); \
 } while(0)
 
@@ -2866,18 +2868,18 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
   NEXT(); \
 } while(0)
 
-#define NewBuiltin2(do_fun,opval,opsym) do { \
+#define NewBuiltin2(do_fun,opval,opsym,rho) do {	\
   SEXP x = R_BCNodeStackTop[-2]; \
   SEXP y = R_BCNodeStackTop[-1]; \
-  R_BCNodeStackTop[-2] = do_fun(FakeCall2, opval, opsym, x, y); \
+  R_BCNodeStackTop[-2] = do_fun(FakeCall2, opval, opsym, x, y,rho);	\
   R_BCNodeStackTop--; \
   NEXT(); \
 } while(0)
 
-#define Arith1(which) NewBuiltin1(cmp_arith1,which)
-#define Arith2(opval,opsym) NewBuiltin2(cmp_arith2,opval,opsym)
+#define Arith1(which) NewBuiltin1(cmp_arith1,which,rho)
+#define Arith2(opval,opsym) NewBuiltin2(cmp_arith2,opval,opsym,rho)
 #define Math1(which) Builtin1(do_math1,which,rho)
-#define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym)
+#define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
 # define DO_FAST_BINOP(op,a,b) do { \
     SEXP val = allocVector(REALSXP, 1); \
