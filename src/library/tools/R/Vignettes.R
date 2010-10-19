@@ -51,6 +51,7 @@ function(package, dir, lib.loc = NULL,
     result <- list(tangle = list(), weave = list(),
                    source = list(), latex = list())
 
+    startdir <- getwd()
     for(f in vigns$docs) {
         if(tangle)
             .eval_with_capture(tryCatch(utils::Stangle(f, quiet = TRUE),
@@ -62,6 +63,7 @@ function(package, dir, lib.loc = NULL,
                                         error = function(e)
                                         result$weave[[f]] <<-
                                         conditionMessage(e)))
+        setwd(startdir) # in case a vignette changes the working dir
     }
 
     if(tangle) {
@@ -71,11 +73,13 @@ function(package, dir, lib.loc = NULL,
             stop("current working directory cannot be ascertained")
         sources <- list_files_with_exts(cwd, c("r", "s", "R", "S"))
         sources <- sources[file_test("-nt", sources, ".check.timestamp")]
-        for(f in sources)
+        for(f in sources) {
             .eval_with_capture(tryCatch(source(f),
                                         error = function(e)
                                         result$source[[f]] <<-
                                         conditionMessage(e)))
+            setwd(startdir)
+        }
     }
     if(weave && latex) {
         if(!("makefile" %in% tolower(list.files(vigns$dir)))) {
@@ -194,6 +198,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     file.create(".build.timestamp")
 
     pdfs <- character()
+    startdir <- getwd()
     for(f in vigns$docs) {
         f <- basename(f)
         bf <- file_path_sans_ext(f)
@@ -206,6 +211,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
                                    f, conditionMessage(e)),
                           domain = NA, call. = FALSE)
                  })
+        setwd(startdir)
         if(!have.makefile)
             texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = quiet)
     }
