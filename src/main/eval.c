@@ -3618,19 +3618,12 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	SEXP x = R_BCNodeStackTop[-1];
 	if (isObject(x)) {
-	  RCNTXT cntxt;
-	  SEXP pargs, str, rho1;
-	  PROTECT(pargs = promiseArgs(CDR(call), rho));
-	  /* See comment at first usemethod() call in this file. LT */
-	  PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
-	  SET_PRVALUE(CAR(pargs), x);
-	  str = ScalarString(PRINTNAME(symbol));
-	  SET_PRVALUE(CADR(pargs), str);
-	  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
-	  if (usemethod("$", x, call, pargs, rho1, rho, R_BaseEnv, &value))
-	    dispatched = TRUE;
-	  endcontext(&cntxt);
-	  UNPROTECT(2);
+	    SEXP ncall;
+	    PROTECT(ncall = duplicate(call));
+	    /**** hack to avoid evaluating the symbol */
+	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
+	    dispatched = tryDispatch("$", ncall, x, rho, &value);
+	    UNPROTECT(1);
 	}
 	if (dispatched)
 	  R_BCNodeStackTop[-1] = value;
@@ -3646,20 +3639,14 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP x = R_BCNodeStackTop[-1];
 	value = R_BCNodeStackTop[-2];
 	if (isObject(x)) {
-	  RCNTXT cntxt;
-	  SEXP pargs, str, rho1;
-	  PROTECT(pargs = promiseArgs(CDR(call), rho));
-	  /* See comment at first usemethod() call in this file. LT */
-	  PROTECT(rho1 = NewEnvironment(R_NilValue, R_NilValue, rho));
-	  SET_PRVALUE(CAR(pargs), x);
-	  str = ScalarString(PRINTNAME(symbol));
-	  SET_PRVALUE(CADR(pargs), str);
-	  SET_PRVALUE(CADDR(pargs), value);
-	  begincontext(&cntxt, CTXT_RETURN, call, rho1, rho, pargs, R_NilValue);/**** FIXME: put in op */
-	  if (usemethod("$<-", x, call, pargs, rho1, rho, R_BaseEnv, &value))
-	    dispatched = TRUE;
-	  endcontext(&cntxt);
-	  UNPROTECT(2);
+	    SEXP ncall;
+	    PROTECT(ncall = duplicate(call));
+	    /**** hack to avoid evaluating the symbol */
+	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
+	    /**** this may result in multiple evaluation of the
+		  assigned value */
+	    dispatched = tryDispatch("$<-", ncall, x, rho, &value);
+	    UNPROTECT(1);
 	}
 	R_BCNodeStackTop--;
 	if (dispatched)
