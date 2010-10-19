@@ -47,6 +47,9 @@
       Also, \code{callSuper()} now works via the \code{methods()} invocation as well
       as for initially specified methods.
 
+
+      \item \code{download.file()} could leave the destination file open
+      if a http or ftp URL was not able to be opened.  (\PR{14414})
     }
   }
 }
