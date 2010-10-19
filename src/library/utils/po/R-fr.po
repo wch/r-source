@@ -637,7 +637,7 @@ msgid ""
 "Installing package(s) into %s\n"
 "(as %s is unspecified)"
 msgstr ""
-"Installation d(es) package(s) dans %\n"
+"Installation d(es) package(s) dans %s\n"
 "(car %s n'est pas spécifié)"
 
 msgid "'lib = \"%s\"' is not writable"
