@@ -146,6 +146,9 @@
 
       It failed to centre the return configuration and sometimes lost
       the labels on the points if \code{add = TRUE}.
+
+      \item \code{download.file()} could leave the destination file open
+      if a http or ftp URL was not able to be opened.  (\PR{14414})
     }
   }
 }

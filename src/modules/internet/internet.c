@@ -431,7 +431,6 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	    }
 	    in_R_HTTPClose(ctxt);
-	    fclose(out);
 	    if(!quiet) {
 #ifndef Win32
 		REprintf("\n");
@@ -455,6 +454,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		warning(_("downloaded length %d != reported length %d"),
 			nbytes, total);
 	}
+	fclose(out);
 	R_Busy(0);
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 
@@ -536,7 +536,6 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	    }
 	    in_R_FTPClose(ctxt);
-	    fclose(out);
 	    if(!quiet) {
 #ifndef Win32
 		REprintf("\n");
@@ -561,6 +560,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 			nbytes, total);
 	}
 	R_Busy(0);
+	fclose(out);
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 #endif
 
