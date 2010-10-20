@@ -44,9 +44,6 @@
 
       The PDF, PostScript, and Quartz graphics devices record this fact.
       X11 (and Cairo) and Windows just assume that your screen conforms.
-
-      \item \url{http://www.rforge.net} has been added to the default
-      set of repositories known to \code{setRepoositories()}.
     }
   }
   
@@ -117,6 +114,9 @@
       \item The DVI/PDF reference manual now includes the help page for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
+
+      \item \url{http://www.rforge.net} has been added to the default
+      set of repositories known to \code{setRepoositories()}.
     }
   }
   
@@ -137,9 +137,6 @@
       column name was longer than 256 bytes (the maximum length allowed
       for an \R name).
 
-      \item Reference class methods using \code{callSuper()} now work
-      when installed by invoking \code{methods()} on the generator.
-
       \item \code{predict(<lm object>, type ="terms", ...)} failed if
       both \code{terms} and \code{interval} were specified.  (Reported
       by Bill Dunlap.)
@@ -157,6 +154,12 @@
 
       It failed to centre the return configuration and sometimes lost
       the labels on the points if \code{add = TRUE}.
+
+      \item \code{promptClass()} now works for reference classes and gives a
+      suitably specialized skeleton of documentation.
+
+      Also, \code{callSuper()} now works via the \code{methods()}
+      invocation as well as for initially specified methods.
 
       \item \code{download.file()} could leave the destination file open
       if a http or ftp URL was not able to be opened.  (\PR{14414})
