@@ -166,12 +166,12 @@ get_exclude_patterns <- function()
             "",
             "  --force               force removal of INDEX file",
             "  --no-vignettes        do not rebuild package vignettes",
+            "  --no-manual           do not build the manual even if \\Sexprs are present",
             "",
             "  --binary              build pre-compiled binary packages, with options:",
             if (WINDOWS) "  --auto-zip            select zipping of data based on size",
             "  --use-zip-data        collect data files in zip archive",
             "  --no-docs             do not build and install documentation",
-            "  --no-manual           do not build the manual even if \\Sexprs are present",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -542,7 +542,7 @@ get_exclude_patterns <- function()
         ## This does not easily work if $pkg is a symbolic link.
         ## Hence, we now convert to absolute paths.'
         setwd(startdir)
-        res <- try(setwd(pkg))
+        res <- try(setwd(pkg), silent = TRUE)
         if (inherits(res, "try-error")) {
             errorLog(Log, "cannot change to directory ", sQuote(pkg))
             do_exit(1L)
