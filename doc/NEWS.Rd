@@ -44,6 +44,9 @@
 
       The PDF, PostScript, and Quartz graphics devices record this fact.
       X11 (and Cairo) and Windows just assume that your screen conforms.
+
+      \item \url{http://www.rforge.net} has been added to the default
+      set of repositories known to \code{setRepoositories()}.
     }
   }
   
@@ -63,6 +66,10 @@
 
       \item \command{R CMD build} no longer does any cleaning in the
       supplied package directory: all the cleaning is done in the copy.
+
+      It has a new option \option{--install-args} to pass argument to
+      \command{R CMD INSTALL} for \option{--install} (but not when
+      installing to rebuild vignettes).
     }
   }
 
@@ -88,6 +95,10 @@
       \item The \code{gamma} argument to \code{hsv()},
       \code{rainbow()}, and \code{rgb2hsv()} is deprecated
       and no longer has any effect.
+
+      \item The options for \command{R CMD build}, \option{--auto-zip},
+      \option{--use-zip-data} and \option{--no-docs} are deprecated: use
+      \option{--install-args} instead.
     }
   }
 

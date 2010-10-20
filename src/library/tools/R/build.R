@@ -169,9 +169,8 @@ get_exclude_patterns <- function()
             "  --no-manual           do not build the manual even if \\Sexprs are present",
             "",
             "  --binary              build pre-compiled binary packages, with options:",
-            if (WINDOWS) "  --auto-zip            select zipping of data based on size",
-            "  --use-zip-data        collect data files in zip archive",
-            "  --no-docs             do not build and install documentation",
+            "  --install-args=       command-line args to be passed to INSTALL,",
+            "                        separated by spaces",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -509,11 +508,16 @@ get_exclude_patterns <- function()
             vignettes <- FALSE
         } else if (a == "--binary") {
             binary <- TRUE
+        } else if (substr(a, 1, 15) == "--install-args=") {
+            INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
         } else if (WINDOWS && a == "--auto-zip") {
+            warning("use of '--auto-zip' is deprecated: use '--install-args' instead")
             INSTALL_opts <- c(INSTALL_opts, "--auto-zip")
         } else if (a == "--use-zip-data") {
+            warning("use of '--use-zip-data' is deprecated: use '--install-args' instead")
             INSTALL_opts <- c(INSTALL_opts, "--use-zip-data")
         } else if (a == "--no-docs") {
+            warning("use of '--no-docs' is deprecated: use '--install-args' instead")
             INSTALL_opts <- c(INSTALL_opts, "--no-docs")
         } else if (a == "--no-manual") {
             manual <- FALSE
