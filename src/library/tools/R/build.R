@@ -195,12 +195,15 @@ get_exclude_patterns <- function()
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755")
+        ## assume vignettes only need one arch
         if (WINDOWS) {
             cmd <- file.path(R.home("bin"), "Rcmd.exe")
-            args <- c("INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+            args <- c("INSTALL -l", shQuote(libdir),
+                      "--no-multiarch", shQuote(pkgdir))
         } else {
             cmd <- file.path(R.home("bin"), "R")
-            args <- c("CMD", "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+            args <- c("CMD", "INSTALL -l", shQuote(libdir),
+                      "--no-multiarch", shQuote(pkgdir))
         }
 	res <- shell_with_capture(cmd, args)
 	if (res$status) {

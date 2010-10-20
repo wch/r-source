@@ -18,10 +18,9 @@ This file contains instructions for non-standard situations:
  - Using Microsoft Visual C++
  - Using Borland C++
  - Using other compilers and languages
- - Cross-building packages on Linux
 
-All the examples given here have worked at some point, but they are not
-tested for every R release.
+All the examples given here have worked at some point with 32-bit R,
+but are mainly of historical interest.
 
 
 Using Visual C++
@@ -107,8 +106,8 @@ Using other compilers and languages
 
 To use C++ see the section in the R for Windows FAQ.  You can include
 C++ code in packages and the supplied Makefiles will compile with g++
-and link the DLL using g++ (and hence link against libstc++.a).  Use
-of C++ I/O may or may not work, and has been seen to crash R.
+and link the DLL using g++ (and hence link against libstdc++).  Use of
+C++ I/O may or may not work, and has been seen to crash R.
 
 To use F90 or F95, see `Writing R Extensions'.
 
@@ -122,8 +121,9 @@ cannot you may need to write some `glue' code in C to interface to the
 DLL.
 
 If you use .Fortran this appends an underscore and does no case
-conversion at all to the symbol name.  It is normally best to use
-.C with compilers other than gfortran and map the name manually if necessary.
+conversion at all to the symbol name.  It is normally best to use .C
+with compilers other than gfortran and map the name manually if
+necessary.
 
 Care is needed in passing character strings to and from a DLL by .C:
 they must be equivalent to the C type char** and null-terminated.  Not
@@ -137,12 +137,4 @@ call to the C entry point Rwin_fpset().
 
 For some further details and Delphi examples see
 http://www.stats.uwo.ca/faculty/murdoch/software/compilingDLLs/
-
-
-Feedback
-========
-
-Please send comments and bug reports to
-
-	R-windows@r-project.org
 
