@@ -17,3 +17,4 @@ BioCann	"BioC annotation"	%bm/packages/%v/data/annotation	FALSE	TRUE	TRUE	TRUE	F
 BioCexp	"BioC experiment"	%bm/packages/%v/data/experiment	FALSE	TRUE	TRUE	TRUE	FALSE
 BioCextra	"BioC extra"	%bm/packages/%v/extra	FALSE	TRUE	TRUE	TRUE	FALSE
 R-Forge	R-Forge	http://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE	FALSE
+rforge.net	rforge.net	http://www.rforge.net	FALSE	TRUE	TRUE	TRUE

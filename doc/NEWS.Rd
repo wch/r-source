@@ -10,6 +10,9 @@
       \item The DVI/PDF reference manual now includes the help page for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
+
+      \item \url{http://www.rforge.net} has been added to the default
+      set of repositories known to \code{setRepoositories()}.
     }
   }
   
@@ -41,12 +44,18 @@
       than give an error when given certain invalid regular expressions.
       (\PR{14398})
 
+      \item \code{cmdscale(eig=TRUE)} was documented to return \eqn{n-1}
+      eigenvalues but in fact only returned \code{k}.  It now returns
+      all \eqn{n} eigenvalues.
+
+      It failed to centre the return configuration and sometimes lost
+      the labels on the points if \code{add = TRUE}.
+
       \item \code{promptClass()} now works for reference classes and gives a
       suitably specialized skeleton of documentation.
 
-      Also, \code{callSuper()} now works via the \code{methods()} invocation as well
-      as for initially specified methods.
-
+      Also, \code{callSuper()} now works via the \code{methods()}
+      invocation as well as for initially specified methods.
 
       \item \code{download.file()} could leave the destination file open
       if a http or ftp URL was not able to be opened.  (\PR{14414})
