@@ -270,3 +270,15 @@ stopifnot(length(c(grep("foo.*refClassA", ctxt),
                    grep("code{foo()}", ctxt, fixed = TRUE),
                    grep("linkS4class{refClassA", ctxt, fixed = TRUE))) >= 3)
 rm(ctxt)
+
+
+## tests related to subclassing environments.  These really test code in the core, viz. builtin.c
+a <- refClassA$new()
+ev <- new.env(parent = a) # parent= arg
+stopifnot(is.environment(ev))
+foo <- function()"A"; environment(foo) <- a # environment of function
+stopifnot(identical(as.environment(a), environment(foo)))
+xx <- 1:10; environment(xx) <- a # environment attribute
+stopifnot(identical(as.environment(a), environment(xx)))
+
+
