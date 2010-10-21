@@ -543,12 +543,6 @@
     eval.parent(call)
     x
   })
-  setMethod("[[<-", ".environment", function (x, i, j, ..., exact = TRUE, value) {
-    call <- sys.call()
-    call[[2]] <- x@.Data
-    eval.parent(call)
-    x
-  })
     ## a few other special classes
     setClass("namedList", representation(names = "character"),
              contains = "list", where = where)

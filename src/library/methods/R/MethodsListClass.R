@@ -263,8 +263,7 @@
     else
       needed <- get(".NeedPrimitiveMethods", where)
     needed <- c(needed, list(structure = "Ops", vector = "Ops",
-          array = "Ops", nonStructure = "Ops",
-          .environment = "$<-", .environment = "[[<-"),
+          array = "Ops", nonStructure = "Ops"),
           array = "[", structure = "[", nonStructure = "[",
           structure = "Math", nonStructure = "Math",
           refClass = "$"
