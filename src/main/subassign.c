@@ -1456,7 +1456,7 @@ SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden
 do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue;
+    SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue, xOrig = R_NilValue;
     int i, ndims, nsubs, offset, off = -1 /* -Wall */, stretch, which, len = 0 /* -Wall */;
     Rboolean S4, recursed=FALSE;
 
@@ -1496,8 +1496,9 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
         x = R_getS4DataSlot(x, ANYSXP);
-	if(x == R_NilValue)
-	  errorcall(call, _("no method for assigning subsets of this S4 class"));
+	xOrig = x; /* will be an S4 object */
+	if(TYPEOF(x) != ENVSXP)
+	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environemnt"));
     }
 
     /* ENVSXP special case first */
@@ -1506,7 +1507,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("wrong args for environment subassignment"));
 	defineVar(install(translateChar(STRING_ELT(CAR(subs), 0))), y, x);
 	UNPROTECT(1);
-	return(x);
+	return(S4 ? xOrig : x);
     }
     
     /* new case in 1.7.0, one vector index for a list, more general as of 2.10.0 */

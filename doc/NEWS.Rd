@@ -59,6 +59,13 @@
 
       \item \code{download.file()} could leave the destination file open
       if a http or ftp URL was not able to be opened.  (\PR{14414})
+
+      \item Assignment of an environment to functions or as an
+      attribute to other objects now works for subclases of \code{"environment"}.
+
+      \item Use of \code{`[[<-`} for subclasses of
+      \code{"environment"} generated and infinite recursion from the
+      method.  The method has been replaced by internal code.
     }
   }
 }

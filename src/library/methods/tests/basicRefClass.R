@@ -282,3 +282,9 @@ xx <- 1:10; environment(xx) <- a # environment attribute
 stopifnot(identical(as.environment(a), environment(xx)))
 
 
+## tests of [[<- and $<- for subclasses of environment.  At one point methods for these assignments were defined
+## and caused inf. recursion when the arguments to the [[<- case were changed in base.
+setClass("myEnv", contains = "environment")
+m <- new("myEnv")
+m[["x"]] <- 1; m$y <- 2
+stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
