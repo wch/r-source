@@ -93,9 +93,10 @@
       \code{rainbow()}, and \code{rgb2hsv()} is deprecated
       and no longer has any effect.
 
-      \item The options for \command{R CMD build}, \option{--auto-zip},
-      \option{--use-zip-data} and \option{--no-docs} are deprecated: use
-      \option{--install-args} instead.
+      \item The previous options for \command{R CMD build --binary}
+      (\option{--auto-zip}, \option{--use-zip-data} and
+      \option{--no-docs}) are deprecated:
+      use the new option \option{--install-args} instead.
     }
   }
 
@@ -152,8 +153,8 @@
       eigenvalues but in fact only returned \code{k}.  It now returns
       all \eqn{n} eigenvalues.
 
-      It failed to centre the return configuration and sometimes lost
-      the labels on the points if \code{add = TRUE}.
+      \code{cmdscale(add=TRUE)} failed to centre the return
+      configuration and sometimes lost the labels on the points.
 
       \item \code{promptClass()} now works for reference classes and gives a
       suitably specialized skeleton of documentation.
@@ -162,7 +163,14 @@
       invocation as well as for initially specified methods.
 
       \item \code{download.file()} could leave the destination file open
-      if a http or ftp URL was not able to be opened.  (\PR{14414})
+      if the URL was not able to be opened.  (\PR{14414})
+
+      \item Assignment of an environment to functions or as an attribute
+      to other objects now works for S4 subclases of \code{"environment"}.
+
+      \item Use of \code{`[[<-`} for S4 subclasses of
+      \code{"environment"} generated an infinite recursion from the
+      method.  The method has been replaced by internal code.
     }
   }
 }
