@@ -75,6 +75,7 @@ mkRbase:
 	  fi; \
 	  f2=$${TMPDIR:-/tmp}/R2$$$$; \
 	  sed -e "s:@WHICH@:${WHICH}:" "$${f}" > "$${f2}"; \
+	  rm -f "$${f}"; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f2}" all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
