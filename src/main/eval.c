@@ -3892,7 +3892,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	int label = GETOP();
         FIXUP_SCALAR_LOGICAL("'x'", "||");
         value = R_BCNodeStackTop[-1];
-	if (LOGICAL(value)[0] == TRUE)
+	if (LOGICAL(value)[0] != NA_LOGICAL && LOGICAL(value)[0]) /* is true */
 	    pc = codebase + label;
 	NEXT();
     }
