@@ -61,7 +61,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   Otherwise, a list containing the following components.
   \item{points}{a matrix with \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
-  \item{eig}{the \eqn{n-1} eigenvalues computed during the scaling process if
+  \item{eig}{the \eqn{n} eigenvalues computed during the scaling process if
     \code{eig} is true.  \strong{NB}: versions of \R before 2.12.1
     returned only \code{k} but were documented to return \eqn{n-1}.}
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
