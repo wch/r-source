@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseBioCmirror.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{chooseBioCmirror}
@@ -14,18 +14,18 @@
 chooseBioCmirror(graphics = getOption("menu.graphics"))
 }
 \arguments{
-  \item{graphics}{Logical. If true, use a graphical list: on Windows or
+  \item{graphics}{logical.  If true, use a graphical list: on Windows or
     Mac OS X GUI use a list box, and on a Unix-alike if package
     \pkg{tcltk} and an X server are available, use a Tk
-    widget. Otherwise use a text \code{\link{menu}}.}
+    widget.  Otherwise use a text \code{\link{menu}}.}
 }
 \details{
   This sets the option \code{"BioC_mirror"}: it needs to be used before
   a call to \code{\link{setRepositories}}.
 
-  Currently the Bioconductor master site (in Seattle, USA), NIH
-  (Bethesda, USA) and the European mirror in Dortmund, Germany are
-  available to select from.
+  In addition to the Bioconductor master site (in Seattle, USA), there
+  currently are mirrors in Bethesda (USA), Dortmund (Germany), Bergen
+  (Norway) and Cambridge (UK).
 }
 \value{
   None: this function is invoked for its

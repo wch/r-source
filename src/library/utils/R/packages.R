@@ -692,7 +692,9 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
     if(!interactive()) stop("cannot choose a BioC mirror non-interactively")
     m <- c("Seattle (USA)"="http://www.bioconductor.org",
            "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror",
-           "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de")
+           "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de",
+           "Bergen (Norway)"="http://bioconductor.uib.no/",
+           "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/")
     res <- menu(names(m), graphics, "BioC mirror")
     if(res > 0L) options("BioC_mirror" = m[res])
     invisible()
