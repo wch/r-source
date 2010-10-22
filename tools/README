@@ -5,6 +5,7 @@ The files are as follows.
 
   config.guess
   config.sub
+	auxiliary scripts for configure.
 	From http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD etc
 
   install-sh
@@ -13,6 +14,10 @@ The files are as follows.
 	standard tools from GNU autoconf.  Taken from the autoconf CVS
 	(pserver:anoncvs@subversions.gnu.org:/cvsroot/autoconf, module 
 	'autoconf').
+	install-sh may be set by configure as a substitute for the
+	'install' program.  
+	missing may be set by configure as a substitute for various GNU programs.
+	mdate-sh is not currently used.
 
   GETCONFIG
 	create API 'Rconfig.h' from the configure information in
@@ -38,10 +43,12 @@ The files are as follows.
   help2man.pl
 	generate simple manual pages from program output.  Taken from
 	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
+	Used for a maintainer-mode build only.
 	
   install-info.pl
 	create or update entry in Info directory.  Taken from the Debian
-	GNU/Linux stable distribution.
+	GNU/Linux stable distribution in 2001.  Only used if a suitable
+	install-info program is not found.
 	
   ldAIX4
 	writes an export file, assembling the exported symbols by
@@ -50,9 +57,6 @@ The files are as follows.
 
   link-recommended
 	create links with simplified names to the recommended packages.
-  
-  linkcheck.pl
-	comment out links that are not available.
 
   ltmain.sh
 	provide generalized library-building support services.  Taken
@@ -68,3 +72,6 @@ The files are as follows.
   updatefat
 	updates a fat file by adding a new architecture (Mac OS X only)
 	it is essentially a smart wrapper for "lipo".
+
+GETCONFIG, GETVERSION, copy-if-change and move-if-change are used on Windows,
+and require cmp, cp, echo, expr, grep, mv and sed.
