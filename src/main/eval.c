@@ -3027,7 +3027,12 @@ typedef int BCODE;
     } \
   } \
   else if (TYPEOF(value) == PROMSXP) { \
-    value = forcePromise(value); \
+    if (PRVALUE(value) == R_UnboundValue) { \
+      if (keepmiss && R_isMissing(symbol, rho)) /**** this is inefficient */ \
+        value = R_MissingArg;		    \
+      else value = forcePromise(value); \
+    } \
+    else value = PRVALUE(value); \
     SET_NAMED(value, 2); \
   } \
   else if (!isNull(value) && NAMED(value) < 1) \
