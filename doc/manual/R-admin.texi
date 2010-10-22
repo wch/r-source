@@ -4564,30 +4564,34 @@ This item is installed by the @file{Rtools*.exe} installer.
 @c src/library/Recommended/Makefile.win uses basename and tar
 
 @c comm, sort, uniq are used in producing .def files
-@c cmp is used in src/include/Makefile.win
-@c cp is used as $CP) in numerous Makefiles
+@c cmp is used in src/include/Makefile.win, tools/{copy,move}-if-change
+@c cp is used as $(CP) in numerous Makefiles
 @c cut is used to make RVER
 @c date is used when building base and tools
 @c diff is used by tools::Rdiff and tests/Makefile.common
+@c expr is used in tools/GETVERSION
 @c find is used in installer/Makefile
+@c expr is used in tools/GETCONFIG
 @c gzip is used in src/library/Makefile.win, R CMD build
 @c ls is used in src/library/*/Makefile.win
-@c mkdir is used in numerous Makefiles, Rd2dvi
+@c mkdir is used in numerous Makefiles
 @c rsync is only needed if building from svn
+@c sed is used in tools/GETVERSION, many Makefiles
 @c touch is used in Makefiles
 @c unzip is used in making R, e.g. for zoneinfo.zip
 @c wc is used in doc/manual/Makefile.win
-@c AFAICS [g]awk, egrep, expr, grep, head, rmdir, tail, tr are no longer used
+@c AFAICS [g]awk, egrep, head, rmdir, tail, tr are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
-@code{gzip}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
-@code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh}, @code{sort},
-@code{tar}, @code{texindex}, @code{touch} and @code{uniq}; we use those
-from the Cygwin distribution (@uref{http://www.cygwin.com/}) or compiled
-from the sources.  You will also need @code{zip} and @code{unzip} from
-the Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these
-tools are in @file{Rtools*.exe}.
+@code{expr} @code{grep}, @code{gzip}, @code{ls}, @code{make},
+@code{makeinfo}, @code{mkdir}, @code{mv}, @code{rm}, @code{rsync},
+@code{sed}, @code{sh}, @code{sort}, @code{tar}, @code{texindex},
+@code{touch} and @code{uniq}; we use those from the Cygwin distribution
+(@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
+also need @code{zip} and @code{unzip} from the Info-ZIP project
+(@uref{http://www.info-zip.org/}).  All of these tools are in
+@file{Rtools*.exe}.
 
 @c So needed for end users:
 @c basename comm cp echo gzip make mkdir rm sh sort tar uniq zip
