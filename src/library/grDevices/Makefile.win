@@ -20,7 +20,7 @@ SHELL = sh
 USE_NLS =yes
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-INSTDIRS = afm enc
+INSTDIRS = afm enc icc
 
 
 all:
