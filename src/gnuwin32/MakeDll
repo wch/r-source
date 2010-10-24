@@ -34,6 +34,7 @@ DEPS=$(CSOURCES:.c=.d)
 
 RCOBJ=$(DLLNAME)_res.o
 
+## grDevices, methods, stats, tcltk have this
 -include Makevars.win
 
 $(DLLNAME)_res.rc:

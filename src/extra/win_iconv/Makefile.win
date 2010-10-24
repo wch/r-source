@@ -9,7 +9,6 @@ install: Riconv.dll
 	@cp Riconv.dll ../../../$(BINDIR)
 
 CPPFLAGS=-I../../include
-CFLAGS= $(OPTFLAGS)
 
 CSOURCES= win_iconv.c
 OBJS=$(CSOURCES:.c=.o)

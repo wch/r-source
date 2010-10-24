@@ -7,17 +7,11 @@ top_srcdir = ../../..
 
 top_builddir = ../../..
 
+include $(top_builddir)/Makeconf
+
 pkg = stats
 
-R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
-
 FRONTFILES = COPYRIGHTS.modreg SOURCES.ts
-
-ECHO = echo
-MKINSTALLDIRS = mkdir -p
-INSTALL_DATA = cp
-SHELL = sh
-USE_NLS =yes
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
@@ -25,6 +19,5 @@ all:
 	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkdemos mkpo
 	@$(MAKE) -f Makefile.win mksrc-win
 	@$(MAKE) -f Makefile.win mklazy
-
 
 include $(top_srcdir)/share/make/basepkg.mk

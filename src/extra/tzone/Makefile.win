@@ -7,7 +7,6 @@ include ../../gnuwin32/MkRules
 all: makeMakedeps libtz.a zinfo
 
 CPPFLAGS=-I../../include
-CFLAGS= $(OPTFLAGS)
 
 CSOURCES= localtime.c registryTZ.c
 OBJS=$(CSOURCES:.c=.o)

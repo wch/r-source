@@ -5,8 +5,6 @@ all: makeMakedeps libnmath.a
 
 ## there are headers and include files in this directory
 CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
-CFLAGS=$(OPTFLAGS)
-FFLAGS=$(OPTFLAGS)
 CSOURCES= \
 	mlutils.c \
 	d1mach.c i1mach.c \

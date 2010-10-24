@@ -7,17 +7,11 @@ top_srcdir = ../../..
 
 top_builddir = ../../..
 
+include $(top_builddir)/Makeconf
+
 pkg = datasets
 
 RSRC = $(srcdir)/R/zzz.R
-
-R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
-
-ECHO = echo
-MKINSTALLDIRS = mkdir -p
-INSTALL_DATA = cp
-SHELL = sh
-USE_NLS =yes
 
 all:
 	@$(ECHO) "building package '$(pkg)'"

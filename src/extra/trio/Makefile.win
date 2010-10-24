@@ -1,8 +1,6 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS=$(OPTFLAGS)
-
 # triop.h says this does not work, but useful to debug wchar conversions.
 trio-CPPFLAGS=-DTRIO_FEATURE_WIDECHAR=1
 

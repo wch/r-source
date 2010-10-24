@@ -1,0 +1,13 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/Makeconf for Windows
+
+ECHO = echo
+MKINSTALLDIRS = mkdir -p
+INSTALL_DATA = cp
+SHELL = sh
+USE_NLS = yes
+
+R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
+
+RHOME = ../../../..

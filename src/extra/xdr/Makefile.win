@@ -6,7 +6,7 @@ ifdef LEA_MALLOC
 DEFS+=-DLEA_MALLOC
 endif
 
-CFLAGS=-I. -I../../include $(DEFS) $(OPTFLAGS)
+CPPFLAGS=-I. -I../../include $(DEFS)
 
 all: libxdr.a
 

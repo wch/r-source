@@ -15,13 +15,7 @@ OBJS=$(CSOURCES:.c=.o) dllversion.o
 LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f cmplx.f
 LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
 
-# will be overridden on call from src/gnuwin32/Makefile
-OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
-FOPTFLAGS=-O3
-
 CPPFLAGS=-I../../include -DHAVE_CONFIG_H
-CFLAGS=$(OPTFLAGS)
-FFLAGS=$(FOPTFLAGS)
 dlamch-FFLAGS=-ffloat-store
 
 install: $(MODULE).dll

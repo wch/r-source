@@ -47,8 +47,6 @@ else
  DLLFLAGS=-s
 endif
 
-# used when compiling src/main: needed for memory.c, regex.c
-OPTFLAGS_M=$(OPTFLAGS)
 
 R-DLLFLAGS=-mwindows
 ifdef USE_ICU
@@ -75,7 +73,7 @@ EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
-OPTFLAGS_M+=-DLEA_MALLOC
+malloc-DEFS=-DLEA_MALLOC
 endif
 
 .PHONY:  clean veryclean rlibs fixfiles front-ends rmodules
@@ -110,19 +108,19 @@ endif
 
 
 rlibs:
-	$(MK) -C ../extra/intl OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MK) -C ../appl RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MK) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MK) -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MK) -C ./getline OPTFLAGS='$(OPTFLAGS)'
+	$(MK) -C ../extra/intl CFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MK) -C ../appl RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MK) -C ../nmath CFLAGS='$(OPTFLAGS)' FFLAGS='${FOPTFLAGS}' -f Makefile.win
+	$(MK) -C ../main RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
+	$(MK) -C ./getline CFLAGS='$(OPTFLAGS)'
 	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv xz; do \
-	  $(MK) -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
+	  $(MK) -C ../extra/$${ex} CFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 
 rmodules:
 	@$(MKDIR) -p ../../modules$(R_ARCH)
 	$(MK) -C ../modules -f Makefile.win \
-	  RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)'
+	  RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)'
 
 COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@

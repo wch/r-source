@@ -7,8 +7,6 @@ all: makeMakedeps libmain.a
 
 ## there are headers and include files in this directory
 CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
-CFLAGS=$(OPTFLAGS)
-FFLAGS=-O2
 
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
@@ -36,7 +34,7 @@ CSOURCES=\
 	version.c vfonts.c
 
 FSOURCES=xxxpr.f
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 
 ifdef RUN_BISON
 gram.c: gram.y
@@ -47,12 +45,12 @@ gram.c: gram.y
 gramRd.c: gramRd.y
 	bison gramRd.y
 	$(SED) -e "s/gramRd.tab.c/gramRd.c/" gramRd.tab.c > gramRd.c
-	$(RM) gramRd.tab.c	
-	
+	$(RM) gramRd.tab.c
+
 gramLatex.c: gramLatex.y
 	bison gramLatex.y
 	$(SED) -e "s/gramLatex.tab.c/gramLatex.c/" gramLatex.tab.c > gramLatex.c
-	$(RM) gramLatex.tab.c		
+	$(RM) gramLatex.tab.c
 endif
 
 platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'
@@ -64,6 +62,7 @@ connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
 dounzip-CPPFLAGS=-I../extra/zlib
 grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
+memory-CPPFLAGS=$(malloc-DEFS)
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
