@@ -1,11 +1,11 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
+CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
- OPTFLAGS=$(G_FLAG) -O3 -Wall
+ CFLAGS+=$(G_FLAG)
  DLLFLAGS=
 else
- OPTFLAGS=-O3 -Wall -pedantic
  DLLFLAGS=-s
 endif
 
@@ -50,7 +50,6 @@ distclean: clean
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 CPPFLAGS=-I.. -I../../include $(DEFS)
-CFLAGS=$(OPTFLAGS)
 
 SOURCES_NMATH = \
 	mlutils.c \

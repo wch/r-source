@@ -33,8 +33,6 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-## use in front-ends and internet module
-GRAPHAPP_LIB=-lRgraphapp
 ## used in stats/src/Makevars.win
 BLAS_LIBS=-L$(RHOME)/$(IMPDIR) -lRblas
 

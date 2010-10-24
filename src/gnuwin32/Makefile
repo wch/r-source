@@ -37,11 +37,11 @@ endif
 ## NB: will not be set correctly first time through.
 RHOME = $(shell ./Rpwd.exe ../..)
 
-OPTFLAGS=-O3 -Wall -pedantic
-FOPTFLAGS=-O3
+CFLAGS=-O3 -Wall -pedantic
+FFLAGS=-O3
 ifdef DEBUG
- OPTFLAGS+=$(G_FLAG)
- FOPTFLAGS+=$(G_FLAG)
+ CFLAGS+=$(G_FLAG)
+ FFLAGS+=$(G_FLAG)
  DLLFLAGS=
 else
  DLLFLAGS=-s
@@ -80,8 +80,6 @@ endif
 
 
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
-CFLAGS = $(OPTFLAGS)
-FFLAGS = $(FOPTFLAGS)
 extra-CPPFLAGS = -I../library/grDevices/src
 
 Rpwd.exe: front-ends/Rpwd.exe
@@ -108,19 +106,19 @@ endif
 
 
 rlibs:
-	$(MK) -C ../extra/intl CFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MK) -C ../appl RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MK) -C ../nmath CFLAGS='$(OPTFLAGS)' FFLAGS='${FOPTFLAGS}' -f Makefile.win
-	$(MK) -C ../main RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
-	$(MK) -C ./getline CFLAGS='$(OPTFLAGS)'
+	$(MK) -C ../extra/intl CFLAGS='$(CFLAGS)' -f Makefile.win
+	$(MK) -C ../appl RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' -f Makefile.win
+	$(MK) -C ../nmath CFLAGS='$(CFLAGS)' FFLAGS='${FFLAGS}' -f Makefile.win
+	$(MK) -C ../main RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
+	$(MK) -C ./getline CFLAGS='$(CFLAGS)'
 	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv xz; do \
-	  $(MK) -C ../extra/$${ex} CFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
+	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
 	done
 
 rmodules:
 	@$(MKDIR) -p ../../modules$(R_ARCH)
 	$(MK) -C ../modules -f Makefile.win \
-	  RHOME=$(RHOME) CFLAGS='$(OPTFLAGS)' FFLAGS='$(FOPTFLAGS)'
+	  RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)'
 
 COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -210,7 +208,7 @@ htmldocs:
 
 Rblas:
 	@$(MK) -C ../extra/blas -f Makefile.win \
-	  RHOME=$(RHOME) FFLAGS='$(FOPTFLAGS)'
+	  RHOME=$(RHOME) FFLAGS='$(FFLAGS)'
 
 Rblas-clean:
 	@$(MK) -C ../extra/blas -f Makefile.win clean

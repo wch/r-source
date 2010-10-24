@@ -1,17 +1,14 @@
 include ../MkRules
 R_HOME = ../../..
 
+CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
-  OPTFLAGS=$(G_FLAG) -O3 -Wall
-  LINKFLAGS=
-  DLLFLAGS=
+ CFLAGS+=$(G_FLAG)
+ DLLFLAGS=
 else
-  OPTFLAGS=-O3 -Wall -pedantic
-  LINKFLAGS=-s
-  DLLFLAGS=-s
+ DLLFLAGS=-s
 endif
 CPPFLAGS=-I../../include
-CFLAGS=$(OPTFLAGS)
 
 ## Increase stack size to 10Mb
 LARGE_STACK=-Wl,--stack=0xA00000
@@ -72,9 +69,9 @@ rterm-CPPFLAGS=-DWin32
 graphappmain-CPPFLAGS=$(DEFS_W64)
 
 ## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
-Rgui-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
-Rscript-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
-Rterm-LIBS=-L../../../$(IMPDIR) -lR $(GRAPHAPP_LIB)
+Rgui-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
+Rscript-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
+Rterm-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
 
 Rgui-LINKFLAGS=-mwindows $(LARGE_ADDR) $(LARGE_STACK)
 Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
