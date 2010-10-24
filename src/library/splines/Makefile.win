@@ -28,5 +28,3 @@ all:
 
 
 include $(top_srcdir)/share/make/basepkg.mk
-
-#	@$(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean
