@@ -1023,16 +1023,19 @@ You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
 @uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  You will need
-files @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
-@file{tiff-3.8.0.tar.gz} or later.
+files @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v7.tar.gz},
+@file{tiff-3.8.0.tar.gz} or later.  It is also possible to use
+@samp{libjpeg-turbo} from
+@url{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8b}; if
-you use a different version (e.g.@: @file{jpeg-6b}), copy file
-@file{src/gnuwin32/MkRules.dist} to @file{src/gnuwin32/MkRules.local}
-and edit the definition of @code{JPEGDIR}: the names of the
-@file{libpng} and @file{libtiff} directories can also be set there.
+The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8a}; if
+you use a different version (e.g.@: @file{jpeg-7} or
+@file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit the definition of
+@code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
+directories can also be set there.
 
 Example:
 

@@ -3441,9 +3441,12 @@ static int Load_Rbitmap_Dll()
 	} else {
 	    if (hRbitmapDll != NULL) FreeLibrary(hRbitmapDll);
 	    RbitmapAlreadyLoaded= -1;
+	    char buf[1000];
+	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
+	    R_ShowMessage(buf);
 	}
     }
-    return (RbitmapAlreadyLoaded>0);
+    return (RbitmapAlreadyLoaded > 0);
 }
 
 static int png_rows = 0;
@@ -3501,10 +3504,7 @@ static void SaveAsPng(pDevDesc dd, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
-	return;
-    }
+    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn, "wb")) == NULL) {
 	char msg[MAX_PATH+32];
 
@@ -3534,10 +3534,7 @@ static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
-	return;
-    }
+    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn,"wb")) == NULL) {
 	char msg[MAX_PATH+32];
 	strcpy(msg, "Impossible to open ");
@@ -3567,10 +3564,7 @@ static void SaveAsBmp(pDevDesc dd, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
-	return;
-    }
+    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn, "wb")) == NULL) {
 	char msg[MAX_PATH+32];
 

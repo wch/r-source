@@ -27,6 +27,15 @@
       to.
     }
   }
+  
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item There is support for \samp{libjpeg-turbo} \emph{via}
+      setting \code{JPEGDIR} to that value in \file{MkRules.local}.
+
+      Support for \samp{jpeg-6b} has been removed.
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.12.0 patched}{
