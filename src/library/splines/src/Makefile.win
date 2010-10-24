@@ -1,0 +1,41 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/splines/src/Makefile.win
+
+pkg = splines
+
+srcdir = .
+top_srcdir = ../../../..
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+
+SOURCES_C = splines.c
+SOURCES_F =
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
+
+SHLIB = $(pkg).dll
+RESFLAGS = -I $(R_HOME)/include
+
+all: makeMakedeps shlib
+
+shlib: $(SHLIB)
+	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o $(SHLIB)
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps

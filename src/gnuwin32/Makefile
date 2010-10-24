@@ -342,7 +342,7 @@ link-recommended:
 
 recommended:
 	@$(ECHO) "--- Making recommended packages"
-	@$(MK) -C ../library/Recommended -f Makefile.win RHOME=$(RHOME)
+	@$(MK) -C ../library/Recommended -f Makefile.win R_HOME=$(RHOME)
 
 docfiles:
 	@$(MK) -f Makefile.docs

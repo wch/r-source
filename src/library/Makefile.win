@@ -13,7 +13,7 @@ ECHO = echo
 MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-RHOME = $(shell ../gnuwin32/Rpwd.exe ../..)
+#RHOME = $(shell ../gnuwin32/Rpwd.exe ../..)
 
 R_EXE = $(top_builddir)/$(BINDIR)/Rterm --vanilla --slave
 
@@ -26,11 +26,11 @@ all: R
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) -C $${pkg} -f Makefile.win RHOME=$(RHOME) R_ARCH=$(R_ARCH) \
+	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
 		R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
 	        all install-tests || exit 1; \
 	done
-	@(cd base && $(MAKE) -f Makefile.win RHOME=$(RHOME) BINDIR=$(BINDIR) mkdesc)
+	@(cd base && $(MAKE) -f Makefile.win BINDIR=$(BINDIR) mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 	@$(ECHO) "installing parsed NAMESPACE files"
@@ -89,7 +89,7 @@ metadata:
 clean:
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(MAKE) --no-print-directory -C $${pkg} \
-	    -f Makefile.win RHOME=$(RHOME) clean-win; \
+	    -f Makefile.win R_ARCH=$(R_ARCH) clean-win; \
 	done
 	-@rm -f stamp-*
 

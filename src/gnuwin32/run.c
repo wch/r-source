@@ -114,7 +114,6 @@ static char *expandcmd(const char *cmd)
      redirect stdin for the child.
    newconsole != 0 to use a new console (if not waiting)
    visible = -1, 0, 1 for hide, minimized, default
-   inpipe != 0 to duplicate I/O handles
    pi is set based on the newly created process,
    with the hThread handle closed.
 */
@@ -131,7 +130,6 @@ static void pcreate(const char* cmd, cetype_t enc,
     STARTUPINFOW wsi;
     HANDLE dupIN, dupOUT, dupERR;
     WORD showWindow = SW_SHOWDEFAULT;
-    int inpipe;
     char *ecmd;
     SECURITY_ATTRIBUTES sa;
     sa.nLength = sizeof(sa);

@@ -1,2 +1,0 @@
-## need config.h and Defn.h
-PKG_CFLAGS=-I$(RHOME)/src/include -DHAVE_CONFIG_H

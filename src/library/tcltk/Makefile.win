@@ -26,7 +26,7 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkexec mkdemos mkpo
-	@$(MAKE) -f Makefile.win mksrc-win
+	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazy
 endif
 

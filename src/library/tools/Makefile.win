@@ -16,13 +16,7 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc2 mkpo
-	@if test -d src; then \
-	  cp -p ../../gnuwin32/dllversion.rc src/tools_res.rc; \
-	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
-	fi
+	@$(MAKE) -f Makefile.win mkR mkdesc2 mkpo mksrc-win2
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \

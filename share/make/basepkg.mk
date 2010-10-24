@@ -132,11 +132,9 @@ mksrc:
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
 
-mksrc-win:
+mksrc-win2:
 	@if test -d src; then \
-	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
+	  (cd src && $(MAKE) -f Makefile.win) || exit 1; \
 	fi
 
 install-tests:
@@ -163,7 +161,7 @@ maintainer-clean: distclean
 
 clean-win:
 	@if test -d src; then \
-	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) shlib-clean; \
+	  $(MAKE) -C src -f Makefile.win clean; \
 	fi
 	-@rm -f all.R .RData
 distclean-win: clean-win

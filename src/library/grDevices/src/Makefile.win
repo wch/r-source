@@ -1,0 +1,50 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/grDevices/src/Makefile.win
+
+pkg = grDevices
+
+srcdir = .
+top_srcdir = ../../../..
+
+top_builddir = ../../../..
+subdir = src/library/$(pkg)/src
+R_HOME = $(top_builddir)
+
+SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devWindows.c init.c
+SOURCES_F =
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
+
+SHLIB = $(pkg).dll
+RESFLAGS = -I $(R_HOME)/include
+
+## need config.h
+PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H
+## devPS needs zlib.h and run.h
+devPS-CPPFLAGS=-I$(R_HOME)/src/extra/zlib -I$(R_HOME)/src/gnuwin32
+## devWindows needs opt.h, console.h, rui.h and graphapp headers
+devWindows-CPPFLAGS=-I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
+
+PKG_LIBS=-lRgraphapp -lRzlib
+
+all: makeMakedeps shlib
+
+shlib: $(SHLIB)
+	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o $(SHLIB)
+
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps
