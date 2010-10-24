@@ -537,12 +537,6 @@
       ## these classes need explicit coercion for S3 methods
       assign(cl, getClass(cl, where), envir = S3table)
     }
-  setMethod("$<-", ".environment", function (x, name, value) {
-    call <- sys.call()
-    call[[2]] <- x@.Data
-    eval.parent(call)
-    x
-  })
     ## a few other special classes
     setClass("namedList", representation(names = "character"),
              contains = "list", where = where)
