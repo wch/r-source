@@ -1,4 +1,4 @@
-# ${RHOME}/tools/GETCONFIG
+# ${R_HOME}/tools/GETCONFIG
 
 echo "/* Rconfig.h.  Generated automatically */"
 echo "#ifndef R_RCONFIG_H"
