@@ -8,7 +8,7 @@ ifdef DEBUG
 else
  DLLFLAGS=-s
 endif
-CPPFLAGS=-I../../include
+CPPFLAGS=-I../../include $(arch_DEFS)
 
 ## Increase stack size to 10Mb
 LARGE_STACK=-Wl,--stack=0xA00000

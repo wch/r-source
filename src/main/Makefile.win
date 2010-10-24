@@ -6,7 +6,7 @@ include ../gnuwin32/MkRules
 all: makeMakedeps libmain.a
 
 ## there are headers and include files in this directory
-CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD $(arch_DEFS)
 
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
@@ -62,6 +62,7 @@ connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
 dounzip-CPPFLAGS=-I../extra/zlib
 grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
+inspect-CPPFLAGS=$(DEFS_W64)
 memory-CPPFLAGS=$(malloc-DEFS)
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
