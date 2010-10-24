@@ -3277,7 +3277,7 @@ command line as
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
 and both will be read (in that order).  In addition, if there is a file
-@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} wer
+@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} were
 supported (but undocumented) in versions of @R{} prior to 2.10.0.}
 @code{~/.Rconfig}), it is read between the @file{config.site} files in
 the source and the build directories.
