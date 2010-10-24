@@ -26,7 +26,7 @@ The files are as follows.
 	get the name of the distribution tarball.
   GETMAKEVAL
 	get the value of a Make variable from a Makefile [this needs to
-	be improved].
+	be improved].  Used by configure.
   GETVERSION
 	create API 'Rversion.h' from 'VERSION' and 'SVN-REVISION'.
   

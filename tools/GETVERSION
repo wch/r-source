@@ -1,4 +1,4 @@
-# ${RHOME}/tools/GETVERSION
+# ${R_HOME}/tools/GETVERSION
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (

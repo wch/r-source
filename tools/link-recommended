@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# ${RHOME}/tools/link-recommended
+# ${R_HOME}/tools/link-recommended
 
 ## This is like rsync-recommended but without the rsync.  Before running
 ## it you are assumed to have already fetched the packages by (say) FTP.

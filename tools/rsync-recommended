@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# ${RHOME}/tools/rsync-recommended
+# ${R_HOME}/tools/rsync-recommended
 
 : ${CRAN_RSYNC='cran.r-project.org::CRAN'}
 
