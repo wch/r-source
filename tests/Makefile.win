@@ -13,10 +13,10 @@ include ../share/make/vars.mk
 
 srcdir = .
 top_srcdir = ..
-top_builddir = $(R_HOME)
+top_builddir = ..
+R_HOME = ..
 include Makefile.common
 
-R_HOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R = $(R_HOME)/$(BINDIR)/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
 R2 = $(R_HOME)/$(BINDIR)/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
 R3 = $(R_HOME)/$(BINDIR)/Rcmd check
