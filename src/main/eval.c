@@ -3213,6 +3213,12 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	int label = GETOP();
 
+	/* if we are iterating over a factor, coerce to character first */
+	if (inherits(seq, "factor")) {
+	    seq = asCharacterFactor(seq);
+	    R_BCNodeStackTop[-1] = seq;
+	}
+
 	defineVar(symbol, R_NilValue, rho);
 	BCNPUSH((SEXP) R_findVarLocInFrame(rho, symbol));
 
