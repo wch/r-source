@@ -8,7 +8,7 @@ blas00.o: blas00.c
 	$(CC) -O3 -I../../include  -c $< -o $@
 
 ## Rblas.dll imports xerbla_ from R.dll
-ifeq ($(strip $(USE_ATLAS)),YES)
+ifeq "$(USE_ATLAS)" "YES"
 ../../../$(BINDIR)/Rblas.dll: blas00.o ../../gnuwin32/dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \

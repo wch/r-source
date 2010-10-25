@@ -23,7 +23,7 @@ Internet = 0
 ## Used to set Registry entries
 Producer = R-core
 
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 ifneq ($(strip $(HOME32)),)
 SUFF = win
 else
@@ -120,7 +120,7 @@ fixups:
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
 
 32bit:
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 ifneq ($(strip $(HOME32)),)
 	@echo "------------ including 32-bit files"
 	(cd "$(HOME32)"; zip -qr9X 32bit */i386 library/*/libs/i386 bin/R.exe bin/Rscript.exe)
@@ -169,7 +169,7 @@ R.wxs: WIXins.pl uuids files.wxs
 ## To change compression with WiX 3.0 use
 ## light -dcl:high
 ## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 $(RPREFIX)-win32.msi:
 	@echo "MSI installs for 64-bit builds are not yet supported"
 	@exit 1

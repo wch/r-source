@@ -1,11 +1,5 @@
 include ../MkRules
 
-ifeq ($(strip $(WIN)),64)
-BITSIZE=64
-else
-BITSIZE=32
-endif
-
 R_HOME = ../../..
 
 RPREFIX = $(shell ../../../bin$(R_ARCH)/Rscript ../fixed/rwver.R)
@@ -20,7 +14,7 @@ all:
 	$(CP) ../../../doc/html/CHANGES.html CHANGES.$(RPREFIX).html
 	$(CP) ../../../doc/html/NEWS.html NEWS.$(RPREFIX).html
 	$(CP) ../installer/$(RPREFIX)-win*.exe .
-	($(ECHO) 'cat(md5sum("$(RPREFIX)-win$(BITSIZE).exe"),"*$(RPREFIX)-win$(BITSIZE).exe")' \
+	($(ECHO) 'cat(md5sum("$(RPREFIX)-win.exe"), "*$(RPREFIX)-win.exe")' \
          | $(R_EXE) R_DEFAULT_PACKAGES=tools > md5sum.txt)
 	$(CP) ../../../doc/html/rw-FAQ.html .	
 	@for page in index rdevel rpatched rtest release; do \

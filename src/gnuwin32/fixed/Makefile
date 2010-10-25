@@ -20,7 +20,7 @@ fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 	$(RM) $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/$(R_ARCH)
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/BINPREF =/BINPREF = $(BINPREF)/" \

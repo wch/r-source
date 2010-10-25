@@ -56,7 +56,7 @@ CSOURCES = \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
 OBJS = $(CSOURCES:.c=.o)
-ifeq ($(strip $(WIN)),32)
+ifeq "$(WIN)" "32"
  OBJS += e_pow.o
 endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
@@ -345,7 +345,7 @@ rinstaller:
 	@$(MAKE) -C installer clean
 
 crandir:
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 	$(MAKE) -C cran all
 endif
 

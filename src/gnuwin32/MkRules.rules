@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 
-ifeq ($(strip $(WIN)),64)
+ifeq "$(WIN)" "64"
 BINPREF = $(BINPREF64)
 SYMPAT = $(SYMPAT64)
 R_ARCH = /x64
@@ -15,16 +15,11 @@ endif
 ## -std=c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
 C99FLAG=-std=gnu99
 
-# No other alternative is currently supported, but this could be used for ICC
-BUILD=GCC4
-
-
-ifeq ($(strip $(BUILD)),GCC4)
 F77=$(BINPREF)gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
-endif
+
 
 BINDIR=bin$(R_ARCH)
 
