@@ -4,7 +4,7 @@ Rterm  ICON  R.ico
 #include "../../include/Rversion.h"
 
 #ifndef WIN64
-CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rterm.exe.manifest"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rterm32.manifest"
 #else
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rterm64.manifest"
 #endif
