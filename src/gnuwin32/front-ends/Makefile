@@ -82,8 +82,8 @@ Rterm.exe: graphappmain.o rterm.o rtico.o
 
 ifneq ($(strip $(WIN)),64)
 rcico.o: Rcmd.exe.manifest
-rgico.o: Rgui.exe.manifest
-rtico.o: Rterm.exe.manifest
+rgico.o: Rgui32.manifest
+rtico.o: Rterm32.manifest
 else
 rtico.o: Rterm64.manifest
 rgico.o: Rgui64.manifest
