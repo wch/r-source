@@ -34,7 +34,6 @@ SUFF = win32
 endif
 
 FULLVERSION=`cat ../../../VERSION`
-#RPREFIX = $(shell $(R_HOME)/tools/GETRWVERSION $(R_HOME)/VERSION)
 RPREFIX = $(shell ../../../bin$(R_ARCH)/Rscript ../fixed/rwver.R)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 

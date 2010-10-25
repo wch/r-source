@@ -41,7 +41,6 @@ BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
 MAKEINDEX = LC_ALL=C makeindex
 TEXINDEX = LC_ALL=C texindex
-RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
 
 MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
