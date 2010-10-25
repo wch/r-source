@@ -252,10 +252,10 @@ get_exclude_patterns <- function()
             creatingLog(Log, "vignettes")
             R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
             if (!is.na(R_LIBS)) {
-                on.exit(Sys.setenv(R_LIBS = R_LIBS))
+                on.exit(Sys.setenv(R_LIBS = R_LIBS), add=TRUE)
                 Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
             } else {
-                on.exit(Sys.unsetenv("R_LIBS"))
+                on.exit(Sys.unsetenv("R_LIBS"), add=TRUE)
                 Sys.setenv(R_LIBS = libdir)
             }
             ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
@@ -281,7 +281,7 @@ get_exclude_patterns <- function()
 
     cleanup_pkg <- function(pkgdir, Log)
     {
-        owd <- setwd(pkgdir)
+        owd <- setwd(pkgdir); on.exit(setwd(owd))
         pkgname <- basename(pkgdir)
         if (dir.exists("src")) {
             setwd("src")
@@ -726,9 +726,10 @@ get_exclude_patterns <- function()
             }
             setwd(startdir)
             unlink(Tdir, recursive = TRUE)
-            closeLog(Log)
             message("") # blank line
         }
+        on.exit() # cancel closeLog
+        closeLog(Log)
     }
     do_exit(0L)
 }
