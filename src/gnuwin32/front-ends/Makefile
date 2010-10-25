@@ -4,8 +4,10 @@ R_HOME = ../../..
 CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
  CFLAGS+=$(G_FLAG)
+ LINKFLAGS=
  DLLFLAGS=
 else
+ LINKFLAGS=-s
  DLLFLAGS=-s
 endif
 CPPFLAGS=-I../../include $(arch_DEFS)
