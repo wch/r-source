@@ -13,6 +13,15 @@
       2.12.0.)
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \\item Some warning/error messages from \code{dyn.load()} could be
+      masked in \command{Rgui} on Windows 7, as that OS can return
+      messages containing carriage returns and \command{Rgui} does not
+      support overwriting.
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.12.0}{

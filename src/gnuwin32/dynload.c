@@ -167,7 +167,8 @@ static DL_FUNC getRoutine(DllInfo *info, char const *name)
 
 static void R_getDLLError(char *buf, int len)
 {
-    LPVOID lpMsgBuf;
+    LPSTR lpMsgBuf, p;
+    char *q;
     FormatMessage(
 	FORMAT_MESSAGE_ALLOCATE_BUFFER |
 	FORMAT_MESSAGE_FROM_SYSTEM |
@@ -175,12 +176,14 @@ static void R_getDLLError(char *buf, int len)
 	NULL,
 	GetLastError(),
 	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	(LPTSTR) &lpMsgBuf,
+	&lpMsgBuf,
 	0,
 	NULL
 	);
     strcpy(buf, "LoadLibrary failure:  ");
-    strcat(buf, lpMsgBuf);
+    q = buf + strlen(buf);
+    /* It seems that Win 7 returns error messages with CRLF terminators */
+    for (p = lpMsgBuf; *p; p++) if (*p != '\r') *q++ = *p;
     LocalFree(lpMsgBuf);
 }
 
