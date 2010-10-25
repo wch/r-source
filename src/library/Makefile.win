@@ -13,7 +13,6 @@ ECHO = echo
 MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-#RHOME = $(shell ../gnuwin32/Rpwd.exe ../..)
 
 R_EXE = $(top_builddir)/$(BINDIR)/Rterm --vanilla --slave
 

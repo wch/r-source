@@ -2,6 +2,8 @@
 #
 # ${R_HOME}/src/library/Recommended/Makefile.win
 
+top_builddir = ../../..
+
 include ../../../share/make/vars.mk
 
 include ../../gnuwin32/MkRules
@@ -28,15 +30,15 @@ stamp-recommended: $(OBJECTS)
 ## allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--pkglock --install-tests --data-compress="xz"
 
-
-RCMD = ../../../$(BINDIR)/Rcmd
+RCMD = $(top_builddir)/$(BINDIR)/Rcmd
 
 ## force tar.exe, as internal tar gets wrong permissions on >= Vista
 ## when run from Cygwin
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
-	@R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' $(RCMD) INSTALL $(INSTALL_OPTS) -l $(R_HOME)/library `basename $< .tgz`_*.tar.gz
+	@R_INSTALL_TAR='tar.exe --no-same-owner --no-same-permissions' \
+	  $(RCMD) INSTALL $(INSTALL_OPTS) -l $(top_builddir)/library `basename $< .tgz`_*.tar.gz
 	@touch $@
 
 clean:

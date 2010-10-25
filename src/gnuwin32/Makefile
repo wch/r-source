@@ -11,7 +11,7 @@ include ../../share/make/vars.mk
 MK = $(MAKE) --no-print-directory
 
 all:
-	@$(MK) MkRules Rpwd.exe
+	@$(MK) MkRules
 	@if test -f  ../../SVN-REVISION ; then \
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
 	fi
@@ -33,10 +33,6 @@ MkRules: MkRules.dist MkRules.rules
 	cat MkRules.dist MkRules.rules > MkRules
 endif
 
-## must be absolute and space-free.  
-## NB: will not be set correctly first time through.
-RHOME = $(shell ./Rpwd.exe ../..)
-
 CFLAGS=-O3 -Wall -pedantic
 FFLAGS=-O3
 ifdef DEBUG
@@ -55,11 +51,11 @@ endif
 
 R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
-SOURCES = \
+CSOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rt_complete.c \
   rui.c run.c shext.c sys-win32.c system.c dos_wglob.c
-OBJS = $(SOURCES:.c=.o)
+OBJS = $(CSOURCES:.c=.o)
 ifeq ($(strip $(WIN)),32)
  OBJS += e_pow.o
 endif
@@ -82,12 +78,6 @@ endif
 CPPFLAGS = -I../include -I. -I../extra -DHAVE_CONFIG_H -DR_DLL_BUILD
 extra-CPPFLAGS = -I../library/grDevices/src
 
-Rpwd.exe: front-ends/Rpwd.exe
-	$(CP) $< $@
-
-front-ends/Rpwd.exe:
-	$(MK) -C front-ends Rpwd
-
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild:
 	@$(MK) fixfiles
@@ -107,9 +97,9 @@ endif
 
 rlibs:
 	$(MK) -C ../extra/intl CFLAGS='$(CFLAGS)' -f Makefile.win
-	$(MK) -C ../appl RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' -f Makefile.win
+	$(MK) -C ../appl CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' -f Makefile.win
 	$(MK) -C ../nmath CFLAGS='$(CFLAGS)' FFLAGS='${FFLAGS}' -f Makefile.win
-	$(MK) -C ../main RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
+	$(MK) -C ../main CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
 	$(MK) -C ./getline CFLAGS='$(CFLAGS)'
 	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv xz; do \
 	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
@@ -118,7 +108,7 @@ rlibs:
 rmodules:
 	@$(MKDIR) -p ../../modules$(R_ARCH)
 	$(MK) -C ../modules -f Makefile.win \
-	  RHOME=$(RHOME) CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)'
+	  CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)'
 
 COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -207,8 +197,7 @@ htmldocs:
 #                          ===== BLAS ======
 
 Rblas:
-	@$(MK) -C ../extra/blas -f Makefile.win \
-	  RHOME=$(RHOME) FFLAGS='$(FFLAGS)'
+	@$(MK) -C ../extra/blas -f Makefile.win FFLAGS='$(FFLAGS)'
 
 Rblas-clean:
 	@$(MK) -C ../extra/blas -f Makefile.win clean
@@ -244,7 +233,7 @@ distclean: clean
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
-	@$(MAKE) -C ../../tests -f Makefile.win distclean RHOME=$(RHOME)
+	@$(MAKE) -C ../../tests -f Makefile.win distclean
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
@@ -298,21 +287,21 @@ cleanwin:
 #                          ===== testing ======
 
 check check-devel check-all check-recommended:
-	@$(MK) -C ../../tests -f Makefile.win RHOME=$(RHOME) $@
+	@$(MK) -C ../../tests -f Makefile.win $@
 
 #                          ===== documentation ======
 
 pdfdocs manuals:
-	@$(MK) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MK) -C $(RHOME)/doc/manual -f Makefile.win
+	@$(MK) -C ../../doc/manual -f Makefile.win clean
+	@$(MK) -C ../../doc/manual -f Makefile.win
 
-REXE = $(RHOME)/$(BINDIR)/rterm.exe --vanilla --slave
+R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --slave
 
 vignettes:
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "../library/$${pkg}/inst/doc"; then \
 	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(REXE) > /dev/null; \
+	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(R_EXE) > /dev/null; \
 	  fi; \
 	done
 	@rm -rf .vignettes
@@ -342,7 +331,7 @@ link-recommended:
 
 recommended:
 	@$(ECHO) "--- Making recommended packages"
-	@$(MK) -C ../library/Recommended -f Makefile.win R_HOME=$(RHOME)
+	@$(MK) -C ../library/Recommended -f Makefile.win
 
 docfiles:
 	@$(MK) -f Makefile.docs
@@ -368,13 +357,12 @@ distribution:
 	@$(MK) manuals
 	@$(MK) rinstaller
 	@$(MK) crandir
-	@$(RM) -f $(RHOME)/SVN-REVISION.bak
+	@$(RM) -f ../../SVN-REVISION.bak
 
 
 ## ============= End of maintainer targets ========================
 
-# Dependencies : blas00.c malloc.c don't have any
-CSOURCES=$(SOURCES)
+# Dependencies: malloc.c doesn't have any
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

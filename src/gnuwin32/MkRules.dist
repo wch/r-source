@@ -24,10 +24,6 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
-# Where does Tcl/Tk live?  Spaces allowed.
-TCL_HOME = $(RHOME)/Tcl
-TCL_VERSION = 85
-
 # Define to use svnversion to set SVN-REVISION (slow, and requires a clean
 # checkout with no modifications).
 # USE_SVNVERSION = YES

@@ -34,9 +34,6 @@ else
 IMPDIR=$(BINDIR)
 endif
 
-## used in stats/src/Makevars.win
-BLAS_LIBS=-L$(RHOME)/$(IMPDIR) -lRblas
-
 AR=$(BINPREF)ar
 AS=$(BINPREF)as
 # AWK=gawk

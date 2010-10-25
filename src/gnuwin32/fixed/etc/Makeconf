@@ -50,6 +50,7 @@ RM = rm -f
 SORT = sort
 
 GRAPHAPP_LIB = -lRgraphapp
+## Used by packages tcltk and tkrplot
 TCL_HOME = $(R_HOME)/Tcl
 TCL_VERSION = 85
 ZLIB_LIBS = -lRzlib

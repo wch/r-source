@@ -1,10 +1,10 @@
 #-*- Makefile -*-
 #
-# ${RHOME}/tests/Examples/Makefile.win
+# ${R_HOME}/tests/Examples/Makefile.win
 
-RHOME=../..
+R_HOME=../..
 
-include $(RHOME)/src/gnuwin32/MkRules
+include $(R_HOME)/src/gnuwin32/MkRules
 
 INSTFILES = \
   datasets-Ex.Rout.save grDevices-Ex.Rout.save graphics-Ex.Rout.save \
@@ -13,7 +13,7 @@ INSTFILES = \
 
 ECHO = echo
 
-R_EXE = $(RHOME)/$(BINDIR)/Rterm --slave --vanilla LANGUAGE=en LC_TIME=C
+R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla LANGUAGE=en LC_TIME=C
 
 all: test-Examples-Base
 

@@ -1,6 +1,7 @@
 #-*- Makefile -*-
 #
 # ${R_HOME}/Makeconf for Windows
+# called from $(R_HOME)/src/library/*/Makefile.win, settings for basepkg.mk
 
 ECHO = echo
 MKINSTALLDIRS = mkdir -p
@@ -9,5 +10,3 @@ SHELL = sh
 USE_NLS = yes
 
 R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
-
-RHOME = ../../../..

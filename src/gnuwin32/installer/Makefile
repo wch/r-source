@@ -6,8 +6,6 @@ include ../MkRules
 FIND = find
 
 R_HOME = ../../..
-## for TCL_HOME
-RHOME = ../../..
 include $(R_HOME)/share/make/vars.mk
 
 ## use this to install other packages from main library
@@ -119,7 +117,7 @@ md5sums:
 
 fixups:
 	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
-	$(CP) -prf "$(TCL_HOME)" $(RPREFIX)
+	$(CP) -prf $(R_HOME)/Tcl $(RPREFIX)
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
 
 32bit:
