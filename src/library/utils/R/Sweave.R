@@ -34,6 +34,9 @@ Sweave <- function(file, driver=RweaveLatex(),
     if(is.character(syntax))
         syntax <- get(syntax, mode="list")
 
+    if(.Platform$OS.type == "windows")
+        file <- gsub("\\\\", "/", file)
+    
     drobj <- driver$setup(file=file, syntax=syntax, ...)
     on.exit(driver$finish(drobj, error=TRUE))
 
