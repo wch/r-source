@@ -288,9 +288,9 @@ sprintf('         Value="[!%s],0" />', rgui),
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="manualsb" Title="Basic Manuals" Description="Basic Manuals in PDF" Level="1"',
+        '      <Feature Id="manualsb" Title="Basic manuals" Description="Basic Manuals in PDF" Level="1"',
         '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'manuals/technical'])
+    for(id in ids[comps == 'manuals/basic'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
@@ -351,7 +351,7 @@ sprintf('         Value="[!%s],0" />', rgui),
         '',
         '      <Feature Id="tcl2" Title="Timezone files for Tcl" Description="Timezone files for Tcl" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
-    for(id in ids[comps == 'tcl/tzone'])
+    for(id in ids[comps == 'tcl/tzdata'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
@@ -361,7 +361,7 @@ sprintf('         Value="[!%s],0" />', rgui),
 
     cat(file = con, sep="\n",
         '',
-        '    <Feature Id="trans" Title="Message Translations" Description="Messages tranalsted to other languages" Level="1"',
+        '    <Feature Id="trans" Title="Message Translations" Description="Messages translated to other languages" Level="1"',
         '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'trans'])
         cat(file = con,
@@ -370,7 +370,7 @@ sprintf('         Value="[!%s],0" />', rgui),
 
      cat(file = con, sep="\n",
         '',
-        '    <Feature Id="tests" Title="Test Files" Description="Test files" Level="1"',
+        '    <Feature Id="tests" Title="Test Files" Description="Test files" Level="1000"',
         '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tests'])
         cat(file = con,
