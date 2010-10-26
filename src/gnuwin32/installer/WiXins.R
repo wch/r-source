@@ -49,14 +49,15 @@
     ## http://blogs.msdn.com/astebner/archive/2007/11/18/6385121.aspx
     cat(file = con, sep = "\n",
         '<?xml version="1.0" encoding="windows-1252"?>',
-        '<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">',
+        '<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">',
         '  <Product Manufacturer="R Development Core Team" ',
-        '   Id="3AF9DA8E-B4DB-49B2-802D-A279667F44E5"',
+        '   Id="*"',
         '   Language="1033"',
         sprintf('   Name="R %s for Windows"', Rver),
-        sprintf('   Version="%s"', Rver),
+        ## FIXME sprintf('   Version="%s"', Rver),
+        '   Version="2.11.0.51588"',
         '   UpgradeCode="309E663C-CA7A-40B9-8822-5D466F1E2AF9">',
-        '    <Package Id="????????-????-????-????-????????????" ',
+        '    <Package Id="*" ',
         sprintf('     Keywords="R %s for Windows Installer"', Rver),
         sprintf('     Description="R %s for Windows Installer"', Rver),
         '     Comments="R Language and Environment"',
@@ -80,18 +81,6 @@
             "  VersionNT64", "</Condition>")
     }
 
-    ## The standard folder names are listed at
-    ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
-    cat(file = con, sep = "\n", '',
-        '    <Directory Id=\'TARGETDIR\' Name=\'SourceDir\'>',
-        '',
-        if (have64bit)
-        '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
-        else
-        '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
-        '        <Directory Id=\'R\' Name=\'R\'>',
-        sprintf("          <Directory Id='INSTALLDIR' Name = '%s' LongName='%s'>", sRW, RW))
-
 
     ff <- readLines('files.wxs', warn = FALSE)
     ff <- grep("^        ", ff, value = TRUE)
@@ -102,6 +91,7 @@
     rgui <- rgui64 <- rhelp <- 'unknown'
     comp <- id <- 'unknown'
     rx3 <- paste(".*", srcdir0, "/", sep="")
+    rx3 <- ".*SourceDir/"
     for(i in seq_along(ff)) {
         f <- ff[i]
         if(grepl(rx1, f)) id <- sub(rx1, "\\1", f)
@@ -163,18 +153,33 @@
             comps <- c(comps, component)
         }
         if(grepl("PUT-GUID-HERE", f)) {
-            f <- sub("PUT-GUID-HERE", uuids[nc], f)
+            f <- sub("PUT-GUID-HERE", uuids[nc], f, fixed = TRUE)
             nc <- nc + 1L
         }
+        f <- sub("SourceDir", srcdir, f, fixed = TRUE)
+        f <- sub("TARGETDIR", "INSTALLDIR", f, fixed = TRUE)
         cat("    ", f, "\n", file=con, sep="")
     }
     if (rgui == "unknown") rgui <- rgui64
 
+
+    ## The standard folder names are listed at
+    ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
+    cat(file = con, sep = "\n", '',
+        '    <Directory Id=\'TARGETDIR\' Name=\'SourceDir\'>',
+        '',
+        if (have64bit)
+        '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
+        else
+        '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
+        '        <Directory Id=\'R\' Name=\'R\'>',
+        sprintf("          <Directory Id='INSTALLDIR' Name = '%s'>", RW))
     cat(file = con, sep="\n",
         "          </Directory>",
         "        </Directory>",
         "      </Directory>")
 
+    if(FALSE) {
     cat(file = con, sep="\n",
 '      <Directory Id="StartMenuFolder" Name="SMenu">',
 '        <Directory Id="ProgramMenuFolder" Name="Programs">',
@@ -183,24 +188,24 @@
         cat(file = con, sep="\n",
 '            <Component Id="shortcut0"',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
-'              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU" Name="R" ',
-sprintf('               LongName="R %s" Target="[!%s]" ', Rver, rgui),
+'              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
+sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
 '               WorkingDirectory="INSTALLDIR" />',
 '            </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
 '            <Component Id="shortcut64"',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
-'              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU" Name="R64" ',
-sprintf('               LongName="R x64 %s" Target="[!%s]" ', Rver, rgui64),
+'              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU"',
+sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
 '               WorkingDirectory="INSTALLDIR" />',
 '            </Component>')
 
     cat(file = con, sep="\n",
 '            <Component Id="shortcut1" ',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
-'              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU" ',
-sprintf('               Name="RHelp" LongName="R %s Help" Target="[!%s]"', Rver, rhelp),
+'              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU"',
+sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
 '               WorkingDirectory="INSTALLDIR" />',
 '            </Component>',
 '          </Directory>',
@@ -210,30 +215,33 @@ sprintf('               Name="RHelp" LongName="R %s Help" Target="[!%s]"', Rver,
     if (have32bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
-sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R %s"', Rver),
+sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', Rver),
 sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
 '        </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
-sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="Rx64" LongName="R x64 %s"', Rver),
+sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
 sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui64),
 '        </Component>')
-    cat(file = con, sep="\n", '      </Directory>',
+    cat(file = con, sep="\n",
+'      </Directory>',
 '',
 '      <Directory Id="AppDataFolder" Name="AppData">',
-'        <Directory Id="Microsoft" Name="MS" LongName="Microsoft">',
-'          <Directory Id="InternetExplorer" Name="IE" LongName="Internet Explorer">',
-'            <Directory Id="QuickLaunch" Name="QLaunch" LongName="Quick Launch">',
+'        <Directory Id="Microsoft" Name="Microsoft">',
+'          <Directory Id="InternetExplorer" Name="Internet Explorer">',
+'            <Directory Id="QuickLaunch" Name="Quick Launch">',
 sprintf('              <Component Id="quickshortcut0" DiskId="1" Guid="%s">', guuids()),
-sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R %s"', Rver),
+sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', Rver),
 sprintf('                 WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
 '              </Component>',
 '            </Directory>',
 '          </Directory>',
 '        </Directory>',
-'      </Directory>',
-'',
+'      </Directory>')
+}
+    if(FALSE) {
+    cat(file = con, sep="\n",'',
 '',
 sprintf('      <Component Id="registry0" Guid="%s">', guuids()),
 '        <Registry Id="RInstallPath" Root="HKMU" Key="Software\\R-core\\R" ',
@@ -319,7 +327,10 @@ sprintf('      <Component Id="registry6" Guid="%s">', guuids()),
 sprintf('         Value="[!%s],0" />', rgui),
 '      </Component>',
 '    </Directory>')
-
+} else {
+    cat(file = con, sep="\n",
+'    </Directory>')
+}
     ## the features.
     cat(file = con, sep="\n",
         '',
@@ -484,7 +495,7 @@ sprintf('         Value="[!%s],0" />', rgui),
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
 
-
+    if(FALSE)
     cat(file = con, sep="\n",
         '',
         '    <Feature Id="shortcuts" Title="Shortcuts" Description="Shortcut install options" Level="1" InstallDefault="local"',
@@ -526,12 +537,14 @@ sprintf('         Value="[!%s],0" />', rgui),
         "      <ComponentRef Id='registry4' />",
         "      <ComponentRef Id='registry5' />",
         "      <ComponentRef Id='registry6' />",
-        "    </Feature>",
+        "    </Feature>")
+    cat(file = con, sep="\n",
         "",
         '    <UIRef Id="WixUI_FeatureTree" />',
         '    <UIRef Id="WixUI_ErrorProgressText" />',
+        '    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />',
         '',
-        '    <Icon Id="shell32.dll" SourceFile="C:\\Windows\\system32\\shell32.dll" />',
+#        '    <Icon Id="shell32.dll" SourceFile="C:\\Windows\\system32\\shell32.dll" />',
         '',
         "  </Product>",
         "</Wix>")
