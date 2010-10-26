@@ -163,7 +163,7 @@ files.wxs: imagedir fixups 32bit md5sums
 	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
 
 R.wxs: WIXins.R uuids files.wxs
-	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || rm -f $@
+	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || (rm -f $@;exit 1)
 
 ## for WiX 3.0 light uses -ext WixUIExtension
 ## To change compression with WiX 3.0 use
