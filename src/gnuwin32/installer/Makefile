@@ -48,7 +48,7 @@ ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
 SHARE_DIRS = R encodings licenses locale make texmf zoneinfo
 
 all: $(RPREFIX)-$(SUFF).exe
-msi: $(RPREFIX)-win32.msi
+msi: $(RPREFIX)-$(SUFF).msi
 
 imagedir:
 	$(RM) -r $(RPREFIX)
@@ -159,27 +159,20 @@ uuidgen.exe: uuidgen.o
 uuids: uuidgen.exe
 	uuidgen 10000 > $@
 
-files.wxs: imagedir fixups md5sums
+files.wxs: imagedir fixups 32bit md5sums
 	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
 
 R.wxs: WIXins.R uuids files.wxs
-	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL)
+	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || rm -f $@
 
 ## for WiX 3.0 light uses -ext WixUIExtension
 ## To change compression with WiX 3.0 use
 ## light -dcl:high
 ## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
-ifeq "$(WIN)" "64"
-$(RPREFIX)-win32.msi:
-	@echo "MSI installs for 64-bit builds are not yet supported"
-	@exit 1
-else
-$(RPREFIX)-win32.msi: R.wxs License.rtf
+$(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
 	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
 	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \
 	  -loc $(WIXDIR)/WixUI_en-us.wxl >> $(RPREFIX).log 2>&1
-endif
-
 
 
 clean:
@@ -187,7 +180,7 @@ clean:
 	  uuidgen.o uuidgen.exe uuids
 
 distclean: clean
-	rm -f R*-win32.*exe R*-win32.msi R*-win64.exe R*-win.exe
+	rm -f R*-win*.exe R*-win*.msi
 
 myR:
 	echo "make.packages.html(.Library, verbose=FALSE)" | "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave LC_COLLATE=C

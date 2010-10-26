@@ -17,6 +17,8 @@
 
 .make_R.wxs <- function(RW, srcdir, personal = "0")
 {
+    have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
+
     personal <- personal == "1"
     ## need DOS-style paths
     srcdir0 <- srcdir
@@ -34,7 +36,6 @@
 
     ## for x64 add InstallerVersion="200" Platforms="x64"
     ## see http://blogs.msdn.com/astebner/archive/2007/08/09/4317654.aspx
-    ## and change the product ....
     ## Or something like
     ##<Condition Message='This application is for x64 Windows.'>
     ##  VersionNT64
@@ -59,7 +60,9 @@
         sprintf('     Description="R %s for Windows Installer"', Rver),
         '     Comments="R Language and Environment"',
         '     Manufacturer="R Development Core Team"',
-        '     InstallerVersion="100"',
+        if (have64bit) '     InstallerVersion="200"'
+        else '     InstallerVersion="100"',
+        if (have64bit) '     Platforms="x64"',
         '     Languages="1033"',
         '     Compressed="yes"',
         if (personal) 'InstallPrivileges="limited"',
@@ -68,16 +71,26 @@
         '   <Property Id=\'DiskPrompt\' Value="R for Windows Installation [1]" />',
         if(personal)'   <Property Id="ALLUSERS"></Property>'
         else '   <Property Id="ALLUSERS">1</Property>',
-        '',
+        '')
+
+    if (have64bit) {
+        cat(file = con, sep = "\n", "",
+            "<Condition Message='This application is for x64 Windows.'>",
+            "  VersionNT64", "</Condition>")
+    }
+
+    ## The standard folder names are listed at
+    ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
+    cat(file = con, sep = "\n", '',
         '    <Directory Id=\'TARGETDIR\' Name=\'SourceDir\'>',
         '',
+        if (have64bit)
+        '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
+        else
         '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
         '        <Directory Id=\'R\' Name=\'R\'>',
         sprintf("          <Directory Id='INSTALLDIR' Name = '%s' LongName='%s'>", sRW, RW))
 
-    ## The standard folder names are listed at
-    ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
-    ## They include ProgramFiles64Folder: this one is 32-bit
 
     ff <- readLines('files.wxs', warn = FALSE)
     ff <- grep("^        ", ff, value = TRUE)
@@ -85,9 +98,8 @@
     rx2 <- ' *<File Id=\"([^\"]*).* (src|Source)=\"([^\"]*)\".*'
     rx3 <- paste(".*\\", srcdir, "\\", sep = "")
     comps <- ids <- nm <- character()
-    rgui <- rhelp <- 'unknown'
+    rgui <- rgui64 <- rhelp <- 'unknown'
     comp <- id <- 'unknown'
-    have64bit <- FALSE
     rx3 <- paste(".*", srcdir0, "/", sep="")
     for(i in seq_along(ff)) {
         f <- ff[i]
@@ -97,11 +109,12 @@
             src <- sub(rx3, "", sub(rx2, "\\3", f), fixed = TRUE)
             src <- gsub("\\", "/", src, fixed = TRUE)
             if(grepl("bin/i386/Rgui.exe$", src)) rgui <- fn
+            if(grepl("bin/x64/Rgui.exe$", src)) rgui64 <- fn
             if(grepl("doc/html/index.html$", src)) rhelp <- fn
             ids <- c(ids, id)
             nm <- c(nm, src)
-            ## These manuals are on the Rgui menu, so should always be installed
             g <- sub(rx3, "", src)
+            ## These manuals are on the Rgui menu, so should always be installed
             if (g %in%  c("doc/manual/R-FAQ.html",
                           "doc/html/rw-FAQ.html",
                           "share/texmf/Sweave.sty"))
@@ -124,7 +137,7 @@
                 component <- "manuals"
             else if (grepl("^library/[^/]*/tests", g) || grepl("^tests", g))
 	    	component <- "tests"
-            else if (grepl("^Tcl/(bin|lib)64", g))
+            else if (have64bit && grepl("^Tcl/(bin|lib)64", g))
                 component <- "tcl/64"
             else if (have64bit &&
                      (grepl("^Tcl/bin", g) ||
@@ -142,8 +155,8 @@
             else if (grepl("^share/locale", g) ||
                      grepl("^library/[^/]*/po", g))
                 component <- "trans"
-            # else if (grepl("/i386/", g)) component <- "i386"
-            # else if (grepl("/x64/", g)) component <- "x64"
+            else if (have64bit && grepl("/i386/", g)) component <- "i386"
+            else if (have64bit && grepl("/x64/", g)) component <- "x64"
             else
                 component <- "main"
             comps <- c(comps, component)
@@ -169,7 +182,17 @@ sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU" Name="R" ',
 sprintf('               LongName="R %s" Target="[!%s]" ', Rver, rgui),
 '               WorkingDirectory="INSTALLDIR" />',
-'            </Component>',
+'            </Component>')
+    if (have64bit)
+            cat(file = con, sep="\n",
+'            <Component Id="shortcut64"',
+sprintf('             Guid="%s" KeyPath="yes">', guuids()),
+'              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU" Name="R64" ',
+sprintf('               LongName="R x64 %s" Target="[!%s]" ', Rver, rgui64),
+'               WorkingDirectory="INSTALLDIR" />',
+'            </Component>')
+
+    cat(file = con, sep="\n",
 '            <Component Id="shortcut1" ',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU" ',
@@ -183,8 +206,14 @@ sprintf('               Name="RHelp" LongName="R %s Help" Target="[!%s]"', Rver,
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R %s"', Rver),
 sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
-'        </Component>',
-'      </Directory>',
+'        </Component>')
+    if (have64bit)
+        cat(file = con, sep="\n",
+sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
+sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="Rx64" LongName="R x64 %s"', Rver),
+sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui64),
+'        </Component>')
+    cat(file = con, sep="\n", '      </Directory>',
 '',
 '      <Directory Id="AppDataFolder" Name="AppData">',
 '        <Directory Id="Microsoft" Name="MS" LongName="Microsoft">',
@@ -246,7 +275,30 @@ sprintf('      <Component Id="registry3" Guid="%s">', guuids()),
 sprintf('      <Component Id="registry4" Guid="%s">', guuids()),
 '        <Registry Id="RWorkspace" Root="HKCR" Key="RWorkspace" Type="string" ',
 '         KeyPath="yes" Value="R Workspace" />',
+'      </Component>')
+ if (have64bit) {
+    cat(file = con, sep="\n",
+ sprintf('      <Component Id="registry30" Guid="%s">', guuids()),
+'        <Registry Id="R64InstallPath" Root="HKMU" Key="Software\\R-core\\R32" ',
+'         Name="InstallPath" Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
 '      </Component>',
+sprintf('      <Component Id="registry31" Guid="%s">', guuids()),
+'        <Registry Id="R64VerInstallPath" Root="HKMU" ',
+'         Key="Software\\R-core\\R64" Name="InstallPath"',
+'         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
+'      </Component>',
+sprintf('      <Component Id="registry32" Guid="%s">', guuids()),
+'        <Registry Id="R64CurrentVersion" Root="HKMU" Key="Software\\R-core\\R32" ',
+'         Name="Current Version" Type="string" KeyPath="yes" ',
+'         Value="[ProductVersion]" />',
+'      </Component>',
+sprintf('      <Component Id="registry33" Guid="%s">', guuids()),
+'        <Registry Id="R64CurrentVerInstallPath" Root="HKMU" ',
+'         Key="Software\\R-core\\R32\\[ProductVersion]" Name="InstallPath"',
+'         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
+'      </Component>')
+}
+    cat(file = con, sep="\n",
 sprintf('      <Component Id="registry5" Guid="%s">', guuids()),
 '        <Registry Id="RDataCommand" Root="HKCR" ',
 '         Key="RWorkspace\\shell\\open\\command" Type="string" KeyPath="yes" ',
@@ -270,6 +322,28 @@ sprintf('         Value="[!%s],0" />', rgui),
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
+
+    if (have64bit) {
+    cat(file = con, sep="\n",
+        '',
+        '    <Feature Id="i386" Title="i386 Files" Description="32-bit binary files" Level="1"',
+        '     ConfigurableDirectory="INSTALLDIR"',
+        '     Display="expand" InstallDefault="local" AllowAdvertise="no">')
+    for(id in ids[comps == 'i386'])
+        cat(file = con,
+            "      <ComponentRef Id='", id, "' />\n", sep="")
+    cat(file = con, '    </Feature>\n')
+
+    cat(file = con, sep="\n",
+        '',
+        '    <Feature Id="x64" Title="x64 Files" Description="64-bit binary files" Level="1"',
+        '     ConfigurableDirectory="INSTALLDIR"',
+        '     Display="expand" InstallDefault="local" AllowAdvertise="no">')
+    for(id in ids[comps == 'x64'])
+        cat(file = con,
+            "      <ComponentRef Id='", id, "' />\n", sep="")
+    cat(file = con, '    </Feature>\n')
+    }
 
     cat(file = con, sep="\n",
         '',
@@ -338,6 +412,26 @@ sprintf('         Value="[!%s],0" />', rgui),
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
 
+    if (have64bit) {
+    cat(file = con, sep="\n",
+        '',
+        '      <Feature Id="tcl32" Title="i386 Files for Package tcltk" Description="32-bit files for package tcltk" Level="1"',
+        '       InstallDefault="local" AllowAdvertise="no">')
+    for(id in ids[comps == 'tcl/32'])
+        cat(file = con,
+            "      <ComponentRef Id='", id, "' />\n", sep="")
+    cat(file = con, '      </Feature>\n')
+
+    cat(file = con, sep="\n",
+        '',
+        '      <Feature Id="tcl64" Title="x64 Files for Package tcltk" Description="64-bit files for package tcltk" Level="1"',
+        '       InstallDefault="local" AllowAdvertise="no">')
+    for(id in ids[comps == 'tcl/64'])
+        cat(file = con,
+            "      <ComponentRef Id='", id, "' />\n", sep="")
+    cat(file = con, '      </Feature>\n')
+    }
+
     cat(file = con, sep="\n",
         '',
         '      <Feature Id="tcl1" Title="Tcl/Tk Help (Compiled HTML)" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"',
@@ -385,11 +479,13 @@ sprintf('         Value="[!%s],0" />', rgui),
         "      <Feature Id='sshortcuts' Title='Start Menu Shortcuts' Description='Install Start menu shortcuts' Level='1'",
         "       ConfigurableDirectory='RMENU' InstallDefault='local' AllowAdvertise='no'>",
         "        <ComponentRef Id='shortcut0' />",
+        if (have64bit)"        <ComponentRef Id='shortcut64' />",
         "        <ComponentRef Id='shortcut1' />",
         "      </Feature>",
         "      <Feature Id='dshortcut' Title='Desktop Shortcut' Description='Install Desktop shortcut' Level='1'",
         "       InstallDefault='local' AllowAdvertise='no'>",
         "        <ComponentRef Id='desktopshortcut0' />",
+        if (have64bit) "        <ComponentRef Id='desktopshortcut64' />",
         "      </Feature>",
         '      <Feature Id="qshortcut" Title="Quicklaunch Shortcut" Description="Install Quick Launch shortcut" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">',
@@ -398,6 +494,7 @@ sprintf('         Value="[!%s],0" />', rgui),
         "    </Feature>",
         '    <Feature Id="registryversion" Title="Save Version in Registry"',
         '     Description="Save the R version and install path in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">',
+        "      <ComponentRef Id='registry0' />",
         "      <ComponentRef Id='registry1' />",
         "      <ComponentRef Id='registry7' />",
         "      <ComponentRef Id='registry2' />",
@@ -405,6 +502,10 @@ sprintf('         Value="[!%s],0" />', rgui),
         "      <ComponentRef Id='registry21' />",
         "      <ComponentRef Id='registry22' />",
         "      <ComponentRef Id='registry23' />",
+        if (have64bit) "      <ComponentRef Id='registry30' />",
+        if (have64bit) "      <ComponentRef Id='registry31' />",
+        if (have64bit) "      <ComponentRef Id='registry32' />",
+        if (have64bit) "      <ComponentRef Id='registry33' />",
         "    </Feature>",
         '    <Feature Id="associate" Title="Associate with .RData files"',
         '     Description="Associate R with .RData files" Level="1" InstallDefault="local" AllowAdvertise="no">',
