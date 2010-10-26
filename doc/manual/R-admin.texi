@@ -1289,8 +1289,8 @@ installer image.
 
 It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
-installs, and is not recommended for casual use.  It is only supported
-for 32-bit Windows at present.
+installs, and is not recommended for casual use.  @emph{It is only
+supported for 32-bit Windows at present.}
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 2.0} available from @uref{http://wix.sourceforge.net/}.  (This needs the
@@ -1312,7 +1312,7 @@ make msi
 @end example
 
 @noindent
-which will results in a file of about 45Mb with a name like
+which will results in a file of about 50Mb with a name like
 @file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
 installed, but those who need it will know what to do with it.
 
@@ -2706,7 +2706,6 @@ Some code developers may want Perl version 5.8.0 or later, available via
 @c The Perl scripts left are
 @c src/scripts: Sd2Rd
 @c tools: help2man.pl install-info.pl
-@c src/gnuwin32/installer: WIXins.pl
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
