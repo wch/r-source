@@ -2697,7 +2697,6 @@ ICU be found this can be suppressed by @option{--without-ICU}.
 
 @c The Perl scripts left are
 @c tools: help2man.pl install-info.pl
-@c src/gnuwin32/installer: WIXins.pl
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
