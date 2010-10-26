@@ -14,6 +14,13 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item The MSI installer is now made by an \R script, and there is
+      now support for 64-bit builds.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Some warning/error messages from \code{dyn.load()} could be

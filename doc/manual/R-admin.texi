@@ -1289,8 +1289,7 @@ installer image.
 
 It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
-installs, and is not recommended for casual use.  @emph{It is only
-supported for 32-bit Windows at present.}
+installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 2.0} available from @uref{http://wix.sourceforge.net/}.  (This needs the
@@ -1312,9 +1311,15 @@ make msi
 @end example
 
 @noindent
-which will results in a file of about 50Mb with a name like
-@file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
-installed, but those who need it will know what to do with it.
+which will results in a file a name like
+@file{@value{RWVERSION}-win.msi}.  This can be double-clicked to be
+installed, but those who need it will know what to do with it (usually
+by running @command{msiexec /i} with additional options).
+
+As from @R{} 2.12.1 the MSI installer can be built both for a 32-bit
+build of @R{} or for a 64-bit build of @R{} (optionally including 32-bit
+files).  Unlike the main installer, a 64-bit MSI installer can only be
+installed on a 64-bit system.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.
