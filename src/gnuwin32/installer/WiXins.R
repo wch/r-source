@@ -18,6 +18,7 @@
 .make_R.wxs <- function(RW, srcdir, personal = "0")
 {
     have64bit <- file_test("-d", file.path(srcdir, "bin", "x64"))
+    have32bit <- file_test("-d", file.path(srcdir, "bin", "i386"))
 
     personal <- personal == "1"
     ## need DOS-style paths
@@ -167,6 +168,7 @@
         }
         cat("    ", f, "\n", file=con, sep="")
     }
+    if (rgui == "unknown") rgui <- rgui64
 
     cat(file = con, sep="\n",
         "          </Directory>",
@@ -176,7 +178,9 @@
     cat(file = con, sep="\n",
 '      <Directory Id="StartMenuFolder" Name="SMenu">',
 '        <Directory Id="ProgramMenuFolder" Name="Programs">',
-'          <Directory Id="RMENU" Name="R">',
+'          <Directory Id="RMENU" Name="R">')
+    if (have32bit)
+        cat(file = con, sep="\n",
 '            <Component Id="shortcut0"',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU" Name="R" ',
@@ -184,7 +188,7 @@ sprintf('               LongName="R %s" Target="[!%s]" ', Rver, rgui),
 '               WorkingDirectory="INSTALLDIR" />',
 '            </Component>')
     if (have64bit)
-            cat(file = con, sep="\n",
+        cat(file = con, sep="\n",
 '            <Component Id="shortcut64"',
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU" Name="R64" ',
@@ -202,7 +206,9 @@ sprintf('               Name="RHelp" LongName="R %s Help" Target="[!%s]"', Rver,
 '          </Directory>',
 '        </Directory>',
 '      </Directory>',
-'      <Directory Id="DesktopFolder" Name="Desktop">',
+'      <Directory Id="DesktopFolder" Name="Desktop">')
+    if (have32bit)
+        cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R %s"', Rver),
 sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
@@ -248,6 +254,16 @@ sprintf('      <Component Id="registry2" Guid="%s">', guuids()),
 '         Key="Software\\R-core\\R\\[ProductVersion]" Name="InstallPath"',
 '         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
 '      </Component>',
+sprintf('      <Component Id="registry3" Guid="%s">', guuids()),
+'        <Registry Id="RData" Root="HKCR" Key=".RData" Type="string"',
+'         KeyPath="yes" Value="RWorkspace" />',
+'      </Component>',
+sprintf('      <Component Id="registry4" Guid="%s">', guuids()),
+'        <Registry Id="RWorkspace" Root="HKCR" Key="RWorkspace" Type="string" ',
+'         KeyPath="yes" Value="R Workspace" />',
+'      </Component>')
+ if (have32bit) {
+    cat(file = con, sep="\n",
 sprintf('      <Component Id="registry20" Guid="%s">', guuids()),
 '        <Registry Id="RXInstallPath" Root="HKMU" Key="Software\\R-core\\R32" ',
 '         Name="InstallPath" Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
@@ -267,15 +283,8 @@ sprintf('      <Component Id="registry23" Guid="%s">', guuids()),
 '         Key="Software\\R-core\\R32\\[ProductVersion]" Name="InstallPath"',
 '         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
 '      </Component>',
-'',
-sprintf('      <Component Id="registry3" Guid="%s">', guuids()),
-'        <Registry Id="RData" Root="HKCR" Key=".RData" Type="string"',
-'         KeyPath="yes" Value="RWorkspace" />',
-'      </Component>',
-sprintf('      <Component Id="registry4" Guid="%s">', guuids()),
-'        <Registry Id="RWorkspace" Root="HKCR" Key="RWorkspace" Type="string" ',
-'         KeyPath="yes" Value="R Workspace" />',
-'      </Component>')
+'')
+}
  if (have64bit) {
     cat(file = con, sep="\n",
  sprintf('      <Component Id="registry30" Guid="%s">', guuids()),
@@ -294,7 +303,7 @@ sprintf('      <Component Id="registry32" Guid="%s">', guuids()),
 '      </Component>',
 sprintf('      <Component Id="registry33" Guid="%s">', guuids()),
 '        <Registry Id="R64CurrentVerInstallPath" Root="HKMU" ',
-'         Key="Software\\R-core\\R32\\[ProductVersion]" Name="InstallPath"',
+'         Key="Software\\R-core\\R64\\[ProductVersion]" Name="InstallPath"',
 '         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />',
 '      </Component>')
 }
@@ -316,29 +325,32 @@ sprintf('         Value="[!%s],0" />', rgui),
         '',
         '    <Feature Id="main" Title="Main Files" Description="Main Files" Level="1"',
         '     ConfigurableDirectory="INSTALLDIR"',
-        '     Display="expand" InstallDefault="local" AllowAdvertise="no"',
+        '     InstallDefault="local" AllowAdvertise="no"',
         '     Absent="disallow">')
     for(id in ids[comps == 'main'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
 
-    if (have64bit) {
+    if (have64bit && have32bit) {
     cat(file = con, sep="\n",
         '',
         '    <Feature Id="i386" Title="i386 Files" Description="32-bit binary files" Level="1"',
         '     ConfigurableDirectory="INSTALLDIR"',
-        '     Display="expand" InstallDefault="local" AllowAdvertise="no">')
+        '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'i386'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
+    }
 
+    if (have64bit) {
     cat(file = con, sep="\n",
         '',
         '    <Feature Id="x64" Title="x64 Files" Description="64-bit binary files" Level="1"',
         '     ConfigurableDirectory="INSTALLDIR"',
-        '     Display="expand" InstallDefault="local" AllowAdvertise="no">')
+        if (!have32bit) '     Absent="disallow"',
+        '     InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'x64'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
@@ -412,7 +424,7 @@ sprintf('         Value="[!%s],0" />', rgui),
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
 
-    if (have64bit) {
+    if (have64bit && have32bit) {
     cat(file = con, sep="\n",
         '',
         '      <Feature Id="tcl32" Title="i386 Files for Package tcltk" Description="32-bit files for package tcltk" Level="1"',
@@ -421,7 +433,8 @@ sprintf('         Value="[!%s],0" />', rgui),
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
-
+    }
+    if (have64bit) {
     cat(file = con, sep="\n",
         '',
         '      <Feature Id="tcl64" Title="x64 Files for Package tcltk" Description="64-bit files for package tcltk" Level="1"',
@@ -478,13 +491,13 @@ sprintf('         Value="[!%s],0" />', rgui),
         '     AllowAdvertise="no" Display="expand">',
         "      <Feature Id='sshortcuts' Title='Start Menu Shortcuts' Description='Install Start menu shortcuts' Level='1'",
         "       ConfigurableDirectory='RMENU' InstallDefault='local' AllowAdvertise='no'>",
-        "        <ComponentRef Id='shortcut0' />",
-        if (have64bit)"        <ComponentRef Id='shortcut64' />",
+        if (have32bit) "        <ComponentRef Id='shortcut0' />",
+        if (have64bit) "        <ComponentRef Id='shortcut64' />",
         "        <ComponentRef Id='shortcut1' />",
         "      </Feature>",
         "      <Feature Id='dshortcut' Title='Desktop Shortcut' Description='Install Desktop shortcut' Level='1'",
         "       InstallDefault='local' AllowAdvertise='no'>",
-        "        <ComponentRef Id='desktopshortcut0' />",
+        if (have32bit) "        <ComponentRef Id='desktopshortcut0' />",
         if (have64bit) "        <ComponentRef Id='desktopshortcut64' />",
         "      </Feature>",
         '      <Feature Id="qshortcut" Title="Quicklaunch Shortcut" Description="Install Quick Launch shortcut" Level="1000"',
@@ -498,10 +511,10 @@ sprintf('         Value="[!%s],0" />', rgui),
         "      <ComponentRef Id='registry1' />",
         "      <ComponentRef Id='registry7' />",
         "      <ComponentRef Id='registry2' />",
-        "      <ComponentRef Id='registry20' />",
-        "      <ComponentRef Id='registry21' />",
-        "      <ComponentRef Id='registry22' />",
-        "      <ComponentRef Id='registry23' />",
+        if (have32bit) "      <ComponentRef Id='registry20' />",
+        if (have32bit) "      <ComponentRef Id='registry21' />",
+        if (have32bit) "      <ComponentRef Id='registry22' />",
+        if (have32bit) "      <ComponentRef Id='registry23' />",
         if (have64bit) "      <ComponentRef Id='registry30' />",
         if (have64bit) "      <ComponentRef Id='registry31' />",
         if (have64bit) "      <ComponentRef Id='registry32' />",
