@@ -29,6 +29,8 @@
 ## http://wix.mindcapers.com/wiki/Allusers_Install_vs._Per_User_Install
 ## For non-elevation  see
 ## http://blogs.msdn.com/astebner/archive/2007/11/18/6385121.aspx
+## Also
+## http://msdn.microsoft.com/en-us/library/aa367559%28VS.85%29.aspx
 
 ## The standard folder names are listed at
 ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
@@ -70,14 +72,14 @@
         '  <Product Manufacturer="R Development Core Team" ',
         '   Id="*"',
         '   Language="1033"',
-        sprintf('   Name="R%s for Windows %s (via msi)"',
+        sprintf('   Name="R%s %s (via msi)"',
                 ifelse(have64bit, " x64", ""),
                 Rver),
         sprintf('   Version="%s"', Rver0),
         '   UpgradeCode="309E663C-CA7A-40B9-8822-5D466F1E2AF9">',
         '    <Package Id="*" ',
-        sprintf('     Keywords="R %s for Windows Installer"', Rver),
-        sprintf('     Description="R %s for Windows Installer"', Rver),
+        sprintf('     Keywords="R %s nstaller"', Rver),
+        sprintf('     Description="R %s Installer"', Rver),
         '     Comments="R Language and Environment"',
         '     Manufacturer="R Development Core Team"',
         if (have64bit) '     InstallerVersion="200"'
@@ -88,7 +90,7 @@
         if (personal) 'InstallPrivileges="limited"',
         '     SummaryCodepage="1252" />',
         '    <Media Id=\'1\' Cabinet=\'Sample.cab\' EmbedCab=\'yes\' DiskPrompt="CD-ROM #1" />',
-        '   <Property Id=\'DiskPrompt\' Value="R for Windows Installation [1]" />',
+        '   <Property Id=\'DiskPrompt\' Value="R Installation [1]" />',
         if(personal)'   <Property Id="ALLUSERS"></Property>'
         else '   <Property Id="ALLUSERS">1</Property>',
         sprintf('   <Property Id="RVersion">%s</Property>', Rver),
@@ -237,7 +239,8 @@ sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
 sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui64),
-'        </Component>',
+'        </Component>')
+       cat(file = con, sep="\n",
 '      </Directory>',
 '',
 '      <Directory Id="AppDataFolder" Name="AppData">',
