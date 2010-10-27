@@ -324,7 +324,7 @@
       
       \item \code{setWinProgressBar()} did not check the type of its
        \code{'title'} and \code{'label'} arguments and might have
-       crashed if they were mis-specified.  It checks does, thanks to a
+       crashed if they were mis-specified.  It now does, thanks to a
        report by Greg Snow.
     }
   }
