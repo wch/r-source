@@ -189,10 +189,7 @@
         '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
         else
         '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
-        '        <Directory Id=\'R\' Name=\'R\'>',
-        sprintf("          <Directory Id='INSTALLDIR' Name = '%s'>", RW))
-    cat(file = con, sep="\n",
-        "          </Directory>",
+        "        <Directory Id='INSTALLDIR' Name='R'>",
         "        </Directory>",
         "      </Directory>")
 
@@ -206,7 +203,7 @@
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
-'               WorkingDirectory="INSTALLDIR" />',
+'               WorkingDirectory="PersonalFolder" />',
 '            </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
@@ -214,7 +211,7 @@ sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
-'               WorkingDirectory="INSTALLDIR" />',
+'               WorkingDirectory="PersonalFolder" />',
 '            </Component>')
 
     cat(file = con, sep="\n",
@@ -222,7 +219,7 @@ sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
-'               WorkingDirectory="INSTALLDIR" />',
+'               WorkingDirectory="PersonalFolder" />',
 '            </Component>',
 '          </Directory>',
 '        </Directory>',
@@ -232,13 +229,13 @@ sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', Rver),
-sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
+sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui),
 '        </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
-sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui64),
+sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui64),
 '        </Component>')
        cat(file = con, sep="\n",
 '      </Directory>',
@@ -249,7 +246,7 @@ sprintf('           WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui64),
 '            <Directory Id="QuickLaunch" Name="Quick Launch">',
 sprintf('              <Component Id="quickshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', Rver),
-sprintf('                 WorkingDirectory="INSTALLDIR" Target="[!%s]" />', rgui),
+sprintf('                 WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui),
 '              </Component>',
 '            </Directory>',
 '          </Directory>',
@@ -426,7 +423,7 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
     if (have64bit && have32bit) {
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl32" Title="i386 Files for Package tcltk" Description="32-bit files for package tcltk" Level="1"',
+        '      <Feature Id="tcl32" Title="i386 Files" Description="32-bit files for package tcltk" Level="1"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/32'])
         cat(file = con,
@@ -436,7 +433,7 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
     if (have64bit) {
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl64" Title="x64 Files for Package tcltk" Description="64-bit files for package tcltk" Level="1"',
+        '      <Feature Id="tcl64" Title="x64 Files" Description="64-bit files for package tcltk" Level="1"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/64'])
         cat(file = con,
@@ -446,7 +443,7 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl1" Title="Tcl/Tk Help (Compiled HTML)" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"',
+        '      <Feature Id="tcl1" Title="Help" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/chm'])
         cat(file = con,
@@ -455,7 +452,7 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl2" Title="Timezone files for Tcl" Description="Timezone files for Tcl" Level="1000"',
+        '      <Feature Id="tcl2" Title="Timezone files" Description="Timezone files for Tcl" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/tzdata'])
         cat(file = con,

@@ -30,9 +30,6 @@
       setting \code{JPEGDIR} to that value in \file{MkRules.local}.
 
       Support for \samp{jpeg-6b} has been removed.
-
-      \item The MSI installer is now built with \command{WiX 3.0}
-      (rather than \command{WiX 2.0}.
     }
   }
 }
@@ -55,6 +52,9 @@
     \itemize{
       \item The MSI installer is now made by an \R script, and there is
       now support for 64-bit builds.
+
+      It is now built using \command{WiX 3.0} rather than \command{WiX
+	2.0}.  (As a result it is about 25\% smaller.)
     }
   }
 
