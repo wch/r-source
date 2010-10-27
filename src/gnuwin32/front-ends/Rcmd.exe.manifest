@@ -3,7 +3,7 @@
 <assemblyIdentity
     version="1.0.0.0"
     processorArchitecture="X86"
-    name="Rterm.exe"
+    name="Rcmd.exe"
     type="win32"
 />
 <description>R utility</description>

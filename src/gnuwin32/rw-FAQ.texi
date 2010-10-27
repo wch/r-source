@@ -277,12 +277,12 @@ without creating a shortcut starting in a writable folder.
 @section How do I UNinstall R?
 
 Normally you can do this from the R group on the Start Menu or from the
-@samp{Add/Remove Programs} or @samp{Programs and Features} group in the
-Control Panel.  If it does not appear there, run @file{unins000.exe} in
-the top-level installation directory.  (There should be a separate
-uninstall item in the R group on the Start Menu for each installed
-version of R.  On recent versions of Windows you may well be asked to
-confirm that you wish to run a program from an `unknown' or
+@samp{Add/Remove Programs} (XP) or @samp{Programs and Features}
+(Vista/7) group in the Control Panel.  If it does not appear there, run
+@file{unins000.exe} in the top-level installation directory.  (There
+should be a separate uninstall item in the R group on the Start Menu for
+each installed version of R.  On recent versions of Windows you may well
+be asked to confirm that you wish to run a program from an `unknown' or
 `unidentified' publisher.)
 
 Uninstalling R only removes files from the initial installation, not
@@ -1082,13 +1082,14 @@ prefer compiling from source, read the `R Installation and
 Administration' manual section on `Add-on Packages'.  Source packages
 which contain no C/C++/Fortran code which needs compilation can simply
 be installed by @code{install.packages(type = "source")} or @command{R
-CMD INSTALL pkgname}.  Otherwise you will need to collect and install
-several tools: you can download them via the portal at
+CMD INSTALL pkgname} at a Windows command prompt.  For packages with
+code that needs compilation you will need to collect and install several
+tools: you can download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
-so, just run @command{R CMD INSTALL pkgname}.  To check the package
-(including running all the examples on its help pages and in its test
-suite, if any) use @command{R CMD check pkgname}: see the @emph{`Writing
-R Extensions'} manual.
+so, just run @command{R CMD INSTALL pkgname} at a Windows command
+prompt.  To check the package (including running all the examples on its
+help pages and in its test suite, if any) use @command{R CMD check
+pkgname}: see the @emph{`Writing R Extensions'} manual.
 
 Note that setting up Windows to install a source package that needs
 compilation is rather tricky; please do ensure that you have followed

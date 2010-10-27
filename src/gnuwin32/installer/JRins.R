@@ -65,7 +65,7 @@
 
     lines <- readLines(types)
     if(have64bit && !have32bit) {
-        lines <- lines[-c(3,4,6)]
+        lines <- lines[-c(3,4,6,13,23)]
         lines <- gsub("user(32)* ", "", lines)
         lines <- gsub("compact ", "", lines)
     }
@@ -134,7 +134,7 @@
             component <- "x64"
 	else
             component <- "main"
-            
+
         if (component == "x64" && !have64bit) next
 
         f <- gsub("/", "\\", f, fixed = TRUE)

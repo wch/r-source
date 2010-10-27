@@ -100,7 +100,7 @@
       
         The default package type is \code{"win.binary"} on both 32- and
         64-bit builds: a single repository contains binary packages for
-        both architectures.  This is in place for CRAN, CRANextras and
+        both architectures.  This is in place for CRAN, CRAN extras and
         BioC: \code{type = "win64.binary"} can still be used for any
         repositories which follow the \R 2.11.x convention.  With the
         default filters (see \code{?available.packages}) packages will
@@ -111,7 +111,7 @@
 	is now the same for both 32- and 64-bit \R.
 	
       \item The recommended 64-bit toolchain has been changed to one
-      that does not add leading underscores. See
+      that does not add leading underscores.  See
       \url{http://www.murdoch-sutherland.com/Rtools/} or
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.  Any static or import
       libraries for external software used in installing packages will
@@ -280,8 +280,9 @@
        did not return the focus to the console if the user cancelled the
        action.
        
-      \item \code{system()} (and hence \code{shell()}) did not set the
-        standard file handles properly, so some programs would not run.
+      \item \code{system()} (and hence \code{shell()}) did not always
+        set the standard file handles properly, so some programs would
+        not run.
       
       \item \code{setWinProgressBar()} did not check the type of its
        \code{'title'} and \code{'label'} arguments and might have

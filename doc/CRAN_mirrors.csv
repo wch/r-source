@@ -10,7 +10,7 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 "Canada (NS)",Canada,Halifax,http://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>",1,ca
 "Canada (QC 1)",Canada,Montreal,http://cran.skazkaforyou.com/,"iWeb, Montreal","mirrors # skazkaforyou.com",1,ca
-"Canada (QC 2)",Canada,Montreal,http://cran.parentinginformed.com/,"iWeb, Montreal","jmiller # parentinginformed.com",1,ca
+"Canada (QC 2)",Canada,Montreal,http://cran.parentingamerica.com/,"iWeb, Montreal","jmiller # Parentingamerica.com",1,ca
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 1)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft # ctex.org>",1,cn
 "China (Beijing 2)",China,Bejing,http://cran.csdb.cn/,"Computer Network Information Center, CAS, Beijing","Hull # cnic.cn",1,cn
@@ -55,7 +55,8 @@ Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung","hcchang # cs.pu.edu.tw",1,tw
 "Taiwan (Taipei 1)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw
 "Taiwan (Taipei 2)",Taiwan,Taipei,http://cran.stat.tku.edu.tw/,"Tamkang University, Taipei","steve # stat.tku.edu.tw",1,tw
-"Thailand (Bangkog)",Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok","thawachchai # bunditcenter.com",1,th
+"Thailand (Bangkog 1)",Thailand,Bangkok,http://mirror.kapook.com/cran/,"Kapook.com, Bangkok","thawachchai # bunditcenter.com",1,th
+"Thailand (Bangkog 2)",Thailand,Bangkok,http://www.mirror.in.th/osarchive/CRAN/,"Software Industry Promotion Agency,  Bangkok","iempairote # Buu.ac.th",1,th
 "Thailand (Hatyai)",Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>",1,uk
 "UK (London)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","s.rochford # imperial.ac.uk",1,uk
