@@ -185,6 +185,11 @@
     cat(file = con, sep = "\n", '',
         '    <Directory Id=\'TARGETDIR\' Name=\'SourceDir\'>',
         '',
+        ## empty components to work around bug in Windows Installer
+        ## offering to install components with no features from the network
+        sprintf('    <Component Id="dummyman" Guid="%s"></Component>', guuids()),
+        sprintf('    <Component Id="dummytcl" Guid="%s"></Component>', guuids()),
+        '',
         if (have64bit)
         '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
         else
@@ -366,7 +371,9 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
     cat(file = con, sep="\n",
         '',
         '    <Feature Id="manuals" Title="On-line PDF Manuals" Description="On-line PDF Manuals" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no" Display="expand">')
+        '     InstallDefault="local" AllowAdvertise="no" Display="expand">',
+        '     <ComponentRef Id="dummyman" />')
+
 
     cat(file = con, sep="\n",
         '',
@@ -409,7 +416,8 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
     cat(file = con, sep="\n",
         '',
         '    <Feature Id="tcl" Title="Support Files for Package tcltk" Description="A binary distribution of Tcl/Tk for use by R package tcltk" Level="1"',
-        '     InstallDefault="local" AllowAdvertise="no" Display="expand">')
+        '     InstallDefault="local" AllowAdvertise="no" Display="expand">',
+        '     <ComponentRef Id="dummytcl" />')
 
     cat(file = con, sep="\n",
         '',
