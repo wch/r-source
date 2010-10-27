@@ -21,10 +21,6 @@
 
       \item Running \R always sets the environment variable \env{R_ARCH}
       (as it does on a Unix-alike from the shell-script front-end).
-
-      \item \code{system()} and \code{system2()} no longer discard
-      output from the command to stdout and stderr as often as they used
-      to.
     }
   }
   
@@ -36,8 +32,7 @@
       Support for \samp{jpeg-6b} has been removed.
 
       \item The MSI installer is now built with \command{WiX 3.0}
-      (rather than \command{WiX 2.0}. [It does not currently create
-      shortcuts and Registry entries.]
+      (rather than \command{WiX 2.0}.
     }
   }
 }
@@ -49,6 +44,10 @@
       to a character vector now give a warning if the command returns a
       non-zero error code.  (This is what a Unix-alike does as from \R
       2.12.0.)
+
+      \item \code{system()} and \code{system2()} no longer discard
+      output from the command to stdout and stderr as often as they used
+      to.
     }
   }
 
