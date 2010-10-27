@@ -43,10 +43,10 @@ GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
 
 
-# we don't want share/{Makefile.in,java,perl,sh} installed
+# we don't want share/{Makefile.in,java,sh} installed
 SHARE_DIRS = R encodings licenses locale make texmf zoneinfo
 
-all: $(RPREFIX)-$(SUFF).exe
+all: $(RPREFIX)-win.exe
 msi: $(RPREFIX)-$(SUFF).msi
 
 imagedir:
@@ -145,7 +145,7 @@ R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
 	../../../bin$(R_ARCH)/Rscript JRins.R \
 	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
-$(RPREFIX)-$(SUFF).exe: R.iss
+$(RPREFIX)-win.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
 
 
@@ -154,7 +154,7 @@ $(RPREFIX)-$(SUFF).exe: R.iss
 uuidgen.exe: uuidgen.o
 	$(CC) -o $@ $< -lole32
 
-# currently use about 3200
+# currently use about 3200 (32-bit)
 uuids: uuidgen.exe
 	uuidgen 10000 > $@
 
