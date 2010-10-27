@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -97,6 +97,15 @@ x \%/\% y
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
   most platforms give \code{5}.
+  
+  Users are sometimes surprised by the value returned, for example why
+  \code{(-8)^(1/3) = NaN}.  \R makes use of IEC 60559 arithmetic on all
+  platforms, together with the C system function \samp{pow} for the
+  \code{^} operator.  The relevant standards define the result in many
+  corner cases.  In particular, the result in the example above is
+  mandated by the C99 standard.  On many Unix-alike systems the command
+  \command{man pow} gives details of the values in a large number of
+  corner cases.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Arith}} group generic,
