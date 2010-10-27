@@ -1292,12 +1292,8 @@ Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
-2.0} available from @uref{http://wix.sourceforge.net/}.  (This needs the
-.NET 1.1 framework installed: it ran on a vanilla Windows XP SP2
-machine. Unfortunately the file format has been changed within the same
-version: currently our code works with release 2.0.5805.0 -- the latter
-is said to be `production/stable'.)  Once WiX is installed, set the path
-to its home directory in @file{MkRules.local}.
+3.0} available from @uref{http://wix.sourceforge.net/}.  Once WiX is
+installed, set the path to its home directory in @file{MkRules.local}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
@@ -1314,10 +1310,14 @@ make msi
 which will results in a file a name like
 @file{@value{RWVERSION}-win.msi}.  This can be double-clicked to be
 installed, but those who need it will know what to do with it (usually
-by running @command{msiexec /i} with additional options).
+by running @command{msiexec /i} with additional options).  Properties
+that users might want to set from the @command{msiexec} command line
+include @samp{ALLUSERS}, @samp{INSTALLDIR} (something like
+@file{c:\Program Files\R}) and @samp{RMENU} (the path to the @samp{R}
+folder on the start menu)
 
 As from @R{} 2.12.1 the MSI installer can be built both for a 32-bit
-build of @R{} or for a 64-bit build of @R{} (optionally including 32-bit
+build of @R{} and for a 64-bit build of @R{} (optionally including 32-bit
 files).  Unlike the main installer, a 64-bit MSI installer can only be
 installed on a 64-bit system.
 
@@ -2703,7 +2703,7 @@ Linux distributions, Solaris 9/10, AIX and Windows, usually as
 available (including on Mac OS X >= 10.4): should a broken version of
 ICU be found this can be suppressed by @option{--without-ICU}.
 
-Some code developers may want Perl version 5.8.0 or later, available via
+A few code developers may want Perl version 5.8.0 or later, available via
 @uref{http://www.perl.com/CPAN/}.  This is needed for the rarely used
 @command{R CMD Sd2Rd}: if required it should be in your @env{PATH} when
 @command{configure} is run.
@@ -3290,7 +3290,7 @@ command line as
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
 and both will be read (in that order).  In addition, if there is a file
-@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} wer
+@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} were
 supported (but undocumented) in versions of @R{} prior to 2.10.0.}
 @code{~/.Rconfig}), it is read between the @file{config.site} files in
 the source and the build directories.

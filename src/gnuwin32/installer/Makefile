@@ -154,25 +154,20 @@ $(RPREFIX)-win.exe: R.iss
 uuidgen.exe: uuidgen.o
 	$(CC) -o $@ $< -lole32
 
-# currently use about 3200 (32-bit)
+# currently use about 3300
 uuids: uuidgen.exe
-	uuidgen 10000 > $@
+	uuidgen 4000 > $@
 
 files.wxs: imagedir fixups 32bit md5sums
-	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
+	"$(WIX3DIR)/bin/heat" dir $(RPREFIX) -sw5150 -nologo -o $@
 
 R.wxs: WIXins.R uuids files.wxs
 	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || (rm -f $@;exit 1)
 
-## for WiX 3.0 light uses -ext WixUIExtension
-## To change compression with WiX 3.0 use
-## light -dcl:high
-## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
-
 $(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
-	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
-	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \
-	  -loc $(WIXDIR)/WixUI_en-us.wxl >> $(RPREFIX).log 2>&1
+	"$(WIX3DIR)/bin/candle" R.wxs > $(RPREFIX).log 2>&1
+	"$(WIX3DIR)/bin/light" -out $@ R.wixobj -dcl:high \
+	 -ext WixUIExtension -sw1076 -sval -spdb >> $(RPREFIX).log 2>&1
 
 
 clean:
