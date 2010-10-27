@@ -174,7 +174,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *fout = "", *ferr = "";
     int   vis = 0, flag = 2, i = 0, j, ll;
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
-    HANDLE hOUT = NULL, hERR = NULL /* -Wall */;
 
     checkArity(op, args);
     cmd = CAR(args);
@@ -204,18 +203,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
     } else {
 	if (flag == 2) flag = 1; /* ignore std.output.on.console */
-	if (TYPEOF(Stdout) == STRSXP) {
-	    fout = CHAR(STRING_ELT(Stdout, 0));
-	} else if (asLogical(Stdout) == 0) {
-	    hOUT = GetStdHandle(STD_OUTPUT_HANDLE);
-	    SetStdHandle(STD_OUTPUT_HANDLE, INVALID_HANDLE_VALUE);
-	}
-	if (TYPEOF(Stderr) == STRSXP) {
-	    ferr = CHAR(STRING_ELT(Stderr, 0));
-	} else if (asLogical(Stderr) == 0) {
-	    hERR = GetStdHandle(STD_ERROR_HANDLE);
-	    SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
-	}
+	if (TYPEOF(Stdout) == STRSXP) fout = CHAR(STRING_ELT(Stdout, 0));
+	else if (asLogical(Stdout) == 0) fout = NULL;
+	if (TYPEOF(Stderr) == STRSXP) ferr = CHAR(STRING_ELT(Stderr, 0));
+	else if (asLogical(Stderr) == 0) ferr = NULL;
     }
 
     if (flag < 2) { /* Neither intern = TRUE nor
@@ -258,9 +249,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    /* restore stdout/stderr if we changed it */
-    if (hOUT) SetStdHandle(STD_OUTPUT_HANDLE, hOUT);
-    if (hERR) SetStdHandle(STD_ERROR_HANDLE, hERR);
     if (flag == 3) { /* intern = TRUE: convert pairlist to list */
 	PROTECT(rval = allocVector(STRSXP, i));
 	for (j = (i - 1); j >= 0; j--) {

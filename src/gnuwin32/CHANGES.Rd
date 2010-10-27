@@ -11,6 +11,10 @@
       to a character vector now give a warning if the command returns a
       non-zero error code.  (This is what a Unix-alike does as from \R
       2.12.0.)
+
+      \item \code{system()} and \code{system2()} no longer discard
+      output from the command to stdout and stderr as often as they used
+      to.
     }
   }
 
