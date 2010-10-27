@@ -176,7 +176,7 @@ static void R_getDLLError(char *buf, int len)
 	NULL,
 	GetLastError(),
 	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-	&lpMsgBuf,
+	(LPSTR) &lpMsgBuf,
 	0,
 	NULL
 	);
