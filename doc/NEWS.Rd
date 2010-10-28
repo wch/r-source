@@ -44,6 +44,9 @@
 
       The PDF, PostScript, and Quartz graphics devices record this fact.
       X11 (and Cairo) and Windows just assume that your screen conforms.
+
+      \item \code{system.file} gains a \code{mustWork} argument
+      (suggestion of Bill Dunlap).
     }
   }
   

@@ -6598,15 +6598,10 @@ package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
 for that we can ask @R{} by something like
 
 @example
-PKGB_PATH=`echo 'library(packB); \
- cat(system.file("libs", .Platform$r_arch, package="packB"))' \
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
  | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @end example
-
-@noindent
-(If @file{libpackB.a} itself depends on other libraries these will need
-to be included in @code{PKG_LIBS}.)
 
 @noindent
 which will give an empty path component if sub-architectures are not in
@@ -6616,7 +6611,7 @@ For a dynamic library @file{packB/libs/libpackB.so}
 (@file{packB/libs/libpackB.dylib} on Mac OS X) we could use
 
 @example
-PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
  | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
 @end example
@@ -6631,8 +6626,10 @@ some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
 the @command{ld.so} cache (see @command{man ldconfig}).  On platforms
 that support it, the path to the dynamic library can be hardcoded at
 install time (which assumes that the location of package @pkg{packB}
-will not be changed).  On systems with the @acronym{GNU} linker (e.g.@:
-Linux) and some others (e.g.@: Mac OS X) this can be done by
+will not be changed) nor the package updated to a changed API, as
+@pkg{Rcpp} has done all too often).  On systems with the @acronym{GNU}
+linker (e.g.@: Linux) and some others (e.g.@: Mac OS X) this can be done
+by
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
