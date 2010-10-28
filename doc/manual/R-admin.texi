@@ -1317,12 +1317,16 @@ by running @command{msiexec /i} with additional options).  Properties
 that users might want to set from the @command{msiexec} command line
 include @samp{ALLUSERS}, @samp{INSTALLDIR} (something like
 @file{c:\Program Files\R}) and @samp{RMENU} (the path to the @samp{R}
-folder on the start menu)
+folder on the start menu) and @samp{STARTDIR} (the starting directory
+for @R{} shortcuts, defaulting to something like
+@file{c:\Users\name\Documents\R}).
 
-As from @R{} 2.12.1 the MSI installer can be built both for a 32-bit
-build of @R{} and for a 64-bit build of @R{} (optionally including 32-bit
-files).  Unlike the main installer, a 64-bit MSI installer can only be
-installed on a 64-bit system.
+As from @R{} 2.12.1 the MSI installer can be built both from a 32-bit
+build of @R{} (@file{@value{RWVERSION}-win32.msi}) and from a 64-bit
+build of @R{} (@file{@value{RWVERSION}-win64.msi}, optionally including
+32-bit files when the name is @file{@value{RWVERSION}-win.msi}).  Unlike
+the main installer, a 64-bit MSI installer can only be installed on a
+64-bit system.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.

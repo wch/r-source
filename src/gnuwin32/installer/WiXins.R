@@ -35,14 +35,6 @@
 ## The standard folder names are listed at
 ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
 
-
-## For file associations in WiX 3.0  we need something like
-## <ProgId Id='RData' Description='R Workspace' Icon='Foobar.exe' IconIndex='1'>
-##   <Extension Id='RData' ContentType='application/RData'>
-##     <Verb Id='open' Command='Open' TargetFile='FileId' Argument='"%1"' />
-##   </Extension>
-## </ProgId>
-
 ## http://windows-installer-xml-wix-toolset.687559.n2.nabble.com/64-bit-and-32-bit-Registry-Keys-in-same-MSI-td4439679.html
 
 .make_R.wxs <- function(RW, srcdir, personal = "0")
@@ -189,6 +181,7 @@
         ## offering to install components with no features from the network
         sprintf('    <Component Id="dummyman" Guid="%s"></Component>', guuids()),
         sprintf('    <Component Id="dummytcl" Guid="%s"></Component>', guuids()),
+        sprintf('    <Component Id="dummystart" Guid="%s"></Component>', guuids()),
         '',
         if (have64bit)
         '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
@@ -197,6 +190,11 @@
         "        <Directory Id='INSTALLDIR' Name='R'>",
         "        </Directory>",
         "      </Directory>")
+
+    cat(file = con, sep="\n",
+'      <Directory Id="PersonalFolder" Name="Personal">',
+'        <Directory Id="STARTDIR" Name="R"></Directory>',
+'      </Directory>')
 
     cat(file = con, sep="\n",
 '      <Directory Id="StartMenuFolder" Name="SMenu">',
@@ -208,7 +206,7 @@
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
-'               WorkingDirectory="PersonalFolder" />',
+'               WorkingDirectory="STARTDIR" />',
 '            </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
@@ -216,7 +214,7 @@ sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
-'               WorkingDirectory="PersonalFolder" />',
+'               WorkingDirectory="STARTDIR" />',
 '            </Component>')
 
     cat(file = con, sep="\n",
@@ -224,7 +222,7 @@ sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
-'               WorkingDirectory="PersonalFolder" />',
+'               WorkingDirectory="STARTDIR" />',
 '            </Component>',
 '          </Directory>',
 '        </Directory>',
@@ -234,13 +232,13 @@ sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', Rver),
-sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui),
+sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
 '        </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
-sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui64),
+sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui64),
 '        </Component>')
        cat(file = con, sep="\n",
 '      </Directory>',
@@ -251,7 +249,7 @@ sprintf('           WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui64
 '            <Directory Id="QuickLaunch" Name="Quick Launch">',
 sprintf('              <Component Id="quickshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', Rver),
-sprintf('                 WorkingDirectory="PersonalFolder" Target="[!%s]" />', rgui),
+sprintf('                 WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
 '              </Component>',
 '            </Directory>',
 '          </Directory>',
@@ -305,18 +303,11 @@ sprintf('      <Component Id="registry64" Guid="%s" Win64="yes">', guuids()),
     ## file associations
     cat(file = con, sep="\n",
 sprintf('      <Component Id="registry3" Guid="%s">', guuids()),
-'        <RegistryKey Id="RData" Root="HKCR" Key=".RData" Action="create">',
-'          <RegistryValue Type="string" Value="RWorkspace" />',
-'        </RegistryKey>',
-'        <RegistryKey Id="RWorkspace" Root="HKCR" Key="RWorkspace" Action="create">',
-'          <RegistryValue Type="string" Value="R Workspace" />',
-'        </RegistryKey>',
-'        <RegistryKey Id="RDataCommand" Root="HKCR" Key="RWorkspace\\shell\\open\\command" Action="create">',
-sprintf('         <RegistryValue Type="string"  Value="&quot;[!%s]&quot; &quot;%%1&quot;" />', rgui),
-'        </RegistryKey>',
-'        <RegistryKey Id="RDataDefaultIcon" Root="HKCR" Key="RWorkspace\\DefaultIcon" Action="create">',
-sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
-'        </RegistryKey>',
+"        <ProgId Id='RData' Description='R Workspace'>",
+"          <Extension Id='RData' ContentType='application/RData'>",
+sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%%1\"'/>", rgui),
+"          </Extension>",
+"        </ProgId>",
 '      </Component>')
 
 
@@ -334,6 +325,15 @@ sprintf('         <RegistryValue Type="string"  Value="[!%s],0" />', rgui),
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '    </Feature>\n')
+
+    cat(file = con, sep="\n",
+        '',
+        '    <Feature Id="startup" Title="Starting Directory" Description="Set starting directory for R shortcuts" Level="1"',
+        '     ConfigurableDirectory="STARTDIR"',
+        '     InstallDefault="local" AllowAdvertise="no"',
+        '     Absent="disallow">',
+        '     <ComponentRef Id="dummystart" />',
+        '    </Feature>\n')
 
     if (have64bit && have32bit) {
     cat(file = con, sep="\n",
