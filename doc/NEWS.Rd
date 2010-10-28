@@ -67,6 +67,9 @@
       \item Use of \code{`[[<-`} for S4 subclasses of
       \code{"environment"} generated an infinite recursion from the
       method.  The method has been replaced by internal code.
+
+      \item In a reference class method, callSuper() now works in
+        initialize() methods when there is no explicit superclass method.
     }
   }
 }
