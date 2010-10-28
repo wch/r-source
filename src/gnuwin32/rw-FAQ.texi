@@ -148,10 +148,10 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A typical install 32-
-or 64-bit installation takes around 50Mb of disk space, of both about
-60Mb, a full installation about 80Mb and a minimal 32-bit one about
-32Mb.
+except perhaps for some network-mounted systems).  A typical install
+either 32- or 64-bit installation takes around 50Mb of disk space, of
+both about 60Mb, a full installation about 80Mb and a minimal 32-bit one
+about 32Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -173,9 +173,9 @@ confirm that you want to proceed with installing a program from an
 `unknown' or `unidentified' publisher.
 
 After installation you should choose a working directory for R.  You
-will have a shortcut to @file{Rgui.exe} on your desktop
-and/or somewhere on the Start menu file tree, and perhaps also in the
-Quick Launch part of the taskbar.  Right-click each shortcut, select
+will have a shortcut to @file{Rgui.exe} on your desktop and/or somewhere
+on the Start menu file tree, and perhaps also in the Quick Launch part
+of the taskbar (Vista and earlier).  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
 
 On some systems you will have two shortcuts, one for 32-bit with a label
@@ -189,9 +189,9 @@ environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
 messages are in (American) English, @code{LANGUAGE=en}.
 
-It is also possible (32-bit only) to install from an MSI file, which
-will be of interest only for system administrators.  For how to build an
-MSI file, see the `R Installation and Administration Manual'.
+It is also possible to install from an MSI file, which will be of
+interest only for system administrators.  For how to build the MSI file,
+see the `R Installation and Administration Manual'.
 
 
 @node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage

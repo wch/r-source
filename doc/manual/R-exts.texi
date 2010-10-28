@@ -6606,7 +6606,8 @@ package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
 for that we can ask @R{} by something like
 
 @example
-PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
+PKGB_PATH=`echo 'library(packB); \
+ cat(system.file("libs", .Platform$r_arch, package="packB"))' \
  | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @end example
@@ -6614,6 +6615,10 @@ PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @noindent
 (If @file{libpackB.a} itself depends on other libraries these will need
 to be included in @code{PKG_LIBS}.)
+
+@noindent
+which will give an empty path component if sub-architectures are not in
+use (but works on current platforms).
 
 For a dynamic library @file{packB/libs/libpackB.so}
 (@file{packB/libs/libpackB.dylib} on Mac OS X) we could use
