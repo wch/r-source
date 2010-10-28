@@ -1420,6 +1420,14 @@ try(regexpr("a{2-}", ""))
 ## terminated R <= 2.12.0
 
 
+## ! on zero-length objects (PR#14244)
+M <- matrix(FALSE, 0, 2)
+stopifnot(identical(attributes(!M), attributes(M)))
+# and for back compatibiility
+!list() # logical(0)
+## dropped all attributes in 2.12.0
+
+
 ## Preserve intercepts in drop.terms
 tt <- terms(~a+b-1)
 tt2 <- terms(~b-1)

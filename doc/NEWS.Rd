@@ -175,6 +175,9 @@
       \item Use of \code{`[[<-`} for S4 subclasses of
       \code{"environment"} generated an infinite recursion from the
       method.  The method has been replaced by internal code.
+      
+      \item \code{!} drop attributes such as names and dimensions from a
+      length-zero arguemnt.  (\PR{14424})
     }
   }
 }
