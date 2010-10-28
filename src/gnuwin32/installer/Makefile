@@ -157,7 +157,7 @@ uuidgen.exe: uuidgen.o
 
 # currently use about 3300
 uuids: uuidgen.exe
-	uuidgen 10000 > $@
+	uuidgen 4000 > $@
 
 files.wxs: imagedir fixups 32bit md5sums
 	"$(WIX3DIR)/bin/heat" dir $(RPREFIX) -sw5150 -nologo -o $@

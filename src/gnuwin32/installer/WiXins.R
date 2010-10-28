@@ -86,6 +86,8 @@
         if(personal)'   <Property Id="ALLUSERS"></Property>'
         else '   <Property Id="ALLUSERS">1</Property>',
         sprintf('   <Property Id="RVersion">%s</Property>', Rver),
+        '    <Icon Id="icon.ico" SourceFile="..\\front-ends\\R.ico"/>',
+        '    <Property Id="ARPPRODUCTICON" Value="icon.ico" />',
         '')
 
     if (have64bit) {
@@ -206,6 +208,11 @@
 sprintf('             Guid="%s" KeyPath="yes">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
+            ## Supposed to do something like
+            ## <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            ## <RegistryValue Root="HKCU" Key="Software\R-core\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            ## to stop validation errors.
+
 '               WorkingDirectory="STARTDIR" />',
 '            </Component>')
     if (have64bit)
