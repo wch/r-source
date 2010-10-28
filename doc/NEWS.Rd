@@ -176,7 +176,11 @@
       \code{"environment"} generated an infinite recursion from the
       method.  The method has been replaced by internal code.
       
-      \item \code{!} drop attributes such as names and dimensions from a
+      \item In a reference class S4 method, \code{callSuper()} now works in
+      \code{initialize()} methods when there is no explicit superclass
+      method.
+      
+      \item \code{!} dropped attributes such as names and dimensions from a
       length-zero arguemnt.  (\PR{14424})
     }
   }
