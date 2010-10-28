@@ -7,7 +7,7 @@
 \section{CHANGES IN R VERSION 2.12.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{    
-      \item The DVI/PDF reference manual now includes the help page for
+      \item The DVI/PDF reference manual now includes the help pages for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
 
@@ -51,8 +51,9 @@
       \code{cmdscale(add=TRUE)} failed to centre the return
       configuration and sometimes lost the labels on the points.
 
-      \item \code{promptClass()} now works for reference classes and gives a
-      suitably specialized skeleton of documentation.
+      \item \code{promptClass()} in package \pkg{methods} now works for
+      reference classes and gives a suitably specialized skeleton of
+      documentation.
 
       Also, \code{callSuper()} now works via the \code{methods()}
       invocation as well as for initially specified methods.

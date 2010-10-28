@@ -60,9 +60,10 @@ as.formula(object, env = parent.frame())
   nested within those on the right.  For example \code{a + b \%in\% a}
   expands to the formula \code{a + a:b}.  The \code{-} operator removes
   the specified terms, so that \code{(a+b+c)^2 - a:b} is identical to
-  \code{a + b + c + b:c + a:c}.  It can also used to remove the intercept
-  term: \code{y ~ x - 1} is a line through the origin.  A model with no
-  intercept can be also specified as \code{y ~ x + 0} or \code{y ~ 0 + x}.
+  \code{a + b + c + b:c + a:c}.  It can also used to remove the
+  intercept term: when fitting a linear model \code{y ~ x - 1} specifies
+  a line through the origin.  A model with no intercept can be also
+  specified as \code{y ~ x + 0} or \code{y ~ 0 + x}.
 
   While formulae usually involve just variable and factor
   names, they can also involve arithmetic expressions.
@@ -103,10 +104,10 @@ as.formula(object, env = parent.frame())
   component, then a \code{formula} parameter of the call (and evaluates
   its value) and finally a \code{"formula"} attribute.
 
-  There is a method for data frames.  If there is only one column this
-  forms the RHS with an empty LHS.   For more columns, the first column
-  is the LHS of the formula and the remaining columns separated by
-  \code{+} form the RHS.
+  There is a \code{formula} method for data frames.  If there is only
+  one column this forms the RHS with an empty LHS.  For more columns,
+  the first column is the LHS of the formula and the remaining columns
+  separated by \code{+} form the RHS.
 }
 \section{Environments}{
   A formula object has an associated environment, and
