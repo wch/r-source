@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2009  The R Development Core Team.
+ *  Copyright (C) 1999--2010  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -160,13 +160,15 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     int i, len;
 
     len = LENGTH(arg);
-    if(len == 0) return(allocVector(LGLSXP, 0));
-    if (!isLogical(arg) && !isNumber(arg) && !isRaw(arg))
+    if (!isLogical(arg) && !isNumber(arg) && !isRaw(arg)) {
+	/* For back-compatibility */
+	if (!len) return allocVector(LGLSXP, 0);
 	errorcall(call, _("invalid argument type"));
+    }
     PROTECT(names = getAttrib(arg, R_NamesSymbol));
     PROTECT(dim = getAttrib(arg, R_DimSymbol));
     PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
-    PROTECT(x = allocVector(isRaw(arg)?RAWSXP:LGLSXP, len));
+    PROTECT(x = allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
     switch(TYPEOF(arg)) {
     case LGLSXP:
 	for (i = 0; i < len; i++)

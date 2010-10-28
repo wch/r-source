@@ -73,7 +73,8 @@ isTRUE(x)
   same precedence (the AND operators are higher than the OR operators).
 }
 \value{
-  For \code{!}, a logical or raw vector of the same length as \code{x}.
+  For \code{!}, a logical or raw vector of the same length as \code{x}:
+  names, dims and dimnames are copied from \code{x}.
 
   For \code{|}, \code{&} and \code{xor} a logical or raw vector. The
   elements of shorter vectors are recycled as necessary (with a
