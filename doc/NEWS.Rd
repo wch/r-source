@@ -11,8 +11,8 @@
       \command{R CMD} no longer tries to substitute a full path for
       \command{awk} nor \command{perl} -- this was a legacy from the
       days when they were used by \R itself.  Because a couple of
-      packages do use \command{awk}, it is set as a \command{make}
-      (rather than environment) variable.
+      packages do use \command{awk}, it is set as the \command{make}
+      (rather than environment) variable \env{AWK}.
 
       \item \code{normalizePath()} has been moved to the \pkg{base}
       package (from \pkg{utils}): this is so it can be used by
@@ -67,7 +67,7 @@
       \item \command{R CMD build} no longer does any cleaning in the
       supplied package directory: all the cleaning is done in the copy.
 
-      It has a new option \option{--install-args} to pass argument to
+      It has a new option \option{--install-args} to pass arguments to
       \command{R CMD INSTALL} for \option{--install} (but not when
       installing to rebuild vignettes).
     }
@@ -115,7 +115,7 @@
 \section{CHANGES IN R VERSION 2.12.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{    
-      \item The DVI/PDF reference manual now includes the help page for
+      \item The DVI/PDF reference manual now includes the help pages for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
 
@@ -159,8 +159,9 @@
       \code{cmdscale(add=TRUE)} failed to centre the return
       configuration and sometimes lost the labels on the points.
 
-      \item \code{promptClass()} now works for reference classes and gives a
-      suitably specialized skeleton of documentation.
+      \item \code{promptClass()} in package \pkg{methods} now works for
+      reference classes and gives a suitably specialized skeleton of
+      documentation.
 
       Also, \code{callSuper()} now works via the \code{methods()}
       invocation as well as for initially specified methods.
