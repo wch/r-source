@@ -328,8 +328,6 @@ makeEnvRefMethods <- function() {
                             superClassMethod = "SuperClassMethod"),
              contains = "function", where = envir)
     setIs("refMethodDef", "SuperClassMethod", where = envir)
-    ## the standard R ref class extends "environment" to store fields
-    ## but the API allows a different implementation in the future
     setClass("envRefClass", contains = c("environment","refClass"), where =envir)
     ## bootstrap envRefClass as a refClass
     def <- new("refClassRepresentation",
@@ -704,8 +702,13 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
         returnMethods <- value
     for(method in theseMethods) {
         prevMethod <- methods[[method]] # NULL or superClass method
-        if(is.null(prevMethod))
-            superClassMethod <- ""
+        if(is.null(prevMethod)) {
+            ## kludge because default version on $initialize() breaks bootstrapping of methods package
+            if(identical(method, "initialize"))
+                superClassMethod <- "initFields"
+            else
+                superClassMethod <- ""
+        }
         else if(identical(prevMethod@refClassName, Class))
             superClassMethod <- prevMethod@superClassMethod
         else {

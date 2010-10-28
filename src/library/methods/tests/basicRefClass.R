@@ -288,3 +288,12 @@ setClass("myEnv", contains = "environment")
 m <- new("myEnv")
 m[["x"]] <- 1; m$y <- 2
 stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
+
+## test of callSuper() to a hidden default method for initialize() (== initFields)
+TestClass <- setRefClass ("TestClass",
+        fields = list (text = "character"),
+                methods = list(print = function ()  {cat(text)},
+initialize = function(text, ...) callSuper(text = paste(text, "\n"),...)
+))
+tt = TestClass$new("hello world")
+stopifnot(identical(tt$text, "hello world \n"))
