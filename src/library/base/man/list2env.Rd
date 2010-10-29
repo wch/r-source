@@ -13,7 +13,7 @@
 }
 \usage{
 list2env(x, envir = NULL, parent = parent.frame(),
-         hash = FALSE, size = 29L)
+         hash = (length(x) > 100), size = max(29L, length(x)))
 }
 \arguments{
   \item{x}{a \code{\link{list}}, where \code{\link{names}(x)} must
@@ -27,8 +27,8 @@ list2env(x, envir = NULL, parent = parent.frame(),
     see \code{\link{new.env}}.}
 }
 \details{
-  This will be very slow for large inputs (say, more than 1000 elements) unless
-  hashing is used.
+  This will be very slow for large inputs unless hashing is used on the
+  environment.
 }
 \value{
   an \code{\link{environment}}, either newly created (as with

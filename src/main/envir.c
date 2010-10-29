@@ -1535,15 +1535,8 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /**
- * do_list2env : .Internal(list2env(x, envir, parent, hash, size))
- *
- * 2 cases: 1) envir = NULL -->  create new environment from list
- *             elements, using parent, assuming part of new.env() functionality.
- *
- *          2) envir = environment --> assign x entries to names(x) in
- *             *existing* envir
- * @return a newly created environment() or envir {with new content}
- */
+ * do_list2env : .Internal(list2env(x, envir))
+  */
 SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, xnms, envir;
@@ -1552,40 +1545,17 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(CAR(args)) != VECSXP)
 	error(_("first argument must be a named list"));
-    x = CAR(args); args = CDR(args);
+    x = CAR(args);
     n = LENGTH(x);
     xnms = getAttrib(x, R_NamesSymbol);
     if (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n)
 	error(_("names(x) must be a character vector of the same length as x"));
-    envir = CAR(args);  args = CDR(args);
-    if (TYPEOF(envir) == NILSXP) {
-	/* "copied" from do_newenv()  [ ./builtin.c ] */
-	SEXP enclos = CAR(args);
-	int hash = asInteger(CADR(args));
-	if( !isEnvironment(enclos) )
-	    error(_("'%s' must be an environment"), "parent");
-	if (hash) {
-	    SEXP size;
-	    PROTECT(size = coerceVector(CADDR(args), INTSXP));
-	    if (INTEGER(size)[0] == NA_INTEGER)
-		INTEGER(size)[0] = 0; /* so it will use the internal default */
-	    envir = R_NewHashedEnv(enclos, size);
-	    UNPROTECT(1);
-	} else
-	    envir = NewEnvironment(R_NilValue, R_NilValue, enclos);
+    envir = CADR(args);
 
-    } else { /* assign into existing environment */
-	if (TYPEOF(envir) != ENVSXP)
-	    error(_("invalid '%s' argument: must be NULL or environment"), 
-		  "envir");
-    }
-
-    PROTECT(envir);
-    for(int i = 0; i < n ; i++) {
+    for(int i = 0; i < LENGTH(x) ; i++) {
 	SEXP name = install(translateChar(STRING_ELT(xnms, i)));
 	defineVar(name, VECTOR_ELT(x, i), envir);
     }
-    UNPROTECT(1);
 
     return envir;
 }

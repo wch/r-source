@@ -19,9 +19,10 @@ assign <-
               inherits = FALSE, immediate = TRUE)
     .Internal(assign(x, value, envir, inherits))
 
+## do_list2env in ../../../main/envir.c
 list2env <- function(x, envir = NULL, parent = parent.frame(),
-		     hash = FALSE, size = 29L)
+		     hash = (length(x) > 100), size = max(29L, length(x)))
 {
-    ## do_list2env in ../../../main/envir.c
-    .Internal(list2env(x, envir, parent, hash, size))
+    if (is.null(envir)) envir <- new.env(hash=hash, parent=parent, size=size)
+    .Internal(list2env(x, envir))
 }
