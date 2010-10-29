@@ -1580,10 +1580,12 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  "envir");
     }
 
+    PROTECT(envir);
     for(int i = 0; i < n ; i++) {
 	SEXP name = install(translateChar(STRING_ELT(xnms, i)));
 	defineVar(name, VECTOR_ELT(x, i), envir);
     }
+    UNPROTECT(1);
 
     return envir;
 }

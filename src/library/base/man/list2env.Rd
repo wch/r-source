@@ -1,3 +1,8 @@
+% File src/library/base/man/list2env.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2010 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{list2env}
 \alias{list2env}
 \title{From A List, Build or Add To an Environment}
@@ -22,22 +27,20 @@ list2env(x, envir = NULL, parent = parent.frame(),
     see \code{\link{new.env}}.}
 }
 \details{
-...
+  This will be very slow for large inputs (say, more than 1000 elements) unless
+  hashing is used.
 }
 \value{
   an \code{\link{environment}}, either newly created (as with
   \code{\link{new.env}}) if the \code{envir} argument was \code{NULL},
   otherwise the updated environment \code{envir}.
 }
-% \references{
-% %% ~put references to the literature/web site here ~
-% }
 \author{Martin Maechler}
 \seealso{
- \code{\link{environment}}, \code{\link{new.env}},
- \code{\link{as.environment}}; further, \code{\link{assign}}.
+  \code{\link{environment}}, \code{\link{new.env}},
+  \code{\link{as.environment}}; further, \code{\link{assign}}.
 
- The (semantical) \dQuote{inverse}: \code{\link{as.list.environment}}.
+  The (semantical) \dQuote{inverse}: \code{\link{as.list.environment}}.
 }
 \examples{
 L <- list(a=1, b=2:4, p = pi, ff = gl(3,4,labels=LETTERS[1:3]))
@@ -47,7 +50,7 @@ stopifnot(ls(e) == sort(names(L)),
           identical(L$b, e$b)) # "$" working for environments as for lists
 
 ## consistency, when we do the inverse:
-ll <- as.list(e)# -> dispatching to the as.list.environment() method
+ll <- as.list(e)  # -> dispatching to the as.list.environment() method
 rbind(names(L), names(ll)) # not in the same order, typically,
                            # but the same content:
 stopifnot(identical(L [sort.list(names(L ))],

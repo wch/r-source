@@ -182,6 +182,9 @@
       
       \item \code{!} dropped attributes such as names and dimensions from a
       length-zero arguemnt.  (\PR{14424})
+
+      \item When \code{list2env()} created an environment it was missing
+      a \code{PROTECT} call and so was vulnerable to garbage collection.
     }
   }
 }
