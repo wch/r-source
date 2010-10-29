@@ -283,8 +283,7 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef BYTECODE
 	if (TYPEOF(BODY(s)) == BCODESXP) {
 	    /* switch to interpreted version if compiled */
-	    s = allocSExp(CLOSXP);
-	    SET_FORMALS(s, FORMALS(CAR(args)));
+	    s = duplicate(s);
 	    SET_BODY(s, R_ClosureExpr(CAR(args)));
 	}
 	else
