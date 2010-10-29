@@ -328,19 +328,35 @@ The currently available methods are:
 This method is equivalent to the function \code{\link{new}} with the
 class name as an argument.  The \dots arguments are values for the
 named fields.
-If the class has a method defined for \code{$initialize(...)}, %$
+If the class has a method defined for \code{$initialize()}, %$
 this method will be called once the reference object has been
 created.  You should write such a method for a class that needs to do
 some special initialization.
 In particular, a reference method is recommended rather than a method
 for the S4 generic function, because some special initialization is
-required for reference objects \emph{before} the initialization of fields.
+required for reference objects \emph{before} the initialization of
+fields.
+As with S4 classes, methods are written for \code{$initialize()} %$
+and not for \code{$new()}, %$
+both for the previous reason and also because \code{$new()} %$
+is invoked on the generator object and would be a method for that class.
 
-In the absence of a method for \code{intialize}, a computation
-equivalent to invoking the method \code{$initFields(...)} %$
-will take place.  It is possible (and usually a good idea) to invoke
-this method from within a special initialization method.
+The default method for \code{$initialize()} %$
+is equivalent to invoking the method \code{$initFields(...)} %$
+with named fields as its arguments.  For technical reasons, the
+default method does not currently appear explicitly, but can be
+invoked by $callSuper(...) %$
+from a method for \code{$initialize()}. %$
+Initialization methods need some care in design, as they do for S4
+classes.
+In particular, remember that others may subclass your class and pass
+through field assignments or other arguments.  Therefore, your method
+should normally include \dots as an argument, all other arguments
+should have defaults or check for missingness, and your method should
+pass all initialized values on via \code{$callSuper()} or \code{$initFields()} if
+you know that your superclasses have no initialization methods.
 }
+
 \item{\code{$help(topic)}}{ %$
 Prints brief help on the topic.  The topics recognized
 are reference method names, quoted or not.
@@ -567,12 +583,13 @@ mv <- setRefClass("matrixViewer",
           }))
 
 ## initialize and finalize methods
-mv$methods( initialize = function(...) {
-    viewerFile <<- "./matrixView.pdf"
+mv$methods( initialize = 
+  function(file = "./matrixView.pdf", ...) {
+    viewerFile <<- file
     pdf(viewerFile)
     viewerDevice <<- dev.cur()
     dev.set(dev.prev())
-    initFields(...)
+    callSuper(...)
   },
   finalize = function() {
     dev.off(viewerDevice)

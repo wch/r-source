@@ -217,8 +217,8 @@ mv <- setRefClass("matrixViewer",
           }))
 
 ## initialize and finalize methods
-mv$methods( initialize = function(...) {
-    viewerFile <<- tempfile("matrixView")
+mv$methods( initialize = function(file = "./matrixView.pdf", ...) {
+    viewerFile <<- file
     pdf(viewerFile)
     viewerDevice <<- dev.cur()
     message("Plotting to ", viewerFile)
@@ -264,11 +264,13 @@ if(methods:::.hasCodeTools()) {
     warning("Can't run some tests:  recommended package codetools is not available")
 
 ## tests (fragmentary by necessity) of promptClass for reference class
-suppressMessages(promptClass("refClassB", filename = textConnection("ctxt", "w")))
+ccon <- textConnection("ctxt", "w")
+suppressMessages(promptClass("refClassB", filename = ccon))
 ## look for a method, inheritance, inherited method
 stopifnot(length(c(grep("foo.*refClassA", ctxt),
                    grep("code{foo()}", ctxt, fixed = TRUE),
                    grep("linkS4class{refClassA", ctxt, fixed = TRUE))) >= 3)
+close(ccon)
 rm(ctxt)
 
 
@@ -291,9 +293,22 @@ stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
 
 ## test of callSuper() to a hidden default method for initialize() (== initFields)
 TestClass <- setRefClass ("TestClass",
-        fields = list (text = "character"),
-                methods = list(print = function ()  {cat(text)},
-initialize = function(text, ...) callSuper(text = paste(text, "\n"),...)
-))
-tt = TestClass$new("hello world")
-stopifnot(identical(tt$text, "hello world \n"))
+     fields = list (text = "character"),
+     methods = list(
+       print = function ()  {cat(text)},
+       initialize = function(text = "", ...) callSuper(text = paste(text, ":", sep=""),...)
+  ))
+tt <- TestClass$new("hello world")
+stopifnot(identical(tt$text, "hello world:"))
+## now a subclass with another field & another layer of callSuper()
+TestClass2 <- setRefClass("TestClass2",
+        contains = "TestClass",
+        fields = list( version = "integer"),
+        methods = list(
+          initialize = function(..., version = 1)
+              callSuper(..., version = version+1))
+  )
+tt <- TestClass2$new("test", version = 1)
+stopifnot(identical(tt$text, "test:"), identical(tt$version, as.integer(2)))
+tt <- TestClass2$new(version=3) # default text
+stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
