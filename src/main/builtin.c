@@ -280,6 +280,14 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    isNull(env))) {
 	if (isNull(env))
 	    error(_("use of NULL environment is defunct"));
+#ifdef BYTECODE
+	if (TYPEOF(BODY(s)) == BCODESXP) {
+	    /* switch to interpreted version if compiled */
+	    s = duplicate(s);
+	    SET_BODY(s, R_ClosureExpr(CAR(args)));
+	}
+	else
+#endif
 	if(NAMED(s) > 1) {
 	    /* partial duplicate */
 	    s = allocSExp(CLOSXP);
