@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-04 r53167)
+R version 2.13.0 Under development (unstable) (2010-10-28 r53469)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
@@ -1309,7 +1309,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x100bbb548>
+<environment: 0x10265ee00>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1905,12 +1905,13 @@ Undoes the last edit() operation
 > ##D           }))
 > ##D 
 > ##D ## initialize and finalize methods
-> ##D mv$methods( initialize = function(...) {
-> ##D     viewerFile <<- "./matrixView.pdf"
+> ##D mv$methods( initialize = 
+> ##D   function(file = "./matrixView.pdf", ...) {
+> ##D     viewerFile <<- file
 > ##D     pdf(viewerFile)
 > ##D     viewerDevice <<- dev.cur()
 > ##D     dev.set(dev.prev())
-> ##D     initFields(...)
+> ##D     callSuper(...)
 > ##D   },
 > ##D   finalize = function() {
 > ##D     dev.off(viewerDevice)
@@ -2886,7 +2887,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x101b7cb40>
+<environment: 0x100dc6838>
 
 Signatures:
         object    
@@ -3235,7 +3236,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.311 0.049 3.369 0 0 
+Time elapsed:  3.287 0.046 3.335 0 0 
 > grDevices::dev.off()
 null device 
           1 
