@@ -34,7 +34,7 @@ globalenv()
 emptyenv()
 baseenv()
 
-new.env(hash = FALSE, parent = parent.frame(), size = 29L)
+new.env(hash = TRUE, parent = parent.frame(), size = 29L)
 
 parent.env(env)
 parent.env(env) <- value
