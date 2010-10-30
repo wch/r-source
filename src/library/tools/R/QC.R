@@ -100,7 +100,7 @@ function(package, dir, lib.loc = NULL)
 
         all_doc_topics <- Rd_aliases(dir = dir)
 
-        code_env <- new.env()
+        code_env <- new.env(hash = TRUE)
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
             dfile <- file.path(dir, "DESCRIPTION")
@@ -358,7 +358,7 @@ function(package, dir, lib.loc = NULL,
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
-        code_env <- new.env()
+        code_env <- new.env(hash = TRUE)
         dfile <- file.path(dir, "DESCRIPTION")
         meta <- if(file_test("-f", dfile))
             .read_description(dfile)
@@ -1137,7 +1137,7 @@ function(package, lib.loc = NULL)
 
     db_names <- names(db)[idx]
 
-    data_env <- new.env()
+    data_env <- new.env(hash = TRUE)
     data_dir <- file.path(dir, "data")
     ## with lazy data we have data() but don't need to use it.
     has_data <- file_test("-d", data_dir) &&
@@ -1508,7 +1508,7 @@ function(package, dir, lib.loc = NULL)
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
-        code_env <- new.env()
+        code_env <- new.env(hash = TRUE)
         dfile <- file.path(dir, "DESCRIPTION")
         meta <- if(file_test("-f", dfile))
             .read_description(dfile)
@@ -1927,7 +1927,7 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
-        code_env <- new.env()
+        code_env <- new.env(hash = TRUE)
         dfile <- file.path(dir, "DESCRIPTION")
         meta <- if(file_test("-f", dfile))
             .read_description(dfile)
@@ -2161,7 +2161,7 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
-        code_env <- new.env()
+        code_env <- new.env(hash = TRUE)
         dfile <- file.path(dir, "DESCRIPTION")
         meta <- if(file_test("-f", dfile))
             .read_description(dfile)
@@ -4168,7 +4168,7 @@ function(package, dir, lib.loc = NULL)
     }
 
     find_bad_examples <- function(txts) {
-        env <- new.env()
+        env <- new.env(hash = TRUE) # might be many
         x <- lapply(txts,
                     function(txt) {
                         tryCatch({
@@ -4207,7 +4207,7 @@ function(package, dir, lib.loc = NULL)
         code_dir <- file.path(dir, "R")
         if(!packageHasNamespace(basename(dir), dirname(dir))
            && file_test("-d", code_dir)) {
-            code_env <- new.env()
+            code_env <- new.env(hash = TRUE)
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
                 .read_description(dfile)
@@ -4308,7 +4308,7 @@ function(package, dir, lib.loc = NULL)
         dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
-            code_env <- new.env()
+            code_env <- new.env(hash = TRUE)
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
                 .read_description(dfile)

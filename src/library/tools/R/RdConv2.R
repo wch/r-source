@@ -333,7 +333,7 @@ processRdIfdefs <- function(blocks, defines)
 
 processRdSexprs <-
     function(block, stage, options = RweaveRdDefaults,
-             env = new.env(parent=globalenv()))
+             env = new.env(hash = TRUE, parent = globalenv()))
 {
     recurse <- function(block) {
     	if (!any(getDynamicFlags(block)[stage])) return(block)

@@ -23,7 +23,7 @@ function(given = NULL, family = NULL, middle = NULL,
     ## We could do this more elegantly, but let's just go through the
     ## list processing person by person.  I'm just recycling the old
     ## person() code for this.
-    ## </COMMENT>    
+    ## </COMMENT>
     person1 <-
     function(given = NULL, family = NULL, middle = NULL,
              email = NULL, role = NULL, comment = NULL,
@@ -57,7 +57,7 @@ function(given = NULL, family = NULL, middle = NULL,
             ## </COMMENT>
             ## </FIXME>
             family <- last
-        } 
+        }
 
         ## Set all empty arguments to NULL.
         if(.is_not_nonempty_text(given)) given <- NULL
@@ -76,10 +76,10 @@ function(given = NULL, family = NULL, middle = NULL,
         ##   tools:::.valid_maintainer_field_regexp
         ## to validate given email addresses.
         ## </FIXME>
- 
+
         if(length(role))
             role <- .canonicalize_person_role(role)
- 
+
         rval <- list(given = given, family = family, role = role,
                      email = email, comment = comment)
         ## Canonicalize 0-length character arguments to NULL.
@@ -137,7 +137,7 @@ function(x, i)
     return(rval)
 }
 
-print.person <- 
+print.person <-
 function(x, ...)
 {
     x_char <- sapply(x, format, ...)
@@ -145,7 +145,7 @@ function(x, ...)
     invisible(x)
 }
 
-"$.person" <- 
+"$.person" <-
 function(x, name)
 {
     ## <COMMENT Z>
@@ -160,7 +160,7 @@ function(x, name)
     ## Let's be nice and support first/middle/last for now.
     ## </COMMENT>
     if(name %in% c("first", "last", "middle")) {
-        message("It is recommended to use given/family instead of first/middle/last.")    
+        message("It is recommended to use given/family instead of first/middle/last.")
         oname <- name
 	name <- switch(name,
 	    "first" = "given",
@@ -170,9 +170,9 @@ function(x, name)
     } else {
         oname <- name
     }
-    
+
     rval <- lapply(unclass(x), function(p) p[[name]])
-    
+
     if(oname == "first") rval <- lapply(rval, head, 1L)
     if(oname == "middle") {
         rval <- lapply(rval, tail, -1L)
@@ -184,7 +184,7 @@ function(x, name)
     rval
 }
 
-"$<-.person" <- 
+"$<-.person" <-
 function(x, name, value)
 {
     name <- match.arg(name, c("given", "family", "role", "email", "comment"))
@@ -202,7 +202,7 @@ function(x, name, value)
     x
 }
 
-c.person <- 
+c.person <-
 function(..., recursive = FALSE)
 {
     args <- list(...)
@@ -222,7 +222,7 @@ as.person.default <-
 function(x)
 {
     if(inherits(x, "person")) return(x)
-    
+
     x <- as.character(x)
     x <- do.call("c",
                  strsplit(x, "[[:space:]]?(,|[[:space:]]and)[[:space:]]+"))
@@ -281,7 +281,7 @@ function(x,
          include = c("given", "family", "email", "role", "comment"),
          braces =
          list(given = "", family = "", email = c("<", ">"),
-              role = c("[", "]"), comment = c("(", ")")), 
+              role = c("[", "]"), comment = c("(", ")")),
          collapse =
          list(given = " ", family = " ", email = ", ",
               role = ", ", comment = ", "),
@@ -290,7 +290,7 @@ function(x,
 {
     args <- c("given", "family", "email", "role", "comment")
     include <- sapply(include, match.arg, args)
-    
+
     ## process defaults
     braces <- braces[args]
     collapse <- collapse[args]
@@ -307,7 +307,7 @@ function(x,
     if(is.null(collapse$role)) collapse$role <- ", "
     if(is.null(collapse$comment)) collapse$comment <- ", "
     collapse <- lapply(collapse, rep, length.out = 1L)
-    
+
     ## extract selected elements
     x <- lapply(unclass(x), "[", include)
     braces <- braces[include]
@@ -321,8 +321,8 @@ function(x,
         rval <- paste(do.call("c", rval), collapse = " ")
 	rval
     }
-    
-    sapply(x, format_person1)  
+
+    sapply(x, format_person1)
 }
 
 as.character.person <-
@@ -349,13 +349,13 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
         stop("at least one field has to be specified")
     if(any(sapply(names(args), .is_not_nonempty_text))) stop("all fields have to be named")
 
-    ## arrange all arguments in lists of equal length    
+    ## arrange all arguments in lists of equal length
     args <- c(list(bibtype = bibtype, textVersion = textVersion,
               header = header, footer = footer, key = key), list(...))
     args <- lapply(args, function(x) if(inherits(x, "list")) x else list(x))
     other <- lapply(other, function(x) if(inherits(x, "list")) x else list(x))
     max_length <- max(sapply(c(args, other), length))
-    
+
     args_length <- sapply(args, length)
     if(!all(args_length_ok <- args_length %in% c(1L, max_length)))
         warning(sprintf("Not all arguments are of the same length, the following need to be recycled: %s",
@@ -440,7 +440,7 @@ function(x, i)
 
 format.bibentry <-
 function(x,
-         style = c("text", "html", "latex", "Bibtex", "textVersion"), 
+         style = c("text", "html", "latex", "Bibtex", "textVersion"),
          .bibstyle = "JSS", ...)
 {
     style <- match.arg(style)
@@ -478,7 +478,7 @@ function(x,
 print.bibentry <-
 function(x,
          style = c("text", "Bibtex", "citation", "html", "latex",
-                   "textVersion"), 
+                   "textVersion"),
          .bibstyle = "JSS", ...)
 {
     style <- match.arg(style)
@@ -520,10 +520,10 @@ function(x,
     else
         writeLines(paste(format(x, style), collapse = "\n\n"))
 
-    invisible(x)    
+    invisible(x)
 }
 
-"$.bibentry" <- 
+"$.bibentry" <-
 function(x, name)
 {
     ## <COMMENT Z>
@@ -539,14 +539,14 @@ function(x, name)
     rval
 }
 
-"$<-.bibentry" <- 
+"$<-.bibentry" <-
 function(x, name, value)
 {
     is_attribute <-
         name %in% c("bibtype", "textVersion", "header", "footer", "key")
     x <- unclass(x)
     name <- tolower(name)
-    
+
     ## recycle value
     if(!inherits(value, "list")) value <- list(value)
     value <- rep(value, length.out = length(x))
@@ -555,12 +555,12 @@ function(x, name, value)
     if(name == "bibtype") {
       stopifnot(all(sapply(value, length) == 1L))
       BibTeX_names <- names(tools:::BibTeX_entry_field_db)
-      value <- unlist(value)      
+      value <- unlist(value)
       pos <- match(tolower(value), tolower(BibTeX_names))
       if(any(is.na(pos)))
           stop("'bibtype' has to be one of",
                paste(BibTeX_names, collapse = ", "))
-      value <- as.list(BibTeX_names[pos])    
+      value <- as.list(BibTeX_names[pos])
     }
 
     ## replace all values
@@ -590,13 +590,13 @@ function(x, name, value)
 		paste(rfields[!ok], collapse = ", "), sep = "")
         }
     }
-    for(i in seq_along(x)) check_bibentry1(x[[i]])    
-    
+    for(i in seq_along(x)) check_bibentry1(x[[i]])
+
     class(x) <- "bibentry"
     x
 }
 
-c.bibentry <- 
+c.bibentry <-
 function(..., recursive = FALSE)
 {
     args <- list(...)
@@ -611,7 +611,7 @@ function(..., recursive = FALSE)
 toBibtex.bibentry <-
 function(object, ...)
 {
-    format_author <- function(author) paste(sapply(author, function(p) {        
+    format_author <- function(author) paste(sapply(author, function(p) {
 	fnms <- p$family
 	only_given_or_family <- is.null(fnms) || is.null(p$given)
 	fbrc <- if(length(fnms) > 1L ||
@@ -633,7 +633,7 @@ function(object, ...)
     	"}", "")
         return(rval)
     }
-    
+
     rval <- head(unlist(lapply(object, format_bibentry1)), -1L)
     class(rval) <- "Bibtex"
     rval
@@ -671,7 +671,7 @@ function(file, meta = NULL)
     mheader <- NULL
     mfooter <- NULL
     k <- 0L
-    envir <- new.env()
+    envir <- new.env(hash = TRUE)
     ## Make the package metadata available to the citation entries.
     assign("meta", meta, envir = envir)
 
@@ -693,7 +693,7 @@ function(file, meta = NULL)
         attr(rval, "mheader") <- paste(mheader, collapse = "\n")
     if(!.is_not_nonempty_text(mfooter))
         attr(rval, "mfooter") <- paste(mfooter, collapse = "\n")
-    
+
     .citation(rval)
 }
 
@@ -710,7 +710,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
 
     ## if(is.null(auto)): Use default auto-citation if no CITATION
     ## available.
-    citfile <- file.path(dir, "CITATION")    
+    citfile <- file.path(dir, "CITATION")
     if(is.null(auto)) auto <- !file_test("-f", citfile)
 
     ## if CITATION is available
@@ -755,7 +755,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     } else {
         author <- as.personList(meta$Author)
     }
-                
+
     z <- list(title = paste(package, ": ", meta$Title, sep=""),
               author = author,
               year = year,
@@ -775,7 +775,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         if(!is.null(rfr <- meta$"Repository/R-Forge/Revision"))
             z$note <- paste(z$note, rfr, sep = "/r")
     }
-    
+
     footer <- if(!("recommended" %in% meta$Priority) && !has_enhanced_author_spec)
             paste("ATTENTION: This citation information has been auto-generated",
                   "from the package DESCRIPTION file and may need manual editing,",
@@ -808,7 +808,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
 function(x)
 {
     out <- eval(parse(text = x))
-    
+
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
     if(!inherits(out, "person"))
@@ -816,7 +816,7 @@ function(x)
     ## Barf if we got no authors at all.
     if(!any(sapply(out, .person_has_author_role)))
         stop("Enhanced author specification provides no authors.")
-    
+
     out
 }
 

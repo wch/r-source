@@ -1061,7 +1061,7 @@ fileCompletions <- function(token)
 
 
 
-.CompletionEnv <- new.env()
+.CompletionEnv <- new.env(hash = FALSE)
 
 ## needed to save some overhead in .win32consoleCompletion
 assign("linebuffer", "", env = .CompletionEnv)

@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## presumed small
 .userHooksEnv <- new.env(hash = FALSE, parent = baseenv())
 
 packageEvent <-

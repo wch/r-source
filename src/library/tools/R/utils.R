@@ -984,7 +984,7 @@ function(parent = parent.frame())
 {
     ## Create an environment with pseudo-definitions for the S3 group
     ## methods.
-    env <- new.env(parent = parent)
+    env <- new.env(parent = parent) # small
     assign("Math", function(x, ...) UseMethod("Math"),
            envir = env)
     assign("Ops", function(e1, e2) UseMethod("Ops"),
@@ -1003,7 +1003,7 @@ function(parent = parent.frame(), fixup = FALSE)
 {
     ## Create an environment with pseudo-definitions for the S3 primitive
     ## generics
-    env <- new.env(parent = parent)
+    env <- new.env(hash = TRUE, parent = parent)
     for(f in ls(base::.GenericArgsEnv))
         assign(f, get(f, envir=base::.GenericArgsEnv), envir = env)
     if(fixup) {
@@ -1025,7 +1025,7 @@ function(parent = parent.frame())
 {
     ## Create an environment with pseudo-definitions
     ## for the S3 primitive non-generics
-    env <- new.env(parent = parent)
+    env <- new.env(hash = TRUE, parent = parent)
     for(f in ls(base::.ArgsEnv))
         assign(f, get(f, envir=base::.ArgsEnv), envir = env)
     env

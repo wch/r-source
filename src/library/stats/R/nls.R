@@ -41,7 +41,7 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
 nlsModel.plinear <- function(form, data, start, wts)
 {
     thisEnv <- environment()
-    env <- new.env(parent=environment(form))
+    env <- new.env(hash = TRUE, parent=environment(form))
     for(i in names(data)) assign(i, data[[i]], envir = env)
     ind <- as.list(start)
     p2 <- 0
@@ -224,7 +224,7 @@ nlsModel.plinear <- function(form, data, start, wts)
 nlsModel <- function(form, data, start, wts, upper=NULL)
 {
     thisEnv <- environment()
-    env <- new.env(parent = environment(form))
+    env <- new.env(hash = TRUE, parent = environment(form))
     for(i in names(data)) assign(i, data[[i]], envir = env)
     ind <- as.list(start)
     parLength <- 0
@@ -541,7 +541,7 @@ nls <-
                 warning("argument 'na.action' will be ignored")
 	    if(missing(start))
 		start <- getInitial(formula, mf)
-	    startEnv <- new.env(parent = environment(formula))
+	    startEnv <- new.env(hash = FALSE, parent = environment(formula)) # small
 	    for (i in names(start))
 		assign(i, start[[i]], envir = startEnv)
 	    rhs <- eval(formula[[3L]], data, startEnv)

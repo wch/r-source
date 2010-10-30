@@ -849,7 +849,7 @@ resaveRdaFiles <- function(paths,
     if (missing(compression_level))
         compression_level <- switch(compress, "gzip" = 6, 9)
     for(p in paths) {
-        env <- new.env()
+        env <- new.env(hash = TRUE) # probably small, need not be
         load(p, envir = env)
         if(compress == "auto") {
             f1 <- tempfile()

@@ -5,11 +5,11 @@ makeJSS <- function()
 
 	# First, some utilities
 
-	collapse <- function(strings) 
+	collapse <- function(strings)
 	    paste(strings, collapse="\n")
 
-	# Add a period if there's no sentence punctuation already    	
-	addPeriod <- function(string) 
+	# Add a period if there's no sentence punctuation already
+	addPeriod <- function(string)
 	    sub("([^.?!])$", "\\1.", string)
 
 	# Separate args by sep, add a period at the end.
@@ -19,10 +19,10 @@ makeJSS <- function()
 		addPeriod(paste(strings, collapse=sep))
 	    }
 	}
-	
+
 	# Clean up LaTeX accents and braces
 	cleanup <- function(x) {
-	    if (!length(x)) return(x) 
+	    if (!length(x)) return(x)
 	    latex <- try(parseLatex(x), silent=TRUE)
 	    if (inherits(latex, "try-error")) {
 	    	x
@@ -33,31 +33,31 @@ makeJSS <- function()
 
 	# Now some simple markup
 
-	plain <- function(pages) 
+	plain <- function(pages)
 	    if (length(pages)) collapse(pages)
-	    
+
 	plainclean <- function(s) plain(cleanup(s))
 
-	emph <- function(s) 
+	emph <- function(s)
 	    if (length(s)) paste("\\emph{", collapse(s), "}", sep="")
 
         emphclean <- function(s) emph(cleanup(s))
-        
+
 	# This creates a function to label a field by adding a prefix or suffix (or both)
 
 	label <- function(prefix=NULL, suffix=NULL, style=plain) {
 	    force(prefix); force(suffix); force(style)
-	    function(s) 
+	    function(s)
 		if (length(s)) style(paste(prefix, collapse(s), suffix, sep=""))
 	}
-	
+
 	labelclean <- function(prefix=NULL, suffix=NULL, style=plain) {
 	    f <- label(prefix, suffix, style)
 	    function(s) f(cleanup(s))
-	}    	
+	}
 
 	# Now the formatters for each particular field.  These take
-	# a character vector; if length zero, they return NULL, otherwise 
+	# a character vector; if length zero, they return NULL, otherwise
 	# a single element character vector putting everything together
 
 	fmtAddress <- plainclean
@@ -76,8 +76,8 @@ makeJSS <- function()
 	fmtSchool <- plainclean
 	fmtTechreportnumber <- labelclean(prefix="Technical Report ")
 	fmtUrl <- label(prefix="\\url{", suffix="}")
-	fmtTitle <- function(title) 
-	    if (length(title)) paste("\\dQuote{", 
+	fmtTitle <- function(title)
+	    if (length(title)) paste("\\dQuote{",
 				     addPeriod(collapse(cleanup(title))), "}", sep="")
 
 	fmtYear <- function(year) {
@@ -89,7 +89,7 @@ makeJSS <- function()
 	volNum <- function(paper) {
 	    if (length(paper$volume)) {
 		result <- paste("\\bold{", collapse(paper$volume), "}", sep="")
-		if (length(paper$number)) 
+		if (length(paper$number))
 		    result <- paste(result, "(", collapse(paper$number), ")", sep="")
 		result
 	    }
@@ -122,7 +122,7 @@ makeJSS <- function()
 	    names <- sapply(paper$editor, shortName)
 	    if (length(names) > 1)
 		result <- paste( paste(names[-length(names)], collapse=", "),
-			    "and", names[length(names)], "(eds.)") 
+			    "and", names[length(names)], "(eds.)")
 	    else if (length(names))
 		result <- paste(names, "(ed.)")
 	    else
@@ -131,7 +131,7 @@ makeJSS <- function()
 	}
 
 	extraInfo <- function(paper) {
-	    result <- paste(c(fmtDOI(paper$doi), fmtNote(paper$note), 
+	    result <- paste(c(fmtDOI(paper$doi), fmtNote(paper$note),
 		  fmtEprint(paper$eprint), fmtUrl(paper$url)), collapse=", ")
 	    if (result != "") result
 	}
@@ -150,7 +150,7 @@ makeJSS <- function()
 	bookPublisher <- function(book) {
 	    if (length(book$publisher)) {
 		result <- collapse(book$publisher)
-		if (length(book$address)) 
+		if (length(book$address))
 		    result <- paste(result, collapse(book$address), sep=", ")
 		result
 	    }
@@ -159,7 +159,7 @@ makeJSS <- function()
 	procOrganization <- function(paper) {
 	    if (length(paper$organization)) {
 		result <- collapse(cleanup(paper$organization))
-		if (length(paper$address)) 
+		if (length(paper$address))
 		    result <- paste(result, collapse(cleanup(paper$address)), sep=", ")
 		result
 	    }
@@ -192,7 +192,7 @@ makeJSS <- function()
 	    }
 	    collapse(c(sentence(authors, fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
-		       paste("In", sentence(editors, fmtBtitle(paper$fmtBtitle), bookVolume(paper), 
+		       paste("In", sentence(editors, fmtBtitle(paper$fmtBtitle), bookVolume(paper),
 					    fmtChapter(paper$chapter),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
 		       sentence(bookPublisher(paper)),
@@ -202,16 +202,16 @@ makeJSS <- function()
 	formatIncollection <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
-		       paste("In", sentence(editorList(paper), fmtBtitle(paper$fmtBtitle), bookVolume(paper), 
+		       paste("In", sentence(editorList(paper), fmtBtitle(paper$fmtBtitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
 		       sentence(bookPublisher(paper)),
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
 	}
 
-	formatInProceedings <- function(paper) 
+	formatInProceedings <- function(paper)
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
 		       fmtTitle(paper$title),
-		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper), 
+		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper),
 					    fmtEdition(paper$edition), fmtPages(paper$pages))),
 		       sentence(procOrganization(paper)),
 		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
@@ -225,21 +225,21 @@ makeJSS <- function()
 
 	formatMastersthesis <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
-		       sentence(fmtBtitle(paper$title)), 
+		       sentence(fmtBtitle(paper$title)),
 		       sentence("Master's thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
 	}
 
 	formatPhdthesis <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
-		       sentence(fmtBtitle(paper$title)), 
+		       sentence(fmtBtitle(paper$title)),
 		       sentence("PhD thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
 		       sentence(extraInfo(paper))))
 	}
 
 	formatMisc <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
-		       fmtTitle(paper$title), 
+		       fmtTitle(paper$title),
 		       sentence(fmtHowpublished(paper$howpublished)),
 		       sentence(extraInfo(paper))))
 	}
@@ -250,13 +250,13 @@ makeJSS <- function()
 	    collapse(c(sentence(editor, fmtYear(book$year), sep=" "),
 		       sentence(fmtBtitle(book$title), bookVolume(book)),
 		       sentence(procOrganization(book)),
-		       sentence(fmtISBN(book$isbn), fmtISSN(book$issn), 
+		       sentence(fmtISBN(book$isbn), fmtISSN(book$issn),
 				extraInfo(book))))
 	}
 
 	formatTechreport <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
-		       fmtTitle(paper$title), 
+		       fmtTitle(paper$title),
 		       sentence(fmtTechreportnumber(paper$number),
 				fmtInstitution(paper$institution),
 				fmtAddress(paper$address)),
@@ -265,7 +265,7 @@ makeJSS <- function()
 
 	formatUnpublished <- function(paper) {
 	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
-		       fmtTitle(paper$title), 
+		       fmtTitle(paper$title),
 		       sentence(extraInfo(paper))))
 	}
 
@@ -284,7 +284,7 @@ makeJSS <- function()
 
 	environment()
     })
-    
+
 bibstyle <- local({
     styles <- list(JSS = makeJSS())
     default <- "JSS"
@@ -310,13 +310,13 @@ bibstyle <- local({
         styles[[style]]
     }
 })
-    
+
 toRd.bibentry <- function(obj, style=NULL, ...) {
-    env <- new.env(parent=bibstyle(style))
+    env <- new.env(hash = FALSE, parent = bibstyle(style)) # small
     env$obj <- obj
     o <- with(env, order(sortKeys(obj)))
     rm("obj", envir=env)
-    bib <- unclass(obj[o])    
+    bib <- unclass(obj[o])
     result <- character(length(bib))
     for (i in seq_along(bib)) {
     	env$paper <- bib[[i]]
@@ -335,7 +335,7 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     	    TechReport = formatTechreport(paper),
     	    Unpublished = formatUnpublished(paper),
     	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
-    } 
+    }
     result
 }
 

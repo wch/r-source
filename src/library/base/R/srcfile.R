@@ -20,7 +20,8 @@ srcfile <- function(filename, encoding = getOption("encoding"), Enc = "unknown")
 {
     stopifnot(is.character(filename), length(filename) == 1L)
 
-    e <- new.env(parent=emptyenv())
+    ## This is small, no need to hash.
+    e <- new.env(hash = FALSE, parent = emptyenv())
 
     e$wd <- getwd()
     e$filename <- filename
@@ -43,15 +44,15 @@ print.srcfile <- function(x, ...) {
 
 summary.srcfile <- function(object, ...) {
     cat(utils:::.normalizePath(object$filename, object$wd), "\n")
-    
+
     if (inherits(object$timestamp, "POSIXt"))
     	cat("Timestamp: ", format(object$timestamp, usetz=TRUE), "\n", sep="")
-    
+
     cat('Encoding: "', object$encoding, '"', sep="")
     if (!is.null(object$Enc) && object$Enc != object$encoding && object$Enc != "unknown")
     	cat(', re-encoded to "', object$Enc, '"', sep="")
     cat("\n")
-    
+
     invisible(object)
 }
 

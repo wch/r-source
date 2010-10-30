@@ -135,7 +135,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
 available_packages_filters_default <-
     c("R_version", "OS_type", "subarch", "duplicates")
 
-available_packages_filters_db <- new.env()
+available_packages_filters_db <- new.env(hash = FALSE) # small
 
 available_packages_filters_db$R_version <-
 function(db)

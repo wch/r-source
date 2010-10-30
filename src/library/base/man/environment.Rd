@@ -48,7 +48,7 @@ env.profile(env)
     \code{NULL}, which is the default.}
   \item{value}{an environment to associate with the function}
   \item{x}{an arbitrary \R object.}
-  \item{hash}{a logical, if \code{TRUE} the environment will be hashed}
+  \item{hash}{a logical, if \code{TRUE} the environment will use a hash table.}
   \item{parent}{an environment to be used as the enclosure of the
     environment created.}
   \item{env}{an environment}
@@ -135,6 +135,9 @@ env.profile(env)
   as environments have unusual copying semantics.
 }
 \seealso{
+  For the performance implications of hashing or not, see
+  \url{http://en.wikipedia.org/wiki/Hash_table}.
+
   The \code{envir} argument of \code{\link{eval}}, \code{\link{get}},
   and \code{\link{exists}}.
 
