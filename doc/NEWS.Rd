@@ -77,6 +77,11 @@
 
       \item When \code{list2env()} created an environment it was missing
       a \code{PROTECT} call and so was vulnerable to garbage collection.
+      
+      \item \code{Sweave()} with \code{keep.source=TRUE} dropped
+      comments at the start and end of code chunks.  It could also
+      fail when \code{\\SweaveInput} was combined with named chunks.
+      
     }
   }
 }

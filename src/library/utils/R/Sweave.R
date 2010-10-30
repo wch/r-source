@@ -455,20 +455,54 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           	                    "", chunkexps[1L], fixed = TRUE)
           	                    
           RweaveTryStop(chunkexps, options)
+          
+          # A couple of functions used below...
+          
+	  putSinput <- function(dce){
+	      if(!openSinput){
+	  	  if(!openSchunk){
+	  	      cat("\\begin{Schunk}\n",
+	  	  	  file=chunkout, append=TRUE)
+	  	      linesout[thisline + 1L] <<- srcline
+	  	      thisline <<- thisline + 1L
+	  	      openSchunk <<- TRUE
+	  	  }
+	  	  cat("\\begin{Sinput}",
+	  	      file=chunkout, append=TRUE)
+	  	  openSinput <<- TRUE
+	      }
+	      cat("\n", paste(getOption("prompt"), dce[1L:leading], sep="", collapse="\n"),
+	  	  file=chunkout, append=TRUE, sep="")
+	      if (length(dce) > leading)
+	  	  cat("\n", paste(getOption("continue"), dce[-(1L:leading)], sep="", collapse="\n"),
+	  	      file=chunkout, append=TRUE, sep="")
+	      linesout[thisline + seq_along(dce)] <<- srcline
+	      thisline <<- thisline + length(dce)
+	  }	  
+	  
+	  trySrcLines <- function(srcfile, showfrom, showto, ce) {
+	      lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)), silent=TRUE)
+	      if (inherits(lines, "try-error")) {
+	          if (is.null(ce)) lines <- character(0)
+	          else lines <- deparse(ce, width.cutoff=0.75*getOption("width"))
+	      }
+	      lines
+	  }          
+
+	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#"
+
           openSinput <- FALSE
           openSchunk <- FALSE
 
-          if(length(chunkexps) == 0L)
-            return(object)
-
           srclines <- attr(chunk, "srclines")
-          linesout <- integer(0L)
-          srcline <- srclines[1L]
-
+          linesout <- integer(0L) # maintains concordance
+          srcline <- srclines[1L] # current input line
+	  thisline <- 0L          # current output line
+	  lastshown <- srcline    # last line already displayed;
+	  			  # at this point it's the <<>>= line
+	  
 	  srcrefs <- attr(chunkexps, "srcref")
-	  lastshown <- NA
-	  thisline <- 0L
-	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#"
+	  
           for(nce in seq_along(chunkexps)) {
  		ce <- chunkexps[[nce]]
                 if (options$keep.source && nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
@@ -488,16 +522,16 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     	showfrom <- showto <- refline
                     	
 		    if (!is.na(refline) || is.na(lastshown)) { 
-			# Did we expand a named chunk for this expression or the previous
-			# one?
-			dce <- getSrcLines(srcfile, showfrom, showto)
+			# We expanded a named chunk for this expression or the previous
+			# one
+			dce <- trySrcLines(srcfile, showfrom, showto, ce)
 			leading <- 1L
 			if (!is.na(refline))
 			    lastshown <- NA
 			else
 			    lastshown <- showto
 		    } else {
-			dce <- getSrcLines(srcfile, lastshown+1L, showto)
+			dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
 			leading <- showfrom-lastshown
 			lastshown <- showto
 		    }
@@ -512,30 +546,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
                 if(object$debug)
                     cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-                if(options$echo && length(dce)){
-                    if(!openSinput){
-                        if(!openSchunk){
-                            cat("\\begin{Schunk}\n",
-                                file=chunkout, append=TRUE)
-                            linesout[thisline + 1L] <- srcline
-                            thisline <- thisline + 1L
-                            openSchunk <- TRUE
-                        }
-                        cat("\\begin{Sinput}",
-                            file=chunkout, append=TRUE)
-                        openSinput <- TRUE
-                    }
-		    cat("\n", paste(getOption("prompt"), dce[1L:leading], sep="", collapse="\n"),
-		    	file=chunkout, append=TRUE, sep="")
-                    if (length(dce) > leading)
-                    	cat("\n", paste(getOption("continue"), dce[-(1L:leading)], sep="", collapse="\n"),
-                    	    file=chunkout, append=TRUE, sep="")
-		    linesout[thisline + seq_along(dce)] <- srcline
-		    thisline <- thisline + length(dce)
-                }
-
-                                        # tmpcon <- textConnection("output", "w")
-                                        # avoid the limitations (and overhead) of output text connections
+                    
+                if(options$echo && length(dce))
+                    putSinput(dce)
+                    
+                  # tmpcon <- textConnection("output", "w")
+                  # avoid the limitations (and overhead) of output text connections
                 tmpcon <- file()
                 sink(file=tmpcon)
                 err <- NULL
@@ -598,6 +614,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
             }
 
+	  if(options$echo && options$keep.source 
+	     && !is.na(lastshown) 
+	     && lastshown < (showto <- srclines[length(srclines)])) {
+	      dce <- trySrcLines(srcfile, lastshown+1L, showto, NULL)
+	      putSinput(dce)
+	  }
+	  
           if(openSinput){
               cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
               linesout[thisline + 1L:2L] <- srcline
