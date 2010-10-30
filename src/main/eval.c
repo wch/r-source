@@ -3184,11 +3184,8 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int label = GETOP(), cond;
 	value = BCNPOP();
-	cond = asLogical(value);
-	if (cond == NA_LOGICAL)
-	  error(isLogical(value)
-		? _("missing value where logical needed")
-		: _("argument of if(*) is not interpretable as logical"));
+	/**** should probably inline this and use proper call here: */
+	cond = asLogicalNoNA(value, R_NilValue);
 	if (! cond) {
 	    BC_CHECK_SIGINT();
 	    pc = codebase + label;
