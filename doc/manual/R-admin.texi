@@ -1295,8 +1295,9 @@ Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
-3.0} available from @uref{http://wix.sourceforge.net/}.  Once WiX is
-installed, set the path to its home directory in @file{MkRules.local}.
+3.0 or 3.5} available from @uref{http://wix.sourceforge.net/}.  Once WiX
+is installed, set the path to its home directory in
+@file{MkRules.local}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
