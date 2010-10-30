@@ -48,6 +48,8 @@
       \item \code{system.file} gains a \code{mustWork} argument
       (suggestion of Bill Dunlap).
 
+      \item \code{new.env(hash = TRUE)} is now the default.
+
       \item \code{list2env(envir = NULL)} defaults to hashing (with a
       suitably sized environment) for lists of more than 100 elements.
     }
