@@ -21,9 +21,10 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The MSI installer is now made by an \R script, and there is
-      now support for 64-bit builds.
+      now support for 64-bit builds.  (Unlike the Inno Setup installer,
+      there are separate MSI installers for 32- and 64-bit Windows.)
 
-      It is now built using \command{WiX 3.0} rather than \command{WiX
+      It is now built using \command{WiX 3.x} rather than \command{WiX
 	2.0}.  (As a result it is about 25\% smaller.)
     }
   }
