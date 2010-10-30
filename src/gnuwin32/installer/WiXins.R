@@ -70,7 +70,7 @@
         sprintf('   Version="%s"', Rver0),
         '   UpgradeCode="309E663C-CA7A-40B9-8822-5D466F1E2AF9">',
         '    <Package Id="*" ',
-        sprintf('     Keywords="R %s nstaller"', Rver),
+        sprintf('     Keywords="R %s Installer"', Rver),
         sprintf('     Description="R %s Installer"', Rver),
         '     Comments="R Language and Environment"',
         '     Manufacturer="R Development Core Team"',
@@ -82,10 +82,10 @@
         if (personal) 'InstallPrivileges="limited"',
         '     SummaryCodepage="1252" />',
         '    <Media Id=\'1\' Cabinet=\'Sample.cab\' EmbedCab=\'yes\' DiskPrompt="CD-ROM #1" />',
-        '   <Property Id=\'DiskPrompt\' Value="R Installation [1]" />',
+        '    <Property Id=\'DiskPrompt\' Value="R Installation [1]" />',
         if(personal)'   <Property Id="ALLUSERS"></Property>'
-        else '   <Property Id="ALLUSERS">1</Property>',
-        sprintf('   <Property Id="RVersion">%s</Property>', Rver),
+        else '    <Property Id="ALLUSERS">1</Property>',
+        sprintf('    <Property Id="RVersion">%s</Property>', Rver),
         '    <Icon Id="icon.ico" SourceFile="..\\front-ends\\R.ico"/>',
         '    <Property Id="ARPPRODUCTICON" Value="icon.ico" />',
         '')
@@ -96,7 +96,7 @@
             "  VersionNT64", "</Condition>")
     }
 
-
+    name0 <- paste('Name="', srcdir, '" />', sep = '')
     ff <- readLines('files.wxs', warn = FALSE)
     ff <- grep("^        ", ff, value = TRUE)
     rx1 <- ' *<Component Id="([^"]*)".*'
@@ -171,6 +171,7 @@
             f <- sub("PUT-GUID-HERE", guuids(), f, fixed = TRUE)
         f <- sub("SourceDir", srcdir, f, fixed = TRUE)
         f <- sub("TARGETDIR", "INSTALLDIR", f, fixed = TRUE)
+        f <- sub(name0, "/>", f, fixed = TRUE)
         cat("    ", f, "\n", file=con, sep="")
     }
     if (rgui == "unknown") rgui <- rgui64
@@ -189,7 +190,9 @@
         '      <Directory Id=\'ProgramFiles64Folder\' Name=\'PFiles\'>'
         else
         '      <Directory Id=\'ProgramFilesFolder\' Name=\'PFiles\'>',
-        "        <Directory Id='INSTALLDIR' Name='R'>",
+        "        <Directory Id='Rdir' Name='R'>",
+        sprintf("         <Directory Id='INSTALLDIR' Name='%s'>", srcdir),
+        "         </Directory>",
         "        </Directory>",
         "      </Directory>")
 
@@ -204,32 +207,31 @@
 '          <Directory Id="RMENU" Name="R">')
     if (have32bit)
         cat(file = con, sep="\n",
-'            <Component Id="shortcut0"',
-sprintf('             Guid="%s" KeyPath="yes">', guuids()),
+sprintf('             <Component Id="shortcut0" Guid="%s">', guuids()),
 '              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s" Target="[!%s]" ', Rver, rgui),
-            ## Supposed to do something like
-            ## <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-            ## <RegistryValue Root="HKCU" Key="Software\R-core\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-            ## to stop validation errors.
-
 '               WorkingDirectory="STARTDIR" />',
+            ## stop validation errors
+'            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '            </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
-'            <Component Id="shortcut64"',
-sprintf('             Guid="%s" KeyPath="yes">', guuids()),
+sprintf('             <Component Id="shortcut64" Guid="%s">', guuids()),
 '              <Shortcut Id="Rgui64StartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R x64 %s" Target="[!%s]" ', Rver, rgui64),
 '               WorkingDirectory="STARTDIR" />',
+            ## stop validation errors
+'            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '            </Component>')
 
     cat(file = con, sep="\n",
-'            <Component Id="shortcut1" ',
-sprintf('             Guid="%s" KeyPath="yes">', guuids()),
+sprintf('             <Component Id="shortcut1" Guid="%s">', guuids()),
 '              <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU"',
 sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
 '               WorkingDirectory="STARTDIR" />',
+            ## The next two stop validation errors
+'            <RemoveFolder Id="RMENU" On="uninstall"/>',
+'            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '            </Component>',
 '          </Directory>',
 '        </Directory>',
@@ -240,12 +242,14 @@ sprintf('               Name="R %s Help" Target="[!%s]"', Rver, rhelp),
 sprintf('        <Component Id="desktopshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R %s"', Rver),
 sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
+'            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '        </Component>')
     if (have64bit)
         cat(file = con, sep="\n",
 sprintf('        <Component Id="desktopshortcut64" DiskId="1" Guid="%s">', guuids()),
 sprintf('          <Shortcut Id="Rgui64DesktopShortcut" Directory="DesktopFolder" Name="R x64 %s"', Rver),
 sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui64),
+'            <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '        </Component>')
        cat(file = con, sep="\n",
 '      </Directory>',
@@ -257,6 +261,7 @@ sprintf('           WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui64),
 sprintf('              <Component Id="quickshortcut0" DiskId="1" Guid="%s">', guuids()),
 sprintf('                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R %s"', Rver),
 sprintf('                 WorkingDirectory="STARTDIR" Target="[!%s]" />', rgui),
+'                <RegistryValue Root="HKCU" Key="Software\\R-core\\R" Name="installed" Type="integer" Value="1" KeyPath="yes"/>',
 '              </Component>',
 '            </Directory>',
 '          </Directory>',
