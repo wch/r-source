@@ -194,10 +194,10 @@ Summary.Date <- function (..., na.rm)
 
 `[<-.Date` <- function(x, ..., value)
 {
-    if(!as.logical(length(value))) return(x)
-    value <- as.Date(value)
+    if(!length(value)) return(x)
+    value <- unclass(as.Date(value))
     cl <- oldClass(x)
-    class(x) <- class(value) <- NULL
+    class(x) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
     x

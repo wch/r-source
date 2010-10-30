@@ -14,8 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-"fix" <-
-    function (x, ...)
+fix <- function (x, ...)
 {
     subx <- substitute(x)
     if (is.name(subx))

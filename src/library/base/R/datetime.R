@@ -323,11 +323,11 @@ function(x, ..., drop = TRUE)
 
 `[<-.POSIXct` <-
 function(x, ..., value) {
-    if(!as.logical(length(value))) return(x)
-    value <- as.POSIXct(value)
+    if(!length(value)) return(x)
+    value <- unclass(as.POSIXct(value))
     cl <- oldClass(x)
     tz <- attr(x, "tzone")
-    class(x) <- class(value) <- NULL
+    class(x) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
     attr(x, "tzone") <- tz
@@ -851,10 +851,10 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 
 `[<-.POSIXlt` <- function(x, i, value)
 {
-    if(!as.logical(length(value))) return(x)
-    value <- as.POSIXlt(value)
+    if(!length(value)) return(x)
+    value <- unclass(as.POSIXlt(value))
     cl <- oldClass(x)
-    class(x) <- class(value) <- NULL
+    class(x) <- NULL
     for(n in names(x)) x[[n]][i] <- value[[n]]
     class(x) <- cl
     x
