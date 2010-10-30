@@ -569,6 +569,7 @@ the global environment (possibly as part of a recursive search).
 @menu
 * Search paths::                
 * Name spaces::                 
+* Hash table::                  
 @end menu
 
 @node Search paths, Name spaces, Environments and variable lookup, Environments and variable lookup
@@ -601,7 +602,7 @@ the empty environment, but with an optimization to stop at the base
 environment.)  So the `search path' describes the chain of environments
 which is traversed once the search reaches the global environment.
 
-@node Name spaces,  , Search paths, Environments and variable lookup
+@node Name spaces, Hash table, Search paths, Environments and variable lookup
 @subsection Name spaces
 
 @cindex name space
@@ -633,6 +634,31 @@ as the base environment @code{R_BaseEnv} @emph{except} that its
 enclosure is the global environment rather than the empty environment:
 the internal code diverts lookups in its frame to the global symbol
 table.
+
+@node Hash table,  , Name spaces, Environments and variable lookup
+@subsection Hash table
+
+Environments in @R{} usually have a hash table, although that is not the
+default in @code{new.env()}.  It is stored as a @code{VECSXP} where
+@code{length} is used for the allocated size of the table and
+@code{truelength} is the number of primary slots in use---the pointer to
+the @code{VECSXP} is part of the header of a @code{SEXP} of type
+@code{ENVSXP}, and this points to @code{R_NilValue} if the environment
+is not hashed.
+
+For the pros and cons of hashing, see a basic text on Computer Science.
+
+The code to implement hashed environments is in @file{src/main/envir.c}.
+Unless set otherwise (e.g.@: by the @code{size} argument of
+@code{new.env()}) the initial table size is @code{29}.  The table will
+be resized by a factor of 1.2 once the load factor (the proportion of
+primary slots in use) reaches 85%.
+
+The hash chains are stored as pairlist elements of the @code{VECSXP}:
+items are inserted at the front of the pairlist.  Hashing is principally
+designed for fast searching of enviroments, which are from time to time
+added to but rarely deleted from, so items are not actually deleted but
+have their value set to @code{R_UnboundValue}.
 
 
 @node Attributes, Contexts, Environments and variable lookup, R Internal Structures
