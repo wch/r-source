@@ -48,7 +48,7 @@ as.matrix.noquote <- function(x, ...) noquote(NextMethod("as.matrix", x))
 c.noquote <- function(..., recursive = FALSE)
     structure(NextMethod("c"), class = "noquote")
 
-"[.noquote" <- function (x, ...) {
+`[.noquote` <- function (x, ...) {
     attr <- attributes(x)
     r <- unclass(x)[...] ## shouldn't this be NextMethod?
     attributes(r) <- c(attributes(r),

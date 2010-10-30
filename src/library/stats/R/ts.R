@@ -84,7 +84,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 
 tsp <- function(x) attr(x, "tsp")
 
-"tsp<-" <- function(x, value)
+`tsp<-` <- function(x, value)
 {
     cl <- oldClass(x)
     attr(x, "tsp") <- value # does error-checking internally
@@ -687,9 +687,9 @@ window.default <- function(x, start = NULL, end = NULL,
 
 window.ts <- function (x, ...) as.ts(window.default(x, ...))
 
-"window<-" <- function(x, ..., value) UseMethod("window<-")
+`window<-` <- function(x, ..., value) UseMethod("window<-")
 
-"window<-.ts" <- function(x, start, end, frequency, deltat, ..., value)
+`window<-.ts` <- function(x, start, end, frequency, deltat, ..., value)
 {
     xtsp <- tsp(x)
     m <- match.call(expand.dots = FALSE)
@@ -721,35 +721,14 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     x
 }
 
-"[.ts" <- function (x, i, j, drop = TRUE) {
+`[.ts` <- function (x, i, j, drop = TRUE) {
     y <- NextMethod("[")
     if (missing(i))
 	ts(y, start = start(x), frequency = frequency(x))
-#     else {
-#         if(is.matrix(i)) return(y)
-# 	n <- if (is.matrix(x)) nrow(x) else length(x)
-# 	li <- length(ind <- (1L:n)[i])
-#         if(li == 0) return(numeric(0))
-#         if(li == 1) {
-#             tsp(y) <- c(start(x), start(x), frequency(x))
-#             class(y) <- class(x)
-#             return(y)
-#         }
-# 	if (length(unique(ind[-1L] - ind[-li])) != 1) {
-# 	    warning("Not returning a time series object")
-# 	} else {
-# 	    xtsp <- tsp(x)
-# 	    xtimes <- seq(from = xtsp[1L], to = xtsp[2L], by = 1 / xtsp[3L])
-# 	    ytsp <- xtimes[range(ind)]
-# 	    tsp(y) <- c(ytsp, (li - 1) / (ytsp[2L] - ytsp[1L]))
-#             class(y) <- class(x)
-# 	}
-# 	y
-#     }
     else y
 }
 
-"[<-.ts" <- function (x, i, j, value) {
+`[<-.ts` <- function (x, i, j, value) {
     y <- NextMethod("[<-")
     if (NROW(y) != NROW(x)) stop("only replacement of elements is allowed")
     y

@@ -50,7 +50,7 @@ diag <- function(x = 1, nrow, ncol)
     y
 }
 
-"diag<-" <- function(x, value)
+`diag<-` <- function(x, value)
 {
     dx <- dim(x)
     if(length(dx) != 2L)

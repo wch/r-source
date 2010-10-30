@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-"mostattributes<-" <- function(obj, value) {
+`mostattributes<-` <- function(obj, value)
+{
     if(length(value)) {
 	if(!is.list(value)) stop("RHS must be list")
 	if(h.nam <- !is.na(inam <- match("names", names(value)))) {

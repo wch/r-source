@@ -76,7 +76,7 @@ print.formula <- function(x, showEnv = !identical(e, .GlobalEnv), ...)
     invisible(.x)
 }
 
-"[.formula" <- function(x,i) {
+`[.formula` <- function(x,i) {
     ans <- NextMethod("[")
     ## as.character gives a vector.
     if(as.character(ans[[1L]])[1L] == "~") {
@@ -172,7 +172,7 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 }
 
 
-"[.terms" <-function (termobj, i)
+`[.terms` <-function (termobj, i)
 {
     resp <- if (attr(termobj, "response")) termobj[[2L]] else NULL
     newformula <- attr(termobj, "term.labels")[i]

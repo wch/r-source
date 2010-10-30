@@ -242,7 +242,7 @@ print.gList <- function(x, ...) {
   invisible(x)
 }
 
-"[.gList" <- function(x, index, ...) {
+`[.gList` <- function(x, index, ...) {
     cl <- class(x)
     result <- "["(unclass(x), index, ...)
     class(result) <- cl

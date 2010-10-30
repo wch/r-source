@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## give the base namespace a table for registered methods
-".__S3MethodsTable__." <- new.env(hash = TRUE, parent = baseenv())
+`.__S3MethodsTable__.` <- new.env(hash = TRUE, parent = baseenv())
 
 ## NOTA BENE:
 ##  1) This code should work also when methods is not yet loaded
@@ -80,7 +80,7 @@ getExportedValue <- function(ns, name) {
     else get(getInternalExportName(name, ns), envir = ns)
 }
 
-"::" <- function(pkg, name) {
+`::` <- function(pkg, name) {
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
     ns <- tryCatch(asNamespace(pkg), hasNoNamespaceError = function(e) NULL)
@@ -93,7 +93,7 @@ getExportedValue <- function(ns, name) {
     else getExportedValue(pkg, name)
 }
 
-":::" <- function(pkg, name) {
+`:::` <- function(pkg, name) {
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
     get(name, envir = asNamespace(pkg), inherits = FALSE)

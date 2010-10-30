@@ -54,16 +54,7 @@ levels <- function(x) UseMethod("levels")
 levels.default <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
-## now a primitive
-## "levels<-" <- function(x, value) UseMethod("levels<-")
-
-## "levels<-.default" <- function(x, value)
-## {
-##     attr(x, "levels") <- value
-##     x
-## }
-
-"levels<-.factor" <- function(x, value)
+`levels<-.factor` <- function(x, value)
 {
     xlevs <- levels(x)
     if (is.list(value)) {
@@ -90,7 +81,7 @@ nlevels <- function(x) length(levels(x))
 droplevels <- function(x, ...) UseMethod("droplevels")
 droplevels.factor <- function(x, ...) factor(x)
 droplevels.data.frame <- function(x, except = NULL, ...)
-  {		      
+  {
     ix <- sapply(x, is.factor)
     if (!is.null(except)) ix[except] <- FALSE
     x[ix] <- lapply(x[ix], factor)
@@ -197,7 +188,7 @@ Ops.factor <- function(e1, e2)
 
 ## NB for next four:
 ## a factor has levels before class in attribute list (PR#6799)
-"[.factor" <- function(x, ..., drop = FALSE)
+`[.factor` <- function(x, ..., drop = FALSE)
 {
     y <- NextMethod("[")
     attr(y,"contrasts")<-attr(x,"contrasts")
@@ -208,7 +199,7 @@ Ops.factor <- function(e1, e2)
         factor(y, exclude = if(any(is.na(levels(x)))) NULL else NA ) else y
 }
 
-"[<-.factor" <- function(x, ..., value)
+`[<-.factor` <- function(x, ..., value)
 {
     lx <- levels(x)
     cx <- oldClass(x)
@@ -223,7 +214,7 @@ Ops.factor <- function(e1, e2)
     x
 }
 
-"[[.factor" <- function(x, ...)
+`[[.factor` <- function(x, ...)
 {
     y <- NextMethod("[[")
     attr(y,"contrasts") <- attr(x,"contrasts")
@@ -300,7 +291,7 @@ function (e1, e2)
     value
 }
 
-"is.na<-.factor" <- function(x, value)
+`is.na<-.factor` <- function(x, value)
 {
     lx <- levels(x)
     cx <- oldClass(x)
@@ -309,7 +300,7 @@ function (e1, e2)
     structure(x, levels = lx, class = cx)
 }
 
-"length<-.factor" <- function(x, value)
+`length<-.factor` <- function(x, value)
 {
     cl <- class(x)
     levs <- levels(x)

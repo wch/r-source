@@ -20,7 +20,7 @@ as.raster.logical <- function(x, max=1, ...) {
     as.raster(matrix(x, ...), max)
 }
 
-as.raster.numeric <- as.raster.logical 
+as.raster.numeric <- as.raster.logical
 
 as.raster.character <- as.raster.logical
 
@@ -80,7 +80,7 @@ print.raster <- function(x, ...) {
 # Non-standard because raster is ROW-wise
 # Try to piggy-back on existing methods as much as possible
 # IGNORE 'drop'
-"[.raster" <- function(x, i, j, ..., drop) {
+`[.raster` <- function(x, i, j, ..., drop) {
     m <- as.matrix(x)
     if (missing(j))
         subset <- m[i, drop=FALSE]
@@ -89,7 +89,7 @@ print.raster <- function(x, ...) {
     as.raster(subset)
 }
 
-"[<-.raster" <- function(x, i, j, value) {
+`[<-.raster` <- function(x, i, j, value) {
     m <- as.matrix(x)
     if (missing(j))
         m[i] <- value
@@ -105,7 +105,7 @@ Ops.raster <- function(e1, e2) {
         if (is.raster(e1))
             e1 <- as.matrix(e1)
         if (is.raster(e2))
-            e2 <- as.matrix(e2)        
+            e2 <- as.matrix(e2)
         # The result is a logical MATRIX
         get(.Generic)(e1, e2)
     } else {

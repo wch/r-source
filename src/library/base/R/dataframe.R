@@ -36,9 +36,9 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 .set_row_names <- function(n)
     if(n > 0) c(NA_integer_, -n) else integer(0L)
 
-"row.names<-" <- function(x, value) UseMethod("row.names<-")
+`row.names<-` <- function(x, value) UseMethod("row.names<-")
 
-"row.names<-.data.frame" <- function(x, value)
+`row.names<-.data.frame` <- function(x, value)
 {
     if (!is.data.frame(x)) x <- as.data.frame(x)
     n <- .row_names_info(x, 2L)
@@ -73,7 +73,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     x
 }
 
-"row.names<-.default" <- function(x, value) "rownames<-"(x, value)
+`row.names<-.default` <- function(x, value) `rownames<-`(x, value)
 
 is.na.data.frame <- function (x)
 {
@@ -105,7 +105,7 @@ dim.data.frame <- function(x) c(.row_names_info(x, 2L), length(x))
 
 dimnames.data.frame <- function(x) list(row.names(x), names(x))
 
-"dimnames<-.data.frame" <- function(x, value)
+`dimnames<-.data.frame` <- function(x, value)
 {
     d <- dim(x)
     if(!is.list(value) || length(value) != 2L)
@@ -309,7 +309,7 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
 
 ## Allow extraction method to have changed the underlying class,
 ## so re-assign the class based on the result.
-"[.AsIs" <- function(x, i, ...) I(NextMethod("["))
+`[.AsIs` <- function(x, i, ...) I(NextMethod("["))
 
 
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
@@ -504,7 +504,7 @@ data.frame <-
 ###  Subsetting and mutation methods
 ###  These are a little less general than S
 
-"[.data.frame" <-
+`[.data.frame` <-
     function(x, i, j, drop = if(missing(i)) TRUE else length(cols) == 1)
 {
     mdrop <- missing(drop)
@@ -650,7 +650,7 @@ data.frame <-
     x
 }
 
-"[[.data.frame" <- function(x, ..., exact=TRUE)
+`[[.data.frame` <- function(x, ..., exact=TRUE)
 {
     ## use in-line functions to refer to the 1st and 2nd ... arguments
     ## explicitly. Also will check for wrong number or empty args
@@ -671,7 +671,7 @@ data.frame <-
     }
 }
 
-"[<-.data.frame" <- function(x, i, j, value)
+`[<-.data.frame` <- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
         warning("named arguments are discouraged")
@@ -931,7 +931,7 @@ data.frame <-
     x
 }
 
-"[[<-.data.frame"<- function(x, i, j, value)
+`[[<-.data.frame` <- function(x, i, j, value)
 {
     if(!all(names(sys.call()) %in% c("", "value")))
         warning("named arguments are discouraged")
@@ -1024,7 +1024,7 @@ data.frame <-
 }
 
 ## added in 1.8.0
-"$<-.data.frame"<- function(x, name, value)
+`$<-.data.frame` <- function(x, name, value)
 {
     cl <- oldClass(x)
     ## delete class: Version 3 idiom

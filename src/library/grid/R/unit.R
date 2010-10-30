@@ -280,7 +280,7 @@ as.character.unit.arithmetic <- function(x, ...) {
 unit.pmax <- function(...) {
 
   select.i <- function(unit, i) {
-    "["(unit, i, top=FALSE)
+    `[`(unit, i, top=FALSE)
   }
 
   x <- list(...)
@@ -302,7 +302,7 @@ unit.pmax <- function(...) {
 unit.pmin <- function(...) {
 
   select.i <- function(unit, i) {
-    "["(unit, i, top=FALSE)
+    `[`(unit, i, top=FALSE)
   }
 
   x <- list(...)
@@ -377,7 +377,7 @@ print.unit <- function(x, ...) {
 # except at the top level
 
 # NOTE that "unit" and "data" attributes will be recycled
-"[.unit" <- function(x, index, top=TRUE, ...) {
+`[.unit` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
     index <- (1L:this.length)[index]
@@ -409,7 +409,7 @@ print.unit <- function(x, ...) {
 
 # NOTE that units will be recycled to the length of the largest
 # of the arguments
-"[.unit.arithmetic" <- function(x, index, top=TRUE, ...) {
+`[.unit.arithmetic` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
     index <- (1L:this.length)[index]
@@ -422,27 +422,27 @@ print.unit <- function(x, ...) {
   }
   if (top && any(index > this.length))
     stop("Index out of bounds (unit arithmetic subsetting)")
-  
+
   repSummaryUnit <- function(x, n) {
       newUnits <- lapply(1:n, function(z) { get(x$fname)(x$arg1) })
       class(newUnits) <- c("unit.list", "unit")
       newUnits
   }
-  
+
   switch(x$fname,
-         "+"="["(x$arg1, (index - 1) %% this.length + 1, top=FALSE) +
-             "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
-         "-"="["(x$arg1, (index - 1) %% this.length + 1, top=FALSE) -
-             "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
+         "+"=`[`(x$arg1, (index - 1) %% this.length + 1, top=FALSE) +
+             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
+         "-"=`[`(x$arg1, (index - 1) %% this.length + 1, top=FALSE) -
+             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
          # Recycle multiplier if necessary
          "*"=x$arg1[(index - 1) %% length(x$arg1) + 1] *
-             "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
+             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
          "min"=repSummaryUnit(x, length(index)),
          "max"=repSummaryUnit(x, length(index)),
          "sum"=repSummaryUnit(x, length(index)))
 }
 
-"[.unit.list" <- function(x, index, top=TRUE, ...) {
+`[.unit.list` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
     index <- (1L:this.length)[index]
@@ -461,7 +461,7 @@ print.unit <- function(x, ...) {
   result
 }
 
-# Write "[<-.unit" methods too ??
+# Write `[<-.unit` methods too ??
 
 #########################
 # "c"ombining unit objects

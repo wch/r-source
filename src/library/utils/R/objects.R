@@ -319,7 +319,7 @@ getAnywhere <- function(x)
             if (gen == "" || cl == "") next
             # f might be a special, not a closure, and not have an environment, so
             # be careful below
-            if(!is.null(f <- getS3method(gen, cl, TRUE)) && !is.null(environment(f))) {    
+            if(!is.null(f <- getS3method(gen, cl, TRUE)) && !is.null(environment(f))) {
                 ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
@@ -381,7 +381,7 @@ print.getAnywhere <- function(x, ...)
     invisible(x)
 }
 
-"[.getAnywhere" <- function(x, i)
+`[.getAnywhere` <- function(x, i)
 {
     if(!is.numeric(i)) stop("only numeric indices can be used")
     if(length(i) == 1L) x$objs[[i]]

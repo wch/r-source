@@ -61,4 +61,4 @@ kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 }
 
 ## Binary operator, hence don't simply do "%x%" <- kronecker.
-"%x%" <- function(X, Y) kronecker(X, Y)
+`%x%` <- function(X, Y) kronecker(X, Y)

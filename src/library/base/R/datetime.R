@@ -202,7 +202,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     summary(as.POSIXct(object), digits = digits, ...)
 
 
-"+.POSIXt" <- function(e1, e2)
+`+.POSIXt` <- function(e1, e2)
 {
     ## need to drop "units" attribute here
     coerceTimeUnit <- function(x)
@@ -221,7 +221,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     .POSIXct(unclass(e1) + unclass(e2), check_tzones(e1, e2))
 }
 
-"-.POSIXt" <- function(e1, e2)
+`-.POSIXt` <- function(e1, e2)
 {
     coerceTimeUnit <- function(x)
         as.vector(switch(attr(x,"units"),
@@ -299,7 +299,7 @@ Summary.POSIXlt <- function (..., na.rm)
     as.POSIXlt(.POSIXct(val, tz))
 }
 
-"[.POSIXct" <-
+`[.POSIXct` <-
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
@@ -310,7 +310,7 @@ function(x, ..., drop = TRUE)
     val
 }
 
-"[[.POSIXct" <-
+`[[.POSIXct` <-
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
@@ -321,7 +321,7 @@ function(x, ..., drop = TRUE)
     val
 }
 
-"[<-.POSIXct" <-
+`[<-.POSIXct` <-
 function(x, ..., value) {
     if(!as.logical(length(value))) return(x)
     value <- as.POSIXct(value)
@@ -439,11 +439,11 @@ as.difftime <- function(tim, format="%X", units="auto")
 ### For now, these have only difftime methods, but you never know...
 units <- function(x) UseMethod("units")
 
-"units<-" <- function(x, value) UseMethod("units<-")
+`units<-` <- function(x, value) UseMethod("units<-")
 
 units.difftime <- function(x) attr(x, "units")
 
-"units<-.difftime" <- function(x, value)
+`units<-.difftime` <- function(x, value)
 {
     from <- units(x)
     if (from == value) return(x)
@@ -480,7 +480,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     invisible(x)
 }
 
-"[.difftime" <- function(x, ..., drop = TRUE)
+`[.difftime` <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
     class(x) <- NULL
@@ -536,7 +536,7 @@ Ops.difftime <- function(e1, e2)
     }
 }
 
-"*.difftime" <- function (e1, e2)
+`*.difftime` <- function (e1, e2)
 {
     ## need one scalar, one difftime.
     if(inherits(e1, "difftime") && inherits(e2, "difftime"))
@@ -545,7 +545,7 @@ Ops.difftime <- function(e1, e2)
     .difftime(e2 * unclass(e1), attr(e1, "units"))
 }
 
-"/.difftime" <- function (e1, e2)
+`/.difftime` <- function (e1, e2)
 {
     ## need one scalar, one difftime.
     if(inherits(e2, "difftime"))
@@ -553,7 +553,7 @@ Ops.difftime <- function(e1, e2)
     .difftime(unclass(e1) / e2, attr(e1, "units"))
 }
 
-## "Math": some methods *should* work; the other ones are meaningless :
+## "Math": some methods should work; the other ones are meaningless :
 Math.difftime <- function (x, ...)
 {
     switch(.Generic,
@@ -842,14 +842,14 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 
 ## ---- additions in 1.5.0 -----
 
-"[.POSIXlt" <- function(x, ..., drop = TRUE)
+`[.POSIXlt` <- function(x, ..., drop = TRUE)
 {
     val <- lapply(x, "[", ..., drop = drop)
     attributes(val) <- attributes(x) # need to preserve timezones
     val
 }
 
-"[<-.POSIXlt" <- function(x, i, value)
+`[<-.POSIXlt` <- function(x, i, value)
 {
     if(!as.logical(length(value))) return(x)
     value <- as.POSIXlt(value)

@@ -266,7 +266,7 @@ print.SavedPlots <- function(x, ...)
     invisible(x)
 }
 
-"[.SavedPlots" <- function(x, i, ...)
+`[.SavedPlots` <- function(x, i, ...)
 {
     numplots <- x[[2L]]
     if(i > numplots || i < 1) stop("subscript out of range")

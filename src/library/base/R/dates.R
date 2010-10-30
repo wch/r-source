@@ -116,7 +116,7 @@ summary.Date <- function(object, digits = 12, ...)
     x
 }
 
-"+.Date" <- function(e1, e2)
+`+.Date` <- function(e1, e2)
 {
     coerceTimeUnit <- function(x)
         as.vector(round(switch(attr(x,"units"),
@@ -132,7 +132,7 @@ summary.Date <- function(object, digits = 12, ...)
     structure(unclass(e1) + unclass(e2), class = "Date")
 }
 
-"-.Date" <- function(e1, e2)
+`-.Date` <- function(e1, e2)
 {
     coerceTimeUnit <- function(x)
         as.vector(round(switch(attr(x,"units"),
@@ -174,7 +174,7 @@ Summary.Date <- function (..., na.rm)
     val
 }
 
-"[.Date" <- function(x, ..., drop = TRUE)
+`[.Date` <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
     class(x) <- NULL
@@ -183,7 +183,7 @@ Summary.Date <- function (..., na.rm)
     val
 }
 
-"[[.Date" <- function(x, ..., drop = TRUE)
+`[[.Date` <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
     class(x) <- NULL
@@ -192,7 +192,7 @@ Summary.Date <- function (..., na.rm)
     val
 }
 
-"[<-.Date" <- function(x, ..., value)
+`[<-.Date` <- function(x, ..., value)
 {
     if(!as.logical(length(value))) return(x)
     value <- as.Date(value)

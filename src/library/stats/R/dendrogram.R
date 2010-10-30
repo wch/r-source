@@ -202,7 +202,7 @@ function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
 
 ## The ``generic'' method for "[["  (identical to e.g., "[[.POSIXct"):
 ## --> subbranches are dendrograms as well!
-"[[.dendrogram" <- function(x, ..., drop = TRUE)
+`[[.dendrogram` <- function(x, ..., drop = TRUE)
 {
     cl <- class(x)
     class(x) <- NULL

@@ -162,7 +162,7 @@ validGP <- function(gpars) {
 }
 
 # Method for subsetting "gpar" objects
-"[.gpar" <- function(x, index, ...) {
+`[.gpar` <- function(x, index, ...) {
     if (length(x) == 0)
         return(gpar())
     maxn <- do.call("max", lapply(x, length))

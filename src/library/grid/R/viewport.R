@@ -348,7 +348,7 @@ print.path <- function(x, ...) {
   invisible(x)
 }
 
-"[.vpPath" <- function(x, index, ...) {
+`[.vpPath` <- function(x, index, ...) {
   names <- unlist(strsplit(as.character(x), .grid.pathSep))[index]
   vpPathFromVector(names)
 }

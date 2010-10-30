@@ -128,8 +128,8 @@ function(role)
     role
 }
 
-"[[.person" <-
-"[.person" <-
+`[[.person` <-
+`[.person` <-
 function(x, i)
 {
     rval <- unclass(x)[i]
@@ -145,7 +145,7 @@ function(x, ...)
     invisible(x)
 }
 
-"$.person" <-
+`$.person` <-
 function(x, name)
 {
     ## <COMMENT Z>
@@ -184,7 +184,7 @@ function(x, name)
     rval
 }
 
-"$<-.person" <-
+`$<-.person` <-
 function(x, name, value)
 {
     name <- match.arg(name, c("given", "family", "role", "email", "comment"))
@@ -429,8 +429,8 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
     rval
 }
 
-"[[.bibentry" <-
-"[.bibentry" <-
+`[[.bibentry` <-
+`[.bibentry` <-
 function(x, i)
 {
     rval <- unclass(x)[i]
@@ -523,7 +523,7 @@ function(x,
     invisible(x)
 }
 
-"$.bibentry" <-
+`$.bibentry` <-
 function(x, name)
 {
     ## <COMMENT Z>
@@ -539,7 +539,7 @@ function(x, name)
     rval
 }
 
-"$<-.bibentry" <-
+`$<-.bibentry` <-
 function(x, name, value)
 {
     is_attribute <-

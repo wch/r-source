@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-"?" <- function(e1, e2)
+`?` <- function(e1, e2)
 {
     if (missing(e2)) {
         type <- NULL

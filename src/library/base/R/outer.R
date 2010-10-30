@@ -61,4 +61,4 @@ outer <- function (X, Y, FUN = "*", ...)
 }
 
 ## Binary operator, hence don't simply do "%o%" <- outer.
-"%o%" <- function(X, Y) outer(X, Y)
+`%o%` <- function(X, Y) outer(X, Y)

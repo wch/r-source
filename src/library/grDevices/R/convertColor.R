@@ -196,7 +196,7 @@ colorspaces <-
          ) # colorspaces
 
 
-"%^%" <- function(a,b) {
+`%^%` <- function(a,b) {
   ifelse(a <= 0, -abs(a)^b, a^b)
 }
 

@@ -58,9 +58,9 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 ## }
 
 
-"split<-" <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
+`split<-` <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
 
-"split<-.default" <- function(x, f, drop = FALSE, ..., value)
+`split<-.default` <- function(x, f, drop = FALSE, ..., value)
 {
     ix <- split(seq_along(x), f, drop = drop, ...)
     n <- length(value)
@@ -73,7 +73,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 }
 
 ## This is documented to work for matrices too
-"split<-.data.frame" <- function(x, f, drop = FALSE, ..., value)
+`split<-.data.frame` <- function(x, f, drop = FALSE, ..., value)
 {
     ix <- split(seq_len(nrow(x)), f, drop = drop, ...)
     n <- length(value)

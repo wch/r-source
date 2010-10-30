@@ -231,7 +231,7 @@ ccf <- function(x, y, lag.max = NULL,
     } else return(acf.out)
 }
 
-"[.acf" <- function(x, i, j)
+`[.acf` <- function(x, i, j)
 {
     if(missing(j)) j <- seq_len(ncol(x$lag))
     ii <- if(missing(i)) seq_len(nrow(x$lag))

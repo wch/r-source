@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-"ar.yw.mts" <-
+ar.yw.mts <-
 function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     demean = TRUE, series = NULL, var.method = 1, ...)
 {

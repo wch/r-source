@@ -41,7 +41,7 @@ print.octmode <- function(x, ...)
     invisible(x)
 }
 
-"[.octmode" <- function (x, i)
+`[.octmode` <- function (x, i)
 {
     cl <- oldClass(x)
     y <- NextMethod("[")
@@ -91,7 +91,7 @@ print.hexmode <- function(x, ...)
     invisible(x)
 }
 
-"[.hexmode" <- function (x, i)
+`[.hexmode` <- function (x, i)
 {
     cl <- oldClass(x)
     y <- NextMethod("[")
