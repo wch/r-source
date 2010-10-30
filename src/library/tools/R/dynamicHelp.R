@@ -348,7 +348,7 @@ httpdPort <- 0L
 
 startDynamicHelp <- function(start=TRUE)
 {
-    env <- environment(hash = FALSE, startDynamicHelp) # small
+    env <- environment(startDynamicHelp) 
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
         unlockBinding("httpdPort", env)
         httpdPort <<- -1L
