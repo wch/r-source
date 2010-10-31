@@ -19,9 +19,9 @@ vapply(X, FUN, FUN.VALUE, \dots, USE.NAMES = TRUE)
 replicate(n, expr, simplify = TRUE)
 }
 \arguments{
-  \item{X}{a vector (atomic or list) or an expressions vector.  Other
-    objects (including classed objects) will be coerced by
-    \code{\link{as.list}}.}
+  \item{X}{a vector (atomic or list) or an \code{\link{expression}}
+    object.  Other objects (including classed objects) will be coerced
+    by \code{base::\link{as.list}}.}
   \item{FUN}{the function to be applied to each element of \code{X}:
     see \sQuote{Details}.  In the case of functions like
     \code{+}, \code{\%*\%}, etc.,
@@ -32,9 +32,10 @@ replicate(n, expr, simplify = TRUE)
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
-  \item{FUN.VALUE}{a vector; a template for the return value from FUN.}
-  \item{n}{number of replications.}
-  \item{expr}{expression (language object, usually a call)
+  \item{FUN.VALUE}{a vector; a template for the return value from FUN.
+    See \sQuote{Details}.}
+  \item{n}{integer: the number of replications.}
+  \item{expr}{the expression (language object, usually a call)
     to evaluate repeatedly.}
 }
 \description{
@@ -75,23 +76,25 @@ replicate(n, expr, simplify = TRUE)
   (Types may be promoted to a higher type within the ordering logical
   < integer < real < complex, but not demoted.)
 
-  Users of S4 classes should pass a list to \code{lapply}: the internal
-  coercion is done by the system \code{as.list} in the base namespace
-  and not one defined by a user (e.g. by setting S4 methods on the
-  system function).
+  Users of S4 classes should pass a list to \code{lapply} and
+  \code{vapply}: the internal coercion is done by the \code{as.list} in
+  the base namespace and not one defined by a user (e.g. by setting S4
+  methods on the base function).
   
   \code{lapply} and \code{vapply} are \link{primitive} functions.
 }
 \value{
-  For \code{lapply} and \code{sapply(simplify=FALSE)}, a list.
+  For \code{lapply}, \code{sapply(simplify = FALSE)} and
+  \code{replicate(simplify = FALSE)}, a list.
 
-  For \code{sapply(simplify=TRUE)} and \code{replicate}: if \code{X} has
-  length zero or \code{n = 0}, an empty list.  Otherwise an atomic
-  vector or matrix or list of the same length as \code{X} (of length
-  \code{n} for \code{replicate}).  If simplification occurs, the output
-  type is determined from the highest type of the return values in the
-  hierarchy NULL < raw < logical < integer < real < complex < character
-  < list < expression, after coercion of pairlists to lists.
+  For \code{sapply(simplify = TRUE)} and \code{replicate(simplify =
+  TRUE)}: if \code{X} has length zero or \code{n = 0}, an empty list.
+  Otherwise an atomic vector or matrix or list of the same length as
+  \code{X} (of length \code{n} for \code{replicate}).  If simplification
+  occurs, the output type is determined from the highest type of the
+  return values in the hierarchy NULL < raw < logical < integer < real <
+  complex < character < list < expression, after coercion of pairlists
+  to lists.
   
   \code{vapply} returns a vector or matrix of type matching the
   \code{FUN.VALUE}. If \code{length(FUN.VALUE) != 1} a matrix will be returned
