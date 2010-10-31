@@ -45,6 +45,13 @@ shlib: $(SHLIB)
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/winshlib.mk
 
+
+## Meeded with i386 gcc 4.5.0 -- PR#14427
+portsrc_FFLAGS=$(SAFE_FFLAGS)
+portsrc.o: portsrc.f
+	$(F77) $(portsrc_FFLAGS) -c $< -o $@
+
+
 mostlyclean distclean: clean
 clean:
 	@-rm -f Makedeps *.d *.o $(SHLIB)

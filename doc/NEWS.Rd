@@ -194,7 +194,11 @@
       \item \code{Sweave()} with \code{keep.source=TRUE} dropped
       comments at the start and end of code chunks.  It could also
       fail when \code{\\SweaveInput} was combined with named chunks.
-      
+
+      \item The Fortran code used by \code{nls(algorithm = "port")}
+      could infinite-loop when compiled with high optimization on a
+      modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
+      to make this less likely.  (\PR{14427})
     }
   }
 }
