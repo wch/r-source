@@ -1,2 +1,3 @@
 PKG_CPPFLAGS=-DHAVE_CONFIG_H -I$(RHOME)/src/include
 PKG_LIBS=$(BLAS_LIBS) $(FLIBS)
+portsrc-FFLAGS=-ffloat-store
