@@ -1,7 +1,7 @@
 This is subdirectory src/liblzma of xz-utils-5.0.0, except for files
 Makefile.in, Makefile.win and R_changes
 
-common/{mythread,tuklib*}.h are from xz-utils-5.0.0/src/common.
+common/{bswap,mythread,tuklib*}.h are from xz-utils-5.0.0/src/common.
 
 check/{sha256.c,crc_macros.h} is modified to look on the usual include path.
 
