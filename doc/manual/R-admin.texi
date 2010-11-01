@@ -1259,7 +1259,7 @@ installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL-2
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
-of R).
+of R, and also the sources of libraries which are included).
 
 
 The defaults for the startup parameters may also be customized.  For example
@@ -1311,23 +1311,23 @@ make msi
 @end example
 
 @noindent
-which will results in a file a name like
-@file{@value{RWVERSION}-win.msi}.  This can be double-clicked to be
+which will results in a file with a name like
+@file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
 installed, but those who need it will know what to do with it (usually
 by running @command{msiexec /i} with additional options).  Properties
 that users might want to set from the @command{msiexec} command line
 include @samp{ALLUSERS}, @samp{INSTALLDIR} (something like
-@file{c:\Program Files\R}) and @samp{RMENU} (the path to the @samp{R}
-folder on the start menu) and @samp{STARTDIR} (the starting directory
-for @R{} shortcuts, defaulting to something like
+@file{c:\Program Files\R\@value{RWVERSION}}) and @samp{RMENU} (the path
+to the @samp{R} folder on the start menu) and @samp{STARTDIR} (the
+starting directory for @R{} shortcuts, defaulting to something like
 @file{c:\Users\name\Documents\R}).
 
 As from @R{} 2.12.1 the MSI installer can be built both from a 32-bit
 build of @R{} (@file{@value{RWVERSION}-win32.msi}) and from a 64-bit
 build of @R{} (@file{@value{RWVERSION}-win64.msi}, optionally including
-32-bit files when the name is @file{@value{RWVERSION}-win.msi}).  Unlike
-the main installer, a 64-bit MSI installer can only be installed on a
-64-bit system.
+32-bit files by setting the macro @code{HOME32}, when the name is
+@file{@value{RWVERSION}-win.msi}).  Unlike the main installer, a 64-bit
+MSI installer can only be run on 64-bit Windows.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.
@@ -1406,10 +1406,10 @@ for Mac OS X @acronym{FAQ}} for more details.
 @node Building from source on Mac OS X,  , Installing R under Mac OS X, Installing R under Mac OS X
 @section Building from source on Mac OS X
 
-If you want to build this port from the sources, you can read the FAQ
-for full details.  You will need to collect and install some tools as
-explained in the document.  Then you have to expand the @R{} sources and
-configure @R{} appropriately, for example
+If you want to build this port from the sources, you should read the R for
+Mac OS X FAQ for full details.  You will need to collect and install
+some tools as explained in that document.  Then you have to unpack the
+@R{} sources and configure @R{} appropriately, for example
 
 @example
 tar -zxvf R-@value{VERSIONno}.tar.gz
@@ -1420,24 +1420,27 @@ make
 @end example
 
 @noindent
-and then sit back and wait.  The first two options are the default (and
-strongly recommended), and with some toolsets have been essential.
+and then sit back and wait.  The first two options are the default and
+use the BLAS and LAPACK built into Mac OS X.  This has pros and cons: it
+used to be faster (but has not been on some recent multicore hardware)
+but less accurate.
 
-The second line of options is also default on Mac OS X, but needed only
+The second line of options are also default on Mac OS X, but needed only
 if you want to build @R{} for use with @code{R.app} Console, and imply
 @option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
 These options configure @R{} to be built and installed as a framework
-called @file{R.framework}.  The default path for @file{R.framework} is
-@file{/Library/Frameworks} but this can be changed at configure time by
-specifying the flag @option{--enable-R-framework[=@var{DIR}]} or at
-install time as
+called @file{R.framework}.  The default installation path for
+@file{R.framework} is @file{/Library/Frameworks} but this can be changed
+at configure time by specifying the flag
+@option{--enable-R-framework[=@var{DIR}]} or at install time as
 
 @example
 make prefix=/where/you/want/R.framework/to/go install
 @end example
 
 @noindent
-(the @file{R.framework} directory should not be included in the path).
+(the final @file{R.framework} directory should not be included in the
+path).
 
 For compatibility with the @acronym{CRAN} distribution you may need to
 specify @option{--with-included-gettext} to avoid linking against a
@@ -1457,7 +1460,9 @@ in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
 file descriptors.  (Any modern OS will have default limits at least as
-large as these, but apparently NetBSD does not.)
+large as these, but apparently NetBSD does not.  Use the shell command
+@command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
+(@command{csh}/@command{tcsh}) to check.)
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
@@ -1694,7 +1699,7 @@ from a local @file{zip} file by setting argument @code{repos} to
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
-Windows binary packages for @R{} 2.12.x are distributed as a single
+Windows binary packages for @R{} are nowadays distributed as a single
 binary containing either or both architectures (@R{} 2.11.x had separate
 repository areas for 32- and 64-bit binary packages).
 
@@ -1731,8 +1736,8 @@ the building service offered at
 For almost all packages @command{R CMD INSTALL} will attempt to install
 both 32- and 64-bit builds of a package if run from a 32/64-bit install
 of @R{} on a 64-bit version of Windows.  It will report success if the
-installation of the architecture of @command{R} succeeded, whether or
-not the other architecture was successfully installed.
+installation of the architecture of the running @command{R} succeeded,
+whether or not the other architecture was successfully installed.
 
 The exceptions are packages with a non-empty @file{configure.win} script
 or which make use of @file{src/Makefile.win}.  If @file{configure.win}
@@ -1826,7 +1831,7 @@ where there is an @file{configure} script, or a file @file{src/Makefile}.
 @item Windows
 
 where there is a non-empty @file{configure.win} script, or a file
-@file{src/Makefile.win} (plus some exceptions where the package is known
+@file{src/Makefile.win} (with some exceptions where the package is known
 to have an architecture-independent @file{configure.win}, or if
 @option{--force-biarch} is used to assert so).
 
@@ -4555,9 +4560,10 @@ suitably; ensure you have the required fonts installed.
 @section The Inno Setup installer
 
 To make the installer package (@file{@value{RWVERSION}-win.exe}) we
-currently require Inno Setup 5.3.7 or later from
+currently require Inno Setup 5.3.7 or later (including 5.4.x) from
 @uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
-that version be used.  This is @emph{not} included in @file{Rtools*.exe}.
+that version be used.  This is @emph{not} included in
+@file{Rtools*.exe}.
 
 Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
