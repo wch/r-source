@@ -52,6 +52,8 @@
 
       \item \code{list2env(envir = NULL)} defaults to hashing (with a
       suitably sized environment) for lists of more than 100 elements.
+
+      \item xz-utils has been updated to version 5.0.0.
     }
   }
   

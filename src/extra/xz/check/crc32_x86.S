@@ -67,7 +67,7 @@ init_table(void)
  * Solaris assembler doesn't have .p2align, and Darwin uses .align
  * differently than GNU/Linux and Solaris.
  */
-#if defined(__MACH__) || defined(__MSDOS__)
+#if defined(__APPLE__) || defined(__MSDOS__)
 #	define ALIGN(pow2, abs) .align pow2
 #else
 #	define ALIGN(pow2, abs) .align abs
@@ -76,7 +76,7 @@ init_table(void)
 	.text
 	.globl	LZMA_CRC32
 
-#if !defined(__MACH__) && !defined(_WIN32) && !defined(__CYGWIN__) \
+#if !defined(__APPLE__) && !defined(_WIN32) && !defined(__CYGWIN__) \
 		&& !defined(__MSDOS__)
 	.type	LZMA_CRC32, @function
 #endif
@@ -118,8 +118,8 @@ LZMA_CRC32:
 #if (!defined(PIC) && !defined(__PIC__)) \
 		|| (defined(_WIN32) || defined(__CYGWIN__))
 	/* Not PIC */
-	movl	$LZMA_CRC32_TABLE, %ebx
-#elif defined(__MACH__)
+	movl	$ LZMA_CRC32_TABLE, %ebx
+#elif defined(__APPLE__)
 	/* Mach-O */
 	call	.L_get_pc
 .L_pic:
@@ -142,7 +142,7 @@ LZMA_CRC32:
 	 * We need 16 bytes, because the loop pre-reads eight bytes.
 	 */
 	cmpl	$16, %edi
-	jl	.L_rest
+	jb	.L_rest
 
 	/* Check if we have reached alignment of eight bytes. */
 	testl	$7, %esi
@@ -275,7 +275,7 @@ LZMA_CRC32:
 	ret
 #endif
 
-#if defined(__MACH__) && (defined(PIC) || defined(__PIC__))
+#if defined(__APPLE__) && (defined(PIC) || defined(__PIC__))
 	/* Mach-O PIC */
 	.section __IMPORT,__pointers,non_lazy_symbol_pointers
 .L_lzma_crc32_table$non_lazy_ptr:

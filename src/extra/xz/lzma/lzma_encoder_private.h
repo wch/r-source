@@ -24,7 +24,7 @@
 // needed in lzma_lzma_optimum_*() to test if the match is at least
 // MATCH_LEN_MIN bytes. Unaligned access gives tiny gain so there's no
 // reason to not use it when it is supported.
-#ifdef HAVE_FAST_UNALIGNED_ACCESS
+#ifdef TUKLIB_FAST_UNALIGNED_ACCESS
 #	define not_equal_16(a, b) \
 		(*(const uint16_t *)(a) != *(const uint16_t *)(b))
 #else
@@ -85,7 +85,7 @@ struct lzma_coder_s {
 	/// Number of match candidates in matches[]
 	uint32_t matches_count;
 
-	/// Varibale to hold the length of the longest match between calls
+	/// Variable to hold the length of the longest match between calls
 	/// to lzma_lzma_optimum_*().
 	uint32_t longest_match_length;
 

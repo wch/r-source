@@ -15,7 +15,7 @@
 
 #include "sysdefs.h"
 #include "mythread.h"
-#include "integer.h"
+#include "tuklib_integer.h"
 
 #if defined(_WIN32) || defined(__CYGWIN__)
 #	ifdef DLL_EXPORT
@@ -50,7 +50,7 @@
 
 
 /// Starting value for memory usage estimates. Instead of calculating size
-/// of _every_ structure and taking into accont malloc() overhead etc. we
+/// of _every_ structure and taking into account malloc() overhead etc., we
 /// add a base size to all memory usage estimates. It's not very accurate
 /// but should be easily good enough.
 #define LZMA_MEMUSAGE_BASE (UINT64_C(1) << 15)
@@ -58,12 +58,6 @@
 /// Start of internal Filter ID space. These IDs must never be used
 /// in Streams.
 #define LZMA_FILTER_RESERVED_START (LZMA_VLI_C(1) << 62)
-
-
-/// Internal helper filter used by Subblock decoder. It is mapped to an
-/// otherwise invalid Filter ID, which is impossible to get from any input
-/// file (even if malicious file).
-#define LZMA_FILTER_SUBBLOCK_HELPER LZMA_VLI_C(0x7000000000000001)
 
 
 /// Supported flags that can be passed to lzma_stream_decoder()
@@ -109,6 +103,10 @@ typedef void (*lzma_end_function)(
 /// an array of lzma_filter_info structures. This array is used with
 /// lzma_next_filter_init to initialize the filter chain.
 struct lzma_filter_info_s {
+	/// Filter ID. This is used only by the encoder
+	/// with lzma_filters_update().
+	lzma_vli id;
+
 	/// Pointer to function used to initialize the filter.
 	/// This is NULL to indicate end of array.
 	lzma_init_function init;
@@ -122,6 +120,10 @@ struct lzma_filter_info_s {
 struct lzma_next_coder_s {
 	/// Pointer to coder-specific data
 	lzma_coder *coder;
+
+	/// Filter ID. This is LZMA_VLI_UNKNOWN when this structure doesn't
+	/// point to a filter coder.
+	lzma_vli id;
 
 	/// "Pointer" to init function. This is never called here.
 	/// We need only to detect if we are initializing a coder
@@ -145,6 +147,12 @@ struct lzma_next_coder_s {
 	/// If new_memlimit == 0, the limit is not changed.
 	lzma_ret (*memconfig)(lzma_coder *coder, uint64_t *memusage,
 			uint64_t *old_memlimit, uint64_t new_memlimit);
+
+	/// Update the filter-specific options or the whole filter chain
+	/// in the encoder.
+	lzma_ret (*update)(lzma_coder *coder, lzma_allocator *allocator,
+			const lzma_filter *filters,
+			const lzma_filter *reversed_filters);
 };
 
 
@@ -153,10 +161,12 @@ struct lzma_next_coder_s {
 	(lzma_next_coder){ \
 		.coder = NULL, \
 		.init = (uintptr_t)(NULL), \
+		.id = LZMA_VLI_UNKNOWN, \
 		.code = NULL, \
 		.end = NULL, \
 		.get_check = NULL, \
 		.memconfig = NULL, \
+		.update = NULL, \
 	}
 
 
@@ -212,6 +222,12 @@ extern lzma_ret lzma_strm_init(lzma_stream *strm);
 extern lzma_ret lzma_next_filter_init(lzma_next_coder *next,
 		lzma_allocator *allocator, const lzma_filter_info *filters);
 
+/// Update the next filter in the chain, if any. This checks that
+/// the application is not trying to change the Filter IDs.
+extern lzma_ret lzma_next_filter_update(
+		lzma_next_coder *next, lzma_allocator *allocator,
+		const lzma_filter *reversed_filters);
+
 /// Frees the memory allocated for next->coder either using next->end or,
 /// if next->end is NULL, using lzma_free.
 extern void lzma_next_end(lzma_next_coder *next, lzma_allocator *allocator);
@@ -226,7 +242,7 @@ extern size_t lzma_bufcpy(const uint8_t *restrict in, size_t *restrict in_pos,
 
 /// \brief      Return if expression doesn't evaluate to LZMA_OK
 ///
-/// There are several situations where we want to return immediatelly
+/// There are several situations where we want to return immediately
 /// with the value of expr if it isn't LZMA_OK. This macro shortens
 /// the code a little.
 #define return_if_error(expr) \

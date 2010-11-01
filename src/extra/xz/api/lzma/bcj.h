@@ -31,7 +31,7 @@
 
 #define LZMA_FILTER_IA64        LZMA_VLI_C(0x06)
 	/**<
-	 * Filter for IA64 (Itanium) binaries.
+	 * Filter for IA-64 (Itanium) binaries.
 	 */
 
 #define LZMA_FILTER_ARM         LZMA_VLI_C(0x07)
@@ -41,7 +41,7 @@
 
 #define LZMA_FILTER_ARMTHUMB    LZMA_VLI_C(0x08)
 	/**<
-	 * Filter for ARMThumb binaries.
+	 * Filter for ARM-Thumb binaries.
 	 */
 
 #define LZMA_FILTER_SPARC       LZMA_VLI_C(0x09)
@@ -77,7 +77,7 @@ typedef struct {
 	 * This setting is useful only when the same filter is used
 	 * _separately_ for multiple sections of the same executable file,
 	 * and the sections contain cross-section branch/call/jump
-	 * instructions. In that case it is benefical to set the start
+	 * instructions. In that case it is beneficial to set the start
 	 * offset of the non-first sections so that the relative addresses
 	 * of the cross-section branch/call/jump instructions will use the
 	 * same absolute addresses as in the first section.

@@ -182,6 +182,9 @@ stream_decode(lzma_coder *coder, lzma_allocator *allocator,
 
 		coder->pos = 0;
 
+		// Version 0 is currently the only possible version.
+		coder->block_options.version = 0;
+
 		// Set up a buffer to hold the filter chain. Block Header
 		// decoder will initialize all members of this array so
 		// we don't need to do it here.
@@ -358,7 +361,7 @@ stream_decode(lzma_coder *coder, lzma_allocator *allocator,
 		return LZMA_PROG_ERROR;
 	}
 
-	return LZMA_OK;
+	// Never reached
 }
 
 
@@ -383,12 +386,15 @@ static lzma_ret
 stream_decoder_memconfig(lzma_coder *coder, uint64_t *memusage,
 		uint64_t *old_memlimit, uint64_t new_memlimit)
 {
-	if (new_memlimit != 0 && new_memlimit < coder->memusage)
-		return LZMA_MEMLIMIT_ERROR;
-
 	*memusage = coder->memusage;
 	*old_memlimit = coder->memlimit;
-	coder->memlimit = new_memlimit;
+
+	if (new_memlimit != 0) {
+		if (new_memlimit < coder->memusage)
+			return LZMA_MEMLIMIT_ERROR;
+
+		coder->memlimit = new_memlimit;
+	}
 
 	return LZMA_OK;
 }

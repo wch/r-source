@@ -2689,9 +2689,10 @@ been found with 1.2.4 and 1.2.5), @option{--with-system-bzlib} or
 be compiled in.  As the latter suffice and are tested with @R{} you
 should not need to change this.
 
-@code{liblzma} from @code{xz-utils} version 4.999 or later will be used
-if installed: the version in the @R{} sources can be selected instead by
-configuring with @option{--with-system-xz=no}.
+@code{liblzma} from @code{xz-utils} version 4.999 or later (preferably
+5.0.0 or later) will be used if installed: the version in the @R{}
+sources can be selected instead by configuring with
+@option{--with-system-xz=no}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
