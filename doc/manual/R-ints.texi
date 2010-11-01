@@ -984,7 +984,7 @@ might involve investigating a promise and so on @dots{}.
 
 Special primitives also need to handle missing arguments, and in some
 case (e.g.@: @code{log}) that is why they are special and not
-builtin.  This is usually done by testing is an argument's value is
+builtin.  This is usually done by testing if an argument's value is
 @code{R_MissingArg}.
 
 @node Dot-dot-dot arguments,  , Missingness, Argument evaluation
