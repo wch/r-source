@@ -40,12 +40,12 @@ test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
 ## replaced on Windows
-test-src-reg-1 = reg-tests-1.R reg-tests-1b.R reg-tests-2.R \
+test-src-reg-1 = reg-tests-1a.R reg-tests-1b.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
-test-src-reg3 = reg-tests-3.R reg-plot-latin1.R 
+test-src-reg3 = reg-tests-3.R reg-plot-latin1.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
