@@ -1443,4 +1443,17 @@ stopifnot(ncol(mds$points) == 11L)
 ## Used negative eigenvalues in 2.12.0
 
 
+## Sweave() comments with  keep.source=TRUE
+utils::Sweave(file.path(Sys.getenv("SRCDIR"), "keepsource.Rnw"))
+texl <- readLines("keepsource.tex")
+comml <- grep("##", texl, value=TRUE)
+stopifnot(length(comml) == 2,
+	  grepl("initial comment line", comml[1]),
+	  grepl("last comment", comml[2]))
+## the first was lost in 2.12.0;  the last in most/all previous versions of R
+
+
 proc.time()
+
+
+
