@@ -7,7 +7,7 @@
 \alias{system2}
 \title{Invoke a System Command}
 \description{
-  \code{system} invokes the OS command specified by \code{command}.
+  \code{system2} invokes the OS command specified by \code{command}.
 }
 \usage{
 system2(command, args = character(),
