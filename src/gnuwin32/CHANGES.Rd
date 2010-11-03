@@ -21,6 +21,12 @@
 
       \item Running \R always sets the environment variable \env{R_ARCH}
       (as it does on a Unix-alike from the shell-script front-end).
+
+      \item The defaults for \code{options("browser")} and
+      \code{options("pdfviewer")} are now set from environment variables
+      \env{R_BROWSER} and \env{R_PDFVIEWER} respectively (as on a
+      Unix-alike).  A value of \code{"false"} suppresses display (even
+      if there is no \command{false.exe} present on the path).
     }
   }
   

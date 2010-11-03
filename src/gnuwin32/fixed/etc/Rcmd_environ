@@ -26,12 +26,12 @@ R_UNZIPCMD=${R_UNZIPCMD-'unzip'}
 R_ZIPCMD=${R_ZIPCMD-'zip'}
 R_BZIPCMD=${R_BZIPCMD-'bzip2'}
 ## Default browser
-R_BROWSER=${R_BROWSER-'open'}
+# R_BROWSER=${R_BROWSER-'open'}
 ## Default editor
 # EDITOR=${EDITOR-${VISUAL-vi}}
 ## Default pager
 # PAGER=${PAGER-''}
 ## Default PDF viewer
-R_PDFVIEWER=${R_PDFVIEWER-'open'}
+# R_PDFVIEWER=${R_PDFVIEWER-'open'}
 # MAKE=${MAKE-make}
 SED=${SED-sed}
