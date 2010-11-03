@@ -500,6 +500,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  thisline <- 0L          # current output line
 	  lastshown <- srcline    # last line already displayed;
 	  			  # at this point it's the <<>>= line
+	  leading <- 1L		  # How many lines get the user prompt
 	  
 	  srcrefs <- attr(chunkexps, "srcref")
 	  
