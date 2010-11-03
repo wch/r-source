@@ -51,7 +51,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 
     if (!is.character(url) || length(url) != 1L|| !nzchar(url))
         stop("'url' must be a non-empty character string")
-    if(identical(browser, "false")) return(invisible)
+    if(identical(browser, "false")) return(invisible())
     if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     if (!is.character(browser)
