@@ -36,6 +36,7 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
   file \file{\var{\link{R_HOME}}/etc/Renviron} to a choice
   made manually or automatically when \R was configured.  (See
   \code{\link{Startup}} for where to override that default value.)
+  To suppress showing URLs altogether, use the value \code{"false"}.
   
   If \code{browser} supports remote control and \R knows how to perform
   it, the URL is opened in any already running browser or a new one if
@@ -65,6 +66,11 @@ browseURL("http://www.r-project.org")
 #endif
 #ifdef windows
 \details{
+  The default browser is set by option \code{"browser"}, in turn set by
+  the environment variable \env{R_BROWSER} if that is set, otherwise to
+  \code{NULL}.
+  To suppress showing URLs altogether, use the value \code{"false"}.
+
   Some browsers have required \code{:} be replaced by \code{|} in file
   paths: others do not accept that.  All seem to accept \code{\\} as a
   path separator even though the RFC1738 standard requires \code{/}.

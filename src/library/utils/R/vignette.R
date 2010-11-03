@@ -123,11 +123,12 @@ print.vignette <- function(x, ...){
         ## <FIXME>
         ## Should really abstract this into a BioC style
         ## openPDF() along the lines of browseURL() ...
-        if(.Platform$OS.type == "windows")
+        pdfviewer <- getOption("pdfviewer")
+        if(identical(pdfviewer, "false")) {
+        } else if(.Platform$OS.type == "windows" &&
+                  identical(pdfviewer, file.path(R.home("bin"), "open.exe")))
             shell.exec(x$pdf)
-        else
-            system(paste(shQuote(getOption("pdfviewer")), shQuote(x$pdf)),
-                   wait = FALSE)
+        else system2(pdfviewer, shQuote(x$pdf), wait = FALSE)
         ## </FIXME>
     } else {
         warning(gettextf("vignette '%s' has no PDF", x$topic),

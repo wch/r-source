@@ -200,13 +200,13 @@ getOption(x, default = NULL)
     }
 
     \item{\code{pdfviewer}:}{default PDF viewer.
+      The default is set from the environment variable \env{R_PDFVIEWER},
 #ifdef unix
-      The default is set from the environment variable
-      \env{R_PDFVIEWER}, the default value of which is set when \R is
-      configured.
+      the default value of which is set when \R is configured.
 #endif
 #ifdef windows
-      Defaults to the full path to \samp{open.exe}, a utility supplied with \R.
+      which defaults to the full path to \command{open.exe}, a utility
+      supplied with \R.
 #endif
     }
 

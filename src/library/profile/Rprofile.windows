@@ -28,9 +28,10 @@ if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
     else options(papersize = "a4")
 }
 
-options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal")
-options(useFancyQuotes = (.Platform$GUI == "Rgui"))
-options(pdfviewer = file.path(R.home("bin"), "open.exe"))
+options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal",
+        useFancyQuotes = (.Platform$GUI == "Rgui"),
+        pdfviewer = as.vector(Sys.getenv("R_PDFVIEWER",
+                                          file.path(R.home("bin"), "open.exe"))))
 
 if(.Platform$GUI == "Rgui") {
     Sys.setenv(GFORTRAN_STDOUT_UNIT= "-1")
@@ -38,6 +39,8 @@ if(.Platform$GUI == "Rgui") {
 }
 
 local({
+    br <- as.vector(Sys.getenv("R_BROWSER", NA))
+    if(!is.na(br)) options(browser = br)
     tests_startup <- Sys.getenv("R_TESTS")
     if(nzchar(tests_startup)) source(tests_startup)
 })

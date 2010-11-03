@@ -35,6 +35,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 {
     if(!is.character(url) || !(length(url) == 1) || !nzchar(url))
         stop("'url' must be a non-empty character string")
+    if(identical(browser, "false")) return(invisible)
     if(is.null(browser))
         shell.exec(url)
     else if (is.function(browser))
