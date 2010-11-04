@@ -287,7 +287,6 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (TYPEOF(BODY(s)) == BCODESXP)
 	    /* switch to interpreted version if compiled */
 	    SET_BODY(s, R_ClosureExpr(CAR(args)));
-	else
 #endif
 	SET_CLOENV(s, env);
     }
