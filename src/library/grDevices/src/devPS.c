@@ -6519,7 +6519,8 @@ static void PDFwritesRGBcolorspace(PDFDesc *pd)
         error(_("Failed to load sRGB colorspace"));
     }
     while (!feof(fp)) {
-        char *p = fgets(line, 50, fp); /* avoid compiler warning on Fedora */
+        char *p;
+	p = fgets(line, 50, fp); /* avoid compiler warning on Fedora */
         fprintf(pd->pdffp, "%s", line);
     }
     fclose(fp);
