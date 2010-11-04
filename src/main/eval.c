@@ -2994,7 +2994,7 @@ static int opcode_counts[OPCOUNT];
   } \
 } while (0)
 
-static void loopWithContect(volatile SEXP code, volatile SEXP rho)
+static void loopWithContext(volatile SEXP code, volatile SEXP rho)
 {
     RCNTXT cntxt;
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
@@ -3198,7 +3198,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(STARTLOOPCNTXT, 1):
 	{
 	    SEXP code = VECTOR_ELT(constants, GETOP());
-	    loopWithContect(code, rho);
+	    loopWithContext(code, rho);
 	    NEXT();
 	}
     OP(ENDLOOPCNTXT, 0): value = R_NilValue; goto done;
