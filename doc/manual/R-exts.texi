@@ -1697,13 +1697,13 @@ installed in an available library tree (see the Note: below).
 
 Similarly, if the @file{.Rd} documentation files contain any
 @code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
-temporarily installed to execute them.  Post-execution binary copies
-of those pages containing build-time macros will be saved in
-@file{build/partial.rdb}.  If there are any install-time or
-render-time macros, a @file{.pdf} version of the package manual will be built
-and installed in the @file{build/} subdirectory.  (This allows CRAN or
-other repositories to display the manual even if they are unable to
-install the package.)
+temporarily installed to execute them.  Post-execution binary copies of
+those pages containing build-time macros will be saved in
+@file{build/partial.rdb}.  If there are any install-time or render-time
+macros, a @file{.pdf} version of the package manual will be built and
+installed in the @file{build/} subdirectory.  (This allows CRAN or other
+repositories to display the manual even if they are unable to install
+the package.)
 
 One of the checks that @code{R CMD build} runs is for empty source
 directories.  These are in most cases unintentional, in which case they
@@ -1717,7 +1717,7 @@ binary distributions, but @code{R CMD INSTALL --build} is preferred (and
 is considerably more flexible).
 
 @code{R CMD build} currently does some cleaning in the supplied source
-directory, but this was will no longer happen in @R 2.13.0.
+directory, but this will no longer happen in @R{} 2.13.0.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
