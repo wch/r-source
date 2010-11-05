@@ -49,7 +49,9 @@
       all \eqn{n} eigenvalues.
 
       \code{cmdscale(add=TRUE)} failed to centre the return
-      configuration and sometimes lost the labels on the points.
+      configuration and sometimes lost the labels on the points.  Its
+      return value was described wrongly (it is always a list and
+      contains component \code{ac}).
 
       \item \code{promptClass()} in package \pkg{methods} now works for
       reference classes and gives a suitably specialized skeleton of

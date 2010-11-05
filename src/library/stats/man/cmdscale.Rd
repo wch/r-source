@@ -54,9 +54,9 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   solution of Cailliez (1983), see also Cox and Cox (2001).
 }
 \value{
-  If \code{eig = FALSE} and \code{x.ret = FALSE} (default), a matrix
-  with \code{k} columns whose rows give the coordinates of the points
-  chosen to represent the dissimilarities.
+  If \code{eig = FALSE}, \code{add = FALSE} and \code{x.ret = FALSE}
+  (default), a matrix with \code{k} columns whose rows give the
+  coordinates of the points chosen to represent the dissimilarities.
 
   Otherwise, a list containing the following components.
   \item{points}{a matrix with \code{k} columns whose rows give the
@@ -65,6 +65,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     \code{eig} is true.  \strong{NB}: versions of \R before 2.12.1
     returned only \code{k} but were documented to return \eqn{n-1}.}
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
+  \item{ac}{the additive constant \eqn{c*}, \code{0} if \code{add=FALSE}.}
   \item{GOF}{a numeric vector of length 2, equal to say
     \eqn{(g_1,g_2)}{(g.1,g.2)}, where
     \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{g.i = (sum{j=1..k} \lambda[j]) / (sum{j=1..n} T.i(\lambda[j]))},
