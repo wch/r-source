@@ -60,7 +60,7 @@ getOption(x, default = NULL)
       \code{TRUE}.  Could also be set to an integer for specifying how
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link{plot.lm}}.}
-    
+
     \item{\code{checkPackageLicense}:}{logical, not set by default.  If
       true, \code{\link{library}} asks a user to accept any non-standard
       license at first use.
@@ -219,7 +219,7 @@ getOption(x, default = NULL)
     \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
       should usually end in a blank (\code{" "}).}
 
-      % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"    
+      % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
 #ifdef unix
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
@@ -461,9 +461,12 @@ getOption(x, default = NULL)
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}
 
+    \item{\code{help.ports}:}{optional integer vector for setting ports
+      of the internal HTTP server, see \code{\link{startDynamicHelp}}.}
+
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}
-    
+
     \item{\code{help_type}:}{default for an argument of
     \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
