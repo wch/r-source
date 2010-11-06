@@ -56,7 +56,7 @@
       \item xz-utils has been updated to version 5.0.0.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Because they use a C99 interface which a C++ compiler is not
@@ -65,7 +65,7 @@
       \code{R_USE_C99_IN_CXX} is defined when it is included.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD Rdiff} is now implemented in \R on
@@ -121,7 +121,7 @@
 
 \section{CHANGES IN R VERSION 2.12.0 patched}{
   \subsection{NEW FEATURES}{
-    \itemize{    
+    \itemize{
       \item The DVI/PDF reference manual now includes the help pages for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
       \pkg{tcltk} were previously omitted.
@@ -130,9 +130,9 @@
       set of repositories known to \code{setRepoositories()}.
     }
   }
-  
+
   \subsection{INSTALLATION}{
-    \itemize{    
+    \itemize{
       \item The PDF reference manual is now built as PDF version 1.5
       with object compression, which on platforms for which this is not
       the default (notably MiKTeX) halves its size.
@@ -143,7 +143,7 @@
     \itemize{
       \item \code{seq.int} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
-      
+
       \item The \code{data.frame} method of \code{format} failed if a
       column name was longer than 256 bytes (the maximum length allowed
       for an \R name).
@@ -184,17 +184,17 @@
       \item Use of \code{`[[<-`} for S4 subclasses of
       \code{"environment"} generated an infinite recursion from the
       method.  The method has been replaced by internal code.
-      
+
       \item In a reference class S4 method, \code{callSuper()} now works in
       \code{initialize()} methods when there is no explicit superclass
       method.
-      
+
       \item \code{!} dropped attributes such as names and dimensions from a
       length-zero arguemnt.  (\PR{14424})
 
       \item When \code{list2env()} created an environment it was missing
       a \code{PROTECT} call and so was vulnerable to garbage collection.
-      
+
       \item \code{Sweave()} with \code{keep.source=TRUE} dropped
       comments at the start and end of code chunks.  It could also
       fail when \code{\\SweaveInput} was combined with named chunks.
@@ -203,6 +203,11 @@
       could infinite-loop when compiled with high optimization on a
       modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
       to make this less likely.  (\PR{14427})
+
+      \item \code{sapply()} with default \code{simplify = TRUE} and
+      \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
+      simplified language-like results, as, e.g., in
+      \code{mapply(1:2, c(3,7), FUN = function(i,j) call(':',i,j))}.
     }
   }
 }
@@ -568,7 +573,7 @@
       additional quotes in, e.g., \code{TAR = "'/path with spaces/mytar'"}.
     }
   }
-  
+
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item Supplying the parser with a character string containing both
@@ -623,11 +628,11 @@
        deprecated \command{R CMD Sd2Rd} and \code{install-info.pl} (used
        only if \code{install-info} is not found) as well as some
        maintainer-mode-only scripts.
-       
+
        \strong{NB:} because these have been completely rewritten, users
        should not expect undocumented details of previous
        implementations to have been duplicated.
-       
+
        \command{R CMD} no longer manipulates the environment variables
        \env{PERL5LIB} and \env{PERLLIB}.
 
@@ -700,7 +705,7 @@
        respectively if included from a C++ source file.
     }
   }
-  
+
   \subsection{INSTALLATION}{
     \itemize{
       \item A C99 compiler is now required, and more C99 language features
@@ -711,7 +716,7 @@
       \item System functions \code{access}, \code{chdir} and
        \code{getcwd} are now essential to configure \R.  (In practice
        they have been required for some time.)
-      
+
       \item \command{make check} compares the output of the examples
        from several of the base packages to reference output rather than
        the previous output (if any).  Expect some differences due to
@@ -734,7 +739,7 @@
       version.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Calls to \code{selectMethod()} by default no longer cache
@@ -900,10 +905,10 @@
       \item Added workaround for the font problem with \code{X11(type =
       "cairo")} and similar on Mac OS X whereby italic and bold styles
       were interchanged.  (\PR{13463} amongst many other reports.)
-      
+
       \item \code{source(chdir = TRUE)} failed to reset the working
       directory if it could not be determined -- that is now an error.
-      
+
       \item Fix for crash of \code{example(rasterImage)} on
       \code{x11(type="Xlib")}.
 
@@ -913,7 +918,7 @@
 
       \item \code{model.frame} had an unstated 500 byte limit on
       variable names.  (Example reported by Terry Therneau.)
-      
+
       \item The 256-byte limit on names is now documented.
 
       \item Subassignment by \code{[}, \code{[[} or \code{$} on an

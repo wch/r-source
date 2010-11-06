@@ -50,8 +50,8 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
   no formal list.
 }
 \seealso{
-  \code{\link{sapply}},
-  \code{\link{outer}}
+  \code{\link{sapply}}, after which \code{mapply()} is built, notably on
+  simplification; \code{\link{outer}}
 }
 \examples{
 require(graphics)
