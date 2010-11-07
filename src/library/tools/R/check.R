@@ -1365,7 +1365,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          ")", sep = "")
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = "LANGUAGE=en", "", "", arch)
+                             env = "LANGUAGE=en",
+                             stdout = "", stderr = "", arch = arch)
             if (status) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
