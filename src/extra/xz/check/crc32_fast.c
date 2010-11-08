@@ -29,7 +29,7 @@ lzma_crc32(const uint8_t *buf, size_t size, uint32_t crc)
 	crc = ~crc;
 
 #ifdef WORDS_BIGENDIAN
-	crc = bswap_32(crc);
+	crc = bswap32(crc);
 #endif
 
 	if (size > 8) {
@@ -49,7 +49,7 @@ lzma_crc32(const uint8_t *buf, size_t size, uint32_t crc)
 
 		// Calculate the CRC32 using the slice-by-eight algorithm.
 		while (buf < limit) {
-			crc ^= *(uint32_t *)(buf);
+			crc ^= *(const uint32_t *)(buf);
 			buf += 4;
 
 			crc = lzma_crc32_table[7][A(crc)]
@@ -57,7 +57,7 @@ lzma_crc32(const uint8_t *buf, size_t size, uint32_t crc)
 			    ^ lzma_crc32_table[5][C(crc)]
 			    ^ lzma_crc32_table[4][D(crc)];
 
-			const uint32_t tmp = *(uint32_t *)(buf);
+			const uint32_t tmp = *(const uint32_t *)(buf);
 			buf += 4;
 
 			// At least with some compilers, it is critical for
@@ -75,7 +75,7 @@ lzma_crc32(const uint8_t *buf, size_t size, uint32_t crc)
 		crc = lzma_crc32_table[0][*buf++ ^ A(crc)] ^ S8(crc);
 
 #ifdef WORDS_BIGENDIAN
-	crc = bswap_32(crc);
+	crc = bswap32(crc);
 #endif
 
 	return ~crc;

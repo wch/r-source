@@ -31,8 +31,8 @@ SOURCES = \
  price_table.c sha256.c simple_coder.c simple_decoder.c \
  simple_encoder.c sparc.c stream_buffer_decoder.c stream_buffer_encoder.c \
  stream_decoder.c stream_encoder.c stream_flags_common.c \
- stream_flags_decoder.c stream_flags_encoder.c subblock_decoder.c \
- subblock_decoder_helper.c vli_decoder.c vli_encoder.c vli_size.c x86.c
+ stream_flags_decoder.c stream_flags_encoder.c \
+ vli_decoder.c vli_encoder.c vli_size.c x86.c
 
 OBJECTS = $(SOURCES:.c=.o)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
@@ -43,7 +43,7 @@ noinst_LIBRARIES = liblzma.a
 liblzma_a_SOURCES = $(SOURCES)
 liblzma_a_OBJECTS = $(OBJECTS)
 SUBDIRS_WITH_NO_BUILD = \
-  api check common delta lz lzma rangecoder simple subblock
+  api check common delta lz lzma rangecoder simple
 
 all: @BUILD_XZ_TRUE@ R
 

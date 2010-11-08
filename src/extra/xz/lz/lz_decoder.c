@@ -39,15 +39,15 @@ struct lzma_coder_s {
 	/// marker. This may become true before next_finished becomes true.
 	bool this_finished;
 
-        /// Temporary buffer needed when the LZ-based filter is not the last
-        /// filter in the chain. The output of the next filter is first
-        /// decoded into buffer[], which is then used as input for the actual
-        /// LZ-based decoder.
-        struct {
-                size_t pos;
-                size_t size;
-                uint8_t buffer[LZMA_BUFFER_SIZE];
-        } temp;
+	/// Temporary buffer needed when the LZ-based filter is not the last
+	/// filter in the chain. The output of the next filter is first
+	/// decoded into buffer[], which is then used as input for the actual
+	/// LZ-based decoder.
+	struct {
+		size_t pos;
+		size_t size;
+		uint8_t buffer[LZMA_BUFFER_SIZE];
+	} temp;
 };
 
 
@@ -81,8 +81,9 @@ decode_buffer(lzma_coder *coder,
 		// It must not decode past the end of the dictionary
 		// buffer, and we don't want it to decode more than is
 		// actually needed to fill the out[] buffer.
-		coder->dict.limit = coder->dict.pos + MIN(out_size - *out_pos,
-				coder->dict.size - coder->dict.pos);
+		coder->dict.limit = coder->dict.pos
+				+ my_min(out_size - *out_pos,
+					coder->dict.size - coder->dict.pos);
 
 		// Call the coder->lz.code() to do the actual decoding.
 		const lzma_ret ret = coder->lz.code(
@@ -264,7 +265,7 @@ lzma_lz_decoder_init(lzma_next_coder *next, lzma_allocator *allocator,
 			&& lz_options.preset_dict_size > 0) {
 		// If the preset dictionary is bigger than the actual
 		// dictionary, copy only the tail.
-		const size_t copy_size = MIN(lz_options.preset_dict_size,
+		const size_t copy_size = my_min(lz_options.preset_dict_size,
 				lz_options.dict_size);
 		const size_t offset = lz_options.preset_dict_size - copy_size;
 		memcpy(next->coder->dict.buf, lz_options.preset_dict + offset,

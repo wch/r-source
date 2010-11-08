@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifdef WORDS_BIGENDIAN
-#	include "../common/bswap.h"
+#	include "bswap.h"
 
 #	define A(x) ((x) >> 24)
 #	define B(x) (((x) >> 16) & 0xFF)

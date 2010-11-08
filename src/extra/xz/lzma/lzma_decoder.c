@@ -195,7 +195,7 @@ struct lzma_coder_s {
 	/// 2 (i.e. MATCH_LEN_MIN), 3, 4, and [5, 273].
 	probability pos_slot[LEN_TO_POS_STATES][POS_SLOTS];
 
-	/// Probility trees for additional bits for match distance when the
+	/// Probability trees for additional bits for match distance when the
 	/// distance is in the range [4, 127].
 	probability pos_special[FULL_DISTANCES - END_POS_MODEL_INDEX];
 
@@ -600,7 +600,7 @@ lzma_decode(lzma_coder *restrict coder, lzma_dict *restrict dictptr,
 					}
 #endif
 				} else {
-					// The distace is >= 128. Decode the
+					// The distance is >= 128. Decode the
 					// lower bits without probabilities
 					// except the lowest four bits.
 					assert(symbol >= 14);
@@ -656,7 +656,8 @@ lzma_decode(lzma_coder *restrict coder, lzma_dict *restrict dictptr,
 						}
 
 	case SEQ_EOPM:
-						// TODO Comment
+						// LZMA1 stream with
+						// end-of-payload marker.
 						rc_normalize(SEQ_EOPM);
 						ret = LZMA_STREAM_END;
 						goto out;
@@ -856,7 +857,6 @@ lzma_decoder_reset(lzma_coder *coder, const void *opt)
 
 	// NOTE: We assume that lc/lp/pb are valid since they were
 	// successfully decoded with lzma_lzma_decode_properties().
-	// FIXME?
 
 	// Calculate pos_mask. We don't need pos_bits as is for anything.
 	coder->pos_mask = (1U << options->pb) - 1;
@@ -1042,7 +1042,7 @@ lzma_lzma_props_decode(void **options, lzma_allocator *allocator,
 	// All dictionary sizes are accepted, including zero. LZ decoder
 	// will automatically use a dictionary at least a few KiB even if
 	// a smaller dictionary is requested.
-	opt->dict_size = integer_read_32(props + 1);
+	opt->dict_size = unaligned_read32le(props + 1);
 
 	opt->preset_dict = NULL;
 	opt->preset_dict_size = 0;

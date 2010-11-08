@@ -21,10 +21,12 @@ SOURCES = \
  price_table.c sha256.c simple_coder.c simple_decoder.c \
  simple_encoder.c sparc.c stream_buffer_decoder.c stream_buffer_encoder.c \
  stream_decoder.c stream_encoder.c stream_flags_common.c \
- stream_flags_decoder.c stream_flags_encoder.c subblock_decoder.c \
- subblock_decoder_helper.c vli_decoder.c vli_encoder.c vli_size.c x86.c
+ stream_flags_decoder.c stream_flags_encoder.c \
+ vli_decoder.c vli_encoder.c vli_size.c x86.c
 
-ifeq ($(strip $(WIN)),64)
+
+## Use assembler version on i386
+ifeq "$(WIN)" "64"
 OBJECTS = $(SOURCES:.c=.o) crc32_fast.o crc64_fast.o
 else
 OBJECTS = $(SOURCES:.c=.o) crc32_x86.o crc64_x86.o

@@ -60,8 +60,8 @@
  *
  * Some could argue that liblzma API should provide all the required types,
  * for example lzma_uint64, LZMA_UINT64_C(n), and LZMA_UINT64_MAX. This was
- * seen unnecessary mess, since most systems already provide all the necessary
- * types and macros in the standard headers.
+ * seen as an unnecessary mess, since most systems already provide all the
+ * necessary types and macros in the standard headers.
  *
  * Note that liblzma API still has lzma_bool, because using stdbool.h would
  * break C89 and C++ programs on many systems. sizeof(bool) in C99 isn't
@@ -95,8 +95,8 @@
 			/* Use the standard inttypes.h. */
 #			ifdef __cplusplus
 				/*
-				 * C99 sections 7.18.2 and 7.18.4 specify that
-				 * in C++ implementations define the limit
+				 * C99 sections 7.18.2 and 7.18.4 specify
+				 * that C++ implementations define the limit
 				 * and constant macros only if specifically
 				 * requested. Note that if you want the
 				 * format macros (PRIu64 etc.) too, you need
@@ -162,10 +162,9 @@
  ******************/
 
 /*
- * Some systems require (or at least recommend) that the functions and
- * function pointers are declared specially in the headers. LZMA_API_IMPORT
- * is for importing symbols and LZMA_API_CALL is to specify calling
- * convention.
+ * Some systems require that the functions and function pointers are
+ * declared specially in the headers. LZMA_API_IMPORT is for importing
+ * symbols and LZMA_API_CALL is to specify the calling convention.
  *
  * By default it is assumed that the application will link dynamically
  * against liblzma. #define LZMA_API_STATIC in your application if you
@@ -174,11 +173,14 @@
  * against static liblzma on them, don't worry about LZMA_API_STATIC. That
  * is, most developers will never need to use LZMA_API_STATIC.
  *
- * Cygwin is a special case on Windows. We rely on GCC doing the right thing
- * and thus don't use dllimport and don't specify the calling convention.
+ * The GCC variants are a special case on Windows (Cygwin and MinGW).
+ * We rely on GCC doing the right thing with its auto-import feature,
+ * and thus don't use __declspec(dllimport). This way developers don't
+ * need to worry about LZMA_API_STATIC. Also the calling convention is
+ * omitted on Cygwin but not on MinGW.
  */
 #ifndef LZMA_API_IMPORT
-#	if !defined(LZMA_API_STATIC) && defined(_WIN32) && !defined(__CYGWIN__)
+#	if !defined(LZMA_API_STATIC) && defined(_WIN32) && !defined(__GNUC__)
 #		define LZMA_API_IMPORT __declspec(dllimport)
 #	else
 #		define LZMA_API_IMPORT
@@ -210,7 +212,7 @@
 #ifndef lzma_nothrow
 #	if defined(__cplusplus)
 #		define lzma_nothrow throw()
-#	elif __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#	elif __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)
 #		define lzma_nothrow __attribute__((__nothrow__))
 #	else
 #		define lzma_nothrow
@@ -232,10 +234,6 @@
 #		define lzma_attribute(attr) __attribute__(attr)
 #	endif
 
-#	ifndef lzma_restrict
-#		define lzma_restrict __restrict__
-#	endif
-
 	/* warn_unused_result was added in GCC 3.4. */
 #	ifndef lzma_attr_warn_unused_result
 #		if __GNUC__ == 3 && __GNUC_MINOR__ < 4
@@ -246,14 +244,6 @@
 #else
 #	ifndef lzma_attribute
 #		define lzma_attribute(attr)
-#	endif
-
-#	ifndef lzma_restrict
-#		if __STDC_VERSION__ >= 199901L
-#			define lzma_restrict restrict
-#		else
-#			define lzma_restrict
-#		endif
 #	endif
 #endif
 
@@ -294,7 +284,6 @@ extern "C" {
 
 /* Filters */
 #include "lzma/filter.h"
-#include "lzma/subblock.h"
 #include "lzma/bcj.h"
 #include "lzma/delta.h"
 #include "lzma/lzma.h"
@@ -307,6 +296,9 @@ extern "C" {
 #include "lzma/block.h"
 #include "lzma/index.h"
 #include "lzma/index_hash.h"
+
+/* Hardware information */
+#include "lzma/hardware.h"
 
 /*
  * All subheaders included. Undefine LZMA_H_INTERNAL to prevent applications

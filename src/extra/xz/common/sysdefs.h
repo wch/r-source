@@ -53,7 +53,7 @@
 // we can work without inttypes.h thanks to Autoconf tests.
 #ifndef UINT32_C
 #	if UINT_MAX != 4294967295U
-#		error UINT32_C is not defined and unsiged int is not 32-bit.
+#		error UINT32_C is not defined and unsigned int is not 32-bit.
 #	endif
 #	define UINT32_C(n) n ## U
 #endif
@@ -92,6 +92,12 @@
 #	define UINT64_MAX UINT64_C(18446744073709551615)
 #endif
 
+// Interix has broken header files, which typedef size_t to unsigned long,
+// but a few lines later define SIZE_MAX to INT32_MAX.
+#ifdef __INTERIX
+#	undef SIZE_MAX
+#endif
+
 // The code currently assumes that size_t is either 32-bit or 64-bit.
 #ifndef SIZE_MAX
 #	if SIZEOF_SIZE_T == 4
@@ -99,11 +105,11 @@
 #	elif SIZEOF_SIZE_T == 8
 #		define SIZE_MAX UINT64_MAX
 #	else
-#		error sizeof(size_t) is not 32-bit or 64-bit
+#		error size_t is not 32-bit or 64-bit
 #	endif
 #endif
 #if SIZE_MAX != UINT32_MAX && SIZE_MAX != UINT64_MAX
-#	error sizeof(size_t) is not 32-bit or 64-bit
+#	error size_t is not 32-bit or 64-bit
 #endif
 
 #include <stdlib.h>
@@ -151,20 +157,14 @@ typedef unsigned char _Bool8;
 // Macros //
 ////////////
 
-#if defined(_WIN32) || defined(__MSDOS__) || defined(__OS2__)
-#	define DOSLIKE 1
-#endif
-
 #undef memzero
 #define memzero(s, n) memset(s, 0, n)
 
-#ifndef MIN
-#	define MIN(x, y) ((x) < (y) ? (x) : (y))
-#endif
-
-#ifndef MAX
-#	define MAX(x, y) ((x) > (y) ? (x) : (y))
-#endif
+// NOTE: Avoid using MIN() and MAX(), because even conditionally defining
+// those macros can cause some portability trouble, since on some systems
+// the system headers insist defining their own versions.
+#define my_min(x, y) ((x) < (y) ? (x) : (y))
+#define my_max(x, y) ((x) > (y) ? (x) : (y))
 
 #ifndef ARRAY_SIZE
 #	define ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))

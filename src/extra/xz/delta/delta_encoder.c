@@ -59,7 +59,7 @@ delta_encode(lzma_coder *coder, lzma_allocator *allocator,
 	if (coder->next.code == NULL) {
 		const size_t in_avail = in_size - *in_pos;
 		const size_t out_avail = out_size - *out_pos;
-		const size_t size = MIN(in_avail, out_avail);
+		const size_t size = my_min(in_avail, out_avail);
 
 		copy_and_encode(coder, in + *in_pos, out + *out_pos, size);
 
@@ -83,11 +83,26 @@ delta_encode(lzma_coder *coder, lzma_allocator *allocator,
 }
 
 
+static lzma_ret
+delta_encoder_update(lzma_coder *coder, lzma_allocator *allocator,
+		const lzma_filter *filters_null lzma_attribute((unused)),
+		const lzma_filter *reversed_filters)
+{
+	// Delta doesn't and will never support changing the options in
+	// the middle of encoding. If the app tries to change them, we
+	// simply ignore them.
+	return lzma_next_filter_update(
+			&coder->next, allocator, reversed_filters + 1);
+}
+
+
 extern lzma_ret
 lzma_delta_encoder_init(lzma_next_coder *next, lzma_allocator *allocator,
 		const lzma_filter_info *filters)
 {
-	return lzma_delta_coder_init(next, allocator, filters, &delta_encode);
+	next->code = &delta_encode;
+	next->update = &delta_encoder_update;
+	return lzma_delta_coder_init(next, allocator, filters);
 }
 
 
