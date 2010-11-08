@@ -208,6 +208,9 @@
       \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
       simplified language-like results, as, e.g., in
       \code{mapply(1:2, c(3,7), FUN = function(i,j) call(':',i,j))}.
+      
+      \item Backreferences to undefined patterns in
+      \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
     }
   }
 }
