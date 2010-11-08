@@ -91,7 +91,9 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
-  replaces all occurrences.
+  replaces all occurrences.  If \code{replacement} contains
+  backreferences which are not defined in \code{pattern} the result is
+  undefined (but most often the backreference is taken to be \code{""}).
 
   For \code{regexpr} and \code{gregexpr} it is an error for
   \code{pattern} to be \code{NA}, otherwise \code{NA} is permitted and

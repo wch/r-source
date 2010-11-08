@@ -88,6 +88,9 @@
       could infinite-loop when compiled with high optimization on a
       modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
       to make this less likely.  (\PR{14427})
+      
+      \item Backreferences to undefined patterns in
+      \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
     }
   }
 }
