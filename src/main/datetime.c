@@ -1019,7 +1019,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 	if(R_FINITE(REAL(x)[i])) {
-	    day = (int) REAL(x)[i];
+	    day = (int) floor(REAL(x)[i]);
 	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
 	    /* weekday: 1970-01-01 was a Thursday */
 	    if ((tm.tm_wday = ((4 + day) % 7)) < 0) tm.tm_wday += 7;

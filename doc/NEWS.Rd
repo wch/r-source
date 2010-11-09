@@ -93,6 +93,10 @@
       
       \item Backreferences to undefined patterns in
       \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
+      
+      \item The \code{format()} (and hence the \code{print()}) method
+      for class \code{"Date"} rounded fractional dates towards zero: it
+      now always rounds them down.
     }
   }
 }
