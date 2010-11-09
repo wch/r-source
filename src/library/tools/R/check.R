@@ -1205,8 +1205,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            status <- R_runR(NULL, c(Ropts, enc), env = "LANGUAGE=en",
-                              exout, exout, exfile, arch = arch)
+            status <- R_runR(NULL, c(Ropts, enc), "LANGUAGE=en",
+                             stdout = exout, stderr = exout,
+                             stdin = exfile, arch = arch)
             if (status) {
                 errorLog(Log, "Running examples in ", sQuote(exfile),
                          " failed")
@@ -1278,7 +1279,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
             Rout <- tempfile("Rout")
             ## any arch will do here
-            status <- R_runR(cmd, R_opts2, "LC_ALL=C", Rout, Rout)
+            status <- R_runR(cmd, R_opts2, "LC_ALL=C",
+                             stdout = Rout, stderr = Rout)
             if (status) {
                 errorLog(Log,
                          paste("Running massageExamples to create",

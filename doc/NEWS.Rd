@@ -52,8 +52,6 @@
 
       \item \code{list2env(envir = NULL)} defaults to hashing (with a
       suitably sized environment) for lists of more than 100 elements.
-
-      \item xz-utils has been updated to version 5.0.0.
     }
   }
 
@@ -128,6 +126,8 @@
 
       \item \url{http://www.rforge.net} has been added to the default
       set of repositories known to \code{setRepoositories()}.
+
+      \item xz-utils has been updated to version 5.0.0.
     }
   }
 
@@ -211,6 +211,10 @@
       
       \item Backreferences to undefined patterns in
       \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
+      
+      \item The \code{format()} (and hence the \code{print()}) method
+      for class \code{"Date"} rounded fractional dates towards zero: it
+      now always rounds them down.
     }
   }
 }

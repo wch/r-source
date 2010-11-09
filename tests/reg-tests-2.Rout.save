@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-08 r53245)
+R version 2.13.0 Under development (unstable) (2010-11-08 r53540)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6555,4 +6555,11 @@ Frequency = 0.2
 > format.pval(a, eps=0.01, nsmall =2)
 [1] "0.10"  "0.30"  "0.40"  "0.50"  "0.30"  "<0.01"
 > ## granted in 2.12.0
+> 
+> 
+> ## printing fractional dates
+> as.Date(0.5, origin="1969-12-31")
+[1] "1969-12-31"
+> ## changed to round down in 2.12.1
+> 
 > 
