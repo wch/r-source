@@ -99,8 +99,9 @@
       now always rounds them down.
 
       \item Reference class creation could generate ambiguous
-      inheritance patterns under very special circumstances, now
-      fixed.
+      inheritance patterns under very special circumstances.
+
+      \item `[[<-` turned subclasses of "environment" into plain environments.
 
     }
   }

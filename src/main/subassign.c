@@ -1495,8 +1495,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
-        x = R_getS4DataSlot(x, ANYSXP);
 	xOrig = x; /* will be an S4 object */
+        x = R_getS4DataSlot(x, ANYSXP);
 	if(TYPEOF(x) != ENVSXP)
 	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environemnt"));
     }
