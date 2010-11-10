@@ -594,39 +594,41 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
 }
 
 refClassInformation <- function(Class, contains, fields, refMethods, where) {
-    superClassDefs <- lapply(contains,
-                             function(what) {
-                                 if(is(what, "classRepresentation"))
-                                     what
-                                 else if(is.character(what))
-                                     getClass(what, where = where)
-                                 else
-                                     stop(gettextf(
-                                       "The contains= argument should be the names of superclasses:  got an element of class \"%s\"",
-                                        class(what)), domain = NA)
-                             })
-    missingDefs <- sapply(superClassDefs, is.null)
-    if(any(missingDefs))
-        stop(gettextf("No definition found for inherited class: %s",
-                      paste('"',contains[missingDefs], '"', sep = "", collapse = ", ")),
-             domain = NA)
-    superClasses <- unlist(lapply(superClassDefs,
-                                  function(def) def@className), FALSE)
-    if(length(superClassDefs) > 0) {
+    if(length(contains) > 0) {
+        superClassDefs <- lapply(contains,
+                                 function(what) {
+                                     if(is(what, "classRepresentation"))
+                                         what
+                                     else if(is.character(what))
+                                         getClass(what, where = where)
+                                     else
+                                         stop(gettextf(
+                                                       "The contains= argument should be the names of superclasses:  got an element of class \"%s\"",
+                                                       class(what)), domain = NA)
+                                 })
+        missingDefs <- sapply(superClassDefs, is.null)
+        if(any(missingDefs))
+            stop(gettextf("No definition found for inherited class: %s",
+                          paste('"',contains[missingDefs], '"', sep = "", collapse = ", ")),
+                 domain = NA)
+        superClasses <- unlist(lapply(superClassDefs,
+                          function(def) def@className), FALSE)
         isRefSuperClass <- sapply(superClassDefs, function(def)
-                                  is(def, "refClassRepresentation"))
-        refSuperClasses <- superClasses[isRefSuperClass]
-        ## get the indirectly inherited ref classes:  for consistent
-        ## superclass ordering these must precede any other indirectly inherited
-        ## classes
-        otherRefClasses <- getRefSuperClasses(refSuperClasses, superClassDefs[isRefSuperClass])
-        superClasses <- unique(c(superClasses, otherRefClasses))
-        refSuperClasses <- unique(c(refSuperClasses, otherRefClasses))
+                              is(def, "refClassRepresentation"))
     }
     else {
-        superClasses <- refSuperClasses <- character()
-        isRefSuperClass <- 0
+        superClassDefs <- list()
+        superClasses <- character()
+        isRefSuperClass <- logical()
     }
+    if(!any(isRefSuperClass)) {
+        superClasses <- c(superClasses, "envRefClass")
+        isRefSuperClass <- c(isRefSuperClass, TRUE)
+        superClassDefs[["envRefClass"]] <- getClass("envRefClass", where = where)
+    }
+    refSuperClasses <- superClasses[isRefSuperClass]
+    otherRefClasses <- getRefSuperClasses(refSuperClasses, superClassDefs[isRefSuperClass])
+    refSuperClasses <- unique(c(refSuperClasses, otherRefClasses))
     ## process the field definitions.  The call from setRefClass
     ## guarantees that fields is a named list.
     fieldNames <- names(fields)
@@ -754,8 +756,6 @@ setRefClass <- function(Class, fields = character(),
         stop(gettextf("Argument fields must be a list of the field classes or definitions, or else just the names of the fields; got an object of class \"%s\"",
                       class(fields)), domain = NA)
     theseMethods <- names(methods) # non-inherited, for processing later
-    ## include envRefClass automatically (and so refClass indirectly).
-    contains <- unique(c(contains, "envRefClass"))
     ## collect the method and field definitions
     info <- refClassInformation(Class, contains, fields, methods, where)
     ## think Python's multiple assignment operator
