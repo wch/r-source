@@ -86,7 +86,7 @@ system2 <- function(command, args = character(),
         command <- paste(command, "2>&1")
     } else if(is.character(stderr)) {
         if(length(stderr) != 1L) stop("'stderr' must be of length 1")
-        paste(command, "2>", shQuote(stderr))
+        command <- paste(command, "2>", shQuote(stderr))
     }
     if(!is.null(input)) {
         if(!is.character(input))
