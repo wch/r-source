@@ -215,6 +215,12 @@
       \item The \code{format()} (and hence the \code{print()}) method
       for class \code{"Date"} rounded fractional dates towards zero: it
       now always rounds them down.
+
+      \item Reference S4 class creation could generate ambiguous
+      inheritance patterns under very special circumstances.
+
+      \item \code{`[[<-`} turned S4 subclasses of \code{"environment"} into
+      plain environments.
     }
   }
 }
