@@ -32,9 +32,7 @@ eapply(env, FUN, \dots, all.names = FALSE, USE.NAMES = TRUE)
 }
 \value{
   A named (unless \code{USE.NAMES = FALSE}) list.  Note that the order of
-  the components is arbitrary for hashed environments: currently it will
-  be in the order the name-value pairs were added for unhashed
-  environments.
+  the components is arbitrary for hashed environments.
 }
 \seealso{
   \code{\link{environment}}, \code{\link{lapply}}.
