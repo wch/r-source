@@ -3858,7 +3858,7 @@ Others have reported success with versions 10.x and 11.x.
 @subsection Oracle Solaris Studio compilers
 
 Brian Ripley tested the Sun Studio 12 compilers, since renamed to Oracle
-Solaris Studion,
+Solaris Studio,
 (@uref{http://developers.sun.com/sunstudio/index.jsp}) 
 On
 @cputype{x86_64} Linux with
