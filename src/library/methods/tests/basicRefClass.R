@@ -290,6 +290,31 @@ setClass("myEnv", contains = "environment")
 m <- new("myEnv")
 m[["x"]] <- 1; m$y <- 2
 stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
+rm(x, envir = m)
+stopifnot(identical(objects(m), "y"))
+
+## tests of binding & environment tools with subclases of environment
+lockBinding("y", m)
+stopifnot(bindingIsLocked("y", m))
+unlockBinding("y", m)
+stopifnot(!bindingIsLocked("y", m))
+
+makeActiveBinding("z", function(value) {
+    if(missing(value))
+        "dummy"
+    else
+        "dummy assignment"
+}, m)
+stopifnot(identical(get("z", m),"dummy"))
+## assignment will return the value but do nothing
+stopifnot(identical(assign("z","other", m), "other"),
+          identical(get("z", m),"dummy"))
+
+
+## this has to be last--Seems no way to unlock an environment!
+lockEnvironment(m)
+stopifnot(environmentIsLocked(m))
+
 
 ## test of callSuper() to a hidden default method for initialize() (== initFields)
 TestClass <- setRefClass ("TestClass",

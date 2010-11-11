@@ -111,6 +111,9 @@
 
       \item Long titles for help pages were truncated in package indices
       and a few other places.
+
+      \item Additional utilities now work correctly with subclasses of
+      \code{"environment"} (\code{rm}, locking tools and active bindings).
     }
   }
 }
