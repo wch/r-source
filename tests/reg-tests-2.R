@@ -1861,11 +1861,11 @@ x[2]
 x[[2]]
 stopifnot(identical(x[2], x[[2]]))
 as.list(x)
-unlist(as.list(x))
-stopifnot(identical(x, unlist(as.list(x))))
+(xx <- unlist(as.list(x)))
+stopifnot(identical(x, xx))
 as.vector(x, "list")
-sapply(x, na.pass)
-stopifnot(identical(x, sapply(x, na.pass)))
+(sx <- sapply(x, function(.).))
+stopifnot(identical(x, sx))
 ## changed in 2.4.0
 
 
