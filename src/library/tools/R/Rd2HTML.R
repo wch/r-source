@@ -673,12 +673,14 @@ Rd2HTML <-
     	    for (i in seq_along(sections))
     	    	writeBlock(Rd[[i]], sections[i], "")
     } else {
-	title <- Rd[[1L]]
 	name <- htmlify(Rd[[2L]][[1L]])
 
 	of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-	    '<html><head><title>R: ')
-	of1(htmlify(.Rd_format_title(.Rd_get_title(Rd, encoding="UTF-8"))))
+	    '<html><head><title>')
+	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd, encoding="UTF-8")),
+	                     width=65, initial="R: ")
+	if (length(headtitle) > 1) headtitle <- paste(headtitle[1], "...", sep="")
+	of1(htmlify(headtitle))
 	of0('</title>\n',
 	    '<meta http-equiv="Content-Type" content="text/html; charset=',
 	    mime_canonical_encoding(outputEncoding),
@@ -695,6 +697,7 @@ Rd2HTML <-
 	of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
 
 	of1("<h2>")
+	title <- Rd[[1L]]
 	writeContent(title,sections[1])
 	of1("</h2>")
 

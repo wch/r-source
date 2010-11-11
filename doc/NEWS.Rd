@@ -103,6 +103,9 @@
 
       \item \code{`[[<-`} turned S4 subclasses of \code{"environment"} into
       plain environments.
+      
+      \item Long titles for help pages were truncated in package indices
+      and a few other places.
     }
   }
 }
