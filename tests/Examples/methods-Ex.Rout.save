@@ -1063,7 +1063,7 @@ Creating a generic for 'paste' in package '.GlobalEnv'
 > 
 > ### Name: evalSource
 > ### Title: Use Function Definitions from a Source File without Reinstalling
-> ###   a
+> ###   a Package
 > ### Aliases: evalSource insertSource sourceEnvironment-class
 > ### Keywords: programming methods
 > 

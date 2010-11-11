@@ -58,7 +58,7 @@ function(file, encoding = "unknown")
     }
 
     Rd_title <- .Rd_get_title(Rd)
-    if(!length(Rd_title)) {
+    if(!nchar(Rd_title)) {
         msg <-
             c(gettextf("missing/empty \\title field in '%s'",
                        description),
@@ -675,9 +675,7 @@ function(x, encoding="")
         result <- .Rd_get_text(title, encoding=encoding)
         result <- result[result != ""]
     }
-    if (length(result)) 
-    	result <- result[1]
-    result
+    paste(result, collapse=" ")
 }
 
 ### * .Rd_get_text
