@@ -2862,7 +2862,7 @@ an external @acronym{BLAS} has to be usable from a shared object (so
 must contain position-independent code), and that is not checked.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
-(@code{libsunperf} on Sun Sparc@footnote{Using the Sun Studio
+(@code{libsunperf} on Sun Sparc@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
 @code{vecLib} on Mac OS X).  The correct incantation for these is
 usually found @emph{via} @option{--with-blas} with no value on the
@@ -3818,10 +3818,10 @@ the additional flags being needed to resolve problems linking against
 
 @menu
 * Intel compilers::             
-* Sun Studio compilers::        
+* Oracle Solaris Studio compilers::  
 @end menu
 
-@node Intel compilers, Sun Studio compilers, Linux, Linux
+@node Intel compilers, Oracle Solaris Studio compilers, Linux, Linux
 @subsection Intel compilers
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
@@ -3863,11 +3863,13 @@ system with @command{gcc} or the Intel compilers see
 Others have reported success with versions 10.x and 11.x.
 
 
-@node Sun Studio compilers,  , Intel compilers, Linux
-@subsection Sun Studio compilers
+@node Oracle Solaris Studio compilers,  , Intel compilers, Linux
+@subsection Oracle Solaris Studio compilers
 
-Brian Ripley tested the Sun Studio 12 compilers
-(@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
+Brian Ripley tested the Sun Studio 12 compilers, since renamed to Oracle
+Solaris Studion,
+(@uref{http://developers.sun.com/sunstudio/index.jsp}) 
+On
 @cputype{x86_64} Linux with
 
 @example
@@ -4030,13 +4032,13 @@ LIBS=-L/usr/X11/lib
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Sun Studio 12 compilers: there has
-been some success with @command{gcc}@tie{}4/@command{gfortran}, mainly
-on Sparc.  Sun packages for @R{} used to be available from
-@uref{http://www.sunfreeware.com/} for both architectures, but have not
-been updated recently.  (Recent Sun machines are AMD Opterons or Intel
-Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
-@cputype{x86} executables are the default.)
+@cputype{x86}) using the (zero cost) Oracle Solaris Studio 12 compilers:
+there has been some success with
+@command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
+for @R{} used to be available from @uref{http://www.sunfreeware.com/}
+for both architectures, but have not been updated recently.  (Recent Sun
+machines are AMD Opterons or Intel Xeons (@cputype{amd64}) rather than
+@cputype{x86}, but 32-bit @cputype{x86} executables are the default.)
 
 There are also reports of success on OpenSolaris (also known as Solaris
 Express Community Edition, and sometimes as Solaris 11) on
@@ -4072,7 +4074,7 @@ When using the Sun compilers@footnote{including @command{gcc} for Sparc
 from Sun.} do @emph{not} specify @option{-fast}, as this disables
 @acronym{IEEE} arithmetic and @command{make check} will fail.
 
-For the Sun Studio compilers a little juggling of paths was needed to
+For the Solaris Studio compilers a little juggling of paths was needed to
 ensure @acronym{GNU} @code{libiconv} is used rather than the Solaris
 @code{iconv}: at one time we used
 
@@ -4097,7 +4099,7 @@ flags).  For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
 @code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.
 
-By default the Sun Studio compilers do not by default conform to the C99
+By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.  Also, errors have
 been reported on @cputype{amd64} if @option{-xc99} is omitted.
@@ -4122,7 +4124,7 @@ CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
-The Sun Studio compilers provide several implementations of the C++
+The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
 These are selected by the @option{-library} flag, which as it is needed
 for both compiling and linking is best specified as part of the
@@ -4146,7 +4148,7 @@ CXXFLAGS="-features=tmplrefstatic"
 @cindex LAPACK library
 
 The Sun performance library @code{libsunperf} is available for use with
-the Sun Studio compilers.  If selected as a @acronym{BLAS}, it must also be
+the Solaris Studio compilers.  If selected as a @acronym{BLAS}, it must also be
 selected as LAPACK via
 
 @example
@@ -4418,7 +4420,7 @@ directory.
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-Sun Studio compilers causes @R{}'s @code{NaN} to be set incorrectly.
+Studio compilers causes @R{}'s @code{NaN} to be set incorrectly.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.
