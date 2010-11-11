@@ -90,10 +90,15 @@
       could infinite-loop when compiled with high optimization on a
       modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
       to make this less likely.  (\PR{14427})
-      
+
+      \item \code{sapply()} with default \code{simplify = TRUE} and
+      \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
+      simplified language-like results, as, e.g., in
+      \code{mapply(1:2, c(3,7), FUN = function(i,j) call(':',i,j))}.
+
       \item Backreferences to undefined patterns in
       \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
-      
+
       \item The \code{format()} (and hence the \code{print()}) method
       for class \code{"Date"} rounded fractional dates towards zero: it
       now always rounds them down.
@@ -103,7 +108,7 @@
 
       \item \code{`[[<-`} turned S4 subclasses of \code{"environment"} into
       plain environments.
-      
+
       \item Long titles for help pages were truncated in package indices
       and a few other places.
     }
