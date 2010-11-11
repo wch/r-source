@@ -445,19 +445,33 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     for(i in seq_along(pkgs)) {
         pkgpath <- file.path(lib, pkgs[i])
         if(file.access(pkgpath, 5L)) next
-        pkgpath <- file.path(pkgpath, "DESCRIPTION")
-        if(file.access(pkgpath, 4L)) next
-        desc <- tryCatch(read.dcf(pkgpath, fields = fields), error = identity)
-        if(inherits(desc, "error")) {
-            warning(gettextf("read.dcf() error on file '%s'", pkgpath),
-                    domain = NA, call. = FALSE)
-            next
+        if (file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
+            md <- .readRDS(file)
+            desc <- md$DESCRIPTION[fields]
+            if (!length(desc)) {
+                warning(gettextf("metadata of '%s' is corrupt", pkgpath),
+                        domain = NA)
+                next
+            }
+            if("Built" %in% fields)
+                desc["Built"] <- as.character(md$Built$R)
+        } else { ## is this really needed these days?
+            file <- file.path(pkgpath, "DESCRIPTION")
+            if(file.access(file, 4L)) next
+            desc <- tryCatch(read.dcf(file, fields = fields), error = identity)
+            if(inherits(desc, "error") || NROW(desc) < 1L) {
+                warning(gettextf("error reading file '%s'", file),
+                        domain = NA, call. = FALSE)
+                next
+            }
+            desc <- desc[1,]
+            if("Built" %in% fields) {
+                Rver <- strsplit(strsplit(desc["Built"], ";")[[1L]][1L],
+                                 "[ \t]+")[[1L]][2L]
+                desc["Built"] <- Rver
+            }
         }
-        desc <- desc[1,]
-        Rver <- strsplit(strsplit(desc["Built"], ";")[[1L]][1L],
-                         "[ \t]+")[[1L]][2L]
-        desc["Built"] <- Rver
-        ret[i, ] <- c(sub("_.*", "", pkgs[i]), lib, desc)
+        ret[i, ] <- c(pkgs[i], lib, desc)
     }
     ret[!is.na(ret[, 1L]), ]
 }
