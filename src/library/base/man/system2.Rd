@@ -52,6 +52,10 @@ system2(command, args = character(),
 
   For details of how \code{command} is found see \code{\link{system}}.
 
+  Some Unix commands (such as \code{ls}) change their ouptut depending
+  on whether they think it is redirected: \code{stdout = TRUE} uses a
+  pipe whereas \code{stdout = "some_file_name"} uses redirection.
+
   Because of the way it is implemented, on a Unix-alike \code{stderr =
     TRUE} implies \code{stdout = TRUE}.
 }
@@ -80,7 +84,7 @@ system2(command, args = character(),
   \code{system2} is a more portable and flexible interface than
   \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
   of output without needing to invoke a shell on Windows.  Not all the
-  possible combinations of arguments are yet implemented (not may it be
+  possible combinations of arguments are yet implemented (nor may it be
   possible to do so).
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
