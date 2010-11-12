@@ -52,6 +52,10 @@ system2(command, args = character(),
   
   For details of how \code{command} is found see \code{\link{system}}.
 
+  Some Unix commands (such as \code{ls}) change their ouptut depending
+  on whether they think it is redirected: \code{stdout = TRUE} uses a
+  pipe whereas \code{stdout = "some_file_name"} uses redirection.
+
   Because of the way it is implemented, on a Unix-alike \code{stderr =
     TRUE} implies \code{stdout = TRUE}: a warning is given if this is
   not what was specified.

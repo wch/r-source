@@ -75,7 +75,7 @@
       supplied package directory: all the cleaning is done in the copy.
 
       It has a new option \option{--install-args} to pass arguments to
-      \command{R CMD INSTALL} for \option{--install} (but not when
+      \command{R CMD INSTALL} for \option{--build} (but not when
       installing to rebuild vignettes).
     }
   }
