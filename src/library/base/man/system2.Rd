@@ -88,13 +88,6 @@ system2(command, args = character(),
   the OS.
 }
 
-#ifdef windows
-\section{Warning}{
-  On Windows, using non-null \code{stdin} or \code{input} suppresses
-  output to the console (both standard output and standard error).
-}
-#endif
-
 \seealso{
   \code{\link{system}}.
 #ifdef windows
