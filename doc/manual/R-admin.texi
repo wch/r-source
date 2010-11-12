@@ -2862,7 +2862,7 @@ an external @acronym{BLAS} has to be usable from a shared object (so
 must contain position-independent code), and that is not checked.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
-(@code{libsunperf} on Sun Sparc@footnote{Using the Oracle Solaris Studio
+(@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
 @code{vecLib} on Mac OS X).  The correct incantation for these is
 usually found @emph{via} @option{--with-blas} with no value on the
@@ -3128,7 +3128,7 @@ run-time library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
+as @code{sunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
 @cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
 gains are thought to be small (and may be negative), and the default is
 not to search for a suitable LAPACK library, and this is definitely
@@ -3166,14 +3166,10 @@ DGEBRD gave error code -10
 @end example
 
 @noindent
-(seen with the Debian @samp{-llapack} which was current in late 2002,
-Fedora Core 4 Extras @samp{-llapack} in September 2005 and 64-bit
-@code{libsunperf} in Forte 7).  Other potential problems are incomplete
-versions of the libraries: for example @code{libsunperf} from Sun Forte
-6.x was missing the entry point for @code{DLANGE} and @code{vecLib} has
-omitted the @acronym{BLAS} routine @code{LSAME}.  For problems compiling LAPACK
-using recent versions of @code{gcc} on @cputype{ix86} Linux, see
-@ref{New platforms}.
+.  Other potential problems are incomplete versions of the libraries,
+seen several times over the years.  For problems compiling LAPACK using
+recent versions of @code{gcc} on @cputype{ix86} Linux, see @ref{New
+platforms}.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
@@ -3185,7 +3181,7 @@ because it is necessary on some platforms.
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
-@option{-dalign} is needed so @code{libsunperf} can be used.
+@option{-dalign} is needed so @code{sunperf} can be used.
 
 On some systems it is necessary that an external @acronym{BLAS}/LAPACK
 was built with the same FORTRAN compiler used to build @R{}: known
@@ -4147,21 +4143,18 @@ CXXFLAGS="-features=tmplrefstatic"
 @cindex BLAS library
 @cindex LAPACK library
 
-The performance library @code{libsunperf} is available for use with the
+The performance library @code{sunperf} is available for use with the
 Solaris Studio compilers.  If selected as a @acronym{BLAS}, it must also
 be selected as LAPACK via
 
 @example
-./configure --with-blas=sunperf --with-lapack
+./configure --with-blas='-library=sunperf' --with-lapack
 @end example
 
 @noindent
-@c However, our tests were none too successful.  Sparc 32-bit builds
-@c worked, but 64-bit Sparc builds failed in @code{example(eigen)},
-@c and @cputype{x86} builds failed in @code{example(bw.SJ)}.
 This has often given test failures in the past, in several different
-places.  For Solaris 10 in early 2010 this worked with 32-bit Sparc and
-32-bit Opteron, but failed on both 64-bit Sparc and Opteron in
+places.  For @R{} 2.12.0, it fails in @file{tests/reg-tests-1b.R} in the
+BLAS test, and on some builds such as @cputype{amd64} is fails in
 @code{example(eigen)}.
 
 

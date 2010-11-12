@@ -79,20 +79,15 @@ system2(command, args = character(),
 \note{
   \code{system2} is a more portable and flexible interface than
   \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
-  of output without needing to invoke a shell on Windows.
+  of output without needing to invoke a shell on Windows.  Not all the
+  possible combinations of arguments are yet implemented (not may it be
+  possible to do so).
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
   \code{TRUE} or the same file that the two streams will be interleaved
   in order.  This depends on both the buffering used by the command and
   the OS.
 }
-
-#ifdef windows
-\section{Warning}{
-  On Windows, using non-null \code{stdin} or \code{input} suppresses
-  output to the console (both standard output and standard error).
-}
-#endif
 
 \seealso{
   \code{\link{system}}.
