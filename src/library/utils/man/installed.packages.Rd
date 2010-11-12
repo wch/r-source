@@ -33,9 +33,9 @@ installed.packages(lib.loc = NULL, priority = NULL,
     each package's \code{DESCRIPTION} file in addition to the default
     ones, or \code{NULL} (default).  Unavailable fields result in
     \code{NA} values.}
-  \item{subarch}{
-    character string or \code{NULL}.  If non-null, used to
-    select packages which are installed for that sub-architecture.
+  \item{subarch}{character string or \code{NULL}.  If non-null and
+    non-empty, used to select packages which are installed for that
+    sub-architecture.
   }
 }
 \details{
@@ -52,7 +52,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
 }
 \value{
   A matrix with one row per package, row names the package names and
-  column names
+  column names (currently)
   \code{"Package"}, \code{"LibPath"},
   \code{"Version"}, \code{"Priority"},
   \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
