@@ -52,6 +52,8 @@
 
       \item \code{list2env(envir = NULL)} defaults to hashing (with a
       suitably sized environment) for lists of more than 100 elements.
+
+      \item \code{text()} gains a formula method.
     }
   }
 
@@ -208,10 +210,10 @@
       \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
       simplified language-like results, as, e.g., in
       \code{mapply(1:2, c(3,7), FUN = function(i,j) call(':',i,j))}.
-      
+
       \item Backreferences to undefined patterns in
       \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
-      
+
       \item The \code{format()} (and hence the \code{print()}) method
       for class \code{"Date"} rounded fractional dates towards zero: it
       now always rounds them down.
@@ -221,7 +223,7 @@
 
       \item \code{`[[<-`} turned S4 subclasses of \code{"environment"} into
       plain environments.
-      
+
       \item Long titles for help pages were truncated in package indices
       and a few other places.
     }

@@ -1,15 +1,16 @@
 % File src/library/graphics/man/plotformula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995--2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.formula}
 \alias{plot.formula}
 \alias{lines.formula}
 \alias{points.formula}
+\alias{text.formula}
 \title{Formula Notation for Scatterplots}
 \description{
-  Specify a scatterplot or add points or lines via a formula.
+  Specify a scatterplot or add points, lines, or text via a formula.
 }
 \usage{
 \method{plot}{formula}(formula, data = parent.frame(), \dots, subset,
@@ -18,6 +19,8 @@
 \method{points}{formula}(formula, data = parent.frame(), \dots, subset)
 
 \method{lines}{formula}(formula, data = parent.frame(), \dots, subset)
+
+\method{text}{formula}(formula, data = parent.frame(), \dots, subset)
 }
 \arguments{
   \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
@@ -51,7 +54,7 @@
   \code{horizontal = TRUE} can be used (see \code{\link{boxplot}}).
 }
 \value{
-  These functions are invoked for their side effect of drawing 
+  These functions are invoked for their side effect of drawing
   in the active graphics device.
 }
 \seealso{
@@ -64,5 +67,12 @@ plot(Ozone ~ Wind, data = airquality, pch=as.character(Month))
 plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),
      subset = Month != 7)
 par(op)
+
+## text.formula() can be very natural:
+wb <- within(warpbreaks, {
+    time <- seq_along(breaks); W.T <- wool:tension })
+plot(breaks ~ time, data = wb, type = "b")
+text(breaks ~ time, data = wb, label = W.T, col = 1+as.integer(wool))
 }
-\keyword{hplot}
+\keyword{hplot}% plot
+\keyword{aplot}% points, etc

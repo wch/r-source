@@ -49,6 +49,7 @@ lines(x, \dots)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
+  \code{\link{lines.formula}} for the formula method;
   \code{\link{points}}, particularly for \code{type \%in\% c("p","b","o")},
   \code{\link{plot}},
   and the workhorse function \code{\link{plot.xy}}.

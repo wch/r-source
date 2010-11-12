@@ -125,6 +125,7 @@ text(x, \dots)
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
+  \code{\link{text.formula}} for the formula method;
   \code{\link{mtext}}, \code{\link{title}},
   \code{\link{Hershey}} for details on Hershey vector fonts,
   \code{\link{plotmath}} for details and more examples on

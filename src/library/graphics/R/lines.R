@@ -29,3 +29,5 @@ lines.table <- function (x, type = "h", lwd = 2,  ...)
      }
      else stop("only for 1-D table")
 }
+
+## lines.formula  --> ./plot.R

@@ -85,7 +85,7 @@ points(x, \dots)
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
   do not include a border.
-  
+
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
@@ -107,7 +107,7 @@ points(x, \dots)
   The difference between \code{pch=16} and \code{pch=19} is that the
   latter uses a border and so is perceptibly larger when \code{lty} is
   large relative to \code{cex}.
-      
+
   Values \code{pch=26:31} are currently unused and \code{pch=32:127}
   give the ASCII characters.  In a single-byte locale
   \code{pch=128:255} give the corresponding character (if any) in
@@ -148,6 +148,7 @@ points(x, \dots)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
+  \code{\link{points.formula}} for the formula method;
   \code{\link{plot}}, \code{\link{lines}}, and the underlying
   workhorse function \code{\link{plot.xy}}.
 }

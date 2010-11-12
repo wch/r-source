@@ -29,3 +29,5 @@ points.table <- function (x, type = "h", lwd = 2, ...)
      }
      else stop("only for 1-D table")
 }
+
+## points.formula  --> ./plot.R
