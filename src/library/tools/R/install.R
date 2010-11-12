@@ -739,7 +739,7 @@
 
             ## if we have subarchs, update DESCRIPTION
             fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")))
-            dirs <- basename(row.names(fi[fi$isdir %in% TRUE]))
+            dirs <- basename(row.names(fi[fi$isdir %in% TRUE, ]))
             ## avoid DLLs installed by rogue packages
             if(WINDOWS) dirs <- dirs[dirs %in% c("i386", "x64")]
             if (length(dirs)) {
