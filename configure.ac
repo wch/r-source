@@ -2134,6 +2134,9 @@ AC_LANG_POP()
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
+## x86 Solaris' f95 needs additional libs when building a DSO
+FCLIBS=${FCLIBS}
+AC_SUBST(FCLIBS)
 
 
 ## Look for FCPICFLAGS
