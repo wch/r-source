@@ -4037,12 +4037,10 @@ The Solaris versions of several of the tools needed to build @R{}
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
-@command{makeinfo}.
-
-It is necessary to avoid the tools in @file{/usr/ucb}: in particular
-@file{/usr/ucb/tr} has caused @command{R CMD Rdiff} to malfunction.
-@command{configure} looks for a POSIX-compliant @command{tr}, e.g. in
-@file{/usr/xpg4/bin}.
+@command{makeinfo}.  It may be necessary to avoid the tools in
+@file{/usr/ucb}: in particular @file{/usr/ucb/tr} has caused problems in
+the past.  POSIX-compilant versions of some tools can be found in
+@file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}
 
 A large selection of Open Source software can be installed from
 @url{http://www.opencsw.org} (and also @url{http://www.blastwave.org})
@@ -4052,7 +4050,7 @@ You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
 
 The native @command{make} suffices to build @R{} but a small number of
-packages require @acronym{GNU} @command{make}.
+rogue packages require @acronym{GNU} @command{make}.
 
 Some people have reported that the Solaris @code{libintl} needs to be
 avoided, for example by using @option{--disable-nls} or
