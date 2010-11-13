@@ -29,7 +29,7 @@ ECHO_T = @ECHO_T@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 ## additional libs needed when linking with $(FC), e.g. on Solaris
-FCLIBS =
+FCLIBS = @FCLIBS@
 F77 = @F77@
 F77_VISIBILITY = @F77_VISIBILITY@
 FFLAGS = @FFLAGS@
