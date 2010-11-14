@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-28 r52822)
+R version 2.13.0 Under development (unstable) (2010-11-14 r53588)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1874,8 +1874,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: plot.formula
 > ### Title: Formula Notation for Scatterplots
-> ### Aliases: plot.formula lines.formula points.formula
-> ### Keywords: hplot
+> ### Aliases: plot.formula lines.formula points.formula text.formula
+> ### Keywords: hplot aplot
 > 
 > ### ** Examples
 > 
@@ -1884,6 +1884,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),
 +      subset = Month != 7)
 > par(op)
+> 
+> ## text.formula() can be very natural:
+> wb <- within(warpbreaks, {
++     time <- seq_along(breaks); W.T <- wool:tension })
+> plot(breaks ~ time, data = wb, type = "b")
+> text(breaks ~ time, data = wb, label = W.T, col = 1+as.integer(wool))
 > 
 > 
 > 

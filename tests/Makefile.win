@@ -32,9 +32,7 @@ ECHO_T =
 MK = $(MAKE) -f Makefile.win
 TAR = tar
 
-test-src-reg-1 = reg-tests-1a.R  reg-tests-1b.R reg-tests-2.R \
-  reg-examples1.R reg-examples2.R reg-packages.R \
-  reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-BLAS.R reg-win.R
+test-src-reg-1e = reg-win.R
 
 all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
