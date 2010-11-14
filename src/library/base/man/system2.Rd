@@ -52,7 +52,7 @@ system2(command, args = character(),
   
   For details of how \code{command} is found see \code{\link{system}}.
 
-  Some Unix commands (such as \code{ls}) change their ouptut depending
+  Some Unix commands (such as \code{ls}) change their output depending
   on whether they think it is redirected: \code{stdout = TRUE} uses a
   pipe whereas \code{stdout = "some_file_name"} uses redirection.
 

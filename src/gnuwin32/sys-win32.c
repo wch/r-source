@@ -221,9 +221,8 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(TYPEOF(Stderr) == LGLSXP)
 	    m = asLogical(Stderr) ? 2 : 0;
 	if(m  && TYPEOF(Stdout) == LGLSXP && asLogical(Stdout)) m = 3;
-	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)),
-		       getCharCE(STRING_ELT(cmd, 0)),
-		       vis, CHAR(STRING_ELT(cmd, 0)), m, fout, ferr);
+	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)), getCharCE(STRING_ELT(cmd, 0)),
+		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr);
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
 	    if (flag == 3) error(runerror());
