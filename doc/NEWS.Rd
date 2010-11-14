@@ -70,7 +70,7 @@
       if the URL was not able to be opened.  (\PR{14414})
 
       \item Assignment of an environment to functions or as an attribute
-      to other objects now works for S4 subclases of \code{"environment"}.
+      to other objects now works for S4 subclasses of \code{"environment"}.
 
       \item Use of \code{`[[<-`} for S4 subclasses of
       \code{"environment"} generated an infinite recursion from the
@@ -81,7 +81,7 @@
       method.
 
       \item \code{!} dropped attributes such as names and dimensions from a
-      length-zero arguemnt.  (\PR{14424})
+      length-zero argument.  (\PR{14424})
 
       \item When \code{list2env()} created an environment it was missing
       a \code{PROTECT} call and so was vulnerable to garbage collection.
@@ -93,7 +93,8 @@
       \item The Fortran code used by \code{nls(algorithm = "port")}
       could infinite-loop when compiled with high optimization on a
       modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
-      to make this less likely.  (\PR{14427})
+      to make this less likely.  (\PR{14427}, seen with 32-bit Windows
+      using \code{gcc 4.5.0} used from \R 2.12.0.)
 
       \item \code{sapply()} with default \code{simplify = TRUE} and
       \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
@@ -116,7 +117,7 @@
       \item Long titles for help pages were truncated in package indices
       and a few other places.
 
-      \item Additional utilities now work correctly with subclasses of
+      \item Additional utilities now work correctly with S4 subclasses of
       \code{"environment"} (\code{rm}, locking tools and active bindings).
     }
   }
@@ -125,7 +126,7 @@
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Reading a packages's \file{CITATION} file now defaults to
+      \item Reading a package's \file{CITATION} file now defaults to
        ASCII rather than Latin-1: a package with a non-ASCII
        \file{CITATION} file should declare an encoding in its
        \file{DESCRIPTION} file and use that encoding for the
@@ -204,7 +205,7 @@
       \item There are several small changes to output which \sQuote{zap}
        small numbers, e.g. in printing quantiles of residuals in
        summaries from \code{"lm"} and \code{"glm"} fits, and in test
-       statisics in \code{print.anova()}.
+       statistics in \code{print.anova()}.
 
       \item Special names such as \code{"dim"}, \code{"names"}, etc, are
        now allowed as slot names of S4 classes, with \code{"class"} the
@@ -438,7 +439,7 @@
       which can be used to (portably) ignore standard output.
 
       \item \code{system(intern = TRUE)} and \code{pipe()} connections
-      are guaranteed to be avaliable on all builds of \R.
+      are guaranteed to be available on all builds of \R.
 
       \item \code{Sys.which()} has been altered to return \code{""} if
       the command is not found (even on Solaris).
@@ -1810,7 +1811,7 @@
        (\PR{14210})
 
       \item Changing both line texture and line cap (end) resulted in the
-       latter to be ommitted form the PDF code.  In addition, line cap
+       latter to be omitted form the PDF code.  In addition, line cap
        (end) and join are now set explicitly in PDF output to ensure
        correct defaults.
 
@@ -2125,7 +2126,7 @@
 
       \item \code{available.packages()} by default only returns
        information on the latest versions of packages whose version
-       requirements are satisified by the currently running \R.
+       requirements are satisfied by the currently running \R.
 
       \item \code{tools::write_PACKAGES()} has a new argument
        \code{latestOnly}, which defaults to \code{TRUE} when only the
@@ -2411,7 +2412,7 @@
     \itemize{
       \item A different regular expression engine is used for basic and
        extended regexps and is also for approximate matching.  This is
-       based on the TRE library of Ville Laurikari, a modifed copy of
+       based on the TRE library of Ville Laurikari, a modified copy of
        which is included in the \R sources.
 
        This is often faster, especially in a MBCS locale.
