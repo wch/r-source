@@ -38,6 +38,13 @@ all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
    Standalone Packages
 
+
+test-system2.exe: test-system2.c
+
+test-System: test-system2.exe
+	@$(MK) test-system.Rout
+
+
 internet.Rout2:
 	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
 	  echo " testing --internet2 failed"
@@ -70,7 +77,7 @@ clean:
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	@rm -rf Packages
-	-@rm -f *.tar.gz
+	-@rm -f *.tar.gz test-system2.exe keepsource.tex
 	@$(MK) -C Embedding clean
 
 distclean: clean
