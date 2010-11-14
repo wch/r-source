@@ -24,7 +24,8 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
-	R-intro.Rout.save
+	R-intro.Rout.save \
+	test-system.R test-system.Rout.save test-system2.c
 
 SUBDIRS = Embedding Examples Native
 SUBDIRS_WITH_NO_BUILD = Pkgs
@@ -50,6 +51,11 @@ all check test-all-basics test-all-devel: Makefile $(srcdir)/Makefile.common
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+test-system2: test-system2.c
+	@$(MAIN_LD) -o $@ $<
+
+tests-System: test-system2
+	-@$(MAKE) test-system.Rout
 
 
 ## <NOTE>
@@ -82,7 +88,7 @@ clean:
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
 	-@rm -rf anRpackage myTst* myLib
-	-@rm -f *.tar.gz
+	-@rm -f *.tar.gz test-system2
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \
