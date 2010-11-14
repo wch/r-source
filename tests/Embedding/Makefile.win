@@ -36,4 +36,4 @@ tryEval.exe: tryEval.o
 	$(R_CMD_LINK) -o $@ tryEval.o $(LIBR)	
 
 clean:
-	$(RM) *.exe *.o Rplots.ps
+	$(RM) *.exe *.o Rplots.pdf Rplots.ps
