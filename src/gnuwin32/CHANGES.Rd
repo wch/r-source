@@ -51,6 +51,8 @@
       \item \code{system()} and \code{system2()} no longer discard
       output from the command to stdout and stderr as often as they used
       to, and more cases of \code{system2()} are implemented.
+
+      \item \code{stdin} is now flushed after echoing the input line.
     }
   }
 
