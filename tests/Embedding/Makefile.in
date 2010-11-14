@@ -98,7 +98,7 @@ clean:
 	  rm -f $(SOURCES_R); \
 	fi
 	@-rm -rf .libs _libs
-	@-rm -f *.o $(PROGRAMS) Rplots.pdf
+	@-rm -f *.o $(PROGRAMS) Rplots.pdf Rplots.ps
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
