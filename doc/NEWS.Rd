@@ -208,7 +208,8 @@
       \item The Fortran code used by \code{nls(algorithm = "port")}
       could infinite-loop when compiled with high optimization on a
       modern version of \code{gcc}, and \code{SAFE_FFLAGS} is now used
-      to make this less likely.  (\PR{14427})
+      to make this less likely.  (\PR{14427}, seen with 32-bit Windows
+      using \code{gcc 4.5.0} used from \R 2.12.0.)
 
       \item \code{sapply()} with default \code{simplify = TRUE} and
       \code{mapply()} with default \code{SIMPLIFY = TRUE} wrongly
@@ -230,6 +231,9 @@
 
       \item Long titles for help pages were truncated in package indices
       and a few other places.
+
+      \item Additional utilities now work correctly with S4 subclasses of
+      \code{"environment"} (\code{rm}, locking tools and active bindings).
     }
   }
 }
