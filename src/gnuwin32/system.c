@@ -345,8 +345,10 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
 
-    if (!R_Interactive && !R_Slave)
+    if (!R_Interactive && !R_Slave) {
 	fputs(buf, stdout);
+	fflush(stdout);
+    }
     return 1;
 }
 
