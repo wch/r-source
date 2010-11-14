@@ -40,7 +40,8 @@ int   runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 	     const char *fin, const char *fout, const char *ferr);
 
 rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, 
-		 const char *finput, int io);
+		 const char *finput, int io,
+		 const char *fout, const char *ferr);
 char  *rpipeGets(rpipe *r, char *buf, int len);
 int rpipeGetc(rpipe *r);
 int rpipeClose(rpipe *r);

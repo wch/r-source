@@ -343,7 +343,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 
     hOUT = getOutputHandle(fout, 0);
     if (!hOUT) return 1;
-    if (fout && fout[0]) close3 = 1;
+    if (fout && fout[0]) close2 = 1;
     if (fout && fout[0] && ferr && streql(fout, ferr)) hERR = hOUT;
     else { 
 	hERR = getOutputHandle(ferr, 1);
@@ -382,12 +382,14 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
    3 to read both stdout and stderr from pipe.
  */
 rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
-		  const char *finput, int io)
+		  const char *finput, int io,
+		  const char *fout, const char *ferr)
 {
     rpipe *r;
-    HANDLE hTHIS, hIN, hReadPipe, hWritePipe;
+    HANDLE hTHIS, hIN, hOUT, hERR, hReadPipe, hWritePipe;
     DWORD id;
     BOOL res;
+    int close2 = 0, close3 = 0;
 
     if (!(r = (rpipe *) malloc(sizeof(struct structRPIPE)))) {
 	strcpy(RunError, _("Insufficient memory (rpipeOpen)"));
@@ -426,12 +428,22 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
     CloseHandle(hTHIS);
 
     hIN = getInputHandle(finput); /* a file or (usually NUL:) */
-    pcreate(cmd, enc, 0, visible,
-	    hIN, 
-	    (io == 0 || io == 3) ? r->write : GetStdHandle(STD_OUTPUT_HANDLE),
-	    io >= 2 ? r->write : GetStdHandle(STD_ERROR_HANDLE),
-	    &(r->pi));
+    if ((io == 0 || io == 3)) 
+	hOUT = r->write;
+    else {
+	if (fout && fout[0]) close2 = 1;
+ 	hOUT = getOutputHandle(fout, 0);
+    }
+    if (io >= 2) 
+	hERR = r->write;
+    else {
+	if (ferr && ferr[0]) close3 = 1;
+	hERR = getOutputHandle(ferr, 1);
+    }
+    pcreate(cmd, enc, 0, visible, hIN, hOUT, hERR, &(r->pi));
     if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
+    if (close2) CloseHandle(hOUT);
+    if (close3) CloseHandle(hERR);
 
     r->active = 1;
     if (!r->pi.hProcess)
@@ -552,7 +564,7 @@ static Rboolean Wpipe_open(Rconnection con)
 
     io = con->mode[0] == 'w';
     if(io) visible = 1; /* Somewhere to put the output */
-    rp = rpipeOpen(con->description, con->enc, visible, NULL, io);
+    rp = rpipeOpen(con->description, con->enc, visible, NULL, io, NULL, NULL);
     if(!rp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;
