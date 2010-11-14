@@ -2728,11 +2728,6 @@ stopifnot(is.na(ISOdate(year=2003, month=22, day=20)))
 ## several after the first gave non-NA values in 1.8.1 on some broken OSes
 
 
-## PR#4582 %*% with NAs
-stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
-## depended on the BLAS in use.
-
-
 ## PR#4688
 reli <- cbind(Si = c(2121, 100, 27, 0),
               av = c(4700, 216, 67, 0),
