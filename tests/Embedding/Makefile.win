@@ -3,10 +3,10 @@ include ../../src/gnuwin32/MkRules
 
 PROGRAMS = Rtest.exe Rplot.exe Rpostscript.exe Rerror.exe RNamedCall.exe RParseEval.exe Rpackage.exe tryEval.exe
 
-R_CMD_LINK=gcc
-CFLAGS=-I../../include -O3 -Wall -pedantic
-LIBR=-L../../$(BINDIR) -lR
-R_EXE=R_HOME=../..
+R_CMD_LINK= $(CC)
+CFLAGS = -I../../include -O3 -Wall -pedantic
+LIBR = -L../../$(IMPDIR) -lR
+R_EXE = R_HOME=../..
 
 tests: $(PROGRAMS)
 	$(R_EXE) ./Rtest --silent
