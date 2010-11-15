@@ -4159,9 +4159,9 @@ be selected as LAPACK @emph{via} (for Solaris Studio 12.2)
 
 @noindent
 This has often given test failures in the past, in several different
-places.  For @R{} 2.12.0, it fails in @file{tests/reg-tests-1b.R} in the
-BLAS test, and on some builds, including for @cputype{amd64}, it fails
-in @code{example(eigen)}.
+places.  For @R{} 2.13.0 it fails in @file{tests/reg-BLAS.R}, and on
+some builds, including for @cputype{amd64}, it fails in
+@code{example(eigen)}.
 
 
 @menu
