@@ -656,7 +656,7 @@ primary slots in use) reaches 85%.
 
 The hash chains are stored as pairlist elements of the @code{VECSXP}:
 items are inserted at the front of the pairlist.  Hashing is principally
-designed for fast searching of enviroments, which are from time to time
+designed for fast searching of environments, which are from time to time
 added to but rarely deleted from, so items are not actually deleted but
 have their value set to @code{R_UnboundValue}.
 

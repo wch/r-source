@@ -4039,7 +4039,7 @@ path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.  It may be necessary to avoid the tools in
 @file{/usr/ucb}: in particular @file{/usr/ucb/tr} has caused problems in
-the past.  POSIX-compilant versions of some tools can be found in
+the past.  POSIX-compliant versions of some tools can be found in
 @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from

@@ -345,7 +345,7 @@ The default method for \code{$initialize()} %$
 is equivalent to invoking the method \code{$initFields(...)} %$
 with named fields as its arguments.  For technical reasons, the
 default method does not currently appear explicitly, but can be
-invoked by $callSuper(...) %$
+invoked by \code{$callSuper(...)} %$
 from a method for \code{$initialize()}. %$
 Initialization methods need some care in design, as they do for S4
 classes.
