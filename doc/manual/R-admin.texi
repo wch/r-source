@@ -4022,15 +4022,14 @@ LIBS=-L/usr/X11/lib
 @cputype{x86}) using the (zero cost) Oracle Solaris Studio 12 compilers:
 there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
-for @R{} used to be available from @uref{http://www.sunfreeware.com/}
-for both architectures, but recently have often been several versions
-old.  (Recent Sun machines are AMD Opterons or Intel Xeons
-(@cputype{amd64}) rather than @cputype{x86}, but 32-bit @cputype{x86}
-executables are the default.)
+for @R{} are available from @uref{http://www.sunfreeware.com/} for both
+32-bit architectures, but recently have often been several versions old.
+(Recent Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64})
+rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
+default.)
 
 There are also reports of success on OpenSolaris (also known as Solaris
-Express Community Edition, and sometimes as Solaris 11) on
-@cputype{x86}.
+Express Community Edition, and dropped in August 2010) on @cputype{x86}.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -4097,7 +4096,7 @@ packages currently on CRAN).
 
 @noindent
 
-By default the Solaris Studio compilers do not by default conform to the C99
+By default the Solaris Studio compilers do not conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.  Also, errors have
 been reported on @cputype{amd64} if @option{-xc99} is omitted.
@@ -4136,7 +4135,8 @@ it is needed for linking) is @samp{Cstd} which dates from 1998: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such a package also
-needs to be.  Occasionally the library flag @option{-lCrun} is needed.
+needs to be.  Occasionally the flag @option{-library=stlport4,Crun} is
+needed.
 
 Several CRAN packages using C++ need the more liberal interpretation
 given by adding
