@@ -192,7 +192,7 @@ system(command, intern = FALSE,
     This means that it cannot be assumed that redirection or piping will
     work in \code{system} (redirection sometimes does, but we have seen
     cases where it stopped working after a Windows security patch), and
-    \code{shell} must be used on Windows.
+    \code{\link{system2}} (or \code{shell}) must be used on Windows.
 
     \item The behaviour on error is different in subtle ways (and has
     differed between \R versions).

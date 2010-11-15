@@ -84,7 +84,9 @@ system2(command, args = character(),
 \note{
   \code{system2} is a more portable and flexible interface than
   \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
-  of output without needing to invoke a shell on Windows.
+  of output without needing to invoke a shell on Windows, a portable to
+  set environment variables for the execution of \code{command}, and
+  finer control over the redirection of \code{stdout} and \code{stderr}.
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
   \code{TRUE} or the same file that the two streams will be interleaved
@@ -96,8 +98,7 @@ system2(command, args = character(),
   \code{\link{system}}.
 #ifdef windows
   
-  \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
-  interface.
+  \code{\link{shell}} and \code{\link{shell.exec}}.
 #endif
 }
 \keyword{interface}

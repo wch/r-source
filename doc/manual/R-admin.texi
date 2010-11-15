@@ -4087,6 +4087,16 @@ flags).  For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
 @code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.
 
+With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
+
+@example
+FCLIBS=-lfai -lfai2 -lfsu
+@end example
+(and possibly other Fortran libraries, but this suffices for the
+packages currently on CRAN).
+
+@noindent
+
 By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.  Also, errors have
@@ -4102,6 +4112,7 @@ performance: Oracle recommend
 
 @noindent
 (in @code{CFLAGS} etc.) as a good compromise for recent Sparc chipsets.
+Using @code{-libmil} allows more system mathematical functions to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
@@ -4111,6 +4122,9 @@ FFLAGS="-O5 -libmil -nofstore -xtarget=native"
 CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
+
+@noindent
+but the use of @code{-no-fstore} can be less numerically stable.
 
 The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
@@ -4137,7 +4151,7 @@ CXXFLAGS="-features=tmplrefstatic"
 
 The performance library @code{sunperf} is available for use with the
 Solaris Studio compilers.  If selected as a @acronym{BLAS}, it must also
-be selected as LAPACK via
+be selected as LAPACK @emph{via} (for Solaris Studio 12.2)
 
 @example
 ./configure --with-blas='-library=sunperf' --with-lapack
