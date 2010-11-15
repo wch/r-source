@@ -38,6 +38,7 @@ all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
    Standalone Packages
 
+all check test-all-basics test-all-devel: Makefile.win Makefile.common
 
 test-system2.exe: test-system2.c
 
@@ -54,7 +55,7 @@ internet.Rout2:
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@$(RM) -f internet.Rout internet.Rout2
-	@$(ECHO) "running tests of Internet and socket functions ..."
+	@$(ECHO) "running tests of Internet and socket functions"
 	@$(ECHO) "  expect some differences"
 	-@$(MK) $(test-out-internet) RVAL_IF_DIFF=0 || \
 	  $(ECHO) " testing standard internet connectivity failed"
@@ -68,20 +69,23 @@ test-Standalone:
 
 
 clean:
-	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
-	  reg-plot-latin1.ps reg-tests-*.ps \
-	  $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
-	@rm -rf *.Rcheck myTst* myLib Rprofmem.out
-	@rm -f FALSE* PACKAGES* .R .tex mirrors.html Rplots*.pdf ./-package.Rd ex.gz
+	@rm -f *.Rout *.Rout.fail internet.Rout2 \
+	  Rplot* Rprof.out Rprofmem.out \
+	  reg-plot-latin1.ps reg-plot.ps reg-tests-*.ps \
+	  R-exts.* R-intro.R 
+	@rm -f R-exts_res.rc Makedeps
+	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
-	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
-	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
-	@rm -rf Packages
-	-@rm -f *.tar.gz test-system2.exe keepsource.tex
-	@$(MK) -C Embedding clean
+	@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
+	@rm -rf anRpackage myTst* myLib
+	@rm -f *.tar.gz
+	@rm -f keepsource.tex test-system2.exe test-system.Rout
+	@$(MK) -C Examples $@
+	@$(MK) -C Embedding $@
 
 distclean: clean
 	@$(MK) -C Examples $@
+	@rm -rf *.Rcheck Packages
 
 
 install-tests:
