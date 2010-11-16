@@ -190,6 +190,13 @@ system(command, intern = FALSE,
     cases where it stopped working after a Windows security patch), and
     \code{\link{system2}} (or \code{shell}) must be used on Windows.
 
+    \item What happens to \code{stdout} and \code{stderr} when not
+    captured depends on how \R is running: Windows batch commands behave
+    like a Unix-alike, but from the Windows GUI they are
+    generally lost.  \code{system(intern=TRUE)} captures \file{stderr}
+    when run from the Windows GUI console unless \code{ignore.stderr =
+      TRUE}.
+
     \item The behaviour on error is different in subtle ways (and has
     differed between \R versions).
     
