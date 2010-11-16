@@ -228,7 +228,13 @@
         }
 
         setwd(pkg)
-        desc <- read.dcf(file.path(pkg, "DESCRIPTION"))[1, ]
+        ## We checked this exists, but not that it is readable
+        desc <- tryCatch(read.dcf(fd <- file.path(pkg, "DESCRIPTION")),
+                         error = identity)
+        if(inherits(desc, "error") || !length(desc))
+            stop(gettextf("error reading file '%s'", fd),
+                 domain = NA, call. = FALSE)
+        desc <- desc[1L,]
         ## Let's see if we have a bundle
         if (!is.na(desc["Bundle"])) {
             stop("this seems to be a bundle -- and they are defunct")
@@ -1652,7 +1658,8 @@
     dir.create(outman, showWarnings = FALSE)
     outcon <- file(file.path(outman, "00Index.html"), "wt")
     on.exit(close(outcon))
-    desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
+    ## we know we have a valid file by now.
+    desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1L, ]
     ## re-encode if necessary
     if(!is.na(enc <- desc["Encoding"])) {
         ## should be valid in UTF-8, might be invalid in declared encoding

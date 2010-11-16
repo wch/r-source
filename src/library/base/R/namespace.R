@@ -1008,12 +1008,9 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 
     nsFile <- namespaceFilePath(package, package.lib)
     descfile <- file.path(package.lib, package, "DESCRIPTION")
-    enc <- NA
-    if (file.exists(descfile)) {
-        dcf <- read.dcf(file = descfile)
-        if(NROW(dcf) >= 1) enc <- as.list(dcf[1, ])[["Encoding"]]
-        if(is.null(enc)) enc <- NA
-    }
+    enc <- if (file.exists(descfile)) {
+        read.dcf(file = descfile, "Encoding")[1L]
+    } else NA_character_
     if (file.exists(nsFile))
         directives <- if (!is.na(enc) &&
                           ! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")) {
