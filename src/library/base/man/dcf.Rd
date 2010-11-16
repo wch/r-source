@@ -60,18 +60,6 @@ write.dcf(x, file = "", append = FALSE,
     \item Records are separated by one or more empty (=whitespace only)
     lines.
   }
-
-  By default, \code{read.dcf} returns a character matrix with one row
-  per record and one column per field.  Leading and trailing whitespace
-  of field values is ignored.  If a tag name is specified, but the
-  corresponding value is empty, then an empty string is returned.  If
-  the tag name of a field is never used in a record, then \code{NA} is
-  returned.  If fields are repeated within a record, the last one
-  encountered is returned.  Malformed lines lead to an error.  If
-  \code{all} is true, a data frame is returned, again with one row per
-  record and one column per field, and columns lists of character
-  vectors for fields with multiple occurrences, and character vectors
-  otherwise.
   
   Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
   This allows a \file{DESCRIPTION} file to be read and only its ASCII
@@ -80,6 +68,27 @@ write.dcf(x, file = "", append = FALSE,
 
   \code{write.dcf} does not write \code{NA} fields.
 }
+\value{
+  The default \code{read.dcf(all = FALSE)} returns a character matrix
+  with one row per record and one column per field.  Leading and
+  trailing whitespace of field values is ignored.  If a tag name is
+  specified in the file, but the corresponding value is empty, then an
+  empty string is returned.  If the tag name of a field is specified in
+  \code{fields} but never used in a record, then the corresponding value
+  is \code{NA}.  If fields are repeated within a record, the last one
+  encountered is returned.  Malformed lines lead to an error.
+  
+  For \code{read.dcf(all = TRUE)} a data frame is returned, again with
+  one row per record and one column per field. The columns are lists of
+  character vectors for fields with multiple occurrences, and character
+  vectors otherwise.
+
+  Note that an empty \code{file} is a valid DCF file, and
+  \code{read.dcf} will return a zero-row matrix or data frame.
+  
+  For \code{write.dcf}, invisible \code{NULL}.
+}
+
 \references{
   \url{http://www.debian.org/doc/debian-policy/ch-controlfields.html}.
   Note that \R does not require encoding in UTF-8, which is a recent
