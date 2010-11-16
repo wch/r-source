@@ -53,3 +53,8 @@ process(system2("test-system2", "1", stdin = tmp, stdout = "o1.txt", stderr = "o
 process(system2("test-system2", "1", stdin = tmp, stdout = "o1.txt", stderr = "o2.txt"))
 
 unlink(c(tmp, outs))
+
+print(system("test-system2 5"))
+system("test-system2 6", intern = TRUE)
+print(system2("test-system2", "7"))
+system2("test-system2", "8", stdout=TRUE)

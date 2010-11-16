@@ -51,8 +51,8 @@ all check test-all-basics test-all-devel: Makefile $(srcdir)/Makefile.common
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-test-system2: test-system2.c
-	@$(MAIN_LD) -o $@ test-system2.c
+test-system2: $(srcdir)/test-system2.c
+	@$(MAIN_LD) -o $@ $(srcdir)/test-system2.c
 
 tests-System: test-system2
 	-@$(MAKE) test-system.Rout

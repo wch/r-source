@@ -48,7 +48,7 @@ system2(command, args = character(),
 }
 \details{
   Unlike \code{\link{system}}, \code{command} is always quoted by
-  \code{\link{shQuote}}.
+  \code{\link{shQuote}}, so it must be a single command without arguments.
   
   For details of how \code{command} is found see \code{\link{system}}.
 
@@ -84,9 +84,11 @@ system2(command, args = character(),
 \note{
   \code{system2} is a more portable and flexible interface than
   \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
-  of output without needing to invoke a shell on Windows, a portable to
-  set environment variables for the execution of \code{command}, and
+  of output without needing to invoke a shell on Windows, a portable way
+  to set environment variables for the execution of \code{command}, and
   finer control over the redirection of \code{stdout} and \code{stderr}.
+  Conversely, \code{system} (and \code{shell} on Windows) allows the
+  invocation of arbitrary command lines.
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
   \code{TRUE} or the same file that the two streams will be interleaved

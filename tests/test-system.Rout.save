@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-13 r53583)
+R version 2.13.0 Under development (unstable) (2010-11-15 r53605)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
@@ -265,4 +265,21 @@ o2.txt:
 stderr 1
 > 
 > unlink(c(tmp, outs))
+> 
+> print(system("test-system2 5"))
+stdout 1
+stderr 1
+[1] 5
+> system("test-system2 6", intern = TRUE)
+stderr 1
+Warning: running command 'test-system2 6' had status 6
+[1] "stdout 1"
+> print(system2("test-system2", "7"))
+stdout 1
+stderr 1
+[1] 7
+> system2("test-system2", "8", stdout=TRUE)
+stderr 1
+Warning: running command ''test-system2' 8' had status 8
+[1] "stdout 1"
 > 
