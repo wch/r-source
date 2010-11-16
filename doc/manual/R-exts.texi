@@ -2501,6 +2501,17 @@ the use of @code{$<} other than in implicit rules is a GNU extension.
 Unfortunately makefiles which use GNU extensions often run on other
 platforms but do not have the intended results.
 
+The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
+
+@example
+PKG_CFLAGS = `gsl-config --cflags`
+@end example
+
+@noindent
+which works in all versions of @command{make} known@footnote{GNU make,
+BSD make as in FreeBSD and @command{bsdmake} on Darwin, AT&T make as
+implemented on Solaris.} to be used with @R{}.
+
 If you really must assume GNU make, declare it in the @file{DESCRIPTON}
 file by
 
@@ -6606,8 +6617,7 @@ package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
 for that we can ask @R{} by something like
 
 @example
-PKGB_PATH=`echo 'library(packB); \
- cat(system.file("libs", .Platform$r_arch, package="packB"))' \
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
  | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @end example
@@ -6615,15 +6625,12 @@ PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @noindent
 which will give an empty path component if sub-architectures are not in
 use (but works on current platforms).
-(If @file{libpackB.a} itself depends on other libraries these will need
-to be included in @code{PKG_LIBS}.)
 
 For a dynamic library @file{packB/libs/libpackB.so}
 (@file{packB/libs/libpackB.dylib} on Mac OS X) we could use
 
 @example
-PKGB_PATH=`echo 'library(packB); \
-  cat(system.file("libs", .Platform$r_arch, package="packB"))' \
+PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
  | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
 @end example
