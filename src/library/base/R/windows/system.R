@@ -34,6 +34,8 @@ system <- function(command, intern = FALSE,
         stop("'minimized' must be TRUE or FALSE")
     if(!is.logical(invisible) || is.na(invisible))
         stop("'invisible' must be TRUE or FALSE")
+    stdout <- ifelse(ignore.stdout, FALSE, "")
+    stderr <- ifelse(ignore.stderr, FALSE, "")
 
     f <- ""
     if (!is.null(input)) {
@@ -42,9 +44,12 @@ system <- function(command, intern = FALSE,
         # cat(input, file = f, sep="\n")
         writeLines(input, f)
     }
-    if (intern)
+    if (intern) {
         flag <- 3L
-    else {
+        ## documented to capture stderr also on Rgui
+        if(stdout == "") stdout <- TRUE
+        if(!ignore.stderr && .Platform$GUI == "Rgui") stderr <- TRUE
+    } else {
         if  (wait)
             flag <- ifelse(show.output.on.console, 2L, 1L)
         else
@@ -52,8 +57,7 @@ system <- function(command, intern = FALSE,
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
-    .Internal(system(command, as.integer(flag), f,
-                     !ignore.stdout, !ignore.stderr))
+    .Internal(system(command, as.integer(flag), f, stdout, stderr))
 }
 
 system2 <- function(command, args = character(),
