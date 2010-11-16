@@ -77,8 +77,9 @@
       \item Filenames could not be specified using backslashes in 
       \code{Sweave()}.
 
-      \item \code{system(intern = TRUE)} captured \file{stderr} on
-      \command{Rterm} when it was documented to only do so on \command{Rgui}.
+      \item In \R 2.12.0, \code{system(intern = TRUE)} captured
+      \file{stderr} on \command{Rterm} when it was documented to only do
+      so on \command{Rgui}.
     }
   }
 }

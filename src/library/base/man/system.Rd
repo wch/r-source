@@ -181,7 +181,7 @@ system(command, intern = FALSE,
     \item The most important difference is that on a Unix-alike
     \code{system} launches a shell which then runs \code{command}.  On
     Windows the command is run directly -- use \code{shell} for an
-    interface which runs \code{comamnd} \emph{via} a shell (by default
+    interface which runs \code{command} \emph{via} a shell (by default
     the Windows shell \command{cmd.exe}, which has many differences from
     the POSIX shell).
 
