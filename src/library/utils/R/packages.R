@@ -453,9 +453,25 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                         domain = NA)
                 next
             }
-            if("Built" %in% fields) desc["Built"] <- as.character(md$Built$R)
-            ret[i, ] <- c(pkgs[i], lib, desc)
+            if("Built" %in% fields)
+                desc["Built"] <- as.character(md$Built$R)
+        } else { ## is this really needed these days?
+            file <- file.path(pkgpath, "DESCRIPTION")
+            if(file.access(file, 4L)) next
+            desc <- tryCatch(read.dcf(file, fields = fields), error = identity)
+            if(inherits(desc, "error") || NROW(desc) < 1L) {
+                warning(gettextf("error reading file '%s'", file),
+                        domain = NA, call. = FALSE)
+                next
+            }
+            desc <- desc[1,]
+            if("Built" %in% fields) {
+                Rver <- strsplit(strsplit(desc["Built"], ";")[[1L]][1L],
+                                 "[ \t]+")[[1L]][2L]
+                desc["Built"] <- Rver
+            }
         }
+        ret[i, ] <- c(pkgs[i], lib, desc)
     }
     ret[!is.na(ret[, 1L]), ]
 }
