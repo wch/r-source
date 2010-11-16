@@ -448,12 +448,12 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         pkgpath <- file.path(pkgpath, "DESCRIPTION")
         if(file.access(pkgpath, 4L)) next
         desc <- tryCatch(read.dcf(pkgpath, fields = fields), error = identity)
-        if(inherits(desc, "error")) {
+        if(inherits(desc, "error") || NROW(desc) < 1L) {
             warning(gettextf("read.dcf() error on file '%s'", pkgpath),
                     domain = NA, call. = FALSE)
             next
         }
-        desc <- desc[1,]
+        desc <- desc[1L,]
         Rver <- strsplit(strsplit(desc["Built"], ";")[[1L]][1L],
                          "[ \t]+")[[1L]][2L]
         desc["Built"] <- Rver
