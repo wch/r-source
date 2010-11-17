@@ -2737,6 +2737,7 @@ enum {
   OR2ND_OP,
   GETVAR_MISSOK_OP,
   DDVAL_MISSOK_OP,
+  VISIBLE_OP,
   OPCOUNT
 };
 
@@ -3915,6 +3916,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
     }
     OP(GETVAR_MISSOK, 1): DO_GETVAR(FALSE, TRUE);
     OP(DDVAL_MISSOK, 1): DO_GETVAR(TRUE, TRUE);
+    OP(VISIBLE,0): R_Visible = TRUE; NEXT();
     LASTOP;
   }
 
