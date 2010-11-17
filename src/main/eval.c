@@ -3838,7 +3838,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP); /**** S4 thingy allowed now???*/
     OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
     OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
-    OP(NVECELT, 2): {
+    OP(NVECELT, 0): {
 	SEXP vec = R_BCNodeStackTop[-2];
 	SEXP idx = R_BCNodeStackTop[-1];
 	value = numVecElt(vec, idx);
@@ -3846,7 +3846,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
     }
-    OP(NMATELT, 3): {
+    OP(NMATELT, 0): {
 	SEXP mat = R_BCNodeStackTop[-3];
 	SEXP idx = R_BCNodeStackTop[-2];
 	SEXP jdx = R_BCNodeStackTop[-1];
@@ -3855,7 +3855,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
     }
-    OP(SETNVECELT, 3): {
+    OP(SETNVECELT, 0): {
 	SEXP vec = R_BCNodeStackTop[-3];
 	SEXP idx = R_BCNodeStackTop[-2];
 	value = R_BCNodeStackTop[-1];
@@ -3864,7 +3864,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
     }
-    OP(SETNMATELT, 4): {
+    OP(SETNMATELT, 0): {
 	SEXP mat = R_BCNodeStackTop[-4];
 	SEXP idx = R_BCNodeStackTop[-3];
 	SEXP jdx = R_BCNodeStackTop[-2];
