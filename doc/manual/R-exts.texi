@@ -1751,7 +1751,7 @@ met: many would see these as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
-@file{inst/doc}, then @code{tool::texi2dvi(pdf = TRUE)} is run on all
+@file{inst/doc}, then @code{tools::texi2dvi(pdf = TRUE)} is run on all
 vignettes.  Whenever a @file{Makefile} is found, then @code{R CMD build}
 will try to run @command{make} after the @code{Sweave} step, so PDF
 manuals can be created from arbitrary source formats (plain @LaTeX{}
