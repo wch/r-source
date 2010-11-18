@@ -78,7 +78,6 @@ ECHO_N = -n
 ECHO_T = 
 FC = $(BINPREF)gfortran
 FCFLAGS = -O3 $(DEBUGFLAG)
-FC =
 F77 = $(BINPREF)gfortran
 F77_VISIBILITY = 
 FFLAGS = -O3 $(DEBUGFLAG)
