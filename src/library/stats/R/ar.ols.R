@@ -22,9 +22,9 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     rescale <- TRUE
     ists <- is.ts(x)
     x <- na.action(as.ts(x))
-    xfreq <- frequency(x)
     if(any(is.na(x))) stop("NAs in 'x'")
     if(ists)  xtsp <- tsp(x)
+    xfreq <- frequency(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
         stop("'x' must be numeric")
@@ -33,20 +33,16 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     iser <- seq_len(nser)
     if(rescale) {
         sc <- sqrt(drop(apply(x, 2L, var)))
-        x <- x/rep(sc, rep(n.used, nser))
-    } else sc <- rep(1, nser)
+        x <- x/rep.int(sc, rep.int(n.used, nser))
+    } else sc <- rep.int(1, nser)
 
     order.max <- if (is.null(order.max))
-	min(n.used-1L, floor(10 * log10(n.used)))
-    else round(order.max)
-    if (order.max < 0L) stop ("'order.max' must be >= 0")
-    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
-    if (aic) order.min <- 0L
-    else order.min <- order.max
-    A <- vector("list", order.max - order.min + 1L)
-    varE <- vector("list", order.max - order.min + 1L)
-    seA <- vector("list", order.max - order.min + 1L)
-    xaic <- rep(Inf, order.max - order.min + 1L)
+	min(n.used-1L, floor(10 * log10(n.used))) else round(order.max)
+    if (order.max < 0L)	     stop("'order.max' must be >= 0")
+    if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
+    order.min <- if (aic) 0L else order.max
+    varE <- seA <- A <- vector("list", order.max - order.min + 1L)
+    xaic <- rep.int(Inf, order.max - order.min + 1L)
 
     ## allow for rounding error
     det <- function(x) max(0, prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1))
@@ -55,15 +51,15 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(demean) {
         xm <- colMeans(x)
         x <- sweep(x, 2L, xm, check.margin=FALSE)
-    } else xm <- rep(0, nser)
+    } else xm <- rep.int(0, nser)
     ## Fit models of increasing order
 
     for (m in order.min:order.max)
     {
         y <- embed(x, m+1L)
         if(intercept) {
-            if (m) X <- cbind(rep(1,nrow(y)), y[, (nser+1L):ncol(y)])
-            else X <- as.matrix(rep(1, nrow(y)))
+            if (m) X <- cbind(rep.int(1,nrow(y)), y[, (nser+1L):ncol(y)])
+            else X <- as.matrix(rep.int(1, nrow(y)))
         } else {
             if (m) X <- y[, (nser+1L):ncol(y)]
             else X <- matrix(0, nrow(y), 0)
@@ -75,7 +71,6 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         if (rank != nrow(XX))
         {
             warning(paste("model order: ", m,
-
                           "singularities in the computation of the projection matrix",
                           "results are only valid up to model order", m - 1L),
                     domain = NA)
@@ -103,11 +98,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(intercept) {
         xint <- AA[, 1L]
         ar <- AA[, -1L]
-        if (m) X <- cbind(rep(1,nrow(y)), y[, (nser+1L):ncol(y)])
-        else X <- as.matrix(rep(1, nrow(y)))
+        X <- if(m) cbind(rep.int(1,nrow(y)), y[, (nser+1L):ncol(y)])
+        else as.matrix(rep.int(1, nrow(y)))
     } else {
-        if (m) X <- y[, (nser+1L):ncol(y)]
-        else X <- matrix(0, nrow(y), 0L)
+        X <- if(m) y[, (nser+1L):ncol(y)] else matrix(0, nrow(y), 0L)
         xint <- NULL
         ar <- AA
     }
@@ -124,7 +118,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(intercept) {
         sem <- ses[iser]
         ses <- ses[-iser]
-    } else sem <- rep(0, nser)
+    } else sem <- rep.int(0, nser)
     dim(ses) <- c(nser, nser, m)
     ses <- aperm(ses, c(3,1,2))
     var.pred <- varE[[m - order.min + 1L]]
@@ -143,8 +137,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         if(!is.null(xint)) xint <- xint * sc
         aa <- outer(sc, 1/sc)
         if(nser > 1L && m) for(i in seq_len(m)) ar[i,,] <- ar[i,,]*aa
-        var.pred <- var.pred * outer(sc, sc)
-        E <- E * rep(sc, rep(NROW(E), nser))
+        var.pred <- var.pred * drop(outer(sc, sc))
+        E <- E * rep.int(sc, rep.int(NROW(E), nser))
         sem <- sem*sc
         if(m)
             for(i in seq_len(m)) ses[i,,] <- ses[i,,]*aa

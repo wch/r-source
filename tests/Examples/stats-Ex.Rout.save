@@ -1,5 +1,5 @@
 
-R version 2.12.0 Patched (2010-10-17 r53349)
+R version 2.12.0 Patched (2010-11-17 r53625)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -14937,6 +14937,11 @@ GCV: 1.191602
 > 
 > spec.ar(ldeaths)
 > spec.ar(ldeaths, method="burg")
+> 
+> spec.ar(log(lynx))
+> spec.ar(log(lynx), method="burg", add=TRUE, col="purple")
+> spec.ar(log(lynx), method="mle", add=TRUE, col="forest green")
+> spec.ar(log(lynx), method="ols", add=TRUE, col="blue")
 > 
 > 
 > 

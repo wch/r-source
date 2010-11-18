@@ -18,7 +18,7 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
     the order is chosen by AIC.}
   \item{plot}{Plot the periodogram?}
   \item{na.action}{\code{NA} action function.}
-  \item{method}{\code{method} for \code{ar} fit.}
+  \item{method}{\code{method} for \code{\link{ar}} fit.}
   \item{\dots}{Graphical arguments passed to \code{\link{plot.spec}}.}
 }
 \description{
@@ -53,5 +53,10 @@ spec.ar(lh)
 
 spec.ar(ldeaths)
 spec.ar(ldeaths, method="burg")
+
+spec.ar(log(lynx))
+spec.ar(log(lynx), method="burg", add=TRUE, col="purple")
+spec.ar(log(lynx), method="mle", add=TRUE, col="forest green")
+spec.ar(log(lynx), method="ols", add=TRUE, col="blue")
 }
 \keyword{ts}

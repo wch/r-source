@@ -1394,4 +1394,13 @@ try(regexpr("a{2-}", ""))
 ## terminated R <= 2.12.0
 
 
+## mapply() & sapply() should not wrongly simplify e.g. for "call":
+f2 <- function(i,j) call(':',i,j)
+stopifnot(identical(2:3,
+		    dim(sapply(1:3, function(i) list(0, 1:i)))),
+	  length(r <- mapply(1:2, c(3,7), FUN= f2)) == 2,
+	  length(s <- sapply(1:3, f2, j=7)) == 3)
+## length wrongly were 6 and 9, in R <= 2.12.0
+
+
 proc.time()

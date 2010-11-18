@@ -55,7 +55,7 @@ ar.yw.default <-
     if (demean) {
         xm <- colMeans(x)
         x <- sweep(x, 2, xm, check.margin=FALSE)
-    } else xm <- rep(0, nser)
+    } else xm <- rep.int(0, nser)
     n.used <- nrow(x)
     order.max <- if (is.null(order.max))
 	min(n.used-1L, floor(10 * log10(n.used))) else round(order.max)
@@ -147,7 +147,7 @@ ar.yw.default <-
         var.pred <- var.pred[order+1L]
         ## Splus compatibility fix
         var.pred <- var.pred * n.used/(n.used - (order + 1))
-        resid <- if(order) c(rep(NA, order), embed(x, order + 1L) %*% c(1, -ar))
+        resid <- if(order) c(rep.int(NA, order), embed(x, order + 1L) %*% c(1, -ar))
         else as.vector(x)
         if(ists) {
             attr(resid, "tsp") <- xtsp
@@ -170,20 +170,19 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
     if(nser > 1L) {
-        if(!is.null(x$x.intercept))
-            res <- x[c("ar", "x.intercept", "var.pred")]
-        else res <- x[c("ar", "var.pred")]
+        res <- x[c("ar", if(!is.null(x$x.intercept)) "x.intercept", "var.pred")]
         res$ar <- aperm(res$ar, c(2L,3L,1L))
         print(res, digits = digits)
-    } else {
+    } else { ## univariate case
         if(x$order) {
             cat("Coefficients:\n")
-            coef <- drop(round(x$ar, digits = digits))
+            coef <- round(drop(x$ar), digits = digits)
             names(coef) <- seq_len(x$order)
             print.default(coef, print.gap = 2L)
         }
         if(!is.null(xint <- x$x.intercept) && !is.na(xint))
             cat("\nIntercept: ", format(xint, digits = digits),
+                ## FIXME? asy.se.coef  *only* exists for  ar.ols (??)
                 " (", format(x$asy.se.coef$x.mean, digits = digits),
                 ") ", "\n", sep="")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
@@ -213,10 +212,10 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
         stop("number of series in 'object' and 'newdata' do not match")
     n <- NROW(newdata)
     if(nser > 1L) {
-        if(is.null(object$x.intercept)) xint <- rep(0, nser)
+        if(is.null(object$x.intercept)) xint <- rep.int(0, nser)
         else xint <- object$x.intercept
         x <- rbind(sweep(newdata, 2L, object$x.mean, check.margin = FALSE),
-                   matrix(rep(0, nser), n.ahead, nser, byrow = TRUE))
+                   matrix(rep.int(0, nser), n.ahead, nser, byrow = TRUE))
         pred <- if(p) {
             for(i in seq_len(n.ahead)) {
                 x[n+i,] <- ar[1L,,] %*% x[n+i-1L,] + xint
@@ -234,7 +233,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
     } else {
         if(is.null(object$x.intercept)) xint <- 0
         else xint <- object$x.intercept
-        x <- c(newdata - object$x.mean, rep(0, n.ahead))
+        x <- c(newdata - object$x.mean, rep.int(0, n.ahead))
         if(p) {
             for(i in seq_len(n.ahead))
                 x[n+i] <- sum(ar * x[n+i - seq_len(p)]) + xint
@@ -249,15 +248,14 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
                 se <- sqrt(object$var.pred*vars)[seq_len(n.ahead)]
             }
         } else {
-            pred <- rep(xint, n.ahead)
-            if (se.fit) se <- rep(sqrt(object$var.pred), n.ahead)
+            pred <- rep.int(xint, n.ahead)
+            if (se.fit) se <- rep.int(sqrt(object$var.pred), n.ahead)
         }
-        pred <- pred + rep(object$x.mean, n.ahead)
+        pred <- pred + rep.int(object$x.mean, n.ahead)
     }
     pred <- ts(pred, start = st + dt, frequency = xfreq)
-    if(se.fit) {
-        se <- ts(se, start = st + dt, frequency = xfreq)
-        list(pred = pred, se = se)
-    } else pred
+    if(se.fit)
+        list(pred = pred, se = ts(se, start = st + dt, frequency = xfreq))
+    else pred
 }
 

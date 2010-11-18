@@ -23,7 +23,7 @@
       \item The PDF reference manual is now built as PDF version 1.5
       with object compression, which on platforms for which this is not
       the default (notably MiKTeX) halves its size.
-  
+
       Variable \env{FCLIBS} can be set during configuration, for any
       additional library flags needed when linking a shared object with
       the Fortran 9x compiler.  (Needed with Solaris Studio 12.2.)
@@ -123,6 +123,9 @@
 
       \item \code{reshape} did not make use of \code{sep} in all the
       cases it should have.  (\PR{14435})
+
+      \item \code{spec.ar()} now also work for the \code{"ols"} method.
+      (Reported by Hans-Ruedi Kuensch.)
 
       \item \code{spec.ar()} now also work for the \code{"ols"} method.
       (Reported by Hans-Ruedi Kuensch.)
