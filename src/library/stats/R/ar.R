@@ -170,7 +170,7 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
     if(nser > 1L) {
-        res <- x[c("ar", !is.null(x$x.intercept)"x.intercept", "var.pred")]
+        res <- x[c("ar", if(!is.null(x$x.intercept)) "x.intercept", "var.pred")]
         res$ar <- aperm(res$ar, c(2L,3L,1L))
         print(res, digits = digits)
     } else { ## univariate case
