@@ -233,7 +233,11 @@
       and a few other places.
 
       \item Additional utilities now work correctly with S4 subclasses of
-      \code{"environment"} (\code{rm}, locking tools and active bindings).
+      \code{"environment"} (\code{rm}, locking tools and active
+      bindings).
+
+      \item \code{reshape} did not make use of \code{sep} in all the
+      cases it should have.  (\PR{14435})
 
       \item \code{spec.ar()} now also work for the \code{"ols"} method.
       (Reported by Hans-Ruedi Kuensch.)

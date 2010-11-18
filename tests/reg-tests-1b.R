@@ -1451,6 +1451,17 @@ stopifnot(identical(2:3,
 ## length wrongly were 6 and 9, in R <= 2.12.0
 
 
+## 'sep' in reshape() (PR#14335)
+test <- data.frame(x=rnorm(100), y=rnorm(100), famid=rep(1:50, each=2),
+                   time=rep(1:2, 50))
+
+wide <- reshape(data=test, v.names=c("x", "y"), idvar="famid",
+                timevar="time", sep="", direction="wide")
+stopifnot(identical(names(wide), c("famid", "x1", "y1", "x2", "y2")))
+## was c("famid", "x.1", "y.1", "x.2", "y.2")
+
+
+
 proc.time()
 
 
