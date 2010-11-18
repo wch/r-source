@@ -104,7 +104,7 @@ reshape <-
                 return(rval)
             }
             if (is.null(new.row.names))
-                row.names(rval) <- paste(d[,idvar], times[1L], sep = sep)
+                row.names(rval) <- paste(d[,idvar], times[1L], sep = ".")
             else
                 row.names(rval) <- new.row.names[1L:NROW(rval)]
 
@@ -114,7 +114,7 @@ reshape <-
                     d[ ,v.names[j]] <- data[, varying[[j]][i]]
 
                 if (is.null(new.row.names))
-                    row.names(d) <- paste(d[,idvar], times[i], sep = sep)
+                    row.names(d) <- paste(d[,idvar], times[i], sep = ".")
                 else
                     row.names(d) <- new.row.names[NROW(rval)+1L:NROW(d)]
                 rval <- rbind(rval,d) ##inefficient. So sue me.
