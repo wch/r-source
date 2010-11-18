@@ -88,8 +88,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         ## if using r_arch subdirs, check for presence
         if(nzchar(r_arch)
-           ## back-compatibility fix: remove before 2.12.0
-           ## && (.Platform$OS.type != "windows" || r_arch != "i386")
            && file.exists(file.path(pkgpath, "libs"))
            && !file.exists(file.path(pkgpath, "libs", r_arch)))
             stop(gettextf("package '%s' is not installed for 'arch=%s'",
