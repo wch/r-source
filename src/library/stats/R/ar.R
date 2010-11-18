@@ -170,20 +170,19 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
     if(nser > 1L) {
-        if(!is.null(x$x.intercept))
-            res <- x[c("ar", "x.intercept", "var.pred")]
-        else res <- x[c("ar", "var.pred")]
+        res <- x[c("ar", !is.null(x$x.intercept)"x.intercept", "var.pred")]
         res$ar <- aperm(res$ar, c(2L,3L,1L))
         print(res, digits = digits)
-    } else {
+    } else { ## univariate case
         if(x$order) {
             cat("Coefficients:\n")
-            coef <- drop(round(x$ar, digits = digits))
+            coef <- round(drop(x$ar), digits = digits)
             names(coef) <- seq_len(x$order)
             print.default(coef, print.gap = 2L)
         }
         if(!is.null(xint <- x$x.intercept) && !is.na(xint))
             cat("\nIntercept: ", format(xint, digits = digits),
+                ## FIXME? asy.se.coef  *only* exists for  ar.ols (??)
                 " (", format(x$asy.se.coef$x.mean, digits = digits),
                 ") ", "\n", sep="")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
@@ -255,9 +254,8 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
         pred <- pred + rep(object$x.mean, n.ahead)
     }
     pred <- ts(pred, start = st + dt, frequency = xfreq)
-    if(se.fit) {
-        se <- ts(se, start = st + dt, frequency = xfreq)
-        list(pred = pred, se = se)
-    } else pred
+    if(se.fit)
+        list(pred = pred, se = ts(se, start = st + dt, frequency = xfreq))
+    else pred
 }
 

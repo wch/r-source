@@ -56,7 +56,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         xfreq <- frequency(x)
         nser <- NCOL(x)
         x <- ar(x, is.null(order), order, na.action=na.action, method=method)
-    } else {
+    } else { ## result of ar()
         cn <- match(c("ar", "var.pred", "order"), names(x))
         if(any(is.na(cn)))
             stop("'x' must be a time series or an ar() fit")
@@ -69,12 +69,13 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     freq <- seq.int(0, 0.5, length.out = n.freq)
     if (nser == 1) {
         coh <- phase <- NULL
-        if(order >= 1) {
-            cs <- outer(freq, 1L:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
-            sn <- outer(freq, 1L:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
-            spec <- x$var.pred/(xfreq*((1 - cs)^2 + sn^2))
-        } else
-            spec <- rep(x$var.pred/(xfreq), length(freq))
+        var.p <- as.vector(x$var.pred)
+        spec <-
+            if(order >= 1) {
+                cs <- outer(freq, 1L:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
+                sn <- outer(freq, 1L:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
+                var.p/(xfreq*((1 - cs)^2 + sn^2))
+            } else rep.int(var.p/xfreq, length(freq))
     } else .NotYetImplemented()
     spg.out <- list(freq = freq*xfreq, spec = spec, coh = coh, phase = phase,
                     n.used = nrow(x), series = series,
@@ -83,8 +84,8 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     class(spg.out) <- "spec"
     if(plot) {
 	plot(spg.out, ci = 0, ...)
-        return(invisible(spg.out))
-    } else return(spg.out)
+        invisible(spg.out)
+    } else spg.out
 }
 
 spec.pgram <-
