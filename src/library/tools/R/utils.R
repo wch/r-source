@@ -419,10 +419,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    numeric_version("2.7")
+    numeric_version("2.8")
 ## (Could also use something programmatically mapping (R) 2.10.x to
 ## (BioC) 2.5, 2.9.x to 2.4, ..., 2.1.x to 1.6, but what if R 3.0.0
 ## comes out? Also, pre-2.12.0 is out weeks before all of BioC 2.7)
+## E.g. pre-2.13.0 was out ca Sept 20, BioC 2.8 was ready Nov 17.
 
 ### * Internal utility functions.
 
