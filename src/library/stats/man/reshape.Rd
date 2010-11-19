@@ -1,6 +1,6 @@
 % File src/library/stats/man/reshape.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{reshape}
@@ -31,21 +31,21 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     correspond to single variables in long format
     (\sQuote{time-varying}).  This is canonically a list of vectors of
     variable names, but it can optionally be a matrix of names, or a
-    single vector of names. In each case, the names can be replaced by
+    single vector of names.  In each case, the names can be replaced by
     indices which are interpreted as referring to \code{names(data)}. 
     See below for more details and
     options.}
   \item{v.names}{names of variables in the long format that correspond
-    to multiple variables in the wide format. See below for details.}
+    to multiple variables in the wide format.  See below for details.}
   \item{timevar}{the variable in long format that differentiates multiple
     records from the same group or individual.}
-  \item{idvar}{Names of one or more variables in long format that identify multiple
-    records from the same group/individual.  These variables may also be
-    present in wide format}
+  \item{idvar}{Names of one or more variables in long format that
+    identify multiple records from the same group/individual.  These
+    variables may also be present in wide format.}
   \item{ids}{the values to use for a newly created \code{idvar}
     variable in long format.}
   \item{times}{the values to use for a newly created \code{timevar}
-    variable in long format. See below for details.}
+    variable in long format.  See below for details.}
   \item{drop}{a vector of names of variables to drop before reshaping}
   \item{direction}{character string, either \code{"wide"} to reshape to
     wide format, or \code{"long"} to reshape to long format.}
@@ -53,13 +53,15 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     create new row names in long format from the values of the id and
     time variables.}
   \item{sep}{A character vector of length 1, indicating a separating
-    character in the variable names in the wide format. This is used for
+    character in the variable names in the wide format.  This is used for
     guessing \code{v.names} and \code{times} arguments based on the
-    names in \code{varying}. If \code{sep==""}, the split is just before
-    the first numeral that follows an alphabetic character.} 
+    names in \code{varying}.  If \code{sep==""}, the split is just before
+    the first numeral that follows an alphabetic character.  As from \R
+    2.12.1 it is also used to create variable names when reshaping to
+    wide format.}
   \item{split}{A list with three components, \code{regexp},
-    \code{include}, and (optionally) \code{fixed}. This allows an
-    extended interface to variable name splitting. See below for details.}
+    \code{include}, and (optionally) \code{fixed}.  This allows an
+    extended interface to variable name splitting.  See below for details.}
 }
 \details{
   The arguments to this function are described in terms of longitudinal
@@ -74,21 +76,21 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \sQuote{id} variable showing which records refer to the same person.
 
   If the data frame resulted from a previous \code{reshape} then the
-  operation can be reversed simply by \code{reshape(a)}. The
+  operation can be reversed simply by \code{reshape(a)}.  The
   \code{direction} argument is optional and the other arguments are
   stored as attributes on the data frame.
 
   If \code{direction="wide"} and no \code{varying} or \code{v.names}
   arguments are supplied it is assumed that all variables except
-  \code{idvar} and \code{timevar} are time-varying. They are all
+  \code{idvar} and \code{timevar} are time-varying.  They are all
   expanded into multiple variables in wide format.
 
   If \code{direction="long"} the \code{varying} argument can be a vector
-  of column names (or a corresponding index). The function will attempt
+  of column names (or a corresponding index).  The function will attempt
   to guess the \code{v.names} and \code{times} from these names.  The
   default is variable names like \code{x.1}, \code{x.2}, where
-  \code{sep="."}  specifies to split at the dot and drop it from the
-  name. To have alphabetic followed by numeric times use \code{sep=""}.
+  \code{sep = "."} specifies to split at the dot and drop it from the
+  name.  To have alphabetic followed by numeric times use \code{sep = ""}.
 
   Variable name splitting as described above is only attempted in the
   case where \code{varying} is an atomic vector, if it is a list or a
@@ -97,17 +99,16 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   variable name in each set, and sequential times.
 
   Also, guessing is not attempted if \code{v.names} is given
-  explicitly. Notice that the order of variables in \code{varying} is
+  explicitly.  Notice that the order of variables in \code{varying} is
   like \code{x.1},\code{y.1},\code{x.2},\code{y.2}.
 
-  The \code{split} argument should not usually be necessary. The
+  The \code{split} argument should not usually be necessary.  The
   \code{split$regexp} component is passed to either \code{strsplit()} or
   \code{regexp()}, where the latter is used if \code{split$include} is
   \code{TRUE}, in which case the splitting occurs after the first
-  character of the matched string. In the \code{strsplit()} case, the
+  character of the matched string.  In the \code{strsplit()} case, the
   separator is not included in the result, and it is possible to specify
   fixed-string matching using \code{split$fixed}.
-  
 }
 \value{
   The reshaped data frame with added attributes to simplify reshaping
