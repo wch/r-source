@@ -269,7 +269,7 @@ new("numWithId", 1:3, id = "An Example")
 setClass("stampedEnv", contains = "environment",
       representation(update = "POSIXct"))
 
-e1 <- new("stampedEnv", new.env(), update = Sys.time())
+e1 <- new("stampedEnv",  update = Sys.time())
 
 setMethod("[[<-", c("stampedEnv", "character", "missing"),
    function(x, i, j, ..., value) {

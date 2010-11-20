@@ -66,7 +66,10 @@ initialize(.Object, ...)
 
   For examples of \code{initialize} methods, see
   \code{\link{initialize-methods}} for existing methods for
-  classes \code{"traceable"} and \code{"environment"}, among others.
+  classes \code{"traceable"} and \code{"environment"}, among
+  others. See the comments there on subclasses of
+  \code{"environment"}; any \code{initialize} methods for these should
+  be sure to allocate a new environment.
 
   Methods for \code{initialize} can be inherited only by simple
   inheritance, since it is a requirement that the method return an

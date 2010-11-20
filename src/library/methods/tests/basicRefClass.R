@@ -287,11 +287,16 @@ stopifnot(identical(as.environment(a), environment(xx)))
 ## tests of [[<- and $<- for subclasses of environment.  At one point methods for these assignments were defined
 ## and caused inf. recursion when the arguments to the [[<- case were changed in base.
 setClass("myEnv", contains = "environment")
-m <- new("myEnv")
+m <- new("myEnv", a="test")
+m2 <- new("myEnv"); m3 <- new("myEnv")
+## test that new.env() is called for each new object
+stopifnot(!identical(as.environment(m), as.environment(m2)),
+          !identical(as.environment(m3), as.environment(m2)))
 m[["x"]] <- 1; m$y <- 2
 stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
-rm(x, envir = m)
-stopifnot(identical(objects(m), "y"))
+rm(x, envir = m) # check rm() works, does not clobber class
+stopifnot(identical(sort(objects(m)), sort(c("a", "y"))),
+          is(m, "myEnv"))
 
 ## tests of binding & environment tools with subclases of environment
 lockBinding("y", m)

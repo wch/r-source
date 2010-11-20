@@ -129,6 +129,9 @@
 
       \item \code{spec.ar()} now also work for the \code{"ols"} method.
       (Reported by Hans-Ruedi Kuensch.)
+
+      \item The initialization of objects from subclasses of
+      \code{"environment"} now allocates a new environment object.
     }
   }
 }
