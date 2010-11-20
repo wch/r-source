@@ -320,6 +320,11 @@ stopifnot(identical(assign("z","other", m), "other"),
 lockEnvironment(m)
 stopifnot(environmentIsLocked(m))
 
+rm(m)
+m <- new("myEnv")
+stopifnot(length(ls(m)) == 0)
+## used to contain the previous content
+
 
 ## test of callSuper() to a hidden default method for initialize() (== initFields)
 TestClass <- setRefClass ("TestClass",
