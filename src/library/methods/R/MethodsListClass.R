@@ -170,7 +170,7 @@
                   else
                       .MakeSignature(.Object, functionDef, list(...))
               }, where = envir)
-    setMethod("initialize", "environment",
+    setMethod("initialize", "environment", # only for new("environment",...); see .InitSpecialTypesAndClasses for subclasses
               function(.Object, ...) {
                   value <- new.env()
                   args <- list(...)

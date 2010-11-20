@@ -11,6 +11,7 @@
 \alias{initialize,traceable-method}
 \alias{initialize,signature-method}
 \alias{initialize,environment-method}
+\alias{initialize,.environment-method}
 \description{
   The arguments to function \code{\link{new}} to create an object from a
   particular class can be interpreted specially for that class, by the
@@ -56,9 +57,16 @@
       \code{\link{trace}}.
     }
 
-    \item{\code{signature(.Object = "environment")}}{
+    \item{\code{signature(.Object = "environment")}, \code{signature(.Object = ".environment")}}{
       The \code{initialize} method for environments takes a named list
-      of objects to be used to initialize the environment.
+      of objects to be used to initialize the environment.  Subclasses
+      of \code{"environment"} inherit an initialize method through
+      \code{".environment"}, which has the additional effect of
+      allocating a new environment.  If you define your own method for
+      such a subclass, be sure either to call the existing method via
+      \code{\link{callNextMethod}} or allocate an environment in your
+      method, since environments are references and are not duplicated
+      automatically.
     }
 
     \item{\code{signature(.Object = "signature")}}{
