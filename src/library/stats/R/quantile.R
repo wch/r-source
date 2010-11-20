@@ -114,4 +114,5 @@ quantile.default <-
 }
 
 IQR <- function (x, na.rm = FALSE)
-    diff(quantile(as.numeric(x), c(0.25, 0.75), na.rm = na.rm, names = FALSE))
+    diff(quantile(as.numeric(x), c(0.25, 0.75), na.rm=na.rm, names = FALSE,
+		  type = 7))

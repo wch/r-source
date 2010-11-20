@@ -1,18 +1,20 @@
 % File src/library/stats/man/IQR.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{IQR}
 \alias{IQR}
 \title{The Interquartile Range}
 \usage{
-IQR(x, na.rm = FALSE)
+IQR(x, na.rm = FALSE, type = 7)
 }
 \description{computes interquartile range of the \code{x} values.}
 \arguments{
   \item{x}{a numeric vector.}
   \item{na.rm}{logical. Should missing values be removed?}
+  \item{type}{an integer selecting one of the many quantile algorithms,
+    see \code{\link{quantile}}.}
 }
 \details{
   Note that this function computes the quartiles using the
@@ -39,4 +41,3 @@ IQR(rivers)
 \keyword{univar}
 \keyword{robust}
 \keyword{distribution}
-

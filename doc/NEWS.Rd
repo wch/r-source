@@ -54,6 +54,9 @@
       suitably sized environment) for lists of more than 100 elements.
 
       \item \code{text()} gains a formula method.
+
+      \item \code{IQR()} now has a \code{type} argument passed to
+      \code{quantile()}.
     }
   }
 
