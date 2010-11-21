@@ -54,7 +54,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         text <- paste(..., collapse=" ")
         ## strwrap expects paras separated by blank lines.
         ## Perl's wrap split on \n
-        text <- strsplit(text, "\n")[[1L]]
+        text <- strsplit(text, "\n", useBytes = TRUE)[[1L]]
         printLog(Log, paste(strwrap(text), collapse="\n"), "\n")
     }
 
@@ -1220,7 +1220,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## testing.R).  Should perhaps also be more
                 ## defensive about the prompt ...
                 chunks <- strsplit(txt,
-                                   "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n")[[1L]] #
+                                   "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n", useBytes = TRUE)[[1L]]
                                        if((ll <- length(chunks)) >= 2) {
                                            printLog(Log,
                                                     "The error most likely occurred in:\n\n")
