@@ -9,7 +9,7 @@
     \itemize{
       \item The DVI/PDF reference manual now includes the help pages for
       all the standard packages: \pkg{splines}, \pkg{stats4} and
-      \pkg{tcltk} were previously omitted.
+      \pkg{tcltk} were previously omitted (intentionally).
 
       \item \url{http://www.rforge.net} has been added to the default
       set of repositories known to \code{setRepoositories()}.
@@ -53,11 +53,11 @@
       than give an error when given certain invalid regular expressions.
       (\PR{14398})
 
-      \item \code{cmdscale(eig=TRUE)} was documented to return \eqn{n-1}
+      \item \code{cmdscale(eig = TRUE)} was documented to return \eqn{n-1}
       eigenvalues but in fact only returned \code{k}.  It now returns
       all \eqn{n} eigenvalues.
 
-      \code{cmdscale(add=TRUE)} failed to centre the return
+      \code{cmdscale(add = TRUE)} failed to centre the return
       configuration and sometimes lost the labels on the points.  Its
       return value was described wrongly (it is always a list and
       contains component \code{ac}).
@@ -105,7 +105,7 @@
       \code{mapply(1:2, c(3,7), FUN = function(i,j) call(':',i,j))}.
 
       \item Backreferences to undefined patterns in
-      \code{[g]sub(pcre=TRUE)} could cause a segfault.  (\PR{14431})
+      \code{[g]sub(pcre = TRUE)} could cause a segfault.  (\PR{14431})
 
       \item The \code{format()} (and hence the \code{print()}) method
       for class \code{"Date"} rounded fractional dates towards zero: it
@@ -127,11 +127,12 @@
       \item \code{spec.ar()} now also work for the \code{"ols"} method.
       (Reported by Hans-Ruedi Kuensch.)
 
-      \item \code{spec.ar()} now also work for the \code{"ols"} method.
-      (Reported by Hans-Ruedi Kuensch.)
-
-      \item The initialization of objects from subclasses of
+      \item The initialization of objects from S4 subclasses of
       \code{"environment"} now allocates a new environment object.
+
+      \item \command{R CMD check} has more protection against (probably
+      erroneous) example or test output which is invalid in the current
+      locale.
     }
   }
 }
