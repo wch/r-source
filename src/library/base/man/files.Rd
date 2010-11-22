@@ -9,7 +9,6 @@
 \alias{file.copy}
 \alias{file.create}
 \alias{file.exists}
-\alias{file.rcopy}
 \alias{file.remove}
 \alias{file.rename}
 \alias{file.symlink}
@@ -62,7 +61,7 @@ file.symlink(from, to)
   On most Unix platforms \sQuote{file} includes \emph{empty}
   directories, symbolic links, fifos and sockets.  On Windows,
   \sQuote{file} means a regular file and not, say, an empty directory.
-  
+
   \code{file.rename} attempts to rename a single file.  Where file
   permissions allow this will first remove an existing file \code{to}.
   This is subject to the limitations of the OS's corresponding system
@@ -120,7 +119,7 @@ file.symlink(from, to)
   \code{\link{dir.create}}.
 
   \code{\link{Sys.glob}} to expand wildcards in file specifications.
-  
+
   \code{\link{file_test}}, \code{\link{Sys.readlink}}.
 }
 
