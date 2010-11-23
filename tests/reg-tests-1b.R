@@ -1458,8 +1458,16 @@ test <- data.frame(x=rnorm(100), y=rnorm(100), famid=rep(1:50, each=2),
 wide <- reshape(data=test, v.names=c("x", "y"), idvar="famid",
                 timevar="time", sep="", direction="wide")
 stopifnot(identical(names(wide), c("famid", "x1", "y1", "x2", "y2")))
-## was c("famid", "x.1", "y.1", "x.2", "y.2")
+## was c("famid", "x.1", "y.1", "x.2", "y.2") in R <= 2.12.0
 
+
+## PR#14438
+X <- matrix(0+1:10, ncol=2)[, c(1,1,2,2)]
+colnames(X) <- c("X1","Dup1", "X2", "Dup2")
+X2 <- qr.X(qr(X))
+X2
+identical(colnames(X), colnames(X2))
+## failed to pivot colnames in R <= 2.12.0
 
 
 proc.time()

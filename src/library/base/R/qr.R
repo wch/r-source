@@ -270,7 +270,10 @@ qr.X <- function (qr, complete = FALSE,
 	R <- tmp
     }
     res <- qr.qy(qr, R)
-    if(pivoted) # res may have more columns than length(qr$pivot)
+    cn <- colnames(res)
+    if(pivoted) {# res may have more columns than length(qr$pivot)
 	res[, qr$pivot] <- res[, ip]
+        if(!is.null(cn)) colnames(res)[qr$pivot] <- cn[ip]
+    }
     res
 }

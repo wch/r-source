@@ -248,6 +248,9 @@
       \item \command{R CMD check} has more protection against (probably
       erroneous) example or test output which is invalid in the current
       locale.
+
+      \item \code{qr.X} with column names and pivoting now also pivots
+      the column names.  (\PR{14438})
     }
   }
 }
