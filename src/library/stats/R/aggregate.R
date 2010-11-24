@@ -70,9 +70,13 @@ function(x, by, FUN, ..., simplify = TRUE)
                     ans <- lapply(split(e, grp), FUN, ...)
                     if(simplify &&
                        length(len <- unique(sapply(ans, length))) == 1L) {
-                        if(len == 1L)
+                        ## this used to lose classes
+                        if(len == 1L) {
+                            ## FIXME what about multiple classes?
+                            cl <- unlist(lapply(ans, oldClass))
                             ans <- unlist(ans, recursive = FALSE)
-                        else if(len > 1L)
+                            if (all(cl == cl[1L])) class(ans) <- cl[1L]
+                        } else if(len > 1L)
                             ans <- matrix(unlist(ans,
                                                  recursive = FALSE),
                                           nrow = nry,

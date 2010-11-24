@@ -118,6 +118,10 @@
       \item \code{drop.terms} and the \code{[} method for class
       \code{"terms"} no longer add back an intercept.  (Reported by
       Niels Hansen.)
+
+      \item \code{aggregate} preserves the class of a column (e.g. a
+      date) under some circumstances where it discarded the class
+      previously.
     }
   }
 }
