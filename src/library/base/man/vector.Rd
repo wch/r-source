@@ -36,12 +36,12 @@ is.vector(x, mode = "any")
   The atomic modes are \code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}.
 
-  If \code{mode = "any"}, \code{is.vector} returns \code{TRUE} for
-  modes logical, integer, real, complex, character, raw, list or
+  If \code{mode = "any"}, \code{is.vector} returns \code{TRUE} for modes
+  logical, integer, real, complex, character, raw, list or
   expression. It returns \code{FALSE} if \code{x} has any attributes
   except names.  (This is incompatible with S.)  On the other hand,
   \code{as.vector} removes \emph{all} attributes including names for
-  results of atomic mode.
+  results of atomic mode (but not those of mode list or expression).
   
   Note that factors are \emph{not} vectors;  \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts to a character vector for
