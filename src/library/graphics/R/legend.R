@@ -23,7 +23,8 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-	 inset = 0, xpd, title.col = text.col, title.adj = 0.5)
+	 inset = 0, xpd, title.col = text.col, title.adj = 0.5,
+         seg.len = 2)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -94,7 +95,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("'text.width' must be numeric, >= 0")
 
-    xc <- Cex * xinch(cin[1L], warn.log=FALSE)# [uses par("usr") and "pin"]
+    xc <- Cex * xinch(cin[1L], warn.log=FALSE) # [uses par("usr") and "pin"]
     yc <- Cex * yinch(cin[2L], warn.log=FALSE)
     if(xc < 0) text.width <- -text.width
 
@@ -170,7 +171,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
 	w0 <- text.width + (x.intersp + 1) * xchar
 	if(mfill)	w0 <- w0 + dx.fill
 ##D	if(has.pch && !merge)	w0 <- w0 + dx.pch
-	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
+	if(do.lines)		w0 <- w0 + (seg.len + +x.off)*xchar
 	w <- ncol*w0 + .5* xchar
 	if (!is.null(title)
 	    && (abs(tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar)) > abs(w)) {
@@ -227,7 +228,6 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
     if(missing(lwd))
 	lwd <- par("lwd") # = default for pt.lwd
     if (do.lines) {			#- draw lines ---------------------
-	seg.len <- 2 # length of drawn segment, in xchar units
 	if(missing(lty)) lty <- 1
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)

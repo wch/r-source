@@ -16,7 +16,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0, xpd, title.col = text.col, title.adj = 0.5)
+       inset = 0, xpd, title.col = text.col, title.adj = 0.5,
+       seg.len = 2)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -93,6 +94,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{title.col}{color for \code{title}.}
   \item{title.adj}{horizontal adjustment for \code{title}: see the help
     for \code{\link{par}("adj")}.}
+  \item{seq.len}{the length of lines drawn to illustrate \code{lty}
+    and/or \code{lwd} (in units of character widths).}
 }
 \details{
   Arguments \code{x}, \code{y}, \code{legend} are interpreted in a

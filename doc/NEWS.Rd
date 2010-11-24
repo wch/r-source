@@ -18,6 +18,9 @@
 
       \item \code{reshape} now makes use of \code{sep} when forming
       names reahaping to wide format.  (\PR{14435})
+
+      \item \code{legend} allows the length of lines to be set by the
+      end user \emph{via} the new argument \code{seg.len}.
     }
   }
 
