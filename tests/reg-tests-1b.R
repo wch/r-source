@@ -1470,6 +1470,12 @@ identical(colnames(X), colnames(X2))
 ## failed to pivot colnames in R <= 2.12.0
 
 
+## improvements to aggregate.data.frame in 2.13.0
+a <- data.frame(nm = c("a", "b", "a", "b"), time = rep(Sys.time(), 4))
+b <- with(a, aggregate(time, list(nm=nm), max))
+stopifnot(inherits(b$x, "POSIXt"))
+##
+
 proc.time()
 
 
