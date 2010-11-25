@@ -63,6 +63,11 @@ extern void R_ProcessEvents(void);
 #define IsSurrogatePairsLo(_l)  (SURROGATE_PAIRS_LO_MIN == \
 		      ((uint16_t)(_l) &~ (uint16_t)SURROGATE_PAIRS_MASK ))
 
+#ifdef __GNUC__
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
+#endif
+
 extern UImode  CharacterMode;
 
 static void performCompletion(control c);
@@ -495,8 +500,7 @@ static int writeline(control c, ConsoleData p, int i, int j)
     if((p0 = wcschr(s, L'\r'))) {
 	int l, l1;
 	stmp = LINE(i);
-	wchar_t s0[wcslen(stmp) +1];
-	s = s0;
+	s = (wchar_t *) alloca((wcslen(stmp) + 1) * sizeof(wchar_t));
 	l = p0 - stmp;
 	wcsncpy(s, stmp, l);
 	stmp = p0 + 1;
@@ -511,6 +515,13 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	if(l1 > l) l = l1;
 	s[l] = L'\0';
 	len = l; /* for redraw that uses len */
+	/* and reset cursor position */
+	{
+	    wchar_t *P = s;
+	    int w0;
+	    for (w0 = 0; *P; P++) w0 += wcwidth(*P);
+	    CURCOL = w0;
+	}
     }
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
