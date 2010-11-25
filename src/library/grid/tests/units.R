@@ -128,3 +128,8 @@ rep(x, each=2)
 rep(x, c(2, 2))
 
 
+## grid::unit.pmax, PR#14443
+x <- unit(1, "cm")
+stopifnot(length(unit.pmax(x)) == 1L, length(unit.pmin(x)) == 1L)
+## was 3 in R <= 2.12.0
+

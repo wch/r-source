@@ -139,6 +139,10 @@
 
       \item \code{qr.X} with column names and pivoting now also pivots
       the column names.  (\PR{14438})
+
+      \item The \code{unit.pmax} and \code{unit.pmin} in package
+      \pkg{grid} gave incorrect results when all inputs were of length 1.
+      (\PR{14443})
     }
   }
 }

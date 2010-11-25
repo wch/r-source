@@ -285,17 +285,18 @@ unit.pmax <- function(...) {
 
   x <- list(...)
   numargs <- length(x)
-  if (numargs == 0)
+  if (numargs == 0L)
     stop("Zero arguments where at least one expected")
   # how long will the result be?
-  maxlength <- 0
-  for (i in 1L:numargs)
+  maxlength <- 0L
+  for (i in seq_len(numargs))
     if (length(x[[i]]) > maxlength)
       maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
-  result <- max(unit.list.from.list(lapply(x, select.i, 1)))
-  for (i in 2:maxlength)
-    result <- unit.c(result, max(unit.list.from.list(lapply(x, select.i, i))))
+  result <- max(unit.list.from.list(lapply(x, select.i, 1L)))
+  if (maxlength > 1L)
+      for (i in 2L:maxlength)
+          result <- unit.c(result, max(unit.list.from.list(lapply(x, select.i, i))))
   result
 }
 
@@ -307,17 +308,18 @@ unit.pmin <- function(...) {
 
   x <- list(...)
   numargs <- length(x)
-  if (numargs == 0)
+  if (numargs == 0L)
     stop("Zero arguments where at least one expected")
   # how long will the result be?
-  maxlength <- 0
-  for (i in 1L:numargs)
+  maxlength <- 0L
+  for (i in seq_len(numargs))
     if (length(x[[i]]) > maxlength)
       maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
-  result <- min(unit.list.from.list(lapply(x, select.i, 1)))
-  for (i in 2:maxlength)
-    result <- unit.c(result, min(unit.list.from.list(lapply(x, select.i, i))))
+  result <- min(unit.list.from.list(lapply(x, select.i, 1L)))
+  if (maxlength > 1L)
+      for (i in 2L:maxlength)
+          result <- unit.c(result, min(unit.list.from.list(lapply(x, select.i, i))))
   result
 }
 
@@ -424,7 +426,7 @@ print.unit <- function(x, ...) {
     stop("Index out of bounds (unit arithmetic subsetting)")
   
   repSummaryUnit <- function(x, n) {
-      newUnits <- lapply(1:n, function(z) { get(x$fname)(x$arg1) })
+      newUnits <- lapply(seq_len(n), function(z) { get(x$fname)(x$arg1) })
       class(newUnits) <- c("unit.list", "unit")
       newUnits
   }
@@ -522,7 +524,7 @@ rep.unit <- function(x, times=1, length.out=NA, each=1, ...) {
         stop("Invalid unit object")
 
     # Determine an approprite index, then call subsetting code
-    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
+    repIndex <- rep(seq_along(x), times=times, length.out=length.out, each=each)
     x[repIndex, top=FALSE]
 }
 
