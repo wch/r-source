@@ -94,7 +94,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{title.col}{color for \code{title}.}
   \item{title.adj}{horizontal adjustment for \code{title}: see the help
     for \code{\link{par}("adj")}.}
-  \item{seq.len}{the length of lines drawn to illustrate \code{lty}
+  \item{seg.len}{the length of lines drawn to illustrate \code{lty}
     and/or \code{lwd} (in units of character widths).}
 }
 \details{
