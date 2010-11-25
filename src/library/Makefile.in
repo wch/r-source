@@ -91,6 +91,7 @@ vignettes:
 	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
 	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
+		  R_LIBS_USER= R_LIBS_SITE= \
 	          $(R_EXE) > /dev/null; \
 	   fi; \
 	done
