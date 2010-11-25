@@ -80,6 +80,14 @@
       \item In \R 2.12.0, \code{system(intern = TRUE)} captured
       \file{stderr} on \command{Rterm} when it was documented to only do
       so on \command{Rgui}.
+
+      \item \command{Rgui} in \R 2.12.0 (only) did not always handle lines
+      containing carriage returns (\samp{\r}) correctly: sometimes
+      random characters where shown.
+
+      Since carriage returns have been supported in \command{Rgui},
+      the cursor positioning after outputting a line containing a
+      carriage return had been unreliable.
     }
   }
 }
