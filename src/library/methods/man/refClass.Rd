@@ -41,6 +41,10 @@ getRefClass(Class, where =)
 \arguments{
   \item{Class}{
 character string name for the class.
+
+In the call to \code{getRefClass()} this argument can also be any
+object from the relevant class;  note also the corresponding reference
+class methods documented in the section on \dQuote{Writing Reference Methods}.
 }
   \item{fields}{
 either a character vector of field names or
@@ -267,6 +271,27 @@ arguments automatically, in contrast to the similar mechanism for
 functional methods.
 }
 
+\item{\code{$copy(shallow = FALSE)}}{ %$
+Creates a copy of the object.  With reference classes, unlike ordinary
+\R objects, merely assigning the object with a different name does not
+create an independent copy.  If \code{shallow} is \code{FALSE}, any
+field that is itself a reference object will also be copied, and
+similarly recursively for its fields.  Otherwise, while reassigning a
+field to a new reference object will have no side effect, modifying
+such a field will still be reflected in both copies of the object.
+The argument has no effect on non-reference objects in fields.  When
+there are reference objects in some fields but it is asserted that
+they will not be modified, using \code{shallow = TRUE} will save some
+memory and time.
+}
+
+\item{\code{$getRefClass()}; \code{$getClass()}}{
+These return respectively the generator object and the formal class
+definition for the reference class of this object, efficiently.
+}
+
+
+
 \item{\code{$export(Class)}}{ %$
 Returns the result of coercing the object to \code{Class} (typically
 one of the superclasses of the object's class).  Calling the method
@@ -489,6 +514,10 @@ itself a reference object, with methods to generate objects from the
 class and also for defining new methods and for help-style
 documentation. See the
 section on \dQuote{Reference Class Generator Objects} for details.
+Note that \code{Class} in the call to \code{getRefClass()} can be an
+object from the corresponding class, and that a similar reference
+class method \code{$getRefClass()} %$
+is available as well.
 
 \code{setRefClass} defines the class and stores its class definition.
 \code{getRefClass} requires that the class has been defined as a

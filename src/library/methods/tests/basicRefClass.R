@@ -231,7 +231,7 @@ mv$methods( initialize = function(file = "./matrixView.pdf", ...) {
     setMarkViewer("OFF")
   })
 
-ff = new("matrixViewer", data = xMat)
+ff = mv$new( data = xMat)
 stopifnot(identical(markViewer, "ON")) # check initialize
 ff$edit(2,2,0)
 ff$data
@@ -240,6 +240,32 @@ stopifnot(all.equal(ff$data, xMat))
 rm(ff)
 gc()
 stopifnot(identical(markViewer, "OFF")) #check finalize
+
+## tests of copying
+viewerPlus <- setRefClass("viewerPlus",
+                   fields = list( text = "character",
+                      viewer = "matrixViewer"))
+ff <- mv$new( data = xMat)
+v1 <- viewerPlus$new(text = letters, viewer = ff)
+v2 <- v1$copy()
+v3 <- v1$copy(TRUE)
+v2$text <- "Hello, world"
+v2$viewer$data <- t(xMat) # change a field in v2$viewer
+v3$text <- LETTERS
+v3$viewer <- mv$new( data = matrix(nrow=1,ncol=1))
+## with a deep copy all is protected, with a shallow copy
+## the environment of a copied field remains the same,
+## but replacing the whole field should be local
+stopifnot(identical(v1$text, letters),
+          identical(v1$viewer, ff),
+          identical(v2$text, "Hello, world"))
+v3 <- v1$copy(TRUE)
+v3$viewer$data <- t(xMat) # should modify v1$viewer as well
+stopifnot(identical(v1$viewer$data, t(xMat)))
+
+## the methods to extract class definition and generator
+stopifnot(identical(v3$getRefClass(), mv),
+          identical(v3$getClass(), getClass("viewerPlus")))
 
 ## deal correctly with inherited methods and overriding existing
 ## methods from $methods(...)

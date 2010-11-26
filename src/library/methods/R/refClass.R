@@ -281,7 +281,10 @@ makeEnvRefMethods <- function() {
                         initFieldArgs(.self, .refClassDef, as.environment(.self), ...)
                     else
                         .self
-                    })
+                    },
+                    copy = envRefCopy,
+                    getRefClass = function() methods::getRefClass(.refClassDef),
+                    getClass = function() .refClassDef)
     allMethods <- names(methods)
     for(method in allMethods) {
         methods[[method]] <- makeClassMethod(methods[[method]],
@@ -404,6 +407,24 @@ defined with accessor functions have
 class "activeBindingFunction".
 '
     unlist(def@fieldClasses)
+}
+
+envRefCopy <- function(shallow = FALSE) {
+    def <- .refClassDef
+    value <- new(def)
+    vEnv <- as.environment(value)
+    selfEnv <- as.environment(.self)
+    for(field in names(def@fieldClasses)) {
+        if(shallow)
+            assign(field, get(field, envir = selfEnv), envir = vEnv)
+        else {
+            current <- get(field, envir = selfEnv)
+            if(is(current, "envRefClass"))
+               current <- current$copy(FALSE)
+            assign(field, current, envir = vEnv)
+        }
+    }
+    value
 }
 
 .refObjectFields <- function(...) {
@@ -786,7 +807,10 @@ setRefClass <- function(Class, fields = character(),
 }
 
 getRefClass <- function(Class, where = topenv(parent.frame())) {
-    classDef <- getClass(Class, where = where)
+    if(is(Class, "envRefClass"))
+        classDef <- get(".refClassDef", envir = Class)
+    else
+        classDef <- getClass(Class, where = where)
     if(!is(classDef, "refClassRepresentation"))
         stop(gettextf("Class \"%s\" is defined but is not a reference class",
                       Class), domain = NA)
