@@ -1,6 +1,6 @@
 % File src/library/stats/man/biplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{biplot}
@@ -34,10 +34,10 @@ biplot(x, \dots)
     supplying a vector of length two.}
   \item{xlabs}{A vector of character strings to label the first set of
     points: the default is to use the row dimname of \code{x}, or
-    \code{1:n} is the dimname is \code{NULL}.}
+    \code{1:n} if the dimname is \code{NULL}.}
   \item{ylabs}{A vector of character strings to label the second set of
     points: the default is to use the row dimname of \code{y}, or
-    \code{1:n} is the dimname is \code{NULL}.}
+    \code{1:n} if the dimname is \code{NULL}.}
   \item{expand}{An expansion factor to apply when plotting the second set
     of points relative to the first. This can be used to tweak the
     scaling of the two sets to a physically comparable scale.}

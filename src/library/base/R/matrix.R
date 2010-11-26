@@ -16,6 +16,9 @@
 
 matrix <- function(data=NA, nrow=1, ncol=1, byrow=FALSE, dimnames=NULL)
 {
+    ## We are going to copy the data internally, so this is only needed
+    ## to handle non-vectors (such as factors), and to avoid
+    ## misinterpretations of 'length' by its methods.
     data <- as.vector(data)
     if(missing(nrow))
         nrow <- ceiling(length(data)/ncol)
