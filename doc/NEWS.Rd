@@ -17,14 +17,13 @@
       \item xz-utils has been updated to version 5.0.0.
 
       \item \code{reshape} now makes use of \code{sep} when forming
-      names reahaping to wide format.  (\PR{14435})
+      names during reahaping to wide format.  (\PR{14435})
 
       \item \code{legend} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
      \item New reference class utility methods \code{copy},
      \code{getRefClass} and \code{getClass} have been added.
-
     }
   }
 
@@ -34,9 +33,9 @@
       with object compression, which on platforms for which this is not
       the default (notably MiKTeX) halves its size.
 
-      Variable \env{FCLIBS} can be set during configuration, for any
-      additional library flags needed when linking a shared object with
-      the Fortran 9x compiler.  (Needed with Solaris Studio 12.2.)
+      \item Variable \env{FCLIBS} can be set during configuration, for
+      any additional library flags needed when linking a shared object
+      with the Fortran 9x compiler.  (Needed with Solaris Studio 12.2.)
     }
   }
 
@@ -141,10 +140,10 @@
       erroneous) example or test output which is invalid in the current
       locale.
 
-      \item \code{qr.X} with column names and pivoting now also pivots
+      \item \code{qr.X()} with column names and pivoting now also pivots
       the column names.  (\PR{14438})
 
-      \item The \code{unit.pmax} and \code{unit.pmin} in package
+      \item \code{unit.pmax()} and \code{unit.pmin()} in package
       \pkg{grid} gave incorrect results when all inputs were of length 1.
       (\PR{14443})
     }
