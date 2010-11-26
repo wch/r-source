@@ -21,6 +21,10 @@
 
       \item \code{legend} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
+
+     \item New reference class utility methods \code{copy},
+     \code{getRefClass} and \code{getClass} have been added.
+
     }
   }
 
