@@ -57,6 +57,9 @@
 
       \item \code{IQR()} now has a \code{type} argument passed to
       \code{quantile()}.
+
+      \item \code{as.vector()} and \code{as.double()} etc duplicate less
+      when they leave the mode unchanged but remove attributes.
     }
   }
 
