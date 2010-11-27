@@ -37,6 +37,8 @@
  * These are now very old, plus
  * ``When the "dimnames" attribute is
  *   grabbed off an array it is always adjusted to be a vector.''
+
+ They are used in bind.c and subset.c, and advertised in Rinternals.h
 */
 SEXP GetRowNames(SEXP dimnames)
 {
@@ -56,13 +58,10 @@ SEXP GetColNames(SEXP dimnames)
 
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP vals, ans, snr, snc, dimnames = R_NilValue;
-    int nr, nc, byrow, lendat,nargs;
+    SEXP vals, ans, snr, snc, dimnames;
+    int nr, nc, byrow, lendat;
 
     checkArity(op, args);
-    nargs = length(args);
-    if(nargs < 4 || nargs > 5)
-	error("incorrect number of arguments to 'matrix'");
     vals = CAR(args);
     snr = CADR(args);
     snc = CADDR(args);
@@ -71,7 +70,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     byrow = asLogical(CADDDR(args));
     if (byrow == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
-    if(nargs == 5) dimnames = CAD4R(args);
+    dimnames = CAD4R(args);
 
 
     lendat = length(vals);
