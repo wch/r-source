@@ -2960,13 +2960,11 @@ way to use ACML.
 
 Dr Kazushige Goto has written another tuned @acronym{BLAS} which is
 available for several processors and OSes.  The current version is known
-as GotoBLAS2.
+as GotoBLAS2, and has (in November 2010) been re-released under a much
+less restrictive licence.  Source code can be obtained from
+@uref{http://www.tacc.utexas.edu/@/tacc-projects/@/gotoblas2/}
 
-This has been made available in several formats, but is currently
-available only as source code.  For @emph{academic use only} (after
-registering) it can be obtained via
-@uref{http://www.tacc.utexas.edu/@/tacc-projects}.
-Once this is built and installed, it can be used by configuring with
+Once it is built and installed, it can be used by configuring @R{} with
 
 @example
 --with-blas="-lgoto2"
@@ -2975,14 +2973,9 @@ Once this is built and installed, it can be used by configuring with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
-Note that currently a multi-threaded Goto @acronym{BLAS} will be built
-by default if and only if the building is on a multi-processor system
-(counting multiple cores and hyperthreading), and at run time the
-default number of threads is the number of @acronym{CPU}s detected.
-
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
-
+svn up
 For Intel processors under Linux, there is Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
