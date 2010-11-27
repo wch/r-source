@@ -701,7 +701,8 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
 }
 
 setRepositories <-
-    function(graphics = getOption("menu.graphics"), ind = NULL)
+    function(graphics = getOption("menu.graphics"), ind = NULL,
+             addURLs = character())
 {
     if(is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
@@ -737,10 +738,11 @@ setRepositories <-
         match(select.list(a[, 1L], a[default, 1L], multiple = TRUE, title,
                            graphics = graphics), a[, 1L])
     }
-    if(length(res)) {
+    if(length(res) || length(addURLs)) {
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
-        options(repos = repos[res])
+        repos <- c(repos[res], addURLs)
+        options(repos = repos)
     }
 }
 

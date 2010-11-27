@@ -64,6 +64,8 @@
       \code{as.vector(mode = "any")} no longer duplicates when it does
       not remove attributes.  This helps memory usage in \code{matrix()}
       and \code{array()}.
+
+      \item \code{setRepositories()} gains an \code{addURLs} argument.
     }
   }
 
