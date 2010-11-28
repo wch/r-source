@@ -119,6 +119,10 @@
       (\option{--auto-zip}, \option{--use-zip-data} and
       \option{--no-docs}) are deprecated:
       use the new option \option{--install-args} instead.
+      
+      \item When a character value is used for the \code{EXPR}
+      argument in \code{switch()}, only a single unnamed alternative
+      value is now allowed.
     }
   }
 
@@ -153,8 +157,13 @@
       \item \code{legend} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
-     \item New reference class utility methods \code{copy},
-     \code{getRefClass} and \code{getClass} have been added.
+      \item New reference class utility methods \code{copy},
+      \code{getRefClass} and \code{getClass} have been added.
+     
+      \item When a character value is used for the \code{EXPR}
+      argument in \code{switch()}, a warning is given if more than
+      one unnamed alternative value is given.  This will become an
+      error in R 2.13.0.
     }
   }
 

@@ -38,8 +38,9 @@ switch(EXPR, \dots)
   example \code{switch("cc", a=1, cc=, cd=, d=2)} evaluates to \code{2}.
   If there is more than one match, the first matching element is used.
   In the case of no match, if there is a unnamed element of \code{\dots}
-  its value is returned.  (If there is more than one such argument the
-  first one will be used.)
+  its value is returned.  (If there is more than one such argument 
+  an error is returned.  Before \R 2.13.0 the first one would have
+  been used.)
   
   The first argument is always taken to be \code{EXPR}: if it is named
   its name must (partially) match.

@@ -46,7 +46,7 @@ calcOrigin <- function(x1, y1, x2, y2, origin, hand) {
                            ym,
                            ym + origin*(y2 - y1)/2))
     # Rotate by 90 (or -90) about midpoint between end points
-    sintheta <- switch(hand, -1, 1)
+    sintheta <- switch(hand, left=-1, right=1)
     ox <- xm - (tmpoy - ym)*sintheta
     oy <- ym + (tmpox - xm)*sintheta
 
