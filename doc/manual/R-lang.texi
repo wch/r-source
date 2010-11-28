@@ -1470,12 +1470,18 @@ NULL
 
 If @var{value} is a character vector then the element of @samp{...} with
 a name that exactly matches @var{value} is evaluated.  If there is no
-match @code{NULL} is returned.
+match a single unnamed argument will be used as a default.  If no
+default is specified, @code{NULL} is returned.  (Currently the first
+of multiple defaults will be used with a warning; as of R 2.13.0, only
+one default will be allowed.)
 
 @example
 > y <- "fruit"
-> switch(y, fruit = "banana", vegetable = "broccoli", meat = "beef")
+> switch(y, fruit = "banana", vegetable = "broccoli", "Neither")
 [1] "banana"
+> y <- "meat"
+> switch(y, fruit = "banana", vegetable = "broccoli", "Neither")
+[1] "Neither"
 @end example
 
 A common use of @code{switch} is to branch according to the character

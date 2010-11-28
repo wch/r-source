@@ -450,7 +450,7 @@ Rd2HTML <-
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
-               "\\S3method",
+               "\\S3method" =,
                "\\S4method" = {
                    # Should not get here
                },

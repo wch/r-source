@@ -39,7 +39,8 @@ switch(EXPR, \dots)
   If there is more than one match, the first matching element is used.
   In the case of no match, if there is a unnamed element of \code{\dots}
   its value is returned.  (If there is more than one such argument the
-  first one will be used.)
+  first one will be used, with a warning.  From R 2.13.0 onwards
+  this will be an error.)
   
   The first argument is always taken to be \code{EXPR}: if it is named
   its name must (partially) match.

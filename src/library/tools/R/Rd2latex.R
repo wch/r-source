@@ -448,7 +448,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
-               "\\S3method",
+               "\\S3method" =,
                "\\S4method" = {
                    ## should not get here
                },
