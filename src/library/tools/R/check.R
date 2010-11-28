@@ -1930,6 +1930,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                   " of the 'Writing R Extensions' manual.\n")
             tryCatch(parseNamespaceFile(basename(pkgdir), dirname(pkgdir)),
                      error = function(e) {
+                         errorLog(Log)
                          printLog(Log,
                                   "Invalid NAMESPACE file, parsing gives:", "\n",
                                   as.character(e), "\n")
