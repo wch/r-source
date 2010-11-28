@@ -279,7 +279,7 @@ that class itself, but then you could just overrwite the object).
              else
                  .self
          },
-         coopy = function(shallow = FALSE) {
+         copy = function(shallow = FALSE) {
              def <- .refClassDef
              value <- new(def)
              vEnv <- as.environment(value)
@@ -295,9 +295,9 @@ that class itself, but then you could just overrwite the object).
                  }
              }
              value
-         },
-         getRefClass = function() methods::getRefClass(.refClassDef),
-         getClass = function() .refClassDef
+         } # ,
+##         getRefClass = function() methods::getRefClass(.refClassDef),
+##         getClass = function() .refClassDef
          )
 
 ## construct a list of class methods for envRefClass

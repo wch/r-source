@@ -264,8 +264,8 @@ v3$viewer$data <- t(xMat) # should modify v1$viewer as well
 stopifnot(identical(v1$viewer$data, t(xMat)))
 
 ## the methods to extract class definition and generator
-stopifnot(identical(v3$getRefClass(), mv),
-          identical(v3$getClass(), getClass("viewerPlus")))
+## stopifnot(identical(v3$getRefClass(), mv),
+##           identical(v3$getClass(), getClass("viewerPlus")))
 
 ## deal correctly with inherited methods and overriding existing
 ## methods from $methods(...)
