@@ -26,70 +26,6 @@ self from reference class thisClass.'
     value
 }
 
-envRefAs <- function(Class) {
-    '
-Returns the result of coercing the object to
-Class.  No effect on the object itself.
-'
-    if(match(.refClassDef@className, Class, 0) > 0)
-        return(.self)
-    classDef <- getClass(Class)
-    if(is(classDef, "refClassRepresentation") &&
-       !is.na(match(Class, .refClassDef@refSuperClasses))) {
-            value <- new(classDef)
-            env <- as.environment(value)
-            selfEnv <- as.environment(.self)
-            fieldClasses <- classDef@fieldClasses
-            for(field in names(fieldClasses)) {
-                current <- get(field, envir = selfEnv)
-                if(!is(current, fieldClasses[[field]]))
-                    stop(gettextf("The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target",
-                                  field, fieldClasses[[field]]),
-                         domain = NA)
-                assign(field, envir = env, current)
-            }
-            value
-    }
-    else if(is(classDef, "classRepresentation")) # use standard S4 as()
-        methods::as(.self, Class)
-    else if(is.character(Class) && length(Class) == 1)
-        stop(gettextf("\"%s\" is not a defined class in this environment",
-                      Class), domain = NA)
-    else
-        stop("Invalid Class argument:  should be a single string")
-}
-
-envRefImport <- function(value, Class = class(value)) {
-    '
-Imports value, replacing the part of the current object
-corresponding to Class (if argument Class is missing
-it is taken to be class(value)).  The Class must be one
-of the reference superclasses of the current class (or
-that class itself, but then you could just overrwite the object).
-'
-    if(!missing(Class))
-        value <- value$export(Class)
-    classDef <- getClass(Class)
-    if(is(classDef, "refClassRepresentation") &&
-       !is.na(match(Class, .refClassDef@refSuperClasses))) {
-            env <- as.environment(value)
-            selfEnv <- as.environment(.self)
-            fieldClasses <- .refClassDef@fieldClasses
-            for(field in names(classDef@fieldClasses)) {
-                current <- get(field, envir = env)
-                if(!is(current, fieldClasses[[field]]))
-                    stop(gettextf("The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target",
-                                  field, fieldClasses[[field]]),
-                         domain = NA)
-                assign(field, envir = selfEnv, current)
-            }
-            invisible(.self)
-    }
-    else
-        stop(gettextf("\"%s\" is not one of the reference super classes for this object",
-                      Class), domain = NA)
-}
-
 installClassMethod <- function(def, self, me, selfEnv, thisClass) {
     if(!is(def, "refMethodDef")) {  #should not happen? => need warning
         warning(gettextf("Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
@@ -272,19 +208,101 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
     invisible(x)
 }
 
+.envRefMethods <-
+    list(
+         export = function(Class) {
+             '
+Returns the result of coercing the object to
+Class.  No effect on the object itself.
+'
+             if(match(.refClassDef@className, Class, 0) > 0)
+                 return(.self)
+             classDef <- getClass(Class)
+             if(is(classDef, "refClassRepresentation") &&
+                !is.na(match(Class, .refClassDef@refSuperClasses))) {
+                 value <- new(classDef)
+                 env <- as.environment(value)
+                 selfEnv <- as.environment(.self)
+                 fieldClasses <- classDef@fieldClasses
+                 for(field in names(fieldClasses)) {
+                     current <- get(field, envir = selfEnv)
+                     if(!is(current, fieldClasses[[field]]))
+                         stop(gettextf("The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target",
+                                       field, fieldClasses[[field]]),
+                              domain = NA)
+                     assign(field, envir = env, current)
+                 }
+                 value
+             }
+             else if(is(classDef, "classRepresentation")) # use standard S4 as()
+                 methods::as(.self, Class)
+             else if(is.character(Class) && length(Class) == 1)
+                 stop(gettextf("\"%s\" is not a defined class in this environment",
+                               Class), domain = NA)
+             else
+                 stop("Invalid Class argument:  should be a single string")
+         },
+         import =   function(value, Class = class(value)) {
+             '
+Imports value, replacing the part of the current object
+corresponding to Class (if argument Class is missing
+it is taken to be class(value)).  The Class must be one
+of the reference superclasses of the current class (or
+that class itself, but then you could just overrwite the object).
+'
+             if(!missing(Class))
+                 value <- value$export(Class)
+             classDef <- getClass(Class)
+             if(is(classDef, "refClassRepresentation") &&
+                !is.na(match(Class, .refClassDef@refSuperClasses))) {
+                 env <- as.environment(value)
+                 selfEnv <- as.environment(.self)
+                 fieldClasses <- .refClassDef@fieldClasses
+                 for(field in names(classDef@fieldClasses)) {
+                     current <- get(field, envir = env)
+                     if(!is(current, fieldClasses[[field]]))
+                         stop(gettextf("The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target",
+                                       field, fieldClasses[[field]]),
+                              domain = NA)
+                     assign(field, envir = selfEnv, current)
+                 }
+                 invisible(.self)
+             }
+             else
+                 stop(gettextf("\"%s\" is not one of the reference super classes for this object",
+                               Class), domain = NA)
+         },
+         callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"),
+         initFields = function(...) {
+             if(length(list(...))>0)
+                 initFieldArgs(.self, .refClassDef, as.environment(.self), ...)
+             else
+                 .self
+         },
+         coopy = function(shallow = FALSE) {
+             def <- .refClassDef
+             value <- new(def)
+             vEnv <- as.environment(value)
+             selfEnv <- as.environment(.self)
+             for(field in names(def@fieldClasses)) {
+                 if(shallow)
+                     assign(field, get(field, envir = selfEnv), envir = vEnv)
+                 else {
+                     current <- get(field, envir = selfEnv)
+                     if(is(current, "envRefClass"))
+                         current <- current$copy(FALSE)
+                     assign(field, current, envir = vEnv)
+                 }
+             }
+             value
+         },
+         getRefClass = function() methods::getRefClass(.refClassDef),
+         getClass = function() .refClassDef
+         )
+
 ## construct a list of class methods for envRefClass
 makeEnvRefMethods <- function() {
-    methods <- list( export = envRefAs, import = envRefImport,
-                    callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"),
-                initFields = function(...) {
-                    if(length(list(...))>0)
-                        initFieldArgs(.self, .refClassDef, as.environment(.self), ...)
-                    else
-                        .self
-                    },
-                    copy = envRefCopy,
-                    getRefClass = function() methods::getRefClass(.refClassDef),
-                    getClass = function() .refClassDef)
+    methods <- .envRefMethods
     allMethods <- names(methods)
     for(method in allMethods) {
         methods[[method]] <- makeClassMethod(methods[[method]],
@@ -347,11 +365,7 @@ makeEnvRefMethods <- function() {
     ## the return value is constructed.
     setRefClass("refObjectGenerator",
                 fields = list(def = "ANY", className = "ANY"),
-                methods = list(methods = .refMethods,
-                new = .newRefObject, fields = .refFields,
-                help = .helpRefMethod,
-                lock = .lockField,
-                accessors = .envRefMakeAccessors))
+                methods = .GeneratorMethods)
     setMethod("show", "refClassRepresentation",
               function(object) showRefClassDef(object), where = envir)
     setMethod("show", "refObjectGenerator",
@@ -369,7 +383,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     unique(supers)
 }
 
-.refMethods <- function(...) {
+.GeneratorMethods <- list(methods =  function(...) {
     methodsEnv <- def@refMethods
     if(nargs() == 0)
         return(objects(methodsEnv, all.names = TRUE))
@@ -397,9 +411,9 @@ getRefSuperClasses <- function(classes, classDefs) {
     for(what in names(newMethods))
         assign(what, newMethods[[what]], envir = methodsEnv)
     invisible(methodsEnv)
-}
+},
 
-.refFields <- function() {
+fields =  function() {
     '
 Returns the named vector of classes
 for the fields in this class.  Fields
@@ -407,61 +421,11 @@ defined with accessor functions have
 class "activeBindingFunction".
 '
     unlist(def@fieldClasses)
-}
-
-envRefCopy <- function(shallow = FALSE) {
-    def <- .refClassDef
-    value <- new(def)
-    vEnv <- as.environment(value)
-    selfEnv <- as.environment(.self)
-    for(field in names(def@fieldClasses)) {
-        if(shallow)
-            assign(field, get(field, envir = selfEnv), envir = vEnv)
-        else {
-            current <- get(field, envir = selfEnv)
-            if(is(current, "envRefClass"))
-               current <- current$copy(FALSE)
-            assign(field, current, envir = vEnv)
-        }
-    }
-    value
-}
-
-.refObjectFields <- function(...) {
-    if(nargs() < 1)
-        unlist(.refClassDef@fieldClasses)
-    else {
-        fieldDefs <- list(...)
-        fieldNames <- names(fieldDefs)
-        fieldClasses <- .refClassDef@fieldClasses
-        allNames <- names(fieldClasses)
-        if(length(fieldNames != fieldDefs))
-            stop("must give named list of refdefined fields")
-        for(i in seq_along(fieldNames)) {
-            field <- fieldNames[[i]]
-            old <- match(field, allNames)
-            if(is.na(old))
-                stop(gettextf("\"%s\" is not a field in class \"%s\"",
-                     field, .refClassDef@className), domain = NA)
-            thisClass <- fieldClasses[[old]]
-            if(is.na(match("activeBindingFunction", extends(thisClass))))
-                stop(gettextf("Only accessor fields can be replaced:  field \"%s\" has class \"%s\"",
-                      field, thisClass), domain = NA)
-            f <- fieldDefs[[i]]
-            if(!is.function(f))
-                stop(gettextf("replacement for field \"%s\" must be an accessor function: got an object of class \"%s\"",
-                      field, class(f)), domain = NA)
-            .refClassDef@fieldPrototypes[[field]] <-
-                .makeActiveBinding(f)
-        }
-    }
-}
-
-.newRefObject <- function(...) {
+},
+new =  function(...) {
     methods::new(def, ...)
-}
-
-.helpRefMethod <- function(topic) {
+},
+  help =  function(topic) {
     '
 Prints simple documentation for the method or field
 specified by argument topic, which should be the name
@@ -494,7 +458,76 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
             show(def)
         }
     }
+},
+lock =  function(...) {
+    fields <- c(...)
+    if(is.character(fields) && all(nzchar(fields))) {}
+    else
+        stop("Arguments must all be character string names of fieds")
+    env <- def@fieldPrototypes
+    className <- def@className
+    for(what in fields) {
+        current <- env[[what]]
+        if(is.null(current))
+            stop(gettextf("\"%s\" is not a field in class \"%s\"", what, className),
+                 domain = NA)
+        if(is(current, "activeBindingFunction")) {
+            if(is(current, "defaultBindingFunction"))
+                env[[what]] <- .makeDefaultBinding(current@field,
+                    current@className, TRUE, environment(current))[[what]]
+            else
+                stop(gettextf("Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked",
+                              what, className), domain = NA)
+        }
+        else {
+            ## capture the current prototype value with a read-only binding function
+            binding <- .makeDefaultBinding(current@field,
+               current@className, TRUE, environment(current))
+            env[[what]] <- binding[[what]]
+            metaName <- .bindingMetaName(what)
+            env[[metaName]] <- current
+        }
+    }
+    invisible(env)
+},
+## define accessor functions, store them in the refMethods environment
+## of the class definition.
+accessors = function(...) {
+    fieldNames <- c(...)
+    methodNames <- firstCap(fieldNames)
+    getters <- methodNames$get
+    setters <- methodNames$set
+    accessors <- list()
+    for(i in seq_along(fieldNames)) {
+        what <- fieldNames[[i]]
+        field <- as.name(what)
+        CLASS <- def@fieldClasses[[what]]
+        if(is.null(CLASS))
+            stop(gettextf("\"%s\" is not a field in class \"%s\"",
+               what, def@className), domain = NA)
+        accessors[[getters[[i]] ]] <-
+                     eval(substitute(function() X, list(X = field)))
+        if(CLASS == "ANY")
+            accessors[[setters[[i]] ]] <-
+                eval(substitute(function(value) {
+                    value <- as(value, CLASS, strict = FALSE)
+                    X <<- value
+                    invisible(value)
+                    },
+                                list(X = field, CLASS = CLASS)))
+        else
+            accessors[[setters[[i]] ]] <-
+                eval(substitute(function(value) {
+                    X <<- value
+                    invisible(value)
+                    },
+                                list(X = field)))
+    }
+    ## install the accessors
+    methods(accessors)
+    invisible(accessors)
 }
+)
 
 .makeCall <- function(name, x) {
     paste0 <- function(...)paste(..., sep = "")
@@ -582,37 +615,6 @@ c('Usage:  $help(topic) where topic is the name of a method (quoted or not)',
     value
 }
 
-.lockField <- function(...) {
-    fields <- c(...)
-    if(is.character(fields) && all(nzchar(fields))) {}
-    else
-        stop("Arguments must all be character string names of fieds")
-    env <- def@fieldPrototypes
-    className <- def@className
-    for(what in fields) {
-        current <- env[[what]]
-        if(is.null(current))
-            stop(gettextf("\"%s\" is not a field in class \"%s\"", what, className),
-                 domain = NA)
-        if(is(current, "activeBindingFunction")) {
-            if(is(current, "defaultBindingFunction"))
-                env[[what]] <- .makeDefaultBinding(current@field,
-                    current@className, TRUE, environment(current))[[what]]
-            else
-                stop(gettextf("Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked",
-                              what, className), domain = NA)
-        }
-        else {
-            ## capture the current prototype value with a read-only binding function
-            binding <- .makeDefaultBinding(current@field,
-               current@className, TRUE, environment(current))
-            env[[what]] <- binding[[what]]
-            metaName <- .bindingMetaName(what)
-            env[[metaName]] <- current
-        }
-    }
-    invisible(env)
-}
 
 refClassInformation <- function(Class, contains, fields, refMethods, where) {
     if(length(contains) > 0) {
@@ -779,6 +781,9 @@ setRefClass <- function(Class, fields = character(),
     theseMethods <- names(methods) # non-inherited, for processing later
     ## collect the method and field definitions
     info <- refClassInformation(Class, contains, fields, methods, where)
+    ## make codetools happy:
+    superClasses <- refSuperClasses <- fieldClasses <- fieldPrototypes <-
+        refMethods <- NULL
     ## think Python's multiple assignment operator
     for(what in c("superClasses", "refSuperClasses", "fieldClasses",
                   "fieldPrototypes", "refMethods"))
@@ -883,43 +888,6 @@ firstCap <- function(names) {
     list(get = paste("get", names, sep = ""), set = paste("set", names, sep = ""))
 }
 
-## define accessor functions, store them in the refMethods environment
-## of the class definition.
-.envRefMakeAccessors <- function(...) {
-    fieldNames <- c(...)
-    methodNames <- firstCap(fieldNames)
-    getters <- methodNames$get
-    setters <- methodNames$set
-    accessors <- list()
-    for(i in seq_along(fieldNames)) {
-        what <- fieldNames[[i]]
-        field <- as.name(what)
-        CLASS <- def@fieldClasses[[what]]
-        if(is.null(CLASS))
-            stop(gettextf("\"%s\" is not a field in class \"%s\"",
-               what, def@className), domain = NA)
-        accessors[[getters[[i]] ]] <-
-                     eval(substitute(function() X, list(X = field)))
-        if(CLASS == "ANY")
-            accessors[[setters[[i]] ]] <-
-                eval(substitute(function(value) {
-                    value <- as(value, CLASS, strict = FALSE)
-                    X <<- value
-                    invisible(value)
-                    },
-                                list(X = field, CLASS = CLASS)))
-        else
-            accessors[[setters[[i]] ]] <-
-                eval(substitute(function(value) {
-                    X <<- value
-                    invisible(value)
-                    },
-                                list(X = field)))
-    }
-    ## install the accessors
-    methods(accessors)
-    invisible(accessors)
-}
 
 ## all.equal and identical both screw up on environments
 ## but a bigger change is needed to all.equal than the following
