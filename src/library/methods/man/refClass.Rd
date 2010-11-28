@@ -285,6 +285,18 @@ they will not be modified, using \code{shallow = TRUE} will save some
 memory and time.
 }
 
+\item{\code{$field(name, value)}}{ %$
+With one argument, returns the field of the object with character
+string \code{name}.  With two arguments, the corresponding field is
+assigned \code{value}.  Assignment checks that \code{name} specifies a
+valid field, but the single-argument version will attempt to get
+anything of that name from the object's environment.
+
+The \code{$field()} %$
+method replaces the direct use of a field name, when the name of the
+field must be calculated, or for looping over several fields.
+}
+
 \item{\code{$getRefClass()}; \code{$getClass()}}{
 These return respectively the generator object and the formal class
 definition for the reference class of this object, efficiently.
