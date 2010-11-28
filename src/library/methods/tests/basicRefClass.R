@@ -1,4 +1,3 @@
-options(error = recover)
 ## simple call, only field names
 fg <- setRefClass("foo", c("bar", "flag"))
 f1<- new("foo")
@@ -263,9 +262,18 @@ v3 <- v1$copy(TRUE)
 v3$viewer$data <- t(xMat) # should modify v1$viewer as well
 stopifnot(identical(v1$viewer$data, t(xMat)))
 
+## the field() method
+stopifnot(identical(v1$text, v1$field("text")))
+v1$field("text", "Now is the time")
+stopifnot(identical(v1$field("text"), "Now is the time"))
+
+## setting a non-existent field, or a method, should throw an error
+stopifnot(is(tryCatch(v1$field("foobar", 0), error = function(e)e), "error"),
+         is(tryCatch(v1$field("copy", 0), error = function(e)e), "error") )
+
 ## the methods to extract class definition and generator
-## stopifnot(identical(v3$getRefClass(), mv),
-##           identical(v3$getClass(), getClass("viewerPlus")))
+stopifnot(identical(v3$getRefClass()$def, getRefClass("viewerPlus")$def),
+          identical(v3$getClass(), getClass("viewerPlus")))
 
 ## deal correctly with inherited methods and overriding existing
 ## methods from $methods(...)

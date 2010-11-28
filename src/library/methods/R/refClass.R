@@ -295,9 +295,15 @@ that class itself, but then you could just overrwite the object).
                  }
              }
              value
-         } # ,
-##         getRefClass = function() methods::getRefClass(.refClassDef),
-##         getClass = function() .refClassDef
+         },
+         getRefClass = function(Class = .refClassDef) methods::getRefClass(Class),
+         getClass = function(...) if(nargs()) methods::getClass(...) else .refClassDef,
+         field = function(name, value) if(missing(value)) get(name, envir = .self) else {
+             if(is.na(match(name, names(.refClassDef@fieldClasses))))
+                 stop(gettextf("\"%s\" is not a field in this class", name),
+                      domain = NA)
+             assign(name, value, envir = .self)
+         }
          )
 
 ## construct a list of class methods for envRefClass
