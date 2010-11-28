@@ -146,6 +146,10 @@
       \item \code{unit.pmax()} and \code{unit.pmin()} in package
       \pkg{grid} gave incorrect results when all inputs were of length 1.
       (\PR{14443})
+      
+      \item The parser for \file{NAMESPACE} files ignored misspelled
+      directives, rather than signalling an error.  (Reported by
+      Charles Berry.)
     }
   }
 }

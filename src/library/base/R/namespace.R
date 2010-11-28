@@ -1053,7 +1053,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                else if (length(e) == 4L)
                parseDirective(e[[4L]]),
                "{" =  for (ee in as.list(e[-1L])) parseDirective(ee),
-               "=", "<-" = {
+               "=" =, 
+               "<-" = {
                    parseDirective(e[[3L]])
                    if(as.character(e[[3L]][[1L]]) == "useDynLib")
                        names(dynlibs)[length(dynlibs)] <<- asChar(e[[2L]])
