@@ -16,8 +16,9 @@ as.vector(x, mode = "any")
 is.vector(x, mode = "any")
 }
 \arguments{
-  \item{mode}{A character string giving an atomic mode or \code{"list"},
-    or (not for \code{vector}) \code{"any"}.}
+  \item{mode}{A character string giving an atomic mode or
+    \code{"double"} or \code{"list"}, or (except for \code{vector})
+    \code{"any"}.}
   \item{length}{A non-negative integer specifying the desired length.}
   \item{x}{An object.}
 }
@@ -29,39 +30,51 @@ is.vector(x, mode = "any")
   is most convenient).
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector of the
-  specified mode having no attributes other than names.  It returns
+  specified mode having no attributes \emph{other than names}.  It returns
   \code{FALSE} otherwise.
 }
+
 \details{
   The atomic modes are \code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}.
 
-  If \code{mode = "any"}, \code{is.vector} returns \code{TRUE} for modes
-  logical, integer, real, complex, character, raw, list or
-  expression. It returns \code{FALSE} if \code{x} has any attributes
-  except names.  (This is incompatible with S.)  On the other hand,
-  \code{as.vector} removes \emph{all} attributes including names for
-  results of atomic mode (but not those of mode list or expression).
+  If \code{mode = "any"}, \code{is.vector} returns \code{TRUE} for the
+  atomic modes, \code{\link{list}} and \code{\link{expression}}. It
+  returns \code{FALSE} if \code{x} has any attributes except names.
+  (This is incompatible with S.)  On the other hand, \code{as.vector}
+  removes \emph{all} attributes including names for results of atomic
+  mode (but not those of mode \code{"list"} nor \code{"expression"}).
+
+  \code{is.vector(x, mode = "numeric")} can be true for vectors of types
+  \code{"integer"} or \code{"double"} whereas \code{is.vector(x, mode =
+  "double")} can only be true for those of type \code{"double"}.
   
-  Note that factors are \emph{not} vectors;  \code{is.vector} returns
-  \code{FALSE} and \code{as.vector} converts to a character vector for
-  \code{mode = "any"}.
-  
-  \code{is.vector} is a \link{primitive} function.  
+  Note that factors are \emph{not} vectors; \code{is.vector} returns
+  \code{FALSE} and \code{as.vector} converts a factor to a character
+  vector for \code{mode = "any"}.
 }
+
 \value{
   For \code{vector}, a vector of the given length and mode.  Logical
   vector elements are initialized to \code{FALSE}, numeric vector
   elements to \code{0}, character vector elements to \code{""}, raw
   vector elements to \code{nul} bytes and list elements to \code{NULL}.
+  
+  For \code{as.vector}, a vector (atomic or of type list or expression).
+  All attributes are removed from the result if it is of an atomic mode.
 
-  All attributes are removed from the answer if it is of an atomic mode.
+  For \code{is.vector}, \code{TRUE} or \code{FALSE}.
 }
+
 \note{
   \code{as.vector} and \code{is.vector} are quite distinct from the
   meaning of the formal class \code{"vector"} in the \pkg{methods}
   package, and hence \code{\link{as}(x, "vector")} and
   \code{\link{is}(x, "vector")}.
+
+  Note that \code{as.vector(x)} is not necessarily a null operation if
+  \code{is.vector(x)} is true: any names will be removed from an atomic
+  vector.
 
   \code{mode}s of \code{"symbol"}, \code{"pairlist"} and
   \code{"expression"} are allowed but have long been undocumented.
@@ -72,7 +85,7 @@ is.vector(x, mode = "any")
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-\code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.
+  \code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.
 }
 \examples{
 df <- data.frame(x=1:3, y=5:7)
