@@ -1200,7 +1200,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                        stop("too many 'S3method' directives", call. = FALSE)
                    S3methods[nS3, seq_along(spec)] <<- asChar(spec)
                },
-               stop(gettextf("unknown namespace directive: %s", deparse(e)),
+               warning(gettextf("unknown namespace directive: %s", deparse(e)),
                     call. = FALSE, domain = NA)
                )
     }
