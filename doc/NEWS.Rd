@@ -22,7 +22,7 @@
       \item \code{legend} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
-      \item New reference class utility methods \code{copy},
+      \item New reference class utility methods \code{copy}, \code{field},
       \code{getRefClass} and \code{getClass} have been added.
      
       \item When a character value is used for the \code{EXPR}
