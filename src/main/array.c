@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001   The R Development Core Team
+ *  Copyright (C) 1998-2010   The R Development Core Team
  *  Copyright (C) 2002--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -56,34 +56,63 @@ SEXP GetColNames(SEXP dimnames)
 	return R_NilValue;
 }
 
+/* Package matrix uses this .Internal with 5 args: should have 7 */
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
-    int nr, nc, byrow, lendat;
+    int nr = 1, nc = 1, byrow, lendat, nargs, miss_nr, miss_nc;
 
     checkArity(op, args);
-    vals = CAR(args);
-    snr = CADR(args);
-    snc = CADDR(args);
-    if (!isNumeric(snr) || !isNumeric(snc))
-	error(_("non-numeric matrix extent"));
-    byrow = asLogical(CADDDR(args));
+    nargs = length(args);
+    if(!(nargs  == 7 || nargs == 5))
+	error("incorrect number of arguments to 'matrix'");
+    vals = CAR(args); args = CDR(args);
+    /* Supposedly as.vector() gave a vector type, but we check */
+    switch(TYPEOF(vals)) {
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case RAWSXP:
+	case EXPRSXP:
+	case VECSXP:
+	    break;
+	default:
+	    error(_("'data' must be of a vector type"));
+    }
+    lendat = length(vals);
+    snr = CAR(args); args = CDR(args);
+    snc = CAR(args); args = CDR(args);
+    byrow = asLogical(CAR(args)); args = CDR(args);
     if (byrow == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
-    dimnames = CAD4R(args);
+    dimnames = CAR(args);
+    if (nargs > 5) {
+	args = CDR(args);
+	miss_nr = asLogical(CAR(args)); args = CDR(args);
+	miss_nc = asLogical(CAR(args));
+    } else  miss_nr =  miss_nc = 0;
 
-
-    lendat = length(vals);
-    nr = asInteger(snr);
-    if (nr == NA_INTEGER) /* This is < 0 */
-	error(_("invalid 'nrow' value (too large or NA)"));
-    if (nr < 0)
-	error(_("invalid 'nrow' value (< 0)"));
-    nc = asInteger(snc);
-    if (nc == NA_INTEGER)
-	error(_("invalid 'ncol' value (too large or NA)"));
-    if (nc < 0)
-	error(_("invalid 'ncol' value (< 0)"));
+    if (!miss_nr) {
+	if (!isNumeric(snr)) error(_("non-numeric matrix extent"));
+	nr = asInteger(snr);
+	if (nr == NA_INTEGER)
+	    error(_("invalid 'nrow' value (too large or NA)"));
+	if (nr < 0)
+	    error(_("invalid 'nrow' value (< 0)"));
+    }
+    if (!miss_nc) {
+	if (!isNumeric(snc)) error(_("non-numeric matrix extent"));
+	nc = asInteger(snc);
+	if (nc == NA_INTEGER)
+	    error(_("invalid 'ncol' value (too large or NA)"));
+	if (nc < 0)
+	    error(_("invalid 'ncol' value (< 0)"));
+    }
+    if (miss_nr && miss_nc) nr = lendat;
+    else if (miss_nr) nr = ceil(lendat/(double) nc);
+    else if (miss_nc) nc = ceil(lendat/(double) nr);
 
     if(lendat > 0 ) {
 	if (lendat > 1 && (nr * nc) % lendat != 0) {

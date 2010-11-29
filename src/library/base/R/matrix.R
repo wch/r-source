@@ -16,15 +16,10 @@
 
 matrix <- function(data=NA, nrow=1, ncol=1, byrow=FALSE, dimnames=NULL)
 {
-    ## We are going to copy the data internally, so this is only needed
-    ## to handle non-vectors (such as factors), and to avoid
-    ## misinterpretations of 'length' by its methods.
-    data <- as.vector(data)
-    if(missing(nrow))
-        nrow <- ceiling(length(data)/ncol)
-    else if(missing(ncol))
-        ncol <- ceiling(length(data)/nrow)
-    .Internal(matrix(data, nrow, ncol, byrow, dimnames))
+    ## avoid copying to strip attributes in simple cases
+    if (is.object(data) || !is.atomic(data)) data <- as.vector(data)
+    .Internal(matrix(data, nrow, ncol, byrow, dimnames,
+                     missing(nrow), missing(ncol)))
 }
 
 nrow <- function(x) dim(x)[1L]

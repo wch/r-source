@@ -65,6 +65,9 @@
       not remove attributes.  This helps memory usage in \code{matrix()}
       and \code{array()}.
 
+      \code{matrix()} duplicates less if \code{data} is an atomic vector
+      with attributes such as names (but no class).
+
       \item \code{setRepositories()} gains an \code{addURLs} argument.
     }
   }
@@ -151,10 +154,10 @@
 
       \item xz-utils has been updated to version 5.0.0.
 
-      \item \code{reshape} now makes use of \code{sep} when forming
+      \item \code{reshape()} now makes use of \code{sep} when forming
       names during reahaping to wide format.  (\PR{14435})
 
-      \item \code{legend} allows the length of lines to be set by the
+      \item \code{legend()} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
       \item New reference class utility methods \code{copy},
@@ -181,7 +184,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{seq.int} no longer sometimes evaluates arguments
+      \item \code{seq.int()} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
 
       \item The \code{data.frame} method of \code{format} failed if a
