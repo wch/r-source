@@ -52,7 +52,7 @@ system2(command, args = character(),
   
   For details of how \code{command} is found see \code{\link{system}}.
 
-  On Windows, \code{env} is currently only supported for comamnds such
+  On Windows, \code{env} is currently only supported for commands such
   as \command{R} and \command{make} which accept environment variables on
   their command line.
   

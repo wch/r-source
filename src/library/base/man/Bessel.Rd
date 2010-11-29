@@ -36,7 +36,7 @@ besselY(x, nu)
 }
 \value{
   Numeric vector of the same length of \code{x} with the (scaled, if
-  \code{expon.scale=TRUE}) values of the corresponding Bessel function.
+  \code{expon.scaled=TRUE}) values of the corresponding Bessel function.
 }
 \details{
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
