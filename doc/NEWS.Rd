@@ -16,10 +16,10 @@
 
       \item xz-utils has been updated to version 5.0.0.
 
-      \item \code{reshape} now makes use of \code{sep} when forming
-      names during reahaping to wide format.  (\PR{14435})
+      \item \code{reshape()} now makes use of \code{sep} when forming
+      names during reshaping to wide format.  (\PR{14435})
 
-      \item \code{legend} allows the length of lines to be set by the
+      \item \code{legend()} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
       \item New reference class utility methods \code{copy}, \code{field},
@@ -46,7 +46,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{seq.int} no longer sometimes evaluates arguments
+      \item \code{seq.int()} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
 
       \item The \code{data.frame} method of \code{format} failed if a
