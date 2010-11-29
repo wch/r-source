@@ -665,7 +665,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
     fieldClasses <- character(nf)
     names(fieldClasses) <- fieldNames
     fieldPrototypes <- list()
-    for(i in seq(length = nf)) {
+    for(i in seq_len(nf)) {
         thisName <- fieldNames[[i]]
         thisField <- fields[[i]]
         ## a field definition can be:
