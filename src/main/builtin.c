@@ -895,17 +895,26 @@ static SEXP expandDots(SEXP el, SEXP rho)
 /* This function is used in do_switch to record the default value and
    to detect multiple defaults, which will not be allowed as of 2.13.x */
    
+static Rboolean dfltReported;
+   
 static SEXP setDflt(SEXP arg, SEXP dflt) 
 {
     if (dflt) {
     	SEXP dflt1, dflt2;
-    	PROTECT(dflt1 = deparse1line(dflt, TRUE));
     	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
-    	warning(_("duplicate switch defaults: '%s' and '%s'"), CHAR(STRING_ELT(dflt1, 0)),
-    	                                                   CHAR(STRING_ELT(dflt2, 0)));
-    	UNPROTECT(2); 
-    }
-    return(CAR(arg));
+    	if (dfltReported) 
+    	    warning(_("additional switch default: '%s'"), CHAR(STRING_ELT(dflt2, 0)));
+    	else {
+    	    PROTECT(dflt1 = deparse1line(dflt, TRUE));
+    	    warning(_("duplicate switch defaults: '%s' and '%s'"), CHAR(STRING_ELT(dflt1, 0)),
+    	                                                           CHAR(STRING_ELT(dflt2, 0)));
+    	    UNPROTECT(1);
+    	}
+    	UNPROTECT(1); 
+    	dfltReported = TRUE;
+    	return(dflt);
+    } else
+        return(CAR(arg));
 }
 
 /* For switch, evaluate the first arg, if it is a character then try
@@ -944,6 +953,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   there may be a ... argument */
 	PROTECT(w = expandDots(CDR(args), rho));
 	if (isString(x)) {
+	    dfltReported = FALSE;
 	    for (y = w; y != R_NilValue; y = CDR(y)) {
 		if (TAG(y) != R_NilValue) {
 		    if (pmatch(STRING_ELT(x, 0), TAG(y), 1 /* exact */)) {
