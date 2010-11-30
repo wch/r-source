@@ -1529,6 +1529,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## for Windows' sake: errors can make it unwritable
                 build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
                 checkingLog(Log, "PDF version of manual without index")
+                ## Also turn off hyperrefs.
+                Sys.setenv(R_RD4PDF = "times")
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste("--build-dir=", shQuote(build_dir), sep = ""),
                           "--no-clean", "--no-index",
