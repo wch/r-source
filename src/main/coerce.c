@@ -1251,15 +1251,16 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	/* this duplication may appear not to be needed in all cases,
 	   but beware that other code relies on it.
 	   (E.g  we clear attributes in do_asvector and do_ascharacter.)
+
+	   Generally coerceVector will copy over attributes.
 	*/
 	if (type != ANYSXP && TYPEOF(u) != type) v = coerceVector(u, type);
 	else if (NAMED(u)) v = duplicate(u);
 
-	/* drop attributes() and class() in some cases: */
-	if ((type == LISTSXP
-	     /* already loses 'names' where it shouldn't:
-		|| type == VECSXP) */
-	    ) &&
+	/* drop attributes() and class() in some cases for as.pairlist:
+	   But why?  (And who actually coerces to pairlists?)
+	 */
+	if ((type == LISTSXP) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
 	    CLEAR_ATTRIB(v);
@@ -1345,7 +1346,8 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-
+/* NB: as.vector is used for several other as.xxxx, including
+   as.expression, as.list, as.pairlist, as.symbol, (as.single) */
 SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans;
@@ -1396,15 +1398,15 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     switch(type) {/* only those are valid : */
-    case SYMSXP:
+    case SYMSXP: /* for as.symbol */
     case LGLSXP:
     case INTSXP:
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
-    case EXPRSXP:
+    case EXPRSXP: /* for as.expression */
     case VECSXP: /* list */
-    case LISTSXP:/* pairlist */
+    case LISTSXP:/* for as.pairlist */
     case CLOSXP: /* non-primitive function */
     case RAWSXP:
     case ANYSXP: /* any */
@@ -1839,21 +1841,27 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, a;
+    SEXP ans, a, x;
+    const char *stype;
+
     checkArity(op, args);
+    x = CAR(args);
     if (!isString(CADR(args)) || LENGTH(CADR(args)) <= 0)
 	errorcall_return(call, R_MSG_mode);
 
+    stype = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
+
     PROTECT(ans = allocVector(LGLSXP, 1));
-    if (streql(CHAR(STRING_ELT(CADR(args), 0)), "any")) { /* ASCII */
-	LOGICAL(ans)[0] = isVector(CAR(args));/* from ./util.c */
+    if (streql(stype, "any")) {
+	/* isVector is inlined, means atomic or VECSXP or EXPRSXP */
+	LOGICAL(ans)[0] = isVector(x);
+    } 
+    else if (streql(stype, "numeric")) {
+	LOGICAL(ans)[0] = (isNumeric(x) && !isLogical(x));
     }
-    else if (streql(CHAR(STRING_ELT(CADR(args), 0)), "numeric")) { /* ASCII */
-	LOGICAL(ans)[0] = (isNumeric(CAR(args)) &&
-			   !isLogical(CAR(args)));
-    }
-    else if (streql(CHAR(STRING_ELT(CADR(args), 0)), /* ASCII */
-		    type2char(TYPEOF(CAR(args))))) {
+    /* So this allows any type, including undocumented ones such as
+       "closure", but not aliases such as "name" and "function". */
+    else if (streql(stype, type2char(TYPEOF(x)))) {
 	LOGICAL(ans)[0] = 1;
     }
     else

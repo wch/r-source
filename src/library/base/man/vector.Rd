@@ -21,6 +21,8 @@ is.vector(x, mode = "any")
   \item{length}{A non-negative integer specifying the desired length.}
   \item{x}{An object.}
 }
+%% The implementation of is.vector allows any _type_ to be named,
+%% and MM uses "symbol" and "language" in str.default()
 \description{
   \code{vector} produces a vector of the given length and mode.
 
@@ -135,6 +137,5 @@ is.list(df)
 ! is.vector(df, mode="list")
 
 is.vector(list(), mode="list")
-is.vector(NULL,   mode="NULL")
 }
 \keyword{classes}

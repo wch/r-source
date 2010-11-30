@@ -229,6 +229,8 @@ str.default <-
     } else { #- not function, not list
 	if(is.vector(object)
 	   || (is.array(object) && is.atomic(object))
+           ## FIXME: is.vector is not documented to allow those modes.
+           ## Should this not be is.language?
 	   || is.vector(object, mode= "language")
 	   || is.vector(object, mode= "symbol")## R bug(<=0.50-a4) should be part
 	   ) { ##-- Splus: FALSE for 'named vectors'
