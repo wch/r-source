@@ -47,7 +47,7 @@ prototype(...)
   part to the definition (see the examples below).
 }
 \value{
-  The value pf \code{representation}  is just the list of arguments, after these have been checked
+  The value of \code{representation}  is just the list of arguments, after these have been checked
   for validity.
 
   The value of \code{prototype} is the object to be used as the
