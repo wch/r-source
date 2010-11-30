@@ -1,6 +1,6 @@
 % File src/library/stats/man/kernel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{kernel}
@@ -19,7 +19,7 @@
   methods for these kernel objects.
 }
 \usage{
-kernel(coef, m, r, name)
+kernel(coef, m = 2, r, name)
 
 df.kernel(k)
 bandwidth.kernel(k)

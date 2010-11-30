@@ -69,6 +69,13 @@
       with attributes such as names (but no class).
 
       \item \code{setRepositories()} gains an \code{addURLs} argument.
+
+      \item \code{StructTS(type = "BSM")} now allows series with just
+      two seasons.  (Reported by Birgit Erni.)
+
+      \item \code{kernel()}'s default for \code{m} was not appropriate
+      if \code{coef} was a set of coefficients.  (Reported by Pierre
+      Chausse.)
     }
   }
 
@@ -294,9 +301,6 @@
       directives, rather than signalling an error.  For 2.12.x a warning
       will be issued, but this will be correctly reported as an error 
       in later releases. (Reported by Charles Berry.)
-
-      \item \code{StructTS(type = "BSM")} now allows series with just
-      two seasons.  (Reported by Birgit Erni.)
     }
   }
 }
