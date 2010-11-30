@@ -16,7 +16,7 @@ Installation
 The distribution is distributed as a 37Mb installer @RWVER@-win.exe.
 
 Just run this for a Windows-XP style installer.  It contains all the R
-components, and you can select what want installed.
+components, and you can select what you want installed.
 
 For more details, including command-line options for the installer
 and how to uninstall, see the rw-FAQ.  If you are reading this as part of
