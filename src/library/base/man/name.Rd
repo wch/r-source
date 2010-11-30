@@ -39,7 +39,8 @@ is.name(x)
   symbol of that name (and if the element is \code{NA_character_}, the
   name is \code{`NA`}.
 
-  Names are currently limited to 256 bytes.
+  Names are limited to 10,000 bytes (and were to 256 bytes in versions
+  of \R before 2.13.0).
 
   \code{as.name} is implemented as \code{\link{as.vector}(x, "symbol")},
   and hence will dispatch methods for the generic function \code{as.vector}.
