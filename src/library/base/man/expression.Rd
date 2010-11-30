@@ -47,11 +47,14 @@ as.expression(x, \dots)
 
   \code{as.expression} attempts to coerce its argument into an
   expression object.  It is generic, and only the default method is
-  described here.  \code{NULL}, calls, symbols (see
+  described here.  (The default method calls
+  \code{as.vector(type="expression")} and so may dispatch methods for
+  \code{\link{as.vector}}.)  \code{NULL}, calls, symbols (see
   \code{\link{as.symbol}}) and pairlists are returned as the element of
-  a length-one expression vector.  Vectors (including lists) are placed
-  element-by-element into an expression vector.  Other types are not
-  currently supported.
+  a length-one expression vector.  Atomic vectors are placed
+  element-by-element into an expression vector (without using any
+  names): lists are changed type to an expression vector (keeping all
+  attributes).  Other types are not currently supported.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

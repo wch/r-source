@@ -37,7 +37,7 @@ is.name(x)
   vector (so methods for \code{as.character} are not used).  It then
   takes the first element and provided it is not \code{""}, returns a
   symbol of that name (and if the element is \code{NA_character_}, the
-  name is \code{`NA`}.
+  name is \code{`NA`}).
 
   Names are currently limited to 256 bytes.
 
