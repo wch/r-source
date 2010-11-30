@@ -156,9 +156,6 @@
       directives, rather than signalling an error.  For 2.12.x a warning
       will be issued, but this will be correctly reported as an error 
       in later releases. (Reported by Charles Berry.)
-
-      \item \code{StructTS(type = "BSM")} now allows series with just
-      two seasons.  (Reported by Birgit Erni.)
     }
   }
 }
