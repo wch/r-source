@@ -33,14 +33,14 @@ is.name(x)
   \item{x}{object to be coerced or tested.}
 }
 \details{
+  Names are limited to 10,000 bytes (and were to 256 bytes in versions
+  of \R before 2.13.0).
+  
   \code{as.name} first coerces its argument internally to a character
   vector (so methods for \code{as.character} are not used).  It then
   takes the first element and provided it is not \code{""}, returns a
   symbol of that name (and if the element is \code{NA_character_}, the
-  name is \code{`NA`}.
-
-  Names are limited to 10,000 bytes (and were to 256 bytes in versions
-  of \R before 2.13.0).
+  name is \code{`NA`}).
 
   \code{as.name} is implemented as \code{\link{as.vector}(x, "symbol")},
   and hence will dispatch methods for the generic function \code{as.vector}.

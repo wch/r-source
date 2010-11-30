@@ -27,6 +27,7 @@ as.expression <- function(x,...) UseMethod("as.expression")
 as.expression.default <- function(x,...) .Internal(as.vector(x, "expression"))
 
 as.list <- function(x,...) UseMethod("as.list")
+## This if() avoid dispatch on methods for as.vector.
 as.list.default <- function (x, ...)
     if (typeof(x) == "list") x else .Internal(as.vector(x, "list"))
 
@@ -42,7 +43,9 @@ as.list.data.frame <- function(x,...) {
 as.list.environment <- function(x, all.names=FALSE, ...)
     .Internal(env2list(x, all.names))
 
-##as.vector dispatches internally so no need for a generic
+## NB: as.vector is used for several other as.xxxx, including
+## as.expression, as.list, as.pairlist, as.single, as.symbol.
+## as.vector dispatches internally so no need for a generic
 as.vector <- function(x, mode = "any") .Internal(as.vector(x, mode))
 
 as.matrix <- function(x, ...) UseMethod("as.matrix")
