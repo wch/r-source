@@ -1533,7 +1533,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 unlink(build_dir, recursive = TRUE)
                 ## for Windows' sake: errors can make it unwritable
                 build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
-                checkingLog(Log, "PDF version of manual without index")
+                checkingLog(Log, "PDF version of manual without hyperrefs or index")
+                ## Also turn off hyperrefs.
+                Sys.setenv(R_RD4PDF = "times")
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste("--build-dir=", shQuote(build_dir), sep = ""),
                           "--no-clean", "--no-index",
@@ -1953,7 +1955,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## package vignette must require its own package, which OTOH is
         ## not required in the package DESCRIPTION file.
         ## Namespace imports must really be in Depends.
-        res <- .check_package_depends(pkgdir, R_check_force_suggests)
+
+        ## Suppress warnings from incorrect NAMESPACE files (errors in 2.13.0)
+        res <- suppressWarnings(.check_package_depends(pkgdir, R_check_force_suggests))
         if (any(sapply(res, length) > 0)) {
             if (!all(names(res) %in% c("suggests_but_not_installed",
                                        "enhances_but_not_installed"))) {
