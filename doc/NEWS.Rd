@@ -29,6 +29,9 @@
       argument in \code{switch()}, a warning is given if more than
       one unnamed alternative value is given.  This will become an
       error in R 2.13.0.
+
+      \item \code{StructTS(type = "BSM")} now allows series with just
+      two seasons.  (Reported by Birgit Erni.)
     }
   }
 

@@ -49,13 +49,15 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     }
     makeBSM <- function(x, nf)
     {
-        if(nf <= 1L) stop("frequency must be a positive integer for BSM")
-        if(nf < 4L) stop("only frequencies >= 4 are currently supported")
+        ## See Harvey (1993, p.143)
+        if(nf <= 1L) stop("frequency must be a positive integer >= 2 for BSM")
         T <- matrix(0., nf + 1L, nf + 1L)
         T[1L:2L, 1L:2L] <- c(1, 0, 1, 1)
         T[3L, ] <- c(0, 0, rep(-1, nf - 1L))
-        ind <- 3:nf
-        T[cbind(ind+1L, ind)] <- 1
+        if(nf >= 3L) {
+            ind <- 3:nf
+            T[cbind(ind+1L, ind)] <- 1
+        }
         Z <- c(1., 0., 1., rep(0., nf - 2L))
         xm <- if(is.na(x[1L])) mean(x, na.rm = TRUE) else x[1L]
         if(is.na(xm)) stop("the series is entirely NA")
