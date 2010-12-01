@@ -70,9 +70,6 @@
 
       \item \code{setRepositories()} gains an \code{addURLs} argument.
 
-      \item \code{StructTS(type = "BSM")} now allows series with just
-      two seasons.  (Reported by Birgit Erni.)
-
       \item \code{kernel()}'s default for \code{m} was not appropriate
       if \code{coef} was a set of coefficients.  (Reported by Pierre
       Chausse.)
@@ -174,6 +171,9 @@
       argument in \code{switch()}, a warning is given if more than
       one unnamed alternative value is given.  This will become an
       error in R 2.13.0.
+
+      \item \code{StructTS(type = "BSM")} now allows series with just
+      two seasons.  (Reported by Birgit Erni.)
     }
   }
 

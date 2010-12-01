@@ -49,7 +49,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     }
     makeBSM <- function(x, nf)
     {
-        if(nf <= 1L) stop("frequency must be a positive integer for BSM")
+        ## See Harvey (1993, p.143)
+        if(nf <= 1L) stop("frequency must be a positive integer >= 2 for BSM")
         T <- matrix(0., nf + 1L, nf + 1L)
         T[1L:2L, 1L:2L] <- c(1, 0, 1, 1)
         T[3L, ] <- c(0, 0, rep(-1, nf - 1L))
