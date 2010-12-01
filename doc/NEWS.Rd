@@ -315,7 +315,13 @@
 
       \item Rendering raster images in PDF output was resetting the
       clipping region.
-      
+
+      \item Rendering of raster images on Cairo X11 device was wrong,
+      particularly when a small image was being scaled up using
+      interpolation.
+
+      With Cairo < 1.6, will be better than before, though still a
+      little clunky.  With Cairo >= 1.6, should be sweet as.
     }
   }
 }
