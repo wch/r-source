@@ -73,6 +73,11 @@
       \item \code{kernel()}'s default for \code{m} was not appropriate
       if \code{coef} was a set of coefficients.  (Reported by Pierre
       Chausse.)
+
+      \item \code{chisq.test()} now also returns a \code{stdres}
+      component, for standardized residuals (which have unit variance,
+      unlike the Pearson residuals).
+
     }
   }
 

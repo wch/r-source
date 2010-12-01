@@ -66,6 +66,12 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	sr <- rowSums(x)
 	sc <- colSums(x)
 	E <- outer(sr, sc, "*") / n
+
+        ## Cell residual variance. Essentially formula (2.9) in Agresti(2007).
+        v <- function(r, c, n) c * r * (n - r) * (n - c)/n^3
+        
+        V <- outer(sr, sc, v, n)
+
 	dimnames(E) <- dimnames(x)
 	if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
 	    setMETH()
@@ -114,6 +120,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	}
 	METHOD <- "Chi-squared test for given probabilities"
 	E <- n * p
+        V <- n * p * (1 - p)
 	names(E) <- names(x)
 	STATISTIC <- sum((x - E) ^ 2 / E)
 	if(simulate.p.value) {
@@ -143,6 +150,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 		   data.name = DNAME,
 		   observed = x,
 		   expected = E,
-		   residuals = (x - E) / sqrt(E)),
+		   residuals = (x - E) / sqrt(E),
+                   stdres = (x - E) / sqrt(V) ),
 	      class = "htest")
 }

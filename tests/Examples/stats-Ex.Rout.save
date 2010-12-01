@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-17 r53625)
+R version 2.13.0 Under development (unstable) (2010-12-01 r53725)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin10.5.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3687,7 +3687,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x1024f0718>
+<environment: 0x102c93ce0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4102,27 +4102,38 @@ I(x^3) -0.73        0.93 -0.99
 > 
 > ### ** Examples
 > 
-> ## Not really a good example
-> chisq.test(InsectSprays$count > 7, InsectSprays$spray)
+> 
+> #From Agresti(2007) p.39
+> M <- as.table(rbind(c(762, 327, 468), c(484,239,477)))
+> dimnames(M) <- list(gender=c("M","F"), party=c("Democrat","Independent", "Republican"))
+> (Xsq <- chisq.test(M))  # Prints test summary
 
 	Pearson's Chi-squared test
 
-data:  InsectSprays$count > 7 and InsectSprays$spray 
-X-squared = 60.9915, df = 5, p-value = 7.582e-12
+data:  M 
+X-squared = 30.0701, df = 2, p-value = 2.954e-07
 
->                                 # Prints test summary
-> chisq.test(InsectSprays$count > 7, InsectSprays$spray)$observed
-                      InsectSprays$spray
-InsectSprays$count > 7  A  B  C  D  E  F
-                 FALSE  1  1 12 11 12  0
-                 TRUE  11 11  0  1  0 12
->                                 # Counts observed
-> chisq.test(InsectSprays$count > 7, InsectSprays$spray)$expected
-                      InsectSprays$spray
-InsectSprays$count > 7        A        B        C        D        E        F
-                 FALSE 6.166667 6.166667 6.166667 6.166667 6.166667 6.166667
-                 TRUE  5.833333 5.833333 5.833333 5.833333 5.833333 5.833333
->                                 # Counts expected under the null
+> Xsq$observed   # observed counts (same as M) 
+      party
+gender Democrat Independent Republican
+     M      762         327        468
+     F      484         239        477
+> Xsq$expected   # expected counts under the null
+      party
+gender Democrat Independent Republican
+     M 703.6714    319.6453   533.6834
+     F 542.3286    246.3547   411.3166
+> Xsq$residuals  # Pearson residuals
+      party
+gender   Democrat Independent Republican
+     M  2.1988558   0.4113702 -2.8432397
+     F -2.5046695  -0.4685829  3.2386734
+> Xsq$stdres     # standardized residuals
+      party
+gender   Democrat Independent Republican
+     M  4.5020535   0.6994517 -5.3159455
+     F -4.5020535  -0.6994517  5.3159455
+> 
 > 
 > ## Effect of simulating p-values
 > x <- matrix(c(12, 5, 7, 7), ncol = 2)
@@ -6781,7 +6792,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x106e8eb80>
+<environment: 0x10b182d40>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7183,7 +7194,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x1050a7260>
+<environment: 0x10718f068>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11559,22 +11570,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x105d4d3f8>
+<environment: 0x10bb7aa08>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x105d4d3f8>
+<environment: 0x10bb7aa08>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x105d4d3f8>
+<environment: 0x10bb7aa08>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x105d4d3f8>
+<environment: 0x10bb7aa08>
 
 $name
 [1] "identity"
@@ -11585,12 +11596,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x10589bf08>
+<environment: 0x10bb6edc0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x10589bf08>
+<environment: 0x10bb6edc0>
 
 > 
 > 
@@ -15212,7 +15223,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x1073ed7b8>
+<environment: 0x107c625f8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17432,7 +17443,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  19.571 0.523 25.695 0 0 
+Time elapsed:  11.504 0.463 12.172 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -87,6 +87,9 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{expected}{the expected counts under the null hypothesis.}
   \item{residuals}{the Pearson residuals,
     \code{(observed - expected) / sqrt(expected)}.}
+  \item{stdres}{standardized residuals,
+    \code{(observed - expected) / sqrt(V)}, where \code{V} is the residual cell variance (Agresti, 2007, 
+    section 2.4.5 for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
 }
 \seealso{
   For goodness-of-fit testing, notably of continuous distributions,
@@ -101,15 +104,23 @@ chisq.test(x, y = NULL, correct = TRUE,
   Algorithm AS159.  An efficient method of generating r x c tables
   with given row and column totals.
   \emph{Applied Statistics} \bold{30}, 91--97.
+
+  Agresti, A. (2007)
+  \emph{An Introduction to Categorical Data Analysis, 2nd ed.},
+  New York: John Wiley & Sons.
+  Page 38.
 }
 \examples{
-## Not really a good example
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)
-                                # Prints test summary
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$observed
-                                # Counts observed
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$expected
-                                # Counts expected under the null
+
+## From Agresti(2007) p.39
+M <- as.table(rbind(c(762, 327, 468), c(484,239,477)))
+dimnames(M) <- list(gender=c("M","F"), party=c("Democrat","Independent", "Republican"))
+(Xsq <- chisq.test(M))  # Prints test summary
+Xsq$observed   # observed counts (same as M) 
+Xsq$expected   # expected counts under the null
+Xsq$residuals  # Pearson residuals
+Xsq$stdres     # standardized residuals
+
 
 ## Effect of simulating p-values
 x <- matrix(c(12, 5, 7, 7), ncol = 2)
