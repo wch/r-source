@@ -159,6 +159,22 @@
       directives, rather than signalling an error.  For 2.12.x a warning
       will be issued, but this will be correctly reported as an error 
       in later releases. (Reported by Charles Berry.)
+
+      \item Fix for subsetting of \code{"raster"} objects when only one
+      of \code{i} or \code{j} is specified.
+
+      \item \code{grid.raster()} in package \pkg{grid} did not accept
+      \code{"nativeRaster"} objects (like \code{rasterImage()} does).
+
+      \item Rendering raster images in PDF output was resetting the
+      clipping region.
+
+      \item Rendering of raster images on Cairo X11 device was wrong,
+      particularly when a small image was being scaled up using
+      interpolation.
+
+      With Cairo < 1.6, will be better than before, though still a
+      little clunky.  With Cairo >= 1.6, should be sweet as.
     }
   }
 }

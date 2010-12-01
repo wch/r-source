@@ -80,10 +80,14 @@ print.raster <- function(x, ...) {
 # Non-standard because raster is ROW-wise
 # Try to piggy-back on existing methods as much as possible
 # IGNORE 'drop'
-"[.raster" <- function(x, i, j, ..., drop) {
+"[.raster" <- function(x, i, j, ...) {
     m <- as.matrix(x)
-    if (missing(j))
-        subset <- m[i, drop=FALSE]
+    if (missing(i) && missing(j))
+        stop('No valid indices')
+    if (missing(i))
+        subset <- m[1:nrow(m), j, drop=FALSE]        
+    else if (missing(j))
+        subset <- m[i, 1:ncol(m), drop=FALSE]
     else
         subset <- m[i, j, drop=FALSE]
     as.raster(subset)
@@ -91,8 +95,12 @@ print.raster <- function(x, ...) {
 
 "[<-.raster" <- function(x, i, j, value) {
     m <- as.matrix(x)
-    if (missing(j))
-        m[i] <- value
+    if (missing(i) && missing(j))
+        stop('No valid indices')
+    if (missing(i))
+        m[1:nrow(m), j] <- value
+    else if (missing(j))
+        m[i, 1:ncol(m)] <- value
     else
         m[i, j] <- value
     as.raster(m)

@@ -998,7 +998,7 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 ######################################
 
 validDetails.rastergrob <- function(x) {
-    if (!is.raster(x$raster))
+    if (!(is.raster(x$raster) || inherits(x$raster, "nativeRaster")))
         x$raster <- as.raster(x$raster)
     if (!is.unit(x$x) ||
         !is.unit(x$y) ||
@@ -1137,7 +1137,11 @@ rasterGrob <- function(image,
                        interpolate=TRUE,
                        default.units="npc",
                        name=NULL, gp=gpar(), vp=NULL) {
-    raster <- as.raster(image)
+    
+    if (inherits(image, "nativeRaster"))
+        raster <- image
+    else
+        raster <- as.raster(image)
     if (!is.unit(x))
         x <- unit(x, default.units)
     if (!is.unit(y))
