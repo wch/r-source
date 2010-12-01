@@ -85,11 +85,11 @@ print.raster <- function(x, ...) {
     if (missing(i) && missing(j))
         stop('No valid indices')
     if (missing(i))
-        subset <- m[1:nrow(m), j]        
+        subset <- m[1:nrow(m), j, drop=FALSE]        
     else if (missing(j))
-        subset <- m[i, 1:ncol(m)]
+        subset <- m[i, 1:ncol(m), drop=FALSE]
     else
-        subset <- m[i, j]
+        subset <- m[i, j, drop=FALSE]
     as.raster(subset)
 }
 
