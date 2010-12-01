@@ -306,6 +306,9 @@
       directives, rather than signalling an error.  For 2.12.x a warning
       will be issued, but this will be correctly reported as an error 
       in later releases. (Reported by Charles Berry.)
+
+      \item Fix for subsetting of \code{"raster"} objects when only one
+      of \code{i} or \code{j} is specified.
     }
   }
 }
