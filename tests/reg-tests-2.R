@@ -1628,7 +1628,7 @@ x # list
 
 
 ## printing of a kernel:
-kernel(1, 0)
+kernel(1)
 ## printed wrongly in R <= 2.1.1
 
 
