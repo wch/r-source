@@ -86,9 +86,9 @@ kernel <- function (coef, m = 2, r, name="unknown")
                modified.daniell = modified.daniell.kernel(m),
                stop("unknown named kernel"))
     } else {
-        if (!is.vector(coef))
+        if (!is.numeric(coef))
             stop ("'coef' must be a vector")
-        if (length(coef) <= 1L)
+        if (length(coef) < 1L)
             stop ("'coef' does not have the correct length")
         m <- length(coef) - 1L
         kernel <- list (coef=coef, m=m)
