@@ -18,7 +18,9 @@ as.array(x, ...)
 is.array(x)
 }
 \arguments{
-  \item{data}{a vector (including a list) giving data to fill the array.}
+  \item{data}{a vector (including a list or \code{\link{expression}}
+    vector) giving data to fill the array.  Other objects are coerced by
+    \code{\link{as.vector}}.}
   \item{dim}{the dim attribute for the array to be created, that is a
     vector of length one or more giving the maximal indices in
     each dimension.}

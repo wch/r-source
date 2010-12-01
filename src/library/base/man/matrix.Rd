@@ -27,7 +27,8 @@ as.matrix(x, \dots)
 is.matrix(x)
 }
 \arguments{
-  \item{data}{an optional data vector.  It is coerced by
+  \item{data}{an optional data vector (including a list or
+    \code{\link{expression}} vector).  Other \R objects are coerced by
     \code{\link{as.vector}}.}
   \item{nrow}{the desired number of rows.}
   \item{ncol}{the desired number of columns.}
