@@ -312,6 +312,9 @@
 
       \item \code{grid.raster()} in package \pkg{grid} did not accept
       \code{"nativeRaster"} objects (like \code{rasterImage()} does).
+
+      \item Rendering raster images in PDF output was resetting the
+      clipping region.
       
     }
   }
