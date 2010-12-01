@@ -309,6 +309,10 @@
 
       \item Fix for subsetting of \code{"raster"} objects when only one
       of \code{i} or \code{j} is specified.
+
+      \item \code{grid.raster()} in package \pkg{grid} did not accept
+      \code{"nativeRaster"} objects (like \code{rasterImage()} does).
+      
     }
   }
 }
