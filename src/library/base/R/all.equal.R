@@ -55,7 +55,7 @@ all.equal.numeric <-
 
     lt <- length(target)
     lc <- length(current)
-    cplx <- is.complex(target)
+    cplx <- is.complex(target) # and so current must be too.
     if(lt != lc) {
 	## *replace* the 'Lengths' msg[] from attr.all.equal():
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
@@ -63,6 +63,7 @@ all.equal.numeric <-
 			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
 	return(msg)
     }
+    ## remove atttributes (remember these are both numeric or complex vectors)
     target <- as.vector(target)
     current <- as.vector(current)
     out <- is.na(target)
@@ -77,7 +78,7 @@ all.equal.numeric <-
     target <- target[!out]
     current <- current[!out]
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- mean((if(cplx)Mod else abs)(target - current))
+    xy <- mean((if(cplx) Mod else abs)(target - current))
     what <-
 	if(is.null(scale)) {
 	    xn <- mean(abs(target))
@@ -227,6 +228,7 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
     if(is.null(msg)) TRUE else msg
 }
 
+## also used for logical
 all.equal.raw <-
     function(target, current, check.attributes = TRUE, ...)
 {
