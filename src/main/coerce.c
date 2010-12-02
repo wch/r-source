@@ -1346,6 +1346,18 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static R_INLINE SEXP clear_non_name_attribs(SEXP x)
+{
+    /* only called for VECXSP and EXPRSXP */
+    SEXP ans, nm;
+    if(ATTRIB(x) == R_NilValue) return x;
+    nm = getAttrib(x, R_NamesSymbol);
+    ans  = NAMED(x) ? duplicate(x) : x;
+    CLEAR_ATTRIB(ans);
+    if (!isNull(nm)) setAttrib(ans, R_NamesSymbol, nm);
+    return ans;
+}
+
 /* NB: as.vector is used for several other as.xxxx, including
    as.expression, as.list, as.pairlist, as.symbol, (as.single) */
 SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1384,7 +1396,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return ans;
 	case EXPRSXP:
 	case VECSXP:
-	    return x;
+	    return clear_non_name_attribs(x);
 	default:
 	    ;
 	}
@@ -1416,11 +1428,13 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     ans = ascommon(call, x, type);
     switch(TYPEOF(ans)) { /* keep attributes for these: */
-    case NILSXP:
+    case NILSXP: /* doesn't have any */
+    case LISTSXP: /* but ascommon fiddled */
+    case LANGSXP:
+	break;
     case VECSXP:
     case EXPRSXP:
-    case LISTSXP:
-    case LANGSXP:
+	ans = clear_non_name_attribs(ans);
 	break;
     default:
 	CLEAR_ATTRIB(ans);
