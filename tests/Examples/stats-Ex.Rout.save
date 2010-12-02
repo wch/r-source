@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-12-01 r53725)
+R version 2.13.0 Under development (unstable) (2010-12-01 r53729)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.5.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3687,7 +3687,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x102c93ce0>
+<environment: 0x15c5220>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4103,7 +4103,7 @@ I(x^3) -0.73        0.93 -0.99
 > ### ** Examples
 > 
 > 
-> #From Agresti(2007) p.39
+> ## From Agresti(2007) p.39
 > M <- as.table(rbind(c(762, 327, 468), c(484,239,477)))
 > dimnames(M) <- list(gender=c("M","F"), party=c("Democrat","Independent", "Republican"))
 > (Xsq <- chisq.test(M))  # Prints test summary
@@ -6792,7 +6792,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x10b182d40>
+<environment: 0x58ef428>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7194,7 +7194,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x10718f068>
+<environment: 0x4a54328>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11570,22 +11570,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x10bb7aa08>
+<environment: 0x50f94a8>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x10bb7aa08>
+<environment: 0x50f94a8>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x10bb7aa08>
+<environment: 0x50f94a8>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x10bb7aa08>
+<environment: 0x50f94a8>
 
 $name
 [1] "identity"
@@ -11596,12 +11596,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x10bb6edc0>
+<environment: 0x50f0070>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x10bb6edc0>
+<environment: 0x50f0070>
 
 > 
 > 
@@ -15223,7 +15223,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x107c625f8>
+<environment: 0x3bdde68>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17443,7 +17443,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.504 0.463 12.172 0 0 
+Time elapsed:  12.42 0.316 12.741 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -280,10 +280,13 @@ tar <- function(tarfile, files = NULL,
         }
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))
-        if(!is.na(info$uid))
-            header[109:115] <- charToRaw(sprintf("%07o", info$uid))
-        if(!is.na(info$gid))
-            header[117:123] <- charToRaw(sprintf("%07o", info$gid))
+        ## Windows does not have uid, gid
+        uid <- info$uid
+        if(!is.null(uid) && !is.na(uid))
+            header[109:115] <- charToRaw(sprintf("%07o", uid))
+        gid <- info$gid
+        if(!is.null(gid) && !is.na(gid))
+            header[117:123] <- charToRaw(sprintf("%07o", gid))
         ## size is 0 for directories and it seems for links.
         size <- ifelse(info$isdir, 0, info$size)
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
