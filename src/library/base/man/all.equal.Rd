@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -52,27 +52,28 @@ attr.all.equal(target, current,
     \code{\link{identical}} if appropriate.
 }
 \details{
-    There are several methods available, most of which are dispatched by
-    the default method, see \code{\link{methods}("all.equal")}.
-    \code{all.equal.list} and \code{all.equal.language} provide
-    comparison of recursive objects.
+  \code{all.equal} is a generic function, dispatching methods on the
+  \code{target} argument.  To see the available methods, use
+  \code{\link{methods}("all.equal")}, but note that the default method
+  also does some dispatching, e.g. using the raw method for logical
+  targets.
 
-    Numerical comparisons for \code{scale = NULL} (the default) are done
-    by first computing the mean absolute difference of the two numerical
-    vectors.  If this is smaller than \code{tolerance} or not finite,
-    absolute differences are used, otherwise relative differences scaled
-    by the mean absolute difference.
+  Numerical comparisons for \code{scale = NULL} (the default) are done
+  by first computing the mean absolute difference of the two numerical
+  vectors.  If this is smaller than \code{tolerance} or not finite,
+  absolute differences are used, otherwise relative differences scaled
+  by the mean absolute difference.
 
-    If \code{scale} is positive, absolute comparisons are made after
-    scaling (dividing) by \code{scale}.
+  If \code{scale} is positive, absolute comparisons are made after
+  scaling (dividing) by \code{scale}.
 
-    For complex arguments, the modulus \code{\link{Mod}} of the difference
-    is used: \code{all.equal.numeric} is called so arguments
-    \code{tolerance} and \code{scale} are available.
+  For complex \code{target}, the modulus (\code{\link{Mod}}) of the
+  difference is used: \code{all.equal.numeric} is called so arguments
+  \code{tolerance} and \code{scale} are available.
 
-    \code{attr.all.equal} is used for comparing
-    \code{\link{attributes}}, returning \code{NULL} or a
-    \code{character} vector.
+  \code{attr.all.equal} is used for comparing
+  \code{\link{attributes}}, returning \code{NULL} or a
+  \code{character} vector.
 }
 \value{
   Either \code{TRUE} (\code{NULL} for \code{attr.all.equal}) or a vector
