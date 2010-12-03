@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### http://www.r-project.org/Licenses/
 
-AC_PREREQ(2.60)
+AC_PREREQ(2.62)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -419,6 +419,15 @@ AC_ARG_WITH([ICU],
 [R_ARG_USE(ICU)],
 [use_ICU=yes])
 
+## Byte-compilation of packages.
+AC_ARG_ENABLE([byte-compiled-packages],
+[AS_HELP_STRING([--enable-byte-compiled-packages],
+                [byte-compile R packages @<:@no@:>@])],
+[want_byte_compiled_packages="${enableval}"],
+[want_byte_compiled_packages=no])
+AM_CONDITIONAL(BYTE_COMPILE_PACKAGES,
+               [test "x${want_byte_compiled_packages}" = xyes])
+
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
@@ -554,6 +563,8 @@ AC_PATH_PROGS(R_BZIPCMD, [${BZIP} bzip2], "")
 R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
+## Noweb
+AC_PATH_PROG(NOTANGLE, notangle)
 
 ## Cairo needs pkg-config
 AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
@@ -786,6 +797,13 @@ dnl ])
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
 
+AC_OPENMP
+
+dnl if test "x${ac_cv_prog_c_openmp}" != "unsupported"; then
+dnl   AC_DEFINE(HAVE_OPENMP, 1, 
+dnl             [Define if you have C OpenMP support.])
+dnl fi
+
 ### *** Fortran 77 compiler.
 
 R_PROG_F77_FLIBS
@@ -797,9 +815,18 @@ R_PROG_F77_CC_COMPAT_COMPLEX
 AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
                [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
 
+AC_LANG_PUSH(Fortran 77)
+AC_OPENMP
+AC_LANG_POP(Fortran 77)
+
+
 ### *** C++ compiler.
 
 R_PROG_CXX_MAKEFRAG
+
+AC_LANG_PUSH(C++)
+AC_OPENMP
+AC_LANG_POP(C++)
 
 ### *** ObjC compiler
 
@@ -2123,6 +2150,7 @@ AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
+AC_OPENMP
 AC_LANG_POP()
 : ${SHLIB_FCLD="${FC}"}
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
