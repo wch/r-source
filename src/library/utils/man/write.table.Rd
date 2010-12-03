@@ -1,6 +1,6 @@
 % File src/library/utils/man/write.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write.table}
@@ -16,7 +16,8 @@
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
             eol = "\n", na = "NA", dec = ".", row.names = TRUE,
-            col.names = TRUE, qmethod = c("escape", "double"))
+            col.names = TRUE, qmethod = c("escape", "double"),
+            fileEncoding = "")
 
 write.csv(\dots)
 write.csv2(\dots)
@@ -56,6 +57,9 @@ write.csv2(\dots)
     \code{"escape"} (default), in which case the quote character is
     escaped in C style by a backslash, or \code{"double"}, in which case
     it is doubled.  You can specify just the initial letter.}
+  \item{fileEncoding}{character string: if non-empty declares the
+    encoding to be used on a file (not a connection) so the character data can
+    be re-encoded as they are written.  See \code{\link{file}}.}
 
   \item{\dots}{arguments to \code{write.table}: \code{append},
     \code{col.names}, \code{sep}, \code{dec} and \code{qmethod}
@@ -157,6 +161,9 @@ read.csv("foo.csv", row.names = 1)
 ## or without row names
 write.csv(x, file = "foo.csv", row.names = FALSE)
 read.csv("foo.csv")
+
+## To write a file in MacRoman for simple use in Mac Excel 2004
+write.csv(x, file = "foo.csv", fileEncoding = "macroman")
 }}
 \keyword{print}
 \keyword{file}

@@ -78,6 +78,9 @@
       component, for standardized residuals (which have unit variance,
       unlike the Pearson residuals).
 
+      \item \code{write.table()} and friends gain a \code{fileEncoding}
+      argument, to simplify writing files for use on other OSes (e.g. a
+      spreadsheet to be input for Windows or Mac OS X Excel).
     }
   }
 
