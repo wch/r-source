@@ -1536,11 +1536,20 @@ static void tmp_cleanup(void *data)
 	R_SetVarLocValue(loc, __v__); \
     } while(0)
 
+#define ASSIGNBUFSIZ 32
+static R_INLINE SEXP installAssignFcnName(SEXP fun)
+{
+    char buf[ASSIGNBUFSIZ];
+    if(strlen(CHAR(PRINTNAME(fun))) + 3 > ASSIGNBUFSIZ)
+	error(_("overlong name in '%s'"), CHAR(PRINTNAME(fun)));
+    sprintf(buf, "%s<-", CHAR(PRINTNAME(fun)));
+    return install(buf);
+}
+
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmp2;
+    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, afun;
     R_varloc_t tmploc;
-    char buf[32];
     RCNTXT cntxt;
 
     expr = CAR(args);
@@ -1589,10 +1598,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (isLanguage(CADR(expr))) {
 	if (TYPEOF(CAR(expr)) != SYMSXP)
 	    error(_("invalid function in complex assignment"));
-	if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
-	    error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
-	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
-	tmp = install(buf);
+	tmp = installAssignFcnName(CAR(expr));
 	SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
 	SET_PRVALUE(tmp2, rhs);
@@ -1607,14 +1613,12 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (TYPEOF(CAR(expr)) != SYMSXP)
 	error(_("invalid function in complex assignment"));
-    if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
-	error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
-    sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
+    afun = installAssignFcnName(CAR(expr));
     SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
     SET_PRVALUE(tmp, rhs);
     PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
-			      install(buf), R_GetVarLocSymbol(tmploc),
+			      afun, R_GetVarLocSymbol(tmploc),
 			      CDDR(expr), tmp));
     expr = eval(expr, rho);
     UNPROTECT(5);
