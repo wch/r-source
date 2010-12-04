@@ -576,13 +576,12 @@ void attribute_hidden R_init_jit_enabled(void)
     
 SEXP attribute_hidden R_cmpfun(SEXP fun)
 {
-    SEXP dcolonsym, packsym, funsym, call, fcall, val;
+    SEXP packsym, funsym, call, fcall, val;
 
-    dcolonsym = install("::");
     packsym = install("compiler");
     funsym = install("cmpfun");
 
-    PROTECT(fcall = lang3(dcolonsym, packsym, funsym));
+    PROTECT(fcall = lang3(R_DoubleColonSymbol, packsym, funsym));
     PROTECT(call = lang2(fcall, fun));
     val = eval(call, R_GlobalEnv);
     UNPROTECT(2);
@@ -591,10 +590,9 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
 
 static SEXP R_compileExpr(SEXP expr, SEXP vars, SEXP rho)
 {
-    SEXP dcolonsym, packsym, funsym, quotesym;
+    SEXP packsym, funsym, quotesym;
     SEXP qexpr, call, fcall, envarg, val;
 
-    dcolonsym = install("::");
     packsym = install("compiler");
     funsym = install("compile");
     quotesym = install("quote");
@@ -605,7 +603,7 @@ static SEXP R_compileExpr(SEXP expr, SEXP vars, SEXP rho)
     else
 	PROTECT(vars);
 
-    PROTECT(fcall = lang3(dcolonsym, packsym, funsym));
+    PROTECT(fcall = lang3(R_DoubleColonSymbol, packsym, funsym));
     PROTECT(qexpr = lang2(quotesym, expr));
     PROTECT(envarg = list2(vars, rho));
     PROTECT(call = lang3(fcall, qexpr, envarg));

@@ -1087,6 +1087,8 @@ static void SymbolShortcuts(void)
     R_WholeSrcrefSymbol = install("wholeSrcref");
     R_TmpvalSymbol = install("*tmp*");
     R_UseNamesSymbol = install("use.names");
+    R_DoubleColonSymbol = install("::");
+    R_TripleColonSymbol = install(":::");
 }
 
 extern SEXP framenames; /* from model.c */

@@ -88,6 +88,8 @@ extern0 SEXP	R_WholeSrcrefSymbol;   /* "wholeSrcref" */
 extern0 SEXP	R_SrcrefSymbol;     /* "srcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
+extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
+extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 
 extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 
