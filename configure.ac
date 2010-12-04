@@ -476,7 +476,7 @@ AC_ARG_VAR([SHLIB_CXXLD],
             files from the C++ compiler])
 AC_ARG_VAR([SHLIB_CXXLDFLAGS],
            [special flags used by SHLIB_CXXLD])
-AC_ARG_VAR([SHLIB_FCD],
+AC_ARG_VAR([SHLIB_FCLD],
            [command for linking shared objects which contain object
             files from the Fortran 95 compiler])
 AC_ARG_VAR([SHLIB_FCLDFLAGS],
@@ -1566,6 +1566,7 @@ if test -z "${CXXPICFLAGS}"; then
 fi
 
 if test -z "${SHLIB_LD}"; then
+  shlib_ld_was_given=no
   SHLIB_LD="${shlib_ld}"
   R_SH_VAR_ADD(SHLIB_LDFLAGS, [${shlib_ldflags}])
 fi
@@ -1575,6 +1576,7 @@ if test -z "${SHLIB_LDFLAGS}"; then
 fi
 
 if test -z "${SHLIB_CXXLD}"; then
+  shlib_cxxld_was_given=no
   SHLIB_CXXLD="${shlib_cxxld}"
   R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${shlib_cxxldflags}])
 fi
@@ -1702,19 +1704,23 @@ fi
 AC_SUBST(R_OPENMP_CFLAGS)
 AC_SUBST(R_OPENMP_FFLAGS)
 
-## For compiling package code, we use SHLIB_CXXLD or SHLIB_LD for
-## linking, depending on whether the package contains C++ code or not.
+## For compiling package code, we use SHLIB_FCLD, SHLIB_CXXLD or
+## SHLIB_LD for linking, depending on whether the package contains
+## Fortran (90/95) code, C++ (or ObjC) code, or "just" C and Fortran 77.
 ## However, we (currently) do not conditionalize compilation flags.  So
 ## the only "safe" thing we can do for now is:
 ##
-##    If both SHLIB_LD and SHLIB_CXXLD were not specified by the user
-##    and equal CXX and CC, respectively, and these were determined to
-##    support OpenMP, the we try to provide OpenMP support for packages
-##    by adding OPENMP_CXXFLAGS and OPENMP_CFLAGS to the respective
-##    linker flags, and add the OPENMP flags to all (C, C++, Fortran and
-##    Fortran 77) compiler flags.
+##    If none of SHLIB_LD, SHLIB_CXXLD and SHLIB_FCLD were specified by
+##    the user and equal CC, CXX and FC, respectively, and these were
+##    determined to support OpenMP, the we try to provide OpenMP support
+##    for packages by adding OPENMP_FCFLAGS, OPENMP_CXXFLAGS and
+##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
+##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
-
+## <FIXME>
+## Need to do this after configuring Fortran 90/95 support, which comes
+## way below: should this be moved up to the compiler section?
+## </FIXME>
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
@@ -2200,13 +2206,45 @@ AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 AC_OPENMP
 AC_LANG_POP()
-: ${SHLIB_FCLD="${FC}"}
+if test -z "${SHLIB_FCLD}"; then
+  shlib_fcld_was_given=no
+  SHLIB_FCLD="${FC}"
+fi
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
 ## x86 Solaris' f95 needs additional libs when building a DSO
 FCLIBS=${FCLIBS}
 AC_SUBST(FCLIBS)
+
+## OpenMP package stuff (needs to come *after* configuration of all
+## compilers).
+if test "x${shlib_ld_was_given}" = xno -a \
+        "${SHLIB_LD}" = "${CC}" -a \
+        "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${shlib_cxxld_was_given}" = xno -a \
+        "${SHLIB_CXXLD}" = "${CXX}" -a \
+        "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
+        "x${shlib_fcld_was_given}" = xno -a \
+        "${SHLIB_FCLD}" = "${FC}" -a \
+        "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
+  PKG_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
+  PKG_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
+  PKG_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
+  PKG_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+  R_SH_VAR_ADD(SHLIB_LDFLAGS, [${OPENMP_CFLAGS}])
+  R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${OPENMP_CXXFLAGS}])
+  R_SH_VAR_ADD(SHLIB_FCLDFLAGS, [${OPENMP_FCFLAGS}])
+else
+  PKG_OPENMP_CFLAGS=
+  PKG_OPENMP_CXXFLAGS=
+  PKG_OPENMP_FCFLAGS=
+  PKG_OPENMP_FFLAGS=
+fi
+AC_SUBST(PKG_OPENMP_CFLAGS)
+AC_SUBST(PKG_OPENMP_CXXFLAGS)
+AC_SUBST(PKG_OPENMP_FCFLAGS)
+AC_SUBST(PKG_OPENMP_FFLAGS)
 
 
 ## Look for FCPICFLAGS
