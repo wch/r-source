@@ -799,11 +799,6 @@ R_PROG_CC_LO_MAKEFRAG
 
 AC_OPENMP
 
-dnl if test "x${ac_cv_prog_c_openmp}" != "unsupported"; then
-dnl   AC_DEFINE(HAVE_OPENMP, 1, 
-dnl             [Define if you have C OpenMP support.])
-dnl fi
-
 ### *** Fortran 77 compiler.
 
 R_PROG_F77_FLIBS
@@ -1529,6 +1524,7 @@ esac
 
 ## Step 5.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD}"; then
+  main_ld_was_given=no
   MAIN_LD="${main_ld}"
   R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 fi
@@ -1633,6 +1629,7 @@ case "${host_os}" in
 esac
 
 if test -z "${DYLIB_LD}"; then
+  dylib_ld_was_given=no
   DYLIB_LD="${SHLIB_LD}"
   R_SH_VAR_ADD(DYLIB_LDFLAGS, [${dylib_ldflags}])
 else
@@ -1667,6 +1664,57 @@ AC_SUBST(RBLAS_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 AC_SUBST(FW_VERSION)
+
+### OpenMP.
+
+## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,
+## which we already called for determining the appropriate flags for the
+## C, C++, Fortran 77, Fortran compiler/linker.  Note that this gives
+## variables OPENMP_CFLAGS etc., which are meant to be used for *both*
+## compiling and linking.  So we can really only used them provided that
+## we use the respective compilers for linking as well (or we need a
+## different mechanism for determining what is needed).
+##
+## For compiling R itself, we use MAIN_LD and DYLIB_LD for linking, both
+## defaulting to CC.  Hence:
+## 
+##    If both MAIN_LD and DYLIB_LD were not specified by the user and
+##    equal CC and this was determined to support OpenMP, then we (try
+##    to) provide OpenMP support by adding OPENMP_CFLAGS to the linker
+##    flags and OPENMP_CFLAGS and OPENMP_FFLAGS to the C and Fortran 77
+##    compiler flags, and defining HAVE_OPENMP.
+##
+## (The Fortran 77 compiler is never used for linking by default.)
+
+if test "x${main_ld_was_given}" = xno -a "${MAIN_LD}" = "${CC}" -a \
+        "x${dylib_ld_was_given}" = xno -a "${DYLIB_LD}" = "${CC}" -a \
+        "x${ac_cv_prog_c_openmp}" != "xunsupported"; then
+  R_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
+  R_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+  R_SH_VAR_ADD(MAIN_LDFLAGS, [${OPENMP_CFLAGS}])
+  R_SH_VAR_ADD(DYLIB_LDFLAGS, [${OPENMP_CFLAGS}])
+  AC_DEFINE(HAVE_OPENMP, 1, 
+            [Define if you have C OpenMP support.])
+else
+  R_OPENMP_CFLAGS=
+  R_OPENMP_FFLAGS=
+fi
+AC_SUBST(R_OPENMP_CFLAGS)
+AC_SUBST(R_OPENMP_FFLAGS)
+
+## For compiling package code, we use SHLIB_CXXLD or SHLIB_LD for
+## linking, depending on whether the package contains C++ code or not.
+## However, we (currently) do not conditionalize compilation flags.  So
+## the only "safe" thing we can do for now is:
+##
+##    If both SHLIB_LD and SHLIB_CXXLD were not specified by the user
+##    and equal CXX and CC, respectively, and these were determined to
+##    support OpenMP, the we try to provide OpenMP support for packages
+##    by adding OPENMP_CXXFLAGS and OPENMP_CFLAGS to the respective
+##    linker flags, and add the OPENMP flags to all (C, C++, Fortran and
+##    Fortran 77) compiler flags.
+
+
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.

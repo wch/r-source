@@ -474,6 +474,9 @@
 /* Define if you have off_t, fseeko and ftello. */
 #undef HAVE_OFF_T
 
+/* Define if you have C OpenMP support. */
+#undef HAVE_OPENMP
+
 /* Define to 1 if you have pangocairo. */
 #undef HAVE_PANGOCAIRO
 
