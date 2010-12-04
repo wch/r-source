@@ -1551,6 +1551,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP expr, lhs, rhs, saverhs, tmp, tmp2, afun;
     R_varloc_t tmploc;
     RCNTXT cntxt;
+    int nprot;
 
     expr = CAR(args);
 
@@ -1596,24 +1597,54 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rhs); /* To get the loop right ... */
 
     while (isLanguage(CADR(expr))) {
-	if (TYPEOF(CAR(expr)) != SYMSXP)
-	    error(_("invalid function in complex assignment"));
-	tmp = installAssignFcnName(CAR(expr));
+	nprot = 3; /* the two PROTECTs from this iteration and the
+		      old rhs from the previous one */
+	if (TYPEOF(CAR(expr)) == SYMSXP)
+	    tmp = installAssignFcnName(CAR(expr));
+	else {
+	    /* check for and handle assignments of the form
+	       foo::bar(x) <- y or foo:::bar(x) <- y */
+	    tmp = R_NilValue; /* avoid uninitialized variable warnings */
+	    if (TYPEOF(CAR(expr)) == LANGSXP &&
+		(CAR(CAR(expr)) == R_DoubleColonSymbol ||
+		 CAR(CAR(expr)) == R_TripleColonSymbol) &&
+		length(CAR(expr)) == 3 && TYPEOF(CADDR(CAR(expr))) == SYMSXP) {
+		tmp = installAssignFcnName(CADDR(CAR(expr)));
+		PROTECT(tmp = lang3(CAAR(expr), CADR(CAR(expr)), tmp));
+		nprot++;
+	    }
+	    else
+		error(_("invalid function in complex assignment"));
+	}
 	SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
 	SET_PRVALUE(tmp2, rhs);
 	PROTECT(rhs = replaceCall(tmp, R_GetVarLocSymbol(tmploc), CDDR(expr),
 				  tmp2));
 	rhs = eval(rhs, rho);
-	UNPROTECT(3); /* the two PROTECTs from this iteration and the
-			 old rhs from the previous one */
+	UNPROTECT(nprot);
 	PROTECT(rhs);
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
-    if (TYPEOF(CAR(expr)) != SYMSXP)
-	error(_("invalid function in complex assignment"));
-    afun = installAssignFcnName(CAR(expr));
+    nprot = 5; /* the commont case */
+    if (TYPEOF(CAR(expr)) == SYMSXP)
+	afun = installAssignFcnName(CAR(expr));
+    else {
+	/* check for and handle assignments of the form
+	   foo::bar(x) <- y or foo:::bar(x) <- y */
+	afun = R_NilValue; /* avoid uninitialized variable warnings */
+	if (TYPEOF(CAR(expr)) == LANGSXP &&
+	    (CAR(CAR(expr)) == R_DoubleColonSymbol ||
+	     CAR(CAR(expr)) == R_TripleColonSymbol) &&
+	    length(CAR(expr)) == 3 && TYPEOF(CADDR(CAR(expr))) == SYMSXP) {
+	    afun = installAssignFcnName(CADDR(CAR(expr)));
+	    PROTECT(afun = lang3(CAAR(expr), CADR(CAR(expr)), afun));
+	    nprot++;
+	}
+	else
+	    error(_("invalid function in complex assignment"));
+    }
     SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
     SET_PRVALUE(tmp, rhs);
@@ -1621,7 +1652,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      afun, R_GetVarLocSymbol(tmploc),
 			      CDDR(expr), tmp));
     expr = eval(expr, rho);
-    UNPROTECT(5);
+    UNPROTECT(nprot);
     endcontext(&cntxt); /* which does not run the remove */
     unbindVar(R_TmpvalSymbol, rho);
 #ifdef CONSERVATIVE_COPYING /* not default */

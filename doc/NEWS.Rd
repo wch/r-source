@@ -81,6 +81,10 @@
       \item \code{write.table()} and friends gain a \code{fileEncoding}
       argument, to simplify writing files for use on other OSes (e.g. a
       spreadsheet to be input for Windows or Mac OS X Excel).
+
+      \item Assignment expressions of the form \code{foo::bar(x) <- y}
+      and \code{foo:::bar(x) <- y} now work; the assignment functions
+      used are \code{foo::`bar<-`} and \code{foo:::`bar<-`}.
     }
   }
 
