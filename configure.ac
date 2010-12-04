@@ -2235,6 +2235,8 @@ if test "x${shlib_ld_was_given}" = xno -a \
   R_SH_VAR_ADD(SHLIB_LDFLAGS, [${OPENMP_CFLAGS}])
   R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${OPENMP_CXXFLAGS}])
   R_SH_VAR_ADD(SHLIB_FCLDFLAGS, [${OPENMP_FCFLAGS}])
+  AC_DEFINE(SUPPORT_OPENMP, 1,
+            [Define if you C/C++/Fortran OpenMP support for package code.])
 else
   PKG_OPENMP_CFLAGS=
   PKG_OPENMP_CXXFLAGS=

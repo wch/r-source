@@ -924,6 +924,9 @@
 /* Define if you provide support for the libxml ftp/http functions. */
 #undef SUPPORT_LIBXML
 
+/* Define if you C/C++/Fortran OpenMP support for package code. */
+#undef SUPPORT_OPENMP
+
 /* Define to enable provoking compile errors on write barrier violation. */
 #undef TESTING_WRITE_BARRIER
 
