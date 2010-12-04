@@ -90,12 +90,12 @@ principal authors of the packages mentioned are
 @quotation
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
-@item @pkg{DBI} David A. James
-@item @pkg{dataframes2xls} Guido van Steen
+@item @pkg{DBI} @tab David A. James
+@item @pkg{dataframes2xls} @tab Guido van Steen
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
 @item @pkg{gdata} @tab Gregory R. Warnes
 @item @pkg{hdf5} @tab Marcus Daniels
-@item @pkg{ncdf} @tab David Pierce
+@item @pkg{ncdf}, @pkg{ncdf4} @tab David Pierce
 @item @pkg{rJava} @tab Simon Urbanek
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RNetCDF} @tab Pavel Michna
@@ -262,7 +262,7 @@ is specified.  Excel is one such system.
 @findex write.csv2
 
 A common field separator to use in the file is a comma, as that is
-unlikely to appear in any of the fields, in English-speaking countries.
+unlikely to appear in any of the fields in English-speaking countries.
 Such files are known as CSV (comma separated values) files, and wrapper
 function @code{write.csv} provides appropriate defaults.  In some locales
 the comma is used as the decimal point (set this in @code{write.table}
@@ -303,6 +303,29 @@ a
 
 @noindent
 The second is the form of escape commonly used by spreadsheets.
+
+@item @strong{Encodings}
+@cindex Encodings
+
+Text files do not contain metadata on their encodings, so for non-ASCII
+data the file needs to be targetted to the application intended to read
+it.  All of these functions can write to a @emph{connection} which
+allows an encoding to be specified for the file, and as from @R{} 2.13.0
+@code{write.table} has a @code{fileEncoding} argument to make this
+easier.
+
+The hard part is to know what file encoding to use.  For use on Windows,
+it is best to use what Windows calls `Unicode'@footnote{Even then,
+Windows applications may expect a Byte Order Mark which the
+implementation of @code{iconv} used by @R{} may or may not add depending
+on the platform.}, that is @code{"UTF-16LE"}.  Using UTF-8 is a good way
+to make portable files that will not easily be confused with any other
+encoding, but even Mac OS X applications (where UTF-8 is the system
+encoding) may not recognize them, and Windows applications are most
+unlikely to.  Apparently Excel:mac 2004/8 expects @code{.csv} files in
+@code{"macroman"} encoding (the encoding used in much earlier versions
+of Mac OS).
+
 @end enumerate
 
 @findex write.matrix
@@ -791,10 +814,10 @@ Another way to do this is to use the function
 ...
 @end example
 
-The @code{reshape} has a more complicated syntax than @code{stack} but
-can be used for data where the `long' form has more than the one column
-in this example. With @code{direction="wide"}, @code{reshape} can also
-perform the opposite transformation.
+The @code{reshape} function has a more complicated syntax than
+@code{stack} but can be used for data where the `long' form has more
+than the one column in this example. With @code{direction="wide"},
+@code{reshape} can also perform the opposite transformation.
 
 @node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
 @section Flat contingency tables
@@ -932,8 +955,8 @@ export the data in an ordinary @acronym{SPSS} format.
 @cindex Stata
 @findex read.dta
 @findex write.dta
-Stata @file{.dta} files are a binary file format. Files from versions 5,
-6, 7/SE and 8 of Stata can be read and written by functions
+Stata @file{.dta} files are a binary file format. Files from versions 5
+up to at least 11 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.  Stata variables with value labels
 are optionally converted to (and from) @R{} factor.
 
@@ -1200,13 +1223,13 @@ PostgreSQL.
 
 
 @menu
-* DBI / RMySQL::                
+* DBI::                         
 * RODBC::                       
 @end menu
 
 
-@node DBI / RMySQL, RODBC, R interface packages, R interface packages
-@subsection Packages DBI and  RMySQL
+@node DBI, RODBC, R interface packages, R interface packages
+@subsection Packages using DBI
 @cindex MySQL database system
 
 Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
@@ -1230,7 +1253,7 @@ object, and then a call to @code{dbConnect} opens a database connection
 which can subsequently be closed by a call to the generic function
 @code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
 @code{dbdDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
-DBMSs and packages @pkg{ROracle}, @pkg{PostgreSQL} or @pkg{RSQLite}
+DBMSs and packages @pkg{ROracle}, @pkg{RPostgreSQL} or @pkg{RSQLite}
 respectively.
 
 @findex dbSendQuery
@@ -1294,7 +1317,7 @@ Arkansas          8.8     190       50 19.5
 > dbDisconnect(con)
 @end smallexample
 
-@node RODBC,  , DBI / RMySQL, R interface packages
+@node RODBC,  , DBI, R interface packages
 @subsection Package RODBC
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1591,10 +1614,10 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @pkg{hdf5}, @pkg{RNetCDF} and @pkg{ncdf} on @acronym{CRAN}
-provide interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format,
-see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data
-files (network Common Data Form, see
+Packages @pkg{hdf5}, @pkg{RNetCDF}, @pkg{ncdf} and @pkg{ncdf4} on
+@acronym{CRAN} provide interfaces to @acronym{NASA}'s HDF5 (Hierarchical
+Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
+netCDF data files (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
@@ -1603,6 +1626,13 @@ allows @emph{groups} of arrays, and the @R{} interface maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
 
+NetCDF's version 4 format (confusingly, implemented in netCDF 4.1.1 and
+later, but not in 4.0.1) includes the use of various HDF5 formats.  This
+is handled by package @pkg{ncdf4} whereas @pkg{RNetCDF} and @pkg{ncdf}
+handle version 3 files.
+
+The availability of software to support these formats is somewhat
+limited by platform, especially on Windows.
 
 @node dBase files (DBF),  , Binary data formats, Binary files
 @section dBase files (DBF)
