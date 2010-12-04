@@ -799,8 +799,11 @@ USE_RECOMMENDED_PACKAGES_FALSE
 USE_RECOMMENDED_PACKAGES_TRUE
 R_JAVA_LD_LIBRARY_PATH
 R_LD_LIBRARY_PATH
+PKG_OPENMP_FFLAGS
+PKG_OPENMP_FCFLAGS
+PKG_OPENMP_CXXFLAGS
+PKG_OPENMP_CFLAGS
 FCLIBS
-SHLIB_FCLD
 OPENMP_FCFLAGS
 FCFLAGS_f95
 FCFLAGS_f90
@@ -997,7 +1000,7 @@ MAKE
 TCLTK_CPPFLAGS
 TCLTK_LIBS
 SHLIB_FCLDFLAGS
-SHLIB_FCD
+SHLIB_FCLD
 SHLIB_CXXLDFLAGS
 SHLIB_CXXLD
 CXXPICFLAGS
@@ -1154,7 +1157,7 @@ DYLIB_LDFLAGS
 CXXPICFLAGS
 SHLIB_CXXLD
 SHLIB_CXXLDFLAGS
-SHLIB_FCD
+SHLIB_FCLD
 SHLIB_FCLDFLAGS
 TCLTK_LIBS
 TCLTK_CPPFLAGS
@@ -1911,7 +1914,7 @@ Some influential environment variables:
               from the C++ compiler
   SHLIB_CXXLDFLAGS
               special flags used by SHLIB_CXXLD
-  SHLIB_FCD   command for linking shared objects which contain object files
+  SHLIB_FCLD  command for linking shared objects which contain object files
               from the Fortran 95 compiler
   SHLIB_FCLDFLAGS
               special flags used by SHLIB_FCLD
@@ -8709,13 +8712,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:8712: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:8715: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:8715: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:8718: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:8718: output\"" >&5)
+  (eval echo "\"\$as_me:8721: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -11563,11 +11566,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11566: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11569: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11570: \$? = $ac_status" >&5
+   echo "$as_me:11573: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -11902,11 +11905,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11905: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11908: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11909: \$? = $ac_status" >&5
+   echo "$as_me:11912: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12007,11 +12010,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12010: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12013: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12014: \$? = $ac_status" >&5
+   echo "$as_me:12017: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12062,11 +12065,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12065: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12068: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12069: \$? = $ac_status" >&5
+   echo "$as_me:12072: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14429,7 +14432,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 14432 "configure"
+#line 14435 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14525,7 +14528,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 14528 "configure"
+#line 14531 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16474,11 +16477,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16477: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16480: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16481: \$? = $ac_status" >&5
+   echo "$as_me:16484: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16573,11 +16576,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16576: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16579: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16580: \$? = $ac_status" >&5
+   echo "$as_me:16583: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16625,11 +16628,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16628: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16631: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16632: \$? = $ac_status" >&5
+   echo "$as_me:16635: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18005,11 +18008,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18008: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18011: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18012: \$? = $ac_status" >&5
+   echo "$as_me:18015: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -18104,11 +18107,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18107: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18110: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:18111: \$? = $ac_status" >&5
+   echo "$as_me:18114: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18156,11 +18159,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18159: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18162: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:18163: \$? = $ac_status" >&5
+   echo "$as_me:18166: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -22762,7 +22765,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:22765: \"$ac_link\") >&5
+(eval echo $as_me:22768: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -22837,7 +22840,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:22840: \"$ac_link\") >&5
+(eval echo $as_me:22843: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25984,6 +25987,7 @@ $as_echo "$as_me: WARNING: ${warn_cxxpicflags}" >&2;}
 fi
 
 if test -z "${SHLIB_LD}"; then
+  shlib_ld_was_given=no
   SHLIB_LD="${shlib_ld}"
   separator=""
 test -z "${separator}" && separator=" "
@@ -26000,6 +26004,7 @@ $as_echo "$as_me: WARNING: I could not determine SHLIB_LDFLAGS." >&2;}
 fi
 
 if test -z "${SHLIB_CXXLD}"; then
+  shlib_cxxld_was_given=no
   SHLIB_CXXLD="${shlib_cxxld}"
   separator=""
 test -z "${separator}" && separator=" "
@@ -26177,19 +26182,23 @@ fi
 
 
 
-## For compiling package code, we use SHLIB_CXXLD or SHLIB_LD for
-## linking, depending on whether the package contains C++ code or not.
+## For compiling package code, we use SHLIB_FCLD, SHLIB_CXXLD or
+## SHLIB_LD for linking, depending on whether the package contains
+## Fortran (90/95) code, C++ (or ObjC) code, or "just" C and Fortran 77.
 ## However, we (currently) do not conditionalize compilation flags.  So
 ## the only "safe" thing we can do for now is:
 ##
-##    If both SHLIB_LD and SHLIB_CXXLD were not specified by the user
-##    and equal CXX and CC, respectively, and these were determined to
-##    support OpenMP, the we try to provide OpenMP support for packages
-##    by adding OPENMP_CXXFLAGS and OPENMP_CFLAGS to the respective
-##    linker flags, and add the OPENMP flags to all (C, C++, Fortran and
-##    Fortran 77) compiler flags.
+##    If none of SHLIB_LD, SHLIB_CXXLD and SHLIB_FCLD were specified by
+##    the user and equal CC, CXX and FC, respectively, and these were
+##    determined to support OpenMP, the we try to provide OpenMP support
+##    for packages by adding OPENMP_FCFLAGS, OPENMP_CXXFLAGS and
+##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
+##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
-
+## <FIXME>
+## Need to do this after configuring Fortran 90/95 support, which comes
+## way below: should this be moved up to the compiler section?
+## </FIXME>
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
@@ -35240,11 +35249,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35243: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35252: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35247: \$? = $ac_status" >&5
+   echo "$as_me:35256: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35339,11 +35348,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35342: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35351: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35346: \$? = $ac_status" >&5
+   echo "$as_me:35355: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35391,11 +35400,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35394: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35403: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35398: \$? = $ac_status" >&5
+   echo "$as_me:35407: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -37424,12 +37433,62 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-: ${SHLIB_FCLD="${FC}"}
+if test -z "${SHLIB_FCLD}"; then
+  shlib_fcld_was_given=no
+  SHLIB_FCLD="${FC}"
+fi
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 
 
 ## x86 Solaris' f95 needs additional libs when building a DSO
 FCLIBS=${FCLIBS}
+
+
+## OpenMP package stuff (needs to come *after* configuration of all
+## compilers).
+if test "x${shlib_ld_was_given}" = xno -a \
+        "${SHLIB_LD}" = "${CC}" -a \
+        "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${shlib_cxxld_was_given}" = xno -a \
+        "${SHLIB_CXXLD}" = "${CXX}" -a \
+        "x${ac_cv_prog_cxx_openmp}" != "xunsupported" -a \
+        "x${shlib_fcld_was_given}" = xno -a \
+        "${SHLIB_FCLD}" = "${FC}" -a \
+        "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
+  PKG_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
+  PKG_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
+  PKG_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
+  PKG_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+  separator=""
+test -z "${separator}" && separator=" "
+if test -z "${SHLIB_LDFLAGS}"; then
+  SHLIB_LDFLAGS="${OPENMP_CFLAGS}"
+else
+  SHLIB_LDFLAGS="${SHLIB_LDFLAGS}${separator}${OPENMP_CFLAGS}"
+fi
+  separator=""
+test -z "${separator}" && separator=" "
+if test -z "${SHLIB_CXXLDFLAGS}"; then
+  SHLIB_CXXLDFLAGS="${OPENMP_CXXFLAGS}"
+else
+  SHLIB_CXXLDFLAGS="${SHLIB_CXXLDFLAGS}${separator}${OPENMP_CXXFLAGS}"
+fi
+  separator=""
+test -z "${separator}" && separator=" "
+if test -z "${SHLIB_FCLDFLAGS}"; then
+  SHLIB_FCLDFLAGS="${OPENMP_FCFLAGS}"
+else
+  SHLIB_FCLDFLAGS="${SHLIB_FCLDFLAGS}${separator}${OPENMP_FCFLAGS}"
+fi
+else
+  PKG_OPENMP_CFLAGS=
+  PKG_OPENMP_CXXFLAGS=
+  PKG_OPENMP_FCFLAGS=
+  PKG_OPENMP_FFLAGS=
+fi
+
+
+
 
 
 
