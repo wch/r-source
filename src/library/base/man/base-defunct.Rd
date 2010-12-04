@@ -186,7 +186,7 @@ manglePackageName(pkgName, pkgVersion)
   internal coding of a factor, use \code{unclass}, \code{as.vector} or
   \code{as.integer}.  For \emph{ordered} factors, \code{codes} was
   equivalent to these, but for \emph{unordered} factors it assumed an
-  an alphabetical ordering of the levels in the locale in use.
+  alphabetical ordering of the levels in the locale in use.
 
   \code{La.eigen} has become the default for \code{\link{eigen}}.
 
