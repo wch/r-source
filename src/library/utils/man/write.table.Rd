@@ -129,6 +129,17 @@ write.csv2(\dots)
   ensure that the correct conventions are used to write a valid file.
   Attempts to change \code{append}, \code{col.names}, \code{sep},
   \code{dec} or \code{qmethod} are ignored, with a warning.
+  
+  CSV files do not record an encoding, and this causes problems if they
+  are not ASCII for many other applications.  Windows Excel 2007/10 will
+  open files (e.g. by the file association mechanism) corectly if they
+  are ASCII or UTF-16 (use \code{fileEncoding = "UTF-16"}) or perhaps in
+  the current Windows codepage (e.g. \code{"CP1252"}), but the
+  \sQuote{Text Import Wizard} (from the \sQuote{Data} tab) allows far
+  more choice of encodings.  Mac:Excel 2004/8 can \emph{import} only
+  Macintosh (which seems to mean MacRoman), Windows (perhaps Latin-1)
+  and \sQuote{PC-8} files.  OpenOffice 3.x asks for the character set
+  when opening the file.
 }
 \note{
   \code{write.table} can be slow for data frames with large numbers
@@ -162,8 +173,10 @@ read.csv("foo.csv", row.names = 1)
 write.csv(x, file = "foo.csv", row.names = FALSE)
 read.csv("foo.csv")
 
-## To write a file in MacRoman for simple use in Mac Excel 2004
+## To write a file in MacRoman for simple use in Mac Excel 2004/8
 write.csv(x, file = "foo.csv", fileEncoding = "macroman")
+## or for Windows Excel 2007/10
+write.csv(x, file = "foo.csv", fileEncoding = "UTF-16")
 }}
 \keyword{print}
 \keyword{file}
