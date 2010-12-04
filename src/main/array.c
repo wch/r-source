@@ -54,6 +54,9 @@ SEXP GetColNames(SEXP dimnames)
 	return R_NilValue;
 }
 
+/* Used to have 4 args, now has 5, R-devel has 7.
+   Called as .Internal in Matrix ... and others.
+*/
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames = R_NilValue;
@@ -61,8 +64,6 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     nargs = length(args);
-    if(nargs < 4 || nargs > 5)
-	error("incorrect number of arguments to 'matrix'");
     vals = CAR(args);
     snr = CADR(args);
     snc = CADDR(args);
@@ -71,7 +72,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     byrow = asLogical(CADDDR(args));
     if (byrow == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
-    if(nargs == 5) dimnames = CAD4R(args);
+    dimnames = CAD4R(args);
 
 
     lendat = length(vals);
