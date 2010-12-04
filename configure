@@ -37480,6 +37480,9 @@ if test -z "${SHLIB_FCLDFLAGS}"; then
 else
   SHLIB_FCLDFLAGS="${SHLIB_FCLDFLAGS}${separator}${OPENMP_FCFLAGS}"
 fi
+
+$as_echo "#define SUPPORT_OPENMP 1" >>confdefs.h
+
 else
   PKG_OPENMP_CFLAGS=
   PKG_OPENMP_CXXFLAGS=
