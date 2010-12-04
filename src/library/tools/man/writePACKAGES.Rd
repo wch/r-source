@@ -54,6 +54,11 @@ write_PACKAGES(dir = ".", fields = NULL,
     \samp{File} in the \file{PACKAGES} file.}
 }
 \details{
+  \code{write_PACKAGES} scans the named directory for R packages,
+  extracts information from each package's \file{DESCRIPTION} file, and
+  writes this information into the \file{PACKAGES} and
+  \file{PACKAGES.gz} files.
+  
   Including non-latest versions of packages is only useful if they have
   less constraining version requirements, so for example
   \code{latestOnly = FALSE} could be used for a source repository when
@@ -77,8 +82,8 @@ write_PACKAGES(dir = ".", fields = NULL,
 }
 \value{
   Invisibly returns the number of packages described in the resulting
-  \file{PACKAGES} and \file{PACKAGES.gz} files.  If \code{0}, no packages were
-  found and no files were written.
+  \file{PACKAGES} and \file{PACKAGES.gz} files.  If \code{0}, no
+  packages were found and no files were written.
 }
 \note{
   Processing \file{.tar.gz} archives to extract the \file{DESCRIPTION}
