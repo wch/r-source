@@ -39,22 +39,26 @@ duplicated.matrix <- duplicated.array <-
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
         stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
-    res <- duplicated(as.vector(temp), fromLast = fromLast)
+    ## previously as.vector(temp), but can avoid a copy
+    res <- duplicated.default(temp, fromLast = fromLast)
     dim(res) <- dim(temp)
     dimnames(res) <- dimnames(temp)
     res
 }
 
-anyDuplicated <- function(x, incomparables = FALSE, ...) UseMethod("anyDuplicated")
+anyDuplicated <- function(x, incomparables = FALSE, ...)
+    UseMethod("anyDuplicated")
 
-anyDuplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
+anyDuplicated.default <-
+    function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(is.na(fromLast <- as.logical(fromLast[1L])))
         stop("'fromLast' must be TRUE or FALSE")
     .Internal(anyDuplicated(x, incomparables, fromLast))
 }
 
-anyDuplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
+anyDuplicated.data.frame <-
+    function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
@@ -70,7 +74,7 @@ anyDuplicated.matrix <- anyDuplicated.array <-
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
         stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
-    anyDuplicated(as.vector(temp), fromLast = fromLast)
+    anyDuplicated.default(temp, fromLast = fromLast)
 }
 
 unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
@@ -111,6 +115,6 @@ unique.matrix <- unique.array <-
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
     args <- rep(alist(a=), ndim)
     names(args) <- NULL
-    args[[MARGIN]] <- !duplicated(as.vector(temp), fromLast = fromLast)
+    args[[MARGIN]] <- !duplicated.default(temp, fromLast = fromLast)
     do.call("[", c(list(x), args, list(drop=FALSE)))
 }
