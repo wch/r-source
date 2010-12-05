@@ -93,7 +93,7 @@
       \item \code{Sys.getenv()} gains a \code{names} argument so
       \code{Sys.getenv(x, names = FALSE)} can replace the common idiom
       of \code{as.vector(Sys.getenv())}.  The default has been changed
-      to name a length-one result.
+      to not name a length-one result.
     }
   }
 
@@ -163,6 +163,10 @@
       \item \code{aggregate} preserves the class of a column (e.g. a
       date) under some circumstances where it discarded the class
       previously.
+
+      \item \code{p.adjust()} now always returns a vector result, as
+      documented.  In previous versions it copied attributes (such as
+      dimensions) from the \code{p} argument.
     }
   }
 }
