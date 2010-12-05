@@ -118,6 +118,7 @@ summary.Date <- function(object, digits = 12, ...)
 
 `+.Date` <- function(e1, e2)
 {
+    ## need to drop "units" attribute here
     coerceTimeUnit <- function(x)
         as.vector(round(switch(attr(x,"units"),
                                secs = x/86400, mins = x/1440, hours = x/24,

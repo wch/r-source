@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## See the help for why as.vector is used:
+## it includes coercing factors.
 union <- function(x, y) unique(c(as.vector(x), as.vector(y)))
 
 intersect <- function(x, y)

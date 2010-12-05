@@ -223,6 +223,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 
 `-.POSIXt` <- function(e1, e2)
 {
+    ## need to drop "units" attribute here
     coerceTimeUnit <- function(x)
         as.vector(switch(attr(x,"units"),
                          secs = x, mins = 60*x, hours = 60*60*x,
@@ -454,10 +455,10 @@ units.difftime <- function(x) attr(x, "units")
     .difftime(newx, value)
 }
 
-as.double.difftime <- function(x, units="auto", ...) {
-    if (units != "auto")
-        units(x) <- units
-    as.double(as.vector(x))
+as.double.difftime <- function(x, units="auto", ...)
+{
+    if (units != "auto") units(x) <- units
+    as.vector(x, "double")
 }
 
 as.data.frame.difftime <- as.data.frame.vector
@@ -574,7 +575,7 @@ mean.difftime <- function (x, ...)
 
 Summary.difftime <- function (..., na.rm)
 {
-    ## FIXME: this should return in the smallest of the units of the inputs.
+    ## FIXME: this could return in the smallest of the units of the inputs.
     coerceTimeUnit <- function(x)
     {
         as.vector(switch(attr(x,"units"),
