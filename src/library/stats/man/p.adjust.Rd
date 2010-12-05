@@ -17,12 +17,13 @@ p.adjust.methods
 #   "fdr", "none")
 }
 \arguments{
-  \item{p}{vector of p-values (possibly with \code{\link{NA}}s).}
+  \item{p}{numeric vector of p-values (possibly with \code{\link{NA}}s).
+    Any other \R is coerced by \code{\link{as.numeric}}.}
   \item{method}{correction method}
   \item{n}{number of comparisons, must be at least \code{length(p)};
     only set this (to non-default) when you know what you are doing!}
 }
-\value{A vector of corrected p-values (same length as \code{p}).}
+\value{A vector of corrected p-values (of the same length as \code{p}).}
 \details{
   The adjustment methods include the Bonferroni correction
   (\code{"bonferroni"}) in which the p-values are multiplied by the
@@ -37,7 +38,7 @@ p.adjust.methods
   and pass it on to \code{p.adjust}.
 
   The first four methods are designed to give strong control of the
-  family wise error rate.  There seems no reason to use the unmodified
+  family-wise error rate.  There seems no reason to use the unmodified
   Bonferroni correction because it is dominated by Holm's method, which
   is also valid under arbitrary assumptions.
 
@@ -51,7 +52,7 @@ p.adjust.methods
   Benjamini, Hochberg, and Yekutieli control the false discovery rate,
   the expected proportion of false discoveries amongst the rejected
   hypotheses.  The false discovery rate is a less stringent condition
-  than the family wise error rate, so these methods are more powerful
+  than the family-wise error rate, so these methods are more powerful
   than the others.
 
   Note that you can set \code{n} larger than \code{length(p)} which

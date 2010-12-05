@@ -23,9 +23,9 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p))
     ## Gordon Smyth <smyth@wehi.edu.au>.
     method <- match.arg(method)
     if(method == "fdr") method <- "BH"	# back compatibility
-    p0 <- p
+    p0 <- p <- as.numeric(p)
     if(all(nna <- !is.na(p))) nna <- TRUE
-    p <- as.vector(p[nna])
+    p <- p[nna]
     lp <- length(p)
     stopifnot(n >= lp)
     if (n <= 1) return(p0)
@@ -38,10 +38,10 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p))
 		   i <- seq_len(lp)
 		   o <- order(p)
 		   ro <- order(o)
-		   pmin(1, cummax( (n - i + 1) * p[o] ))[ro]
+		   pmin(1, cummax( (n - i + 1L) * p[o] ))[ro]
 	       },
 	       hommel = { ## needs n-1 >= 2 in for() below
-		   if(n > lp) p <- c(p,rep.int(1,n-lp))
+		   if(n > lp) p <- c(p, rep.int(1, n-lp))
 		   i <- seq_len(n)
 		   o <- order(p)
 		   p <- p[o]
@@ -58,22 +58,22 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p))
 		   pmax(pa,p)[if(lp < n) ro[1:lp] else ro]
 	       },
 	       hochberg = {
-		   i <- lp:1
+		   i <- lp:1L
 		   o <- order(p, decreasing = TRUE)
 		   ro <- order(o)
-		   pmin(1, cummin( (n - i + 1) * p[o] ))[ro]
+		   pmin(1, cummin( (n - i + 1L) * p[o] ))[ro]
 	       },
 	       BH = {
-		   i <- lp:1
+		   i <- lp:1L
 		   o <- order(p, decreasing = TRUE)
 		   ro <- order(o)
 		   pmin(1, cummin( n / i * p[o] ))[ro]
 	       },
 	       BY = {
-		   i <- lp:1
+		   i <- lp:1L
 		   o <- order(p, decreasing = TRUE)
 		   ro <- order(o)
-		   q <- sum(1/(1L:n))
+		   q <- sum(1L/(1L:n))
 		   pmin(1, cummin(q * n / i * p[o]))[ro]
 	       },
 	       none = p)
