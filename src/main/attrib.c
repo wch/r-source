@@ -989,16 +989,24 @@ SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
+    SEXP ans, x;
     checkArity(op, args);
     if (DispatchOrEval(call, op, "dim<-", args, env, &ans, 0, 1))
 	return(ans);
+    x = CAR(args);
+    /* Duplication might be expensive */
+    if (CADR(args) == R_NilValue) {
+	SEXP s;
+	for (s = ATTRIB(x); s != R_NilValue; s = CDR(s))
+	    if (TAG(s) == R_DimSymbol || TAG(s) == R_NamesSymbol) break;
+	if (s == R_NilValue) return x;
+    }
     PROTECT(args = ans);
-    if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
-    setAttrib(CAR(args), R_DimSymbol, CADR(args));
-    setAttrib(CAR(args), R_NamesSymbol, R_NilValue);
+    if (NAMED(x) > 1) SETCAR(args, duplicate(x));
+    setAttrib(x, R_DimSymbol, CADR(args));
+    setAttrib(x, R_NamesSymbol, R_NilValue);
     UNPROTECT(1);
-    return CAR(args);
+    return x;
 }
 
 SEXP dimgets(SEXP vec, SEXP val)

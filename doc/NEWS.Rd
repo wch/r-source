@@ -68,6 +68,10 @@
       \code{matrix()} duplicates less if \code{data} is an atomic vector
       with attributes such as names (but no class).
 
+      \code{dim(x) <- NULL} duplicates less if \code{x} has neither
+      dimensions nor names (since this operation removes names and
+      dimnames).
+
       \item \code{setRepositories()} gains an \code{addURLs} argument.
 
       \item \code{kernel()}'s default for \code{m} was not appropriate
