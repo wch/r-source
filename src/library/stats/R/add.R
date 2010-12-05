@@ -73,8 +73,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
 	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
-    head <- c("Single term additions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
@@ -198,8 +197,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1L], rdf)
     }
-    head <- c("Single term additions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
@@ -317,8 +315,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
     }
-    head <- c("Single term additions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
@@ -374,8 +371,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
         aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
-    head <- c("Single term deletions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
@@ -452,8 +448,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
 	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
-    head <- c("Single term deletions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
@@ -543,8 +538,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
 	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
-    head <- c("Single term deletions", "\nModel:",
-	      deparse(as.vector(formula(object))),
+    head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(!is.null(scale) && scale > 0)
 	      paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
@@ -682,8 +676,8 @@ step <- function(object, scope, scale = 0,
 	ddf <- c(NA, diff(rdf))
 	AIC <- sapply(models, "[[", "AIC")
 	heading <- c("Stepwise Model Path \nAnalysis of Deviance Table",
-		     "\nInitial Model:", deparse(as.vector(formula(object))),
-		     "\nFinal Model:", deparse(as.vector(formula(fit))),
+		     "\nInitial Model:", deparse(formula(object)),
+		     "\nFinal Model:", deparse(formula(fit)),
 		     "\n")
 	aod <- data.frame(Step = I(change), Df = ddf, Deviance = dd,
                           "Resid. Df" = rdf, "Resid. Dev" = rd, AIC = AIC,
@@ -737,7 +731,7 @@ step <- function(object, scope, scale = 0,
     Terms <- fit$terms
     if(trace)
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
-	    cut.string(deparse(as.vector(formula(fit)))), "\n\n", sep='')
+	    cut.string(deparse(formula(fit))), "\n\n", sep='')
 
     models[[nm]] <- list(deviance = mydeviance(fit), df.resid = n - edf,
 			 change = "", AIC = bAIC)
@@ -797,7 +791,7 @@ step <- function(object, scope, scale = 0,
 	bAIC <- bAIC[2L]
 	if(trace)
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
-		cut.string(deparse(as.vector(formula(fit)))), "\n\n", sep='')
+		cut.string(deparse(formula(fit))), "\n\n", sep='')
         ## add a tolerance as dropping 0-df terms might increase AIC slightly
 	if(bAIC >= AIC + 1e-7) break
 	nm <- nm + 1
