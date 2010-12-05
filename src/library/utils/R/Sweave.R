@@ -104,16 +104,14 @@ Sweave <- function(file, driver=RweaveLatex(),
                 line[1L] <- sub('"$', paste("#from line#", linenum, '#"', sep=""), line[1L])
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
-            if(is.null(chunk))
-                chunk <- line
-            else
-                chunk <- c(chunk, line)
+	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
-        }
+	}
     }
-    if(!is.null(chunk)){
-        if(mode=="doc") drobj <- driver$writedoc(drobj, chunk)
-        else drobj <- driver$runcode(drobj, chunk, chunkopts)
+    if(!is.null(chunk)) {
+	drobj <-
+	    if(mode=="doc") driver$writedoc(drobj, chunk)
+	    else driver$runcode(drobj, chunk, chunkopts)
     }
 
     on.exit()
@@ -184,12 +182,13 @@ SweaveReadFile <- function(file, syntax)
             }
             itext <- SweaveReadFile(c(ifile, file), syntax)
 
-            if(pos == 1L)
-                text <- c(itext, text[-pos])
-            else if(pos == length(text))
-                text <- c(text[-pos], itext)
-            else
-                text <- c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
+	    text <-
+		if(pos == 1L)
+		    c(itext, text[-pos])
+		else if(pos == length(text))
+		    c(text[-pos], itext)
+		else
+		    c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
 
             attr(text, "hasSweaveInput") <- TRUE
         }
@@ -527,10 +526,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 			# one
 			dce <- trySrcLines(srcfile, showfrom, showto, ce)
 			leading <- 1L
-			if (!is.na(refline))
-			    lastshown <- NA
-			else
-			    lastshown <- showto
+			lastshown <- if(!is.na(refline)) NA else showto
 		    } else {
 			dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
 			leading <- showfrom-lastshown
