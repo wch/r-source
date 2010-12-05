@@ -17,11 +17,7 @@
 duplicated <- function(x, incomparables = FALSE, ...) UseMethod("duplicated")
 
 duplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
-{
-    if(is.na(fromLast <- as.logical(fromLast[1L])))
-        stop("'fromLast' must be TRUE or FALSE")
     .Internal(duplicated(x, incomparables, fromLast))
-}
 
 duplicated.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
@@ -51,11 +47,8 @@ anyDuplicated <- function(x, incomparables = FALSE, ...)
 
 anyDuplicated.default <-
     function(x, incomparables = FALSE, fromLast = FALSE, ...)
-{
-    if(is.na(fromLast <- as.logical(fromLast[1L])))
-        stop("'fromLast' must be TRUE or FALSE")
     .Internal(anyDuplicated(x, incomparables, fromLast))
-}
+
 
 anyDuplicated.data.frame <-
     function(x, incomparables = FALSE, fromLast = FALSE, ...)
@@ -84,8 +77,6 @@ unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
 ## so it needs to handle some other cases.
 unique.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
-    if(is.na(fromLast <- as.logical(fromLast[1L])))
-        stop("'fromLast' must be TRUE or FALSE")
     z <- .Internal(unique(x, incomparables, fromLast))
     if(is.factor(x))
 	factor(z, levels = seq_len(nlevels(x)), labels = levels(x),

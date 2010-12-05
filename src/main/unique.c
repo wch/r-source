@@ -529,10 +529,17 @@ int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, incomp, dup, ans;
-    int i, k, n;
+    int i, k, n, fromLast;
 
     checkArity(op, args);
     x = CAR(args);
+    incomp = CADR(args);
+    if (length(CADDR(args)) < 1)
+	error(_("'fromLast' must be length 1"));
+    fromLast = asLogical(CADDR(args));
+    if (fromLast == NA_LOGICAL)
+	error(_("'fromLast' must be TRUE or FALSE"));
+
     /* handle zero length vectors, and NULL */
     if ((n = length(x)) == 0)
 	return(PRIMVAL(op) <= 1
@@ -545,20 +552,18 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	       (PRIMVAL(op) == 1 ? "unique" : /* 2 */ "anyDuplicated")));
     }
 
-    incomp = CADR(args);
-
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0)) {
 	if(PRIMVAL(op) == 2) /* return R's 1-based index :*/
-	    return ScalarInteger(any_duplicated3(x, incomp, asLogical(CADDR(args))));
+	    return ScalarInteger(any_duplicated3(x, incomp, fromLast));
 	else
-	    dup = duplicated3(x, incomp, asLogical(CADDR(args)));
+	    dup = duplicated3(x, incomp, fromLast);
     }
     else {
 	if(PRIMVAL(op) == 2)
-	    return ScalarInteger(any_duplicated(x, asLogical(CADDR(args))));
+	    return ScalarInteger(any_duplicated(x, fromLast));
 	else
-	    dup = duplicated(x, asLogical(CADDR(args)));
+	    dup = duplicated(x, fromLast);
     }
     if (PRIMVAL(op) == 0) /* "duplicated()" */
 	return dup;
