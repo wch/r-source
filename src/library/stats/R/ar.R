@@ -75,7 +75,7 @@ ar.yw.default <-
             # Solve Yule-Walker equations with Whittle's
             # generalization of the Levinson(-Durbin) algorithm
             betaA <- betaB <- 0
-            for (i in 0:m) {
+            for (i in 0L:m) {
                 betaA <- betaA + A[i + 1L, , ] %*% xacf[m + 2L - i, , ]
                 betaB <- betaB + B[i + 1L, , ] %*% t(xacf[m + 2L - i, , ])
             }
@@ -103,7 +103,7 @@ ar.yw.default <-
             return(rbind(matrix(NA, order, nser), resid))
         }
         order <- 0L
-        for (m in 0:order.max) {
+        for (m in 0L:order.max) {
             xaic[m + 1L] <- cal.aic()
             if (!aic || xaic[m + 1L] == min(xaic[seq_len(m + 1L)])) {
                 ar <- A
@@ -116,7 +116,7 @@ ar.yw.default <-
             }
         }
         xaic <- xaic - min(xaic)
-        names(xaic) <- 0:order.max
+        names(xaic) <- 0L:order.max
         resid <- cal.resid()
         if(order) {
             ar <- -ar[2L:(order + 1L), , , drop = FALSE]
@@ -138,17 +138,17 @@ ar.yw.default <-
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
         var.pred <- c(r[1L], z$vars)
-        xaic <- n.used * log(var.pred) + 2 * (0:order.max) + 2 * demean
+        xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
         maic <- min(aic)
         xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
-        names(xaic) <- 0:order.max
-        order <- if (aic) (0:order.max)[xaic == 0L] else order.max
+        names(xaic) <- 0L:order.max
+        order <- if (aic) (0L:order.max)[xaic == 0L] else order.max
         ar <- if (order) coefs[order, seq_len(order)] else numeric()
         var.pred <- var.pred[order+1L]
         ## Splus compatibility fix
         var.pred <- var.pred * n.used/(n.used - (order + 1))
         resid <- if(order) c(rep.int(NA, order), embed(x, order + 1L) %*% c(1, -ar))
-        else as.vector(x)
+        else as.vector(x) # we had as.matrix() above
         if(ists) {
             attr(resid, "tsp") <- xtsp
             attr(resid, "class") <- "ts"

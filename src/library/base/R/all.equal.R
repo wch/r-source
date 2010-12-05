@@ -20,7 +20,7 @@ all.equal.default <-
     function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
-    ## use data.class as unlike class it does not give "Integer"
+    ## use data.class as unlike class it does not give "integer"
     if(is.language(target) || is.function(target) || is.environment(target))
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))
@@ -35,8 +35,8 @@ all.equal.default <-
 		   ## assumes that slots are implemented as attributes :
 		   S4 = attr.all.equal(target, current, ...),
                    if(data.class(target) != data.class(current)) {
-                       paste("target is ", data.class(target), ", current is ",
-                             data.class(current), sep = "")
+                       gettextf("target is %s, current is %s",
+                                data.class(target), data.class(current))
                    } else NULL)
     if(is.null(msg)) TRUE else msg
 }
@@ -63,6 +63,7 @@ all.equal.numeric <-
 			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
 	return(msg)
     }
+    ## is this what is intended?  Maybe just dim() <- NULL
     ## remove atttributes (remember these are both numeric or complex vectors)
     target <- as.vector(target)
     current <- as.vector(current)

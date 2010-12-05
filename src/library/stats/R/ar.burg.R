@@ -28,7 +28,7 @@ ar.burg.default <-
     if(any(is.na(x))) stop("NAs in 'x'")
     if (ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
-    x <- as.vector(x)
+    x <- as.vector(x) # drop attributes including class
     if (demean) {
         x.mean <- mean(x)
         x <- x - x.mean
@@ -59,7 +59,7 @@ ar.burg.default <-
     ar <- if (order) coefs[order, 1L:order] else numeric()
     var.pred <- var.pred[order+1L]
     resid <- if(order) c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
-    else as.vector(x)
+    else x
     if(ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"

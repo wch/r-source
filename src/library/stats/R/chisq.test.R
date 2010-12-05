@@ -21,15 +21,15 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     DNAME <- deparse(substitute(x))
     if (is.data.frame(x))
 	x <- as.matrix(x)
-    if (is.matrix(x)) {
-	if (min(dim(x)) == 1)
+    if (is.matrix(x)) { # why not just drop()?
+	if (min(dim(x)) == 1L)
 	    x <- as.vector(x)
     }
     if (!is.matrix(x) && !is.null(y)) {
 	if (length(x) != length(y))
 	    stop("'x' and 'y' must have the same length")
         DNAME2 <- deparse(substitute(y))
-        ## omit names on dims if too long (and 1 line might already too long)
+        ## omit names on dims if too long (and 1 line might already be too long)
         xname <- if(length(DNAME) > 1L || nchar(DNAME, "w") > 30) "" else DNAME
         yname <- if(length(DNAME2) > 1L || nchar(DNAME2, "w") > 30) "" else DNAME2
 	OK <- complete.cases(x, y)
@@ -69,7 +69,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 
         ## Cell residual variance. Essentially formula (2.9) in Agresti(2007).
         v <- function(r, c, n) c * r * (n - r) * (n - c)/n^3
-        
+
         V <- outer(sr, sc, v, n)
 
 	dimnames(E) <- dimnames(x)
