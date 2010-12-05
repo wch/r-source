@@ -106,7 +106,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 		  "iscii-dev", "big5hkscs")
 		known <- k
             }
-	    if(enc %in% names(known)) return(as.vector(known[enc]))
+	    if(enc %in% names(known)) return(unname(known[enc]))
             if(length(grep("^cp-", enc)))  # old Linux
                 return(sub("cp-([0-9]+)", "CP\\1", enc))
             if(enc == "EUC") {
@@ -120,9 +120,9 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         }
 	## on Darwin all real locales w/o encoding are UTF-8
 	## HOWEVER! unlike the C code, we cannot filter out
-	## invalid locales, so wit ill be wrong for non-supported
+	## invalid locales, so it will be wrong for non-supported
 	## locales (why is this duplicated in R code anyway?)
-	if (length(grep("darwin",R.version$os))) return("UTF-8")
+	if (length(grep("darwin", R.version$os))) return("UTF-8")
         ## let's hope it is a ll_* name.
         if(length(grep("^[[:alpha:]]{2}_", x[1L]))) {
             ll <- substr(x[1L], 1L, 2L)
