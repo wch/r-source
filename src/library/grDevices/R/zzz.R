@@ -23,14 +23,14 @@
         list(windowsTimeouts = c(100L,500L)) else
     list(bitmapType = if(capabilities("aqua")) "quartz"
     else if(.Call("cairoProps", 2L, PACKAGE="grDevices")) "cairo" else "Xlib")
-    defdev <- as.vector(Sys.getenv("R_DEFAULT_DEVICE"))
+    defdev <- Sys.getenv("R_DEFAULT_DEVICE", names = FALSE)
     ## Use devices rather than names to make it harder to get masked.
     if(!nzchar(defdev)) defdev <- pdf
     device <- if(interactive()) {
-        intdev <- as.vector(Sys.getenv("R_INTERACTIVE_DEVICE"))
+        intdev <- Sys.getenv("R_INTERACTIVE_DEVICE", names = FALSE)
         if(nzchar(intdev)) intdev
         else {
-            dsp <- Sys.getenv("DISPLAY")
+            dsp <- Sys.getenv("DISPLAY", names = FALSE)
             if(.Platform$OS.type == "windows") windows
             else if (.Platform$GUI == "AQUA" ||
                      ((!nzchar(dsp) || grepl("^/tmp/launch-", dsp))

@@ -36,7 +36,7 @@ Sweave <- function(file, driver=RweaveLatex(),
 
     if(.Platform$OS.type == "windows")
         file <- gsub("\\\\", "/", file)
-    
+
     drobj <- driver$setup(file=file, syntax=syntax, ...)
     on.exit(driver$finish(drobj, error=TRUE))
 
@@ -101,7 +101,7 @@ Sweave <- function(file, driver=RweaveLatex(),
                           paste("#line ", linenum+1L, ' "', file, '"', sep=""))
                 #FIXME:  this should really be done through a more general
                 #        mechanism for adding non-executable info to the parse
-                line[1L] <- sub('"$', paste("#from line#", linenum, '#"', sep=""), line[1L])    
+                line[1L] <- sub('"$', paste("#from line#", linenum, '#"', sep=""), line[1L])
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
             if(is.null(chunk))
@@ -190,7 +190,7 @@ SweaveReadFile <- function(file, syntax)
                 text <- c(text[-pos], itext)
             else
                 text <- c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
-                
+
             attr(text, "hasSweaveInput") <- TRUE
         }
     }
@@ -367,7 +367,7 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
 
     if(missing(stylepath)) {
-        p <- as.vector(Sys.getenv("SWEAVE_STYLEPATH_DEFAULT"))
+        p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT", names = FALSE)
         stylepath <- if(length(p) >= 1L && nzchar(p[1L])) identical(p, "TRUE") else FALSE
     }
     if(stylepath){
@@ -449,15 +449,15 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           # Note that we edit the error message below, so change both
           # if you change this line:
           chunkexps <- try(parse(text=chunk, srcfile=srcfile), silent=TRUE)
-          
+
           if (inherits(chunkexps, "try-error"))
           	chunkexps[1L] <- sub(" parse(text = chunk, srcfile = srcfile) : \n ",
           	                    "", chunkexps[1L], fixed = TRUE)
-          	                    
+
           RweaveTryStop(chunkexps, options)
-          
+
           # A couple of functions used below...
-          
+
 	  putSinput <- function(dce){
 	      if(!openSinput){
 	  	  if(!openSchunk){
@@ -478,8 +478,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  	      file=chunkout, append=TRUE, sep="")
 	      linesout[thisline + seq_along(dce)] <<- srcline
 	      thisline <<- thisline + length(dce)
-	  }	  
-	  
+	  }
+
 	  trySrcLines <- function(srcfile, showfrom, showto, ce) {
 	      lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)), silent=TRUE)
 	      if (inherits(lines, "try-error")) {
@@ -487,7 +487,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	          else lines <- deparse(ce, width.cutoff=0.75*getOption("width"))
 	      }
 	      lines
-	  }          
+	  }
 
 	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#"
 
@@ -501,9 +501,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  lastshown <- srcline    # last line already displayed;
 	  			  # at this point it's the <<>>= line
 	  leading <- 1L		  # How many lines get the user prompt
-	  
+
 	  srcrefs <- attr(chunkexps, "srcref")
-	  
+
           for(nce in seq_along(chunkexps)) {
  		ce <- chunkexps[[nce]]
                 if (options$keep.source && nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
@@ -515,14 +515,14 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     	if (grepl(chunkregexp, srcfile$filename)) {
                     	    refline <- as.integer(sub(chunkregexp, "\\2", srcfile$filename))
                     	    srcfile$filename <- sub(chunkregexp, "\\1", srcfile$filename)
-                    	} else 
+                    	} else
                     	    refline <- NA
                     	srcfile$refline <- refline
                     }
-                    if (!options$expand && !is.na(refline)) 
+                    if (!options$expand && !is.na(refline))
                     	showfrom <- showto <- refline
-                    	
-		    if (!is.na(refline) || is.na(lastshown)) { 
+
+		    if (!is.na(refline) || is.na(lastshown)) {
 			# We expanded a named chunk for this expression or the previous
 			# one
 			dce <- trySrcLines(srcfile, showfrom, showto, ce)
@@ -547,10 +547,10 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
                 if(object$debug)
                     cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-                    
+
                 if(options$echo && length(dce))
                     putSinput(dce)
-                    
+
                   # tmpcon <- textConnection("output", "w")
                   # avoid the limitations (and overhead) of output text connections
                 tmpcon <- file()
@@ -615,13 +615,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
             }
 
-	  if(options$echo && options$keep.source 
-	     && !is.na(lastshown) 
+	  if(options$echo && options$keep.source
+	     && !is.na(lastshown)
 	     && lastshown < (showto <- srclines[length(srclines)])) {
 	      dce <- trySrcLines(srcfile, lastshown+1L, showto, NULL)
 	      putSinput(dce)
 	  }
-	  
+
           if(openSinput){
               cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
               linesout[thisline + 1L:2L] <- srcline

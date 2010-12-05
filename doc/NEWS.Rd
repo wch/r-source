@@ -89,6 +89,10 @@
       \item Assignment expressions of the form \code{foo::bar(x) <- y}
       and \code{foo:::bar(x) <- y} now work; the assignment functions
       used are \code{foo::`bar<-`} and \code{foo:::`bar<-`}.
+
+      \item \code{Sys.getenv()} gains a \code{names} argument so
+      \code{Sys.getenv(x, names = FALSE)} can replace the common idiom
+      of \code{as.vector(Sys.getenv())}.
     }
   }
 

@@ -37,7 +37,7 @@ options(stringsAsFactors = TRUE)
 if(!interactive() && is.null(getOption("showErrorCalls")))
     options(showErrorCalls = TRUE)
 
-local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
+local({dp <- Sys.getenv("R_DEFAULT_PACKAGES", names = FALSE)
        if(identical(dp, "")) # marginally faster to do methods last
            dp <- c("datasets", "utils", "grDevices", "graphics",
                    "stats", "methods")
@@ -74,7 +74,7 @@ Sys.setenv(R_LIBS_USER =
     }
 }
 
-if(Sys.getenv("R_BATCH") != "") {
+if(nzchar(Sys.getenv("R_BATCH"))) {
     .Last.sys <- function()
     {
         cat("> proc.time()\n")
