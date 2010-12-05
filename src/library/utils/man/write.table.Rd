@@ -132,7 +132,7 @@ write.csv2(\dots)
   
   CSV files do not record an encoding, and this causes problems if they
   are not ASCII for many other applications.  Windows Excel 2007/10 will
-  open files (e.g. by the file association mechanism) corectly if they
+  open files (e.g. by the file association mechanism) correctly if they
   are ASCII or UTF-16 (use \code{fileEncoding = "UTF-16LE"}) or perhaps in
   the current Windows codepage (e.g. \code{"CP1252"}), but the
   \sQuote{Text Import Wizard} (from the \sQuote{Data} tab) allows far
