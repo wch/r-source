@@ -367,7 +367,7 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
 
     if(missing(stylepath)) {
-        p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT", names = FALSE)
+        p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
         stylepath <- if(length(p) >= 1L && nzchar(p[1L])) identical(p, "TRUE") else FALSE
     }
     if(stylepath){

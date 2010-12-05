@@ -37,7 +37,7 @@ options(stringsAsFactors = TRUE)
 if(!interactive() && is.null(getOption("showErrorCalls")))
     options(showErrorCalls = TRUE)
 
-local({dp <- Sys.getenv("R_DEFAULT_PACKAGES", names = FALSE)
+local({dp <- Sys.getenv("R_DEFAULT_PACKAGES")
        if(identical(dp, "")) # marginally faster to do methods last
            dp <- c("datasets", "utils", "grDevices", "graphics",
                    "stats", "methods")

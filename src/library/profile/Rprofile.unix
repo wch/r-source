@@ -11,20 +11,20 @@ invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
 
 local({
 ## we distinguish between R_PAPERSIZE as set by the user and by configure
-papersize <- Sys.getenv("R_PAPERSIZE_USER", names = FALSE)
+papersize <- Sys.getenv("R_PAPERSIZE_USER")
 if(!nchar(papersize)) {
     lcpaper <- Sys.getlocale("LC_PAPER") # might be null: OK as nchar is 0
     papersize <- if(nchar(lcpaper))
         if(length(grep("(_US|_CA)", lcpaper))) "letter" else "a4"
-    else Sys.getenv("R_PAPERSIZE", names = FALSE)
+    else Sys.getenv("R_PAPERSIZE")
 }
 options(papersize = papersize,
-        printcmd = Sys.getenv("R_PRINTCMD", names = FALSE),
-        dvipscmd = Sys.getenv("DVIPS", "dvips", names = FALSE),
-        texi2dvi = Sys.getenv("R_TEXI2DVICMD", names = FALSE),
-        browser = Sys.getenv("R_BROWSER", names = FALSE),
+        printcmd = Sys.getenv("R_PRINTCMD"),
+        dvipscmd = Sys.getenv("DVIPS", "dvips"),
+        texi2dvi = Sys.getenv("R_TEXI2DVICMD"),
+        browser = Sys.getenv("R_BROWSER"),
         pager = file.path(R.home(), "bin", "pager"),
-        pdfviewer = Sys.getenv("R_PDFVIEWER", names = FALSE),
+        pdfviewer = Sys.getenv("R_PDFVIEWER"),
         useFancyQuotes = TRUE)
 })
 

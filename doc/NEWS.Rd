@@ -92,7 +92,8 @@
 
       \item \code{Sys.getenv()} gains a \code{names} argument so
       \code{Sys.getenv(x, names = FALSE)} can replace the common idiom
-      of \code{as.vector(Sys.getenv())}.
+      of \code{as.vector(Sys.getenv())}.  The default has been changed
+      to name a length-one result.
     }
   }
 

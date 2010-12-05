@@ -19,8 +19,8 @@ invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
                       unlist(strsplit(Sys.getenv("R_LIBS_USER"), ";"))
                       )))
 
-if(nzchar(Sys.getenv("R_PAPERSIZE", names = FALSE))) {
-    options(papersize = Sys.getenv("R_PAPERSIZE", names = FALSE))
+if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
+    options(papersize = Sys.getenv("R_PAPERSIZE"))
 } else {
     if(grepl("(canada|united.states)", Sys.getlocale("LC_MONETARY"),
              ignore.case = TRUE)) options(papersize = "letter")
@@ -29,13 +29,13 @@ if(nzchar(Sys.getenv("R_PAPERSIZE", names = FALSE))) {
 
 options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal",
         useFancyQuotes = (.Platform$GUI == "Rgui"),
-        pdfviewer = Sys.getenv("R_PDFVIEWER", file.path(R.home("bin"), "open.exe"), names = FALSE))
+        pdfviewer = Sys.getenv("R_PDFVIEWER", file.path(R.home("bin"), "open.exe")))
 
 if(.Platform$GUI == "Rgui")
     Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1", GFORTRAN_STDERR_UNIT = "-1")
 
 local({
-    br <- Sys.getenv("R_BROWSER", NA, names = FALSE)
+    br <- Sys.getenv("R_BROWSER", NA_character_)
     if(!is.na(br)) options(browser = br)
     tests_startup <- Sys.getenv("R_TESTS")
     if(nzchar(tests_startup)) source(tests_startup)

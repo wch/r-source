@@ -6,13 +6,15 @@
 \name{Sys.getenv}
 \title{Get Environment Variables}
 \usage{
-Sys.getenv(x = NULL, unset = "", names = TRUE)
+Sys.getenv(x = NULL, unset = "", names = NA)
 }
 \alias{Sys.getenv}
 \arguments{
   \item{x}{a character vector, or \code{NULL}.}
   \item{unset}{a character string.}
-  \item{names}{logical: should the result be named?}
+  \item{names}{logical: should the result be named?  If \code{NA} (the
+    default) single-element results are not named whereas multi-element
+    results are.}
 }
 \description{
   \code{Sys.getenv} obtains the values of the environment variables.

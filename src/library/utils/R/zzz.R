@@ -38,8 +38,8 @@
                  )
         } else
             list(mailer = "mailx",
-                 unzip = Sys.getenv("R_UNZIPCMD", names = FALSE),
-                 editor = Sys.getenv("EDITOR", names = FALSE),
+                 unzip = Sys.getenv("R_UNZIPCMD"),
+                 editor = Sys.getenv("EDITOR"),
                  repos = c(CRAN="@CRAN@"))
     op.utils <- c(op.utils, extra)
     toset <- !(names(op.utils) %in% names(op))
