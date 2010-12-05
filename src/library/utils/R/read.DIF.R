@@ -24,7 +24,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	 transpose = FALSE)
 {
     if (.Platform$OS.type == "windows" && identical(file, "clipboard")) {
-	if (!(5 %in% getClipboardFormats()) ) stop("No DIF data on clipboard")
+	if (!(5 %in% getClipboardFormats(numeric=TRUE)) ) stop("No DIF data on clipboard")
 	lines <- readClipboard(5)
     } else {
 	lines <- readLines(file)
@@ -94,7 +94,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
         }
     }
 
-    if(skip > 0L) data <- data[-(1L:skip),]
+    if(skip > 0L) data <- data[-(1L:skip),,drop=FALSE]
 
     ## determine header, no of cols.
     nlines <- nrow(data)
@@ -123,8 +123,8 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     if(!header) rlabp <- FALSE
 
     if (header) {
-    	data <- data[-1L,] # skip over header
-    	types <- types[-1L, ]
+    	data <- data[-1L,,drop=FALSE] # skip over header
+    	types <- types[-1L,,drop=FALSE]
         if(missing(col.names)) col.names <- first
         else if(length(first) != length(col.names))
             warning("header and 'col.names' are of different lengths")
@@ -163,8 +163,8 @@ read.DIF <- function(file, header = FALSE, dec = ".",
                 c("logical", "integer", "numeric", "complex", "character")
     keep <- !(colClasses %in% "NULL")
 
-    if (blank.lines.skip) data <- data[apply(data, 1L, function(x) !all(x == "")),]
-    if (nrows > -1 && nrows < nrow(data)) data <- data[seq_len(nrows),]
+    if (blank.lines.skip) data <- data[apply(data, 1L, function(x) !all(x == "")),,drop=FALSE]
+    if (nrows > -1 && nrows < nrow(data)) data <- data[seq_len(nrows),,drop=FALSE]
     nlines <- nrow(data)
 
     data[data %in% na.strings] <- NA
@@ -206,10 +206,12 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     for (i in (1L:cols)[do]) {
         data[[i]] <-
 	    if (is.na(colClasses[i])) {
-		if (stringsAsFactors || all(types[,i] != "character"))
+	        if (any(types[,i] == "character")) {
+	            if (stringsAsFactors && !as.is[i]) as.factor(data[[i]])
+	            else data[[i]]
+		} else
 		    type.convert(data[[i]], as.is = as.is[i], dec = dec,
 				 na.strings = character(0L))
-		else data[[i]]
 	    }
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
