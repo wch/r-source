@@ -99,7 +99,7 @@ arrangeWindows <- function(action=c("vertical", "horizontal","cascade",
 
 menuShowCRAN <- function()
 {
-    CRAN <- as.vector(getOption("repos")["CRAN"])
+    CRAN <- as.vector(getOption("repos")["CRAN"]) # drop name for identical()
     if(is.na(CRAN) || identical(CRAN, "@CRAN@"))
         CRAN <- "http://cran.r-project.org"
     shell.exec(CRAN)
