@@ -175,6 +175,11 @@
 
       With Cairo < 1.6, will be better than before, though still a
       little clunky.  With Cairo >= 1.6, should be sweet as.
+            
+      \item Several bugs fixed in \code{read.DIF()}:  single column
+      inputs caused errors, cells marked as \code{"character"} could
+      be converted to other types, and (in Windows) copying from the
+      clipboard failed.      
     }
   }
 }
