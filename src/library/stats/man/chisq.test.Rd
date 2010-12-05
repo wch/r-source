@@ -1,6 +1,6 @@
 % File src/library/stats/man/chisq.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{chisq.test}
@@ -17,10 +17,12 @@ chisq.test(x, y = NULL, correct = TRUE,
            simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
-  \item{x}{a vector or matrix.}
-  \item{y}{a vector; ignored if \code{x} is a matrix.}
+  \item{x}{a numeric vector or matrix. \code{x} and \code{y} can also
+    both be factors.}
+  \item{y}{a numeric vector; ignored if \code{x} is a matrix.  If
+    \code{x} is a factor, \code{y} should be a factor of the same length.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction when computing the test statistic for 2x2 tables: one
+    correction when computing the test statistic for 2 by 2 tables: one
     half is subtracted from all \eqn{|O - E|} differences.  No correction
     is done if \code{simulate.p.value = TRUE}.}
   \item{p}{a vector of probabilities of the same length of \code{x}.
@@ -43,14 +45,14 @@ chisq.test(x, y = NULL, correct = TRUE,
   \code{p} is not given.
 
   If \code{x} is a matrix with at least two rows and columns, it is
-  taken as a two-dimensional contingency table.  Again, the entries
-  of \code{x} must be non-negative integers.  Otherwise, \code{x} and
-  \code{y} must be vectors or factors of the same length; incomplete
-  cases are removed, the objects are coerced into factor objects, and
-  the contingency table is computed from these.  Then, Pearson's
-  chi-squared test of the null hypothesis that the joint distribution of
-  the cell counts in a 2-dimensional contingency table is the product of
-  the row and column marginals is performed.
+  taken as a two-dimensional contingency table: the entries of \code{x}
+  must be non-negative integers.  Otherwise, \code{x} and \code{y} must
+  be vectors or factors of the same length; cases with missing values
+  are removed, the objects are coerced to factors, and the contingency
+  table is computed from these.  Then Pearson's chi-squared test is
+  performed of the null hypothesis that the joint distribution of the
+  cell counts in a 2-dimensional contingency table is the product of the
+  row and column marginals.
 
   If \code{simulate.p.value} is \code{FALSE}, the p-value is computed
   from the asymptotic chi-squared distribution of the test statistic;
@@ -63,8 +65,8 @@ chisq.test(x, y = NULL, correct = TRUE,
   only if the marginals are strictly positive.  (A C translation of the
   algorithm of Patefield (1981) is used.)  Continuity correction is
   never used, and the statistic is quoted without it.  Note that this is
-  not the usual sampling situation for the chi-squared test but rather
-  that for Fisher's exact test.
+  not the usual sampling situation assumed for the chi-squared test but
+  rather that for Fisher's exact test.
 
   In the goodness-of-fit case simulation is done by random sampling from
   the discrete distribution specified by \code{p}, each sample being
