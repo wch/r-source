@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:56\n"
+"POT-Creation-Date: 2010-12-05 22:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -569,6 +570,15 @@ msgstr "改动需要特别'style'"
 msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
 
+msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
 msgid "** Options"
 msgstr "**选项"
 
@@ -673,6 +683,10 @@ msgstr "无法从文件'%s'中读取索引信息"
 
 msgid "ERROR:"
 msgstr "错误："
+
+#, fuzzy
+msgid "error reading file '%s'"
+msgstr "文件'%s'里句法分析有错:"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
@@ -894,13 +908,11 @@ msgstr "打不开"
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
-msgid "Collecting examples for package"
+#, fuzzy
+msgid "Testing examples for package"
 msgstr "收集范例程序包"
 
-msgid "Running examples in package"
-msgstr "调用例子在程序包"
-
-msgid "Comparing"
+msgid "comparing"
 msgstr "比较"
 
 msgid "to"
@@ -911,6 +923,9 @@ msgstr "…"
 
 msgid "OK"
 msgstr "好"
+
+msgid "results differ from reference results"
+msgstr ""
 
 msgid "no examples found"
 msgstr "没有范例"
@@ -923,6 +938,9 @@ msgstr "执行"
 
 msgid "Running vignettes for package"
 msgstr "执行小文品给程序包"
+
+msgid "Comparing"
+msgstr "比较"
 
 msgid "creation of"
 msgstr "建造"
@@ -941,9 +959,6 @@ msgstr "调用程序于"
 
 msgid "FAILED"
 msgstr "失败"
-
-msgid "comparing"
-msgstr "比较"
 
 msgid "running strict specific tests"
 msgstr "执行严格检验"
@@ -1050,6 +1065,9 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "Running examples in package"
+#~ msgstr "调用例子在程序包"
 
 #~ msgid "making DLL ..."
 #~ msgstr "制造DLL…"

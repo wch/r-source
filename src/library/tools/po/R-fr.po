@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:56\n"
+"POT-Creation-Date: 2010-12-05 22:16\n"
 "PO-Revision-Date: 2010-10-03 18:49-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -135,8 +136,8 @@ msgstr ""
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr ""
-"Methodes S3 indiquées avec le nom complet dans la documentation de l'objet '%"
-"s' :"
+"Methodes S3 indiquées avec le nom complet dans la documentation de l'objet "
+"'%s' :"
 
 msgid "unable to create"
 msgstr "impossible de créer"
@@ -180,8 +181,8 @@ msgstr "T/F trouvé(s) dans %s"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
-"le nom du package '%s' semble incorrect ; utilisation du nom de répertoire '%"
-"s' à la place"
+"le nom du package '%s' semble incorrect ; utilisation du nom de répertoire "
+"'%s' à la place"
 
 msgid "Packages required but not available:"
 msgstr "Packages requis mais non disponibles :"
@@ -608,6 +609,15 @@ msgstr "Les modifications nécessite le 'style' spécifié"
 msgid "The default JSS style may not be modified."
 msgstr "Le style par défaut JSS ne peut être modifié."
 
+msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
 msgid "** Options"
 msgstr "** Les options"
 
@@ -716,6 +726,10 @@ msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 
 msgid "ERROR:"
 msgstr "ERREUR :"
+
+#, fuzzy
+msgid "error reading file '%s'"
+msgstr "erreur d'analyse de code dans le fichier '%s' :"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "ceci semble être un bundle -- ils ne sont plus supportés"
@@ -947,14 +961,12 @@ msgstr "ne peut être ouvert"
 msgid "testing '%s' failed"
 msgstr "le test '%s' a échoué"
 
-msgid "Collecting examples for package"
+#, fuzzy
+msgid "Testing examples for package"
 msgstr "Récupération des exemples du package"
 
-msgid "Running examples in package"
-msgstr "Exécution des examples du package"
-
-msgid "Comparing"
-msgstr "Comparaison"
+msgid "comparing"
+msgstr "comparaison"
 
 msgid "to"
 msgstr "à"
@@ -964,6 +976,9 @@ msgstr "..."
 
 msgid "OK"
 msgstr "OK"
+
+msgid "results differ from reference results"
+msgstr ""
 
 msgid "no examples found"
 msgstr "aucun exemple n'est trouvé"
@@ -976,6 +991,9 @@ msgstr "Exécution"
 
 msgid "Running vignettes for package"
 msgstr "Exécution des vignettes du package"
+
+msgid "Comparing"
+msgstr "Comparaison"
 
 msgid "creation of"
 msgstr "la création de"
@@ -994,9 +1012,6 @@ msgstr "exécution du code dans"
 
 msgid "FAILED"
 msgstr "ECHEC"
-
-msgid "comparing"
-msgstr "comparaison"
 
 msgid "running strict specific tests"
 msgstr "exécution stricte des tests spécifiques"
@@ -1120,6 +1135,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "Running examples in package"
+#~ msgstr "Exécution des examples du package"
 
 #~ msgid "making DLL ..."
 #~ msgstr "création de la DLL ..."

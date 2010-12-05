@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:56\n"
+"POT-Creation-Date: 2010-12-05 22:16\n"
 "PO-Revision-Date: 2010-09-29 21:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"Language: \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
@@ -604,6 +605,15 @@ msgstr " 指定された 'style' の変更が必要です "
 msgid "The default JSS style may not be modified."
 msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
+msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
 msgid "** Options"
 msgstr " ** オプション"
 
@@ -709,6 +719,10 @@ msgstr " ファイル '%s' 中のインデックス情報を読み取ること�
 
 msgid "ERROR:"
 msgstr "エラー: "
+
+#, fuzzy
+msgid "error reading file '%s'"
+msgstr " ファイル '%s' 中に構文解析エラー: "
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "バンドルされているようですが、現在は用いられていません "
@@ -938,13 +952,11 @@ msgstr "オープンできません "
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
-msgid "Collecting examples for package"
+#, fuzzy
+msgid "Testing examples for package"
 msgstr "パッケージに対する例を集めています "
 
-msgid "Running examples in package"
-msgstr "パッケージ中の例を実行中"
-
-msgid "Comparing"
+msgid "comparing"
 msgstr " 比較中"
 
 msgid "to"
@@ -955,6 +967,9 @@ msgstr " ... "
 
 msgid "OK"
 msgstr "OK "
+
+msgid "results differ from reference results"
+msgstr ""
 
 msgid "no examples found"
 msgstr " 例がが見つかりません "
@@ -967,6 +982,9 @@ msgstr " 実行中"
 
 msgid "Running vignettes for package"
 msgstr "パッケージのビニエットを実行中"
+
+msgid "Comparing"
+msgstr " 比較中"
 
 msgid "creation of"
 msgstr " 以下の作成 "
@@ -985,9 +1003,6 @@ msgstr " 以下の中にあるコードを実行中"
 
 msgid "FAILED"
 msgstr " 失敗 "
-
-msgid "comparing"
-msgstr " 比較中"
 
 msgid "running strict specific tests"
 msgstr "厳格な指定テストを実行中"
@@ -1097,6 +1112,9 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "Running examples in package"
+#~ msgstr "パッケージ中の例を実行中"
 
 #~ msgid "making DLL ..."
 #~ msgstr "DLLの作成中... "

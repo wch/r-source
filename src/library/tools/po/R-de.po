@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:56\n"
+"POT-Creation-Date: 2010-12-05 22:16\n"
 "PO-Revision-Date: 2010-09-22 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -142,7 +143,9 @@ msgstr "Datei '%s' existiert nicht"
 msgid ""
 "parse error in file '%s':\n"
 "%s"
-msgstr "Parse-Fehler in Datei '%s'"
+msgstr ""
+"Parse-Fehler in Datei '%s':\n"
+"%s"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
 msgstr "Aufrufe paketexterner Funktionen ohne 'PACKAGE' Argument:"
@@ -173,13 +176,13 @@ msgid "Packages required but not available:"
 msgstr "Benötigte, aber nicht verfügbare Pakete:"
 
 msgid "Package required but not available: %s"
-msgstr "Benötigte, aber nicht verfügbare Pakete: %s"
+msgstr "Benötigtes, aber nicht verfügbares Paket: %s"
 
 msgid "Packages required and available but unsuitable versions:"
 msgstr "Benötigte aber nur in falscher Version verfügbare Pakete:"
 
 msgid "Package required and available but unsuitable version: %s"
-msgstr "Benötigtes aber nur in falscher Version verfügbares Paket:"
+msgstr "Benötigtes aber nur in falscher Version verfügbares Paket: %s"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "Ehemalige Standardpakete benötigt, die es nicht mehr gibt:"
@@ -188,7 +191,7 @@ msgid "Packages suggested but not available for checking:"
 msgstr "Vorgeschlagene, aber nicht zur Überprüfung verfügbare Pakete:"
 
 msgid "Package suggested but not available for checking: %s"
-msgstr "Vorgeschlagenes, aber nicht zur Überprüfung verfügbares Paket:"
+msgstr "Vorgeschlagenes, aber nicht zur Überprüfung verfügbares Paket: %s"
 
 msgid "Packages which this enhances but not available for checking:"
 msgstr ""
@@ -196,7 +199,7 @@ msgstr ""
 
 msgid "Package which this enhances but not available for checking: %s"
 msgstr ""
-"Paket, welches dieses erweitern, aber nicht für Überprüfung bereit steht:"
+"Paket, welches dieses erweitert, aber nicht für Überprüfung bereit steht: %s"
 
 msgid "Vignette dependencies not required:"
 msgstr "nicht benötigte Vignettenabhängigkeiten "
@@ -341,7 +344,7 @@ msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
 
 msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr "Paket(e) fehlt(en) um Rd Kreuzreferenzen zu überprüfen"
+msgstr "Fehlende(s) Paket(e) um Rd Kreuzreferenzen zu überprüfen: %s"
 
 msgid "Unknown package(s) %s in Rd xrefs"
 msgstr "Unbekannte(s) Paket(e) %s in Rd Kreuzreferenzen"
@@ -589,6 +592,15 @@ msgstr "Änderungen benötigen den angegebenen 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Der Standard JSS style darf nicht geändert werden"
 
+msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
 msgid "** Options"
 msgstr "** Optionen"
 
@@ -695,6 +707,10 @@ msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
 msgid "ERROR:"
 msgstr "Fehler:"
+
+#, fuzzy
+msgid "error reading file '%s'"
+msgstr "Parse-Fehler in Datei '%s'"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "sieht aus wie ein Bundle --  und diese sind veraltet"
@@ -926,14 +942,12 @@ msgstr "kann nicht geöffnet werden"
 msgid "testing '%s' failed"
 msgstr "Test von '%s' fehlgeschlagen"
 
-msgid "Collecting examples for package"
+#, fuzzy
+msgid "Testing examples for package"
 msgstr "Sammle die Beispiele für Paket"
 
-msgid "Running examples in package"
-msgstr "Ausführen der Beispiele im Paket "
-
-msgid "Comparing"
-msgstr "Vergleiche"
+msgid "comparing"
+msgstr "vergleiche"
 
 msgid "to"
 msgstr "mit"
@@ -943,6 +957,9 @@ msgstr "..."
 
 msgid "OK"
 msgstr "OK"
+
+msgid "results differ from reference results"
+msgstr ""
 
 msgid "no examples found"
 msgstr "keine Beispiele gefunden"
@@ -955,6 +972,9 @@ msgstr "Ausführen"
 
 msgid "Running vignettes for package"
 msgstr "Ausführen der Vignetten für das Paket"
+
+msgid "Comparing"
+msgstr "Vergleiche"
 
 msgid "creation of"
 msgstr "Erzeugung von"
@@ -974,9 +994,6 @@ msgstr "Ausführen von Code in "
 msgid "FAILED"
 msgstr "fehlgeschlagen"
 
-msgid "comparing"
-msgstr "vergleiche"
-
 msgid "running strict specific tests"
 msgstr "Ausführen strenger spezifischer Tests"
 
@@ -994,8 +1011,8 @@ msgstr "Ausführen der Tests um Latin-1 zu plotten"
 
 msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
 msgstr ""
-"einige Fehler oder Unterschiede sind in Lokalisierungen außer Latin oder UTF-"
-"8 zu erwarten"
+"einige Fehler oder Unterschiede sind in Lokalisierungen außer Latin oder "
+"UTF-8 zu erwarten"
 
 msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
 msgstr "vergleiche  'reg-plot-latin1.ps' mit 'reg-plot-latin1.ps.save' .."
@@ -1091,6 +1108,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "Running examples in package"
+#~ msgstr "Ausführen der Beispiele im Paket "
 
 #~ msgid "making DLL ..."
 #~ msgstr "erzuege DLL"

@@ -19,6 +19,14 @@
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "")
 {
+    if(grepl("INSTALL", args) && identical("maechler", unname(Sys.getenv("USER")))) {
+        cat("\n ** Debugging tools/R/check.R:run_Rcmd() -- Sys.getenv(\"R_LIBS\") [split ':']:\n")
+        print(strsplit(Sys.getenv("R_LIBS"), ":", fixed=TRUE))
+        cat(" .libPaths():\n"); print(.libPaths())
+        args <- c(args, "--debug")
+        cat(" ** args {incl debug}=\n"); print(args)
+        ## now add '--debug' to args:
+    }
     if(.Platform$OS.type == "windows")
         system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out)
     else

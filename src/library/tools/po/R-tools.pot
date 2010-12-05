@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:56\n"
+"POT-Creation-Date: 2010-12-05 22:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -527,6 +527,15 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
+msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
 msgid "** Options"
 msgstr ""
 
@@ -630,6 +639,9 @@ msgid "cannot read index information in file '%s'"
 msgstr ""
 
 msgid "ERROR:"
+msgstr ""
+
+msgid "error reading file '%s'"
 msgstr ""
 
 msgid "this seems to be a bundle -- and they are defunct"
@@ -836,13 +848,10 @@ msgstr ""
 msgid "testing '%s' failed"
 msgstr ""
 
-msgid "Collecting examples for package"
+msgid "Testing examples for package"
 msgstr ""
 
-msgid "Running examples in package"
-msgstr ""
-
-msgid "Comparing"
+msgid "comparing"
 msgstr ""
 
 msgid "to"
@@ -852,6 +861,9 @@ msgid "..."
 msgstr ""
 
 msgid "OK"
+msgstr ""
+
+msgid "results differ from reference results"
 msgstr ""
 
 msgid "no examples found"
@@ -864,6 +876,9 @@ msgid "Running"
 msgstr ""
 
 msgid "Running vignettes for package"
+msgstr ""
+
+msgid "Comparing"
 msgstr ""
 
 msgid "creation of"
@@ -882,9 +897,6 @@ msgid "running code in"
 msgstr ""
 
 msgid "FAILED"
-msgstr ""
-
-msgid "comparing"
 msgstr ""
 
 msgid "running strict specific tests"
