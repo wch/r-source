@@ -17,6 +17,9 @@
       to, and more cases of \code{system2()} are implemented.
 
       \item \code{stdin} is now flushed after echoing the input line.
+
+      \item The internal implementation of \code{tar()} (package
+      \pkg{utils}) is now supported on Windows.
     }
   }
 

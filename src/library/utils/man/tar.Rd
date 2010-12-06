@@ -25,8 +25,8 @@ tar(tarfile, files = NULL,
   \item{files}{A character vector of filepaths to be archived:
     the default is to archive all files under the current directory.}
   
-  \item{compression}{logical or character.  The type of compression to
-    be used.  Can be abbreviated.}
+  \item{compression}{character string giving the type of compression to
+    be used (default none).  Can be abbreviated.}
 
   \item{compression_level}{integer: the level of compression.  Only used
     for the internal method.}

@@ -280,10 +280,13 @@ tar <- function(tarfile, files = NULL,
         }
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))
-        if(!is.na(info$uid))
-            header[109:115] <- charToRaw(sprintf("%07o", info$uid))
-        if(!is.na(info$gid))
-            header[117:123] <- charToRaw(sprintf("%07o", info$gid))
+        ## Windows does not have uid, gid: defaults to 0, which isn't great
+        uid <- info$uid
+        if(!is.null(uid) && !is.na(uid))
+            header[109:115] <- charToRaw(sprintf("%07o", uid))
+        gid <- info$gid
+        if(!is.null(gid) && !is.na(gid))
+            header[117:123] <- charToRaw(sprintf("%07o", gid))
         ## size is 0 for directories and it seems for links.
         size <- ifelse(info$isdir, 0, info$size)
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
@@ -303,11 +306,14 @@ tar <- function(tarfile, files = NULL,
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
         header[264:265] <- charToRaw("0")
-        if(!is.na(s <- info$uname)) {
+        ## Windows does not have uname, grname
+        s <- info$uname
+        if(!is.null(s) && !is.na(s)) {
             ns <- nchar(s, "b")
             header[265L + (1:ns)] <- charToRaw(s)
         }
-        if(!is.na(s <- info$grname)) {
+        s <- info$grname
+        if(!is.null(s) && !is.na(s)) {
             ns <- nchar(s, "b")
             header[297L + (1:ns)] <- charToRaw(s)
         }
