@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,6 +80,9 @@ msgstr " Kinderman-Ramage の疑似乱数発生法のバギー版は使えませ
 
 msgid "malformed version string"
 msgstr " 正しい書式のバージョン文字列ではありません "
+
+msgid "target is %s, current is %s"
+msgstr ""
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "
@@ -578,9 +581,6 @@ msgstr " 行列の対角成分だけが置き換えられます "
 msgid "replacement diagonal has wrong length"
 msgstr " 置き換え対角成分の長さが間違っています "
 
-msgid "'fromLast' must be TRUE or FALSE"
-msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
-
 msgid "MARGIN ="
 msgstr " MARGIN= "
 
@@ -674,6 +674,10 @@ msgstr " リンクすべきファイルもしくはディレクトリがあり�
 
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "
+
+#, fuzzy
+msgid "no file found"
+msgstr " 見つかりません "
 
 msgid "'vec' contains NAs"
 msgstr " 'vec' は NA 値を含んでいます "
@@ -1658,6 +1662,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'fromLast' must be TRUE or FALSE"
+#~ msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr " 共用ライブラリ '%s' が見付かりません "

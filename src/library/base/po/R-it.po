@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -91,6 +91,9 @@ msgstr ""
 
 msgid "malformed version string"
 msgstr "versione stringa mal composta"
+
+msgid "target is %s, current is %s"
+msgstr ""
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve avere lunghezza positiva"
@@ -605,9 +608,6 @@ msgstr "si possono sostituire solo le diagonali della matrice"
 msgid "replacement diagonal has wrong length"
 msgstr "la diagonale sostitutiva ha lunghezza sbagliata"
 
-msgid "'fromLast' must be TRUE or FALSE"
-msgstr ""
-
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -705,6 +705,10 @@ msgstr "nessun file/directory da collegare"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve avere lunghezza 1"
+
+#, fuzzy
+msgid "no file found"
+msgstr "non trovato"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' contiene NA"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-12-06 16:54\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -50,7 +50,8 @@ msgstr "série temporal tem menos de 3 períodos"
 msgid "the series is entirely NA"
 msgstr "a série é composta somente de observações NA"
 
-msgid "frequency must be a positive integer for BSM"
+#, fuzzy
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "freqüência deve ser um inteiro positivo para BSM"
 
 msgid "only implemented for univariate time series"
@@ -474,7 +475,8 @@ msgstr "distâncias devem ser o resultado de 'dist' ou uma matriz quadrada"
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr "'k' deve estar em {1, 2, ... n - 1}"
 
-msgid "some of the first %d eigenvalues are < 0"
+#, fuzzy
+msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "alguns dos primeiros %d autovalores são < 0"
 
 #, fuzzy
@@ -2008,6 +2010,10 @@ msgstr "'ref' deve ser um nível existente"
 #, fuzzy
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d  deve estar em 1:%d"
+
+#, fuzzy
+msgid "'sep' must be a character string"
+msgstr "'file' deve ser uma string de caracteres ou conexão"
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr ""

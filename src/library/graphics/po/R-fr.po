@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:26\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -147,6 +147,9 @@ msgstr "'from' et 'to' doivent être > 0 avec log=\"x\""
 
 msgid "wrong method"
 msgstr "mauvaise méthode"
+
+msgid "Must specify 'breaks' in hist(<POSIXt>)"
+msgstr ""
 
 msgid "invalid specification of 'breaks'"
 msgstr "valeur de 'breaks' incorrecte"

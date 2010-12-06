@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2010-09-21 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -85,6 +85,9 @@ msgstr ""
 
 msgid "malformed version string"
 msgstr "falsch aufgebaute Versionszeichenkette"
+
+msgid "target is %s, current is %s"
+msgstr ""
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
@@ -582,9 +585,6 @@ msgstr "nur Matrixdiagonalen können ersetzt werden"
 msgid "replacement diagonal has wrong length"
 msgstr "Ersatzdiagonale hat falsche Länge"
 
-msgid "'fromLast' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
-
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -675,6 +675,10 @@ msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
+
+#, fuzzy
+msgid "no file found"
+msgstr "nicht gefunden"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' enthält NAs"
@@ -1656,6 +1660,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "'fromLast' must be TRUE or FALSE"
+#~ msgstr "'fromLast' muss TRUE oder FALSE sein"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "shared library '%s' nicht gefunden"

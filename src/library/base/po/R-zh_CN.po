@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -84,6 +84,9 @@ msgstr "不能用有虫的Kinderman-Ramage任意数产生器。"
 
 msgid "malformed version string"
 msgstr "版本字串格式有错"
+
+msgid "target is %s, current is %s"
+msgstr ""
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X)的值必需是正数"
@@ -571,9 +574,6 @@ msgstr "只能替换矩阵的对角"
 msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
-msgid "'fromLast' must be TRUE or FALSE"
-msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
-
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -661,6 +661,10 @@ msgstr "鏈結时没有可以写的文件/目錄"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"
+
+#, fuzzy
+msgid "no file found"
+msgstr "不存在"
 
 msgid "'vec' contains NAs"
 msgstr "'vec'内有NA值"
@@ -1608,6 +1612,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'fromLast' must be TRUE or FALSE"
+#~ msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "找不到共享图书馆'%s'"

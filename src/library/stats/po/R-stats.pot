@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-12-06 16:54\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "the series is entirely NA"
 msgstr ""
 
-msgid "frequency must be a positive integer for BSM"
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr ""
 
 msgid "only implemented for univariate time series"
@@ -446,7 +446,7 @@ msgstr ""
 msgid "'k' must be in {1, 2, ..  n - 1}"
 msgstr ""
 
-msgid "some of the first %d eigenvalues are < 0"
+msgid "only %d of the first %d eigenvalues are > 0"
 msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
@@ -1830,6 +1830,9 @@ msgid "'ref' must be an existing level"
 msgstr ""
 
 msgid "ref = %d must be in 1L:%d"
+msgstr ""
+
+msgid "'sep' must be a character string"
 msgstr ""
 
 msgid "Failed to guess time-varying variables from their names"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-17 16:04\n"
+"POT-Creation-Date: 2010-12-06 16:54\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -129,9 +129,7 @@ msgstr "参数不对"
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
-msgstr ""
-"不是所有的参数的长度都一样，下面这些需要被再循环："
-"%s"
+msgstr "不是所有的参数的长度都一样，下面这些需要被再循环：%s"
 
 msgid ","
 msgstr ","
@@ -577,8 +575,9 @@ msgstr "'instPkgs'矩阵有错"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
 
-msgid "read.dcf() error on file '%s'"
-msgstr "read.dcf()在'%s'文件上出了错"
+#, fuzzy
+msgid "metadata of '%s' is corrupt"
+msgstr "程序包'%s'里元数据出了错"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
@@ -1102,6 +1101,9 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
+#~ msgid "read.dcf() error on file '%s'"
+#~ msgstr "read.dcf()在'%s'文件上出了错"
+
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "找不到aspell或ispell执行文件"
 
@@ -1287,4 +1289,3 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-

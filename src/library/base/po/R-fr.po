@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-23 07:22\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -86,6 +86,9 @@ msgstr "La version boggée du générateur Kinderman-Ramage n'est pas autorisée"
 
 msgid "malformed version string"
 msgstr "chaîne de caractères de version incorrecte"
+
+msgid "target is %s, current is %s"
+msgstr ""
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) doit avoir un longueur positive"
@@ -604,9 +607,6 @@ msgstr "seules les diagonales des matrices peuvent être remplacées"
 msgid "replacement diagonal has wrong length"
 msgstr "la diagonale a une mauvaise longueur pour le remplacement"
 
-msgid "'fromLast' must be TRUE or FALSE"
-msgstr "'fromLast' doit être TRUE ou FALSE"
-
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -699,6 +699,10 @@ msgstr "aucun fichier / répertoire vers où pointer un lien"
 
 msgid "'package' must be of length 1"
 msgstr "'package' doit être de longueur unaire"
+
+#, fuzzy
+msgid "no file found"
+msgstr "introuvable"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' contient des valeurs manquantes (NAs)"
@@ -1703,6 +1707,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'fromLast' must be TRUE or FALSE"
+#~ msgstr "'fromLast' doit être TRUE ou FALSE"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "la librairie partagée '%s' est introuvable"

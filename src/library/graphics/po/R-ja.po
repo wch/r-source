@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:26\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2010-09-29 17:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -139,6 +139,9 @@ msgstr " log=\"x\" ならば 'from' と 'to' は正値でなければなりま�
 
 msgid "wrong method"
 msgstr " 間違ったメソッドです "
+
+msgid "Must specify 'breaks' in hist(<POSIXt>)"
+msgstr ""
 
 msgid "invalid specification of 'breaks'"
 msgstr " 'breaks' の指定が無効です "

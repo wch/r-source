@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-28 22:26\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -137,6 +137,9 @@ msgstr "'from'와 'to'는 정확한 값이 되어어야만 합니다. 그리고 
 
 msgid "wrong method"
 msgstr "잘못된 메소드입니다"
+
+msgid "Must specify 'breaks' in hist(<POSIXt>)"
+msgstr ""
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks'의 지정이 무효입니다"

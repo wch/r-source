@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
-"PO-Revision-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2010-12-06 16:53\n"
+"PO-Revision-Date: 2010-12-06 16:53\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,9 @@ msgstr "‘bias’ must be positive"
 
 msgid "at least 3 columns needed"
 msgstr "at least 3 columns needed"
+
+msgid "The 'gamma' argument is deprecated and has no effect"
+msgstr "The ‘gamma’ argument is deprecated and has no effect"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb matrix must be numeric"
@@ -242,6 +245,9 @@ msgstr "A raster array must have exactly 3 dimensions"
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "A raster array must have exactly 3 or 4 planes"
+
+msgid "No valid indices"
+msgstr "No valid indices"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Operator not meaningful for raster objects"
