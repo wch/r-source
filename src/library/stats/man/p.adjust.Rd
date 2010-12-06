@@ -23,7 +23,6 @@ p.adjust.methods
   \item{n}{number of comparisons, must be at least \code{length(p)};
     only set this (to non-default) when you know what you are doing!}
 }
-\value{A vector of corrected p-values (of the same length as \code{p}).}
 \details{
   The adjustment methods include the Bonferroni correction
   (\code{"bonferroni"}) in which the p-values are multiplied by the
@@ -57,8 +56,13 @@ p.adjust.methods
 
   Note that you can set \code{n} larger than \code{length(p)} which
   means the unobserved p-values are assumed to be greater than all the
-  observed p for \code{"bonferroni"} and \code{"holm"} methods and equal to 1 for
-  the other methods.
+  observed p for \code{"bonferroni"} and \code{"holm"} methods and equal
+  to 1 for the other methods.
+}
+
+\value{
+  A numeric vector of corrected p-values (of the same length as
+  \code{p}, with names copied from \code{p}).
 }
 
 \references{

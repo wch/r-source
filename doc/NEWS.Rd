@@ -166,7 +166,7 @@
 
       \item \code{p.adjust()} now always returns a vector result, as
       documented.  In previous versions it copied attributes (such as
-      dimensions) from the \code{p} argument.
+      dimensions) from the \code{p} argument: now it only copies names.
     }
   }
 }
