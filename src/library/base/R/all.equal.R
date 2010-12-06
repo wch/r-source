@@ -63,8 +63,8 @@ all.equal.numeric <-
 			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
 	return(msg)
     }
-    ## is this what is intended?  Maybe just dim() <- NULL
     ## remove atttributes (remember these are both numeric or complex vectors)
+    ## one place this is needed is to unclass Surv objects in the rpart test suite.
     target <- as.vector(target)
     current <- as.vector(current)
     out <- is.na(target)

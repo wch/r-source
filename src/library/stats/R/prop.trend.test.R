@@ -20,8 +20,7 @@ prop.trend.test <- function (x, n, score = seq_along(x))
     dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
     dname <- paste(dname, ",\n using scores:", paste(score, collapse = " "))
 
-    ## Tabular input have caused grief, get rid of
-    ## dim() attributes:
+    ## Tabular input has caused grief, get rid of dim() attributes:
     x <- as.vector(x)
     n <- as.vector(n)
     score <- as.vector(score)
