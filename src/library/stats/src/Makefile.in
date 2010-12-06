@@ -32,9 +32,9 @@ DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
 # need config.h
-PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
-PKG_CFLAGS=$(C_VISIBILITY)
-PKG_FFLAGS=$(F77_VISIBILITY)
+PKG_CPPFLAGS = -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
+PKG_CFLAGS = @R_OPENMP_CFLAGS@ $(C_VISIBILITY)
+PKG_FFLAGS = $(F77_VISIBILITY)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
@@ -42,7 +42,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 ## We should really add FLIBS to SHLIB_LIBADD, but we need to include
 ## the shlib Makeconf at a later stage, and its default value would
 ## override our setting.
-PKG_LIBS = @BLAS_LIBS@ @FLIBS@
+PKG_LIBS = @R_OPENMP_CFLAGS@ @BLAS_LIBS@ @FLIBS@
 ## </FIXME>
 
 
