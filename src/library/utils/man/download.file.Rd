@@ -94,24 +94,26 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   messages, and 3 or more suppresses all messages.
 
 #ifdef windows
-  A progress bar tracks the transfer. If the file length is known, the
+  A progress bar tracks the transfer.  If the file length is known, the
   full width of the bar is the known length.  Otherwise the initial
   width represents 100 Kbytes and is doubled whenever the current width
   is exceeded.
 
   If \code{mode} is not supplied and \code{url} ends in one of
   \code{.gz}, \code{.bz2}, \code{.tgz} or \code{.zip} a binary transfer
-  is done.
+  is done.  Since Windows (unlike Unix-alikes) does distinguish between
+  text and binary files, care is needed that other binary file types are
+  transferred with \code{mode = "wb"}.
 
   There is an alternative method if you have Internet Explorer 4 or
   later installed.   You can use the command line flag \option{--internet2}, 
   or call \code{\link{setInternet2}(TRUE)} and then 
   the \sQuote{Internet Options} of the system are used to choose proxies
   and so on; these are set in the Control Panel and are those used for
-  Internet Explorer.  This version does not support \code{cacheOK = FALSE}.
+  Internet Explorer.  That version does not support \code{cacheOK = FALSE}.
 #endif
 #ifdef unix
-  A progress bar tracks the transfer. If the file length is known, an
+  A progress bar tracks the transfer.  If the file length is known, an
   equals sign represents 2\% of the transfer completed: otherwise a dot
   represents 10Kb.
 #endif
