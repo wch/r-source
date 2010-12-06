@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.object.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{terms.object}
@@ -40,7 +40,7 @@
     is an \code{offset} attribute indicating which variable(s) are offsets}
   \item{specials}{If a \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
-    list of vectors (one for each specified special function) giving
+    pairlist of vectors (one for each specified special function) giving
     numeric indices of the arguments of the list returned as the
     \code{variables} attribute which contain these special functions.}
   \item{dataClasses}{optional. A named character vector giving the classes
