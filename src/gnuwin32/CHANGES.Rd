@@ -16,7 +16,7 @@
       output from the command to stdout and stderr as often as they used
       to, and more cases of \code{system2()} are implemented.
 
-      \item \code{stdin} is now flushed after echoing the input line.
+      \item \code{stdout} is now flushed after echoing the input line.
 
       \item The internal implementation of \code{tar()} (package
       \pkg{utils}) is now supported on Windows.
