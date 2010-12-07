@@ -175,7 +175,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.0 patched}{
+\section{CHANGES IN R VERSION 2.12.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The DVI/PDF reference manual now includes the help pages for
