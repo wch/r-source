@@ -94,6 +94,10 @@
       \code{Sys.getenv(x, names = FALSE)} can replace the common idiom
       of \code{as.vector(Sys.getenv())}.  The default has been changed
       to not name a length-one result.
+
+      \item Lazy loading now preserves attributes and locked status of
+      environments (locked status of bindings and active bindings are
+      still not preserved; this may be addressed in the future).
     }
   }
 

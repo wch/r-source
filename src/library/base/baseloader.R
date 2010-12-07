@@ -50,6 +50,12 @@
             vars <- names(data$bindings)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
+            if (! is.null(data$attributes))
+                attributes(e) <-data$attributes
+            if (! is.null(data$isS4) && data$isS4)
+                .Call("R_setS4Object", e, TRUE, TRUE, PACKAGE = "base")
+            if (! is.null(data$locked) && data$locked)
+                .Internal(lockEnvironment(e, FALSE))
             e
         }
     }
