@@ -32,7 +32,7 @@ as.raster.matrix <- function(x, max=1, ...) {
         # Assume greyscale or b&w values
         # Use rgb() to allow for different 'max' value
         tx <- t(x)
-        r <- rgb(tx, tx, tx, max=max)
+        r <- rgb(tx, tx, tx, maxColorValue = max)
     } else {
         stop("A raster matrix must be character, or numeric, or logical")
     }
@@ -49,9 +49,11 @@ as.raster.array <- function(x, max=1, ...) {
         stop("A raster array must have exactly 3 dimensions")
     }
     if (dim(x)[3] == 3) {
-        r <- rgb(t(x[,,1]), t(x[,,2]), t(x[,,3]), max=max)
+        r <- rgb(t(x[,,1]), t(x[,,2]), t(x[,,3]),
+                 maxColorValue = max)
     } else if (dim(x)[3] == 4) {
-        r <- rgb(t(x[,,1]), t(x[,,2]), t(x[,,3]), t(x[,,4]), max=max)
+        r <- rgb(t(x[,,1]), t(x[,,2]), t(x[,,3]), t(x[,,4]),
+                 maxColorValue = max)
     } else {
         stop("A raster array must have exactly 3 or 4 planes")
     }

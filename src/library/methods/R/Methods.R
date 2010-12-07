@@ -234,7 +234,7 @@ isGeneric <-
         ## the definition of isGeneric() for a primitive is that methods are defined
         ## (other than the default primitive)
         gen <- genericForPrimitive(f)
-        return(is.function(gen) && length(objects(.getMethodsTable(gen), all=TRUE)) > 1L)
+        return(is.function(gen) && length(objects(.getMethodsTable(gen), all.names=TRUE)) > 1L)
     }
     if(!is(fdef, "genericFunction"))
         return(FALSE)
@@ -1306,7 +1306,7 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     if(!is.environment(what))
         stop(gettextf("Must provide an environment table; got class \"%s\"",
                       class(what)), domain = NA)
-    objs <- objects(what, all=TRUE)
+    objs <- objects(what, all.names = TRUE)
     for(f in objs)
         .cacheImplicitGeneric(f, get(f, envir = what))
     NULL

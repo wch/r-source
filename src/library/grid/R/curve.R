@@ -154,7 +154,7 @@ calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
 
     # Debugging
     if (debug) {
-        grid.points(cornerx, cornery, default="inches",
+        grid.points(cornerx, cornery, default.units="inches",
                     pch=16, size=unit(3, "mm"),
                     gp=gpar(col="grey"))
     }
@@ -222,11 +222,11 @@ calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
         ox <- ox/scalex
         fox <- x1 + (ox - x1)*cosnb - (oy - y1)*sinnb
         foy <- y1 + (oy - y1)*cosnb + (ox - x1)*sinnb
-        grid.points(fox, foy, default="inches",
+        grid.points(fox, foy, default.units="inches",
                     pch=16, size=unit(1, "mm"),
                     gp=gpar(col="grey"))
         grid.circle(fox, foy, sqrt((ox - x1)^2 + (oy - y1)^2),
-                    default="inches",
+                    default.units="inches",
                     gp=gpar(col="grey"))
     }
 

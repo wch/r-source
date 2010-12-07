@@ -211,7 +211,7 @@
         if(length(S3Class)) S3Class <- S3Class[[1L]]
         else S3Class <- "oldClass"      # or error?
         cat("Object of class \"", cl, "\"\n", sep = "")
-        print(S3Part(object, strict = TRUE))
+        print(S3Part(object, strictS3 = TRUE))
         otherSlots <- slotNames(cl)
         S3slots <- slotNames(S3Class)
         otherSlots <- otherSlots[is.na(match(otherSlots, S3slots))]

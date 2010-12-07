@@ -244,9 +244,9 @@ tar <- function(tarfile, files = NULL,
         }
         con <- switch(match.arg(compression),
                       "none" =    file(tarfile, "wb"),
-                      "gzip" =  gzfile(tarfile, "wb", compress = compression_level),
-                      "bzip2" = bzfile(tarfile, "wb", compress = compression_level),
-                      "xz" =    xzfile(tarfile, "wb", compress = compression_level))
+                      "gzip" =  gzfile(tarfile, "wb", compression = compression_level),
+                      "bzip2" = bzfile(tarfile, "wb", compression = compression_level),
+                      "xz" =    xzfile(tarfile, "wb", compression = compression_level))
         on.exit(close(con))
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")

@@ -340,7 +340,7 @@ function(pch, labels, frame=TRUE,
 ## Just a wrapper for a sample series of grid commands
 grid.plot.and.legend <- function() {
   grid.newpage()
-  top.vp <- viewport(w=0.8, h=0.8)
+  top.vp <- viewport(width=0.8, height=0.8)
   pushViewport(top.vp)
   x <- stats::runif(10)
   y1 <- stats::runif(10)
