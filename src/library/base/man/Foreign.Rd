@@ -14,13 +14,13 @@
   Functions to make calls to compiled code that has been loaded into \R.
 }
 \usage{
-       .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
- .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
-.External(name, \dots, PACKAGE)
-    .Call(name, \dots, PACKAGE)
+       .C(.NAME, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
+ .Fortran(.NAME, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
+.External(.NAME, \dots, PACKAGE)
+    .Call(.NAME, \dots, PACKAGE)
 }
 \arguments{
-  \item{name}{a character string giving the name of a C function or
+  \item{.NAME}{a character string giving the name of a C function or
     Fortran subroutine, or an object of class
     \code{"\link{NativeSymbolInfo}"}, \code{"\link{RegisteredNativeSymbol}"}
     or \code{"\link{NativeSymbol}"} referring to such a name.}
@@ -31,7 +31,7 @@
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
   \item{DUP}{if \code{TRUE} then arguments are duplicated before
     their address is passed to C or Fortran.}
-  \item{PACKAGE}{if supplied, confine the search for the \code{name} to
+  \item{PACKAGE}{if supplied, confine the search for the \code{.NAME} to
     the DLL given by this argument (plus the conventional extension,
     \file{.so}, \file{.sl}, \file{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
@@ -66,10 +66,14 @@
   \code{\link{Encoding}}) which are otherwise used to translate to the
   current locale before passing the strings to the compiled code.
   
-  These functions are all \link{primitive}, and \code{name} is always
+  These functions are all \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which if named must partially
-  match \code{name}).  The other named arguments follow \code{\dots} and
-  so cannot be abbreviated.
+  match \code{.NAME}).  The other named arguments follow \code{\dots}
+  and so cannot be abbreviated.  You should avoid using names in the
+  arguments passed to \code{\dots} that match or partially match
+  \code{.NAME} in case the argument handling in \code{.C} or
+  \code{.Fortran} should change to follow standard argument matching
+  conventions.
   
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on \dQuote{System and foreign language

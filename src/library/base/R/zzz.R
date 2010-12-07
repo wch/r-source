@@ -50,16 +50,16 @@ is.name <- is.symbol
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
 assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
-assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
+assign(".C", function(.NAME, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
                       ENCODING) NULL,
        envir = .ArgsEnv)
 assign(".Fortran",
-       function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING) NULL,
+       function(.NAME, ..., NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING) NULL,
        envir = .ArgsEnv)
-assign(".Call", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
-assign(".Call.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
-assign(".External", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
-assign(".External.graphics", function(name, ..., PACKAGE) NULL,
+assign(".Call", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".Call.graphics", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External", function(.NAME, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External.graphics", function(.NAME, ..., PACKAGE) NULL,
        envir = .ArgsEnv)
 assign(".Internal", function(call) NULL, envir = .ArgsEnv)
 assign(".Primitive", function(name) NULL, envir = .ArgsEnv)

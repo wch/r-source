@@ -11,11 +11,11 @@
   Internal versions of \code{\link{.Call}} and \code{\link{.External}}.
 }
 \usage{
-    .Call.graphics(name, \dots, PACKAGE)
-.External.graphics(name, \dots, PACKAGE)
+    .Call.graphics(.NAME, \dots, PACKAGE)
+.External.graphics(.NAME, \dots, PACKAGE)
 }
 \arguments{
-  \item{name}{a character string giving the name of a C function or
+  \item{.NAME}{a character string giving the name of a C function or
     Fortran subroutine, or an object of class
     \code{"\link{NativeSymbolInfo}"}, \code{"\link{RegisteredNativeSymbol}"}
     or \code{"\link{NativeSymbol}"} referring to such a name.}
