@@ -2043,16 +2043,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         paste(paths[nzchar(paths)], collapse = .Platform$path.sep)
     }
 
-    config_val_to_logical <- function(val) {
-        v <- tolower(val)
-        if (v %in% c("1", "yes", "true")) TRUE
-        else if (v %in% c("0", "no", "false")) FALSE
-        else {
-            warning("cannot coerce ", sQuote(val), " to logical")
-            NA
-        }
-    }
-
     Usage <- function() {
         cat("Usage: R CMD check [options] pkgs",
             "",

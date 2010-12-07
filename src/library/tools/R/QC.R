@@ -3027,7 +3027,8 @@ function(package, lib.loc = NULL)
                              multi = TRUE, filters = Filters,
                              index = nrow(Filters)) {Filters=NULL}, envir = compat)
             assign("DLL.version", function(path) {}, envir = compat)
-            assign("getClipboardFormats", function() {}, envir = compat)
+            assign("getClipboardFormats", function(numeric = FALSE) {},
+                   envir = compat)
             assign("getIdentification", function() {}, envir = compat)
             assign("getWindowsHandle", function(which = "Console") {},
                    envir = compat)
@@ -3140,19 +3141,24 @@ function(package, lib.loc = NULL)
 			    getNamespace(pack) else as.environment(pname), ...)
     }
 
-    ## <NOTE>
-    ## Eventually, we should be able to specify a codetools "profile"
-    ## for checking.
-    ## </NOTE>
+    ## Allow specifying a codetools "profile" for checking via the
+    ## environment variable _R_CHECK_CODETOOLS_PROFILE_, used as e.g.
+    ##   _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
+    ## (where the values get converted to logicals "the usual way").
+    args <- list(skipWith = TRUE,
+                 suppressLocalUnused = TRUE)
+    opts <- unlist(strsplit(Sys.getenv("_R_CHECK_CODETOOLS_PROFILE_"),
+                            "[[:space:]]*,[[:space:]]*"))
+    if(length(opts)) {
+        args[sub("[[:space:]]*=.*", "", opts)] <-
+            lapply(sub(".*=[[:space:]]*", "", opts),
+                   config_val_to_logical)
+    }
 
-    suppressMessages(codetools::checkUsagePackage(package,
-                                                  report = foo,
-                                                  suppressLocalUnused = TRUE,
-                                                  skipWith = TRUE))
-    suppressMessages(checkMethodUsagePackage     (package,
-                                                  report = foo,
-                                                  suppressLocalUnused = TRUE,
-                                                  skipWith = TRUE))
+    args <- c(list(package, report = foo), args)
+    suppressMessages(do.call(codetools::checkUsagePackage, args))
+    suppressMessages(do.call(checkMethodUsagePackage, args))
+
     out <- unique(out)
     class(out) <- "check_code_usage_in_package"
     out

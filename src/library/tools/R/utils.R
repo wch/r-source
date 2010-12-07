@@ -464,6 +464,21 @@ function() {
 ## does not work because when tools is installed there are no Rd pages
 ## yet ...
 
+### ** config_val_to_logical
+
+config_val_to_logical <-
+function(val) {
+    v <- tolower(val)
+    if (v %in% c("1", "yes", "true")) TRUE
+    else if (v %in% c("0", "no", "false")) FALSE
+    else {
+        warning("cannot coerce ", sQuote(val), " to logical")
+        NA
+    }
+}
+
+
+
 ### ** .eval_with_capture
 
 .eval_with_capture <-
