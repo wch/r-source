@@ -94,10 +94,15 @@
       \code{Sys.getenv(x, names = FALSE)} can replace the common idiom
       of \code{as.vector(Sys.getenv())}.  The default has been changed
       to not name a length-one result.
+      
+      \item Lazy loading of environments now preserves attributes and
+      locked status. (The locked status of bindings and active bindings
+      are still not preserved; this may be addressed in the future).
 
-      \item Lazy loading now preserves attributes and locked status of
-      environments (locked status of bindings and active bindings are
-      still not preserved; this may be addressed in the future).
+      \item \command{R CMD INSTALL --clean} now removes copies of a
+      \file{src} directory which are created when multiple
+      sub-architectures are in use.  (Following a comment from
+      Berwin Turlach.) 
     }
   }
 

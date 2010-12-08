@@ -351,6 +351,16 @@
     run_clean <- function()
     {
         if (dir.exists("src")) {
+            if (WINDOW) archs <- c("i386", "x64")
+            else {
+                wd2 <- setwd(file.path(R.home("bin"), "exec"))
+                archs <- Sys.glob("*")
+                setwd(wd2)
+            }
+            if(length(archs))
+                for(arch in archs)
+                    unlink(paste("src", arch, sep = "-"), recursive=TRUE)
+
             owd <- setwd("src")
             if (WINDOWS) {
                 if (file.exists("Makefile.win"))
