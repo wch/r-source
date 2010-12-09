@@ -351,7 +351,7 @@
     run_clean <- function()
     {
         if (dir.exists("src")) {
-            if (WINDOW) archs <- c("i386", "x64")
+            if (WINDOWS) archs <- c("i386", "x64")
             else {
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))
                 archs <- Sys.glob("*")
