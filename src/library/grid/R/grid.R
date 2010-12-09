@@ -356,8 +356,8 @@ inc.display.list <- function() {
 grid.display.list <- function(on=TRUE) {
   grid.Call("L_setDLon", as.logical(on))
   if (on) {
-    grid.Call("L_setDisplayList", vector("list", 100))
-    grid.Call("L_setDLindex", as.integer(0L))
+    grid.Call("L_setDisplayList", vector("list", 100L))
+    grid.Call("L_setDLindex", 0L)
   }
   else
     grid.Call("L_setDisplayList", NULL)

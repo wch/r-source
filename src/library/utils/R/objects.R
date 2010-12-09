@@ -303,7 +303,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
 getAnywhere <- function(x)
 {
     x <- as.character(substitute(x))
-    objs <- list(); where <- character(0L); visible <- logical(0L)
+    objs <- list(); where <- character(); visible <- logical()
     ## first look on search path
     if(length(pos <- find(x, numeric = TRUE))) {
         objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)

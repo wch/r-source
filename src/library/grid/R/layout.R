@@ -37,9 +37,8 @@ valid.layout <- function(nrow, ncol, widths, heights, respect, just) {
                           dim(respect)[2L])
     respect <- 2
   }
-  else {
-    respect.mat <- matrix(as.integer(0L), nrow, ncol)
-  }
+  else respect.mat <- matrix(0L, nrow, ncol)
+
   valid.just <- valid.just(just)
   l <- list(nrow = nrow, ncol = ncol,
             widths = widths, heights = heights,

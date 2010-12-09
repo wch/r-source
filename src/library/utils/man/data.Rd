@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -11,7 +11,7 @@
   Loads specified data sets, or list the available data sets.
 }
 \usage{
-data(\dots, list = character(0), package = NULL, lib.loc = NULL,
+data(\dots, list = character(), package = NULL, lib.loc = NULL,
      verbose = getOption("verbose"), envir = .GlobalEnv)
 }
 \arguments{

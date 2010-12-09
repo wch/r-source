@@ -519,7 +519,7 @@ nls <-
 	    message("fitting parameters ",
 		    paste(sQuote(pnames[np == -1]), collapse=", "),
 		    " without any variables")
-            n <- integer(0L)
+            n <- integer()
         }
 	else
 	    stop("no parameters to fit")
@@ -568,9 +568,9 @@ nls <-
     else {
         ## length(n) == 0 : Some problems might have no official varNames
         ##                  but still parameters to fit
-        varIndex <- logical(0L)
+        varIndex <- logical()
         mf <- list(0)
-        wts <- numeric(0L)
+        wts <- numeric()
     }
 
     ## set up iteration

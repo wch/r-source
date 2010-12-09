@@ -59,7 +59,7 @@ layout <-
 	respect.mat <- as.integer(respect)
 	respect <- 2
     } else {# respect: logical	|--> 0 or 1
-	respect.mat <- matrix(as.integer(0L), num.rows, num.cols)
+	respect.mat <- matrix(0L, num.rows, num.cols)
     }
     .Internal(layout(num.rows, num.cols,
 		     mat,# integer

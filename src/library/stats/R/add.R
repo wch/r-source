@@ -557,7 +557,7 @@ add.scope <- function(terms1, terms2)
 drop.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
-    f2 <- if(missing(terms2)) numeric(0L)
+    f2 <- if(missing(terms2)) numeric()
     else attr(terms(terms2), "factors")
     factor.scope(attr(terms1, "factors"), list(drop = f2))$drop
 }
@@ -593,9 +593,9 @@ factor.scope <- function(factor, scope)
 	    for(i in seq(keep)) keep[i] <- max(f[i, - i]) != f[i, i]
 	    nmdrop <- nmdrop[keep]
 	}
-    } else nmdrop <- character(0L)
+    } else nmdrop <- character()
 
-    if(!length(add)) nmadd <- character(0L)
+    if(!length(add)) nmadd <- character()
     else {
 	nmfac <- colnames(factor)
 	nmadd <- colnames(add)
@@ -700,7 +700,7 @@ step <- function(object, scope, scale = 0,
     backward <- direction == "both" | direction == "backward"
     forward  <- direction == "both" | direction == "forward"
     if(missing(scope)) {
-	fdrop <- numeric(0L)
+	fdrop <- numeric()
         fadd <- attr(Terms, "factors")
         if(md) forward <- FALSE
     }
@@ -708,14 +708,14 @@ step <- function(object, scope, scale = 0,
 	if(is.list(scope)) {
 	    fdrop <- if(!is.null(fdrop <- scope$lower))
 		attr(terms(update.formula(object, fdrop)), "factors")
-	    else numeric(0L)
+	    else numeric()
 	    fadd <- if(!is.null(fadd <- scope$upper))
 		attr(terms(update.formula(object, fadd)), "factors")
 	}
         else {
 	    fadd <- if(!is.null(fadd <- scope))
 		attr(terms(update.formula(object, scope)), "factors")
-	    fdrop <- numeric(0L)
+	    fdrop <- numeric()
 	}
     }
     models <- vector("list", steps)

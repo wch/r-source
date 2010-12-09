@@ -28,7 +28,7 @@ merge.data.frame <-
     fix.by <- function(by, df)
     {
         ## fix up 'by' to be a valid set of cols by number: 0 is row.names
-        if(is.null(by)) by <- numeric(0L)
+        if(is.null(by)) by <- numeric()
         by <- as.vector(by)
         nc <- ncol(df)
         if(is.character(by))
@@ -98,8 +98,8 @@ merge.data.frame <-
         if(nx > 0L && ny > 0L)
             m <- .Internal(merge(xinds, yinds, all.x, all.y))
         else
-            m <- list(xi=integer(0L), yi=integer(0L),
-                      x.alone=seq_len(nx), y.alone=seq_len(ny))
+            m <- list(xi = integer(), yi = integer(),
+                      x.alone = seq_len(nx), y.alone = seq_len(ny))
         nm <- nm.x <- names(x)[-by.x]
         nm.by <- names(x)[by.x]
         nm.y <- names(y)[-by.y]

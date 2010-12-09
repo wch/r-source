@@ -99,9 +99,9 @@ function (x,
            s = as.double(s.start),
 
 	   ## return values
-           SSE = as.double(0L),
-           level = double(len + 1),
-           trend = double(len + 1),
+           SSE = as.double(0),
+           level = double(len + 1L),
+           trend = double(len + 1L),
            seasonal = double(len + f),
 
 	   PACKAGE = "stats"

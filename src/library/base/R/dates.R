@@ -417,7 +417,7 @@ diff.Date <- function (x, lag = 1L, differences = 1L, ...)
     if (length(lag) > 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-        return(structure(numeric(0L), class="difftime", units="days"))
+        return(structure(numeric(), class="difftime", units="days"))
     r <- x
     i1 <- -seq_len(lag)
     if (ismat)

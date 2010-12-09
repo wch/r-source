@@ -35,7 +35,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 
     if(nu == 0L) {
 	job <- 0L
-	u <- double(0L)
+	u <- double()
     }
     else if(nu == n) {
 	job <- 10L
@@ -52,7 +52,7 @@ svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 	if(nv == 0L) 0L else if(nv == p || nv == n) 1L else
     stop("'nv' must be 0 or ncol(x)")
 
-    v <- if(job == 0L) double(0L) else matrix(0, p, p)
+    v <- if(job == 0L) double() else matrix(0, p, p)
 
     mn <- min(n,p)
     mm <- min(n+1L,p)

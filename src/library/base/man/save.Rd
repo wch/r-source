@@ -18,7 +18,7 @@
   happens with \code{\link{q}("yes")}.
 }
 \usage{
-save(\dots, list = character(0L),
+save(\dots, list = character(),
      file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(),
      compress = !ascii, compression_level,

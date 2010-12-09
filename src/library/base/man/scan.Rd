@@ -10,7 +10,7 @@
   Read data into a vector or list from the console or file.
 }
 \usage{
-scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
+scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
      quote = if(identical(sep, "\n")) "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,

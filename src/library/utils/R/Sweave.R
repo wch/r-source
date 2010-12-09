@@ -322,7 +322,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     if(is.null(SweaveHooks <- getOption("SweaveHooks")))
         return(NULL)
 
-    z <- character(0L)
+    z <- character()
     for(k in names(SweaveHooks)){
         if(k != "" && !is.null(options[[k]]) && options[[k]]){
             if(is.function(SweaveHooks[[k]])){
@@ -395,7 +395,7 @@ RweaveLatexSetup <-
 
     list(output=output, styfile=styfile, havesty=FALSE, haveconcordance=FALSE,
          debug=debug, quiet=quiet, syntax = syntax,
-         options=options, chunkout=list(), srclines=integer(0L),
+         options=options, chunkout=list(), srclines=integer(),
          srcfile=srcfile(file))
 }
 
@@ -494,7 +494,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           openSchunk <- FALSE
 
           srclines <- attr(chunk, "srclines")
-          linesout <- integer(0L) # maintains concordance
+          linesout <- integer() # maintains concordance
           srcline <- srclines[1L] # current input line
 	  thisline <- 0L          # current output line
 	  lastshown <- srcline    # last line already displayed;
@@ -706,7 +706,7 @@ RweaveLatexWritedoc <- function(object, chunk)
         cmd <- sub(object$syntax$docexpr, "\\1", cmd)
         if(object$options$eval){
             val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
-            ## protect against character(0L), because sub() will fail
+            ## protect against character(), because sub() will fail
             if(length(val) == 0L) val <- ""
         }
         else

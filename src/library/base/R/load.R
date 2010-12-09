@@ -40,7 +40,7 @@ load <-
     .Internal(loadFromConn2(con, envir))
 }
 
-save <- function(..., list = character(0L),
+save <- function(..., list = character(),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
                  compress = !ascii, compression_level,

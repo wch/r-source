@@ -448,8 +448,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	## library():
         if(is.null(lib.loc))
             lib.loc <- .libPaths()
-        db <- matrix(character(0L), nrow = 0L, ncol = 3L)
-        nopkgs <- character(0L)
+        db <- matrix(character(), nrow = 0L, ncol = 3L)
+        nopkgs <- character()
 
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
@@ -693,7 +693,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(all.available) {
-	ans <- character(0L)
+	ans <- character()
         for(lib in lib.loc[file.exists(lib.loc)]) {
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             pfile <- file.path(lib, a, "Meta", "package.rds")
@@ -708,7 +708,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 .path.package <- function(package = NULL, quiet = FALSE)
 {
     if(is.null(package)) package <- .packages()
-    if(length(package) == 0L) return(character(0L))
+    if(length(package) == 0L) return(character())
     s <- search()
     searchpaths <-
         lapply(seq_along(s), function(i) attr(as.environment(i), "path"))
@@ -759,8 +759,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
 
     if(!length(package)) return(character())
 
-    bad <- character(0L)
-    out <- character(0L)
+    bad <- character()
+    out <- character()
 
     for(pkg in package) {
         paths <- character()

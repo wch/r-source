@@ -126,7 +126,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                 fiti$terms <- Terms
             } else {
                 y <- qty[select,,drop=FALSE]
-                fiti <- list(coefficients = numeric(0L), residuals = y,
+                fiti <- list(coefficients = numeric(), residuals = y,
                              fitted.values = 0 * y, weights = wts, rank = 0L,
                              df.residual = NROW(y))
             }
@@ -329,11 +329,11 @@ summary.aov <- function(object, intercept = FALSE, split,
     for (y in 1L:nresp) {
         if(is.null(effects)) {
             nterms <- 0
-            df <- ss <- ms <- numeric(0L)
-            nmrows <- character(0L)
+            df <- ss <- ms <- numeric()
+            nmrows <- character()
         } else {
-            df <- ss <- numeric(0L)
-            nmrows <- character(0L)
+            df <- ss <- numeric()
+            nmrows <- character()
             for(i in seq(nterms)) {
                 ai <- (asgn == uasgn[i])
                 df <- c(df, sum(ai))

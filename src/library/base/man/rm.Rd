@@ -1,15 +1,15 @@
 % File src/library/base/man/rm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{remove}
 \title{Remove Objects from a Specified Environment}
 \usage{
-remove(\dots, list = character(0L), pos = -1,
+remove(\dots, list = character(), pos = -1,
        envir = as.environment(pos), inherits = FALSE)
 
-rm    (\dots, list = character(0L), pos = -1,
+rm    (\dots, list = character(), pos = -1,
        envir = as.environment(pos), inherits = FALSE)
 }
 \alias{rm}

@@ -45,7 +45,7 @@ arima <- function(x, order = c(0, 0, 0),
     {
         ## next call changes objects a, P, Pn so beware!
         .Call(R_ARIMA_Like, y, mod$phi, mod$theta, mod$Delta,
-              mod$a, mod$P, mod$Pn, as.integer(0L), TRUE)
+              mod$a, mod$P, mod$Pn, 0L, TRUE)
     }
 
     armafn <- function(p, trans)
@@ -57,7 +57,7 @@ arima <- function(x, order = c(0, 0, 0),
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
         ## next call changes objects a, P, Pn so beware!
         res <- .Call(R_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
-                     Z$a, Z$P, Z$Pn, as.integer(0L), FALSE)
+                     Z$a, Z$P, Z$Pn, 0L, FALSE)
         s2 <- res[1L]/res[3L]
         0.5*(log(s2) + res[2L]/res[3L])
     }
@@ -221,7 +221,7 @@ arima <- function(x, order = c(0, 0, 0),
 
     if(method == "CSS") {
         res <- if(no.optim)
-            list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
+            list(convergence=0L, par=numeric(), value=armaCSS(numeric()))
         else
             optim(init[mask], armaCSS,  method = optim.method, hessian = TRUE,
                   control = optim.control)
@@ -237,11 +237,11 @@ arima <- function(x, order = c(0, 0, 0),
         val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), TRUE)
         sigma2 <- val[[1L]]
-        var <- if(no.optim) numeric(0L) else solve(res$hessian * n.used)
+        var <- if(no.optim) numeric() else solve(res$hessian * n.used)
     } else {
         if(method == "CSS-ML") {
             res <- if(no.optim)
-                list(convergence=0L, par=numeric(0L), value=armaCSS(numeric(0L)))
+                list(convergence=0L, par=numeric(), value=armaCSS(numeric()))
             else
                 optim(init[mask], armaCSS,  method = optim.method,
                       hessian = FALSE, control = optim.control)
@@ -270,8 +270,8 @@ arima <- function(x, order = c(0, 0, 0),
         trarma <- .Call(R_ARIMA_transPars, init, arma, transform.pars)
         mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         res <- if(no.optim)
-            list(convergence = 0, par = numeric(0L),
-                 value = armafn(numeric(0L), as.logical(transform.pars)))
+            list(convergence = 0, par = numeric(),
+                 value = armafn(numeric(), as.logical(transform.pars)))
         else
             optim(init[mask], armafn,  method = optim.method,
                   hessian = TRUE, control = optim.control,
@@ -308,7 +308,7 @@ arima <- function(x, order = c(0, 0, 0),
             A <- A[mask, mask]
             var <- t(A) %*% solve(res$hessian * n.used) %*% A
             coef <- .Call(R_ARIMA_undoPars, coef, arma)
-        } else var <- if(no.optim) numeric(0L) else solve(res$hessian * n.used)
+        } else var <- if(no.optim) numeric() else solve(res$hessian * n.used)
         trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
         mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         val <- if(ncxreg > 0L)

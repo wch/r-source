@@ -81,8 +81,8 @@ write.socket <- function(socket, string)
     if(length(port <- as.integer(socket$socket)) != 1L)
 	stop("invalid 'socket' argument")
     strlen <- length(strsplit(string,NULL)[[1L]])
-    invisible(.C("Rsockwrite", port, string,
-		 as.integer(0L), strlen, strlen, PACKAGE="base")[[5]])
+    invisible(.C("Rsockwrite", port, string, 0L, strlen, strlen,
+                 PACKAGE="base")[[5]])
 }
 
 

@@ -69,7 +69,7 @@ qr.coef <- function(qr, y)
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- ncol(y)
-    if (p == 0L) return( if (im) matrix(0, p, ny) else numeric(0L) )
+    if (p == 0L) return( if (im) matrix(0, p, ny) else numeric() )
     ix <- if ( p > n ) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)

@@ -378,7 +378,7 @@ function(package, dir, lib.loc = NULL,
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
             objects_in_ns <- objects_in_code
-            functions_in_S3Table <- character(0L)
+            functions_in_S3Table <- character()
             ns_env <- code_env
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
             ## Look only at exported objects.
@@ -1877,7 +1877,7 @@ function(package, dir, lib.loc = NULL)
     ## If an installed package has a namespace, we need to record the S3
     ## methods which are registered but not exported (so that we can
     ## get() them from the right place).
-    S3_reg <- character(0L)
+    S3_reg <- character()
 
     ## Argument handling.
     if(!missing(package)) {
@@ -2216,7 +2216,7 @@ function(package, dir, lib.loc = NULL)
                    ! .check_last_formal_arg(f)
                },
                replace_funs)
-    } else character(0L)
+    } else character()
 
     if(.isMethodsDispatchOn()) {
         S4_generics <- get_S4_generics_with_methods(code_env)
@@ -2257,7 +2257,7 @@ function(x, ...)
 checkTnF <-
 function(package, dir, file, lib.loc = NULL)
 {
-    code_files <- docs_files <- character(0L)
+    code_files <- docs_files <- character()
 
     ## Argument handling.
     if(!missing(package)) {
@@ -3378,10 +3378,10 @@ function(pkgDir)
     names(ans) <- files
     old <- setwd(pkgDir)
     for(f in files)
-        .try_quietly(utils::data(list = f, package = character(0L), envir = dataEnv))
+        .try_quietly(utils::data(list = f, package = character(), envir = dataEnv))
     setwd(old)
 
-    non_ASCII <- latin1 <- utf8 <- where <- character(0L)
+    non_ASCII <- latin1 <- utf8 <- where <- character()
     ## avoid messages about loading packages that started with r48409
     suppressPackageStartupMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
@@ -3442,8 +3442,8 @@ function(dir, doDelete = FALSE)
     else
         dir <- file_path_as_absolute(dir)
 
-    wrong_things <- list(R = character(0L), man = character(0L),
-                         demo = character(0L), `inst/doc` = character(0L))
+    wrong_things <- list(R = character(), man = character(),
+                         demo = character(), `inst/doc` = character())
 
     code_dir <- file.path(dir, "R")
     if(file_test("-d", code_dir)) {
@@ -3531,7 +3531,7 @@ function(dir, respect_quotes = FALSE)
         dir <- file_path_as_absolute(dir)
 
     code_dir <- file.path(dir, "R")
-    wrong_things <- character(0L)
+    wrong_things <- character()
     if(file_test("-d", code_dir)) {
         R_files <- list_files_with_type(code_dir, "code",
                                         full.names = FALSE,

@@ -32,7 +32,7 @@ na.contiguous.default <- function(object, ...)
     st <- min(which(keep))
     if(!good[st]) st <- st + 1
     en <- max(which(keep))
-    omit <- integer(0L)
+    omit <- integer()
     n <- NROW(object)
     if(st > 1) omit <- c(omit, 1L:(st-1))
     if(en < n) omit <- c(omit, (en+1):n)

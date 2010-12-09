@@ -56,7 +56,7 @@ print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
 {
     numform <- function(x) paste(formatC(x, digits = digits), collapse=", ")
     i1 <- function(n) 1L:min(3, n)
-    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer(0L)
+    i2 <- function(n) if(n >= 4) max(4, n-1):n else integer()
     cat("Step function\nCall: ")
     print(attr(x, "call"), ...)
     env <- environment(x)

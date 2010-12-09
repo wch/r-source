@@ -59,7 +59,7 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 hsv <- function(h=1, s=1, v=1, gamma = 1, alpha = 1)
 {
     alphaspec <- !missing(alpha)
-    if (gamma != 1) 
+    if (gamma != 1)
         warning("The 'gamma' argument is deprecated and has no effect")
     result <- .Internal(hsv(h, s, v, gamma, alpha))
     ## If alpha not specified only return #RRGGBB
@@ -91,7 +91,7 @@ rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
         return(cbind(c(h=1,s=1,v=1))[,0])
     ## else:
     rgb <- rgb/maxColorValue
-    if (gamma != 1) 
+    if (gamma != 1)
         warning("The 'gamma' argument is deprecated and has no effect")
     if(any(0 > rgb) || any(rgb > 1))
         stop("rgb values must be in [0, maxColorValue]")
@@ -110,14 +110,14 @@ palette <- function(value)
 rainbow <-
     function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1, alpha = 1)
 {
-    if (gamma != 1) 
+    if (gamma != 1)
         warning("The 'gamma' argument is deprecated and has no effect")
     if ((n <- as.integer(n[1L])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
 	hsv(h = seq.int(start, ifelse(start > end, 1, 0) + end,
                         length.out = n) %% 1, s, v, gamma, alpha)
-    } else character(0L)
+    } else character()
 }
 
 topo.colors <- function (n, alpha = 1)
@@ -130,7 +130,7 @@ topo.colors <- function (n, alpha = 1)
 	  if(j > 0) hsv(h= seq.int(from= 23/60, to= 11/60, length.out = j), alpha=alpha),
 	  if(k > 0) hsv(h= seq.int(from= 10/60, to=  6/60, length.out = k), alpha=alpha,
 			s= seq.int(from= 1,	to= 0.3,   length.out = k), v = 1))
-    } else character(0L)
+    } else character()
 }
 
 terrain.colors <- function (n, alpha = 1)
@@ -146,7 +146,7 @@ terrain.colors <- function (n, alpha = 1)
 	  hsv(h = seq.int(h[2L], h[3L], length.out = n - k + 1)[-1L],
 	      s = seq.int(s[2L], s[3L], length.out = n - k + 1)[-1L],
 	      v = seq.int(v[2L], v[3L], length.out = n - k + 1)[-1L], alpha = alpha))
-    } else character(0L)
+    } else character()
 }
 
 heat.colors <- function (n, alpha = 1)
@@ -158,7 +158,7 @@ heat.colors <- function (n, alpha = 1)
 	  if (j > 0)
 	  hsv(h = 1/6, s = seq.int(from= 1-1/(2*j), to= 1/(2*j), length.out = j),
 	      v = 1, alpha = alpha))
-    } else character(0L)
+    } else character()
 }
 
 cm.colors <- function (n, alpha = 1)
@@ -174,7 +174,7 @@ cm.colors <- function (n, alpha = 1)
 	  if(l2 > 1)
 	  hsv(h = 10/12, s = seq.int(0, 0.5, length.out = l2)[-1L],
 	      v = 1, alpha = alpha))
-    } else character(0L)
+    } else character()
 }
 
 gray.colors <- ## FIXME: add 'alpha = 1'

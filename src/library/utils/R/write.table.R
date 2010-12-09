@@ -41,13 +41,13 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         if(is.null(d[[2L]]) && makeColnames && p > 0L)
             d[[2L]] <- paste("V", 1L:p, sep="")
         if(qset)
-            quote <- if(is.character(x)) seq_len(p) else numeric(0L)
+            quote <- if(is.character(x)) seq_len(p) else numeric()
     } else { ## data.frame
         if(qset)
             quote <- if(length(x))
                 which(unlist(lapply(x, function(x)
                                     is.character(x) || is.factor(x))))
-            else numeric(0L)
+            else numeric()
         ## fix up embedded matrix columns into separate cols:
         if(any(sapply(x, function(z) length(dim(z)) == 2 && dim(z)[2L] > 1))) {
             c1 <- names(x)

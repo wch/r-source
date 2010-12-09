@@ -393,7 +393,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     res <- setdiff(poss, installed)
 
-    update <- character(0L)
+    update <- character()
     graphics <- FALSE
     if(is.character(ask) && ask == "graphics") {
         ask <- TRUE
@@ -559,7 +559,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
-    retval <- matrix(character(0L), 0L, 2L)
+    retval <- matrix(character(), 0L, 2L)
     for(p in unique(pkgs))
     {
         ok <- (available[,"Package"] == p)
@@ -801,9 +801,9 @@ compareVersion <- function(a, b)
         unlist(lapply(strsplit(x, ","), .split2), FALSE, FALSE)
     }
     x <- x[!is.na(x)]
-    if(!length(x)) return(list(character(0L), character(0L)))
+    if(!length(x)) return(list(character(), character()))
     xx <- .split_dependencies(x)
-    if(!length(xx)) return(list(character(0L), character(0L)))
+    if(!length(xx)) return(list(character(), character()))
     ## Then check for those we already have installed
     pkgs <- installed[, "Package"]
     have <- sapply(xx, function(x) {
@@ -819,10 +819,10 @@ compareVersion <- function(a, b)
         } else x[[1L]] %in% pkgs
     })
     xx <- xx[!have]
-    if(!length(xx)) return(list(character(0L), character(0L)))
+    if(!length(xx)) return(list(character(), character()))
     ## now check if we can satisfy the missing dependencies
     pkgs <- row.names(available)
-    canget <- miss <- character(0L)
+    canget <- miss <- character()
     for (i in seq_along(xx)) {
         x <- xx[[i]]
         if(length(x) == 3L) {

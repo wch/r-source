@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 data <-
-function(..., list = character(0L), package = NULL, lib.loc = NULL,
+function(..., list = character(), package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"), envir = .GlobalEnv)
 {
     fileExt <- function(x) {
@@ -54,7 +54,7 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
         ## List all possible data sets.
 
         ## Build the data db.
-        db <- matrix(character(0L), nrow = 0L, ncol = 4L)
+        db <- matrix(character(), nrow = 0L, ncol = 4L)
         for(path in paths) {
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.

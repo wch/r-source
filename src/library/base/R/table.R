@@ -53,7 +53,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
     # 0L, 1L, etc: keep 'bin' and 'pd' integer - as long as tabulate() requires it
     bin <- 0L
     lens <- NULL
-    dims <- integer(0L)
+    dims <- integer()
     pd <- 1L
     dn <- NULL
     for (a in args) {

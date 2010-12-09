@@ -43,7 +43,7 @@ function(x, MARGIN)
     if((length(MARGIN) > 1L) || (MARGIN < 1L) || (MARGIN > n))
         stop("incorrect value for 'MARGIN'")
 
-    if(any(d == 0L)) return(array(integer(0L), d))
+    if(any(d == 0L)) return(array(integer(), d))
 
     y <- rep.int(rep.int(1L:d[MARGIN],
 			 prod(d[seq_len(MARGIN - 1L)]) * rep.int(1L, d[MARGIN])),

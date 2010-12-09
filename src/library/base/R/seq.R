@@ -23,11 +23,11 @@ seq.default <-
     if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
 	return(if(mode(from) == "numeric" && lf == 1L) 1L:from else
-	       if(lf) 1L:lf else integer(0L))
+	       if(lf) 1L:lf else integer())
     }
     if(!missing(along.with)) {
 	length.out <- length(along.with)
-	if(One) return(if(length.out) seq_len(length.out) else integer(0L))
+	if(One) return(if(length.out) seq_len(length.out) else integer())
     }
     else if(!missing(length.out))
 	length.out <- ceiling(length.out)

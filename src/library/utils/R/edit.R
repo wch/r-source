@@ -88,12 +88,12 @@ edit.data.frame <-
     factors <- if (length(name))
         which(sapply(name, is.factor))
     else
-        numeric(0L)
+        numeric()
 
     logicals <- if (length(name))
     	which(sapply(name, is.logical))
     else
-    	numeric(0L)
+    	numeric()
 
     if(length(name)) {
         has_class <-

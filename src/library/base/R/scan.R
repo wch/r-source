@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 scan <-
-function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
+function(file = "", what = double(), nmax = -1, n = -1, sep = "",
          quote = if(identical(sep, "\n")) "" else "'\"",
          dec = ".", skip = 0, nlines = 0,
          na.strings = "NA", flush = FALSE, fill = FALSE,

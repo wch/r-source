@@ -30,7 +30,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	## List all possible demos.
 
 	## Build the demo db.
-	db <- matrix(character(0L), nrow = 0L, ncol = 4L)
+	db <- matrix(character(), nrow = 0L, ncol = 4L)
 	for(path in paths) {
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.
@@ -62,7 +62,7 @@ function(topic, package = NULL, lib.loc = NULL,
 
     if(!character.only)
 	topic <- as.character(substitute(topic))
-    available <- character(0L)
+    available <- character()
     paths <- file.path(paths, "demo")
     for(p in paths) {
 	files <- basename(tools::list_files_with_type(p, "demo"))

@@ -29,7 +29,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 
     ##--------------- Argument checking -----------------------------
     if(length(x) == 0L)
-	return(noquote(if(is.null(d <- dim(x)))character(0L) else array("", dim=d)))
+	return(noquote(if(is.null(d <- dim(x)))character() else array("", dim=d)))
     has.na <- any(nax <- is.na(x))
     if(numeric.x) {
 	force(corr) # missingness..

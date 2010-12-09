@@ -199,16 +199,16 @@ simpleLoess <-
 		as.double(span*cell),
 		as.character(surf.stat),
 		temp = double(N),
-		parameter = integer(7),
+		parameter = integer(7L),
 		a = integer(max.kd),
 		xi = double(max.kd),
-		vert = double(2*D),
-		vval = double((D+1)*max.kd),
+		vert = double(2L*D),
+		vval = double((D+1L)*max.kd),
 		diagonal = double(N),
-		trL = double(1),
-		delta1 = double(1),
-		delta2 = double(1),
-		as.integer(0L))
+		trL = double(1L),
+		delta1 = double(1L),
+		delta2 = double(1L),
+		0L)
 	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)

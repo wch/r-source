@@ -29,7 +29,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                                 nc = integer(k), double(k), double(k), integer(k),
                                 double(m), integer(k), integer(k),
                                 as.integer(iter.max), wss = double(k),
-                                ifault = as.integer(0L))
+                                ifault = 0L)
                        switch(Z$ifault,
                               stop("empty cluster: try a better set of initial centers",
                                    call.=FALSE),
