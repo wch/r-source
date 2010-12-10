@@ -51,7 +51,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
   will be called to label them appropriately.
 
   There are \code{"Date"} and \code{"POSIXt"} methods which can pass an
-  argument \code{format} onto the appropriate \code{axis} method (see
+  argument \code{format} on to the appropriate \code{axis} method (see
   \code{\link{axis.POSIXct}}).
 }
 \seealso{

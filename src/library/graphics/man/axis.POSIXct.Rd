@@ -36,14 +36,18 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   is chosen. Printing of tick labels can be suppressed by using
   \code{labels = FALSE}.
   
-  As from \R 2.9.0 the date-times for a \code{"POSIXct"} input are
-  interpreted in the timezone give by the \code{"tzone"} attribute it
-  there is one, otherwise the current timezone.  (Earlier versions always
-  used the current timezone.)
-  
+  The date-times for a \code{"POSIXct"} input are interpreted in the
+  timezone give by the \code{"tzone"} attribute if there is one,
+  otherwise the current timezone.
+
+  The way the date-times are rendered (especially month names) is
+  controlled by the locale setting of category \code{"LC_TIME"} (see
+  \code{\link{Sys.setlocale}}.
+}
+\note{
   These functions are the workhorse for methods for \code{\link{Axis}}.
   Prior to \R 2.12.0 there were also \code{plot} methods for the
-  data-time classes, but the default method has also handled those for a
+  date-time classes, but the default method has also handled those for a
   long time.
 }
 \value{
@@ -51,6 +55,8 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
 }
 \seealso{
   \link{DateTimeClasses}, \link{Dates} for details of the classes.
+
+  \code{\link{Axis}}.
 }
 \examples{
 with(beaver1, {
