@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:52+0000\n"
+"POT-Creation-Date: 2010-12-10 08:29+0000\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -2781,8 +2781,8 @@ msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:830 src/main/dotcode.c:1658
-#, c-format
-msgid "Incorrect number of arguments (%d), expecting %d for %s"
+#, fuzzy, c-format
+msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "인수의 개수(%d)가 부적절합니다. %d개가 %s개에 대해서는 필요합니다"
 
 #: src/main/dotcode.c:1487 src/main/dotcode.c:2290
@@ -2819,7 +2819,7 @@ msgstr "call_R 인수 개수가 부적절합니다"
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 부적절합니다"
 
-#: src/main/dotcode.c:2443
+#: src/main/dotcode.c:2434
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R에서 \"%s'\"라고 하는 모드는 서포트되어있지 않습니다"

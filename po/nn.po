@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:52+0000\n"
+"POT-Creation-Date: 2010-12-10 08:29+0000\n"
 "PO-Revision-Date: 2010-09-26 10:06+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -2719,8 +2719,8 @@ msgid "too many arguments"
 msgstr "for mange argument"
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:830 src/main/dotcode.c:1658
-#, c-format
-msgid "Incorrect number of arguments (%d), expecting %d for %s"
+#, fuzzy, c-format
+msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Feil tal på argument (%d). Venta %d for %s."
 
 #: src/main/dotcode.c:1487 src/main/dotcode.c:2290
@@ -2757,7 +2757,7 @@ msgstr "ugyldig argumenttal i call_R"
 msgid "invalid return value count in call_R"
 msgstr "ugyldig returverdi i call_R"
 
-#: src/main/dotcode.c:2443
+#: src/main/dotcode.c:2434
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "modusen «%s» er ikkje støtta i call_R"

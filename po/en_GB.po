@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:52+0000\n"
+"POT-Creation-Date: 2010-12-10 08:29+0000\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -2664,7 +2664,7 @@ msgstr ""
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:830 src/main/dotcode.c:1658
 #, c-format
-msgid "Incorrect number of arguments (%d), expecting %d for %s"
+msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr ""
 
 #: src/main/dotcode.c:1487 src/main/dotcode.c:2290
@@ -2701,7 +2701,7 @@ msgstr ""
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2443
+#: src/main/dotcode.c:2434
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""

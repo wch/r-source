@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:52+0000\n"
-"PO-Revision-Date: 2010-12-06 16:52+0000\n"
+"POT-Creation-Date: 2010-12-10 08:29+0000\n"
+"PO-Revision-Date: 2010-12-10 08:29+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -2716,8 +2716,8 @@ msgstr "too many arguments"
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:830 src/main/dotcode.c:1658
 #, c-format
-msgid "Incorrect number of arguments (%d), expecting %d for %s"
-msgstr "Incorrect number of arguments (%d), expecting %d for %s"
+msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
+msgstr "Incorrect number of arguments (%d), expecting %d for ‘%s’"
 
 #: src/main/dotcode.c:1487 src/main/dotcode.c:2290
 msgid "too many arguments, sorry"
@@ -2753,7 +2753,7 @@ msgstr "invalid argument count in call_R"
 msgid "invalid return value count in call_R"
 msgstr "invalid return value count in call_R"
 
-#: src/main/dotcode.c:2443
+#: src/main/dotcode.c:2434
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode ‘%s’ is not supported in call_R"

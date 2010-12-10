@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:52+0000\n"
+"POT-Creation-Date: 2010-12-10 08:29+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -2798,8 +2798,8 @@ msgid "too many arguments"
 msgstr "troppi argomenti"
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:830 src/main/dotcode.c:1658
-#, c-format
-msgid "Incorrect number of arguments (%d), expecting %d for %s"
+#, fuzzy, c-format
+msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Numero di argomenti errato (%d), ce ne vogliono %d per %s"
 
 #: src/main/dotcode.c:1487 src/main/dotcode.c:2290
@@ -2836,7 +2836,7 @@ msgstr "numero di argomenti non valido in call_R"
 msgid "invalid return value count in call_R"
 msgstr "numero di valori restituiti non valido in call_R"
 
-#: src/main/dotcode.c:2443
+#: src/main/dotcode.c:2434
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "modalità '%s' non supportata in call_R"
