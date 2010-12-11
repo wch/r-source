@@ -83,6 +83,13 @@ R_compute_identical(SEXP x, SEXP y, Rboolean num_eq,
     if(OBJECT(x) != OBJECT(y))
 	return FALSE;
 
+    /* Skip attribute checks for CHARSXP -- such attributes can be used for internal purposes */
+    if(TYPEOF(x) == CHARSXP)
+    {
+	/* This matches NAs */
+	return Seql(x, y);
+    }
+
     ax = ATTRIB(x); ay = ATTRIB(y);
     if (!attr_as_set) {
 	if(!R_compute_identical(ax, ay, num_eq, single_NA, FALSE)) return FALSE;
@@ -183,7 +190,7 @@ R_compute_identical(SEXP x, SEXP y, Rboolean num_eq,
 	}
 	return TRUE;
     }
-    case CHARSXP:
+    case CHARSXP: /* Probably unreachable, but better safe than sorry... */
     {
 	/* This matches NAs */
 	return Seql(x, y);

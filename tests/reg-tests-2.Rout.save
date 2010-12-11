@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-11 r53554)
+R version 2.13.0 Under development (unstable) (2010-12-10 r53825)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin10.5.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6239,22 +6239,22 @@ foo(1, bar = 2)
 > ## https://stat.ethz.ch/pipermail/r-devel/2008-December/051669.html
 > try(.Call("R_GD_nullDevice", NULL))
 Error in .Call("R_GD_nullDevice", NULL) : 
-  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
 > sym <- getDLLRegisteredRoutines("grDevices")$.Call[["R_GD_nullDevice"]]
 > try(.Call(sym, NULL))
 Error in .Call(sym, NULL) : 
-  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
 > try(.Call(sym$address, NULL))
 Error in .Call(sym$address, NULL) : 
-  Incorrect number of arguments (1), expecting 0 for R_GD_nullDevice
+  Incorrect number of arguments (1), expecting 0 for 'R_GD_nullDevice'
 > ## wrong error in 2.8.1
 > sym <- getDLLRegisteredRoutines("stats")$.C$prho
 > try(.C(sym, NULL))
 Error in .C(sym, NULL) : 
-  Incorrect number of arguments (1), expecting 5 for prho
+  Incorrect number of arguments (1), expecting 5 for 'prho'
 > try(.C(sym$address, NULL))
 Error in .C(sym$address, NULL) : 
-  Incorrect number of arguments (1), expecting 5 for prho
+  Incorrect number of arguments (1), expecting 5 for 'prho'
 > ## were OK
 > 
 > options(keep.source = TRUE)

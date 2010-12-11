@@ -176,6 +176,12 @@
       \item \code{p.adjust()} now always returns a vector result, as
       documented.  In previous versions it copied attributes (such as
       dimensions) from the \code{p} argument: now it only copies names.
+
+      \item \code{identical} could in rare cases generate a warning
+      about non-pairlist attributes on CHARSXPs. As these are used for
+      internal purposes, the attribute check should be
+      skipped. (Reported by Niels Richard Hansen).
+
     }
   }
 }
