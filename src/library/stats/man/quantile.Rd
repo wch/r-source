@@ -44,9 +44,8 @@ quantile(x, \dots)
 
   The default method works with objects sufficiently like numeric
   vectors that \code{sort} and (not needed by types 1 and 3) addition of
-  elements and multiplication by a number work correctly.  Note that
-  %% "currently": this is really not desirable, rather a (design) "FIXME"
-  currently, as this is in a namespace, the copy of \code{sort} in \pkg{base} will be
+  elements and multiplication by a number work correctly.  Note that as
+  this is in a namespace, the copy of \code{sort} in \pkg{base} will be
   used, not some S4 generic of that name.
 
   There is a method for the date-time classes (see
