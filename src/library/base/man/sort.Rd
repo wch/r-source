@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -35,7 +35,8 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
   \item{partial}{\code{NULL} or an integer vector of indices for
     partial sorting.}
-  \item{method}{character string specifying the algorithm used.}
+  \item{method}{character string specifying the algorithm used.  Not
+    available for partial sorting.}
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
     \code{na.last = NA} and full sorting of non-factors.}
@@ -59,8 +60,8 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   sorted array.  (This is included for efficiency, and many of the
   options are not available for partial sorting.  It is only
   substantially more efficient if \code{partial} has a handful of
-  elements, and a full sort is done if there are more than 10.)  Names
-  are discarded for partial sorting.
+  elements, and a full sort is done (a quick sort if possible) if there
+  are more than 10.)  Names are discarded for partial sorting.
 
   Complex values are sorted first by the real part, then the imaginary
   part.

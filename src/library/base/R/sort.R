@@ -54,7 +54,8 @@ sort.int <-
         y <- if(length(partial) <= 10L) {
             partial <- .Internal(qsort(partial, FALSE))
             .Internal(psort(x, partial))
-        } else .Internal(qsort(x, FALSE))
+        } else if (is.double(x)) .Internal(qsort(x, FALSE))
+        else .Internal(sort(x, FALSE))
     }
     else {
         nms <- names(x)
