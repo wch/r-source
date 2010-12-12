@@ -1056,8 +1056,6 @@ function(package)
     ## @code{package} which 'look' like S3 methods, but are not.
     ## Using package=NULL returns all known examples
 
-    ## round.POSIXt is a method for S3 and S4 group generics with
-    ## deliberately different arg names.
     stopList <-
         list(base = c("all.equal", "all.names", "all.vars",
              "format.char", "format.info", "format.pval",
@@ -1066,6 +1064,8 @@ function(package)
              "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
+             ## round.POSIXt is a method for S3 and S4 group generics with
+             ## deliberately different arg names.
              "rep.int", "round.POSIXt",
              "seq.int", "sort.int", "sort.list"),
              BSDA = "sign.test",
@@ -1077,7 +1077,10 @@ function(package)
              "hist.FD", "hist.scott"),
              ## FIXME: since these are already listed with 'base',
              ##        they should not need to be repeated here:
-             Matrix = c("qr.Q", "qr.R", "qr.coef", "qr.fitted", "qr.qty", "qr.qy", "qr.resid"),
+             Matrix = c("qr.Q", "qr.R", "qr.coef", "qr.fitted",
+                        "qr.qty", "qr.qy", "qr.resid"),
+             RNetCDF = c("close.nc", "dim.def.nc", "dim.inq.nc",
+                         "dim.rename.nc", "open.nc", "print.nc"),
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
