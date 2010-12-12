@@ -26,7 +26,7 @@ quantile(x, \dots)
     allowed in numeric vectors unless \code{na.rm} is \code{TRUE}.}
   \item{probs}{numeric vector of probabilities with values in
     \eqn{[0,1]}.  (As from \R 2.8.0 values up to \samp{2e-14} outside that
-    range are accepted and moved to the nearby endpoint.}
+    range are accepted and moved to the nearby endpoint.)}
   \item{na.rm}{logical; if true, any \code{\link{NA}} and \code{NaN}'s
     are removed from \code{x} before the quantiles are computed.}
   \item{names}{logical; if true, the result has a \code{\link{names}}
