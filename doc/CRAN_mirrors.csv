@@ -35,7 +35,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
-Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme # gmail.com>",0,kr
 Mexico,Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.xl-mirror.nl/,"XL-Data, Amsterdam","werner # xl-mirror.nl",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
@@ -75,7 +74,6 @@ Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.
 "USA (OR)",USA,Corvallis,http://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us
 "USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
-"USA (TN)",USA,Knoxville,http://mira.sunsite.utk.edu/CRAN/,"University of Tennessee, Knoxville, TN","Michael Campfield <campfieldm # Sworps.tennessee.edu>",0,us
 "USA (TX 1)",USA,"San Antonio",http://www.revolution-computing.com/cran/,"Revolution Computing, San Antonio, TX","David Smith <david # revolution-computing.com>",1,us
 "USA (TX 2)",USA,Houston,http://cran.sixsigmaonline.org/,"sixsigmaonline.org, Houston, TX","gosixsigma # gmail.com",1,us
 "USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","sfalcon # fhcrc.org",1,us
