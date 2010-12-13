@@ -102,7 +102,11 @@
       \item \command{R CMD INSTALL --clean} now removes copies of a
       \file{src} directory which are created when multiple
       sub-architectures are in use.  (Following a comment from
-      Berwin Turlach.) 
+      Berwin Turlach.)
+
+      \item \code{sort(partial=p)} for large \code{p} now tries shell
+      sort if quicksort is not appropriate and so works for non-numeric
+      vectors.
     }
   }
 
