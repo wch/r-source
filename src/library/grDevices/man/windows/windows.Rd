@@ -210,12 +210,6 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     the graphics card -- this is likely to be close to sRGB.
   }
 }
-\section{Gamma}{
-  PC displays map RGB numbers non-linearly to luminosities (and the
-  eye/brain system also perceives non-linearly).  For a typical PC
-  display, a value of \code{gamma} of around \code{2.2} will result in
-  the unit steps in the RGB values are being perceived as roughly equal.
-}
 
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
