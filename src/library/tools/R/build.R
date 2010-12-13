@@ -178,7 +178,7 @@ get_exclude_patterns <- function()
 
     add_build_stamp_to_description_file <- function(ldpath)
     {
-        lines <- readLines(ldpath)
+        lines <- readLines(ldpath, warn = FALSE)
         lines <- lines[nzchar(lines)] # Remove blank lines.
         ## Do not keep previous build stamps.
         lines <- lines[!grepl("^Packaged:", lines)]
