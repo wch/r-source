@@ -35,6 +35,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
+Korea,Korea,Seoul,http://statlab.korea.ac.kr/R/,"Korea University","hanansh # Korea.ac.kr",1,kr
 Mexico,Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.xl-mirror.nl/,"XL-Data, Amsterdam","werner # xl-mirror.nl",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
@@ -49,7 +50,6 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 "Slovakia 1",Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
 "Slovakia 2",Slovakia,Bratislava,http://cran.phphosts.org/,"phphosts.org,Bratislava","admin # Phphosts.org",1,sk
 "South Africa","South Africa",Grahamstown,http://cran.ru.ac.za/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>",1,za
-"South Korea","South Korea",Seoul,http://statlab.korea.ac.kr/R/,"Korea University","hanansh # Korea.ac.kr",1,kr
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb # stat.umu.se>",1,se
 Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.Maechler # R-project.org",1,ch
