@@ -1,4 +1,4 @@
-## this should be kept in step with lazyLoad in R/lazyload.R
+## this should be kept in step with code in R/lazyload.R
 .Internal(eval(quote({
 ..lazyLoad <- function(filebase, envir = parent.frame())
 {

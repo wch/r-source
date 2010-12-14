@@ -14,8 +14,13 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## note that there is a version in ../baseloader.R that should be kept in step
-lazyLoad <- function(filebase, envir = parent.frame(), filter)
+## This code should be kept in step with code in ../baseloader.R
+##
+## This code has been factored in a somewhat peculiar way to allow the
+## lazy load data base mechanism to be used for storing processed .Rd
+## files. This isn't wuite right as the .Rd use only uses the data
+## base, not the lazy load part, but for now it will do. LT
+lazyLoadDBexec <- function(filebase, fun, filter)
 {
     ##
     ## bootstrapping definitions so we can load base
@@ -92,9 +97,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     } else
         vals <-  map$variables
 
-    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
-    this <- environment()
-    .Internal(makeLazy(vars, vals, expr, this, envir))
+    res <- fun(environment())
 
     ## reduce memory use
     map <- NULL
@@ -103,4 +106,17 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL
+
+    res
+}
+
+lazyLoad <- function(filebase, envir = parent.frame(), filter)
+{
+    fun <- function(db) {
+        vals <- db$vals
+        vars <- db$vars
+        expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+        .Internal(makeLazy(vars, vals, expr, db, envir))
+    }
+    lazyLoadDBexec(filebase, fun, filter)
 }
