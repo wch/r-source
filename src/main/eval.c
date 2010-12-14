@@ -630,7 +630,7 @@ static SEXP R_compileAndExecute(SEXP call, SEXP rho)
 
 SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    Rboolean old = R_jit_enabled, new;
+    int old = R_jit_enabled, new;
     checkArity(op, args);
     new = asInteger(CAR(args));
     if (new > 0)
