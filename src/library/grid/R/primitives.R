@@ -655,9 +655,60 @@ grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
 # PATH primitive
 ######################################
 
+validDetails.pathgrob <- function(x) {
+    if (!is.unit(x$x) || !is.unit(x$y))
+        stop("'x' and 'y' must be units")
+    if (!is.null(x$id) && !is.null(x$id.lengths))
+        stop("It is invalid to specify both 'id' and 'id.lengths'")
+    if (length(x$x) != length(x$y))
+        stop("'x' and 'y' must be same length")
+    if (!is.null(x$id) && (length(x$id) != length(x$x)))
+        stop("'x' and 'y' and 'id' must all be same length")
+    if (!is.null(x$id))
+        x$id <- as.integer(x$id)
+    if (!is.null(x$id.lengths) && (sum(x$id.lengths) != length(x$x)))
+        stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+    if (!is.null(x$id.lengths))
+        x$id.lengths <- as.integer(x$id.lengths)
+    x
+}
+  
+xDetails.pathgrob <- function(x, theta) {
+    bounds <- grid:::grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[1L], "inches")
+}
+
+yDetails.pathgrob <- function(x, theta) {
+    bounds <- grid:::grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[2L], "inches")
+}
+
+widthDetails.pathgrob <- function(x) {
+    bounds <- grid:::grid.Call("L_locnBounds", x$x, x$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[3L], "inches")
+}
+
+heightDetails.pathgrob <- function(x) {
+    bounds <- grid:::grid.Call("L_locnBounds", x$x, x$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[4L], "inches")
+}
+
+  
 drawDetails.pathgrob <- function(x, recording=TRUE) {
-  if (is.null(x$id) && is.null(x$id.lengths))
-    grid.Call.graphics("L_polygon", x$x, x$y,
+      if (is.null(x$id) && is.null(x$id.lengths))
+          grid.Call.graphics("L_polygon", x$x, x$y,
                        list(as.integer(seq_along(x$x))))
   else {
     if (is.null(x$id)) {

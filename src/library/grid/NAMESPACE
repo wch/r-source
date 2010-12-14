@@ -73,12 +73,15 @@ export(
        "getNames", "childNames", 
        
        # Creating and drawing predefined grobs and gTrees
+       "grid.abline",
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
+       "grid.function",
        "grid.line.to", "grid.lines", "grid.move.to", "grid.null", 
        "grid.points", "grid.path", "grid.polygon", "grid.polyline", 
        "grid.raster", "grid.rect", "grid.roundrect",
        "grid.segments", "grid.text", "grid.xspline",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
+       "functionGrob",
        "linesGrob", "lineToGrob", "moveToGrob", "nullGrob",
        "pointsGrob", "pathGrob", "polygonGrob", "polylineGrob",
        "rasterGrob", "rectGrob", "roundrectGrob",
@@ -145,6 +148,7 @@ S3method("downViewport", "vpPath")
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
 S3method("drawDetails", "curve")
+S3method("drawDetails", "functiongrob")
 S3method("drawDetails", "grob")
 S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
@@ -208,6 +212,7 @@ S3method("grobY", "default")
 S3method("heightDetails", "arrows")
 S3method("heightDetails", "circle")
 S3method("heightDetails", "curve")
+S3method("heightDetails", "functiongrob")
 S3method("heightDetails", "default")
 S3method("heightDetails", "frame")
 S3method("heightDetails", "lines")
@@ -240,6 +245,7 @@ S3method("validDetails", "arrows")
 S3method("validDetails", "circle")
 S3method("validDetails", "clip")
 S3method("validDetails", "curve")
+S3method("validDetails", "functiongrob")
 S3method("validDetails", "grob")
 S3method("validDetails", "lines")
 S3method("validDetails", "line.to")
@@ -255,6 +261,7 @@ S3method("validDetails", "text")
 S3method("widthDetails", "arrows")
 S3method("widthDetails", "circle")
 S3method("widthDetails", "curve")
+S3method("widthDetails", "functiongrob")
 S3method("widthDetails", "default")
 S3method("widthDetails", "frame")
 S3method("widthDetails", "lines")
@@ -270,6 +277,7 @@ S3method("widthDetails", "xspline")
 
 S3method("xDetails", "circle")
 S3method("xDetails", "curve")
+S3method("xDetails", "functiongrob")
 S3method("xDetails", "lines")
 S3method("xDetails", "points")
 S3method("xDetails", "polygon")
@@ -282,6 +290,7 @@ S3method("xDetails", "xspline")
 
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
+S3method("yDetails", "functiongrob")
 S3method("yDetails", "lines")
 S3method("yDetails", "points")
 S3method("yDetails", "polygon")

@@ -1,3 +1,9 @@
+Changes from grid_2.12.0 to grid_2.13.0:
+--------------------------------------
+
+1.  Added grid.function() for drawing lines to represent functions.
+
+
 Changes from grid_2.11.0 to grid_2.12.0:
 --------------------------------------
 
