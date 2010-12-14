@@ -4340,3 +4340,13 @@ SEXP R_startbcprof() { return R_NilValue; }
 SEXP R_stopbcprof() { return R_NilValue; }
 #endif
 #endif
+
+SEXP attribute_hidden do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int old = R_num_math_threads, new;
+    checkArity(op, args);
+    new = asInteger(CAR(args));
+    if (new >= 0)
+	R_num_math_threads = new;
+    return ScalarInteger(old);
+}

@@ -434,6 +434,7 @@ SEXP do_set(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setencoding(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seterrmessage(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setnumthreads(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setGraphicsEventEnv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setlocale(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setseed(SEXP, SEXP, SEXP, SEXP);
