@@ -707,7 +707,8 @@ extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
 #endif
 
-extern0 int R_num_math_threads INI_as(1);
+LibExtern int R_num_math_threads INI_as(1);
+LibExtern int R_max_num_math_threads INI_as(1);
 
 /* Pointer  type and utilities for dispatch in the methods package */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP); /* typedef */
