@@ -1224,6 +1224,9 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     int *ix;
     double *rx;
     LDOUBLE sum = 0.0;
+#ifdef HAVE_OPENMP
+    int nthreads;
+#endif
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
@@ -1249,6 +1252,16 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (OP == 0 || OP == 1) { /* columns */
 	cnt = n;
 	PROTECT(ans = allocVector(REALSXP, p));
+#ifdef HAVE_OPENMP
+	if (R_num_math_threads > 0)
+	    nthreads = R_num_math_threads;
+	else
+	    nthreads = 1; /* for now */
+#pragma omp parallel for num_threads(nthreads) default(none) \
+    private(j, i, ix, rx) \
+    firstprivate(x, ans, n, p, type, cnt, sum, \
+		 NaRm, keepNA, R_NaReal, R_NaInt, OP)
+#endif
 	for (j = 0; j < p; j++) {
 	    switch (type) {
 	    case REALSXP:
