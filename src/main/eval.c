@@ -4346,7 +4346,20 @@ SEXP attribute_hidden do_setnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
     int old = R_num_math_threads, new;
     checkArity(op, args);
     new = asInteger(CAR(args));
-    if (new >= 0)
+    if (new >= 0 && new <= R_max_num_math_threads)
 	R_num_math_threads = new;
+    return ScalarInteger(old);
+}
+
+SEXP attribute_hidden do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int old = R_max_num_math_threads, new;
+    checkArity(op, args);
+    new = asInteger(CAR(args));
+    if (new >= 0) {
+	R_max_num_math_threads = new;
+	if (R_num_math_threads > R_max_num_math_threads)
+	    R_num_math_threads = R_max_num_math_threads;
+    }
     return ScalarInteger(old);
 }
