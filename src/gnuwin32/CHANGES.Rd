@@ -9,6 +9,9 @@
     \itemize{
       \item In some circumstances the caret (cursor) could be positioned 
       incorrectly. (\PR{14460})
+      
+      \item When loading \file{Rconsole} from disk, a spurious warning
+      message was sometimes shown.
     }
   }
 }
