@@ -947,15 +947,17 @@ void setcaret(object obj, int x, int y, int width, int height)
     if (! obj)
     	return;
     if (width != obj->caretwidth || height != obj->caretheight) {
-	if (obj->caretwidth > 0) DestroyCaret();
+	if (obj->caretwidth > 0 && (obj->state & Focus)) DestroyCaret();
 	obj->caretwidth = width;
 	obj->caretheight = height;
 	if (width > 0) {
-	    CreateCaret(obj->handle, (HBITMAP) NULL, width, height);
+	    if (obj->state & Focus)
+		CreateCaret(obj->handle, (HBITMAP) NULL, width, height);
 	    obj->caretshowing = 0;
 	}
     }
-    SetCaretPos(x, y);
+    if (obj->state & Focus)
+    	SetCaretPos(x, y);
 }
 
 void showcaret(object obj, int showing)

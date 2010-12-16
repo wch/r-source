@@ -4,6 +4,15 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.12.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item In some circumstances the caret (cursor) could be positioned 
+      incorrectly. (\PR{14460})
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.12.1}{
   \subsection{NEW FEATURES}{
     \itemize{
