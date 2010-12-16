@@ -120,6 +120,7 @@ static void getChoices(Gui p)
     for (int i=0; i<numGuiColors; i++)
 	p->guiColors[i] = dialogColors[i];    
     /* MDIsize is not currently a choice in the dialog, only in the Rconsole file */
+    p->warning[0] = 0;
 }
 
 void getDefaults(Gui gui)
