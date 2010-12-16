@@ -31,6 +31,9 @@
 #include <float.h>
 #include "mva.h"
 #include "stats.h"
+#ifdef HAVE_OPENMP
+# include <R_ext/MathThreads.h>
+#endif
 
 #define both_FINITE(a,b) (R_FINITE(a) && R_FINITE(b))
 #ifdef R_160_and_older
@@ -199,6 +202,9 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 {
     int dc, i, j, ij;
     double (*distfun)(double*, int, int, int, int) = NULL;
+#ifdef HAVE_OPENMP
+    int nthreads;
+#endif
 
     switch(*method) {
     case EUCLIDEAN:
@@ -224,9 +230,29 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 	error(_("distance(): invalid distance"));
     }
     dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
+#ifdef HAVE_OPENMP
+    if (R_num_math_threads > 0)
+	nthreads = R_num_math_threads;
+    else
+	nthreads = 1; /* for now */
+    /* This produces uneven thread workloads since the outer loop is
+       over the subdiagonal portions of columns.  An alternative would
+       be to use a loop on ij and to compute the i and j values from
+       ij. */
+#pragma omp parallel for num_threads(nthreads) default(none) \
+    private(i, j, ij) \
+    firstprivate(nr, dc, d, method, distfun, nc, x, p)
+    for(j = 0 ; j <= *nr ; j++) {
+	ij = j * (*nr - dc) + j - ((1 + j) * j) / 2;
+	for(i = j+dc ; i < *nr ; i++)
+  	    d[ij++] = (*method != MINKOWSKI) ?
+		distfun(x, *nr, *nc, i, j) : R_minkowski(x, *nr, *nc, i, j, *p);
+    }
+#else
     ij = 0;
     for(j = 0 ; j <= *nr ; j++)
 	for(i = j+dc ; i < *nr ; i++)
 	    d[ij++] = (*method != MINKOWSKI) ?
 		distfun(x, *nr, *nc, i, j) : R_minkowski(x, *nr, *nc, i, j, *p);
+#endif
 }
