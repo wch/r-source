@@ -235,19 +235,31 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 	nthreads = R_num_math_threads;
     else
 	nthreads = 1; /* for now */
-    /* This produces uneven thread workloads since the outer loop is
-       over the subdiagonal portions of columns.  An alternative would
-       be to use a loop on ij and to compute the i and j values from
-       ij. */
-#pragma omp parallel for num_threads(nthreads) default(none) \
-    private(i, j, ij) \
-    firstprivate(nr, dc, d, method, distfun, nc, x, p)
-    for(j = 0 ; j <= *nr ; j++) {
-	ij = j * (*nr - dc) + j - ((1 + j) * j) / 2;
-	for(i = j+dc ; i < *nr ; i++)
-  	    d[ij++] = (*method != MINKOWSKI) ?
-		distfun(x, *nr, *nc, i, j) : R_minkowski(x, *nr, *nc, i, j, *p);
+    if (nthreads == 1) {
+	/* do the nthreads == 1 case without any OMP overhead to see
+	   if it matters on some platforms */
+	ij = 0;
+	for(j = 0 ; j <= *nr ; j++)
+	    for(i = j+dc ; i < *nr ; i++)
+		d[ij++] = (*method != MINKOWSKI) ?
+		    distfun(x, *nr, *nc, i, j) :
+		    R_minkowski(x, *nr, *nc, i, j, *p);
     }
+    else
+	/* This produces uneven thread workloads since the outer loop
+	   is over the subdiagonal portions of columns.  An
+	   alternative would be to use a loop on ij and to compute the
+	   i and j values from ij. */
+#pragma omp parallel for num_threads(nthreads) default(none)	\
+    private(i, j, ij)						\
+    firstprivate(nr, dc, d, method, distfun, nc, x, p)
+	for(j = 0 ; j <= *nr ; j++) {
+	    ij = j * (*nr - dc) + j - ((1 + j) * j) / 2;
+	    for(i = j+dc ; i < *nr ; i++)
+		d[ij++] = (*method != MINKOWSKI) ?
+		    distfun(x, *nr, *nc, i, j) :
+		    R_minkowski(x, *nr, *nc, i, j, *p);
+	}
 #else
     ij = 0;
     for(j = 0 ; j <= *nr ; j++)
