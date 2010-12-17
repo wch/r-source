@@ -4,6 +4,16 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.12.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item If the extension was not included in a call to
+      \code{Sweave()}, source references would not work properly, and the
+      \code{keep.source} option failed. (\PR{14459})
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.12.1}{
   \subsection{NEW FEATURES}{
     \itemize{

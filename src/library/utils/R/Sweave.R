@@ -42,6 +42,9 @@ Sweave <- function(file, driver=RweaveLatex(),
 
     text <- SweaveReadFile(file, syntax)
     syntax <- attr(text, "syntax")
+    file <- attr(text, "file")
+    drobj$srcfile <- srcfile(file)
+    
     if (identical(attr(text, "hasSweaveInput"), TRUE)) {
         file <- "SweaveInput"
     	drobj$srcfile <- srcfilecopy(file, text)
@@ -196,6 +199,7 @@ SweaveReadFile <- function(file, syntax)
     }
 
     attr(text, "syntax") <- syntax
+    attr(text, "file") <- f[1L]
     text
 }
 
@@ -396,8 +400,7 @@ RweaveLatexSetup <-
 
     list(output=output, styfile=styfile, havesty=FALSE, haveconcordance=FALSE,
          debug=debug, quiet=quiet, syntax = syntax,
-         options=options, chunkout=list(), srclines=integer(0L),
-         srcfile=srcfile(file))
+         options=options, chunkout=list(), srclines=integer(0L))
 }
 
 makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
