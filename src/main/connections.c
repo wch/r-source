@@ -44,6 +44,8 @@ static void con_destroy(int i);
 # include <fcntl.h>
 /* Solaris and AIX define open as open64 under some circumstances */
 # undef open
+/* AIX defines truncate as truncate64 under some circumstances */
+# undef truncate
 #endif
 
 /* This should work on Win64, as long is 4 bytes but long long is 8 bytes. */
