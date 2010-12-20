@@ -2473,3 +2473,8 @@ format.pval(a, eps=0.01, nsmall =2)
 as.Date(0.5, origin="1969-12-31")
 ## changed to round down in 2.12.1
 
+
+## printing data frames with  ""  colnames
+dfr <- data.frame(x=1:6, CC=11:16, f = gl(3,2)); colnames(dfr)[2] <- ""
+dfr
+## now prints the same as data.matrix(dfr) does here
