@@ -154,7 +154,7 @@ system(command, intern = FALSE,
   \code{invisible = FALSE}.
 
   GUI applications will not display in either front-end unless
-  \code{invisible} is true.
+  \code{invisible} is false.
   
   It is possible to interrupt a running command being waited for from
   the keyboard (using the \samp{Esc} key in \code{Rgui} or \samp{Ctrl-C}

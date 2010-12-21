@@ -12,6 +12,9 @@
       
       \item When loading \file{Rconsole} from disk, a spurious warning
       message was sometimes shown.
+      
+      \item In \R 2.12.1, \code{system()} sometimes passed an empty
+      input stream to the new process rather than allowing user input.
     }
   }
 }
