@@ -2626,6 +2626,9 @@ static void PostScriptSetClipRect(FILE *fp, double x0, double x1,
 
 static void PostScriptSetLineWidth(FILE *fp, double linewidth)
 {
+    /* Must not allow line width to be zero */
+    if (linewidth < .01)
+        linewidth = .01;
     fprintf(fp, "%.2f setlinewidth\n", linewidth);
 }
 
@@ -2690,16 +2693,22 @@ PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty,
    has been left in for back-compatibility
 */
 #define PP_SetLineTexture(_CMD_, adj)				\
-    double dash, a = adj;					\
+    double dash[8], a = adj;					\
     int i;							\
-    fprintf(fp,"[");						\
+    Rboolean allzero = TRUE;                                    \
     for (i = 0; i < nlty; i++) {				\
-	dash = lwd *				\
+	dash[i] = lwd *				                \
 	    ((i % 2) ? (dashlist[i] + a)			\
 	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) ); \
-	if (dash < 0) dash = 0;					\
-	fprintf(fp," %.2f", dash);				\
+	if (dash[i] < 0) dash[i] = 0;					\
+        if (dash[i] > .01) allzero = FALSE;                     \
     }								\
+    fprintf(fp,"[");						\
+    if (!allzero) {                                             \
+        for (i = 0; i < nlty; i++) {				\
+            fprintf(fp," %.2f", dash[i]);                       \
+        }                                                       \
+    }                                                           \
     fprintf(fp,"] 0 %s\n", _CMD_)
 
     PP_SetLineTexture("setdash", (lend == GE_BUTT_CAP) ? 0. : 1.);
@@ -6396,7 +6405,8 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
     char dashlist[8];
     int i;
     int newlty = gc->lty;
-    double newlwd = gc->lwd;
+    double linewidth;
+    double newlwd = gc->lwd; 
     R_GE_lineend newlend = gc->lend;
     R_GE_linejoin newljoin = gc->ljoin;
     double newlmitre = gc->lmitre;
@@ -6405,7 +6415,11 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	pd->current.lend != newlend) {
 	pd->current.lwd = newlwd;
 	pd->current.lty = newlty;
-	fprintf(pd->pdffp, "%.2f w\n", newlwd * 0.75);
+        linewidth = newlwd * 0.75;
+        /* Must not allow line width to be zero */
+        if (linewidth < .01)
+            linewidth = .01;
+	fprintf(pd->pdffp, "%.2f w\n", linewidth);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
 	    dashlist[i] = newlty & 15;

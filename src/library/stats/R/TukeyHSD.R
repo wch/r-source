@@ -108,8 +108,8 @@ plot.TukeyHSD <- function (x, ...)
         axis(1, ...)
         axis(2, at = nrow(xi):1, labels = dimnames(xi)[[1L]],
              srt = 0, ...)
-        abline(h = yvals, lty = 1, lwd = 0, col = "lightgray")
-        abline(v = 0, lty = 2, lwd = 0, ...)
+        abline(h = yvals, lty = 1, lwd = 0.5, col = "lightgray")
+        abline(v = 0, lty = 2, lwd = 0.5, ...)
         segments(xi[, "lwr"], yvals, xi[, "upr"], yvals, ...)
         segments(as.vector(xi), rep.int(yvals - 0.1, 3), as.vector(xi),
                  rep.int(yvals + 0.1, 3), ...)

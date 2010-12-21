@@ -190,7 +190,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
-    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Line widths are as a multiple of 1/96 inch, with a minimum
+    of 0.01 enforced.   
     \item Circles of any radius are allowed.  Unless \code{useDingbats =
     FALSE}, opaque circles of less than 10 big
     points radius are rendered using char 108 in the Dingbats font:
@@ -198,6 +199,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     curve for each quadrant.
     \item Colours are interpreted by the viewing/printing application.
   }
+
+  At very small line widths, the line type may be forced to solid.
 }
 \note{
   If you see problems with PDF output, do remember that the

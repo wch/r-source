@@ -331,10 +331,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
-    \item Line widths are as a multiple of 1/96 inch, with no minimum. 
+    \item Line widths are as a multiple of 1/96 inch, with a minimum
+    of 0.01 enforced.   
     \item Circle of any radius are allowed.
     \item Colours are interpreted by the viewing/printing application.
   }
+
+  At very small line widths, the line type may be forced to solid.
 }
 
 \note{

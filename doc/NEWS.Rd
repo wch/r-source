@@ -191,6 +191,16 @@
       internal purposes, the attribute check should be
       skipped. (Reported by Niels Richard Hansen).
 
+      \item On PDF and PostScript devices, a line width of zero was
+      recorded verbatim and this caused problems for some viewers
+      (a very thin line combined with a non-solid line dash pattern
+      could also cause a problem).  On these devices, the line width is
+      now limited at 0.01 and for very thin lines with complex dash
+      patterns the device may force the line dash pattern to be solid.
+      (Reported by Jari Oksanen.)
+
+      \item The \code{plot.TukeyHSD} function now uses a line width of
+      0.5 for its reference lines, rather than \samp{lwd=0}.
     }
   }
 }
