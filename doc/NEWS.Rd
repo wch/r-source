@@ -103,6 +103,11 @@
       \file{src} directory which are created when multiple
       sub-architectures are in use.  (Following a comment from
       Berwin Turlach.)
+      
+      \item \code{options("install.lock")} may be set to \code{FALSE}
+      so that \code{install.packages()} defaults to \option{--unsafe}
+      installs, or (on Windows) to \code{TRUE} so that binary installs
+      implement locking.
 
       \item \code{sort(partial=p)} for large \code{p} now tries shell
       sort if quicksort is not appropriate and so works for non-numeric

@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## Unexported helper
-unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
+unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 {
     ## Create a temporary directory and unpack the zip to it
     ## then get the real package name, copying the
@@ -26,6 +26,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
         stop(gettextf("unable to create temporary directory '%s'",
                       normalizePath(tmpDir, mustWork = FALSE)),
              domain = NA, call. = FALSE)
+    on.exit(unlink(tmpDir, recursive=TRUE))
     cDir <- getwd()
     on.exit(setwd(cDir), add = TRUE)
     res <- zip.unpack(pkg, tmpDir)
@@ -86,6 +87,35 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
         ## CHM help was last shipped in Aug 2009, prior to 2.10.0
         unlink(file.path(tmpDir, pkgname, "chtml"), recursive = TRUE)
         instPath <- file.path(lib, pkgname)
+        if(lock) {
+            ## This is code adapted from tools:::.install_packages
+            dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+	    lockdir <- file.path(lib, "00LOCK")
+	    if (file.exists(lockdir)) {
+		stop("ERROR: failed to lock directory ", sQuote(lib),
+			" for modifying\nTry removing ", sQuote(lockdir))
+	    }
+	    dir.create(lockdir, recursive = TRUE)
+	    if (!dir.exists(lockdir)) {
+		stop("ERROR: failed to create lock directory ", sQuote(lockdir))
+	    }
+            ## Back up a previous version
+            if (file.exists(instPath)) {
+                file.copy(instPath, lockdir, recursive = TRUE)
+        	on.exit({ 
+        	    if (restorePrevious) {
+        	    	try(unlink(instPath, recursive = TRUE))
+        	    	savedcopy <- file.path(lockdir, pkgname)
+        	    	file.copy(savedcopy, lib, recursive = TRUE)
+        	    	warning(gettextf("restored '%s'", pkgname),
+                                domain = NA, call. = FALSE, immediate. = TRUE)
+        	    }
+        	}, add=TRUE)
+        	restorePrevious <- FALSE
+            }
+	    on.exit(unlink(lockdir, recursive = TRUE), add=TRUE)
+        }
+        
         if(libs_only) {
             if (!file_test("-d", file.path(instPath, "libs")))
                 warning(gettextf("there is no 'libs' directory in package '%s'",
@@ -95,14 +125,17 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
             for(sub in c("i386", "x64"))
                 if (file_test("-d", file.path(tmpDir, pkgname, "libs", sub))) {
                     unlink(file.path(instPath, "libs", sub), recursive = TRUE)
+                    
                     ret <- file.copy(file.path(tmpDir, pkgname, "libs", sub),
                                      file.path(instPath, "libs"),
                                      recursive = TRUE)
-                    if(any(!ret))
+                    if(any(!ret)) {
                         warning(gettextf("unable to move temporary installation '%s' to '%s'",
                                          normalizePath(file.path(tmpDir, pkgname, "libs", sub), mustWork = FALSE),
                                          normalizePath(file.path(instPath, "libs")), mustWork = FALSE ),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
+                        restorePrevious <- TRUE # Might not be used
+                    }
                 }
             ## update 'Archs': copied from tools:::.install.packages
             fi <- file.info(Sys.glob(file.path(instPath, "libs", "*")))
@@ -125,21 +158,21 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
             if (ret == 0) {
                 ## Move the new package to the install lib
                 ret <- file.rename(file.path(tmpDir, pkgname), instPath)
-                if(!ret)
+                if(!ret) {
                     warning(gettextf("unable to move temporary installation '%s' to '%s'",
                                      normalizePath(file.path(tmpDir, pkgname), mustWork = FALSE),
                                      normalizePath(instPath, mustWork = FALSE)),
                             domain = NA, call. = FALSE, immediate. = TRUE)
+                    restorePrevious <- TRUE # Might not be used
+                }
             } else {
                 warning(gettextf("cannot remove prior installation of package '%s'",
                                  pkgname),
                         domain = NA, call. = FALSE, immediate. = TRUE)
+                restorePrevious <- TRUE # Might not be used
             }
         }
     }
-    setwd(cDir)
-    ## remove our temp dir
-    unlink(tmpDir, recursive=TRUE)
 }
 
 ## called as
@@ -153,11 +186,12 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
-             dependencies = FALSE, libs_only = FALSE, ...)
+             dependencies = FALSE, libs_only = FALSE, 
+             lock = getOption("install.lock", FALSE), ...)
 {
 
     if(!length(pkgs)) return(invisible())
-
+    
     ## look for package in use.
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
@@ -180,7 +214,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
 
     if(is.null(contriburl)) {
         for(i in seq_along(pkgs))
-            unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only)
+            unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock)
         link.html.help(verbose=TRUE)
         return(invisible())
     }
@@ -213,7 +247,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
                 okp <- p == foundpkgs[, 1L]
                 if(any(okp))
                     unpackPkgZip(foundpkgs[okp, 2L], foundpkgs[okp, 1L],
-                                 lib, libs_only)
+                                 lib, libs_only, lock)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))

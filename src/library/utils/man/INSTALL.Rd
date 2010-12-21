@@ -95,15 +95,17 @@
 
   By default the library directory is \sQuote{locked} by creating a
   directory \file{00LOCK} within it.  This has two purposes: it
-  prevents any other process installing into that library concurrently,
-  and is used to store any previous version of the package to
-  restore on error.  A finer-grained locking is provided by the option
-  \option{--pkglock} which creates a separate lock for each
+  prevents any other process installing into that library
+  concurrently, and is used to store any previous version of the
+  package to restore on error.  A finer-grained locking is provided by
+  the option \option{--pkglock} which creates a separate lock for each
   package: this allows enough freedom for careful parallel
   installation as done by \code{\link{install.packages}(Ncpus =
   \var{n})} with \code{\var{n} > 1}.  Finally locking (and restoration
-  on error) can be suppressed by \option{--no-lock} or \option{--unsafe}
-  (two names for the same option).
+  on error) can be suppressed by \option{--no-lock} or 
+  \option{--unsafe} (two names for the same option), or by setting
+  \code{option(install.lock=FALSE)} in \R.
+  
 #ifdef windows
   
   Windows-only option \option{--build} can be used to zip up the

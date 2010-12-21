@@ -1023,7 +1023,7 @@
     fake <- FALSE
     lazy <- TRUE
     lazy_data <- FALSE
-    lock <- TRUE
+    lock <- getOption("install.lock", TRUE)
     pkglock <- FALSE
     pkglockname <- ""
     libs_only <- FALSE

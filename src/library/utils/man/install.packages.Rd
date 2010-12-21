@@ -156,7 +156,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   of the Mac OS X GUI \code{R.app}.  \code{install.packages} can install
   either type, either by downloading a file from a repository or from a
   local file.  The default type is given by
-  \code{\link{getOption}("pkgType")}: this \code{"source"} apart from
+  \code{\link{getOption}("pkgType")}: this is \code{"source"} apart from
   under Windows or a CRAN binary distribution for Mac OS X.
   
   \code{install.packages} is used to install packages. It takes
@@ -172,7 +172,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \sQuote{Note} section.
 #endif
   
-  For source packages from a repository is used an attempt is made to
+  For source packages from a repository an attempt is made to
   install the packages in an order that respects their dependencies.
   This does assume that all the entries in \code{lib} are on the default
   library path for installs (set by \env{R_LIBS}).
@@ -183,6 +183,18 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Otherwise you will need to have installed the Rtools collection as
   described in the \sQuote{R for Windows FAQ} \emph{and} you must have the
   \env{PATH} set up as required by Rtools.
+  
+  When installing a binary package, \code{install.packages} will abort
+  the install if it detects that the package already installed and is
+  currently in use.  In some circumstances (e.g. multiple instances of
+  R running at the same time and sharing a library) it won't detect a
+  problem, but the installation will fail.  Unlike \link{INSTALL}, it
+  will not by default be able to restore the old version.  If you want
+  this safety feature, set \code{option(install.lock=TRUE)}.  Setting
+  this to \code{TRUE} will also prevent multiple instances of \R from
+  simultaneously installing packages in the same library, and will slow
+  down updates and re-installs.
+ 
 #endif
 
   You are advised to run \code{update.packages} before

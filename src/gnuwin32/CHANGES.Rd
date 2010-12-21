@@ -27,6 +27,11 @@
       \env{R_BROWSER} and \env{R_PDFVIEWER} respectively (as on a
       Unix-alike).  A value of \code{"false"} suppresses display (even
       if there is no \command{false.exe} present on the path).
+      
+      \item If \code{options("install.lock")} is set to \code{TRUE},
+      binary package installs are protected against failure similar to
+      the way source package installs are protected.
+      
     }
   }
   
