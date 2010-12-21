@@ -618,6 +618,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	     && !is.na(lastshown)
 	     && lastshown < (showto <- srclines[length(srclines)])) {
 	      dce <- trySrcLines(srcfile, lastshown+1L, showto, NULL)
+	      leading <- length(dce) # These are all trailing comments
 	      putSinput(dce)
 	  }
 
