@@ -10,6 +10,11 @@
       \item If the extension was not included in a call to
       \code{Sweave()}, source references would not work properly, and the
       \code{keep.source} option failed. (\PR{14459})
+
+      \item \code{format.data.frame()} now keeps zero character column names.
+
+      \item \code{pretty(x)} no longer raises an error when \code{x}
+      contains solely non-finite values. (\PR{14468})
     }
   }
 }
@@ -34,7 +39,7 @@
 
       \item New reference class utility methods \code{copy()}, \code{field()},
       \code{getRefClass()} and \code{getClass()} have been added.
-     
+
       \item When a character value is used for the \code{EXPR}
       argument in \code{switch()}, a warning is given if more than
       one unnamed alternative value is given.  This will become an
@@ -164,10 +169,10 @@
       \item \code{unit.pmax()} and \code{unit.pmin()} in package
       \pkg{grid} gave incorrect results when all inputs were of length 1.
       (\PR{14443})
-      
+
       \item The parser for \file{NAMESPACE} files ignored misspelled
       directives, rather than signalling an error.  For 2.12.x a warning
-      will be issued, but this will be correctly reported as an error 
+      will be issued, but this will be correctly reported as an error
       in later releases. (Reported by Charles Berry.)
 
       \item Fix for subsetting of \code{"raster"} objects when only one
@@ -185,11 +190,11 @@
 
       With Cairo < 1.6, will be better than before, though still a
       little clunky.  With Cairo >= 1.6, should be sweet as.
-            
+
       \item Several bugs fixed in \code{read.DIF()}:  single column
       inputs caused errors, cells marked as \code{"character"} could
       be converted to other types, and (in Windows) copying from the
-      clipboard failed.      
+      clipboard failed.
     }
   }
 }

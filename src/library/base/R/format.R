@@ -244,7 +244,7 @@ format.data.frame <- function(x, ..., justify = "none")
 	    oldClass(rval[[i]]) <- "AsIs"
     }
     cn <- names(x)
-    m <- match(c("row.names", "check.rows", "check.names"), cn, 0L)
+    m <- match(c("row.names", "check.rows", "check.names", ""), cn, 0L)
     if(any(m)) cn[m] <- paste("..dfd.", cn[m], sep="")
     ## This requires valid symbols for the columns, so we need to
     ## truncate any of more than 256 bytes.

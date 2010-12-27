@@ -22,10 +22,9 @@ pretty.default <-
              high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
              eps.correct = 0, ...)
 {
-    x <- as.numeric(x)
+    x <- x[is.finite(x <- as.numeric(x))]
     if(length(x)==0L)
 	return(x)
-    x <- x[is.finite(x)]
     if(is.na(n <- as.integer(n[1L])) || n < 0L)# n=0 !!
 	stop("invalid 'n' value")
     if(!is.numeric(shrink.sml) || shrink.sml <= 0)
