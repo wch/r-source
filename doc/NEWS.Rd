@@ -228,7 +228,7 @@
       \pkg{tcltk} were previously omitted (intentionally).
 
       \item \url{http://www.rforge.net} has been added to the default
-      set of repositories known to \code{setRepoositories()}.
+      set of repositories known to \code{setRepositories()}.
 
       \item xz-utils has been updated to version 5.0.0.
 
@@ -238,8 +238,8 @@
       \item \code{legend()} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
-      \item New reference class utility methods \code{copy}, \code{field},
-      \code{getRefClass} and \code{getClass} have been added.
+      \item New reference class utility methods \code{copy()}, \code{field()},
+      \code{getRefClass()} and \code{getClass()} have been added.
 
       \item When a character value is used for the \code{EXPR}
       argument in \code{switch()}, a warning is given if more than
@@ -268,7 +268,7 @@
       \item \code{seq.int()} no longer sometimes evaluates arguments
       twice.  (\PR{14388})
 
-      \item The \code{data.frame} method of \code{format} failed if a
+      \item The \code{data.frame} method of \code{format()} failed if a
       column name was longer than 256 bytes (the maximum length allowed
       for an \R name).
 
@@ -305,7 +305,7 @@
       \item Assignment of an environment to functions or as an attribute
       to other objects now works for S4 subclasses of \code{"environment"}.
 
-      \item Use of \code{`[[<-`} for S4 subclasses of
+      \item Use of \samp{[[<-} for S4 subclasses of
       \code{"environment"} generated an infinite recursion from the
       method.  The method has been replaced by internal code.
 
@@ -313,7 +313,7 @@
       \code{initialize()} methods when there is no explicit superclass
       method.
 
-      \item \code{!} dropped attributes such as names and dimensions from a
+      \item \samp{!} dropped attributes such as names and dimensions from a
       length-zero argument.  (\PR{14424})
 
       \item When \code{list2env()} created an environment it was missing
@@ -321,7 +321,7 @@
 
       \item \code{Sweave()} with \code{keep.source=TRUE} dropped
       comments at the start and end of code chunks.  It could also
-      fail when \code{\\SweaveInput} was combined with named chunks.
+      fail when \samp{\SweaveInput} was combined with named chunks.
 
       \item The Fortran code used by \code{nls(algorithm = "port")}
       could infinite-loop when compiled with high optimization on a
@@ -344,7 +344,7 @@
       \item Reference S4 class creation could generate ambiguous
       inheritance patterns under very special circumstances.
 
-      \item \code{`[[<-`} turned S4 subclasses of \code{"environment"} into
+      \item \samp{[[<-} turned S4 subclasses of \code{"environment"} into
       plain environments.
 
       \item Long titles for help pages were truncated in package indices
@@ -518,7 +518,7 @@
        It avoids the use of \command{texindy} by \command{texinfo}'s
        \command{texi2dvi >= 1.157}, since that does not emulate
        'makeindex' well enough to avoid problems with special characters
-       (such as \code{(}, \code{\{}, \code{!}) in indices.
+       (such as \samp{(}, \samp{\{}, \samp{!}) in indices.
 
       \item The ability of \code{readLines()} and \code{scan()} to
        re-encode inputs to marked UTF-8 strings on Windows since \R 2.7.0
@@ -584,10 +584,10 @@
        customizable using the new \code{Rd2txt_options()} function.
        options(\code{"help_text_width"}) is no longer used.
 
-      \item Added \code{\\href} tag to the Rd format, to allow
+      \item Added \samp{\href} tag to the Rd format, to allow
        hyperlinks to URLs without displaying the full URL.
 
-      \item Added \code{\\newcommand} and \code{\\renewcommand} tags
+      \item Added \samp{\newcommand} and \samp{\renewcommand} tags
        to the Rd format, to allow user-defined macros.
 
       \item New \code{toRd()} generic in the \pkg{tools} package to
@@ -613,13 +613,13 @@
 
       \item Added support for subsetting \code{"raster"} objects, plus
       assigning to a subset, conversion to a matrix (of colour
-      strings), and comparisons (\code{==} and \code{!=}).
+      strings), and comparisons (\samp{==} and \samp{!=}).
 
       \item Added a new \code{parseLatex()} function (and related
       functions \code{deparseLatex()} and \code{latexToUtf8()}) to
       support conversion of bibliographic entries for display in R.
 
-      \item Text rendering of \code{\\itemize} in help uses a Unicode
+      \item Text rendering of \samp{\itemize} in help uses a Unicode
       bullet in UTF-8 and most single-byte Windows locales.
 
       \item Added support for polygons with holes to the graphics
@@ -862,7 +862,7 @@
        It supports a file \file{~/.R/build.Renviron} analogously to
        \command{check}.
 
-       It now runs build-time \code{\\Sexpr} expressions in help files.
+       It now runs build-time \samp{\Sexpr} expressions in help files.
 
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
        to process the package manual.  It is now implemented entirely in
@@ -1153,7 +1153,7 @@
       \item \code{stripchart()} could fail with an empty factor
       level.  (\PR{14317})
 
-      \item Text help rendering of \code{\\tabular\{\}} has been
+      \item Text help rendering of \samp{\tabular\{\}} has been
       improved: under some circumstances leading blank columns were
       not rendered.
 
@@ -1171,7 +1171,7 @@
       \option{--file=size...} for one of the options for setting limits
       for Ncells or Vcells.
 
-      \item The internal strptime() could corrupt its copy of the
+      \item The internal \code{strptime()} could corrupt its copy of the
       timezone which would then lead to spurious warnings. (\PR{14338})
 
       \item \code{dir.create(recursive = TRUE)} could fail if one of the
@@ -1190,14 +1190,14 @@
       does nothing in those cases; previously the behaviour was
       undefined, probably device-specific, and possibly dangerous.
 
-      \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
+      \item \code{wilcox.test(x, y, conf.int = TRUE)} failed with an unhelpful
       message if \code{x} and \code{y} were constant vectors, and
       similarly in the one-sample case.  (\PR{14329})
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
 
-      \item \code{\\Sexpr[result=rd]} in an Rd file added a
+      \item \samp{\Sexpr[result=rd]} in an Rd file added a
       spurious newline, which was displayed as extra whitespace when
       rendered.
 
@@ -1294,7 +1294,7 @@
         crash when used on very long vectors.  (\PR{14267})
 
       \item \code{Rd2latex()} incorrectly escaped special characters in
-      \code{\\usage} sections.
+      \samp{\usage} sections.
 
       \item \code{mcnemar.test()} could alter the levels (dropping
        unused levels) if passed \code{x} and \code{y} as factors
@@ -1348,7 +1348,7 @@
 
        It computed widths of strings that would be \code{print()}ed with
        escapes incorrectly, for example in the computation of column
-       width for \code{\\tabular}.
+       width for \samp{\tabular}.
 
       \item \code{na.action()} did not extract the \code{na.action}
       component as documented.
@@ -1579,10 +1579,10 @@
        for use on platforms which have \command{curl} but not
        \command{wget}, but also for some hard-to-access URLs.
 
-      \item In \code{Rd}, \code{\\eqn} and \code{\\deqn} will render in
+      \item In \code{Rd}, \samp{\eqn} and \samp{\deqn} will render in
        HTML (and convert to text) upper- and lower-case Greek letters
-       (entered as \code{\\alpha} \dots), \code{\\ldots}, \code{\\dots},
-       \code{\\ge} and \code{\\le}.
+       (entered as \samp{\alpha} \dots), \samp{\ldots}, \samp{\dots},
+       \samp{\ge} and \samp{\le}.
 
       \item \code{utf8ToInt()} and \code{intToUtf8()} now map \code{NA} inputs
       to \code{NA} outputs.
@@ -1607,7 +1607,7 @@
       \item \code{seq.int()} returns an integer result in some further cases
        where \code{seq()} does, e.g. \code{seq.int(1L, 9L, by = 2L)}.
 
-      \item Added \code{\\subsection\{\}\{\}} macro to Rd syntax, for
+      \item Added \samp{\subsection\{\}\{\}} macro to Rd syntax, for
        subsections within sections.
 
       \item n-dimensional arrays with dimension names can now be indexed
@@ -1712,7 +1712,7 @@
        Thanks to Patrick Aboyoun for implementation suggestions.
 
       \item Help conversion to text now uses the first part of
-       \code{\\enc\{\}\{\}} markup if it is representable in the current
+       \samp{\enc\{\}\{\}} markup if it is representable in the current
        output encoding.  On the other hand, conversion to LaTeX with the
        default \code{outputEncoding = "ASCII"} uses the second part.
 
@@ -1857,7 +1857,7 @@
        singular fits.
 
       \item \code{callNextMethod} now works again with the \code{drop=}
-      argument in \code{`[`}
+      argument in \samp{[}
 
       \item \code{parse()} and \code{parse_Rd()} miscounted columns when
        multibyte UTF-8 characters were present.
@@ -2378,7 +2378,7 @@
       in order to \strong{end} \code{"\\U"} and \code{"\\L"} case changes,
       thanks to a patch from Bill Dunlap.
 
-      \item \code{factor()}, \code{`levels<-`()}, etc, now ensure that
+      \item \code{factor()}, \code{levels()<-}, etc, now ensure that
        the resulting factor levels are unique (as was always the implied
        intention).  Factors with duplicated levels are still
        constructible by low-level means, but are now declared illegal.
