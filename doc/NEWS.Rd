@@ -103,7 +103,7 @@
       \file{src} directory which are created when multiple
       sub-architectures are in use.  (Following a comment from
       Berwin Turlach.)
-      
+
       \item \code{options("install.lock")} may be set to \code{FALSE}
       so that \code{install.packages()} defaults to \option{--unsafe}
       installs, or (on Windows) to \code{TRUE} so that binary installs
@@ -213,6 +213,9 @@
       \code{keep.source} option failed. (\PR{14459})
 
       \item \code{format.data.frame()} now keeps zero character column names.
+
+      \item \code{pretty(x)} no longer raises an error when \code{x}
+      contains solely non-finite values. (\PR{14468})
     }
   }
 }

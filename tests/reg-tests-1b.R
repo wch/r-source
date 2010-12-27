@@ -1476,7 +1476,10 @@ b <- with(a, aggregate(time, list(nm=nm), max))
 stopifnot(inherits(b$x, "POSIXt"))
 ##
 
+
+## pretty(<only non-finite>)  PR#14468
+stopifnot(length(pretty(-2:1 / 0)) == 0)
+## gave an error in R <= 2.12.1
+
+
 proc.time()
-
-
-
