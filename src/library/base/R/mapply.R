@@ -28,20 +28,8 @@ mapply <- function(FUN,..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 	else if (!is.null(names1))
 	    names(answer) <- names1
     }
-    if (SIMPLIFY && length(answer) &&
-        length(common.len <- unique(unlist(lapply(answer, length)))) == 1L) {
-        if (common.len == 1L)
-            unlist(answer, recursive = FALSE)
-        else if (common.len > 1L) {
-	    ## make sure that array(*) will not call rep() {e.g. for 'call's}:
-	    r <- as.vector(unlist(answer, recursive = FALSE))
-	    if(prod(d <- c(common.len, max(sapply(dots,length)))) == length(r))
-		array(r, dim = d,
-		      dimnames = list(names(answer[[1L]]), names(answer)))
-	    else answer
-        }
-        else answer
-    }
+    if(!identical(SIMPLIFY, FALSE) && length(answer))
+	simplify2array(answer, higher = (SIMPLIFY == "array"))
     else answer
 }
 

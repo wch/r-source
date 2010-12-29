@@ -112,6 +112,13 @@
       \item \code{sort(partial=p)} for large \code{p} now tries shell
       sort if quicksort is not appropriate and so works for non-numeric
       vectors.
+
+      \item \code{sapply()} gets a new option \code{simplify = "array"}
+      which returns a \dQuote{higher rank} array instead of just a matrix
+      when \code{FUN()} returns a \code{dim()} length of two or more.
+
+      \code{replicate()} has this option set by default, and
+      \code{vapply()} now behaves that way internally.
     }
   }
 

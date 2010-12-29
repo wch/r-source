@@ -1,6 +1,7 @@
 % File src/library/base/man/mapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
+% Copyright 2002-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{mapply}
@@ -27,7 +28,9 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
   \item{\dots}{arguments to vectorize over (list or vector).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
-  \item{SIMPLIFY}{logical; attempt to reduce the result to a vector or matrix?}
+  \item{SIMPLIFY}{logical or character string; attempt to reduce the result to a vector,
+    matrix or higher dimensional array; see the \code{simplify} argument
+    of \code{\link{sapply}}.}
   \item{USE.NAMES}{logical; use names if the first \dots argument has
     names, or if it is a character vector, use that character vector as
     the names.}
