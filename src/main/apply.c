@@ -206,10 +206,14 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (!isNull(names) || !isNull(rowNames)) {
 		SEXP dimnames;
 		PROTECT(dimnames = allocVector(VECSXP, rnk_v+1));
-		if(array_value)
+		if(array_value && !isNull(rowNames)) {
+		    if(TYPEOF(rowNames) != VECSXP || LENGTH(rowNames) != rnk_v)
+			// should never happen ..
+			error(_("dimnames(<value>) is neither NULL nor list of length %d"),
+			      rnk_v);
 		    for(int j=0; j < rnk_v; j++)
 			SET_VECTOR_ELT(dimnames, j, VECTOR_ELT(rowNames, j));
-		else
+		} else
 		    SET_VECTOR_ELT(dimnames, 0, rowNames);
 
 		SET_VECTOR_ELT(dimnames, rnk_v, names);
