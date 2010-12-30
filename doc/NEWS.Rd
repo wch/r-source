@@ -211,6 +211,10 @@
 
       \item The \code{plot.TukeyHSD} function now uses a line width of
       0.5 for its reference lines, rather than \samp{lwd=0}.
+      
+      \item The \code{big.mark} argument to \code{prettyNum()},
+      \code{format()}, etc. was inserted reversed if it was more than
+      one character long.      
     }
   }
 }
