@@ -4,14 +4,18 @@
 % Distributed under GPL 2 or later
 
 \name{aperm}
-\alias{aperm}
 \title{Array Transposition}
+\alias{aperm}
+\alias{aperm.default}
+\alias{aperm.table}
 \description{
   Transpose an array by permuting its dimensions and optionally resizing
   it.
 }
 \usage{
-aperm(a, perm = NULL, resize = TRUE)
+aperm(a, perm, \dots)
+\method{aperm}{default}(a, perm = NULL, resize = TRUE, \dots)
+\method{aperm}{table}(a, perm = NULL, resize = TRUE, keep.class = TRUE, \dots)
 }
 \arguments{
   \item{a}{the array to be transposed.}
@@ -23,6 +27,9 @@ aperm(a, perm = NULL, resize = TRUE)
     reverse the order of the dimensions.}
   \item{resize}{a flag indicating whether the vector should be
     resized as well as having its elements reordered (default \code{TRUE}).}
+  \item{keep.class}{logical indicating if the result should be of the
+    same class as \code{a}.}
+  \item{\dots}{potential further arguments of methods.}
 }
 \value{
   A transposed version of array \code{a}, with subscripts permuted as
@@ -53,5 +60,9 @@ stopifnot(t(xt[,,2]) == x[,,2],
           t(xt[,,3]) == x[,,3],
           t(xt[,,4]) == x[,,4])
 
+UCB <- aperm(UCBAdmissions, c(2,1,3))
+UCB[1,,]
+summary(UCB)# UCB is still a continency table
+\dontshow{stopifnot(is.table(UCB))}
 }
 \keyword{array}

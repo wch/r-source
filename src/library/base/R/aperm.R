@@ -14,5 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-aperm <- function(a, perm = NULL, resize=TRUE)
-    .Internal(aperm(a, perm, resize))
+aperm <- function(a, perm, ...) UseMethod("aperm")
+
+aperm.default <- function (a, perm = NULL, resize = TRUE, ...)
+     .Internal(aperm(a, perm, resize))
+
+aperm.table <- function(a, perm = NULL, resize = TRUE, keep.class = TRUE, ...)
+{
+     r <- aperm.default(a, perm, resize=resize)
+     if(keep.class) class(r) <- class(a)
+     r
+}

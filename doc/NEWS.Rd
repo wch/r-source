@@ -119,6 +119,9 @@
 
       \code{replicate()} has this option set by default, and
       \code{vapply()} now behaves that way internally.
+
+      \item \code{aperm()} becomes S3 generic and gets a \code{table}
+      method which preserves the class.
     }
   }
 
