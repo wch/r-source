@@ -29,19 +29,18 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     if (nMerge != nrow(object$merge))
 	stop("'merge' and 'height' do not fit!")
     hMax <- oHgt[nMerge]
-    one <- 1L;	   two <- 2L # integer!
     for (k in 1L:nMerge) {
 	x <- object$merge[k, ]# no sort() anymore!
 	if (any(neg <- x < 0))
 	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
 	if (all(neg)) {			# two leaves
 	    zk <- as.list(-x)
-	    attr(zk, "members") <- two
+	    attr(zk, "members") <- 2L
 	    attr(zk, "midpoint") <- 0.5 # mean( c(0,1) )
 	    objlabels <- object$labels[-x]
 	    attr(zk[[1L]], "label") <- objlabels[1L]
 	    attr(zk[[2L]], "label") <- objlabels[2L]
-	    attr(zk[[1L]], "members") <- attr(zk[[2L]], "members") <- one
+	    attr(zk[[1L]], "members") <- attr(zk[[2L]], "members") <- 1L
 	    attr(zk[[1L]], "height") <- attr(zk[[2L]], "height") <- h0
 	    attr(zk[[1L]], "leaf") <- attr(zk[[2L]], "leaf") <- TRUE
 	}
@@ -53,16 +52,17 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	    zk <-
 		if(isL) list(-x[1L], z[[X[2L]]])
 		else	list(z[[X[1L]]], -x[2L])
-	    attr(zk, "members") <- attr(z[[X[1 + isL]]], "members") + one
+	    attr(zk, "members") <- attr(z[[X[1 + isL]]], "members") + 1L
 	    attr(zk, "midpoint") <-
                 (.memberDend(zk[[1L]]) + attr(z[[X[1 + isL]]], "midpoint"))/2
-	    attr(zk[[2 - isL]], "members") <- one
+	    attr(zk[[2 - isL]], "members") <- 1L
 	    attr(zk[[2 - isL]], "height") <- h0
 	    attr(zk[[2 - isL]], "label") <- object$labels[-x[2 - isL]]
 	    attr(zk[[2 - isL]], "leaf") <- TRUE
 	}
-	else {				# two nodes
+	else {				# two non-leaf nodes
 	    x <- as.character(x)
+            ## "merge" the two ('earlier') branches:
 	    zk <- list(z[[x[1L]]], z[[x[2L]]])
 	    attr(zk, "members") <- attr(z[[x[1L]]], "members") +
 		attr(z[[x[2L]]], "members")
@@ -71,12 +71,81 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 				     attr(z[[x[2L]]], "midpoint"))/2
 	}
 	attr(zk, "height") <- oHgt[k]
-	z[[k <- as.character(k)]] <- zk
+	z[[as.character(k)]] <- zk
     }
-    z <- z[[k]]
+    z <- z[[as.character(k)]]
     class(z) <- "dendrogram"
     z
 }
+
+## Reversing the above (as much as possible)
+## is only possible for dendrograms with *binary* splits
+as.hclust.dendrogram <- function(x, ...)
+{
+    stopifnot(is.list(x), length(x) == 2)
+    n <- length(ord <- unlist(x))
+    stopifnot(n == attr(x, "members"))
+    n.h <- n - 1L
+    ## labels: not sure, if we'll use this; there should be a faster way!
+    labsu <- unlist(labels(x))
+    labs <- labsu[sort.list(ord)]
+    x <- .add.dendrInd(x)
+
+    SIMP <- function(d) {
+	if(is.leaf(d)) {
+	    - as.vector(d)# dropping attributes
+	} else {
+	    j <<- j + 1L
+	    height[j] <<- attr(d, "height")
+	    inds[[j]] <<- attr(d, ".indx.")
+	    attributes(d) <- NULL # drop all, incl. class
+	    ## recursively apply to components:
+	    d[] <- lapply(d, SIMP)
+	    d
+	}
+    }
+
+    height <- numeric(n.h);  inds <- vector("list",n.h);  j <- 0L
+    xS <- SIMP(x)
+    ii <- sort.list(height)
+
+    merge <- matrix(NA_integer_, 2L, n.h)
+    for(k in seq_len(n.h)) {
+	if(k < n.h) { in.k <- inds[[ ii[k] ]] ; s <- xS[[in.k]] } else s <- xS
+	##cat(sprintf("ii[k=%2d]=%2d -> s=xS[[in.k]]=", k, ii[k])); str(s)
+	stopifnot(length(s) == 2L, all( vapply(s, is.integer, NA) ))# checking..
+	merge[,k] <- unlist(s)
+	if(k < n.h)
+	    xS[[in.k]] <- + k
+    }
+
+    r <- list(merge = t(merge),
+	      height = height[ii],
+	      order = ord,
+	      labels = labs,
+	      call = match.call(),
+	      method = NA_character_,
+	      dist.method = NA_character_)
+    class(r) <- "hclust"
+    r
+}
+
+##' add the c(i1,i2,..) list indices to each non-leaf of a dendrogram
+##' --> allowing "random access" into the dendrogram
+.add.dendrInd <- function(x)
+{
+    add.I <- function(x, ind) {
+        if(!is.leaf(x)) {
+            for(i in seq_along(x))
+                x[[i]] <- add.I(x[[i]], c(ind, i))
+            attr(x, ".indx.") <- ind
+        }
+        x
+    }
+    ## apply recursively:
+    add.I(x, integer(0))
+}
+
 
 ### MM: 'FIXME'	 (2002-05-14):
 ###	 =====
@@ -99,13 +168,12 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 .midDend <- function(x)
     if(is.null(mp <- attr(x, "midpoint"))) 0 else mp
 
-midcache.dendrogram <- function (x, type = "hclust")
+midcache.dendrogram <- function (x, type = "hclust", quiet=FALSE)
 {
     ## Recompute "midpoint" attributes of a dendrogram, e.g. after reorder().
 
     type <- match.arg(type) ## currently only "hclust"
-    if( !inherits(x, "dendrogram") )
-	stop("we require a dendrogram")
+    stopifnot( inherits(x, "dendrogram") )
     setmid <- function(d, type) {
 	if(is.leaf(d))# no "midpoint"
 	    return(d)
@@ -118,7 +186,7 @@ midcache.dendrogram <- function (x, type = "hclust")
 	    r[[j]] <- unclass(setmid(d[[j]], type))
 	    midS <- midS + .midDend(r[[j]])
 	}
-	if(type == "hclust" && k != 2)
+	if(!quiet && type == "hclust" && k != 2)
 	    warning("midcache() of non-binary dendrograms only partly implemented")
 	## compatible to as.dendrogram.hclust() {MM: doubtful if k > 2}
 	attr(r, "midpoint") <- (.memberDend(d[[1L]]) + midS) / 2
@@ -146,7 +214,7 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 str.dendrogram <-
 function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
           wid = getOption("width"), nest.lev = 0, indent.str = "",
-          stem = "--", ...)
+          last.str = "`", stem = "--", ...)
 {
 ## TO DO: when object is part of a larger structure which is str()ed
 ##    with default max.level= NA, it should not be str()ed to all levels,
@@ -160,7 +228,8 @@ function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
 	paste(paste(names(fl), fl, sep=sep), collapse = ", ")
     }
 
-    istr <- sub(" $", "`", indent.str)
+    ## when  indent.str  ends in a blank, i.e. "last" (see below)
+    istr <- sub(" $", last.str, indent.str)
     cat(istr, stem, sep="")
 
     at <- attributes(object)
@@ -180,6 +249,7 @@ function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
 		##cat(indent.str, nam.ob[i], ":", sep="")
 		str(object[[i]], nest.lev = nest.lev + 1,
 		    indent.str= paste(indent.str, if(i < le) " |" else "  "),
+                    last.str=last.str, stem=stem,
 		    max.level=max.level, digits.d=digits.d,
 		    give.attr= give.attr, wid=wid)
 	    }
@@ -549,10 +619,35 @@ rev.dendrogram <- function(x) {
 labels.dendrogram <- function(object, ...)
     unlist(dendrapply(object, function(n) attr(n,"label")))
 
+merge.dendrogram <- function(x, y, ..., height) {
+    stopifnot(inherits(x,"dendrogram"), inherits(y,"dendrogram"))
+    r <- list(x,y)
+    if(length(xtr <- list(...))) {
+	xpr <- substitute(c(...))
+	if(!all(is.d <- vapply(xtr, inherits, NA, what="dendrogram"))) {
+	    nms <- sapply(xpr[-1][!is.d], deparse, nlines=1L)
+	    stop(sprintf(ngettext(length(nms),
+				  "extra argument %s is not a \"%s\"",
+				  "extra arguments %s are not \"%s\"s"),
+			 paste(nms, collapse=", "), "dendrogram"))
+	}
+	r <- c(r, xtr)
+    }
+    attr(r, "members") <- sum(vapply(r, attr, 0L, which="members"))
+    h.max <- max(vapply(r, attr, 0., which="height"))
+    if(missing(height) || is.null(height))
+	height <- 1.1 * h.max
+    else if(height < h.max)
+	stop(gettextf("'height' must be at least %g, the maximal height of its components",
+		      h.max))
+    attr(r, "height") <- height
+    class(r) <- "dendrogram"
+    midcache.dendrogram(r, quiet=TRUE)
+}
 
 dendrapply <- function(X, FUN, ...)
 {
-    ## Purpose: "dendrogram" apply {to each node}
+    ## Purpose: "dendrogram" recursive apply {to each node}
     ## ----------------------------------------------------------------------
     ## Author: Martin Maechler, Date: 26 Jun 2004, 22:43
     FUN <- match.fun(FUN)
@@ -562,9 +657,10 @@ dendrapply <- function(X, FUN, ...)
     Napply <- function(d) {
 	r <- FUN(d, ...)
 	if(!is.leaf(d)) {
-            if(!is.list(r)) r <- as.list(r) # fixing unsafe FUN()s
-            for(j in seq_along(d))
-                r[[j]] <- Napply(d[[j]])
+	    if(!is.list(r)) r <- as.list(r) # fixing unsafe FUN()s
+	    if(length(r) < (n <- length(d))) r[seq_len(n)] <- vector("list", n)
+	    ## and overwrite recursively, possibly keeping "attr"
+	    r[] <- lapply(d, Napply)
         }
 	r
     }

@@ -1,6 +1,7 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
+% Copyright 2002-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{dendrogram}
@@ -9,12 +10,14 @@
 \alias{as.dendrogram}
 \alias{as.dendrogram.dendrogram}
 \alias{as.dendrogram.hclust}
+\alias{as.hclust.dendrogram}
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
+\alias{merge.dendrogram}
+\alias{plot.dendrogram}
 \alias{print.dendrogram}
 \alias{rev.dendrogram}
 \alias{str.dendrogram}
-\alias{plot.dendrogram}
 \alias{is.leaf}
 \description{
   Class \code{"dendrogram"} provides general functions for handling
@@ -30,6 +33,8 @@
 as.dendrogram(object, \dots)
 \method{as.dendrogram}{hclust}(object, hang = -1, \dots)
 
+\method{as.hclust}{dendrogram}(x, \dots)
+
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
       center = FALSE,
       edge.root = is.leaf(x) || !is.null(attr(x,"edgetext")),
@@ -40,20 +45,22 @@ as.dendrogram(object, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
+\method{merge}{dendrogram}(x, y, \dots, height)
+
 \method{print}{dendrogram}(x, digits, \dots)
 
 \method{rev}{dendrogram}(x)
 
 \method{str}{dendrogram}(object, max.level = NA, digits.d = 3,
     give.attr = FALSE, wid = getOption("width"),
-    nest.lev = 0, indent.str = "", stem = "--", \dots)
+    nest.lev = 0, indent.str = "", last.str = "`", stem = "--", \dots)
 
 is.leaf(object)
 }
 \arguments{
   \item{object}{any \R object that can be made into one of class
     \code{"dendrogram"}.}
-  \item{x}{object of class \code{"dendrogram"}.}
+  \item{x,y}{object(s) of class \code{"dendrogram"}.}
   \item{hang}{numeric scalar indicating how the \emph{height} of leaves
     should be computed from the heights of their parents; see
     \code{\link{plot.hclust}}.}
@@ -89,6 +96,9 @@ is.leaf(object)
   \item{frame.plot}{logical indicating if a box around the plot should
     be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
+  \item{height}{height at which the two dendrogram should be merged.  If not
+    specified (or \code{NULL}), the default is ten percent larger than
+    the (larger of the) two component heights.}
   \item{xlim, ylim}{optional x- and y-limits of the plot, passed to
     \code{\link{plot.default}}.  The defaults for these show the full
     dendrogram.}
@@ -100,16 +110,18 @@ is.leaf(object)
     to \code{str}, see \code{\link{str.default}()}.  Note that
     \code{give.attr = FALSE} still shows \code{height} and \code{members}
     attributes for each node.}
-  \item{stem}{a string used for \code{str()} specifying the \emph{stem}
+  \item{last.str, stem}{strings used for \code{str()} specifying how the
+    last branch (at each level) should start and the \emph{stem}
     to use for each dendrogram branch.}
 }
 \details{
-  Warning: This documentation is preliminary.
+  This documentation is somewhat preliminary.
 
   The dendrogram is directly represented as a nested list where each
   component corresponds to a branch of the tree.  Hence, the first
   branch of tree \code{z} is \code{z[[1]]}, the second branch of the
-  corresponding subtree is \code{z[[1]][[2]]} etc.. Each node of the tree
+  corresponding subtree is \code{z[[1]][[2]]}, or shorter
+  \code{z[[c(1,2)]]}, etc..  Each node of the tree
   carries some information needed for efficient plotting or cutting as
   attributes, of which only \code{members}, \code{height} and
   \code{leaf} for leaves are compulsory:
@@ -149,18 +161,27 @@ is.leaf(object)
   (extraction) ensures that selecting sub-branches keeps the class.
 
   Objects of class \code{"hclust"} can be converted to class
-  \code{"dendrogram"} using method \code{as.dendrogram}.
+  \code{"dendrogram"} using method \code{as.dendrogram()}, and since R
+  2.13.0, there is also a \code{\link{as.hclust}()} method as an inverse.
 
   \code{rev.dendrogram} simply returns the dendrogram \code{x} with
   reversed nodes, see also \code{\link{reorder.dendrogram}}.
+
+  The \code{\link{merge}(x,y, ...)} method allows to join two (or more!)
+  dendrograms into a new one which has \code{x} and \code{y} (and
+  optional further arguments) as branches.
 
   \code{is.leaf(object)} is logical indicating if \code{object} is a
   leaf (the most simple dendrogram).
   \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
 }
 \note{
-  When using \code{type = "triangle"}, \code{center = TRUE} often looks
-  better.
+  \describe{
+    \item{\code{plot()}:}{When using \code{type = "triangle"},
+      \code{center = TRUE} often looks better.}
+    \item{\code{str(d)}:}{If you really want to see the \emph{internal}
+      structure, use \code{str(unclass(d))} instead.}
+  }
 }
 \section{Warning}{
   Some operations on dendrograms (including plotting) make use of
@@ -170,8 +191,9 @@ is.leaf(object)
   (which it is not on Windows).
 }
 \seealso{
-  \code{\link{order.dendrogram}} also on the \code{\link{labels}} method
-  for dendrograms.
+  \code{\link{dendrapply}} for applying a function to \emph{each} node.
+  \code{\link{order.dendrogram}} and \code{\link{reorder.dendrogram}};
+  further, the \code{\link{labels}} method.
 }
 \examples{
 require(graphics); require(utils)
@@ -179,7 +201,7 @@ require(graphics); require(utils)
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1)          # "str()" method
-str(dend1, max = 2) # only the first two sub-levels
+str(dend1, max = 2, last.str= "'") # only the first two sub-levels
 
 op <- par(mfrow= c(2,2), mar = c(5,2,1,4))
 plot(dend1)
@@ -191,6 +213,9 @@ plot(dend1, edgePar=list(col = 1:2, lty = 2:3),
 plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3),
      horiz=TRUE)
 
+## simple test for as.hclust() asthe inverse of as.dendrogram():
+stopifnot(identical(as.hclust(dend1)[1:4], hc[1:4]))
+
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
 ## leaves are wrong horizontally:
@@ -201,7 +226,19 @@ plot(dend2$lower[[3]], nodePar=list(col=4), horiz = TRUE, type = "tr")
 plot(dend2$lower[[2]], nodePar=list(col=1),# non empty list
      edgePar = list(lty=1:2, col=2:1), edge.root=TRUE)
 par(op)
-str(d3 <- dend2$lower[[2]][[2]][[1]])
+d3 <- dend2$lower[[2]][[2]][[1]]
+stopifnot(identical(d3, dend2$lower[[2]][[c(2,1)]]))
+str(d3, last.str="'")
+
+## merge() to join dendrograms:
+(d13 <- merge(dend2$lower[[1]], dend2$lower[[3]]))
+## merge() all parts back (using default 'height' instead of original one):
+den.1 <- Reduce(merge, dend2$lower)
+## or merge() all four parts at same height --> 4 branches (!)
+d. <- merge(dend2$lower[[1]], dend2$lower[[2]], dend2$lower[[3]], dend2$lower[[4]])
+## (with a warning) or the same using  do.call :
+stopifnot(identical(d., do.call(merge, dend2$lower)))
+plot(d., main="merge(d1, d2, d3, d4)  |->  dendrogram with a 4-split")
 
 ## "Zoom" in to the first dendrogram :
 plot(dend1, xlim = c(1,20), ylim = c(1,50))

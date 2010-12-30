@@ -3183,8 +3183,8 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [41] subset        summary       t             tail          transform    
 [46] unique        unstack       within       
 > meth2gen("dendrogram")
-[1] [[         cophenetic cut        labels     plot       print      reorder   
-[8] rev        str       
+[1] [[         as.hclust  cophenetic cut        labels     merge     
+[7] plot       print      reorder    rev        str       
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
