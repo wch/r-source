@@ -6,7 +6,7 @@
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
 # on CRAN can be found at
-# http://www.stats.ox.ac.uk/pub/Rtools/goodies/local.zip
+# http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win32/local.zip
 # http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win64/local64.zip
 LOCAL_SOFT =
 
