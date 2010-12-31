@@ -219,6 +219,9 @@ withCallingHandlers({ warning("A"); 1+2 }, warning = function(w) {})
  { withRestarts(stop("A"), abort = function() {}); 1 }
 }
 withRestarts(invokeRestart("foo", 1, 2), foo = function(x, y) {x + y})
+
+##--> More examples are part of
+##-->   demo(error.catching)
 }
 \keyword{programming}
 \keyword{error}

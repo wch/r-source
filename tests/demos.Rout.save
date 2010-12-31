@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2010-12-27 r53883)
+R version 2.13.0 Under development (unstable) (2010-12-30 r53892)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -46,6 +46,60 @@ Type 'q()' to quit R.
 + }
 
 
+	demo(error.catching)
+	---- ~~~~~~~~~~~~~~
+
+> 	##================================================================##
+> 	###  In longer simulations, aka computer experiments,		 ###
+> 	###  you may want to						 ###
+> 	###  1) catch all errors and warnings (and continue)		 ###
+> 	###  2) store the error or warning messages			 ###
+> 	###								 ###
+> 	###  Here's a solution	(see R-help mailing list, Dec 9, 2010):	 ###
+> 	##================================================================##
+> 
+> ##' We want to catch *and* save both errors and warnings, and in the case of
+> ##' a warning, also keep the computed result.
+> ##'
+> ##' @title tryCatch both warnings and errors
+> ##' @param expr
+> ##' @return a list with 'value' and 'warning', where
+> ##'   'value' may be an error caught.
+> ##' @author Martin Maechler
+> tryCatch.W.E <- function(expr)
++ {
++     W <- NULL
++     w.handler <- function(w){ # warning handler
++ 	W <<- w
++ 	invokeRestart("muffleWarning")
++     }
++     list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
++ 				     warning = w.handler),
++ 	 warning = W)
++ }
+
+> str( tryCatch.W.E( log( 2 ) ) )
+List of 2
+ $ value  : num 0.693
+ $ warning: NULL
+
+> str( tryCatch.W.E( log( -1) ) )
+List of 2
+ $ value  : num NaN
+ $ warning:List of 2
+  ..$ message: chr "NaNs produced"
+  ..$ call   : language log(-1)
+  ..- attr(*, "class")= chr [1:3] "simpleWarning" "warning" "condition"
+
+> str( tryCatch.W.E( log("a") ) )
+List of 2
+ $ value  :List of 2
+  ..$ message: chr "Non-numeric argument to mathematical function"
+  ..$ call   : language log("a")
+  ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
+ $ warning: NULL
+
+
 	demo(is.things)
 	---- ~~~~~~~~~
 
@@ -62,8 +116,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n", sep = "")
 
-Number of base objects:		1249
-Number of functions in base:	1219
+Number of base objects:		1251
+Number of functions in base:	1221
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1458,5 +1512,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.49 0.06 1.555 0 0 
+Time elapsed:  1.35 0.08 1.425 0 0 
 > 
