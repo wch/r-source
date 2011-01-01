@@ -33,7 +33,7 @@ as.POSIXlt.POSIXct <- function(x, tz = "", ...)
     .Internal(as.POSIXlt(x, tz))
 }
 
-as.POSIXlt.factor <- function(x, ...) as.POSIXlt(as.character(x))
+as.POSIXlt.factor <- function(x, ...) as.POSIXlt(as.character(x), ...)
 
 as.POSIXlt.character <- function(x, tz = "", format, ...)
 {

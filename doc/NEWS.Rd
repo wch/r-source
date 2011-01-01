@@ -125,6 +125,9 @@
 
       \item \code{merge()} and \code{as.hclust()} methods for
       \code{"dendrogram"} objects are provided.
+
+      \item \code{as.POSIXlt.factor()} now passes \code{...} to the
+      character method (suggestion of Joshua Wiley).
     }
   }
 
