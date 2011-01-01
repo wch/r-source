@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-30 r52412)
+R version 2.13.0 Under development (unstable) (2010-12-31 r53893)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -625,6 +625,57 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > grid.frame(name="gf", draw=TRUE)
 > grid.pack("gf", rectGrob(gp=gpar(fill="grey")), width=unit(1, "null"))
 > grid.pack("gf", textGrob("hi there"), side="right")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.function")
+> ### * grid.function
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.function
+> ### Title: Draw a curve representing a function
+> ### Aliases: grid.function functionGrob grid.abline
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+>     # abline
+>     # NOTE: in ROOT viewport on screen, (0, 0) at top-left
+>     #       and "native" is pixels!
+>     grid.function(function(x) list(x=x, y=0 + 1*x))
+>     # a more "normal" viewport with default normalized "native" coords
+>     grid.newpage()
+>     pushViewport(viewport())
+>     grid.function(function(x) list(x=x, y=0 + 1*x))
+>     # slightly simpler
+>     grid.newpage()
+>     pushViewport(viewport())
+>     grid.abline()
+>     # sine curve
+>     grid.newpage()
+>     pushViewport(viewport(xscale=c(0, 2*pi), yscale=c(-1, 1)))
+>     grid.function(function(x) list(x=x, y=sin(x)))
+>     # constrained sine curve
+>     grid.newpage()
+>     pushViewport(viewport(xscale=c(0, 2*pi), yscale=c(-1, 1)))
+>     grid.function(function(x) list(x=x, y=sin(x)),
++                   range=0:1)
+>     # inverse sine curve
+>     grid.newpage()
+>     pushViewport(viewport(xscale=c(-1, 1), yscale=c(0, 2*pi)))
+>     grid.function(function(y) list(x=sin(y), y=y),
++                   range="y")
+>     # parametric function
+>     grid.newpage()
+>     pushViewport(viewport(xscale=c(-1, 1), yscale=c(-1, 1)))
+>     grid.function(function(t) list(x=cos(t), y=sin(t)),
++                   range=c(0, 9*pi/5))
+>     # physical abline
+>     grid.newpage()
+>     grid.function(function(x) list(x=x, y=0 + 1*x),
++                   units="in")
 > 
 > 
 > 
@@ -1619,7 +1670,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.088 0.037 4.13 0 0 
+Time elapsed:  3.838 0.043 3.886 0 0 
 > grDevices::dev.off()
 null device 
           1 

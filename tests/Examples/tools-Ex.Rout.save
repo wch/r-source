@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-11 r52699)
+R version 2.13.0 Under development (unstable) (2010-12-31 r53893)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
@@ -735,6 +735,15 @@ NULL
 <table cols="2" width="100%">
 <tr>
  <td align="left" valign="top" width="10%">
+error.catching
+ </td>
+ <td align="left" valign="top" width="90%">
+More examples on catching and handling errors
+ </td>
+</tr>
+
+<tr>
+ <td align="left" valign="top" width="10%">
 is.things
  </td>
  <td align="left" valign="top" width="90%">
@@ -861,7 +870,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.92 0.06 1.15 NA NA 
+Time elapsed:  0.481 0.024 0.507 0 0 
 > grDevices::dev.off()
 null device 
           1 
