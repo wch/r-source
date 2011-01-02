@@ -127,7 +127,7 @@
       \code{"dendrogram"} objects are provided.
 
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
-      character method (suggestion of Joshua Wiley).
+      character method (suggestion of Joshua Ulrich).
     }
   }
 
