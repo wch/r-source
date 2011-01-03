@@ -40,7 +40,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     containing \code{file} for evaluating.}
   \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
-    possible value is \code{"unknown"} when the encoding is guesses: see
+    possible value is \code{"unknown"} when the encoding is guessed: see
     the \sQuote{Details}.}
   \item{continue.echo}{character; gives the prompt to use on
     continuation lines if \code{echo = TRUE}.}
@@ -84,13 +84,13 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   This paragraph applies if \code{file} is a filename (rather than a
   connection).  If \code{encoding = "unknown"}, an attempt is made to
-  guess the encoding.  The result of \code{\link{localeToCharset}()} is
+  guess the encoding: the result of \code{\link{localeToCharset}()} is
   used as a guide.  If \code{encoding} has two or more elements, they
   are tried in turn until the file/URL can be read without error in the
-  trial encoding.  If an actual \code{encoding} is specified (rather than the
-  default or \code{"unknown"}) then character strings in the result will be
-  translated to the current encoding and marked as such (see
-  \code{\link{Encoding}}) in Latin-1 and UTF-8 locales.
+  trial encoding.  If an actual \code{encoding} is specified (rather
+  than the default or \code{"unknown"}) then character strings in the
+  result will be translated to the current encoding, and marked as such
+  (see \code{\link{Encoding}}) in Latin-1 and UTF-8 locales.
   
   If \code{file} is a connection (including one specified by \code{""},
   it is not possible to re-encode the input inside \code{source}, and so
