@@ -82,7 +82,7 @@ droplevels <- function(x, ...) UseMethod("droplevels")
 droplevels.factor <- function(x, ...) factor(x)
 droplevels.data.frame <- function(x, except = NULL, ...)
   {
-    ix <- sapply(x, is.factor)
+    ix <- vapply(x, is.factor, NA)
     if (!is.null(except)) ix[except] <- FALSE
     x[ix] <- lapply(x[ix], factor)
     x

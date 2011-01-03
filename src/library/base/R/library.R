@@ -182,14 +182,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## report only objects which are both functions or
                 ## both non-functions.
 		same.isFn <- function(where)
-		    sapply(same, exists,
+		    vapply(same, exists, NA,
                            where = where, mode = "function", inherits = FALSE)
 		same <- same[same.isFn(i) == same.isFn(lib.pos)]
                 ## if a package imports, and re-exports, there's no problem
 		if(length(same))
-		    same <- same[sapply(same, function(.)
+		    same <- same[vapply(same, function(.)
 					!identical(get(., i),
-						   get(., lib.pos)))]
+						   get(., lib.pos)), NA)]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
@@ -571,7 +571,7 @@ function(chname, package = NULL, lib.loc = NULL,
     ## for consistency with library.dyn.unload:
     file <- file.path(normalizePath(DLLpath, "/", TRUE),
                       paste(chname, file.ext, sep = ""))
-    ind <- sapply(dll_list, function(x) x[["path"]] == file)
+    ind <- vapply(dll_list, function(x) x[["path"]] == file, NA)
     if(length(ind) && any(ind)) {
         if(verbose)
             if(.Platform$OS.type == "windows")
@@ -632,7 +632,7 @@ function(chname, libpath, verbose = getOption("verbose"),
      else    file.path(libpath, "libs",
                        paste(chname, file.ext, sep = ""))
 
-    pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
+    pos <- which(vapply(dll_list, function(x) x[["path"]] == file, NA))
     if(!length(pos))
         if(.Platform$OS.type == "windows")
             stop(gettextf("DLL '%s' was not loaded", chname), domain = NA)
@@ -785,7 +785,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     attr(env, "path")
             })
             ## possibly NULL if no path attribute.
-            dirs <- dirs[!sapply(dirs, is.null)]
+            dirs <- dirs[!vapply(dirs, is.null, NA)]
             paths <- c(as.character(dirs), paths)
         }
         if(length(paths)) {
@@ -873,7 +873,7 @@ print.packageInfo <- function(x, ...)
     }
     writeLines(gettextf("\n\t\tInformation on package '%s'\n", x$name),
                outConn)
-    for(i in which(!sapply(x$info, is.null))) {
+    for(i in which(!vapply(x$info, is.null, NA))) {
         writeLines(headers[i], outConn, sep = "")
         writeLines(formatDocEntry(x$info[[i]]), outConn)
         writeLines(footers[i], outConn, sep = "")
@@ -902,7 +902,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
         for(pkg in pkgs) {
             ## allow for multiple occurrences
             zs <- pkgInfo$Depends[names(pkgInfo$Depends) == pkg]
-            have_vers <- any(sapply(zs, length) > 1L)
+            have_vers <- any(vapply(zs, length, 1L) > 1L)
             if ( !paste("package", pkg, sep = ":") %in% search() ) {
                 if (have_vers) {
                     pfile <- system.file("Meta", "package.rds",

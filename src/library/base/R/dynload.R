@@ -70,7 +70,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
 getLoadedDLLs <- function()
 {
     els <- .Call("R_getDllTable", PACKAGE = "base")
-    names(els) = sapply(els, function(x) x[["name"]])
+    names(els) <- vapply(els, function(x) x[["name"]], "")
     els
 }
 
@@ -82,7 +82,7 @@ getDLLRegisteredRoutines <- function(dll, addNames = TRUE)
 getDLLRegisteredRoutines.character <- function(dll, addNames = TRUE)
 {
     dlls <- getLoadedDLLs()
-    w <- sapply(dlls, function(x) x[["name"]] == dll || x[["path"]] == dll)
+    w <- vapply(dlls, function(x) x[["name"]] == dll || x[["path"]] == dll, NA)
 
     if(!any(w))
         stop("No DLL currently loaded with name or path ", dll)
@@ -108,7 +108,7 @@ getDLLRegisteredRoutines.DLLInfo <- function(dll, addNames = TRUE)
     if(addNames) {
       els <- lapply(els, function(x) {
                               if(length(x))
-                                 names(x) <- sapply(x, function(z) z$name)
+                                 names(x) <- vapply(x, function(z) z$name, "")
                               x
                          })
     }
@@ -138,7 +138,7 @@ function(x, ...)
       # of routines in any category. Then fill the column with ""
       # and then the actual entries.
 
-    n <- max(sapply(x, length))
+    n <- max(vapply(x, length, 1L))
     d <- list()
     sapply(names(x),
              function(id) {

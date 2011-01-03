@@ -25,7 +25,7 @@ conflicts <- function(where = search(), detail = FALSE)
     dups <- all[dups]
     if(detail) {
 	for(i in where) z[[i]] <- z[[i]][match(dups, z[[i]], 0L)]
-	z[sapply(z, function(x) length(x) == 0L)] <- NULL
+	z[vapply(z, function(x) length(x) == 0L, NA)] <- NULL
 	z
     } else dups
 }

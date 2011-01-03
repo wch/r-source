@@ -21,7 +21,7 @@ pmax <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     if(length(elts) == 0L) stop("no arguments")
-    if(all(sapply(elts, function(x) is.atomic(x) && !is.object(x)))) {
+    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
         ## NB: NULL passes is.atomic
         mmm <- .Internal(pmax(na.rm, ...))
     } else {
@@ -53,7 +53,7 @@ pmin <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     if(length(elts) == 0L) stop("no arguments")
-    if(all(sapply(elts, function(x) is.atomic(x) && !is.object(x)))) {
+    if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
         mmm <- .Internal(pmin(na.rm, ...))
     } else {
         mmm <- elts[[1L]]

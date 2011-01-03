@@ -839,7 +839,7 @@ data.frame <-
         ## careful, as.data.frame turns things into factors.
 	## value <- as.data.frame(value)
         value <- unclass(value) # to avoid data frame indexing
-        lens <- sapply(value, NROW)
+        lens <- vapply(value, NROW, 1L)
         for(k in seq_along(lens)) {
             N <- lens[k]
             if(n != N && length(dim(value[[k]])) == 2L)
@@ -1116,14 +1116,14 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	else ri
     }
     allargs <- list(...)
-    allargs <- allargs[sapply(allargs, length) > 0L]
+    allargs <- allargs[vapply(allargs, length, 1L) > 0L]
     if(length(allargs)) {
     ## drop any zero-row data frames, as they may not have proper column
     ## types (e.g. NULL).
-        nr <- sapply(allargs, function(x)
+        nr <- vapply(allargs, function(x)
                      if(is.data.frame(x)) .row_names_info(x, 2L)
                      else if(is.list(x)) length(x[[1L]]) # mismatched lists are checked later
-                     else length(x))
+                     else length(x), 1L)
         if(any(nr > 0L)) allargs <- allargs[nr > 0L]
         else return(allargs[[1L]]) # pretty arbitrary
     }
@@ -1192,7 +1192,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
             }
 	}
 	else if(is.list(xi)) {
-	    ni <- range(sapply(xi, length))
+	    ni <- range(vapply(xi, length, 1L))
 	    if(ni[1L] == ni[2L])
 		ni <- ni[1L]
 	    else stop("invalid list argument: all variables should have the same length")
@@ -1218,7 +1218,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     nvar <- length(clabs)
     if(nvar == 0L)
-	nvar <- max(sapply(allargs, length))	# only vector args
+	nvar <- max(vapply(allargs, length, 1L)) # only vector args
     if(nvar == 0L)
 	return(structure(list(), class = "data.frame",
 			 row.names = integer()))
@@ -1382,7 +1382,7 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 
 Math.data.frame <- function (x, ...)
 {
-    mode.ok <- sapply(x, function(x) is.numeric(x) || is.complex(x))
+    mode.ok <- vapply(x, function(x) is.numeric(x) || is.complex(x), NA)
     if (all(mode.ok)) {
 	x[] <- lapply(x, .Generic, ...)
 	return(x)

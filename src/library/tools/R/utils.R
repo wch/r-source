@@ -621,7 +621,7 @@ function(primitive = TRUE) # primitive means 'include primitives'
           ## groupGeneric.Rd.
           )
     if(!primitive)
-        out <- out[!sapply(out, .is_primitive_in_base)]
+        out <- out[!vapply(out, .is_primitive_in_base, NA)]
     out
 }
 
@@ -854,9 +854,8 @@ function(x)
 {
     ## Determine whether the strings in a character vector are ASCII or
     ## not.
-    as.logical(sapply(as.character(x),
-                      function(txt)
-                      all(charToRaw(txt) <= as.raw(127))))
+    vapply(as.character(x), function(txt)
+           all(charToRaw(txt) <= as.raw(127)), NA)
 }
 
 ### ** .is_ISO_8859
@@ -868,11 +867,10 @@ function(x)
     ## some ISO 8859 character set or not.
     raw_ub <- charToRaw("\x7f")
     raw_lb <- charToRaw("\xa0")
-    as.logical(sapply(as.character(x),
-                      function(txt) {
-                          raw <- charToRaw(txt)
-                          all(raw <= raw_ub | raw >= raw_lb)
-                      }))
+    vapply(as.character(x), function(txt) {
+	    raw <- charToRaw(txt)
+	    all(raw <= raw_ub | raw >= raw_lb)
+	}, NA)
 }
 
 ### ** .is_primitive_in_base

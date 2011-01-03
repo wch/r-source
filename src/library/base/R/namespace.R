@@ -263,7 +263,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
             symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
                                                withRegistrationInfo = TRUE)
-            sapply(seq_along(symNames),
+            lapply(seq_along(symNames),
                     function(i) {
                         ## could vectorize this outside of the loop
                         ## and assign to different variable to
@@ -440,7 +440,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
             pClasses <- unique(pClasses)
             if( length(pClasses) ) {
-                good <- sapply(pClasses, methods:::isClass, where = ns)
+                good <- vapply(pClasses, methods:::isClass, NA, where = ns)
                 if( !any(good) )
                     warning(gettextf("exportClassPattern specified in NAMESPACE but no matching classes in package %s", sQuote(package)),
                             call. = FALSE, domain = NA)
@@ -448,7 +448,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
             if(length(expClasses)) {
                 missingClasses <-
-                    !sapply(expClasses, methods:::isClass, where = ns)
+                    !vapply(expClasses, methods:::isClass, NA, where = ns)
                 if(any(missingClasses))
                     stop(gettextf("in package %s classes %s were specified for export but not defined",
                                   sQuote(package),
@@ -938,12 +938,10 @@ namespaceExport <- function(ns, vars) {
         new <- makeImportExportNames(unique(vars))
         ## calling exists each time is too slow, so do two phases
         undef <- new[! new %in% .Internal(ls(ns, TRUE))]
-        if (length(undef)) { # avoid list result from sapply
-            undef <- undef[! sapply(undef, exists, envir = ns)]
-            if (length(undef)) {
-                undef <- do.call("paste", as.list(c(undef, sep = ", ")))
-                stop("undefined exports: ", undef)
-            }
+        undef <- undef[! vapply(undef, exists, NA, envir = ns)]
+        if (length(undef)) {
+            undef <- do.call("paste", as.list(c(undef, sep = ", ")))
+            stop("undefined exports: ", undef)
         }
         if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)
         addExports(ns, new)

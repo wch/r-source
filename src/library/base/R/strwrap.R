@@ -139,7 +139,7 @@ function(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 {
     if(is.list(x)) {
-        if((length(x) == 2L) && (diff(sapply(x, length)) == 0L)) {
+        if(length(x) == 2L && diff(vapply(x, length, 1L)) == 0L) {
             y <- x[[2L]]; x <- x[[1L]]
         }
         else

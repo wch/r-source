@@ -84,7 +84,7 @@ apply <- function(X, MARGIN, FUN, ...)
     if(!ans.list)
 	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     if(!ans.list && length(ans.names)) {
-        all.same <- sapply(ans, function(x) identical(names(x), ans.names))
+        all.same <- vapply(ans, function(x) identical(names(x), ans.names), NA)
         if (!all(all.same)) ans.names <- NULL
     }
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
@@ -98,7 +98,7 @@ apply <- function(X, MARGIN, FUN, ...)
         if(is.null(dn.ans)) dn.ans <- vector(mode="list", length(d.ans))
         dn.ans <- c(list(ans.names), dn.ans)
 	return(array(ans, c(len.a %/% d2, d.ans),
-                     if(!all(sapply(dn.ans, is.null))) dn.ans))
+		     if(!all(vapply(dn.ans, is.null, NA))) dn.ans))
     }
     return(ans)
 }

@@ -94,12 +94,9 @@ function(x, strict = TRUE)
                           "package_version")
 }
 
-is.package_version <-
-function(x)
-    inherits(x, "package_version")
+is.package_version <- function(x) inherits(x, "package_version")
 
-as.package_version <-
-function(x)
+as.package_version <- function(x)
     if(is.package_version(x)) x else package_version(x)
 
 ## R system versions must have exactly three integers.
@@ -129,16 +126,14 @@ function(x, base = NULL)
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
-    lens <- as.numeric(sapply(x, length))
+    lens <- vapply(x, length, 1L)
     ## We store the lengths so that we know when to stop when decoding.
     ## Alternatively, we need to be smart about trailing zeroes.  One
     ## approach is to increment all numbers in the version specs and
     ## base by 1, and when decoding only retain the non-zero entries and
     ## decrement by 1 one again.
-    x <- as.numeric(sapply(x,
-                           function(t)
-                           sum(t / base^seq.int(0, length.out =
-                                                length(t)))))
+    x <- vapply(x, function(t)
+		sum(t / base^seq.int(0, length.out = length(t))), 1.)
     structure(ifelse(lens > 0L, x, NA_real_),
               base = base, lens = lens, .classes = classes, names = nms)
 }
@@ -178,8 +173,7 @@ function(x, i, j)
     else
         lapply(unclass(x)[i], "[", j)
     ## Change sequences which are NULL or contains NAs to integer().
-    bad <- as.logical(sapply(y,
-                             function(t) is.null(t) || any(is.na(t))))
+    bad <- vapply(y, function(t) is.null(t) || any(is.na(t)), NA)
     if(any(bad))
         y[bad] <- rep.int(list(integer()), length(bad))
     class(y) <- class(x)
@@ -276,7 +270,7 @@ function(x, ...)
     y <- lapply(seq_along(x), function(i) x[i])
     names(y) <- nms
     y
-}    
+}
 
 c.numeric_version <-
 function(..., recursive = FALSE)
@@ -305,7 +299,7 @@ function(x, ...)
     x <- unclass(x)
     y <- rep.int(NA_character_, length(x))
     names(y) <- names(x)
-    ind <- as.integer(sapply(x, length)) > 0L
+    ind <- vapply(x, length, 1L) > 0L
     y[ind] <- unlist(lapply(x[ind], paste, collapse = "."))
     y
 }
@@ -349,7 +343,7 @@ function(x, name)
     name <- pmatch(name, c("major", "minor", "patchlevel"))
     x <- unclass(x)
     switch(name,
-           major = as.integer(sapply(x, "[", 1L)),
-           minor = as.integer(sapply(x, "[", 2L)),
-           patchlevel = as.integer(sapply(x, "[", 3L)))
+	   major = vapply(x, "[", 0L, 1L),
+	   minor = vapply(x, "[", 0L, 2L),
+	   patchlevel = vapply(x, "[", 0L, 3L))
 }
