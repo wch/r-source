@@ -151,6 +151,11 @@
       It has a new option \option{--install-args} to pass arguments to
       \command{R CMD INSTALL} for \option{--build} (but not when
       installing to rebuild vignettes).
+
+      \item \command{R CMD check} now also checks for filenames that are
+      case-insensitive matches to Windows' reserved file names with
+      extensions, such as \file{nul.Rd}, as these have caused problems
+      on some Windows systems.
     }
   }
 
@@ -221,6 +226,9 @@
       \item The \code{big.mark} argument to \code{prettyNum()},
       \code{format()}, etc. was inserted reversed if it was more than
       one character long.
+
+      \item \command{R CMD check} failed to check the filenames under
+      \file{man} for Windows' reserved names.
     }
   }
 }
