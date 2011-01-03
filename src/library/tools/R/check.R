@@ -220,7 +220,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         bad <- tolower(basename(allfiles))
         ## remove any extension(s) (see 'Writing R Extensions')
         bad <- sub("[.].*", "", bad)
-        bad <- grepl("^(con|prn|aux|clock$|nul|lpt[1-9]|com[1-9])$", bad)
+        bad <- grepl("^(con|prn|aux|clock[$]|nul|lpt[1-9]|com[1-9])$", bad)
         bad_files <- c(bad_files, allfiles[bad])
         if (length(bad_files)) {
             errorLog(Log)
