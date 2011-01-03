@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-21 14:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -227,6 +227,9 @@ msgstr "Ein Raster-Array muss genau 3 Dimensionen haben"
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Ein Rater-Array muss genau 3 oder 4 Ebenen haben"
+
+msgid "No valid indices"
+msgstr ""
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Operator hat für Rasterobjekte keine Bedeutung"

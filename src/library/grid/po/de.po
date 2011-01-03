@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
 "PO-Revision-Date: 2010-09-21 14:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -56,11 +56,11 @@ msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
 msgid "non-finite x or y in graphics path"
 msgstr "unendliches x oder y im Grafikpfad"
 
-#: grid.c:3270
+#: grid.c:3276
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:3356
+#: grid.c:3362
 msgid "Unable to clip to rotated rectangle"
 msgstr "Kann nicht auf das rotierte Rechteck zurechtschneiden"
 

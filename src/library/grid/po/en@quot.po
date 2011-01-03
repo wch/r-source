@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2010 The R Foundation
+# Copyright (C) 2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2010.
+# Automatically generated, 2011.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.12.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
+"PO-Revision-Date: 2011-01-03 16:13+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -74,11 +74,11 @@ msgstr "Non-finite control point in Xspline"
 msgid "non-finite x or y in graphics path"
 msgstr "non-finite x or y in graphics path"
 
-#: grid.c:3270
+#: grid.c:3276
 msgid "invalid plotting symbol"
 msgstr "invalid plotting symbol"
 
-#: grid.c:3356
+#: grid.c:3362
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
 "PO-Revision-Date: 2010-09-29 17:25+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -457,14 +457,14 @@ msgstr " %s 中に不正な 'family' パラメータ "
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ "
 
-#: devPS.c:8029 devPS.c:8188 devWindows.c:3646 devWindows.c:3650
-#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
-#: devWindows.c:3689
+#: devPS.c:8029 devPS.c:8188 devWindows.c:3647 devWindows.c:3651
+#: devWindows.c:3659 devWindows.c:3670 devWindows.c:3676 devWindows.c:3683
+#: devWindows.c:3690
 #, c-format
 msgid "invalid value of '%s'"
 msgstr " '%s' の値が不正です "
 
-#: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3709
+#: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3710
 #, c-format
 msgid "unable to start %s() device"
 msgstr "デバイス %s() を開始できませんでした "
@@ -599,48 +599,48 @@ msgstr " クリップボードメタファイルは一つの図だけを保管�
 msgid "metafile '%s' could not be created"
 msgstr " メタファイル '%s' を作成できませんでした "
 
-#: devWindows.c:3092 devWindows.c:3733
+#: devWindows.c:3093 devWindows.c:3734
 msgid "R Graphics"
 msgstr " R グラフィックス "
 
-#: devWindows.c:3347
+#: devWindows.c:3348
 msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません "
 
-#: devWindows.c:3368
+#: devWindows.c:3369
 msgid "invalid device number in 'savePlot'"
 msgstr " savePlot　中に不正なデバイス番号 "
 
-#: devWindows.c:3370
+#: devWindows.c:3371
 msgid "invalid device in 'savePlot'"
 msgstr " savePlot 中に不正なデバイス "
 
-#: devWindows.c:3373
+#: devWindows.c:3374
 msgid "invalid filename argument in savePlot"
 msgstr " savePlot 中に不正なファイル名引数 "
 
-#: devWindows.c:3378
+#: devWindows.c:3379
 msgid "invalid type argument in 'savePlot'"
 msgstr " savePlot　に不正な型の引数 "
 
-#: devWindows.c:3405
+#: devWindows.c:3406
 msgid "unknown type in savePlot"
 msgstr " savePlot 中に未知の型 "
 
-#: devWindows.c:3488 devWindows.c:3524 devWindows.c:3556 devWindows.c:3591
-#: devWindows.c:3616
+#: devWindows.c:3489 devWindows.c:3525 devWindows.c:3557 devWindows.c:3592
+#: devWindows.c:3617
 msgid "processing of the plot ran out of memory"
 msgstr " プロット中にメモリ不足になりました "
 
-#: devWindows.c:3504 devWindows.c:3537 devWindows.c:3570 devWindows.c:3603
+#: devWindows.c:3505 devWindows.c:3538 devWindows.c:3571 devWindows.c:3604
 msgid "Impossible to load Rbitmap.dll"
 msgstr " Rbitmap.dll をロードできません "
 
-#: devWindows.c:3576
+#: devWindows.c:3577
 msgid "Impossible to open "
 msgstr " オープンできません "
 
-#: devWindows.c:3641
+#: devWindows.c:3642
 msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 

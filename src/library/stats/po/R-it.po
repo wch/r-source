@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -46,7 +46,8 @@ msgstr "la serie storica non ha o ha meno di 3 periodi"
 msgid "the series is entirely NA"
 msgstr "la serie è interamente composta di NA"
 
-msgid "frequency must be a positive integer for BSM"
+#, fuzzy
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "frequency deve essere un intero positivo per BSM"
 
 msgid "only implemented for univariate time series"
@@ -2013,6 +2014,10 @@ msgstr "'ref' deve essere un livello esistente"
 #, fuzzy
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d deve essere in 1:%d"
+
+#, fuzzy
+msgid "'sep' must be a character string"
+msgstr "'file' deve essere una stringa di caratteri o una connessione"
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr ""

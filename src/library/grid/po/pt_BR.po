@@ -2,95 +2,95 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2006-04-16 19:17-0300\n"
-"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
+"PO-Revision-Date: 2010-11-07 13:47+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: grid.c:214
 msgid "Cannot clip to rotated viewport"
-msgstr "N„o È possÌvel cortar sobre uma viewport rotacionada"
+msgstr "N√£o √© poss√≠vel cortar sobre uma viewport rotacionada"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
-"N„o È possÌvel mostrar a viewport de nÌvel m·ximo (saidas gr·ficas e grid "
+"N√£o √© poss√≠vel mostrar a viewport de n√≠vel m√°ximo (saidas gr√°ficas e grid "
 "misturadas?) "
 
 #: grid.c:952
 msgid "attempt to plot on null device"
-msgstr "tentativa de fazer um gr·fico no dispositivo nulo"
+msgstr "tentativa de fazer um gr√°fico no dispositivo nulo"
 
 #: grid.c:1232
 msgid "There is no layout defined"
-msgstr "N„o h· layout definido"
+msgstr "N√£o h√° layout definido"
 
 #: grid.c:1452
 msgid "Polygon edge not found (zero-width or zero-height?)"
-msgstr "Limite do polÌgono n„o encontrado (largura ou altura zero?)"
+msgstr "Limite do pol√≠gono n√£o encontrado (largura ou altura zero?)"
 
 #: grid.c:1461
 msgid "Polygon edge not found"
-msgstr "Limite do polÌgono n„o encontrado"
+msgstr "Limite do pol√≠gono n√£o encontrado"
 
 #: grid.c:1601
 msgid "Require at least two points to draw arrow"
-msgstr "Pelo menos dois pontos s„o necess·rios para desenhar uma seta"
+msgstr "Pelo menos dois pontos s√£o necess√°rios para desenhar uma seta"
 
 #: grid.c:1917
 msgid "Non-finite control point in Xspline"
-msgstr "Ponto de controle n„o-finito em Xspline"
+msgstr "Ponto de controle n√£o-finito em Xspline"
 
 #: grid.c:2786
 msgid "non-finite x or y in graphics path"
-msgstr ""
+msgstr "valores n√£o-finitos de x ou y no caminho do gr√°fico"
 
-#: grid.c:3270
-#, fuzzy
+#: grid.c:3276
 msgid "invalid plotting symbol"
-msgstr "layout.pos.col inv·lido"
+msgstr "simbolo para gr√°fico inv√°lido"
 
-#: grid.c:3356
+#: grid.c:3362
 msgid "Unable to clip to rotated rectangle"
-msgstr "N„o È possÌvel cortar sobre um ret‚ngulo rotacionado"
+msgstr "N√£o √© poss√≠vel cortar sobre um ret√¢ngulo rotacionado"
 
 #: layout.c:519
 msgid "invalid layout.pos.row"
-msgstr "layout.pos.row inv·lido"
+msgstr "layout.pos.row inv√°lido"
 
 #: layout.c:523
 msgid "invalid layout.pos.col"
-msgstr "layout.pos.col inv·lido"
+msgstr "layout.pos.col inv√°lido"
 
 #: matrix.c:49
 msgid "singular transformation matrix"
-msgstr "matriz de transformaÁ„o singular"
+msgstr "matriz de transforma√ß√£o singular"
 
 #: state.c:169
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
-"N„o foi possÌvel guardar o estado do grid. Muitos dispositivos abertos?"
+"N√£o foi poss√≠vel guardar o estado do grid. Muitos dispositivos abertos?"
 
 #: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
 msgid "Unimplemented unit function"
-msgstr "FunÁ„o unidade n„o implementada"
+msgstr "Fun√ß√£o unidade n√£o implementada"
 
 #: unit.c:831 unit.c:1577
 msgid "Illegal unit or unit not yet implemented"
-msgstr "Unidade inv·lida ou unidade ainda n„o implementada"
+msgstr "Unidade inv√°lida ou unidade ainda n√£o implementada"
 
 #: unit.c:1732
 msgid "Invalid unit"
-msgstr "Unidade inv·lida"
+msgstr "Unidade inv√°lida"
 
 #: unit.c:1748
 msgid "Units must be character"
@@ -102,7 +102,7 @@ msgstr "Unidades devem ter comprimento > 0"
 
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
-msgstr "LocalizaÁ„o e/ou tamanhos n„o finitos para viewport"
+msgstr "Localiza√ß√£o e/ou tamanhos n√£o finitos para viewport"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
-#~ msgstr "Raio de cÌrculo inv·lido (deve ser n„o negativo)"
+#~ msgstr "Raio de c√≠rculo inv√°lido (deve ser n√£o negativo)"

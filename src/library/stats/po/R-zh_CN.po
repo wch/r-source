@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -43,7 +43,8 @@ msgstr "時間序列的周期不能小于二"
 msgid "the series is entirely NA"
 msgstr "时间序列里所有的值都是NA"
 
-msgid "frequency must be a positive integer for BSM"
+#, fuzzy
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "用BSM时頻率必需是正整数"
 
 msgid "only implemented for univariate time series"
@@ -1882,6 +1883,10 @@ msgstr "'ref'必需是存在的层次"
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d必需在1L:%d里"
 
+#, fuzzy
+msgid "'sep' must be a character string"
+msgstr "'file'必需是字符串或链结"
+
 msgid "Failed to guess time-varying variables from their names"
 msgstr "没有能够从它们的名字里来猜测时变参数"
 
@@ -2396,4 +2401,3 @@ msgstr[0] "参数%s没有在模型公式里出现过"
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
-

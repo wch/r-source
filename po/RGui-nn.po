@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39+0100\n"
+"POT-Creation-Date: 2011-01-03 16:10+0000\n"
 "PO-Revision-Date: 2010-09-26 10:36+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -18,24 +18,24 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: console.c:1146 console.c:1188
+#: console.c:1157 console.c:1199
 msgid "Not enough memory"
 msgstr "Ikkje nok minne"
 
-#: console.c:1235 console.c:1239
+#: console.c:1246 console.c:1250
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Ikkje nok minne: tekst ikkje kopiert til utklippstavla"
 
-#: console.c:1275 ../extra/graphapp/clipboard.c:53
+#: console.c:1286 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Klarte ikkje opna utklippstavla"
 
-#: console.c:1893
+#: console.c:1904
 msgid "Insufficient memory. Please close the console"
 msgstr "Ikkje nok minne. Lukk konsollen."
 
-#: console.c:1948 console.c:2001 preferences.c:332
+#: console.c:1959 console.c:2012 preferences.c:333
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -44,24 +44,24 @@ msgstr ""
 "Fann ikkje skrifta «%s-%d-%d».\n"
 "Brukar system-skrifta."
 
-#: console.c:2106
+#: console.c:2117
 msgid "Save selection to"
 msgstr "Lagra utvalet til"
 
-#: console.c:2108
+#: console.c:2119
 msgid "Save console contents to"
 msgstr "Lagra konsollinhaldet til"
 
-#: console.c:2207
+#: console.c:2218
 msgid "Scrolling.\n"
 msgstr "Rulling.\n"
 
-#: console.c:2208
+#: console.c:2219
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr ""
 "  Tastatur: Page Up, Page Down, Ctrl + piltastar, Ctrl + Home, Ctrl + End,\n"
 
-#: console.c:2209
+#: console.c:2220
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -69,74 +69,74 @@ msgstr ""
 "  Mus: Bruk rullefelta.\n"
 "\n"
 
-#: console.c:2210
+#: console.c:2221
 msgid "Editing.\n"
 msgstr "Redigering.\n"
 
-#: console.c:2211
+#: console.c:2222
 msgid "  Moving the cursor: \n"
 msgstr "  Flytting av skrivemerket: \n"
 
-#: console.c:2212
+#: console.c:2223
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     «Pil venstre» eller «Ctrl + B»: flytt eitt teikn bakover;\n"
 
-#: console.c:2213
+#: console.c:2224
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     «Pil høgre» eller «Ctrl + F»: flytt eitt teikn framover;\n"
 
-#: console.c:2214
+#: console.c:2225
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     «Home» eller «Ctrl + A»: gå til starten av linja;\n"
 
-#: console.c:2215
+#: console.c:2226
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     «End» eller «Ctrl + E»: gå til slutten av linja;\n"
 
-#: console.c:2216
+#: console.c:2227
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Loggen: «Pil opp» og «Pil ned», eller «Ctrl + P» og «Ctrl + N»\n"
 
-#: console.c:2217
+#: console.c:2228
 msgid "  Deleting:\n"
 msgstr "  Sletting:\n"
 
-#: console.c:2218
+#: console.c:2229
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     «Delete» eller «Ctrl + D»: slett gjeldande teikn eller utval;\n"
 
-#: console.c:2219
+#: console.c:2230
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     «Rettetast»: slett førre teikn;\n"
 
-#: console.c:2220
+#: console.c:2231
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     «Ctrl + Delete» eller «Ctrl + K»: slett tekst frå gjeldande teikn til "
 "slutten av linja.\n"
 
-#: console.c:2221
+#: console.c:2232
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     «Ctrl + U»: Slett all teksten frå den gjeldande linja.\n"
 
-#: console.c:2222
+#: console.c:2233
 msgid "  Copy and paste.\n"
 msgstr "  Kopiering og innliming.\n"
 
-#: console.c:2223
+#: console.c:2234
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr "     Bruk musa (med venstre museknapp inne) for å merkje teksten.\n"
 
-#: console.c:2224
+#: console.c:2235
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Bruk «Shift + Delete» eller «Ctrl + C» for kopiera utvalet til "
 "utklippstavla, og\n"
 
-#: console.c:2225
+#: console.c:2236
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -144,29 +144,29 @@ msgstr ""
 "     «Shift + Insert», «Ctrl + V» eller «Ctrl +Y» for å lima inn innhaldet frå "
 "utklippstavla\n"
 
-#: console.c:2226
+#: console.c:2237
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     til konsollen, «Ctrl + X» først kopiera og så lima inn\n"
 
-#: console.c:2227
+#: console.c:2238
 msgid "  Misc:\n"
 msgstr "  Ymse:\n"
 
-#: console.c:2228
+#: console.c:2239
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     «Ctrl + L»: tøm konsollen.\n"
 
-#: console.c:2229
+#: console.c:2240
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     « Ctrl + O» eller «Insert»: slå på/av overskrivingsmodus (av som "
 "standard).\n"
 
-#: console.c:2230
+#: console.c:2241
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     «Ctrl +T»: Byt det gjeldande teiknet med det til venstre.\n"
 
-#: console.c:2231
+#: console.c:2242
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -174,7 +174,7 @@ msgstr ""
 "\n"
 "Merk: Konsollen vert berre oppdatert når han treng inndata.\n"
 
-#: console.c:2232
+#: console.c:2243
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -182,7 +182,7 @@ msgstr ""
 "  Bruk «Ctrl + W» for å slå funksjonen av eller på.\n"
 "\n"
 
-#: console.c:2233
+#: console.c:2244
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -190,7 +190,7 @@ msgstr ""
 "Bruk «Escape» for å stoppa skriptkøyringa.\n"
 "\n"
 
-#: console.c:2234
+#: console.c:2245
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -198,11 +198,11 @@ msgstr ""
 "Bruk «Tab» for å autofullføra det gjeldande ordet.\n"
 "\n"
 
-#: console.c:2235
+#: console.c:2246
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Du kan bruka dei vanlige Windows-snarvegane for å byta til\n"
 
-#: console.c:2236
+#: console.c:2247
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "grafikkeininga («Ctrl + Tab» eller «Ctrl + F6» i MDI, og «Alt + Tab» i SDI)"
@@ -561,7 +561,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: extra.c:2103 rui.c:1234
+#: extra.c:2106 rui.c:1234
 msgid "Select file"
 msgstr "Vel fil"
 
@@ -597,7 +597,7 @@ msgstr "Vis"
 msgid "Unable to create pager window"
 msgstr "Klarte ikkje laga nytt lesevindauge"
 
-#: preferences.c:301
+#: preferences.c:302
 msgid ""
 "The overall console properties cannot be changed\n"
 "on a running console.\n"
@@ -610,7 +610,7 @@ msgstr ""
 "Lagra innstillingane, og start programmet på nytt\n"
 "for å ta dei i bruk.\n"
 
-#: preferences.c:305
+#: preferences.c:306
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
@@ -622,11 +622,11 @@ msgstr ""
 "\n"
 "Lagra innstillingane, og start programmet på nytt.\n"
 
-#: preferences.c:370
+#: preferences.c:371
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr "Endringar i lesevindaugestorleiken vil berre gjelda nye lesevindauge"
 
-#: preferences.c:376
+#: preferences.c:377
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -634,20 +634,20 @@ msgstr ""
 "Ikkje endra lesevindaugestorleiken om du har\n"
 "nokon lesevindauge opne. Vil du halda fram?"
 
-#: preferences.c:409
+#: preferences.c:410
 msgid "Select directory for file 'Rconsole'"
 msgstr "Vel mappe for fila «Rconsole»"
 
-#: preferences.c:502
+#: preferences.c:503
 msgid "Select 'Rconsole' file"
 msgstr "Vel «Rconsole»-fil"
 
-#: preferences.c:687
+#: preferences.c:688
 #, c-format
 msgid "Ignored '%s' at line %d of file %s"
 msgstr "Ignorerte «%s» på linje %d i fila «%s»"
 
-#: preferences.c:788
+#: preferences.c:789
 msgid "Rgui Configuration Editor"
 msgstr "Redigering av Rgui-innstillingar"
 
@@ -961,7 +961,7 @@ msgstr "fann ikkje menyen"
 msgid "menu or item does not exist"
 msgstr "menyen eller elementet finst ikkje"
 
-#: system.c:439
+#: system.c:441
 msgid "Save workspace image?"
 msgstr "Vil du lagra arbeidsområdet?"
 
@@ -1029,7 +1029,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafile"
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:3395
+#: ../library/grDevices/src/devWindows.c:3396
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "for lang filadresse: maksgrensa er på 512 byte"
 
@@ -1174,14 +1174,14 @@ msgstr "Lagra som metafil …"
 msgid "Save as postscript..."
 msgstr "Lagra som PostScript …"
 
-#: ../library/grDevices/src/devWindows.c:3116
+#: ../library/grDevices/src/devWindows.c:3117
 msgid "Locator is active"
 msgstr "Posisjonslesar køyrer"
 
-#: ../library/grDevices/src/devWindows.c:3745
+#: ../library/grDevices/src/devWindows.c:3746
 msgid "Waiting to confirm page change..."
 msgstr "Ventar på stadfesting av sideskifte …"
 
-#: ../library/grDevices/src/devWindows.c:3757
+#: ../library/grDevices/src/devWindows.c:3758
 msgid "Click or hit ENTER for next page"
 msgstr "Klikk eller trykk «Enter» for neste side"

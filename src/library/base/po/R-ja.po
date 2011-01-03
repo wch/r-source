@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:49\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1399,6 +1399,9 @@ msgstr "エンコーディング %s が選択されました "
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr " 'chdir = TRUE' は URL に対しては意味がありません "
 
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr " 現在のディレクトリが未知なので 'chdir'  できません "
+
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr " 'chdir = TRUE' はコネクションに対しては意味がありません "
 
@@ -1651,9 +1654,6 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
-
-#~ msgid "cannot 'chdir' as current directory is unknown"
-#~ msgstr " 現在のディレクトリが未知なので 'chdir'  できません "
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr " 共用ライブラリ '%s' が見付かりません "

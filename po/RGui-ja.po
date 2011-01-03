@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39+0100\n"
+"POT-Creation-Date: 2011-01-03 16:10+0000\n"
 "PO-Revision-Date: 2010-09-29 06:37+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -16,24 +16,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit \n"
 "X-Generator: Pootle 1.1.0 \n"
 
-#: console.c:1146 console.c:1188
+#: console.c:1157 console.c:1199
 msgid "Not enough memory"
 msgstr " メモリが不足しています "
 
-#: console.c:1235 console.c:1239
+#: console.c:1246 console.c:1250
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr " メモリ不足: テキストをクリップボードにコピーすることができません "
 
-#: console.c:1275 ../extra/graphapp/clipboard.c:53
+#: console.c:1286 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr " クリップボードを開くことができません "
 
-#: console.c:1893
+#: console.c:1904
 msgid "Insufficient memory. Please close the console"
 msgstr " メモリが不足しています.コンソールを閉じてください "
 
-#: console.c:1948 console.c:2001 preferences.c:332
+#: console.c:1959 console.c:2012 preferences.c:333
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -42,23 +42,23 @@ msgstr ""
 " フォント %s-%d-%d  が見つかりません \n"
 " システムに用意されているフォントを使います "
 
-#: console.c:2106
+#: console.c:2117
 msgid "Save selection to"
 msgstr " 選択を以下にセーブします "
 
-#: console.c:2108
+#: console.c:2119
 msgid "Save console contents to"
 msgstr " コンソールの内容を以下に保存します "
 
-#: console.c:2207
+#: console.c:2218
 msgid "Scrolling.\n"
 msgstr " スクロール. \n"
 
-#: console.c:2208
+#: console.c:2219
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "   キーボード: PgUp, PgDown, Ctrl+矢印, Ctrl+Home, Ctrl+End, \n"
 
-#: console.c:2209
+#: console.c:2220
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -66,76 +66,76 @@ msgstr ""
 "   マウス: スクロールバーを使います. \n"
 " \n"
 
-#: console.c:2210
+#: console.c:2221
 msgid "Editing.\n"
 msgstr " 編集. \n"
 
-#: console.c:2211
+#: console.c:2222
 msgid "  Moving the cursor: \n"
 msgstr "   カーソル移動:  \n"
 
-#: console.c:2212
+#: console.c:2223
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "      左矢印 または Ctrl+B: 1文字戻る; \n"
 
-#: console.c:2213
+#: console.c:2224
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "      右矢印 または Ctrl+F: 1文字進む; \n"
 
-#: console.c:2214
+#: console.c:2225
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "      Home または Ctrl+A: 行頭に移動; \n"
 
-#: console.c:2215
+#: console.c:2226
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "      End または Ctrl+E: 行末に移動; \n"
 
-#: console.c:2216
+#: console.c:2227
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "   履歴: 上矢印,下矢印,Ctrl+P, Ctrl+N \n"
 
-#: console.c:2217
+#: console.c:2228
 msgid "  Deleting:\n"
 msgstr "   消去: \n"
 
-#: console.c:2218
+#: console.c:2229
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "      Delete または Ctrl+D: 現在選択している文字を消去; \n"
 
-#: console.c:2219
+#: console.c:2230
 msgid "     Backspace: delete preceding character;\n"
 msgstr "      Backspace: 1つ前の文字を消去; \n"
 
-#: console.c:2220
+#: console.c:2231
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "      Ctrl+Del または Ctrl+K: 現在選択している文字から行末までの文字を全て消"
 "去. \n"
 
-#: console.c:2221
+#: console.c:2232
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "      Ctrl+U: 現在の行のテキストを全て消去. \n"
 
-#: console.c:2222
+#: console.c:2233
 msgid "  Copy and paste.\n"
 msgstr "   コピー＆ペースト. \n"
 
-#: console.c:2223
+#: console.c:2234
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "      マウスの左ボタンを押しながらマウスを使って文字列をマーク（選択）しま"
 "す. \n"
 
-#: console.c:2224
+#: console.c:2235
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "      Shift+Del (または Ctrl+C) を使って,マーク（選択）した文字列をクリップ"
 "ボードにコピーし, \n"
 
-#: console.c:2225
+#: console.c:2236
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -143,29 +143,29 @@ msgstr ""
 "      Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容（もしあ"
 "れば）をペーストして \n"
 
-#: console.c:2226
+#: console.c:2237
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 "      ,コンソールへ出力します,また Ctrl+X でコピーした後にペーストしても構い"
 "ません \n"
 
-#: console.c:2227
+#: console.c:2238
 msgid "  Misc:\n"
 msgstr "   その他: \n"
 
-#: console.c:2228
+#: console.c:2239
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "      Ctrl+L: コンソール画面を全消去します. \n"
 
-#: console.c:2229
+#: console.c:2240
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "      Ctrl+O: 上書きモードを切り替えます: 最初はオフです. \n"
 
-#: console.c:2230
+#: console.c:2241
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "      Ctrl+T: 現在の文字と1文字前の文字を入れ替えます. \n"
 
-#: console.c:2231
+#: console.c:2242
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -173,7 +173,7 @@ msgstr ""
 "\n"
 " 注意: 何らかの入力が要求された場合にのみ,コンソールが更新されます. \n"
 
-#: console.c:2232
+#: console.c:2243
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -181,7 +181,7 @@ msgstr ""
 "   Ctrl+W で現在の機能の off/on を切り替えます. \n"
 " \n"
 
-#: console.c:2233
+#: console.c:2244
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -189,7 +189,7 @@ msgstr ""
 " ESC で計算を中断します. \n"
 " \n"
 
-#: console.c:2234
+#: console.c:2245
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -197,11 +197,11 @@ msgstr ""
 " 'rcompgen'パッケージがインストールされていれば, TABで補完を開始します. \n"
 " \n"
 
-#: console.c:2235
+#: console.c:2246
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr " 標準ウインドウズ・ホットキーを使い以下へ切りかえることができます \n"
 
-#: console.c:2236
+#: console.c:2247
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 " グラフィックスデバイス (MDI 中の Ctrl+Tab または Ctrl+F6, SDI 中の Alt+Tab) "
@@ -564,7 +564,7 @@ msgstr " OK "
 msgid "Cancel"
 msgstr " キャンセル "
 
-#: extra.c:2103 rui.c:1234
+#: extra.c:2106 rui.c:1234
 msgid "Select file"
 msgstr " ファイルを選択 "
 
@@ -600,7 +600,7 @@ msgstr " 閲覧 "
 msgid "Unable to create pager window"
 msgstr " ページャ用のウインドウを作成することができません "
 
-#: preferences.c:301
+#: preferences.c:302
 msgid ""
 "The overall console properties cannot be changed\n"
 "on a running console.\n"
@@ -612,7 +612,7 @@ msgstr ""
 " \n"
 " これらを適用するためには、設定を保存してから、Rguiを再実行して下さい。 \n"
 
-#: preferences.c:305
+#: preferences.c:306
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
@@ -624,11 +624,11 @@ msgstr ""
 " \n"
 " 変更を適用するには、設定を保存してRguiを再実行してください。 \n"
 
-#: preferences.c:370
+#: preferences.c:371
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr " ページャーサイズの変更は、オープン済みのページャーに影響をあたえない "
 
-#: preferences.c:376
+#: preferences.c:377
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -636,20 +636,20 @@ msgstr ""
 " ページャを開いている間に、ページャのタイプを変えてはいけません \n"
 " 続行しますか? "
 
-#: preferences.c:409
+#: preferences.c:410
 msgid "Select directory for file 'Rconsole'"
 msgstr " ファイル 'Rconsole' 用のディレクトリを選択 "
 
-#: preferences.c:502
+#: preferences.c:503
 msgid "Select 'Rconsole' file"
 msgstr " ファイル 'Rconsole' を選択 "
 
-#: preferences.c:687
+#: preferences.c:688
 #, c-format
 msgid "Ignored '%s' at line %d of file %s"
 msgstr " ファイル %3$s の %2$d 行目にある '%1$s' を無視しました "
 
-#: preferences.c:788
+#: preferences.c:789
 msgid "Rgui Configuration Editor"
 msgstr " Rgui設定エディター "
 
@@ -963,7 +963,7 @@ msgstr " メニューが見つかりません "
 msgid "menu or item does not exist"
 msgstr " メニューまたはアイテムが存在しません "
 
-#: system.c:439
+#: system.c:441
 msgid "Save workspace image?"
 msgstr " 作業スペースを保存しますか? "
 
@@ -1032,7 +1032,7 @@ msgid "Enhanced metafiles"
 msgstr " Enhanced metafiles "
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:3395
+#: ../library/grDevices/src/devWindows.c:3396
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr " 選択されたファイルパスが長すぎます: 512 バイトまでです "
 
@@ -1177,15 +1177,15 @@ msgstr " メタファイルに保存... "
 msgid "Save as postscript..."
 msgstr " ポストスクリプトに保存... "
 
-#: ../library/grDevices/src/devWindows.c:3116
+#: ../library/grDevices/src/devWindows.c:3117
 msgid "Locator is active"
 msgstr " Locator はアクティブです "
 
-#: ../library/grDevices/src/devWindows.c:3745
+#: ../library/grDevices/src/devWindows.c:3746
 msgid "Waiting to confirm page change..."
 msgstr " ページ変更を確認するまで待機中... "
 
-#: ../library/grDevices/src/devWindows.c:3757
+#: ../library/grDevices/src/devWindows.c:3758
 msgid "Click or hit ENTER for next page"
 msgstr " クリックまたは ENTER キーを押すと次のページに移ります "
 

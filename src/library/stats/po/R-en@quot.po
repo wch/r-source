@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.12.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
-"PO-Revision-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
+"PO-Revision-Date: 2011-01-03 16:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -60,8 +60,8 @@ msgstr "time series has no or less than 2 periods"
 msgid "the series is entirely NA"
 msgstr "the series is entirely NA"
 
-msgid "frequency must be a positive integer for BSM"
-msgstr "frequency must be a positive integer for BSM"
+msgid "frequency must be a positive integer >= 2 for BSM"
+msgstr "frequency must be a positive integer >= 2 for BSM"
 
 msgid "only implemented for univariate time series"
 msgstr "only implemented for univariate time series"
@@ -1917,6 +1917,9 @@ msgstr "‘ref’ must be an existing level"
 
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d must be in 1L:%d"
+
+msgid "'sep' must be a character string"
+msgstr "‘sep’ must be a character string"
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr "Failed to guess time-varying variables from their names"

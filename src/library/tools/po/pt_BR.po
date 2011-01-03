@@ -2,19 +2,20 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-11-12 09:44+0000\n"
-"PO-Revision-Date: 2005-11-05 16:51-0200\n"
-"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
+"PO-Revision-Date: 2010-11-07 13:48+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -27,8 +28,8 @@ msgstr "md5 falhou no arquivo '%s'"
 
 #: text.c:65
 msgid "invalid argument type"
-msgstr "tipo de argumento inv�lido"
+msgstr "tipo de argumento inválido"
 
 #: text.c:189 text.c:208
 msgid "out of memory"
-msgstr ""
+msgstr "falta de memória"

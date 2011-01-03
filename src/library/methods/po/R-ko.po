@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-27 09:37\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -49,6 +49,12 @@ msgid "Cannot specify matrix() arguments when specifying .Data"
 msgstr ""
 
 msgid "Cannot specify array() arguments when specifying .Data"
+msgstr ""
+
+msgid "Can't have more than one unnamed argument as environment"
+msgstr ""
+
+msgid "Unnamed argument to new() must be an environment for the new object"
 msgstr ""
 
 #, fuzzy
@@ -1622,6 +1628,24 @@ msgid ""
 msgstr ""
 
 msgid ""
+"Method %s from class %s was not processed into a class method until being "
+"installed.  Possible corruption of the methods in the class."
+msgstr ""
+
+msgid ""
+"a call to superClass() is in the method \"%s\" but there is no superclass "
+"definition of this method for class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a reference class"
+msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
+
+#, fuzzy
+msgid "\"%s\" is not a field in class \"%s\""
+msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
+
+msgid ""
 "The class of field \"%s\" in the object is not compatible with the desired "
 "class \"%s\" in the target"
 msgstr ""
@@ -1641,50 +1665,28 @@ msgid "\"%s\" is not one of the reference super classes for this object"
 msgstr "%s의 것은 요소명 중 하나가 아닙니다"
 
 msgid ""
-"Method %s from class %s was not processed into a class method until being "
-"installed.  Possible corruption of the methods in the class."
-msgstr ""
-
-msgid ""
-"a call to superClass() is in the method \"%s\" but there is no superclass "
-"definition of this method for class \"%s\""
-msgstr ""
-
-#, fuzzy
-msgid "\"%s\" is not a reference class"
-msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
-
-#, fuzzy
-msgid "\"%s\" is not a field in class \"%s\""
-msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
-
-msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
 msgstr ""
 
 #, fuzzy
-msgid "Arguments to methods() must be named, or one named list"
-msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
-
-msgid "must give named list of refdefined fields"
-msgstr ""
-
-msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
-msgstr ""
+msgid "\"%s\" is not a field in this class"
+msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
 #, fuzzy
-msgid ""
-"replacement for field \"%s\" must be an accessor function: got an object of "
-"class \"%s\""
-msgstr ""
-"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
-"스 \"%s\"\n"
-"의 오브젝트를 얻었습니다"
+msgid "Arguments to methods() must be named, or one named list"
+msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
 "The class definition follows"
+msgstr ""
+
+msgid "Arguments must all be character string names of fieds"
+msgstr ""
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 msgid ""
@@ -1696,13 +1698,6 @@ msgid "Field \""
 msgstr ""
 
 msgid "\" is read-only"
-msgstr ""
-
-msgid "Arguments must all be character string names of fieds"
-msgstr ""
-
-msgid ""
-"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
@@ -1755,6 +1750,12 @@ msgid "(class \"%s\")"
 msgstr ""
 
 msgid "for method %s()"
+msgstr ""
+
+msgid ""
+"Local assignment to field name (%s) will not change the field: Did you mean "
+"to use \"<<-\"? \n"
+"( in method %s for class %s)"
 msgstr ""
 
 #, fuzzy
@@ -1935,6 +1936,15 @@ msgstr ""
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "replacement for field \"%s\" must be an accessor function: got an object "
+#~ "of class \"%s\""
+#~ msgstr ""
+#~ "인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클"
+#~ "래스 \"%s\"\n"
+#~ "의 오브젝트를 얻었습니다"
 
 #, fuzzy
 #~ msgid ""

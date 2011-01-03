@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-27 09:37\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-22 13:26+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -64,6 +64,12 @@ msgstr ""
 
 msgid "Cannot specify array() arguments when specifying .Data"
 msgstr "Kann array() Argumente nicht spezifizieren, wenn .Data spezifiert wir"
+
+msgid "Can't have more than one unnamed argument as environment"
+msgstr ""
+
+msgid "Unnamed argument to new() must be an environment for the new object"
+msgstr ""
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -1634,23 +1640,6 @@ msgstr ""
 "Referenzklasse \"%s\""
 
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class \"%s\" in the target"
-msgstr ""
-"Die Klasse des Feldes \"%s\" im Objekt ist nicht kompatibel mit der "
-"gewünschten \n"
-"Klasse \"%s\" im Ziel"
-
-msgid "\"%s\" is not a defined class in this environment"
-msgstr "Klasse \"%s\" ist in dieser Umgebung nicht definiert"
-
-msgid "Invalid Class argument:  should be a single string"
-msgstr "Ungültige Klassenargument: sollte eine Zeichenkette sein"
-
-msgid "\"%s\" is not one of the reference super classes for this object"
-msgstr "\"%s\" ist keine der Referenzsuperklassen für dieses Objekt"
-
-msgid ""
 "Method %s from class %s was not processed into a class method until being "
 "installed.  Possible corruption of the methods in the class."
 msgstr ""
@@ -1673,6 +1662,23 @@ msgid "\"%s\" is not a field in class \"%s\""
 msgstr "\"%s\" ist kein Feld in Klasse \"%s\""
 
 msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+"Die Klasse des Feldes \"%s\" im Objekt ist nicht kompatibel mit der "
+"gewünschten \n"
+"Klasse \"%s\" im Ziel"
+
+msgid "\"%s\" is not a defined class in this environment"
+msgstr "Klasse \"%s\" ist in dieser Umgebung nicht definiert"
+
+msgid "Invalid Class argument:  should be a single string"
+msgstr "Ungültige Klassenargument: sollte eine Zeichenkette sein"
+
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr "\"%s\" ist keine der Referenzsuperklassen für dieses Objekt"
+
+msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
 msgstr ""
@@ -1680,23 +1686,13 @@ msgstr ""
 "anderen\n"
 "Methode aufgerufen werden"
 
+#, fuzzy
+msgid "\"%s\" is not a field in this class"
+msgstr "\"%s\" ist kein Feld in Klasse \"%s\""
+
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 "Argumente für methods() müssen benannt sein, oder eine eine benannte Liste"
-
-msgid "must give named list of refdefined fields"
-msgstr ""
-
-msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
-msgstr ""
-
-#, fuzzy
-msgid ""
-"replacement for field \"%s\" must be an accessor function: got an object of "
-"class \"%s\""
-msgstr ""
-"Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
-"Klasse \"%s\""
 
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
@@ -1704,6 +1700,14 @@ msgid ""
 msgstr ""
 "Punkt \"%s\" ist kein Methodenname in der Klasse \"%s\".\n"
 "Die Klassendefinition folgt."
+
+#, fuzzy
+msgid "Arguments must all be character string names of fieds"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
+msgstr ""
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1717,14 +1721,6 @@ msgid "Field \""
 msgstr ""
 
 msgid "\" is read-only"
-msgstr ""
-
-#, fuzzy
-msgid "Arguments must all be character string names of fieds"
-msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
-
-msgid ""
-"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
 
 #, fuzzy
@@ -1774,6 +1770,12 @@ msgstr "(Klasse \"%s\")"
 
 msgid "for method %s()"
 msgstr "für Methode %s()"
+
+msgid ""
+"Local assignment to field name (%s) will not change the field: Did you mean "
+"to use \"<<-\"? \n"
+"( in method %s for class %s)"
+msgstr ""
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1966,6 +1968,14 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "keine Definition der Klasse %s"
 msgstr[1] "keine Definition der Klassen %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "replacement for field \"%s\" must be an accessor function: got an object "
+#~ "of class \"%s\""
+#~ msgstr ""
+#~ "Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
+#~ "Klasse \"%s\""
 
 #~ msgid ""
 #~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "

@@ -2,110 +2,110 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2005-11-05 16:50-0200\n"
-"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
+"POT-Creation-Date: 2011-01-03 16:14\n"
+"PO-Revision-Date: 2010-11-15 18:57+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 msgid "cannot handle object of mode '%s'"
-msgstr "n�o � poss�vel lidar com objeto de modo '%s'"
+msgstr "não é possível lidar com objeto de modo '%s'"
 
 msgid "cannot change names on Tcl array"
-msgstr "n�o � poss�vel mudar nomes em um array Tcl"
+msgstr "não é possível mudar nomes em um array Tcl"
 
 msgid "cannot set length of Tcl array"
-msgstr "n�o � poss�vel especificar o comprimento de array Tcl"
+msgstr "não é possível especificar o comprimento de array Tcl"
 
 msgid "Tcl package '%s' not found"
-msgstr "pacote Tcl '%s' n�o encontrado"
+msgstr "pacote Tcl '%s' não encontrado"
 
 msgid "The tkGUI is not available under Windows"
-msgstr ""
+msgstr "A interface tkGUI não está disponível no Windows"
 
 msgid "File"
-msgstr ""
+msgstr "Arquivo"
 
 msgid "Demos"
-msgstr ""
+msgstr "Demonstrações"
 
 msgid "Packages"
-msgstr ""
+msgstr "Pacotes"
 
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 msgid "Source R code"
-msgstr ""
+msgstr "Carregar código R"
 
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 msgid "Save workspace"
-msgstr ""
+msgstr "Salvar área de trabalho"
 
 msgid "Don't save workspace"
-msgstr ""
+msgstr "Não salvar área de trabalho"
 
 msgid "t test"
-msgstr ""
+msgstr "teste t"
 
 msgid "Density"
-msgstr ""
+msgstr "Densidade"
 
 msgid "Interactive linear fitting"
-msgstr ""
+msgstr "Ajuste interativo linear"
 
 msgid "R FAQ"
-msgstr ""
+msgstr "R FAQ"
 
 msgid "Load"
-msgstr ""
+msgstr "Carregar"
 
 msgid "Go get them!"
-msgstr ""
+msgstr "Vá pegá-los"
 
 msgid "Load packages"
-msgstr ""
+msgstr "Carregar pacotes"
 
 msgid "Install packages from CRAN"
-msgstr ""
+msgstr "Instalar pacotes via CRAN"
 
 msgid "Help topic:"
-msgstr ""
+msgstr "Tópico da ajuda:"
 
 msgid "Manuals in PDF format"
-msgstr ""
+msgstr "Manuais em formato PDF"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgid "'pb' is not from class \"tkProgressBar\""
-msgstr ""
+msgstr "'pb' não é da classe \"tkProgressBar\""
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr ""
+msgstr "'filters' deve ser uma matriz caractere com 2 colunas"
 
 msgid "Loading Tcl/Tk interface ..."
-msgstr ""
+msgstr "Carregando a interface Tcl/Tk ..."
 
 msgid "done"
-msgstr ""
+msgstr "pronto"
 
-#, fuzzy
 msgid "Tcl/Tk support is not available on this system"
-msgstr "arquivos de suporte a Tcl/Tk n�o foram instalados"
+msgstr "Suporte a Tcl/Tk não está disponível neste sistema"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr "arquivos de suporte a Tcl/Tk n�o foram instalados"
+msgstr "Arquivos de suporte a Tcl/Tk não foram instalados"

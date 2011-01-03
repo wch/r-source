@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:49\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1375,6 +1375,9 @@ msgstr "выбрана кодировка = \"%s\""
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' не имеет смысла для URL"
 
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "не могу 'chdir', поскольку текущая папка неизвестна"
+
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' не имеет смысла для соединения"
 
@@ -1645,9 +1648,6 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
-
-#~ msgid "cannot 'chdir' as current directory is unknown"
-#~ msgstr "не могу 'chdir', поскольку текущая папка неизвестна"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "разделяемая библиотека '%s' не найдена"

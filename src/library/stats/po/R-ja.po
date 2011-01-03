@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-29 21:00+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -41,7 +41,8 @@ msgstr " 時系列の期間が無いか、2未満です "
 msgid "the series is entirely NA"
 msgstr " 系列は NA 値ばかりです "
 
-msgid "frequency must be a positive integer for BSM"
+#, fuzzy
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr " BSM では頻度は正整数でなければなりません "
 
 msgid "only implemented for univariate time series"
@@ -1929,6 +1930,10 @@ msgstr " 'ref' は既存の水準でなければなりません "
 
 msgid "ref = %d must be in 1L:%d"
 msgstr " ref = %d は 1L:%d 中になければなりません: "
+
+#, fuzzy
+msgid "'sep' must be a character string"
+msgstr " 'file'は文字列かコネクションでなければなりません "
 
 msgid "Failed to guess time-varying variables from their names"
 msgstr " 時間依存変数を名前から推測できませんでした "

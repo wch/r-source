@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,11 +52,11 @@ msgstr ""
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:3270
+#: grid.c:3276
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:3356
+#: grid.c:3362
 msgid "Unable to clip to rotated rectangle"
 msgstr ""
 

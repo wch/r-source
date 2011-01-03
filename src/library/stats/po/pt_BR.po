@@ -3,45 +3,46 @@
 # This file is distributed under the same license as the R package.
 # Cesar Henrique Torres <chtorres@gmail.com>, 2005.
 # Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-07-12 18:52+0100\n"
-"PO-Revision-Date: 2005-12-17 10:57-0200\n"
-"Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
+"PO-Revision-Date: 2010-11-15 18:59+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: Portuguese\n"
+"X-Generator: Pootle 2.0.5\n"
 "X-Poedit-Country: BRAZIL\n"
+"X-Poedit-Language: Portuguese\n"
 
 #: Srunmed.c:58
 msgid "bandwidth/span of running medians is larger than n"
-msgstr "largura de banda/v„o das medianas mÛveis È maior que n"
+msgstr "largura de banda/v√£o das medianas m√≥veis √© maior que n"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
-msgstr "probabilidades fora do intervalo [0,1] em qansari()"
+msgstr "probabilidades em qansari() fora do intervalo [0,1] "
 
 #: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
-msgstr ""
+msgstr "approx(): valor de f inv√°lido"
 
 #: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
-msgstr ""
+msgstr "approx(): m√©todo de interpola√ß√£o inv√°lido"
 
 #: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
-msgstr ""
+msgstr "approx(): tentativa de interpolar valores NA"
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
-msgstr "tipo de argumento inv·lido"
+msgstr "tipo de argumento inv√°lido"
 
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
@@ -49,43 +50,42 @@ msgstr "pode-se transformar apenas 100 pares em arima0"
 
 #: arima.c:838
 msgid "maximum supported lag is 350"
-msgstr ""
+msgstr "intervalo m√°ximo suportado √© 350"
 
 #: distance.c:152
-#, fuzzy
 msgid "treating non-finite values as NA"
-msgstr "dist(.,\"binary\"): considerando valores n„o-finitos como NA"
+msgstr "considerando valores n√£o-finitos como NA"
 
 #: distance.c:221
 msgid "distance(): invalid p"
-msgstr "distance(): p inv·lido"
+msgstr "distance(): p inv√°lido"
 
 #: distance.c:224
 msgid "distance(): invalid distance"
-msgstr "distance(): dist‚ncia inv·lida"
+msgstr "distance(): dist√¢ncia inv√°lida"
 
 #: family.c:21
-#, fuzzy, c-format
+#, c-format
 msgid "Value %g out of range (0, 1)"
-msgstr "Valor %d fora dos limites (0,1)"
+msgstr "Valor %g fora do intervalo (0,1)"
 
 #: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr "Argumento %s deve ser um vetor numÈrico n„o-vazio"
+msgstr "Argumento %s deve ser um vetor num√©rico n√£o-vazio"
 
 #: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr "argumento %s deve ser um vetor numÈrico com comprimento 1 ou %d"
+msgstr "argumento %s deve ser um vetor num√©rico com comprimento 1 ou %d"
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr "apenas 2500 linhas s„o permitidas para sm.method=\"spline\""
+msgstr "s√£o permitidas apenas 2500 linhas para sm.method=\"spline\""
 
 #: loessc.c:235
 msgid "span is too small"
-msgstr "v„o È muito pequeno"
+msgstr "v√£o √© muito pequeno"
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
@@ -97,31 +97,27 @@ msgstr "Matriz singular em ldet"
 
 #: mAR.c:697
 msgid "Invalid vmethod"
-msgstr "vmethod inv·lido"
+msgstr "vmethod inv√°lido"
 
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
-msgstr "algoritmo de Burg n„o conseguiu encontrar correlaÁ„o parcial"
+msgstr "algoritmo de Burg n√£o conseguiu encontrar correla√ß√£o parcial"
 
 #: monoSpl.c:40
-#, fuzzy
 msgid "n must be at least two"
-msgstr "m deve ser uma lista"
+msgstr "n deve ser pelo menos dois"
 
 #: monoSpl.c:73
-#, fuzzy
 msgid "Argument m must be numeric"
-msgstr "Argumento %s deve ser um vetor numÈrico n„o-vazio"
+msgstr "Argumento m deve ser num√©rico"
 
 #: monoSpl.c:76
-#, fuzzy
 msgid "length(m) must be at least two"
-msgstr "m deve ser uma lista"
+msgstr "length(m) deve ser pelo menos dois"
 
 #: monoSpl.c:78
-#, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr "argumento %s deve ser um vetor numÈrico com comprimento 1 ou %d"
+msgstr "Argumento Sx deve ser um vetor num√©rico com comprimento menor que m[]"
 
 #: nls.c:97
 msgid "'control' must be a list"
@@ -149,29 +145,27 @@ msgstr "fator de passos %g reduzido abaixo de 'minFactor' de %g"
 #: nls.c:262
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
-msgstr "n˙mero de iteraÁıes excedeu o m·ximo de %d"
+msgstr "n√∫mero de itera√ß√µes excedeu o m√°ximo de %d"
 
 #: nls.c:267
 msgid "converged"
-msgstr ""
+msgstr "convergiu"
 
 #: nls.c:288
 msgid "'theta' should be of type character"
 msgstr "'theta' deve ser do tipo caractere"
 
 #: nls.c:290 port.c:382
-#, fuzzy
 msgid "use of NULL environment is defunct"
-msgstr "uso do ambiente NULL È obsoleto"
+msgstr "uso do ambiente NULL √© obsoleto"
 
 #: nls.c:294
 msgid "'rho' should be an environment"
 msgstr "'rho' deve ser um ambiente"
 
 #: nls.c:297
-#, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr "argumento %s deve ser um vetor numÈrico com comprimento 1 ou %d"
+msgstr "'dir' n√£o √© um vetor num√©rico de comprimento correto"
 
 #: nls.c:314 nls.c:342
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -180,30 +174,30 @@ msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 #: nls.c:320
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr "vari·vel '%s' È inteira, n„o numÈrica"
+msgstr "vari√°vel '%s' √© inteira, n√£o num√©rica"
 
 #: nls.c:322
 #, c-format
 msgid "variable '%s' is not numeric"
-msgstr "vari·vel '%s' n„o È numÈrica"
+msgstr "vari√°vel '%s' n√£o √© num√©rica"
 
 #: pacf.c:81
 msgid "bad Starma struct"
-msgstr "estrutura Starma inv·lida"
+msgstr "estrutura Starma inv√°lida"
 
 #: pacf.c:227
 #, c-format
 msgid "starma error code %d"
-msgstr "starma erro cÛdigo %d"
+msgstr "erro starma c√≥digo %d"
 
 #: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
-msgstr "erro forkal cÛdigo %d"
+msgstr "erro forkal c√≥digo %d"
 
 #: pacf.c:451
 msgid "invalid value of lag.max"
-msgstr "valor inv·lido para lag.max"
+msgstr "valor inv√°lido para lag.max"
 
 #: port.c:130
 #, c-format
@@ -213,12 +207,12 @@ msgstr "Rf_divset: alg = %d deve ser 1, 2, 3, ou 4"
 #: port.c:326
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr "funÁ„o gradiente deve retornar um vetor numÈrico de comprimento %d"
+msgstr "fun√ß√£o gradiente deve retornar um vetor num√©rico de comprimento %d"
 
 #: port.c:336
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "funÁ„o hessiana deve retornar uma matriz quadrada numÈrica de ordem %d"
+msgstr "fun√ß√£o hessiana deve retornar uma matriz quadrada num√©rica de ordem %d"
 
 #: port.c:386
 msgid "'rho' must be an environment"
@@ -226,21 +220,21 @@ msgstr "'rho' deve ser um ambiente"
 
 #: port.c:388 port.c:539
 msgid "'d' must be a nonempty numeric vector"
-msgstr "'d' deve ser um vetor numÈrico n„o-vazio"
+msgstr "'d' deve ser um vetor num√©rico n√£o-vazio"
 
 #: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
-"quando a hessiana for definida o gradiente tambÈm deve ser especificado"
+"quando a hessiana for definida o gradiente tamb√©m deve ser especificado"
 
 #: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "ambiente 'rho' deve conter um vetor numÈrico '.par' de comprimento %d"
+msgstr "ambiente 'rho' deve conter um vetor num√©rico '.par' de comprimento %d"
 
 #: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
-msgstr "'lower' e 'upper' devem ser vetores numÈricos"
+msgstr "'lower' e 'upper' devem ser vetores num√©ricos"
 
 #: port.c:453
 msgid "'getElement' applies only to named lists"
@@ -249,22 +243,22 @@ msgstr "'getElement' se aplica apenas a listas nomeadas"
 #: port.c:474
 #, c-format
 msgid "%s$%s() not found"
-msgstr "%s$%s() n„o encontrado"
+msgstr "%s$%s() n√£o encontrado"
 
 #: port.c:487
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr "'gradient' deve ser uma matriz numÈrica de dimens„o (%d,%d)"
+msgstr "'gradient' deve ser uma matriz num√©rica de dimens√£o (%d,%d)"
 
 #: port.c:508
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
-"fcn retornou modo %d, comprimento %d - necess·rio modo %d, comprimento %d"
+"fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
 
 #: port.c:521
 msgid "invalid type for eval_check_store"
-msgstr "tipo inv·lido para eval_check_store"
+msgstr "tipo inv√°lido para eval_check_store"
 
 #: port.c:540
 msgid "m must be a list"
@@ -272,32 +266,32 @@ msgstr "m deve ser uma lista"
 
 #: port.c:560
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr "'lowerb' e 'upperb' devem ser vetores numÈricos"
+msgstr "'lowerb' e 'upperb' devem ser vetores num√©ricos"
 
 #: smooth.c:79
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
-msgstr "regra final inv·lida para mediana mÛvel de 3: %d"
+msgstr "regra final inv√°lida para mediana m√≥vel de 3: %d"
 
 #: smooth.c:231
 msgid "allocation error in smooth(*, '3RSR')."
-msgstr "erro na alocaÁ„o em smooth(*,'3RSR')."
+msgstr "erro de aloca√ß√£o em smooth(*,'3RSR')."
 
 #: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
-msgstr "erro na alocaÁ„o em smooth(*, '3RSS')."
+msgstr "erro de aloca√ß√£o em smooth(*, '3RSS')."
 
 #: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
-msgstr "erro na alocaÁ„o em smooth(*, '3R')."
+msgstr "erro de aloca√ß√£o em smooth(*, '3R')."
 
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
-msgstr "valor faltante nas ˙ltimas %d observaÁıes"
+msgstr "valor faltante nas √∫ltimas %d observa√ß√µes"
 
 #~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr "declaraÁ„o falhou em src/library/ts/src/carray.c:"
+#~ msgstr "declara√ß√£o falhou em src/library/ts/src/carray.c:"
 
 #~ msgid "'control$maxiter' absent"
 #~ msgstr "'control$maxiter' ausente"
@@ -324,4 +318,4 @@ msgstr "valor faltante nas ˙ltimas %d observaÁıes"
 #~ msgstr "m$setPars() ausente"
 
 #~ msgid "lowerb and upperb must be numeric vectors"
-#~ msgstr "'lowerb' e 'upperb' devem ser vetores numÈricos"
+#~ msgstr "'lowerb' e 'upperb' devem ser vetores num√©ricos"

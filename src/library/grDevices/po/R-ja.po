@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-29 17:19+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -225,6 +225,9 @@ msgstr "ラスター配列は丁度3つの次元を持つ必要があります "
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "ラスター配列は丁度3か4の平面(plane)を持つ必要があります "
+
+msgid "No valid indices"
+msgstr ""
 
 msgid "Operator not meaningful for raster objects"
 msgstr "ラスターオブジェクトには無意味な操作です "

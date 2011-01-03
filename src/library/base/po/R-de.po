@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:49\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-21 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1389,6 +1389,9 @@ msgstr "encoding = %s gewählt"
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' ist für eine URL sinnlos"
 
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "'chdir' unmöglich, da das aktuelle Verzeichnis unbekannt ist"
+
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' ist für eine Verbindung sinnlos"
 
@@ -1649,9 +1652,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
-
-#~ msgid "cannot 'chdir' as current directory is unknown"
-#~ msgstr "'chdir' unmöglich, da das aktuelle Verzeichnis unbekannt ist"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "shared library '%s' nicht gefunden"

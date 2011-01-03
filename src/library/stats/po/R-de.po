@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-22 13:37+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -44,7 +44,8 @@ msgstr "Zeitreihe hat keine oder weniger als 2 Perioden"
 msgid "the series is entirely NA"
 msgstr "Zeitreihe besteht ausschließlich aus NA"
 
-msgid "frequency must be a positive integer for BSM"
+#, fuzzy
+msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "Frequenz muss für BSM eine posiive, ganze Zahl sein"
 
 msgid "only implemented for univariate time series"
@@ -1944,6 +1945,10 @@ msgstr "'ref' muss eine exisiterende Faktorstufe sein"
 msgid "ref = %d must be in 1L:%d"
 msgstr "ref = %d muss in 1L:%d liegen"
 
+#, fuzzy
+msgid "'sep' must be a character string"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
+
 msgid "Failed to guess time-varying variables from their names"
 msgstr "Konnte die zeit-veränderlichen Variablen nicht aus den Namen raten"
 
@@ -2305,7 +2310,8 @@ msgid "Requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"
 
 msgid "cannot compute confidence interval when all observations are tied"
-msgstr "kann kein Konfidenzinterval berechnen, wenn alle Beobachtungen gebunden sind"
+msgstr ""
+"kann kein Konfidenzinterval berechnen, wenn alle Beobachtungen gebunden sind"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "kann bei Bindungen das exakte Konfidenzinterval nicht berechnen"

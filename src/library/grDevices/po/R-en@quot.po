@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.12.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
-"PO-Revision-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
+"PO-Revision-Date: 2011-01-03 16:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -242,6 +242,9 @@ msgstr "A raster array must have exactly 3 dimensions"
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "A raster array must have exactly 3 or 4 planes"
+
+msgid "No valid indices"
+msgstr "No valid indices"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Operator not meaningful for raster objects"

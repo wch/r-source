@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-08-30 08:39+0100\n"
+"POT-Creation-Date: 2011-01-03 16:10+0000\n"
 "PO-Revision-Date: 2010-03-26 08:29+0000\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
@@ -13,24 +13,24 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: console.c:1146 console.c:1188
+#: console.c:1157 console.c:1199
 msgid "Not enough memory"
 msgstr "메모리가 충분하지 않습니다"
 
-#: console.c:1235 console.c:1239
+#: console.c:1246 console.c:1250
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "메모리가 부족합니다: 텍스트가 클립보드로 복사되지 않았습니다"
 
-#: console.c:1275 ../extra/graphapp/clipboard.c:53
+#: console.c:1286 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다"
 
-#: console.c:1893
+#: console.c:1904
 msgid "Insufficient memory. Please close the console"
 msgstr "메모리가 부족합니다. 콘솔을 닫아주십시오"
 
-#: console.c:1948 console.c:2001 preferences.c:332
+#: console.c:1959 console.c:2012 preferences.c:333
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -39,23 +39,23 @@ msgstr ""
 "글꼴 %s-%d-%d 가 발견되지않습니다. \n"
 "시스템의 고정폭 글꼴을 사용합니다."
 
-#: console.c:2106
+#: console.c:2117
 msgid "Save selection to"
 msgstr "선택한 것을 저장"
 
-#: console.c:2108
+#: console.c:2119
 msgid "Save console contents to"
 msgstr "콘솔 내용을 저장"
 
-#: console.c:2207
+#: console.c:2218
 msgid "Scrolling.\n"
 msgstr "스크롤링.\n"
 
-#: console.c:2208
+#: console.c:2219
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  키보드:  PgUp, PgDown, Ctrl+화살표, Ctrl+Home, Ctrl+End\n"
 
-#: console.c:2209
+#: console.c:2220
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -63,101 +63,101 @@ msgstr ""
 "  마우스: 스크롤바를 사용하십시오\n"
 "\n"
 
-#: console.c:2210
+#: console.c:2221
 msgid "Editing.\n"
 msgstr "편집.\n"
 
-#: console.c:2211
+#: console.c:2222
 msgid "  Moving the cursor: \n"
 msgstr "  커서 이동:\n"
 
-#: console.c:2212
+#: console.c:2223
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     좌측 화살표 또는 Ctrl+B: 한 문자 뒤로 이동;\n"
 
-#: console.c:2213
+#: console.c:2224
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     우측 화살표 또는 Ctrl+F: 한 문자 앞으로 이동;\n"
 
-#: console.c:2214
+#: console.c:2225
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home 또는 Ctrl+A: 줄 처음으로 이동;\n"
 
-#: console.c:2215
+#: console.c:2226
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End 또는 Ctrl+E:  줄 끝으로 이동;\n"
 
-#: console.c:2216
+#: console.c:2227
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  이력: 위 그리고 아래 화살표, Ctrl+P, Ctrl+N\n"
 
-#: console.c:2217
+#: console.c:2228
 msgid "  Deleting:\n"
 msgstr "  삭제:\n"
 
-#: console.c:2218
+#: console.c:2229
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del 또는 Ctrl+D: 현재 문자 혹은 선택영역 삭제;\n"
 
-#: console.c:2219
+#: console.c:2230
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 이전 문자 삭제;\n"
 
-#: console.c:2220
+#: console.c:2231
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 또는 Ctrl+ K: 현재 문자부터 줄 끝까지 텍스트 삭제.\n"
 
-#: console.c:2221
+#: console.c:2232
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 현재 줄의 모든 텍스트 삭제.\n"
 
-#: console.c:2222
+#: console.c:2233
 msgid "  Copy and paste.\n"
 msgstr "  복사 후 붙여넣기.\n"
 
-#: console.c:2223
+#: console.c:2234
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     텍스트를 선택하려면 (좌측버튼을 누른 채로) 마우스를 사용하십시오.\n"
 
-#: console.c:2224
+#: console.c:2235
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     선택한 텍스트를 클립보드에 복사하려면 Shift+Del(또는 Ctrl+C)을 사용하"
 "고,\n"
 
-#: console.c:2225
+#: console.c:2236
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
 "     Shitf+Ins (또는 Ctrl+V 또는 Ctrl+Y)로는 클립보드의 내용을(만약 있다면)\n"
 
-#: console.c:2226
+#: console.c:2237
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 "     콘솔에 붙여넣기 하며, Ctrl+X로 잘라낸 후에 붙여넣기 해도 상관없습니다\n"
 
-#: console.c:2227
+#: console.c:2238
 msgid "  Misc:\n"
 msgstr "기타:\n"
 
-#: console.c:2228
+#: console.c:2239
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "Ctrl+L: 콘솔을 지웁니다.\n"
 
-#: console.c:2229
+#: console.c:2240
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O 혹은 INS: 덮어쓰기 모드 토글 : 처음에는 꺼져있음.\n"
 
-#: console.c:2230
+#: console.c:2241
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 현 문자와 좌측 문자를 교환.\n"
 
-#: console.c:2231
+#: console.c:2242
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -165,29 +165,29 @@ msgstr ""
 "\n"
 "주의: 입력이 요구될 경우에만, 콘솔이 갱신됩니다.\n"
 
-#: console.c:2232
+#: console.c:2243
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr "  Ctrl+W로 이 기능의 off/on을 토글합니다.\n"
 
-#: console.c:2233
+#: console.c:2244
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr "ESC으로 인터프리터를 중단합니다.\n"
 
-#: console.c:2234
+#: console.c:2245
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr "TAB은 현 단어의 완성을 시작합니다.\n"
 
-#: console.c:2235
+#: console.c:2246
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "표준 윈도우즈의 핫키(hotkey)를 사용하면\n"
 
-#: console.c:2236
+#: console.c:2247
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "그래픽스 디바이스 (SDI에서 Alt+Tab, MDI에서 Ctrl+Tab 또는 Ctrl+F6)로 전환할 "
@@ -544,7 +544,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "취소"
 
-#: extra.c:2103 rui.c:1234
+#: extra.c:2106 rui.c:1234
 msgid "Select file"
 msgstr "파일 선택"
 
@@ -580,7 +580,7 @@ msgstr "보기"
 msgid "Unable to create pager window"
 msgstr "페이저 윈도우를 생성할 수 없습니다"
 
-#: preferences.c:301
+#: preferences.c:302
 msgid ""
 "The overall console properties cannot be changed\n"
 "on a running console.\n"
@@ -592,7 +592,7 @@ msgstr ""
 "\n"
 "바꾼 것을 적용하려면 설정을 저장하고 Rgui를 다시 시작해주십시오\n"
 
-#: preferences.c:305
+#: preferences.c:306
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
@@ -604,11 +604,11 @@ msgstr ""
 "\n"
 "메뉴에 적용하려면 설정을 저장하고 Rgui를 다시 시작해주십시오.\n"
 
-#: preferences.c:370
+#: preferences.c:371
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr "페이저 크기의 변화는 열려있는 페이저에 적용되지 않습니다"
 
-#: preferences.c:376
+#: preferences.c:377
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -616,20 +616,20 @@ msgstr ""
 "페이저가 열려있다면, 페이저 유형을 변경하지 말아주십시오\n"
 "진행할까요?"
 
-#: preferences.c:409
+#: preferences.c:410
 msgid "Select directory for file 'Rconsole'"
 msgstr "'Rconsole' 파일을 위한 디렉토리 선택"
 
-#: preferences.c:502
+#: preferences.c:503
 msgid "Select 'Rconsole' file"
 msgstr "'Rconsole' 파일 선택"
 
-#: preferences.c:687
+#: preferences.c:688
 #, fuzzy, c-format
 msgid "Ignored '%s' at line %d of file %s"
 msgstr "파일 %2$s의 %1$d 줄에서 에러가 발생했습니다"
 
-#: preferences.c:788
+#: preferences.c:789
 msgid "Rgui Configuration Editor"
 msgstr "RGui 구성 편집기"
 
@@ -943,7 +943,7 @@ msgstr "메뉴를 찾지 못했습니다"
 msgid "menu or item does not exist"
 msgstr "메뉴 또는 항목이 존재하지 않습니다"
 
-#: system.c:439
+#: system.c:441
 msgid "Save workspace image?"
 msgstr "작업공간 이미지를 저장하겠습니까?"
 
@@ -1011,7 +1011,7 @@ msgid "Enhanced metafiles"
 msgstr "강화된 metafiles"
 
 #: ../library/grDevices/src/devWindows.c:937
-#: ../library/grDevices/src/devWindows.c:3395
+#: ../library/grDevices/src/devWindows.c:3396
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택한 파일경로는 너무 깁니다: 512 바이트만 허용됩니다"
 
@@ -1156,15 +1156,15 @@ msgstr "metafile로 저장..."
 msgid "Save as postscript..."
 msgstr "postscript로 저장..."
 
-#: ../library/grDevices/src/devWindows.c:3116
+#: ../library/grDevices/src/devWindows.c:3117
 msgid "Locator is active"
 msgstr "Locator가 작동 중입니다"
 
-#: ../library/grDevices/src/devWindows.c:3745
+#: ../library/grDevices/src/devWindows.c:3746
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 
-#: ../library/grDevices/src/devWindows.c:3757
+#: ../library/grDevices/src/devWindows.c:3758
 msgid "Click or hit ENTER for next page"
 msgstr "클릭 또는 ENTER 키를 누르면 다음 페이지로 이동합니다"
 

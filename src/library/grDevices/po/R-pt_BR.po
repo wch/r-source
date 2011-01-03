@@ -1,0 +1,371 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
+"PO-Revision-Date: 2010-12-28 14:54+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+msgid "'coef' must not be negative"
+msgstr "'coef' não pode ser negativo"
+
+msgid "no 'z' matrix specified"
+msgstr "nenhuma matriz 'z' especificada"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "valores de 'x' e 'y' crescente esperados"
+
+msgid "no proper 'z' matrix specified"
+msgstr "nenhuma matriz 'z' própria especificada"
+
+msgid "'bias' must be positive"
+msgstr "'bias' deve ser positivo"
+
+msgid "at least 3 columns needed"
+msgstr "pelo menos 3 colunas necessárias"
+
+msgid "rgb matrix must be numeric"
+msgstr "matriz rgb deve ser numérica"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "matriz rgb deve ter 3 colunas"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "valores rgb devem estar em [0,maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'stard' e 'end' devem ser distintos e em [0,1]"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' deve ser um escalar ou 'sRGB'"
+
+msgid "Color space converter:"
+msgstr "Conversor de espaço de cor:"
+
+msgid "Reference white:"
+msgstr "Referencia branca:"
+
+msgid "display gamma"
+msgstr "exibição gama"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "'from' deve ser colorConverter ou cadeia de caracter"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "'to' deve ser um colorConverter ou uma cadeia de caracter"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "'from.ref.white' discorda com a definição de"
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "'to.ref.white' discorda com a definição de"
+
+msgid "color spaces use different reference whites."
+msgstr "espaços de cores usem diferentes brancos de referência"
+
+msgid "'name' must be a character vector"
+msgstr "'name' deve ser um vetor de caracteres"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "não é possível desligar dispositivo 1 (o dispositivo nulo)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "não é possível fornecer 'which' e 'device' ao mesmo tempo"
+
+msgid "cannot copy from the null device"
+msgstr "não é possível copiar do dispositivo nulo"
+
+msgid "cannot copy to the null device"
+msgstr "não é possível copiar para o dispositivo nulo"
+
+msgid "cannot copy device to itself"
+msgstr "não é possível copiar o dispositivo para si mesmo"
+
+msgid "'device' should be a function"
+msgstr "'device' deve ser uma função"
+
+msgid "no device to print from"
+msgstr "nenhum dispositivo disponível para imprimir"
+
+msgid "can only print from screen device"
+msgstr "é possível imprimir somente do dispositivo da tela"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "é preciso especificar um de 'width' e 'height'"
+
+msgid "can only print from a screen device"
+msgstr "é possível imprimir somente de um dispositivo da tela"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.control() chamado sem um dispositivo gráfico aberto"
+
+msgid "argument is missing with no default"
+msgstr "argumento está faltando sem nenhum padrão"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.displaylist() chamado sem um dispositivo gráfico aberto"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "configuração inválida para 'getOption(\"device\")'"
+
+msgid "device '%s' not found"
+msgstr "dispositivo '%s' não encontrado"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "nenhum nome de arquivo apropriado e não utilizado para pdf()"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): usando pdf(arquivo=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "nenhum nome de arquivo apropriado e não utilizado para postscript()"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): usando postscript(arquivo=\"%s\")"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "argumentos inválidos em '%s' (precisa-se de argumentos nomeados)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' deve ser caractere, nome de uma lista existente"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "não é possível reiniciar '%s' não existente"
+
+msgid "invalid options in '%s'"
+msgstr "opções inválidas em '%s'"
+
+# NOT é acrônimo, NOT não é NÃO!?
+msgid "NOT changing"
+msgstr "NOT mudando"
+
+msgid "argment 'append' is for back-compatibility and will be ignored"
+msgstr "argumento 'append' é para retro-compatibilidade e será ignorado"
+
+msgid "unknown family '%s'"
+msgstr "família desconhecida '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "argumento 'family' inválido"
+
+msgid "invalid 'file'"
+msgstr "'file' inválido"
+
+msgid "invalid PDF version"
+msgstr "versão PDF inválida"
+
+msgid "Invalid font type"
+msgstr "Tipo de fonte inválido"
+
+msgid "invalid family name in font specification"
+msgstr "nome de família inválido na especificação da fonte"
+
+msgid "invalid metric information in font specification"
+msgstr "informação métrica inválida na especificação da fonte"
+
+msgid "invalid encoding in font specification"
+msgstr "codificação inválida na especificação da fonte"
+
+msgid "Not a CID font"
+msgstr "Não é uma fonte CID"
+
+msgid "invalid CMap name in font specification"
+msgstr "nome CMap inválido na especificação da fonte"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "'cmapEncoding' inválida na especificação da fonte"
+
+msgid "invalid PDF resource in font specification"
+msgstr "recurso PDF inválido na especificação da fonte"
+
+msgid "Invalid font database name"
+msgstr "nome do banco de dados de fonte inválido"
+
+msgid "font %s already in use"
+msgstr "fonte %s já está em uso"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "argumentos inválidos em '%s' (devem ser nomes de fontes)"
+
+msgid "unknown font"
+msgstr "fonte desconhecida"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "codificação da fone não corresponde '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' deve ser uma cadeia de caracteres não-vazia "
+
+msgid "Invalid output format"
+msgstr "formato de saída inválido"
+
+msgid "status %d in running command '%s'"
+msgstr "estado %d em executar comando '%s'"
+
+msgid "range too small for min.n"
+msgstr "faixa pequena demais para min.n"
+
+msgid "A raster matrix must be character, or numeric, or logical"
+msgstr "Uma matriz raster deve ser caractere, ou numérica, ou lógica"
+
+msgid "A raster array must be numeric"
+msgstr "Um array raster deve ser numérico"
+
+msgid "A raster array must have exactly 3 dimensions"
+msgstr "Um array raster deve ter exatamente 3 dimensões"
+
+msgid "A raster array must have exactly 3 or 4 planes"
+msgstr "Um array raster deve ter exatamente 3 ou 4 planos"
+
+msgid "No valid indices"
+msgstr ""
+
+msgid "Operator not meaningful for raster objects"
+msgstr "Operador não tem significância para objetos raster"
+
+msgid "no current device to record from"
+msgstr "nenhum dispositivo atual disponível do qual gravar"
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "argumento não é da classe \"recordedplot\""
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr "carregando snapshot de versão R pré-2.0.0"
+
+msgid "loading snapshot from different R version"
+msgstr "carregando snapshot de versão R diferente"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "'nbin' deve ser numérico de comprimento 1 ou 2"
+
+msgid "'bandwidth' must be numeric"
+msgstr "'bandwidth' deve ser numérica"
+
+msgid "'bandwidth' must be positive"
+msgstr "'bandwidth' deve ser positiva"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' deve ser uma \"range\", portanto de comprimento 2"
+
+msgid "invalid first argument"
+msgstr "primeiro argumento inválido"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x' é uma lista, mas não tem componentes 'x' e 'y'"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "comprimentos de 'x' e 'y' diferem"
+
+msgid "invalid first argument [bad language object]"
+msgstr "primeiro argumento inválido [objeto de linguagem inadequado]"
+
+msgid "at least 2 columns needed"
+msgstr "pelo menos 2 colunas necessárias"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x' é uma lista, mas não tem componentes 'x', 'y' e 'z'"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "comprimentos de 'x', 'y' e 'z' diferem"
+
+msgid "'file' is missing with no default"
+msgstr "'file' está faltando sem nenhum padrão"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "desculpe, 'gs' não pode ser encontrado"
+
+msgid "unrecognized format of gs -help"
+msgstr "formato desconhecido de gs -help"
+
+msgid "device '%s' is not available"
+msgstr "dispositivo '%s' não está disponível"
+
+msgid "Available devices are %s"
+msgstr "dispositivos disponíveis são %s"
+
+msgid "invalid 'title'"
+msgstr "'title' inválido"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "fonte Quartz inválido: deve ser 4 cadeias"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "argumentos inválidos em quartzFonts (devem ser nomes de fontes)"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr "argumentos inválidos em quartzFonts (precisa de argumentos nomeados)"
+
+msgid "invalid 'filename'"
+msgstr "'filename' inválido"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "'res' deve ser especificada a não ser 'units = \"px\"'"
+
+msgid "invalid X11 font specification:"
+msgstr "especificação de fonte X11 inválido:"
+
+msgid "no such device"
+msgstr "dispositivo não existe"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "somente possível copiar dos dispositivos 'X11(type=\"*cairo\")'"
+
+msgid "invalid value for 'rescale'"
+msgstr "valor inválido para 'rescale'"
+
+msgid "can only bring windows devices to the front"
+msgstr "somente possível trazer dispositivos windows para frente"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' não aplicável ao console R"
+
+msgid "can only manipulate windows devices"
+msgstr "somente possível manipular dispositivos windows"
+
+msgid "can only copy from 'windows' devices"
+msgstr "somente possível copiar de dispositivos 'windows'"
+
+msgid "subscript out of range"
+msgstr "subscrito fora da faixa"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "fonte Windows inválido: deve ser um nome único de família de fonte"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "argumentos inválidos em 'windowsFonts' (devem ser nomes de fontes)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr ""
+"argumentos inválidos em 'windowsFonts' (precisa de argumentos nomeados)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "nomes de argumentos inválidos %s em '%s'"
+msgstr[1] ""
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "diferem entre novo e prévio"
+msgstr[1] ""
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "valores %d x <= 0 omitidos do gráfico logarítmico"
+msgstr[1] ""
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "valores %d y <= 0 omitidos do gráfico logarítmico"
+msgstr[1] ""
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "valores %d z <= 0 omitidos do gráfico logarítmico"
+msgstr[1] ""

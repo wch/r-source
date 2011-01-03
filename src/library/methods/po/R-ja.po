@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-27 09:37\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2010-09-30 15:04+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -60,6 +60,12 @@ msgstr " .Data を指定した場合は matrix() の引数を指定すること�
 
 msgid "Cannot specify array() arguments when specifying .Data"
 msgstr " .Data を指定した場合は array() の引数を指定することはできません "
+
+msgid "Can't have more than one unnamed argument as environment"
+msgstr ""
+
+msgid "Unnamed argument to new() must be an environment for the new object"
+msgstr ""
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -1592,22 +1598,6 @@ msgstr ""
 "ん "
 
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class \"%s\" in the target"
-msgstr ""
-" オブジェクトの欄 \"%s\" のクラスがターゲットのin the object is not "
-"compatible with the desired class \"%s\" in the target "
-
-msgid "\"%s\" is not a defined class in this environment"
-msgstr " この環境ではクラス \"%s\" は定義されていません "
-
-msgid "Invalid Class argument:  should be a single string"
-msgstr " 不正なクラス引数です: 単一の文字列である必要があります "
-
-msgid "\"%s\" is not one of the reference super classes for this object"
-msgstr " \"%s\" はこのオブジェクトに対する参照上位クラスの一つではありません "
-
-msgid ""
 "Method %s from class %s was not processed into a class method until being "
 "installed.  Possible corruption of the methods in the class."
 msgstr ""
@@ -1628,29 +1618,35 @@ msgid "\"%s\" is not a field in class \"%s\""
 msgstr " \"%s\" はクラス \"%s\" 中の欄ではありません "
 
 msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+" オブジェクトの欄 \"%s\" のクラスがターゲットのin the object is not "
+"compatible with the desired class \"%s\" in the target "
+
+msgid "\"%s\" is not a defined class in this environment"
+msgstr " この環境ではクラス \"%s\" は定義されていません "
+
+msgid "Invalid Class argument:  should be a single string"
+msgstr " 不正なクラス引数です: 単一の文字列である必要があります "
+
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr " \"%s\" はこのオブジェクトに対する参照上位クラスの一つではありません "
+
+msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
 msgstr ""
 " callSuper() の直接の呼び出しは不正です: 他のメソッドからのみ呼び出されるべき"
 "です "
 
+#, fuzzy
+msgid "\"%s\" is not a field in this class"
+msgstr " \"%s\" はクラス \"%s\" 中の欄ではありません "
+
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 " methods() の引数は名前付きか，一つの名前付きリストでなければなりません "
-
-msgid "must give named list of refdefined fields"
-msgstr " 再定義された欄の名前付きリストを与える必要があります "
-
-msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
-msgstr ""
-" accessor 欄だけが置き換えられます： 欄 \"%s\" はクラス \"%s\" を持ちます "
-
-msgid ""
-"replacement for field \"%s\" must be an accessor function: got an object of "
-"class \"%s\""
-msgstr ""
-" 欄 \"%s\" は accessor 関数によってしか置き換えられません： クラス \"%s\" の"
-"オブジェクトが与えられました "
 
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
@@ -1658,6 +1654,14 @@ msgid ""
 msgstr ""
 " トピック \"%s\" はクラス \"%s\" 中のメソッド名ではありません \n"
 "クラす定義が続きます "
+
+msgid "Arguments must all be character string names of fieds"
+msgstr " 引数はすべて欄の文字列の名前でなければなりません "
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
+msgstr ""
+" 欄 \"%s\" （クラス \"%s\" の)は既定の結合を持たないためロックできません "
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1671,14 +1675,6 @@ msgstr " 欄 \" "
 
 msgid "\" is read-only"
 msgstr " \" は読み取り専用です "
-
-msgid "Arguments must all be character string names of fieds"
-msgstr " 引数はすべて欄の文字列の名前でなければなりません "
-
-msgid ""
-"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
-msgstr ""
-" 欄 \"%s\" （クラス \"%s\" の)は既定の結合を持たないためロックできません "
 
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
@@ -1728,6 +1724,12 @@ msgstr " (クラス \"%s\") "
 
 msgid "for method %s()"
 msgstr "メソッド %s()　用"
+
+msgid ""
+"Local assignment to field name (%s) will not change the field: Did you mean "
+"to use \"<<-\"? \n"
+"( in method %s for class %s)"
+msgstr ""
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
@@ -1916,6 +1918,20 @@ msgstr "ファイルを移動するか、クラスまたはメソッドを削除
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#~ msgid "must give named list of refdefined fields"
+#~ msgstr " 再定義された欄の名前付きリストを与える必要があります "
+
+#~ msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
+#~ msgstr ""
+#~ " accessor 欄だけが置き換えられます： 欄 \"%s\" はクラス \"%s\" を持ちます "
+
+#~ msgid ""
+#~ "replacement for field \"%s\" must be an accessor function: got an object "
+#~ "of class \"%s\""
+#~ msgstr ""
+#~ " 欄 \"%s\" は accessor 関数によってしか置き換えられません： クラス \"%s\" "
+#~ "のオブジェクトが与えられました "
 
 #, fuzzy
 #~ msgid ""

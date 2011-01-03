@@ -2,19 +2,20 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:49\n"
-"PO-Revision-Date: 2005-12-17 10:55-0200\n"
-"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
+"PO-Revision-Date: 2011-01-02 18:10+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' foi extinto."
@@ -29,13 +30,13 @@ msgid "See help(\"Defunct\")"
 msgstr "Veja help(\"Defunct\")"
 
 msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.C' n√£o √© neces√°rio: por favor remova"
 
 msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.For' n√£o √© necess√°rio: remova-o"
 
 msgid "'%s' is deprecated."
-msgstr "'%s' È obsoleto."
+msgstr "'%s' √© obsoleto."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "Veja help(\"Deprecated\") e help(\"%s-deprecated\")."
@@ -44,13 +45,13 @@ msgid "See help(\"Deprecated\")"
 msgstr "Veja help(\"Deprecated\")"
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "argumento de 'La.svd' deve ser numÈrico ou complexo"
+msgstr "argumento de 'La.svd' deve ser num√©rico ou complexo"
 
 msgid "infinite or missing values in 'x'"
 msgstr "valores infinitos ou faltantes em 'x'"
 
 msgid "0 extent dimensions"
-msgstr "dimensıes de comprimento 0"
+msgstr "dimens√µes de comprimento 0"
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr "'nu' deve ser 0, nrow(x) ou ncol(x)"
@@ -62,42 +63,38 @@ msgid "second argument must be a list"
 msgstr "segundo argumento deve ser uma lista"
 
 msgid "'iconvlist' is not available on this system"
-msgstr "'iconvlist' n„o est· disponÌvel neste sistema"
+msgstr "'iconvlist' n√£o est√° dispon√≠vel neste sistema"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr ""
 "'kind' deve ser uma string de caracteres de comprimento 1 (RNG a ser usado)"
 
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' n„o È uma abreviaÁ„o v·lida de RNG"
+msgstr "'%s' n√£o √© uma abrevia√ß√£o v√°lida de RNG"
 
-#, fuzzy
 msgid "'normal.kind' must be a character string of length 1"
-msgstr "'normal.kind' deve ser uma string de caractres de tamanho 1."
+msgstr "'normal.kind' deve ser uma string de caracteres de tamanho 1."
 
 msgid "'%s' is not a valid choice"
-msgstr "'%s' n„o È uma escolha v·lida"
+msgstr "'%s' n√£o √© uma escolha v√°lida"
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator used"
-msgstr "Usando vers„o com erros do gerador Kinderman-Ramage."
+msgstr "Usando vers√£o com erros do gerador Kinderman-Ramage"
 
-#, fuzzy
 msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-msgstr "Usando vers„o com erros do gerador Kinderman-Ramage."
+msgstr "Uso da vers√£o com erros do gerador Kinderman-Ramage n√£o permitido"
 
 msgid "malformed version string"
-msgstr "string de vers„o mal formada"
+msgstr "string de vers√£o mal formada"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve ter um comprimento positivo"
 
-#, fuzzy
 msgid "'X' must have named dimnames"
-msgstr "'input' deve ter comprimento 1"
+msgstr "'X' deve ser dimnames nomeados"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "nem todos elementos de 'MARGIN'  s√£o nomes de dimens√µes"
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' especifica um array muito grande"
@@ -106,109 +103,107 @@ msgid "incorrect value for 'MARGIN'"
 msgstr "valor incorreto para 'MARGIN'"
 
 msgid "you cannot be serious"
-msgstr "vocÍ n„o pode estar falando sÈrio"
+msgstr "voc√™ n√£o pode estar falando s√©rio"
 
 msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
-msgstr "*** 'pos=1' n„o È possÌvel; usando 'pos=2' por enquanto."
+msgstr "*** 'pos=1' n√£o √© poss√≠vel; usando 'pos=2' por enquanto."
 
 msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Note que 'pos=1' resultar· em erro no futuro."
+msgstr "*** Note que 'pos=1' resultar√° em erro no futuro."
 
 msgid "file '%s' not found"
-msgstr "arquivo '%s' n„o encontrado"
+msgstr "arquivo '%s' n√£o encontrado"
 
-#, fuzzy
 msgid "invalid 'name' argument"
-msgstr "argumento 'category' inv·lido"
+msgstr "argumento 'name' inv√°lido"
 
-#, fuzzy
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr "pacote '%s' foi compilado na vers„o do R %s"
+msgstr ""
+"pacote '%s' √© requerido por %s, que pode n√£o funcionar mais corretamente"
 
-#, fuzzy
 msgid "package %s is required by %s so will not be detached"
-msgstr "pacote '%s' exigido por '%s' n„o pÙde ser encontrado"
+msgstr "pacote '%s' √© requerido por %s e portanto n√£o ser√° descarregado"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
 msgstr ""
+"%s falhou em %s() para '%s', detalhes:\n"
+"  chamada: %s\n"
+"  erro: %s"
 
-#, fuzzy
 msgid "name space cannot be unloaded:"
-msgstr "espaÁo de nomes '%s' n„o carregado"
+msgstr "espa√ßo de nomes n√£o pode ser descarregado"
 
-#, fuzzy
 msgid "converted to character string"
-msgstr "'file' deve ser NULL, uma conex„o ou uma string de caracteres"
+msgstr "convertido para cadeia de caracteres"
 
-#, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
-msgstr "padr„o de express„o regular '[' trocado por '\\\\['"
+msgstr "padr√£o de express√£o regular '[' substitu√≠do por  '\\\\['"
 
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-msgstr "trocado '[<-' por '\\\\[<-' em padr„o de express„o regular"
+msgstr "trocado '[<-' por '\\\\[<-' em padr√£o de express√£o regular"
 
 msgid "RHS must be list"
-msgstr "lado direito da express„o deve ser uma lista"
+msgstr "lado direito da express√£o deve ser uma lista"
 
 msgid "an object with that name already exists"
-msgstr "um objeto com esse nome j· existe"
+msgstr "um objeto com esse nome j√° existe"
 
 msgid "autoloader did not find '%s' in '%s'"
-msgstr "autocarregador n„o encontrou '%s' em '%s'"
+msgstr "autocarregador n√£o encontrou '%s' em '%s'"
 
 msgid "invalid argument values in 'backsolve'"
-msgstr "argumentos de valores inv·lidos em 'backsolve'"
+msgstr "argumentos de valores inv√°lidos em 'backsolve'"
 
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "matriz singular em 'backsolve'. Primeiro zero na diagonal [%d]"
 
 msgid "complex matrices not permitted at present"
-msgstr "matrizes complexas n„o permitidas atualmente"
+msgstr "matrizes complexas n√£o permitidas atualmente"
 
 msgid "non-numeric argument to 'chol'"
-msgstr "argumento n„o numÈrico para 'chol'"
+msgstr "argumento n√£o num√©rico para 'chol'"
 
 msgid "non-square matrix in 'chol'"
-msgstr "matriz n„o quadrada em 'chol'"
+msgstr "matriz n√£o quadrada em 'chol'"
 
 msgid "non-matrix argument to 'chol'"
-msgstr "argumento n„o matricial para 'chol'"
+msgstr "argumento n√£o matricial para 'chol'"
 
 msgid "matrix not positive definite"
-msgstr "matriz n„o È positiva definida"
+msgstr "matriz n√£o √© positiva definida"
 
 msgid "non-positive definite matrix in 'chol'"
-msgstr "matriz n„oo positiva definida em 'chol'"
+msgstr "matriz n√£oo positiva definida em 'chol'"
 
 msgid "non-numeric argument to 'chol2inv'"
-msgstr "argumento n„o numÈrico para 'chol2inv'"
+msgstr "argumento n√£o num√©rico para 'chol2inv'"
 
 msgid "invalid 'size' argument in 'chol2inv'"
-msgstr "argumento 'size' inv·lido em 'chol2inv'"
+msgstr "argumento 'size' inv√°lido em 'chol2inv'"
 
 msgid "singular matrix in 'chol2inv'"
 msgstr "matriz singular em 'chol2inv'"
 
 msgid "'x' must be an array of at least two dimensions"
-msgstr "'x' deve ser um array de pelo menos duas dimensıes"
+msgstr "'x' deve ser um array de pelo menos duas dimens√µes"
 
 msgid "invalid 'dims'"
-msgstr "'dims' inv·lido"
+msgstr "'dims' inv√°lido"
 
 msgid "bad handler specification"
-msgstr "especificaÁ„o de handler inv·lido"
+msgstr "especifica√ß√£o de handler inv√°lido"
 
 msgid "no 'restart' '%s' found"
 msgstr "nenhum 'restart' '%s' encontrado"
 
 msgid "not an interactive session"
-msgstr "n„o È uma seÁ„o interativa"
+msgstr "n√£o √© uma se√ß√£o interativa"
 
 msgid "not a valid restart specification"
-msgstr "especificaÁ„o de reinÌcio inv·lida"
+msgstr "especifica√ß√£o de rein√≠cio inv√°lida"
 
 msgid "argument 'where' of length 0"
 msgstr "argumento 'where' com comprimento 0"
@@ -217,58 +212,55 @@ msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"
 
 msgid "can only truncate an open connection"
-msgstr "sÛ È possÌvel truncar uma conex„o aberta"
+msgstr "s√≥ √© poss√≠vel truncar uma conex√£o aberta"
 
 msgid "can only write vector objects"
-msgstr "sÛ È possÌvel escrever objetos do tipo vetor"
+msgstr "s√≥ √© poss√≠vel escrever objetos do tipo vetor"
 
 msgid "can only write character objects"
-msgstr "sÛ È possÌvel escrever objetos do tipo caracter"
+msgstr "s√≥ √© poss√≠vel escrever objetos do tipo caracter"
 
 msgid "supplied timeout must be NULL or a non-negative number"
-msgstr "tempo limite especificado deve ser NULL ou um n˙mero n„o negativo"
+msgstr "tempo limite especificado deve ser NULL ou um n√∫mero n√£o negativo"
 
-#, fuzzy
 msgid "'from' must be raw or character"
-msgstr "'normal.kind' deve ser uma string de caractres de tamanho 1."
+msgstr "'from' deve ser de tipo raw ou caractere"
 
 msgid "'x' must be numeric"
-msgstr "'x' deve ser numÈrico"
+msgstr "'x' deve ser num√©rico"
 
 msgid "invalid number of intervals"
-msgstr "n˙mero de intervalos inv·lido"
+msgstr "n√∫mero de intervalos inv√°lido"
 
 msgid "'breaks' are not unique"
-msgstr "'breaks' n„o s„o ˙nicos"
+msgstr "'breaks' n√£o s√£o √∫nicos"
 
 msgid "labels/breaks length conflict"
 msgstr "conflito de tamanho entre labels e breaks"
 
 msgid "invalid 'row.names' length"
-msgstr "'row.names' com comprimento inv·lido"
+msgstr "'row.names' com comprimento inv√°lido"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr "'row.names' duplicados n„o s„o permitidos"
+msgstr "'row.names' duplicados n√£o s√£o permitidos"
 
-#, fuzzy
 msgid "missing values in 'row.names' are not allowed"
-msgstr "'row.names' faltantes n„o s„o permitidos"
+msgstr "'row.names' com valores faltantes n√£o s√£o permitidos"
 
 msgid "invalid 'dimnames' given for data frame"
-msgstr "'dimnames' inv·lidos para um data frame"
+msgstr "'dimnames' inv√°lidos para um data frame"
 
-#, fuzzy
 msgid "cannot coerce class '%s' into a data.frame"
-msgstr "n„o È possÌvel fazer coerÁ„o de classe \"%s\" para data.frame"
+msgstr "n√£o √© poss√≠vel fazer coer√ß√£o de classe \"%s\" para um data.frame"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr "'row.names' inv·lido, comprimento %d para um data frame com %d linhas"
+msgstr "'row.names' inv√°lido, comprimento %d para um data frame com %d linhas"
 
 msgid "supplied %d row names for %d rows"
 msgstr "especificados %d nomes de linhas para %d linhas"
 
 msgid "options('stringsAsFactors') not set to TRUE or FALSE"
-msgstr ""
+msgstr "options('stringsAsFactors') n√£o definido como TRUE ou FALSE"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
@@ -281,68 +273,64 @@ msgid ","
 msgstr ","
 
 msgid "--> row.names NOT used"
-msgstr "--> row.names N√O utilizados"
+msgstr "--> row.names N√ÉO utilizados"
 
 msgid "row names contain missing values"
-msgstr "nomes de linhas contÈm valores faltantes"
+msgstr "nomes de linhas cont√©m valores faltantes"
 
 msgid "duplicate row.names:"
 msgstr "row.names duplicados:"
 
 msgid "arguments imply differing number of rows:"
-msgstr "argumentos implicam em n˙mero de linhas conflitantes:"
+msgstr "argumentos implicam em n√∫mero de linhas conflitantes:"
 
 msgid "row.names should specify one of the variables"
-msgstr "row.names deve especificar uma das vari·veis"
+msgstr "row.names deve especificar uma das vari√°veis"
 
 msgid "row names supplied are of the wrong length"
 msgstr "nomes de linhas especificado com comprimento errado"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
-"nomes de linhas foram encontrados em uma vari·vel curta e foram descartados"
+"nomes de linhas foram encontrados em uma vari√°vel curta e foram descartados"
 
-#, fuzzy
 msgid "named arguments other than 'drop' are discouraged"
-msgstr "'row.names' faltantes n„o s„o permitidos"
+msgstr "argumentos nomeados a n√£o ser 'drop' s√£o desencorajados"
 
 msgid "drop argument will be ignored"
-msgstr "argumento 'drop' ser· ignorado"
+msgstr "argumento 'drop' ser√° ignorado"
 
 msgid "undefined columns selected"
 msgstr "colunas indefinidas selecionadas"
 
-#, fuzzy
 msgid "named arguments other than 'exact' are discouraged"
-msgstr "'row.names' faltantes n„o s„o permitidos"
+msgstr "argumentos nomeados tirando 'exact' s√£o desencorajados"
 
-#, fuzzy
 msgid "named arguments are discouraged"
-msgstr "'row.names' duplicados n„o s„o permitidos"
+msgstr "argumentos nomeados s√£o desencorajados"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr ""
-"o lado direito da express„o tem o comprimento errado para indexaÁ„o atravÈs "
-"de uma matriz lÛgica"
+"o lado direito da express√£o tem o comprimento errado para indexa√ß√£o atrav√©s "
+"de uma matriz l√≥gica"
 
 msgid "only logical matrix subscripts are allowed in replacement"
-msgstr "somente subscritos lÛgicos matriciais s„o permitidos na substituiÁ„o"
+msgstr "somente subscritos l√≥gicos matriciais s√£o permitidos na substitui√ß√£o"
 
 msgid "need 0, 1, or 2 subscripts"
-msgstr "s„o necess·rios 0, 1 ou 2 subscritos"
+msgstr "s√£o necess√°rios 0, 1 ou 2 subscritos"
 
 msgid ""
 "missing values are not allowed in subscripted assignments of data frames"
 msgstr ""
-"valores faltantes n„o s„o permitidos em atribuiÁıes com subscrito de data "
+"valores faltantes n√£o s√£o permitidos em atribui√ß√µes com subscrito de data "
 "frames"
 
 msgid "non-existent rows not allowed"
-msgstr "linhas n„o existentes n„o permitidas"
+msgstr "linhas n√£o existentes n√£o permitidas"
 
-#, fuzzy
 msgid "column name \"\" cannot match any column"
-msgstr "mais nomes de colunas que colunas"
+msgstr "nome de coluna \"\" n√£o corresponde a nenhuma coluna"
 
 msgid "new columns would leave holes after existing columns"
 msgstr "novas colunas deixariam buracos em cima das colunas existentes"
@@ -351,18 +339,18 @@ msgid "duplicate subscripts for columns"
 msgstr "subscritos duplicados para colunas"
 
 msgid "replacement has %d rows, data has %d"
-msgstr "substituto tem %d linhas, dados tÍm %d"
+msgstr "substituto tem %d linhas, dados t√™m %d"
 
 msgid "replacement has %d items, need %d"
 msgstr "substituto tem %d itens, dados tem %d"
 
 msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
 msgstr ""
-"elemento substituto %d È uma matriz/data frame com %d linhas, %d s„o "
-"necess·rias"
+"elemento substituto %d √© uma matriz/data frame com %d linhas, %d s√£o "
+"necess√°rias"
 
 msgid "replacement element %d has %d rows, need %d"
-msgstr "elemento substituto %d tem %d linhas, mas %d s„o necess·rias"
+msgstr "elemento substituto %d tem %d linhas, mas %d s√£o necess√°rias"
 
 msgid "replacement element %d has %d rows to replace %d rows"
 msgstr "elemento substituto %d tem %d linhas para substituir %d linhas"
@@ -371,39 +359,38 @@ msgid "%d rows in value to replace %d rows"
 msgstr "%d linhas no valor para substituir %d linhas"
 
 msgid "replacement data has %d rows to replace %d rows"
-msgstr "dados substitutos tÍm %d linhas para substituir %d linhas"
+msgstr "dados substitutos t√™m %d linhas para substituir %d linhas"
 
 msgid "provided %d variables to replace %d variables"
-msgstr "especificadas %d vari·veis para substituir %d vari·veis"
+msgstr "especificadas %d vari√°veis para substituir %d vari√°veis"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr "as ˙nicas chamadas v·lidas s„o x[[j]] <- valor ou x[[i,j]] <- valor"
+msgstr "as √∫nicas chamadas v√°lidas s√£o x[[j]] <- valor ou x[[i,j]] <- valor"
 
 msgid "replacing element in non-existent column:"
-msgstr "substituindo elemento em coluna n„o existente:"
+msgstr "substituindo elemento em coluna n√£o existente:"
 
 msgid "only a single element should be replaced"
-msgstr "somente um ˙nico elemento deve ser substituido"
+msgstr "somente um √∫nico elemento deve ser substituido"
 
-#, fuzzy
 msgid "names do not match previous names"
-msgstr "nomes n„o pareiam com os nomes anteriores:"
+msgstr "nomes n√£o correspondem aos nomes anteriores"
 
 msgid "numbers of columns of arguments do not match"
-msgstr ""
+msgstr "n√∫meros de colunas dos argumentos n√£o correspondem"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
-"argumento lista inv·lido: todas as vari·veis devem ter o mesmo comprimento"
+"argumento lista inv√°lido: todas as vari√°veis devem ter o mesmo comprimento"
 
 msgid "data frame with 0 columns and %d rows"
-msgstr ""
+msgstr "data frame com 0 colunas e %d  linhas"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr "<0 linhas> (ou row.names de comprimento 0)"
 
 msgid "non-numeric variable in data frame:"
-msgstr "vari·vel n„o numÈrica no data frame:"
+msgstr "vari√°vel n√£o num√©rica no data frame:"
 
 msgid "only defined for equally-sized data frames"
 msgstr "definido somente para data frames com tamanhos iguais"
@@ -411,45 +398,43 @@ msgstr "definido somente para data frames com tamanhos iguais"
 msgid "list of length %d not meaningful"
 msgstr "lista de comprimento %d sem sentido"
 
-#, fuzzy
 msgid "only defined on a data frame with all numeric variables"
 msgstr ""
-"somente definido para um data frame com todas as vari·veis numÈricas ou "
+"somente definido para um data frame com todas as vari√°veis num√©ricas ou "
 "complexas"
 
 msgid "character string is not in a standard unambiguous format"
-msgstr "string de caracteres n„o È um formato padr„o n„o ambÌguo"
+msgstr "string de caracteres n√£o √© um formato padr√£o n√£o amb√≠guo"
 
-#, fuzzy
 msgid "'origin' must be supplied"
-msgstr "'from' deve ser especificado"
+msgstr "'origin' deve ser especificado"
 
 msgid "do not know how to convert '%s' to class \"Date\""
-msgstr "n„o sei como converter '%s' para classe \"Date\""
+msgstr "n√£o sei como converter '%s' para classe \"Date\""
 
 msgid "'%s' is not a \"date\" object"
-msgstr "'%s' n„o È um objeto \"date\""
+msgstr "'%s' n√£o √© um objeto \"date\""
 
 msgid "'%s' is not a \"dates\" object"
-msgstr "'%s' n„o È um objeto \"dates\""
+msgstr "'%s' n√£o √© um objeto \"dates\""
 
 msgid "binary + is not defined for Date objects"
-msgstr "+ bin·rio n„o est· definido para objetos Date"
+msgstr "+ bin√°rio n√£o est√° definido para objetos Date"
 
 msgid "Can only subtract from Date objects"
-msgstr "SÛ È possÌvel subtrair de objetos Date"
+msgstr "S√≥ √© poss√≠vel subtrair de objetos Date"
 
 msgid "unary - is not defined for Date objects"
-msgstr "- un·rio n„o est· definido para objetos Date"
+msgstr "- un√°rio n√£o est√° definido para objetos Date"
 
 msgid "can only subtract numbers from Date objects"
-msgstr "sÛ È possÌvel subtrair n˙meros de objetos Date"
+msgstr "s√≥ √© poss√≠vel subtrair n√∫meros de objetos Date"
 
 msgid "unary"
-msgstr "un·rio"
+msgstr "un√°rio"
 
 msgid "not defined for Date objects"
-msgstr "n„o definido para objetos Date"
+msgstr "n√£o definido para objetos Date"
 
 msgid "'from' must be specified"
 msgstr "'from' deve ser especificado"
@@ -479,22 +464,22 @@ msgid "'by' must be of length 1"
 msgstr "'by' deve ter comprimento 1"
 
 msgid "invalid 'by' string"
-msgstr "string 'by' inv·lida"
+msgstr "string 'by' inv√°lida"
 
 msgid "invalid string for 'by'"
-msgstr "string inv·lida para 'by'"
+msgstr "string inv√°lida para 'by'"
 
 msgid "invalid mode for 'by'"
-msgstr "modo inv·lido para 'by'"
+msgstr "modo inv√°lido para 'by'"
 
 msgid "'by' is NA"
-msgstr "'by' È NA"
+msgstr "'by' √© NA"
 
 msgid "'x' must be a date-time object"
 msgstr "'x' deve ser um objeto date-time"
 
 msgid "invalid specification of 'breaks'"
-msgstr "especificaÁ„o de 'breaks' inv·lida"
+msgstr "especifica√ß√£o de 'breaks' inv√°lida"
 
 msgid "'origin' must be of length one"
 msgstr "'origin' deve ter comprimento 1"
@@ -503,64 +488,55 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' e differences' devem ser inteiros >= 1"
 
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
-msgstr "n„o sei como converter '%s' para classe \"POSIXlt\""
+msgstr "n√£o sei como converter '%s' para classe \"POSIXlt\""
 
-#, fuzzy
 msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "n„o sei como converter '%s' para classe \"POSIXlt\""
+msgstr "n√£o sei como converter '%s' para classe \"POSIXct\""
 
 msgid "wrong class"
 msgstr "classe errada"
 
-#, fuzzy
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr "+ bin·rio n„o definido para objetos \"POSIXt\""
+msgstr "'+' bin√°rio n√£o definido para objetos \"POSIXt\""
 
 msgid "Can only subtract from POSIXt objects"
-msgstr "SÛ È possÌvel subtrair de objetos POSIXt"
+msgstr "S√≥ √© poss√≠vel subtrair de objetos POSIXt"
 
-#, fuzzy
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr "- un·rio n„o definido para objetos \"POSIXt\""
+msgstr "'-' un√°rio n√£o definido para objetos \"POSIXt\""
 
 msgid "can only subtract numbers from POSIXt objects"
-msgstr "sÛ È possÌvel subtrair n˙meros de objetos POSIXt"
+msgstr "s√≥ √© poss√≠vel subtrair n√∫meros de objetos POSIXt"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr "- un·rio n„o definido para objetos \"POSIXt\""
+msgstr "'%s' un√°rio n√£o definido para objetos \"POSIXt\""
 
-#, fuzzy
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr "n„o definido para objetos \"POSIXt\""
+msgstr "'%s' definido para objetos \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
 msgstr "atributos 'tzone' inconsistentes"
 
-#, fuzzy
 msgid "'tim' is not character or numeric"
-msgstr "'%s' n„o È uma funÁ„o, caracter ou sÌmbolo"
+msgstr "'tim' n√£o √© caractere ou num√©rico"
 
 msgid "need explicit units for numeric conversion"
-msgstr ""
+msgstr "precisa explicitar unidades para convers√£o num√©rica"
 
-#, fuzzy
 msgid "invalid units specified"
-msgstr "especificaÁ„o de 'quote' inv·lida"
+msgstr "unidades inv√°lidas especificadas"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr "n„o definidos para objetos \"difftime\""
+msgstr "'%s' un√°rio n√£o definido para objetos 'difftime'"
 
-#, fuzzy
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "n„o definidos para objetos \"difftime\""
+msgstr "'%s' n√£o definidos para objetos \"difftime\""
 
 msgid "both arguments of * cannot be \"difftime\" objects"
-msgstr "ambos os argumentos de * n„o podem ser objetos \"difftime\""
+msgstr "ambos os argumentos de * n√£o podem ser objetos \"difftime\""
 
 msgid "second argument of / cannot be a \"difftime\" object"
-msgstr "segundo argumento de / n„o pode ser um objeto \"difftime\""
+msgstr "segundo argumento de / n√£o pode ser um objeto \"difftime\""
 
 msgid "'from' must be a POSIXt object"
 msgstr "'from' deve ser um objeto POSIXt"
@@ -569,7 +545,7 @@ msgid "'to' must be a POSIXt object"
 msgstr "'to' deve ser um objeto POSIXt"
 
 msgid "'file' must be a character string or connection"
-msgstr "'file' deve ser uma string de caracteres ou uma conex„o"
+msgstr "'file' deve ser uma string de caracteres ou uma conex√£o"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -577,6 +553,10 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"Formato DCF inv√°lido.\n"
+"Linhas regulares devem ter uma etiqueta.\n"
+"As linhas que n√£o est√£o no padr√£o come√ßam com:\n"
+"%s"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -584,19 +564,22 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
+"Formato DCF inv√°lido.\n"
+"Continua√ß√£o de linhas n√£o devem come√ßar um registro.\n"
+"As linhas que n√£o est√£o no padr√£o come√ßam com:\n"
+"%s"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' deve ser uma matriz quadrada"
 
 msgid "determinant not currently defined for complex matrices"
-msgstr "determinante atualmente n„o definido para matrizes complexas"
+msgstr "determinante atualmente n√£o definido para matrizes complexas"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "'nrow' ou 'ncol' n√£o pode ser especificado quando 'x' √© uma matriz "
 
-#, fuzzy
 msgid "'x' is an array, but not 1D."
-msgstr "primeiro argumento È array, n„o matriz"
+msgstr "'x' √© um array, mas n√£o unidimensional."
 
 msgid "only matrix diagonals can be replaced"
 msgstr "somente diagonais de matrizes podem ser substituidas"
@@ -605,13 +588,13 @@ msgid "replacement diagonal has wrong length"
 msgstr "a diagonal substituta tem o comprimento errado"
 
 msgid "'fromLast' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' deve ser TRUE ou FALSE"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
 msgid "is invalid for dim ="
-msgstr "È inv·lido para dim ="
+msgstr "√© inv√°lido para dim ="
 
 msgid "must pass a package name, DLLInfo or DllInfoReference object"
 msgstr ""
@@ -621,61 +604,60 @@ msgid "No DLL currently loaded with name or path"
 msgstr "Nenhuma DLL atualmente carregada com nome ou caminho"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
-msgstr "v·rias DLLs pareiam '%s'. Usando '%s'"
+msgstr "v√°rias DLLs pareiam '%s'. Usando '%s'"
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
 msgstr "DLL deve ser especificada via objeto DLLInfo. Veja getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr ""
-"funÁ„o n„o est· em um espaÁo de nomes, ent„o n„o È possÌvel localizar DLL "
+"fun√ß√£o n√£o est√° em um espa√ßo de nomes, ent√£o n√£o √© poss√≠vel localizar DLL "
 "associada"
 
 msgid ""
 "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
-"procurando por DLL para chamada de rotina nativa, mas n„o h· DLLs no espaÁo "
+"procurando por DLL para chamada de rotina nativa, mas n√£o h√° DLLs no espa√ßo "
 "de nomes da chamada"
 
 msgid "0 x 0 matrix"
 msgstr "matriz 0 x 0"
 
 msgid "non-square matrix in 'eigen'"
-msgstr "matriz n„o quadrada em 'eigen'"
+msgstr "matriz n√£o quadrada em 'eigen'"
 
 msgid "'ch' returned code %d in 'eigen'"
-msgstr "'ch' retornou cÛdigo %d em 'eigen'"
+msgstr "'ch' retornou c√≥digo %d em 'eigen'"
 
 msgid "'rs' returned code %d in 'eigen'"
-msgstr "'rs' retornou cÛdigo %d em 'eigen'"
+msgstr "'rs' retornou c√≥digo %d em 'eigen'"
 
 msgid "'cg' returned code %d in 'eigen'"
-msgstr "'cg' retornou cÛdigo %d em 'eigen'"
+msgstr "'cg' retornou c√≥digo %d em 'eigen'"
 
 msgid "'rg' returned code %d in 'eigen'"
-msgstr "'rg' retornou cÛdigo %d em 'eigen'"
+msgstr "'rg' retornou c√≥digo %d em 'eigen'"
 
 msgid "invalid labels; length %d should be 1 or %d"
-msgstr "rÛtulos inv·lidos; comprimento %d deve ser 1 ou %d"
+msgstr "r√≥tulos inv√°lidos; comprimento %d deve ser 1 ou %d"
 
 msgid "number of levels differs"
-msgstr "n˙mero de nÌveis difere"
+msgstr "n√∫mero de n√≠veis difere"
 
 msgid "not meaningful for factors"
-msgstr "n„o faz sentido para fatores"
+msgstr "n√£o faz sentido para fatores"
 
 msgid "level sets of factors are different"
-msgstr "conjunto de nÌveis dos fatores s„o diferentes"
+msgstr "conjunto de n√≠veis dos fatores s√£o diferentes"
 
 msgid "invalid factor level, NAs generated"
-msgstr "nÌvel de fator inv·lido, NAs gerados"
+msgstr "n√≠vel de fator inv√°lido, NAs gerados"
 
-#, fuzzy
 msgid "invalid factor level, NA generated"
-msgstr "nÌvel de fator inv·lido, NAs gerados"
+msgstr "n√≠vel de fator inv√°lido, NA gerado"
 
 msgid "'%s' is not meaningful for ordered factors"
-msgstr "'%s' n„o faz sentido para fatores ordenados"
+msgstr "'%s' n√£o faz sentido para fatores ordenados"
 
 msgid "no files to copy from"
 msgstr "nenhum arquivo de onde copiar"
@@ -686,18 +668,17 @@ msgstr "nenhum arquivo para onde copiar"
 msgid "more 'from' files than 'to' files"
 msgstr "mais arquivos 'from' do que 'to'"
 
-#, fuzzy
 msgid "'recursive' will be ignored"
-msgstr "argumento 'drop' ser· ignorado"
+msgstr "argumento 'recursive' ser√° ignorado"
 
 msgid "file can not be copied both 'from' and 'to'"
-msgstr "arquivo n„o pode ser copiado ao mesmo tempo em 'from' e 'to'"
+msgstr "arquivo n√£o pode ser copiado ao mesmo tempo em 'from' e 'to'"
 
 msgid "no files to link from"
-msgstr "nenhum arquivo para onde fazer a vinculaÁ„o"
+msgstr "nenhum arquivo para onde fazer a vincula√ß√£o"
 
 msgid "no files/directory to link to"
-msgstr "nenhum arquivo/diretÛrio para onde fazer a vinculaÁ„o"
+msgstr "nenhum arquivo/diret√≥rio para onde fazer a vincula√ß√£o"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve ter comprimento 1"
@@ -706,10 +687,10 @@ msgid "'vec' contains NAs"
 msgstr "'vec' contem NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
-msgstr "'vec' deve ser ordenado de forma n„o-decrescente"
+msgstr "'vec' deve ser ordenado de forma n√£o-decrescente"
 
 msgid "using the first element of 'value' of type expression"
-msgstr ""
+msgstr "usando o primeiro elemento de 'value' da express√£o de tipo"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' deve ser \"double\" (\"real\"), \"integer\" ou \"character\""
@@ -722,143 +703,138 @@ msgstr ""
 "'format' deve ser um dentre {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to"
-msgstr ""
+msgstr "'digits' reduzido para"
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' pode conter somente '0+- #'"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
-msgstr "data frame corrompido: colunas ser„o truncadas ou completadas com NAs"
+msgstr "data frame corrompido: colunas ser√£o truncadas ou completadas com NAs"
 
-#, fuzzy
 msgid "'zero.print' has length > 1"
-msgstr "'input' deve ter comprimento 1"
+msgstr "'zero.print' tem comprimento > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr ""
+msgstr "'zero.print' deve ser caractere, l√≥gico ou NULL"
 
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' deve poder ser avaliado logicamente"
 
 msgid "'subset' must be logical"
-msgstr "'subset' deve ser lÛgico"
+msgstr "'subset' deve ser l√≥gico"
 
 msgid "value for '"
 msgstr "valor para '"
 
 msgid "' not found"
-msgstr "' n„o encontrado"
+msgstr "' n√£o encontrado"
 
-#, fuzzy
 msgid "all arguments must be named"
-msgstr "todos os argumentos devem ter o mesmo comprimento"
+msgstr "todos os argumentos devem ser nomeados"
 
 msgid "'pattern' must be a non-empty character string"
-msgstr "'pattern' deve ser uma string de caracteres n„o vazia"
+msgstr "'pattern' deve ser uma string de caracteres n√£o vazia"
 
-#, fuzzy
 msgid "invalid multibyte string for 'pattern'"
-msgstr "string inv·lida para 'by'"
+msgstr "string multibyte inv√°lida para 'pattern'"
 
 msgid "'max.distance' must be non-negative"
-msgstr "'max.distance' deve ser n„o negativo"
+msgstr "'max.distance' deve ser n√£o negativo"
 
 msgid "unknown match distance components ignored"
-msgstr "componentes de pareamento de dist‚ncia desconhecidos ignorados"
+msgstr "componentes de pareamento de dist√¢ncia desconhecidos ignorados"
 
 msgid "'max.distance' components must be non-negative"
-msgstr "componentes de 'max.distance' devem ser n„o negativos"
+msgstr "componentes de 'max.distance' devem ser n√£o negativos"
 
 msgid "norm '%s' currently always uses exact = FALSE"
-msgstr ""
+msgstr "norma '%s' atualmente sempre usa exact = FALSE"
 
-#, fuzzy
 msgid "triangular matrix should be square"
-msgstr "matriz deve ser quadrada"
+msgstr "matriz triangular deve ser quadrada"
 
-#, fuzzy
 msgid "'object' must be a list"
-msgstr "'subset' deve ser lÛgico"
+msgstr "'object' deve ser uma lista"
 
 msgid "package '%s' has not been installed properly"
-msgstr "pacote '%s' n„o foi instalado corretamente"
+msgstr "pacote '%s' n√£o foi instalado corretamente"
 
-#, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
-"pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
+"pacote '%s' foi compilado antes do R 2.10.0: por favor instale-o novamente"
 
 msgid "This is R %s, package '%s' needs %s %s"
-msgstr "Esse È o R %s, o pacote '%s' precisa do %s %s"
+msgstr "Esse √© o R %s, o pacote '%s' precisa do %s %s"
 
 msgid "package '%s' was built under R version %s"
-msgstr "pacote '%s' foi compilado na vers„o do R %s"
+msgstr "pacote '%s' foi compilado na vers√£o do R %s"
 
 msgid "package '%s' was built for %s"
 msgstr "pacote '%s' foi compilado para %s"
 
-#, fuzzy
 msgid "package '%s' is not installed for 'arch=%s'"
-msgstr "pacote '%s' n„o foi instalado corretamente"
+msgstr "pacote '%s' n√£o foi instalado para 'arch=%s'"
 
 msgid ""
 "package '%s' has a license that you need to accept in an interactive session"
 msgstr ""
+"pacote '%s' tem uma licen√ßa que voc√™ precisa aceitar em uma sess√£o interativa"
 
 msgid "Package '%s' has a license that you need to accept after viewing"
 msgstr ""
+"Pacote '%s' tem uma licen√ßa que voc√™ precisa aceitar depois de visualiz√°-la"
 
 msgid ""
 "Package '%s' has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
+"Pacote '%s' tem uma licen√ßa que voc√™ precisa aceitar:\n"
+"de acordo com o arquivo DESCRIPTION"
 
 msgid "License"
-msgstr ""
+msgstr "Licen√ßa"
 
 msgid "License for package '%s' not accepted"
-msgstr ""
+msgstr "Licen√ßa para o pacote '%s' n√£o foi aceita"
 
 msgid "Attaching package: '%s'"
 msgstr "Anexando pacote: '%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
-msgstr ""
+msgstr "'verbose' e 'quietly' s√£o ambos verdadeiros; mantendo verbose ent√£o .."
 
-#, fuzzy
 msgid "invalid package name"
-msgstr "nome inv·lido"
+msgstr "nome de pacote inv√°lido"
 
 msgid "there is no package called '%s'"
-msgstr "n„o h· nenhum pacote chamado '%s'"
+msgstr "n√£o h√° nenhum pacote chamado '%s'"
 
 msgid "no library trees found in 'lib.loc'"
 msgstr "nenhuma biblioteca encontrada em 'lib.loc'"
 
-#, fuzzy
 msgid "'%s' is not a valid installed package"
-msgstr "'%s' n„o È uma escolha v·lida"
+msgstr "'%s' n√£o √© um pacote v√°lido instalado"
 
 msgid "'%s' not found on search path, using pos = 2"
-msgstr "'%s' n„o encontrado no caminho de procura, usando pos = 2"
+msgstr "'%s' n√£o encontrado no caminho de procura, usando pos = 2"
 
 msgid "package/namespace load failed for '%s'"
-msgstr "carregamento do pacote/espaÁo de nomes falhou para '%s'"
+msgstr "carregamento do pacote/espa√ßo de nomes falhou para '%s'"
 
 msgid "unable to load R code in package '%s'"
-msgstr "n„o foi possivel carregar cÛdigo R do pacote '%s'"
+msgstr "n√£o foi possivel carregar c√≥digo R do pacote '%s'"
 
 msgid "package '%s' contains no R code"
-msgstr "pacote '%s' n„o contem cÛdigo R"
+msgstr "pacote '%s' n√£o contem c√≥digo R"
 
 msgid ".First.lib failed for '%s'"
 msgstr ".First.lib falhou para '%s'"
 
 msgid "package '%s' already present in search()"
-msgstr "pacote '%s' j· presente em search()"
+msgstr "pacote '%s' j√° presente em search()"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRIPTION' tem o campo 'Encoding' e recodificaÁ„o n„o È possÌvel"
+msgstr "'DESCRIPTION' tem o campo 'Encoding' e recodifica√ß√£o n√£o √© poss√≠vel"
 
 msgid "%sPackages in library '%s':"
 msgstr "%sPacotes na biblioteca '%s':"
@@ -867,45 +843,37 @@ msgid "no packages found"
 msgstr "nenhum pacote encontrado"
 
 msgid "R packages available"
-msgstr "pacotes R disponÌveis"
+msgstr "pacotes R dispon√≠veis"
 
 msgid "DLL '%s' not found: maybe not installed for this architecture?"
-msgstr ""
+msgstr "DLL '%s' n√£o encontrada: talvez n√£o instalada para essa arquitetura?"
 
-#, fuzzy
 msgid "shared object '%s' not found"
-msgstr "%s n„o encontrado"
+msgstr "objeto compartilhado %s n√£o encontrado"
 
-#, fuzzy
 msgid "DLL '%s' already loaded"
-msgstr "biblioteca compartilhada '%s' j· carregada"
+msgstr "DLL '%s' j√° carregada"
 
-#, fuzzy
 msgid "shared object '%s' already loaded"
-msgstr "biblioteca compartilhada '%s' j· carregada"
+msgstr "objeto compartilhado '%s' j√° carregado"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "agora dyn.load(\"%s\") ..."
 
-#, fuzzy
 msgid "no DLL was specified"
-msgstr "nenhuma biblioteca compartilhada foi especificada"
+msgstr "nenhuma DLL foi especificada"
 
-#, fuzzy
 msgid "no shared object was specified"
-msgstr "nenhuma biblioteca compartilhada foi especificada"
+msgstr "nenhum objeto compartilhado foi especificado"
 
-#, fuzzy
 msgid "DLL '%s' was not loaded"
-msgstr "biblioteca compartilhada '%s' n„o foi carregada"
+msgstr "DLL '%s' n√£o foi carregada"
 
-#, fuzzy
 msgid "shared object '%s' was not loaded"
-msgstr "biblioteca compartilhada '%s' n„o foi carregada"
+msgstr "objeto compartilhado '%s' n√£o foi carregado"
 
-#, fuzzy
 msgid "DLL '%s' not found"
-msgstr "arquivo '%s' n„o encontrado"
+msgstr "DLL '%s' n√£o encontrada"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "agora dyn.unload(\"%s\") ..."
@@ -913,9 +881,8 @@ msgstr "agora dyn.unload(\"%s\") ..."
 msgid "Loading required package: %s"
 msgstr "Carregando pacotes exigidos: %s"
 
-#, fuzzy
 msgid "use of 'save' is deprecated"
-msgstr "'%s' È obsoleto."
+msgstr "uso de 'save' √© obsoleto"
 
 msgid "none of the packages are loaded"
 msgstr "nenhum dos pacotes foi carregado"
@@ -931,34 +898,34 @@ msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
 msgstr ""
-"Mais informaÁıes est„o disponÌveis nos seguintes vignettes no diretÛrio '%s':"
+"Mais informa√ß√µes est√£o dispon√≠veis nos seguintes vignettes no diret√≥rio '%s':"
 
 msgid "doc"
 msgstr "doc"
 
 msgid "Description:"
-msgstr "DescriÁ„o:"
+msgstr "Descri√ß√£o:"
 
 msgid "Index:"
-msgstr "Õndice:"
+msgstr "√çndice:"
 
 msgid "Information on package '%s'"
-msgstr "InformaÁ„o sobre o pacote '%s'"
+msgstr "Informa√ß√£o sobre o pacote '%s'"
 
 msgid "Documentation for package '%s'"
-msgstr "DocumentaÁ„o para o pacote '%s'"
+msgstr "Documenta√ß√£o para o pacote '%s'"
 
 msgid "package '%s' required by '%s' could not be found"
-msgstr "pacote '%s' exigido por '%s' n„o pÙde ser encontrado"
+msgstr "pacote '%s' exigido por '%s' n√£o p√¥de ser encontrado"
 
 msgid "package '%s' %s was found, but %s %s is required by '%s'"
-msgstr "pacote '%s' %s foi encontrado, mas %s %s È exigido por '%s'"
+msgstr "pacote '%s' %s foi encontrado, mas %s %s √© exigido por '%s'"
 
 msgid "package '%s' could not be loaded"
-msgstr "pacote '%s' n„o pÙde ser carregado"
+msgstr "pacote '%s' n√£o p√¥de ser carregado"
 
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
-msgstr "pacote '%s' %s est· carregado, mas %s %s È exigido por '%s'"
+msgstr "pacote '%s' %s est√° carregado, mas %s %s √© exigido por '%s'"
 
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "entrada foi corrompida, com LF substituido por CR"
@@ -967,61 +934,59 @@ msgid ""
 "file '%s' has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
+"arquivo '%s' tem n√∫mero m√°gico '%s'\n"
+"   Uso de vers√µes salvas antes da vers√£o 2 √© obsoleto"
 
 msgid "bad 'file' argument"
-msgstr "argumento 'file' inv·lido"
+msgstr "argumento 'file' inv√°lido"
 
 msgid "'file' must be specified"
 msgstr "'file' deve ser especificado"
 
 msgid "Use of save versions prior to 2 is deprecated"
-msgstr ""
+msgstr "Uso de vers√µes salvas antes da vers√£o 2 √© obsoleto"
 
 msgid "'file' must be non-empty string"
-msgstr "'file' deve ser uma string n„o vazia"
+msgstr "'file' deve ser uma string n√£o vazia"
 
 msgid "bad file argument"
-msgstr "argumento de arquivo inv·lido"
+msgstr "argumento de arquivo inv√°lido"
 
 msgid "can only save to a binary connection"
-msgstr "sÛ È possÌvel salvar em uma conex„o bin·ria"
+msgstr "s√≥ √© poss√≠vel salvar em uma conex√£o bin√°ria"
 
 msgid "image could not be renamed and is left in"
-msgstr "imagem n„o pÙde ser renomeada e foi mantida"
+msgstr "imagem n√£o p√¥de ser renomeada e foi mantida"
 
 msgid "[Previously saved workspace restored]"
-msgstr "[¡rea de trabalho anterior carregada]"
+msgstr "[√Årea de trabalho anterior carregada]"
 
 msgid "Attempting to load the environment '%s'"
-msgstr ""
+msgstr "Tentando carregar o ambiente '%s'"
 
 msgid "not found: using .GlobalEnv instead"
-msgstr ""
+msgstr "n√£o encontrado: usando .GlobalEnv em seu lugar"
 
 msgid "invalid 'category' argument"
-msgstr "argumento 'category' inv·lido"
+msgstr "argumento 'category' inv√°lido"
 
 msgid "must specify formal argument names to vectorize"
 msgstr "nomes de argumentos formais devem ser especificados para vetorizar"
 
-#, fuzzy
 msgid "'arg' must be NULL or a character vector"
-msgstr "'normal.kind' deve ser uma string de caractres de tamanho 1."
+msgstr "'arg' deve ser NULL ou um vetor caractere"
 
-#, fuzzy
 msgid "'arg' must be of length 1"
-msgstr "'from' deve ter comprimento 1"
+msgstr "'arg' deve ter comprimento 1"
 
-#, fuzzy
 msgid "'arg' must be of length >= 1"
-msgstr "'from' deve ter comprimento 1"
+msgstr "'arg' deve ter comprimento >= 1"
 
-#, fuzzy
 msgid "'arg' should be one of %s"
-msgstr "'arg' deve ser um dentre"
+msgstr "'arg' deve ser um dentre %s"
 
 msgid "there is more than one match in 'match.arg'"
-msgstr "h· mais de um pareamento em 'match.arg'"
+msgstr "h√° mais de um pareamento em 'match.arg'"
 
 msgid "no match"
 msgstr "nenhum pareamento"
@@ -1033,89 +998,86 @@ msgid "'input' and 'target' must be character vectors"
 msgstr "'input' e 'target' devem ser vetores de caracteres"
 
 msgid "'%s' is not a function, character or symbol"
-msgstr "'%s' n„o È uma funÁ„o, caracter ou sÌmbolo"
+msgstr "'%s' n√£o √© uma fun√ß√£o, caracter ou s√≠mbolo"
 
 msgid "found non-function '%s'"
-msgstr "encontrada n„o funÁ„o '%s'"
+msgstr "encontrada n√£o fun√ß√£o '%s'"
 
 msgid "attempt to set rownames on object with no dimensions"
-msgstr "tentativa de especificar nomes de linhas em um objeto sem dimensıes"
+msgstr "tentativa de especificar nomes de linhas em um objeto sem dimens√µes"
 
 msgid "attempt to set colnames on object with less than two dimensions"
 msgstr ""
 "tentativa de especificar nomes de colunas em um objeto com menos de duas "
-"dimensıes"
+"dimens√µes"
 
 msgid "argument is not numeric or logical: returning NA"
-msgstr "argumento n„o È numÈrico nem lÛgico: retornando NA"
+msgstr "argumento n√£o √© num√©rico nem l√≥gico: retornando NA"
 
-#, fuzzy
 msgid "'trim' must be numeric of length one"
-msgstr "'origin' deve ter comprimento 1"
+msgstr "'trim' deve ser num√©rico de comprimento 1"
 
 msgid "trimmed means are not defined for complex data"
-msgstr "mÈdias aparadas n„o s„o definidas para dados complexos"
+msgstr "m√©dias aparadas n√£o s√£o definidas para dados complexos"
 
 msgid "'by' must match numbers of columns"
-msgstr "'by' deve ser compatÌvel com o n˙mero de colunas"
+msgstr "'by' deve ser compat√≠vel com o n√∫mero de colunas"
 
 msgid "'by' must match number of columns"
-msgstr "'by' deve ser compatÌvel com o n˙mero de colunas"
+msgstr "'by' deve ser compat√≠vel com o n√∫mero de colunas"
 
-#, fuzzy
 msgid "'by' must specify column(s) as numbers, names or logical"
-msgstr "'by' deve especificar coluna(s)"
+msgstr "'by' deve especificar coluna(s) como n√∫meros, nomes ou l√≥gico"
 
 msgid "'by' must specify valid column(s)"
-msgstr "'by' deve especificar coluna(s) v·lida(s)"
+msgstr "'by' deve especificar coluna(s) v√°lida(s)"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
-msgstr "'by.x' e 'by.y' especificam n˙meros de colunas diferentes"
+msgstr "'by.x' e 'by.y' especificam n√∫meros de colunas diferentes"
 
 msgid "additional arguments ignored in message()"
-msgstr ""
+msgstr "argumentos adicionais ignorados em message()"
 
 msgid "(loaded the methods namespace)"
-msgstr ""
+msgstr "(carregado o espa√ßo de nomes de methods)"
 
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 msgstr ""
-"Rastreamento de funÁıes requer o pacote methods, mas n„o foi possÌvel "
-"carregar o seu espaÁo de nomes"
+"Rastreamento de fun√ß√µes requer o pacote methods, mas n√£o foi poss√≠vel "
+"carregar o seu espa√ßo de nomes"
 
 msgid "Expected a single logical value for the S4 state flag"
-msgstr ""
+msgstr "Esperado um √∫nico valor l√≥gico para o flag de estado S4"
 
 msgid "Expected a single logical value for the S3 state flag"
-msgstr ""
+msgstr "Esperado um √∫nico valor l√≥gico para o flag de estado S3"
 
 msgid "invalid to change the storage mode of a factor"
-msgstr ""
+msgstr "Inv√°lido mudar o modo de armazenamento de um fator"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
-msgstr "'%s' n„o È um objeto exportado de 'namespace:%s'"
+msgstr "'%s' n√£o √© um objeto exportado de 'namespace:%s'"
 
-#, fuzzy
 msgid "package %s has no name space and is not on the search path"
-msgstr "pacote '%s' n„o tem um espaı de nomes"
+msgstr ""
+"pacote '%s' n√£o tem um espa√ßo de nomes e n√£o est√° no caminho de procura"
 
 msgid "name space is already attached"
-msgstr "espaÁo de nomes j· est· anexo"
+msgstr "espa√ßo de nomes j√° est√° anexo"
 
 msgid "%s not found"
-msgstr "%s n„o encontrado"
+msgstr "%s n√£o encontrado"
 
 msgid "cyclic name space dependencies are not supported"
-msgstr "dependÍncias cÌclicas entre espaÁos de nomes n„o est„o implementadas"
+msgstr "depend√™ncias c√≠clicas entre espa√ßos de nomes n√£o est√£o implementadas"
 
 msgid "namespace '%s' is already sealed in loadNamespace"
-msgstr "espaÁo de nomes '%s' j· est· selado em loadNamespace"
+msgstr "espa√ßo de nomes '%s' j√° est√° selado em loadNamespace"
 
-#, fuzzy
 msgid "failed to assign RegisteredNativeSymbol for"
-msgstr "falha na atribuiÁ„o de NativeSymbolInfo para"
+msgstr "falha na atribui√ß√£o de RegisteredNativeSymbol para"
 
 msgid "to"
 msgstr "para"
@@ -1124,203 +1086,195 @@ msgid "since"
 msgstr "desde"
 
 msgid "is already defined in the"
-msgstr "j· est· definido no"
+msgstr "j√° est√° definido no"
 
 msgid "namespace"
-msgstr "espaÁo de nomes"
+msgstr "espa√ßo de nomes"
 
 msgid "failed to assign NativeSymbolInfo for"
-msgstr "falha na atribuiÁ„o de NativeSymbolInfo para"
+msgstr "falha na atribui√ß√£o de NativeSymbolInfo para"
 
 msgid "package '%s' does not have a name space"
-msgstr "pacote '%s' n„o tem um espaı de nomes"
+msgstr "pacote '%s' n√£o tem um espa√µ de nomes"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
 "%s"
 msgstr ""
+"exportClassPattern especificado em NAMESPACE mas nenhuma classe "
+"correspondente no pacote %s"
 
-#, fuzzy
 msgid "in package %s classes %s were specified for export but not defined"
-msgstr "em '%s' classes para expor~taÁ„o n„o definidas: %s"
+msgstr ""
+"no pacote %s classes %s foram especificadas para exporta√ß√£o mas n√£o foram "
+"definidas"
 
 msgid "in '%s' methods for export not found: %s"
-msgstr "em '%s' mÈtodos para exportaÁ„o n„o encontrados: %s"
+msgstr "em '%s' m√©todos para exporta√ß√£o n√£o encontrados: %s"
 
 msgid "multiple methods tables found for %s"
-msgstr ""
+msgstr "m√∫ltiplas tabelas de m√©todos encontradas para %s"
 
 msgid "failed to find metadata object for %s"
-msgstr ""
+msgstr "falha ao encontrar objeto de metadados para %s"
 
-#, fuzzy
 msgid "in package %s methods %s were specified for export but not defined"
-msgstr "em '%s' mÈtodos especificados para exportaÁ„o, mas nenhum definido: %s"
+msgstr ""
+"no pacote %s m√©todos %s foram especificados para exporta√ß√£o mas n√£o foram "
+"definidos"
 
 msgid "not found"
-msgstr "n„o encontrado"
+msgstr "n√£o encontrado"
 
 msgid "not loading a name space"
-msgstr "n„o carregando um espaÁo de nomes"
+msgstr "n√£o carregando um espa√ßo de nomes"
 
-#, fuzzy
 msgid "name space %s is imported by %s so cannot be unloaded"
-msgstr "espaÁo de nomes '%s' n„o carregado"
+msgstr "espa√ßo de nomes %s importado por %s ent√£o n√£o √© poss√≠vel descarregar"
 
 msgid "imperative name space directives are disabled"
-msgstr "diretivas imperativas de espaÁo de nomes est„o desabilitadas"
+msgstr "diretivas imperativas de espa√ßo de nomes est√£o desabilitadas"
 
 msgid "all objects in base name space are currently exported."
-msgstr "todos os objetos no espaÁo de nomes base est„o atualmente exportados"
+msgstr "todos os objetos no espa√ßo de nomes base est√£o atualmente exportados"
 
 msgid "can only export from a name space"
-msgstr "somente È possÌvel exportar a partir de um espaÁo de nomes"
+msgstr "somente √© poss√≠vel exportar a partir de um espa√ßo de nomes"
 
 msgid "not a name space"
-msgstr "n„o È um espaÁo de nomes"
+msgstr "n√£o √© um espa√ßo de nomes"
 
 msgid "operation not allowed on base name space"
-msgstr "operaÁ„o n„o permitida no espaÁo de nomes base"
+msgstr "opera√ß√£o n√£o permitida no espa√ßo de nomes base"
 
 msgid "duplicate import names"
-msgstr "nomes de importaÁ„o duplicados"
+msgstr "nomes de importa√ß√£o duplicados"
 
 msgid "replacing local value with import %s when loading %s"
-msgstr ""
+msgstr "substituindo valor local com import %s quando carregando %s"
 
 msgid "cannot import into a sealed name space"
-msgstr "n„o È possÌvel importar em um espaÁo de nomes selado"
+msgstr "n√£o √© poss√≠vel importar em um espa√ßo de nomes selado"
 
 msgid "replacing previous import %s when loading %s"
-msgstr ""
+msgstr "substituindo importa√ß√£o %s quando carregando %s"
 
 msgid "invalid import target"
-msgstr "alvo de importaÁ„o inv·lido"
+msgstr "alvo de importa√ß√£o inv√°lido"
 
 msgid "got invalid index for importing"
-msgstr ""
+msgstr "√≠ndice inv√°lido obtido para importa√ß√£o"
 
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
+"m√©todos encontrados para importar para fun√ß√£o %s mas n√£o o gen√©rico em si"
 
-#, fuzzy
 msgid "requested methods not found in environment/package %s: %s"
-msgstr ""
-"objetos exigidos do 'methods' n„o encontrados no ambiente/pacote '%s': %s"
+msgstr "m√©todos requeridos n√£o encontrados no ambiente/pacote %s: %s"
 
 msgid "cannot add to exports of a sealed name space"
-msgstr "n„o È possÌvel adicionar ‡ exportaÁ„o de um espaÁo de nomes selado"
+msgstr "n√£o √© poss√≠vel adicionar √† exporta√ß√£o de um espa√ßo de nomes selado"
 
-#, fuzzy
 msgid "undefined exports:"
-msgstr "exportaÁıes n„o definidas:"
+msgstr "exporta√ß√µes n√£o definidas:"
 
 msgid "package '%s' has no NAMESPACE file"
-msgstr "pacote '%s' n„o tem arquivo NAMESPACE"
+msgstr "pacote '%s' n√£o tem arquivo NAMESPACE"
 
-#, fuzzy
 msgid "empty name in directive '%s' in NAMESPACE file"
-msgstr "pacote '%s' n„o tem arquivo NAMESPACE"
+msgstr "nome vazio na diretiva '%s' do arquivo NAMESPACE"
 
-#, fuzzy
 msgid "duplicated symbol names %s in useDynlib(\"%s\")"
-msgstr "sÌmbolos de importaÁ„o duplicados"
+msgstr "nomes de s√≠mbolos duplicados %s em useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
-msgstr "diretiva 'S3method' inv·lida: %s"
+msgstr "diretiva 'S3method' inv√°lida: %s"
 
 msgid "too many 'S3method' directives"
 msgstr "diretivas 'S3method' demais"
 
 msgid "unknown namespace directive: %s"
-msgstr "diretiva de espaÁo de nomes desconhecida: %s"
+msgstr "diretiva de espa√ßo de nomes desconhecida: %s"
 
-#, fuzzy
 msgid "S3 method %s was declared but not found"
-msgstr "mÈtodo S3 %s foi declarado no NAMESPACE mas n„o encontrado"
+msgstr "m√©todo S3 %s foi declarado mas n√£o foi encontrado"
 
 msgid "bad method"
-msgstr "mÈtodo inv·lido"
+msgstr "m√©todo inv√°lido"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
-msgstr "objeto '%s' n„o encontrado enquanto carregando espaÁo de nomes '%s'"
+msgstr "objeto '%s' n√£o encontrado enquanto carregando espa√ßo de nomes '%s'"
 
-#, fuzzy
 msgid "found an S4 version of %s so it has not been imported correctly"
 msgstr ""
-"foi encontrada uma vers„o S4 de '%s', portanto ele n„o foi importado "
+"foi encontrada uma vers√£o S4 de '%s' portanto ele n√£o foi importado "
 "corretamente"
 
 msgid "'%s' is not implemented yet"
-msgstr "'%s' ainda n„o est· implementado"
+msgstr "'%s' ainda n√£o est√° implementado"
 
 msgid "argument '%s' is not used (yet)"
-msgstr "argumento '%s' (ainda) n„o È usado"
+msgstr "argumento '%s' (ainda) n√£o √© usado"
 
-#, fuzzy
 msgid "'x' cannot be coerced to 'octmode'"
-msgstr "n„o È possÌvel fazer coerÁ„o para tabela"
+msgstr "'x' n√£o √© coerc√≠vel para 'octmode'"
 
-#, fuzzy
 msgid "'x' cannot be coerced to hexmode"
-msgstr "n„o È possÌvel fazer coerÁ„o para tabela"
+msgstr "'x' n√£o √© coerc√≠vel para hexmode"
 
-#, fuzzy
 msgid "no arguments"
-msgstr "argumento errado"
+msgstr "sem argumentos"
 
 msgid "invalid 'n' value"
-msgstr "valor de 'n' inv·lido"
+msgstr "valor de 'n' inv√°lido"
 
 msgid "'shrink.sml' must be numeric > 0"
-msgstr "'shrink.sml' deve ser numÈrico > 0"
+msgstr "'shrink.sml' deve ser num√©rico > 0"
 
 msgid "'min.n' must be non-negative integer <= n"
-msgstr "'min.n' deve ser um inteiro n„o negativo <= n"
+msgstr "'min.n' deve ser um inteiro n√£o negativo <= n"
 
 msgid "'high.u.bias' must be non-negative numeric"
-msgstr "'high.u.bias' deve ser numÈrico n„o negativo"
+msgstr "'high.u.bias' deve ser num√©rico n√£o negativo"
 
 msgid "'u5.bias' must be non-negative numeric"
-msgstr "'u5.bias' deve ser n„o negativo numÈrico"
+msgstr "'u5.bias' deve ser n√£o negativo num√©rico"
 
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' deve ser 0, 1, ou 2"
 
 msgid "first argument must be a QR decomposition"
-msgstr "primeiro argumento deve ser uma decomposiÁ„o QR"
+msgstr "primeiro argumento deve ser uma decomposi√ß√£o QR"
 
 msgid "'qr' and 'y' must have the same number of rows"
-msgstr "'qr' e 'y' devem ter o mesmo n˙mero de linhas"
+msgstr "'qr' e 'y' devem ter o mesmo n√∫mero de linhas"
 
 msgid "exact singularity in 'qr.coef'"
 msgstr "singularidade exata em 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
-msgstr "argumento n„o È uma decomposiÁ„o QR"
+msgstr "argumento n√£o √© uma decomposi√ß√£o QR"
 
 msgid "not implemented for complex 'qr'"
-msgstr "n„o implementado para 'qr' complexo"
+msgstr "n√£o implementado para 'qr' complexo"
 
 msgid "not supported for LAPACK QR"
-msgstr "n„o disponÌvel para LAPACK QR"
+msgstr "n√£o dispon√≠vel para LAPACK QR"
 
 msgid "'k' is too large"
-msgstr "'k' È muito grande"
+msgstr "'k' √© muito grande"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr "necess·rio valor maior de 'ncol', pois houve pivotamento"
+msgstr "necess√°rio valor maior de 'ncol', pois houve pivotamento"
 
-#, fuzzy
 msgid "'x' must be an atomic vector"
-msgstr "'x' deve ser um vetor"
+msgstr "'x' deve ser um vetor at√¥mico"
 
 msgid "invalid 'rle' structure"
-msgstr "estrutura 'rle' inv·lida"
+msgstr "estrutura 'rle' inv√°lida"
 
-#, fuzzy
 msgid "... must contain names or character strings"
-msgstr "'file' deve ser NULL, uma conex„o ou uma string de caracteres"
+msgstr "... deve conter nomes ou cadeia de caracteres"
 
 msgid "incorrect length for 'group'"
 msgstr "comprimento incorreto para 'group'"
@@ -1329,46 +1283,46 @@ msgid "missing values for 'group'"
 msgstr "valores faltantes para 'group'"
 
 msgid "not a data frame"
-msgstr "n„o È um data frame"
+msgstr "n√£o √© um data frame"
 
 msgid "length of 'center' must equal the number of columns of 'x'"
-msgstr "comprimento de 'center' deve ser igual ao n˙mero de colunas de 'x'"
+msgstr "comprimento de 'center' deve ser igual ao n√∫mero de colunas de 'x'"
 
 msgid "length of 'scale' must equal the number of columns of 'x'"
-msgstr "comprimento de 'scale' deve ser igual ao n˙mero de colunas de 'x'"
+msgstr "comprimento de 'scale' deve ser igual ao n√∫mero de colunas de 'x'"
 
 msgid "either specify 'nmax' or 'n', but not both."
-msgstr "especifique 'nmax' ou 'n', mas n„o ambos."
+msgstr "especifique 'nmax' ou 'n', mas n√£o ambos."
 
 msgid "invalid (to - from)/by in seq(.)"
-msgstr "(to-from)/by inv·lido em seq(.)"
+msgstr "(to-from)/by inv√°lido em seq(.)"
 
 msgid "wrong sign in 'by' argument"
 msgstr "sinal errado no argumento 'by'"
 
 msgid "'by' argument is much too small"
-msgstr "argumento 'by' È muito pequeno"
+msgstr "argumento 'by' √© muito pequeno"
 
 msgid "length must be non-negative number"
-msgstr "'length' deve ser um n˙mero n„o negativo"
+msgstr "'length' deve ser um n√∫mero n√£o negativo"
 
 msgid "too many arguments"
 msgstr "muitos argumentos"
 
 msgid "'connection' must be a connection"
-msgstr "'connection' deve ser uma conex„o"
+msgstr "'connection' deve ser uma conex√£o"
 
 msgid "'file' must be NULL or an already open connection"
-msgstr "'file' deve ser NULL ou uma conex„o j· aberta"
+msgstr "'file' deve ser NULL ou uma conex√£o j√° aberta"
 
 msgid "cannot split the message connection"
-msgstr "n„o È possÌvel quebrar a mensagem de conex„o"
+msgstr "n√£o √© poss√≠vel quebrar a mensagem de conex√£o"
 
 msgid "'file' must be NULL, a connection or a character string"
-msgstr "'file' deve ser NULL, uma conex„o ou uma string de caracteres"
+msgstr "'file' deve ser NULL, uma conex√£o ou uma string de caracteres"
 
 msgid "this is the \"qr\" method for the generic function solve()"
-msgstr "esse È o mÈtodo \"qr\" para a funÁ„o genÈrica solve()"
+msgstr "esse √© o m√©todo \"qr\" para a fun√ß√£o gen√©rica solve()"
 
 msgid "singular matrix 'a' in 'solve'"
 msgstr "matriz singular 'a' em 'solve'"
@@ -1376,9 +1330,8 @@ msgstr "matriz singular 'a' em 'solve'"
 msgid "only square matrices can be inverted"
 msgstr "somente matrizes quadradas podem ser invertidas"
 
-#, fuzzy
 msgid "'b' must be compatible with 'a'"
-msgstr "'by' deve ter comprimento 1"
+msgstr "'b' deve ser compat√≠vel com 'a'"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "solve.default chamado com um objeto \"qr\": use 'qr.solve'"
@@ -1390,21 +1343,23 @@ msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
 msgstr ""
+"'decreasing' deve ser um vetor l√≥gico de comprimento 1.\n"
+"Sua inten√ß√£o era definir 'partial'?"
 
 msgid "'index.return' only for non-factors"
-msgstr "'index.return' somente para n„o fatores"
+msgstr "'index.return' somente para n√£o fatores"
 
 msgid "'x' must be atomic"
-msgstr "'x' deve ser atÙmico"
+msgstr "'x' deve ser at√¥mico"
 
 msgid "'index.return' only for 'na.last = NA'"
 msgstr "'index.return' somente para 'na.last = NA'"
 
 msgid "unsupported options for partial sorting"
-msgstr "opÁıes n„o disponÌveis para ordenaÁ„o parcial"
+msgstr "op√ß√µes n√£o dispon√≠veis para ordena√ß√£o parcial"
 
 msgid "non-finite 'partial'"
-msgstr "'partial' n„o finito"
+msgstr "'partial' n√£o finito"
 
 msgid "argument lengths differ"
 msgstr "comprimentos dos argumentos diferem"
@@ -1413,55 +1368,59 @@ msgid ""
 "'x' must be atomic for 'sort.list'\n"
 "Have you called 'sort' on a list?"
 msgstr ""
+"'x' deve ser at√¥mico para 'sort.list'\n"
+"Voc√™ tentou usar 'sort' em uma lista?"
 
 msgid "method=\"quick\" is only for numeric 'x'"
-msgstr "method=\"quick\" somente para 'x' numÈrico"
+msgstr "method=\"quick\" somente para 'x' num√©rico"
 
 msgid "method=\"radix\" is only for integer 'x'"
 msgstr "method=\"radix\" somente para 'x' inteiro"
 
 msgid "'echo' must be logical"
-msgstr "'echo' deve ser lÛgico"
+msgstr "'echo' deve ser l√≥gico"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
-msgstr "'verbose' È TRUE, 'echo' n„o; ... fazendo 'echo <- TRUE'"
+msgstr "'verbose' √© TRUE, 'echo' n√£o; ... fazendo 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
-msgstr "n„o foi possÌvel achar uma codificaÁ„o plausÌvel"
+msgstr "n√£o foi poss√≠vel achar uma codifica√ß√£o plaus√≠vel"
 
 msgid "encoding = \"%s\" chosen"
-msgstr ""
+msgstr "codifica√ß√£o = \"%s\" escolhida"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr "'chdir = TRUE' n„o faz sentido para uma URL"
+msgstr "'chdir = TRUE' n√£o faz sentido para uma URL"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "n√£o √© poss√≠vel realizar 'chdir' pois o diret√≥rio atual √© desconhecido"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
-msgstr "'chdir = TRUE' n„o faz sentido para uma conex„o"
+msgstr "'chdir = TRUE' n√£o faz sentido para uma conex√£o"
 
 msgid "'%s' is not an existing file"
-msgstr "'%s' n„o È um arquivo existente"
+msgstr "'%s' n√£o √© um arquivo existente"
 
 msgid "Timestamp of '"
-msgstr ""
+msgstr "Carimbo de hora '"
 
 msgid "' has changed"
-msgstr ""
+msgstr "' mudou"
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
+msgstr "argumentos adicionais ignorados em stop()"
 
-#, fuzzy
 msgid "is not"
-msgstr "n„o È TRUE"
+msgstr "n√£o √©"
 
 msgid "all"
-msgstr ""
+msgstr "todo"
 
 msgid "TRUE"
-msgstr ""
+msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
-msgstr ""
+msgstr "argumentos adicionais ignorados em warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "valor incorreto para 'x'"
@@ -1473,7 +1432,7 @@ msgid "incorrect values of 'indent' and 'width'"
 msgstr "valores incorretos de 'indent' e 'width'"
 
 msgid "probably wrong encoding in names(.) of column"
-msgstr ""
+msgstr "provavelmente codifica√ß√£o errada no names(.) da coluna"
 
 msgid "'nv' must be 0 or ncol(x)"
 msgstr "'nv' deve ser 0 ou ncol(x)"
@@ -1482,13 +1441,13 @@ msgid "error %d in 'dsvdc'"
 msgstr "erro %d em 'dsvdc'"
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
-msgstr ""
+msgstr "STATS √© maior que o comprimento de 'dim(x)[MARGIN]'"
 
 msgid "STATS does not recycle exactly across MARGIN"
-msgstr ""
+msgstr "STATS n√£o recicla exatamente sobre MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr ""
+msgstr "length(STATS) ou dim(STATS) n√£o corresponde a dim(x)[MARGIN]"
 
 msgid "nothing to tabulate"
 msgstr "nada para tabular"
@@ -1503,19 +1462,19 @@ msgid "'x' must inherit from class \"summary.table\""
 msgstr "'x' deve herdar da classe \"summary.table\""
 
 msgid "cannot coerce into a table"
-msgstr "n„o È possÌvel fazer coerÁ„o para tabela"
+msgstr "n√£o √© poss√≠vel fazer coer√ß√£o para tabela"
 
 msgid "'x' is not an array"
-msgstr "'x' n„o È um array"
+msgstr "'x' n√£o √© um array"
 
 msgid "'bin' must be numeric or a factor"
-msgstr "'bin' deve ser numÈrico ou um fator"
+msgstr "'bin' deve ser num√©rico ou um fator"
 
 msgid "arguments must have same length"
 msgstr "argumentos devem ter o mesmo comprimento"
 
 msgid "handler must be a function"
-msgstr "manipulador deve ser uma funÁ„o"
+msgstr "manipulador deve ser uma fun√ß√£o"
 
 msgid "no such element '%s'"
 msgstr "nenhum elemento '%s'"
@@ -1524,195 +1483,190 @@ msgid "Removing"
 msgstr "Excluindo"
 
 msgid "Registering evaluate as low-level callback"
-msgstr "Registrando avaliaÁ„o como chamada de retorno em baixo nÌvel"
+msgstr "Registrando avalia√ß√£o como chamada de retorno em baixo n√≠vel"
 
 msgid "user"
-msgstr ""
+msgstr "usu√°rio"
 
 msgid "system"
-msgstr ""
+msgstr "sistema"
 
 msgid "elapsed"
-msgstr ""
+msgstr "decorrido"
 
 msgid "'width' must be positive"
 msgstr "'width' deve ser positivo"
 
 msgid "No traceback available"
-msgstr "Nenhum rastreamento disponÌvel"
+msgstr "Nenhum rastreamento dispon√≠vel"
 
 msgid "invalid version specification"
-msgstr "especificaÁ„o de vers„o inv·lida"
+msgstr "especifica√ß√£o de vers√£o inv√°lida"
 
 msgid "wrong argument"
 msgstr "argumento errado"
 
-#, fuzzy
 msgid "invalid value"
-msgstr "valor de 'n' inv·lido"
+msgstr "valor inv√°lido"
 
-#, fuzzy
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "n„o definido para objetos package_version"
+msgstr "'%s' un√°rio n√£o definido para objetos \"numeric_version\""
 
-#, fuzzy
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "n„o definido para objetos package_version"
+msgstr "'%s' n√£o definido para objetos \"numeric_version\" "
 
-#, fuzzy
 msgid "not defined for numeric_version objects"
-msgstr "n„o definido para objetos package_version"
+msgstr "n√£o definido para objetosnumeric_version"
 
 msgid "<0 elements>"
-msgstr ""
+msgstr "<0 elementos>"
 
 msgid "invalid 'digits'"
-msgstr "'digits' inv·lido"
+msgstr "'digits' inv√°lido"
 
 msgid ""
 "arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
 "Windows only"
 msgstr ""
+"argumentos 'show.output.on.console', 'minimized' e 'invisible' s√£o v√°lidos "
+"somente para Windows "
 
 msgid "'intern' must be TRUE or FALSE"
-msgstr ""
+msgstr "'intern' deve ser TRUE ou FALSE"
 
 msgid "'ignore.stdout' must be TRUE or FALSE"
-msgstr ""
+msgstr "'ignore.stdout' deve ser TRUE ou FALSE"
 
 msgid "'ignore.stderr' must be TRUE or FALSE"
-msgstr ""
+msgstr "'ignore.stderr' deve ser TRUE ou FALSE"
 
 msgid "'wait' must be TRUE or FALSE"
-msgstr ""
+msgstr "'wait' deve ser TRUE ou FALSE"
 
-#, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
-msgstr "'input' e 'target' devem ser vetores de caracteres"
+msgstr "'input'  deve ser um vetor de caracter ou 'NULL'"
 
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
-msgstr ""
+msgstr "argumentos 'minimized' e 'invisible' s√£o v√°lidos somente para Windows"
 
 msgid "setting stdout = TRUE"
-msgstr ""
+msgstr "definindo stdout = TRUE"
 
-#, fuzzy
 msgid "'stdout' must be of length 1"
-msgstr "'to' deve ter comprimento 1"
+msgstr "'stdout' deve ter comprimento 1"
 
-#, fuzzy
 msgid "'stderr' must be of length 1"
-msgstr "'to' deve ter comprimento 1"
+msgstr "'stderr' deve ter comprimento 1"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
-msgstr ""
+msgstr "'show.output.on.console' deve ser TRUE ou FALSE"
 
 msgid "'minimized' must be TRUE or FALSE"
-msgstr ""
+msgstr "'minimized' deve ser TRUE ou FALSE"
 
 msgid "'invisible' must be TRUE or FALSE"
-msgstr ""
+msgstr "'invisible' deve ser TRUE ou FALSE"
 
-#, fuzzy
 msgid "'%s' could not be run"
-msgstr "'cmd' n„o pÙde ser executado"
+msgstr "'%s' n√£o p√¥de ser executado"
 
-#, fuzzy
 msgid "'%s' execution failed with error code %d"
-msgstr "execuÁ„o de 'cmd' falhou com erro cÛdigo %d"
+msgstr "execu√ß√£o de '%s' falhou com c√≥digo de erro %d"
 
 msgid "-l option without value"
-msgstr ""
+msgstr "op√ß√£o -l sem valor"
 
-#, fuzzy
 msgid "ERROR: no packages specified"
-msgstr "nenhum pacote encontrado"
+msgstr "ERRO: nenhum pacote especificado"
 
 msgid "Removing from library"
-msgstr ""
+msgstr "Removendo da biblioteca"
 
 msgid "ERROR: cannot cd to directory"
-msgstr ""
+msgstr "ERRO: n√£o √© poss√≠vel entrar no diret√≥rio"
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
+msgstr "ERRO: sem permiss√£o para remover diret√≥rio"
 
 msgid "T used instead of TRUE"
-msgstr ""
+msgstr "T usado ao inv√©s de TRUE"
 
 msgid "F used instead of FALSE"
-msgstr ""
+msgstr "F usado ao inv√©s de FALSE"
 
 msgid "items"
-msgstr ""
+msgstr "itens"
 
-#, fuzzy
 msgid "have been removed from the search path"
-msgstr "'%s' n„o encontrado no caminho de procura, usando pos = 2"
+msgstr "foi removido do caminho de procura"
 
 msgid "cannot find name space environment"
-msgstr "n„o foi possÌvel encontrar o ambiente de espaÁo de nomes"
+msgstr "n√£o foi poss√≠vel encontrar o ambiente de espa√ßo de nomes"
 
 msgid "package '%s' has a non-function '.First.lib'"
-msgstr "pacote '%s' tem uma n„o fun„o '.FIrst.lib'"
+msgstr "pacote '%s' tem uma n√£o fun√£o '.FIrst.lib'"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
-msgstr[0] "opÁ„o de deparse %s n„o È reconhecida"
-msgstr[1] "opÁıes de deparse %s n„o s„o reconhecidas"
+msgstr[0] "op√ß√£o de deparse %s n√£o √© reconhecida"
+msgstr[1] "op√ß√µes de deparse %s n√£o s√£o reconhecidas"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
-msgstr[0] "biblioteca %s n„o contem pacotes"
-msgstr[1] "bibliotecas %s n„o contÈm pacotes"
+msgstr[0] "biblioteca %s n√£o contem pacotes"
+msgstr[1] "bibliotecas %s n√£o cont√©m pacotes"
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
-msgstr[0] "pacote %s n„o est· carregado"
-msgstr[1] "pacotes %s n„o est„o carregados"
+msgstr[0] "pacote %s n√£o est√° carregado"
+msgstr[1] "pacotes %s n√£o est√£o carregados"
 
-#, fuzzy
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "n„o h· nenhum pacote chamado '%s'"
-msgstr[1] "n„o h· nenhum pacote chamado '%s'"
+msgstr[0] "n√£o h√° nenhum pacote chamado"
+msgstr[1] "n√£o h√° pacotes chamados "
 
-#, fuzzy
 msgid "object %s not found"
 msgid_plural "objects %s not found"
-msgstr[0] "%s n„o encontrado"
-msgstr[1] "%s n„o encontrado"
+msgstr[0] "objeto %s n√£o encontrado"
+msgstr[1] "objetos %s n√£o encontrado"
 
-#, fuzzy
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
-msgstr[0] "objeto %s n„o est· exportado por 'namespace:%s'"
-msgstr[1] "objetos %s n„o est„o exportados por 'namespace:%s'"
+msgstr[0] "classe %s n√£o foi exportada por 'namespace:%s'"
+msgstr[1] "classes %s n√£o foram exportadas por 'namespace:%s'"
 
-#, fuzzy
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
-msgstr[0] "objeto %s n„o est· exportado por 'namespace:%s'"
-msgstr[1] "objetos %s n„o est„o exportados por 'namespace:%s'"
+msgstr[0] "objeto %s n√£o foi exportado por 'namespace:%s'"
+msgstr[1] "objetos %s n√£o foram exportados por 'namespace:%s'"
 
-#, fuzzy
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
-msgstr[0] "exportaÁ„o anterior %s substituida"
-msgstr[1] "exportaÁıes anteriores %s substituidas"
+msgstr[0] "exporta√ß√£o anterior '%s' substitu√≠da"
+msgstr[1] "exporta√ß√µes anteriores '%s' substitu√≠das"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
-msgstr[0] "mÈtodo S3 %s foi declarado no NAMESPACE mas n„o encontrado"
-msgstr[1] "mÈtodos S3 %s foram declarados no NAMESPACE mas n„o encontrados"
+msgstr[0] "m√©todo S3 %s foi declarado no NAMESPACE mas n√£o encontrado"
+msgstr[1] "m√©todos S3 %s foram declarados no NAMESPACE mas n√£o encontrados"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
 
+#~ msgid "target is %s, current is %s"
+#~ msgstr "alvo √© %s, atual √© %s"
+
+#~ msgid "no file found"
+#~ msgstr "nenhum arquivo encontrado"
+
+#~ msgid "save != FALSE is defunct"
+#~ msgstr "save != FALSE foi extinto"
+
 #~ msgid "shared library '%s' not found"
-#~ msgstr "biblioteca compartilhada '%s' n„o encontrada"
+#~ msgstr "biblioteca compartilhada '%s' n√£o encontrada"
 
 #, fuzzy
 #~ msgid ""
@@ -1723,18 +1677,18 @@ msgstr[1] "Mensagens de aviso:\n"
 
 #, fuzzy
 #~ msgid "invalid digits"
-#~ msgstr "'digits' inv·lido"
+#~ msgstr "'digits' inv√°lido"
 
 #, fuzzy
 #~ msgid "'x' must be of length 1"
 #~ msgstr "'to' deve ter comprimento 1"
 
 #~ msgid "argument to 'which' is not logical"
-#~ msgstr "argumento para 'which' n„o È lÛgico"
+#~ msgstr "argumento para 'which' n√£o √© l√≥gico"
 
 #, fuzzy
 #~ msgid "is not on the search path"
-#~ msgstr "'%s' n„o encontrado no caminho de procura, usando pos = 2"
+#~ msgstr "'%s' n√£o encontrado no caminho de procura, usando pos = 2"
 
 #~ msgid "in useDynLib("
 #~ msgstr "em useDynLib("
@@ -1743,23 +1697,23 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr ")"
 
 #~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
-#~ msgstr "mÈtodo S3 '%s' foi declarado no NAMESPACE mas n„o encontrado"
+#~ msgstr "m√©todo S3 '%s' foi declarado no NAMESPACE mas n√£o encontrado"
 
 #~ msgid "invalid name"
-#~ msgstr "nome inv·lido"
+#~ msgstr "nome inv√°lido"
 
 #~ msgid "is required by"
-#~ msgstr "È exigido por"
+#~ msgstr "√© exigido por"
 
 #~ msgid "(still attached)"
 #~ msgstr "(ainda anexado)"
 
 #, fuzzy
 #~ msgid "name space '%s' is still used by: %s"
-#~ msgstr "espaÁo de nomes '%s' ainda em uso por:"
+#~ msgstr "espa√ßo de nomes '%s' ainda em uso por:"
 
 #~ msgid "See the Note in ?library"
-#~ msgstr "Veja a observaÁ„o em ?library"
+#~ msgstr "Veja a observa√ß√£o em ?library"
 
 #, fuzzy
 #~ msgid "package was installed prior to 2.4.0 and must be re-installed"
@@ -1773,7 +1727,7 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "%s falhou em 'loadNamespace' para '%s'"
 
 #~ msgid "name space '%s' is loaded"
-#~ msgstr "espaÁo de nomes '%s' n„o carregado"
+#~ msgstr "espa√ßo de nomes '%s' n√£o carregado"
 
 #~ msgid "%s failed in unloadNamespace(%s)"
 #~ msgstr "%s falhou em unloadNamespace(%s)"
@@ -1788,16 +1742,16 @@ msgstr[1] "Mensagens de aviso:\n"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"
-#~ msgstr "argumento 'drop' ser· ignorado"
+#~ msgstr "argumento 'drop' ser√° ignorado"
 
 #~ msgid "numeric or complex values required in 'eigen'"
-#~ msgstr "valores numÈricos ou complexos exigidos em 'eigen'"
+#~ msgstr "valores num√©ricos ou complexos exigidos em 'eigen'"
 
 #~ msgid "argument to 'svd' must be numeric"
-#~ msgstr "argumento para 'svd' deve ser numÈrico"
+#~ msgstr "argumento para 'svd' deve ser num√©rico"
 
 #~ msgid "package '%s' has been merged into '%s'"
-#~ msgstr "pacote '%s' foi incluÌdo em '%s'"
+#~ msgstr "pacote '%s' foi inclu√≠do em '%s'"
 
 #~ msgid "package 'lqs' has been moved back to package 'MASS'"
 #~ msgstr "pacote 'lqs' foi movido de volta para o pacote 'MASS'"
@@ -1806,57 +1760,57 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "pacote 'MASS' foi carregado"
 
 #~ msgid "package 'MASS' seems to be missing from this R installation"
-#~ msgstr "pacote 'MASS' parece n„o estar disponÌvel nessa instalaÁ„o do R"
+#~ msgstr "pacote 'MASS' parece n√£o estar dispon√≠vel nessa instala√ß√£o do R"
 
 #~ msgid "there is no package called '%s', version %s"
-#~ msgstr "n„o h· nenhum pacote chamado '%s', vers„o %s"
+#~ msgstr "n√£o h√° nenhum pacote chamado '%s', vers√£o %s"
 
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
-#~ msgstr "'%s' n„o È um pacote v·lido -- instalado antes do R 2.0.0?"
+#~ msgstr "'%s' n√£o √© um pacote v√°lido -- instalado antes do R 2.0.0?"
 
 #~ msgid "non-numeric data type in frame"
-#~ msgstr "tipo de dados n„o numÈrico no frame"
+#~ msgstr "tipo de dados n√£o num√©rico no frame"
 
 #~ msgid "class information lost from one or more columns"
-#~ msgstr "informaÁ„o de classe perdida de uma ou mais colunas"
+#~ msgstr "informa√ß√£o de classe perdida de uma ou mais colunas"
 
 #~ msgid "not defined for POSIXt objects"
-#~ msgstr "n„o definido para objetos POSIXt"
+#~ msgstr "n√£o definido para objetos POSIXt"
 
 #~ msgid "not defined for \"POSIXct\" objects"
-#~ msgstr "n„o definido para objetos \"POSIXct\""
+#~ msgstr "n√£o definido para objetos \"POSIXct\""
 
 #~ msgid "not defined for \"POSIXlt\" objects"
-#~ msgstr "n„o definido para objetos \"POSIXlt\""
+#~ msgstr "n√£o definido para objetos \"POSIXlt\""
 
 #, fuzzy
 #~ msgid "'data' must exist"
-#~ msgstr "'subset' deve ser lÛgico"
+#~ msgstr "'subset' deve ser l√≥gico"
 
 #, fuzzy
 #~ msgid "names do not match previous names:"
-#~ msgstr "nomes n„o pareiam com os nomes anteriores:"
+#~ msgstr "nomes n√£o pareiam com os nomes anteriores:"
 
 #~ msgid "argument must be character"
 #~ msgstr "argumento deve ser caracter"
 
 #~ msgid "'all' can not be used with other deparse options"
-#~ msgstr "'all' n„o pode ser usado junto com outras opÁıes de deparse"
+#~ msgstr "'all' n√£o pode ser usado junto com outras op√ß√µes de deparse"
 
 #~ msgid "no rows to match"
 #~ msgstr "nenhuma linha para parear"
 
 #~ msgid "'form' must be a two-sided formula"
-#~ msgstr "'form' deve ser uma fÛrmula com dois lados"
+#~ msgstr "'form' deve ser uma f√≥rmula com dois lados"
 
 #~ msgid "no lines available in input"
-#~ msgstr "nenhuma linha disponÌvel na entrada"
+#~ msgstr "nenhuma linha dispon√≠vel na entrada"
 
 #~ msgid "empty beginning of file"
-#~ msgstr "comeÁo de arquivo vazio"
+#~ msgstr "come√ßo de arquivo vazio"
 
 #~ msgid "header and 'col.names' are of different lengths"
-#~ msgstr "'header' e 'col.names' tÍm comprimentos diferentes"
+#~ msgstr "'header' e 'col.names' t√™m comprimentos diferentes"
 
 #~ msgid "more columns than column names"
 #~ msgstr "mais colunas que nomes de colunas"
@@ -1868,7 +1822,7 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "nem todas as colunas com nome em 'colClasses' existem"
 
 #~ msgid "invalid numeric 'as.is' expression"
-#~ msgstr "express„o numÈrica 'as.is' inv·lida"
+#~ msgstr "express√£o num√©rica 'as.is' inv√°lida"
 
 #~ msgid "not all columns named in 'as.is' exist"
 #~ msgstr "nem todas as colunas nomeadas em 'as.is' existem"
@@ -1877,16 +1831,16 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "'as.is' tem o comprimento errado %d != cols = %d"
 
 #~ msgid "invalid 'row.names' specification"
-#~ msgstr "especificaÁ„o de 'row.names' inv·lida"
+#~ msgstr "especifica√ß√£o de 'row.names' inv√°lida"
 
 #~ msgid "invalid numbers in 'quote'"
-#~ msgstr "n˙meros inv·lidos em 'quote'"
+#~ msgstr "n√∫meros inv√°lidos em 'quote'"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
-#~ msgstr "col.names = NA n„o faz sentido com quando row.names = FALSE"
+#~ msgstr "col.names = NA n√£o faz sentido com quando row.names = FALSE"
 
 #~ msgid "invalid 'col.names' specification"
-#~ msgstr "especificaÁ„o de 'col.names' inv·lida"
+#~ msgstr "especifica√ß√£o de 'col.names' inv√°lida"
 
 #~ msgid "appending column names to file"
 #~ msgstr "acrescentando nomes de coluna no arquivo"
@@ -1899,13 +1853,13 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "cinco primeiras linhas vazias: desistindo"
 
 #~ msgid "invalid argument 'n'"
-#~ msgstr "argumento 'n' inv·lido"
+#~ msgstr "argumento 'n' inv√°lido"
 
 #~ msgid "invalid argument 'r'"
-#~ msgstr "argumento 'r' inv·lido"
+#~ msgstr "argumento 'r' inv√°lido"
 
 #~ msgid "invalid argument 'c'"
-#~ msgstr "argumento 'c' inv·lido"
+#~ msgstr "argumento 'c' inv√°lido"
 
 #~ msgid "arguments 'r' and 'c' must have the same sums"
 #~ msgstr "argumentos 'r' e 'c' devem ter a mesma soma"
@@ -1914,17 +1868,17 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgstr "nenhum dos pacotes foi encontrado"
 
 #~ msgid "no input is available"
-#~ msgstr "nenhuma entrada disponÌvel"
+#~ msgstr "nenhuma entrada dispon√≠vel"
 
 #~ msgid ""
 #~ "the input does not start with a magic number compatible with loading from "
 #~ "a connection"
 #~ msgstr ""
-#~ "a entrada n„o comeÁa com um n˙mero m·gico compatÌvel com carregamento a "
-#~ "partir de uma conex„o"
+#~ "a entrada n√£o come√ßa com um n√∫mero m√°gico compat√≠vel com carregamento a "
+#~ "partir de uma conex√£o"
 
 #~ msgid "calling wrong method"
-#~ msgstr "chamada do mÈtodo errado"
+#~ msgstr "chamada do m√©todo errado"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char: fazendo coerÁ„o de 'x' para 'character' "
+#~ msgstr "format.char: fazendo coer√ß√£o de 'x' para 'character' "

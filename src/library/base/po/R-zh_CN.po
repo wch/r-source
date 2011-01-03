@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-10-04 10:49\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1352,6 +1352,9 @@ msgstr "已经选择了encoding = \"%s\""
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE'对URL来说没有意义"
 
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "'chdir'没有作用，因为不知道目前的工作目录在哪里"
+
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE'对联结来说没有任何意义"
 
@@ -1601,9 +1604,6 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
-
-#~ msgid "cannot 'chdir' as current directory is unknown"
-#~ msgstr "'chdir'没有作用，因为不知道目前的工作目录在哪里"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "找不到共享图书馆'%s'"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
 "PO-Revision-Date: 2008-10-06 16:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -57,11 +57,11 @@ msgstr "Не-конечная контрольная точка в Xspline"
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:3270
+#: grid.c:3276
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:3356
+#: grid.c:3362
 msgid "Unable to clip to rotated rectangle"
 msgstr "Не могу обрезать повернутый четырехугольник"
 

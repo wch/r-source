@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.12.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-27 09:37\n"
-"PO-Revision-Date: 2010-09-27 09:37\n"
+"POT-Creation-Date: 2011-01-03 16:13\n"
+"PO-Revision-Date: 2011-01-03 16:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -78,6 +78,12 @@ msgstr "Cannot specify matrix() arguments when specifying .Data"
 
 msgid "Cannot specify array() arguments when specifying .Data"
 msgstr "Cannot specify array() arguments when specifying .Data"
+
+msgid "Can't have more than one unnamed argument as environment"
+msgstr "Can't have more than one unnamed argument as environment"
+
+msgid "Unnamed argument to new() must be an environment for the new object"
+msgstr "Unnamed argument to new() must be an environment for the new object"
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -1570,22 +1576,6 @@ msgstr ""
 "Field “%s” is not a valid field or method name for reference class “%s”"
 
 msgid ""
-"The class of field \"%s\" in the object is not compatible with the desired "
-"class \"%s\" in the target"
-msgstr ""
-"The class of field “%s” in the object is not compatible with the desired "
-"class “%s” in the target"
-
-msgid "\"%s\" is not a defined class in this environment"
-msgstr "“%s” is not a defined class in this environment"
-
-msgid "Invalid Class argument:  should be a single string"
-msgstr "Invalid Class argument:  should be a single string"
-
-msgid "\"%s\" is not one of the reference super classes for this object"
-msgstr "“%s” is not one of the reference super classes for this object"
-
-msgid ""
 "Method %s from class %s was not processed into a class method until being "
 "installed.  Possible corruption of the methods in the class."
 msgstr ""
@@ -1606,27 +1596,33 @@ msgid "\"%s\" is not a field in class \"%s\""
 msgstr "“%s” is not a field in class “%s”"
 
 msgid ""
+"The class of field \"%s\" in the object is not compatible with the desired "
+"class \"%s\" in the target"
+msgstr ""
+"The class of field “%s” in the object is not compatible with the desired "
+"class “%s” in the target"
+
+msgid "\"%s\" is not a defined class in this environment"
+msgstr "“%s” is not a defined class in this environment"
+
+msgid "Invalid Class argument:  should be a single string"
+msgstr "Invalid Class argument:  should be a single string"
+
+msgid "\"%s\" is not one of the reference super classes for this object"
+msgstr "“%s” is not one of the reference super classes for this object"
+
+msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
 msgstr ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
+
+msgid "\"%s\" is not a field in this class"
+msgstr "“%s” is not a field in this class"
 
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "Arguments to methods() must be named, or one named list"
-
-msgid "must give named list of refdefined fields"
-msgstr "must give named list of refdefined fields"
-
-msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
-msgstr "Only accessor fields can be replaced:  field “%s” has class “%s”"
-
-msgid ""
-"replacement for field \"%s\" must be an accessor function: got an object of "
-"class \"%s\""
-msgstr ""
-"replacement for field “%s” must be an accessor function: got an object of "
-"class “%s”"
 
 msgid ""
 "Topic \"%s\" is not a method name in class \"%s\"\n"
@@ -1634,6 +1630,14 @@ msgid ""
 msgstr ""
 "Topic “%s” is not a method name in class “%s”\n"
 "The class definition follows"
+
+msgid "Arguments must all be character string names of fieds"
+msgstr "Arguments must all be character string names of fieds"
+
+msgid ""
+"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
+msgstr ""
+"Field “%s”  of class “%s” has a non-default binding and cannot be locked"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1647,14 +1651,6 @@ msgstr "Field \""
 
 msgid "\" is read-only"
 msgstr "\" is read-only"
-
-msgid "Arguments must all be character string names of fieds"
-msgstr "Arguments must all be character string names of fieds"
-
-msgid ""
-"Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
-msgstr ""
-"Field “%s”  of class “%s” has a non-default binding and cannot be locked"
 
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
@@ -1703,6 +1699,15 @@ msgstr "(class “%s”)"
 
 msgid "for method %s()"
 msgstr "for method %s()"
+
+msgid ""
+"Local assignment to field name (%s) will not change the field: Did you mean "
+"to use \"<<-\"? \n"
+"( in method %s for class %s)"
+msgstr ""
+"Local assignment to field name (%s) will not change the field: Did you mean "
+"to use “<<-”? \n"
+"( in method %s for class %s)"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2010 The R Foundation
+# Copyright (C) 2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2010.
+# Automatically generated, 2011.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.12.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:19+0100\n"
-"PO-Revision-Date: 2010-09-17 09:19+0100\n"
+"POT-Creation-Date: 2011-01-03 16:13+0000\n"
+"PO-Revision-Date: 2011-01-03 16:13+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -470,14 +470,14 @@ msgstr "invalid ‘family’ parameter in %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "invalid ‘fonts’ parameter in %s"
 
-#: devPS.c:8029 devPS.c:8188 devWindows.c:3646 devWindows.c:3650
-#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
-#: devWindows.c:3689
+#: devPS.c:8029 devPS.c:8188 devWindows.c:3647 devWindows.c:3651
+#: devWindows.c:3659 devWindows.c:3670 devWindows.c:3676 devWindows.c:3683
+#: devWindows.c:3690
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "invalid value of ‘%s’"
 
-#: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3709
+#: devPS.c:8042 devPS.c:8109 devPS.c:8204 devPicTeX.c:800 devWindows.c:3710
 #, c-format
 msgid "unable to start %s() device"
 msgstr "unable to start %s() device"
@@ -613,48 +613,48 @@ msgstr "A clipboard metafile can store only one figure."
 msgid "metafile '%s' could not be created"
 msgstr "metafile ‘%s’ could not be created"
 
-#: devWindows.c:3092 devWindows.c:3733
+#: devWindows.c:3093 devWindows.c:3734
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3347
+#: devWindows.c:3348
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "option ‘windowsTimeouts’ should be integer"
 
-#: devWindows.c:3368
+#: devWindows.c:3369
 msgid "invalid device number in 'savePlot'"
 msgstr "invalid device number in ‘savePlot’"
 
-#: devWindows.c:3370
+#: devWindows.c:3371
 msgid "invalid device in 'savePlot'"
 msgstr "invalid device in ‘savePlot’"
 
-#: devWindows.c:3373
+#: devWindows.c:3374
 msgid "invalid filename argument in savePlot"
 msgstr "invalid filename argument in savePlot"
 
-#: devWindows.c:3378
+#: devWindows.c:3379
 msgid "invalid type argument in 'savePlot'"
 msgstr "invalid type argument in ‘savePlot’"
 
-#: devWindows.c:3405
+#: devWindows.c:3406
 msgid "unknown type in savePlot"
 msgstr "unknown type in savePlot"
 
-#: devWindows.c:3488 devWindows.c:3524 devWindows.c:3556 devWindows.c:3591
-#: devWindows.c:3616
+#: devWindows.c:3489 devWindows.c:3525 devWindows.c:3557 devWindows.c:3592
+#: devWindows.c:3617
 msgid "processing of the plot ran out of memory"
 msgstr "processing of the plot ran out of memory"
 
-#: devWindows.c:3504 devWindows.c:3537 devWindows.c:3570 devWindows.c:3603
+#: devWindows.c:3505 devWindows.c:3538 devWindows.c:3571 devWindows.c:3604
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossible to load Rbitmap.dll"
 
-#: devWindows.c:3576
+#: devWindows.c:3577
 msgid "Impossible to open "
 msgstr "Impossible to open "
 
-#: devWindows.c:3641
+#: devWindows.c:3642
 msgid "invalid 'width' or 'height'"
 msgstr "invalid ‘width’ or ‘height’"
 
