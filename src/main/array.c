@@ -60,12 +60,9 @@ SEXP GetColNames(SEXP dimnames)
 SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, ans, snr, snc, dimnames;
-    int nr = 1, nc = 1, byrow, lendat, nargs, miss_nr, miss_nc;
+    int nr = 1, nc = 1, byrow, lendat, miss_nr, miss_nc;
 
     checkArity(op, args);
-    nargs = length(args);
-    if(!(nargs  == 7 || nargs == 5))
-	error("incorrect number of arguments to 'matrix'");
     vals = CAR(args); args = CDR(args);
     /* Supposedly as.vector() gave a vector type, but we check */
     switch(TYPEOF(vals)) {
@@ -88,11 +85,9 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (byrow == NA_INTEGER)
 	error(_("invalid '%s' argument"), "byrow");
     dimnames = CAR(args);
-    if (nargs > 5) {
-	args = CDR(args);
-	miss_nr = asLogical(CAR(args)); args = CDR(args);
-	miss_nc = asLogical(CAR(args));
-    } else  miss_nr =  miss_nc = 0;
+    args = CDR(args);
+    miss_nr = asLogical(CAR(args)); args = CDR(args);
+    miss_nc = asLogical(CAR(args));
 
     if (!miss_nr) {
 	if (!isNumeric(snr)) error(_("non-numeric matrix extent"));
