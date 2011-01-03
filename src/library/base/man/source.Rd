@@ -1,10 +1,16 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{source}
 \title{Read R Code from a File or a Connection}
+\description{
+  \code{source} causes \R to accept its input from the named file or URL
+  or connection.  Input is read and \code{\link{parse}}d from that file
+  until the end of the file is reached, then the parsed expressions are
+  evaluated sequentially in the chosen environment.
+}
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
        verbose = getOption("verbose"),
@@ -19,7 +25,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{file}{a connection or a character string giving the pathname
     of the file or URL to read from.  \code{""} indicates the connection
     \code{\link{stdin}()}.}
-  \item{local}{if \code{local} is \code{FALSE}, the statements scanned
+  \item{local}{if \code{local} is \code{FALSE}, the parsed expressions
     are evaluated in the user's workspace (the global environment),
     otherwise in the environment calling \code{source}.}
   \item{echo}{logical; if \code{TRUE}, each expression is printed
@@ -41,20 +47,13 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{encoding}{character vector.  The encoding(s) to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"} when the encoding is guessed: see
-    the \sQuote{Details}.}
+    the \sQuote{Encodings} section.}
   \item{continue.echo}{character; gives the prompt to use on
     continuation lines if \code{echo = TRUE}.}
   \item{skip.echo}{integer; how many comment lines at the start of the
     file to skip if \code{echo = TRUE}.}
   \item{keep.source}{logical: should the source formatting be retained
     when echo expressions, if possible?}
-}
-\description{
-  \code{source} causes \R to accept its input from the named file or URL
-  (the name must be quoted) or connection.  Input is read and
-  \code{\link{parse}}d by from that file until the end of the file is
-  reached, then the parsed expressions are evaluated sequentially in the
-  chosen environment.
 }
 \details{
   Note that running code via \code{source} differs in a few respects
@@ -81,21 +80,6 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   function size and a nesting limit of 265.  Use \code{keep.source =
   FALSE} when these limits might take effect: if exceeded they generate
   an error.
-
-  This paragraph applies if \code{file} is a filename (rather than a
-  connection).  If \code{encoding = "unknown"}, an attempt is made to
-  guess the encoding: the result of \code{\link{localeToCharset}()} is
-  used as a guide.  If \code{encoding} has two or more elements, they
-  are tried in turn until the file/URL can be read without error in the
-  trial encoding.  If an actual \code{encoding} is specified (rather
-  than the default or \code{"unknown"}) then character strings in the
-  result will be translated to the current encoding, and marked as such
-  (see \code{\link{Encoding}}) in Latin-1 and UTF-8 locales.
-  
-  If \code{file} is a connection (including one specified by \code{""},
-  it is not possible to re-encode the input inside \code{source}, and so
-  the \code{encoding} argument is just used to mark character strings in the
-  parsed input: see \code{\link{parse}}.
   
   Unlike input from a console, lines in the file or on a connection can
   contain an unlimited number of characters.
@@ -108,6 +92,28 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   If \code{echo} is true and a deparsed expression exceeds
   \code{max.deparse.length}, that many characters are output followed by
   \code{ .... [TRUNCATED] }.  
+}
+\section{Encodings}{
+  By default the input is read and parsed in  the current encoding of
+  the \R session.  This is usually what it required, but occasionally
+  re-encoding is needed, e.g. if a file from a UTF-8-using system is to
+  be read on Windows (or \emph{vice versa}).
+  
+  The rest of this paragraph applies if \code{file} is an actual
+  filename or URL (and not \code{""} nor a connection).  If
+  \code{encoding = "unknown"}, an attempt is made to guess the encoding:
+  the result of \code{\link{localeToCharset}()} is used as a guide.  If
+  \code{encoding} has two or more elements, they are tried in turn until
+  the file/URL can be read without error in the trial encoding.  If an
+  actual \code{encoding} is specified (rather than the default or
+  \code{"unknown"}) in a Latin-1 or UTF-8 locale then character strings
+  in the result will be translated to the current encoding and marked as
+  such (see \code{\link{Encoding}}).
+  
+  If \code{file} is a connection (including one specified by \code{""},
+  it is not possible to re-encode the input inside \code{source}, and so
+  the \code{encoding} argument is just used to mark character strings in the
+  parsed input in Latin-1 and UTF-8 locales: see \code{\link{parse}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
