@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2010-09-21 15:11+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -83,6 +83,14 @@ msgid ""
 msgstr ""
 "es kann nur ein Parameter aus 'side=[\"left\", \"right\"]', 'row', 'row."
 "before' oder 'row.after' angegeben werden"
+
+#, fuzzy
+msgid "Invalid 'n'"
+msgstr "unzulässiger 'origin'"
+
+#, fuzzy
+msgid "Invalid 'f'"
+msgstr "ungültiger 'frame'"
 
 msgid "gpar element '%s' must not be length 0"
 msgstr "gpar element '%s' darf nicht Länge 0 haben"

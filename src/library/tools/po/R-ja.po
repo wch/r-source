@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-05 22:16\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: 2010-09-29 21:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -623,12 +623,6 @@ msgstr " 　は '--binary' 専用ですから無視されます "
 msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
-msgid "cannot coerce"
-msgstr " 強制変換できません "
-
-msgid "to logical"
-msgstr " 論理値へ"
-
 msgid "-l option without value"
 msgstr " 値のない -l オプション"
 
@@ -1069,6 +1063,12 @@ msgstr " '%s' を '%s' に対して実行出来ません "
 
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
+
+msgid "cannot coerce"
+msgstr " 強制変換できません "
+
+msgid "to logical"
+msgstr " 論理値へ"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "ファイル'DESCRIPTION'が見当たりません。 "

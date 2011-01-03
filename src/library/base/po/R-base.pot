@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1362,6 +1362,9 @@ msgid "nothing to tabulate"
 msgstr ""
 
 msgid "all arguments must have the same length"
+msgstr ""
+
+msgid "attempt to make a table with >= 2^31 elements"
 msgstr ""
 
 msgid "'object' must inherit from class \"table\""

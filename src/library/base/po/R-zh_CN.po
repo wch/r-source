@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1422,6 +1422,9 @@ msgstr "没有可列表的东西"
 
 msgid "all arguments must have the same length"
 msgstr "所有参数的长度都应一致"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr ""
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'object'必需从\"table\"繼承类别"

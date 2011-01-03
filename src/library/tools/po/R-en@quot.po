@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-05 22:16\n"
-"PO-Revision-Date: 2010-12-05 22:16\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
+"PO-Revision-Date: 2011-01-03 16:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -616,12 +616,6 @@ msgstr "are only for ‘--binary’  and will be ignored"
 msgid "Error: cannot rename directory to"
 msgstr "Error: cannot rename directory to"
 
-msgid "cannot coerce"
-msgstr "cannot coerce"
-
-msgid "to logical"
-msgstr "to logical"
-
 msgid "-l option without value"
 msgstr "-l option without value"
 
@@ -1052,6 +1046,12 @@ msgstr "unable to run ‘%s’ on ‘%s’"
 
 msgid "unable to run %s on '%s'"
 msgstr "unable to run %s on ‘%s’"
+
+msgid "cannot coerce"
+msgstr "cannot coerce"
+
+msgid "to logical"
+msgstr "to logical"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "File ‘DESCRIPTION’ is missing."

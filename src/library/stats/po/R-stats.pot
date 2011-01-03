@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -584,9 +584,6 @@ msgstr ""
 msgid "'merge' and 'height' do not fit!"
 msgstr ""
 
-msgid "we require a dendrogram"
-msgstr ""
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr ""
 
@@ -599,10 +596,28 @@ msgstr ""
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr ""
 
+msgid "we require a dendrogram"
+msgstr ""
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr ""
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
+msgstr ""
+
+msgid "extra argument %s is not a \"%s\""
+msgstr ""
+
+msgid "extra arguments %s are not \"%s\"s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "dendrogram"
+msgstr ""
+
+msgid "'height' must be at least %g, the maximal height of its components"
 msgstr ""
 
 msgid "'X' is not a dendrogram"
@@ -1020,9 +1035,6 @@ msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr ""
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "using F test with a %s family is inappropriate"
@@ -2248,6 +2260,11 @@ msgstr ""
 
 msgid        "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
 msgstr[0]    ""
 msgstr[1]    ""
 

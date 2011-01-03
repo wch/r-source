@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,6 +69,12 @@ msgid "Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col
 msgstr ""
 
 msgid "Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr ""
+
+msgid "Invalid 'n'"
+msgstr ""
+
+msgid "Invalid 'f'"
 msgstr ""
 
 msgid "gpar element '%s' must not be length 0"

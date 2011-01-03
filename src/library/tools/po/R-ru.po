@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-05 22:16\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -612,12 +612,6 @@ msgstr "только для '--binary' и будет пропущено"
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"
 
-msgid "cannot coerce"
-msgstr "нельзя соединить"
-
-msgid "to logical"
-msgstr "в логический"
-
 msgid "-l option without value"
 msgstr "-l опция без значения"
 
@@ -1053,6 +1047,12 @@ msgstr "не могу запустить '%s' на '%s'"
 
 msgid "unable to run %s on '%s'"
 msgstr "не могу запустить %s на '%s'"
+
+msgid "cannot coerce"
+msgstr "нельзя соединить"
+
+msgid "to logical"
+msgstr "в логический"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "Файл 'DESCRIPTION' пропущен."

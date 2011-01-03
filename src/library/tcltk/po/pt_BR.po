@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2010-03-26 08:42+0000\n"
+"PO-Revision-Date: 2010-11-15 18:58+0200\n"
+"Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+#: tcltk.c:63
+msgid "parse error in R expression"
+msgstr "erro de análise na expressão R"
+
+#: tcltk.c:159 tcltk.c:233
+msgid "tcl error.\n"
+msgstr "erro tcl.\n"
+
+#: tcltk.c:187 tcltk.c:702
+msgid "invalid argument"
+msgstr "argumento inválido"
+
+#: tcltk.c:284 tcltk.c:302 tcltk.c:372 tcltk.c:435 tcltk.c:487
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr "objeto tclObj inválido - talvez salvo em outra sessão?"
+
+#: tcltk.c:577
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr ""
+"lista de argumentos muito longa na função tcltk interna: 'callback_closure'"
+
+#: tcltk.c:610
+msgid "argument is not of correct type"
+msgstr "argumento não é do tipo correto"
+
+#: tcltk.c:661
+msgid "no DISPLAY variable so Tk is not available"
+msgstr "sem variável DISPLAY então Tk não está disponível"
+
+#: tcltk_unix.c:86
+msgid "Tcl already loaded"
+msgstr "Tcl já está carregado"
+
+#: tcltk_unix.c:107
+msgid "Tcl is not loaded"
+msgstr "Tcl não está carregado"
+
+# Handler ~ Gerenciador ?
+#: tcltk_unix.c:115
+msgid "Tcl is not last loaded handler"
+msgstr "Tcl não é o último gerenciador carregado"

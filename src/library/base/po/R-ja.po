@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1469,6 +1469,9 @@ msgstr " 表にするものが何もありません "
 
 msgid "all arguments must have the same length"
 msgstr " 全ての引数は同じ長さでなければなりません "
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr ""
 
 msgid "'object' must inherit from class \"table\""
 msgstr " 'object' はクラス \"table\" を継承しなければなりません "

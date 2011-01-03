@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-09-17 09:20\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2010-04-03 09:46+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,6 +80,14 @@ msgid ""
 msgstr ""
 " 'side=[\"top\", \"bottom\"]', 'row', 'row.before', 'row.after' のうち一つだ"
 "けを指定しなければいけません "
+
+#, fuzzy
+msgid "Invalid 'n'"
+msgstr " 不正な 'origin' です "
+
+#, fuzzy
+msgid "Invalid 'f'"
+msgstr " 不正な 'frame' です "
 
 msgid "gpar element '%s' must not be length 0"
 msgstr " gpar の要素 '%s' は長さ 0 にしてはいけません "

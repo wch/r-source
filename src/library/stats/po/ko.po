@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:17+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -49,16 +49,16 @@ msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
 msgid "maximum supported lag is 350"
 msgstr ""
 
-#: distance.c:152
+#: distance.c:155
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"):유한하지 않은 값을 NA로서 취급합니다"
 
-#: distance.c:221
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr "distance(): 부적절한 p"
 
-#: distance.c:224
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance() : 부적절한 distance"
 

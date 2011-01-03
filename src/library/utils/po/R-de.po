@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: 2010-09-22 15:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1074,6 +1074,21 @@ msgstr "Wenn nichts passiert, sollten Sie '%s' selbst öffnen"
 
 msgid "failed to create '%s'"
 msgstr "Erzeugen von '%s' fehlgeschlagen"
+
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr "kann temporäres Verzeichnis '%s' nicht erzeugen"
+
+msgid "restored '%s'"
+msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "kein 'libs' Verzeichnis in paket '%s'"

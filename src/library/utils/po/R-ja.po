@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: 2010-09-29 17:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1096,6 +1096,21 @@ msgstr " もし何も起きなければ、自分で '%s' を開いてくださ�
 
 msgid "failed to create '%s'"
 msgstr " '%s' を生成できませんでした "
+
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
+
+msgid "restored '%s'"
+msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "いかなる 'libs' ディレクトリもパッケージ '%s' 中にはありません "

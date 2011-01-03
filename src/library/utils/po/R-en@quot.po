@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
-"PO-Revision-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
+"PO-Revision-Date: 2011-01-03 16:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1081,6 +1081,22 @@ msgstr ""
 
 msgid "failed to create '%s'"
 msgstr "failed to create ‘%s’"
+
+msgid "ERROR: failed to lock directory"
+msgstr "ERROR: failed to lock directory"
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+"for modifying\n"
+"Try removing"
+
+msgid "ERROR: failed to create lock directory"
+msgstr "ERROR: failed to create lock directory"
+
+msgid "restored '%s'"
+msgstr "restored ‘%s’"
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "there is no ‘libs’ directory in package ‘%s’"

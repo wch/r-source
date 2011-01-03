@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52+0100\n"
+"POT-Creation-Date: 2011-01-03 16:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,15 +48,15 @@ msgstr ""
 msgid "maximum supported lag is 350"
 msgstr ""
 
-#: distance.c:152
+#: distance.c:155
 msgid "treating non-finite values as NA"
 msgstr ""
 
-#: distance.c:221
+#: distance.c:227
 msgid "distance(): invalid p"
 msgstr ""
 
-#: distance.c:224
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr ""
 

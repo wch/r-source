@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1445,6 +1445,9 @@ msgstr "нечего табулировать"
 
 msgid "all arguments must have the same length"
 msgstr "все аргументы должны иметь одинаковую длину"
+
+msgid "attempt to make a table with >= 2^31 elements"
+msgstr ""
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'объект' должен наследовать классу \"table\""

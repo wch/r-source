@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-05 22:16\n"
+"POT-Creation-Date: 2011-01-03 16:18\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -600,12 +600,6 @@ msgstr ""
 msgid "Error: cannot rename directory to"
 msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
 
-msgid "cannot coerce"
-msgstr ""
-
-msgid "to logical"
-msgstr ""
-
 msgid "-l option without value"
 msgstr ""
 
@@ -1053,6 +1047,12 @@ msgstr "'%s'에서 bibtex를 실행할 수 없습니다"
 #, fuzzy
 msgid "unable to run %s on '%s'"
 msgstr "'%s'에서 bibtex를 실행할 수 없습니다"
+
+msgid "cannot coerce"
+msgstr ""
+
+msgid "to logical"
+msgstr ""
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr ""

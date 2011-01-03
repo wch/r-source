@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2011-01-03 16:17\n"
 "PO-Revision-Date: 2010-04-09 16:55-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -87,6 +87,14 @@ msgid ""
 msgstr ""
 "Вы должны задать в точности один из 'side=[\"top\", \"bottom\"]', 'строка', "
 "'строка.before', или 'строка.after'"
+
+#, fuzzy
+msgid "Invalid 'n'"
+msgstr "Неправильный 'origin'"
+
+#, fuzzy
+msgid "Invalid 'f'"
+msgstr "Неправильная 'frame'"
 
 msgid "gpar element '%s' must not be length 0"
 msgstr "элемент gpar '%s' не должен быть нулевой длины"
