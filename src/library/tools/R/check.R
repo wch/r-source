@@ -225,7 +225,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(bad))
             bad_files <- c(bad_files, (allfiles[is_man])[bad])
         bad <- tolower(basename(allfiles[!is_man]))
-        bad <- grepl("^(con|prn|aux|clock$|nul|lpt[1-9]|com[1-9])$", bad)
+        bad <- grepl("^(con|prn|aux|clock[$]|nul|lpt[1-9]|com[1-9])$", bad)
         bad_files <- c(bad_files, (allfiles[!is_man])[bad])
         if (length(bad_files)) {
             errorLog(Log)
