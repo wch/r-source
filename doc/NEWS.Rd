@@ -211,11 +211,6 @@
       documented.  In previous versions it copied attributes (such as
       dimensions) from the \code{p} argument: now it only copies names.
 
-      \item \code{identical} could in rare cases generate a warning
-      about non-pairlist attributes on CHARSXPs. As these are used for
-      internal purposes, the attribute check should be
-      skipped. (Reported by Niels Richard Hansen).
-
       \item On PDF and PostScript devices, a line width of zero was
       recorded verbatim and this caused problems for some viewers
       (a very thin line combined with a non-solid line dash pattern
@@ -223,16 +218,6 @@
       now limited at 0.01 and for very thin lines with complex dash
       patterns the device may force the line dash pattern to be solid.
       (Reported by Jari Oksanen.)
-
-      \item The \code{plot.TukeyHSD} function now uses a line width of
-      0.5 for its reference lines, rather than \samp{lwd=0}.
-
-      \item The \code{big.mark} argument to \code{prettyNum()},
-      \code{format()}, etc. was inserted reversed if it was more than
-      one character long.
-
-      \item \command{R CMD check} failed to check the filenames under
-      \file{man} for Windows' reserved names.
     }
   }
 }
@@ -240,6 +225,11 @@
 \section{CHANGES IN R VERSION 2.12.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{identical} could in rare cases generate a warning
+      about non-pairlist attributes on CHARSXPs. As these are used for
+      internal purposes, the attribute check should be
+      skipped. (Reported by Niels Richard Hansen).
+
       \item If the extension was not included in a call to
       \code{Sweave()}, source references would not work properly, and the
       \code{keep.source} option failed. (\PR{14459})
@@ -248,6 +238,17 @@
 
       \item \code{pretty(x)} no longer raises an error when \code{x}
       contains solely non-finite values. (\PR{14468})
+
+      \item The \code{plot.TukeyHSD} function now uses a line width of
+      0.5 for its reference lines rather than \samp{lwd = 0} (which
+      caused problems for some PDF and PostScript viewers).
+      
+      \item The \code{big.mark} argument to \code{prettyNum()},
+      \code{format()}, etc. was inserted reversed if it was more than
+      one character long.
+      
+      \item \command{R CMD check} failed to check the filenames under
+      \file{man} for Windows' reserved names.
     }
   }
 }
@@ -270,13 +271,14 @@
       \item \code{legend()} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
-      \item New reference class utility methods \code{copy()}, \code{field()},
-      \code{getRefClass()} and \code{getClass()} have been added.
+      \item New S4 reference class utility methods \code{copy()},
+      \code{field()}, \code{getRefClass()} and \code{getClass()} have
+      been added to package \pkg{methods}.
 
       \item When a character value is used for the \code{EXPR}
       argument in \code{switch()}, a warning is given if more than
       one unnamed alternative value is given.  This will become an
-      error in R 2.13.0.
+      error in \R 2.13.0.
 
       \item \code{StructTS(type = "BSM")} now allows series with just
       two seasons.  (Reported by Birgit Erni.)
