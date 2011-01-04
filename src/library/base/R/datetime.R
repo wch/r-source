@@ -43,21 +43,18 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     }
-    xx <- x[1L]
-    if(is.na(xx)) {
-        j <- 1L
-        while(is.na(xx) && (j <- j+1L) <= length(x))
-            xx <- x[j]
-        if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
-    }
-    if(is.na(xx) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS", tz=tz)) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS", tz=tz)) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M", tz=tz)) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M", tz=tz)) ||
-       !is.na(strptime(xx, f <- "%Y-%m-%d", tz=tz)) ||
-       !is.na(strptime(xx, f <- "%Y/%m/%d", tz=tz)))
-    {
+    xx <- x[!is.na(x)]
+    if (!length(xx)) {
+        res <- as.character(x)
+        if(nzchar(tz)) attr(res, "tzone") <- tz
+        return(res)
+    } else if(all(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS", tz=tz))) ||
+            all(!is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS", tz=tz))) ||
+            all(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M", tz=tz))) ||
+            all(!is.na(strptime(xx, f <- "%Y/%m/%d %H:%M", tz=tz))) ||
+            all(!is.na(strptime(xx, f <- "%Y-%m-%d", tz=tz))) ||
+            all(!is.na(strptime(xx, f <- "%Y/%m/%d", tz=tz)))
+            ) {
         res <- strptime(x, f, tz=tz)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)

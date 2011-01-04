@@ -1482,4 +1482,10 @@ stopifnot(length(pretty(-2:1 / 0)) == 0)
 ## gave an error in R <= 2.12.1
 
 
+## revised behaviour of as.POSIXlt in R 2.13.0
+x <- c("2001-02-03", "2001-02-03 04:05")
+stopifnot(identical(as.POSIXlt(x), rev(as.POSIXlt(rev(x)))))
+## used different formats earlier
+
+
 proc.time()

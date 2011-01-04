@@ -128,6 +128,10 @@
 
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
       character method (suggestion of Joshua Ulrich).
+
+      \item The character method of \code{as.POSIXlt()} now tries to
+      find a format that works for all non-\code{NA} inputs, not just
+      the first one.
     }
   }
 
