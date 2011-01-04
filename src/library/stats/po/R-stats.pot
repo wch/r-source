@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:18\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -605,18 +605,6 @@ msgstr ""
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr ""
 
-msgid "extra argument %s is not a \"%s\""
-msgstr ""
-
-msgid "extra arguments %s are not \"%s\"s"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "dendrogram"
-msgstr ""
-
 msgid "'height' must be at least %g, the maximal height of its components"
 msgstr ""
 
@@ -1035,6 +1023,9 @@ msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr ""
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "using F test with a %s family is inappropriate"

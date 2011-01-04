@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -630,9 +630,6 @@ msgstr "gli elementi di 'k' devono essere tra 1 e %d"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' e 'height' in disaccordo!"
 
-msgid "we require a dendrogram"
-msgstr "necessario un dendrogramma"
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "nodo del dendrogramma con #{branches} non positivi"
 
@@ -645,11 +642,17 @@ msgstr "sotto-albero non-terminale di lunghezza 0"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram' richiede un dendrogramma"
 
+msgid "we require a dendrogram"
+msgstr "necessario un dendrogramma"
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr "nodo non valido (lunghezza 0) nel dendrogramma"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr "nodo non terminale del dendrogramma con #{branches} non positivi"
+
+msgid "'height' must be at least %g, the maximal height of its components"
+msgstr ""
 
 msgid "'X' is not a dendrogram"
 msgstr "'X' non è un dendrogramma"
@@ -2477,6 +2480,12 @@ msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+msgid "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
+msgstr[0] "argometni extra ignorati"
+msgstr[1] "argometni extra ignorati"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"

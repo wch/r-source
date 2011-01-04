@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -601,9 +601,6 @@ msgstr "'k'的单元必需在一和%d之间"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge'和'height'不合!"
 
-msgid "we require a dendrogram"
-msgstr "需要系統樹圖"
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "系統樹圖節點有非正#{分支}"
 
@@ -616,11 +613,17 @@ msgstr "长度为零的非叶子树"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram'必需用在系統樹圖上"
 
+msgid "we require a dendrogram"
+msgstr "需要系統樹圖"
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr "系統樹圖里的节点不对(长度为零)"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr "系統樹圖里有非正#{分支}的非叶節點"
+
+msgid "'height' must be at least %g, the maximal height of its components"
+msgstr ""
 
 msgid "'X' is not a dendrogram"
 msgstr "'X'不是系統樹圖"
@@ -2306,6 +2309,11 @@ msgstr "所有'x'的值都必需是非负的才能拟合Weibull成长模型"
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "有%d个错误项，但最多只允许有一个"
+
+#, fuzzy
+msgid "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
+msgstr[0] "额外参数不用"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: 2010-09-29 21:00+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -609,9 +609,6 @@ msgstr " 'k' の要素は 1 と %d の間になければなりません "
 msgid "'merge' and 'height' do not fit!"
 msgstr " 'merge' と 'height' が合致していません! "
 
-msgid "we require a dendrogram"
-msgstr " デンドログラムが必要です "
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr " 枝数が正でないデンドログラムノードです "
 
@@ -625,11 +622,17 @@ msgstr " 長さ 0 の葉ではないサブツリーです "
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr " 'order.dendrogram' はデンドログラムを必要とします "
 
+msgid "we require a dendrogram"
+msgstr " デンドログラムが必要です "
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr " デンドログラム中に不正な(長さ0)ノードがあります "
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr " 枝数が非負のデンドログラムの葉ではないノードです "
+
+msgid "'height' must be at least %g, the maximal height of its components"
+msgstr ""
 
 msgid "'X' is not a dendrogram"
 msgstr " 'X' はデンドログラムではありません "
@@ -2366,6 +2369,11 @@ msgstr ""
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] " %d 個のエラー項があります。一つだけが許されます "
+
+#, fuzzy
+msgid "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
+msgstr[0] " 余計な引数は捨てられました "
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -623,9 +623,6 @@ msgstr "'k'의 요소는 1과 %d의 사이에 없으면 되지 않습니다"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' 그리고 'height'가 적합하고 있지 않습니다!"
 
-msgid "we require a dendrogram"
-msgstr "dendrogram이 필요합니다"
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "지수가 non-positive이 아닌 dendrogram입니다"
 
@@ -639,11 +636,17 @@ msgstr "길이 0의 non-leaf인 subtree입니다"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram'는 dendrogram을 필요로 합니다"
 
+msgid "we require a dendrogram"
+msgstr "dendrogram이 필요합니다"
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr "dendrogram에 부적절한(길이 0)노드가 있습니다"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr "지수가 non-positive dendrogram의 #{non-leaf}노드입니다"
+
+msgid "'height' must be at least %g, the maximal height of its components"
+msgstr ""
 
 msgid "'X' is not a dendrogram"
 msgstr "'X'는 dendrogram이 아닙니다"
@@ -2465,6 +2468,11 @@ msgstr ""
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
+
+#, fuzzy
+msgid "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
+msgstr[0] "불필요한 인수는 버려졌습니다"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"

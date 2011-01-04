@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:54\n"
+"POT-Creation-Date: 2011-01-04 11:30\n"
 "PO-Revision-Date: 2010-09-22 13:37+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -613,9 +613,6 @@ msgstr "Elemente von 'k' müssen zwischen 1 und %d sein"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' und 'height' passen nicht"
 
-msgid "we require a dendrogram"
-msgstr "Dendrogramm benötigt"
-
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "Dendrogrammknoten mit nicht-positiver #{Verzweigungen}"
 
@@ -628,11 +625,17 @@ msgstr "Teilbaum ist kein Blatt, aber Länge 0"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogramm' benötigt ein Dendrogramm"
 
+msgid "we require a dendrogram"
+msgstr "Dendrogramm benötigt"
+
 msgid "invalid (length 0) node in dendrogram"
 msgstr "unzulässiger Knoten in Dendrogramm (Länge 0)"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
 msgstr "Dendrogrammknoten ist kein Blatt, aber nicht-positive #{Verzweigungen}"
+
+msgid "'height' must be at least %g, the maximal height of its components"
+msgstr ""
 
 msgid "'X' is not a dendrogram"
 msgstr "'X' ist kein Dendrogramm"
@@ -2391,6 +2394,12 @@ msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "es gibt %d Fehlerterme: nur 1 erlaubt"
 msgstr[1] "es gibt %d Fehlerterme: nur 1 erlaubt"
+
+#, fuzzy
+msgid "extra argument %s is not a \"%s\""
+msgid_plural "extra arguments %s are not \"%s\"s"
+msgstr[0] "zusätzliche Argumente verworfen"
+msgstr[1] "zusätzliche Argumente verworfen"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
