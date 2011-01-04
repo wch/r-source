@@ -615,7 +615,7 @@ rev.dendrogram <- function(x) {
     midcache.dendrogram( r )
 }
 
-## This is a cheap
+## This is cheap
 labels.dendrogram <- function(object, ...)
     unlist(dendrapply(object, function(n) attr(n,"label")))
 
@@ -626,10 +626,12 @@ merge.dendrogram <- function(x, y, ..., height) {
 	xpr <- substitute(c(...))
 	if(!all(is.d <- vapply(xtr, inherits, NA, what="dendrogram"))) {
 	    nms <- sapply(xpr[-1][!is.d], deparse, nlines=1L)
-	    stop(sprintf(ngettext(length(nms),
-				  "extra argument %s is not a \"%s\"",
-				  "extra arguments %s are not \"%s\"s"),
-			 paste(nms, collapse=", "), "dendrogram"))
+            ## do not simplify: xgettext needs this form
+            msg <- ngettext(length(nms),
+                            "extra argument %s is not a \"%s\"",
+                            "extra arguments %s are not \"%s\"s")
+	    stop(sprintf(msg, paste(nms, collapse=", "), "dendrogram"),
+                 domain = NA)
 	}
 	r <- c(r, xtr)
     }
@@ -637,9 +639,10 @@ merge.dendrogram <- function(x, y, ..., height) {
     h.max <- max(vapply(r, attr, 0., which="height"))
     if(missing(height) || is.null(height))
 	height <- 1.1 * h.max
-    else if(height < h.max)
-	stop(gettextf("'height' must be at least %g, the maximal height of its components",
-		      h.max))
+    else if(height < h.max) {
+        msg <- gettextf("'height' must be at least %g, the maximal height of its components", h.max)
+        stop(msg, domain = NA)
+    }
     attr(r, "height") <- height
     class(r) <- "dendrogram"
     midcache.dendrogram(r, quiet=TRUE)
