@@ -7,6 +7,11 @@
 \section{CHANGES IN R VERSION 2.12.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{identical} could in rare cases generate a warning
+      about non-pairlist attributes on CHARSXPs. As these are used for
+      internal purposes, the attribute check should be
+      skipped. (Reported by Niels Richard Hansen).
+
       \item If the extension was not included in a call to
       \code{Sweave()}, source references would not work properly, and the
       \code{keep.source} option failed. (\PR{14459})
@@ -15,6 +20,9 @@
 
       \item \code{pretty(x)} no longer raises an error when \code{x}
       contains solely non-finite values. (\PR{14468})
+
+      \item \command{R CMD check} failed to check the filenames under
+      \file{man} for Windows' reserved names.
     }
   }
 }
@@ -37,13 +45,14 @@
       \item \code{legend()} allows the length of lines to be set by the
       end user \emph{via} the new argument \code{seg.len}.
 
-      \item New reference class utility methods \code{copy()}, \code{field()},
-      \code{getRefClass()} and \code{getClass()} have been added.
+      \item New S4 reference class utility methods \code{copy()},
+      \code{field()}, \code{getRefClass()} and \code{getClass()} have
+      been added to package \pkg{methods}.
 
       \item When a character value is used for the \code{EXPR}
       argument in \code{switch()}, a warning is given if more than
       one unnamed alternative value is given.  This will become an
-      error in R 2.13.0.
+      error in \R 2.13.0.
 
       \item \code{StructTS(type = "BSM")} now allows series with just
       two seasons.  (Reported by Birgit Erni.)
