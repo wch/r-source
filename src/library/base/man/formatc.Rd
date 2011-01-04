@@ -140,6 +140,13 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   unexpectedly if \code{x} is a \code{character} vector not resulting from
   something like \code{format(<number>)}: in particular it assumes that
   a period is a decimal mark.
+  
+  Because \code{\link{gsub}} is used to insert the \code{big.mark}
+  and \code{small.mark}, special characters need escaping.  In particular, 
+  to insert a single backslash, use \code{"\\\\\\\\"}.  
+  
+  In versions of \R before 2.13.0, the \code{big.mark} would be
+  reversed on insertion if it contained more than one character.  
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap, later much

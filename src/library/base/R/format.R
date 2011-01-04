@@ -353,7 +353,7 @@ prettyNum <-
        ) { ## add 'big.mark' in decimals before "." :
 	B.[i.big] <-
 	    revStr(gsub(P0("([0-9]{",big.interval,"})\\B"),
-			P0("\\1",big.mark), revStr(B.[i.big])))
+			P0("\\1",revStr(big.mark)), revStr(B.[i.big])))
     }
     if(nzchar(small.mark) &&
        length(i.sml <- grep(P0("[0-9]{", small.interval + 1L,",}"), A.))

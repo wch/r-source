@@ -21,6 +21,14 @@
       \item \code{pretty(x)} no longer raises an error when \code{x}
       contains solely non-finite values. (\PR{14468})
 
+      \item The \code{plot.TukeyHSD} function now uses a line width of
+      0.5 for its reference lines rather than \samp{lwd = 0} (which
+      caused problems for some PDF and PostScript viewers).
+      
+      \item The \code{big.mark} argument to \code{prettyNum()},
+      \code{format()}, etc. was inserted reversed if it was more than
+      one character long.
+      
       \item \command{R CMD check} failed to check the filenames under
       \file{man} for Windows' reserved names.
     }
