@@ -1488,4 +1488,12 @@ stopifnot(identical(as.POSIXlt(x), rev(as.POSIXlt(rev(x)))))
 ## used different formats earlier
 
 
+## seq.Date could overshoot
+x <- seq(as.Date("2011-01-07"), as.Date("2011-03-01"), by = "month")
+stopifnot(length(x) == 2)
+x <- seq(as.POSIXct("2011-01-07"), as.POSIXct("2011-03-01"), by = "month")
+stopifnot(length(x) == 2)
+## was 3 in R < 2.13.0
+
+
 proc.time()
