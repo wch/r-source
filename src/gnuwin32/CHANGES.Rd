@@ -15,6 +15,10 @@
       
       \item In \R 2.12.1, \code{system()} sometimes passed an empty
       input stream to the new process rather than allowing user input.
+
+      \item The internal method for \code{untar()} does a better job of
+      unravelling symbolic links in the tarball (but still with many
+      limitations).
     }
   }
 }

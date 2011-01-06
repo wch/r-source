@@ -31,6 +31,14 @@
       
       \item \command{R CMD check} failed to check the filenames under
       \file{man} for Windows' reserved names.
+
+      \item The \code{"Date"} and \code{"POSIXt"} methods for
+      \code{seq()} could overshoot when \code{to} was supplied and
+      \code{by} was specified in months or years.
+
+      \item The internal method of \code{untar()} now restores hard
+      links as file copies rather than symbolic links (which did not
+      work for cross-directory links).
     }
   }
 }

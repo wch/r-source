@@ -656,19 +656,19 @@ seq.POSIXt <-
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
-    if(valid <= 5L) {
+    if(valid <= 5L) { # secs, mins, hours, days, weeks
         from <- unclass(as.POSIXct(from))
         if(!is.null(length.out))
             res <- seq.int(from, by=by, length.out=length.out)
         else {
-            to <- unclass(as.POSIXct(to))
+            to0 <- unclass(as.POSIXct(to))
             ## defeat test in seq.default
-            res <- seq.int(0, to - from, by) + from
+            res <- seq.int(0, to0 - from, by) + from
         }
         return(.POSIXct(res, tz))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
-        if(valid == 7L) {
+        if(valid == 7L) { # years
             if(missing(to)) { # years
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
@@ -678,16 +678,24 @@ seq.POSIXt <-
             r1$year <- yr
             r1$isdst <- -1L
             res <- as.POSIXct(r1)
+            if(!missing(to)) {
+                to <- as.POSIXct(to)
+                res <- if(by > 0) res[res <= to] else res[res >= to]
+            }
         } else if(valid == 6L) { # months
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
-                to <- as.POSIXlt(to)
-                mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
+                to0 <- as.POSIXlt(to)
+                mon <- seq.int(r1$mon, 12*(to0$year - r1$year) + to0$mon, by)
             }
             r1$mon <- mon
             r1$isdst <- -1
             res <- as.POSIXct(r1)
+            if(!missing(to)) {
+                to <- as.POSIXct(to)
+                res <- if(by > 0) res[res <= to] else res[res >= to]
+            }
         } else if(valid == 8L) { # DSTdays
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
@@ -697,8 +705,11 @@ seq.POSIXt <-
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
             r1$isdst <- -1L
             res <- as.POSIXct(r1)
-            ## now correct if necessary.
-            if(!missing(to)) res <- res[res <= as.POSIXct(to)]
+            ## now shorten if necessary.
+            if(!missing(to)) {
+                to <- as.POSIXct(to)
+                res <- if(by > 0) res[res <= to] else res[res >= to]
+            }
         }
         return(res)
     }

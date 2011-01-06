@@ -261,24 +261,24 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     } else if(!is.numeric(by)) stop("invalid mode for 'by'")
     if(is.na(by)) stop("'by' is NA")
 
-    if(valid <= 2L) {
+    if(valid <= 2L) { # days or weeks
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
             res <- seq.int(from, by=by, length.out=length.out)
         else {
-            to <- unclass(as.Date(to))
+            to0 <- unclass(as.Date(to))
             ## defeat test in seq.default
-            res <- seq.int(0, to - from, by) + from
+            res <- seq.int(0, to0 - from, by) + from
         }
-        return(structure(res, class="Date"))
+        res <- structure(res, class="Date")
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
         if(valid == 4L) {
             if(missing(to)) { # years
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
-                to <- as.POSIXlt(to)
-                yr <- seq.int(r1$year, to$year, by)
+                to0 <- as.POSIXlt(to)
+                yr <- seq.int(r1$year, to0$year, by)
             }
             r1$year <- yr
             res <- as.Date(r1)
@@ -286,14 +286,19 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
-                to <- as.POSIXlt(to)
-                mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
+                to0 <- as.POSIXlt(to)
+                mon <- seq.int(r1$mon, 12*(to0$year - r1$year) + to0$mon, by)
             }
             r1$mon <- mon
             res <- as.Date(r1)
         }
-        return(res)
     }
+    ## can overshoot
+    if (!missing(to)) {
+        to <- as.Date(to)
+        res <- if (by > 0) res[res <= to] else res[res >= to]
+    }
+    res
 }
 
 ## *very* similar to cut.POSIXt [ ./datetime.R ] -- keep in sync!
