@@ -45,7 +45,7 @@ as.POSIXlt.character <- function(x, tz = "", format, ...)
     }
     xx <- x[!is.na(x)]
     if (!length(xx)) {
-        res <- as.character(x)
+        res <- strptime(x, "%Y/%m/%d")
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     } else if(all(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS", tz=tz))) ||
