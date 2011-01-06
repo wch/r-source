@@ -920,7 +920,10 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-@R{} can be built as either a 32-bit or 64-bit application on Windows.
+@R{} can be built as either a 32-bit or 64-bit application on Windows:
+to build the 64-bit application you need a 64-bit edition of Windows:
+such an OS can also be used to build 32-bit \R.
+
 The standard installer combines 32-bit and 64-bit builds into a single
 executable which can then be installed into the same location and share
 all the files except the @file{.exe} and @file{.dll} files and some
