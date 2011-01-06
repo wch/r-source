@@ -116,6 +116,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         x
     }
 
+    warn1 <- character()
+
     ## A tar file is a set of 512 byte records,
     ## a header record followed by file contents (zero-padded).
     ## See http://en.wikipedia.org/wiki/Tar_%28file_format%29
@@ -195,9 +197,16 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(lname)) {name <- lname; lname <- NULL}
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
-                ## this will not work for links to dirs on Windows
-                if(.Platform$OS.type == "windows") file.copy(name2, name)
-                else file.symlink(name2, name)
+                if(ctype == "1") {
+                    file.copy(name2, name)
+                    warn1 <- c(warn1, "restoring hard link as a file copy")
+                } else {
+                    ## this will not work for links to dirs on Windows
+                    if(.Platform$OS.type == "windows") {
+                        file.copy(file.path(dirname(name), name2), name)
+                        warn1 <- c(warn1, "restoring symbolic link as a file copy")
+                   } else file.symlink(name2, name)
+                }
             }
         } else if(ctype == "5") {
             contents <- c(contents, name)
@@ -220,6 +229,10 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             else
                 llink <- rawToChar(block[seq_len(ns)])
         } else stop("unsupported entry type ", sQuote(ctype))
+    }
+    if(length(warn1)) {
+        warn1 <- unique(warn1)
+        for (w in warn1) warning(w, domain = NA)
     }
     if(list) contents else invisible(0L)
 }
