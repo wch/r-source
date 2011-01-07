@@ -132,6 +132,9 @@
       \item The character method of \code{as.POSIXlt()} now tries to
       find a format that works for all non-\code{NA} inputs, not just
       the first one.
+
+      \item \code{str()} now has a method for class \code{"Date"}
+      analogous to that for class \code{"POSIXt"}.
     }
   }
 
@@ -218,6 +221,9 @@
       now limited at 0.01 and for very thin lines with complex dash
       patterns the device may force the line dash pattern to be solid.
       (Reported by Jari Oksanen.)
+
+      \item The \code{str()} method for class \code{"POSIXt"} now gives
+      sensible output for 0-length input.
     }
   }
 }
