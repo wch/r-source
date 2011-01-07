@@ -57,9 +57,11 @@ simplify2array(x, higher=TRUE)
   element of which is the result of applying \code{FUN} to the
   corresponding element of \code{X}.
 
-  \code{sapply} is a user-friendly version of \code{lapply}
+  \code{sapply} is a user-friendly version and wrapper of \code{lapply}
   by default returning a vector, matrix or, if \code{simplify="array"}, an
-  array if appropriate.
+  array if appropriate, by applying \code{simplify2array()}.
+  \code{sapply(x, f, simplify=FALSE, USE.NAMES=FALSE)} is the same as
+  \code{lapply(x,f)}.
 
   \code{vapply} is similar to \code{sapply}, but has a pre-specified
   type of return value, so it can be safer (and sometimes faster) to
