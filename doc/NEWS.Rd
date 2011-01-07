@@ -5,6 +5,13 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{replicate()} (by default) and \code{vapply()} (always)
+      now return a higher-rank array instead of a matrix in the case
+      where the inner function value is already an array (of rank >= 2).
+    }
+  }
   \subsection{NEW FEATURES}{
     \itemize{
       \item Installing \R no longer tries to find \command{perl}, and
@@ -138,6 +145,9 @@
 
       \item New function \code{file.link()} to create hard links on
       those Unix-alikes that support them.
+
+      \item New \code{Summary.ordered()} group method enables \code{min()},
+      \code{max()} and \code{range()} for ordered factors.
     }
   }
 
@@ -251,11 +261,11 @@
       \item The \code{plot.TukeyHSD} function now uses a line width of
       0.5 for its reference lines rather than \samp{lwd = 0} (which
       caused problems for some PDF and PostScript viewers).
-      
+
       \item The \code{big.mark} argument to \code{prettyNum()},
       \code{format()}, etc. was inserted reversed if it was more than
       one character long.
-      
+
       \item \command{R CMD check} failed to check the filenames under
       \file{man} for Windows' reserved names.
 
