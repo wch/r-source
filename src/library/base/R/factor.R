@@ -295,7 +295,7 @@ Summary.ordered <- function(..., na.rm)
     ok <- switch(.Generic, max = , min = , range = TRUE,
 		 FALSE)
     if (!ok)
-	stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
+	stop(gettextf("'%s' not defined for ordered factors", .Generic),
 	     domain = NA)
     args <- list(...)
     levl <- lapply(args, levels)
