@@ -1711,7 +1711,7 @@ selected values of @code{x} are those for which @code{i} is @code{TRUE}.
 @strong{Character}.  The strings in @code{i} are matched against the
 names attribute of @code{x} and the resulting integers are used.  For
 @code{[[} and @code{$} partial matching is used if exact matching fails,
-so @code{x$aa} will match @code{x$aabb} if @code{x} does not a component
+so @code{x$aa} will match @code{x$aabb} if @code{x} does not contain a component
 named @code{"aa"} and @code{"aabb"} is the only name which has prefix
 @code{"aa"}.  For @code{[[}, partial matching can be controlled via the
 @code{exact} argument which defaults to @code{NA} indicating that
