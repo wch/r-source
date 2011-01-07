@@ -25,7 +25,7 @@ factor <- function(x = character(), levels, labels=levels,
 	y <- as.character(y)
 	levels <- unique(y[ind])
     }
-    force(ordered)
+    force(ordered) # check if original x is an ordered factor
     exclude <- as.vector(exclude, typeof(x))# may result in NA
     x <- as.character(x)
     levels <- levels[is.na(match(levels, exclude))]

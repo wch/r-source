@@ -24,9 +24,9 @@
 \description{
   The function \code{factor} is used to encode a vector as a factor (the
   terms \sQuote{category} and \sQuote{enumerated type} are also used for
-  factors).  If \code{ordered} is \code{TRUE}, the factor levels are
-  assumed to be ordered.
-  For compatibility with S there is also a function \code{ordered}.
+  factors).  If argument \code{ordered} is \code{TRUE}, the factor
+  levels are assumed to be ordered.  For compatibility with S there is
+  also a function \code{ordered}.
 
   \code{is.factor}, \code{is.ordered}, \code{as.factor} and \code{as.ordered}
   are the membership and coercion functions for these classes.
@@ -70,8 +70,8 @@ addNA(x, ifany=FALSE)
   \code{factor} returns an object of class \code{"factor"} which has a
   set of integer codes the length of \code{x} with a \code{"levels"}
   attribute of mode \code{\link{character}} and unique
-  (\code{!\link{anyDuplicated}(.)}) entries.  If \code{ordered} is true
-  (or \code{ordered} is used) the result has class
+  (\code{!\link{anyDuplicated}(.)}) entries.  If argument \code{ordered}
+  is true (or \code{ordered()} is used) the result has class
   \code{c("ordered", "factor")}.
 
   Applying \code{factor} to an ordered or unordered factor returns a
@@ -80,8 +80,8 @@ addNA(x, ifany=FALSE)
 
   \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of type factor or not.  Correspondingly,
-  \code{is.ordered} returns \code{TRUE} when its
-  argument is ordered and \code{FALSE} otherwise.
+  \code{is.ordered} returns \code{TRUE} when its argument is an ordered
+  factor and \code{FALSE} otherwise.
 
   \code{as.factor} coerces its argument to a factor.
   It is an abbreviated form of \code{factor}.
