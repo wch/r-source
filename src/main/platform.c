@@ -611,6 +611,63 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP f1, f2;
+    int n, n1, n2;
+#ifdef HAVE_LINK
+    SEXP ans;
+    int i;
+    char from[PATH_MAX], to[PATH_MAX];
+    const char *p;
+#endif
+    checkArity(op, args);
+    f1 = CAR(args); n1 = length(f1);
+    f2 = CADR(args); n2 = length(f2);
+    if (!isString(f1))
+	error(_("invalid first filename"));
+    if (!isString(f2))
+	error(_("invalid second filename"));
+    if (n1 < 1)
+	error(_("nothing to link"));
+    if (n2 < 1)
+	return allocVector(LGLSXP, 0);
+    n = (n1 > n2) ? n1 : n2;
+#ifdef HAVE_LINK  /* Not Windows */
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (i = 0; i < n; i++) {
+	if (STRING_ELT(f1, i%n1) == NA_STRING ||
+	    STRING_ELT(f2, i%n2) == NA_STRING)
+	    LOGICAL(ans)[i] = 0;
+	else {
+	    p = R_ExpandFileName(translateChar(STRING_ELT(f1, i%n1)));
+	    if (strlen(p) >= PATH_MAX - 1) {
+		LOGICAL(ans)[i] = 0;
+		continue;
+	    }
+	    strcpy(from, p);
+	    p = R_ExpandFileName(translateChar(STRING_ELT(f2, i%n2)));
+	    if (strlen(p) >= PATH_MAX - 1) {
+		LOGICAL(ans)[i] = 0;
+		continue;
+	    }
+	    strcpy(to, p);
+	    /* Rprintf("linking %s to %s\n", from, to); */
+	    LOGICAL(ans)[i] = link(from, to) == 0;
+	    if(!LOGICAL(ans)[i]) {
+		warning(_("cannot link '%s' to '%s', reason '%s'"),
+			from, to, strerror(errno));
+	    }
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    warning(_("(hard) links are not supported on this platform"));
+    return allocVector(LGLSXP, n);
+#endif
+}
+
 #ifdef Win32
 int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 int Rwin_wrename(const wchar_t *from, const wchar_t *to);

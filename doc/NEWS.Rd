@@ -135,6 +135,9 @@
 
       \item \code{str()} now has a method for class \code{"Date"}
       analogous to that for class \code{"POSIXt"}.
+
+      \item New function \code{file.link()} to create hard links on
+      those Unix-alikes that support them.
     }
   }
 

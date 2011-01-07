@@ -198,8 +198,10 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
-                    file.copy(name2, name)
-                    warn1 <- c(warn1, "restoring hard link as a file copy")
+                    if(.Platform$OS.type == "windows") {
+                        file.copy(name2, name)
+                        warn1 <- c(warn1, "restoring hard link as a file copy")
+                    } else file.link(name2, name)
                 } else {
                     ## this will not work for links to dirs on Windows
                     if(.Platform$OS.type == "windows") {

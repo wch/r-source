@@ -12,6 +12,7 @@
 \alias{file.remove}
 \alias{file.rename}
 \alias{file.symlink}
+\alias{file.link}
 \title{File Manipulation}
 \usage{
 file.create(\dots, showWarnings = TRUE)
@@ -21,6 +22,7 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = recursive, recursive = FALSE)
 file.symlink(from, to)
+file.link(from, to)
 }
 \arguments{
   \item{\dots, file1, file2}{character vectors, containing file names or paths.}
@@ -79,12 +81,13 @@ file.symlink(from, to)
   the arguments in the natural order for copying.  Copying to existing
   destination files is skipped unless \code{overwrite = TRUE}.
   The \code{to} argument can specify a single existing directory.
-
-  \code{file.symlink} makes symbolic links on those Unix-alike platforms
-  which support them.  The \code{to} argument can specify a single
+  
+  \code{file.symlink} and \code{file.link} make symbolic and hard links
+  on those Unix-alike platforms which support them.  For
+  \code{file.symlink} the \code{to} argument can specify a single
   existing directory.
 #ifdef windows
-  (Windows Vista/7/Server 2008 have a version of symbolic links on NTFS
+  (Recent versions of Windows have a version of symbolic links on NTFS
   filesystems, but this seems too limited to be worth implementing.)
 #endif
 }

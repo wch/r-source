@@ -72,12 +72,11 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
-  The internal implementation restores symbolic links as symbolic links
-  on a Unix-alike, and as file copies on Windows (which works only for
-  existing files, not for directories).  Hard links are always restored
-  as file copies (POSIX does not allow hard links to directories).
-  Since it uses \code{\link{gzfile}} to read a file it can handle files
-  compressed by any of the methods that function can handle: at least
+  The internal implementation restores symbolic/hard links as links on a
+  Unix-alike, and as file copies on Windows (which works only for
+  existing files, not for directories).  Since it uses
+  \code{\link{gzfile}} to read a file it can handle files compressed by
+  any of the methods that function can handle: at least
   \command{compress}, \command{gzip}, \command{bzip2} and \command{xz}
   compression, and some types of \command{lzma} compression.  It does
   not guard against restoring absolute file paths, as some \command{tar}

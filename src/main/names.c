@@ -775,6 +775,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"file.append",	do_fileappend,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"codeFiles.append",do_fileappend,1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.symlink",do_filesymlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"file.link",	do_filelink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.copy",	do_filecopy,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"list.files",	do_listfiles,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.exists", do_fileexists,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
