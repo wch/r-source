@@ -170,7 +170,7 @@ addNA(x, ifany=FALSE)
   mechanism precludes comparing ordered and unordered factors.
 
   All the comparison operators are available for ordered factors.
-  Sorting is done by the levels of the operands: if both operands are
+  Collation is done by the levels of the operands: if both operands are
   ordered factors they must have the same level set.
 }
 \note{
