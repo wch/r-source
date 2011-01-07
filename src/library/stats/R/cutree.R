@@ -25,10 +25,9 @@ cutree <- function(tree, k=NULL, h=NULL)
         if(is.unsorted(tree$height))
             stop("the 'height' component of 'tree' is not sorted\n(increasingly); consider applying as.hclust() first")
         ## h |--> k
-        k <- integer(length(h))
         ## S+6 help(cutree) says k(h) = k(h+), but does k(h-) [continuity]
         ## h < min() should give k = n;
-        k <- n+1 - apply(outer(c(tree$height,Inf), h, ">"), 2, which.max)
+        k <- n+1L - apply(outer(c(tree$height,Inf), h, ">"), 2, which.max)
         if(getOption("verbose")) message("cutree(): k(h) = ", k, domain = NA)
     }
     else {
