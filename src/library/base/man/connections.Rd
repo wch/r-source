@@ -146,14 +146,14 @@ isIncomplete(con)
   extension if required.
 
   For \code{pipe} the description is the command line to be piped to or
-  from.  This is run in shell, on Windows that specified by the
+  from.  This is run in a shell, on Windows that specified by the
   \env{COMSPEC} environment variable.
 
   For \code{fifo} the description is the path of the fifo.  (Windows
   does not have fifos, so attempts to use this function there are an
   error.  It was possible to use \code{file} with fifos prior to \R
-  2.10.0, but no longer for reading, and \code{fifo} was always the
-  documented interface.) % PR#14366
+  2.10.0, but \code{raw=TRUE} is now required for reading, and
+  \code{fifo} was always the documented interface.) % PR#14366
 
   All platforms support \code{file}, \code{pipe}, \code{gzfile},
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{url("file://")}
@@ -192,6 +192,9 @@ isIncomplete(con)
 }
 
 \section{URLs}{
+  \code{url} and \code{file} support URL schemes \samp{http://},
+  \samp{ftp://} and \samp{file://}.
+  
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
@@ -216,7 +219,7 @@ isIncomplete(con)
 
   Note that \samp{https://} connections are
 #ifdef unix
-  not supported.
+  not supported (with some exceptions on Windows).
 #endif
 #ifdef windows
   only supported if \option{--internet2} or
@@ -225,6 +228,9 @@ isIncomplete(con)
   be valid.  With that option only, the \samp{http://user:pass@site}
   notation for sites requiring authentication is also accepted.
 #endif
+
+  Contributed package \pkg{RCurl} provides more comprehensive facilities
+  to download from URLs.
 }
 
 \value{
@@ -372,10 +378,10 @@ isIncomplete(con)
   
   Requesting a conversion that is not supported is an error, reported
   when the connection is opened.  Exactly what happens when the
-  requested translation cannot be done is in general undocumented.  On
-  output the result is likely to be that up to the error, with a
-  warning.  On input, it will most likely be all or some of the input up
-  to the error.
+  requested translation cannot be done for invalid input is in general
+  undocumented.  On output the result is likely to be that up to the
+  error, with a warning.  On input, it will most likely be all or some
+  of the input up to the error.
 }
 
 \section{Blocking}{
@@ -462,7 +468,7 @@ isIncomplete(con)
   known as \code{"*"}.
 
   On (rare) platforms where \code{vsnprintf} does not return the needed length
-  of output there is a 100,000 character output limit on the length of
+  of output there is a 100,000 byte output limit on the length of
   line for text output on \code{fifo}, \code{gzfile}, \code{bzfile} and
   \code{xzfile} connections: longer lines will be truncated with a
   warning.

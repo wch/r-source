@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -180,5 +180,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \code{\link{url.show}}, \code{\link{available.packages}},
   \code{\link{download.packages}} for applications.
+
+  Contributed package \pkg{RCurl} provides more comprehensive facilities
+  to download from URLs.
 }
 \keyword{utilities}

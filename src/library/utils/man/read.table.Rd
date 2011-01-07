@@ -55,7 +55,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     \code{Ctrl-Z} on Windows.  Any pushback on \code{stdin()} will be
     cleared before return.)
 
-    \code{file} can also be a complete URL.
+    \code{file} can also be a complete URL.  (See the \sQuote{URLs}
+    section of the help for \code{\link{url}}.)
   }
 
   \item{header}{a logical value indicating whether the file contains the
