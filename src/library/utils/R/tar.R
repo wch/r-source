@@ -100,6 +100,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 {
+    ## FIXME: we should test the return values of dir.create, file.copy ...
+
     getOct <- function(x, offset, len)
     {
         x <- 0L
@@ -198,13 +200,10 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
-                    if(.Platform$OS.type == "windows") {
-                        file.copy(name2, name)
-                        warn1 <- c(warn1, "restoring hard link as a file copy")
-                    } else file.link(name2, name)
+                    file.link(name2, name)
                 } else {
-                    ## this will not work for links to dirs on Windows
                     if(.Platform$OS.type == "windows") {
+                        ## this will not work for links to dirs
                         file.copy(file.path(dirname(name), name2), name)
                         warn1 <- c(warn1, "restoring symbolic link as a file copy")
                    } else file.symlink(name2, name)

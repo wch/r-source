@@ -144,10 +144,11 @@
       analogous to that for class \code{"POSIXt"}.
 
       \item New function \code{file.link()} to create hard links on
-      those Unix-alikes that support them.
+      those file systems (POSIX, NTFS but not FAT) that support them.
 
-      \item New \code{Summary.ordered()} group method enables \code{min()},
-      \code{max()} and \code{range()} for ordered factors.
+      \item New \code{Summary()} group method for class \code{"ordered"}
+      implements \code{min()}, \code{max()} and \code{range()} for
+      ordered factors.
     }
   }
 

@@ -611,6 +611,17 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+#ifdef Win32
+# ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x500 /* for CreateHardLink */
+# endif
+#include <windows.h>
+const char *formatError(DWORD res);  /* extra.c */
+/* Windows does not have link(), but it does have CreateHardLink() on NTFS */
+#undef HAVE_LINK
+#define HAVE_LINK 1
+#endif
+
 SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP f1, f2;
@@ -633,7 +644,7 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
-#ifdef HAVE_LINK  /* Not Windows */
+#ifdef HAVE_LINK
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	if (STRING_ELT(f1, i%n1) == NA_STRING ||
@@ -653,10 +664,17 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    strcpy(to, p);
 	    /* Rprintf("linking %s to %s\n", from, to); */
+#ifdef Win32
+	    LOGICAL(ans)[i] = CreateHardLink(to, from, NULL) != 0;
+	    if(!LOGICAL(ans)[i]) {
+		warning(_("cannot link '%s' to '%s', reason '%s'"),
+			from, to, formatError(GetLastError()));
+#else
 	    LOGICAL(ans)[i] = link(from, to) == 0;
 	    if(!LOGICAL(ans)[i]) {
 		warning(_("cannot link '%s' to '%s', reason '%s'"),
 			from, to, strerror(errno));
+#endif
 	    }
 	}
     }

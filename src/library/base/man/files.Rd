@@ -83,13 +83,11 @@ file.link(from, to)
   The \code{to} argument can specify a single existing directory.
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
-  on those Unix-alike platforms which support them.  For
-  \code{file.symlink} the \code{to} argument can specify a single
-  existing directory.
-#ifdef windows
-  (Recent versions of Windows have a version of symbolic links on NTFS
-  filesystems, but this seems too limited to be worth implementing.)
-#endif
+  on those platforms which support them.  For \code{file.symlink} the
+  \code{to} argument can specify a single existing directory.
+  (Windows has hard links on NTFS file systems.  Recent versions of
+  Windows have a version of symbolic links on NTFS filesystems, but this
+  seems too limited to be worth implementing.)
 }
 \value{
   \code{file.rename} and \code{file.symlink} returns a logical value,
@@ -124,6 +122,10 @@ file.link(from, to)
   \code{\link{Sys.glob}} to expand wildcards in file specifications.
 
   \code{\link{file_test}}, \code{\link{Sys.readlink}}.
+
+  \url{http://en.wikipedia.org/wiki/Hard_link} and
+  \url{http://en.wikipedia.org/wiki/Symbolic_link} for the concepts of
+  links and their limitations. 
 }
 
 \examples{
