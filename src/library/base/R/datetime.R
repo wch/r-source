@@ -674,12 +674,6 @@ seq.POSIXt <-
                 yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
-            r1$isdst <- -1L
-            res <- as.POSIXct(r1)
-            if(!missing(to)) {
-                to <- as.POSIXct(to)
-                res <- if(by > 0) res[res <= to] else res[res >= to]
-            }
         } else if(valid == 6L) { # months
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
@@ -688,12 +682,6 @@ seq.POSIXt <-
                 mon <- seq.int(r1$mon, 12*(to0$year - r1$year) + to0$mon, by)
             }
             r1$mon <- mon
-            r1$isdst <- -1
-            res <- as.POSIXct(r1)
-            if(!missing(to)) {
-                to <- as.POSIXct(to)
-                res <- if(by > 0) res[res <= to] else res[res >= to]
-            }
         } else if(valid == 8L) { # DSTdays
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
@@ -701,15 +689,15 @@ seq.POSIXt <-
                                           unclass(as.POSIXct(from)))/86400)
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
-            r1$isdst <- -1L
-            res <- as.POSIXct(r1)
-            ## now shorten if necessary.
-            if(!missing(to)) {
-                to <- as.POSIXct(to)
-                res <- if(by > 0) res[res <= to] else res[res >= to]
-            }
         }
-        return(res)
+	r1$isdst <- -1L
+	res <- as.POSIXct(r1)
+	## now shorten if necessary.
+	if(!missing(to)) {
+	    to <- as.POSIXct(to)
+	    res <- if(by > 0) res[res <= to] else res[res >= to]
+	}
+	res
     }
 }
 
