@@ -40,22 +40,17 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
     ## little point in providing format/reader support ...
     ## </FIXME>
     
-    ## Look for new-style inst/NEWS.Rd.
+    ## Look for new-style inst/NEWS.Rd installed as NEWS.Rd.
     ## If not found, look for old-style
     ##   NEWS inst/NEWS
-    ## and ignore
-    ##   ChangeLog inst/ChangeLog
-    ## in the package directory.
-    nfile <- file.path(dir, "inst", "NEWS.Rd")
+    ## installed as NEWS (and ignore ChangeLog files).
+    nfile <- file.path(dir, "NEWS.Rd")
     if(file_test("-f", nfile))
         return(.build_news_db_from_package_NEWS_Rd(nfile))
-    
-    files <- file.path(dir,
-                       c("NEWS",
-                         file.path("inst", "NEWS")))
-    nfile <- files[file_test("-f", files)][1L]
 
-    if(is.na(nfile)) return(invisible())
+    nfile <- file.path(dir, "NEWS")
+    if(!file_test("-f", nfile))
+        return(invisible())
     ## Return NULL for now, no message that there is no NEWS or
     ## ChangeLog file.
 
@@ -535,7 +530,7 @@ function(file)
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
         warning("Cannot extract version info from the following section titles:\n",
-                sprintf("  %s", unique(nms[ind])))
+                sprintf("  %s", unique(nms[!ind])))
     .make_news_db(cbind(ifelse(ind,
                                sub(re_v, "\\1", nms),
                                NA_character_),
