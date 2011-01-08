@@ -52,9 +52,6 @@ function(given = NULL, family = NULL, middle = NULL,
             ## <FIXME>
             ## Start warning eventually ... maybe use message() for now?
             message("It is recommended to use 'family' instead of 'last'.")
-	    ## <COMMENT Z>
-            ## I don't think you mean that!
-            ## </COMMENT>
             ## </FIXME>
             family <- last
         }
@@ -827,8 +824,8 @@ function(x)
 }
 
 print.citation <-
-function(x, ...)
+function(x, style = "citation", ...)
 {
-    NextMethod("print", x, style = "citation")
+    NextMethod("print", x, style = style, ...)
     invisible(x)
 }
