@@ -100,8 +100,6 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 {
-    ## FIXME: we should test the return values of dir.create, file.copy ...
-
     getOct <- function(x, offset, len)
     {
         x <- 0L
@@ -119,6 +117,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
     }
 
     mydir.create <- function(path, ...) {
+        ## for Windows' sake
+        path <- sub("[\\/]$", "", path)
         if(file_test("-d", path)) return()
         if(!dir.create(path, showWarnings = TRUE, recursive = TRUE, ...))
            stop(gettextf("failed to create directory %s", sQuote(path)),
