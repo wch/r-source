@@ -89,7 +89,8 @@ file.link(from, to)
   NTFS file systems.  Recent versions of Windows have a limited version
   of symbolic links on NTFS filesystems, but this has not be implemented
   in \code{file.symlink}, not least because \R is still widely used on
-  Windows XP.)
+  Windows XP.  What happens on a FAT or SMB-mounted file system is
+  OS-specific.)
 }
 
 \value{

@@ -80,7 +80,11 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     } else {
         cmd <- paste(TAR, " -", cflag, "xf ", shQuote(tarfile), sep = "")
         if (!missing(exdir)) {
-            dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+            if (!file_test("-d", exdir)) {
+                if(!dir.create(exdir, showWarnings = TRUE, recursive = TRUE))
+                    stop(gettextf("failed to create directory %s", sQuote(path)),
+                         domain = NA)
+            }
             cmd <- if(.Platform$OS.type == "windows")
                 ## some versions of tar.exe need / here
                 paste(cmd, "-C", gsub("\\", "/", exdir, fixed=TRUE))
@@ -206,8 +210,13 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
-                    if (!file.link(name2, name))
-                        warning(gettextf("failed to link %s to %s", sQuote(name2), sQuote(name)), domain = NA)
+                    if (!file.link(name2, name)) { # will give a warning
+                        ## link failed, so try a file copy
+                        if(file.copy(name2, name))
+                             warn1 <- c(warn1, "restoring hard link as a file copy")
+                        else
+                            warning(gettextf("failed to copy %s to %s", sQuote(name2), sQuote(name)), domain = NA)
+                    }
                 } else {
                     if(.Platform$OS.type == "windows") {
                         ## this will not work for links to dirs
@@ -217,8 +226,14 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                         else
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                    } else {
-                       if(!file.symlink(name2, name))
-                           warning(gettextf("failed to link %s to %s", sQuote(name2), sQuote(name)), domain = NA)
+                       if(!file.symlink(name2, name)) { # will give a warning
+                        ## so try a file copy: will not work for links to dirs
+                        from <- file.path(dirname(name), name2)
+                        if (file.copy(from, name))
+                            warn1 <- c(warn1, "restoring symbolic link as a file copy")
+                           else
+                               warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
+                       }
                    }
                 }
             }
