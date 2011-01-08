@@ -144,3 +144,33 @@ Abbrev: EUPL
 FSF: free_and_GPL_incompatible
 OSI: open
 URL: http://ec.europa.eu/idabc/eupl
+
+Name: Creative Commons Attribution-ShareAlike 3.0 United States License
+Abbrev: CC BY-SA 3.0 US
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://creativecommons.org/licenses/by-sa/3.0/us/
+
+Name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0 United States License
+Abbrev: CC BY-NC-ND 3.0 US
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://creativecommons.org/licenses/by-nc-nd/3.0/us
+
+Name: Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+Abbrev: CC BY-NC-SA 3.0
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://creativecommons.org/licenses/by-nc-sa/3.0
+
+Name: Creative Commons Attribution-NonCommercial 3.0 Unported License
+Abbrev: CC BY-NC 3.0
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://creativecommons.org/licenses/by-nc/3.0
+
+Name: Creative Commons Attribution-ShareAlike 2.0 Generic License
+Abbrev: CC BY-SA 2.0
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://creativecommons.org/licenses/by-sa/2.0
