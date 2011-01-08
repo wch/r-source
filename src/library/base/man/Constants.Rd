@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Constants}
+\alias{Constants}
 \alias{LETTERS}
 \alias{letters}
 \alias{month.abb}
