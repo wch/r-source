@@ -118,6 +118,13 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         x
     }
 
+    mydir.create <- function(path, ...) {
+        if(file_test("-d", path)) return()
+        if(!dir.create(path, showWarnings = TRUE, recursive = TRUE, ...))
+           stop(gettextf("failed to create directory %s", sQuote(path)),
+                domain = NA)
+    }
+
     warn1 <- character()
 
     ## A tar file is a set of 512 byte records,
@@ -129,7 +136,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
     if (!missing(exdir)) {
-        dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+        mydir.create(exdir)
         od <- setwd(exdir)
         on.exit(setwd(od), add = TRUE)
     }
@@ -174,8 +181,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             dothis <- !list
             if(dothis && length(files)) dothis <- name %in% files
             if(dothis) {
-                dir.create(dirname(name), showWarnings = FALSE,
-                           recursive = TRUE)
+                mydir.create(dirname(name))
                 out <- file(name, "wb")
             }
             for(i in seq_len(ceiling(size/512L))) {
@@ -200,20 +206,27 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 if(ctype == "1") {
-                    file.link(name2, name)
+                    if (!file.link(name2, name))
+                        warning(gettextf("failed to link %s to %s", sQuote(name2), sQuote(name)), domain = NA)
                 } else {
                     if(.Platform$OS.type == "windows") {
                         ## this will not work for links to dirs
-                        file.copy(file.path(dirname(name), name2), name)
-                        warn1 <- c(warn1, "restoring symbolic link as a file copy")
-                   } else file.symlink(name2, name)
+                        from <- file.path(dirname(name), name2)
+                        if (!file.copy(from, name))
+                            warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
+                        else
+                            warn1 <- c(warn1, "restoring symbolic link as a file copy")
+                   } else {
+                       if(!file.symlink(name2, name))
+                           warning(gettextf("failed to link %s to %s", sQuote(name2), sQuote(name)), domain = NA)
+                   }
                 }
             }
         } else if(ctype == "5") {
             contents <- c(contents, name)
             if(!list) {
-                dir.create(name, showWarnings = FALSE, recursive = TRUE)
-                Sys.chmod(name, mode)
+                mydir.create(name)
+                Sys.chmod(name, mode) # FIXME: check result
                 ## not much point, since dir will be populated afterwards
                 ## .Call("R_setFileTime", name, ft)
             }

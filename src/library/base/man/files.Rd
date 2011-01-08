@@ -83,15 +83,18 @@ file.link(from, to)
   The \code{to} argument can specify a single existing directory.
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
-  on those platforms which support them.  For \code{file.symlink} the
-  \code{to} argument can specify a single existing directory.
-  (Windows has hard links on NTFS file systems.  Recent versions of
-  Windows have a version of symbolic links on NTFS filesystems, but this
-  seems too limited to be worth implementing.)
+  on those file systems which support them.  For \code{file.symlink} the
+  \code{to} argument can specify a single existing directory.  (Unix and
+  Mac OS X native filesystems support both.  Windows has hard links on
+  NTFS file systems.  Recent versions of Windows have a limited version
+  of symbolic links on NTFS filesystems, but this has not be implemented
+  in \code{file.symlink}, not least because \R is still widely used on
+  Windows XP.)
 }
+
 \value{
-  \code{file.rename} and \code{file.symlink} returns a logical value,
-  true for success.
+  \code{file.rename}, \code{file.symlink} and \code{file.link}
+  returns a logical value, true for success.
 
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.  Using a missing
