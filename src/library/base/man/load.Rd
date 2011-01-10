@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -48,6 +48,9 @@ load(file, envir = parent.frame())
 }
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
+
+  For other interfaces to the underlying serialization format, see
+  \code{\link{unserialize}} and \code{\link{.readRDS}}.
 }
 \examples{
 ## save all data
