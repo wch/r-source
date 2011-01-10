@@ -1014,7 +1014,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
         }
 
-        if (do_install && !extra_arch && !is_base_pkg) {
+        ## Check undeclared dependencies in examples (if any)
+        if (dir.exists("man") && do_install && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in examples")
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
