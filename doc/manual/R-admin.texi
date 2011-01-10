@@ -132,7 +132,7 @@ privileges) you may seem many warnings about changing ownership.  In
 which case you can use
 
 @example
-tar -xf --no-same-owner R-@var{x}.@var{y}.@var{z}.tar.gz
+tar --no-same-owner -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
@@ -985,7 +985,7 @@ administrative privileges you may get a lot of messages which can be
 suppressed by
 
 @example
-tar -xf --no-same-owner R-@value{VERSIONno}.tar.gz
+tar --no-same-owner -xf R-@value{VERSIONno}.tar.gz
 @end example
 
 @noindent
