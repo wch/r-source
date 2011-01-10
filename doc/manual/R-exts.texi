@@ -2584,6 +2584,14 @@ possible static (check with @code{nm -pg}), and to use unusual names, as
 well as ensuring you have used the @code{PACKAGE} argument that @code{R
 CMD check} checks for.
 
+@item
+Do not use (hard or symbolic) file links in your package sources.
+@command{R CMD build} packages the tarball with the @option{-h}
+@command{tar} flag which is documented to dereference links so this is
+not usually a problem, but versions 1.24 and later of GNU @command{tar}
+dereference some links to hard links which may not be handled correctly
+by @command{R CMD INSTALL}.
+
 @end itemize
 
 Some notes on issues specific to porting to x64 Windows are available at
