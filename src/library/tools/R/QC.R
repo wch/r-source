@@ -2504,68 +2504,77 @@ function(dir, force_suggests = TRUE)
     bad_depends
 }
 
+format.check_package_depends <-
+function(x, ...)
+{
+    c(character(),
+      if(length(bad <- x$required_but_not_installed) > 1L) {
+          c(gettext("Packages required but not available:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Package required but not available: %s", bad),
+            "")
+      },
+      if(length(bad <- x$required_but_obsolete) > 1L) {
+          c(gettext("Packages required and available but unsuitable versions:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Package required and available but unsuitable version: %s", bad),
+            "")
+      },
+      if(length(bad <- x$required_but_stub) > 1L) {
+          c(gettext("Former standard packages required but now defunct:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Package required but not available: %s", bad),
+            "")
+      },
+      if(length(bad <- x$suggests_but_not_installed) > 1L) {
+          c(gettext("Packages suggested but not available for checking:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Package suggested but not available for checking: %s", bad),
+            "")
+      },
+      if(length(bad <- x$enhances_but_not_installed) > 1L) {
+          c(gettext("Packages which this enhances but not available for checking:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Package which this enhances but not available for checking: %s", bad),
+            "")
+      },
+      if(length(bad <- x$missing_vignette_depends)) {
+          c(if(length(bad) > 1L) {
+                c(gettext("Vignette dependencies not required:"),
+                  .pretty_format(bad))
+            } else {
+                gettextf("Vignette dependencies not required: %s", bad)
+            },
+            strwrap(gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")),
+            "")
+      },
+      if(length(bad <- x$missing_namespace_depends) > 1L) {
+          c(gettext("Namespace dependencies not required:"),
+            .pretty_format(bad),
+            "")
+      } else if(length(bad)) {
+          c(gettextf("Namespace dependency not required: %s", bad),
+            "")
+      }
+      )
+}
+
 print.check_package_depends <-
 function(x, ...)
 {
-    if(length(bad <- x$required_but_not_installed) > 1L) {
-        writeLines(gettext("Packages required but not available:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Package required but not available: %s", bad),
-                     ""))
-    if(length(bad <- x$required_but_obsolete) > 1L) {
-        writeLines(gettext("Packages required and available but unsuitable versions:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Package required and available but unsuitable version: %s", bad),
-                     ""))
-    if(length(bad <- x$required_but_stub) > 1L) {
-        writeLines(gettext("Former standard packages required but now defunct:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Package required but not available: %s", bad),
-                     ""))
-
-    if(length(bad <- x$suggests_but_not_installed) > 1L) {
-        writeLines(gettext("Packages suggested but not available for checking:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Package suggested but not available for checking: %s", bad),
-                     ""))
-
-    if(length(bad <- x$enhances_but_not_installed) > 1L) {
-        writeLines(gettext("Packages which this enhances but not available for checking:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Package which this enhances but not available for checking: %s", bad),
-                     ""))
-
-    if(length(bad <- x$missing_vignette_depends)) {
-        if(length(bad) > 1L) {
-            writeLines(gettext("Vignette dependencies not required:"))
-            .pretty_print(bad)
-        } else
-           writeLines(gettextf("Vignette dependencies not required: %s", bad))
-        msg <- gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")
-        writeLines(strwrap(msg))
-        writeLines("")
-    }
-    if(length(bad <- x$missing_namespace_depends) > 1L) {
-        writeLines(gettext("Namespace dependencies not required:"))
-        .pretty_print(bad)
-        writeLines("")
-    } else if (length(bad))
-        writeLines(c(gettextf("Namespace dependency not required: %s", bad),
-                     ""))
-
+    writeLines(format(x))
     invisible(x)
 }
-
 
 ### * .check_package_description
 
@@ -4524,7 +4533,8 @@ function(dir)
 format.check_package_CRAN_incoming <-
 function(x, ...)
 {
-    c(if(length(y <- x$bad_package))
+    c(character(),
+      if(length(y <- x$bad_package))
           sprintf("Conflicting package names (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
       if(length(y <- x$bad_version))
@@ -5064,6 +5074,15 @@ function(x)
     txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
                 "\\1<unescaped bksl>\\2", txt)
     .parse_text_as_much_as_possible(txt)
+}
+
+### ** .pretty_format
+
+.pretty_format <-
+function(x)
+{
+    strwrap(paste(x, collapse = " "),
+            indent = 2L, exdent = 2L)
 }
 
 ### ** .pretty_print

@@ -536,23 +536,22 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                      "Most likely, these were included erroneously.\n")
         }
 
-        ## <FIXME>
-        ## Packages also should not contain version control subdirs
-        ## provided that we check a .tar.gz: is there a way to test for
-        ## this?
-        ## ind <- basename(all_dirs) %in% .vc_dir_names
-        ## if(any(ind)) {
-        ##     if(!any) warnLog()
-        ##     any <- TRUE
-        ##     printLog(Log,
-        ##              "Found the following directory(s) with ",
-        ##              "names of version control directories:\n",
-        ##              paste("  ", all_dirs[ind], sep = "",
-        ##                    collapse = "\n"),
-        ##              "\n",
-        ##              "These should not be in a package tarball.\n")
-        ## }
-        ## </FIXME>
+        if(istar) {
+            ## Packages also should not contain version control subdirs
+            ## provided that we check a .tar.gz.
+            ind <- basename(all_dirs) %in% .vc_dir_names
+            if(any(ind)) {
+                if(!any) warnLog()
+                any <- TRUE
+                printLog(Log,
+                         "Found the following directory(s) with ",
+                         "names of version control directories:\n",
+                         paste("  ", all_dirs[ind], sep = "",
+                               collapse = "\n"),
+                         "\n",
+                         "These should not be in a package tarball.\n")
+            }
+        }
 
         if (subdirs != "no") {
             Rcmd = "tools:::.check_package_subdirs(\".\")\n";
@@ -1966,17 +1965,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     check_CRAN_incoming <- function()
     {
         checkingLog(Log, "CRAN incoming feasibility")
-        out <- .check_package_CRAN_incoming(pkgdir)
-        if(length(out)) {
-            res <- format(out)
-            if(length(out$bad_package)) {
+        res <- .check_package_CRAN_incoming(pkgdir)
+        if(length(res)) {
+            out <- format(res)
+            if(length(res$bad_package)) {
                 errorLog(Log)
-                printLog(Log, paste(c(res, ""), collapse = "\n"))
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
-            } else if(length(out$bad_version))
+            } else if(length(res$bad_version))
                 warnLog()
             else noteLog(Log)
-            printLog(Log, paste(c(res, ""), collapse = "\n"))
+            printLog(Log, paste(c(out, ""), collapse = "\n"))
         } else resultLog(Log, "OK")
     }
 
@@ -2031,18 +2030,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## not required in the package DESCRIPTION file.
         ## Namespace imports must really be in Depends.
         res <- .check_package_depends(pkgdir, R_check_force_suggests)
-        if (any(sapply(res, length) > 0)) {
-            if (!all(names(res) %in% c("suggests_but_not_installed",
-                                       "enhances_but_not_installed"))) {
+        if(any(sapply(res, length) > 0L)) {
+            out <- format(res)
+            if(!all(names(res) %in% c("suggests_but_not_installed",
+                                      "enhances_but_not_installed"))) {
                 errorLog(Log)
-                printLog(Log, paste(utils::capture.output(print(res)),
-                                    collapse="\n"), "\n")
+                printLog(Log, paste(out, collapse = "\n"), "\n")
                 wrapLog(msg_DESCRIPTION)
                 do_exit(1L)
             } else {
                 noteLog(Log)
-                printLog(Log, paste(utils::capture.output(print(res)),
-                                    collapse="\n"))
+                printLog(Log, paste(out, collapse = "\n"))
             }
         } else resultLog(Log, "OK")
     }
