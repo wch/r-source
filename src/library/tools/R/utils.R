@@ -425,6 +425,14 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ## comes out? Also, pre-2.12.0 is out weeks before all of BioC 2.7)
 ## E.g. pre-2.13.0 was out ca Sept 20, BioC 2.8 was ready Nov 17.
 
+### ** .vc_dir_names
+
+## Version control directory names: CVS, .svn (Subversion), .arch-ids
+## (arch), .bzr, .git and .hg (mercurial). 
+
+.vc_dir_names <-
+    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
+
 ### * Internal utility functions.
 
 ### ** %w/o%
@@ -938,6 +946,31 @@ function(fname, envir, mustMatch = TRUE)
     }
     res <- isUME(body(f))
     if(mustMatch) res == fname else nzchar(res)
+}
+
+### ** .list_dirs
+
+## Should have base::list.dirs eventually ...
+
+.list_dirs <-
+function(path = ".", full.names = FALSE, recursive = FALSE)
+{
+    ## Always find all directories for now.
+
+    ## Note that list.files(recursive = TRUE) excludes directories.
+    files <- list.files(path, all.files = TRUE)
+    dirs <- files[file_test("-d", file.path(path, files))]
+    if(recursive)
+        dirs <- unique(c(dirs,
+                         dirname(list.files(path, all.files = TRUE,
+                                            recursive = TRUE))))
+    ## <FIXME>
+    ## What should we do about "." and ".."?
+    dirs <- dirs %w/o% c(".", "..")
+    ## </FIXME>
+    if(full.names)
+        dirs <- file.path(path, dirs)
+    dirs
 }
 
 ### ** .load_package_quietly

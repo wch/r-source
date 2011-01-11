@@ -4521,31 +4521,35 @@ function(dir)
 
 }
 
+format.check_package_CRAN_incoming <-
+function(x, ...)
+{
+    c(if(length(y <- x$bad_package))
+          sprintf("Conflicting package names (submitted: %s, existing: %s)",
+                  y[[1L]], y[[2L]]),
+      if(length(y <- x$bad_version))
+          sprintf("Insufficient package version (submitted: %s, existing: %s)",
+                  y[[1L]], y[[2L]]),
+      if(length(y <- x$new_maintainer))
+          c("New maintainer:",
+            strwrap(y[[1L]], indent = 2L, exdent = 4L),
+            "Old maintainer(s):",
+            strwrap(y[[2L]], indent = 2L, exdent = 4L)),
+      if(length(y <- x$bad_license))
+          sprintf("Non-FOSS package license (%s)", y),
+      if(length(y <- x$new_license))
+          c("Change to non-FOSS package license.",
+            "New license:",
+            strwrap(y[[1L]], indent = 2L, exdent = 4L),
+            "Old license:",
+            strwrap(y[[2L]], indent = 2L, exdent = 4L))
+      )
+}
+
 print.check_package_CRAN_incoming <-
 function(x, ...)
 {
-    if(length(y <- x$bad_package))
-        writeLines(sprintf("Conflicting package names (submitted: %s, existing: %s)",
-                           y[[1L]], y[[2L]]))
-    if(length(y <- x$bad_version))
-        writeLines(sprintf("Insufficient package version (submitted: %s, existing: %s)",
-                           y[[1L]], y[[2L]]))
-    if(length(y <- x$new_maintainer)) {
-        writeLines(c("New maintainer:",
-                     strwrap(y[[1L]], indent = 2L, exdent = 4L),
-                     "Old maintainer(s):",
-                     strwrap(y[[2L]], indent = 2L, exdent = 4L)))
-    }
-    if(length(y <- x$bad_license)) {
-        writeLines(sprintf("Non-FOSS package license (%s)", y))
-    }
-    if(length(y <- x$new_license)) {
-        writeLines(c("Change to non-FOSS package license.",
-                     "New license:",
-                     strwrap(y[[1L]], indent = 2L, exdent = 4L),
-                     "Old license:",
-                     strwrap(y[[2L]], indent = 2L, exdent = 4L)))
-    }
+    writeLines(format(x))
     invisible(x)
 }
 

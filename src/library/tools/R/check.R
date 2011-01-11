@@ -491,6 +491,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
+        all_dirs <- .list_dirs(".", full.names = TRUE, recursive = TRUE)
+
         ## several packages have had check dirs in the sources, e.g.
         ## ./languageR/languageR.Rcheck
         ## ./locfdr/man/locfdr.Rcheck
@@ -498,15 +500,59 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## ./bicreduc/OldFiles/bicreduc.Rcheck
         ## ./waved/man/waved.Rcheck
         ## ./waved/..Rcheck
-        alldirs <- dirname(dir(".", all.files = TRUE, full.names = TRUE))
-        check_files <- grep("\\.Rcheck$", alldirs, value = TRUE)
-        if (length(check_files)) {
-            if (!any) warnLog()
-            printLog(Log, "Found the following directory(s) with ",
-                     "names of check directories:\n")
-            printLog(Log, paste(c("", check_files, ""), collapse = "\n"))
-            printLog(Log, "Most likely, these were included erroneously.\n")
+        ind <- grepl("\\.Rcheck$", all_dirs)
+        if(any(ind)) {
+            if(!any) warnLog()
+            any <- TRUE
+            printLog(Log,
+                     "Found the following directory(s) with ",
+                     "names of check directories:\n",
+                     paste("  ", all_dirs[ind], sep = "",
+                           collapse = "\n"),
+                     "\n",
+                     "Most likely, these were included erroneously.\n")
         }
+
+        ## Several packages had leftover Rd2dvi build directories in
+        ## their sources, e.g.
+        ## ./catmap/man/.Rd2dvi
+        ## ./Rdsm/man/.Rd2dvi7366
+        ## ./depmix/man/.Rd2dvi1150
+        ## ./beadarrayMSV/man/.Rd2dvi2933
+        ## ./qgraph/man/.Rd2dvi4352
+        ## ./qgraph/man/.Rd2dvi1532
+        ## ./qgraph/man/.Rd2dvi2032
+        ## ./qgraph/man/.Rd2dvi6032
+        ind <- grepl("^\\.Rd2dvi", basename(all_dirs))
+        if(any(ind)) {
+            if(!any) warnLog()
+            any <- TRUE
+            printLog(Log,
+                     "Found the following directory(s) with ",
+                     "names of Rd2dvi build directories:\n",
+                     paste("  ", all_dirs[ind], sep = "",
+                           collapse = "\n"),
+                     "\n",
+                     "Most likely, these were included erroneously.\n")
+        }
+
+        ## <FIXME>
+        ## Packages also should not contain version control subdirs
+        ## provided that we check a .tar.gz: is there a way to test for
+        ## this?
+        ## ind <- basename(all_dirs) %in% .vc_dir_names
+        ## if(any(ind)) {
+        ##     if(!any) warnLog()
+        ##     any <- TRUE
+        ##     printLog(Log,
+        ##              "Found the following directory(s) with ",
+        ##              "names of version control directories:\n",
+        ##              paste("  ", all_dirs[ind], sep = "",
+        ##                    collapse = "\n"),
+        ##              "\n",
+        ##              "These should not be in a package tarball.\n")
+        ## }
+        ## </FIXME>
 
         if (subdirs != "no") {
             Rcmd = "tools:::.check_package_subdirs(\".\")\n";
@@ -594,6 +640,38 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
+        ## Valid NEWS.Rd?
+        nfile <- file.path("inst", "NEWS.Rd")
+        if(file.exists(nfile)) {
+            ## Catch all warning and error messages.
+            ## We use the same construction in at least another place,
+            ## so maybe factor out a common utility function 
+            ##   .try_catch_all_warnings_and_errors
+            ## eventually.
+            ## For testing package NEWS.Rd files, we really need a real
+            ## QC check function eventually ...
+            .warnings <- NULL
+            .error <- NULL
+            withCallingHandlers(tryCatch(tools:::.build_news_db_from_package_NEWS_Rd(nfile),
+                                         error = function(e)
+                                         .error <<- conditionMessage(e)),
+                                warning = function(e) {
+                                    .warnings <<- c(.warnings,
+                                                    conditionMessage(e))
+                                    invokeRestart("muffleWarning")
+                                })
+            msg <- c(.warnings, .error)
+            if(length(msg)) {
+                if(!any) warnLog("Problems with news in inst/NEWS.Rd:")
+                any <- TRUE
+                printLog(Log,
+                         paste("  ",
+                               unlist(strsplit(msg, "\n", fixed = TRUE)),
+                               sep = "", collapse = "\n"),
+                         "\n")
+            }
+        }
+
         ## Valid CITATION metadata?
         if (file.exists(file.path("inst", "CITATION"))) {
             Rcmd <- "tools:::.check_citation(\"inst/CITATION\")\n"
@@ -602,7 +680,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
                 any <- TRUE
                 printLog(Log,
-                         paste("  ", out, sep = "", collapse="\n"),
+                         paste("  ", out, sep = "", collapse = "\n"),
                          "\n")
             }
         }
@@ -1890,13 +1968,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "CRAN incoming feasibility")
         out <- .check_package_CRAN_incoming(pkgdir)
         if(length(out)) {
-            ## TODO: work with object directly
-            res <- utils::capture.output(print(out))
-            if (any(grepl("Conflicting", res))) {
+            res <- format(out)
+            if(length(out$bad_package)) {
                 errorLog(Log)
                 printLog(Log, paste(c(res, ""), collapse = "\n"))
                 do_exit(1L)
-            } else if (any(grepl("Insufficient", res)))
+            } else if(length(out$bad_version))
                 warnLog()
             else noteLog(Log)
             printLog(Log, paste(c(res, ""), collapse = "\n"))

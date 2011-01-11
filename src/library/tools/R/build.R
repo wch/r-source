@@ -623,10 +623,9 @@ get_exclude_patterns <- function()
                                        ignore.case = WINDOWS)
 
         isdir <- file_test("-d", allfiles)
-        ## Version-control directories
-        vcdirs <- c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
         ## old (pre-2.10.0) dirnames
-        exclude <- exclude | (isdir & (bases %in% c("check", "chm", vcdirs)))
+        exclude <- exclude | (isdir & (bases %in%
+                                       c("check", "chm", .vc_dir_names)))
         exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
         ## FIXME: GNU make uses GNUmakefile (note capitalization)
         exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")

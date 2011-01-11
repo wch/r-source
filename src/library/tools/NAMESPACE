@@ -65,3 +65,5 @@ S3method("toRd", "default")
 S3method("toRd", "bibentry")
 
 S3method("as.character", "Rd")
+
+S3method("format", "check_package_CRAN_incoming")
