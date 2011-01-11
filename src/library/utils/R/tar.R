@@ -82,7 +82,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         if (!missing(exdir)) {
             if (!file_test("-d", exdir)) {
                 if(!dir.create(exdir, showWarnings = TRUE, recursive = TRUE))
-                    stop(gettextf("failed to create directory %s", sQuote(path)),
+                    stop(gettextf("failed to create directory %s", sQuote(exdir)),
                          domain = NA)
             }
             cmd <- if(.Platform$OS.type == "windows")
