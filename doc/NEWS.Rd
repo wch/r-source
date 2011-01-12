@@ -277,6 +277,12 @@
       \item The internal method of \code{untar()} now restores hard
       links as file copies rather than symbolic links (which did not
       work for cross-directory links).
+      
+      \item \code{unzip()} did not handle zip files which contained
+      filepaths with two or more leading directories which were not in
+      the zipfile and did not already exist.  (It is unclear if such
+      zipfiles are valid and the third-party C code used did not support
+      them, but \PR{14462} created one.)
     }
   }
 }
