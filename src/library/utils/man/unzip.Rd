@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -34,6 +34,12 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
 }
+\note{
+  This is a minimal implementation, principally designed for Windows'
+  users to be able to unpack Windows binary packages without external
+  software.  It does not (for example) support Unicode filenames and
+  large files as introduced in \command{zip 3.0}.
+}
 
 \value{
   If \code{list = TRUE}, a data frame with columns \code{Name},
@@ -46,7 +52,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 \source{
   The C code uses \code{zlib} and is in particular based on the
   contributed \samp{minizip} application in the \code{zlib} sources
-  (from \url{zlib.net}) by Gilles Vollant.
+  (from \url{http://zlib.net}) by Gilles Vollant.
 }
 
 \seealso{

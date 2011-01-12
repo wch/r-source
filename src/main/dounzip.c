@@ -86,18 +86,28 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
     strcat(outname, fn);
 
 #ifdef Win32
-    R_fixslash(outname);
+    R_fixslash(outname); /* ensure path separator is / */
 #endif
     p = outname + strlen(outname) - 1;
-    if (*p == '/') { /* Don't know how these are stored in Mac zip files */
+    if (*p == '/') { /* Directories are stored with trailing slash */
 	if (!junk) {
 	    *p = '\0';
-	    if (!R_FileExists(outname)) err = R_mkdir(outname);
+	    if (!R_FileExists(outname)) {
+		/* make parents as required: have already checked dest exists */
+		pp = outname + strlen(dest) + 1;
+		while((p = Rf_strchr(pp, '/'))) {
+		    strcpy(dirs, outname);
+		    dirs[p - outname] = '\0';
+		    if (!R_FileExists(dirs)) R_mkdir(dirs);
+		    pp = p + 1;
+		}
+		err = R_mkdir(outname);
+	    }
 	}
     } else {
 	/* make parents as required: have already checked dest exists */
 	pp = outname + strlen(dest) + 1;
-	while((p = Rf_strrchr(pp, '/'))) {
+	while((p = Rf_strchr(pp, '/'))) {
 	    strcpy(dirs, outname);
 	    dirs[p - outname] = '\0';
 	    /* Rprintf("dirs is %s\n", dirs); */
@@ -247,20 +257,20 @@ SEXP attribute_hidden do_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn))
-	    error(_("invalid '%s' argument"), "topics");
+	    error(_("invalid '%s' argument"), "files");
 	topics = (const char **) R_alloc(ntopics, sizeof(char *));
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = translateChar(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	error(_("invalid '%s' argument"), "destination");
+	error(_("invalid '%s' argument"), "exdir");
     p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
-	error(_("'destination' is too long"));
+	error(_("'exdir' is too long"));
     strcpy(dest, p);
     if (!R_FileExists(dest))
-	error(_("'destination' does not exist"));
+	error(_("'exdir' does not exist"));
     args = CDR(args);
     list = asLogical(CAR(args));
     if (list == NA_LOGICAL)
@@ -269,7 +279,7 @@ SEXP attribute_hidden do_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     overwrite = asLogical(CAR(args));
     if (overwrite == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "overwrtie");
+	error(_("invalid '%s' argument"), "overwrite");
     args = CDR(args);
     junk = asLogical(CAR(args));
     if (junk == NA_LOGICAL)
