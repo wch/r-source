@@ -7773,7 +7773,7 @@ value of its arguments if they are vector types.
 
 SEXP showArgs(SEXP args)
 @{
-  int i, nargs;
+  int i;
   Rcomplex cpl;
   const char *name;
   SEXP el;
@@ -7782,22 +7782,22 @@ SEXP showArgs(SEXP args)
 @group
   args = CDR(args); /* skip 'name' */
   for(i = 0; args != R_NilValue; i++, args = CDR(args)) @{
-    args = CDR(args);
-    name = CHAR(PRINTNAME(TAG(args)));
-    switch(TYPEOF(CAR(args))) @{
+    name = isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
+    el = CAR(args);
+    switch(TYPEOF(el)) @{
     case REALSXP:
-      Rprintf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
+      Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
       break;
 @end group
 @group
     case LGLSXP:
     case INTSXP:
-      Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
+      Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
       break;
 @end group
 @group
     case CPLXSXP:
-      cpl = COMPLEX(CAR(args))[0];
+      cpl = COMPLEX(el)[0];
       Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
       break;
 @end group
@@ -7820,7 +7820,7 @@ SEXP showArgs(SEXP args)
 This can be called by the wrapper function
 
 @example
-showArgs <- function(...) .External("showArgs", ...)
+showArgs <- function(...) invisible(.External("showArgs", ...))
 @end example
 
 @noindent
@@ -7828,7 +7828,7 @@ Note that this style of programming is convenient but not necessary, as
 an alternative style is
 
 @example
-showArgs1 <- function(...) .Call("showArgs1", list(...))
+showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
 @end example
 
 @noindent
