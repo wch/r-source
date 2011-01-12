@@ -157,17 +157,17 @@ uuidgen.exe: uuidgen.o
 
 # currently use about 3300
 uuids: uuidgen.exe
-	uuidgen 4000 > $@
+	./uuidgen 4000 > $@
 
 files.wxs: imagedir fixups 32bit md5sums
-	"$(WIX3DIR)/bin/heat" dir $(RPREFIX) -sw5150 -nologo -o $@
+	"$(WIX3DIR)/heat" dir $(RPREFIX) -sw5150 -nologo -o $@
 
 R.wxs: WIXins.R uuids files.wxs
-	Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || (rm -f $@;exit 1)
+	../../../bin$(R_ARCH)/Rscript WIXins.R $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL) || (rm -f $@;exit 1)
 
 $(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
-	"$(WIX3DIR)/bin/candle" R.wxs > $(RPREFIX).log 2>&1
-	"$(WIX3DIR)/bin/light" -out $@ R.wixobj -dcl:high \
+	"$(WIX3DIR)/candle" R.wxs > $(RPREFIX).log 2>&1
+	"$(WIX3DIR)/light" -out $@ R.wixobj -dcl:high \
 	 -ext WixUIExtension -sw1076 -sval -spdb >> $(RPREFIX).log 2>&1
 
 

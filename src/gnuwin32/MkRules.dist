@@ -74,8 +74,9 @@ HOME32=
 
 ## ====== configuration macros for building MSI installer ===========
 
-# location where WiX 3.x was installed. Spaces allowed.
-WIX3DIR=C:/packages/WiX3.0
+# location where WiX 3.x executables were installed. Spaces allowed.
+# The MSI uses '/bin': other packagings may not
+WIX3DIR=C:/packages/WiX3.0/bin
 
 # set to 1 for a non-elevated per-user installer
 WIX_PERSONAL=0
