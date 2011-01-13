@@ -154,6 +154,8 @@
       attribute and not the \code{dim()} function, making it more useful
       for objects (such as data frames) from classes with methods for
       \code{dim()}.  (Related to \PR{14469}.)
+
+      \item \code{.saveRDS()} now allows \code{compress = "xz"}.
     }
   }
 

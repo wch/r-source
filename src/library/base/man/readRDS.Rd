@@ -32,7 +32,7 @@
     to use \code{"gzip"} compression.  Ignored when \code{file} is a
     connection and for workspace format version 1.  As from \R 2.10.0
     this is also allowed to be \code{"bzip2"} to specify that type of
-    compression.}
+    compression, and from \R 2.13.0, \code{"xz"}.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
