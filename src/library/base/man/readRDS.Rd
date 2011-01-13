@@ -3,6 +3,7 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
+% These were introduced in R 1.7.0, post version 2
 \name{readRDS}
 \alias{.readRDS}
 \alias{.saveRDS}
@@ -25,12 +26,10 @@
     written; otherwise (default except for text-mode connections), a
     more compact binary one is used.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default format.  The version used from \R
-    0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
-    1.4.0 is version 2.}
+    specifies the current default version (2).  Earlier versions are not
+    supported, so this will only be relevant when there are later versions.}
   \item{compress}{a logical specifying whether saving to a named file is
-    to use \code{"gzip"} compression.  Ignored when \code{file} is a
-    connection and for workspace format version 1.  As from \R 2.10.0
+    to use \code{"gzip"} compression.  As from \R 2.10.0
     this is also allowed to be \code{"bzip2"} to specify that type of
     compression, and from \R 2.13.0, \code{"xz"}.}
   \item{refhook}{a hook function for handling reference objects.}
