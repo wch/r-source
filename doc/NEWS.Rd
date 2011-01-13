@@ -156,6 +156,11 @@
       \code{dim()}.  (Related to \PR{14469}.)
 
       \item \code{.saveRDS()} now allows \code{compress = "xz"}.
+
+      \item There is a new option \code{"browserNLdisabled"} to disable
+      the use of an empty (e.g. via the \sQuote{Return} key) as a synonym
+      for \code{c} in \code{browser()} or \code{n} under \code{debug()}.
+      (Wish of \PR{14472}.)
     }
   }
 

@@ -22,10 +22,10 @@ isdebugged(fun)
 }
 \description{
   Set, unset or query the debugging flag on a function.
- The \code{text} and \code{condition} arguments are the same as those
- that can be supplied via a call to \code{browser}. They can be retrieved
- by the user once the browser has been entered, and provide a mechanism to
- allow users to identify which breakpoint has been activated.
+  The \code{text} and \code{condition} arguments are the same as those
+  that can be supplied via a call to \code{browser}. They can be retrieved
+  by the user once the browser has been entered, and provide a mechanism to
+  allow users to identify which breakpoint has been activated.
 }
 \details{
   When a function flagged for debugging is entered, normal execution
@@ -33,11 +33,12 @@ isdebugged(fun)
   time.  A new browser context is initiated for each step (and the
   previous one destroyed).
 
-  At the debug prompt the user can enter commands or \R expressions.
-  The commands are
+  At the debug prompt the user can enter commands or \R expressions,
+  followed by a newline.  The commands are
 
   \describe{
-    \item{\code{n}}{(or just return).  Advance to the next step.}
+    \item{\code{n}}{(or just an empty line, by default).
+      Advance to the next step.}
     \item{\code{c}}{continue to the end of the current context: e.g. to the
       end of the loop if within a loop or to the end of the function.}
     \item{\code{cont}}{synonym for \code{c}.}
@@ -45,14 +46,19 @@ isdebugged(fun)
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
   }
-  (Leading and trailing whitespace is ignored, except for return).
+  (Leading and trailing whitespace is ignored, except for an empty line).
 
   Anything else entered at the debug prompt is interpreted as an
   \R expression to be evaluated in the calling environment: in
   particular typing an object name will cause the object to be printed,
   and \code{ls()} lists the objects in the calling frame.  (If you want
   to look at an object with a name such as \code{n}, print it explicitly.)
-
+  
+  Setting \link{option} \code{"browserNLdisabled"} to \code{TRUE}
+  disables the use of an empty line as a synonym for \code{n}.  If this
+  is done, the user will be re-prompted for input until a valid command
+  or an expression is entered.
+  
   To debug a function is defined inside a function, single-step though
   to the end of its definition, and then call \code{debug} on its name.
 
