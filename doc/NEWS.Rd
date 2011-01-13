@@ -250,6 +250,9 @@
 
       \item The \code{str()} method for class \code{"POSIXt"} now gives
       sensible output for 0-length input.
+
+      \item Added \code{PROTECT} calls to some constructed expressions
+      used in C level \code{eval} calls.
     }
   }
 }
