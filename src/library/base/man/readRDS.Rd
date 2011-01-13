@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -8,8 +8,8 @@
 \alias{.saveRDS}
 \title{Internal Serialization Interface}
 \description{
-  Internal functions for serialization.  See \code{\link{serialize}} for
-  public (but experimental) versions.
+  Internal functions for serialization of \R objects to a file.  See
+  \code{\link{serialize}} for public versions.
 }
 \usage{
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
@@ -29,15 +29,16 @@
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
     1.4.0 is version 2.}
   \item{compress}{a logical specifying whether saving to a named file is
-    to use compression.  Ignored when \code{file} is a connection and for
-    workspace format version 1.  As from \R 2.10.0 this is also allowed
-    to be \code{"bzip2"} to specify that type of compression.}
+    to use \code{"gzip"} compression.  Ignored when \code{file} is a
+    connection and for workspace format version 1.  As from \R 2.10.0
+    this is also allowed to be \code{"bzip2"} to specify that type of
+    compression.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
   Since these are internal, the file format is subject to change without
-  notice.  The current  format is that of \code{\link{serialize}},
-  compressed as if by \command{gzip} if \code{compress = FALSE}.
+  notice.  The current file format is that of \code{\link{serialize}},
+  optionally compressed.
 }
 
 \value{
