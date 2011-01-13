@@ -54,7 +54,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \code{"default"}.  The latter is interpreted as
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as
-    corresponding to a language using ISO 8859-\{5,7,13,15\} or KOI8-\{R,U\}.
+    corresponding to a language using ISO 8859-\{2,5,7,13,15\} or KOI8-\{R,U\}.
 #endif
 #ifdef windows
     \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
@@ -72,11 +72,11 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{fg}{the initial foreground color to be used.  Defaults to
     \code{"black"}.}
   \item{width, height}{the width and height of the graphics region in
-    inches.  Default to t\code{0}.
+    inches.  Default to \code{0}.
 
     If \code{paper != "special"} and \code{width} or \code{height} is less
-    than \code{0.1} or too large to give a total margin of 0.5 inch, it is
-    reset to the corresponding paper dimension minus 0.5.
+    than \code{0.1} or too large to give a total margin of 0.5 inch, the
+    graphics region is reset to the corresponding paper dimension minus 0.5.
   }
   \item{horizontal}{the orientation of the printed image, a logical.
     Defaults to true, that is landscape orientation on paper sizes
