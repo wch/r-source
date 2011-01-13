@@ -1496,4 +1496,10 @@ stopifnot(length(x) == 2)
 ## was 3 in R < 2.13.0
 
 
+## mostattributes<- now sometimes works for data frames (PR#14469)
+x <- women
+mostattributes(x) <- attributes(women) # did not set names in R < 2.13.0
+## but there are still problems with row.names (see the help)
+
+
 proc.time()

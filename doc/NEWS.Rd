@@ -149,6 +149,11 @@
       \item New \code{Summary()} group method for class \code{"ordered"}
       implements \code{min()}, \code{max()} and \code{range()} for
       ordered factors.
+
+      \item \code{`mostattributes<-`} now consults the \code{"dim"}
+      attribute and not the \code{dim()} function, making it more useful
+      for objects (such as data frames) from classes with methods for
+      \code{dim()}.  (Related to \PR{14469}.)
     }
   }
 

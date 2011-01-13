@@ -1,6 +1,6 @@
 % File src/library/base/man/attributes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{attributes}
@@ -46,13 +46,18 @@ mostattributes(obj) <- value
 
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
-  attributes, and assigns them only when valid whereas an
-  \code{attributes} assignment would give an error if any are not.
+  attributes, and assigns them only when known to be valid whereas an
+  \code{attributes} assignment would give an error if any are not.  It
+  is principally intended for arrays, and should be used with care on
+  classed objects.  For example, it does not check that
+  \code{\link{row.names}} are assigned correctly for data frames.
 
   The names of a pairlist are not stored as attributes, but are reported
-  as if they were (and can be set by the replacement method for attributes).
+  as if they were (and can be set by the replacement form of
+  \code{attributes}).
   
-  Both forms of \code{attributes} are \link{primitive} functions.
+  Both assignment and replacement forms of \code{attributes} are
+  \link{primitive} functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

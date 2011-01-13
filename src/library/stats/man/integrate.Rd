@@ -1,6 +1,6 @@
 % File src/library/stats/man/integrate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{integrate}
@@ -34,11 +34,12 @@ integrate(f, lower, upper, \dots, subdivisions=100,
 \details{
   Note that arguments after \code{\dots} must be matched exactly.
   
-  If one or both limits are infinite, the
-  infinite range is mapped onto a finite interval.
+  If one or both limits are infinite, the infinite range is mapped onto
+  a finite interval.
 
   For a finite interval, globally adaptive interval subdivision is used
-  in connection with extrapolation by the Epsilon algorithm.
+  in connection with extrapolation by Wynn's Epsilon algorithm, with the
+  basic step being Gauss--Kronrod quadrature.
 
   \code{rel.tol} cannot be less than \code{max(50*.Machine$double.eps,
     0.5e-28)} if \code{abs.tol <= 0}.
@@ -53,6 +54,11 @@ integrate(f, lower, upper, \dots, subdivisions=100,
   just using a large number as the endpoint.  This increases the chance
   of a correct answer -- any function whose integral over an infinite
   interval is finite must be near zero for most of that interval.
+
+  For values at a finite set of points to be a fair reflection of the
+  behaviour of the function elsewhere, the function needs to be
+  well-behaved, for example differentiable except perhaps for a small
+  number of jumps or integrable singularities.
   
   \code{f} must accept a vector of inputs and produce a vector of function
   evaluations at those points.  The \code{\link{Vectorize}} function
