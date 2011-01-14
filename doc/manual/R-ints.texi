@@ -1130,45 +1130,62 @@ For background papers see
 
 @cindex serialization
 Serialized versions of @R{} objects are used by @code{load}/@code{save}
-and also at a lower level by @code{.saveRDS}/@code{.readRDS} and
-@code{serialize}/@code{unserialize}.  These differ in what they
+and also at a slightly lower level by @code{.saveRDS}/@code{.readRDS}
+and @code{serialize}/@code{unserialize}.  These differ in what they
 serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
-(typically a workspace).  @code{save} writes a header indicating the
-format at the beginning of the file (a single LF-terminated line) which
-the lower-level versions do not.
+(typically the workspace).  @code{save} writes a header at the beginning
+of the file (a single LF-terminated line) which the lower-level versions
+do not.
+
+@code{save} and @code{.saveRDS} allow various forms of compression, and
+@command{gzip} compression has been the default (except for ASCII saves)
+since @R{} 2.4.0.  Compression is applied to the whole file stream,
+including the headers, so serialized files can be uncompressed or
+re-compressed by external programs.  Since @R{} 2.10.0 both @code{load}
+and @code{.readRDS} can read @command{gzip}, @command{bzip2} and
+@command{xz} forms of compression when reading from a file, and
+@command{gzip} compression when reading from a connection.
 
 @R{} has used the same serialization format since @R{} 1.4.0 in December
-2001.  Reading of earlier formats is still supported via @code{load},
-but they are not described here.  (Files of most of these formats can
-still be found in @file{data} directories of packages.) The current
-serialization format is called `version 2', and has been expanded in
-back-compatible ways since @R{} 1.4.0, for example to support additional
-@code{SEXPTYPE}s.
+2001.  Earlier formats are still supported via @code{load} and
+@code{save} but such formats are not described here.  (Files of some of
+these formats can still be found in @file{data} directories of
+packages.) The current serialization format is called `version 2', and
+has been expanded in back-compatible ways since @R{} 1.4.0, for example
+to support additional @code{SEXPTYPE}s.
 
-@code{save()} works by first creating a tagged pairlist of objects to be
-saved, and then saving that single object preceded by a single-line
-header (typically @code{RDX2\n} for a binary save).  @code{load()} reads
-the header line, unserializes a single object (a pairlist or a vector
-list) and assigns the elements of the list in the appropriate
-environment.
+@code{save} works by writing a single-line header (typically
+@code{RDX2\n} for a binary save: the only other current value is
+@code{RDA2\n} for @code{save(files=TRUE)}), then creating a tagged
+pairlist of the objects to be saved and serializing that single object.
+@code{load} reads the header line, unserializes a single object (a
+pairlist or a vector list) and assigns the elements of the object in the
+specified environment.  The header line serves two purposes in @R{}: it
+identifies the serialization format so @code{load} can switch to the
+appropriate reader code, and the linefeed allows the detection of files
+which have been subjected to a non-binary transfer which re-mapped line
+endings.  It can also be thought of as a `magic number' in the sense
+used by the @command{file} program (although @R{} save files are not yet
+by default known to that program).
 
 Serialization in @R{} needs to take into account that objects may
 contain references to environments, which then have enclosing
 environments and so on.  (Environments recognized as package or name
-space environments are saved by name.)  Further, there are `reference
-objects' which are not duplicated on copy and should remain
-shared on unserialization.  These are weak references, external pointers
-and environments other than those associated with packages, name spaces
-and the global environment.  These are handled via a hash table, and
+space environments are saved by name.)  There are `reference objects'
+which are not duplicated on copy and should remain shared on
+unserialization.  These are weak references, external pointers and
+environments other than those associated with packages, name spaces and
+the global environment.  These are handled via a hash table, and
 references after the first are written out as a reference marker indexed
 by the table entry.
 
-Serialization first writes a header indicating the format (normally
-@samp{X\n} for an XDR format binary save, but @samp{A\n}, ASCII, and
-@samp{B\n}, native word-order binary@footnote{there is no @R{}-level
-interface to this format}, can also occur) and the version number of the
-format and of two @R{} versions (as integers).  (Unserialization
+Version-2 serialization first writes a header indicating the format
+(normally @samp{X\n} for an XDR format binary save, but @samp{A\n},
+ASCII, and @samp{B\n}, native word-order binary@footnote{there is no
+@R{}-level interface to this format}, can also occur) and then three
+integers giving the version of the format and two @R{} versions (packed
+by the @code{R_Version} macro from @file{Rversion.h}).  (Unserialization
 interprets the two versions as the version of @R{} which wrote the file
 followed by the minimal version of @R{} needed to read the format.)
 Serialization then writes out the object recursively using function
@@ -1181,19 +1198,19 @@ pseudo-@code{SEXPTYPE}s cover @code{R_NilValue}, @code{R_EmptyEnv},
 
 For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
 @code{ENVSXP} serialization starts with an integer with the
-@code{SEXPTYPE} in bits 0:7@footnote{only 0:4 will currently be used for
-@code{SEXPTYPE}s but values 241:255 are used for pseudo-@code{SEXPTYPE}s.}
-followed by the object bit, two bits indicating if there are any
-attributes and if there is a tag (for the pairlist types), an unused bit
-and then the @code{gp} field@footnote{Currently the only relevant bits
-are 0:1, 4, 14:15.} in bits 12:27.  Pairlist-like objects write their
-attributes (if any), tag (if any), CAR and then CDR (using tail
-recursion): other objects write their attributes after themselves.
-Atomic vector objects write their length followed by the data: generic
-vector-list objects write the length followed by a call to
-@code{WriteItem} for each element.  The code for @code{CHARSXP}s
-special-cases @code{NA_STRING} and writes it as length @code{-1} with no
-data.
+@code{SEXPTYPE} in bits 0:7@footnote{only bits 0:4 are currently used
+for @code{SEXPTYPE}s but values 241:255 are used for
+pseudo-@code{SEXPTYPE}s.} followed by the object bit, two bits
+indicating if there are any attributes and if there is a tag (for the
+pairlist types), an unused bit and then the @code{gp}
+field@footnote{Currently the only relevant bits are 0:1, 4, 14:15.} in
+bits 12:27.  Pairlist-like objects write their attributes (if any), tag
+(if any), CAR and then CDR (using tail recursion): other objects write
+their attributes after themselves.  Atomic vector objects write their
+length followed by the data: generic vector-list objects write their
+length followed by a call to @code{WriteItem} for each element.  The
+code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
+length @code{-1} with no data.
 
 Environments are treated in several ways: as we have seen, some are
 written as specific pseudo-@code{SEXPTYPE}s.  Package and name space
@@ -1269,10 +1286,9 @@ UTF-8-encoded string if it encounters a @samp{\uxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
 needs MBCS support, and was only enabled@footnote{See define
 @code{USE_UTF8_IF_POSSIBLE} in file @file{src/main/gram.c}.} on
-Windows.)  This was taken further in @R{} 2.10.0, where it is enabled
-for all platforms with MBCS support, and a @samp{\uxxx} or
-@samp{\Uxxxxxxxx} escape ensures that the parsed string will be marked
-as UTF-8.
+Windows.)  From @R{} 2.10.0 it is enabled for all platforms with MBCS
+support, and a @samp{\uxxx} or @samp{\Uxxxxxxxx} escape ensures that the
+parsed string will be marked as UTF-8.
 
 Most of the character manipulation functions now preserve UTF-8
 encodings: there are some notes as to which at the top of file
@@ -2244,7 +2260,7 @@ calls to builtins.
 @node Special internals, Prototypes for primitives, Special primitives, .Internal vs .Primitive
 @section Special internals
 
-There are also special @code{.Internal} functions: @code{NextMethod}
+There are also special @code{.Internal} functions: @code{NextMethod},
 @code{Recall}, @code{withVisible}, @code{cbind}, @code{rbind} (to allow
 for the @code{deparse.level} argument), @code{eapply}, @code{lapply} and
 @code{vapply}.
@@ -2454,12 +2470,12 @@ installed differed in earlier versions.
 An installed package has a top-level file @file{DESCRIPTION}, a copy of
 the file of that name in the package sources with a @samp{Built} field
 appended, and file @file{INDEX}, usually describing the objects on which
-help is available, a file @file{NAMESPACE} is the package has a name
-space, files such as @file{CITATION}, @file{LICENCE} and @file{NEWS},
-and any other files copied in from @file{inst}.  It will have
-directories @file{Meta}, @file{help} and @file{html} (even if the
-package has no help), almost always has a directory @file{R} and often
-has a directory @file{libs} to contain compiled code.  Other
+help is available, a file @file{NAMESPACE} if the package has a name
+space, optional files such as @file{CITATION}, @file{LICENCE} and
+@file{NEWS}, and any other files copied in from @file{inst}.  It will
+have directories @file{Meta}, @file{help} and @file{html} (even if the
+package has no help pages), almost always has a directory @file{R} and
+often has a directory @file{libs} to contain compiled code.  Other
 directories with known meaning to @R{} are @file{data}, @file{demo},
 @file{doc} and @file{po}.
 
@@ -2472,19 +2488,19 @@ into the package's environment, then lazy-loads a database
 the contents of  @file{R/@var{pkgname}}: standard templates to load
 lazy-load databases are provided in @file{share/R/[ns]packloader.R}.
 
-How (and if) compiled code is loaded is down to the package's start-code
-such as @code{.First.lib} or @code{.onLoad}, although a @code{useDynlib}
-directive in a name space provides an alternative.
-Conventionally compiled code is loaded by a call to
-@code{library.dynam} and this looks in directory @file{libs} (and in an
-appropriate sub-directory if sub-architectures are in use) for a shared
-object (Unix-alike) or DLL (Windows).
+How (and if) compiled code is loaded is down to the package's startup
+code such as @code{.First.lib} or @code{.onLoad}, although a
+@code{useDynlib} directive in a name space provides an alternative.
+Conventionally compiled code is loaded by a call to @code{library.dynam}
+and this looks in directory @file{libs} (and in an appropriate
+sub-directory if sub-architectures are in use) for a shared object
+(Unix-alike) or DLL (Windows).
 
 Subdirectory @file{data} serves two purposes. In a package using
 lazy-loading of data, it contains a lazy-load database @file{Rdata},
 plus a file @file{Rdata.rds} which contain a named character vector used
-by @code{data} in the (unusual) event that it is used for such a
-package.  Otherwise it is copy of the @file{data} directory in the
+by @code{data()} in the (unusual) event that it is used for such a
+package.  Otherwise it is a copy of the @file{data} directory in the
 sources, with saved images re-compressed if @command{R CMD INSTALL
 --resave-data} was used.  If @command{R CMD INSTALL --use-data-zip} was
 specified or selected @emph{via} @option{--auto-zip}, the contents of
@@ -2501,11 +2517,11 @@ catalogs.
 @section Metadata
 
 Directory @file{Meta} contains several files in @code{.rds} format, that
-is serialized @R{} objects.  All packages have @file{Rd.rds},
-@file{hsearch.rds}, @file{links.rds} and @file{package.rds}.  Packages
-with name spaces have a file @file{nsInfo.rds}, and those with data,
-demos or vignettes have @file{data.rds}, @file{demo.rds} or
-@file{vignette.rds} files.
+is serialized @R{} objects written by @code{.saveRDS}.  All packages
+have files @file{Rd.rds}, @file{hsearch.rds}, @file{links.rds} and
+@file{package.rds}.  Packages with name spaces have a file
+@file{nsInfo.rds}, and those with data, demos or vignettes have
+@file{data.rds}, @file{demo.rds} or @file{vignette.rds} files.
 
 The structure of these files (and their existence and names) is private
 to @R{}, so the description here is for those trying to follow the @R{}
@@ -2513,7 +2529,7 @@ sources: there should be no reference to these files in non-base
 packages.
 
 File @file{package.rds} is a dump of information extracted from the
-@file{DESCRIPTION} file. It is a list of several components.  The first,
+@file{DESCRIPTION} file.  It is a list of several components.  The first,
 @samp{DESCRIPTION}, is a character vector, the @file{DESCRIPTION} file
 as read by @code{read.dcf}.  Further elements @samp{Depends},
 @samp{Suggests}, @samp{Imports}, @samp{Rdepends} and @samp{Rdepends2}
@@ -2570,7 +2586,7 @@ file name of the installed @R{} code, if present).
 @node Help,  , Metadata, Package Structure
 @section Help
 
-All installed packages, whether they had an @file{.Rd} files or not,
+All installed packages, whether they had any @file{.Rd} files or not,
 have @file{help} and @file{html} directories. The latter normally only
 contains the single file @file{00Index.html}, the package index which
 has hyperlinks to the help topics (if any).
