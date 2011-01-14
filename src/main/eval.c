@@ -449,6 +449,19 @@ SEXP eval(SEXP e, SEXP rho)
 	       promise is already evaluated. */
 	    forcePromise(e);
 	tmp = PRVALUE(e);
+	/* This does _not_ change the value of NAMED on the value tmp,
+	   in contrast to the handling of promises bound to symbols in
+	   the SYMSXP case above.  The reason is that one (typically
+	   the only) place promises appear in source code is as
+	   wrappers for the RHS value in assignment function calls for
+	   complex assignment expression created in applydefine().  If
+	   the RHS value is freshly created it will have NAMED = 0 and
+	   we want it to stay that way or a BUILTIN or SPECIAL
+	   assignment function might have to duplicate the value
+	   before inserting it to avoid creating cycles.  (Closure
+	   assignment functions will get the value via the SYMSXP case
+	   from evaluating their 'value' argument so the value will
+	   end up getting duplicated if NAMED = 2.) LT */
 	break;
     case LANGSXP:
 	if (TYPEOF(CAR(e)) == SYMSXP)
