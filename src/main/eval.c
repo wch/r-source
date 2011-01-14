@@ -1618,7 +1618,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rho == R_BaseEnv)
 	errorcall(call, _("cannot do complex assignments in base environment"));
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
-    PROTECT(tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol));
+    PROTECT((SEXP) (tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol)));
 
     /* Now set up a context to remove it when we are done, even in the
      * case of an error.  This all helps error() provide a better call.
