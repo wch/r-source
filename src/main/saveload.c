@@ -2188,14 +2188,19 @@ void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 /* Ideally it should be possible to do this entirely in R code with
    something like
 
-	magic <- if (ascii) "RDA2\n" else
+	magic <- if (ascii) "RDA2\n" else ...
 	writeChar(magic, con, eos = NULL)
 	val <- lapply(list, get, envir = envir)
 	names(val) <- list
 	invisible(serialize(val, con, ascii = ascii))
 
    Unfortunately, this will result in too much duplication in the lapply
-   (and any other way of doing this).  Hence we need an internal version. */
+   (and any other way of doing this).  Hence we need an internal version. 
+
+   In case anyone wants to do this another way, in fact it is a
+   pairlist of objects that is serialized, but RestoreToEnv copes
+   with either a pairlist or list.
+*/
 
 SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
