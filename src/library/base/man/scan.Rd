@@ -41,11 +41,14 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     any of LF, CRLF or CR will be accepted as the EOL marker for a line
     and so will match \code{sep = "\n"}.
 
-    \code{file} can also be a complete URL.
+    \code{file} can also be a complete URL.  (For the supported URL
+    schemes, see the \sQuote{URLs} section of the help for
+    \code{\link{url}}.)
 
     To read a data file not in the current encoding (for example a
     Latin-1 file in a UTF-8 locale or conversely) use a
-    \code{\link{file}} connection setting the \code{encoding} argument.
+    \code{\link{file}} connection setting its \code{encoding} argument
+    (or \code{scan}'s \code{fileEncoding} argument).
   }
 
   \item{what}{the type of \code{what} gives the type of data to be read.
@@ -66,10 +69,10 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{n}{integer: the maximum number of data values to be read, defaulting to
     no limit.  Invalid values will be ignored.}
 
-  \item{sep}{by default, scan expects to read white-space delimited
-    input fields.  Alternatively, \code{sep} can be used to specify a
-    character which delimits fields.  A field is always delimited by an
-    end-of-line marker unless it is quoted.
+  \item{sep}{by default, scan expects to read \sQuote{white-space}
+    delimited input fields.  Alternatively, \code{sep} can be used to
+    specify a character which delimits fields.  A field is always
+    delimited by an end-of-line marker unless it is quoted.
 
     If specified this should be the empty character string (the default)
     or \code{NULL} or a character string containing just one single-byte
@@ -107,7 +110,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument.  It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
-    white space from \code{character} fields (\code{numeric} fields
+    \sQuote{white space} from \code{character} fields (\code{numeric} fields
     are always stripped).
 
     If \code{strip.white} is of length 1, it applies to all fields;
@@ -115,12 +118,6 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     \code{i}-th field is of mode character (because \code{what[i]} is)
     then the leading and trailing white space from field \code{i} is
     stripped.
-
-    The precise definition of \sQuote{white.space} depends on the
-    locale.  ASCII spaces, tabs, newlines and carriage returns are
-    always considered to be white space, and in locales where the
-    encoding is known (Latin-1 locales and 8-bit Windows locales), so is
-    \sQuote{non-breaking space}.
   }
 
   \item{quiet}{logical: if \code{FALSE} (default), scan() will print a
