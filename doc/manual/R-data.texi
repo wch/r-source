@@ -97,6 +97,7 @@ principal authors of the packages mentioned are
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{ncdf}, @pkg{ncdf4} @tab David Pierce
 @item @pkg{rJava} @tab Simon Urbanek
+@item @pkg{RJDBC} @tab Simon Urbanek
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
@@ -138,13 +139,16 @@ better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 another system do the work!  (For example Therneau & Grambsch (2000)
 comment that they prefer to do data manipulation in SAS and then use
-@pkg{survival} in @Sl{} for the analysis.)  Several packages allow
-functionality developed in languages such as @code{Java}, @code{perl}
-and @code{python} to be directly integrated with @R{} code, making the
-use of facilities in these languages even more appropriate.  (See the
-@pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the Omegahat
-project, @uref{http://www.omegahat.org}, and the @pkg{rJava} package
-from @acronym{CRAN}.)
+@pkg{survival} in @Sl{} for the analysis.)   Database manipulation
+systems are often very suitable for manipulating an extracting data:
+several packages to interact with DBMSs are discussed here.
+
+There are packages to allow functionality developed in languages such as
+@code{Java}, @code{perl} and @code{python} to be directly integrated
+with @R{} code, making the use of facilities in these languages even
+more appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
+packages from the Omegahat project, @uref{http://www.omegahat.org}, and
+the @pkg{rJava} package from @acronym{CRAN}.)
 
 
 @cindex Unix tools
@@ -523,18 +527,18 @@ indicate missing cases in a regular layout.
 
 @item @strong{Classes for the variables}
 
-Unless you take any special action, @code{read.table} tries to select a
-suitable class for each variable in the data frame.  It tries in turn
-@code{logical}, @code{integer}, @code{numeric} and @code{complex},
-moving on if any entry is not missing and cannot be
-converted.@footnote{This is normally fast as looking at the first entry
-rules out most of the possibilities.}  If all of these fail, the
-variable is converted to a factor.
+Unless you take any special action, @code{read.table} reads all the
+columns as character vectors and then tries to select a suitable class
+for each variable in the data frame.  It tries in turn @code{logical},
+@code{integer}, @code{numeric} and @code{complex}, moving on if any
+entry is not missing and cannot be converted.@footnote{This is normally
+fast as looking at the first entry rules out most of the possibilities.}
+If all of these fail, the variable is converted to a factor.
 
 Arguments @code{colClasses} and @code{as.is} provide greater control.
 @code{as.is} suppresses conversion of character vectors to factors
 (only).  Using @code{colClasses} allows the desired class to be set for
-each column in the input.
+each column in the input: it will be faster and use less memory.
 
 Note that @code{colClasses} and @code{as.is} are specified @emph{per} 
 column, not @emph{per} variable, and so include the column of row names
@@ -557,13 +561,13 @@ text files, but Windows does not (and uses backslash in path names).
 It is optional in @R{} whether such conventions are applied to data files.
 
 Both @code{read.table} and @code{scan} have a logical argument
-@code{allowEscapes}.  As from @R{} 2.2.0 this is false by default, and
-backslashes are then only interpreted as (under circumstances described
-above) escaping quotes.  If this set to be true, C-style escapes are
-interpreted, namely the control characters @code{\a, \b, \f, \n, \r, \t,
-\v} and octal and hexadecimal representations like @code{\040} and
-@code{\0x2A}.  Any other escaped character is treated as itself,
-including backslash.
+@code{allowEscapes}.  This is false by default, and backslashes are then
+only interpreted as (under circumstances described above) escaping
+quotes.  If this set to be true, C-style escapes are interpreted, namely
+the control characters @code{\a, \b, \f, \n, \r, \t, \v} and octal and
+hexadecimal representations like @code{\040} and @code{\0x2A}.  Any
+other escaped character is treated as itself, including backslash.  Note
+that Unicode escapes such as @code{\u@var{xxxx}} are never interpreted.
 
 @end enumerate
 
@@ -578,10 +582,8 @@ Convenience functions @code{read.csv} and @code{read.delim} provide
 arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
 variations @code{read.csv2} and @code{read.delim2} are appropriate for
-use in countries where the comma is used for the decimal point.
-@c Currently R overrides the setting of LC_NUMERIC
-@c You can find the current settings of the computer in use by calling
-@c @code{Sys.localeconv()}.
+use in those locales where the comma is used for the decimal point and
+(for @code{read.csv2}) spreadsheets use semicolons to separate fields.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
@@ -610,7 +612,7 @@ to specify @code{comment.char = ""}, @code{colClasses} as one of the
 atomic vector types (logical, integer, numeric, complex, character or
 perhaps raw) for each column, and to give @code{nrows}, the number of
 rows to be read (and a mild over-estimate is better than not specifying
-this at all).  See the examples below.
+this at all).  See the examples in later subsections.
 
 
 @node Fixed-width-format files, Data Interchange Format (DIF), Variations on read.table, Spreadsheet-like data
@@ -819,6 +821,9 @@ The @code{reshape} function has a more complicated syntax than
 than the one column in this example. With @code{direction="wide"},
 @code{reshape} can also perform the opposite transformation.
 
+Some people prefer the tools in packages @pkg{reshape}, @pkg{reshape2}
+and @pkg{plyr}.
+
 @node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
 @section Flat contingency tables
 @cindex Flat contingency tables
@@ -879,6 +884,11 @@ in the data, and create the contingency table from this using
 In this chapter we consider the problem of reading a binary data file
 written by another statistical system.  This is often best avoided, but
 may be unavoidable if the originating system is not available. 
+
+In all cases the facilities described were written for data files from
+specific versions of the other system (often in the early 2000s), and
+have not necessarily been updated for the most recent versions of the
+other system.
 
 @menu
 * EpiInfo Minitab SAS S-PLUS SPSS Stata Systat::  
@@ -951,6 +961,9 @@ forms.  By default it creates data files with extra formatting
 information that @code{read.spss} cannot handle, but it is possible to
 export the data in an ordinary @acronym{SPSS} format.
 
+Some third-party applications claim to produce data `in SPSS format' but
+with differences in the formats: @code{read.spss} may or may not be able
+to handle these.
 
 @cindex Stata
 @findex read.dta
@@ -958,7 +971,7 @@ export the data in an ordinary @acronym{SPSS} format.
 Stata @file{.dta} files are a binary file format. Files from versions 5
 up to at least 11 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.  Stata variables with value labels
-are optionally converted to (and from) @R{} factor.
+are optionally converted to (and from) @R{} factors.
 
 
 @cindex Systat
@@ -1003,7 +1016,7 @@ Since all data being manipulated by @R{} are resident in memory, and
 several copies of the data can be created during execution of a
 function, @R{} is not well suited to extremely large data sets.  Data
 objects that are more than a (few) hundred megabytes in size can cause
-@R{} to run out of memory.
+@R{} to run out of memory, particularly on a 32-bit operating system.
 
 @R{} does not easily support concurrent access to data.  That is, if
 more than one user is accessing, and perhaps updating, the same data,
@@ -1071,7 +1084,7 @@ non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
 @uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
-Linux/Unix.
+Linux/Unix/Mac OS X.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
@@ -1157,7 +1170,7 @@ copies a data frame to the database in these interfaces), INSERT or
 DELETE or UPDATE data.  A table is destroyed by a DROP TABLE `query'.
 
 Kline and Kline (2001) discuss the details of the implementation of SQL
-in SQL Server 2000, Oracle, MySQL and PostgreSQL.
+in Microsoft SQL Server 2000, Oracle, MySQL and PostgreSQL.
 
 @node Data types,  , SQL queries, Overview of RDBMSs
 @subsection Data types
@@ -1208,16 +1221,20 @@ have functions to select data within the database via @acronym{SQL}
 queries, and to retrieve the result as a whole as a
 data frame or in pieces (usually as groups of rows).  
 
-All except @pkg{RODBC} are tied to one DBMS, but work is in progress
-towards a unified `front-end' package @pkg{DBI}
+All except @pkg{RODBC} are tied to one DBMS, but there has been a
+proposal for a unified `front-end' package @pkg{DBI}
 (@uref{http://developer.r-project.org/db}) in conjunction with a
 `back-end', the most developed of which is @pkg{RMySQL}.  Also on
 @acronym{CRAN} are the back-ends @pkg{ROracle}, @pkg{RPostgreSQL} and
 @pkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
-@uref{http://www.sqlite.org}).
+@uref{http://www.sqlite.org}),  @pkg{RJDBC} (which uses Java and can
+connect to any DBMS that has a JDBC driver) and @pkg{RpgSQL} (a
+specialist interface to PostgreSQL built on top of @code{RJBDC}).
 
 The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
-@acronym{CRAN}).  @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
+@acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
+
+@pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
@@ -1239,8 +1256,9 @@ versions had a substantially different interface.  The current version
 requires the @pkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @pkg{DBI}.
 
-MySQL exists on Unix/Linux and Windows: as from version 3.23.x (Jan 2001)
-it is released under GPL.  MySQL is a `light and lean' database.  (It
+MySQL exists on Unix/Linux?Mac OS X and Windows: as from version 3.23.x
+(Jan 2001) it is released under GPL but commercial licenses are also
+available.  MySQL was originally a `light and lean' database.  (It
 preserves the case of names where the operating file system is
 case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
 on both Linux and Windows.
@@ -1333,12 +1351,11 @@ DB2 on Windows and MySQL, Oracle, PostgreSQL and SQLite on Linux.
 ODBC is a client-server system, and we have happily connected to a DBMS
 running on a Unix server from a Windows client, and @emph{vice versa}.
 
-On Windows ODBC support is normally installed, and current versions are
-available from @uref{http://www.microsoft.com/data/odbc/} as part of
-MDAC.  On Unix/Linux you will need an @acronym{ODBC} Driver Manager such
-as unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
-(@uref{http://www.iODBC.org}: this is pre-installed in Mac OS X) and an
-installed driver for your database system.
+On Windows ODBC support is part of the OS.  On Unix/Linux you will need
+an @acronym{ODBC} Driver Manager such as unixODBC
+(@uref{http://www.unixODBC.org}) or iOBDC (@uref{http://www.iODBC.org}:
+this is pre-installed in Mac OS X) and an installed driver for your
+database system.
 
 @cindex Excel
 @findex .xls

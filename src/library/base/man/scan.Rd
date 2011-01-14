@@ -145,6 +145,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     \samp{\\a, \\b, \\f, \\n, \\r, \\t, \\v} and octal and
     hexadecimal representations like \samp{\\040} and \samp{\\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
+    Note that Unicode escapes (starting \samp{\\u} or \samp{\\U}: see
+    \link{Quotes}) are never processed.
   }
   
   \item{fileEncoding}{character string: if non-empty declares the
