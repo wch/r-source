@@ -105,7 +105,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     \code{what}.}
 
   \item{strip.white}{vector of logical value(s) corresponding to items
-    in the \code{what} argument. It is used only when \code{sep} has
+    in the \code{what} argument.  It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     white space from \code{character} fields (\code{numeric} fields
     are always stripped).
@@ -114,7 +114,14 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     otherwise, if \code{strip.white[i]} is \code{TRUE} \emph{and} the
     \code{i}-th field is of mode character (because \code{what[i]} is)
     then the leading and trailing white space from field \code{i} is
-    stripped.}
+    stripped.
+
+    The precise definition of \sQuote{white.space} depends on the
+    locale.  ASCII spaces, tabs, newlines and carriage returns are
+    always considered to be white space, and in locales where the
+    encoding is known (Latin-1 locales and 8-bit Windows locales), so is
+    \sQuote{non-breaking space}.
+  }
 
   \item{quiet}{logical: if \code{FALSE} (default), scan() will print a
     line, saying how many items have been read.}
