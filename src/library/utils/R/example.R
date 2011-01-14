@@ -16,13 +16,16 @@
 
 ## Examples as from 2.11.0 will always be new-style and hence in UTF-8
 example <-
-function(topic, package = NULL, lib.loc = NULL, local = FALSE,
+function(topic, package = NULL, lib.loc = NULL,
+         character.only = FALSE, give.lines = FALSE, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          ask = getOption("example.ask"),
 	 prompt.prefix = abbreviate(topic, 6))
 {
-    topic <- substitute(topic)
-    if(!is.character(topic)) topic <- deparse(topic)[1L]
+    if (!character.only) {
+        topic <- substitute(topic)
+        if(!is.character(topic)) topic <- deparse(topic)[1L]
+    }
     pkgpaths <- .find.package(package, lib.loc, verbose = verbose)
     ## will only return at most one path
     file <- index.search(topic, pkgpaths, TRUE)
@@ -36,11 +39,14 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf)
     if (!file.exists(tf)) {
+	if(give.lines) return(character(0))
         warning(gettextf("'%s' has a help file but no examples", topic),
                 domain = NA)
         return(invisible())
     }
     on.exit(unlink(tf))
+    if(give.lines)
+	return(readLines(tf))
     if(pkgname != "base")
         library(pkgname, lib.loc = lib, character.only = TRUE)
     if(!is.logical(setRNG) || setRNG) {

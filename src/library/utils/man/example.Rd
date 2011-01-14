@@ -1,6 +1,6 @@
 % File src/library/utils/man/example.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{example}
@@ -13,8 +13,8 @@
 }
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
-        local = FALSE, echo = TRUE,
-        verbose = getOption("verbose"),
+        character.only = FALSE, give.lines = FALSE, local = FALSE,
+        echo = TRUE, verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6))
 }
@@ -28,6 +28,10 @@ example(topic, package = NULL, lib.loc = NULL,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
+  \item{character.only}{a logical indicating whether \code{topic} can be
+    assumed to be a character string.}
+  \item{give.lines}{logical: if true, the \emph{lines} of the example
+    source code are returned as a character vector.}
   \item{local}{logical: if \code{TRUE} evaluate locally, if \code{FALSE}
     evaluate in the workspace.}
   \item{echo}{logical;  if \code{TRUE}, show the \R input when sourcing.}
@@ -37,7 +41,7 @@ example(topic, package = NULL, lib.loc = NULL,
     number generator state is saved, then initialized to a specified state,
     the example is run and the (saved) state is restored.
     \code{setRNG = TRUE} sets the same state as
-    \code{R CMD \link{check}} does for 
+    \code{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
   \item{ask}{logical (or \code{"default"}) indicating if
@@ -46,12 +50,13 @@ example(topic, package = NULL, lib.loc = NULL,
     \code{"default"} (the factory-fresh default) means to ask if
     \code{echo == TRUE} and the graphics device appears to be
     interactive.  This parameter applies both to any currently opened
-    device and to any devices opened by the example code.}    
+    device and to any devices opened by the example code.}
   \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo = TRUE}.}
 }
 \value{
-  The value of the last evaluated expression.
+  The value of the last evaluated expression, unless \code{give.lines}
+  is true, where a \code{\link{character}} vector is returned.
 }
 \details{
   If \code{lib.loc} is not specified, the packages are searched for
@@ -98,6 +103,12 @@ stopifnot(identical(r1, r2))
 ## but x1 and x2 differ since the RNG state from before example()
 ## differs and is restored!
 x1; x2
+
+## Exploring examples code:
+## How large are the examples of "lm...()" functions?
+lmex <- sapply(apropos("^lm", mode="function"),
+               example, character.only=TRUE, give.lines=TRUE)
+sapply(lmex, length)
 }
 \keyword{documentation}
 \keyword{utilities}

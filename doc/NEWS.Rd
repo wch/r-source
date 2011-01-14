@@ -161,6 +161,10 @@
       the use of an empty (e.g. via the \sQuote{Return} key) as a synonym
       for \code{c} in \code{browser()} or \code{n} under \code{debug()}.
       (Wish of \PR{14472}.)
+
+      \item \code{example()} gains optional new arguments
+      \code{character.only} and \code{give.lines} enabling programmatic
+      exploration.
     }
   }
 
@@ -292,7 +296,7 @@
       \item The internal method of \code{untar()} now restores hard
       links as file copies rather than symbolic links (which did not
       work for cross-directory links).
-      
+
       \item \code{unzip()} did not handle zip files which contained
       filepaths with two or more leading directories which were not in
       the zipfile and did not already exist.  (It is unclear if such
