@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-01-10 r53949)
+R version 2.13.0 Under development (unstable) (2011-01-14 r53970)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -14592,7 +14592,7 @@ eff.vl> options(contrasts = old)
 +     xy[["z"]] <- log(z/(1 - z))         # logit transformation
 +     aux <- coef(lm(x ~ z, xy))
 +     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
-+     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)), 
++     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
 +                              data = xy, algorithm = "plinear")))
 +     value <- c(pars[3], pars[1], pars[2])
 +     names(value) <- mCall[c("Asym", "xmid", "scal")]
@@ -14600,7 +14600,7 @@ eff.vl> options(contrasts = old)
 +   }, c("Asym", "xmid", "scal"))
 > 
 > # 'first.order.log.model' is a function object defining a first order
-> # compartment model 
+> # compartment model
 > # 'first.order.log.initial' is a function object which calculates initial
 > # values for the parameters in 'first.order.log.model'
 > 
@@ -14608,6 +14608,30 @@ eff.vl> options(contrasts = old)
 > ## Not run: 
 > ##D SSfol <- selfStart(first.order.log.model, first.order.log.initial)
 > ## End(Not run)
+> 
+> ## Explore the self-starting models already available in R's  "stats":
+> pos.st <- which("package:stats" == search())
+> mSS <- apropos("^SS..", where=TRUE, ignore.case=FALSE)
+> (mSS <- unname(mSS[names(mSS) == pos.st]))
+ [1] "SSasymp"     "SSasympOff"  "SSasympOrig" "SSbiexp"     "SSfol"      
+ [6] "SSfpl"       "SSgompertz"  "SSlogis"     "SSmicmen"    "SSweibull"  
+> fSS <- sapply(mSS, get, pos = pos.st, mode = "function")
+> all(sapply(fSS, inherits, "selfStart"))# -> TRUE
+[1] TRUE
+> 
+> ## Show the argument list of each self-starting function:
+> str(fSS, give.attr=FALSE)
+List of 10
+ $ SSasymp    :function (input, Asym, R0, lrc)  
+ $ SSasympOff :function (input, Asym, lrc, c0)  
+ $ SSasympOrig:function (input, Asym, lrc)  
+ $ SSbiexp    :function (input, A1, lrc1, A2, lrc2)  
+ $ SSfol      :function (Dose, input, lKe, lKa, lCl)  
+ $ SSfpl      :function (input, A, B, xmid, scal)  
+ $ SSgompertz :function (x, Asym, b2, b3)  
+ $ SSlogis    :function (input, Asym, xmid, scal)  
+ $ SSmicmen   :function (input, Vm, K)  
+ $ SSweibull  :function (x, Asym, Drop, lrc, pwr)  
 > 
 > 
 > 

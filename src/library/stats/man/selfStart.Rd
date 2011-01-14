@@ -1,6 +1,6 @@
 % File src/library/stats/man/selfStart.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{selfStart}
@@ -50,7 +50,13 @@ selfStart(model, initial, parameters, template)
 \author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 
 \seealso{
-  \code{\link{nls}}
+  \code{\link{nls}}.
+  Each of the following are \code{"selfStart"} models (with examples)
+\code{\link{SSasymp}}, \code{\link{SSasympOff}}, \code{\link{SSasympOrig}},
+\code{\link{SSbiexp}}, \code{\link{SSfol}},\code{\link{SSfpl}},
+\code{\link{SSgompertz}}, \code{\link{SSlogis}}, \code{\link{SSmicmen}},
+\code{\link{SSweibull}}
+
 }
 \examples{
 ## self-starting logistic model
@@ -68,7 +74,7 @@ SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
     xy[["z"]] <- log(z/(1 - z))         # logit transformation
     aux <- coef(lm(x ~ z, xy))
     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
-    pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)), 
+    pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
                              data = xy, algorithm = "plinear")))
     value <- c(pars[3], pars[1], pars[2])
     names(value) <- mCall[c("Asym", "xmid", "scal")]
@@ -76,7 +82,7 @@ SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
   }, c("Asym", "xmid", "scal"))
 
 # 'first.order.log.model' is a function object defining a first order
-# compartment model 
+# compartment model
 # 'first.order.log.initial' is a function object which calculates initial
 # values for the parameters in 'first.order.log.model'
 
@@ -84,5 +90,15 @@ SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
 \dontrun{
 SSfol <- selfStart(first.order.log.model, first.order.log.initial)
 }
-}    
+
+## Explore the self-starting models already available in R's  "stats":
+pos.st <- which("package:stats" == search())
+mSS <- apropos("^SS..", where=TRUE, ignore.case=FALSE)
+(mSS <- unname(mSS[names(mSS) == pos.st]))
+fSS <- sapply(mSS, get, pos = pos.st, mode = "function")
+all(sapply(fSS, inherits, "selfStart"))# -> TRUE
+
+## Show the argument list of each self-starting function:
+str(fSS, give.attr=FALSE)
+}
 \keyword{models}
