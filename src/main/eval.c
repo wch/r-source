@@ -3360,6 +3360,23 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
 	} \
     } while(0)
 
+static R_INLINE void checkForMissings(SEXP args, SEXP call)
+{
+    SEXP a, c;
+    int n, k;
+    for (a = args, n = 1; a != R_NilValue; a = CDR(a), n++)
+	if (CAR(a) == R_MissingArg) {
+	    /* check for an empty argument in the call */
+	    if (call != R_NilValue) {
+		for (k = 1, c = CDR(call); c != R_NilValue; c = CDR(c), k++)
+		    if (CAR(c) == R_MissingArg)
+			errorcall(call, "argument %d is empty", k);
+	    }
+	    /* otherwise signal a 'missing argument' error */
+	    errorcall(call, "argument %d is missing", n);
+	}
+}
+
 static SEXP bcEval(SEXP body, SEXP rho)
 {
   SEXP value, constants;
@@ -3725,6 +3742,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	int flag;
 	switch (ftype) {
 	case BUILTINSXP:
+	  checkForMissings(args, call);
 	  flag = PRIMPRINT(fun);
 	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, args, rho);
