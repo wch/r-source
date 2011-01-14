@@ -151,7 +151,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     white space from \code{character} fields (\code{numeric} fields
-    are always stripped).  See \code{\link{scan}} for further details,
+    are always stripped).  See \code{\link{scan}} for further details
+    (including the exact meaning of \sQuote{white space}),
     remembering that the columns may include the row names.}
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
