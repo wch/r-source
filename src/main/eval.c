@@ -1586,14 +1586,40 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /*  We need a temporary variable to hold the intermediate values
 	in the computation.  For efficiency reasons we record the
-	location where this variable is stored.  */
+	location where this variable is stored.  We need to protect
+	the location in case the biding is removed from its
+	environment by user code or an assignment within the
+	assignment arguments */
+
+    /*  There are two issues with the approach here:
+
+	    A complex assignment within a complex assignment, like
+	    f(x, y[] <- 1) <- 3, can cause the value temporary
+	    variable for the outer assignment to be overwritten and
+	    then removed by the inner one.  This could be addressed by
+	    using multiple temporaries or using a promise for this
+	    variable as is done for the RHS.  Printing of the
+	    assignment function call in error messages might then need
+	    to be adjusted.
+
+	    With assignments of the form f(g(x, z), y) <- w the value
+	    of 'z' will be computed twice, once for a call to g(x, z)
+	    and once for the call to the assignment function g<-.  It
+	    might be possible to address this by using promises.
+	    Using more temporaries would not work as it would mess up
+	    assignment functions that use substitute and/or
+	    nonstandard evaluation (and there are packages that do
+	    that -- igraph is one).
+
+	    LT */
 
     if (rho == R_BaseNamespace)
 	errorcall(call, _("cannot do complex assignments in base namespace"));
     if (rho == R_BaseEnv)
 	errorcall(call, _("cannot do complex assignments in base environment"));
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
-    tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
+    PROTECT(tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol));
+
     /* Now set up a context to remove it when we are done, even in the
      * case of an error.  This all helps error() provide a better call.
      */
@@ -1640,7 +1666,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
-    nprot = 5; /* the commont case */
+    nprot = 6; /* the commont case */
     if (TYPEOF(CAR(expr)) == SYMSXP)
 	afun = installAssignFcnName(CAR(expr));
     else {
