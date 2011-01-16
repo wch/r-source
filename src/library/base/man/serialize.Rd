@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
@@ -22,7 +22,8 @@ unserialize(connection, refhook = NULL)
     (see \sQuote{Details}).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    more compact binary one is used.}
+    more compact binary one is used.  Ignored for socket connections
+    which always use \code{ascii = FALSE}.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
@@ -56,9 +57,11 @@ unserialize(connection, refhook = NULL)
   and \code{A} for ASCII serialization, followed by a new line.
 }
 \section{Warning}{
-  These functions are still experimental.  Names, interfaces and
-  values might change in future versions (and the value of
-  \code{serialize} was changed for \R 2.4.0).
+  These functions have provided a stable interface since \R 2.4.0 (when
+  the storage of serialized objects was changed from character to raw
+  vectors).  However, the serialization format may change in future
+  versions of \R, so this interface should not be used for long-term
+  storage of \R objects.
 
   A raw vector is limited to \eqn{2^{31} - 1}{2^31 - 1} bytes, but \R
   objects can exceed this and their serializations will normally be
@@ -70,9 +73,20 @@ unserialize(connection, refhook = NULL)
 
   For \code{unserialize} an \R object.
 }
+\seealso{
+  \code{\link{.saveRDS}} for a more convenient interface to serialize an
+  object to a file or connection.
+
+  \code{\link{save}} and \code{\link{load}} to serialize and restore one
+  or more named objects.
+
+  The \sQuote{R Internals} manual for details of the format used.
+}
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
+
+## see also the examples for .saveRDS
 }
 \keyword{file}
 \keyword{connection}

@@ -165,6 +165,15 @@
       \item \code{example()} gains optional new arguments
       \code{character.only} and \code{give.lines} enabling programmatic
       exploration.
+      
+      \item \code{serialize()} and \code{unserialize()} are no longer
+      described as \sQuote{experimental}.  The interface is now regarded
+      as stable, although the serialization format may well change in
+      future releases.
+
+      \code{.saveRDS()} and \code{.readRDS()} are no longer described as
+      \sQuote{internal} and so are made available for general use
+      (something several package authors had pre-empted).
     }
   }
 

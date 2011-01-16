@@ -7,10 +7,9 @@
 \name{readRDS}
 \alias{.readRDS}
 \alias{.saveRDS}
-\title{Internal Serialization Interface}
+\title{Serialization Interface for Single Objects}
 \description{
-  Internal functions for serialization of \R objects to a file.  See
-  \code{\link{serialize}} for public versions.
+  Functions to write a single \R object to a file, and to restore it.
 }
 \usage{
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
@@ -29,15 +28,44 @@
     specifies the current default version (2).  Earlier versions are not
     supported, so this will only be relevant when there are later versions.}
   \item{compress}{a logical specifying whether saving to a named file is
-    to use \code{"gzip"} compression.  As from \R 2.10.0
-    this is also allowed to be \code{"bzip2"} to specify that type of
-    compression, and from \R 2.13.0, \code{"xz"}.}
+    to use \code{"gzip"} compression, or one of \code{"gzip"},
+    \code{"bzip2"} or \code{"xz"} to indicate the type of compression to
+    be used.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
-  Since these are internal, the file format is subject to change without
-  notice.  The current file format is that of \code{\link{serialize}},
-  optionally compressed.
+  These functions provide the means to save a single \R object to a
+  connection (typically a file) and to restore the object, quite
+  possibly under a different name.  This differs from \code{\link{save}}
+  and \code{\link{load}}, which save and restore one or more named
+  objects into an environment.  They are widely used by \R itself, for
+  example to store metadata for a package and to store the
+  \code{\link{help.search}} databases: the \code{".rds"} file extension
+  is most often used.
+  
+  Functions \code{\link{serialize}} and \code{\link{unserialize}}
+  provide a slightly lower-level interface to serialization: objects
+  serialized to a connection by \code{serialize} can be read back by
+  \code{.readRDS} and conversely.
+  
+  All of these interfaces use the same serialization format, which has
+  been used since \R 1.4.0 (but extended from time to time as new
+  object types have been added to \R).  However, \code{save} writes a
+  single line header (typically \code{"RDXs\n"}) before the
+  serialization of a single object (a pairlist of all the objects to be
+  saved). 
+}
+
+\note{
+  Prior to \R 2.13.0 these functions were marked as \sQuote{internal},
+  which is why they have \sQuote{dot} names.  Nevertheless, they have
+  been stable since \R 1.7.0, except that support for support for types
+  of compression was added in \R 2.10.0 (previously only \code{"gzip"}
+  was available).
+
+  Currently \code{.readRDS} will if given an un-opened connection wrap
+  it in \code{\link{gzcon}} and \code{\link{close}} it after use.  This
+  behaviour may change in future.
 }
 
 \value{
@@ -45,4 +73,45 @@
 
   For \code{.saveRDS}, \code{NULL} invisibly.
 }
-\keyword{internal}
+
+\seealso{
+  \code{\link{serialize}}, \code{\link{save}} and \code{\link{load}}.
+
+  The \sQuote{R Internals} manual for details of the format used.
+}
+
+\examples{
+## save a single object to file
+.saveRDS(women, "women.rds")
+## restore it under a different name
+women2 <- .readRDS("women.rds")
+identical(women, women2)
+## or examine the object via a connection
+con <- gzfile("women.rds", "r")
+str(.readRDS(con))
+close(con)
+
+## Less convenient way to restore the object which demonstrate compatibility
+con <- gzfile("women.rds", "rb")
+identical(unserialize(con), women)
+close(con)
+con <- gzfile("women.rds", "rb")
+wm <- readBin(con, "raw", n = 1e4) # size is a guess
+close(con)
+identical(unserialize(wm), women)
+
+## Format compatibility with serialize():
+con <- file("women2", "w")
+serialize(women, con) # ASCII, uncompressed
+close(con)
+identical(women, .readRDS("women2"))
+con <- bzfile("women3", "w")
+serialize(women, con) # binary, bzip2-compressed
+close(con)
+identical(women, .readRDS("women2"))
+
+\testonly{unlink(c("women.rds", "women2", "women3"))}
+}
+
+\keyword{file}
+\keyword{connection}
