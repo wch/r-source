@@ -1094,6 +1094,7 @@ static void SymbolShortcuts(void)
     R_UseNamesSymbol = install("use.names");
     R_DoubleColonSymbol = install("::");
     R_TripleColonSymbol = install(":::");
+    R_ConnIdSymbol = install("conn_id");
 }
 
 extern SEXP framenames; /* from model.c */
