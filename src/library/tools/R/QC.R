@@ -221,7 +221,7 @@ function(package, dir, lib.loc = NULL)
             else
                 character()
         }
-        S4_methods <- lapply(get_S4_generics_with_methods(code_env),
+        S4_methods <- lapply(.get_S4_generics(code_env),
                              .make_S4_method_siglist)
         S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
 
@@ -485,7 +485,7 @@ function(package, dir, lib.loc = NULL,
         if(check_S4_methods) {
             get_formals_from_method_definition <- function(m)
                 formals(methods::unRematchDefinition(m))
-            lapply(get_S4_generics_with_methods(code_env),
+            lapply(.get_S4_generics(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
                        sigs <- .make_siglist(mlist)
@@ -688,7 +688,7 @@ function(package, dir, lib.loc = NULL,
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
                 functions <-
-                    functions %w/o% get_S4_generics_with_methods(code_env)
+                    functions %w/o% names(.get_S4_generics(code_env))
             }
             ## Drop the defunct functions.
             is_defunct <- function(f) {
@@ -1824,7 +1824,7 @@ function(package, dir, file, lib.loc = NULL,
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
-            for(f in get_S4_generics_with_methods(code_env)) {
+            for(f in .get_S4_generics(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
@@ -2219,10 +2219,10 @@ function(package, dir, lib.loc = NULL)
     } else character()
 
     if(.isMethodsDispatchOn()) {
-        S4_generics <- get_S4_generics_with_methods(code_env)
+        S4_generics <- .get_S4_generics(code_env)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
-        S4_generics <- grep("<-$", S4_generics, value = TRUE)
+        S4_generics <- S4_generics[grepl("<-$", names(S4_generics))]
         bad_S4_replace_methods <-
             sapply(S4_generics,
                    function(f) {
@@ -3133,8 +3133,8 @@ function(package, lib.loc = NULL)
     ## Not only check function definitions, but also S4 methods
     ## [a version of this should be part of codetools eventually] :
     checkMethodUsageEnv <- function(env, ...) {
-	for (g in methods::getGenerics(where = env))
-	    for (m in methods::findMethods(g, where = env)) {
+	for(g in .get_S4_generics(env))
+	    for(m in .get_S4_methods_list(g, env)) {
 		fun <- methods::getDataPart(m)
 		signature <- paste(m@generic,
 				   paste(m@target, collapse = "-"),
@@ -3862,7 +3862,7 @@ function(package, dir, lib.loc = NULL)
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice.
-            for(f in get_S4_generics_with_methods(code_env)) {
+            for(f in .get_S4_generics(code_env)) {
                 mlist <- .get_S4_methods_list(f, code_env)
                 exprs <- c(exprs, lapply(mlist, body))
             }
@@ -4898,17 +4898,58 @@ function(env, verbose = getOption("verbose"))
     else as.vector(r)# for back-compatibility and current ..../tests/reg-S4.R
 }
 
+### ** .get_S4_generics
+
+## For several QC tasks, we need to compute on "all S4 methods in/from a
+## package".  These days, this can straightforwardly be accomplished by
+## looking at all methods tables in the package environment or namespace.
+## Somewhat historically, we organize our computations by first using
+## using methods::getGenerics() to find all S4 generics the package has
+## methods for, and then iterating over these.  To make this work
+## conveniently, we wrap around methods::getGenerics() to rewrite its
+## "ObjectsWithPackage" result into a (currently unclassed) list of
+## generic-name-with-package-name-attribute objects, and wrap around
+## methods::findMethods() to perform lookup based on this information
+## (rather than the genericFunction object itself), and also rewrite the
+## MethodsList result into a simple list.
+
+.get_S4_generics <-
+function(env)
+{
+    env <- as.environment(env)
+    g <- methods::getGenerics(env)
+    Map(function(f, p) {
+            attr(f, "package") <- p
+            f
+        },
+        g@.Data,
+        g@package)
+}
+
 ### ** .get_S4_methods_list
 
 .get_S4_methods_list <-
-function(g, env)
+function(f, env)
 {
+    ## Get S4 methods in environment env for f a structure with the name
+    ## of the S4 generic and its package in the corresponding attribute.
+    
     ## For the QC computations, we really only want the S4 methods
     ## defined in a package, so we try to exclude derived default
     ## methods as well as methods inherited from other environments.
 
     env <- as.environment(env)
-    mlist <- methods::findMethods(g, env)
+
+    ## <FIXME>
+    ## Use methods::findMethods() once this gets a package argument.
+    ## This will return a listOfMethods object: turn this into a simple
+    ## list of methods named by hash-collapsed signatures.
+    tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
+               envir = env)
+    nms <- objects(tab, all.names = TRUE)
+    mlist <- lapply(nms, get, envir = tab)
+    names(mlist) <- nms
+    ## </FIXME>
 
     ## First, derived default methods (signature w/ "ANY").
     if(any(ind <- as.logical(sapply(mlist, methods::is,
