@@ -7,6 +7,7 @@
 \alias{options}
 \alias{.Options}
 \alias{getOption}
+\alias{option} % so help files can do 'set \link{} \code{"foo"}'
 \title{Options Settings}
 \description{
   Allow the user to set and examine a variety of global \emph{options}
