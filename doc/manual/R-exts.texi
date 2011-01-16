@@ -3174,8 +3174,8 @@ carried out by functions in the @pkg{tools} package called by the
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
 
-@c 1225 just prior to 2.9.0
-The @R{} distribution contains more than 1200 such files which can be
+@c 1324 as of 2011-01-16
+The @R{} distribution contains more than 1300 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
 source tree, where @var{pkg} stands for one of the standard packages
 which are included in the @R{} distribution.
