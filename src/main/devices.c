@@ -546,7 +546,7 @@ void attribute_hidden InitGraphics(void)
     PROTECT(s = mkString("null device"));
     gsetVar(R_DeviceSymbol, s, R_BaseEnv);
     PROTECT(t = mkString("null device"));
-    gsetVar(install(".Devices"), CONS(t, R_NilValue), R_BaseEnv);
+    gsetVar(R_DotDevicesSymbol, CONS(t, R_NilValue), R_BaseEnv);
     UNPROTECT(2);
 
     /* Register the base graphics system with the graphics engine
