@@ -1290,8 +1290,9 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_HandlerStack);          /* Condition handler stack */
     FORWARD_NODE(R_RestartStack);          /* Available restarts stack */
 
-    for (i = 0; i < HSIZE; i++)	           /* Symbol table */
-	FORWARD_NODE(R_SymbolTable[i]);
+    if (R_SymbolTable != NULL)             /* in case of GC during startup */
+	for (i = 0; i < HSIZE; i++)        /* Symbol table */
+	    FORWARD_NODE(R_SymbolTable[i]);
 
     if (R_CurrentExpr != NULL)	           /* Current expression */
 	FORWARD_NODE(R_CurrentExpr);
@@ -1375,6 +1376,7 @@ static void RunGenCollect(R_size_t size_needed)
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
 
     /* process CHARSXP cache */
+    if (R_StringHash != NULL) /* in case of GC during initialization */
     {
 	SEXP t;
 	int nc = 0;
