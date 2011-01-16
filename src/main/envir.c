@@ -334,9 +334,11 @@ SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
 {
     SEXP s;
 
+    PROTECT(enclos);
+    PROTECT(size);
     PROTECT(s = NewEnvironment(R_NilValue, R_NilValue, enclos));
     SET_HASHTAB(s, R_NewHashTable(asInteger(size)));
-    UNPROTECT(1);
+    UNPROTECT(3);
     return s;
 }
 
