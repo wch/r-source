@@ -24,7 +24,10 @@ load(file, envir = parent.frame())
   to \code{\link{url}}).
   
   A not-open connection will be opened in mode \code{"rb"} and closed
-  after use. 
+  after use.  Any connection other than a \code{\link{gzfile}}
+  connection will be wrapped in \code{\link{gzcon}} to allow compressed
+  saves to be handled: note that this leaves the connection in an
+  altered state (in particular, binary-only).
   
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a

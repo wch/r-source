@@ -37,7 +37,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     \code{version = 1}.} 
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
-    leads to a more compact binary file being written.}
+    leads to a binary file being written.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default format.  The version used from \R
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
@@ -74,17 +74,21 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   All \R platforms use the XDR (bigendian) representation of C ints and
   doubles in binary save-d files, and these are portable across all \R
   platforms. (ASCII saves used to be useful for moving data between
-  platforms but are now mainly of historical interest.)
+  platforms but are now mainly of historical interest.  They can be more
+  compact than binary saves where compression is not used, but are
+  almost always slower to both read and write: binary saves compress
+  much better than ASCII ones.)
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
-  \code{version} arguments can be modified with the \code{save.defaults}
-  option (used both by \code{save} and \code{save.image}), see also the
-  example section below.  If a \code{save.image.defaults} option is set
-  it overrides \code{save.defaults} for function \code{save.image}
-  (which allows this to have different defaults).
+  \code{version} arguments can be modified with the
+  \code{"save.defaults"} option (used both by \code{save} and
+  \code{save.image}), see also the \sQuote{Examples} section.  If a
+  \code{"save.image.defaults"} option is set it is used in preference to
+  \code{"save.defaults"} for function \code{save.image} (which allows
+  this to have different defaults).
 
   A connection that is not already open will be opened in mode
-  \code{"wb"}.  Only ASCII saves can be written to text-mode connections.
+  \code{"wb"}.
 }
 
 \section{Compression}{

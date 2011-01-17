@@ -23,9 +23,9 @@
     is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    more compact binary one is used.}
+    binary one is used.  See the commnents in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (2).  Earlier versions are not
+    specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
   \item{compress}{a logical specifying whether saving to a named file is
     to use \code{"gzip"} compression, or one of \code{"gzip"},
@@ -57,7 +57,10 @@
   
   Compression is handled by the connection opened when \code{file} is a
   file name, so is only possible when \code{file} is a connection if
-  handled by the connection.
+  handled by the connection.  If a connection is supplied it will be
+  opened (in binary mode) for the duration of the function if not
+  already open: if it is already it must be in binary mode for
+  \code{.saveRDS(ascii=FALSE)}.
 }
 
 \note{
@@ -67,9 +70,9 @@
   of compression was added in \R 2.10.0 (previously only \code{"gzip"}
   was available).
 
-  Currently \code{.readRDS} will if given an un-opened connection wrap
-  it in \code{\link{gzcon}} and \code{\link{close}} it after use.  This
-  behaviour may change in future.
+  The internal-only versions of \code{.readRDS} if given an un-opened
+  connection would wrap it in \code{\link{gzcon}} and
+  \code{\link{close}} it after use: this was undocumented.
 }
 
 \value{
@@ -91,7 +94,7 @@
 women2 <- .readRDS("women.rds")
 identical(women, women2)
 ## or examine the object via a connection
-con <- gzfile("women.rds", "r")
+con <- gzfile("women.rds", "rb")
 str(.readRDS(con))
 close(con)
 

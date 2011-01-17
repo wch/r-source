@@ -27,8 +27,9 @@ function(object, file = "", ascii = FALSE, version = NULL,
         on.exit(close(con))
     }
     else if(inherits(file, "connection")) {
+        if (!missing(compress))
+            warning("'compress' is ignored unless 'file' is a file name")
         con <- file
-        if(missing(ascii)) ascii <- summary(con)$text == "text"
     }
     else
         stop("bad 'file' argument")
@@ -41,16 +42,9 @@ function(file, refhook = NULL)
     if(is.character(file)) {
         con <- gzfile(file, "rb")
         on.exit(close(con))
-    }
-    else if(inherits(file, "connection")) {
-        con <- gzcon(file)
-        if(!isOpen(con, "rb")) {
-            open(con, "rb")
-            on.exit(close(con))
-        }
-    }
-    else
-        stop("bad 'file' argument")
+    } else if(inherits(file, "connection"))
+        con <- file
+    else stop("bad 'file' argument")
     .Internal(unserializeFromConn(con, refhook))
 }
 

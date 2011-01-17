@@ -22,10 +22,9 @@ unserialize(connection, refhook = NULL)
     (see \sQuote{Details}).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    more compact binary one is used.  Ignored for socket connections
-    which always use \code{ascii = FALSE}.}
+    binary one is used.  See the commnents in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (2).  Earlier versions are not
+    specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
   \item{refhook}{a hook function for handling reference objects.}
 }
