@@ -617,6 +617,7 @@ unloadNamespace <- function(ns)
 }
 
 .Import <- function(...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -636,6 +637,7 @@ unloadNamespace <- function(ns)
 }
 
 .ImportFrom <- function(name, ...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -655,6 +657,7 @@ unloadNamespace <- function(ns)
 }
 
 .Export <- function(...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -679,6 +682,7 @@ unloadNamespace <- function(ns)
 }
 
 .S3method <- function(generic, class, method) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {

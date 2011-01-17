@@ -236,6 +236,9 @@
       \item When a character value is used for the \code{EXPR}
       argument in \code{switch()}, only a single unnamed alternative
       value is now allowed.
+
+      \item The \sQuote{experimenatal} alternative specification of a
+      name space via \code{.Export()} etc is now deprecated.
     }
   }
 
