@@ -90,8 +90,8 @@ void Rf_InitColors(void);
 SEXP R_compress1(SEXP);
 SEXP R_decompress1(SEXP);
 
-SEXP R_serializeb(SEXP, SEXP, SEXP);
-SEXP R_serialize(SEXP, SEXP, SEXP, SEXP);
+SEXP R_serializeb(SEXP, SEXP, SEXP, SEXP);
+SEXP R_serialize(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_unserialize(SEXP, SEXP);
 
 SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);

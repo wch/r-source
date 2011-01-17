@@ -54,7 +54,8 @@ function(file, refhook = NULL)
     .Internal(unserializeFromConn(con, refhook))
 }
 
-serialize <- function(object, connection, ascii = FALSE, refhook = NULL)
+serialize <-
+    function(object, connection, ascii = FALSE, version = NULL, refhook = NULL)
 {
     if (!is.null(connection)) {
         if (!inherits(connection, "connection"))
@@ -62,9 +63,10 @@ serialize <- function(object, connection, ascii = FALSE, refhook = NULL)
         if (missing(ascii)) ascii <- summary(connection)$text == "text"
     }
     if (!ascii && inherits(connection, "sockconn"))
-        .Call("R_serializeb", object, connection, refhook, PACKAGE="base")
+        .Call("R_serializeb", object, connection, version, refhook,
+              PACKAGE="base")
     else
-        .Call("R_serialize", object, connection, ascii, refhook,
+        .Call("R_serialize", object, connection, ascii, version, refhook,
               PACKAGE="base")
 }
 

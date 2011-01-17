@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1906,16 +1906,25 @@ static void InitBConOutPStream(R_outpstream_t stream, bconbuf_t bb,
 }
 
 /* only for use by serialize(), with binary write to a socket connection */
-SEXP attribute_hidden R_serializeb(SEXP object, SEXP icon, SEXP fun)
+SEXP attribute_hidden 
+R_serializeb(SEXP object, SEXP icon, SEXP Sversion, SEXP fun)
 {
     struct R_outpstream_st out;
     SEXP (*hook)(SEXP, SEXP);
     struct bconbuf_st bbs;
     Rconnection con = getConnection(asInteger(icon));
+    int version;
+    
+    if (Sversion == R_NilValue)
+	version = R_DefaultSerializeVersion;
+    else version = asInteger(Sversion);
+    if (version == NA_INTEGER || version <= 0)
+	error(_("bad version value"));
 
     hook = fun != R_NilValue ? CallHook : NULL;
 
-    InitBConOutPStream(&out, &bbs, con, R_pstream_xdr_format, 0, hook, fun);
+    InitBConOutPStream(&out, &bbs, con, R_pstream_xdr_format, version, 
+		       hook, fun);
     R_Serialize(object, &out);
     flush_bcon_buffer(&bbs);
     return R_NilValue;
@@ -2037,11 +2046,18 @@ static SEXP CloseMemOutPStream(R_outpstream_t stream)
 }
 
 SEXP attribute_hidden
-R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
+R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 {
     struct R_outpstream_st out;
     R_pstream_format_t type;
     SEXP (*hook)(SEXP, SEXP);
+    int version;
+    
+    if (Sversion == R_NilValue)
+	version = R_DefaultSerializeVersion;
+    else version = asInteger(Sversion);
+    if (version == NA_INTEGER || version <= 0)
+	error(_("bad version value"));
 
     hook = fun != R_NilValue ? CallHook : NULL;
 
@@ -2059,7 +2075,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
 	cntxt.cend = &free_mem_buffer;
 	cntxt.cenddata = &mbs;
 
-	InitMemOutPStream(&out, &mbs, type, 0, hook, fun);
+	InitMemOutPStream(&out, &mbs, type, version, hook, fun);
 	R_Serialize(object, &out);
 
 	val =  CloseMemOutPStream(&out);
@@ -2337,7 +2353,7 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
     Rboolean compress = asInteger(compsxp);
     SEXP key;
 
-    value = R_serialize(value, R_NilValue, ascii, hook);
+    value = R_serialize(value, R_NilValue, ascii, R_NilValue, hook);
     PROTECT_WITH_INDEX(value, &vpi);
     if (compress == 3)
 	REPROTECT(value = R_compress3(value), vpi);

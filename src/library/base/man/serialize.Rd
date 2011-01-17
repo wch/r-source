@@ -11,7 +11,7 @@
   A simple low-level interface for serializing to connections.
 }
 \usage{
-serialize(object, connection, ascii = FALSE, refhook = NULL)
+serialize(object, connection, ascii = FALSE, version = NULL, refhook = NULL)
 
 unserialize(connection, refhook = NULL)
 }
@@ -24,6 +24,9 @@ unserialize(connection, refhook = NULL)
     written; otherwise (default except for text-mode connections), a
     more compact binary one is used.  Ignored for socket connections
     which always use \code{ascii = FALSE}.}
+  \item{version}{the workspace format version to use.  \code{NULL}
+    specifies the current default version (2).  Earlier versions are not
+    supported, so this will only be relevant when there are later versions.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
