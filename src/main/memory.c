@@ -102,6 +102,8 @@ extern void *Rm_realloc(void * p, size_t n);
 static int gc_reporting = 0;
 static int gc_count = 0;
 
+static Rboolean bad_sexp_type_seen = FALSE;
+
 #define GC_TORTURE
 
 #ifdef GC_TORTURE
@@ -500,7 +502,7 @@ static R_size_t R_NodesInUse = 0;
     dc__action__(EXTPTR_TAG(__n__), dc__extra__); \
     break; \
   default: \
-    abort(); \
+    bad_sexp_type_seen = TRUE; \
   } \
 } while(0)
 
@@ -798,7 +800,7 @@ static void ReleaseLargeFreeVectors(void)
 		size = LENGTH(s) * sizeof(SEXP);
 		break;
 	    default:
-		abort();
+		bad_sexp_type_seen = TRUE;
 	    }
 	    size = BYTE2VEC(size);
 	    UNSNAP_NODE(s);
@@ -1232,6 +1234,8 @@ static void RunGenCollect(R_size_t size_needed)
     RCNTXT *ctxt;
     SEXP s;
     SEXP forwarded_nodes;
+
+    bad_sexp_type_seen = FALSE;
 
     /* determine number of generations to collect */
     while (num_old_gens_to_collect < NUM_OLD_GENERATIONS) {
@@ -2346,6 +2350,7 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
+    Rboolean warn_bad_sexp_type = FALSE;
 
  again:
 
@@ -2359,6 +2364,9 @@ static void R_gc_internal(R_size_t size_needed)
 	RunGenCollect(size_needed);
 	gc_end_timing();
     } END_SUSPEND_INTERRUPTS;
+
+    if (bad_sexp_type_seen)
+	warn_bad_sexp_type = TRUE;
 
     if (gc_reporting) {
 	ncells = onsize - R_Collected;
@@ -2387,6 +2395,9 @@ static void R_gc_internal(R_size_t size_needed)
 	    (NO_FREE_NODES() || size_needed > VHEAP_FREE()))
 	    goto again;
     }
+
+    if (warn_bad_sexp_type)
+	warning("GC encountered a node with an unknown SEXP type");
 }
 
 SEXP attribute_hidden do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
