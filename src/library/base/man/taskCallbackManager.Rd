@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallbackManager.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{taskCallbackManager}
@@ -71,10 +71,6 @@ taskCallbackManager(handlers = list(), registered = FALSE,
     manually.}
   \item{callbacks}{returns the list of callbacks being maintained by this
    manager.}
-}
-\note{
-  This is an experimental feature and the interface may be changed
-  in the future.
 }
 \seealso{
   \code{\link{addTaskCallback}},
