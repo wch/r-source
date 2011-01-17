@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
@@ -22,7 +22,7 @@ unserialize(connection, refhook = NULL)
     (see \sQuote{Details}).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    more compact binary one is used.}
+    binary one is used.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
@@ -69,6 +69,15 @@ unserialize(connection, refhook = NULL)
   the result is returned in a raw vector.
 
   For \code{unserialize} an \R object.
+}
+\seealso{
+  \code{\link{.saveRDS}} for a more convenient interface to serialize an
+  object to a file or connection.
+
+  \code{\link{save}} and \code{\link{load}} to serialize and restore one
+  or more named objects.
+
+  The \sQuote{R Internals} manual for details of the format used.
 }
 \examples{
 x <- serialize(list(1,2,3), NULL)

@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -24,7 +24,10 @@ load(file, envir = parent.frame())
   to \code{\link{url}}).
   
   A not-open connection will be opened in mode \code{"rb"} and closed
-  after use. 
+  after use.  Any connection other than a \code{\link{gzfile}}
+  connection will be wrapped in \code{\link{gzcon}} to allow compressed
+  saves to be handled: note that this leaves the connection in an
+  altered state (in particular, binary-only).
   
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a
@@ -48,6 +51,9 @@ load(file, envir = parent.frame())
 }
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
+
+  For other interfaces to the underlying serialization format, see
+  \code{\link{unserialize}} and \code{\link{.readRDS}}.
 }
 \examples{
 ## save all data

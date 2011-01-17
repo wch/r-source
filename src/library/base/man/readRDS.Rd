@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 % These were introduced in R 1.7.0, post version 2
@@ -24,9 +24,9 @@
     is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    more compact binary one is used.}
+    binary one is used.  See the commnents in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (2).  Earlier versions are not
+    specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
   \item{compress}{a logical specifying whether saving to a named file is
     to use compression.  Ignored when \code{file} is a connection.  As
@@ -39,7 +39,10 @@
   notice.  The current format is that of \code{\link{serialize}},
   compressed as if by \command{gzip} if \code{compress = TRUE}.
 
-  They will be made public in \R 2.13.0.
+  The current internal-only versions of \code{.readRDS} if given an
+  un-opened connection wrap it in \code{\link{gzcon}} and
+  \code{\link{close}} it after use: this was undocumented and will
+  change in \R 2.13.0.
 }
 
 \value{
