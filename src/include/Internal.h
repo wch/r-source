@@ -241,6 +241,7 @@ SEXP do_gc(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gcinfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gctorture(SEXP, SEXP, SEXP, SEXP);
+SEXP do_gctorture2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_get(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_geterrmessage(SEXP, SEXP, SEXP, SEXP);

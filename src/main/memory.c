@@ -37,6 +37,7 @@
 
 #include <R_ext/RS.h> /* for S4 allocation */
 
+#define NEW_GC_TORTURE
 
 /* Declarations for Valgrind.
 
@@ -104,7 +105,17 @@ static int gc_count = 0;
 #define GC_TORTURE
 
 #ifdef GC_TORTURE
+#ifdef NEW_GC_TORTURE
+/* **** if this becomes default should remove the public
+   **** gc_inhibit_torture variable from Defn.h and any references to
+   **** it elsewhere */
+static int gc_force_wait = 0;
+static int gc_force_gap = 0;
+static Rboolean gc_inhibit_release = FALSE;
+#define FORCE_GC (gc_force_wait > 0 ? (--gc_force_wait > 0 ? 0 : (gc_force_wait = gc_force_gap, 1)) : 0)
+#else
 # define FORCE_GC !gc_inhibit_torture
+#endif
 #else
 # define FORCE_GC 0
 #endif
@@ -116,8 +127,20 @@ static void R_ReportNewPage();
 
 extern SEXP framenames;
 
+#ifdef NEW_GC_TORTURE
+#define GC_PROT(X) do { \
+    int __wait__ = gc_force_wait; \
+    int __gap__ = gc_force_gap;			   \
+    Rboolean __release__ = gc_inhibit_release;	   \
+    X;						   \
+    gc_force_wait = __wait__;			   \
+    gc_force_gap = __gap__;			   \
+    gc_inhibit_release = __release__;		   \
+}  while(0)
+#else
 #define GC_PROT(X) {int __t = gc_inhibit_torture; \
 	gc_inhibit_torture = 1 ; X ; gc_inhibit_torture = __t;}
+#endif
 
 static void R_gc_internal(R_size_t size_needed);
 static void R_gc_full(R_size_t size_needed);
@@ -1481,7 +1504,86 @@ static void RunGenCollect(R_size_t size_needed)
     }
 }
 
+#ifdef NEW_GC_TORTURE
+/* public interface for controlling GC torture settings */
+void R_gc_torture(int gap, int wait, Rboolean inhibit)
+{
+    if (gap != NA_INTEGER && gap >= 0)
+	gc_force_wait = gc_force_gap = gap;
+    if (gap > 0) {
+	if (wait != NA_INTEGER && wait > 0)
+	    gc_force_wait = wait;
+    }
+#ifdef PROTECTCHECK
+    if (gap > 0) {
+	if (inhibit != NA_LOGICAL)
+	    gc_inhibit_release = inhibit;
+    }
+    else gc_inhibit_release = FALSE;
+#endif
+}
 
+SEXP attribute_hidden do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int gap;
+    SEXP old = ScalarLogical(gc_force_wait > 0);
+
+    checkArity(op, args);
+
+    if (isLogical(CAR(args))) {
+	Rboolean on = asLogical(CAR(args));
+	if (on == NA_LOGICAL) gap = NA_INTEGER;
+	else if (on) gap = 1;
+	else gap = 0;
+    }
+    else gap = asInteger(CAR(args));
+
+    R_gc_torture(gap, 0, FALSE);
+
+    return old;
+}
+
+SEXP attribute_hidden do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int gap, wait;
+    Rboolean inhibit;
+    SEXP old = ScalarInteger(gc_force_gap);
+
+    checkArity(op, args);
+    gap = asInteger(CAR(args));
+    wait = asInteger(CADR(args));
+    inhibit = asLogical(CADDR(args));
+    R_gc_torture(gap, wait, inhibit);
+
+    return old;
+}
+
+/* initialize gctorture settings from environment variables */
+static void init_gctorture(void)
+{
+    char *arg = getenv("R_GCTORTURE");
+    if (arg != NULL) {
+	int gap = atoi(arg);
+	if (gap > 0) {
+	    gc_force_wait = gc_force_gap = gap;
+	    arg = getenv("R_GCTORTURE_WAIT");
+	    if (arg != NULL) {
+		int wait = atoi(arg);
+		if (wait > 0)
+		    gc_force_wait = wait;
+	    }
+#ifdef PROTECTCHECK
+	    getenv("R_GCTORTURE_INHIBIT_RELEASE");
+	    if (arg != NULL) {
+		int inhibit = atoi(arg);
+		if (inhibit > 0) gc_inhibit_release = TRUE;
+		else gc_inhibit_release = FALSE;
+	    }
+#endif
+	}
+    }
+}
+#else
 SEXP attribute_hidden do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i;
@@ -1493,6 +1595,7 @@ SEXP attribute_hidden do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
 	gc_inhibit_torture = !i;
     return old;
 }
+#endif
 
 SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1584,6 +1687,10 @@ void attribute_hidden InitMemory()
 {
     int i;
     int gen;
+
+#ifdef NEW_GC_TORTURE
+    init_gctorture();
+#endif
 
     gc_reporting = R_Verbose;
     R_StandardPPStackSize = R_PPStackSize;
