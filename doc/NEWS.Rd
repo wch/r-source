@@ -45,6 +45,9 @@
       the zipfile and did not already exist.  (It is unclear if such
       zipfiles are valid and the third-party C code used did not support
       them, but \PR{14462} created one.)
+
+      \item \code{combn(n,m)} now behaves more regularly for the border
+      case \eqn{m = 0}. (\PR{14473})
     }
   }
 }
@@ -171,7 +174,7 @@
       for class \code{"Date"} rounded fractional dates towards zero: it
       now always rounds them down.
 
-      \item Reference S4 class creation could generate ambiguous
+      \item Reference class creation could generate ambiguous
       inheritance patterns under very special circumstances.
 
       \item \samp{[[<-} turned S4 subclasses of \code{"environment"} into
