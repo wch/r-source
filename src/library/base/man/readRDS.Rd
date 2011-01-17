@@ -30,7 +30,7 @@
   \item{compress}{a logical specifying whether saving to a named file is
     to use \code{"gzip"} compression, or one of \code{"gzip"},
     \code{"bzip2"} or \code{"xz"} to indicate the type of compression to
-    be used.}
+    be used.  Ignored if \code{file} is a connection.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
@@ -54,6 +54,10 @@
   single line header (typically \code{"RDXs\n"}) before the
   serialization of a single object (a pairlist of all the objects to be
   saved). 
+  
+  Compression is handled by the connection opened when \code{file} is a
+  file name, so is only possible when \code{file} is a connection if
+  handled by the connection.
 }
 
 \note{
