@@ -1,6 +1,6 @@
 % File src/library/base/man/unname.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unname}
@@ -15,10 +15,8 @@ unname(obj, force = FALSE)
 }
 \arguments{
  \item{obj}{an \R object.}
- \item{force}{logical; if true, the \code{dimnames} are even removed
-   from \code{\link{data.frame}}s.
-   \emph{This argument is currently \bold{experimental} and hence
-     might change!}}
+ \item{force}{logical; if true, the \code{dimnames} (names and row
+   names) are removed even from \code{\link{data.frame}}s.}
 }
 \value{
   Object as \code{obj} but without \code{\link{names}} or

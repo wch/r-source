@@ -38,6 +38,8 @@
   Since these are internal, the file format is subject to change without
   notice.  The current format is that of \code{\link{serialize}},
   compressed as if by \command{gzip} if \code{compress = TRUE}.
+
+  They will be made public in \R 2.13.0.
 }
 
 \value{

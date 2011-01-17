@@ -1,6 +1,6 @@
 % File src/library/base/man/gc.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{gc.time}
@@ -25,10 +25,7 @@ gc.time(on = TRUE)
   Times of child processes are not available on Windows and will always
   be given as \code{NA}.
 }
-\section{Warnings}{
-  This is experimental functionality, likely to be removed as soon as
-  the next release.
-
+\details{
   The timings are rounded up by the sampling interval for timing
   processes, and so are likely to be over-estimates.
   

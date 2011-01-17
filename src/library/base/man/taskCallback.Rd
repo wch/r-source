@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallback.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{taskCallback}
@@ -78,9 +78,6 @@ If the function returns TRUE, it is kept in the list and
 will be called on the completion of the next top-level task.
 }
 \note{
-  This is an experimental feature and the interface may be changed
-  in the future.
-
   There is also C-level access to top-level task callbacks
   to allow C routines rather than R functions be used.
 }
