@@ -101,6 +101,10 @@ typedef unsigned int SEXPTYPE;
 #define RAWSXP      24    /* raw bytes */
 #define S4SXP       25    /* S4, non-vector */
 
+/* used for detecting PROTECT issues in memory.c */
+#define NEWSXP      30    /* fresh node creaed in new page */
+#define FREESXP     31    /* node released by GC */
+
 #define FUNSXP      99    /* Closure or Builtin or Special */
 
 
@@ -131,6 +135,9 @@ typedef enum {
     WEAKREFSXP	= 23,	/* weak reference */
     RAWSXP	= 24,	/* raw bytes */
     S4SXP	= 25,	/* S4 non-vector */
+
+    NEWSXP      = 30,   /* fresh node creaed in new page */
+    FREESXP     = 31,   /* node released by GC */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
