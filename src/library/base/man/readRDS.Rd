@@ -93,12 +93,11 @@
 ## restore it under a different name
 women2 <- .readRDS("women.rds")
 identical(women, women2)
-## or examine the object via a connection
-con <- gzfile("women.rds", "rb")
-str(.readRDS(con))
-close(con)
+## or examine the object via a connection, which will be opened as needed.
+str(.readRDS(gzfile("women.rds")))
 
-## Less convenient way to restore the object which demonstrate compatibility
+## Less convenient ways to restore the object
+## which demonstrate compatibility with unserialize()
 con <- gzfile("women.rds", "rb")
 identical(unserialize(con), women)
 close(con)

@@ -11,7 +11,7 @@
   A simple low-level interface for serializing to connections.
 }
 \usage{
-serialize(object, connection, ascii = FALSE, version = NULL, refhook = NULL)
+serialize(object, connection, ascii, version = NULL, refhook = NULL)
 
 unserialize(connection, refhook = NULL)
 }
@@ -21,15 +21,16 @@ unserialize(connection, refhook = NULL)
     \code{NULL} or (for \code{unserialize}) a raw vector
     (see \sQuote{Details}).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
-    written; otherwise (default except for text-mode connections), a
-    binary one is used.  See the commnents in the help for \code{\link{save}}.}
+    written; otherwise binary one.  The default is \code{TRUE} for a
+    text-mode connection and \code{FALSE} otherwise.
+    See also the commnents in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
-  The function \code{serialize} writes \code{object} to the specified
+  The function \code{serialize} serializes \code{object} to the specified
   connection.  If \code{connection} is \code{NULL} then \code{object} is
   serialized to a raw vector, which is returned as the result of
   \code{serialize}.
@@ -56,7 +57,8 @@ unserialize(connection, refhook = NULL)
   
   The format consists of a single line followed by the data: the first
   line contains a single character: \code{X} for binary serialization
-  and \code{A} for ASCII serialization, followed by a new line.
+  and \code{A} for ASCII serialization, followed by a new line.  (The
+  format used is identical to that used by \code{\link{.readRDS}}.)
 }
 \section{Warning}{
   These functions have provided a stable interface since \R 2.4.0 (when
