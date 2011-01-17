@@ -165,7 +165,7 @@
       \item \code{example()} gains optional new arguments
       \code{character.only} and \code{give.lines} enabling programmatic
       exploration.
-      
+
       \item \code{serialize()} and \code{unserialize()} are no longer
       described as \sQuote{experimental}.  The interface is now regarded
       as stable, although the serialization format may well change in
@@ -311,6 +311,9 @@
       the zipfile and did not already exist.  (It is unclear if such
       zipfiles are valid and the third-party C code used did not support
       them, but \PR{14462} created one.)
+
+      \item \code{combn(n,m)} now behaves more regularly for the border
+      case \eqn{m = 0}. (\PR{14473})
     }
   }
 }
