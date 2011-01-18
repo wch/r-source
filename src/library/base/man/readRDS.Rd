@@ -94,7 +94,9 @@
 women2 <- .readRDS("women.rds")
 identical(women, women2)
 ## or examine the object via a connection, which will be opened as needed.
-str(.readRDS(gzfile("women.rds")))
+con <- gzfile("women.rds")
+str(.readRDS(con))
+close(con)
 
 ## Less convenient ways to restore the object
 ## which demonstrate compatibility with unserialize()
