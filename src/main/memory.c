@@ -136,11 +136,14 @@ static int gc_count = 0;
 #define OLDTYPE(s) LEVELS(s)
 #define SETOLDTYPE(s, t) SETLEVELS(s, t)
 
+static const char *sexptype2char(SEXPTYPE type);
+
 static R_INLINE SEXP CHK(SEXP x)
 {
     /* **** NULL check because of R_CurrentExpr */
     if (x != NULL && TYPEOF(x) == FREESXP)
-	error("unprotected object (%p) encountered (was %d)", x, OLDTYPE(x));
+	error("unprotected object (%p) encountered (was %s)",
+	      x, sexptype2char(OLDTYPE(x)));
     return x;
 }
 #else
@@ -150,9 +153,9 @@ static R_INLINE SEXP CHK(SEXP x)
 /* The following three variables definitions are used to record the
    address and type of the first bad type seen during a collection,
    and for FREESXP nodes they record the old type as well. */
-static int bad_sexp_type_seen = 0;
+static SEXPTYPE bad_sexp_type_seen = 0;
 static SEXP bad_sexp_type_sexp = NULL;
-static int bad_sexp_type_old_type = 0;
+static SEXPTYPE bad_sexp_type_old_type = 0;
 
 static R_INLINE void register_bad_sexp_type(SEXP s)
 {
@@ -163,6 +166,39 @@ static R_INLINE void register_bad_sexp_type(SEXP s)
 	if (TYPEOF(s) == FREESXP)
 	    bad_sexp_type_old_type = OLDTYPE(s);
 #endif
+    }
+}
+
+/* slight modification of typename() from install.c -- should probably merge */
+static const char *sexptype2char(SEXPTYPE type) {
+    switch (type) {
+    case NILSXP:	return "NILSXP";
+    case SYMSXP:	return "SYMSXP";
+    case LISTSXP:	return "LISTSXP";
+    case CLOSXP:	return "CLOSXP";
+    case ENVSXP:	return "ENVSXP";
+    case PROMSXP:	return "PROMSXP";
+    case LANGSXP:	return "LANGSXP";
+    case SPECIALSXP:	return "SPECIALSXP";
+    case BUILTINSXP:	return "BUILTINSXP";
+    case CHARSXP:	return "CHARSXP";
+    case LGLSXP:	return "LGLSXP";
+    case INTSXP:	return "INTSXP";
+    case REALSXP:	return "REALSXP";
+    case CPLXSXP:	return "CPLXSXP";
+    case STRSXP:	return "STRSXP";
+    case DOTSXP:	return "DOTSXP";
+    case ANYSXP:	return "ANYSXP";
+    case VECSXP:	return "VECSXP";
+    case EXPRSXP:	return "EXPRSXP";
+    case BCODESXP:	return "BCODESXP";
+    case EXTPTRSXP:	return "EXTPTRSXP";
+    case WEAKREFSXP:	return "WEAKREFSXP";
+    case S4SXP:		return "S4SXP";
+    case RAWSXP:	return "RAWSXP";
+    case NEWSXP:	return "NEWSXP"; /* should never happen */
+    case FREESXP:	return "FREESXP";
+    default:	 	return "<unknown>";
     }
 }
 
@@ -2484,8 +2520,8 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    int warn_bad_sexp_type = 0, warn_bad_sexp_type_old_type;
-    SEXP warn_bad_sexp_type_sexp = NULL;
+    SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type;
+    SEXP first_bad_sexp_type_sexp = NULL;
 
  again:
 
@@ -2500,10 +2536,10 @@ static void R_gc_internal(R_size_t size_needed)
 	gc_end_timing();
     } END_SUSPEND_INTERRUPTS;
 
-    if (bad_sexp_type_seen != 0 && warn_bad_sexp_type == 0) {
-	warn_bad_sexp_type = bad_sexp_type_seen;
-	warn_bad_sexp_type_old_type = bad_sexp_type_old_type;
-	warn_bad_sexp_type_sexp = bad_sexp_type_sexp;
+    if (bad_sexp_type_seen != 0 && first_bad_sexp_type == 0) {
+	first_bad_sexp_type = bad_sexp_type_seen;
+	first_bad_sexp_type_old_type = bad_sexp_type_old_type;
+	first_bad_sexp_type_sexp = bad_sexp_type_sexp;
     }
 
     if (gc_reporting) {
@@ -2534,20 +2570,20 @@ static void R_gc_internal(R_size_t size_needed)
 	    goto again;
     }
 
-    if (warn_bad_sexp_type != 0) {
+    if (first_bad_sexp_type != 0) {
 #ifdef PROTECTCHECK
-	if (warn_bad_sexp_type == FREESXP)
-	    error("GC encountered a node (%p) with type FREESXP (was %d)",
-		  warn_bad_sexp_type_sexp,
-		  warn_bad_sexp_type_old_type);
+	if (first_bad_sexp_type == FREESXP)
+	    error("GC encountered a node (%p) with type FREESXP (was %s)",
+		  first_bad_sexp_type_sexp,
+		  sexptype2char(first_bad_sexp_type_old_type));
 	else
-	    error("GC encountered a node (%p) with an unknown SEXP type: %d",
-		  warn_bad_sexp_type_sexp,
-		  warn_bad_sexp_type);
+	    error("GC encountered a node (%p) with an unknown SEXP type: %s",
+		  first_bad_sexp_type_sexp,
+		  sexptype2char(first_bad_sexp_type));
 #else
-	error("GC encountered a node (%p) with an unknown SEXP type: %d",
-	      warn_bad_sexp_type_sexp,
-	      warn_bad_sexp_type);
+	error("GC encountered a node (%p) with an unknown SEXP type: %s",
+	      first_bad_sexp_type_sexp,
+	      sexptype2char(first_bad_sexp_type));
 #endif
     }
 }
