@@ -100,11 +100,15 @@ extern void *Rm_realloc(void * p, size_t n);
 static int gc_reporting = 0;
 static int gc_count = 0;
 
+#ifdef TESTING_WRITE_BARRIER
+# define PROTECTCHECK
+#endif
+
 #ifdef PROTECTCHECK
 /* This is used to help detect unprotected SEXP values.  It is most
    useful if the strict barrier is enabled as well. The strategy is:
 
-       All GCs are gull GCs
+       All GCs are full GCs
 
        New nodes are marked as NEWSXP
 
@@ -126,18 +130,41 @@ static int gc_count = 0;
    used with care and typically in combination with OS mechanisms to
    limit process memory usage.  LT */
 
+/* Before a node is marked as a FREESXP by the collector the previous
+   type is recorded.  For now using the LEVELS field seems
+   reasonable.  */
+#define OLDTYPE(s) LEVELS(s)
+#define SETOLDTYPE(s, t) SETLEVELS(s, t)
+
 static R_INLINE SEXP CHK(SEXP x)
 {
     /* **** NULL check because of R_CurrentExpr */
     if (x != NULL && TYPEOF(x) == FREESXP)
-	error("unprotected object encountered");
+	error("unprotected object (%p) encountered (was %d)", x, OLDTYPE(x));
     return x;
 }
 #else
 #define CHK(x) x
 #endif
 
+/* The following three variables definitions are used to record the
+   address and type of the first bad type seen during a collection,
+   and for FREESXP nodes they record the old type as well. */
 static int bad_sexp_type_seen = 0;
+static SEXP bad_sexp_type_sexp = NULL;
+static int bad_sexp_type_old_type = 0;
+
+static R_INLINE void register_bad_sexp_type(SEXP s)
+{
+    if (bad_sexp_type_seen == 0) {
+	bad_sexp_type_seen = TYPEOF(s);
+	bad_sexp_type_sexp = s;
+#ifdef PROTECTCHECK
+	if (TYPEOF(s) == FREESXP)
+	    bad_sexp_type_old_type = OLDTYPE(s);
+#endif
+    }
+}
 
 #define GC_TORTURE
 #define NEW_GC_TORTURE
@@ -492,6 +519,11 @@ static R_size_t R_NodesInUse = 0;
 #else
 # define HAS_GENUINE_ATTRIB(x) (ATTRIB(x) != R_NilValue)
 #endif
+#ifdef PROTECTCHECK
+#define FREE_FORWARD_CASE case FREESXP: if (gc_inhibit_release) break;
+#else
+#define FREE_FORWARD_CASE
+#endif
 #define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
   if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
@@ -537,8 +569,9 @@ static R_size_t R_NodesInUse = 0;
     dc__action__(EXTPTR_PROT(__n__), dc__extra__); \
     dc__action__(EXTPTR_TAG(__n__), dc__extra__); \
     break; \
+  FREE_FORWARD_CASE \
   default: \
-    if (bad_sexp_type_seen == 0) bad_sexp_type_seen = TYPEOF(__n__); \
+    register_bad_sexp_type(__n__); \
   } \
 } while(0)
 
@@ -835,9 +868,13 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
     case VECSXP:
 	size = LENGTH(s) * sizeof(SEXP);
 	break;
+#ifdef PROTECTCHECK
+    case FREESXP:
+	if (gc_inhibit_release)
+	    break;
+#endif
     default:
-	if (bad_sexp_type_seen == 0)
-	    bad_sexp_type_seen = TYPEOF(s);
+	register_bad_sexp_type(s);
 	size = 0;
     }
     return BYTE2VEC(size);
@@ -1497,7 +1534,10 @@ static void RunGenCollect(R_size_t size_needed)
 	while (s != R_GenHeap[i].New) {
 	    SEXP next = NEXT_NODE(s);
 	    if (TYPEOF(s) != NEWSXP) {
-		TYPEOF(s) = FREESXP;
+		if (TYPEOF(s) != FREESXP) {
+		    SETOLDTYPE(s, TYPEOF(s));
+		    TYPEOF(s) = FREESXP;
+		}
 		if (gc_inhibit_release)
 		    FORWARD_NODE(s);
 	    }
@@ -1512,7 +1552,10 @@ static void RunGenCollect(R_size_t size_needed)
 		R_size_t size = getVecSizeInVEC(s);
 		LENGTH(s) = size;
 	    }
-	    TYPEOF(s) = FREESXP;
+	    if (TYPEOF(s) != FREESXP) {
+		SETOLDTYPE(s, TYPEOF(s));
+		TYPEOF(s) = FREESXP;
+	    }
 	    if (gc_inhibit_release)
 		FORWARD_NODE(s);
 	}
@@ -1668,7 +1711,7 @@ static void init_gctorture(void)
 		    gc_force_wait = wait;
 	    }
 #ifdef PROTECTCHECK
-	    getenv("R_GCTORTURE_INHIBIT_RELEASE");
+	    arg = getenv("R_GCTORTURE_INHIBIT_RELEASE");
 	    if (arg != NULL) {
 		int inhibit = atoi(arg);
 		if (inhibit > 0) gc_inhibit_release = TRUE;
@@ -2441,7 +2484,8 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    int warn_bad_sexp_type = 0;
+    int warn_bad_sexp_type = 0, warn_bad_sexp_type_old_type;
+    SEXP warn_bad_sexp_type_sexp = NULL;
 
  again:
 
@@ -2456,8 +2500,11 @@ static void R_gc_internal(R_size_t size_needed)
 	gc_end_timing();
     } END_SUSPEND_INTERRUPTS;
 
-    if (bad_sexp_type_seen != 0 && warn_bad_sexp_type == 0)
+    if (bad_sexp_type_seen != 0 && warn_bad_sexp_type == 0) {
 	warn_bad_sexp_type = bad_sexp_type_seen;
+	warn_bad_sexp_type_old_type = bad_sexp_type_old_type;
+	warn_bad_sexp_type_sexp = bad_sexp_type_sexp;
+    }
 
     if (gc_reporting) {
 	ncells = onsize - R_Collected;
@@ -2490,12 +2537,16 @@ static void R_gc_internal(R_size_t size_needed)
     if (warn_bad_sexp_type != 0) {
 #ifdef PROTECTCHECK
 	if (warn_bad_sexp_type == FREESXP)
-	    error("GC encountered a node with type FREESXP");
+	    error("GC encountered a node (%p) with type FREESXP (was %d)",
+		  warn_bad_sexp_type_sexp,
+		  warn_bad_sexp_type_old_type);
 	else
-	    error("GC encountered a node with an unknown SEXP type: %d",
+	    error("GC encountered a node (%p) with an unknown SEXP type: %d",
+		  warn_bad_sexp_type_sexp,
 		  warn_bad_sexp_type);
 #else
-	error("GC encountered a node with an unknown SEXP type: %d",
+	error("GC encountered a node (%p) with an unknown SEXP type: %d",
+	      warn_bad_sexp_type_sexp,
 	      warn_bad_sexp_type);
 #endif
     }
