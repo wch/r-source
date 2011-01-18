@@ -850,14 +850,18 @@ static void ReleaseLargeFreeVectors(void)
 	SEXP next = NEXT_NODE(s);
 	if (CHAR(s) != NULL) {
 	    R_size_t size;
+#ifdef PROTECTCHECK
+	    if (TYPEOF(s) == FREESXP)
+		size = LENGTH(s);
+	    else
+		/* should not get here -- arrange for a warning/error? */
+		size = getVecSizeInVEC(s);
+#else
 	    size = getVecSizeInVEC(s);
+#endif
 	    UNSNAP_NODE(s);
 	    R_LargeVallocSize -= size;
 	    R_GenHeap[LARGE_NODE_CLASS].AllocCount--;
-#ifdef PROTECTCHECK
-	    /*** eventually do this with the other FREESXP settings */
-	    TYPEOF(s) = FREESXP;
-#endif
 	    free(s);
 	}
 	s = next;
@@ -1504,11 +1508,11 @@ static void RunGenCollect(R_size_t size_needed)
     while (s != R_GenHeap[i].New) {
 	SEXP next = NEXT_NODE(s);
 	if (TYPEOF(s) != NEWSXP) {
-#ifdef DODO
-	    /* can't to this yet -- need to first encode length for
-	       use in the release */
+	    if (CHAR(s) != NULL) {
+		R_size_t size = getVecSizeInVEC(s);
+		LENGTH(s) = size;
+	    }
 	    TYPEOF(s) = FREESXP;
-#endif
 	    if (gc_inhibit_release)
 		FORWARD_NODE(s);
 	}
