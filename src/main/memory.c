@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2008  The R Development Core Team.
+ *  Copyright (C) 1998--2011  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -815,7 +815,7 @@ static void ReleaseLargeFreeVectors(void)
     while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
 	SEXP next = NEXT_NODE(s);
 	if (CHAR(s) != NULL) {
-	    R_size_t size;
+	    R_size_t size = 0; /* -Wall on gcc 4.2 */
 	    switch (TYPEOF(s)) {	/* get size in bytes */
 	    case CHARSXP:
 		size = LENGTH(s) + 1;
