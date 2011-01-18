@@ -93,6 +93,13 @@ extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
 extern0 SEXP    R_DotDevicesSymbol;  /* ".Devices" */
 
+extern0 SEXP    R_dot_Generic;  /* ".Generic" */
+extern0 SEXP    R_dot_Methods;  /* ".Methods" */
+extern0 SEXP    R_dot_Group;  /* ".Group" */
+extern0 SEXP    R_dot_Class;  /* ".Class" */
+extern0 SEXP    R_dot_GenericCallEnv;  /* ".GenericCallEnv" */
+extern0 SEXP    R_dot_GenericDefEnv;  /* ".GenericDefEnv" */
+
 extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 
 
@@ -743,6 +750,10 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 extern0 Rboolean known_to_be_latin1 INI_as(FALSE);
 extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
+/* symbols available to packages */
+LibExtern SEXP  R_dot_defined;  /* ".defined" */
+LibExtern SEXP  R_dot_Method;  /* ".Method" */
+LibExtern SEXP  R_dot_target;  /* ".target" */
 
 #ifdef __MAIN__
 # undef extern

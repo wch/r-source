@@ -317,22 +317,22 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 		continue; /* kludge because sort.list is not a method */
             if( RDEBUG(op) || RSTEP(op) )
                 SET_RSTEP(sxp, 1);
-	    defineVar(install(".Generic"), mkString(generic), newrho);
+	    defineVar(R_dot_Generic, mkString(generic), newrho);
 	    if (i > 0) {
 	        int ii;
 		PROTECT(t = allocVector(STRSXP, nclass - i));
 		for(j = 0, ii = i; j < length(t); j++, ii++)
 		      SET_STRING_ELT(t, j, STRING_ELT(klass, ii));
 		setAttrib(t, install("previous"), klass);
-		defineVar(install(".Class"), t, newrho);
+		defineVar(R_dot_Class, t, newrho);
 		UNPROTECT(1);
 	    } else
-		defineVar(install(".Class"), klass, newrho);
+		defineVar(R_dot_Class, klass, newrho);
 	    PROTECT(t = mkString(buf));
-	    defineVar(install(".Method"), t, newrho);
+	    defineVar(R_dot_Method, t, newrho);
 	    UNPROTECT(1);
-	    defineVar(install(".GenericCallEnv"), callrho, newrho);
-	    defineVar(install(".GenericDefEnv"), defrho, newrho);
+	    defineVar(R_dot_GenericCallEnv, callrho, newrho);
+	    defineVar(R_dot_GenericDefEnv, defrho, newrho);
 	    t = newcall;
 	    SETCAR(t, method);
 	    R_GlobalContext->callflag = CTXT_GENERIC;
@@ -350,13 +350,13 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     if (isFunction(sxp)) {
         if( RDEBUG(op) || RSTEP(op) )
             SET_RSTEP(sxp, 1);
-	defineVar(install(".Generic"), mkString(generic), newrho);
-	defineVar(install(".Class"), R_NilValue, newrho);
+	defineVar(R_dot_Generic, mkString(generic), newrho);
+	defineVar(R_dot_Class, R_NilValue, newrho);
 	PROTECT(t = mkString(buf));
-	defineVar(install(".Method"), t, newrho);
+	defineVar(R_dot_Method, t, newrho);
 	UNPROTECT(1);
-	defineVar(install(".GenericCallEnv"), callrho, newrho);
-	defineVar(install(".GenericDefEnv"), defrho, newrho);
+	defineVar(R_dot_GenericCallEnv, callrho, newrho);
+	defineVar(R_dot_GenericDefEnv, defrho, newrho);
 	t = newcall;
 	SETCAR(t, method);
 	R_GlobalContext->callflag = CTXT_GENERIC;
@@ -536,13 +536,13 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
        environment (the method was called outside a method dispatch)
        then chose reasonable defaults. */
     callenv = findVarInFrame3(R_GlobalContext->sysparent,
-			      install(".GenericCallEnv"), TRUE);
+			      R_dot_GenericCallEnv, TRUE);
     if (TYPEOF(callenv) == PROMSXP)
 	callenv = eval(callenv, R_BaseEnv);
     else if (callenv == R_UnboundValue)
 	    callenv = env;
     defenv = findVarInFrame3(R_GlobalContext->sysparent,
-			     install(".GenericDefEnv"), TRUE);
+			     R_dot_GenericDefEnv, TRUE);
     if (TYPEOF(defenv) == PROMSXP) defenv = eval(defenv, R_BaseEnv);
     else if (defenv == R_UnboundValue) defenv = R_GlobalEnv;
 
@@ -639,7 +639,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
       isn't currently used).
     */
     klass = findVarInFrame3(R_GlobalContext->sysparent,
-			    install(".Class"), TRUE);
+			    R_dot_Class, TRUE);
 
     if (klass == R_UnboundValue) {
 	s = GetObject(cptr);
@@ -649,7 +649,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* the generic comes from either the sysparent or it's named */
     generic = findVarInFrame3(R_GlobalContext->sysparent,
-			      install(".Generic"), TRUE);
+			      R_dot_Generic, TRUE);
     if (generic == R_UnboundValue)
 	generic = eval(CAR(args), env);
     if( generic == R_NilValue )
@@ -665,7 +665,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* determine whether we are in a Group dispatch */
 
     group = findVarInFrame3(R_GlobalContext->sysparent,
-			    install(".Group"), TRUE);
+			    R_dot_Group, TRUE);
     if (group == R_UnboundValue) PROTECT(group = mkString(""));
     else PROTECT(group);
 
@@ -685,7 +685,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     */
 
     method = findVarInFrame3(R_GlobalContext->sysparent,
-			     install(".Method"), TRUE);
+			     R_dot_Method, TRUE);
     if( method != R_UnboundValue) {
 	const char *ss;
 	if( !isString(method) )
@@ -780,7 +780,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < length(s); j++)
 	SET_STRING_ELT(s, j, duplicate(STRING_ELT(klass, i++)));
     setAttrib(s, install("previous"), klass);
-    defineVar(install(".Class"), s, m);
+    defineVar(R_dot_Class, s, m);
     /* It is possible that if a method was called directly that
 	'method' is unset */
     if (method != R_UnboundValue) {
@@ -792,15 +792,15 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     } else
 	PROTECT(method = mkString(buf));
-    defineVar(install(".Method"), method, m);
-    defineVar(install(".GenericCallEnv"), callenv, m);
-    defineVar(install(".GenericDefEnv"), defenv, m);
+    defineVar(R_dot_Method, method, m);
+    defineVar(R_dot_GenericCallEnv, callenv, m);
+    defineVar(R_dot_GenericDefEnv, defenv, m);
 
     method = install(buf);
 
-    defineVar(install(".Generic"), generic, m);
+    defineVar(R_dot_Generic, generic, m);
 
-    defineVar(install(".Group"), group, m);
+    defineVar(R_dot_Group, group, m);
 
     SETCAR(newcall, method);
     ans = applyMethod(newcall, nextfun, matchedarg, env, m);
@@ -973,18 +973,17 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 {
     /* dispatch the non-generic definition of `name'.  Used to trap
        calls to standardGeneric during the loading of the methods package */
-    SEXP e, value, rho, fun, symbol, dot_Generic;
+    SEXP e, value, rho, fun, symbol;
     RCNTXT *cptr;
     /* find a non-generic function */
     symbol = install(translateChar(asChar(name)));
-    dot_Generic = install(".Generic");
     for(rho = ENCLOS(env); rho != R_EmptyEnv;
 	rho = ENCLOS(rho)) {
 	fun = findVarInFrame3(rho, symbol, TRUE);
 	if(fun == R_UnboundValue) continue;
 	switch(TYPEOF(fun)) {
 	case CLOSXP:
-	    value = findVarInFrame3(CLOENV(fun), dot_Generic, TRUE);
+	    value = findVarInFrame3(CLOENV(fun), R_dot_Generic, TRUE);
 	    if(value == R_UnboundValue) break;
 	case BUILTINSXP:  case SPECIALSXP:
 	default:

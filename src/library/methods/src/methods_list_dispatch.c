@@ -61,9 +61,8 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 SEXP R_quick_method_check(SEXP object, SEXP fsym, SEXP fdef);
 
-static SEXP R_target, R_defined, R_nextMethod,
-    R_dot_target, R_dot_defined, R_dot_nextMethod,
-    R_loadMethod_name, R_dot_Method;
+static SEXP R_target, R_defined, R_nextMethod, R_dot_nextMethod,
+    R_loadMethod_name;
 
 static SEXP Methods_Namespace = NULL;
 
@@ -78,10 +77,7 @@ static void init_loadMethod()
     R_defined = install("defined");
     R_nextMethod = install("nextMethod");
     R_loadMethod_name = install("loadMethod");
-    R_dot_target = install(".target");
-    R_dot_defined = install(".defined");
     R_dot_nextMethod = install(".nextMethod");
-    R_dot_Method = install(".Method");
 }
 
 

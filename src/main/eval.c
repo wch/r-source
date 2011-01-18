@@ -936,25 +936,11 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 /* **** FIXME: Temporary code to execute S4 methods in a way that
    **** preserves lexical scope. */
 
-static SEXP R_dot_Generic = NULL;
-static SEXP R_dot_Method = NULL;
-static SEXP R_dot_Methods = NULL;
-static SEXP R_dot_defined = NULL;
-static SEXP R_dot_target = NULL;
-
 /* called from methods_list_dispatch.c */
 SEXP R_execMethod(SEXP op, SEXP rho)
 {
     SEXP call, arglist, callerenv, newrho, next, val;
     RCNTXT *cptr;
-
-    if (R_dot_Generic == NULL) {
-	R_dot_Generic = install(".Generic");
-	R_dot_Method = install(".Method");
-	R_dot_Methods = install(".Methods");
-	R_dot_defined = install(".defined");
-	R_dot_target = install(".target");
-    }
 
     /* create a new environment frame enclosed by the lexical
        environment of the method */
@@ -2604,20 +2590,20 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	s = CDR(s);
     }
 
-    defineVar(install(".Method"), m, newrho);
+    defineVar(R_dot_Method, m, newrho);
     UNPROTECT(1);
     PROTECT(t = mkString(generic));
-    defineVar(install(".Generic"), t, newrho);
+    defineVar(R_dot_Generic, t, newrho);
     UNPROTECT(1);
-    defineVar(install(".Group"), lgr, newrho);
+    defineVar(R_dot_Group, lgr, newrho);
     set = length(lclass) - lwhich;
     PROTECT(t = allocVector(STRSXP, set));
     for(j = 0 ; j < set ; j++ )
 	SET_STRING_ELT(t, j, duplicate(STRING_ELT(lclass, lwhich++)));
-    defineVar(install(".Class"), t, newrho);
+    defineVar(R_dot_Class, t, newrho);
     UNPROTECT(1);
-    defineVar(install(".GenericCallEnv"), rho, newrho);
-    defineVar(install(".GenericDefEnv"), R_BaseEnv, newrho);
+    defineVar(R_dot_GenericCallEnv, rho, newrho);
+    defineVar(R_dot_GenericDefEnv, R_BaseEnv, newrho);
 
     PROTECT(t = LCONS(lmeth, CDR(call)));
 
