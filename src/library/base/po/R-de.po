@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-01-18 14:46\n"
 "PO-Revision-Date: 2010-09-21 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -652,6 +652,16 @@ msgstr "ungültiges Faktorniveau, NA erzeugt"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
 
+#, fuzzy
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
+
+#, fuzzy
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
+
 msgid "no files to copy from"
 msgstr "keine Dateien, um daraus zu kopieren"
 
@@ -672,6 +682,10 @@ msgstr "keine Dateien, um davon zu linken"
 
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
+
+#, fuzzy
+msgid "no files to link to"
+msgstr "keine Dateien, um davon zu linken"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
@@ -1313,6 +1327,9 @@ msgstr "Länge muss eine nicht negative Zahl sein"
 
 msgid "too many arguments"
 msgstr "zu viele Argumente"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr ""
 
 msgid "'connection' must be a connection"
 msgstr "'connection' muss eine Verbindung sein"

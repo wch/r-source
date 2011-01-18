@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-01-18 14:46\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -608,6 +608,12 @@ msgstr ""
 msgid "'%s' is not meaningful for ordered factors"
 msgstr ""
 
+msgid "'%s' not defined for ordered factors"
+msgstr ""
+
+msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
+msgstr ""
+
 msgid "no files to copy from"
 msgstr ""
 
@@ -627,6 +633,9 @@ msgid "no files to link from"
 msgstr ""
 
 msgid "no files/directory to link to"
+msgstr ""
+
+msgid "no files to link to"
 msgstr ""
 
 msgid "'package' must be of length 1"
@@ -1224,6 +1233,9 @@ msgid "length must be non-negative number"
 msgstr ""
 
 msgid "too many arguments"
+msgstr ""
+
+msgid "'compress' is ignored unless 'file' is a file name"
 msgstr ""
 
 msgid "'connection' must be a connection"

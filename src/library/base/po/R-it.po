@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-01-18 14:46\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -681,6 +681,16 @@ msgstr "livello non valido in factor, sono stati generati degli NA"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' è senza senso per le variabili qualitative ordinali"
 
+#, fuzzy
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s' è senza senso per le variabili qualitative ordinali"
+
+#, fuzzy
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr "'%s' è senza senso per le variabili qualitative ordinali"
+
 msgid "no files to copy from"
 msgstr "nessun file da cui copiare"
 
@@ -702,6 +712,10 @@ msgstr "nessun file cui collegarsi"
 
 msgid "no files/directory to link to"
 msgstr "nessun file/directory da collegare"
+
+#, fuzzy
+msgid "no files to link to"
+msgstr "nessun file cui collegarsi"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve avere lunghezza 1"
@@ -1367,6 +1381,9 @@ msgstr "la lunghezza deve essere un numero non negativo"
 
 msgid "too many arguments"
 msgstr "troppi argomenti"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr ""
 
 msgid "'connection' must be a connection"
 msgstr "'connection' deve essere una connessione"

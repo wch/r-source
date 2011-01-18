@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:18\n"
+"POT-Creation-Date: 2011-01-18 14:47\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -965,6 +965,10 @@ msgid "'compressed' must be logical or character"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
 
 #, fuzzy
+msgid "failed to create directory %s"
+msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
+
+#, fuzzy
 msgid "invalid octal digit"
 msgstr "무효의 format입니다"
 
@@ -977,6 +981,10 @@ msgstr ""
 
 msgid "checksum error for entry '%s'"
 msgstr ""
+
+#, fuzzy
+msgid "failed to copy %s to %s"
+msgstr "'%s'를 작성하는데 실패 되었습니다"
 
 msgid "unsupported entry type"
 msgstr ""

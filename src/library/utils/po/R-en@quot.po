@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:18\n"
-"PO-Revision-Date: 2011-01-18 13:57+0000\n"
+"POT-Creation-Date: 2011-01-18 14:47\n"
+"PO-Revision-Date: 2011-01-18 14:47\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -930,6 +930,9 @@ msgstr "no events were recorded"
 msgid "'compressed' must be logical or character"
 msgstr "‘compressed’ must be logical or character"
 
+msgid "failed to create directory %s"
+msgstr "failed to create directory %s"
+
 msgid "invalid octal digit"
 msgstr "invalid octal digit"
 
@@ -941,6 +944,9 @@ msgstr "incomplete block on file"
 
 msgid "checksum error for entry '%s'"
 msgstr "checksum error for entry ‘%s’"
+
+msgid "failed to copy %s to %s"
+msgstr "failed to copy %s to %s"
 
 msgid "unsupported entry type"
 msgstr "unsupported entry type"

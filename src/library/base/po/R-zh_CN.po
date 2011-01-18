@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-01-18 14:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -638,6 +638,16 @@ msgstr "因子层次有错，产生了NA"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s'对順序化的因子没有意义"
 
+#, fuzzy
+msgid "'%s' not defined for ordered factors"
+msgstr "'%s'对順序化的因子没有意义"
+
+#, fuzzy
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
+msgstr "'%s'对順序化的因子没有意义"
+
 msgid "no files to copy from"
 msgstr "拷贝时没有可以读的文件"
 
@@ -658,6 +668,10 @@ msgstr "鏈結时没有可以读的文件"
 
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
+
+#, fuzzy
+msgid "no files to link to"
+msgstr "鏈結时没有可以读的文件"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"
@@ -1278,6 +1292,9 @@ msgstr "长度必需为非负数"
 
 msgid "too many arguments"
 msgstr "太多参数"
+
+msgid "'compress' is ignored unless 'file' is a file name"
+msgstr ""
 
 msgid "'connection' must be a connection"
 msgstr "'connection'必需是个链结"
