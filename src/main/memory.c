@@ -210,6 +210,9 @@ static const char *sexptype2char(SEXPTYPE type) {
 /* **** if this becomes default should remove the public
    **** gc_inhibit_torture variable from Defn.h and any references to
    **** it elsewhere */
+/* **** if the user specified a wait before starting to force
+   **** collecitons it might make sense to also wait before starting
+   **** to inhibit releases */
 static int gc_force_wait = 0;
 static int gc_force_gap = 0;
 static Rboolean gc_inhibit_release = FALSE;
