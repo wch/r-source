@@ -1549,7 +1549,7 @@ List of 150
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: convertColor
-> ### Title: Convert between colour spaces
+> ### Title: Convert between Colour Spaces
 > ### Aliases: convertColor colorspaces
 > ### Keywords: color
 > 
