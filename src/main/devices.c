@@ -35,9 +35,11 @@
 #include <Graphics.h>
 #include <GraphicsBase.h> /* registerBase */
 
-static SEXP R_INLINE getSymbolValue(const char *symbolName)
+static SEXP R_INLINE getSymbolValue(SEXP symbol)
 {
-    return findVar(install(symbolName), R_BaseEnv);
+    if (TYPEOF(symbol) != SYMSXP)
+	error("argument to 'getSymbolValue' is not a symbol");
+    return findVar(symbol, R_BaseEnv);
 }
 
 /*
@@ -253,7 +255,7 @@ int selectDevice(int devNum)
 
 	/* maintain .Device */
 	gsetVar(R_DeviceSymbol,
-		elt(getSymbolValue(".Devices"), devNum),
+		elt(getSymbolValue(R_DevicesSymbol), devNum),
 		R_BaseEnv);
 
 	gdd = GEcurrentDevice(); /* will start a device if current is null */
@@ -285,7 +287,7 @@ void removeDevice(int devNum, Rboolean findNext)
 
 	if(findNext) {
 	    /* maintain .Devices */
-	    PROTECT(s = getSymbolValue(".Devices"));
+	    PROTECT(s = getSymbolValue(R_DevicesSymbol));
 	    for (i = 0; i < devNum; i++) s = CDR(s);
 	    SETCAR(s, mkString(""));
 	    UNPROTECT(1);
@@ -295,7 +297,7 @@ void removeDevice(int devNum, Rboolean findNext)
 		R_CurrentDevice = nextDevice(R_CurrentDevice);
 		/* maintain .Device */
 		gsetVar(R_DeviceSymbol,
-			elt(getSymbolValue(".Devices"), R_CurrentDevice),
+			elt(getSymbolValue(R_DevicesSymbol), R_CurrentDevice),
 			R_BaseEnv);
 
 		/* activate new current device */
@@ -443,7 +445,7 @@ void GEaddDevice(pGEDevDesc gdd)
     SEXP s, t;
     pGEDevDesc oldd;
 
-    PROTECT(s = getSymbolValue(".Devices"));
+    PROTECT(s = getSymbolValue(R_DevicesSymbol));
 
     if (!NoDevices())  {
 	oldd = GEcurrentDevice();
@@ -474,7 +476,7 @@ void GEaddDevice(pGEDevDesc gdd)
     gdd->dev->activate(gdd->dev);
 
     /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
+    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(R_DeviceSymbol), 0)));
     if (appnd)
 	SETCDR(s, CONS(t, R_NilValue));
     else
@@ -546,7 +548,7 @@ void attribute_hidden InitGraphics(void)
     PROTECT(s = mkString("null device"));
     gsetVar(R_DeviceSymbol, s, R_BaseEnv);
     PROTECT(t = mkString("null device"));
-    gsetVar(R_DotDevicesSymbol, CONS(t, R_NilValue), R_BaseEnv);
+    gsetVar(R_DevicesSymbol, CONS(t, R_NilValue), R_BaseEnv);
     UNPROTECT(2);
 
     /* Register the base graphics system with the graphics engine

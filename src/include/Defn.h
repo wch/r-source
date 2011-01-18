@@ -91,7 +91,7 @@ extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
 extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
 extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
-extern0 SEXP    R_DotDevicesSymbol;  /* ".Devices" */
+extern0 SEXP    R_DevicesSymbol;  /* ".Devices" */
 
 extern0 SEXP    R_dot_Generic;  /* ".Generic" */
 extern0 SEXP    R_dot_Methods;  /* ".Methods" */
