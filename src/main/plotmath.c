@@ -1154,6 +1154,7 @@ static BBOX RenderNumber(SEXP expr, int draw, mathContext *mc,
 {
     BBOX bbox;
     FontType prevfont = SetFont(PlainFont, gc);
+    PrintDefaults(R_GlobalEnv);
     bbox = RenderStr(CHAR(asChar(expr)), draw, mc, gc, dd);
     SetFont(prevfont, gc);
     return bbox;

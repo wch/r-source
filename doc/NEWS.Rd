@@ -48,6 +48,11 @@
 
       \item \code{combn(n,m)} now behaves more regularly for the border
       case \eqn{m = 0}. (\PR{14473})
+
+      \item The rendering of numbers in plotmath expressions (e.g.
+      \code{expression(10^2)} used the current settings for conversion
+      to strings rather than setting the defaults, and so could be
+      affected by what has been done before.  (\PR{14477})
     }
   }
 }
