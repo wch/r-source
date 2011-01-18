@@ -37,8 +37,6 @@
 
 #include <R_ext/RS.h> /* for S4 allocation */
 
-#define NEW_GC_TORTURE
-
 /* Declarations for Valgrind.
 
    These are controlled by the
@@ -102,9 +100,47 @@ extern void *Rm_realloc(void * p, size_t n);
 static int gc_reporting = 0;
 static int gc_count = 0;
 
-static Rboolean bad_sexp_type_seen = FALSE;
+#ifdef PROTECTCHECK
+/* This is used to help detect unprotected SEXP values.  It is most
+   useful if the strict barrier is enabled as well. The strategy is:
+
+       All GCs are gull GCs
+
+       New nodes are marked as NEWSXP
+
+       After a GC all free nodes that are not of type NEWSXP are
+       marked as type FREESXP
+
+       Most calls to accessor functions check their SEXP inputs and
+       SEXP outputs with CHK() to see if a reachable node is a
+       FREESXP and signal an error if a FREESXP is found.
+
+   Combined with GC torture this can help locate where an unprotected
+   SEXP is being used.
+
+   This approach will miss cases where an unprotected node has been
+   re-allocated.  For these cases it is possible to set
+   gc_inhibit_release to TRUE.  FREESXP nodes will not be reallocated,
+   or large ones released, until gc_inhibit_release is set to FALSE
+   again.  This will of course result in memory growth and should be
+   used with care and typically in combination with OS mechanisms to
+   limit process memory usage.  LT */
+
+static R_INLINE SEXP CHK(SEXP x)
+{
+    /* **** NULL check because of R_CurrentExpr */
+    if (x != NULL && TYPEOF(x) == FREESXP)
+	error("unprotected object encountered");
+    return x;
+}
+#else
+#define CHK(x) x
+#endif
+
+static int bad_sexp_type_seen = 0;
 
 #define GC_TORTURE
+#define NEW_GC_TORTURE
 
 #ifdef GC_TORTURE
 #ifdef NEW_GC_TORTURE
@@ -502,7 +538,7 @@ static R_size_t R_NodesInUse = 0;
     dc__action__(EXTPTR_TAG(__n__), dc__extra__); \
     break; \
   default: \
-    bad_sexp_type_seen = TRUE; \
+    if (bad_sexp_type_seen == 0) bad_sexp_type_seen = TYPEOF(__n__); \
   } \
 } while(0)
 
@@ -803,7 +839,8 @@ static void ReleaseLargeFreeVectors(void)
 		size = LENGTH(s) * sizeof(SEXP);
 		break;
 	    default:
-		bad_sexp_type_seen = TRUE;
+		if (bad_sexp_type_seen == 0)
+		    bad_sexp_type_seen = TYPEOF(s);
 	    }
 	    size = BYTE2VEC(size);
 	    UNSNAP_NODE(s);
@@ -901,43 +938,6 @@ static void old_to_new(SEXP x, SEXP y)
     SNAP_NODE(x, R_GenHeap[NODE_CLASS(x)].OldToNew[NODE_GENERATION(x)]);
 #endif
 }
-
-#ifdef PROTECTCHECK
-/* This is used to help detect unprotectes SEXP values.  It is most
-   useful if the strict barrier is enabled as well. The strategy is:
-
-       All GCs are gull GCs
-
-       New nodes are marked as NEWSXP
-
-       After a GC all free nodes that are not of type NEWSXP are
-       marked as type FREESXP
-
-       Most calls to accessor functions check their SEXP inputs and
-       SEXP outputs with CHK() to see if a reachable node is a
-       FREESXP and signal an error if a FREESXP is found.
-
-   Compined with GC torture this can help locate where an unprotected
-   SEXP is being used.
-
-   This approach will miss cases where an unprotected node has been
-   re-allocated.  For these cases it is possible to set
-   gc_inhibit_release to TRUE.  FREESXP nodes will not be reallocated,
-   or large ones released, until gc_inhibit_release is set to FALSE
-   again.  This will of course result in memory growth and should be
-   used with care and typically in compination with OS mechanisms to
-   limet process memory usage.  LT */
-
-static R_INLINE SEXP CHK(SEXP x)
-{
-    /* **** NULL check because of R_CurrentExpr */
-    if (x != NULL && TYPEOF(x) == FREESXP)
-	error("unprotected object encountered");
-    return x;
-}
-#else
-#define CHK(x) x
-#endif
 
 #define CHECK_OLD_TO_NEW(x,y) do { \
   if (NODE_IS_OLDER(CHK(x), CHK(y))) old_to_new(x,y);  } while (0)
@@ -1275,7 +1275,7 @@ static void RunGenCollect(R_size_t size_needed)
     SEXP s;
     SEXP forwarded_nodes;
 
-    bad_sexp_type_seen = FALSE;
+    bad_sexp_type_seen = 0;
 
     /* determine number of generations to collect */
     while (num_old_gens_to_collect < NUM_OLD_GENERATIONS) {
@@ -2411,7 +2411,7 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    Rboolean warn_bad_sexp_type = FALSE;
+    int warn_bad_sexp_type = 0;
 
  again:
 
@@ -2426,8 +2426,8 @@ static void R_gc_internal(R_size_t size_needed)
 	gc_end_timing();
     } END_SUSPEND_INTERRUPTS;
 
-    if (bad_sexp_type_seen)
-	warn_bad_sexp_type = TRUE;
+    if (bad_sexp_type_seen != 0 && warn_bad_sexp_type == 0)
+	warn_bad_sexp_type = bad_sexp_type_seen;
 
     if (gc_reporting) {
 	ncells = onsize - R_Collected;
@@ -2457,8 +2457,18 @@ static void R_gc_internal(R_size_t size_needed)
 	    goto again;
     }
 
-    if (warn_bad_sexp_type)
-	warning("GC encountered a node with an unknown SEXP type");
+    if (warn_bad_sexp_type != 0) {
+#ifdef PROTECTCHECK
+	if (warn_bad_sexp_type == FREESXP)
+	    error("GC encountered a node with type FREESXP");
+	else
+	    error("GC encountered a node with an unknown SEXP type: %d",
+		  warn_bad_sexp_type);
+#else
+	error("GC encountered a node with an unknown SEXP type: %d",
+	      warn_bad_sexp_type);
+#endif
+    }
 }
 
 SEXP attribute_hidden do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
