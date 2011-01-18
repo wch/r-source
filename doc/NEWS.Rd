@@ -174,6 +174,15 @@
       \code{.saveRDS()} and \code{.readRDS()} are no longer described as
       \sQuote{internal} and so are made available for general use
       (something several package authors had pre-empted).
+
+      \item Many functions when called with a not-open connection will
+      now ensure that the connection is left not-open in the event of
+      error.  These include \code{read.dcf()}, \code{dput()},
+      \code{dump()}, \code{load()}, \code{parse()}, \code{readBin()},
+      \code{readChar()}, \code{readLines()}, \code{save()},
+      \code{writeBin()}, \code{writeChar()}, \code{writeLines()},
+      \code{.readRDS()}, \code{.saveRDS()} and \code{tools::parse_Rd()},
+      as well as functions calling these.
     }
   }
 

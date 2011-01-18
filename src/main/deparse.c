@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -270,12 +270,19 @@ SEXP attribute_hidden deparse1s(SEXP call)
 
 #include "Rconnections.h"
 
+static void con_cleanup(void *data)
+{
+    Rconnection con = data;
+    if(con->isopen) con->close(con);
+}
+
 SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP saveenv, tval;
     int i, ifile, res;
     Rboolean wasopen, havewarned = FALSE, opts;
     Rconnection con = (Rconnection) 1; /* stdout */
+    RCNTXT cntxt;
 
     checkArity(op, args);
 
@@ -307,12 +314,13 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    strcpy(con->mode, "w");
 	    if(!con->open(con)) error(_("cannot open the connection"));
 	    strcpy(con->mode, mode);
-	    if(!con->canwrite) {
-		con->close(con);
-		error(_("cannot write to this connection"));
-	    }
-	} else if(!con->canwrite)
-	    error(_("cannot write to this connection"));
+	    /* Set up a context which will close the connection on error */
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+			 R_NilValue, R_NilValue);
+	    cntxt.cend = &con_cleanup;
+	    cntxt.cenddata = con;
+	}
+	if(!con->canwrite) error(_("cannot write to this connection"));
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (ifile == 1)
@@ -324,7 +332,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning(_("wrote too few characters"));
 	}
     UNPROTECT(1); /* tval */
-    if (!wasopen) con->close(con);
+    if(!wasopen) {endcontext(&cntxt); con->close(con);}
     return (CAR(args));
 }
 
@@ -336,6 +344,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rconnection con;
     int opts;
     const char *obj_name;
+    RCNTXT cntxt;
 
     checkArity(op, args);
 
@@ -391,12 +400,13 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		strcpy(con->mode, "w");
 		if(!con->open(con)) error(_("cannot open the connection"));
 		strcpy(con->mode, mode);
-		if(!con->canwrite) {
-		    con->close(con);
-		    error(_("cannot write to this connection"));
-		}
-	    } else if(!con->canwrite)
-		error(_("cannot write to this connection"));
+		/* Set up a context which will close the connection on error */
+		begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+			     R_NilValue, R_NilValue);
+		cntxt.cend = &con_cleanup;
+		cntxt.cenddata = con;
+	    } 
+	    if(!con->canwrite) error(_("cannot write to this connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
 		int extra = 6;
@@ -421,7 +431,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		o = CDR(o);
 	    }
-	    if (!wasopen) con->close(con);
+	    if(!wasopen) {endcontext(&cntxt); con->close(con);}
 	}
     }
 

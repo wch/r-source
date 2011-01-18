@@ -2325,9 +2325,6 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     con = getConnection(asInteger(CAR(args)));
-    /* These should be deferred until it is open */
-    if(!con->canread) error(_("cannot read from this connection"));
-    if(con->text) error(_("can only read from a binary connection"));
 
     wasopen = con->isopen;
     if(!wasopen) {
@@ -2344,6 +2341,7 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cenddata = con;
     }
     if(!con->canread) error(_("connection not open for reading"));
+    if(con->text) error(_("can only load() from a binary connection"));
 
     aenv = CADR(args);
     if (TYPEOF(aenv) == NILSXP)
@@ -2361,7 +2359,7 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
 	/* PROTECT is paranoia: some close() method might allocate */
 	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));
-	if (!wasopen) endcontext(&cntxt);
+	if(!wasopen) {endcontext(&cntxt); con->close(con);}
 	UNPROTECT(1);
     } else
 	error(_("the input does not start with a magic number compatible with loading from a connection"));

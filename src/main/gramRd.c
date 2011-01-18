@@ -72,7 +72,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -4500,6 +4500,12 @@ static int yylex(void)
     return tok;
 }
 
+static void con_cleanup(void *data)
+{
+    Rconnection con = data;
+    if(con->isopen) con->close(con);
+}
+
 /* "do_parseRd" 
 
  .Internal( parseRd(file, srcfile, encoding, verbose, basename, warningCalls) )
@@ -4514,6 +4520,7 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     int ifile, wcall;
     const char *encoding;
     ParseStatus status;
+    RCNTXT cntxt;
 
 #if DEBUGMODE
     yydebug = 1;
@@ -4544,14 +4551,15 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ifile >= 3) {/* file != "" */
 	if(!wasopen) {
 	    if(!con->open(con)) error(_("cannot open the connection"));
-	    if(!con->canread) {
-		con->close(con);
-		error(_("cannot read from this connection"));
-	    }
-	} else if(!con->canread)
-	    error(_("cannot read from this connection"));
+	    /* Set up a context which will close the connection on error */
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+			 R_NilValue, R_NilValue);
+	    cntxt.cend = &con_cleanup;
+	    cntxt.cenddata = con;
+	}
+	if(!con->canread) error(_("cannot read from this connection"));
 	s = R_ParseRd(con, &status, source, fragment);
-	if(!wasopen) con->close(con);
+	if(!wasopen) {endcontext(&cntxt); con->close(con);}
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else error(_("invalid Rd file"));

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-9   The R Development Core Team.
+ *  Copyright (C) 2001-11   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,12 @@
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);
 
+static void con_cleanup(void *data)
+{
+    Rconnection con = data;
+    if(con->isopen) con->close(con);
+}
+
 SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nwhat, nret, nc, nr, m, k, lastm, need;
@@ -40,21 +46,22 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP file, what, what2, retval, retval2, dims, dimnames;
     Rconnection con = NULL;
     Rboolean wasopen, is_eblankline;
+    RCNTXT cntxt;
 
     checkArity(op, args);
 
     file = CAR(args);
     con = getConnection(asInteger(file));
-    if(!con->canread)
-	error(_("cannot read from this connection"));
     wasopen = con->isopen;
     if(!wasopen) {
 	if(!con->open(con)) error(_("cannot open the connection"));
-	if(!con->canread) { /* recheck */
-	    con->close(con);
-	    error(_("cannot read from this connection"));
-	}
+	/* Set up a context which will close the connection on error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &con_cleanup;
+	cntxt.cenddata = con;
     }
+    if(!con->canread) error(_("cannot read from this connection"));
 
     PROTECT(what = coerceVector(CADR(args), STRSXP)); /* argument fields */
     nwhat = LENGTH(what);
@@ -192,7 +199,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    if(!wasopen) con->close(con);
+    if(!wasopen) {endcontext(&cntxt); con->close(con);}
     free(buf);
     tre_regfree(&blankline);
     tre_regfree(&contline);

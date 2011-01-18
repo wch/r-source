@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-7      The R Development Core Team
+ *  Copyright (C) 2001-11      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -170,6 +170,12 @@ void attribute_hidden parseError(SEXP call, int linenum)
     UNPROTECT(1);
 }
 
+static void con_cleanup(void *data)
+{
+    Rconnection con = data;
+    if(con->isopen) con->close(con);
+}
+
 /* "do_parse" - the user interface input/output to files.
 
  The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
@@ -186,6 +192,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     int ifile, num, i;
     const char *encoding;
     ParseStatus status;
+    RCNTXT cntxt;
 
     checkArity(op, args);
     R_ParseError = 0;
@@ -252,14 +259,15 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (num == NA_INTEGER) num = -1;
 	if(!wasopen) {
 	    if(!con->open(con)) error(_("cannot open the connection"));
-	    if(!con->canread) {
-		con->close(con);
-		error(_("cannot read from this connection"));
-	    }
-	} else if(!con->canread)
-	    error(_("cannot read from this connection"));
+	    /* Set up a context which will close the connection on error */
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+			 R_NilValue, R_NilValue);
+	    cntxt.cend = &con_cleanup;
+	    cntxt.cenddata = con;
+	}
+	if(!con->canread) error(_("cannot read from this connection"));
 	s = R_ParseConn(con, num, &status, source);
-	if(!wasopen) con->close(con);
+	if(!wasopen) {endcontext(&cntxt); con->close(con);}
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
