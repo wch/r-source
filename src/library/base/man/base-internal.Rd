@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -30,6 +30,11 @@
 \alias{.POSIXlt}
 \alias{.difftime}
 \alias{.cache_class}
+%% moved from readRDS.Rd in 2.13.0
+% These were introduced in R 1.7.0, post version 2
+\alias{.readRDS}
+\alias{.saveRDS}
+
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -77,6 +82,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .difftime(xx, units)
 
 .cache_class(class, extends)
+
+.saveRDS(\dots)
+.readRDS(\dots)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -114,6 +122,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{xx}{a classless object to be placed into the class.}
   \item{tz}{an optional timezone.}
   \item{units}{see \code{\link{difftime}}.}
+  \item{\dots}{See \code{\link{saveRDS}}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially

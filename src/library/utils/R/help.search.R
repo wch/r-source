@@ -146,7 +146,7 @@ help.search <-
                 for (nam in a) {
                     pfile <- file.path(lib, nam, "Meta", "package.rds")
                     if (file.exists(pfile))
-                        info <- .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                        info <- readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                     else next
                     if ( (length(info) != 2L) || any(is.na(info)) ) next
                     if (!grepl(valid_package_version_regexp, info["Version"])) next
@@ -163,7 +163,7 @@ help.search <-
 	## Create the hsearch db.
 	np <- 0L
 	if(verbose >= 2L) {
-	    message("Packages {.readRDS() sequentially}:")
+	    message("Packages {readRDS() sequentially}:")
             flush.console()
         }
         tot <- length(package_paths)
@@ -211,7 +211,7 @@ help.search <-
 	    ## R 1.8.0.	 If they are missing, we really cannot use
 	    ## the package (as library() will refuse to load it).
 	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
-		hDB <- .readRDS(hs_file)
+		hDB <- readRDS(hs_file)
 		if(!is.null(hDB)) {
 		    ## Fill up possibly missing information.
 		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
@@ -326,9 +326,9 @@ help.search <-
 		.hsearch_db(db)
 	    else {
 		## If we cannot save to memory, serialize to a file ...
-		.saveRDS(db, file = db_file, compress = TRUE)
+		saveRDS(db, file = db_file, compress = TRUE)
 		## and store a promise to unserialize from this file.
-		.hsearch_db(substitute(.readRDS(con),
+		.hsearch_db(substitute(readRDS(con),
 				       list(con = db_file)))
 	    }
 	    if(verbose >= 2L) {

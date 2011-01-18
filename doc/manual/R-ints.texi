@@ -1130,20 +1130,21 @@ For background papers see
 
 @cindex serialization
 Serialized versions of @R{} objects are used by @code{load}/@code{save}
-and also at a slightly lower level by @code{.saveRDS}/@code{.readRDS}
-and @code{serialize}/@code{unserialize}.  These differ in what they
+and also at a slightly lower level by @code{saveRDS}/@code{readRDS} (and
+their earlier `internal' dot-name versions) and
+@code{serialize}/@code{unserialize}.  These differ in what they
 serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
 (typically the workspace).  @code{save} writes a header at the beginning
 of the file (a single LF-terminated line) which the lower-level versions
 do not.
 
-@code{save} and @code{.saveRDS} allow various forms of compression, and
+@code{save} and @code{saveRDS} allow various forms of compression, and
 @command{gzip} compression has been the default (except for ASCII saves)
 since @R{} 2.4.0.  Compression is applied to the whole file stream,
 including the headers, so serialized files can be uncompressed or
 re-compressed by external programs.  Since @R{} 2.10.0 both @code{load}
-and @code{.readRDS} can read @command{gzip}, @command{bzip2} and
+and @code{readRDS} can read @command{gzip}, @command{bzip2} and
 @command{xz} forms of compression when reading from a file, and
 @command{gzip} compression when reading from a connection.
 
@@ -1952,7 +1953,7 @@ this makes lazy-loading unsuitable for really large objects: the
 unserialized length of an @R{} object can exceed 4GB.)
 
 The index or `map' file @file{@var{name}.rdx} is a compressed serialized
-@R{} object to be read by @code{.readRDS}.  It is a list with three
+@R{} object to be read by @code{readRDS}.  It is a list with three
 elements @code{variables}, @code{references} and @code{compressed}.  The
 first two are named lists of integer vectors of length 2 giving the
 offset and length of the serialized object in the @file{@var{name}.rdb}
@@ -2517,7 +2518,7 @@ catalogs.
 @section Metadata
 
 Directory @file{Meta} contains several files in @code{.rds} format, that
-is serialized @R{} objects written by @code{.saveRDS}.  All packages
+is serialized @R{} objects written by @code{saveRDS}.  All packages
 have files @file{Rd.rds}, @file{hsearch.rds}, @file{links.rds} and
 @file{package.rds}.  Packages with name spaces have a file
 @file{nsInfo.rds}, and those with data, demos or vignettes have

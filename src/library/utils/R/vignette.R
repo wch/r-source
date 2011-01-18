@@ -79,7 +79,7 @@ vignette <-
             ## Check for new-style 'Meta/vignette.rds' ...
             if(file.exists(INDEX <-
                            file.path(dir, "Meta", "vignette.rds")))
-                entries <- .readRDS(INDEX)
+                entries <- readRDS(INDEX)
             if(NROW(entries) > 0)
                 vDB <- rbind(vDB,
                              cbind(dir,

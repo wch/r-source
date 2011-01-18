@@ -263,7 +263,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(!nzchar(pfile))
             	stop(gettextf("'%s' is not a valid installed package",
                               package), domain = NA)
-            pkgInfo <- .readRDS(pfile)
+            pkgInfo <- readRDS(pfile)
             testRversion(pkgInfo, package, pkgpath)
             ## avoid any bootstrapping issues by these exemptions
             if(!package %in% c("datasets", "grDevices", "graphics", "methods",
@@ -406,7 +406,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         pkgInfo <- vector(length = 3L, mode = "list")
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
-                txt <- .readRDS(f)$DESCRIPTION
+                txt <- readRDS(f)$DESCRIPTION
                 if("Encoding" %in% names(txt)) {
                     to <- if(Sys.getlocale("LC_CTYPE") == "C") "ASCII//TRANSLIT"else ""
                     tmp <- try(iconv(txt, from=txt["Encoding"], to=to))
@@ -418,7 +418,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 nm <- paste0(names(txt), ":")
                 formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3)
             } else if(basename(f) %in% "vignette.rds") {
-                txt <- .readRDS(f)
+                txt <- readRDS(f)
                 ## New-style vignette indices are data frames with more
                 ## info than just the base name of the PDF file and the
                 ## title.  For such an index, we give the names of the
@@ -459,7 +459,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
                 title <- if(file != "") {
-                    txt <- .readRDS(file)
+                    txt <- readRDS(file)
                     if(is.list(txt)) txt <- txt$DESCRIPTION
                     ## we may need to re-encode here.
                     if("Encoding" %in% names(txt)) {
@@ -798,7 +798,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                 pfile <- file.path(p, "Meta", "package.rds")
                 info <- if(file.exists(pfile))
                     ## this must have these fields to get installed
-                    .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                    readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                 else {
                     info <- tryCatch(read.dcf(file.path(p, "DESCRIPTION"),
                                               c("Package", "Version"))[1, ],
@@ -911,7 +911,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                         stop(gettextf("package '%s' required by '%s' could not be found",
                                       pkg, pkgname),
                              call. = FALSE, domain = NA)
-                    current <- .readRDS(pfile)$DESCRIPTION["Version"]
+                    current <- readRDS(pfile)$DESCRIPTION["Version"]
                     for(z in zs)
                         if(length(z) > 1L) {
                             target <- as.numeric_version(z$version)
@@ -934,7 +934,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 if (have_vers) {
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
-                    current <- .readRDS(pfile)$DESCRIPTION["Version"]
+                    current <- readRDS(pfile)$DESCRIPTION["Version"]
                     for(z in zs)
                         if (length(z) > 1L) {
                             target <- as.numeric_version(z$version)

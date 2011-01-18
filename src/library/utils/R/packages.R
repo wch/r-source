@@ -51,7 +51,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                                     URLencode(repos, TRUE),
                                     ".rds", sep=""))
             if(file.exists(dest)) {
-                res0 <- .readRDS(dest)
+                res0 <- readRDS(dest)
             } else {
                 tmpf <- tempfile()
                 on.exit(unlink(tmpf))
@@ -79,7 +79,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 }
                 res0 <- read.dcf(file = tmpf)
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
-                .saveRDS(res0, dest, compress = TRUE)
+                saveRDS(res0, dest, compress = TRUE)
                 unlink(tmpf)
                 on.exit()
             } # end of download vs cached
@@ -447,7 +447,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         pkgpath <- file.path(lib, pkgs[i])
         if(file.access(pkgpath, 5L)) next
         if (file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
-            md <- .readRDS(file)
+            md <- readRDS(file)
             desc <- md$DESCRIPTION[fields]
             if (!length(desc)) {
                 warning(gettextf("metadata of '%s' is corrupt", pkgpath),
@@ -484,13 +484,13 @@ installed.packages <-
 	if(!noCache && file.exists(dest) &&
 	    file.info(dest)$mtime > file.info(lib)$mtime) {
 	    ## use the cache file
-	    retval <- rbind(retval, .readRDS(dest))
+	    retval <- rbind(retval, readRDS(dest))
 	} else {
 	    ret0 <- .readPkgDesc(lib, fields)
 	    if(length(ret0)) {
 		retval <- rbind(retval, ret0)
 		## save the cache file
-		.saveRDS(ret0, dest, compress = TRUE)
+		saveRDS(ret0, dest, compress = TRUE)
 	    }
 	}
     }

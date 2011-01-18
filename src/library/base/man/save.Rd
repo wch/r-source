@@ -148,7 +148,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{\link{data}}.
 
   For other interfaces to the underlying serialization format, see
-  \code{\link{serialize}} and \code{\link{.saveRDS}}.
+  \code{\link{serialize}} and \code{\link{saveRDS}}.
 }
 \examples{
 x <- stats::runif(20)

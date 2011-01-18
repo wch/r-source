@@ -1623,7 +1623,7 @@
 
     ## This may well already have been done:
     Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds")))
-        .readRDS(f)
+        readRDS(f)
     else {
         ## Keep this in sync with .install_package_Rd_indices().
         ## Rd objects should already have been installed.
@@ -1632,7 +1632,7 @@
         ## If not, we build the Rd db from the sources:
         if (is.null(db)) db <- Rd_db(dir = dir)
         Rd <- Rd_contents(db)
-        .saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
+        saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
         Rd
     }
 
@@ -1660,7 +1660,7 @@
     write.table(MM, file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
     a <- structure(MM[, 2L], names=MM[, 1L])
-    .saveRDS(a, file.path(outman, "aliases.rds"))
+    saveRDS(a, file.path(outman, "aliases.rds"))
 
     ## no HTML indices if no help pages?
     outman <- file.path(outDir, "html")
@@ -1782,7 +1782,7 @@
     names(dirname) <- names(ext) <- c("html", "latex", "example")
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir)) return()
-    desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
+    desc <- readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
     ver <- desc["Version"]
 

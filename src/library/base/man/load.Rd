@@ -53,7 +53,7 @@ load(file, envir = parent.frame())
   \code{\link{save}}, \code{\link{download.file}}.
 
   For other interfaces to the underlying serialization format, see
-  \code{\link{unserialize}} and \code{\link{.readRDS}}.
+  \code{\link{unserialize}} and \code{\link{readRDS}}.
 }
 \examples{
 ## save all data

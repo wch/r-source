@@ -96,7 +96,7 @@ function(dir, outDir)
                        outMetaDir),
               domain = NA)
     saveInfo <- .split_description(db)
-    .saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
+    saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
 
     invisible()
 }
@@ -176,7 +176,7 @@ function(dir, packages)
                      package_info_rds_file,
                      package_info_dcf_file))
             next
-        .saveRDS(.split_description(.read_description(package_info_dcf_file)),
+        saveRDS(.split_description(.read_description(package_info_dcf_file)),
                  package_info_rds_file)
     }
     invisible()
@@ -413,7 +413,7 @@ function(dir, outDir)
         RdsFile <- file.path("Meta", "Rd.rds")
         if(file.exists(RdsFile)) { ## for Rd files
             ## this has file names without path
-            files <- .readRDS(RdsFile)$File
+            files <- readRDS(RdsFile)$File
             if(!identical(basename(allRd), files)) upToDate <- FALSE
         }
         ## we want to proceed if any is NA.
@@ -429,12 +429,12 @@ function(dir, outDir)
         .write_Rd_contents_as_RDS(contents,
                                   file.path(outDir, "Meta", "Rd.rds"))
 
-        defaultEncoding <- as.vector(.readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
+        defaultEncoding <- as.vector(readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION["Encoding"])
         if(is.na(defaultEncoding)) defaultEncoding <- NULL
-        .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
+        saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
                  file.path(outDir, "Meta", "hsearch.rds"))
 
-        .saveRDS(.build_links_index(contents, packageName),
+        saveRDS(.build_links_index(contents, packageName),
                  file.path(outDir, "Meta", "links.rds"))
 
         ## If there is no @file{INDEX} file in the package sources, we
@@ -442,22 +442,22 @@ function(dir, outDir)
         ## <NOTE>
         ## We currently do not also save this in RDS format, as we can
         ## always do
-        ##   .build_Rd_index(.readRDS(file.path(outDir, "Meta", "Rd.rds"))
+        ##   .build_Rd_index(readRDS(file.path(outDir, "Meta", "Rd.rds"))
         if(!file_test("-f", file.path(dir, "INDEX")))
             writeLines(formatDL(.build_Rd_index(contents)),
                        file.path(outDir, "INDEX"))
         ## </NOTE>
     } else {
         contents <- NULL
-        .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
+        saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
                  file.path(outDir, "Meta", "hsearch.rds"))
 
-        .saveRDS(.build_links_index(contents, packageName),
+        saveRDS(.build_links_index(contents, packageName),
                  file.path(outDir, "Meta", "links.rds"))
 
     }
     if(file_test("-d", dataDir))
-        .saveRDS(.build_data_index(dataDir, contents),
+        saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     invisible()
 }
@@ -532,7 +532,7 @@ function(dir, outDir)
     if(!hasHtmlIndex)
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
 
-    .saveRDS(vignetteIndex,
+    saveRDS(vignetteIndex,
              file = file.path(outDir, "Meta", "vignette.rds"))
 
     invisible()
@@ -546,7 +546,7 @@ function(dir, outDir)
     demoDir <- file.path(dir, "demo")
     if(!file_test("-d", demoDir)) return(invisible())
     demoIndex <- .build_demo_index(demoDir)
-    .saveRDS(demoIndex,
+    saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
     invisible()
 }
@@ -668,7 +668,7 @@ function(dir, outDir)
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
              domain = NA)
-    .saveRDS(nsInfo, nsInfoFilePath)
+    saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }
 
@@ -708,12 +708,12 @@ function(dir, outDir, encoding = "unknown")
     ## Actually, it seems no more costly than these tests, which it also does
     pathsFile <- file.path(manOutDir, "paths.rds")
     if(!file_test("-f", db_file) || !file.exists(pathsFile) ||
-       !identical(sort(manfiles), sort(.readRDS(pathsFile))) ||
+       !identical(sort(manfiles), sort(readRDS(pathsFile))) ||
        !all(file_test("-nt", db_file, manfiles))) {
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
                            encoding = encoding, built_file = built_file)
         nm <- as.character(names(db)) # Might be NULL
-        .saveRDS(nm, pathsFile)
+        saveRDS(nm, pathsFile)
         names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))
     }

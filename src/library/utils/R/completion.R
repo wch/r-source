@@ -268,7 +268,7 @@ matchAvailableTopics <- function(text)
 {
     .readAliases <- function(path) {
         if(file.exists(f <- file.path(path, "help", "aliases.rds")))
-            names(.readRDS(f))
+            names(readRDS(f))
         else if(file.exists(f <- file.path(path, "help", "AnIndex")))
             ## aliases.rds was introduced before 2.10.0, as can phase this out
             scan(f, what = list("", ""), sep = "\t", quote = "",

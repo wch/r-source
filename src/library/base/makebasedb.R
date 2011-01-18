@@ -97,7 +97,7 @@ local({
 
         val <- list(variables = vals, references = rvals,
                     compressed = compress)
-       .saveRDS(val, mapfile)
+       saveRDS(val, mapfile)
     }
 
     omit <- c(".Last.value", ".AutoloadEnv", ".BaseNamespaceEnv",

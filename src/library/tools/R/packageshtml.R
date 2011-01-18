@@ -51,7 +51,7 @@ win.packages.html <-
             file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
             title <- if(file != "") {
-                txt <- .readRDS(file)
+                txt <- readRDS(file)
                 if(is.list(txt)) txt <- txt$DESCRIPTION
                 ## we may need to re-encode here.
                 if("Encoding" %in% names(txt)) {

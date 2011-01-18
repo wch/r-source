@@ -3,19 +3,18 @@
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
-% These were introduced in R 1.7.0, post version 2
 \name{readRDS}
-\alias{.readRDS}
-\alias{.saveRDS}
+\alias{readRDS}
+\alias{saveRDS}
 \title{Serialization Interface for Single Objects}
 \description{
   Functions to write a single \R object to a file, and to restore it.
 }
 \usage{
-.saveRDS(object, file = "", ascii = FALSE, version = NULL,
-         compress = TRUE, refhook = NULL)
+saveRDS(object, file = "", ascii = FALSE, version = NULL,
+        compress = TRUE, refhook = NULL)
 
-.readRDS(file, refhook = NULL)
+readRDS(file, refhook = NULL)
 }
 \arguments{
   \item{object}{\R object to serialize.}
@@ -59,26 +58,26 @@
   file name, so is only possible when \code{file} is a connection if
   handled by the connection.  If a connection is supplied it will be
   opened (in binary mode) for the duration of the function if not
-  already open: if it is already it must be in binary mode for
-  \code{.saveRDS(ascii=FALSE)}.
+  already open: if it is already open it must be in binary mode for
+  \code{saveRDS(ascii=FALSE)}.
 }
 
 \note{
-  Prior to \R 2.13.0 these functions were marked as \sQuote{internal},
-  which is why they have \sQuote{dot} names.  Nevertheless, they have
-  been stable since \R 1.7.0, except that support for support for types
-  of compression was added in \R 2.10.0 (previously only \code{"gzip"}
-  was available).
+  Prior to \R 2.13.0 these functions were known as \code{.readRDS()} and
+  \code{.saveRDS()} andmarked as \sQuote{internal}.  Otherwise their
+  interface has been stable since \R 1.7.0, except that support for
+  support for types of compression was added in \R 2.10.0 (previously
+  only \code{"gzip"} was available).
 
-  The internal-only versions of \code{.readRDS} if given an un-opened
-  connection would wrap it in \code{\link{gzcon}} and
-  \code{\link{close}} it after use: this was undocumented.
+  The internal-only \code{.readRDS} if given an un-opened connection
+  would wrap it in \code{\link{gzcon}} and \code{\link{close}} it after
+  use: this was undocumented.
 }
 
 \value{
-  For \code{.readRDS}, an \R object.
+  For \code{readRDS}, an \R object.
 
-  For \code{.saveRDS}, \code{NULL} invisibly.
+  For \code{saveRDS}, \code{NULL} invisibly.
 }
 
 \seealso{
@@ -89,13 +88,13 @@
 
 \examples{
 ## save a single object to file
-.saveRDS(women, "women.rds")
+saveRDS(women, "women.rds")
 ## restore it under a different name
-women2 <- .readRDS("women.rds")
+women2 <- readRDS("women.rds")
 identical(women, women2)
 ## or examine the object via a connection, which will be opened as needed.
 con <- gzfile("women.rds")
-str(.readRDS(con))
+str(readRDS(con))
 close(con)
 
 ## Less convenient ways to restore the object
@@ -112,11 +111,11 @@ identical(unserialize(wm), women)
 con <- file("women2", "w")
 serialize(women, con) # ASCII, uncompressed
 close(con)
-identical(women, .readRDS("women2"))
+identical(women, readRDS("women2"))
 con <- bzfile("women3", "w")
 serialize(women, con) # binary, bzip2-compressed
 close(con)
-identical(women, .readRDS("women2"))
+identical(women, readRDS("women2"))
 
 \testonly{unlink(c("women.rds", "women2", "women3"))}
 }

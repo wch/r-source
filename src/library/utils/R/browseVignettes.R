@@ -31,7 +31,7 @@ browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
         dir <- dirname(dirname(db[1L]))
         entries <- NULL
         if (file.exists(INDEX <- file.path(dir, "Meta", "vignette.rds")))
-            entries <- .readRDS(INDEX)
+            entries <- readRDS(INDEX)
         if (NROW(entries) > 0) {
             cbind(Dir = dir,
                   File = basename(entries$File),

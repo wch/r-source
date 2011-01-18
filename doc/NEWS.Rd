@@ -155,8 +155,6 @@
       for objects (such as data frames) from classes with methods for
       \code{dim()}.  (Related to \PR{14469}.)
 
-      \item \code{.saveRDS()} now allows \code{compress = "xz"}.
-
       \item There is a new option \code{"browserNLdisabled"} to disable
       the use of an empty (e.g. via the \sQuote{Return} key) as a synonym
       for \code{c} in \code{browser()} or \code{n} under \code{debug()}.
@@ -171,9 +169,13 @@
       as stable, although the serialization format may well change in
       future releases.
 
-      \code{.saveRDS()} and \code{.readRDS()} are no longer described as
-      \sQuote{internal} and so are made available for general use
-      (something several package authors had pre-empted).
+      New functions \code{saveRDS()} and \code{readRDS()} are public
+      versions of the \sQuote{internal} functions \code{.saveRDS()} and
+      \code{.readRDS()} made available for general use.  The dot-name
+      versions remain available as several package authors have made use
+      of them, despite the documentation.
+      
+      \code{saveRDS()} supports \code{compress = "xz"}.
 
       \item Many functions when called with a not-open connection will
       now ensure that the connection is left not-open in the event of

@@ -2447,7 +2447,7 @@ function(dir, force_suggests = TRUE)
                     where <- which(installed == pkg)
                     if(!length(where)) next
                     ## want the first one
-                    desc <- .readRDS(file.path(installed_in[where[1L]], pkg,
+                    desc <- readRDS(file.path(installed_in[where[1L]], pkg,
                                                "Meta", "package.rds"))
                     current <- desc$DESCRIPTION["Version"]
                     target <- as.package_version(r[[3L]])
@@ -2992,7 +2992,7 @@ function(package, lib.loc = NULL)
         .eval_with_capture({
             ## avoid warnings about code in other packages the package
             ## uses
-            desc <- .readRDS(file.path(.find.package(package, NULL),
+            desc <- readRDS(file.path(.find.package(package, NULL),
                                        "Meta", "package.rds"))
             pkgs1 <- sapply(desc$Suggests, "[[", "name")
             pkgs2 <- sapply(desc$Enhances, "[[", "name")
@@ -3198,13 +3198,13 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         pfile <- system.file("Meta", "package.rds", package = package,
                              lib.loc = lib.loc)
-        pkgInfo <- .readRDS(pfile)
+        pkgInfo <- readRDS(pfile)
     } else {
         outDir <- file.path(tempdir(), "fake_pkg")
         dir.create(file.path(outDir, "Meta"), FALSE, TRUE)
         .install_package_description(dir, outDir)
         pfile <- file.path(outDir, "Meta", "package.rds")
-        pkgInfo <- .readRDS(pfile)
+        pkgInfo <- readRDS(pfile)
         unlink(outDir, recursive = TRUE)
     }
     ## only 'Depends' are guaranteed to be on the search path, but
@@ -3281,7 +3281,7 @@ function(package, dir, lib.loc = NULL)
                         domain = NA)
                 next
             }
-            nm <- sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
+            nm <- sub("\\.[Rr]d", "", basename(readRDS(RdDB)))
             good <- thisfile[this] %in% nm
             suspect <- if(any(!good)) {
                 aliases1 <- if (pkg %in% names(aliases)) aliases[[pkg]]
@@ -4513,7 +4513,7 @@ function(dir)
     ## Note that we cannot get the maintainer info from the PACKAGES
     ## files.
     con <- url(sprintf("%s/web/packages/packages.rds", urls[1L]), "rb")
-    db <- tryCatch(.readRDS(con), error = identity)
+    db <- tryCatch(readRDS(con), error = identity)
     close(con)
     if(inherits(db, "error")) return(out)
 
@@ -4583,7 +4583,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
         if(file_test("-f", rds)) {
-            meta <- .readRDS(rds)
+            meta <- readRDS(rds)
             files <- meta$File
             names <- meta$Name
             aliases <- meta$Aliases
@@ -4933,7 +4933,7 @@ function(f, env)
 {
     ## Get S4 methods in environment env for f a structure with the name
     ## of the S4 generic and its package in the corresponding attribute.
-    
+
     ## For the QC computations, we really only want the S4 methods
     ## defined in a package, so we try to exclude derived default
     ## methods as well as methods inherited from other environments.

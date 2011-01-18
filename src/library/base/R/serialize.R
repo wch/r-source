@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.saveRDS <-
-function(object, file = "", ascii = FALSE, version = NULL,
-         compress = TRUE, refhook = NULL)
+saveRDS <-
+    function(object, file = "", ascii = FALSE, version = NULL,
+             compress = TRUE, refhook = NULL)
 {
     if(is.character(file)) {
         if(file == "") stop("'file' must be non-empty string")
@@ -36,8 +36,7 @@ function(object, file = "", ascii = FALSE, version = NULL,
     invisible(.Internal(serializeToConn(object, con, ascii, version, refhook)))
 }
 
-.readRDS <-
-function(file, refhook = NULL)
+readRDS <- function(file, refhook = NULL)
 {
     if(is.character(file)) {
         con <- gzfile(file, "rb")
@@ -47,6 +46,10 @@ function(file, refhook = NULL)
     else stop("bad 'file' argument")
     .Internal(unserializeFromConn(con, refhook))
 }
+
+## Allow for future deprecation/defunct
+.readRDS <- function(...) readRDS(...)
+.saveRDS <- function(...) saveRDS(...)
 
 serialize <-
     function(object, connection, ascii = FALSE, version = NULL, refhook = NULL)

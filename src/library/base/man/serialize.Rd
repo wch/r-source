@@ -58,7 +58,7 @@ unserialize(connection, refhook = NULL)
   The format consists of a single line followed by the data: the first
   line contains a single character: \code{X} for binary serialization
   and \code{A} for ASCII serialization, followed by a new line.  (The
-  format used is identical to that used by \code{\link{.readRDS}}.)
+  format used is identical to that used by \code{\link{readRDS}}.)
 }
 \section{Warning}{
   These functions have provided a stable interface since \R 2.4.0 (when
@@ -78,7 +78,7 @@ unserialize(connection, refhook = NULL)
   For \code{unserialize} an \R object.
 }
 \seealso{
-  \code{\link{.saveRDS}} for a more convenient interface to serialize an
+  \code{\link{saveRDS}} for a more convenient interface to serialize an
   object to a file or connection.
 
   \code{\link{save}} and \code{\link{load}} to serialize and restore one
@@ -90,7 +90,7 @@ unserialize(connection, refhook = NULL)
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
 
-## see also the examples for .saveRDS
+## see also the examples for saveRDS
 }
 \keyword{file}
 \keyword{connection}

@@ -65,7 +65,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                     "."
             ## Check for new-style 'Meta/data.rds'
             if(file_test("-f", INDEX <- file.path(path, "Meta", "data.rds"))) {
-                entries <- .readRDS(INDEX)
+                entries <- readRDS(INDEX)
             } else {
                 ## No index: should only be true for ./data >= 2.0.0
                 dataDir <- file.path(path, "data")
@@ -106,7 +106,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         for(p in paths) {
             ## does this package have "Rdata" databases?
             if(file_test("-f", file.path(p, "Rdata.rds"))) {
-                rds <- .readRDS(file.path(p, "Rdata.rds"))
+                rds <- readRDS(file.path(p, "Rdata.rds"))
                 if(name %in% names(rds)) {
                     ## found it, so copy objects from database
                     found <- TRUE

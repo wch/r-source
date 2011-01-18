@@ -93,7 +93,7 @@ make.packages.html <-
     op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.
-        old <- .readRDS(op)$libs
+        old <- readRDS(op)$libs
         if(identical(lib.loc, old)) {
             dates <- file.info(c(f.tg, lib.loc))$mtime
             if(which.max(dates) == 1L) return(TRUE)
@@ -147,6 +147,6 @@ make.packages.html <-
         message(" ", "done")
         flush.console()
     }
-    if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
+    if (temp) saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)
 }

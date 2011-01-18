@@ -159,7 +159,7 @@ function(x, ...)
                 if(type == "html" || type == "latex")
                     tp <- tools::file_path_sans_ext(tp)
                 for (i in seq_along(fp)) {
-                    tmp <- try(.readRDS(fp[i]))
+                    tmp <- try(readRDS(fp[i]))
                     titles[i] <- if(inherits(tmp, "try-error"))
                         "unknown title" else
                     tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]

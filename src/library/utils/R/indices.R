@@ -59,7 +59,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
     ## is used during package installation.
 
     if(file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
-        desc <- .readRDS(file)$DESCRIPTION
+        desc <- readRDS(file)$DESCRIPTION
         if(length(desc) < 1)
             stop(gettextf("metadata of package '%s' is corrupt", pkg),
                  domain = NA)
@@ -145,7 +145,7 @@ index.search <- function(topic, paths, firstOnly = FALSE)
     res <- character()
     for (p in paths) {
         if(file.exists(f <- file.path(p, "help", "aliases.rds")))
-            al <- .readRDS(f)
+            al <- readRDS(f)
         else if(file.exists(f <- file.path(p, "help", "AnIndex"))) {
             ## aliases.rds was introduced before 2.10.0, as can phase this out
             foo <- scan(f, what = list(a="", b=""), sep = "\t", quote = "",

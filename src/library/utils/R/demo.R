@@ -35,7 +35,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.
 	    if(file_test("-f", INDEX <- file.path(path, "Meta", "demo.rds"))) {
-		entries <- .readRDS(INDEX)
+		entries <- readRDS(INDEX)
 	    }
 	    if(NROW(entries)) {
 		db <- rbind(db,

@@ -71,7 +71,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     }
     if(file_test("-d", dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
-            ans <- .readRDS(sv)
+            ans <- readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
             ans <- strsplit(readLines(sv), ":")
             nms <- lapply(ans, function(x) x[1L])
@@ -147,7 +147,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             if(length(loaded)) {
                 dbbase <- file.path(dataDir, "Rdata")
                 makeLazyLoadDB(dataEnv, dbbase, compress = compress)
-                .saveRDS(dlist, file.path(dataDir, "Rdata.rds"),
+                saveRDS(dlist, file.path(dataDir, "Rdata.rds"),
                          compress = compress)
                 unlink(f0)
                 if(file.exists(file.path(dataDir, "filelist")))
@@ -256,7 +256,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 
     val <- list(variables = vals, references = rvals,
                 compressed = compress)
-   .saveRDS(val, mapfile)
+   saveRDS(val, mapfile)
 }
 
 makeLazyLoading <-

@@ -308,7 +308,7 @@ Rd2HTML <-
                     ## does not exist as static HTML, so look harder
                     f <- file.path(pkgpath, "help", "paths.rds")
                     if (file.exists(f)) {
-                        paths <- sub("\\.[Rr]d$", "", basename(.readRDS(f)))
+                        paths <- sub("\\.[Rr]d$", "", basename(readRDS(f)))
                         OK <- parts$targetfile %in% paths
                     }
                 } else OK <- TRUE
@@ -372,7 +372,7 @@ Rd2HTML <-
                TEXT = of1(if(blocktag == "\\command") vhtmlify(block) else addParaBreaks(htmlify(block), blocktag)),
                USERMACRO =,
                "\\newcommand" =,
-               "\\renewcommand" =,               
+               "\\renewcommand" =,
                COMMENT = {},
                LIST =,
                "\\describe"=,
@@ -522,7 +522,7 @@ Rd2HTML <-
         itemskip <- FALSE
 
 	tags <- RdTags(blocks)
-	
+
 	i <- 0
 	while (i < length(tags)) {
 	    i <- i + 1
@@ -625,7 +625,7 @@ Rd2HTML <-
         save <- sectionLevel
         sectionLevel <<- sectionLevel + 1L
     	of1(paste("\n\n<h", sectionLevel+2L, ">", sep=""))
-    	
+
     	if (tag == "\\section" || tag == "\\subsection") {
     	    title <- section[[1L]]
     	    section <- section[[2L]]
@@ -661,7 +661,7 @@ Rd2HTML <-
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, defines = defines, stages = stages, 
+    Rd <- prepare_Rd(Rd, defines = defines, stages = stages,
                      fragment = fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
@@ -713,7 +713,7 @@ Rd2HTML <-
 	    of0('<hr><div align="center">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
-	of0('\n', 
+	of0('\n',
 	    '</body></html>\n')
     }
     invisible(out)
@@ -752,9 +752,9 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 function(dir)
 {
     if (file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
-        .readRDS(f)
+        readRDS(f)
     else if (file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
-        .build_links_index(.readRDS(f), basename(dir))
+        .build_links_index(readRDS(f), basename(dir))
     else character()
 }
 
@@ -762,7 +762,7 @@ function(dir)
 function(dir)
 {
     if (file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
-        .readRDS(f)
+        readRDS(f)
     else
         .build_library_links_index(dir)
 }

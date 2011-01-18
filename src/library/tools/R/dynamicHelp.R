@@ -176,7 +176,7 @@ httpd <- function(path, query, ...)
             tp <- basename(file)
             titles <- tp
             for (i in seq_along(fp)) {
-                tmp <- try(.readRDS(fp[i]))
+                tmp <- try(readRDS(fp[i]))
                 titles[i] <- if(inherits(tmp, "try-error"))
                     "unknown title" else
                     tmp[file_path_sans_ext(tmp$File) == tp[i], "Title"]
@@ -226,7 +226,7 @@ httpd <- function(path, query, ...)
             return(error_page(msg))
         }
         ## if 'topic' is not a help doc, try it as an alias in the package
-        contents <- .readRDS(sub("/help", "/Meta/Rd.rds", path, fixed = TRUE))
+        contents <- readRDS(sub("/help", "/Meta/Rd.rds", path, fixed = TRUE))
         files <- sub("\\.[Rr]d$", "", contents$File)
         if(! helpdoc %in% files) {
             ## or call help()
@@ -348,7 +348,7 @@ httpdPort <- 0L
 
 startDynamicHelp <- function(start=TRUE)
 {
-    env <- environment(startDynamicHelp) 
+    env <- environment(startDynamicHelp)
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
         unlockBinding("httpdPort", env)
         httpdPort <<- -1L

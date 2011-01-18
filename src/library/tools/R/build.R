@@ -411,7 +411,7 @@ get_exclude_patterns <- function()
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings=FALSE)
-	    .saveRDS(partial, file.path("build", "partial.rdb"))
+	    saveRDS(partial, file.path("build", "partial.rdb"))
 	}
 	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
 	if (needRefman) {

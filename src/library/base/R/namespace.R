@@ -317,12 +317,12 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## stats4 depends on methods, but exports do not matter
         ## whilst it is being built on
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
-        nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
+        nsInfo <- if(file.exists(nsInfoFilePath)) readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
 
         pkgInfoFP <- file.path(pkgpath, "Meta", "package.rds")
         if(file.exists(pkgInfoFP)) {
-            pkgInfo <- .readRDS(pkgInfoFP)
+            pkgInfo <- readRDS(pkgInfoFP)
             version <- pkgInfo$DESCRIPTION["Version"]
             if(is.null(built <- pkgInfo$Built))
                 stop(gettextf("package '%s' has not been installed properly\n",
