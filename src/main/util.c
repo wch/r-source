@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -131,6 +131,8 @@ const static char * const falsenames[] = {
     (char *) NULL,
 };
 
+/* a caller which uses numeric or complex 'x' ought to set R_print,
+   e.g. by calling PrintDefaults */
 SEXP asChar(SEXP x)
 {
     if (LENGTH(x) >= 1) {

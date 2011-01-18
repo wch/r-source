@@ -332,11 +332,12 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP l, x, y, swd;
     int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
     int w, d, e;
-    int wi, di, ei;
+    int wi, di, ei, scikeep;
     const char *strp;
 
     checkArity(op, args);
     PrintDefaults(env);
+    scikeep = R_print.scipen;
 
     if (isEnvironment(x = CAR(args))) {
 	PROTECT(y = allocVector(STRSXP, 1));
@@ -510,6 +511,9 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(y, R_DimNamesSymbol, l);
     } else if((l = getAttrib(x, R_NamesSymbol)) != R_NilValue)
 	setAttrib(y, R_NamesSymbol, l);
+
+    /* In case something else forgets to set PrintDefaults(), PR#14477 */
+    R_print.scipen = scikeep;
 
     UNPROTECT(1);
     return y;
