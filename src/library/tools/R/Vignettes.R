@@ -151,7 +151,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        docdir <- file.path(.find.package(package, lib.loc), "doc")
+        docdir <- file.path(find.package(package, lib.loc), "doc")
         ## Using package installed in @code{dir} ...
     }
     else {

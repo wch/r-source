@@ -38,9 +38,9 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
            warning("datasets have been moved from package 'stats' to package 'datasets'")
         package[package %in% c("base", "stats")] <- "datasets"
     }
-    paths <- .find.package(package, lib.loc, verbose = verbose)
+    paths <- find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
-        paths <- c(.path.package(package, TRUE),
+        paths <- c(path.package(package, TRUE),
                    if(!length(package)) getwd(), # ignored if NULL
                    paths)
     paths <- unique(paths[file.exists(paths)])

@@ -45,11 +45,6 @@
 .subset(x, \dots)
 .subset2(x, \dots)
 
-.find.package(package, lib.loc = NULL, quiet = FALSE,
-              verbose = getOption("verbose"))
-
-.path.package(package, quiet = FALSE)
-
 .getRequiredPackages(file = "DESCRIPTION", lib.loc = NULL,
                      quietly = FALSE, useImports = FALSE)
 .getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL,
@@ -85,19 +80,19 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
 .saveRDS(\dots)
 .readRDS(\dots)
+
+.find.package(\dots)
+.path.package(\dots)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
-  \item{package}{the name of a package.}
+  \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package(s) are not found?}
   \item{useImports}{logical.  Should  the \code{Imports} field be processed?}
-  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
-    printed.}
-  \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
   \item{quietly}{logical: should message(s) be printed.}
   \item{pkginfo}{A processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
@@ -122,7 +117,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{xx}{a classless object to be placed into the class.}
   \item{tz}{an optional timezone.}
   \item{units}{see \code{\link{difftime}}.}
-  \item{\dots}{See \code{\link{saveRDS}}.}
+  \item{\dots}{Arguments passed to non-dot name versions.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -132,24 +127,6 @@ lazyLoadDBfetch(key, file, compressed, hook)
   should not normally be invoked by end users.  Note that unlike the
   operators they are builtins and not specials (all arguments are
   evaluated) and hence do not allow missing arguments.
-
-  \code{.find.package} returns the paths to the locations where the
-  given packages can be found.  If \code{lib.loc} is \code{NULL}, then
-  attached packages are searched before the libraries.  If a package is
-  found more than once, the first match is used.  Unless \code{quiet =
-  TRUE} a warning will be given about the named packages which are not
-  found, and an error if none are.  If \code{verbose} is true, warnings
-  about packages found more than once are given.  For a package to be
-  returned it must contain a either a \file{Meta} subdirectory on a
-  \file{DESCRIPTION} file containing a valid \code{version} field, but
-  it need not be installed.
-
-  \code{.path.package} returns the paths from which the named packages
-  were loaded, or if none were named, for all currently loaded packages.
-  Unless \code{quiet = TRUE} it will warn if some of the packages named
-  are not loaded, and given an error if none are.  This function is not
-  meant to be called by users, and its interface might change in future
-  versions.
 
   \code{.getRequiredPackages2} attaches all the packages mentioned in the
   \code{Depends} field: failure to find a package is an error.  It also
@@ -214,14 +191,17 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.cache_class} caches the inheritance of an S4 class for use in
   S3 method dispatch.  With \code{NULL} second argument, returns the
   cached inheritance, for diagnostic use.
+
+  \code{.readRDS}, \code{.saveRDS}, \code{.find.package} and
+  \code{.path.package} are internal-only versions (and the only versions
+  available prior to \R 2.13.0) of \code{\link{.readRDS}},
+  \code{\link{.saveRDS}}, \code{\link{.find.package}} and
+  \code{\link{.path.package}}.
 }
 \value{
-  \code{.find.package} and \code{.path.packages} return a character
-  vector of paths to installed packages.
-  
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
   return \code{invisible()}.
 
-  \code{testPlatformEquivalence}: \code{TRUE} or \code{FALSE}.
+  \code{testPlatformEquivalence} returns \code{TRUE} or \code{FALSE}.
 }
 \keyword{internal}

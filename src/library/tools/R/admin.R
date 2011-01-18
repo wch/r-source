@@ -753,7 +753,7 @@ function(pkgs, lib.loc = NULL, file = NULL)
         pkgs <- tmp
     }
     pkgs <- strsplit(pkgs[1L], ",[[:blank:]]*")[[1L]]
-    paths <- .find.package(pkgs, lib.loc, quiet=TRUE)
+    paths <- find.package(pkgs, lib.loc, quiet=TRUE)
     if(length(paths))
         cat(paste(paste('-I"', paths, '/include"', sep=""), collapse=" "))
     return(invisible())

@@ -272,7 +272,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         docs_dir <- file.path(dir, "man")
         ## For an installed package, we might have
@@ -436,7 +436,7 @@ function(package, dir, lib.loc = NULL)
     ## unpacked package sources.
 
     if(!missing(package)) {
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
         if(file_test("-f", rds)) {
             aliases <- readRDS(rds)$Aliases

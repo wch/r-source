@@ -41,7 +41,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
         return(invisible())
     }
     if(!missing(package)) {
-        pkgpath <- .find.package(package)
+        pkgpath <- find.package(package)
         if(type == "pdf") {
             path <- file.path(pkgpath, "doc", paste.(what, "pdf"))
             if(file.exists(path)) {

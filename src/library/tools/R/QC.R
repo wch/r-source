@@ -72,7 +72,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         is_base <- package == "base"
 
@@ -302,7 +302,7 @@ function(package, dir, lib.loc = NULL,
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -894,7 +894,7 @@ function(package, lib.loc = NULL)
     ## Argument handling.
     if(length(package) != 1L)
         stop("argument 'package' must be of length 1")
-    dir <- .find.package(package, lib.loc)
+    dir <- find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "R")))
         stop(gettextf("directory '%s' does not contain R code", dir),
              domain = NA)
@@ -1059,7 +1059,7 @@ function(package, lib.loc = NULL)
     if(length(package) != 1L)
         stop("argument 'package' must be of length 1")
 
-    dir <- .find.package(package, lib.loc)
+    dir <- find.package(package, lib.loc)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
@@ -1219,7 +1219,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
     }
     else {
@@ -1458,7 +1458,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1702,7 +1702,7 @@ function(package, dir, file, lib.loc = NULL,
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1883,7 +1883,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -2120,7 +2120,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -2264,7 +2264,7 @@ function(package, dir, file, lib.loc = NULL)
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         ## Using package installed in @code{dir} ...
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         if(file.exists(file.path(dir, "R", "all.rda"))) {
             warning("cannot check R code installed as image")
         }
@@ -2992,7 +2992,7 @@ function(package, lib.loc = NULL)
         .eval_with_capture({
             ## avoid warnings about code in other packages the package
             ## uses
-            desc <- readRDS(file.path(.find.package(package, NULL),
+            desc <- readRDS(file.path(find.package(package, NULL),
                                        "Meta", "package.rds"))
             pkgs1 <- sapply(desc$Suggests, "[[", "name")
             pkgs2 <- sapply(desc$Enhances, "[[", "name")
@@ -3744,7 +3744,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -3929,7 +3929,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
     }
@@ -4203,7 +4203,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         if((package != "base")
            && !packageHasNamespace(package, dirname(dir))) {
             .load_package_quietly(package, lib.loc)
@@ -4307,7 +4307,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         if(! package %in% .get_standard_package_names()$base) {
             .load_package_quietly(package, lib.loc)
             code_env <- if(packageHasNamespace(package, dirname(dir)))
@@ -4580,7 +4580,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
         if(file_test("-f", rds)) {
             meta <- readRDS(rds)
@@ -4662,7 +4662,7 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
-        dir <- .find.package(package, lib.loc)
+        dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
     }
     else {

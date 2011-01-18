@@ -28,7 +28,7 @@
 function(package, lib.loc = NULL, format = NULL, reader = NULL)
 {
     dir <- system.file(package = package, lib.loc = lib.loc)
-    ## Or maybe use .find.package()?
+    ## Or maybe use find.package()?
 
     ## <FIXME>
     ## We had planned to eventually add support for DESCRIPTION

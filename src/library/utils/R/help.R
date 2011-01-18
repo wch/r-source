@@ -54,7 +54,7 @@ function(topic, package = NULL, lib.loc = NULL,
     else match.arg(tolower(help_type),
                    c("text", "html", "postscript", "ps", "pdf"))
 
-    paths <- index.search(topic, .find.package(package, lib.loc, verbose = verbose))
+    paths <- index.search(topic, find.package(package, lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)

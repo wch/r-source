@@ -185,6 +185,9 @@
       \code{writeBin()}, \code{writeChar()}, \code{writeLines()},
       \code{.readRDS()}, \code{.saveRDS()} and \code{tools::parse_Rd()},
       as well as functions calling these.
+
+      \item Public functions \code{find.package()} and \code{path.package()}
+      replace the internal dot-name versions.
     }
   }
 

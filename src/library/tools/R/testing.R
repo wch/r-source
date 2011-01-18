@@ -210,7 +210,7 @@ testInstalledPackage <-
              srcdir = NULL)
 {
     types <- pmatch(types, c("examples", "tests", "vignettes"))
-    pkgdir <- .find.package(pkg, lib.loc)
+    pkgdir <- find.package(pkg, lib.loc)
     exdir <- file.path(pkgdir, "R-ex")
     owd <- setwd(outDir)
     on.exit(setwd(owd))

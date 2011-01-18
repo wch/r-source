@@ -202,7 +202,7 @@ help.search <-
                 flush.console()
             }
             path <- if(!is.null(package_paths)) package_paths[p]
-	    else .find.package(p, lib.loc, quiet = TRUE)
+	    else find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0L) {
                 if(is.null(package)) next
 		else stop(gettextf("could not find package '%s'", p), domain = NA)

@@ -510,7 +510,7 @@
         if (length(pkgs)) {
             miss <- character()
             for (pkg in pkgs) {
-                if(!length(.find.package(pkg, quiet = TRUE)))
+                if(!length(find.package(pkg, quiet = TRUE)))
                     miss <- c(miss, pkg)
             }
             if (length(miss) > 1)
@@ -613,7 +613,7 @@
             linkTo <- desc["LinkingTo"]
             if (!is.na(linkTo)) {
                 lpkgs <- strsplit(linkTo, ",[[:blank:]]*")[[1L]]
-                paths <- .find.package(lpkgs, quiet=TRUE)
+                paths <- find.package(lpkgs, quiet=TRUE)
                 if (length(paths)) {
                     clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
                                             collapse=" ")

@@ -47,10 +47,6 @@ readRDS <- function(file, refhook = NULL)
     .Internal(unserializeFromConn(con, refhook))
 }
 
-## Allow for future deprecation/defunct
-.readRDS <- function(...) readRDS(...)
-.saveRDS <- function(...) saveRDS(...)
-
 serialize <-
     function(object, connection, ascii = FALSE, version = NULL, refhook = NULL)
 {

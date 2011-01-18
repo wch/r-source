@@ -162,7 +162,7 @@ system.file <- function(..., package = "base", lib.loc = NULL, mustWork = FALSE)
         return(file.path(.Library, "base"))
     if(length(package) != 1L)
         stop("'package' must be of length 1")
-    packagePath <- .find.package(package, lib.loc, quiet = TRUE)
+    packagePath <- find.package(package, lib.loc, quiet = TRUE)
     ans <- if(length(packagePath)) {
         FILES <- file.path(packagePath, ...)
         present <- file.exists(FILES)

@@ -538,7 +538,7 @@ remove.packages <- function(pkgs, lib)
 			 sQuote(lib), sQuote("lib")), domain = NA)
     }
 
-    paths <- .find.package(pkgs, lib)
+    paths <- find.package(pkgs, lib)
     if(length(paths)) {
         unlink(paths, TRUE)
         for(lib in unique(dirname(paths))) updateIndices(lib)

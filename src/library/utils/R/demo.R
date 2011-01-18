@@ -19,7 +19,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	 character.only = FALSE, verbose = getOption("verbose"),
 	 echo = TRUE, ask = getOption("demo.ask"))
 {
-    paths <- .find.package(package, lib.loc, verbose = verbose)
+    paths <- find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
     paths <- paths[file_test("-d", file.path(paths, "demo"))]

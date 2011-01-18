@@ -19,7 +19,7 @@ vignette <-
 {
     if(is.null(package))
         package <- .packages(all.available = all, lib.loc)
-    paths <- .find.package(package, lib.loc)
+    paths <- find.package(package, lib.loc)
 
     ## Find the directories with a 'doc' subdirectory *possibly*
     ## containing vignettes.

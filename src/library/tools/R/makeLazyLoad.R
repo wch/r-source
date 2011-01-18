@@ -19,7 +19,7 @@ code2LazyLoadDB <-
              keep.source = getOption("keep.source.pkgs"),
              compress = TRUE)
 {
-    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+    pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
         stop(gettextf("there is no package called '%s'", package),
              domain = NA)
@@ -58,7 +58,7 @@ sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)
 list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 {
     if(is.null(dataDir)) {
-        pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+        pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))
             stop(gettextf("there is no package called '%s'", package),
                  domain = NA)
@@ -100,7 +100,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     options(warn=1)
-    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+    pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
         stop(gettextf("there is no package called '%s'", package),
              domain = NA)
@@ -265,7 +265,7 @@ makeLazyLoading <-
 {
     options(warn=1)
     findpack <- function(package, lib.loc) {
-        pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+        pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))
             stop(gettextf("there is no package called '%s'", package),
                  domain = NA)

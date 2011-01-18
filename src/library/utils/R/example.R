@@ -26,7 +26,7 @@ function(topic, package = NULL, lib.loc = NULL,
         topic <- substitute(topic)
         if(!is.character(topic)) topic <- deparse(topic)[1L]
     }
-    pkgpaths <- .find.package(package, lib.loc, verbose = verbose)
+    pkgpaths <- find.package(package, lib.loc, verbose = verbose)
     ## will only return at most one path
     file <- index.search(topic, pkgpaths, TRUE)
     if(!length(file)) {

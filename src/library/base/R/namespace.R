@@ -290,7 +290,7 @@ loadNamespace <- function (package, lib.loc = NULL,
           }
 
         ## find package and check it has a name space
-        pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+        pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0L)
             stop(gettextf("there is no package called '%s'", package),
                  domain = NA)

@@ -65,11 +65,10 @@ installed.packages(lib.loc = NULL, priority = NULL,
 \note{
   This can be slow when thousands of packages are installed, so do not
   use this to find out if a named package is installed (use
-  \code{\link{system.file}} or the internal function
-  \code{.find.package} from package \pkg{base}) nor to find
-  details of a small number of packages (use
-  \code{\link{packageDescription}}).  It needs to read several files
-  per installed package, which will be slow on Windows and on some
+  \code{\link{system.file}} or \code{\link{find.package}} from package
+  \pkg{base}) nor to find details of a small number of packages (use
+  \code{\link{packageDescription}}).  It needs to read several files per
+  installed package, which will be slow on Windows and on some
   network-mounted file systems.
 }
 \seealso{

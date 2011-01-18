@@ -245,8 +245,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## The methods package caches all other libs when it is
             ## attached.
 
-            pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
-                                     verbose = verbose)
+            pkgpath <- find.package(package, lib.loc, quiet = TRUE,
+                                    verbose = verbose)
             if(length(pkgpath) == 0L) {
                 txt <- if(length(lib.loc))
                     gettextf("there is no package called '%s'", package)
@@ -272,7 +272,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                isTRUE(getOption("checkPackageLicense", FALSE)))
                 checkLicense(package, pkgInfo, pkgpath)
 
-            ## The check for inconsistent naming is now in .find.package
+            ## The check for inconsistent naming is now in find.package
 
             if(is.character(pos)) {
                 npos <- match(pos, search())
@@ -397,7 +397,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	if(!character.only)
 	    help <- as.character(substitute(help))
         pkgName <- help[1L]            # only give help on one package
-        pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
+        pkgPath <- find.package(pkgName, lib.loc, verbose = verbose)
         docFiles <- c(file.path(pkgPath, "Meta", "package.rds"),
                       file.path(pkgPath, "INDEX"))
         if(file.exists(vignetteIndexRDS <-
@@ -557,7 +557,7 @@ function(chname, package = NULL, lib.loc = NULL,
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
 
     r_arch <- .Platform$r_arch
-    for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
+    for(pkg in find.package(package, lib.loc, verbose = verbose)) {
         DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
@@ -705,7 +705,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1L, 8L) == "package:"], 9)))
 }
 
-.path.package <- function(package = NULL, quiet = FALSE)
+path.package <- function(package = NULL, quiet = FALSE)
 {
     if(is.null(package)) package <- .packages()
     if(length(package) == 0L) return(character())
@@ -732,13 +732,13 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 }
 
 ## As from 2.9.0 ignore versioned installs
-.find.package <-
-function(package = NULL, lib.loc = NULL, quiet = FALSE,
-         verbose = getOption("verbose"))
+find.package <-
+    function(package = NULL, lib.loc = NULL, quiet = FALSE,
+             verbose = getOption("verbose"))
 {
     if(is.null(package) && is.null(lib.loc) && !verbose) {
         ## We only want the paths to the attached packages.
-        return(.path.package())
+        return(path.package())
     }
 
     ## don't waste time looking for the standard packages:
