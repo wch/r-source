@@ -809,40 +809,48 @@ static void TryToReleasePages(void)
     else release_count--;
 }
 
+/* compute size in VEC units so result will fit in LENGTH field for FREESXPs */
+static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
+{
+    R_size_t size;
+    switch (TYPEOF(s)) {	/* get size in bytes */
+    case CHARSXP:
+	size = LENGTH(s) + 1;
+	break;
+    case RAWSXP:
+	size = LENGTH(s);
+	break;
+    case LGLSXP:
+    case INTSXP:
+	size = LENGTH(s) * sizeof(int);
+	break;
+    case REALSXP:
+	size = LENGTH(s) * sizeof(double);
+	break;
+    case CPLXSXP:
+	size = LENGTH(s) * sizeof(Rcomplex);
+	break;
+    case STRSXP:
+    case EXPRSXP:
+    case VECSXP:
+	size = LENGTH(s) * sizeof(SEXP);
+	break;
+    default:
+	if (bad_sexp_type_seen == 0)
+	    bad_sexp_type_seen = TYPEOF(s);
+	size = 0;
+    }
+    return BYTE2VEC(size);
+}
+
 static void ReleaseLargeFreeVectors(void)
 {
     SEXP s = NEXT_NODE(R_GenHeap[LARGE_NODE_CLASS].New);
     while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
 	SEXP next = NEXT_NODE(s);
 	if (CHAR(s) != NULL) {
-	    R_size_t size = 0; /* -Wall on gcc 4.2 */
-	    switch (TYPEOF(s)) {	/* get size in bytes */
-	    case CHARSXP:
-		size = LENGTH(s) + 1;
-		break;
-	    case RAWSXP:
-		size = LENGTH(s);
-		break;
-	    case LGLSXP:
-	    case INTSXP:
-		size = LENGTH(s) * sizeof(int);
-		break;
-	    case REALSXP:
-		size = LENGTH(s) * sizeof(double);
-		break;
-	    case CPLXSXP:
-		size = LENGTH(s) * sizeof(Rcomplex);
-		break;
-	    case STRSXP:
-	    case EXPRSXP:
-	    case VECSXP:
-		size = LENGTH(s) * sizeof(SEXP);
-		break;
-	    default:
-		if (bad_sexp_type_seen == 0)
-		    bad_sexp_type_seen = TYPEOF(s);
-	    }
-	    size = BYTE2VEC(size);
+	    R_size_t size;
+	    size = getVecSizeInVEC(s);
 	    UNSNAP_NODE(s);
 	    R_LargeVallocSize -= size;
 	    R_GenHeap[LARGE_NODE_CLASS].AllocCount--;
