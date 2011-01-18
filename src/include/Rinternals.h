@@ -545,6 +545,10 @@ LibExtern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
 LibExtern SEXP	R_SourceSymbol;     /* "source" */
 LibExtern SEXP	R_TspSymbol;	    /* "tsp" */
 
+LibExtern SEXP  R_dot_defined;      /* ".defined" */
+LibExtern SEXP  R_dot_Method;       /* ".Method" */
+LibExtern SEXP  R_dot_target;       /* ".target" */
+
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString
 LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */

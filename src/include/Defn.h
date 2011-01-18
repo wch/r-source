@@ -750,11 +750,6 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 extern0 Rboolean known_to_be_latin1 INI_as(FALSE);
 extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
-/* symbols available to packages */
-LibExtern SEXP  R_dot_defined;  /* ".defined" */
-LibExtern SEXP  R_dot_Method;  /* ".Method" */
-LibExtern SEXP  R_dot_target;  /* ".target" */
-
 #ifdef __MAIN__
 # undef extern
 # undef extern0
