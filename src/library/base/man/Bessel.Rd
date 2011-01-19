@@ -48,7 +48,7 @@ besselY(x, nu)
 }
 \source{
   The C code is a translation of Fortran routines from
-  \url{http://www.netlib.org/specfun/r[ijky]besl}.
+  \url{http://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
@@ -64,7 +64,7 @@ besselY(x, nu)
   Original Fortran code:
   W. J. Cody, Argonne National Laboratory \cr
   Translation to C and adaption to \R:
-  Martin Maechler \email{maechler@stat.math.ethz.ch.}
+  Martin Maechler \email{maechler@stat.math.ethz.ch}.
 }
 \examples{
 require(graphics)
