@@ -41,6 +41,10 @@
       setting \code{JPEGDIR} to that value in \file{MkRules.local}.
 
       Support for \samp{jpeg-6b} has been removed.
+
+      \item The sources now work with \samp{libpng-1.5.1},
+      \samp{jpegsrc.v8c} and \samp{tiff-4.0.0beta6}.  It is possible that
+      they no longer work with older versions than \samp{libpng-1.4.5}.
     }
   }
 }

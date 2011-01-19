@@ -56,6 +56,9 @@
 /* Define to 1 if you have the `isascii' function. */
 #define HAVE_ISASCII 1
 
+/* Define to 1 if you have the `jbg_newlen' function. */
+#undef HAVE_JBG_NEWLEN
+
 /* Define to 1 if you have the `lfind' function. */
 #define HAVE_LFIND 1
 
@@ -128,6 +131,9 @@
 /* Define to 1 if you have the `strtoul' function. */
 #define HAVE_STRTOUL 1
 
+/* Define to 1 if you have the `strtoull' function. */
+#undef HAVE_STRTOULL
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
 
@@ -153,8 +159,14 @@
 /* Support ISO JBIG compression (requires JBIG-KIT library) */
 /* #undef JBIG_SUPPORT */
 
+/* 8/12 bit libjpeg dual mode enabled */
+#undef JPEG_DUAL_MODE_8_12
+
 /* Support JPEG compression (requires IJG JPEG library) */
 /* #undef JPEG_SUPPORT */
+
+/* 12bit libjpeg primary include file with path */
+#undef LIBJPEG_12_PATH
 
 /* Support LogLuv high dynamic range encoding */
 #define LOGLUV_SUPPORT 1
@@ -175,9 +187,8 @@
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 /* #undef NO_MINUS_C_MINUS_O */
 
-/* Support Old JPEG compresson (read contrib/ojpeg/README first! Compilation
-   fails with unpatched IJG JPEG library) */
-/* #undef OJPEG_SUPPORT */
+/* Support Old JPEG compresson (read-only) */
+#undef OJPEG_SUPPORT
 
 /* Name of package */
 #define PACKAGE "tiff"
@@ -193,6 +204,9 @@
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "tiff"
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "3.8.2"
@@ -213,17 +227,32 @@
 /* The size of `long', as computed by sizeof. */
 #define SIZEOF_LONG 4
 
+/* The size of `signed int', as computed by sizeof. */
+#define SIZEOF_SIGNED_INT 4
+
 /* The size of `signed long', as computed by sizeof. */
 #define SIZEOF_SIGNED_LONG 4
 
 /* The size of `signed long long', as computed by sizeof. */
 #define SIZEOF_SIGNED_LONG_LONG 8
 
+/* The size of `signed short', as computed by sizeof. */
+#define SIZEOF_SIGNED_SHORT 2
+
+/* The size of `unsigned char *', as computed by sizeof. */
+#define SIZEOF_UNSIGNED_CHAR_P 2
+
+/* The size of `unsigned int', as computed by sizeof. */
+#define SIZEOF_UNSIGNED_INT 4
+
 /* The size of `unsigned long', as computed by sizeof. */
 #define SIZEOF_UNSIGNED_LONG 4
 
 /* The size of `unsigned long long', as computed by sizeof. */
 #define SIZEOF_UNSIGNED_LONG_LONG 8
+
+/* The size of `unsigned short', as computed by sizeof. */
+#define SIZEOF_UNSIGNED_SHORT 2
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -241,11 +270,47 @@
 /* Support ThunderScan 4-bit RLE algorithm */
 #define THUNDER_SUPPORT 1
 
+/* Signed 16-bit type */
+#define TIFF_INT16_T short
+
+/* Signed 32-bit type formatter */
+#define TIFF_INT32_FORMAT "%d"
+
+/* Signed 32-bit type */
+#define TIFF_INT32_T int
+
 /* Signed 64-bit type formatter */
 #define TIFF_INT64_FORMAT "%lld"
 
 /* Signed 64-bit type */
-#define TIFF_INT64_T signed long long
+#define TIFF_INT64_T long long
+
+/* Signed 8-bit type */
+#define TIFF_INT8_T signed char
+
+/* Pointer difference type formatter */
+#define TIFF_PTRDIFF_FORMAT "%d"
+
+/* Pointer difference type */
+#define TIFF_PTRDIFF_T ptrdiff_t
+
+/* Signed size type formatter */
+#define TIFF_SSIZE_FORMAT "%d"
+
+/* Signed size type */
+#define TIFF_SSIZE_T ssize_t
+
+/* Unsigned 8-bit type */
+#define TIFF_UINT8_T unsigned char
+
+/* Unsigned 16-bit type */
+#define TIFF_UINT16_T unsigned short
+
+/* Unsigned 32-bit type formatter */
+#define TIFF_UINT32_FORMAT "%u"
+
+/* Unsigned 32-bit type */
+#define TIFF_UINT32_T unsigned int
 
 /* Unsigned 64-bit type formatter */
 #define TIFF_UINT64_FORMAT "%llu"

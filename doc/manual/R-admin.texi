@@ -1025,15 +1025,15 @@ and a 64-bit version.
 You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 (available, e.g., from @uref{http://www.libpng.org/},
 @uref{http://www.ijg.org} and
-@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  You will need
-files @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v7.tar.gz},
-@file{tiff-3.8.0.tar.gz} or later.  It is also possible to use
-@samp{libjpeg-turbo} from
-@url{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
+@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  The earliest
+versions that have been tested are @file{libpng-1.4.5.tar.gz},
+@file{jpegsrc.v8b.tar.gz}, @file{tiff-3.9.4.tar.gz} (including betas of
+@file{tiff-4.0.0}).  It is also possible to use @samp{libjpeg-turbo}
+from @url{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8a}; if
+The @code{jpeg} sub-directory for version 8c is named @file{jpeg-8c}; if
 you use a different version (e.g.@: @file{jpeg-7} or
 @file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit the definition of
@@ -1043,9 +1043,9 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.4.1.tar.gz
-> mv libpng-1.4.1 libpng
-> tar -zxf jpegsrc.v8a.tar.gz
+> tar -zxf libpng-1.4.5.tar.gz
+> mv libpng-1.4.5 libpng
+> tar -zxf jpegsrc.v8c.tar.gz
 > tar -zxf tiff-3.9.4.tar.gz
 > mv tiff-3.9.4/libtiff .
 > rm -rf tiff-3.9.4
