@@ -25,7 +25,7 @@ buildzlib:
 ## So we need to explicitly disable it.
 ## prefix=foo shuts up a warning
 buildpng:
-	$(MAKE) CC='$(CC)' AR='$(AR)' \
+	$(MAKE) CC='$(CC)' AR='$(AR)' AR_RC='$(AR) rcs' \
 	  CFLAGS="-O3 -I../../../extra/zlib -DPNG_NO_MMX_CODE" \
 	  RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib -C $(PNGDIR) \
 	  -f scripts/makefile.gcc prefix=foo libpng.a
