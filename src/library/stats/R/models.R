@@ -250,6 +250,12 @@ anova <- function(object, ...)UseMethod("anova")
 effects <- function(object, ...)UseMethod("effects")
 
 weights <- function(object, ...)UseMethod("weights")
+## used for class "lm", e.g. in drop1.
+weights.default <- function(object, ...)
+{
+    wts <-  object$weights
+    if (is.null(wts)) wts else napredict(object$na.action, wts)
+}
 
 df.residual <- function(object, ...)UseMethod("df.residual")
 df.residual.default <- function(object, ...) object$df.residual

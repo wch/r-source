@@ -497,16 +497,6 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
     val
 }
 
-#fitted.lm <- function(object, ...)
-#    napredict(object$na.action, object$fitted.values)
-
-# coef.lm <- function(object, ...) object$coefficients
-
-## need this for results of lm.fit() in drop1():
-weights.default <- function(object, ...)
-    naresid(object$na.action, object$weights)
-
-
 deviance.lm <- function(object, ...)
     sum(weighted.residuals(object)^2, na.rm=TRUE)
 

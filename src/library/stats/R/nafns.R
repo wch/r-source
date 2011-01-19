@@ -146,7 +146,7 @@ naresid.exclude <- function(omit, x, ...)
     if (length(omit) == 0 || !is.numeric(omit))
 	stop("invalid argument 'omit'")
 
-    ## the next line copes with calls from weights.default.
+    ## the next line copes with calls from older versions of weights.default.
     if (is.null(x)) return(x)
 
     if (is.matrix(x)) {

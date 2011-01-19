@@ -1,6 +1,6 @@
 % File src/library/base/man/reg.finalizer.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{reg.finalizer}
@@ -14,7 +14,7 @@
   reg.finalizer(e, f, onexit = FALSE)
 }
 \arguments{
-  \item{e}{Object to finalize. Must be environment or external pointer.}
+  \item{e}{Object to finalize. Must be an environment or an external pointer.}
   \item{f}{Function to call on finalization. Must accept a single argument,
     which will be the object to finalize.}
   \item{onexit}{logical: should the finalizer be run if the object is

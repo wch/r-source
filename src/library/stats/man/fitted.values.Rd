@@ -31,7 +31,7 @@ fitted.values(object, \dots)
   methods do.
 }
 \value{
-  Fitted values extracted from the object \code{x}.
+  Fitted values extracted from the object \code{object}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

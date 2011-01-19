@@ -1,6 +1,6 @@
 % File src/library/stats/man/nafns.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{naresid}
@@ -46,12 +46,12 @@ napredict(omit, x, \dots)
 
   Currently \code{naresid} and \code{napredict} are identical, but
   future methods need not be.  \code{naresid} is used for residuals, and
-  \code{napredict} for fitted values and predictions.
+  \code{napredict} for fitted values, predictions and \code{\link{weights}}.
 }
 \note{
-  Packages \code{rpart} and \code{survival5} used to contain versions of
-  these functions that had an \code{na.omit} action equivalent to that
-  now used for \code{na.exclude}.
+  In the early 2000s, packages \pkg{rpart} and \pkg{survival5} contained
+  versions of these functions that had an \code{na.omit} action
+  equivalent to that now used for \code{na.exclude}.
 }
 \keyword{NA}
 \keyword{models}
