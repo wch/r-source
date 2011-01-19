@@ -1502,4 +1502,12 @@ mostattributes(x) <- attributes(women) # did not set names in R < 2.13.0
 ## but there are still problems with row.names (see the help)
 
 
+## naresid.exclude when all cases have been omitted
+## (reported by Simon Wood to R-help, 2011-01-14)
+x <- NA_real_
+na.act <- na.action(na.exclude(x))
+z <- naresid(na.act, rep(0, 0))
+stopifnot(identical(z, x))
+## gave length-0 result
+
 proc.time()

@@ -145,8 +145,9 @@ naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
 	stop("invalid argument 'omit'")
-    if(length(x) == 0L)      # << FIXME? -- reconstructing all NA object
-        return(x)
+
+    ## the next line copes with calls from weights.default.
+    if (is.null(x)) return(x)
 
     if (is.matrix(x)) {
 	n <- nrow(x)
