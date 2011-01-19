@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{terms}
@@ -27,7 +27,8 @@ terms(x, \dots)
   There are methods for classes \code{"aovlist"}, and \code{"terms"}
   \code{"formula"} (see \code{\link{terms.formula}}):
   the default method just extracts the \code{terms} component of the
-  object (if any).
+  object, or failing that a \code{"terms"} attribute (as used by
+  \code{\link{model.frame}}).
 
   There are \code{\link{print}} and \code{\link{labels}} methods for
   class \code{"terms"}: the latter prints the term labels (see

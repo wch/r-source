@@ -188,6 +188,10 @@
 
       \item Public functions \code{find.package()} and \code{path.package()}
       replace the internal dot-name versions.
+
+      \item The default method for \code{terms()} now looks for a
+      \code{"terms"} attribute if it does not find a \code{"terms"}
+      component, and so works for model frames.
     }
   }
 

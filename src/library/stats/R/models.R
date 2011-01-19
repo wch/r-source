@@ -101,8 +101,10 @@ as.formula <- function(object, env = parent.frame())
 terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x, ...) {
     v <- x$terms
-    if(is.null(v))
-        stop("no terms component")
+    if(is.null(v)) {
+        v <- attr(x, "terms")
+        if(is.null(v)) stop("no terms component nor attribute")
+    }
     v
 }
 
