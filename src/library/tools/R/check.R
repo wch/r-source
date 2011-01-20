@@ -644,7 +644,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if(file.exists(nfile)) {
             ## Catch all warning and error messages.
             ## We use the same construction in at least another place,
-            ## so maybe factor out a common utility function 
+            ## so maybe factor out a common utility function
             ##   .try_catch_all_warnings_and_errors
             ## eventually.
             ## For testing package NEWS.Rd files, we really need a real
@@ -1573,16 +1573,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
+            man_file <- paste(pkgname, "-manual.pdf ", sep = "")
+            ## precautionary remove in case some other attempt left it behind
+            if(file.exists(man_file)) unlink(man_file)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste("--build-dir=", shQuote(build_dir), sep = ""),
-                      "--no-clean",
-                      "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
-                      topdir)
+                      "--no-clean", "-o ", manfile , topdir)
             res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
-            if (res == 2816) { ## 11*256
+            if (res == 11) { ## return code from Rd2dvi
                 errorLog(Log, "Rd conversion errors:")
                 lines <- readLines("Rdlatex.log", warn = FALSE)
                 lines <- grep("^(Hmm|Execution)", lines,
