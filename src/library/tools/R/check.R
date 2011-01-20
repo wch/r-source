@@ -1578,7 +1578,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(file.exists(man_file)) unlink(man_file)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste("--build-dir=", shQuote(build_dir), sep = ""),
-                      "--no-clean", "-o ", manfile , topdir)
+                      "--no-clean", "-o ", man_file , topdir)
             res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
@@ -1615,8 +1615,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste("--build-dir=", shQuote(build_dir), sep = ""),
                           "--no-clean", "--no-index",
-                          "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
-                          topdir)
+                          "-o ", man_file, topdir)
                 if (run_Rcmd(args, "Rdlatex.log")) {
                     ## FIXME: the info is almost certainly in Rdlatex.log
                     errorLog(Log)
