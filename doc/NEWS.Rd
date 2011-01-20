@@ -192,6 +192,12 @@
       \item The default method for \code{terms()} now looks for a
       \code{"terms"} attribute if it does not find a \code{"terms"}
       component, and so works for model frames.
+
+      \item \code{httpd} handlers receive an additional argument
+      containing the full request headers as a raw vector (this can be
+      used to parse cookies, multi-part forms etc.). The recommended
+      full signature for handlers is therefore \code{function(url,
+      query, body, headers, ...)}.
     }
   }
 

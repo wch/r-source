@@ -166,6 +166,12 @@ static struct sockaddr *build_sin(struct sockaddr_in *sa, const char *ip, int po
 #define CONTENT_TYPE      0x40 /* message has a specific content type set */
 #define CONTENT_FORM_UENC 0x80 /* message content type is application/x-www-form-urlencoded */
 
+struct buffer {
+    struct buffer *next, *prev;
+    int size, length;
+    char data[1];
+};
+
 /* --- connection/worker structure holding all data for an active connection --- */
 typedef struct httpd_conn {
     SOCKET sock;         /* client socket */
@@ -181,6 +187,7 @@ typedef struct httpd_conn {
     unsigned int line_pos, body_pos; /* positions in the buffers */
     long content_length;           /* desired content length */
     char part, method, attr;       /* request part, method and connection attributes */
+    struct buffer *headers;        /* buffer holding header lines */
 } httpd_conn_t;
 
 #define IS_HTTP_1_1(C) (((C)->attr & HTTP_1_0) == 0)
@@ -221,6 +228,45 @@ static void first_init()
     needs_init = 0;
 }
 
+/* free buffers starting from the tail(!!) */
+static void free_buffer(struct buffer *buf) {
+    if (!buf) return;
+    if (buf->prev) free_buffer(buf->prev);
+    free(buf);
+}
+
+/* allocate a new buffer */
+static struct buffer *alloc_buffer(int size, struct buffer *parent) {
+    struct buffer *buf = (struct buffer*) malloc(sizeof(struct buffer) + size);
+    if (!buf) return buf;
+    buf->next = 0;
+    buf->prev = parent;
+    if (parent) parent->next = buf;
+    buf->size = size;
+    buf->length = 0;
+    return buf;
+}
+
+/* convert doubly-linked buffers into one big raw vector */
+static SEXP collect_buffers(struct buffer *buf) {
+    SEXP res;
+    char *dst;
+    int len = 0;
+    if (!buf) return allocVector(RAWSXP, 0);
+    while (buf->prev) { /* count the total length and find the root */
+	len += buf->length;
+	buf = buf->prev;
+    }
+    res = allocVector(RAWSXP, len + buf->length);
+    dst = (char*) RAW(res);
+    while (buf) {
+	memcpy(dst, buf->data, buf->length);
+	dst += buf->length;
+	buf = buf->next;
+    }
+    return res;
+}
+
 static void finalize_worker(httpd_conn_t *c)
 {
     DBG(printf("finalizing worker %p\n", (void*) c));
@@ -244,7 +290,10 @@ static void finalize_worker(httpd_conn_t *c)
 	free(c->content_type);
 	c->content_type = NULL;
     }
-    
+    if (c->headers) {
+	free_buffer(c->headers);
+	c->headers = NULL;
+    }
     if (c->sock != INVALID_SOCKET) {
 	closesocket(c->sock);
 	c->sock = INVALID_SOCKET;
@@ -416,6 +465,8 @@ static SEXP parse_query(char *query)
     return res;
 }
 
+static SEXP R_ContentTypeName, R_HandlersName;
+
 /* create an object representing the request body. It is NULL if the body is empty (or zero length).
  * In the case of a URL encoded form it will have the same shape as the query string (named string vector).
  * In all other cases it will be a raw vector with a "content-type" attribute (if specified in the headers) */
@@ -429,8 +480,10 @@ static SEXP parse_request_body(httpd_conn_t *c) {
 	SEXP res = PROTECT(Rf_allocVector(RAWSXP, c->content_length));
 	if (c->content_length)
 	    memcpy(RAW(res), c->body, c->content_length);
-	if (c->content_type) /* attach the content type so it can be interpreted */
-	    setAttrib(res, install("content-type"), mkString(c->content_type));
+	if (c->content_type) { /* attach the content type so it can be interpreted */
+	    if (!R_ContentTypeName) R_ContentTypeName = install("content-type");
+	    setAttrib(res, R_ContentTypeName, mkString(c->content_type));
+	}
 	UNPROTECT(1);
 	return res;
     }
@@ -476,8 +529,10 @@ static SEXP handler_for_path(const char *path) {
 	    fn[c - e] = 0;
 	    DBG(Rprintf("handler_for_path('%s'): looking up custom handler '%s'\n", path, fn));
 	    /* we cache custom_handlers_env so in case it has not been loaded yet, fetch it */
-	    if (!custom_handlers_env)
-		custom_handlers_env = eval(install(".httpd.handlers.env"), R_FindNamespace(mkString("tools")));
+	    if (!custom_handlers_env) {
+		if (!R_HandlersName) R_HandlersName = install(".httpd.handlers.env");
+		custom_handlers_env = eval(R_HandlersName, R_FindNamespace(mkString("tools")));
+	    }
 	    /* we only proceed if .httpd.handlers.env really exists */
 	    if (TYPEOF(custom_handlers_env) == ENVSXP) {
 		SEXP cl = findVarInFrame3(custom_handlers_env, install(fn), TRUE);
@@ -508,14 +563,17 @@ static void process_request(httpd_conn_t *c)
     uri_decode(c->url); /* decode the path part */
     {   /* construct "try(httpd(url, query, body), silent=TRUE)" */
 	SEXP sTrue = PROTECT(ScalarLogical(TRUE));
-	SEXP y, x = PROTECT(lang3(
-				  install("try"),
-				  LCONS(handler_for_path(c->url),
-					list3(mkString(c->url), query ? parse_query(query) : R_NilValue, parse_request_body(c))),
+	SEXP sBody = PROTECT(parse_request_body(c));
+	SEXP sQuery = PROTECT(query ? parse_query(query) : R_NilValue);
+	SEXP sReqHeaders = PROTECT(c->headers ? collect_buffers(c->headers) : R_NilValue);
+	SEXP sArgs = PROTECT(list4(mkString(c->url), sQuery, sBody, sReqHeaders));
+	SEXP sTry = install("try");
+	SEXP y, x = PROTECT(lang3(sTry,
+				  LCONS(handler_for_path(c->url), sArgs),
 				  sTrue));
 	SET_TAG(CDR(CDR(x)), install("silent"));
 	DBG(Rprintf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
-
+	
 	/* evaluate the above in the tools namespace */
 	x = PROTECT(eval(x, R_FindNamespace(mkString("tools"))));
 
@@ -547,7 +605,7 @@ static void process_request(httpd_conn_t *c)
 	    if (c->method != METHOD_HEAD)
 		send_response(c->sock, s, strlen(s));
 	    c->attr |= CONNECTION_CLOSE; /* force close */
-	    UNPROTECT(3);
+	    UNPROTECT(7);
 	    return;
 	}
 
@@ -596,7 +654,7 @@ static void process_request(httpd_conn_t *c)
 		    long fsz = 0;
 		    if (!f) {
 			send_response(c->sock, "\r\nContent-length: 0\r\n\r\n", 23);
-			UNPROTECT(3);
+			UNPROTECT(7);
 			fin_request(c);
 			return;
 		    }
@@ -612,7 +670,7 @@ static void process_request(httpd_conn_t *c)
 				int rd = (fsz > 32768) ? 32768 : fsz;
 				if (fread(fbuf, 1, rd, f) != rd) {
 				    free(fbuf);
-				    UNPROTECT(3);
+				    UNPROTECT(7);
 				    c->attr |= CONNECTION_CLOSE;
 				    return;
 				}
@@ -621,13 +679,13 @@ static void process_request(httpd_conn_t *c)
 			    }
 			    free(fbuf);
 			} else { /* allocation error - get out */
-			    UNPROTECT(3);
+			    UNPROTECT(7);
 			    c->attr |= CONNECTION_CLOSE;
 			    return;
 			}
 		    }
 		    fclose(f);
-		    UNPROTECT(3);
+		    UNPROTECT(7);
 		    fin_request(c);
 		    return;
 		}
@@ -635,7 +693,7 @@ static void process_request(httpd_conn_t *c)
 		send_response(c->sock, buf, strlen(buf));
 		if (c->method != METHOD_HEAD)
 		    send_response(c->sock, cs, strlen(cs));
-		UNPROTECT(3);
+		UNPROTECT(7);
 		fin_request(c);
 		return;
 	    }
@@ -661,12 +719,12 @@ static void process_request(httpd_conn_t *c)
 		send_response(c->sock, buf, strlen(buf));
 		if (c->method != METHOD_HEAD)
 		    send_response(c->sock, (char*) cs, LENGTH(y));
-		UNPROTECT(3);
+		UNPROTECT(7);
 		fin_request(c);
 		return;
 	    }
 	}
-	UNPROTECT(3);
+	UNPROTECT(7);
     }
     send_http_response(c, " 500 Invalid response from R\r\nConnection: close\r\nContent-type: text/plain\r\n\r\nServer error: invalid response from R\r\n");
     c->attr |= CONNECTION_CLOSE; /* force close */
@@ -754,6 +812,7 @@ static void worker_input_handler(void *data) {
 		    if (c->url) { free(c->url); c->url = NULL; }
 		    if (c->body) { free(c->body); c->body = NULL; }
 		    if (c->content_type) { free(c->content_type); c->content_type = NULL; }
+		    if (c->headers) { free_buffer(c->headers); c->headers = NULL; }
 		    c->body_pos = 0;
 		    c->method = 0;
 		    c->part = PART_REQUEST;
@@ -815,6 +874,27 @@ static void worker_input_handler(void *data) {
 		    } else if (c->part == PART_HEADER) {
 			/* --- process headers --- */
 			char *k = bol;
+			if (!c->headers)
+			    c->headers = alloc_buffer(1024, NULL);
+			if (c->headers) { /* record the header line in the buffer */
+			    int l = strlen(bol);
+			    if (l) { /* this should be really always true */
+				if (c->headers->length + l + 1 > c->headers->size) { /* not enough space? */
+				    int fits = c->headers->size - c->headers->length;
+				    if (fits) memcpy(c->headers->data + c->headers->length, bol, fits);
+				    if (alloc_buffer(2048, c->headers)) {
+					c->headers = c->headers->next;
+					memcpy(c->headers, bol + fits, l - fits);
+					c->headers->length = l - fits;
+					c->headers->data[c->headers->length++] = '\n';
+				    }
+				} else {
+				    memcpy(c->headers->data + c->headers->length, bol, l);
+				    c->headers->length += l;	
+				    c->headers->data[c->headers->length++] = '\n';
+				}
+			    }
+			}
 			while (*k && *k != ':') {
 			    if (*k >= 'A' && *k <= 'Z')
 				*k |= 0x20;
