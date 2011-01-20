@@ -1403,12 +1403,4 @@ stopifnot(identical(2:3,
 ## length wrongly were 6 and 9, in R <= 2.12.0
 
 
-## naresid.exclude when all cases have been omitted
-## (reported by Simon Wood to R-help, 2011-01-14)
-x <- NA_real_
-na.act <- na.action(na.exclude(x))
-z <- naresid(na.act, rep(0, 0))
-stopifnot(identical(z, x))
-## gave length-0 result
-
 proc.time()
