@@ -1510,4 +1510,14 @@ z <- naresid(na.act, rep(0, 0))
 stopifnot(identical(z, x))
 ## gave length-0 result
 
+
+## weighted.residuals did not work correctly with mlm fits
+## see https://stat.ethz.ch/pipermail/r-devel/2011-January/059642.html
+d4 <- data.frame(y1=1:4, y2=2^(0:3), wt=log(1:4), fac=LETTERS[c(1,1,2,2)])
+fit <- lm(data=d4, cbind(y1,y2)~fac, weights=wt)
+wtr <- weighted.residuals(fit)
+stopifnot(identical(dim(wtr), 3:2))
+## dropped dims in 2.12.1
+
+
 proc.time()
