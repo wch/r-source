@@ -1499,16 +1499,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
+            man_file <- paste(pkgname, "-manual.pdf ", sep = "")
+            ## precautionary remove in case some other attempt left it behind
+            if(file.exists(man_file)) unlink(man_file)
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste("--build-dir=", shQuote(build_dir), sep = ""),
-                      "--no-clean",
-                      "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
-                      topdir)
+                      "--no-clean", "-o ", man_file , topdir)
             res <- run_Rcmd(args,  "Rdlatex.log")
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
-            if (res == 2816) { ## 11*256
+            if (res == 11) { ## return code from Rd2dvi
                 errorLog(Log, "Rd conversion errors:")
                 lines <- readLines("Rdlatex.log", warn = FALSE)
                 lines <- grep("^(Hmm|Execution)", lines,
@@ -1540,8 +1541,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 args <- c( "Rd2pdf ", Rd2pdf_opts,
                           paste("--build-dir=", shQuote(build_dir), sep = ""),
                           "--no-clean", "--no-index",
-                          "-o ", paste(pkgname, "-manual.pdf ", sep = ""),
-                          topdir)
+                          "-o ", man_file, topdir)
                 if (run_Rcmd(args, "Rdlatex.log")) {
                     ## FIXME: the info is almost certainly in Rdlatex.log
                     errorLog(Log)
