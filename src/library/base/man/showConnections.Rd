@@ -99,8 +99,8 @@ showConnections()
 #  class     description      mode text   isopen   can read can write
 #3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
 \dontrun{close(getConnection(3))}
-\dontshow{r <- as.numeric(row.names(showConnections()))
-close(getConnection(r))}
+\dontshow{try({r <- as.numeric(row.names(showConnections()))
+close(getConnection(r))})}
 showConnections()
 
 c(isatty(stdin()), isatty(stdout()), isatty(stderr()))
