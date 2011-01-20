@@ -1044,7 +1044,7 @@ RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
 int OneIndex(SEXP, SEXP, int, int, SEXP*, int, SEXP);
 SEXP parse(FILE*, int);
-void PrintDefaults(SEXP);
+void PrintDefaults(void);
 void PrintGreeting(void);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);

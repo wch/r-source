@@ -131,8 +131,6 @@ const static char * const falsenames[] = {
     (char *) NULL,
 };
 
-/* a caller which uses numeric or complex 'x' ought to set R_print,
-   e.g. by calling PrintDefaults */
 SEXP asChar(SEXP x)
 {
     if (LENGTH(x) >= 1) {
@@ -155,9 +153,11 @@ SEXP asChar(SEXP x)
 		sprintf(buf, "%d", INTEGER(x)[0]);
 		return mkChar(buf);
 	    case REALSXP:
+		PrintDefaults();
 		formatReal(REAL(x), 1, &w, &d, &e, 0);
 		return mkChar(EncodeReal(REAL(x)[0], w, d, e, OutDec));
 	    case CPLXSXP:
+		PrintDefaults();
 		formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei, 0);
 		return mkChar(EncodeComplex(COMPLEX(x)[0], w, d, e, wi, di, ei, OutDec));
 	    case STRSXP:

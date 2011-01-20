@@ -238,7 +238,7 @@ GuiReadConsole(const char *prompt, char *buf, int len, int addtohistory)
 {
     int res;
     const char *NormalPrompt =
-	CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
+	CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
 
     if(!R_is_running) {
 	R_is_running = 1;

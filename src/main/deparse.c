@@ -201,7 +201,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     localData.opts = opts;
     localData.strvec = R_NilValue;
 
-    PrintDefaults(R_NilValue);/* from global options() */
+    PrintDefaults(); /* from global options() */
     savedigits = R_print.digits;
     R_print.digits = DBL_DIG;/* MAX precision */
 

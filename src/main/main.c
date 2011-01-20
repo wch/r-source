@@ -136,12 +136,10 @@ char *R_PromptString(int browselevel, int type)
 		sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
 		return BrowsePrompt;
 	    }
-	    return (char *)CHAR(STRING_ELT(GetOption(install("prompt"),
-						     R_BaseEnv), 0));
+	    return (char *)CHAR(STRING_ELT(GetOption1(install("prompt")), 0));
 	}
 	else {
-	    return (char *)CHAR(STRING_ELT(GetOption(install("continue"),
-						     R_BaseEnv), 0));
+	    return (char *)CHAR(STRING_ELT(GetOption1(install("continue")), 0));
 	}
     }
 }

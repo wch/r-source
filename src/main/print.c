@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2009	The R Development Core Team.
+ *  Copyright (C) 2000-2011	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,7 +81,8 @@ static char tagbuf[TAGBUFLEN + 5];
 
 
 /* Used in X11 module for dataentry */
-void PrintDefaults(SEXP rho)
+/* 'rho' is unused */
+void PrintDefaults(void)
 {
     R_print.na_string = NA_STRING;
     R_print.na_string_noquote = mkChar("<NA>");
@@ -89,13 +90,13 @@ void PrintDefaults(SEXP rho)
     R_print.na_width_noquote = strlen(CHAR(R_print.na_string_noquote));
     R_print.quote = 1;
     R_print.right = Rprt_adj_left;
-    R_print.digits = GetOptionDigits(rho);
-    R_print.scipen = asInteger(GetOption(install("scipen"), rho));
+    R_print.digits = GetOptionDigits();
+    R_print.scipen = asInteger(GetOption1(install("scipen")));
     if (R_print.scipen == NA_INTEGER) R_print.scipen = 0;
-    R_print.max = asInteger(GetOption(install("max.print"), rho));
+    R_print.max = asInteger(GetOption1(install("max.print")));
     if (R_print.max == NA_INTEGER) R_print.max = 99999;
     R_print.gap = 1;
-    R_print.width = GetOptionWidth(rho);
+    R_print.width = GetOptionWidth();
     R_print.useSource = USESOURCE;
 }
 
@@ -128,7 +129,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *rowname = NULL, *colname = NULL;
 
     checkArity(op,args);
-    PrintDefaults(rho);
+    PrintDefaults();
     a = args;
     x = CAR(a); a = CDR(a);
     rowlab = CAR(a); a = CDR(a);
@@ -154,7 +155,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right,
 		rowlab, collab, rowname, colname);
-    PrintDefaults(rho); /* reset, as na.print.etc may have been set */
+    PrintDefaults(); /* reset, as na.print.etc may have been set */
     return x;
 }/* do_prmatrix */
 
@@ -218,7 +219,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rboolean callShow = FALSE;
 
     checkArity(op, args);
-    PrintDefaults(rho);
+    PrintDefaults();
 
     x = CAR(args); args = CDR(args);
 
@@ -298,7 +299,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	CustomPrintValue(x, rho);
     }
 
-    PrintDefaults(rho); /* reset, as na.print etc may have been set */
+    PrintDefaults(); /* reset, as na.print etc may have been set */
     return x;
 }/* do_printdefault */
 
@@ -931,7 +932,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 
 void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 {
-    PrintDefaults(env);
+    PrintDefaults();
     tagbuf[0] = '\0';
     PROTECT(s);
     if(isObject(s) || isFunction(s)) {

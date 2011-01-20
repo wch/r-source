@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2010  The R Development Core Team.
+ *  Copyright (C) 1999-2011  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -481,7 +481,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     /* Use standard printing defaults */
-    PrintDefaults(rho);
+    PrintDefaults();
 
     objs = CAR(args);
     args = CDR(args);

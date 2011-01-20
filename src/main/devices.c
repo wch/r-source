@@ -125,7 +125,7 @@ pGEDevDesc GEcurrentDevice(void)
      * check the options for a "default device".
      * If there is one, start it up. */
     if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_BaseEnv);
+	SEXP defdev = GetOption1(install("device"));
 	if (isString(defdev) && length(defdev) > 0) {
 	    SEXP devName = install(CHAR(STRING_ELT(defdev, 0)));
 	    /*  Not clear where this should be evaluated, since

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2008   The R Development Core Team.
+ *  Copyright (C) 1998-2011   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1741,7 +1741,7 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(this >  0) quote_col[this - 1] = TRUE;
     }
     R_AllocStringBuffer(0, &strBuf);
-    PrintDefaults(R_NilValue);
+    PrintDefaults();
     wi.savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
     wi.con = con;
     wi.wasopen = wasopen;

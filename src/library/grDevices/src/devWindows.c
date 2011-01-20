@@ -809,8 +809,8 @@ static void HelpMouseClick(window w, int button, point pt)
 	if (!xd->locator && !xd->confirmation && !dd->gettingEvent)
 	    return;
 	if (button & LeftButton) {
-	    int useBeep = xd->locator && asLogical(GetOption(install("locatorBell"),
-					      R_BaseEnv));
+	    int useBeep = xd->locator && 
+		asLogical(GetOption1(install("locatorBell")));
 	    if(useBeep) gabeep();
 	    xd->clicked = 1;
 	    xd->px = pt.x;
@@ -3340,7 +3340,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     xd->buffered = buffered;
     xd->psenv = psenv;
     {
-	SEXP timeouts = GetOption(install("windowsTimeouts"), R_BaseEnv);
+	SEXP timeouts = GetOption1(install("windowsTimeouts"));
 	if(isInteger(timeouts)){
 	    xd->timeafter = INTEGER(timeouts)[0];
 	    xd->timesince = INTEGER(timeouts)[1];

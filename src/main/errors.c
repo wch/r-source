@@ -271,7 +271,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     if (inWarning)
 	return;
 
-    s = GetOption(install("warning.expression"), R_BaseEnv);
+    s = GetOption1(install("warning.expression"));
     if( s != R_NilValue ) {
 	if( !isLanguage(s) &&  ! isExpression(s) )
 	    error(_("invalid option \"warning.expression\""));
@@ -282,7 +282,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	return;
     }
 
-    w = asInteger(GetOption(install("warn"), R_BaseEnv));
+    w = asInteger(GetOption1(install("warn")));
 
     if( w == NA_INTEGER ) /* set to a sensible value */
 	w = 0;
@@ -709,8 +709,8 @@ static void jump_to_top_ex(Rboolean traceback,
 	if (! inError)
 	    inError = 1;
 
-	/*now see if options("error") is set */
-	s = GetOption(install("error"), R_BaseEnv);
+	/* now see if options("error") is set */
+	s = GetOption1(install("error"));
 	haveHandler = ( s != R_NilValue );
 	if (haveHandler) {
 	    if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */

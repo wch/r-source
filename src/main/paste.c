@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     /* We use formatting and so we */
     /* must initialize printing. */
 
-    PrintDefaults(env);
+    PrintDefaults();
 
     /* Check the arguments */
 
@@ -336,7 +336,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *strp;
 
     checkArity(op, args);
-    PrintDefaults(env);
+    PrintDefaults();
     scikeep = R_print.scipen;
 
     if (isEnvironment(x = CAR(args))) {
@@ -536,7 +536,7 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     n = LENGTH(x);
-    PrintDefaults(env);
+    PrintDefaults();
 
     digits = asInteger(CADR(args));
     if (!isNull(CADR(args))) {

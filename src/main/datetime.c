@@ -813,8 +813,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    *p2 = '\0';
 		    ns = *(p+3) - '0';
 		    if(ns < 0 || ns > 9) { /* not a digit */
-			ns = asInteger(GetOption(install("digits.secs"),
-						 R_BaseEnv));
+			ns = asInteger(GetOption1(install("digits.secs")));
 			if(ns == NA_INTEGER) ns = 0;
 			nused = 3;
 		    }
