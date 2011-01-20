@@ -1,6 +1,6 @@
 % File src/library/tools/man/readNEWS.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readNEWS}
@@ -8,9 +8,9 @@
 \alias{checkNEWS}
 \title{Read R's NEWS file or a similar one}
 \description{
-  Read \R's \file{NEWS} file or a similarly formatted one.
-  This is an experimental feature, new in R 2.4.0
-  and may change in several ways.
+  Read/check \R's \file{NEWS} file or a similarly formatted one.
+  This was an experimental feature added in \R 2.4.0: as from
+  \R 2.12.0 the preferred format is \file{NEWS.Rd}.
 }
 \usage{
 readNEWS(file = file.path(R.home(), "NEWS"), trace = FALSE,
@@ -28,28 +28,30 @@ checkNEWS(file = file.path(R.home(), "NEWS"))
     be \emph{chopped}; \code{chop = "keepAll"} saves the full entries.}
 }
 \details{
-\code{readNEWS()} reads a NEWS file; \code{checkNEWS()} checks for common
-errors in formatting.  Currently it detects an incorrect number of spaces before
-the \code{"o"} item marker.
+  \code{readNEWS()} reads a pre-\R-2.12.0-style \file{NEWS} file;
+  \code{checkNEWS()} checks for common errors in formatting.  Currently it
+  detects an incorrect number of spaces before the \code{"o"} item marker.
 
-If non-ASCII characters are needed, the NEWS file may be encoded in
-UTF-8 with a byte-order mark (BOM) at the beginning, which
-\code{readNEWS()} will recognize.  Other encodings will display
-incorrectly on some systems.  However, BOMs are discouraged on many
-systems and not all editors recognize them, so NEWS files should
-normally be written in ASCII.
+  If non-ASCII characters are needed, the \file{NEWS} file may be encoded in
+  UTF-8 with a byte-order mark (BOM) at the beginning, which
+  \code{readNEWS()} will recognize.  Other encodings will display
+  incorrectly on some systems.  However, BOMs are discouraged on many
+  systems and not all editors recognize them, so \file{NEWS} files should
+  normally be written in ASCII.
 }
 
 \value{
-  \code{readNEWS()} returns an (S3) object of class \code{"newsTree"}; effectively
-  a \code{\link{list}} of lists which is a tree of NEWS entries.
+  \code{readNEWS()} returns an (S3) object of class \code{"newsTree"};
+  effectively a \code{\link{list}} of lists which is a tree of NEWS
+  entries.
 
- \code{checkNEWS()} returns \code{TRUE} if no suspected errors are found,
- or prints a message for each suspected error and returns \code{FALSE}.
+  \code{checkNEWS()} returns \code{TRUE} if no suspected errors are found,
+  or prints a message for each suspected error and returns \code{FALSE}.
  
-  Note that this is still experimental and may change in the future.
+  Note that this was only ever experimental and may be removed soon,
+  since the NEWS-file format is not longer supported (but there are
+  examples \file{ONEWS}, \file{OONEWS} and perhaps in packages).
 }
-%\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
 \examples{\donttest{
 NEWStr  <- readNEWS(trace = TRUE)# chop = "first" ( = "first non-empty")
 ## keep the full NEWS entry text i.e. "no chopping":
