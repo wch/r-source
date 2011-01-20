@@ -28,12 +28,15 @@ hat <- function(x, intercept = TRUE)
     rowSums(qr.qy(x, diag(1, nrow = n, ncol = x$rank))^2)
 }
 
-## see PR#7961
+## see PR#7961, https://stat.ethz.ch/pipermail/r-devel/2011-January/059642.html
 weighted.residuals <- function(obj, drop0 = TRUE)
 {
     w <- weights(obj)
     r <- residuals(obj, type="deviance")
-    if(drop0 && !is.null(w)) r[w != 0] else r
+    if(drop0 && !is.null(w)) {
+        if(is.matrix(r)) r[w != 0, , drop = FALSE] # e.g. mlm fit
+        else r[w != 0]
+    } else r
 }
 
 lm.influence <- function (model, do.coef = TRUE)

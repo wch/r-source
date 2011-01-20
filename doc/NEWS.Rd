@@ -59,6 +59,10 @@
       \code{na.action = na.exclude} fits did not work correctly in the
       very rare event that every case had been omitted in the fit.
       (Reported by Simon Wood.)
+
+      \item \code{weighted.residuals(drop0=TRUE)} returned a vector when
+      the residuals were a matrix (e.g. those of class \code{"mlm"}).
+      (Reported by Bill Dunlap.)
     }
   }
 }
