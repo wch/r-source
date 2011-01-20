@@ -8,13 +8,14 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{identical} could in rare cases generate a warning
-      about non-pairlist attributes on CHARSXPs. As these are used for
-      internal purposes, the attribute check should be
-      skipped. (Reported by Niels Richard Hansen).
+      about non-pairlist attributes on CHARSXPs.  As these are used for
+      internal purposes, the attribute check should be skipped.
+      (Reported by Niels Richard Hansen).
 
-      \item If the extension was not included in a call to
-      \code{Sweave()}, source references would not work properly, and the
-      \code{keep.source} option failed. (\PR{14459})
+      \item If the filename extension (usually \file{.Rnw}) was not
+      included in a call to \code{Sweave()}, source references would not
+      work properly, and the \code{keep.source} option
+      failed.  (\PR{14459})
 
       \item \code{format.data.frame()} now keeps zero character column names.
 
@@ -46,13 +47,18 @@
       zipfiles are valid and the third-party C code used did not support
       them, but \PR{14462} created one.)
 
-      \item \code{combn(n,m)} now behaves more regularly for the border
+      \item \code{combn(n, m)} now behaves more regularly for the border
       case \eqn{m = 0}. (\PR{14473})
 
       \item The rendering of numbers in plotmath expressions (e.g.
       \code{expression(10^2)} used the current settings for conversion
       to strings rather than setting the defaults, and so could be
       affected by what has been done before.  (\PR{14477})
+
+      \item The methods of \code{napredict()} and \code{naresid()} for
+      \code{na.action = na.exclude} fits did not work correctly in the
+      very rare event that every case had been omitted in the fit.
+      (Reported by Simon Wood.)
     }
   }
 }
