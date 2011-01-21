@@ -1520,4 +1520,11 @@ stopifnot(identical(dim(wtr), 3:2))
 ## dropped dims in 2.12.1
 
 
+## ccf did not work with na.action=na.pass
+## https://stat.ethz.ch/pipermail/r-help/2011-January/265992.html
+z <- matrix(rnorm(50),,2); z[6,] <- NA; z <- ts(z)
+acf(z, na.action=na.pass, plot = FALSE)
+ccf(z[,1], z[,2], na.action=na.pass, plot=FALSE)
+## failed in 2.12.1
+
 proc.time()
