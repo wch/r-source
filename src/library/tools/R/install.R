@@ -1578,7 +1578,10 @@
 
     html_header <- function(pkg, title, version, conn)
     {
-        cat(paste(HTMLheader(title, Rhome="../../..", up="../../../doc/html/packages.html"), collapse="\n"),
+        cat(paste(HTMLheader(title, Rhome="../../..",
+                             up="../../../doc/html/packages.html",
+                             css = "../../R.css"),
+                  collapse="\n"),
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep ='', file = conn)
 
