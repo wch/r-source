@@ -32,7 +32,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \item{quiet}{If \code{TRUE}, suppress status messages (if any), and
     the progress bar.}
 
-  \item{mode}{character.  The mode with which to write the file. Useful
+  \item{mode}{character.  The mode with which to write the file.  Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.
 #ifdef windows
