@@ -1,6 +1,6 @@
 % File src/library/utils/man/edit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{edit}
@@ -33,7 +33,9 @@ xedit(name = NULL, file = "")
   \item{editor}{a string naming the text editor you want to use.  On
     Unix the default is set from the environment variables \env{EDITOR}
     or \env{VISUAL} if either is set, otherwise \code{vi} is used.  On
-    Windows it defaults to \code{notepad}.}
+    Windows it defaults to \code{"internal"}, the script editor.  On the
+    Mac OS X GUI the argument is ignored and the document editor is
+    always used.}
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{

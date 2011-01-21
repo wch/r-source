@@ -221,10 +221,22 @@ edit.matrix <-
 }
 
 file.edit <-
-  function (..., title = file, editor=getOption("editor"))
+  function (..., title = file, editor=getOption("editor"), fileEncoding="")
 {
     file <- path.expand(c(...))
     title <- rep(as.character(title), len=length(file))
+    if(nzchar(fileEncoding) && fileEncoding != "native.enc") {
+        tfile <- file
+        for(i in seq_along(file)) {
+            ## We won't know when that is done with
+            ## so leave around for the R session.
+            tfile <- tempfile()
+            con <- file(file[i], encoding = fileEncoding)
+            writeLines(readLines(con), tfile)
+            close(con)
+            file[i] <- tfile
+        }
+    }
     if (is.function(editor)) invisible(editor(file = file, title = title))
     else .Internal(file.edit(file, title, editor))
 }
