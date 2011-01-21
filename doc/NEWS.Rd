@@ -67,6 +67,8 @@
       \item Package HTML index files \file{<pkg>/html/00Index.html} were
       generated with a stylesheet reference that was not correct for
       static browsing in libraries.
+
+      \item \code{ccf(na.action = na.pass)} was not implemented.
     }
   }
 }
