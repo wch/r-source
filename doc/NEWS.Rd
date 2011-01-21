@@ -356,6 +356,10 @@
       \item \code{weighted.residuals(drop0=TRUE)} returned a vector when
       the residuals were a matrix (e.g. those of class \code{"mlm"}).
       (Reported by Bill Dunlap.)
+
+      \item Package HTML index files \file{<pkg>/html/00Index.html} were
+      generated with a stylesheet reference that was not correct for
+      static browsing in libraries.
     }
   }
 }

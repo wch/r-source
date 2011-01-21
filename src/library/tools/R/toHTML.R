@@ -2,15 +2,19 @@ toHTML <- function(x, ...) UseMethod("toHTML")
 
 
 HTMLheader <-
-function(title="R", logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
-         Rhome="", headerTitle = paste("R:", title), outputEncoding = "UTF-8")
+function(title="R", logo=TRUE,
+         up=NULL,
+         top=file.path(Rhome, "doc/html/index.html"),
+         Rhome="",
+         css = file.path(Rhome, "doc/html/R.css"),
+         headerTitle = paste("R:", title),
+         outputEncoding = "UTF-8")
 {
     result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
         paste('<html><head><title>', headerTitle, '</title>', sep=''),
         paste('<meta http-equiv="Content-Type" content="text/html; charset=',
               mime_canonical_encoding(outputEncoding), '">', sep=''),
-        paste('<link rel="stylesheet" type="text/css" href="',
-              file.path(Rhome, 'doc/html/R.css'), '">', sep=''),
+        paste('<link rel="stylesheet" type="text/css" href="', css, '">', sep=''),
         '</head><body>',
 	paste('<h1>', title))
     if (logo)
