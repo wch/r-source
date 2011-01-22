@@ -14,16 +14,17 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-help.start <- function(update = FALSE, gui = "irrelevant",
-                       browser = getOption("browser"), remote = NULL)
+help.start <-
+    function (update = FALSE, gui = "irrelevant",
+              browser = getOption("browser"), remote = NULL)
 {
     home <- if(is.null(remote)) {
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
-            if(update) make.packages.html(temp = TRUE)
+            if (update) make.packages.html(temp = TRUE)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         } else stop("help.start() requires the HTTP server to be running",
-                  call. = FALSE)
+                    call. = FALSE)
     } else remote
     url <- paste(home, "/doc/html/index.html", sep = "")
     cat(gettextf("If nothing happens, you should open\n'%s' yourself\n", url))
@@ -41,9 +42,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
     else if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
     else {
-        if(!is.character(browser)
-           || !(length(browser) == 1L)
-           || !nzchar(browser))
+        if(!is.character(browser) || length(browser) != 1L || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
         cmd <- paste('"', browser, '" ',
                      if(encodeIfNeeded) URLencode(url) else url, sep="")

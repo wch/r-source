@@ -83,8 +83,6 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             }
         }
     } else {
-        ## We can't use CHM help -- this works even if not there.
-        ## CHM help was last shipped in Aug 2009, prior to 2.10.0
         unlink(file.path(tmpDir, pkgname, "chtml"), recursive = TRUE)
         instPath <- file.path(lib, pkgname)
         if(lock) {
@@ -102,7 +100,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             ## Back up a previous version
             if (file.exists(instPath)) {
                 file.copy(instPath, lockdir, recursive = TRUE)
-        	on.exit({ 
+        	on.exit({
         	    if (restorePrevious) {
         	    	try(unlink(instPath, recursive = TRUE))
         	    	savedcopy <- file.path(lockdir, pkgname)
@@ -115,7 +113,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             }
 	    on.exit(unlink(lockdir, recursive = TRUE), add=TRUE)
         }
-        
+
         if(libs_only) {
             if (!file_test("-d", file.path(instPath, "libs")))
                 warning(gettextf("there is no 'libs' directory in package '%s'",
@@ -125,7 +123,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             for(sub in c("i386", "x64"))
                 if (file_test("-d", file.path(tmpDir, pkgname, "libs", sub))) {
                     unlink(file.path(instPath, "libs", sub), recursive = TRUE)
-                    
+
                     ret <- file.copy(file.path(tmpDir, pkgname, "libs", sub),
                                      file.path(instPath, "libs"),
                                      recursive = TRUE)
@@ -186,12 +184,16 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
-             dependencies = FALSE, libs_only = FALSE, 
+             dependencies = FALSE, libs_only = FALSE,
              lock = getOption("install.lock", FALSE), ...)
 {
-
     if(!length(pkgs)) return(invisible())
-    
+
+    .link_html_help <- function(lib)
+    {
+        # update packages.html if .Library was changed?
+        # source version and remove.packages only do so on Unix.
+    }
     ## look for package in use.
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
@@ -215,7 +217,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     if(is.null(contriburl)) {
         for(i in seq_along(pkgs))
             unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock)
-        link.html.help(verbose=TRUE)
+        .link_html_help(lib)
         return(invisible())
     }
     tmpd <- destdir
@@ -255,7 +257,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                normalizePath(tmpd, mustWork = FALSE)),
                 "\n", sep = "")
-        link.html.help(verbose = TRUE)
+        .link_html_help(lib)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
