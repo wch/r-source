@@ -1,6 +1,6 @@
 % File src/library/base/man/seek.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seek}
@@ -69,6 +69,9 @@ truncate(con, \dots)
   position.  It works only for \code{file} connections, and is not
   implemented on all platforms: on others (including Windows) it will
   not work for large (> 2Gb) files.
+  
+  None of these should be expected to work on connections with
+  re-encoding selected.
 }
 \section{Warning}{
   Use of \code{seek} on Windows is discouraged.  We have found so many
