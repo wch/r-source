@@ -18,8 +18,8 @@ help.start <-
     function (update = FALSE, gui = "irrelevant",
               browser = getOption("browser"), remote = NULL)
 {
-    home <- if(is.null(remote)) {
-        if(tools:::httpdPort == 0L) tools::startDynamicHelp()
+    home <- if (is.null(remote)) {
+        if (tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
             if (update) make.packages.html(temp = TRUE)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")

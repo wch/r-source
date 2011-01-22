@@ -1,4 +1,4 @@
-#  File src/library/utils/R/unix/help.start.R
+#  File src/library/utils/R/help.start.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -18,9 +18,13 @@ help.start <-
     function (update = FALSE, gui = "irrelevant",
               browser = getOption("browser"), remote = NULL)
 {
-    ## should always be set, but might be empty
-    if (!is.function(browser) && (length(browser) != 1 || !is.character(browser) || !nzchar(browser)))
-	stop("invalid browser name, check options(\"browser\").")
+    WINDOWS <- .Platform$OS.type == "windows"
+    if (!WINDOWS) {
+        ## should always be set, but might be empty
+        if (!is.function(browser) &&
+            (length(browser) != 1L || !is.character(browser) || !nzchar(browser)))
+            stop("invalid browser name, check options(\"browser\").")
+    }
     home <- if (is.null(remote)) {
         if (tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
@@ -31,7 +35,10 @@ help.start <-
     } else remote
     url <- paste(home, "/doc/html/index.html", sep = "")
 
-    if (is.character(browser)) {
+    ## FIXME: maybe these should use message()?
+    if (WINDOWS) {
+        cat(gettextf("If nothing happens, you should open\n'%s' yourself\n", url))
+    } else if (is.character(browser)) {
         writeLines(strwrap(gettextf("If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window.",
                                     browser),
                            exdent = 4L))
@@ -43,27 +50,37 @@ help.start <-
 
 browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 {
-    ## escape characters.  ' can occur in URLs, so we must use " to
-    ## delimit the URL.  We need to escape $, but "`\ do not occur in
-    ## valid URLs (RFC 2396, on the W3C site).
-    shQuote <- function(string)
-        paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
+    WINDOWS <- .Platform$OS.type == "windows"
 
     if (!is.character(url) || length(url) != 1L|| !nzchar(url))
         stop("'url' must be a non-empty character string")
     if(identical(browser, "false")) return(invisible())
-    if (is.function(browser))
+    if(WINDOWS && is.null(browser)) return(shell.exec(url))
+    else if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
-    if (!is.character(browser) || length(browser) != 1L || !nzchar(browser))
-        stop("'browser' must be a non-empty character string")
 
+   if (!is.character(browser) || length(browser) != 1L || !nzchar(browser))
+        stop("'browser' must be a non-empty character string")
+    if (WINDOWS) {
+        ## No shell used, but spaces are possible
+        return(system(paste('"', browser, '" ',
+                            if(encodeIfNeeded) URLencode(url) else url, sep=""),
+                      wait = FALSE))
+    }
+
+    ## Unix-alike, character "browser"
     if (.Platform$GUI == "AQUA" ||
         length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) )
       isLocal <- TRUE
     else
       isLocal <- FALSE
 
-    quotedUrl <- shQuote(if(encodeIfNeeded) URLencode(url) else url)
+    ## escape characters.  ' can occur in URLs, so we must use " to
+    ## delimit the URL.  We need to escape $, but "`\ do not occur in
+    ## valid URLs (RFC 2396, on the W3C site).
+    .shQuote <- function(string)
+        paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
+    quotedUrl <- .shQuote(if(encodeIfNeeded) URLencode(url) else url)
     remoteCmd <- if (isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = quotedUrl,

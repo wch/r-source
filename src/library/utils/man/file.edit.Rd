@@ -16,7 +16,7 @@ file.edit(\dots, title = file, editor = getOption("editor"),
     files to be edited.}
   \item{title}{the title to use in the editor; defaults to the filename.}  
   \item{editor}{the text editor to be used.  See \sQuote{Details}.}
-  \item{fielEncoding}{the encoding to assume for the file: the default
+  \item{fileEncoding}{the encoding to assume for the file: the default
     is to assume the native encoding.  See the \sQuote{Encoding} section
     of the help for \code{\link{file}}.}
 }

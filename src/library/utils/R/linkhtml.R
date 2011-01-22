@@ -1,4 +1,4 @@
-#  File src/library/utils/R/windows/linkhtml.R
+#  File src/library/utils/R/linkhtml.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
