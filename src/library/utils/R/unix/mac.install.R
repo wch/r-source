@@ -1,4 +1,4 @@
-#  File src/library/utils/R/aqua/install.packages.R
+#  File src/library/utils/R/unix/mac.install.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -33,16 +33,12 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 {
     link.html.help<-function(verbose = FALSE, ...)
     {
-        html <- getOption("htmlhelp")
-        # update only if temporary help files exist
-        if (!is.null(html) && html && file.exists(paste(tempdir(),"/.R/doc",sep=''))) {
-            #.Script("sh", "help-links.sh", paste(tempdir(), paste(.libPaths(),
-            #                                                      collapse = " ")))
-            make.packages.html()
-        }
+        ## What was here didn't work recently ....
     }
-    untar<-function(what, where)
+    untar <- function(what, where)
     {
+        ## FIXME: should this look for Sys.getenv('TAR')?
+        ## Leopard has GNU tar, SL has BSD tar.
         xcode <- system(paste("tar zxf \"", path.expand(what), "\" -C \"",
                               path.expand(where), "\"", sep=''), intern=FALSE)
         if (xcode)
@@ -102,7 +98,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         ## but we can't tell without trying to unpack it.
         for(i in seq_along(pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib)
-        link.html.help(verbose=TRUE)
+        # link.html.help(verbose=TRUE)
         return(invisible())
     }
     tmpd <- destdir
@@ -138,7 +134,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s", tmpd),
                 "\n", sep = "")
-        link.html.help(verbose = TRUE)
+        # link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
