@@ -201,6 +201,9 @@
 
       \item \code{file.edit()} gains a \code{fileEncoding} argument to
       specify the encoding of the file(s).
+
+      \item Large HTML package lists now have a contents block by first
+      character.
     }
   }
 

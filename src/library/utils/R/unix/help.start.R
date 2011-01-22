@@ -111,7 +111,6 @@ make.packages.html <-
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open = "a")
     on.exit(close(out))
-    ## find out how many
     pkgs <- vector("list", length(lib.loc))
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
@@ -119,26 +118,36 @@ make.packages.html <-
         pkgs[[lib]] <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
                                 "\\1", pg))
     }
-    tot <- sum(sapply(pkgs, length))
-    incr <- ifelse(tot > 500L, 100L, 10L)
-    npkgs <- 0L
     for (lib in lib.loc) {
-        if (verbose && npkgs %% incr == 0L) {
+        if (verbose) {
             message(".", appendLF = FALSE)
             flush.console()
         }
-        cat("<p><h3>Packages in ", lib,
-            '</h3>\n<p><table width="100%" summary="R Package list">\n',
-            sep = "", file=out)
-        for (i in pkgs[[lib]]) {
-            title <- packageDescription(i, lib.loc = lib, fields = "Title",
-                                        encoding = "UTF-8")
-            if (is.na(title)) title <- "-- Title is missing --"
-            cat('<tr align="left" valign="top">\n',
-                '<td width="25%"><a href="../../library/', i,
-                '/html/00Index.html">', i, "</a></td><td>", title,
-                "</td></tr>\n", file=out, sep="")
-            npkgs <- npkgs + 1L
+        ## Windows does next only if there is more than one library
+        cat("<p><h3>Packages in ", lib, "</h3>\n", sep = "", file = out)
+        pg <- pkgs[[lib]]
+        use_alpha <- (length(pg) > 100)
+        first <- substr(pg, 1, 1) # or toupper()
+        nm <- sort(names(table(first)))
+        if(use_alpha) {
+            writeLines("<p align=\"center\">", out)
+            writeLines(paste("<a href=\"#pkgs-", nm, "\">", nm, "</a>",
+                             sep = ""), out)
+            writeLines("</p>\n", out)
+        }
+        cat('<p><table width="100%" summary="R Package list">\n', file=out)
+        for (a in nm) {
+            if(use_alpha)
+                cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
+            for (i in pg[first == a]) {
+                title <- packageDescription(i, lib.loc = lib, fields = "Title",
+                                            encoding = "UTF-8")
+                if (is.na(title)) title <- "-- Title is missing --"
+                cat('<tr align="left" valign="top">\n',
+                    '<td width="25%"><a href="../../library/', i,
+                    '/html/00Index.html">', i, "</a></td><td>", title,
+                    "</td></tr>\n", file=out, sep="")
+            }
         }
         cat("</table>\n\n", file=out)
     }
@@ -147,6 +156,6 @@ make.packages.html <-
         message(" ", "done")
         flush.console()
     }
-    if (temp) saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
+    if (temp) saveRDS(list(libs=lib.loc), op)
     invisible(TRUE)
 }

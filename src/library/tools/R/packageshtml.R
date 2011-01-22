@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## this one is unused
 win.packages.html <-
     function(lib.loc=.libPaths(), docdir = R.home("doc"), libdir = .Library)
 {
@@ -98,18 +99,31 @@ unix.packages.html <-
             lib0 <- "../../library"
             libname <- "the standard library"
         }
-        cat("<p><h3>Packages in ", libname,
-            '</h3>\n<p>\n<table width="100%" summary="R Package list">\n',
+        cat("<p><h3>Packages in ", libname, "\n", sep = "", file=out)
+        use_alpha <- (length(pg) > 100)
+        first <- substr(pg, 1, 1) # or toupper()
+        nm <- sort(names(table(first)))
+        if(use_alpha) {
+            writeLines("<p align=\"center\">", out)
+            writeLines(paste("<a href=\"#pkgs-", nm, "\">", nm, "</a>",
+                             sep = ""), out)
+            writeLines("</p>\n", out)
+        }
+        cat('</h3>\n<p>\n<table width="100%" summary="R Package list">\n',
             sep = "", file=out)
-        for (i in pg) {
-            title <- utils::packageDescription(i, lib.loc = lib,
-                                               fields = "Title",
-                                               encoding = "UTF-8")
-            if (is.na(title)) title <- "-- Title is missing --"
-            cat('<tr align="left" valign="top">\n',
-                '<td width="25%"><a href="', lib0, '/', i,
-                '/html/00Index.html">', i, "</a></td><td>", title,
-                "</td></tr>\n", file=out, sep="")
+        for (a in nm) {
+            if(use_alpha)
+                cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
+            for (i in pg[first == a]) {
+                title <- utils::packageDescription(i, lib.loc = lib,
+                                                   fields = "Title",
+                                                   encoding = "UTF-8")
+                if (is.na(title)) title <- "-- Title is missing --"
+                cat('<tr align="left" valign="top">\n',
+                    '<td width="25%"><a href="', lib0, '/', i,
+                    '/html/00Index.html">', i, "</a></td><td>", title,
+                    "</td></tr>\n", file=out, sep="")
+            }
         }
         cat("</table>\n\n", file=out)
     }

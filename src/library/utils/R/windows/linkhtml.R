@@ -77,27 +77,39 @@ make.packages.html <-
                     paste(drive, lib, sep="") else lib
                 lib0 <- paste("file:///", URLencode(lib0), sep="")
             }
-        } else
-        libname <- "the standard library"
+        } else libname <- "the standard library"
         if(length(lib.loc) > 1L)
-            cat("<p><h3>Packages in ", libname, "</h3>\n",
-                sep = "", file = out)
+            cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file = out)
+        pg <- pkgs[[lib]]
+        use_alpha <- (length(pg) > 100)
+        first <- substr(pg, 1, 1) # or toupper()
+        nm <- sort(names(table(first)))
+        if(use_alpha) {
+            writeLines("<p align=\"center\">", out)
+            writeLines(paste("<a href=\"#pkgs-", nm, "\">", nm, "</a>",
+                             sep = ""), out)
+            writeLines("</p>\n", out)
+        }
         cat('<p>\n<table width="100%" summary="R Package list">\n', file = out)
-        for (i in pkgs[[lib]]) {
-            title <- packageDescription(i, lib.loc = lib, fields = "Title",
-                                        encoding = "UTF-8")
-            if (is.na(title)) title <- "-- Title is missing --"
-            cat('<tr align="left" valign="top">\n',
-                '<td width="25%"><a href="', lib0, '/', i,
-                '/html/00Index.html">', i, "</a></td><td>", title,
-                "</td></tr>\n", file=out, sep="")
-            npkgs <- npkgs + 1L
-            if(verbose) setWinProgressBar(pb, npkgs)
+        for (a in nm) {
+            if(use_alpha)
+                cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
+            for (i in pg[first == a]) {
+                title <- packageDescription(i, lib.loc = lib, fields = "Title",
+                                            encoding = "UTF-8")
+                if (is.na(title)) title <- "-- Title is missing --"
+                cat('<tr align="left" valign="top">\n',
+                    '<td width="25%"><a href="', lib0, '/', i,
+                    '/html/00Index.html">', i, "</a></td><td>", title,
+                    "</td></tr>\n", file=out, sep="")
+                npkgs <- npkgs + 1L
+                if(verbose) setWinProgressBar(pb, npkgs)
+            }
         }
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
     message("done")
-    if (temp) saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
+    if (temp) saveRDS(list(libs=lib.loc), op)
     invisible(TRUE)
 }
