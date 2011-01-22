@@ -141,7 +141,7 @@
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
                 if (build_help)
-                    unix.packages.html(.Library, docdir = R.home("doc"))
+                    utils::make.packages.html(.Library, docdir = R.home("doc"))
             }
         }
         if (lock && nzchar(lockdir)) unlink(lockdir, recursive = TRUE)

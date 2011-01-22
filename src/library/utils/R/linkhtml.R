@@ -19,14 +19,15 @@
 ## from unix/mac.install.R
 ## and when making the Windows installers.
 make.packages.html <-
-    function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
+    function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE,
+             docdir = R.home("doc"))
 {
     WINDOWS <- .Platform$OS.type == "windows"
     f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
         file.path(tempdir(), ".R/doc/html/packages.html")
-    } else file.path(R.home("doc"), "html", "packages.html")
+    } else file.path(docdir, "html", "packages.html")
     op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.

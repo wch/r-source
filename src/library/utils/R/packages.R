@@ -525,7 +525,7 @@ remove.packages <- function(pkgs, lib)
     updateIndices <- function(lib)
         if(lib == .Library && .Platform$OS.type == "unix") {
             message("Updating HTML index of packages in '.Library'")
-            tools:::unix.packages.html(.Library)
+            make.packages.html(.Library)
         }
 
     if(!length(pkgs)) return(invisible())

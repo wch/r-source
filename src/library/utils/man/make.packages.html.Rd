@@ -7,7 +7,8 @@
 \alias{make.packages.html}
 \title{Update HTML Package List}
 \usage{
-make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
+make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE,
+                   docdir = R.home("doc"))
 }
 \description{
   Re-create the HTML list of packages.
@@ -21,6 +22,8 @@ make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
     On Windows, show a progress bar.
 #endif
   }
+  \item{docdir}{If \code{temp} is false, directory in whose \file{html}
+    directory the \file{packages.html} file is to be created/updated.}
 }
 \details{
   This creates the \file{packages.html} file, either a temporary copy

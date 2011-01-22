@@ -440,7 +440,7 @@ install.packages <-
         libs_used <- unique(update[, 2L])
         if(.Platform$OS.type == "unix" && .Library %in% libs_used) {
             message("Updating HTML index of packages in '.Library'")
-            tools:::unix.packages.html(.Library)
+            make.packages.html(.Library)
         }
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
