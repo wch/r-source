@@ -140,7 +140,7 @@ export(nsl)
 if(tools:::.OStype() == "windows") {
 export(DLL.version, Filters, choose.dir, choose.files, getClipboardFormats,
        getIdentification, getWindowsHandle, getWindowsHandles, getWindowTitle,
-       link.html.help, loadRconsole, readClipboard,
+       loadRconsole, readClipboard,
        readRegistry, setStatusBar, setWindowTitle, shortPathName,
        win.version, winDialog, winDialogString, winMenuAdd,
        winMenuAddItem, winMenuDel, winMenuDelItem, winMenuNames,

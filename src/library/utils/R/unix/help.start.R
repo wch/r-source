@@ -115,19 +115,19 @@ make.packages.html <-
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
         pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pkgs[[lib]] <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
-                                "\\1", pg))
+        pg <- sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"), "\\1", pg)
+        pkgs[[lib]] <- pg[order(toupper(pg), pg)]
     }
     for (lib in lib.loc) {
+        libname <-
+            if (identical(lib, .Library)) "the standard library" else lib
         if (verbose) {
             message(".", appendLF = FALSE)
             flush.console()
         }
-        ## Windows does next only if there is more than one library
-        cat("<p><h3>Packages in ", lib, "</h3>\n", sep = "", file = out)
         pg <- pkgs[[lib]]
         use_alpha <- (length(pg) > 100)
-        first <- substr(pg, 1, 1) # or toupper()
+        first <- toupper(substr(pg, 1, 1))
         nm <- sort(names(table(first)))
         if(use_alpha) {
             writeLines("<p align=\"center\">", out)
@@ -143,6 +143,7 @@ make.packages.html <-
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
+                ## This link is only suitable for dynamic HTML
                 cat('<tr align="left" valign="top">\n',
                     '<td width="25%"><a href="../../library/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,

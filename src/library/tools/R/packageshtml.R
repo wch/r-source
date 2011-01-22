@@ -18,8 +18,7 @@
 ## called from
 # src/library/Makefile.in (install target)
 # and via .vinstall_package_indices (metadata target)
-# link.html.help (unix version)
-# R CMD INSTALL (unix and windows)
+# R CMD INSTALL (unix and windows), if pre-compiled help is used.
 unix.packages.html <-
     function(lib.loc=.libPaths(), docdir = R.home("doc"), libdir = .Library)
 {
@@ -31,7 +30,8 @@ unix.packages.html <-
     file.append(f.tg, file.path(docdir, "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
     for (lib in lib.loc) {
-        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        pg <- .packages(all.available = TRUE, lib.loc = lib)
+        pg <- pg[order(toupper(pg), pg)]
         ## use relative indexing for .Library
         if(lib != libdir) {
             libname <- lib
@@ -42,7 +42,7 @@ unix.packages.html <-
         }
         cat("<p><h3>Packages in ", libname, "\n", sep = "", file=out)
         use_alpha <- (length(pg) > 100)
-        first <- substr(pg, 1, 1) # or toupper()
+        first <- toupper(substr(pg, 1, 1))
         nm <- sort(names(table(first)))
         if(use_alpha) {
             writeLines("<p align=\"center\">", out)

@@ -14,19 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## This has Unix and Windows versions.
-## It is called from remove.packages if .Library is updated
-## The test always fails!
-link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
-{
-    if(!file.exists(file.path(R.home("doc"), "html", "search")))
-       return(invisible(NULL))
-    if(verbose) {
-        cat(gettext("updating HTML package descriptions\n"))
-        flush.console()
-    }
-    make.packages.html(lib.loc, verbose = verbose)
-}
 
 ## This is called by help.start (with temp=TRUE) and when making the installer.
 make.packages.html <-
@@ -49,8 +36,10 @@ make.packages.html <-
         warning("cannot update HTML package index")
         return(FALSE)
     }
-    message("Making packages.html", " ... ", appendLF = FALSE)
-    flush.console()
+    if (verbose) {
+        message("Making packages.html", " ... ", appendLF = FALSE)
+        flush.console()
+    }
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open = "a")
@@ -62,7 +51,8 @@ make.packages.html <-
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
         pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pkgs[[lib]] <- sort(sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg)))
+        pg <- sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg))
+        pkgs[[lib]] <- pg[order(toupper(pg), pg)]
     }
     tot <- sum(sapply(pkgs, length))
     if(verbose) {
@@ -71,21 +61,19 @@ make.packages.html <-
     }
     npkgs <- 0L
     for (lib in lib.loc) {
+        libname <-
+            if (identical(lib, .Library)) "the standard library" else chartr("/", "\\", lib)
+        cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file = out)
         lib0 <- "../../library"
-        ## use relative indexing for .Library
-        if(is.na(pmatch(rh, lib))) {
-            libname <- chartr("/", "\\", lib)
-            if(!temp) {
-                lib0 <- if(substring(lib, 2L, 2L) != ":")
-                    paste(drive, lib, sep="") else lib
-                lib0 <- paste("file:///", URLencode(lib0), sep="")
-            }
-        } else libname <- "the standard library"
-        if(length(lib.loc) > 1L)
-            cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file = out)
+        ## use relative indexing for .Library, perhaps other site libraries
+        if(!temp && is.na(pmatch(rh, lib))) {
+            lib0 <- if(substring(lib, 2L, 2L) != ":")
+                paste(drive, lib, sep="") else lib
+            lib0 <- paste("file:///", URLencode(lib0), sep="")
+        }
         pg <- pkgs[[lib]]
         use_alpha <- (length(pg) > 100)
-        first <- substr(pg, 1, 1) # or toupper()
+        first <- toupper(substr(pg, 1, 1))
         nm <- sort(names(table(first)))
         if(use_alpha) {
             writeLines("<p align=\"center\">", out)
@@ -112,7 +100,7 @@ make.packages.html <-
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
-    message("done")
+    if (verbose) message("done")
     if (temp) saveRDS(lib.loc, op)
     invisible(TRUE)
 }

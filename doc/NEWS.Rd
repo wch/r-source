@@ -269,6 +269,9 @@
 
       \item The \sQuote{experimenatal} alternative specification of a
       name space via \code{.Export()} etc is now deprecated.
+
+      \item The wrapper \code{utils::link.html.help()} is no longer
+      available.
     }
   }
 

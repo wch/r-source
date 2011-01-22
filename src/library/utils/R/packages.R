@@ -521,15 +521,12 @@ installed.packages <-
 
 remove.packages <- function(pkgs, lib)
 {
-    updateIndices <- function(lib) {
-        ## This should eventually be made public, as it could also be
-        ## used by install.packages() && friends.
-        if(lib == .Library) {
-            ## always does exist these days
-            if(exists("link.html.help", mode = "function"))
-                link.html.help()
+    ## This matches what install.packages() does
+    updateIndices <- function(lib)
+        if(lib == .Library && .Platform$OS.type == "unix") {
+            message("Updating HTML index of packages in '.Library'")
+            tools:::unix.packages.html(.Library)
         }
-    }
 
     if(!length(pkgs)) return(invisible())
 
