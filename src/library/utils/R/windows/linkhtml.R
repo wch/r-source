@@ -50,8 +50,9 @@ make.packages.html <-
     pkgs <- vector("list", length(lib.loc))
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
-        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pg <- sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg))
+        pg <- .packages(all.available = TRUE, lib.loc = lib)
+        ## pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        ## pg <- sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg))
         pkgs[[lib]] <- pg[order(toupper(pg), pg)]
     }
     tot <- sum(sapply(pkgs, length))

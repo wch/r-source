@@ -112,16 +112,22 @@ make.packages.html <-
     pkgs <- vector("list", length(lib.loc))
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
-        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pg <- sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"), "\\1", pg)
+        pg <- .packages(all.available = TRUE, lib.loc = lib)
+        ## pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        ## pg <- sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"), "\\1", pg)
         pkgs[[lib]] <- pg[order(toupper(pg), pg)]
     }
     for (lib in lib.loc) {
-        libname <-
-            if (identical(lib, .Library)) "the standard library" else lib
         if (verbose) {
             message(".", appendLF = FALSE)
             flush.console()
+        }
+        libname <-
+            if (identical(lib, .Library)) "the standard library" else lib
+        cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file=out)
+        lib0 <- "../../library"
+        if (!temp && lib != .Library) {
+            lib0 <- paste("file:///", URLencode(lib), sep="")
         }
         pg <- pkgs[[lib]]
         use_alpha <- (length(pg) > 100)
@@ -141,9 +147,8 @@ make.packages.html <-
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
-                ## This link is only suitable for dynamic HTML
                 cat('<tr align="left" valign="top">\n',
-                    '<td width="25%"><a href="../../library/', i,
+                    '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,
                     "</td></tr>\n", file=out, sep="")
             }
