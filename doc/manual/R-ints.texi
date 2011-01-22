@@ -2244,8 +2244,7 @@ evaluate their second argument, and @code{~}, @code{.Internal},
 arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
-arguments conditional on which are non-missing.  @code{c} is special to
-allow it to be used with language objects.
+arguments conditional on which are non-missing.
 
 @code{log}, @code{round} and @code{signif} are special to allow default
 values to be given to missing arguments.
