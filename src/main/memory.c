@@ -918,11 +918,6 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
     case VECSXP:
 	size = LENGTH(s) * sizeof(SEXP);
 	break;
-#ifdef PROTECTCHECK
-    case FREESXP:
-	if (gc_inhibit_release)
-	    break;
-#endif
     default:
 	register_bad_sexp_type(s);
 	size = 0;
@@ -1595,14 +1590,17 @@ static void RunGenCollect(R_size_t size_needed)
 	}
     }
     s = NEXT_NODE(R_GenHeap[LARGE_NODE_CLASS].New);
-    while (s != R_GenHeap[i].New) {
+    while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
 	SEXP next = NEXT_NODE(s);
 	if (TYPEOF(s) != NEWSXP) {
-	    if (CHAR(s) != NULL) {
-		R_size_t size = getVecSizeInVEC(s);
-		LENGTH(s) = size;
-	    }
 	    if (TYPEOF(s) != FREESXP) {
+		/**** could also leave this alone and restore the old
+		      node type in ReleaseLargeFreeVectors before
+		      calculating size */
+		if (CHAR(s) != NULL) {
+		    R_size_t size = getVecSizeInVEC(s);
+		    LENGTH(s) = size;
+		}
 		SETOLDTYPE(s, TYPEOF(s));
 		TYPEOF(s) = FREESXP;
 	    }
