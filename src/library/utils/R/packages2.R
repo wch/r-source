@@ -438,8 +438,10 @@ install.packages <-
                 "\n", sep = "")
         ## update packages.html on Unix only if .Library was installed into
         libs_used <- unique(update[, 2L])
-        if(.Platform$OS.type == "unix" && .Library %in% libs_used)
-            link.html.help(verbose = TRUE)
+        if(.Platform$OS.type == "unix" && .Library %in% libs_used) {
+            message("Updating HTML index of packages in '.Library'")
+            tools:::unix.packages.html(.Library)
+        }
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()

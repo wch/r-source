@@ -82,6 +82,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                  browser, quotedUrl, "&"))
 }
 
+## This is called by help.start (with temp=TRUE) and from mac.install.R
 make.packages.html <-
     function(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
 {
@@ -93,8 +94,7 @@ make.packages.html <-
     op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.
-        old <- readRDS(op)$libs
-        if(identical(lib.loc, old)) {
+        if(identical(lib.loc, readRDS(op))) {
             dates <- file.info(c(f.tg, lib.loc))$mtime
             if(which.max(dates) == 1L) return(TRUE)
         }
@@ -156,6 +156,6 @@ make.packages.html <-
         message(" ", "done")
         flush.console()
     }
-    if (temp) saveRDS(list(libs=lib.loc), op)
+    if (temp) saveRDS(lib.loc, op)
     invisible(TRUE)
 }

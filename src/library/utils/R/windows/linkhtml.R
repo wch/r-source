@@ -14,6 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## This has Unix and Windows versions.
+## It is called from remove.packages if .Library is updated
+## The test always fails!
 link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 {
     if(!file.exists(file.path(R.home("doc"), "html", "search")))
@@ -25,6 +28,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
     make.packages.html(lib.loc, verbose = verbose)
 }
 
+## This is called by help.start (with temp=TRUE) and when making the installer.
 make.packages.html <-
     function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 {
@@ -36,8 +40,7 @@ make.packages.html <-
     op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.
-        old <- readRDS(op)$libs
-        if(identical(lib.loc, old)) {
+        if(identical(lib.loc, readRDS(op))) {
             dates <- file.info(c(f.tg, lib.loc))$mtime
             if(which.max(dates) == 1L) return(TRUE)
         }
@@ -90,7 +93,7 @@ make.packages.html <-
                              sep = ""), out)
             writeLines("</p>\n", out)
         }
-        cat('<p>\n<table width="100%" summary="R Package list">\n', file = out)
+        cat('<p><table width="100%" summary="R Package list">\n', file=out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
@@ -110,6 +113,6 @@ make.packages.html <-
     }
     cat("</body></html>\n", file=out)
     message("done")
-    if (temp) saveRDS(list(libs=lib.loc), op)
+    if (temp) saveRDS(lib.loc, op)
     invisible(TRUE)
 }

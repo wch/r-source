@@ -525,6 +525,7 @@ remove.packages <- function(pkgs, lib)
         ## This should eventually be made public, as it could also be
         ## used by install.packages() && friends.
         if(lib == .Library) {
+            ## always does exist these days
             if(exists("link.html.help", mode = "function"))
                 link.html.help()
         }

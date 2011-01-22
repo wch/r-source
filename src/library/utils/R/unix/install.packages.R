@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## This has Unix and Windows versions.  It is called from
+## remove.packages if .Library is updated
 link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 {
     if(verbose)
