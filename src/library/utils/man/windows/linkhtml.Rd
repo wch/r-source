@@ -5,7 +5,7 @@
 
 \name{make.packages.html}
 \alias{make.packages.html}
-\title{Update HTML documentation files}
+\title{Update HTML Package List}
 \usage{
 make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 }
@@ -33,7 +33,8 @@ make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 }
 
 \value{
-  Logical value showing if it succeeded.
+  Invisible logical, with \code{FALSE} indicating a failure to create
+  the file, probably due to lack of suitable permissions.
 }
 
 \keyword{utilities}

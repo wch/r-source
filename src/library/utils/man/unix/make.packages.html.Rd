@@ -1,19 +1,19 @@
 % File src/library/utils/man/unix/make.packages.html.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{make.packages.html}
 \alias{make.packages.html}
 \title{Update HTML Package List}
 \usage{
-make.packages.html(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
+make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 }
 \description{
-  Re-create the HTML documentation files to reflect all available packages.
+  Re-create the HTML list of packages.
 }
 \arguments{
-  \item{lib.loc}{character vector. List of libraries to be included.}
+  \item{lib.loc}{character vector.  List of libraries to be included.}
   \item{temp}{logical: should the package indices be created in a
     temporary location for use by the HTTP server?}
   \item{verbose}{logical: should messages and a heartbeat be shown?}
@@ -30,6 +30,7 @@ make.packages.html(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
   file will only be re-created if \code{lib.loc} or any of the
   directories it lists have been changed.
 }
+
 \value{
   Invisible logical, with \code{FALSE} indicating a failure to create
   the file, probably due to lack of suitable permissions.
@@ -40,7 +41,8 @@ make.packages.html(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
 \examples{\dontrun{
 # to prefer HTML help, put in your .Rprofile
 options(help_type = "html")
-make.packages.html(temp = FALSE)
+make.packages.html()
 # this can be slow for large numbers of installed packages.
 }}
+
 \keyword{utilities}

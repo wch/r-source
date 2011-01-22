@@ -34,7 +34,7 @@ help.start(update = FALSE, gui = "irrelevant",
 
   One of the links on the index page is the HTML package index,
   \file{R.home("docs")/html/packages.html}, which can be remade by
-  \code{\link{make.packages.html}(temp = FALSE)}.  For local operation,
+  \code{\link{make.packages.html}()}.  For local operation,
   the HTTP server will remake a temporary version of this list when the
   link is first clicked, and each time thereafter check if updating is
   needed (if \code{\link{.libPaths}} has changed or any of the
