@@ -202,8 +202,11 @@
       \item \code{file.edit()} gains a \code{fileEncoding} argument to
       specify the encoding of the file(s).
 
-      \item Large HTML package lists now have a contents block by first
-      character.
+      \item The format of the HTML package lists has changed.  If there
+      is more than one library, a table of links to libraries is
+      provided at the top and bottom of the page.  Where a library
+      contains more than 100 packages, an alphabetic index is given at
+      the top of the section for that library.
     }
   }
 

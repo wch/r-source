@@ -15,13 +15,26 @@
 #  http://www.r-project.org/Licenses/
 
 
-## This is called by help.start (with temp=TRUE),
-## from unix/mac.install.R
-## and when making the Windows installers.
 make.packages.html <-
     function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE,
              docdir = R.home("doc"))
 {
+    add_lib_index <- function(libs)
+    {
+        cat('<div align="left">\n<ul>\n', file = out)
+        for (i in seq_along(libs)) {
+            nm <- libs[i]
+            if (nm == .Library) {
+                cat('<li>Contents of the <a href="#lib-', i, '">',
+                    'standard</a> library</li>\n', sep="", file = out)
+            } else {
+                cat('<li>Contents of <a href="#lib-', i, '">', nm,
+                    '</a></li>\n', sep="", file = out)
+            }
+        }
+        cat("</ul>\n</div>\n", file = out)
+    }
+
     WINDOWS <- .Platform$OS.type == "windows"
     f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
@@ -41,7 +54,7 @@ make.packages.html <-
         return(FALSE)
     }
     if (verbose) {
-        message("Making packages.html", " ... ", appendLF = FALSE)
+        message("Making packages.html  ...", appendLF = FALSE)
         flush.console()
     }
     file.append(f.tg,
@@ -67,10 +80,13 @@ make.packages.html <-
         }
         npkgs <- 0L
     }
-    for (lib in lib.loc) {
+    ## If there is more than one lib, have an index at the top and bottom
+    if (length(lib.loc) > 1L) add_lib_index(lib.loc)
+    for (ii in seq_along(lib.loc)) {
+        lib <- lib.loc[ii]
         libname <-
             if (identical(lib, .Library)) "the standard library" else if (WINDOWS) chartr("/", "\\", lib) else lib
-        cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file = out)
+        cat("<p><h3 id=\"lib-",ii,"\">Packages in ", libname, "</h3>\n", sep = "", file = out)
         lib0 <- "../../library"
         if (!temp) {
             if (WINDOWS) {
@@ -96,7 +112,7 @@ make.packages.html <-
                              sep = ""), out)
             writeLines("</p>\n", out)
         }
-        cat('<p><table width="100%" summary="R Package list">\n', file=out)
+        cat('<p><table width="100%" summary="R Package list>\n', file = out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
@@ -104,7 +120,7 @@ make.packages.html <-
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
-                cat('<tr align="left" valign="top">\n',
+                cat('<tr align="left" valign="top" id="lib-"', i, '">\n',
                     '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,
                     "</td></tr>\n", file=out, sep="")
@@ -116,6 +132,7 @@ make.packages.html <-
         }
         cat("</table>\n\n", file=out)
     }
+    if (length(lib.loc) > 1L) add_lib_index(lib.loc)
     cat("</body></html>\n", file=out)
     if (verbose) { message(" ", "done"); flush.console() }
     if (temp) saveRDS(lib.loc, op)
