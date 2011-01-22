@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-01-14 r53970)
+R version 2.13.0 Under development (unstable) (2011-01-22 r54063)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -8645,8 +8645,7 @@ List of 4
 > 
 > ### Name: lm.summaries
 > ### Title: Accessing Linear Model Fits
-> ### Aliases: family.lm formula.lm residuals.lm labels.lm weights
-> ###   weights.default
+> ### Aliases: family.lm formula.lm residuals.lm labels.lm
 > ### Keywords: regression models
 > 
 > ### ** Examples
