@@ -15,32 +15,34 @@
 #  http://www.r-project.org/Licenses/
 
 ## FIXME: merge with utils:make.packages.html (unix version)
+## Always called with lib.loc = .Library
 ## called from
 # src/library/Makefile.in (install target)
 # and via .vinstall_package_indices (metadata target)
 # R CMD INSTALL (unix and windows), if pre-compiled help is used.
-unix.packages.html <-
-    function(lib.loc=.libPaths(), docdir = R.home("doc"), libdir = .Library)
+unix.packages.html <- function(lib.loc=.libPaths(), docdir = R.home("doc"))
 {
     f.tg <- file.path(docdir, "html", "packages.html")
     if(!file.create(f.tg)) {
         warning("cannot create HTML package index")
         return(FALSE)
     }
-    file.append(f.tg, file.path(docdir, "html", "packages-head-utf8.html"))
-    out <- file(f.tg, open="a")
+    file.append(f.tg,
+                file.path(R.home("doc"), "html", "packages-head-utf8.html"))
+    out <- file(f.tg, open = "a")
+    on.exit(close(out))
     for (lib in lib.loc) {
         pg <- .packages(all.available = TRUE, lib.loc = lib)
         pg <- pg[order(toupper(pg), pg)]
         ## use relative indexing for .Library
-        if(lib != libdir) {
+        if(lib != .Library) {
             libname <- lib
             lib0 <- paste("file:///", lib, sep="")
         } else {
             lib0 <- "../../library"
             libname <- "the standard library"
         }
-        cat("<p><h3>Packages in ", libname, "\n", sep = "", file=out)
+        cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file=out)
         use_alpha <- (length(pg) > 100)
         first <- toupper(substr(pg, 1, 1))
         nm <- sort(names(table(first)))
@@ -50,8 +52,7 @@ unix.packages.html <-
                              sep = ""), out)
             writeLines("</p>\n", out)
         }
-        cat('</h3>\n<p>\n<table width="100%" summary="R Package list">\n',
-            sep = "", file=out)
+        cat('<p><table width="100%" summary="R Package list">\n', file=out)
         for (a in nm) {
             if(use_alpha)
                 cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
@@ -69,6 +70,5 @@ unix.packages.html <-
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
-    close(out)
     invisible(TRUE)
 }

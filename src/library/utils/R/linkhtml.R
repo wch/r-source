@@ -15,10 +15,13 @@
 #  http://www.r-project.org/Licenses/
 
 
-## This is called by help.start (with temp=TRUE) and when making the installer.
+## This is called by help.start (with temp=TRUE),
+## from unix/mac.install.R
+## and when making the Windows installers.
 make.packages.html <-
     function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 {
+    WINDOWS <- .Platform$OS.type == "windows"
     f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
@@ -44,33 +47,43 @@ make.packages.html <-
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open = "a")
     on.exit(close(out))
-    rh <- chartr("\\", "/", R.home())
-    drive <- substring(rh, 1L, 2L)
+    if(WINDOWS) {
+        rh <- chartr("\\", "/", R.home())
+        drive <- substring(rh, 1L, 2L)
+    }
     ## find out how many
     pkgs <- vector("list", length(lib.loc))
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
         pg <- .packages(all.available = TRUE, lib.loc = lib)
-        ## pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        ## pg <- sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg))
         pkgs[[lib]] <- pg[order(toupper(pg), pg)]
     }
-    tot <- sum(sapply(pkgs, length))
-    if(verbose) {
-        pb <- winProgressBar("R: creating packages.html", max = tot)
-        on.exit(close(pb), add = TRUE)
+    if (WINDOWS) {
+        tot <- sum(sapply(pkgs, length))
+        if(verbose) {
+            pb <- winProgressBar("R: creating packages.html", max = tot)
+            on.exit(close(pb), add = TRUE)
+        }
+        npkgs <- 0L
     }
-    npkgs <- 0L
     for (lib in lib.loc) {
         libname <-
-            if (identical(lib, .Library)) "the standard library" else chartr("/", "\\", lib)
+            if (identical(lib, .Library)) "the standard library" else if (WINDOWS) chartr("/", "\\", lib) else lib
         cat("<p><h3>Packages in ", libname, "</h3>\n", sep = "", file = out)
         lib0 <- "../../library"
-        ## use relative indexing for .Library, perhaps other site libraries
-        if(!temp && is.na(pmatch(rh, lib))) {
-            lib0 <- if(substring(lib, 2L, 2L) != ":")
-                paste(drive, lib, sep="") else lib
-            lib0 <- paste("file:///", URLencode(lib0), sep="")
+        if (!temp) {
+            if (WINDOWS) {
+                ## use relative indexing for .Library
+                ## perhaps other site libraries
+                if (is.na(pmatch(rh, lib))) {
+                    lib0 <- if(substring(lib, 2L, 2L) != ":")
+                        paste(drive, lib, sep="") else lib
+                    lib0 <- paste("file:///", URLencode(lib0), sep="")
+                }
+            } else {
+                if (lib != .Library)
+                    lib0 <- paste("file:///", URLencode(lib), sep="")
+            }
         }
         pg <- pkgs[[lib]]
         use_alpha <- (length(pg) > 100)
@@ -94,14 +107,16 @@ make.packages.html <-
                     '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,
                     "</td></tr>\n", file=out, sep="")
-                npkgs <- npkgs + 1L
-                if(verbose) setWinProgressBar(pb, npkgs)
+                if (WINDOWS) {
+                    npkgs <- npkgs + 1L
+                    if(verbose) setWinProgressBar(pb, npkgs)
+                }
             }
         }
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
-    if (verbose) message("done")
+    if (verbose) { message(" ", "done"); flush.console() }
     if (temp) saveRDS(lib.loc, op)
     invisible(TRUE)
 }
