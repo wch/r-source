@@ -521,12 +521,19 @@ installed.packages <-
 
 remove.packages <- function(pkgs, lib)
 {
-    ## This matches what install.packages() does
-    updateIndices <- function(lib)
+    updateIndices <- function(lib) {
+        ## This matches what install.packages() does
         if(lib == .Library && .Platform$OS.type == "unix") {
             message("Updating HTML index of packages in '.Library'")
             make.packages.html(.Library)
         }
+        ## is this the lib now empty?
+        Rcss <- file.path(lib, "R.css")
+        if (file.exists(Rcss)) {
+            pkgs <- Sys.glob(file.path(lib, "*", "Meta", "package.rds"))
+            if (!length(pkgs)) unlink(Rcss)
+        }
+    }
 
     if(!length(pkgs)) return(invisible())
 

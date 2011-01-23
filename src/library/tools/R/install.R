@@ -139,10 +139,8 @@
             ## Only need to do this in case we successfully installed
             ## at least one package
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
-            if (lib == .Library) {
-                if (build_help)
-                    utils::make.packages.html(.Library, docdir = R.home("doc"))
-            }
+            if (lib == .Library && "html" %in% build_help_types)
+                utils::make.packages.html(.Library, docdir = R.home("doc"))
         }
         if (lock && nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
     }
@@ -1665,7 +1663,7 @@
     a <- structure(MM[, 2L], names=MM[, 1L])
     saveRDS(a, file.path(outman, "aliases.rds"))
 
-    ## no HTML indices if no help pages?
+    ## have HTML index even if no help pages
     outman <- file.path(outDir, "html")
     dir.create(outman, showWarnings = FALSE)
     outcon <- file(file.path(outman, "00Index.html"), "wt")

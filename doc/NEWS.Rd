@@ -212,6 +212,10 @@
       which have non-default \code{encoding}.  Although documented to
       record if \sQuote{in principle} the connection supports seeking,
       it seems safer to report \code{FALSE} when it may not work.
+      
+      \item \comamnd{R CMD REMOVE} and \code{remove.packages()} now
+      remove file \code{R.css} when removing all remaining packages in a
+      library tree.  (Related to the wish of \PR{14475}.)
     }
   }
 
