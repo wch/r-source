@@ -5,6 +5,11 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.12.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item PCRE has been updated to 8.12 (two bug-fix releases since 8.10).
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{identical} could in rare cases generate a warning
