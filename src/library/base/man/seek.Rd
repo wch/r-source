@@ -70,7 +70,7 @@ truncate(con, \dots)
   implemented on all platforms: on others (including Windows) it will
   not work for large (> 2Gb) files.
   
-  None of these should be expected to work on connections with
+  None of these should be expected to work on text-mode connections with
   re-encoding selected.
 }
 \section{Warning}{

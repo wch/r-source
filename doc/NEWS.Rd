@@ -207,6 +207,11 @@
       provided at the top and bottom of the page.  Where a library
       contains more than 100 packages, an alphabetic index is given at
       the top of the section for that library.
+      
+      \item \code{isSeekable()} now returns \code{FALSE} on connections
+      which have non-default \code{encoding}.  Although documented to
+      record if \sQuote{in principle} the connection supports seeking,
+      it seems safer to report \code{FALSE} when it may not work.
     }
   }
 

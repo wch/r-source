@@ -1740,6 +1740,10 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     Connections[ncon] = con;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
+    /* see the comment in do_url */
+    if (con->encname[0] && !streql(con->encname, "native.enc"))
+	con->canseek = 0;
+
     /* open it if desired */
     if(strlen(open)) {
 	Rboolean success = con->open(con);
@@ -4709,6 +4713,11 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     con->blocking = block;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
+    /* only text-mode connections are affected, but we can't tell that
+       until the connection is opened, and why set an encoding on a
+       connection intended to be used in binary mode? */
+    if (con->encname[0] && !streql(con->encname, "native.enc"))
+	con->canseek = 0;
     /* open it if desired */
     if(strlen(open)) {
 	Rboolean success = con->open(con);
