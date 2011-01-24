@@ -302,6 +302,7 @@
         if (zip_up) { # Windows only
             starsmsg(stars, "MD5 sums")
             .installMD5sums(instdir)
+            ## we could use utils::zip() here.
             ZIP <- "zip"                # Windows only
             version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, ".zip")
@@ -309,6 +310,7 @@
             ## system(paste("rm -f", filepath))
             unlink(filepath)
             owd <- setwd(lib)
+            ## FIXME: test return value
             system(paste(ZIP, "-r9Xq", filepath,
                          paste(curPkg, collapse = " ")))
             setwd(owd)

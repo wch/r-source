@@ -223,6 +223,9 @@
       \command{unzip} program to be used, which can be useful for
       features supported by Info-ZIP's \command{unzip} version 6 which
       is now becoming more widely available.
+
+      \item There is a simple \code{zip()} function, as wrapper for an
+      external \command{unzip} command.
     }
   }
 

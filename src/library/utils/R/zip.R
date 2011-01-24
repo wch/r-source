@@ -56,6 +56,7 @@ unzip <-
     } else {
         if(!is.character(unzip) || length(unzip) != 1L || !nzchar(unzip))
             stop("'unzip' must be a single character string")
+        zipfile <- path.expand(zipfile)
         if (list) {
             res <- system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE,
                            env = c("TZ=UTC"))
@@ -76,3 +77,14 @@ unzip <-
         }
     }
 }
+
+zip <- function(zipfile, files, flags = "-r9X", extras = "",
+                zip = Sys.getenv("R_ZIPCMD", "zip"))
+{
+    if (missing(flags) && (!is.character(files) || !length(files)))
+        stop("'files' must a character vector specifying one or more filepaths")
+    args <- c(flags, shQuote(path.expand(zipfile)),
+              shQuote(files), extras)
+    invisible(system2(zip, args))
+}
+

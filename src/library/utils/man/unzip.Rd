@@ -43,7 +43,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   users to be able to unpack Windows binary packages without external
   software.  It does not (for example) support Unicode filenames and
   large files as introduced in \command{zip 3.0}: for that use
-  \code{unzip = "unzip"} with \command{unzip 6.0} or later.
+  \code{unzip = "unzip"} with \command{unzip 6.00} or later.
 }
 
 \value{
@@ -64,6 +64,8 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 \seealso{
   \code{\link{unz}} and \code{\link{zip.file.extract}} to read a single
   component from a zip file.
+
+  \code{\link{zip}}.
 }
 
 \keyword{file}

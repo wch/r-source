@@ -139,8 +139,8 @@
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
       initial value for \code{\link{options}("unzip")} on a Unix-alike
       when package \pkg{utils} is loaded.}
-    \item{\env{R_ZIPCMD}:}{The path to \command{zip}.  Only used in \R
-      itself by \command{R CMD INSTALL --build} on Windows.}
+    \item{\env{R_ZIPCMD}:}{The path to \command{zip}. Used by
+      \code{\link{zip}} and by \command{R CMD INSTALL --build} on Windows.}
     \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
       order) when setting the temporary directory for the session: see
       \code{\link{tempdir}}.  \env{TMPDIR} is also used by some of the
