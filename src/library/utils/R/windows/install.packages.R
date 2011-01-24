@@ -17,7 +17,17 @@
 ## Unexported helper
 unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 {
-    ## Create a temporary directory and unpack the zip to it
+    .zip.unpack <- function(zipname, dest)
+    {
+        if(file.exists(zipname)) {
+            if((unzip <- getOption("unzip")) != "internal") {
+                system(paste(unzip, "-oq", zipname, "-d", dest),
+                       show.output.on.console = FALSE, invisible = TRUE)
+            } else unzip(zipname, exdir = dest)
+        } else stop(gettextf("zipfile '%s' not found", zipname), domain = NA)
+    }
+
+## Create a temporary directory and unpack the zip to it
     ## then get the real package name, copying the
     ## dir over to the appropriate install dir.
     lib <- normalizePath(lib, mustWork = TRUE)
@@ -29,7 +39,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     on.exit(unlink(tmpDir, recursive=TRUE))
     cDir <- getwd()
     on.exit(setwd(cDir), add = TRUE)
-    res <- zip.unpack(pkg, tmpDir)
+    res <- .zip.unpack(pkg, tmpDir)
     setwd(tmpDir)
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
     if(!is.na(res) && res) {
@@ -274,14 +284,14 @@ menuInstallLocal <- function()
                      .libPaths()[1L], repos = NULL)
 }
 
-### the following function supports .install.winbinaries()
-
+### Deprecated in 2.13.0
 zip.unpack <- function(zipname, dest)
 {
+    .Deprecated("unzip")
     if(file.exists(zipname)) {
         if((unzip <- getOption("unzip")) != "internal") {
             system(paste(unzip, "-oq", zipname, "-d", dest),
-                   show = FALSE, invisible = TRUE)
+                   show.output.on.console = FALSE, invisible = TRUE)
         } else unzip(zipname, exdir = dest)
     } else stop(gettextf("zipfile '%s' not found", zipname),
                 domain = NA)

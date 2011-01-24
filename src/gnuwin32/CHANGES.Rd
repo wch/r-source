@@ -34,7 +34,12 @@
       
     }
   }
-  
+
+  \subsection{DEPRECATED}{
+    \itemize{
+      \item{zip.unpack()} is deprecated: use \code{unzip()}.
+    }
+  }
   \subsection{INSTALLATION}{
     \itemize{
       \item There is support for \samp{libjpeg-turbo} \emph{via}

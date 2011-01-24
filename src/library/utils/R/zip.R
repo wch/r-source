@@ -72,7 +72,8 @@ unzip <-
             if (length(files)) args <- c(args, shQuote(files))
             if (exdir != ".") args <- c(args, "-d", shQuote(exdir))
             ## there is an unzip clone about that does not respect -q
-            system2(unzip, args, stdout = NULL, stderr = NULL)
+            system2(unzip, args, stdout = NULL, stderr = NULL,
+                    invisible = TRUE)
             invisible(NULL)
         }
     }
@@ -85,6 +86,6 @@ zip <- function(zipfile, files, flags = "-r9X", extras = "",
         stop("'files' must a character vector specifying one or more filepaths")
     args <- c(flags, shQuote(path.expand(zipfile)),
               shQuote(files), extras)
-    invisible(system2(zip, args))
+    invisible(system2(zip, args, invisible = TRUE))
 }
 
