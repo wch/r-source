@@ -44,6 +44,10 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   software.  It does not (for example) support Unicode filenames and
   large files as introduced in \command{zip 3.0}: for that use
   \code{unzip = "unzip"} with \command{unzip 6.00} or later.
+
+  If \code{unzip} specifies a program, the format of the dates listed
+  with \code{list=TRUE} is unknown and the return values could be
+  \code{NA} or expressed in the wrong timezone.
 }
 
 \value{

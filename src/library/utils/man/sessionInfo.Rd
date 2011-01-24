@@ -28,13 +28,13 @@ sessionInfo(package = NULL)
   An object of class \code{"sessionInfo"}, which has a \code{print}
   method. This is a list with components
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
-  \item{platform}{a character string describing the platform. In recent
+  \item{platform}{a character string describing the platform.  For recent
     versions where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
-  \item{otherPkgs}{(not always present): a character vector os other
+  \item{otherPkgs}{(not always present): a character vector of other
     attached packages.}
   \item{loadedOnly}{(not always present): a named list of the results of
     calling \code{\link{packageDescription}} on packages whose
