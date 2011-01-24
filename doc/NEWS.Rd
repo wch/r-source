@@ -225,7 +225,7 @@
       is now becoming more widely available.
 
       \item There is a simple \code{zip()} function, as wrapper for an
-      external \command{unzip} command.
+      external \command{zip} command.
 
       \item Cocoa Quartz back-end provides a way to disable event loop
       processing temporarily (useful, e.g., for forked instances of R).

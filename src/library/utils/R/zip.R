@@ -68,6 +68,8 @@ unzip <-
             res2 <- res[-c(1,3, l-1, l)]
             con <- textConnection(res2); on.exit(close(con))
             z <- read.table(con, header=TRUE)
+            ## It gets worse: Windows unzip 6.00 has "%d/%m/%Y"
+            ## and Fedora unzip 6.00 has "%m-%d-%Y"
             format <- if(WINDOWS) "%d/%m/%y %H:%M"else "%m-%d-%y %H:%M"
             z[, "Date"] <- as.POSIXct(paste(z$Date, z$Time), tz="UTC",
                                       format =format)
