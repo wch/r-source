@@ -65,7 +65,7 @@
       \item \code{IQR()} now has a \code{type} argument passed to
       \code{quantile()}.
 
-      \item \code{as.vector()} and \code{as.double()} etc duplicate less
+      \item \code{as.vector()}, \code{as.double()} etc duplicate less
       when they leave the mode unchanged but remove attributes.
 
       \code{as.vector(mode = "any")} no longer duplicates when it does
@@ -206,7 +206,8 @@
       is more than one library, a table of links to libraries is
       provided at the top and bottom of the page.  Where a library
       contains more than 100 packages, an alphabetic index is given at
-      the top of the section for that library.
+      the top of the section for that library.  (As a consequence,
+      entries are now sorted case-insensitively whatever the locale.)
       
       \item \code{isSeekable()} now returns \code{FALSE} on connections
       which have non-default \code{encoding}.  Although documented to
@@ -341,7 +342,7 @@
       \item \code{pretty(x)} no longer raises an error when \code{x}
       contains solely non-finite values. (\PR{14468})
 
-      \item The \code{plot.TukeyHSD} function now uses a line width of
+      \item The \code{plot.TukeyHSD()} function now uses a line width of
       0.5 for its reference lines rather than \samp{lwd = 0} (which
       caused problems for some PDF and PostScript viewers).
 
@@ -370,7 +371,7 @@
       case \eqn{m = 0}. (\PR{14473})
 
       \item The rendering of numbers in plotmath expressions (e.g.
-      \code{expression(10^2)} used the current settings for conversion
+      \code{expression(10^2)}) used the current settings for conversion
       to strings rather than setting the defaults, and so could be
       affected by what has been done before.  (\PR{14477})
 
