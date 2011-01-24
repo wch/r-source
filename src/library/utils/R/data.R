@@ -157,6 +157,13 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                         found <- TRUE
                         Rdatadir <- file.path(tempdir(), "Rdata")
                         dir.create(Rdatadir, showWarnings=FALSE)
+##                         zfile <- file
+##                         zipname <- file.path(dirname(file), "Rdata.zip")
+##                         if(file.exists(zipname)) {
+##                             topic <- basename(file)
+##                             rc <- .Internal(unzip(zipname, topic, Rdatadir, FALSE, TRUE, FALSE))
+##                             if(rc==OL) zfile <- file.path(Rdatadir, topic)
+##                         }
                         zfile <- zip.file.extract(file, "Rdata.zip", dir=Rdatadir)
                         if(zfile != file) on.exit(unlink(zfile))
                         switch(ext,
