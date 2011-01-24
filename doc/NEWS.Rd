@@ -27,14 +27,14 @@
       \item \code{pretty(x)} no longer raises an error when \code{x}
       contains solely non-finite values. (\PR{14468})
 
-      \item The \code{plot.TukeyHSD} function now uses a line width of
+      \item The \code{plot.TukeyHSD()} function now uses a line width of
       0.5 for its reference lines rather than \samp{lwd = 0} (which
       caused problems for some PDF and PostScript viewers).
-      
+
       \item The \code{big.mark} argument to \code{prettyNum()},
       \code{format()}, etc. was inserted reversed if it was more than
       one character long.
-      
+
       \item \command{R CMD check} failed to check the filenames under
       \file{man} for Windows' reserved names.
 
@@ -45,7 +45,7 @@
       \item The internal method of \code{untar()} now restores hard
       links as file copies rather than symbolic links (which did not
       work for cross-directory links).
-      
+
       \item \code{unzip()} did not handle zip files which contained
       filepaths with two or more leading directories which were not in
       the zipfile and did not already exist.  (It is unclear if such
@@ -56,7 +56,7 @@
       case \eqn{m = 0}. (\PR{14473})
 
       \item The rendering of numbers in plotmath expressions (e.g.
-      \code{expression(10^2)} used the current settings for conversion
+      \code{expression(10^2)}) used the current settings for conversion
       to strings rather than setting the defaults, and so could be
       affected by what has been done before.  (\PR{14477})
 
@@ -200,7 +200,7 @@
       for class \code{"Date"} rounded fractional dates towards zero: it
       now always rounds them down.
 
-      \item Reference class creation could generate ambiguous
+      \item Reference S4 class creation could generate ambiguous
       inheritance patterns under very special circumstances.
 
       \item \samp{[[<-} turned S4 subclasses of \code{"environment"} into
