@@ -2642,7 +2642,7 @@ encodings for French locales, the most common ones being @samp{CP1252}
 which includes the Euro), and @samp{UTF-8}.  For characters in the
 French language the first three agree, but they do not agree with
 @samp{UTF-8}.  Further, you (or different users of your machine) can run
-@R{} in different locales in different sessions, say @samp{fr_CA.utf8}
+@R{} in different locales in different sessions, say @samp{fr_CA.UTF-8}
 one day and @samp{fr_CH.iso88591} the next.  Declaring the encoding as
 either @samp{latin1} or @samp{UTF-8} in the @file{DESCRIPTION} file will
 enable this to work.
@@ -2662,7 +2662,7 @@ that sets the encoding you may need to specify a suitable locale
 is equivalent to the value
 
 @example
-"latin1=en_US:latin2=pl_PL:UTF-8=en_US.utf8:latin9=fr_FR.iso885915@@euro"
+"latin1=en_US:latin2=pl_PL:UTF-8=en_US.UTF-8:latin9=fr_FR.iso885915@@euro"
 @end example
 
 @noindent
