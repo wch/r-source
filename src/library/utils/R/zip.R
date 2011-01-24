@@ -54,18 +54,23 @@ unzip <-
             data.frame(Name = res[[1]], Length = res[[2]], Date = dates)
         } else invisible(attr(res, "extracted"))
     } else {
+        WINDOWS <- .Platform$OS.type == "windows"
         if(!is.character(unzip) || length(unzip) != 1L || !nzchar(unzip))
             stop("'unzip' must be a single character string")
         zipfile <- path.expand(zipfile)
         if (list) {
-            res <- system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE,
-                           env = c("TZ=UTC"))
+            res <- if (WINDOWS)
+                    system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE)
+                else
+                    system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE,
+                            env = c("TZ=UTC"))
             l <- length(res)
             res2 <- res[-c(1,3, l-1, l)]
             con <- textConnection(res2); on.exit(close(con))
             z <- read.table(con, header=TRUE)
-            z[, "Date"] <- as.POSIXct(paste(z$Date, z$Time),
-                                      "%m-%d-%y %H:%M",  tz="UTC")
+            format <- if(WINDOWS) "%d/%m/%y %H:%M"else "%m-%d-%y %H:%M"
+            z[, "Date"] <- as.POSIXct(paste(z$Date, z$Time), tz="UTC",
+                                      format =format)
             z[c("Name", "Length", "Date")]
         } else {
             args <- c("-oq", shQuote(zipfile))
