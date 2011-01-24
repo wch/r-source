@@ -13,7 +13,7 @@
 }
 \usage{
 unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
-       junkpaths = FALSE, exdir = ".")
+       junkpaths = FALSE, exdir = ".", unzip = "internal")
 }
 \arguments{
   \item{zipfile}{The pathname of the zip file: tilde expansion (see
@@ -33,12 +33,17 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
+
+  \item{unzip}{The method to be used. An alternative is to use
+  \code{getOption("unzip"}), which on a Unix-alike may be set to the
+  path to a \command{unzip} program.}
 }
 \note{
   This is a minimal implementation, principally designed for Windows'
   users to be able to unpack Windows binary packages without external
   software.  It does not (for example) support Unicode filenames and
-  large files as introduced in \command{zip 3.0}.
+  large files as introduced in \command{zip 3.0}: for that use
+  \code{unzip = "unzip"} with \command{unzip 6.0} or later.
 }
 
 \value{
@@ -46,11 +51,12 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \code{Length} (the size of the uncompressed file) and \code{Date} (of
   class \code{"\link{POSIXct}"}).
 
-  Otherwise, a character vector of the filepaths extracted to, invisibly.
+  Otherwise for the \code{"internal"} method, a character vector of the
+  filepaths extracted to, invisibly.
 }
 
 \source{
-  The C code uses \code{zlib} and is in particular based on the
+  The internal C code uses \code{zlib} and is in particular based on the
   contributed \samp{minizip} application in the \code{zlib} sources
   (from \url{http://zlib.net}) by Gilles Vollant.
 }

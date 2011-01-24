@@ -217,6 +217,12 @@
       \item \command{R CMD REMOVE} and \code{remove.packages()} now
       remove file \code{R.css} when removing all remaining packages in a
       library tree.  (Related to the wish of \PR{14475}.)
+
+      \item \code{unzip()} now has a \code{unzip} argument like
+      \code{zip.file.extract()}.  This allows an external
+      \command{unzip} program to be used, which can be useful for
+      features supported by Info-ZIP's \command{unzip} version 6 which
+      is now becoming more widely available.
     }
   }
 
