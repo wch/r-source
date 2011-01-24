@@ -297,6 +297,8 @@
 
       \item The wrapper \code{utils::link.html.help()} is no longer
       available.
+
+      \item \code{zip.file.extract()} is now deprecated.
     }
   }
 

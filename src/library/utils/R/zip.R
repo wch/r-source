@@ -17,6 +17,7 @@
 zip.file.extract <- function(file, zipname = "R.zip",
 			     unzip = getOption("unzip"), dir = tempdir())
 {
+    .Deprecated("unzip")
     path <- dirname(file)
     topic <- basename(file)
     if(file.exists(file.path(path, zipname))) {
