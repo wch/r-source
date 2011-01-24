@@ -107,7 +107,7 @@ install: installdirs
 	  (cd $(top_builddir)/library; \
 	    $(TAR) cf - . | (cd "$(DESTDIR)$(rhome)/library"; $(TAR) xmof -))
 	@$(ECHO) "  building HTML index ..."
-	@$(ECHO) "utils:::make.packages.html(.Library, docdir=\"$(DESTDIR)${rdocdir}\")" | \
+	@$(ECHO) "utils:::make.packages.html(.Library, verbose=FALSE, docdir=\"$(DESTDIR)${rdocdir}\")" | \
           R_DEFAULT_PACKAGES=NULL LC_ALL=C ${R_EXE} >/dev/null
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library"
