@@ -2110,11 +2110,12 @@ Chinese.
 @subsection Locales under Linux
 
 Modern Linux uses the XPG locale specifications which have the form
-@samp{en_GB}, @samp{en_GB.utf8}, @samp{aa_ER.utf8@@saaho},
+@samp{en_GB}, @samp{en_GB.UTF-8}, @samp{aa_ER.UTF-8@@saaho},
 @samp{de_AT.iso885915@@euro}, the components being in the order listed
 above.  (See @command{man locale} and @command{locale -a} for more
 details.)  Similar schemes (but often in different cases) are used by
-most Unix-alikes: some use @samp{.UTF-8} rather than @samp{.utf8}.
+most Unix-alikes: some (including earlier versions of Linux) use
+@samp{.utf8} rather than @samp{.UTF-8}.
 
 @node Locales under Windows, Locales under Mac OS X, Locales under Linux, Locales
 @subsection Locales under Windows
@@ -3701,9 +3702,9 @@ are using has an entry in the @samp{XLC_LOCALE} directory (typically
 is to pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be
-displayed when running in @samp{ja_JP.utf8} but not when running in
-@samp{en_GB.utf8} on the same machine (although on some systems many
-UTF-8 X11 locales are aliased to @samp{en_US.utf8} which covers several
+displayed when running in @samp{ja_JP.UTF-8} but not when running in
+@samp{en_GB.UTF-8} on the same machine (although on some systems many
+UTF-8 X11 locales are aliased to @samp{en_US.UTF-8} which covers several
 character sets, e.g.@: ISO 8859-1 (Western European), JISX0208 (Kanji),
 KSC5601 (Korean), GB2312 (Chinese Han) and JISX0201 (Kana)).
 
