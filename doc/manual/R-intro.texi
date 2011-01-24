@@ -2584,7 +2584,7 @@ files}.
 @findex attach
 @findex detach
 
-The @code{$} notation, such as @code{accountants$statef}, for list
+The @code{$} notation, such as @code{accountants$home}, for list
 components is not always very convenient.  A useful facility would be
 somehow to make the components of a list or data frame temporarily
 visible as variables under their component name, without the need to
