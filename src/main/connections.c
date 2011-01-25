@@ -1377,26 +1377,65 @@ static void bzfile_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int bzfile_fgetc_internal(Rconnection con)
-{
-    Rbzfileconn bz = con->private;
-    char buf[1];
-    int bzerror, size;
-
-    size = BZ2_bzRead(&bzerror, bz->bfp, buf, 1);
-    return (size < 1) ? R_EOF : (buf[0] % 256);
-}
-
 static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
     Rbzfileconn bz = con->private;
+    size_t nread = 0, nleft;
     int bzerror;
 
-    /* uses 'int' for len */
+    /* BZ2 uses 'int' for len */
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
-    return BZ2_bzRead(&bzerror, bz->bfp, ptr, size*nitems)/size;
+
+    nleft = size * nitems;
+    /* we try to fill the buffer, because fgetc can interact with the stream boundaries
+       resulting in truncated text streams while binary streams work fine */
+    while (nleft > 0) {
+	size_t n = BZ2_bzRead(&bzerror, bz->bfp, ptr + nread, nleft);
+	if (bzerror == BZ_STREAM_END) { /* this could mean multiple streams so we need to check */
+	    char *unused, *next_unused = 0;
+	    int nUnused;
+	    BZ2_bzReadGetUnused(&bzerror, bz->bfp, (void**) &unused, &nUnused);
+	    if (bzerror == BZ_OK) {
+		if (nUnused > 0) { /* unused bytes present - need to retain them */
+		    /* given that this should be rare I don't want to add that overhead
+		       to the entire bz structure so we allocate memory temporarily */
+		    next_unused = (char*) malloc(nUnused);
+		    if (!next_unused)
+			error(_("allocation of overflow buffer for bzfile failed"));
+		    memcpy(next_unused, unused, nUnused);
+		}
+		if (nUnused > 0 || !feof(bz->fp)) {
+		    BZ2_bzReadClose(&bzerror, bz->bfp);	
+		    bz->bfp = BZ2_bzReadOpen(&bzerror, bz->fp, 0, 0, next_unused, nUnused);
+		    if(bzerror != BZ_OK)
+			warning(_("file '%s' has trailing content that appears not to be compressed by bzip2"),
+				R_ExpandFileName(con->description));
+		}
+		if (next_unused) free(next_unused);
+	    }
+	} else if (bzerror != BZ_OK) {
+	    /* bzlib docs say in this case n is invalid - but historically
+	       we still used n in that case, so I keep it for now */
+	    nread += n;
+	    break;
+	}
+	nread += n;
+	nleft -= n;
+    }
+    
+    return nread / size;
+}
+
+static int bzfile_fgetc_internal(Rconnection con)
+{
+    Rbzfileconn bz = con->private;
+    char buf[1];
+    size_t size;
+
+    size = bzfile_read(buf, 1, 1, con);
+    return (size < 1) ? R_EOF : (buf[0] % 256);
 }
 
 static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
