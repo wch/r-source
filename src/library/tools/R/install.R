@@ -392,7 +392,6 @@
             ## used for inst/
             if (WINDOWS) {
                 file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
-                # system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
             } else {
                 from <- shQuote(from)
                 to <- shQuote(to)
@@ -904,14 +903,6 @@
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
 
-	## Defunct:
-	## FIXME: remove these at some point
-	if (file.exists("install.R"))
-	    warning("use of file 'install.R' is no longer supported",
-		    call. = FALSE, domain = NA)
-	if (file.exists("R_PROFILE.R"))
-	    warning("use of file 'R_PROFILE.R' is no longer supported",
-		    call. = FALSE, domain = NA)
 	value <- parse_description_field(desc, "SaveImage", default = NA)
 	if (!is.na(value))
 	    warning("field 'SaveImage' is defunct: please remove it",
