@@ -403,6 +403,9 @@
       static browsing in libraries.
 
       \item \code{ccf(na.action = na.pass)} was not implemented.
+
+      \item The parser accepted some incorrect numeric constants,
+      e.g. \code{20x2}.  (Reported by Olaf Mersmann.)
     }
   }
 }
