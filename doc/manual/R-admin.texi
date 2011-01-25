@@ -2109,13 +2109,13 @@ Chinese.
 @node Locales under Linux, Locales under Windows, Locales, Locales
 @subsection Locales under Linux
 
-Modern Linux uses the XPG locale specifications which have the form
+Modern Linux uses the XPG@footnote{`X/Open Portability Guide', which has
+had several versions.} locale specifications which have the form
 @samp{en_GB}, @samp{en_GB.UTF-8}, @samp{aa_ER.UTF-8@@saaho},
 @samp{de_AT.iso885915@@euro}, the components being in the order listed
 above.  (See @command{man locale} and @command{locale -a} for more
-details.)  Similar schemes (but often in different cases) are used by
-most Unix-alikes: some (including earlier versions of Linux) use
-@samp{.utf8} rather than @samp{.UTF-8}.
+details.)  Similar schemes are used by most Unix-alikes: some (including
+some distributions of Linux) use @samp{.utf8} rather than @samp{.UTF-8}.
 
 @node Locales under Windows, Locales under Mac OS X, Locales under Linux, Locales
 @subsection Locales under Windows
@@ -2143,8 +2143,10 @@ terminal may need to set the locale to something like @samp{en_GB.UTF-8}
 if it defaults to @samp{C}.
 
 Internally Mac OS X uses a form similar to Linux but without specifying
-the encoding (which is @code{UTF-8}).  It is based on ICU locales
-(@uref{http://userguide.icu-project.org/@/locale}) and not POSIX ones.
+the encoding (which is normally @code{UTF-8}).  It is based on ICU
+locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
+XPG ones, but utilties such as @code{Sys.setlocale()} do now normally
+accept XPG forms.
 
 
 @node Localization of messages,  , Locales, Internationalization
