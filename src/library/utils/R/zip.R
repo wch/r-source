@@ -17,7 +17,7 @@
 zip.file.extract <- function(file, zipname = "R.zip",
 			     unzip = getOption("unzip"), dir = tempdir())
 {
-    .Deprecated("unzip")
+    .Deprecated("unzip") # in 2.13.0
     path <- dirname(file)
     topic <- basename(file)
     if(file.exists(file.path(path, zipname))) {
@@ -52,7 +52,8 @@ unzip <-
         res <- .Internal(unzip(zipfile, files, exdir, list, overwrite, junkpaths))
         if(list) {
             dates <- as.POSIXct(res[[3]], "%Y-%m-%d %H:%M",  tz="UTC")
-            data.frame(Name = res[[1]], Length = res[[2]], Date = dates)
+            data.frame(Name = res[[1]], Length = res[[2]], Date = dates,
+                       stringsAsFactors = TRUE)
         } else invisible(attr(res, "extracted"))
     } else {
         WINDOWS <- .Platform$OS.type == "windows"
@@ -68,12 +69,28 @@ unzip <-
             l <- length(res)
             res2 <- res[-c(1,3, l-1, l)]
             con <- textConnection(res2); on.exit(close(con))
-            z <- read.table(con, header=TRUE)
-            ## It gets worse: Windows unzip 6.00 has "%d/%m/%Y"
-            ## and Fedora unzip 6.00 has "%m-%d-%Y"
-            format <- if(WINDOWS) "%d/%m/%y %H:%M"else "%m-%d-%y %H:%M"
-            z[, "Date"] <- as.POSIXct(paste(z$Date, z$Time), tz="UTC",
-                                      format =format)
+            z <- read.table(con, header=TRUE, as.is=TRUE)
+            dt <- paste(z$Date, z$Time)
+            ## Unzip 6.00 always uses 4-digits years, but any order is
+            ## possible and the separator could be - or / (depending
+            ## on the locale on Windows).
+            ## Unzip 5.52 uses 2-digit years, but default to "%m-%d-%y" on
+            ## most platforms (but is locale-dependent on Windows).
+            formats <-
+                if (max(nchar(z$Date) > 8))
+                    c("%Y-%m-%d", "%d-%m-%Y", "%m-%d-%Y") else
+                    ## At this point we are guessing: there is no way
+                    ## to know what "08-09-10" means.  Take the most common
+                    ## default first.
+                    c("%m-%d-%y", "%d-%m-%y", "%y-%m-%d")
+            slash <- any(grepl("/", z$Date))
+            if (slash) formats <- gsub("-", "/", formats)
+            formats <- paste(formats, "%H:%M")
+            for (f in formats) {
+                zz <- as.POSIXct(dt, tz="UTC", format = f)
+                if (all(!is.na(zz))) break
+            }
+            z[, "Date"] <- zz
             z[c("Name", "Length", "Date")]
         } else {
             args <- c("-oq", shQuote(zipfile))
