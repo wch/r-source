@@ -2795,6 +2795,7 @@ enum {
   GETVAR_MISSOK_OP,
   DDVAL_MISSOK_OP,
   VISIBLE_OP,
+  SETVAR2_OP,
   OPCOUNT
 };
 
@@ -3992,6 +3993,17 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(GETVAR_MISSOK, 1): DO_GETVAR(FALSE, TRUE);
     OP(DDVAL_MISSOK, 1): DO_GETVAR(TRUE, TRUE);
     OP(VISIBLE,0): R_Visible = TRUE; NEXT();
+    OP(SETVAR2, 1):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = R_BCNodeStackTop[-1];
+	if (NAMED(value)) {
+	    value = duplicate(value);
+	    R_BCNodeStackTop[-1] = value;
+	}
+	setVar(symbol, value, ENCLOS(rho));
+	NEXT();
+      }
     LASTOP;
   }
 
