@@ -4207,6 +4207,7 @@ static int NumericValue(int c)
     int last = c;
     int nd = 0;
     int asNumeric = 0;
+    int count = 1; /* The number of characters seen */
 
     DECLARE_YYTEXT_BUFP(yyp);
     YYTEXT_PUSH(c, yyp);
@@ -4214,11 +4215,12 @@ static int NumericValue(int c)
     while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E'
 	   || c == 'x' || c == 'X' || c == 'L')
     {
+	count++;
 	if (c == 'L') /* must be at the end.  Won't allow 1Le3 (at present). */
 	    break;
 
 	if (c == 'x' || c == 'X') {
-	    if (last != '0') break;
+	    if (count > 2 || last != '0') break;  /* 0x must be first */
 	    YYTEXT_PUSH(c, yyp);
 	    while(isdigit(c = xxgetc()) || ('a' <= c && c <= 'f') ||
 		  ('A' <= c && c <= 'F') || c == '.') {

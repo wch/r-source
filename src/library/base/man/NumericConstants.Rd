@@ -28,7 +28,7 @@
   Hexadecimal constants start with \code{0x} or \code{0X} followed by
   a nonempty sequence from \code{0-9 a-f A-F .} which is interpreted as a
   hexadecimal number, optionally followed by a binary exponent.  A binary
-  exponent consists of an \code{P} or \code{p} followed by an optional
+  exponent consists of a \code{P} or \code{p} followed by an optional
   plus or minus sign followed by a non-empty sequence of (decimal)
   digits, and indicates multiplication by a power of two.  Thus
   \code{0x123p456} is \eqn{291 \times 2^{456}}{291 * 2^456}.
@@ -62,14 +62,11 @@
   may not be representable exactly in the C double type used.  If not
   one of the nearest representable numbers will be returned.
   
-  Since \R 2.7.0 \R's own C code has been used to parse constants, so
-  the effect can be expected to be the same on all platforms
-  implementing full IEC 600559 arithmetic (the most likely area of
-  difference being the handling of numbers less than
-  \code{\link{.Machine}$double.xmin}).  The same code is used by
-  \code{\link{scan}}.
-}
-\seealso{
+  \R's own C code is used to convert constants to binary numbers, so the
+  effect can be expected to be the same on all platforms implementing
+  full IEC 600559 arithmetic (the most likely area of difference being
+  the handling of numbers less than \code{\link{.Machine}$double.xmin}).
+  The same code is used by \code{\link{scan}}.  } \seealso{
   \code{\link{Syntax}}.
 
   \code{\link{Quotes}} for the parsing of character constants,
