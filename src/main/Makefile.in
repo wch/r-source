@@ -70,7 +70,7 @@ DISTFILES = Makefile.in Makefile.win \
 	gramRd.y \
 	gramLatex.y
 
-ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
+ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib -DZ_PREFIX
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
 TRE_CPPFLAGS = -I$(top_srcdir)/src/extra

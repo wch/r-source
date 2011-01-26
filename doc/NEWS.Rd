@@ -271,6 +271,12 @@
       from the reference output when testing package examples and if
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
+
+      \item The \samp{zlib} sources in the distribution are now built
+      with \samp{Z_PREFIX} defined: this is intended to avoid problems
+      seen with packages such as \pkg{XML} which link to
+      \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
+      [Experimental for now.]
     }
   }
 
