@@ -1527,4 +1527,34 @@ acf(z, na.action=na.pass, plot = FALSE)
 ccf(z[,1], z[,2], na.action=na.pass, plot=FALSE)
 ## failed in 2.12.1
 
+
+## tests of append mode on compressed connections.
+tf <- tempfile(); con <- gzfile(tf, "w")
+writeLines(as.character(1:50), con)
+close(con); con <- gzfile(tf, "a")
+writeLines(as.character(51:70), con)
+close(con)
+stopifnot(length(readLines(tf)) == 70)
+unlink(tf)
+
+con <- bzfile(tf, "w")
+writeLines(as.character(1:50), con)
+close(con); con <- bzfile(tf, "a")
+writeLines(as.character(51:70), con)
+close(con)
+stopifnot(length(readLines(tf)) == 70)
+unlink(tf)
+
+con <- xzfile(tf, "w")
+writeLines(as.character(1:50), con)
+close(con); con <- xzfile(tf, "a")
+writeLines(as.character(51:70), con)
+close(con)
+stopifnot(length(readLines(tf)) == 70)
+unlink(tf)
+## bzfile warned and did not work < R 2.13.0
+
+
+
+
 proc.time()

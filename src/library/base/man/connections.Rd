@@ -299,8 +299,8 @@ isIncomplete(con)
   connections.  They do \strong{not} produce a single compressed stream
   on the file, but rather append a new compressed stream to the file.
   Readers (including \R) may or may not read beyond end of the first
-  stream: currently \R does so for \code{gzfile} and \code{xzfile}
-  connections, but not for \code{bzfile} connections.
+  stream: currently \R does so for \code{gzfile}, \code{bzfile} and
+  \code{xzfile} connections, but earlier versions did not.
 }
 
 \section{Compression}{

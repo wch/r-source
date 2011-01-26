@@ -220,7 +220,7 @@
 
       \item \code{unzip()} now has a \code{unzip} argument like
       \code{zip.file.extract()}.  This allows an external
-      \command{unzip} program to be used, which can be useful for
+      \command{unzip} program to be used, which can be useful to access
       features supported by Info-ZIP's \command{unzip} version 6 which
       is now becoming more widely available.
 
@@ -228,7 +228,11 @@
       external \command{zip} command.
 
       \item Cocoa Quartz back-end provides a way to disable event loop
-      processing temporarily (useful, e.g., for forked instances of R).
+      processing temporarily (useful, e.g., for forked instances of \R).
+
+      \item \code{bzfile()} connections can now read from concatenated
+      \command{bzip2} files and files written by some other compressors
+      (as in the example of \PR{14479}).
     }
   }
 

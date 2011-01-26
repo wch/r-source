@@ -1323,8 +1323,6 @@ static Rboolean bzfile_open(Rconnection con)
     int bzerror;
     char mode[] = "rb";
 
-    if (con->mode[0] == 'a')
-	warning(_("append mode may not do what you expect"));
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     /* regardless of the R view of the file, the file must be opened in
@@ -1394,7 +1392,7 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
     while (nleft > 0) {
 	size_t n = BZ2_bzRead(&bzerror, bz->bfp, ptr + nread, nleft);
 	if (bzerror == BZ_STREAM_END) { /* this could mean multiple streams so we need to check */
-	    char *unused, *next_unused = 0;
+	    char *unused, *next_unused = NULL;
 	    int nUnused;
 	    BZ2_bzReadGetUnused(&bzerror, bz->bfp, (void**) &unused, &nUnused);
 	    if (bzerror == BZ_OK) {
@@ -1430,7 +1428,6 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 
 static int bzfile_fgetc_internal(Rconnection con)
 {
-    Rbzfileconn bz = con->private;
     char buf[1];
     size_t size;
 
