@@ -1,6 +1,6 @@
 
-R version 2.12.0 Patched (2010-12-05 r53787)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-01-26 r54112)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 2664
+[1] 2766
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
