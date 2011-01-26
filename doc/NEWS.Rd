@@ -231,8 +231,9 @@
       processing temporarily (useful, e.g., for forked instances of \R).
 
       \item \code{bzfile()} connections can now read from concatenated
-      \command{bzip2} files and files written by some other compressors
-      (as in the example of \PR{14479}).
+      \command{bzip2} files (including files written with
+      \code{bzfile(open = "a")}) and files created by some other
+      compressors (such as the example of \PR{14479}).
     }
   }
 
