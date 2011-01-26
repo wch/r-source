@@ -1966,6 +1966,7 @@ fit <- lm(y ~ 1, na.action="na.exclude")
 summary(fit)
 ## failed < 2.4.0
 
+RNGkind("default","default")## reset to default - ease  R core
 
 ## prettyNum lost attributes (PR#8695)
 format(matrix(1:16, 4), big.mark = ",")
@@ -2478,3 +2479,10 @@ as.Date(0.5, origin="1969-12-31")
 dfr <- data.frame(x=1:6, CC=11:16, f = gl(3,2)); colnames(dfr)[2] <- ""
 dfr
 ## now prints the same as data.matrix(dfr) does here
+
+
+## format(., zero.print) --> prettyNum()
+set.seed(9); m <- matrix(local({x <- rnorm(40)
+                                sign(x)*round(exp(2*x))/10}), 8,5)
+noquote(format(m, zero.print= "."))
+## used to print  ". 0" instead of ".  "

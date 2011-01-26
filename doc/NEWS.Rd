@@ -174,7 +174,7 @@
       \code{.readRDS()} made available for general use.  The dot-name
       versions remain available as several package authors have made use
       of them, despite the documentation.
-      
+
       \code{saveRDS()} supports \code{compress = "xz"}.
 
       \item Many functions when called with a not-open connection will
@@ -208,12 +208,12 @@
       contains more than 100 packages, an alphabetic index is given at
       the top of the section for that library.  (As a consequence,
       entries are now sorted case-insensitively whatever the locale.)
-      
+
       \item \code{isSeekable()} now returns \code{FALSE} on connections
       which have non-default \code{encoding}.  Although documented to
       record if \sQuote{in principle} the connection supports seeking,
       it seems safer to report \code{FALSE} when it may not work.
-      
+
       \item \command{R CMD REMOVE} and \code{remove.packages()} now
       remove file \code{R.css} when removing all remaining packages in a
       library tree.  (Related to the wish of \PR{14475}.)
@@ -406,6 +406,9 @@
 
       \item The parser accepted some incorrect numeric constants,
       e.g. \code{20x2}.  (Reported by Olaf Mersmann.)
+
+      \item \code{format(*, zero.print)} did not always replace the full
+      zero parts.
     }
   }
 }
