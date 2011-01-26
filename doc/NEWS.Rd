@@ -234,6 +234,9 @@
       \command{bzip2} files (including files written with
       \code{bzfile(open = "a")}) and files created by some other
       compressors (such as the example of \PR{14479}).
+
+      \item The \code{.Primitive} function \code{c()} is now of type
+      BUILTIN.
     }
   }
 
