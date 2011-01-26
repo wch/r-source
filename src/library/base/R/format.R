@@ -113,7 +113,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 		       justify = if(flag=="-") "left" else "right")
     }
     blank.chars <- function(no)
-	sapply(no+1L, function(n) paste(character(n), collapse=" "))
+	vapply(no+1L, function(n) paste(character(n), collapse=" "), "")
 
     if (!(n <- length(x))) return("")
     if (is.null(mode))	  mode <- storage.mode(x)
@@ -304,11 +304,13 @@ prettyNum <-
 	    zero.print <- if(zero.print) "0" else " "
 	if(!is.character(zero.print))
 	    stop("'zero.print' must be character, logical or NULL")
+	blank.chars <- function(no) # as in formatC()
+	    vapply(no+1L, function(n) paste(character(n), collapse=" "), "")
 	nz <- nchar(zero.print, "c")
 	nc <- nchar(x[i0], "c")
 	ind0 <- regexpr("0", x[i0], fixed = TRUE)# first '0' in string
-	substr(x[i0],ind0, ind0+nz-1) <- zero.print
-	substr(x[i0],ind0+nz, nc) <- " "
+	substr(x[i0],ind0, (i1 <- ind0+nz-1L)) <- zero.print
+	substr(x[i0],ind0+nz, nc) <- blank.chars(nc - i1)
     }
     if(nMark && !drop0trailing)# zero.print was only non-default
 	return(x)

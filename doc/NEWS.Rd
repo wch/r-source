@@ -77,6 +77,9 @@
 
       \item The parser accepted some incorrect numeric constants,
       e.g. \code{20x2}.  (Reported by Olaf Mersmann.)
+
+      \item \code{format(*, zero.print)} did not always replace the full
+      zero parts.
     }
   }
 }
