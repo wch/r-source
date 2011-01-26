@@ -32500,8 +32500,8 @@ fi
 
   fi
   if test "${have_zlib}" = yes; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if zlib version == 1.2.3" >&5
-$as_echo_n "checking if zlib version == 1.2.3... " >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if zlib version >= 1.2.3" >&5
+$as_echo_n "checking if zlib version >= 1.2.3... " >&6; }
 if test "${r_cv_header_zlib_h+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
@@ -32518,7 +32518,7 @@ int main() {
 #ifdef ZLIB_VERSION
 /* Workaround Debian bug: it uses 1.2.3.4 even though there is no such
    version on the master site zlib.net */
-  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) != 0);
+  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) < 0);
 #else
   exit(1);
 #endif
