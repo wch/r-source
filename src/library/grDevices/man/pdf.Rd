@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -218,12 +218,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   standard Helvetica and Times fonts, and these too often have different
   font metrics from the true fonts.
 
-  Acrobat Reader 5.x and later can be extended by support for Asian and
-  (so-called) Central European fonts, and these will be needed for the
-  full use of encodings other than Latin-1.  See
+  Acrobat Reader can be extended by support for Asian and (so-called)
+  Central European fonts, and these will be needed for the full use of
+  encodings other than Latin-1.  See
+  \url{http://www.adobe.com/downloads/updates} for Reader 9 and X, and
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
-  Reader 6.x to 8.x, and \url{http://www.adobe.com/downloads/updates}
-  for 9.x.
+  Reader 6 to 8.
 
 #ifdef unix
   On some systems the default plotting character \code{pch = 1} is
@@ -241,6 +241,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 </alias>
 </fontconfig>  
 }
+  Some further workarounds for problems with symbol fonts on Cairo-based
+  viewers are given in the \sQuote{Cairo Fonts} section of the help for
+  \code{\link{X11}}.
 #endif
 }
 \seealso{
