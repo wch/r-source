@@ -1474,7 +1474,8 @@ SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*
   For complex superassignment  x[y==z]<<-w
-  we want x required to be nonlocal, y,z, and w permitted to be local or nonlocal.
+  we want x required to be nonlocal, y,z, and w permitted to be local or
+  nonlocal.
 */
 
 static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
@@ -1546,7 +1547,7 @@ static R_INLINE SEXP installAssignFcnName(SEXP fun)
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, afun;
+    SEXP expr, lhs, rhs, saverhs, tmp, afun, rhsprom;
     R_varloc_t tmploc;
     RCNTXT cntxt;
     int nprot;
@@ -1618,11 +1619,11 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
-    PROTECT(rhs); /* To get the loop right ... */
+    PROTECT(rhsprom = mkPROMISE(CADR(args), rho));
+    SET_PRVALUE(rhsprom, rhs);
 
     while (isLanguage(CADR(expr))) {
-	nprot = 3; /* the two PROTECTs from this iteration and the
-		      old rhs from the previous one */
+	nprot = 1; /* the PROTECT of rhs below from this iteration */
 	if (TYPEOF(CAR(expr)) == SYMSXP)
 	    tmp = installAssignFcnName(CAR(expr));
 	else {
@@ -1641,17 +1642,15 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("invalid function in complex assignment"));
 	}
 	SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
-	PROTECT(tmp2 = mkPROMISE(rhs, rho));
-	SET_PRVALUE(tmp2, rhs);
-	PROTECT(rhs = replaceCall(tmp, R_GetVarLocSymbol(tmploc), CDDR(expr),
-				  tmp2));
+	PROTECT(rhs = replaceCall(tmp, R_TmpvalSymbol, CDDR(expr), rhsprom));
 	rhs = eval(rhs, rho);
+	SET_PRVALUE(rhsprom, rhs);
+	SET_PRCODE(rhsprom, rhs); /* not good but is what we have been doing */
 	UNPROTECT(nprot);
-	PROTECT(rhs);
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
-    nprot = 6; /* the commont case */
+    nprot = 5; /* the commont case */
     if (TYPEOF(CAR(expr)) == SYMSXP)
 	afun = installAssignFcnName(CAR(expr));
     else {
@@ -1670,11 +1669,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid function in complex assignment"));
     }
     SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
-    PROTECT(tmp = mkPROMISE(CADR(args), rho));
-    SET_PRVALUE(tmp, rhs);
     PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
-			      afun, R_GetVarLocSymbol(tmploc),
-			      CDDR(expr), tmp));
+			      afun, R_TmpvalSymbol, CDDR(expr), rhsprom));
     expr = eval(expr, rho);
     UNPROTECT(nprot);
     endcontext(&cntxt); /* which does not run the remove */
