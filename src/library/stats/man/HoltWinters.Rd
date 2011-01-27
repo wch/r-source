@@ -61,8 +61,8 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 
   The multiplicative Holt-Winters prediction function (for time series
   with period length p) is
-  \deqn{\hat Y[t+h] = (a[t] + h b[t]) \times s[t + p + 1 + (h - 1) \bmod p].}{
-    Yhat[t+h] = (a[t] + h * b[t]) * s[t + p + 1 + (h - 1) mod p],}
+  \deqn{\hat Y[t+h] = (a[t] + h b[t]) \times s[t - p + 1 + (h - 1) \bmod p].}{
+    Yhat[t+h] = (a[t] + h * b[t]) * s[t - p + 1 + (h - 1) mod p],}
   where \eqn{a[t]}, \eqn{b[t]} and \eqn{s[t]} are given by
   \deqn{a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}{
   a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}
