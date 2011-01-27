@@ -2113,13 +2113,13 @@ Chinese.
 @node Locales under Linux, Locales under Windows, Locales, Locales
 @subsection Locales under Linux
 
-Modern Linux uses the XPG locale specifications which have the form
+Modern Linux uses the XPG@footnote{`X/Open Portability Guide', which has
+had several versions.} locale specifications which have the form
 @samp{en_GB}, @samp{en_GB.UTF-8}, @samp{aa_ER.UTF-8@@saaho},
 @samp{de_AT.iso885915@@euro}, the components being in the order listed
 above.  (See @command{man locale} and @command{locale -a} for more
-details.)  Similar schemes (but often in different cases) are used by
-most Unix-alikes: some (including earlier versions of Linux) use
-@samp{.utf8} rather than @samp{.UTF-8}.
+details.)  Similar schemes are used by most Unix-alikes: some (including
+some distributions of Linux) use @samp{.utf8} rather than @samp{.UTF-8}.
 
 @node Locales under Windows, Locales under Mac OS X, Locales under Linux, Locales
 @subsection Locales under Windows
@@ -2691,11 +2691,16 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 
 If you have them installed (including the appropriate headers and of
 suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
-specified by @option{--with-system-zlib} (version 1.2.3 only: bugs have
-been found with 1.2.4 and 1.2.5), @option{--with-system-bzlib} or
-@option{--with-system-pcre}: otherwise versions in the @R{} sources will
-be compiled in.  As the latter suffice and are tested with @R{} you
-should not need to change this.
+specified by @option{--with-system-zlib} (version 1.2.3 or later, but
+beware that bugs have been found with 1.2.4 and 1.2.5, and these should
+not be used on 32-bit Linux systems with LFS),
+@option{--with-system-bzlib} or @option{--with-system-pcre}: otherwise
+versions in the @R{} sources will be compiled in.  As the latter suffice
+and are tested with @R{} you should not need to change this.  (One
+circumstance in which you might is if your system provides @code{zlib}
+1.2.5 and you want to use packages such as @pkg{XML} linked against the
+system @code{zlib}: that has been seen to cause crashes, at least when
+@R{} was not built as a shared library.)
 
 @code{liblzma} from @code{xz-utils} version 4.999 or later (preferably
 5.0.0 or later) will be used if installed: the version in the @R{}

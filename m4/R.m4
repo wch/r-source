@@ -2926,7 +2926,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## R_ZLIB
 ## ------
 ## Try finding zlib library and headers.
-## We check that both are installed, and that the header == 1.2.3
+## We check that both are installed, and that the header >= 1.2.3
 ## and that gzeof is in the library (which suggests the library
 ## is also recent enough).
 AC_DEFUN([R_ZLIB],
@@ -2960,7 +2960,7 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 ## Set shell variable r_cv_header_zlib_h to 'yes' if a recent enough
 ## zlib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_ZLIB],
-[AC_CACHE_CHECK([if zlib version == 1.2.3],
+[AC_CACHE_CHECK([if zlib version >= 1.2.3],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -2970,7 +2970,7 @@ int main() {
 #ifdef ZLIB_VERSION
 /* Workaround Debian bug: it uses 1.2.3.4 even though there is no such
    version on the master site zlib.net */
-  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) != 0);
+  exit(strncmp(ZLIB_VERSION, "1.2.3", 5) < 0);
 #else
   exit(1);
 #endif
