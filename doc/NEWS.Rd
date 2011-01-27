@@ -276,10 +276,9 @@
       value.
 
       \item The \samp{zlib} sources in the distribution are now built
-      with \samp{Z_PREFIX} defined: this is intended to avoid problems
-      seen with packages such as \pkg{XML} which link to
+      with all symbols remapped: this is intended to avoid problems seen
+      with packages such as \pkg{XML} and \pkg{rggobi} which link to
       \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
-      [Experimental for now.]
     }
   }
 
