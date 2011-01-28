@@ -31,10 +31,11 @@ getDependencies <-
     p0 <- unique(pkgs)
     miss <-  !p0 %in% row.names(available)
     if(sum(miss)) {
-        warning(sprintf(ngettext(sum(miss),
-                                 "package %s is not available",
-                                 "packages %s are not available"),
-                        paste(sQuote(p0[miss]), collapse=", ")),
+	warning(sprintf(ngettext(sum(miss),
+				 "package %s is not available (for %s)",
+				 "packages %s are not available (for %s)"),
+			paste(sQuote(p0[miss]), collapse=", "),
+			sub(" *\\(.*","", R.version.string)),
                 domain = NA)
         if (sum(miss) == 1L &&
             !is.na(w <- match(tolower(p0[miss]),
