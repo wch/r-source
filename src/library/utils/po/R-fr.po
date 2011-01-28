@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:47\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -475,6 +476,35 @@ msgstr "spécification 'agrep' incorrecte"
 msgid "matched %d objects."
 msgstr "%d objets correspondent"
 
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
+
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
+msgstr ""
+"Si rien ne se passe, vous devrez ouvrir\n"
+"'%s' vous-même"
+
+msgid ""
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
+msgstr ""
+"Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa "
+"fenêtre."
+
+msgid "Otherwise, be patient ..."
+msgstr "Sinon, soyez patient..."
+
+msgid "'url' must be a non-empty character string"
+msgstr "'url' doit être une chaîne de caractères non vide"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "'browser' doit être une chaîne de caractères non vide"
+
 msgid "no package '%s' was found"
 msgstr "le package '%s' est introuvable"
 
@@ -497,6 +527,13 @@ msgstr "package"
 
 msgid "not found"
 msgstr "introuvable"
+
+msgid "cannot update HTML package index"
+msgstr "impossible de mettre à jour l'index HTML des packages"
+
+#, fuzzy
+msgid "Making packages.html  ..."
+msgstr "Création de packages.html"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() ne peut être utilisé en mode non interactif"
@@ -618,6 +655,9 @@ msgstr "les métadonnées du package '%s' sont incorrectes"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' doit être de type caractère ou NULL"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "mise à jour de la liste HTML des packages dans '.Library'"
 
 msgid ""
 "Removing package(s) from %s\n"
@@ -779,8 +819,8 @@ msgstr ""
 
 msgid "error in trying to evaluate the expression for argument '%s' (%s)"
 msgstr ""
-"erreur lors de la tentative d'évaluation d'expression pour l'argument '%s' (%"
-"s)"
+"erreur lors de la tentative d'évaluation d'expression pour l'argument "
+"'%s' (%s)"
 
 msgid "no method defined for function '%s' and signature '%s'"
 msgstr "aucune méthode définie pour la fonction '%s' et pour la signature '%s'"
@@ -1038,6 +1078,10 @@ msgstr "une tentative de modification de '%s' a échoué"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' doit être une seule chaîne de caractères"
 
+#, fuzzy
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
+
 msgid "'subject' missing"
 msgstr "'subject' manquant"
 
@@ -1059,34 +1103,6 @@ msgstr "la création de '%s' a échoué"
 msgid "Saving help page to"
 msgstr "Sauvegarde de la page d'aide dans"
 
-msgid "invalid browser name, check options(\"browser\")."
-msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
-
-msgid "help.start() requires the HTTP server to be running"
-msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
-
-msgid ""
-"If the browser launched by '%s' is already running, it is *not* restarted, "
-"and you must switch to its window."
-msgstr ""
-"Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa "
-"fenêtre."
-
-msgid "Otherwise, be patient ..."
-msgstr "Sinon, soyez patient..."
-
-msgid "'url' must be a non-empty character string"
-msgstr "'url' doit être une chaîne de caractères non vide"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' doit être une chaîne de caractères non vide"
-
-msgid "Making packages.html"
-msgstr "Création de packages.html"
-
-msgid "Updating HTML index of packages in '.Library'"
-msgstr "mise à jour de la liste HTML des packages dans '.Library'"
-
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' a renvoyé un code de sortie non nul %d"
 
@@ -1107,12 +1123,8 @@ msgstr "'memory.size()' est spécifique à Windows"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' est spécifique à Windows"
 
-msgid ""
-"If nothing happens, you should open\n"
-"'%s' yourself"
-msgstr ""
-"Si rien ne se passe, vous devrez ouvrir\n"
-"'%s' vous-même"
+msgid "zipfile '%s' not found"
+msgstr "fichier zip '%s' introuvable"
 
 msgid "failed to create '%s'"
 msgstr "la création de '%s' a échoué"
@@ -1138,15 +1150,6 @@ msgstr "aucun répertoire 'libs' n'est trouvé dans le package '%s'"
 msgid "cannot remove prior installation of package '%s'"
 msgstr "impossible de supprimer l'installation précédente du package '%s'"
 
-msgid "zipfile '%s' not found"
-msgstr "fichier zip '%s' introuvable"
-
-msgid "updating HTML package descriptions"
-msgstr "mise à jour des descriptions HTML des packages"
-
-msgid "cannot update HTML package index"
-msgstr "impossible de mettre à jour l'index HTML des packages"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"
 
@@ -1166,8 +1169,9 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "objet '%s' introuvable"
 msgstr[1] "objets '%s' introuvables"
 
-msgid "package %s is not available"
-msgid_plural "packages %s are not available"
+#, fuzzy
+msgid "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
 msgstr[0] "le package '%s' n'est pas disponible"
 msgstr[1] "les packages '%s' ne sont pas disponibles"
 
@@ -1193,6 +1197,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "updating HTML package descriptions"
+#~ msgstr "mise à jour des descriptions HTML des packages"
 
 #~ msgid "read.dcf() error on file '%s'"
 #~ msgstr "erreur de read.dcf() dans le fichier %s"

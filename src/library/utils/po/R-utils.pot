@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:47\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -413,6 +413,27 @@ msgstr ""
 msgid "matched %d objects."
 msgstr ""
 
+msgid "invalid browser name, check options(\"browser\")."
+msgstr ""
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr ""
+
+msgid "If nothing happens, you should open\n'%s' yourself"
+msgstr ""
+
+msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr ""
+
+msgid "Otherwise, be patient ..."
+msgstr ""
+
+msgid "'url' must be a non-empty character string"
+msgstr ""
+
+msgid "'browser' must be a non-empty character string"
+msgstr ""
+
 msgid "no package '%s' was found"
 msgstr ""
 
@@ -432,6 +453,12 @@ msgid "package"
 msgstr ""
 
 msgid "not found"
+msgstr ""
+
+msgid "cannot update HTML package index"
+msgstr ""
+
+msgid "Making packages.html  ..."
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -549,6 +576,9 @@ msgid "metadata of '%s' is corrupt"
 msgstr ""
 
 msgid "'priority' must be character or NULL"
+msgstr ""
+
+msgid "Updating HTML index of packages in '.Library'"
 msgstr ""
 
 msgid "Removing package(s) from %s\n(as %s is unspecified)"
@@ -908,6 +938,9 @@ msgstr ""
 msgid "'unzip' must be a single character string"
 msgstr ""
 
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr ""
 
@@ -929,30 +962,6 @@ msgstr ""
 msgid "Saving help page to"
 msgstr ""
 
-msgid "invalid browser name, check options(\"browser\")."
-msgstr ""
-
-msgid "help.start() requires the HTTP server to be running"
-msgstr ""
-
-msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
-msgstr ""
-
-msgid "Otherwise, be patient ..."
-msgstr ""
-
-msgid "'url' must be a non-empty character string"
-msgstr ""
-
-msgid "'browser' must be a non-empty character string"
-msgstr ""
-
-msgid "Making packages.html"
-msgstr ""
-
-msgid "Updating HTML index of packages in '.Library'"
-msgstr ""
-
 msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
@@ -971,7 +980,7 @@ msgstr ""
 msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
-msgid "If nothing happens, you should open\n'%s' yourself"
+msgid "zipfile '%s' not found"
 msgstr ""
 
 msgid "failed to create '%s'"
@@ -995,15 +1004,6 @@ msgstr ""
 msgid "cannot remove prior installation of package '%s'"
 msgstr ""
 
-msgid "zipfile '%s' not found"
-msgstr ""
-
-msgid "updating HTML package descriptions"
-msgstr ""
-
-msgid "cannot update HTML package index"
-msgstr ""
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr ""
 
@@ -1023,8 +1023,8 @@ msgid_plural "objects '%s' not found"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "package %s is not available"
-msgid_plural "packages %s are not available"
+msgid        "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
 msgstr[0]    ""
 msgstr[1]    ""
 

@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:18\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -173,8 +173,8 @@ msgstr "найден T/F в %s"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
-"похоже, что имя пакета '%s' неправильное; вместо него использую имя папки '%"
-"s'"
+"похоже, что имя пакета '%s' неправильное; вместо него использую имя папки "
+"'%s'"
 
 msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
@@ -863,15 +863,6 @@ msgstr "Плохо сформированный файл NEWS.Rd."
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
 
-msgid "cannot update HTML package index"
-msgstr "не могу обновить HTML-индекс пакетов"
-
-msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
-msgstr "у 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
-
-msgid "cannot create HTML package index"
-msgstr "не могу создать HTML-индекс пакета"
-
 msgid "Internal error, no tag"
 msgstr "Внутренняя ошибка, тега нет"
 
@@ -1107,6 +1098,15 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr "не могу обновить HTML-индекс пакетов"
+
+#~ msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+#~ msgstr "у 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
+
+#~ msgid "cannot create HTML package index"
+#~ msgstr "не могу создать HTML-индекс пакета"
 
 #~ msgid "Running examples in package"
 #~ msgstr "Запускаю примеры к пакету"

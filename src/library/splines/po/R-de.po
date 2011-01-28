@@ -3,16 +3,15 @@
 # Copyright (C) 2005-2009 The R Foundation
 # This file is distributed under the same license as the R package.
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
-
-
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-10 14:49\n"
+"POT-Creation-Date: 2010-09-17 09:20\n"
 "PO-Revision-Date: 2009-10-07 14:29+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,13 +24,17 @@ msgid "length of 'derivs' must match length of 'x'"
 msgstr "Länge von 'derivs' muss der Länge von 'x' entsprechen"
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr "'ord' muss eine positive ganze Zahl sein, maximal die Anzahl der Knoten"
+msgstr ""
+"'ord' muss eine positive ganze Zahl sein, maximal die Anzahl der Knoten"
 
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr "brauche mindestens 2*ord -1 (=%d) Knoten"
 
-msgid "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
-msgstr "die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist 'outer.ok = TRUE'"
+msgid ""
+"the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+msgstr ""
+"die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist 'outer.ok = "
+"TRUE'"
 
 msgid "values of 'x' must be distinct"
 msgstr "Werte von 'x' müssen verschieden sein"
@@ -73,4 +76,6 @@ msgid "'df' was too small; have used"
 msgstr "'df' war zu klein; habe benutzt"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
-msgstr "einige 'x' Werte ausserhalb der Begrenzungsknoten erzeugen eventuwll schlecht konditionierte Basis"
+msgstr ""
+"einige 'x' Werte ausserhalb der Begrenzungsknoten erzeugen eventuwll "
+"schlecht konditionierte Basis"

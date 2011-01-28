@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:47\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -471,6 +472,37 @@ msgstr "'agrep' 명세는 적적하지 않습니다"
 msgid "matched %d objects."
 msgstr ""
 
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "무효의 browser명, 체크 옵션(\"browser\")입니다"
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
+msgstr "아무것도 일어나지 않는 경우, 그 자체에 '%s'를 열어야 합니다"
+
+#, fuzzy
+msgid ""
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
+msgstr ""
+"'%s'가 이미 실행하고 있는 경우, 그것은 재개된 *not*입니다. \n"
+"또, 그 window로 변경하지 않으면 안됩니다"
+
+msgid "Otherwise, be patient ..."
+msgstr "그렇지 않으면, 수동적으로 해주십시오 ..."
+
+#, fuzzy
+msgid "'url' must be a non-empty character string"
+msgstr "url는 non-empty이어야만 합니다"
+
+#, fuzzy
+msgid "'browser' must be a non-empty character string"
+msgstr "브라우저는 non-empty 문자열이어야만 합니다"
+
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'는 검색되지 않았습니다"
 
@@ -499,6 +531,13 @@ msgid "not found"
 msgstr ""
 "검색되지 않는 object '%s' 입니다\n"
 "검색되지 않는 objects '%s' 입니다"
+
+msgid "cannot update HTML package index"
+msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
+
+#, fuzzy
+msgid "Making packages.html  ..."
+msgstr "첫번째 match를 사용해주십시오..."
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()는 non-intertactively에 사용할 수가 없습니다"
@@ -627,6 +666,10 @@ msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되�
 
 msgid "'priority' must be character or NULL"
 msgstr "'prority'는 문자 또는 NULL이어야만 합니다"
+
+#, fuzzy
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "HTML 패키지의 리스트를 갱신합니다"
 
 msgid ""
 "Removing package(s) from %s\n"
@@ -1055,6 +1098,10 @@ msgstr "data set '%s'는 검색되지 않습니다"
 msgid "'unzip' must be a single character string"
 msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
 
+#, fuzzy
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
 msgid "'subject' missing"
 msgstr "'subject'는 잘못되어집니다"
 
@@ -1078,38 +1125,6 @@ msgstr "패키지 '%s'의 다운로드는 실패했습니다"
 msgid "Saving help page to"
 msgstr "첫번째 match를 사용해주십시오..."
 
-msgid "invalid browser name, check options(\"browser\")."
-msgstr "무효의 browser명, 체크 옵션(\"browser\")입니다"
-
-msgid "help.start() requires the HTTP server to be running"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"If the browser launched by '%s' is already running, it is *not* restarted, "
-"and you must switch to its window."
-msgstr ""
-"'%s'가 이미 실행하고 있는 경우, 그것은 재개된 *not*입니다. \n"
-"또, 그 window로 변경하지 않으면 안됩니다"
-
-msgid "Otherwise, be patient ..."
-msgstr "그렇지 않으면, 수동적으로 해주십시오 ..."
-
-#, fuzzy
-msgid "'url' must be a non-empty character string"
-msgstr "url는 non-empty이어야만 합니다"
-
-#, fuzzy
-msgid "'browser' must be a non-empty character string"
-msgstr "브라우저는 non-empty 문자열이어야만 합니다"
-
-msgid "Making packages.html"
-msgstr ""
-
-#, fuzzy
-msgid "Updating HTML index of packages in '.Library'"
-msgstr "HTML 패키지의 리스트를 갱신합니다"
-
 msgid "'tar' returned non-zero exit code %d"
 msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
 
@@ -1129,11 +1144,8 @@ msgstr ""
 msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
-#, fuzzy
-msgid ""
-"If nothing happens, you should open\n"
-"'%s' yourself"
-msgstr "아무것도 일어나지 않는 경우, 그 자체에 '%s'를 열어야 합니다"
+msgid "zipfile '%s' not found"
+msgstr "검색되지 않는 zip파일'%s'입니다"
 
 msgid "failed to create '%s'"
 msgstr "'%s'를 작성하는데 실패 되었습니다"
@@ -1159,15 +1171,6 @@ msgstr ""
 msgid "cannot remove prior installation of package '%s'"
 msgstr "패키지 '%s'의 이전 설치를 삭제할수 없습니다"
 
-msgid "zipfile '%s' not found"
-msgstr "검색되지 않는 zip파일'%s'입니다"
-
-msgid "updating HTML package descriptions"
-msgstr "갱신하는 HTML 패키지 기술입니다"
-
-msgid "cannot update HTML package index"
-msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
-
 #, fuzzy
 msgid "winDialog() cannot be used non-interactively"
 msgstr "menu()는 non-intertactively에 사용할 수가 없습니다"
@@ -1190,8 +1193,8 @@ msgstr[0] ""
 "검색되지 않는 objects '%s' 입니다"
 
 #, fuzzy
-msgid "package %s is not available"
-msgid_plural "packages %s are not available"
+msgid "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
 msgstr[0] ""
 "dependency '%s'는 이용 가능하지는 않습니다\n"
 "dependencies '%s'는 이용 가능하지는 않습니다"
@@ -1220,6 +1223,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "updating HTML package descriptions"
+#~ msgstr "갱신하는 HTML 패키지 기술입니다"
 
 #~ msgid "argument 'lib' is missing: using %s"
 #~ msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"

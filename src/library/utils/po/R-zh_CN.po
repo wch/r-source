@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:47\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -443,6 +444,33 @@ msgstr "'agrep'设定得不对"
 msgid "matched %d objects."
 msgstr "%d个匹配对象"
 
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr "help.start()需要用HTTP服务器"
+
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
+msgstr "如果什么都不发生的话，你应该自己打开'%s'"
+
+msgid ""
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
+msgstr ""
+"如果由'%s'打开的浏览器已经在运行的话，它*不会*被重新启动，因此你必需人工地转"
+"换到它的窗口。"
+
+msgid "Otherwise, be patient ..."
+msgstr "否则的话请耐心等待…"
+
+msgid "'url' must be a non-empty character string"
+msgstr "url必需的非空字符串"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "'browser'必需为非空字符串"
+
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
 
@@ -463,6 +491,13 @@ msgstr "程序包"
 
 msgid "not found"
 msgstr "找不到"
+
+msgid "cannot update HTML package index"
+msgstr "无法更新HTML程序包索引"
+
+#, fuzzy
+msgid "Making packages.html  ..."
+msgstr "制造packages.html"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()不能在非互交形式下使用"
@@ -581,6 +616,9 @@ msgstr "程序包'%s'里元数据出了错"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "更新'.Library'里的HTML程序包列表"
 
 msgid ""
 "Removing package(s) from %s\n"
@@ -982,6 +1020,10 @@ msgstr "不能修改'%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
 
+#, fuzzy
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr "'list'必需是为R对象取名的字符向量"
+
 msgid "'subject' missing"
 msgstr "缺少'subject'值"
 
@@ -1003,34 +1045,6 @@ msgstr "制造'%s'时出了问题"
 msgid "Saving help page to"
 msgstr "保存帮助页到"
 
-msgid "invalid browser name, check options(\"browser\")."
-msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
-
-msgid "help.start() requires the HTTP server to be running"
-msgstr "help.start()需要用HTTP服务器"
-
-msgid ""
-"If the browser launched by '%s' is already running, it is *not* restarted, "
-"and you must switch to its window."
-msgstr ""
-"如果由'%s'打开的浏览器已经在运行的话，它*不会*被重新启动，因此你必需人工地转"
-"换到它的窗口。"
-
-msgid "Otherwise, be patient ..."
-msgstr "否则的话请耐心等待…"
-
-msgid "'url' must be a non-empty character string"
-msgstr "url必需的非空字符串"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser'必需为非空字符串"
-
-msgid "Making packages.html"
-msgstr "制造packages.html"
-
-msgid "Updating HTML index of packages in '.Library'"
-msgstr "更新'.Library'里的HTML程序包列表"
-
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"
 
@@ -1049,10 +1063,8 @@ msgstr "'memory.size()'只在Windows上有用"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
 
-msgid ""
-"If nothing happens, you should open\n"
-"'%s' yourself"
-msgstr "如果什么都不发生的话，你应该自己打开'%s'"
+msgid "zipfile '%s' not found"
+msgstr "找不到'%s'这一zip文件"
 
 msgid "failed to create '%s'"
 msgstr "无法建立'%s'"
@@ -1078,15 +1090,6 @@ msgstr "在程序字'%s'里找不到'libs'这个目录"
 msgid "cannot remove prior installation of package '%s'"
 msgstr "无法将拆除原来安装的程序包 '%s'"
 
-msgid "zipfile '%s' not found"
-msgstr "找不到'%s'这一zip文件"
-
-msgid "updating HTML package descriptions"
-msgstr "更新HTML程序包的描述内容"
-
-msgid "cannot update HTML package index"
-msgstr "无法更新HTML程序包索引"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
 
@@ -1104,8 +1107,9 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个对象"
 
-msgid "package %s is not available"
-msgid_plural "packages %s are not available"
+#, fuzzy
+msgid "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
 msgstr[0] "没有'%s'这个程序包"
 
 msgid "dependency %s is not available"
@@ -1123,6 +1127,9 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "updating HTML package descriptions"
+#~ msgstr "更新HTML程序包的描述内容"
 
 #~ msgid "read.dcf() error on file '%s'"
 #~ msgstr "read.dcf()在'%s'文件上出了错"

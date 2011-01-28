@@ -10,16 +10,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:47\n"
+"POT-Creation-Date: 2011-01-28 18:12\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -459,6 +460,35 @@ msgstr "неправильное указание 'agrep'"
 msgid "matched %d objects."
 msgstr "соответствует %d объект(ам)."
 
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "неправильное имя броузера, проверьте options(\"browser\")."
+
+msgid "help.start() requires the HTTP server to be running"
+msgstr "help.start() требует запуска сервера HTTP"
+
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
+msgstr ""
+"Если ничего не произойдет, надо открыть\n"
+"'%s' самостоятельно"
+
+msgid ""
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
+msgstr ""
+"Если браузер, запущенный '%s', уже работает, он *не* перезагрузился, и Вы "
+"должны перейти в его окно."
+
+msgid "Otherwise, be patient ..."
+msgstr "Если нет, ждите..."
+
+msgid "'url' must be a non-empty character string"
+msgstr "'url' должен быть непустой текстовой строкой"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "'browser' должен быть непустой текстовой строкой"
+
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
 
@@ -479,6 +509,13 @@ msgstr "пакет"
 
 msgid "not found"
 msgstr "не найден"
+
+msgid "cannot update HTML package index"
+msgstr "не могу обновить HTML-индекс пакетов"
+
+#, fuzzy
+msgid "Making packages.html  ..."
+msgstr "Делаю packages.html"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() нельзя использовать неинтерактивно"
@@ -598,6 +635,9 @@ msgstr "метаданные пакета '%s' повреждены"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' должен быть текстом или NULL"
+
+msgid "Updating HTML index of packages in '.Library'"
+msgstr "Обновляю HTML-список пакетов в '.Library'"
 
 msgid ""
 "Removing package(s) from %s\n"
@@ -1010,6 +1050,10 @@ msgstr "попытка установить '%s' пропущена"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' должен быть одной текстовой строкой"
 
+#, fuzzy
+msgid "'files' must a character vector specifying one or more filepaths"
+msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
+
 msgid "'subject' missing"
 msgstr "пропущен 'subject'"
 
@@ -1031,34 +1075,6 @@ msgstr "создание '%s' не удалось"
 msgid "Saving help page to"
 msgstr "Сохраняю страницу помощи в"
 
-msgid "invalid browser name, check options(\"browser\")."
-msgstr "неправильное имя броузера, проверьте options(\"browser\")."
-
-msgid "help.start() requires the HTTP server to be running"
-msgstr "help.start() требует запуска сервера HTTP"
-
-msgid ""
-"If the browser launched by '%s' is already running, it is *not* restarted, "
-"and you must switch to its window."
-msgstr ""
-"Если браузер, запущенный '%s', уже работает, он *не* перезагрузился, и Вы "
-"должны перейти в его окно."
-
-msgid "Otherwise, be patient ..."
-msgstr "Если нет, ждите..."
-
-msgid "'url' must be a non-empty character string"
-msgstr "'url' должен быть непустой текстовой строкой"
-
-msgid "'browser' must be a non-empty character string"
-msgstr "'browser' должен быть непустой текстовой строкой"
-
-msgid "Making packages.html"
-msgstr "Делаю packages.html"
-
-msgid "Updating HTML index of packages in '.Library'"
-msgstr "Обновляю HTML-список пакетов в '.Library'"
-
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' вернул ненулевой код выхода %d"
 
@@ -1077,12 +1093,8 @@ msgstr "'memory.size()' -- Windows-специфичный"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' -- Windows-специфичный"
 
-msgid ""
-"If nothing happens, you should open\n"
-"'%s' yourself"
-msgstr ""
-"Если ничего не произойдет, надо открыть\n"
-"'%s' самостоятельно"
+msgid "zipfile '%s' not found"
+msgstr "zip-файл '%s' не найден"
 
 msgid "failed to create '%s'"
 msgstr "не удалось создать '%s'"
@@ -1108,15 +1120,6 @@ msgstr "нет папки 'libs' в пакете '%s'"
 msgid "cannot remove prior installation of package '%s'"
 msgstr "не могу удалить прежнюю установку пакета '%s'"
 
-msgid "zipfile '%s' not found"
-msgstr "zip-файл '%s' не найден"
-
-msgid "updating HTML package descriptions"
-msgstr "обновляю HTML-описания пакетов"
-
-msgid "cannot update HTML package index"
-msgstr "не могу обновить HTML-индекс пакетов"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() нельзя использовать неинтерактивно"
 
@@ -1138,8 +1141,9 @@ msgstr[0] "объект '%s' не найден"
 msgstr[1] "объекты '%s' не найдены"
 msgstr[2] "объекты '%s' не найдены"
 
-msgid "package %s is not available"
-msgid_plural "packages %s are not available"
+#, fuzzy
+msgid "package %s is not available (for %s)"
+msgid_plural "packages %s are not available (for %s)"
 msgstr[0] "зависимость '%s' недоступна"
 msgstr[1] "пакеты %s недоступны"
 msgstr[2] "пакеты %s недоступны"
@@ -1167,6 +1171,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "updating HTML package descriptions"
+#~ msgstr "обновляю HTML-описания пакетов"
 
 #~ msgid "read.dcf() error on file '%s'"
 #~ msgstr "Ошибка read.dcf() на файле '%s'"
