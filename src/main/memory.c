@@ -156,12 +156,14 @@ static R_INLINE SEXP CHK(SEXP x)
 static SEXPTYPE bad_sexp_type_seen = 0;
 static SEXP bad_sexp_type_sexp = NULL;
 static SEXPTYPE bad_sexp_type_old_type = 0;
+static int bad_sexp_type_line = 0;
 
-static R_INLINE void register_bad_sexp_type(SEXP s)
+static R_INLINE void register_bad_sexp_type(SEXP s, int line)
 {
     if (bad_sexp_type_seen == 0) {
 	bad_sexp_type_seen = TYPEOF(s);
 	bad_sexp_type_sexp = s;
+	bad_sexp_type_line = line;
 #ifdef PROTECTCHECK
 	if (TYPEOF(s) == FREESXP)
 	    bad_sexp_type_old_type = OLDTYPE(s);
@@ -621,7 +623,7 @@ static R_size_t R_NodesInUse = 0;
     break; \
   FREE_FORWARD_CASE \
   default: \
-    register_bad_sexp_type(__n__); \
+    register_bad_sexp_type(__n__, __LINE__);		\
   } \
 } while(0)
 
@@ -634,6 +636,7 @@ static R_size_t R_NodesInUse = 0;
 #define FORWARD_NODE(s) do { \
   SEXP fn__n__ = (s); \
   if (fn__n__ && ! NODE_IS_MARKED(fn__n__)) { \
+    CHECK_FOR_FREE_NODE(fn__n__) \
     MARK_NODE(fn__n__); \
     UNSNAP_NODE(fn__n__); \
     SET_NEXT_NODE(fn__n__, forwarded_nodes); \
@@ -643,6 +646,18 @@ static R_size_t R_NodesInUse = 0;
 
 #define FC_FORWARD_NODE(__n__,__dummy__) FORWARD_NODE(__n__)
 #define FORWARD_CHILDREN(__n__) DO_CHILDREN(__n__,FC_FORWARD_NODE, 0)
+
+/* This macro should help localize where a FREESXP node is encountered
+   in the GC */
+#ifdef PROTECTCHECK
+#define CHECK_FOR_FREE_NODE(s) { \
+    SEXP cf__n__ = (s); \
+    if (TYPEOF(cf__n__) == FREESXP) \
+	register_bad_sexp_type(cf__n__, __LINE__); \
+}
+#else
+#define CHECK_FOR_FREE_NODE(s)
+#endif
 
 
 /* Node Allocation. */
@@ -919,7 +934,7 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 	size = LENGTH(s) * sizeof(SEXP);
 	break;
     default:
-	register_bad_sexp_type(s);
+	register_bad_sexp_type(s, __LINE__);
 	size = 0;
     }
     return BYTE2VEC(size);
@@ -2532,8 +2547,9 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type;
+    SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type = 0;
     SEXP first_bad_sexp_type_sexp = NULL;
+    int first_bad_sexp_type_line = 0;
 
  again:
 
@@ -2552,6 +2568,7 @@ static void R_gc_internal(R_size_t size_needed)
 	first_bad_sexp_type = bad_sexp_type_seen;
 	first_bad_sexp_type_old_type = bad_sexp_type_old_type;
 	first_bad_sexp_type_sexp = bad_sexp_type_sexp;
+	first_bad_sexp_type_line = bad_sexp_type_line;
     }
 
     if (gc_reporting) {
@@ -2585,17 +2602,23 @@ static void R_gc_internal(R_size_t size_needed)
     if (first_bad_sexp_type != 0) {
 #ifdef PROTECTCHECK
 	if (first_bad_sexp_type == FREESXP)
-	    error("GC encountered a node (%p) with type FREESXP (was %s)",
+	    error("GC encountered a node (%p) with type FREESXP (was %s)"
+		  " at memory.c:%d",
 		  first_bad_sexp_type_sexp,
-		  sexptype2char(first_bad_sexp_type_old_type));
+		  sexptype2char(first_bad_sexp_type_old_type),
+		  first_bad_sexp_type_line);
 	else
-	    error("GC encountered a node (%p) with an unknown SEXP type: %s",
+	    error("GC encountered a node (%p) with an unknown SEXP type: %s"
+		  " at memory.c:%d",
 		  first_bad_sexp_type_sexp,
-		  sexptype2char(first_bad_sexp_type));
+		  sexptype2char(first_bad_sexp_type),
+		  first_bad_sexp_type_line);
 #else
-	error("GC encountered a node (%p) with an unknown SEXP type: %s",
+	error("GC encountered a node (%p) with an unknown SEXP type: %s"
+	      " at memory.c:%d",
 	      first_bad_sexp_type_sexp,
-	      sexptype2char(first_bad_sexp_type));
+	      sexptype2char(first_bad_sexp_type),
+	      first_bad_sexp_type_line);
 #endif
     }
 }
