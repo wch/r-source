@@ -32233,15 +32233,15 @@ else
 fi
 
   if test "${have_png}" = yes; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if libpng version >= 1.0.5" >&5
-$as_echo_n "checking if libpng version >= 1.0.5... " >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking if libpng version >= 1.2.7" >&5
+$as_echo_n "checking if libpng version >= 1.2.7... " >&6; }
 if test "${r_cv_header_png_h+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <png.h>
-#if (PNG_LIBPNG_VER >= 10005)
+#if (PNG_LIBPNG_VER >= 10207)
   yes
 #endif
 

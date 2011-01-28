@@ -2006,11 +2006,11 @@ AC_EGREP_CPP([yes],
 ## Set shell variable r_cv_header_png_h to 'yes' if a recent enough
 ## 'png.h' is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_PNG],
-[AC_CACHE_CHECK([if libpng version >= 1.0.5],
+[AC_CACHE_CHECK([if libpng version >= 1.2.7],
                 [r_cv_header_png_h],
 AC_EGREP_CPP([yes],
 [#include <png.h>
-#if (PNG_LIBPNG_VER >= 10005)
+#if (PNG_LIBPNG_VER >= 10207)
   yes
 #endif
 ],
