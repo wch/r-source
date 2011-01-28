@@ -1,6 +1,6 @@
 % File src/library/utils/man/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -125,9 +125,12 @@
   the compiled code for another sub-architecture, use
   \option{--libs-only}.
 #endif
+
+  By default a package is installed with static HTML help pages if and
+  only if \R was: use option \option{--html} to override this.
   
   Use \command{R CMD INSTALL --help} for concise usage information,
-  including all the available options
+  including all the available options.
 }
 
 #ifdef unix
