@@ -10,6 +10,16 @@
       \item PCRE has been updated to 8.12 (two bug-fix releases since 8.10).
     }
   }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item The \samp{zlib} sources in the distribution are now built
+      with all symbols remapped: this is intended to avoid problems seen
+      with packages such as \pkg{XML} and \pkg{rggobi} which link to
+      \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{identical} could in rare cases generate a warning

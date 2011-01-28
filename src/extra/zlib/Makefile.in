@@ -11,7 +11,7 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-ZLIB_CPPFLAGS = -I$(srcdir) @USE_MMAP_ZLIB_TRUE@ -DUSE_MMAP
+ZLIB_CPPFLAGS = -I$(srcdir) -DZ_PREFIX @USE_MMAP_ZLIB_TRUE@ -DUSE_MMAP
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 SOURCES = adler32.c compress.c crc32.c deflate.c gzio.c infback.c \

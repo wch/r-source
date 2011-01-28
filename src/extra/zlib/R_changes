@@ -9,6 +9,12 @@ There are a very few to the source code of zlib-1.2.3 used here.
 Makefile.in is ours, not zlib's, and allows us to use PIC flags so this
 can be included in libR.so.
 
+As from R 2.13.0 we remap all the symbols (not just those remapped by
+defining Z_PREFIX) to avoid conflict with system versions of zlib
+(notably 1.2.5) linked into packages' *.so.  The known problems are
+with libxml2 and libggobi, both of which are linked to libz.
+
+
 diff -u ./gzio.c /data/gannet/ripley/R/svn/R-patched/src/extra/zlib/gzio.c
 --- ./gzio.c	2005-07-11 21:31:48.000000000 +0100
 +++ /data/gannet/ripley/R/svn/R-patched/src/extra/zlib/gzio.c	2006-09-04 15:41:33.998757000 +0100
