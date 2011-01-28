@@ -188,6 +188,10 @@ purpose).  However, this is not always possible, and @ref{Importing from
 other statistical systems} discusses what facilities are available to
 access such files directly from @R{}.  For Excel spreadsheets, the
 available methods are summarized in @ref{Reading Excel spreadsheets}.
+For ODS spreadsheets from Open Office, see the Omegahat
+package@footnote{Currently not available from their repository but as a
+source package for download from
+@url{http://www.omegahat.org/ROpenOffice/}.} @pkg{ROpenOffice}.
 
 In a few cases, data have been stored in a binary form for compactness
 and speed of access.  One application of this that we have seen several
@@ -2156,7 +2160,7 @@ project at @uref{http://www.omegahat.org/RSCORBA/}.
 The most common R data import/export question seems to be `how do I read
 an Excel spreadsheet'.  This chapter collects together advice and
 options given earlier.  Note that most of the advice is for pre-Excel
-2007 spreadsheets and not the later the @file{.xlsx} format.
+2007 spreadsheets and not the later @file{.xlsx} format.
 
 @findex read.csv
 @findex read.delim
