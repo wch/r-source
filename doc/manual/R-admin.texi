@@ -2147,8 +2147,10 @@ terminal may need to set the locale to something like @samp{en_GB.UTF-8}
 if it defaults to @samp{C}.
 
 Internally Mac OS X uses a form similar to Linux but without specifying
-the encoding (which is @code{UTF-8}).  It is based on ICU locales
-(@uref{http://userguide.icu-project.org/@/locale}) and not POSIX ones.
+the encoding (which is normally @code{UTF-8}).  It is based on ICU
+locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
+XPG ones, but utilties such as @code{Sys.setlocale()} do now normally
+accept XPG forms.
 
 
 @node Localization of messages,  , Locales, Internationalization
@@ -2685,9 +2687,9 @@ Roman and Courier New, and contain fonts rather similar to the first two
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
-@code{libpng} (version 1.2.3 or later, including 1.4.x) and @code{zlib}
-(version 1.1.3 or later) or @code{libtiff} (any recent version of 3.x.y
--- 3.8.2 and 3.9.[124] have been tested) respectively.
+@code{libpng} (version 1.2.3 or later, including 1.4.x and 1.5.x) and
+@code{zlib} (version 1.1.3 or later) or @code{libtiff} (any recent
+version of 3.x.y -- 3.8.2 and 3.9.[124] have been tested) respectively.
 
 If you have them installed (including the appropriate headers and of
 suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
@@ -3529,12 +3531,13 @@ in @code{example(eigen)} hanging or segfaulting under external @acronym{BLAS}s
 built under @command{g77}.  This should be detected by a
 @command{configure} test.
 
-The default @code{FFLAGS} chosen (by @command{autoconf}) for a
-@acronym{GNU} FORTRAN compiler is @samp{-g -O2}.  This seems not to be
-documented for @command{gfortran}, and has caused problems (segfaults
-and infinite loops) on @cputype{x86_64} Linux (and the optimizer will be
-shared with other platforms on that @acronym{CPU} type).  A maximum
-optimization of @samp{-O} is recommended there.
+The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
+@command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
+-O2}.  This has caused problems (segfaults and infinite loops) on
+@cputype{x86_64} Linux with @command{gfortran 4.3.x}, and
+@file{configure} changes the default to @samp{-g -O}: however it seems
+safe to override this to give higher levels of optimization on more
+recent compilers, for example @command{gfortran 4.5.1}
 
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
@@ -3892,10 +3895,7 @@ SAFE_FFLAGS="-O5 -libmil"
 @option{-fast}: see the warnings under Solaris. (The C++ options are
 also explained under Solaris.)
 
-The resulting build of @R{} was not quite as fast as that built with
-@command{gcc}@tie{}4.4.3 at @samp{-O3}.
-
-Others have found on at least some versions of @cputype{i386} Linux that
+Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
@@ -3918,7 +3918,7 @@ version is @command{bsdmake} on Darwin.)
 @cindex Mac OS X
 
 You can build @R{} as a Unix application on Mac OS X using the Apple
-Developer Tools (`Xcode') and @command{gfortran}.  You will also need to
+Developer Tools (`Xcode') and @command{gfortran}.  You may also need to
 install an X sub-system or configure with @option{--without-x}.  The X
 window manager is part of the standard Mac OS X distribution since Mac
 OS X version 10.3 (Panther), but it is typically not pre-installed prior
@@ -3928,15 +3928,6 @@ to 10.5 (Leopard).  You will also need @command{gfortran} and
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
-
-@c If you use the X window manager and prefer @code{Terminal.app} to
-@c @code{xterm}, you should be aware that @R{}, like many Unix tools, uses
-@c @enindex DISPLAY
-@c the existence of a @env{DISPLAY} environment variable to determine
-@c whether an X system is running.  This affects the default graphics
-@c device for the command-line version of R and the behaviour of the
-@c @code{png} and @code{jpeg} devices.
-
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -3960,12 +3951,12 @@ can be done (and is provided as an alternative in the binary
 distribution).
 
 @menu
-* 64-bit Leopard builds::       
+* 64-bit builds::               
 * Snow Leopard::                
 @end menu
 
-@node 64-bit Leopard builds, Snow Leopard, Mac OS X, Mac OS X
-@subsection 64-bit Leopard builds
+@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
+@subsection 64-bit builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
 needed is to select suitable compiler options, e.g.@: for recent Intel
@@ -3984,7 +3975,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit Leopard builds, Mac OS X
+@node Snow Leopard,  , 64-bit builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
@@ -4044,11 +4035,9 @@ The Solaris versions of several of the tools needed to build @R{}
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
-@command{makeinfo}.
-
-It is necessary to avoid the tools in @file{/usr/ucb}: in particular
-@file{/usr/ucb/tr} has caused @command{R CMD Rdiff} to malfunction.
-@command{configure} looks for a POSIX-compliant @command{tr}, e.g. in
+@command{makeinfo}.  It may be necessary to avoid the tools in
+@file{/usr/ucb}: in particular @file{/usr/ucb/tr} has caused problems in
+the past.  POSIX-compliant versions of some tools can be found in
 @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from

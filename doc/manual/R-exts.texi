@@ -177,12 +177,12 @@ package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
 should feel free to include a license file in your @emph{source}
 distribution, please do not arrange to @emph{install} yet another copy
 of the @acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but
-refer to the copies on @url{http://www.r-project.org/Licenses/} and
+refer to the copies on @uref{http://www.r-project.org/@/Licenses/} and
 included in the @R{} distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
-@uref{http://@/www.gnu.org/prep/standards/standards.html#Documentation}.
+@uref{http://www.gnu.org/@/prep/@/standards/@/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows and by default on Mac
@@ -296,12 +296,12 @@ One of the ``standard'' short specifications
 @example
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-1.0 Artistic-2.0
 @end example
-as made available @emph{via} @uref{http://@/www.r-project.org/@/Licenses/} and
+as made available @emph{via} @uref{http:/www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
 The names of abbreviations of free or open source software (FOSS, e.g.,
-@uref{http://en.wikipedia.org/wiki/FOSS}) licenses as contained in the
+@uref{http://en.wikipedia.org/@/wiki/@/FOSS}) licenses as contained in the
 license data base in file @file{share/licenses/license.db} in the @R{}
 source or home directory, possibly (for versioned licenses) followed by
 a version restriction of the form @samp{(@var{op} @var{v})} with
@@ -312,9 +312,9 @@ possibly combined @emph{via} @samp{,} (see below for an example).  For
 versioned licenses, one can also specify the name followed by the
 version, or combine an existing abbreviation and the version with a
 @samp{-}.  Further free (see
-@uref{http://@/www.fsf.org/@/licenses/@/license-list.html}) or open
+@uref{http://www.fsf.org/@/licenses/@/license-list.html}) or open
 software (see
-@uref{http://@/www.opensource.org/@/licenses/@/bsd-license.php})
+@uref{http://www.opensource.org/@/licenses/@/bsd-license.php})
 licenses will be added to this data base if necessary.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
@@ -545,11 +545,11 @@ Finally, an @samp{Language} field can be used to indicate if
 the package documentation is not in English: this should be a
 comma-separated list of standard (not private use or grandfathered) IETF
 language tags as currently defined by RFC 5646
-(@uref{http://tools.ietf.org/html/rfc5646}, see also
-@uref{http://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
+(@uref{http://tools.ietf.org/@/html/@/rfc5646}, see also
+@uref{http://en.wikipedia.org/@/wiki/@/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
-(@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
-639-3 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-3}) language
+(@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-1}) or 3-letter ISO
+639-3 (@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-3}) language
 codes.
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
@@ -796,7 +796,7 @@ Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
 or @file{.csv}, see @code{?data} for the file formats, and note that
 @file{.csv} is @strong{not} the
-standard@footnote{e.g@: @uref{http://tools.ietf.org/html/rfc4180}.} CSV
+standard@footnote{e.g@: @uref{http://tools.ietf.org/@/html/@/rfc4180}.} CSV
 format), or @code{save()} images (@file{.RData} or @file{.rda}). Note
 that @R{} code should be ``self-sufficient'' and not make use of extra
 functionality provided by the package, so that the data file can also be
@@ -1405,7 +1405,7 @@ older) platforms have no Fortran 90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 95.  See
-@uref{http://developer.r-project.org/Portability.html} for reference
+@uref{http://developer.r-project.org/@/Portability.html} for reference
 resources.  In particular, @emph{free source form} F95 code is not
 portable.
 
@@ -1760,7 +1760,7 @@ met: many would see these as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
-@file{inst/doc}, then @code{tool::texi2dvi(pdf = TRUE)} is run on all
+@file{inst/doc}, then @code{tools::texi2dvi(pdf = TRUE)} is run on all
 vignettes.  Whenever a @file{Makefile} is found, then @code{R CMD build}
 will try to run @command{make} after the @code{Sweave} step, so PDF
 manuals can be created from arbitrary source formats (plain @LaTeX{}
@@ -1865,7 +1865,7 @@ spurious) send an explanatory note with your submission.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
 @samp{anonymous} as log-in name and your e-mail address as password, to
-@uref{ftp://CRAN.R-project.org/incoming/} (note: use
+@uref{ftp://CRAN.R-project.org/@/incoming/} (note: use
 @samp{ftp}@footnote{for Windows users the simplest way may be to open
 that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
@@ -1877,7 +1877,7 @@ archive.
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use reasonably recent versions of the
 Debian TexLive distribution
-(@uref{http://packages.debian.org/de/sid/texlive}); for the Windows
+(@uref{http://packages.debian.org/@/de/@/sid/@/texlive}); for the Windows
 @acronym{CRAN} server, a reasonably recent version of MikTeX (including
 all packages available directly for MikTeX) is employed: the Mac OS X
 builders use a current full version of MacTeX.  Developers wanting to
@@ -2266,7 +2266,7 @@ space.
 
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from
-@uref{http://www.omegahat.org/examples/RDotCall}.
+@uref{http://www.omegahat.org/@/examples/@/RDotCall}.
 
 @node An example, Summary -- converting an existing package, Load hooks, Package name spaces
 @subsection An example
@@ -2535,7 +2535,7 @@ available on most platforms since @emph{ca} 2007 but old versions of
 @command{gcc} were still in use for @R{} 2.11.x.)
 
 If you use FORTRAN 77, @code{ftnchek}
-(@uref{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
+(@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
 of conformance to the standard.
 
 @item
@@ -2595,7 +2595,7 @@ by @command{R CMD INSTALL}.
 @end itemize
 
 Some notes on issues specific to porting to x64 Windows are available at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+@uref{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
 
 
 @node Encoding issues, Binary distribution, Writing portable packages, Writing portable packages
@@ -2804,7 +2804,7 @@ The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at the @acronym{GNU}
 archive mirrors and packaged with the @code{poEdit} package
-(@uref{http://@/poedit.sourceforge.net/@/download.php#win32}).
+(@uref{http://poedit.sourceforge.net/@/download.php#win32}).
 
 @menu
 * C-level messages::
@@ -3183,8 +3183,8 @@ carried out by functions in the @pkg{tools} package called by the
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
 
-@c 1225 just prior to 2.9.0
-The @R{} distribution contains more than 1200 such files which can be
+@c 1324 as of 2011-01-16
+The @R{} distribution contains more than 1300 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
 source tree, where @var{pkg} stands for one of the standard packages
 which are included in the @R{} distribution.
@@ -4915,7 +4915,7 @@ profile DLLs on Windows.
 @subsection Linux
 
 Options include using @command{sprof} for a shared object, and
-@command{oprofile} (see @uref{http://@/oprofile.sourceforge.net/}) for any
+@command{oprofile} (see @uref{http://oprofile.sourceforge.net/}) for any
 executable or shared object.
 
 @subsubsection sprof
@@ -5007,8 +5007,8 @@ collects information from shared objects compiled with @option{-pg}.
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version) and @command{Shark} (see
-@uref{http://developer.apple.com/tools/sharkoptimize.html} and
-@uref{http://@/developer.@/apple.com/tools/shark_optimize.html}).
+@uref{http://developer.apple.com/@/tools/@/sharkoptimize.html} and
+@uref{http://developer.apple.com/@/tools/@/shark_optimize.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -5019,10 +5019,10 @@ ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
 contributed packages such as @pkg{debug} on @acronym{CRAN} (described in
 an article in
-@uref{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf, R-News
+@uref{http://cran.r-project.org/@/doc/@/Rnews/@/Rnews_2003-3.pdf, R-News
 3/3}).  (There are notes from 2002 provided by Roger Peng at
-@uref{http://www.biostat.jhsph.edu/~rpeng/docs/R-debug-tools.pdf} which
-provide complementary examples to those given here.)
+@uref{http://www.biostat.jhsph.edu/@/~rpeng/@/docs/@/R-debug-tools.pdf}
+which provide complementary examples to those given here.)
 
 @menu
 * Browsing::
@@ -6431,7 +6431,7 @@ used in preference to @file{Makevars}, and only @file{src/Makefile.win}
 will be used by @code{R CMD INSTALL} with @file{src/Makefile} being
 ignored.  For details of building DLLs with a variety of compilers, see
 file @samp{README.packages} and
-@uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
+@uref{http://www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 .  Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
@@ -7791,7 +7791,7 @@ value of its arguments if they are vector types.
 
 SEXP showArgs(SEXP args)
 @{
-  int i, nargs;
+  int i;
   Rcomplex cpl;
   const char *name;
   SEXP el;
@@ -7800,22 +7800,22 @@ SEXP showArgs(SEXP args)
 @group
   args = CDR(args); /* skip 'name' */
   for(i = 0; args != R_NilValue; i++, args = CDR(args)) @{
-    args = CDR(args);
-    name = CHAR(PRINTNAME(TAG(args)));
-    switch(TYPEOF(CAR(args))) @{
+    name = isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
+    el = CAR(args);
+    switch(TYPEOF(el)) @{
     case REALSXP:
-      Rprintf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
+      Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
       break;
 @end group
 @group
     case LGLSXP:
     case INTSXP:
-      Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
+      Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
       break;
 @end group
 @group
     case CPLXSXP:
-      cpl = COMPLEX(CAR(args))[0];
+      cpl = COMPLEX(el)[0];
       Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
       break;
 @end group
@@ -7838,7 +7838,7 @@ SEXP showArgs(SEXP args)
 This can be called by the wrapper function
 
 @example
-showArgs <- function(...) .External("showArgs", ...)
+showArgs <- function(...) invisible(.External("showArgs", ...))
 @end example
 
 @noindent
@@ -7846,7 +7846,7 @@ Note that this style of programming is convenient but not necessary, as
 an alternative style is
 
 @example
-showArgs1 <- function(...) .Call("showArgs1", list(...))
+showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
 @end example
 
 @noindent
@@ -9863,10 +9863,15 @@ the code is indeed being used with @R{}.
 
 Header file @file{Rconfig.h} (included by @file{R.h}) is used to define
 platform-specific macros that are mainly for use in other header files.
-The macro @code{WORDS_BIGENDIAN} is defined on big-endian systems
-(e.g.@: @code{sparc-sun-solaris2.6}) and not on little-endian systems
-(such as @code{i686} under Linux or Windows). It can be useful when
-manipulating binary files.
+The macro @code{WORDS_BIGENDIAN} is defined on
+big-endian@footnote{@uref{http://en.wikipedia.org/@/wiki/@/Endianness}.}
+systems (e.g.@: most OSes on Sparc, PowerPC and PA-RISC hardware, and
+HP-UX on Itanium) and not on little-endian systems (such as @code{i686}
+and @code{x86_64} on all OSes, and Linux on Alpha and Itanium).  It can
+be useful when manipulating binary files.  The macro
+@code{SUPPORT_OPENMP} is defined on suitable systems as from @R{}
+2.13.0, and can be used in conjuction with the @code{SUPPORT_OPENMP_*}
+macros in packages that want to make use of OpenMP.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
@@ -9909,7 +9914,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably, see
-@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}, so this usage
+@uref{http://www.greenend.org.uk/@/rjk/@/2003/@/03/@/inline.html}, so this usage
 is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
@@ -10276,8 +10281,8 @@ mean a GUI or other application that has the ability to submit commands
 to @R{} and perhaps to receive results back (not necessarily in a text
 format).  There are other routes besides those described here, for
 example the package @pkg{Rserve} (from @acronym{CRAN}, see also
-@uref{http://www.rforge.net/Rserve/}) and connections to Java in
-@samp{SJava} (see @uref{http://www.omegahat.org/RSJava/} and @samp{JRI},
+@uref{http://www.rforge.net/@/Rserve/}) and connections to Java in
+@samp{SJava} (see @uref{http://www.omegahat.org/@/RSJava/} and @samp{JRI},
 part of the @pkg{rJava} package on @acronym{CRAN}).
 
 @menu
@@ -10822,7 +10827,7 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on @acronym{CRAN}
-(@uref{http://@/cran.r-project.org/@/other-software.html}) which works
+(@uref{http://cran.r-project.org/@/other-software.html}) which works
 with package @pkg{rscproxy} to support transfer of data to and from @R{}
 and remote execution of R commands, as well as embedding of an @R{}
 graphics window.  The @pkg{rcom} package on @acronym{CRAN} provides a
@@ -10831,7 +10836,7 @@ graphics window.  The @pkg{rcom} package on @acronym{CRAN} provides a
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
 @uref{http://www.omegahat.org/}. Its philosophy is discussed in
-@uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
+@uref{http://www.omegahat.org/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
 very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows

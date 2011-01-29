@@ -42,10 +42,10 @@ convE(u, u)
 
 ## ----- Lists examples -----
 
-showArgs <- function(...) .External("showArgs", ...)
+showArgs <- function(...) invisible(.External("showArgs", ...))
 showArgs(u=u, x=x, let=letters)
 
-showArgs1 <- function(...) .Call("showArgs1", list(...))
+showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
 showArgs1(u=u, x=x, let=letters)
 
 a <- list(a = 1:5, b = rnorm(10), test = runif(100))
