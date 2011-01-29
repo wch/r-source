@@ -574,7 +574,7 @@ AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
-## see if the user set FFLAGS
+## see if the user set FFLAGS: used for Intel compilers
 userFFLAGS=${FFLAGS}
 R_PROG_F77
 AC_PROG_CXX
@@ -2177,7 +2177,6 @@ AC_SUBST(R_BATCHSAVE)
 R_JAVA
 
 ## F90/F95 support
-userFCFLAGS=${FCFLAGS}
 AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
@@ -2210,8 +2209,9 @@ if test "x${shlib_ld_was_given}" = xno -a \
   SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
   SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
   SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+  ## next macro is copied into Rconfig.h
   AC_DEFINE(SUPPORT_OPENMP, 1,
-            [Define if you C/C++/Fortran OpenMP support for package code.])
+            [Define if you have C/C++/Fortran OpenMP support for package code.])
 else
   SHLIB_OPENMP_CFLAGS=
   SHLIB_OPENMP_CXXFLAGS=
