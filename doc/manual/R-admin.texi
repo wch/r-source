@@ -3522,11 +3522,9 @@ built under @command{g77}.  This should be detected by a
 @command{configure} test.
 
 The default @code{FFLAGS} chosen (by @command{autoconf}) for a
-@acronym{GNU} FORTRAN compiler is @samp{-g -O2}.  This seems not to be
-documented for @command{gfortran}, and has caused problems (segfaults
-and infinite loops) on @cputype{x86_64} Linux (and the optimizer will be
-shared with other platforms on that @acronym{CPU} type).  A maximum
-optimization of @samp{-O} is recommended there.
+@acronym{GNU} FORTRAN compiler is @samp{-g -O2}.  This has caused
+problems (segfaults and infinite loops) on @cputype{x86_64} Linux in the
+past, but seems fine with @command{gfortran 4.5.x}.
 
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
@@ -3884,10 +3882,7 @@ SAFE_FFLAGS="-O5 -libmil"
 @option{-fast}: see the warnings under Solaris. (The C++ options are
 also explained under Solaris.)
 
-The resulting build of @R{} was not quite as fast as that built with
-@command{gcc}@tie{}4.4.3 at @samp{-O3}.
-
-Others have found on at least some versions of @cputype{i386} Linux that
+Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
@@ -3910,7 +3905,7 @@ version is @command{bsdmake} on Darwin.)
 @cindex Mac OS X
 
 You can build @R{} as a Unix application on Mac OS X using the Apple
-Developer Tools (`Xcode') and @command{gfortran}.  You will also need to
+Developer Tools (`Xcode') and @command{gfortran}.  You may also need to
 install an X sub-system or configure with @option{--without-x}.  The X
 window manager is part of the standard Mac OS X distribution since Mac
 OS X version 10.3 (Panther), but it is typically not pre-installed prior
@@ -3920,15 +3915,6 @@ to 10.5 (Leopard).  You will also need @command{gfortran} and
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
-
-@c If you use the X window manager and prefer @code{Terminal.app} to
-@c @code{xterm}, you should be aware that @R{}, like many Unix tools, uses
-@c @enindex DISPLAY
-@c the existence of a @env{DISPLAY} environment variable to determine
-@c whether an X system is running.  This affects the default graphics
-@c device for the command-line version of R and the behaviour of the
-@c @code{png} and @code{jpeg} devices.
-
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -3952,12 +3938,12 @@ can be done (and is provided as an alternative in the binary
 distribution).
 
 @menu
-* 64-bit Leopard builds::       
+* 64-bit builds::               
 * Snow Leopard::                
 @end menu
 
-@node 64-bit Leopard builds, Snow Leopard, Mac OS X, Mac OS X
-@subsection 64-bit Leopard builds
+@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
+@subsection 64-bit builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
 needed is to select suitable compiler options, e.g.@: for recent Intel
@@ -3976,7 +3962,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit Leopard builds, Mac OS X
+@node Snow Leopard,  , 64-bit builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
