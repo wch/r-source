@@ -376,6 +376,7 @@ plotNode <-
     lab.col <- Xtract("lab.col", nPar, default = par("col"), i)
     lab.cex <- Xtract("lab.cex", nPar, default = c(1,1), i)
     lab.font <- Xtract("lab.font", nPar, default = par("font"), i)
+    lab.xpd <- Xtract("xpd", nPar, default = c(TRUE, TRUE), i)
     if (is.leaf(subtree)) {
 	## label leaf
 	if (leaflab == "perpendicular") { # somewhat like plot.hclust
@@ -388,7 +389,7 @@ plotNode <-
                 X <- xTop; srt <- 90; adj <- 1
 	    }
             nodeText <- asTxt(attr(subtree,"label"))
-	    text(X, Y, nodeText, xpd = TRUE, srt = srt, adj = adj,
+	    text(X, Y, nodeText, xpd = lab.xpd, srt = srt, adj = adj,
                  cex = lab.cex, col = lab.col, font = lab.font)
 	}
     }
@@ -433,7 +434,7 @@ plotNode <-
 		vln <- 1.5 * strheight(nodeText, cex = lab.cex)/2
 		rect(xBot - hln, yBot,
 		     xBot + hln, yBot + 2 * vln, col = p.col)
-		text(xBot, yBot + vln, nodeText, xpd = TRUE,
+		text(xBot, yBot + vln, nodeText, xpd = lab.xpd,
                      cex = lab.cex, col = lab.col, font = lab.font)
 	    }
 	    if (!is.null(attr(child, "edgetext"))) {

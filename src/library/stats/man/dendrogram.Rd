@@ -1,7 +1,7 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
-% Copyright 2002-2010 The R Foundation
+% Copyright 1995-2011 R Core Development Team
+% Copyright 2002-2011 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{dendrogram}
@@ -72,9 +72,12 @@ is.leaf(object)
   \item{nodePar}{a \code{list} of plotting parameters to use for the
     nodes (see \code{\link{points}}) or \code{NULL} by default which
     does not draw symbols at the nodes.  The list may contain components
-    named \code{pch}, \code{cex}, \code{col}, and/or \code{bg} each of
+    named \code{pch}, \code{cex}, \code{col}, \code{xpd},
+    and/or \code{bg} each of
     which can have length two for specifying separate attributes for
-    \emph{inner} nodes and \emph{leaves}.}
+    \emph{inner} nodes and \emph{leaves}.  Note that the default of
+    \code{pch} is \code{1:2}, so you may want to use \code{pch = NA} if
+    you specify \code{nodePar}.}
   \item{edgePar}{a \code{list} of plotting parameters to use for the
     edge \code{\link{segments}} and labels (if there's an
     \code{edgetext}).  The list may contain components
@@ -213,7 +216,7 @@ plot(dend1, edgePar=list(col = 1:2, lty = 2:3),
 plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3),
      horiz=TRUE)
 
-## simple test for as.hclust() asthe inverse of as.dendrogram():
+## simple test for as.hclust() as the inverse of as.dendrogram():
 stopifnot(identical(as.hclust(dend1)[1:4], hc[1:4]))
 
 dend2 <- cut(dend1, h=70)

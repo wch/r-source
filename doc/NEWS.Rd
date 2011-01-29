@@ -237,6 +237,9 @@
 
       \item The \code{.Primitive} function \code{c()} is now of type
       BUILTIN.
+
+      \item plot(<dendrogram>, .., nodePar=*) now obeys an optional
+      \code{xpd} specification (allowing to turn off clipping completely).
     }
   }
 
@@ -358,10 +361,10 @@
       \item The default for \env{FFLAGS} and \env{FCFLAGS} with
       \command{gfortran} on x86_64 Linux has been changed back to \samp{-g
 	-O2}:  however, setting \samp{-g -O} may still be needed for
-      \command{gfortran 4.3.x}. 
+      \command{gfortran 4.3.x}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{identical} could in rare cases generate a warning
