@@ -5033,8 +5033,8 @@ collects information from shared objects compiled with @option{-pg}.
 
 Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version) and @command{Shark} (see
-@uref{http://developer.apple.com/tools/sharkoptimize.html} and
-@uref{http://developer.apple.com/tools/shark_optimize.html}).
+@uref{http://developer.apple.com/@/tools/@/sharkoptimize.html} and
+@uref{http://developer.apple.com/@/tools/@/shark_optimize.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
