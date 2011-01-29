@@ -2679,11 +2679,11 @@ as in the x units).} in the @samp{x} and @samp{y} directions.
 @c think of the engine as colors.c, devices.c, engine.c, plotmath.c, vfonts.c
 The next layer up is the graphics `engine' that is the main interface to
 the device (although the graphics subsystems do talk directly to
-devices).  This is responsible for clipping, converting the @code{pch}
-values @code{0...26} to sets of lines/circles, centring (and otherwise
-adjusting) text, rendering mathematical expressions (`plotmath') and
-mapping colour descriptions such as names to the internal
-representation.
+devices).  This is responsible for clipping lines, rectangles and
+polygons, converting the @code{pch} values @code{0...26} to sets of
+lines/circles, centring (and otherwise adjusting) text, rendering
+mathematical expressions (`plotmath') and mapping colour descriptions
+such as names to the internal representation.
 
 @c graphics.c looks at device dimensions, locator, metricinfo
 @c par.c looks at various device pars
