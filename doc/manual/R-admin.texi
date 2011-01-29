@@ -3521,11 +3521,12 @@ in @code{example(eigen)} hanging or segfaulting under external @acronym{BLAS}s
 built under @command{g77}.  This should be detected by a
 @command{configure} test.
 
-The default @code{FFLAGS} chosen (by @command{autoconf}) for a
-@acronym{GNU} FORTRAN compiler is @samp{-g -O2}.  This has caused
-problems (segfaults and infinite loops) on @cputype{x86_64} Linux in the
-past, but seems fine with @command{gfortran 4.5.x}.
-
+The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
+@command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
+-O2}.  This has caused problems (segfaults and infinite loops) on
+@cputype{x86_64} Linux in the past, but seems fine with
+@command{gfortran 4.4.4} and later: for earlier compilers set
+@code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags

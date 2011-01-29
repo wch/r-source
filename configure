@@ -25328,28 +25328,6 @@ fi
         ;;
     esac
     case  "${F77}" in
-      ## gfortran: At least for 4.3.x -O2 gives faulty code
-      gfortran*)
- 	if test "x$userFFLAGS" = x; then
-          if test $ac_cv_prog_f77_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-g -O"
-		;;
-	      *)
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-O"
-		;;
-	      *)
-		;;
-	    esac
-          fi
-        fi
-        ;;
       ## Intel compilers
       *ifc|*ifort)
 	if test "x$userFFLAGS" = x; then
@@ -35180,11 +35158,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35183: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35161: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35187: \$? = $ac_status" >&5
+   echo "$as_me:35165: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35279,11 +35257,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35282: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35260: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35286: \$? = $ac_status" >&5
+   echo "$as_me:35264: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35331,11 +35309,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35334: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35312: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35338: \$? = $ac_status" >&5
+   echo "$as_me:35316: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -37431,27 +37409,6 @@ case "${host_os}" in
     ;;
   linux*)
     case  "${FC}" in
-      gfortran)
- 	if test "x$userFCFLAGS" = x; then
-          if test $ac_cv_prog_fc_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FCFLAGS="-g -O"
-		;;
-	      *)
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FCFLAGS="-O"
-		;;
-	      *)
-		;;
-	    esac
-          fi
-        fi
-        ;;
       ## Intel compilers: probably get identified as GNU, but make sure.
       *ifc|*ifort)
         fcpicflags="-fpic"

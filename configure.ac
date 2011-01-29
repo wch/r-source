@@ -974,28 +974,6 @@ case "${host_os}" in
         ;;
     esac
     case  "${F77}" in
-      ## gfortran: At least for 4.3.x -O2 gives faulty code
-      gfortran*)
- 	if test "x$userFFLAGS" = x; then
-          if test $ac_cv_prog_f77_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-g -O"
-		;;
-	      *)
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-O"
-		;;
-	      *)
-		;;
-	    esac
-          fi
-        fi
-        ;;
       ## Intel compilers
       *ifc|*ifort)
 	if test "x$userFFLAGS" = x; then
@@ -2272,27 +2250,6 @@ case "${host_os}" in
     ;;
   linux*)
     case  "${FC}" in
-      gfortran)
- 	if test "x$userFCFLAGS" = x; then
-          if test $ac_cv_prog_fc_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FCFLAGS="-g -O"
-		;;
-	      *)
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FCFLAGS="-O"
-		;;
-	      *)
-		;;
-	    esac
-          fi
-        fi
-        ;;
       ## Intel compilers: probably get identified as GNU, but make sure.
       *ifc|*ifort)
         fcpicflags="-fpic"
