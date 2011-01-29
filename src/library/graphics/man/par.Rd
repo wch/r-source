@@ -553,7 +553,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{xpd}}{A logical value or \code{NA}.
       If \code{FALSE}, all plotting is clipped to the plot region, if
       \code{TRUE}, all plotting is clipped to the figure region, and if
-      \code{NA}, all plotting is clipped to the device region. See also
+      \code{NA}, all plotting is clipped to the device region.  See also
       \code{\link{clip}}.}
     \item{\code{yaxp}}{A vector of the form \code{c(y1, y2, n)} giving
       the coordinates of the extreme tick marks and the number of
