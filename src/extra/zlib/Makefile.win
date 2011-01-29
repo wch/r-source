@@ -14,7 +14,8 @@ CPPFLAGS=-I../../include -DHAVE_CONFIG_H
 DLL: Rzlib.dll
 	@cp Rzlib.dll ../../../$(BINDIR)
 
-Rzlib.dll: $(OBJECTS)
+Rzlib.dll: $(OBJECTS) Rzlib.def
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rzlib.def $(OBJECTS)
 
 ifdef USE_IMPLIBS
 implib: libRzlib.dll.a
@@ -26,15 +27,11 @@ endif
 
 libRzlib.dll.a: Rzlib.def
 
-Rzlib.def: $(OBJECTS)
-	@$(ECHO) EXPORTS > $@
-	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SORT) | uniq >> $@
-
 headers:
 	@$(CP) -p zlib.h zconf.h ../../../include
 
 clean:
-	@$(RM) *.o *~ *.d Makedeps Rzlib.def
+	@$(RM) *.o *~ *.d Makedeps
 distclean: clean
 	@$(RM) libz.a Rzlib.dll libRzlib.dll.a
 

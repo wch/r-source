@@ -9,10 +9,13 @@ There are a very few to the source code of zlib-1.2.3 used here.
 Makefile.in is ours, not zlib's, and allows us to use PIC flags so this
 can be included in libR.so.
 
-As from R 2.13.0 we remap all the symbols (not just those remapped by
-defining Z_PREFIX) to avoid conflict with system versions of zlib
-(notably 1.2.5) linked into packages' *.so.  The known problems are
-with libxml2 and libggobi, both of which are linked to libz.
+As from R 2.12.1-patched, on a Unix-alike we remap all the symbols
+(not just those remapped by defining Z_PREFIX) to avoid conflict with
+system versions of zlib (notably 1.2.5) linked into packages' *.so.
+The known problems are with libxml2 and libggobi, both of which are
+linked to libz.  This is not needed on Windows where the DLL is named
+Rzlib.dll and symbols are imported from a named DLL.  But Rzlib.def is
+used to confine exports to symbols marked ZEXPORT in zlib.h.
 
 
 diff -u ./gzio.c /data/gannet/ripley/R/svn/R-patched/src/extra/zlib/gzio.c
@@ -119,5 +122,4 @@ diff -u ./zconf.h /data/gannet/ripley/R/svn/R-patched/src/extra/zlib/zconf.h
  #  include <sys/types.h> /* for off_t */
  #  include <unistd.h>    /* for SEEK_* and off_t */
  #  ifdef VMS
-Only in .: zconf.in.h
-Only in .: zlib.3
+
