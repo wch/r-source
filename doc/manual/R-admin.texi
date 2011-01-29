@@ -172,9 +172,10 @@ built in exactly the same way as distributions of R releases.
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
 @uref{http://subversion.apache.org/}), you can check out and update the
-current @samp{r-devel} from @uref{https://svn.r-project.org/R/trunk/} and the
-current @samp{r-patched} from
-@samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/}
+current @samp{r-devel} from
+@uref{https://svn.r-project.org/@/R/@/trunk/} and the current
+@samp{r-patched} from
+@samp{https://svn.r-project.org/@/R/@/branches/R-@var{x}-@var{y}-branch/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
 
@@ -1029,7 +1030,7 @@ You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
 versions that have been tested are @file{libpng-1.4.5.tar.gz},
 @file{jpegsrc.v8b.tar.gz}, @file{tiff-3.9.4.tar.gz} (including betas of
 @file{tiff-4.0.0}).  It is also possible to use @samp{libjpeg-turbo}
-from @url{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
+from @uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
@@ -1346,7 +1347,7 @@ Support for cross-building was withdrawn at @R{} 2.9.0.
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
 discussed here (@pxref{64-bit toolchain}) is based on the work of
 the MinGW-w64 project
-(@url{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
+(@uref{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
 
@@ -1709,11 +1710,11 @@ repository areas for 32- and 64-bit binary packages).
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
 For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
 @pkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution from
-@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
+@uref{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.  One way to
 achieve this is to set the @env{PATH} environment variable in files
@@ -1755,7 +1756,7 @@ will only succeed if both installs succeed.)
 
 
 Some notes on porting packages to 64-bit Windows can be found at
-@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
+@uref{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -2074,12 +2075,12 @@ locale needs to specify
 @item
 A human language.  These are generally specified by a lower-case
 two-character abbreviation following ISO 639 (see e.g.@:
-@url{http://en.wikipedia.org/@/wiki/@/ISO_639-1}).
+@uref{http://en.wikipedia.org/@/wiki/@/ISO_639-1}).
 
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO 3166
-(see e.g.@: @url{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).  Sometimes
+(see e.g.@: @uref{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).  Sometimes
 the combination of language and territory is used to specify the
 encoding, for example to distinguish between traditional and simplified
 Chinese.
@@ -3854,7 +3855,7 @@ Others have reported success with versions 10.x and 11.x.
 
 Brian Ripley tested the Sun Studio 12 compilers, since renamed to Oracle
 Solaris Studio,
-(@uref{http://developers.sun.com/sunstudio/index.jsp}) 
+(@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) 
 On
 @cputype{x86_64} Linux with
 
@@ -3969,7 +3970,7 @@ on Snow Leopard.)
 On Snow Leopard you will most likely to need to specify @option{-arch
 i386} for a 32-bit build and @option{-arch x86_64} for a 64-bit build:
 the Apple compilers default to 64-bit but the @command{gfortran}
-supplied on @url{http://r.research.att.com} defaults to 32-bit.
+supplied on @uref{http://r.research.att.com} defaults to 32-bit.
 
 Another quirk is that the X11 libraries are not in the default linking
 path, so something like @samp{LIBS=-L/usr/X11/lib} may be required (or
@@ -4029,7 +4030,7 @@ the past.  POSIX-compliant versions of some tools can be found in
 @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from
-@url{http://www.opencsw.org} (and also @url{http://www.blastwave.org})
+@uref{http://www.opencsw.org} (and also @uref{http://www.blastwave.org})
 via @command{pkg-get}, by default installed under @file{/opt/csw}.
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
@@ -4165,7 +4166,7 @@ several reports of problems were due to using @command{gcc} compiled on
 one version of Solaris on a later version.  A version of @command{gcc}
 optimized for Sparc (using technology from Sun's compilers) is available
 from
-Sun.@footnote{@uref{http://www.sun.com/download/index.jsp?@/cat=Application%20Development&tab=3&subcat=Development%20Tools}}
+Sun.@footnote{@uref{http://www.sun.com/@/download/@/index.jsp?@/cat=Application%20Development&tab=3&subcat=Development%20Tools}}
 
 Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 needed
 
@@ -4276,7 +4277,7 @@ Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
 Applications''
 (@uref{http://www-03.ibm.com/@/systems/@/power/@/software/@/aix/@/linux/}) and
-@uref{http://www.@/oss4aix.org/download/}.  The latter website typically
+@uref{http://www.oss4aix.org/@/download/}.  The latter website typically
 offers more recent versions of the available OSS.  All tools needed and
 libraries downloaded from these repositories (e.g., GCC, Make,
 @code{libreadline}, etc.) are typically installed to
@@ -4300,7 +4301,7 @@ The recent WU testing was done using compilers from both the
 @acronym{GNU} Compiler Collection (version 4.2.4) which is available
 from one of the above OSS repositories, and the IBM C/C++ (XL C/C++
 10.01) as well as FORTRAN (XL Fortran 12.01) compilers
-(@url{http://www14.software.ibm.com/@/webapp/@/download/@/byproduct.jsp#X}).
+(@uref{http://www14.software.ibm.com/@/webapp/@/download/@/byproduct.jsp#X}).
 
 To compile for a 64-bit @cputype{powerpc} (Power6 @acronym{CPU}) target
 one can use
@@ -4654,7 +4655,7 @@ with the current toolchain.
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
 @code{4.5.0}.  The toolchain included in @file{Rtools212.exe}, and was
 collected from the files at
-@url{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
+@uref{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
 @example
 binutils-2.20.51-1-mingw32-bin.tar.lzma
@@ -4696,7 +4697,7 @@ under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages
 unless @option{--no-test-load} is used.}  This is based on files from
-@url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
+@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
 including a pre-release of @command{gcc 4.5.2}.  However, this has been
 patched to use static Fortran and C++ runtime libraries: a suitable
