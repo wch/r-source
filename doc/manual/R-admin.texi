@@ -175,7 +175,7 @@ R Subversion repository.  If you have a Subversion client (see
 current @samp{r-devel} from
 @uref{https://svn.r-project.org/@/R/@/trunk/} and the current
 @samp{r-patched} from
-@samp{https://svn.r-project.org/@/R/@/branches/R-@var{x}-@var{y}-branch/}
+@samp{https://svn.r-project.org/@/R/@/branches/@/R-@var{x}-@var{y}-branch/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
 
@@ -3526,7 +3526,7 @@ The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
 -O2}.  This has caused problems (segfaults and infinite loops) on
 @cputype{x86_64} Linux in the past, but seems fine with
-@command{gfortran 4.4.4} and later: for earlier compilers set
+@command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
 @code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
@@ -3751,12 +3751,23 @@ what is needed.
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
 libraries, but this is not necessarily so on other platforms, in
 particular on 64-bit @acronym{CPU}s such as @cputype{x86_64}.  So care
-can be needed with @acronym{BLAS} libraries and when building @R{} as a shared
-library to ensure that position-independent code is used in any static
-libraries (such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg}
-and @code{zlib}) which might be linked against.  Fortunately these are
-normally built as shared libraries with the exception of the ATLAS @acronym{BLAS}
-libraries.
+can be needed with @acronym{BLAS} libraries and when building @R{} as a
+shared library to ensure that position-independent code is used in any
+static libraries (such as the Tcl/Tk libraries, @code{libpng},
+@code{libjpeg} and @code{zlib}) which might be linked against.
+Fortunately these are normally built as shared libraries with the
+exception of the ATLAS @acronym{BLAS} libraries.
+
+The default optimization settings chosen for @code{CFLAGS} etc are
+conservative.  It is likely that using @option{-mtune} will result in
+significant performance improvements on recent CPUs (especially for
+@cputype{ix86}): one possibility is to add @option{-mtune=native} for
+the best possible performance on the machine on which @R{} is being
+installed: if the compilation is for a site-wide installation, it may
+still be desirable to use something like @option{-mtume=core2}.  It is
+also possible to increase the optimization levels to @option{-O3}:
+however for many versions of the compilers this has caused problems in
+at least one @acronym{CRAN} package.
 
 For platforms with both 64- and 32-bit support, it is likely that
 
