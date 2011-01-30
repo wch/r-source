@@ -6778,7 +6778,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 fi
-## see if the user set FFLAGS
+## see if the user set FFLAGS: used for Intel compilers
 userFFLAGS=${FFLAGS}
 
 CC_VERSION=
@@ -28335,26 +28335,34 @@ else
 #include "confdefs.h"
 #include <complex.h>
 #include <stdlib.h>
+#include <stdio.h>
 typedef struct {
         double r;
         double i;
 } Rcomplex;
 
-void set_it(Rcomplex *z)
-{
+int main () {
+    /* We assume that we can cast between Rcomplex and double complex
+      arrays, so test that directly */
+    double complex x[3], *xz;
+    Rcomplex *z;
+    z = (Rcomplex *) calloc(3, sizeof(Rcomplex));
     z[0].r = 3.14159265;
     z[0].i = 2.172;
     z[1].i = 3.14159265;
     z[1].r = 2.172;
     z[2].r = 123.456;
     z[2].i = 0.123456;
-}
-int main () {
-    double complex z[3];
-
-    set_it(z);
-    if(cabs(z[2] - 123.456 - 0.123456 * _Complex_I) < 1e-4) exit(0);
-    else exit(1);
+    xz = (double complex *) z;
+    /* printf("%f+%fi\n", creal(xz[2]), cimag(xz[2])); */
+    if(cabs(xz[2] - 123.456 - 0.123456 * _Complex_I) > 1e-4) exit(1);
+    x[0] = 3.14159265 + 2.172 * _Complex_I;
+    x[1] = 2.172 + 3.14159265 * _Complex_I;
+    x[2] = 123.456 + 0.123456 * _Complex_I;
+    z = (Rcomplex *) x;
+    /* printf("%f+%fi\n", z[2].r, z[2].i); */
+    if (z[2].r != 123.456 || z[2].i != 0.123456) exit(1);
+    exit(0);
 }
 
 _ACEOF
@@ -34165,7 +34173,6 @@ fi
 
 
 ## F90/F95 support
-userFCFLAGS=${FCFLAGS}
 ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
@@ -35158,11 +35165,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35161: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35168: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35165: \$? = $ac_status" >&5
+   echo "$as_me:35172: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35257,11 +35264,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35260: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35267: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35264: \$? = $ac_status" >&5
+   echo "$as_me:35271: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35309,11 +35316,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35312: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35319: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35316: \$? = $ac_status" >&5
+   echo "$as_me:35323: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -37368,6 +37375,7 @@ if test "x${shlib_ld_was_given}" = xno -a \
   SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
   SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
   SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+  ## next macro is copied into Rconfig.h
 
 $as_echo "#define SUPPORT_OPENMP 1" >>confdefs.h
 

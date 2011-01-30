@@ -108,20 +108,19 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 
 static void R_cpow_n(Rcomplex *r, Rcomplex *x, int k) {
     if(k == 0) {
-	r->r = 1.;
-	r->i = 0.;
+	r->r = 1.; r->i = 0.;
+    } else if(k == 1) {
+	r->r = x->r; r->i = x->i;
     } else if(k < 0) {
 	Rcomplex h;
 	R_cpow_n(r, x, -k);
 	/* r := 1/r : */
-	h.r = 1.; h.i = 0;
-	complex_div(r, &h, r);
+	h.r = 1.; h.i = 0; complex_div(r, &h, r);
     }
     else {/* k > 0 */
 	Rcomplex X;
-	r->r = X.r = x->r;
-	r->i = X.i = x->i;
-	k--;
+	r->r = 1.; r->i = 0.;
+	X.r = x->r; X.i = x->i;
 	while (k > 0) {
 	    double rr;
 	    if (k & 1) { /* r := r * X */
@@ -129,8 +128,7 @@ static void R_cpow_n(Rcomplex *r, Rcomplex *x, int k) {
 		r->i = r->r * X.i + r->i * X.r;
 		r->r = rr;
 	    }
-	    if(k == 1)
-		break;
+	    if(k == 1) break;
 	    k >>= 1; /* efficient division by 2; now have k >= 1 */
 
 	    /* X := X * X : */

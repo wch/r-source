@@ -3415,26 +3415,34 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
 #include <complex.h>
 #include <stdlib.h>
+#include <stdio.h>
 typedef struct {
         double r;
         double i;
 } Rcomplex;
 
-void set_it(Rcomplex *z)
-{
+int main () {
+    /* We assume that we can cast between Rcomplex and double complex
+      arrays, so test that directly */
+    double complex x[3], *xz;
+    Rcomplex *z;
+    z = (Rcomplex *) calloc(3, sizeof(Rcomplex));
     z[0].r = 3.14159265;
     z[0].i = 2.172;
     z[1].i = 3.14159265;
     z[1].r = 2.172;
     z[2].r = 123.456;
     z[2].i = 0.123456;
-}
-int main () {
-    double complex z[3];
-
-    set_it(z);
-    if(cabs(z[2] - 123.456 - 0.123456 * _Complex_I) < 1e-4) exit(0);
-    else exit(1);
+    xz = (double complex *) z;
+    /* printf("%f+%fi\n", creal(xz[2]), cimag(xz[2])); */
+    if(cabs(xz[2] - 123.456 - 0.123456 * _Complex_I) > 1e-4) exit(1);
+    x[0] = 3.14159265 + 2.172 * _Complex_I;
+    x[1] = 2.172 + 3.14159265 * _Complex_I;
+    x[2] = 123.456 + 0.123456 * _Complex_I;
+    z = (Rcomplex *) x;
+    /* printf("%f+%fi\n", z[2].r, z[2].i); */
+    if (z[2].r != 123.456 || z[2].i != 0.123456) exit(1);
+    exit(0);
 }
 ]])], [r_c99_complex=yes], [r_c99_complex=no], [r_c99_complex=no])
   AC_MSG_RESULT(${r_c99_complex})
