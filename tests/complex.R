@@ -94,5 +94,8 @@ signif(8.678932-9.238276i, 5)
 
 ## 2.10.0-2.12.1 got z^n wrong in the !HAVE_C99_COMPLEX case
 z <- 0.2853725+0.3927816i
-stopifnot(all.equal(z^3, z*z*z))
-## was z^2
+z2 <- z^(1:20)
+z3 <- z^-(1:20)
+z0 <- cumprod(rep(z, 20))
+stopifnot(all.equal(z2, z0), all.equal(z3, 1/z0))
+## was z^3 had value z^2 ....

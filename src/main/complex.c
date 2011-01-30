@@ -105,9 +105,6 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 	c->i = (a->i - a->r*ratio) / den;
     }
 }
-#endif
-
-#ifndef HAVE_C99_COMPLEX
 
 static void R_cpow_n(Rcomplex *r, Rcomplex *x, int k) {
     if(k == 0) {
@@ -185,20 +182,15 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 
 
 static double complex R_cpow_n(double complex X, int k) {
-    if(k == 0)
-	return (double complex) 1.;
-    else if(k < 0)
-	return 1. / R_cpow_n(X, -k);
+    if(k == 0) return (double complex) 1.;
+    else if(k == 1) return X;
+    else if(k < 0) return 1. / R_cpow_n(X, -k);
     else {/* k > 0 */
-	double complex z = X;
-	k--;
+	double complex z = (double complex) 1.;;
 	while (k > 0) {
-	    if (k & 1)
-		z = z * X;
-	    if(k == 1)
-		break;
+	    if (k & 1) z = z * X;
+	    if(k == 1) break;
 	    k >>= 1; /* efficient division by 2; now have k >= 1 */
-	    /* x := x * x */
 	    X = X * X;
 	}
 	return z;
