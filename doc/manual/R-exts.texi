@@ -5920,23 +5920,25 @@ match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}
-included by @file{R.h}.  (On most platforms which have it, this is
-compatible with the C99 @code{double complex} type.)  Only a single
-character string can be passed to or from FORTRAN, and the success of
-this is compiler-dependent.  Other @R{} objects can be passed to
-@code{.C}, but it is better to use one of the other interfaces.  An
-exception is passing an @R{} function for use with @w{@code{call_R}},
-when the object can be handled as @code{void *} en route to
-@code{call_R}, but even there @code{.Call} is to be preferred.
-Similarly, passing an @R{} list as an argument to a C routine should be
-done using the @code{.Call} interface.  If one does use the @code{.C}
-function to pass a list as an argument, it is visible to the routine as
-an array in C of @code{SEXP} types (i.e., @code{SEXP *}).  The elements
-of the array correspond directly to the elements of the @R{} list.
-However, this array must be treated as read-only and one must not assign
-values to its elements within the C routine --- doing so bypasses @R{}'s
-memory management facilities and will corrupt the object and the @R{}
-session.
+included by @file{R.h}.  (On most platforms this is stored in a way
+compatible with the C99 @code{double complex} type: however, it may not
+be possible to pass @code{Rcomplex} to a C99 function expecting a
+@code{double complex} argument.  Nor need it be compatible with a C++
+@code{complex} type.)  Only a single character string can be passed to
+or from FORTRAN, and the success of this is compiler-dependent.  Other
+@R{} objects can be passed to @code{.C}, but it is better to use one of
+the other interfaces.  An exception is passing an @R{} function for use
+with @w{@code{call_R}}, when the object can be handled as @code{void *}
+en route to @code{call_R}, but even there @code{.Call} is to be
+preferred.  Similarly, passing an @R{} list as an argument to a C
+routine should be done using the @code{.Call} interface.  If one does
+use the @code{.C} function to pass a list as an argument, it is visible
+to the routine as an array in C of @code{SEXP} types (i.e., @code{SEXP
+*}).  The elements of the array correspond directly to the elements of
+the @R{} list.  However, this array must be treated as read-only and one
+must not assign values to its elements within the C routine --- doing so
+bypasses @R{}'s memory management facilities and will corrupt the object
+and the @R{} session.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or to FORTRAN as @code{REAL} by setting the
