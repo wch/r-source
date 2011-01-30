@@ -110,7 +110,6 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 #ifndef HAVE_C99_COMPLEX
 
 static void R_cpow_n(Rcomplex *r, Rcomplex *x, int k) {
-    printf(" in R_cpow_n, k = %d\n", k);
     if(k == 0) {
 	r->r = 1.;
 	r->i = 0.;
