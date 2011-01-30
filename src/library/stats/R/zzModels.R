@@ -172,8 +172,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
 
 ##*## SSbiexp - linear combination of two exponentials
 
-SSbiexp <-
-                                        #  selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * input),
+SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * input),
     selfStart(
               function(input, A1, lrc1, A2, lrc2)
           {
@@ -222,17 +221,17 @@ SSbiexp <-
 
 ##*## SSfol - first order compartment model with the log of the rates
 ##*##         and the clearence
-SSfol <-
-                                        #  selfStart(~Dose * exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
-                                        # exp(-exp(lKa) * input))/(exp(lKa) - exp(lKe)),
+
+SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
+    ##                 exp(-exp(lKa) * input))/(exp(lKa) - exp(lKe)),
     selfStart(
               function(Dose, input, lKe, lKa, lCl)
           {
-              .expr4 <- Dose * (exp(((lKe + lKa) - lCl)))
+              .expr4 <- Dose * exp((lKe + lKa) - lCl)
               .expr5 <- exp(lKe)
-              .expr8 <- exp((( - .expr5) * input))
+              .expr8 <- exp( - .expr5 * input)
               .expr9 <- exp(lKa)
-              .expr12 <- exp((( - .expr9) * input))
+              .expr12 <- exp( - .expr9 * input)
               .expr14 <- .expr4 * (.expr8 - .expr12)
               .expr15 <- .expr9 - .expr5
               .expr16 <- .expr14/.expr15
@@ -242,12 +241,12 @@ SSfol <-
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("lKe", "lKa", "lCl")))
-                  .grad[, "lKe"] <- ((.expr14 - (.expr4 * (.expr8 * (.expr5 * input))))/
-                                     .expr15) + ((.expr14 * .expr5)/.expr23)
-                  .grad[, "lKa"] <- ((.expr14 + (.expr4 * (.expr12 * (.expr9 * input))))/
-                                     .expr15) - ((.expr14 * .expr9)/.expr23)
+                  .grad[, "lKe"] <- (.expr14 - .expr4 * (.expr8 * (.expr5 * input)))/
+                                     .expr15 + .expr14 * .expr5/.expr23
+                  .grad[, "lKa"] <- (.expr14 + .expr4 * (.expr12 * (.expr9 * input)))/
+                                     .expr15 - .expr14 * .expr9/.expr23
                   .grad[, "lCl"] <-  - .expr16
-                  dimnames(.grad) <- list(NULL, .actualArgs)
+                  dimnames(.grad) <- list(NULL, .actualArgs) # extra
                   attr(.value, "gradient") <- .grad
               }
               .value
@@ -296,6 +295,7 @@ SSfol <-
               value
           }, parameters = c("lKe", "lKa", "lCl"))
 
+
 ##*## SSfpl - four parameter logistic model
 
 SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
@@ -304,11 +304,11 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
           {
               .expr1 <- B - A
               .expr2 <- xmid - input
-              .expr4 <- exp((.expr2/scal))
+              .expr4 <- exp(.expr2/scal)
               .expr5 <- 1 + .expr4
               .expr8 <- 1/.expr5
               .expr13 <- .expr5^2
-              .value <- A + (.expr1/.expr5)
+              .value <- A + .expr1/.expr5
               .actualArgs <- as.list(match.call()[c("A", "B", "xmid", "scal")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
@@ -316,8 +316,8 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
                                  list(NULL, c("A", "B", "xmid", "scal")))
                   .grad[, "A"] <- 1 - .expr8
                   .grad[, "B"] <- .expr8
-                  .grad[, "xmid"] <-  - ((.expr1 * (.expr4 * (1/ scal)))/.expr13)
-                  .grad[, "scal"] <- (.expr1 * (.expr4 * (.expr2/(scal^2))))/.expr13
+                  .grad[, "xmid"] <-  - (.expr1 * (.expr4 * (1/ scal))/.expr13)
+                  .grad[, "scal"] <- .expr1 * (.expr4 * (.expr2/scal^2))/.expr13
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -352,7 +352,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               function(input, Asym, xmid, scal)
           {
               .expr1 <- xmid - input
-              .expr3 <- exp((.expr1/scal))
+              .expr3 <- exp(.expr1/scal)
               .expr4 <- 1 + .expr3
               .expr10 <- .expr4^2
               .value <- Asym/.expr4
@@ -361,8 +361,8 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               {
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "xmid", "scal")))
                   .grad[, "Asym"] <- 1/.expr4
-                  .grad[, "xmid"] <-  - ((Asym * (.expr3 * (1/scal)))/.expr10)
-                  .grad[, "scal"] <- (Asym * (.expr3 * (.expr1/(scal^2))))/.expr10
+                  .grad[, "xmid"] <-  - (Asym * (.expr3 * (1/scal))/.expr10)
+                  .grad[, "scal"] <- Asym * (.expr3 * (.expr1/scal^2))/.expr10
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -388,6 +388,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               value
           }, parameters = c("Asym", "xmid", "scal"))
 
+
 ##*## SSmicmen - Michaelis-Menten model for enzyme kinetics.
 
 SSmicmen <- # selfStart(~ Vm * input/(K + input),
@@ -402,7 +403,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               {
                   .grad <- array(0, c(length(.value), 2L), list(NULL, c("Vm", "K")))
                   .grad[, "Vm"] <- input/.expr2
-                  .grad[, "K"] <-  - (.expr1/(.expr2^2))
+                  .grad[, "K"] <-  - (.expr1/.expr2^2)
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -425,6 +426,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               names(value) <- mCall[c("Vm", "K")]
               value
           }, parameters = c("Vm", "K"))
+
 
 SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
     ## Gompertz model for growth curve data
