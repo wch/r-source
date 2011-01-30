@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -10,7 +10,7 @@
 \concept{Mann-Whitney Test}
 \title{Wilcoxon Rank Sum and Signed Rank Tests}
 \description{
-  Performs one and two sample Wilcoxon tests on vectors of data; the
+  Performs one- and two-sample Wilcoxon tests on vectors of data; the
   latter is also known as \sQuote{Mann-Whitney} test.
 }
 \usage{
@@ -84,10 +84,16 @@ wilcox.test(x, \dots)
   of the distribution of \eqn{(u+v)/2}, where \eqn{u} and \eqn{v} are
   independent, each with distribution \eqn{F}.  If \eqn{F} is symmetric,
   then the pseudomedian and median coincide.  See Hollander & Wolfe
-  (1973), page 34.)  If exact p-values are available, an exact
-  confidence interval is obtained by the algorithm described in Bauer
-  (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
-  returned confidence interval and point estimate are based on normal
+  (1973), page 34.)  Note that in the two-sample case the estimator for
+  the difference in location parameters does \bold{not} estimate the
+  difference in medians (a common misconception) but rather the median
+  of the difference between a sample from \code{x} and a sample from
+  \code{y}.
+  
+  If exact p-values are available, an exact confidence interval is
+  obtained by the algorithm described in Bauer (1972), and the
+  Hodges-Lehmann estimator is employed.  Otherwise, the returned
+  confidence interval and point estimate are based on normal
   approximations.  These are continuity-corrected for the interval but
   \emph{not} the estimate (as the correction depends on the
   \code{alternative}).
