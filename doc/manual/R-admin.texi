@@ -3535,12 +3535,9 @@ built under @command{g77}.  This should be detected by a
 The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
 -O2}.  This has caused problems (segfaults and infinite loops) on
-@cputype{x86_64} Linux with @command{gfortran 4.3.x} and
-@file{configure} changes the default to @samp{-g -O}: however it seems
-safe to override this to give higher levels of optimization on more
-recent compilers, for example @command{gfortran 4.4.4} and
-@command{gfortran 4.5.1}.
-
+@cputype{x86_64} Linux in the past, but seems fine with
+@command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
+@code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags

@@ -91,3 +91,8 @@ signif(1.678932-1.238276e-4i, 5)
 signif(1.678932-1.238276e-5i, 5)
 signif(8.678932-9.238276i, 5)
 ## prior to 2.2.0 rounded real and imaginary parts separately.
+
+## 2.10.0-2.12.1 got z^n wrong in the !HAVE_C99_COMPLEX case
+z <- 0.2853725+0.3927816i
+stopifnot(all.equal(z^3, z*z*z))
+## was z^2
