@@ -37,7 +37,7 @@ static R_INLINE double fsign_int(double x, double y)
 
 #include "arithmetic.h"		/* complex_*  */
 
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 # include <complex.h>
 # ifdef USE_RINTERNALS
 #  define C99_COMPLEX(x) ((double complex *) DATAPTR(x))
@@ -53,7 +53,7 @@ static R_INLINE double fsign_int(double x, double y)
 SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
     int i, n;
-#ifndef HAVE_C99_COMPLEX
+#ifndef HAVE_COMPATIBLE_C99_COMPLEX
     Rcomplex x;
 #endif
     SEXP ans;
@@ -66,7 +66,7 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 	ans = duplicate(s1);
 	n = LENGTH(s1);
 	for (i = 0; i < n; i++) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] = - C99_COMPLEX(s1)[i];
 #else
 	    x = COMPLEX(s1)[i];
@@ -81,7 +81,7 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     return R_NilValue; /* -Wall */
 }
 
-#ifndef HAVE_C99_COMPLEX
+#ifndef HAVE_COMPATIBLE_C99_COMPLEX
 /* c := a / b --- where c may overwrite 'b' but not 'a' */
 static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 {
@@ -176,7 +176,7 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
     r->i = x * sin(y);
 }
 
-#else /* HAVE_C99_COMPLEX */
+#else /* HAVE_COMPATIBLE_C99_COMPLEX */
 
 
 static double complex R_cpow_n(double complex X, int k) {
@@ -256,7 +256,7 @@ static double complex mycpow (double complex X, double complex Y)
 }
 #endif
 
-#endif /* HAVE_C99_COMPLEX */
+#endif /* HAVE_COMPATIBLE_C99_COMPLEX */
 
 /* See arithmetic.c */
 #define mod_iterate(n1,n2,i1,i2) for (i=i1=i2=0; i<n; \
@@ -267,7 +267,7 @@ static double complex mycpow (double complex X, double complex Y)
 SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i,i1, i2, n, n1, n2;
-#ifndef HAVE_C99_COMPLEX
+#ifndef HAVE_COMPATIBLE_C99_COMPLEX
     Rcomplex x1, x2;
 #endif
     SEXP ans;
@@ -298,7 +298,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     switch (code) {
     case PLUSOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] + C99_COMPLEX(s2)[i2];
 #else
 	    x1 = COMPLEX(s1)[i1];
@@ -310,7 +310,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case MINUSOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] - C99_COMPLEX(s2)[i2];
 #else
 	    x1 = COMPLEX(s1)[i1];
@@ -322,7 +322,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case TIMESOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] * C99_COMPLEX(s2)[i2];
 #else
 	    x1 = COMPLEX(s1)[i1];
@@ -334,7 +334,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case DIVOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] / C99_COMPLEX(s2)[i2];
 #else
 	    x1 = COMPLEX(s1)[i1];
@@ -345,7 +345,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     case POWOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 	    C99_COMPLEX(ans)[i] =
 		mycpow(C99_COMPLEX(s1)[i1], C99_COMPLEX(s2)[i2]);
 #else
@@ -391,7 +391,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 1:	/* Re */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 		REAL(y)[i] = creal(C99_COMPLEX(x)[i]);
 #else
 		REAL(y)[i] = COMPLEX(x)[i].r;
@@ -400,7 +400,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 2:	/* Im */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 		REAL(y)[i] = cimag(C99_COMPLEX(x)[i]);
 #else
 		REAL(y)[i] = COMPLEX(x)[i].i;
@@ -410,7 +410,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 6:	/* abs */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 		REAL(y)[i] = cabs(C99_COMPLEX(x)[i]);
 #else
 		REAL(y)[i] = hypot(COMPLEX(x)[i].r, COMPLEX(x)[i].i);
@@ -419,7 +419,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 4:	/* Arg */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 		REAL(y)[i] = carg(C99_COMPLEX(x)[i]);
 #else
 		REAL(y)[i] = atan2(COMPLEX(x)[i].i, COMPLEX(x)[i].r);
@@ -428,7 +428,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 5:	/* Conj */
 	    y = allocVector(CPLXSXP, n);
 	    for(i = 0 ; i < n ; i++) {
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 		C99_COMPLEX(y)[i] = conj(C99_COMPLEX(x)[i]);
 #else
 		COMPLEX(y)[i].r = COMPLEX(x)[i].r;
@@ -520,7 +520,7 @@ static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
     z_prec_r(r, x, p->r);
 }
 
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 static void z_log(double complex *r, double complex *z)
 {
     *r = clog(*z);
@@ -583,7 +583,7 @@ static void z_sqrt(Rcomplex *r, Rcomplex *z)
 }
 #endif
 
-#ifdef HAVE_C99_COMPLEX
+#ifdef HAVE_COMPATIBLE_C99_COMPLEX
 static void z_cos(double complex *r, double complex *z)
 {
     *r = ccos(*z);
@@ -699,7 +699,7 @@ static void z_tanh(double complex *r, double complex *z)
     *r = ctanh(*z);
 }
 
-#else /* not HAVE_C99_COMPLEX */
+#else /* not HAVE_COMPATIBLE_C99_COMPLEX */
 
 static void z_cos(Rcomplex *r, Rcomplex *z)
 {

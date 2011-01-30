@@ -77,9 +77,6 @@
 /* Define to 1 if you have the <bzlib.h> header file. */
 /* #undef HAVE_BZLIB_H */
 
-/* Define this if you have support for C99 complex types. */
-#define HAVE_C99_COMPLEX 1
-
 /* Define to 1 if you have cairo-ps. */
 /* #undef HAVE_CAIRO_PDF */
 
@@ -102,6 +99,9 @@
 
 /* Define to 1 if you have the `chmod' function. */
 #define HAVE_CHMOD 1
+
+/* Define this if Rcomplex and C99 double complex are compatible. */
+#define HAVE_COMPATIBLE_C99_COMPLEX 1
 
 /* Defined if framework CoreFoundation is present */
 /* #undef HAVE_COREFOUNDATION_FW */

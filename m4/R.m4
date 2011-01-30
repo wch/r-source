@@ -3408,14 +3408,19 @@ AC_DEFUN([R_C99_COMPLEX],
       R_CHECK_DECL($ac_func, , [r_cv_c99_complex=no], [#include<complex.h>])
     done
   fi
+  dnl we are supposed to have a C99 compiler, so fail at this point.
+  if test "${r_cv_c99_complex}" = "no"; then
+     AC_MSG_ERROR([Support for C99 complex type is required.])
+  fi
+])
   dnl Now check if the representation is the same as Rcomplex
-  if test "${r_cv_c99_complex}" = "yes"; then
-  AC_MSG_CHECKING([whether C99 double complex is compatible with Rcomplex])
-AC_RUN_IFELSE([AC_LANG_SOURCE([[
+  AC_CACHE_CHECK([whether C99 double complex is compatible with Rcomplex],
+  [r_cv_compat_c99_complex],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
 #include <complex.h>
 #include <stdlib.h>
-#include <stdio.h>
+/* #include <stdio.h> */
 typedef struct {
         double r;
         double i;
@@ -3444,14 +3449,11 @@ int main () {
     if (z[2].r != 123.456 || z[2].i != 0.123456) exit(1);
     exit(0);
 }
-]])], [r_c99_complex=yes], [r_c99_complex=no], [r_c99_complex=no])
-  AC_MSG_RESULT(${r_c99_complex})
-  r_cv_c99_complex=${r_c99_complex}
-  fi
+]])], [r_cv_compat_c99_complex=yes], [r_cv_compat_c99_complex=no], [r_cv_compat_c99_complex=no])
 ])
-if test "${r_cv_c99_complex}" = "yes"; then
-AC_DEFINE(HAVE_C99_COMPLEX, 1, [Define this if you have support for C99 complex types.])
-AC_SUBST(HAVE_C99_COMPLEX)
+if test "${r_cv_compat_c99_complex}" = "yes"; then
+AC_DEFINE(HAVE_COMPATIBLE_C99_COMPLEX, 1, [Define this if Rcomplex and C99 double complex are compatible.])
+AC_SUBST(HAVE_COMPATIBLE_C99_COMPLEX)
 fi
 ])# R_COMPLEX
 

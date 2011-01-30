@@ -79,9 +79,6 @@
 /* Define to 1 if you have the <bzlib.h> header file. */
 #undef HAVE_BZLIB_H
 
-/* Define this if you have support for C99 complex types. */
-#undef HAVE_C99_COMPLEX
-
 /* Define to 1 if you have cairo-ps. */
 #undef HAVE_CAIRO_PDF
 
@@ -104,6 +101,9 @@
 
 /* Define to 1 if you have the `chmod' function. */
 #undef HAVE_CHMOD
+
+/* Define this if Rcomplex and C99 double complex are compatible. */
+#undef HAVE_COMPATIBLE_C99_COMPLEX
 
 /* Defined if framework CoreFoundation is present */
 #undef HAVE_COREFOUNDATION_FW
@@ -927,7 +927,7 @@
 /* Define if you provide support for the libxml ftp/http functions. */
 #undef SUPPORT_LIBXML
 
-/* Define if you C/C++/Fortran OpenMP support for package code. */
+/* Define if you have C/C++/Fortran OpenMP support for package code. */
 #undef SUPPORT_OPENMP
 
 /* Define to enable provoking compile errors on write barrier violation. */

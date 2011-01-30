@@ -861,7 +861,7 @@ BLAS_LIBS0
 LIBR
 BLAS_SHLIB_FALSE
 BLAS_SHLIB_TRUE
-HAVE_C99_COMPLEX
+HAVE_COMPATIBLE_C99_COMPLEX
 RMATH_HAVE_WORKING_LOG1P
 LIBOBJS
 RMATH_HAVE_LOG1P
@@ -28323,11 +28323,20 @@ else
 fi
     done
   fi
-    if test "${r_cv_c99_complex}" = "yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is compatible with Rcomplex" >&5
+    if test "${r_cv_c99_complex}" = "no"; then
+     as_fn_error "Support for C99 complex type is required." "$LINENO" 5
+  fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c99_complex" >&5
+$as_echo "$r_cv_c99_complex" >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is compatible with Rcomplex" >&5
 $as_echo_n "checking whether C99 double complex is compatible with Rcomplex... " >&6; }
-if test "$cross_compiling" = yes; then :
-  r_c99_complex=no
+if test "${r_cv_compat_c99_complex+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_compat_c99_complex=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -28335,7 +28344,7 @@ else
 #include "confdefs.h"
 #include <complex.h>
 #include <stdlib.h>
-#include <stdio.h>
+/* #include <stdio.h> */
 typedef struct {
         double r;
         double i;
@@ -28367,25 +28376,21 @@ int main () {
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_c99_complex=yes
+  r_cv_compat_c99_complex=yes
 else
-  r_c99_complex=no
+  r_cv_compat_c99_complex=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${r_c99_complex}" >&5
-$as_echo "${r_c99_complex}" >&6; }
-  r_cv_c99_complex=${r_c99_complex}
-  fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c99_complex" >&5
-$as_echo "$r_cv_c99_complex" >&6; }
-if test "${r_cv_c99_complex}" = "yes"; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_compat_c99_complex" >&5
+$as_echo "$r_cv_compat_c99_complex" >&6; }
+if test "${r_cv_compat_c99_complex}" = "yes"; then
 
-$as_echo "#define HAVE_C99_COMPLEX 1" >>confdefs.h
+$as_echo "#define HAVE_COMPATIBLE_C99_COMPLEX 1" >>confdefs.h
 
 
 fi
@@ -35165,11 +35170,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35168: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35173: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35172: \$? = $ac_status" >&5
+   echo "$as_me:35177: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35264,11 +35269,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35267: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35272: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35271: \$? = $ac_status" >&5
+   echo "$as_me:35276: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35316,11 +35321,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35319: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35324: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35323: \$? = $ac_status" >&5
+   echo "$as_me:35328: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
