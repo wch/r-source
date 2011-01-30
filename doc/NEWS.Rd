@@ -207,7 +207,8 @@
 
       \item \command{R CMD REMOVE} and \code{remove.packages()} now
       remove file \code{R.css} when removing all remaining packages in a
-      library tree.  (Related to the wish of \PR{14475}.)
+      library tree.  (Related to the wish of \PR{14475}: note that this
+      file is no longer installed.)
 
       \item \code{unzip()} now has a \code{unzip} argument like
       \code{zip.file.extract()}.  This allows an external
@@ -260,11 +261,6 @@
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems
       on some Windows systems.
-
-      \item \command{R CMD INSTALL --clean} now removes copies of a
-      \file{src} directory which are created when multiple
-      sub-architectures are in use.  (Following a comment from
-      Berwin Turlach.)
     }
   }
 
@@ -281,6 +277,22 @@
       from the reference output when testing package examples and if
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \command{R CMD INSTALL --clean} now removes copies of a
+      \file{src} directory which are created when multiple
+      sub-architectures are in use.  (Following a comment from
+      Berwin Turlach.)
+      
+      \item File \file{R.css} is now installed on a per-package basis
+      (in the package's \file{html} directory) rather than in each
+      library tree, and this is used for all the HTML pages in the
+      package.  This helps when installing packages with static HTML
+      pages for use on a webserver.  It will also allow future versions
+      of \R to use different stylesheets for the packages they install.
     }
   }
 

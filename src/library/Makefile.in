@@ -41,8 +41,6 @@ R:
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@$(ECHO) "tools:::.vinstall_package_namespaces_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
-	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
-	  $(top_builddir)/library
 
 ## do Rdobjects before metadata before help indices
 docs:
@@ -120,7 +118,6 @@ uninstall:
 	@$(ECHO) "uninstalling packages ..."
 	@(cd "$(DESTDIR)$(rhome)/library"; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	@rm -f "$(DESTDIR)$(rhome)/library/R.css"
 	@rmdir "$(DESTDIR)$(rhome)/library" 2>/dev/null \
           || $(ECHO) "  subdir $(DESTDIR)$(rhome)/library not removed"
 

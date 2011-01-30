@@ -360,19 +360,19 @@ function(pkg, con, vignetteIndex = NULL)
 {
     html <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
               paste("<html><head><title>R:", pkg, "vignettes</title>"),
-              "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">",
+              '<link rel="stylesheet" type="text/css" href="../html/R.css">',
               "</head><body>",
               paste("<h2>Vignettes of package", pkg,"</h2>"))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
         html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
-                  "Please browse the <a href=\".\">directory</a>.")
+                  'Please browse the <a href=".">directory</a>.')
     }
     else{
         html <- c(html, "<dl>")
         for(k in seq_len(nrow(vignetteIndex))){
             html <- c(html,
-                      paste("<dt><a href=\"", vignetteIndex[k, "PDF"], "\">",
+                      paste('<dt><a href="', vignetteIndex[k, "PDF"], '\">',
                             vignetteIndex[k, "PDF"], "</a>:", sep=""),
                       paste("<dd>", vignetteIndex[k, "Title"]))
         }

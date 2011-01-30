@@ -125,8 +125,7 @@
                           "doc/html/rw-FAQ.html",
                           "share/texmf/Sweave.sty"))
                 component <- "main"
-            else if (grepl("^doc/html", g) || grepl("^library/[^/]*/html", g) ||
-                     g == "library/R.css")
+            else if (grepl("^doc/html", g) || grepl("^library/[^/]*/html", g))
                 component <- "main"
             else if (grepl("^doc/manual/[^/]*\\.html", g))
                 component <- "html"

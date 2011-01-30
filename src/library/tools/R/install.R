@@ -138,7 +138,6 @@
         if (!is_first_package) {
             ## Only need to do this in case we successfully installed
             ## at least one package
-            file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library && "html" %in% build_help_types)
                 utils::make.packages.html(.Library, docdir = R.home("doc"))
         }
@@ -1586,7 +1585,7 @@
     {
         cat(paste(HTMLheader(title, Rhome="../../..",
                              up="../../../doc/html/packages.html",
-                             css = "../../R.css"),
+                             css = "R.css"),
                   collapse="\n"),
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep ='', file = conn)
@@ -1749,6 +1748,8 @@
          writeLines("There are no help pages in this package", outcon)
     }
     writeLines('</body></html>', outcon)
+    file.copy(file.path(R.home("doc"), "html", "R.css"), outman)
+    invisible(NULL)
 }
 
 ### * .convertRdfiles
@@ -1876,7 +1877,7 @@
         type <- "html"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.html", "", basename(have))
-        drop <- have[! have2 %in% c(bfs, "00Index")]
+        drop <- have[! have2 %in% c(bfs, "00Index", "R.css")]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("latex" %in% types) {

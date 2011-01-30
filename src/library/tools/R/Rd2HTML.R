@@ -686,9 +686,8 @@ Rd2HTML <-
 	    mime_canonical_encoding(outputEncoding),
 	    '">\n')
 
-	of0('<link rel="stylesheet" type="text/css" ',
-	    if (no_links) 'href="R.css">' else 'href="../../R.css">',
-	    '\n</head><body>\n\n',
+	of0('<link rel="stylesheet" type="text/css" href="R.css">\n',
+	    '</head><body>\n\n',
 	    '<table width="100%" summary="page for ', name)
 	if (nchar(package))
 	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')

@@ -527,6 +527,8 @@ remove.packages <- function(pkgs, lib)
             message("Updating HTML index of packages in '.Library'")
             make.packages.html(.Library)
         }
+        ## FIXME: only needed for packages installed < 2.13.0,
+        ## so remove eventually
         ## is this the lib now empty?
         Rcss <- file.path(lib, "R.css")
         if (file.exists(Rcss)) {
