@@ -8,19 +8,12 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{replicate()} (by default) and \code{vapply()} (always)
-      now return a higher-rank array instead of a matrix in the case
-      where the inner function value is already an array (of rank >= 2).
+      now return a higher-dimensional array instead of a matrix in the case
+      where the inner function value is an array of dimension >= 2.
     }
   }
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Installing \R no longer tries to find \command{perl}, and
-      \command{R CMD} no longer tries to substitute a full path for
-      \command{awk} nor \command{perl} -- this was a legacy from the
-      days when they were used by \R itself.  Because a couple of
-      packages do use \command{awk}, it is set as the \command{make}
-      (rather than environment) variable \env{AWK}.
-
       \item \code{normalizePath()} has been moved to the \pkg{base}
       package (from \pkg{utils}): this is so it can be used by
       \code{library()} and friends.
@@ -31,7 +24,7 @@
       Windows) and \code{mustWork} to control the action if a canonical
       path cannot be found.
 
-      \item The previously almost undocumented limit of 256 bytes on a
+      \item The previously barely documented limit of 256 bytes on a
       symbol name has been raised to 10,000 bytes (a sanity check).
       Long symbol names can sometimes occur when deparsing expressions
       (for example, in \code{model.frame}).
@@ -62,8 +55,8 @@
 
       \item \code{text()} gains a formula method.
 
-      \item \code{IQR()} now has a \code{type} argument passed to
-      \code{quantile()}.
+      \item \code{IQR()} now has a \code{type} argument which is passed
+      to \code{quantile()}.
 
       \item \code{as.vector()}, \code{as.double()} etc duplicate less
       when they leave the mode unchanged but remove attributes.
@@ -91,7 +84,7 @@
 
       \item \code{write.table()} and friends gain a \code{fileEncoding}
       argument, to simplify writing files for use on other OSes (e.g. a
-      spreadsheet to be input for Windows or Mac OS X Excel).
+      spreadsheet intended for Windows or Mac OS X Excel).
 
       \item Assignment expressions of the form \code{foo::bar(x) <- y}
       and \code{foo:::bar(x) <- y} now work; the assignment functions
@@ -106,11 +99,6 @@
       locked status. (The locked status of bindings and active bindings
       are still not preserved; this may be addressed in the future).
 
-      \item \command{R CMD INSTALL --clean} now removes copies of a
-      \file{src} directory which are created when multiple
-      sub-architectures are in use.  (Following a comment from
-      Berwin Turlach.)
-
       \item \code{options("install.lock")} may be set to \code{FALSE}
       so that \code{install.packages()} defaults to \option{--unsafe}
       installs, or (on Windows) to \code{TRUE} so that binary installs
@@ -118,7 +106,7 @@
 
       \item \code{sort(partial=p)} for large \code{p} now tries shell
       sort if quicksort is not appropriate and so works for non-numeric
-      vectors.
+      atomic vectors.
 
       \item \code{sapply()} gets a new option \code{simplify = "array"}
       which returns a \dQuote{higher rank} array instead of just a matrix
@@ -167,7 +155,9 @@
       \item \code{serialize()} and \code{unserialize()} are no longer
       described as \sQuote{experimental}.  The interface is now regarded
       as stable, although the serialization format may well change in
-      future releases.
+      future releases.  (\code{serialize()} has a new argument
+      \code{version} which would allow the current format to be written
+      if that happens.)
 
       New functions \code{saveRDS()} and \code{readRDS()} are public
       versions of the \sQuote{internal} functions \code{.saveRDS()} and
@@ -207,7 +197,8 @@
       provided at the top and bottom of the page.  Where a library
       contains more than 100 packages, an alphabetic index is given at
       the top of the section for that library.  (As a consequence,
-      entries are now sorted case-insensitively whatever the locale.)
+      package names are now sorted case-insensitively whatever the
+      locale.)
 
       \item \code{isSeekable()} now returns \code{FALSE} on connections
       which have non-default \code{encoding}.  Although documented to
@@ -227,19 +218,20 @@
       \item There is a simple \code{zip()} function, as wrapper for an
       external \command{zip} command.
 
-      \item Cocoa Quartz back-end provides a way to disable event loop
-      processing temporarily (useful, e.g., for forked instances of \R).
+      \item The Cocoa back-end for the \code{quartz()} graphics device
+      on Mac OS X provides a way to disable event loop processing
+      temporarily (useful, e.g., for forked instances of \R).
 
       \item \code{bzfile()} connections can now read from concatenated
       \command{bzip2} files (including files written with
       \code{bzfile(open = "a")}) and files created by some other
       compressors (such as the example of \PR{14479}).
 
-      \item The \code{.Primitive} function \code{c()} is now of type
-      BUILTIN.
+      \item The primitive function \code{c()} is now of type BUILTIN.
 
       \item plot(<dendrogram>, .., nodePar=*) now obeys an optional
-      \code{xpd} specification (allowing to turn off clipping completely).
+      \code{xpd} specification (allowing clipping to be turned off
+      completely).
     }
   }
 
@@ -268,11 +260,23 @@
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems
       on some Windows systems.
+
+      \item \command{R CMD INSTALL --clean} now removes copies of a
+      \file{src} directory which are created when multiple
+      sub-architectures are in use.  (Following a comment from
+      Berwin Turlach.)
     }
   }
 
   \subsection{INSTALLATION}{
     \itemize{
+      \item Installing \R no longer tries to find \command{perl}, and
+      \command{R CMD} no longer tries to substitute a full path for
+      \command{awk} nor \command{perl} -- this was a legacy from the
+      days when they were used by \R itself.  Because a couple of
+      packages do use \command{awk}, it is set as the \command{make}
+      (rather than environment) variable \env{AWK}.
+
       \item \command{make check} will now fail if there are differences
       from the reference output when testing package examples and if
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
