@@ -39,7 +39,6 @@ R:
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 	@gzip -9f ../../library/grDevices/afm/*.afm
-	@cp -p ../library/datasets/data/morley.tab ../../library/datasets/data
 
 ## do Rdobjects before metadata before help indices
 docs:
