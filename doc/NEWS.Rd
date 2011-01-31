@@ -459,12 +459,11 @@
       \item \code{format(*, zero.print)} did not always replace the full
       zero parts.
 
-      \item Since \R 2.10.0, \code{z^n} was computed incorrectly except
-      for \code{n >= 3} and \code{n <= -3} on platforms for which the
-      macro \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms
-      have been very rare, but now include x86_64 Linux with
-      \command{gcc 4.5.x} at the default \code{-O2} optimization (but
-      not at \code{-O}).
+      \item Since \R 2.10.0, \code{z^n} was computed incorrectly for
+      \code{n >= 3} and \code{n <= -3} on platforms for which the macro
+      \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
+      very rare, but now include x86_64 Linux with \command{gcc 4.5.x}
+      at the default \code{-O2} optimization (but not at \code{-O}).
     }
   }
 }
