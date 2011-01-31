@@ -23,10 +23,10 @@ Sys.timezone()
 }
 
 \details{
-  Time zones are a system-specific topic, but in recent versions
-  of \R almost all \R platforms use the same underlying code, used by
-  Linux, Mac OS X, Solaris, AIX, FreeBSD, Sun Java >= 1.4 and Tcl >=
-  8.5, and supplied with \R on Windows.
+  Time zones are a system-specific topic, but these days almost all \R
+  platforms use the same underlying code, used by Linux, Mac OS X,
+  Solaris, AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed
+  with \R on Windows.
 
   It is not in general possible to retrieve the system's own name(s) for
   the current timezone, but \code{Sys.timezone} will retrieve the name
@@ -56,10 +56,10 @@ Sys.timezone()
 }
 
 \note{
-  There is currently (since 2007/8) considerable disruption over changes
-  to the timings of the DST transitions, aimed at energy
-  conservation. These often have short notice and time zone databases may
-  not be up to date (even if the OS has been updated recently). 
+  There is currently (since 2007) considerable disruption over changes
+  to the timings of the DST transitions, aimed at energy conservation.
+  These often have short notice and timezone databases may not be up to
+  date (even if the OS has been updated recently).
 
   Note that except on Windows, the operation of time zones is an OS
   service, and even on Windows a third-party database is used and can be
@@ -98,10 +98,14 @@ Sys.timezone()
   details and references.
 #ifdef unix
   
-  For most Unix-alikes use the Olson databases.  The 
-  system-specific default location in the file system varies, e.g. 
-  \file{/usr/share/zoneinfo}, \file{/usr/etc/zoneinfo},
-  \file{/usr/lib/zoneinfo} or \file{/usr/share/lib/zoneinfo}.
+  For most Unix-alikes use the Olson database.  The system-specific
+  default location in the file system varies, e.g.
+  \file{/usr/share/zoneinfo} (Linux, Mac OS X, FreeBSD),
+  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/usr/etc/zoneinfo},
+  \ldots.  It is likely that there is a file \file{zone.tab} in that
+  directory listing the locations known as time-zone names (but not for
+  example \code{EST5EDT}).  See also
+  \url{http://en.wikipedia.org/wiki/Zone.tab}.
 #endif
 #ifdef windows
 
@@ -136,13 +140,23 @@ Sys.timezone()
 
 \examples{
 Sys.timezone()
-#ifdef windows
 
+#ifdef windows
 tzfile <- file.path(R.home("share"), "zoneinfo", "zone.tab")
-tznames <- read.delim(tzfile, row.names = NULL, header = FALSE,
-    col.names = c("code", "coords", "name", "comments"),
-    as.is = TRUE, fill = TRUE, comment.char = "#")$name
-str(sort(tznames))
+tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
+    col.names = c("country", "coords", "name", "comments"),
+    as.is = TRUE, fill = TRUE, comment.char = "#")
+str(tzones$name)
+#endif
+#ifdef unix
+\dontrun{
+## need to supply a suitable file path (if any) for your system
+tzfile <- "/usr/share/zoneinfo/zone.tab"
+tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
+    col.names = c("country", "coords", "name", "comments"),
+    as.is = TRUE, fill = TRUE, comment.char = "#")
+str(tzones$name)
+}
 #endif
 }
 \keyword{utilities}
