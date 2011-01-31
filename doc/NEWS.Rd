@@ -277,6 +277,13 @@
       from the reference output when testing package examples and if
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
+
+      \item The C99 complex arithmetic functions (such as \code{csin})
+      are now required.  However, the arrays of types \code{double
+      complex} and \code{Rcomplex} are not required to be compatible,
+      and conversion rather than coercion is used if necessary.  (They
+      are not compatible on x86_64 Linux for recent versions of
+      \command{gcc -O2}.)
     }
   }
 
