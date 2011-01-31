@@ -141,7 +141,9 @@
       \item \code{`mostattributes<-`} now consults the \code{"dim"}
       attribute and not the \code{dim()} function, making it more useful
       for objects (such as data frames) from classes with methods for
-      \code{dim()}.  (Related to \PR{14469}.)
+      \code{dim()}.  It also uses \code{attr<-()} in preferences to the
+      generics \code{name<-()}, \code{dim<-()} and \code{dimnames<-()}.
+      (Related to \PR{14469}.)
 
       \item There is a new option \code{"browserNLdisabled"} to disable
       the use of an empty (e.g. via the \sQuote{Return} key) as a synonym
