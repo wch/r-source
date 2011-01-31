@@ -17,7 +17,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

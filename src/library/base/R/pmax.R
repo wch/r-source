@@ -24,7 +24,6 @@ pmax <- function (..., na.rm = FALSE)
     if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
         ## NB: NULL passes is.atomic
         mmm <- .Internal(pmax(na.rm, ...))
-        mostattributes(mmm) <- attributes(elts[[1L]])
     } else {
         mmm <- elts[[1L]]
         attr(mmm, "dim") <- NULL  # dim<- would drop names
@@ -46,6 +45,7 @@ pmax <- function (..., na.rm = FALSE)
             if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
         }
     }
+    mostattributes(mmm) <- attributes(elts[[1L]])
     mmm
 }
 
@@ -55,7 +55,6 @@ pmin <- function (..., na.rm = FALSE)
     if(length(elts) == 0L) stop("no arguments")
     if(all(vapply(elts, function(x) is.atomic(x) && !is.object(x), NA))) {
         mmm <- .Internal(pmin(na.rm, ...))
-        mostattributes(mmm) <- attributes(elts[[1L]])
     } else {
         mmm <- elts[[1L]]
         attr(mmm, "dim") <- NULL  # dim<- would drop names
@@ -77,5 +76,6 @@ pmin <- function (..., na.rm = FALSE)
             if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
         }
     }
+    mostattributes(mmm) <- attributes(elts[[1L]])
     mmm
 }
