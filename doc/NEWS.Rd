@@ -295,7 +295,7 @@
       \file{src} directory which are created when multiple
       sub-architectures are in use.  (Following a comment from
       Berwin Turlach.)
-      
+
       \item File \file{R.css} is now installed on a per-package basis
       (in the package's \file{html} directory) rather than in each
       library tree, and this is used for all the HTML pages in the
@@ -466,6 +466,9 @@
       \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
       very rare, but now include x86_64 Linux with \command{gcc 4.5.x}
       at the default \code{-O2} optimization (but not at \code{-O}).
+
+      \item Fixes for subsetting or subassignment of \code{"raster"}
+      objects when not both \code{i} and \code{j} are specified.
     }
   }
 }
