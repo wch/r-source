@@ -831,6 +831,9 @@
 		file.copy(files, is, TRUE)
 		thislazy <- parse_description_field(desc, "LazyData",
 						    default = lazy_data)
+                if(!thislazy && !use_zip_data)
+                    use_zip_data <- parse_description_field(desc, "ZipData",
+                                                            default = FALSE)
 		if (!thislazy && resave_data) {
 		    paths <- Sys.glob(c(file.path(is, "*.rda"),
 					file.path(is, "*.RData")))
