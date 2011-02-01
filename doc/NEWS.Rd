@@ -19,7 +19,7 @@
       \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{identical} could in rare cases generate a warning
@@ -96,6 +96,9 @@
       \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
       very rare, but now include x86_64 Linux with \command{gcc 4.5.x}
       at the default \code{-O2} optimization (but not at \code{-O}).
+
+      \item Fixes for subsetting or subassignment of \code{"raster"}
+      objects when not both \code{i} and \code{j} are specified.
     }
   }
 }

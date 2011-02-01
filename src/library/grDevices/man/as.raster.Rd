@@ -39,7 +39,7 @@ as.raster(x, \dots)
   in graphics packages will make use
   of the \code{as.raster()} function to automatically
   generate a raster object from their input.
-  
+
   The \code{as.raster()} function is generic so methods can be
   written to convert other R objects to a raster object.
 
@@ -96,5 +96,12 @@ r[2:4, 2:5] <- "white"
 # comparison
 r == "white"
 
+\dontshow{% regression tests
+stopifnot(r[] == r,
+          identical(r[1:3], as.raster(cbind(colors()[1:3]))),
+          as.vector(r[47]) == colors()[47])
+r[2:4] <- "black"
+stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black",3)))))
+}% end{tests}
 }
 \keyword{ dplot }
