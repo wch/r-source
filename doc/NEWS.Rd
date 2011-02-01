@@ -17,6 +17,21 @@
       with all symbols remapped: this is intended to avoid problems seen
       with packages such as \pkg{XML} and \pkg{rggobi} which link to
       \file{zlib.so.1} on systems using \samp{zlib 1.2.5}.
+
+      \item The default for \env{FFLAGS} and \env{FCFLAGS} with
+      \command{gfortran} on x86_64 Linux has been changed back to \samp{-g
+	-O2}:  however, setting \samp{-g -O} may still be needed for
+      \command{gfortran 4.3.x}.
+    }
+  }
+
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+
+      \item The \sQuote{experimental} alternative specification of a
+      name space via \code{.Export()} etc is now deprecated.
+
+      \item \code{zip.file.extract()} is now deprecated.
     }
   }
 

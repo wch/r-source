@@ -1,17 +1,17 @@
 % File src/library/base/man/ns-alt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-alt}
-\title{Experimental Alternative Name Specification Support}
+\title{Deprecated Alternative Name Space Specification Support}
 \alias{.Export}
 \alias{.Import}
 \alias{.ImportFrom}
 \alias{.S3method}
 \description{
-  Alternative interface for specifying a name space within the code of a
-  package.
+  Deprecated alternative interface for specifying a name space within
+  the code of a package.
 }
 \usage{
 .Export(\dots)
@@ -27,14 +27,18 @@
   \item{method}{optional character or function argument.}
 }
 \details{
-  As an experimental alternative to using a \file{NAMESPACE} file it is
-  possible to add a name space to a package by adding a
-  \code{Namespace: <package_name>} entry to the \file{DESCRIPTION}
-  file and placing directives to specify imports and exports directly in
-  package code.  These directives should be viewed as declarations, not
-  as function calls.   Except to the optional \code{method} argument to
-  \code{.S3method} arguments are not evaluated.  These directives should
-  only be used at top level of package code except as noted below.
+  This interface was deprecated in \R 2.12.2 and will be removed in a
+  future version of \R.
+ 
+  As an alternative to using a \file{NAMESPACE} file it is possible to
+  add a name space to a package by adding a \code{Namespace:
+  <package_name>} entry to the \file{DESCRIPTION} file and placing
+  directives to specify imports and exports directly in package code.
+  These directives should be viewed as declarations, not as function
+  calls.  Except for the optional \code{method} argument to
+  \code{.S3method}, arguments are not evaluated.  These directives
+  should only be used at top level of package code except as noted
+  below.
 
   \code{.Export} is used to declare exports.  Its arguments should be
   literal names or character strings.  \code{.Export} should only be

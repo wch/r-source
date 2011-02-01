@@ -57,7 +57,7 @@ getNamespaceImports <- function(ns) {
 
 getNamespaceUsers <- function(ns) {
     nsname <- getNamespaceName(asNamespace(ns))
-    users <- character(0L)
+    users <- character()
     for (n in loadedNamespaces()) {
         inames <- names(getNamespaceImports(n))
         if (match(nsname, inames, 0L))
@@ -433,7 +433,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             ##we take any pattern, but check to see if the matches are classes
-            pClasses <- character(0L)
+            pClasses <- character()
             aClasses <- methods:::getClasses(ns)
             for (p in nsInfo$exportClassPatterns) {
                 pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
@@ -617,6 +617,7 @@ unloadNamespace <- function(ns)
 }
 
 .Import <- function(...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -636,6 +637,7 @@ unloadNamespace <- function(ns)
 }
 
 .ImportFrom <- function(name, ...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -655,6 +657,7 @@ unloadNamespace <- function(ns)
 }
 
 .Export <- function(...) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -679,6 +682,7 @@ unloadNamespace <- function(ns)
 }
 
 .S3method <- function(generic, class, method) {
+    .Deprecated(msg = "name spaces should be specified via the 'NAMESPACE' file")
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
         while (n > 1) {
@@ -900,8 +904,8 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         }
     }
     expnames <- unlist(lapply(expnames, get, envir = exports, inherits = FALSE))
-    if (is.null(impnames)) impnames <- character(0L)
-    if (is.null(expnames)) expnames <- character(0L)
+    if (is.null(impnames)) impnames <- character()
+    if (is.null(expnames)) expnames <- character()
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
 }
 
@@ -987,7 +991,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         ## Creates a new NativeRoutineMap.
         function(useRegistration, symbolNames, fixes) {
             proto <- list(useRegistration = FALSE,
-                          symbolNames = character(0L))
+                          symbolNames = character())
             class(proto) <- "NativeRoutineMap"
 
             mergeNativeRoutineMaps(proto, useRegistration, symbolNames, fixes)
@@ -1025,15 +1029,15 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         stop(gettextf("package '%s' has no NAMESPACE file", package),
              domain = NA)
     else directives <- NULL
-    exports <- character(0L)
-    exportPatterns <- character(0L)
-    exportClasses <- character(0L)
-    exportClassPatterns <- character(0L)
-    exportMethods <- character(0L)
+    exports <- character()
+    exportPatterns <- character()
+    exportClasses <- character()
+    exportClassPatterns <- character()
+    exportMethods <- character()
     imports <- list()
     importMethods <- list()
     importClasses <- list()
-    dynlibs <- character(0L)
+    dynlibs <- character()
     S3methods <- matrix(NA_character_, 500L, 3L)
     nativeRoutines <- list()
     nS3 <- 0
@@ -1053,7 +1057,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                else if (length(e) == 4L)
                parseDirective(e[[4L]]),
                "{" =  for (ee in as.list(e[-1L])) parseDirective(ee),
-               "=" =, 
+               "=" =,
                "<-" = {
                    parseDirective(e[[3L]])
                    if(as.character(e[[3L]][[1L]]) == "useDynLib")
