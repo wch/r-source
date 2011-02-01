@@ -27,7 +27,6 @@
 
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
-
       \item The \sQuote{experimental} alternative specification of a
       name space via \code{.Export()} etc is now deprecated.
 
@@ -109,11 +108,16 @@
       \item Since \R 2.10.0, \code{z^n} was computed incorrectly for
       \code{n >= 3} and \code{n <= -3} on platforms for which the macro
       \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
-      very rare, but now include x86_64 Linux with \command{gcc 4.5.x}
+      rare, but now include x86_64 Linux with \command{gcc 4.5.x}
       at the default \code{-O2} optimization (but not at \code{-O}).
 
       \item Fixes for subsetting or subassignment of \code{"raster"}
       objects when not both \code{i} and \code{j} are specified.
+
+      \item \command{R CMD INSTALL} was not always respecting the
+      \samp{ZipData: yes} field of a \file{DESCRIPTION} file (although
+      this is frequently incorrectly specified for packages with no data
+      or which specify lazy-loading of data).
     }
   }
 }
