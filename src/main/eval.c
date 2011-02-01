@@ -3842,6 +3842,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	defineVar(symbol, value, rho);
 	unbindVar(valsym, rho);
 	/* original right-hand side value is now on top of stack again */
+	/* we do not duplicate the right-hand side value, so to be
+	   conservative mark the value as NAMED = 2 */
+	SET_NAMED(R_BCNodeStackTop[-1], 2);
 	NEXT();
       }
     OP(STARTSUBSET, 2): DO_STARTDISPATCH("[");
