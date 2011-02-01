@@ -21,7 +21,14 @@ Sys.timezone <- function() Sys.getenv("TZ", names = FALSE)
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
 as.POSIXlt.Date <- function(x, ...)
-    return(.Internal(Date2POSIXlt(x)))
+{
+    ## <FIXME>
+    ## Move names handling to C code eventually ...
+    y <- .Internal(Date2POSIXlt(x))
+    names(y$year) <- names(x)
+    y
+    ## </FIXME>
+}
 
 as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
     as.POSIXlt(as.POSIXct(x), ...)
@@ -30,10 +37,20 @@ as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
     if((missing(tz) || is.null(tz)) && !is.null(tzone)) tz <- tzone[1L]
-    .Internal(as.POSIXlt(x, tz))
+    ## <FIXME>
+    ## Move names handling to C code eventually ...
+    y <- .Internal(as.POSIXlt(x, tz))
+    names(y$year) <- names(x)
+    y
+    ## </FIXME>
 }
 
-as.POSIXlt.factor <- function(x, ...) as.POSIXlt(as.character(x), ...)
+as.POSIXlt.factor <- function(x, ...)
+{
+    y <- as.POSIXlt(as.character(x))
+    names(y$year) <- names(x)
+    y
+}
 
 as.POSIXlt.character <- function(x, tz = "", format, ...)
 {
@@ -110,7 +127,12 @@ as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
     tzone <- attr(x, "tzone")
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1L]
-    .POSIXct(.Internal(as.POSIXct(x, tz)), tz)
+    ## <FIXME>
+    ## Move names handling to C code eventually ...
+    y <- .Internal(as.POSIXct(x, tz))
+    names(y) <- names(x$year)
+    .POSIXct(y, tz)
+    ## </FIXME>
 }
 
 as.POSIXct.numeric <- function(x, tz = "", origin, ...)
@@ -155,7 +177,12 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
         else if(np == 0L) "%Y-%m-%d %H:%M:%S"
         else paste("%Y-%m-%d %H:%M:%OS", np, sep="")
     }
-    .Internal(format.POSIXlt(x, format, usetz))
+    ## <FIXME>
+    ## Move names handling to C code eventually ...
+    y <- .Internal(format.POSIXlt(x, format, usetz))
+    names(y) <- names(x$year)
+    y
+    ## </FIXME>
 }
 
 ## prior to 2.9.0 the same as format.POSIXlt.
@@ -164,8 +191,15 @@ strftime <- function(x, format = "", tz = "", usetz = FALSE, ...)
     format(as.POSIXlt(x, tz = tz), format = format, usetz = usetz, ...)
 
 strptime <- function(x, format, tz = "")
-    .Internal(strptime(as.character(x), format, tz))
-
+{
+    ## <FIXME>
+    ## Move names handling to C code eventually ...
+    y <- .Internal(strptime(as.character(x), format, tz))
+    ## Assuming we can rely on the names of x ...
+    names(y$year) <- names(x)
+    y
+    ## </FIXME>
+}
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
@@ -338,9 +372,12 @@ as.data.frame.POSIXct <- as.data.frame.vector
 
 as.list.POSIXct <- function(x, ...)
 {
-    lapply(seq_along(x), function(i) x[i])
-}
-
+    nms <- names(x)
+    names(x) <- NULL
+    y <- lapply(seq_along(x), function(i) x[i])
+    names(y) <- nms
+    y
+}    
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
@@ -939,3 +976,16 @@ is.numeric.difftime <- function(x) FALSE
 
 .difftime <- function(xx, units)
     structure(xx, units = units, class = "difftime")
+
+## ---- additions in 2.13.0 -----
+
+names.POSIXlt <-
+function(x)
+    names(x$year)
+
+`names<-.POSIXlt` <-
+function(x, value)
+{
+    names(x$year) <- value
+    x
+}
