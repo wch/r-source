@@ -802,6 +802,14 @@ that @R{} code should be ``self-sufficient'' and not make use of extra
 functionality provided by the package, so that the data file can also be
 used without having to load the package.
 
+Images (extensions @file{.RData} or @file{.rda}) can contain references
+to the name spaces of packages that were used to create them.
+Preferably there should be no such references in data files, and in any
+case they should only be to packages listed in the @code{Depends} and
+@code{Imports}, as otherwise it may be impossible to install the
+package.  To check for such references, load all the images into a
+vanilla @R{} session, and look at the output of @code{loadedNamespaces()}.
+
 If your data files are enormous and you are not using @samp{LazyData}
 you can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
