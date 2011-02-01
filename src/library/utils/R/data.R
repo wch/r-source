@@ -155,9 +155,15 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
                         found <- FALSE
                     else {
                         found <- TRUE
-                        Rdatadir <- file.path(tempdir(), "Rdata")
-                        dir.create(Rdatadir, showWarnings=FALSE)
-                        zfile <- zip.file.extract(file, "Rdata.zip", dir=Rdatadir)
+                        zfile <- file
+                        zipname <- file.path(dirname(file), "Rdata.zip")
+                        if(file.exists(zipname)) {
+                            Rdatadir <- tempfile("Rdata")
+                            dir.create(Rdatadir, showWarnings=FALSE)
+                            topic <- basename(file)
+                            rc <- .Internal(unzip(zipname, topic, Rdatadir, FALSE, TRUE, FALSE))
+                            if(rc==0L) zfile <- file.path(Rdatadir, topic)
+                        }
                         if(zfile != file) on.exit(unlink(zfile))
                         switch(ext,
                                R = , r = {
