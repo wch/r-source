@@ -148,10 +148,9 @@ mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A typical install
-either 32- or 64-bit installation takes around 50Mb of disk space, of
-both about 60Mb, a full installation about 80Mb and a minimal 32-bit one
-about 32Mb.
+except perhaps for some network-mounted systems).  A typical 32- or
+64-bit installation takes around 50Mb of disk space, both about 60Mb, a
+full installation about 80Mb and a minimal 32-bit one about 32Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path

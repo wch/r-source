@@ -5902,11 +5902,16 @@ match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}
-included by @file{R.h}.  (On most platforms which have it, this is
-compatible with the C99 @code{double complex} type.)  Only a single
-character string can be passed to or from FORTRAN, and the success of
-this is compiler-dependent.  Other @R{} objects can be passed to
-@code{.C}, but it is better to use one of the other interfaces.  An
+included by @file{R.h}.  (On most platforms this is stored in a way
+compatible with the C99 @code{double complex} type: however, it may not
+be possible to pass @code{Rcomplex} to a C99 function expecting a
+@code{double complex} argument.  Nor need it be compatible with a C++
+@code{complex} type.  Moreover, the compatibility can depends on the
+optimization level set for the compiler.)  
+
+Only a single character string can be passed to or from FORTRAN, and the
+success of this is compiler-dependent.  Other @R{} objects can be passed
+to @code{.C}, but it is better to use one of the other interfaces.  An
 exception is passing an @R{} function for use with @w{@code{call_R}},
 when the object can be handled as @code{void *} en route to
 @code{call_R}, but even there @code{.Call} is to be preferred.
@@ -5924,7 +5929,7 @@ It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or to FORTRAN as @code{REAL} by setting the
 attribute @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{mode}.  This is intended only
-to be used to aid interfacing to existing C or FORTRAN code.
+to be used to aid interfacing existing C or FORTRAN code.
 
 Logical values are sent as @code{0} (@code{FALSE}), @code{1}
 (@code{TRUE}) or @code{INT_MIN = -2147483648} (@code{NA}, but only if

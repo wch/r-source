@@ -1274,7 +1274,7 @@ The call @code{dbDriver("MySQL")} returns a database connection manager
 object, and then a call to @code{dbConnect} opens a database connection
 which can subsequently be closed by a call to the generic function
 @code{dbDisconnect}.  Use @code{dbDriver("Oracle")},
-@code{dbdDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
+@code{dbDriver("PostgreSQL")} or @code{dbDriver("SQLite")} with those
 DBMSs and packages @pkg{ROracle}, @pkg{RPostgreSQL} or @pkg{RSQLite}
 respectively.
 
