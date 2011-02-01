@@ -27,7 +27,7 @@
   \item{method}{optional character or function argument.}
 }
 \details{
-  This interface was deprecated in \R 2.13.0 and will be removed in a
+  This interface was deprecated in \R 2.12.2 and will be removed in a
   future version of \R.
  
   As an alternative to using a \file{NAMESPACE} file it is possible to

@@ -328,13 +328,8 @@
       argument in \code{switch()}, only a single unnamed alternative
       value is now allowed.
 
-      \item The \sQuote{experimenatal} alternative specification of a
-      name space via \code{.Export()} etc is now deprecated.
-
       \item The wrapper \code{utils::link.html.help()} is no longer
       available.
-
-      \item \code{zip.file.extract()} is now deprecated.
     }
   }
 
@@ -387,6 +382,16 @@
       \command{gfortran} on x86_64 Linux has been changed back to \samp{-g
 	-O2}:  however, setting \samp{-g -O} may still be needed for
       \command{gfortran 4.3.x}.
+    }
+  }
+
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+
+      \item The \sQuote{experimental} alternative specification of a
+      name space via \code{.Export()} etc is now deprecated.
+
+      \item \code{zip.file.extract()} is now deprecated.
     }
   }
 
