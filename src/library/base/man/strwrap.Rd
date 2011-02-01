@@ -46,7 +46,8 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
   string.
 }
 \value{
-  A character vector in the current locale's encoding.
+  A character vector in the current locale's encoding (if
+  \code{simplify} is \code{TRUE}), or a list of such character vectors.
 }
 \examples{
 ## Read in file 'THANKS'.

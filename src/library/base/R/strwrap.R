@@ -130,7 +130,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             c(y, "")
     }
 
-    if(simplify) y <- unlist(y)
+    if(simplify) y <- as.character(unlist(y))
     y
 }
 
