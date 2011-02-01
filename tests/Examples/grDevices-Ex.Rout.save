@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-20 r53373)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-02-01 r54184)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -353,6 +353,13 @@ Warning in text.default(1:8, labels = paste(x, "++", sep = ""), col = x.,  :
  [9,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 [10,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 > 
+> ## Don't show: 
+> stopifnot(r[] == r,
++           identical(r[1:3], as.raster(cbind(colors()[1:3]))),
++           as.vector(r[47]) == colors()[47])
+> r[2:4] <- "black"
+> stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black",3)))))
+> ## End Don't show
 > 
 > 
 > 
@@ -3391,7 +3398,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.87 0.025 2.134 0 0 
+Time elapsed:  1.859 0.059 1.949 0 0 
 > grDevices::dev.off()
 null device 
           1 

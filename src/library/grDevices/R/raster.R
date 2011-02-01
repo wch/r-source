@@ -82,7 +82,7 @@ print.raster <- function(x, ...) {
 # Non-standard because raster is ROW-wise
 # Try to piggy-back on existing methods as much as possible
 # IGNORE 'drop' -- i.e. always use  "drop = FALSE"
-`[.raster` <- function(x, i, j, ...) {
+`[.raster` <- function(x, i, j, drop, ...) {
     mdrop <- missing(drop)
     nA <- nargs() - (!mdrop)
     if(!mdrop && !identical(drop,FALSE))
@@ -95,13 +95,9 @@ print.raster <- function(x, ...) {
 	    if (nA == 2) ## is.matrix(i) || is.logical(i))
 		## FIXME: is this desirable? -- with drop=FALSE, return 1-col obj:
 		m[i, drop=FALSE]
-	    else if(nA == 3)
-		m[i, , drop=FALSE]
+	    else if(nA == 3) m[i, , drop=FALSE]
 	    else stop("invalid raster subsetting")
-	} else {
-	    m[i, j, drop=FALSE]
-	}
-    }
+	} else m[i, j, drop=FALSE]
     as.raster(subset)
 }
 
@@ -111,15 +107,11 @@ print.raster <- function(x, ...) {
     if (missing(i)) {
 	if(missing(j)) m[] <- value else m[, j] <- value
     } else if (missing(j)) {
-	if (nA == 3) { ## typically is.matrix(i) || is.logical(i))
+	if (nA == 3) ## typically is.matrix(i) || is.logical(i))
 	    m[i] <- value
-	} else if(nA == 4) {
-	    m[i, ] <- value
-	} else stop("invalid raster subassignment")
-    } else {
-	m[i, j] <- value
-    }
-    }
+	else if(nA == 4) m[i, ] <- value
+	else stop("invalid raster subassignment")
+    } else m[i, j] <- value
     as.raster(m)
 }
 
