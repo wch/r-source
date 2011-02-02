@@ -29,8 +29,15 @@ seq.default <-
 	length.out <- length(along.with)
 	if(One) return(if(length.out) seq_len(length.out) else integer(0L))
     }
-    else if(!missing(length.out))
+    else if(!missing(length.out)) {
+        len <- length(length.out)
+        if(!len) stop("argument 'length.out' must be of length 1")
+        if(len > 1L) {
+            warning("first element used of 'length.out' argument")
+            length.out <- length.out[1L]
+        }
 	length.out <- ceiling(length.out)
+    }
     if(is.null(length.out))
 	if(missing(by))
 	    from:to

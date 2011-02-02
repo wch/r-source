@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team.
+ *  Copyright (C) 1998-2011  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -379,10 +379,15 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = asInteger(CADDR(args));
     if(len != NA_INTEGER && len < 0)
 	errorcall(call, _("invalid '%s' argument"), "length.out");
+    if(length(CADDR(args)) != 1)
+	warningcall(call, _("first element used of '%s' argument"), 
+		    "length.out");
 
     each = asInteger(CADDDR(args));
     if(each != NA_INTEGER && each < 0)
 	errorcall(call, _("invalid '%s' argument"), "each");
+    if(length(CADDDR(args)) != 1)
+	warningcall(call, _("first element used of '%s' argument"), "each");
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
@@ -510,6 +515,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double rout = asReal(len);
 	if(ISNAN(rout) || rout <= -0.5)
 	    errorcall(call, _("'length.out' must be a non-negative number"));
+	if(length(len) != 1)
+	    warningcall(call, _("first element used of '%s' argument"), 
+			"length.out");
 	lout = (int) ceil(rout);
     }
 
@@ -673,6 +681,9 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = asInteger(CAR(args));
     if(len == NA_INTEGER || len < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
+    if(length(CAR(args)) != 1)
+	warningcall(call, _("first element used of '%s' argument"),
+		    "length.out");
     ans = allocVector(INTSXP, len);
     p = INTEGER(ans);
     for(i = 0; i < len; i++) p[i] = i+1;

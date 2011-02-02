@@ -8,6 +8,10 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item PCRE has been updated to 8.12 (two bug-fix releases since 8.10).
+
+      \item \code{rep()}, \code{seq()}, \code{seq.int()} and
+      \code{seq_len()} report more often when the first element of an
+      incorrect length is taken.
     }
   }
 
