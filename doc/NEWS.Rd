@@ -12,6 +12,10 @@
       \item \code{rep()}, \code{seq()}, \code{seq.int()} and
       \code{seq_len()} report more often when the first element of an
       incorrect length argument is taken.
+
+      \item The Cocoa back-end for the \code{quartz()} graphics device
+      on Mac OS X provides a way to disable event loop processing
+      temporarily (useful, e.g., for forked instances of \R).
     }
   }
 

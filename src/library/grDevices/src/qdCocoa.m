@@ -501,6 +501,8 @@ static unsigned long el_sleep; /* latency in ms */
 static long el_serial = 0;     /* serial number for the time slice */
 static long el_pe_serial = 0;  /* ProcessEvents serial number, event are
                                   only when the serial number changes */
+static BOOL el_inhibit = NO;   /* this flag is used by special code that
+				  needs to inhibit running the event loop */
 
 /* helper function - sleep X milliseconds */
 static void millisleep(unsigned long tout) {
@@ -516,7 +518,7 @@ extern void (*ptr_R_ProcessEvents)(void);
 static void cocoa_process_events() {
     /* this is a precaution if cocoa_process_events is called
        via R_ProcessEvents and the R code calls it too often */
-    if (el_serial != el_pe_serial) {
+    if (!el_inhibit && el_serial != el_pe_serial) {
         NSEvent *event;
         while ((event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                           untilDate:nil
@@ -600,6 +602,11 @@ void QuartzCocoa_SetupEventLoop(int flags, unsigned long latency) {
 int QuartzCocoa_SetLatency(unsigned long latency) {
     el_sleep = latency;
     return (el_obj)?YES:NO;
+}
+
+/* inhibit Cocoa from running the event loop (e.g., when R is forked) */
+void QuartzCocoa_InhibitEventLoop(int flag) {
+    el_inhibit = flag ? YES : NO;
 }
 
 #pragma mark --- R Quartz interface ---
