@@ -96,7 +96,7 @@
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
-            "      --use-zip-data	collect data files in zip archive",
+            "      --use-zip-data	collect data files in zip archive (deprecated)",
             "      --fake		do minimal install for testing purposes",
             "      --no-lock, --unsafe",
             "			install on top of any existing installation",
@@ -120,7 +120,7 @@
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
             "\nand on Windows only",
-            "      --auto-zip	select whether to zip data automatically",
+            "      --auto-zip	select whether to zip data automatically (deprecated)",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
             "      --merge-multiarch	bi-arch by merging",
@@ -545,6 +545,7 @@
         if (auto_zip || zip_up) { ## --build implies --auto-zip
             thislazy <- parse_description_field(desc, "LazyData",
                                                 default = lazy_data)
+            ## This allows ZipData: no to override --auto-zip
             thiszip <- parse_description_field(desc, "ZipData",
                                                default = TRUE)
             if (!thislazy && thiszip && dir.exists("data")) {
@@ -831,9 +832,12 @@
 		file.copy(files, is, TRUE)
 		thislazy <- parse_description_field(desc, "LazyData",
 						    default = lazy_data)
-                if(!thislazy && !use_zip_data)
+                if(!thislazy && !use_zip_data) {
                     use_zip_data <- parse_description_field(desc, "ZipData",
                                                             default = FALSE)
+                    if(use_zip_data)
+                        warning("use of a true value for 'ZipData' is deprecated", call. = FALSE, domain=NA)
+                }
 		if (!thislazy && resave_data) {
 		    paths <- Sys.glob(c(file.path(is, "*.rda"),
 					file.path(is, "*.RData")))
@@ -1075,11 +1079,17 @@
             build_latex <- TRUE
         } else if (a == "--example") {
             build_example <- TRUE
-        } else if (a == "--use-zipdata") {
+        } else if (a == "--use-zip-data") {
             use_zip_data <- TRUE
+            warning("use of '--use-zip-data' is deprecated",
+                    call. = FALSE, domain = NA)
         } else if (a == "--auto-zip") {
-            if (WINDOWS) auto_zip <- TRUE
-            else warning("'--auto-zip' is for Windows only", call. = FALSE)
+            if (WINDOWS) {
+                auto_zip <- TRUE
+                warning("use of '--auto-zip' is deprecated",
+                        call. = FALSE, domain = NA)
+            } else warning("'--auto-zip' is for Windows only",
+                           call. = FALSE, domain = NA)
         } else if (a == "-l") {
             if (length(args) >= 2L) {lib <- args[2L]; args <- args[-1L]}
             else stop("-l option without value", call. = FALSE)

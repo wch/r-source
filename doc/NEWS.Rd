@@ -371,7 +371,7 @@
 
       \item \code{rep()}, \code{seq()}, \code{seq.int()} and
       \code{seq_len()} report more often when the first element of an
-      incorrect length is taken.
+      incorrect length argument is taken.
     }
   }
 
@@ -395,6 +395,12 @@
       name space via \code{.Export()} etc is now deprecated.
 
       \item \code{zip.file.extract()} is now deprecated.
+
+      \item Zip-ing data sets in packages (and hence \command{R CMD
+	INSTALL --use-zip-data} and the \samp{ZipData: yes} field in a
+	\code{DESCRIPTION} file) is deprecated: using efficiently
+	compressed \file{.rda} images and lazy-loading of data has
+	superseded it.
     }
   }
 
@@ -482,6 +488,9 @@
       \samp{ZipData: yes} field of a \file{DESCRIPTION} file (although
       this is frequently incorrectly specified for packages with no data
       or which specify lazy-loading of data).
+
+      \command{R CMD INSTALL --use-zip-data} was incorrectly implemented
+      as \option{--use-zipdata} since \R 2.9.0.
     }
   }
 }
