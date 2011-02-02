@@ -642,20 +642,31 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int i, len, *p;
+    static SEXP length_op = NULL;
+
+    /* Store the .Primitive for 'length' for DispatchOrEval to use. */
+    if (length_op == NULL) {
+	SEXP R_lengthSymbol = install("length");
+	length_op = eval(R_lengthSymbol, R_BaseEnv);
+	if (TYPEOF(length_op) != BUILTINSXP) {
+	    length_op = NULL;
+	    error("'length' is not a BUILTIN");
+	}
+	R_PreserveObject(length_op);
+    }
 
     checkArity(op, args);
     check1arg(args, call, "along.with");
-#ifdef R_291_and_less
-    len = length(CAR(args));
-#else
-    if(isObject(CAR(args)) &&
-       // here, rely on  'op'  being the same for "seq.along" and "length":
-       DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
+
+    /* Try to dispatch to S3 or S4 metods for 'length'.  For cases
+       where no methods are defined this is more efficient than an
+       unconditional callback to R */
+    if (isObject(CAR(args)) &&
+	DispatchOrEval(call, length_op, "length", args, rho, &ans, 0, 1)) {
 	len = asInteger(ans);
     }
     else
 	len = length(CAR(args));
-#endif
 
     ans = allocVector(INTSXP, len);
     p = INTEGER(ans);
