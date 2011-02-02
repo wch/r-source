@@ -504,6 +504,7 @@ package, specify @samp{LazyLoad: yes}.
 The @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
+(Setting to any other value is deprecated.)
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
