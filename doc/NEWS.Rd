@@ -221,10 +221,6 @@
       \item There is a simple \code{zip()} function, as wrapper for an
       external \command{zip} command.
 
-      \item The Cocoa back-end for the \code{quartz()} graphics device
-      on Mac OS X provides a way to disable event loop processing
-      temporarily (useful, e.g., for forked instances of \R).
-
       \item \code{bzfile()} connections can now read from concatenated
       \command{bzip2} files (including files written with
       \code{bzfile(open = "a")}) and files created by some other
@@ -377,6 +373,10 @@
       \item \code{rep()}, \code{seq()}, \code{seq.int()} and
       \code{seq_len()} report more often when the first element of an
       incorrect length argument is taken.
+
+      \item The Cocoa back-end for the \code{quartz()} graphics device
+      on Mac OS X provides a way to disable event loop processing
+      temporarily (useful, e.g., for forked instances of \R).
     }
   }
 
