@@ -812,9 +812,6 @@
 		file.copy(files, is, TRUE)
 		thislazy <- parse_description_field(desc, "LazyData",
 						    default = lazy_data)
-                    if(use_zip_data)
-                        warning("use of a true value for 'ZipData' is deprecated", call. = FALSE, domain=NA)
-                }
 		if (!thislazy && resave_data) {
 		    paths <- Sys.glob(c(file.path(is, "*.rda"),
 					file.path(is, "*.RData")))
@@ -841,7 +838,7 @@
 			pkgerrmsg("lazydata failed", pkg_name)
 		}
 	    } else warning("empty 'data' directory", call. = FALSE)
-	}
+        }
 
 	if (install_demo && dir.exists("demo")) {
 	    starsmsg(stars, "demo")
