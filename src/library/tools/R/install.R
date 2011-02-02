@@ -1623,7 +1623,7 @@
         x[grep("-package$", x)] <- " "
         x <- toupper(substr(x, 1, 1))
         x[x > "Z"] <- "misc"
-        x[x < "A" & x != " "] <- ""
+        x[x < "A" & x != " "] <- "misc"
         x
     }
 
@@ -1734,8 +1734,10 @@
     if (use_alpha) {
         first <- firstLetterCategory(M$Topic)
         nm <- sort(names(table(first)))
-        m <- match(" ", nm, 0L)
+        m <- match(" ", nm, 0L) # -package
         if (m) nm <- c(" ", nm[-m])
+        m <- match("misc", nm, 0L) # force last in all locales.
+        if (m) nm <- c(nm[-m], "misc")
         writeLines("<p align=\"center\">", outcon)
         writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
                    outcon)
@@ -1743,8 +1745,9 @@
 
         for (f in nm) {
             MM <- M[first == f, ]
-            cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
-                sep = "", file = outcon)
+            if (f != " ")
+                cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
+                    sep = "", file = outcon)
             writeLines('<table width="100%">', outcon)
             writeLines(paste('<tr><td width="25%"><a href="', MM[, 2L], '.html">',
                              MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>',
