@@ -511,11 +511,9 @@ get_exclude_patterns <- function()
         } else if (substr(a, 1, 15) == "--install-args=") {
             INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
         } else if (WINDOWS && a == "--auto-zip") {
-            warning("use of '--auto-zip' is deprecated: use '--install-args' instead")
-            INSTALL_opts <- c(INSTALL_opts, "--auto-zip")
+            warning("use of '--auto-zip' is defunct")
         } else if (a == "--use-zip-data") {
-            warning("use of '--use-zip-data' is deprecated: use '--install-args' instead")
-            INSTALL_opts <- c(INSTALL_opts, "--use-zip-data")
+            error("use of '--use-zip-data' is defunct")
         } else if (a == "--no-docs") {
             warning("use of '--no-docs' is deprecated: use '--install-args' instead")
             INSTALL_opts <- c(INSTALL_opts, "--no-docs")

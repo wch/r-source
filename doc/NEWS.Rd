@@ -321,7 +321,7 @@
 
       \item The previous options for \command{R CMD build --binary}
       (\option{--auto-zip}, \option{--use-zip-data} and
-      \option{--no-docs}) are deprecated:
+      \option{--no-docs}) are deprecated (or defunct):
       use the new option \option{--install-args} instead.
 
       \item When a character value is used for the \code{EXPR}
@@ -330,6 +330,11 @@
 
       \item The wrapper \code{utils::link.html.help()} is no longer
       available.
+
+      \item Zip-ing data sets in packages (and hence \command{R CMD
+	INSTALL} options \option{--use-zip-data} and \option{--auto-zip}, as
+      well as the \samp{ZipData: yes} field in a \code{DESCRIPTION} file)
+      is defunct. 
     }
   }
 
