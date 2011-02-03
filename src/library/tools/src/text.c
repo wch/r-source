@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-7   The R Development Core Team.
+ *  Copyright (C) 2003-11   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 
     for (i = 0; i < LENGTH(text); i++) {
 	p = CHAR(STRING_ELT(text, i)); /* ASCII or not not affected by charset */
-	inquote =FALSE; /* avoid runaway quotes */
+	inquote = FALSE; /* avoid runaway quotes */
 	for(; *p; p++) {
 	    if(!inquote && *p == '#') break;
 	    if(!inquote || ign) {
@@ -178,6 +178,39 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 	}
     }
     return ScalarLogical(FALSE);
+}
+
+SEXP check_nonASCII2(SEXP text)
+{
+    SEXP ans = R_NilValue;
+    int i, m = 0, m_all = 100, *ind, *ians, yes;
+    const char *p;
+
+    if(TYPEOF(text) != STRSXP) error("invalid input");
+    ind = Calloc(m_all, int);
+    for (i = 0; i < LENGTH(text); i++) {
+	p = CHAR(STRING_ELT(text, i));
+	yes = 0;
+	for(; *p; p++)
+	    if((unsigned int) *p > 127) {
+		yes = 1;
+		break;
+	    }
+	if(yes) {
+	    if(m >= m_all) {
+		m_all *= 2;
+		ind = Realloc(ind, m_all, int);
+	    }
+	    ind[m++] = i + 1; /* R is 1-based */
+	}
+    }
+    if(m) {
+	ans = allocVector(INTSXP, m);
+	ians = INTEGER(ans);
+	for(i = 0; i < m; i++) ians[i] = ind[i];
+    }
+    Free(ind);
+    return ans;
 }
 
 SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 strings only */

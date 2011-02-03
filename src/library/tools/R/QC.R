@@ -3783,11 +3783,12 @@ function(pkgDir)
             enc <- Encoding(xx)
             latin1 <<- latin1 + sum(enc == "latin1")
             utf8 <<- utf8 + sum(enc == "UTF-8")
-            lapply(xx[enc == "unknown"], function(txt)
-                   if(any(charToRaw(txt) > as.raw(127))) {
-                       non_ASCII <<- c(non_ASCII, txt)
-                       where <<- c(where, ds)
-                   })
+            unk <- xx[enc == "unknown"]
+            ind <- .Call(check_nonASCII2, unk)
+            if(length(ind)) {
+                non_ASCII <<- c(non_ASCII, unk[ind])
+                where <<- c(where, rep.int(ds, length(ind)))
+            }
         }
         a <- attributes(x)
         if(!is.null(a)) {
