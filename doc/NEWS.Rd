@@ -255,6 +255,10 @@
       \command{R CMD INSTALL} for \option{--build} (but not when
       installing to rebuild vignettes).
 
+      There is another new option, \option{--resave-data} to call
+      \code{tools::resaveRdaFiles()} on the \file{data} directory.  This
+      is likely to become the default.
+
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems

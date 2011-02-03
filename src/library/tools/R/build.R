@@ -171,6 +171,9 @@ get_exclude_patterns <- function()
             "  --binary              build pre-compiled binary packages, with options:",
             "  --install-args=       command-line args to be passed to INSTALL,",
             "                        separated by spaces",
+            "  --resave-data=        re-save data files as compactly as possible",
+            '                        "no" (default), "yes", "gzip"',
+            "  --noresave-data",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -469,6 +472,7 @@ get_exclude_patterns <- function()
     binary <- FALSE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
+    resave_data <- "no"
     pkgs <- character()
     options(showErrorCalls=FALSE, warn = 1)
 
@@ -510,6 +514,12 @@ get_exclude_patterns <- function()
             binary <- TRUE
         } else if (substr(a, 1, 15) == "--install-args=") {
             INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
+        } else if (a == "--resave-data") {
+            resave_data <- "yes"
+        } else if (a == "--no-resave-data") {
+            resave_data <- "no"
+        } else if (substr(a, 1, 14) == "--resave-data=") {
+            resave_data <- substr(a, 15, 1000)
         } else if (WINDOWS && a == "--auto-zip") {
             warning("use of '--auto-zip' is defunct")
         } else if (a == "--use-zip-data") {
@@ -682,6 +692,28 @@ get_exclude_patterns <- function()
         unlink(file.path(pkgname,
                          c("src-i386", "src-x64", "src-x86_64", "src-ppc")),
                recursive = TRUE)
+
+        ## work on 'data' directory if present
+        ddir <- file.path(pkgname, "data")
+        if(file_test("-d", ddir) && resave_data != "no") {
+            if(resave_data == "yes") {
+                messageLog(Log, "re-saving data files")
+                resaveRdaFiles(ddir)
+                rdas <- checkRdaFiles(ddir)
+                if(any(rdas$compress %in% c("bzip2", "xz")))
+                    printLog(Log, "  NB: this package now needs to depend on R (>= 2.10)")
+            } else {
+                rdas <- checkRdaFiles(ddir)
+                if(nrow(rdas)) {
+                    update <- with(rdas, ASCII | compress == "none"
+                                   | version <= 2)
+                    if(any(update)) {
+                        messageLog(Log, "re-saving data files")
+                        resaveRdaFiles(row.names(rdas)[update], "gzip")
+                    }
+                }
+            }
+        }
 
         ## Finalize
         if (binary) {
