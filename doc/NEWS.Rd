@@ -334,6 +334,9 @@
 
       Installed packages with zip-ed data sets can still be used, but a
       warning that they should be re-installed will be given.
+
+      \item The \sQuote{experimental} alternative specification of a
+      name space via \code{.Export()} etc is now defunct.
     }
   }
 
