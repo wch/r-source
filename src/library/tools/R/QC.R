@@ -316,7 +316,7 @@ function(x, ...)
               .pretty_format(x[[i]])
           })
     }
-    
+
     as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
 }
 
@@ -1296,7 +1296,7 @@ function(x, ...)
                   indent = 2L, exdent = 8L),
           "")
     }
-        
+
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
@@ -3773,24 +3773,22 @@ function(pkgDir)
 {
     Sys.setlocale("LC_CTYPE", "C")
     options(warn=-1)
-    check_charsxp <- function(txt)
-    {
-        if(any(charToRaw(txt) > as.raw(127)))
-            switch(Encoding(txt),
-                   "latin1" = {latin1 <<- c(latin1, txt)},
-                   "UTF-8" = {utf8 <<- c(utf8, txt)},
-                   {
-                       non_ASCII <<- c(non_ASCII, txt)
-                       where <<- c(where, ds)
-                   })
-        invisible()
-    }
     check_one <- function(x, ds)
     {
         if(!length(x)) return()
         ## avoid as.list methods
         if(is.list(x)) lapply(unclass(x), check_one)
-        if(is.character(x)) lapply(unclass(x), check_charsxp)
+        if(is.character(x)) {
+            xx <- unclass(x)
+            enc <- Encoding(xx)
+            latin1 <<- latin1 + sum(enc == "latin1")
+            utf8 <<- utf8 + sum(enc == "UTF-8")
+            lapply(xx[enc == "unknown"], function(txt)
+                   if(any(charToRaw(txt) > as.raw(127))) {
+                       non_ASCII <<- c(non_ASCII, txt)
+                       where <<- c(where, ds)
+                   })
+        }
         a <- attributes(x)
         if(!is.null(a)) {
             lapply(a, check_one)
@@ -3810,7 +3808,8 @@ function(pkgDir)
         .try_quietly(utils::data(list = f, package = character(), envir = dataEnv))
     setwd(old)
 
-    non_ASCII <- latin1 <- utf8 <- where <- character()
+    non_ASCII <- where <- character()
+    latin1 <- utf8 <- 0L
     ## avoid messages about loading packages that started with r48409
     suppressPackageStartupMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
@@ -3818,28 +3817,9 @@ function(pkgDir)
     })
     sink()
     unknown <- unique(cbind(non_ASCII, where))
-    structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
-                   unknown = unknown),
+    structure(list(latin1 = latin1, utf8 = utf8, unknown = unknown),
               class = "check_package_datasets")
 }
-
-## print.check_package_datasets <-
-## function(x, ...)
-## {
-##     ## not sQuote as we have mucked about with locales.
-##     iconv0 <- function(x, ...) paste("'", iconv(x, ...), "'", sep="")
-
-##     if(n <- length(x$latin1))
-##         cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
-##     if(n <- length(x$utf8))
-##         cat(sprintf("Note: found %d marked UTF-8 string(s)\n", n))
-##     if(nrow(x$unknown)) {
-##         cat("Warning: found non-ASCII string(s)\n")
-##         writeLines(paste(iconv0(x$unknown[,1L], "", "ASCII", sub="byte"),
-##                          " in object '", x$unknown[,2L], "'", sep = ""))
-##     }
-##     invisible(x)
-## }
 
 format.check_package_datasets <-
 function(x, ...)
@@ -3848,10 +3828,10 @@ function(x, ...)
     iconv0 <- function(x, ...) paste("'", iconv(x, ...), "'", sep="")
 
     c(character(),
-      if(n <- length(x$latin1)) {
+      if(n <- x$latin1) {
           sprintf("Note: found %d marked Latin-1 string(s)", n)
       },
-      if(n <- length(x$utf8)) {
+      if(n <- x$utf8) {
           sprintf("Note: found %d marked UTF-8 string(s)", n)
       },
       if(nrow(x$unknown)) {
@@ -4904,7 +4884,7 @@ function(x, ...)
     writeLines(format(x))
     invisible(x)
 }
-    
+
 ### * .check_namespace
 
 .check_namespace <-
