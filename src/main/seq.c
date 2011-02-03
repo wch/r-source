@@ -556,8 +556,8 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call, _("'by' argument is much too small"));
 	    if(n < - FEPS)
 		errorcall(call, _("wrong sign in 'by' argument"));
-	    if(TYPEOF(from) == INTSXP && 
-	       TYPEOF(to) == INTSXP && 
+	    if(TYPEOF(from) == INTSXP &&
+	       TYPEOF(to) == INTSXP &&
 	       TYPEOF(by) == INTSXP) {
 		int *ia, ifrom = asInteger(from), iby = asInteger(by);
 		/* With the current limits on integers and FEPS
@@ -565,8 +565,8 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   next, so this is future-proofing against longer integers.
 		*/
 		nn = (int)n;
-		/* seq.default gives integer result from 
-		   from + (0:n)*by 
+		/* seq.default gives integer result from
+		   from + (0:n)*by
 		*/
 		ans = allocVector(INTSXP, nn+1);
 		ia = INTEGER(ans);
@@ -657,8 +657,8 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = length(CAR(args));
 #else
     if(isObject(CAR(args)) &&
-       DispatchOrEval(call, /* op = */ ScalarInteger(0),
-		      "length", args, rho, &ans, 0, 1)) {
+       // here, rely on  'op'  being the same for "seq.along" and "length":
+       DispatchOrEval(call, op, "length", args, rho, &ans, 0, 1)) {
 	len = asInteger(ans);
     }
     else
