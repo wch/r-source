@@ -373,7 +373,10 @@ auto-generated from it if needed.
 
 The mandatory @samp{Maintainer} field should give a @emph{single} name
 with a @emph{valid} (RFC 2822) email address in angle brackets (for
-sending bug reports etc.).  It should not end in a period or comma.
+sending bug reports etc.).  It should not end in a period or comma.  For
+a public package it should be a @emph{person}, not a mailing list and
+not a corporate entity: do ensure that it is valid and will remain valid
+for the lifetime of the package.
 
 The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
@@ -1955,9 +1958,9 @@ you may need to supply the sources for the additional components (and
 will if your package has a GPL-like license).
 
 Also be aware that there are both 32- and 64-bit builds of @R{} for
-Windows with a combined distribution of binary packages, so the CRAN
-team will be reluctant to support a package that works under just one of
-the architectures.
+Windows with a combined distribution of binary packages, so the
+@acronym{CRAN} team will be reluctant to support a package that works
+under just one of the architectures.
 
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
@@ -10871,12 +10874,13 @@ currently available that interface directly with @R{} and provide a
 @itemize
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
-Baier available on @acronym{CRAN}
-(@uref{http://cran.r-project.org/@/other-software.html}) which works
-with package @pkg{rscproxy} to support transfer of data to and from @R{}
-and remote execution of R commands, as well as embedding of an @R{}
-graphics window.  The @pkg{rcom} package on @acronym{CRAN} provides a
-(D)COM server in a running @R{} session.
+Baier available via
+@uref{http://cran.r-project.org/@/other-software.html} or
+@uref{http://sunsite.univie.ac.at/rcom/}, which works with package
+@pkg{rscproxy} to support transfer of data to and from @R{} and remote
+execution of R commands, as well as embedding of an @R{} graphics
+window.  The @pkg{rcom} package on @acronym{CRAN} provides a (D)COM
+server in a running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
