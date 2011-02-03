@@ -330,7 +330,10 @@
       \item Zip-ing data sets in packages (and hence \command{R CMD
 	INSTALL} options \option{--use-zip-data} and \option{--auto-zip}, as
       well as the \samp{ZipData: yes} field in a \code{DESCRIPTION} file)
-      is defunct. 
+      is defunct.
+
+      Installed packages with zip-ed data sets can still be used, but a
+      warning that they should be re-installed will be given.
     }
   }
 

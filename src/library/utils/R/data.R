@@ -124,6 +124,10 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
             }
             ## check for zipped data dir
             if(file_test("-f", file.path(p, "Rdata.zip"))) {
+                warning("zipped data found for package ",
+                        sQuote(basename(dirname(p))),
+                        ".\nThat is defunct, so please re-install the package.",
+                        domain = NA)
                 if(file_test("-f", fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
