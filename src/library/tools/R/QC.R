@@ -3867,6 +3867,7 @@ function(pkgDir, thorough = FALSE)
         rdas2 <- checkRdaFiles(cpdir)
         row.names(rdas2) <- basename(row.names(rdas2))
         diff2 <- (rdas2$ASCII != rdas$ASCII) | (rdas2$compress != rdas$compress)
+        diff2 <- diff2 & (rdas$size > 1e4) & (rdas2$size < 0.9*rdas$size)
         sizes <- c(sum(rdas$size), sum(rdas2$size))
         improve <- data.frame(old_size = rdas$size,
                               new_size = rdas2$size,
