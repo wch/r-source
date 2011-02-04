@@ -1117,6 +1117,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
             } else resultLog(Log, "OK")
         }
+
+        ## Check for ASCII and uncompressed saves in data
+        if (!is_base_pkg && R_check_compact_data && dir.exists("data")) {
+            checkingLog(Log, "data for ASCII and uncompressed saves")
+            out <- R_runR(paste("tools:::.check_package_compact_datasets('.',",
+                                R_check_compact_data2, ")"),
+                          R_opts2)
+            if (length(out)) {
+                bad <- grep("^Warning:", out)
+                if (length(bad)) warnLog() else noteLog(Log)
+                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
+            } else resultLog(Log, "OK")
+        }
     }
 
     check_src_dir <- function()
@@ -2354,6 +2367,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
+    R_check_compact_data2 <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA2_", "FALSE"))
+    R_check_compact_data <- R_check_compact_data2 ||
+    	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
+
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
@@ -2373,7 +2391,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
                     R_check_dot_internal <- R_check_ascii_code <-
-                    	R_check_ascii_data <- FALSE
+                    	R_check_ascii_data <- R_check_compact_data <-
+                            R_check_compact_data2 <- FALSE
 
     startdir <- getwd()
     if (is.null(startdir))

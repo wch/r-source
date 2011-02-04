@@ -263,6 +263,12 @@
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems
       on some Windows systems.
+
+      It checks for inefficiently saved \file{data/*.rda} and
+      \file{data/*.RData} files, and reports on those large than 100Kb.
+      A more complete check (including of the type of compression) can be
+      switched on by setting environment variable
+      \env{_R_CHECK_COMPACT_DATA2_}.
     }
   }
 

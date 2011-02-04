@@ -41,6 +41,7 @@
 ## checkDocFiles
 ## checkDocStyle
 ## .check_package_datasets
+## .check_package_compact_datasets
 ## .check_make_vars
 ## .createExdotR (testing.R)
 ## .runPackageTestsR (testing.R)
@@ -3846,6 +3847,51 @@ print.check_package_datasets <-
 function(x, ...)
 {
     writeLines(format(x))
+    invisible(x)
+}
+### * .check_package_datasets
+
+.check_package_compact_datasets <-
+function(pkgDir, thorough = FALSE)
+{
+    rdas <- checkRdaFiles(file.path(pkgDir, "data"))
+    row.names(rdas) <- basename(row.names(rdas))
+    problems <- with(rdas, (ASCII | compress == "none") & (size > 1e5))
+    if (thorough &&
+        length(files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
+                                   file.path(pkgDir, "data", "*.RData"))))) {
+        cpdir <- tempfile('cp')
+        dir.create(cpdir)
+        file.copy(files, cpdir)
+        resaveRdaFiles(cpdir)
+        rdas2 <- checkRdaFiles(cpdir)
+        row.names(rdas2) <- basename(row.names(rdas2))
+        diff2 <- (rdas2$ASCII != rdas$ASCII) | (rdas2$compress != rdas$compress)
+        sizes <- c(sum(rdas$size), sum(rdas2$size))
+        improve <- data.frame(old_size = rdas$size,
+                              new_size = rdas2$size,
+                              compress = rdas2$compress,
+                              row.names = row.names(rdas))[diff2, ]
+    } else sizes <- improve <- NULL
+    structure(list(rdas = rdas[problems, 1:3], sizes = sizes,
+                   improve = improve),
+              class = "check_package_compact_datasets")
+}
+
+print.check_package_compact_datasets <-
+function(x, ...)
+{
+    if(nrow(x$rdas)) {
+        writeLines("Warning: large data file(s) saved inefficiently:")
+        print(x$rdas)
+    }
+    if(!is.null(s <- x$sizes) && s[1] > 1e5 &&
+       ((s[2] < 0.9 * s[1]) || s[1] - s[2] > 5e5)) {
+        writeLines(c("",
+                     "Note: significantly better compression could be obtained",
+                     "      by using tools::resaveRdaFiles() on"))
+        print(x$improve)
+    }
     invisible(x)
 }
 
