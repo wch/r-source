@@ -3886,12 +3886,11 @@ function(x, ...)
         writeLines("Warning: large data file(s) saved inefficiently:")
         print(x$rdas)
     }
-    if(!is.null(s <- x$sizes) && s[1] > 1e5 &&
-       ((s[2] < 0.9 * s[1]) || s[1] - s[2] > 5e5)) {
+    if(!is.null(s <- x$sizes) && s[1] - s[2] > 1e5) { # save at least 100Kb
         writeLines(c("",
                      "Note: significantly better compression could be obtained",
-                     "      by using tools::resaveRdaFiles() on"))
-        print(x$improve)
+                     "      by using tools::resaveRdaFiles() or R CMD build --resave-data"))
+        if(nrow(x$improve)) print(x$improve)
     }
     invisible(x)
 }
