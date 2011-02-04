@@ -45,7 +45,7 @@
       The PDF, PostScript, and Quartz graphics devices record this fact.
       X11 (and Cairo) and Windows just assume that your screen conforms.
 
-      \item \code{system.file} gains a \code{mustWork} argument
+      \item \code{system.file()} gains a \code{mustWork} argument
       (suggestion of Bill Dunlap).
 
       \item \code{new.env(hash = TRUE)} is now the default.
@@ -141,7 +141,7 @@
       \item \code{`mostattributes<-`} now consults the \code{"dim"}
       attribute and not the \code{dim()} function, making it more useful
       for objects (such as data frames) from classes with methods for
-      \code{dim()}.  It also uses \code{attr<-()} in preferences to the
+      \code{dim()}.  It also uses \code{attr<-()} in preference to the
       generics \code{name<-()}, \code{dim<-()} and \code{dimnames<-()}.
       (Related to \PR{14469}.)
 
@@ -308,6 +308,10 @@
       package.  This helps when installing packages with static HTML
       pages for use on a webserver.  It will also allow future versions
       of \R to use different stylesheets for the packages they install.
+
+      \item A \samp{LazyDataCompression} field in the \file{DESCRIPTION}
+      file will be used to set the value for the
+      \option{--data-compress} of \command{R CMD INSTALL}. 
     }
   }
 

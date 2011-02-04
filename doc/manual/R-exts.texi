@@ -845,6 +845,15 @@ Package @pkg{tools} has a couple of functions to help with data images:
 @code{resaveRdaFiles} will re-save with a different type of compression,
 including choosing the best type for that particular image.
 
+Some packages using @samp{LazyData} will benefit from using a form of
+compression other than @command{gzip} in the installed lazy-loading
+database.  This can be selected by the @option{--data-compress} option
+to @command{R CMD INSTALL} or (for @R{} >= 2.13.0) by using the
+@samp{LazyDataCompression} field in the @file{DESCRIPTION} file.  Useful
+values are @code{bzip2}, @code{xz} and the default, @code{gzip}.  The
+only way to discover which is best is to try them all and look at the
+size of the @file{@var{pkgname}/data/Rdata.rdb} file.
+
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
 

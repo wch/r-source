@@ -832,6 +832,14 @@
 		    ## the package we have just installed is on the
 		    ## library path.'
 		    ## (We set .libPaths)
+                    lazycompress <- desc["LazyDataCompression"]
+                    if(!is.na(lazycompress))
+                        data_compress <- switch(lazycompress,
+                                                "none" = FALSE,
+                                                "gzip" = TRUE,
+                                                "bzip2" = 2,
+                                                "xz" = 3,
+                                                TRUE)  # defualt to gzip
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))
 		    if (inherits(res, "try-error"))
