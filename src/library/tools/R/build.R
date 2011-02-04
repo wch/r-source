@@ -172,7 +172,7 @@ get_exclude_patterns <- function()
             "  --install-args=       command-line args to be passed to INSTALL,",
             "                        separated by spaces",
             "  --resave-data=        re-save data files as compactly as possible",
-            '                        "no" (default), "yes", "gzip"',
+            '                        "no" (default), "best", "gzip"',
             "  --noresave-data",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
@@ -515,7 +515,7 @@ get_exclude_patterns <- function()
         } else if (substr(a, 1, 15) == "--install-args=") {
             INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
         } else if (a == "--resave-data") {
-            resave_data <- "yes"
+            resave_data <- "best"
         } else if (a == "--no-resave-data") {
             resave_data <- "no"
         } else if (substr(a, 1, 14) == "--resave-data=") {
@@ -696,7 +696,7 @@ get_exclude_patterns <- function()
         ## work on 'data' directory if present
         ddir <- file.path(pkgname, "data")
         if(file_test("-d", ddir) && resave_data != "no") {
-            if(resave_data == "yes") {
+            if(resave_data == "best") {
                 messageLog(Log, "re-saving data files")
                 resaveRdaFiles(ddir)
                 rdas <- checkRdaFiles(ddir)
