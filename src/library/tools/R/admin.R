@@ -850,7 +850,9 @@ resaveRdaFiles <- function(paths,
         compression_level <- switch(compress, "gzip" = 6, 9)
     for(p in paths) {
         env <- new.env(hash = TRUE) # probably small, need not be
-        load(p, envir = env)
+#        sink(tempfile()) ## suppress startup messages to stdout, for BARD
+        suppressPackageStartupMessages(load(p, envir = env))
+#        sink()
         if(compress == "auto") {
             f1 <- tempfile()
             save(file = f1, list = ls(env, all.names = TRUE), envir = env)

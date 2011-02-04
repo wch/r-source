@@ -3857,6 +3857,9 @@ function(pkgDir, thorough = FALSE)
     rdas <- checkRdaFiles(file.path(pkgDir, "data"))
     row.names(rdas) <- basename(row.names(rdas))
     problems <- with(rdas, (ASCII | compress == "none") & (size > 1e5))
+    if (sum(rdas$size) < 1e5 || # we don't report unless we get a 1e5 reduction
+        any(rdas$compress %in% c("bzip2", "xz"))) # assume already optimized
+        thorough <- FALSE
     if (thorough &&
         length(files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
                                    file.path(pkgDir, "data", "*.RData"))))) {
@@ -3882,15 +3885,32 @@ function(pkgDir, thorough = FALSE)
 print.check_package_compact_datasets <-
 function(x, ...)
 {
+    reformat <- function(x) {
+        xx <- paste(x, "b", sep = "")
+        ind1 <- (x >= 1024)
+        xx[ind1] <- sprintf("%.0fKb", x[ind1]/1024)
+        ind2 <- x >= 1024^2
+        xx[ind2] <- sprintf("%.1fMb", x[ind2]/(1024^2))
+        ind3 <- x >= 1024^3
+        xx[ind3] <- sprintf("%.1fGb", x[ind3]/1024^3)
+        xx
+    }
     if(nrow(x$rdas)) {
         writeLines("Warning: large data file(s) saved inefficiently:")
-        print(x$rdas)
+        rdas <- x$rdas
+        rdas$size <- reformat(rdas$size)
+        print(rdas)
     }
     if(!is.null(s <- x$sizes) && s[1] - s[2] > 1e5) { # save at least 100Kb
         writeLines(c("",
                      "Note: significantly better compression could be obtained",
                      "      by using tools::resaveRdaFiles() or R CMD build --resave-data"))
-        if(nrow(x$improve)) print(x$improve)
+        if(nrow(x$improve)) {
+            improve <- x$improve
+            improve$old_size <- reformat(improve$old_size)
+            improve$new_size <- reformat(improve$new_size)
+            print(improve)
+        }
     }
     invisible(x)
 }
