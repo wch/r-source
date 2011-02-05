@@ -380,7 +380,7 @@ can print help files by @code{help(fn_name, help_type="postscript")} (or
 
 Yes: use @code{R CMD BATCH --help} or @code{?BATCH} for full details.
 
-You can set also up a batch file using @command{Rterm.exe}.  A sample
+You can also set up a batch file using @command{Rterm.exe}.  A sample
 batch file might contain (as one line)
 
 @example
