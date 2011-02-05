@@ -469,7 +469,7 @@ get_exclude_patterns <- function()
 
     resave_data_rda <- function(pkgname, resave_data)
     {
-        if (resave_data == "no") return
+        if (resave_data == "no") return()
         ddir <- file.path(pkgname, "data")
         if(resave_data == "best") {
             messageLog(Log, "re-saving data files")
