@@ -231,6 +231,10 @@
       \item plot(<dendrogram>, .., nodePar=*) now obeys an optional
       \code{xpd} specification (allowing clipping to be turned off
       completely).
+
+      \item nls(*, algorithm="port") now shares more code with nlminb(),
+      and is more consistent with the other algorithms in its return
+      value.
     }
   }
 

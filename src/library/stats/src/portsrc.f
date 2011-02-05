@@ -161,6 +161,8 @@ C
      3        NGCALL, NGCOV, QTR, RDREQ, REGD, RESTOR, RLIMIT, RMAT,
      4        TOOBIG, VNEED, Y
 C
+      PARAMETER (HALF=0.5D+0, ZERO=0.D+0)
+C
 C  ***  IV SUBSCRIPT VALUES  ***
 C
       PARAMETER (CNVCOD=55, COVMAT=26, COVREQ=15, DTYPE=16, FDH=74,
@@ -173,7 +175,6 @@ C
 C  ***  V SUBSCRIPT VALUES  ***
 C
       PARAMETER (DINIT=38, DTINIT=39, D0INIT=40, F=10, RLIMIT=46)
-      PARAMETER (HALF=0.5D+0, ZERO=0.D+0)
 C
 C+++++++++++++++++++++++++++++++  BODY  ++++++++++++++++++++++++++++++++
 C
@@ -3609,6 +3610,7 @@ C
  999  RETURN
 C  ***  LAST LINE OF DPARCK FOLLOWS  ***
       END
+
       SUBROUTINE DQ7APL(NN, N, P, J, R, IERR)
 C     *****PARAMETERS.
       INTEGER NN, N, P, IERR
@@ -3696,6 +3698,7 @@ C
  999  RETURN
 C  ***  LAST LINE OF DQ7APL FOLLOWS  ***
       END
+
       SUBROUTINE DV7DFL(ALG, LV, V)
 C
 C  ***  SUPPLY ***SOL (VERSION 2.3) DEFAULT VALUES TO V  ***
@@ -3715,7 +3718,7 @@ C
 C  ***  SUBSCRIPTS FOR V  ***
 C
       INTEGER AFCTOL, BIAS, COSMIN, DECFAC, DELTA0, DFAC, DINIT, DLTFDC,
-     1        DLTFDJ, DTINIT, D0INIT, EPSLON, ETA0, FUZZ, HUBERC,
+     1        DLTFDJ, DTINIT, D0INIT, EPSLON, ETA0, FUZZ,
      2        INCFAC, LMAX0, LMAXS, PHMNFC, PHMXFC, RDFCMN, RDFCMX,
      3        RFCTOL, RLIMIT, RSPTOL, SCTOL, SIGMIN, TUNER1, TUNER2,
      4        TUNER3, TUNER4, TUNER5, XCTOL, XFTOL
@@ -3726,7 +3729,7 @@ C  ***  V SUBSCRIPT VALUES  ***
 C
       PARAMETER (AFCTOL=31, BIAS=43, COSMIN=47, DECFAC=22, DELTA0=44,
      1           DFAC=41, DINIT=38, DLTFDC=42, DLTFDJ=43, DTINIT=39,
-     2           D0INIT=40, EPSLON=19, ETA0=42, FUZZ=45, HUBERC=48,
+     2           D0INIT=40, EPSLON=19, ETA0=42, FUZZ=45,
      3           INCFAC=23, LMAX0=35, LMAXS=36, PHMNFC=20, PHMXFC=21,
      4           RDFCMN=24, RDFCMX=25, RFCTOL=32, RLIMIT=46, RSPTOL=49,
      5           SCTOL=37, SIGMIN=50, TUNER1=26, TUNER2=27, TUNER3=28,
@@ -3735,8 +3738,12 @@ C
 C-------------------------------  BODY  --------------------------------
 C
       MACHEP = DR7MDC(3)
-      V(AFCTOL) = 1.D-20
-      IF (MACHEP .GT. 1.D-10) V(AFCTOL) = MACHEP**2
+      if (MACHEP .GT. 1.D-10) then
+         V(AFCTOL) = MACHEP**2
+      else
+         V(AFCTOL) = 1.D-20
+      endif
+
       V(DECFAC) = 0.5D+0
       SQTEPS = DR7MDC(4)
       V(DFAC) = 0.6D+0
@@ -3761,31 +3768,31 @@ C
       V(XCTOL) = SQTEPS
       V(XFTOL) = 1.D+2 * MACHEP
 C
-      IF (ALG .GE. 2) GO TO 10
+      if (ALG .eq. 1) then
 C
-C  ***  REGRESSION  VALUES
+C  ***  REGRESSION  VALUES (nls)
 C
-      V(COSMIN) = DMAX1(1.D-6, 1.D+2 * MACHEP)
-      V(DINIT) = 0.D+0
-      V(DELTA0) = SQTEPS
-      V(DLTFDC) = MEPCRT
-      V(DLTFDJ) = SQTEPS
-      V(FUZZ) = 1.5D+0
-      V(HUBERC) = 0.7D+0
-      V(RLIMIT) = DR7MDC(5)
-      V(RSPTOL) = 1.D-3
-      V(SIGMIN) = 1.D-4
-      GO TO 999
+         V(COSMIN) = DMAX1(1.D-6, 1.D+2 * MACHEP)
+         V(DINIT) = 0.D+0
+         V(DELTA0) = SQTEPS
+         V(DLTFDC) = MEPCRT
+         V(DLTFDJ) = SQTEPS
+         V(FUZZ) = 1.5D+0
+         V(RLIMIT) = DR7MDC(5)
+         V(RSPTOL) = 1.D-3
+         V(SIGMIN) = 1.D-4
+      else
 C
-C  ***  GENERAL OPTIMIZATION VALUES
+C  ***  GENERAL OPTIMIZATION VALUES (nlminb)
 C
- 10   V(BIAS) = 0.8D+0
-      V(DINIT) = -1.0D+0
-      V(ETA0) = 1.0D+3 * MACHEP
+         V(BIAS) = 0.8D+0
+         V(DINIT) = -1.0D+0
+         V(ETA0) = 1.0D+3 * MACHEP
 C
- 999  RETURN
+      end if
 C  ***  LAST CARD OF DV7DFL FOLLOWS  ***
       END
+
       DOUBLE PRECISION FUNCTION DR7MDC(K)
 C
 C  ***  RETURN MACHINE DEPENDENT CONSTANTS USED BY NL2SOL  ***

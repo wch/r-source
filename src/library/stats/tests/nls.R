@@ -21,7 +21,7 @@ library(stats)
 options(digits=5) # to avoid trivial printed differences
 options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 options(show.nls.convergence=FALSE) # avoid non-diffable output
-postscript("nls-test.ps")
+pdf("nls-test.pdf")
 
 ## selfStart.default() w/ no parameters:
 logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
@@ -143,7 +143,8 @@ pfm1 <- profile(fm1)
 pfm3 <- profile(fm3)
 for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tol=1e-5))
 pfm5 <- profile(fm5)
-for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
+for(m in names(pfm1))
+    stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
 (c1 <- confint(fm1))
 (c4 <- confint(fm4, 1:2))
 stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
@@ -252,9 +253,11 @@ y <- b0 + b1*x + rnorm(200, sd=0.05)
 # next failed in 2.8.1
 fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=1),
            algorithm ="port", upper = c(100, 100, 100))
-# next did not fail in proposed fix.
-fit <- try(nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
-               algorithm ="port", upper = c(100, 100, 100)))
-stopifnot(inherits(fit, "try-error"))
+# next did not "fail" in proposed fix:
+fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
+           algorithm ="port", upper = c(100, 100, 100),
+           control = list(warnOnly=TRUE))# warning ..
+with(fit$convInfo, ## start par. violates constraints
+     stopifnot(isConv == FALSE, stopCode == 300))
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

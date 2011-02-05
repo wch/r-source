@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-02-02 r54207)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -38,7 +39,7 @@ Type 'q()' to quit R.
 > options(digits=5) # to avoid trivial printed differences
 > options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 > options(show.nls.convergence=FALSE) # avoid non-diffable output
-> postscript("nls-test.ps")
+> pdf("nls-test.pdf")
 > 
 > ## selfStart.default() w/ no parameters:
 > logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
@@ -320,7 +321,8 @@ Algorithm "port", convergence message: relative convergence (4)
 > pfm3 <- profile(fm3)
 > for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tol=1e-5))
 > pfm5 <- profile(fm5)
-> for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
+> for(m in names(pfm1))
++     stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
 > (c1 <- confint(fm1))
 Waiting for profiling to be done...
         2.5%  97.5%
@@ -645,13 +647,16 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 > # next failed in 2.8.1
 > fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=1),
 +            algorithm ="port", upper = c(100, 100, 100))
-> # next did not fail in proposed fix.
-> fit <- try(nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
-+                algorithm ="port", upper = c(100, 100, 100)))
-Error in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  : 
+> # next did not "fail" in proposed fix:
+> fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
++            algorithm ="port", upper = c(100, 100, 100),
++            control = list(warnOnly=TRUE))# warning ..
+Warning message:
+In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
   Convergence failure: initial par violates constraints
-> stopifnot(inherits(fit, "try-error"))
+> with(fit$convInfo, ## start par. violates constraints
++      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.043 0.028 4.073 0 0 
+Time elapsed:  2.96 0.03 2.994 0 0 
 > 

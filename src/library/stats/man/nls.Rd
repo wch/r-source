@@ -115,15 +115,17 @@ nls(formula, data, start, control, algorithm,
     \code{"terms"} attribute of the model frame.}
   \item{model}{if \code{model = TRUE}, the model frame.}
   \item{weights}{if \code{weights} is supplied, the weights.}
-  \item{convInfo}{when \code{algorithm} is not "port", a list with
-    convergence information.}
+  \item{convInfo}{a list with convergence information.}
   \item{control}{the control \code{list} used, see the \code{control}
     argument.}
   \item{convergence, message}{for an \code{algorithm = "port"} fit only,
     a convergence code (\code{0} for convergence) and message.
-  }
 
-  \bold{Note} that setting \code{warnOnly = TRUE} in the \code{control}
+    To use these is \emph{deprecated}, as they are available from
+    \code{convInfo} now.
+  }
+}
+\note{Setting \code{warnOnly = TRUE} in the \code{control}
   argument (see \code{\link{nls.control}}) returns a non-converged
   object (since \R version 2.5.0) which might be useful for further
   convergence analysis, \emph{but \bold{not} for inference}.

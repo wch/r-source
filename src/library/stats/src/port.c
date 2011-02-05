@@ -112,8 +112,9 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
 
     /* Initialized data */
 
-    static int miniv[] = {0,82,59,103,103};
-    static int minv[] = {0,98,71,101,85};
+    // alg[orithm] :          1   2   3    4
+    static int miniv[] = {0, 82, 59, 103, 103};
+    static int minv [] = {0, 98, 71, 101, 85};
 
     int mv, miv, alg1;
 
@@ -141,6 +142,7 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
     }
     alg1 = (alg - 1) % 2 + 1;
     F77_CALL(dv7dfl)(&alg1, &lv, &v[1]);
+    //       ------
     iv[1] = 12;
     if (alg > 2) iv[DRADPR] = 1;
     iv[IVNEED] = 0;
@@ -157,33 +159,34 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
     iv[VNEED] = 0;
     iv[X0PRT] = 1;
 
-    if (alg1 >= 2) {		/*  GENERAL OPTIMIZATION VALUES */
+    if (alg1 >= 2) {		/*  GENERAL OPTIMIZATION values: nlminb() */
 	iv[DTYPE] = 0;
 	iv[INITS] = 1;
 	iv[NFCOV] = 0;
 	iv[NGCOV] = 0;
 	iv[NVDFLT] = 25;
 	iv[PARSAV] = (alg > 2) ? 61 : 47;
-	v[AFCTOL] = 0.0;		/* Skip |f(x)| test */
-	return;
-    }
-				/*  REGRESSION  VALUES */
-    iv[COVPRT] = 3;
-    iv[COVREQ] = 1;
-    iv[DTYPE] = 1;
-    iv[HC] = 0;
-    iv[IERR] = 0;
-    iv[INITH] = 0;
-    iv[IPIVOT] = 0;
-    iv[NVDFLT] = 32;
-    iv[VSAVE] = (alg > 2) ? 61 : 58;
-    iv[PARSAV] = iv[60] + 9;
-    iv[QRTYP] = 1;
-    iv[RDREQ] = 3;
-    iv[RMAT] = 0;
-    return;
 
+	v[AFCTOL] = 0.0; /* since R 2.12.0:  Skip |f(x)| test */
+    }
+    else { 			/* REGRESSION  values: nls() */
+	iv[COVPRT] = 3;
+	iv[COVREQ] = 1;
+	iv[DTYPE] = 1;
+	iv[HC] = 0;
+	iv[IERR] = 0;
+	iv[INITH] = 0;
+	iv[IPIVOT] = 0;
+	iv[NVDFLT] = 32;
+	iv[VSAVE] = (alg > 2) ? 61 : 58;
+	iv[PARSAV] = iv[60] + 9;
+	iv[QRTYP] = 1;
+	iv[RDREQ] = 3;
+	iv[RMAT] = 0;
+    }
+    return;
 }
+
 
 /* divset.... supply default values for elements of the iv and v arrays */
 void F77_NAME(divset)(const int *Alg, int iv[], const int *Liv,
@@ -298,25 +301,6 @@ int F77_NAME(stopx)(void)
 {
     return 0;			/* interrupts are caught elsewhere */
 }
-
-#if OLD
-/**
- * return integer machine-dependent constants
- *
- * @param k integer indicating the desired unit number
- *
- * @return standard output unit number for k = 1, alternate output
- *unit number for k = 2, input unit number for k = 3, 0 for k = 0.
- */
-int Rf_i7mdcn(int k) {
-    static int mdperm[] = {0,2,4,1};
-    if (k <= 0 || k > 3)
-	error("Rf_i7mdcn: k = %d must be 1, 2, or 3", k);
-    return Rf_i1mach(mdperm[k]);
-}
-
-int F77_NAME(i7mdcn)(const int *k) {return Rf_i7mdcn(*k);}
-#endif
 
 static
 double* check_gv(SEXP gr, SEXP hs, SEXP rho, int n, double *gv, double *hv)
