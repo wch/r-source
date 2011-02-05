@@ -1115,7 +1115,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 if (length(odd)) {
                     warnLog()
                     msg <- c("Files not of a type allowed in a 'data' directory:\n",
-                             .pretty_format(odd), "\n",
+                             paste(.pretty_format(odd), "\n", sep = ""),
                              "Please use e.g. 'inst/extdata' for non-R data files\n")
                     printLog(Log, msg)
                 } else resultLog(Log, "OK")
