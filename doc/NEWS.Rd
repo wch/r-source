@@ -387,6 +387,10 @@
 
       \item Added \code{PROTECT} calls to some constructed expressions
       used in C level \code{eval} calls.
+      
+      \item \code{Sweave()} with \code{keep.source=TRUE} could
+      duplicate some lines and omit comments. (Reported by John
+      Maindonald and others.)
     }
   }
 }

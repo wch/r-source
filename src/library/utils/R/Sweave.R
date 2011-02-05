@@ -96,15 +96,29 @@ Sweave <- function(file, driver=RweaveLatex(),
         }
         else{
             if(mode=="code" && length(grep(syntax$coderef, line))){
+                # We have a reference to a named chunk.
+                # Wrap it in special #line directives so the
+                # source ref code can see it start and end;
+                # the stop() afterwards is only to give the parser
+                # a place to hang the terminal marker,
+                # it should never be evaluated.
                 chunkref <- sub(syntax$coderef, "\\1", line)
                 if(!(chunkref %in% names(namedchunks)))
                     warning(gettextf("reference to unknown chunk '%s'",
                                      chunkref), domain = NA)
-                line <- c(namedchunks[[chunkref]],
+                namedchunk <- namedchunks[[chunkref]]
+                # Record the last line of the chunk in the terminator
+                # so terminal comments can be echoed
+                namedlines <- attr(namedchunk, "srclines")
+                if (is.null(namedlines)) namedlines <- 0L
+                line <- c(namedchunk,
+                	  paste("#line ", namedlines[length(namedlines)],
+                	        ' "#pop named chunk#"', sep=""),
+                	  'stop("Internal Sweave error")',
                           paste("#line ", linenum+1L, ' "', file, '"', sep=""))
                 #FIXME:  this should really be done through a more general
                 #        mechanism for adding non-executable info to the parse
-                line[1L] <- sub('"$', paste("#from line#", linenum, '#"', sep=""), line[1L])
+                line[1L] <- sub('"$', paste("#from line#", linenum, '#starts at#', namedlines[1], '#"', sep=""), line[1L])
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
@@ -458,7 +472,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 
           RweaveTryStop(chunkexps, options)
 
-          # A couple of functions used below...
+          # Some worker functions used below...
 
 	  putSinput <- function(dce){
 	      if(!openSinput){
@@ -490,8 +504,19 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	      }
 	      lines
 	  }
+	  
+	  echoComments <- function(showto) {
+	      if(options$echo && !is.na(lastshown)
+	         && lastshown < showto) {
+	  	  dce <- trySrcLines(prevsrcfile, lastshown+1L, showto, NULL)
+		  leading <<- length(dce) # These are all trailing comments
+		  putSinput(dce)
+		  lastshown <<- showto
+	      }	  
+	  }
 
-	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#"
+	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#"
+	  popregexp   <- "#pop named chunk#"
 
           openSinput <- FALSE
           openSchunk <- FALSE
@@ -502,20 +527,43 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  thisline <- 0L          # current output line
 	  lastshown <- srcline    # last line already displayed;
 	  			  # at this point it's the <<>>= line
+	  refline <- NA           # line containing the current named chunk ref
 	  leading <- 1L		  # How many lines get the user prompt
+	  # refline		  # Line number from "from line" filename
+	  srcrefstack <- NULL     # Stack of named chunk contexts
 
 	  srcrefs <- attr(chunkexps, "srcref")
 
           for(nce in seq_along(chunkexps)) {
  		ce <- chunkexps[[nce]]
                 if (options$keep.source && nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
+                    prevsrcfile <- srcfile
 		    srcfile <- attr(srcref, "srcfile")
 		    showfrom <- srcref[1L]
-		    showto <- srcref[3L]
-		    refline <- srcfile$refline
-                    if (is.null(refline)) {
+		    showto <- srcref[3L]		    
+		    if (grepl(popregexp, srcfile$filename)) {
+		        # echo any trailing comments in the chunk
+		        echoComments(showto)
+		        
+		    	if (length(srcrefstack)) {
+		    	    cntxt <- srcrefstack[[1L]]
+		    	    srcrefstack <- srcrefstack[-1L]
+		    	    lastshown <- refline
+		    	    refline <- cntxt[[1L]]
+		    	    srcfile <- cntxt[[2L]]
+		    	}
+		    	next # Skip the sentinel
+		    }
+
+                    if (is.null(srcfile$refline)) {
                     	if (grepl(chunkregexp, srcfile$filename)) {
+                    	    cntxt <- list(refline, prevsrcfile)
+                    	    srcrefstack <- c(list(cntxt), srcrefstack)
                     	    refline <- as.integer(sub(chunkregexp, "\\2", srcfile$filename))
+                    	    # Echo any remaining comments if necessary
+                    	    echoComments(refline - 1L)
+                    	    if (options$expand) 
+                    	    	lastshown <- as.integer(sub(chunkregexp, "\\3", srcfile$filename))
                     	    srcfile$filename <- sub(chunkregexp, "\\1", srcfile$filename)
                     	} else
                     	    refline <- NA
@@ -524,18 +572,15 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     if (!options$expand && !is.na(refline))
                     	showfrom <- showto <- refline
 
-		    if (!is.na(refline) || is.na(lastshown)) {
-			# We expanded a named chunk for this expression or the previous
-			# one
+		    if (is.na(lastshown)) {
+			# We know the first line has not been shown
 			dce <- trySrcLines(srcfile, showfrom, showto, ce)
 			leading <- 1L
-			lastshown <- if(!is.na(refline)) NA else showto
 		    } else {
 			dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
 			leading <- showfrom-lastshown
-			lastshown <- showto
 		    }
-                    srcline <- showto
+		    lastshown <- srcline <- showto
                     while (length(dce) && length(grep("^[[:blank:]]*$", dce[1L]))) {
 	    		dce <- dce[-1L]
 	    		leading <- leading - 1L
@@ -614,13 +659,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
             }
 
-	  if(options$echo && options$keep.source
-	     && !is.na(lastshown)
-	     && lastshown < (showto <- srclines[length(srclines)])) {
-	      dce <- trySrcLines(srcfile, lastshown+1L, showto, NULL)
-	      leading <- length(dce) # These are all trailing comments
-	      putSinput(dce)
-	  }
+	  # Echo remaining comments if necessary
+	  if(options$keep.source)
+	      echoComments(srclines[length(srclines)])
 
           if(openSinput){
               cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
