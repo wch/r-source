@@ -574,7 +574,7 @@ get_exclude_patterns <- function()
         } else if (WINDOWS && a == "--auto-zip") {
             warning("use of '--auto-zip' is defunct")
         } else if (a == "--use-zip-data") {
-            error("use of '--use-zip-data' is defunct")
+            warning("use of '--use-zip-data' is defunct")
         } else if (a == "--no-docs") {
             warning("use of '--no-docs' is deprecated: use '--install-args' instead")
             INSTALL_opts <- c(INSTALL_opts, "--no-docs")
