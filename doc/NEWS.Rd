@@ -255,9 +255,12 @@
       \command{R CMD INSTALL} for \option{--build} (but not when
       installing to rebuild vignettes).
 
-      There is another new option, \option{--resave-data} to call
+      There is another new option, \option{--resave-data}, to call
       \code{tools::resaveRdaFiles()} on the \file{data} directory.  This
       is likely to become the default.
+
+      It now adds a \file{datalist} file for \file{data} directories of
+      more than 1Mb.
 
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
@@ -269,6 +272,9 @@
       A more complete check (including of the type of compression) can be
       switched on by setting environment variable
       \env{_R_CHECK_COMPACT_DATA2_}.
+
+      The types of files in the \code{data} directory are now checked,
+      as packages as \emph{still} misusing it for non-\R data files.
     }
   }
 

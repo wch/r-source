@@ -518,6 +518,25 @@ get_exclude_patterns <- function()
             }
         }
     }
+
+    add_datalist <- function(pkgname) {
+        dlist <- file.path(pkgname, "data", "datalist")
+        if (file.exists(dlist)) return()
+        fi <- file.info(Sys.glob(file.path(pkgname, "data", "*")))
+        size <- sum(fi$size)
+        if(size <= 1024^2) return()
+        z <- list_data_in_pkg(pkgname)
+        if(!length(z)) return()
+        con <- file(dlist, "w")
+        for (nm in names(z)) {
+            zz <- z[[nm]]
+            if (length(zz) == 1L && zz == nm) writeLines(nm, con)
+            else cat(nm, ": ", paste(zz, collapse = " "), "\n",
+                     sep = "", file = con)
+        }
+        close(con)
+    }
+
     force <- FALSE
     vignettes <- TRUE
     binary <- FALSE
@@ -745,8 +764,10 @@ get_exclude_patterns <- function()
                recursive = TRUE)
 
         ## work on 'data' directory if present
-        if(file_test("-d", file.path(pkgname, "data")))
+        if(file_test("-d", file.path(pkgname, "data"))) {
+            add_datalist(pkgname)
             resave_data_rda(pkgname, resave_data)
+        }
 
         ## Finalize
         if (binary) {

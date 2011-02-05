@@ -1105,7 +1105,24 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
         } ## FIXME, what if no install?
 
-        ## Check for non-ASCII characters in data
+        ## Check contents of 'data'
+        if (!is_base_pkg && dir.exists("data")) {
+            checkingLog(Log, "contents of 'data' directory")
+            fi <- list.files("data")
+            if (!any(grepl("\\.[Rr]$", fi))) { # code files can do anything
+                dataFiles <- basename(list_files_with_type("data", "data"))
+                odd <- fi[! fi %in% c(dataFiles, "datalist")]
+                if (length(odd)) {
+                    warnLog()
+                    msg <- c("Files not of a type allowed in a 'data' directory:\n",
+                             .pretty_format(odd), "\n",
+                             "Please use e.g. 'inst/extdata' for non-R data files\n")
+                    printLog(Log, msg)
+                } else resultLog(Log, "OK")
+            }
+        }
+
+        ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
             out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
@@ -1118,7 +1135,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
         }
 
-        ## Check for ASCII and uncompressed saves in data
+        ## Check for ASCII and uncompressed/unoptimized saves in 'data'
         if (!is_base_pkg && R_check_compact_data && dir.exists("data")) {
             checkingLog(Log, "data for ASCII and uncompressed saves")
             out <- R_runR(paste("tools:::.check_package_compact_datasets('.',",

@@ -3912,7 +3912,8 @@ function(x, ...)
         print(rdas)
     }
     if(!is.null(x$msg)) writeLines(x$msg)
-    if(!is.null(s <- x$sizes) && s[1] - s[2] > 1e5) { # save at least 100Kb
+    if(!is.null(s <- x$sizes) && s[1L] - s[2L] > 1e5  # save at least 100Kb
+       && s[2L]/s[1L] < 0.9) { # and at least 10%
         writeLines(c("",
                      "Note: significantly better compression could be obtained",
                      "      by using tools::resaveRdaFiles() or R CMD build --resave-data"))
