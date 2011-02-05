@@ -1119,7 +1119,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              "Please use e.g. 'inst/extdata' for non-R data files\n")
                     printLog(Log, msg)
                 } else resultLog(Log, "OK")
-            }
+            } else resultLog(Log, "OK")
         }
 
         ## Check for non-ASCII characters in 'data'
