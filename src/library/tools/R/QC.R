@@ -3854,9 +3854,19 @@ function(x, ...)
 .check_package_compact_datasets <-
 function(pkgDir, thorough = FALSE)
 {
+    msg <- NULL
     rdas <- checkRdaFiles(file.path(pkgDir, "data"))
     row.names(rdas) <- basename(row.names(rdas))
     problems <- with(rdas, (ASCII | compress == "none") & (size > 1e5))
+    if (any(rdas$compress %in% c("bzip2", "xz"))) {
+        OK <- FALSE
+        Rdeps <- .split_description(.read_description(file.path(pkgDir, "DESCRIPTION")))$Rdepends2
+        for(dep in Rdeps) {
+            if(dep$op != '>=') next
+            if(dep$version >= package_version("2.10")) {OK <- TRUE; break;}
+        }
+        if(!OK) msg <- "Warning: package needs dependence on R (>= 2.10)"
+    }
     if (sum(rdas$size) < 1e5 || # we don't report unless we get a 1e5 reduction
         any(rdas$compress %in% c("bzip2", "xz"))) # assume already optimized
         thorough <- FALSE
@@ -3877,8 +3887,8 @@ function(pkgDir, thorough = FALSE)
                               compress = rdas2$compress,
                               row.names = row.names(rdas))[diff2, ]
     } else sizes <- improve <- NULL
-    structure(list(rdas = rdas[problems, 1:3], sizes = sizes,
-                   improve = improve),
+    structure(list(rdas = rdas[problems, 1:3], msg = msg,
+                   sizes = sizes, improve = improve),
               class = "check_package_compact_datasets")
 }
 
@@ -3901,6 +3911,7 @@ function(x, ...)
         rdas$size <- reformat(rdas$size)
         print(rdas)
     }
+    if(!is.null(x$msg)) writeLines(x$msg)
     if(!is.null(s <- x$sizes) && s[1] - s[2] > 1e5) { # save at least 100Kb
         writeLines(c("",
                      "Note: significantly better compression could be obtained",

@@ -1768,11 +1768,11 @@ should be removed and the build re-run.
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
 size.  It can take values @code{"no"}, @code{"gzip"} and @code{"best"}
-(equivalent to calling without a value).  Value @code{"best"} calls
-@code{tools::resaveRdaFiles} on the @file{data} directory, and warns
-about the need for a dependence on @code{R (>= 2.10)} is @command{bzip2}
-or @command{xz} compression is selected for any of the files.  If this
-is thought undesirable, @option{--resave-data="gzip"} will re-save with
+(equivalent to giving it without a value).  Value @code{"best"} calls
+@code{tools::resaveRdaFiles} on the @file{data} directory, and adds a
+dependence on @code{R (>= 2.10)} if @command{bzip2} or @command{xz}
+compression is selected for any of the files.  If this is thought
+undesirable, @option{--resave-data="gzip"} will re-save with
 @command{gzip} compression any @acronym{ASCII} or uncompressed saves,
 and any saves from before @R{} 1.4.0.
 

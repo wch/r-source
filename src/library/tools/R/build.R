@@ -700,8 +700,23 @@ get_exclude_patterns <- function()
                 messageLog(Log, "re-saving data files")
                 resaveRdaFiles(ddir)
                 rdas <- checkRdaFiles(ddir)
-                if(any(rdas$compress %in% c("bzip2", "xz")))
-                    printLog(Log, "  NB: this package now needs to depend on R (>= 2.10)")
+                if(any(rdas$compress %in% c("bzip2", "xz"))) {
+                    OK <- FALSE
+                    Rdeps <- .split_description(.read_description(file.path(pkgname, "DESCRIPTION")))$Rdepends2
+                    for(dep in Rdeps) {
+                        if(dep$op != '>=') next
+                        if(dep$version >= package_version("2.10")) {OK <- TRUE; break;}
+                    }
+                    if(!OK) {
+                        ## This appends a Depends: line.
+                        ## That is fine for R >= 2.7.0,  but earlier
+                        ## should be the first dependence.
+                        con <- file(file.path(pkgname, "DESCRIPTION"), "a")
+                        writeLines("Depends: R (>= 2.10)", con)
+                        close (con)
+                        printLog(Log, "  NB: this package now depends on R (>= 2.10)\n")
+                    }
+                }
             } else {
                 rdas <- checkRdaFiles(ddir)
                 if(nrow(rdas)) {
