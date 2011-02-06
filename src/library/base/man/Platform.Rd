@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -45,7 +45,7 @@
     character string, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.  This is relevant when it is
     necessary to know the order to read/write bytes of e.g. an integer or
-    double from/to a connection: see \code{\link{readBin}}. 
+    double from/to a \link{connection}: see \code{\link{readBin}}. 
   }
   \item{pkgType}{
     character string, the preferred setting for

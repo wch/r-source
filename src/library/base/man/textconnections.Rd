@@ -1,6 +1,6 @@
 % File src/library/base/man/textconnections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{textConnection}
@@ -17,7 +17,7 @@ textConnection(object, open = "r", local = FALSE,
 textConnectionValue(con)
 }
 \arguments{
-  \item{object}{character.  A description of the connection. 
+  \item{object}{character.  A description of the \link{connection}. 
     For an input this is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
     output, or \code{NULL} (for none).

@@ -1,6 +1,6 @@
 % File src/library/utils/man/write.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write.table}
@@ -11,7 +11,7 @@
 \description{
   \code{write.table} prints its required argument \code{x} (after
   converting it to a data frame if it is not one nor a matrix) to
-  a file or connection.
+  a file or \link{connection}.
 }
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
@@ -25,7 +25,7 @@ write.csv2(\dots)
 \arguments{
   \item{x}{the object to be written, preferably a matrix or data frame.
     If not, it is attempted to coerce \code{x} to a data frame.}
-  \item{file}{either a character string naming a file or a connection
+  \item{file}{either a character string naming a file or a \link{connection}
     open for writing.  \code{""} indicates output to the console.}
   \item{append}{logical. Only relevant if \code{file} is a character
     string.  If \code{TRUE}, the output is appended to the

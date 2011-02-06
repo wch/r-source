@@ -1,6 +1,6 @@
 % File src/library/utils/man/prompt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{prompt}
@@ -22,7 +22,7 @@ prompt(object, filename = NULL, name = NULL, \dots)
 \arguments{
   \item{object}{an \R object, typically a function for the default
     method.  Can be \code{\link{missing}} when \code{name} is specified.}
-  \item{filename}{usually, a connection or a character string giving the
+  \item{filename}{usually, a \link{connection} or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}

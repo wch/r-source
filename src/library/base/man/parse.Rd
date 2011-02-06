@@ -1,6 +1,6 @@
 % File src/library/base/man/parse.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse}
@@ -15,7 +15,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
       encoding = "unknown")
 }
 \arguments{
-  \item{file}{a connection, or a character string giving the name of a
+  \item{file}{a \link{connection}, or a character string giving the name of a
     file or a URL to read the expressions from.
     If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
     then input is taken from the console.}

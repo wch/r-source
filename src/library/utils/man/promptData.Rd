@@ -14,7 +14,7 @@ promptData(object, filename = NULL, name = NULL)
 }
 \arguments{
   \item{object}{an \R object to be documented as a data set.}
-  \item{filename}{usually, a connection or a character string giving the
+  \item{filename}{usually, a \link{connection} or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}

@@ -62,8 +62,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
   for more details).
 }
-\note{
 #ifdef unix
+\note{
   Profiling is not available on all platforms.  By default,
   support for profiling is compiled in if possible -- configure \R with
   \option{--disable-R-profiling} to change this.
@@ -71,8 +71,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   As \R profiling uses the same mechanisms as C profiling, the two
   cannot be used together, so do not use \code{Rprof} in an executable
   built for C-level profiling.
-#endif
 }
+#endif
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
   \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory

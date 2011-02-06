@@ -22,7 +22,7 @@ isSeekable(con)
 truncate(con, \dots)
 }
 \arguments{
-  \item{con}{a connection.}
+  \item{con}{a \link{connection}.}
   \item{where}{numeric.  A file position (relative to the origin
     specified by \code{origin}), or \code{NA}.}
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},

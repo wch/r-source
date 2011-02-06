@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.DIF.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.DIF}
@@ -22,7 +22,7 @@ read.DIF(file, header = FALSE,
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from,
-    or a connection, or a complete URL.
+    or a \link{connection}, or a complete URL.
 
     The name \code{"clipboard"} may also be used on Windows, in which
     case \code{read.DIF("clipboard")} will look for a DIF format entry

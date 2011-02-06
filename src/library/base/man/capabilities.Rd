@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -60,7 +60,7 @@ capabilities(what = NULL)
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}
-    \item{fifo}{are FIFO connections supported?}
+    \item{fifo}{are FIFO \link{connections} supported?}
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix

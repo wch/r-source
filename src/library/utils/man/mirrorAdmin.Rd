@@ -1,6 +1,6 @@
 % File src/library/utils/man/mirrorAdmin.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mirrorAdmin}
@@ -19,7 +19,7 @@ checkCRAN(method)
 }
 \arguments{
   \item{mirrors}{A data frame, by default the CRAN list of mirrors is used.}
-  \item{file}{A connection object or a character string.}
+  \item{file}{A \link{connection} or a character string.}
   \item{head}{Name of optional header file.}
   \item{foot}{Name of optional footer file.}
   \item{method}{Download method, see \code{download.file}.}

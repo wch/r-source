@@ -19,7 +19,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.  Alternatively, a
-    connection that can be used for binary reads.}
+    \link{connection} that can be used for binary reads.}
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}

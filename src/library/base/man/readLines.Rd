@@ -1,6 +1,6 @@
 % File src/library/base/man/readLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readLines}
@@ -14,7 +14,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
           encoding = "unknown")
 }
 \arguments{
-  \item{con}{a connection object or a character string.}
+  \item{con}{a \link{connection} object or a character string.}
   \item{n}{integer.  The (maximal) number of lines to
     read.  Negative values indicate that one should read up to the end of
     input on the connection.}

@@ -1,6 +1,6 @@
 % File src/library/base/man/pushBack.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pushBack}
@@ -8,7 +8,7 @@
 \alias{pushBackLength}
 \title{Push Text Back on to a Connection}
 \description{
-  Functions to push back text lines onto a connection, and to enquire
+  Functions to push back text lines onto a \link{connection}, and to enquire
   how many lines are currently pushed back.
 }
 \usage{
@@ -17,7 +17,7 @@ pushBackLength(connection)
 }
 \arguments{
   \item{data}{a character vector.}
-  \item{connection}{A connection.}
+  \item{connection}{A \link{connection}.}
   \item{newLine}{logical. If true, a newline is appended to each string
     pushed back.}
 }

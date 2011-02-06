@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -15,7 +15,7 @@ sink(file = NULL, append = FALSE, type = c("output", "message"),
 sink.number(type = c("output", "message"))
 }
 \arguments{
-  \item{file}{a writable connection or a character string naming the
+  \item{file}{a writable \link{connection} or a character string naming the
     file to write to, or \code{NULL} to stop sink-ing.}
   \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of

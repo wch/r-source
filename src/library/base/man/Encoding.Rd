@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -47,7 +47,8 @@ enc2utf8(x)
   declare encodings, \code{\link{iconv}} declares encodings from its
   \code{from} argument, and console input in suitable locales is also
   declared.  \code{\link{intToUtf8}} declares its output as
-  \code{"UTF-8"}, and output text connections are marked if running in a
+  \code{"UTF-8"}, and output text connections (see
+  \code{\link{textConnection}}) are marked if running in a
   suitable locale.  Under some circumstances (see its help page)
   \code{\link{source}(encoding=)} will mark encodings of character
   strings it outputs.
