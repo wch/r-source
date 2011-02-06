@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -206,6 +206,11 @@
   for these classes.
 
   \code{\link{weekdays}} for convenience extraction functions.
+}
+\references{
+  Ripley, B. D. and Hornik, K. (2001) Date-time classes. \emph{R News},
+  \bold{1/2}, 8--11.
+  \url{http://www.r-project.org/doc/Rnews/Rnews_2001-2.pdf}
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}

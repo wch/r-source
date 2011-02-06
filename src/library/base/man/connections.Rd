@@ -476,6 +476,9 @@ isIncomplete(con)
 \references{
   Chambers, J. M. (1998)
   \emph{Programming with Data.  A Guide to the S Language.} Springer.
+
+  Ripley, B. D. (2001) Connections. \emph{R News}, \bold{1/1}, 16--7.
+  \url{http://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 }
 
 \seealso{
