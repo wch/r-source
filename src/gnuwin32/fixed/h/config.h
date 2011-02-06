@@ -98,6 +98,21 @@
 /* Define to 1 if you have the `carg' function. */
 #define HAVE_CARG 1
 
+/* Define to 1 if you have the `casin' function. */
+#define HAVE_CASIN 1
+
+/* Define to 1 if you have the `casinh' function. */
+#define HAVE_CASINH 1
+
+/* Define to 1 if you have the `catan' function. */
+#define HAVE_CATAN 1
+
+/* Define to 1 if you have the `catanh' function. */
+#define HAVE_CATANH 1
+
+/* Define to 1 if you have the `ccos' function. */
+#define HAVE_CCOS 1
+
 /* Define to 1 if you have the `ccosh' function. */
 #define HAVE_CCOSH 1
 
