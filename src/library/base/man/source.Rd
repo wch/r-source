@@ -75,13 +75,19 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   (as used on classic Mac OS) and map this to newline.  The final line
   can be incomplete, that is missing the final end-of-line marker.
 
-  If \code{\link{options}}("keep.source") is true (the default in
-  interactive use), the source of functions is kept so they can be
-  listed exactly as input. This imposes a limit of 128K bytes on the
-  function size and a nesting limit of 265.  Use \code{keep.source =
-  FALSE} when these limits might take effect: if exceeded they generate
-  an error.
-
+  If \code{keep.source} is true (the default in interactive use), the
+  source of functions is kept so they can be listed exactly as input.
+  This imposes a limit of 128K bytes on the function size and a nesting
+  limit of 265.  Use \code{keep.source = FALSE} when these limits might
+  take effect: if exceeded they generate an error.
+  
+  Using \code{echo = TRUE} and \code{keep.source = TRUE} may interact
+  badly with source code that includes \samp{#line nn "filename"}
+  directives (e.g. code produced by \code{\link{Stangle}()}):
+  \code{source()} will attempt to obtain the source from the named file,
+  which may have changed since the code was produced.  Use
+  \code{keep.source = FALSE} to avoid this.  
+  
   This paragraph applies if \code{file} is a filename (rather than a
   connection).  If \code{encoding = "unknown"}, an attempt is made to
   guess the encoding: the result of \code{\link{localeToCharset}()} is
@@ -121,6 +127,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   \code{\link{sys.source}} which is a streamlined version to source a
   file into an environment.
+  
+  \sQuote{The R Language Definition} for a discussion of source
+  directives.  
 }
 \examples{
 ## If you want to source() a bunch of files, something like
