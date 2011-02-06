@@ -467,6 +467,31 @@ get_exclude_patterns <- function()
         }
     }
 
+    fixup_R_dep <- function(pkgname, ver="2.10")
+    {
+        desc <- .read_description(file.path(pkgname, "DESCRIPTION"))
+        Rdeps <- .split_description(desc)$Rdepends2
+        for(dep in Rdeps) {
+            if(dep$op != '>=') next
+            if(dep$version >= package_version(ver)) return()
+        }
+        on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
+        Sys.setlocale("LC_CTYPE", "C")
+        flatten <- function(x) {
+            if(length(x) == 3)
+                paste(x$name, " (", x$op, " ", x$version, ")", sep = "")
+            else x[[1]]
+        }
+        deps <- .split_dependencies(desc["Depends"])
+        deps <- deps[names(deps) != "R"] # could be more than one
+        desc["Depends"] <- paste(c(sprintf("R (>= %s)", ver),
+                                   sapply(deps, flatten)),
+                                 collapse = ", ")
+        write.dcf(t(as.matrix(desc)), file.path(pkgname, "DESCRIPTION"))
+        printLog(Log,
+                 "  NB: this package now depends on R (>= ", ver, ")\n")
+    }
+
     resave_data_rda <- function(pkgname, resave_data)
     {
         if (resave_data == "no") return()
@@ -475,37 +500,8 @@ get_exclude_patterns <- function()
             messageLog(Log, "re-saving data files")
             resaveRdaFiles(ddir)
             rdas <- checkRdaFiles(ddir)
-            if(any(rdas$compress %in% c("bzip2", "xz"))) {
-                OK <- FALSE
-                desc <- .read_description(file.path(pkgname, "DESCRIPTION"))
-                Rdeps <- .split_description(desc)$Rdepends2
-                for(dep in Rdeps) {
-                    if(dep$op != '>=') next
-                    if(dep$version >= package_version("2.10")) {
-                        OK <- TRUE
-                        break
-                    }
-                }
-                if(!OK) {
-                    on.exit(Sys.setlocale("LC_CTYPE",
-                                          Sys.getlocale("LC_CTYPE")))
-                    Sys.setlocale("LC_CTYPE", "C")
-                    flatten <- function(x) {
-                        if(length(x) == 3)
-                            paste(x$name, " (", x$op, " ", x$version, ")",
-                                  sep = "")
-                        else x[[1]]
-                    }
-                    deps <- .split_dependencies(desc["Depends"])
-                    deps <- deps[names(deps) != "R"] # could be more than one
-                    desc["Depends"] <- paste(c("R (>= 2.10)",
-                                               sapply(deps, flatten)),
-                                             collapse = ", ")
-                    write.dcf(t(as.matrix(desc)),
-                              file.path(pkgname, "DESCRIPTION"))
-                    printLog(Log, "  NB: this package now depends on R (>= 2.10)\n")
-                }
-            }
+            if(any(rdas$compress %in% c("bzip2", "xz")))
+                fixup_R_dep(pkgname, "2.10")
         } else {
             rdas <- checkRdaFiles(ddir)
             if(nrow(rdas)) {
@@ -535,6 +531,43 @@ get_exclude_patterns <- function()
                      sep = "", file = con)
         }
         close(con)
+    }
+
+    resave_data_others <- function(pkgname, resave_data)
+    {
+        if (resave_data == "no") return()
+        ddir <- file.path(pkgname, "data")
+        dataFiles <- grep("\\.(rda|RData)$",
+                          list_files_with_type(ddir, "data"),
+                          invert = TRUE, value = TRUE)
+        if (!length(dataFiles)) return()
+        tabs <- grep("\\.(CSV|csv|TXT|tab|txt)$", dataFiles, value = TRUE)
+        if (length(tabs)) {
+            if (resave_data == "gzip") {
+                lapply(tabs, function(nm) {
+                    x <- readLines(nm)
+                    con <- gzfile(paste(nm, "gz", sep = "."), "wb")
+                    writeLines(x, con)
+                    close(con)
+                    unlink(nm)
+                })
+            } else {
+                OK <- TRUE
+                lapply(tabs, function(nm) {
+                    x <- readLines(nm)
+                    nm3 <- paste(nm, c("gz", "bz2", "xz"), sep = ".")
+                    con <- gzfile(nm3[1L], "wb", compress=9); writeLines(x, con); close(con)
+                    con <- bzfile(nm3[2L], "wb", compress=9); writeLines(x, con); close(con)
+                    con <- xzfile(nm3[3L], "wb", compress=9); writeLines(x, con); close(con)
+                    sizes <- file.info(nm3)$size * c(0.9, 1, 1)
+                    ind <- which.min(sizes)
+                    if(ind > 1) OK <<- FALSE
+                    unlink(c(nm, nm3[-ind]))
+                })
+                if (!OK) fixup_R_dep(pkgname, "2.10")
+            }
+        }
+        ## Then the .R's
     }
 
     force <- FALSE
@@ -767,6 +800,7 @@ get_exclude_patterns <- function()
         if(file_test("-d", file.path(pkgname, "data"))) {
             add_datalist(pkgname)
             resave_data_rda(pkgname, resave_data)
+            resave_data_others(pkgname, resave_data)
         }
 
         ## Finalize

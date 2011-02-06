@@ -260,7 +260,8 @@
       installing to rebuild vignettes).
 
       There is another new option, \option{--resave-data}, to call
-      \code{tools::resaveRdaFiles()} on the \file{data} directory.  This
+      \code{tools::resaveRdaFiles()} on the \file{data} directory and to
+      compress tabular files (\file{.tab}, \file{.csv} etc).  This
       is likely to become the default.
 
       It now adds a \file{datalist} file for \file{data} directories of
