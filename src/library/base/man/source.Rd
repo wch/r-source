@@ -16,7 +16,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 }
 \alias{source}
 \arguments{
-  \item{file}{a connection or a character string giving the pathname
+  \item{file}{a \link{connection} or a character string giving the pathname
     of the file or URL to read from.  \code{""} indicates the connection
     \code{\link{stdin}()}.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned

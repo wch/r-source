@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -63,7 +63,7 @@ memDecompress(from,
 }
 
 \seealso{
-  \code{\link{connections}}.
+  \link{connections}.
   
   \url{http://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{http://zlib.net/},

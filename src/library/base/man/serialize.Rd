@@ -17,7 +17,7 @@ unserialize(connection, refhook = NULL)
 }
 \arguments{
   \item{object}{\R object to serialize.}
-  \item{connection}{an open connection or (for \code{serialize})
+  \item{connection}{an open \link{connection} or (for \code{serialize})
     \code{NULL} or (for \code{unserialize}) a raw vector
     (see \sQuote{Details}).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is

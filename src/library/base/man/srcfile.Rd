@@ -1,6 +1,6 @@
 % File src/library/base/man/srcfile.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{srcfile}
@@ -82,7 +82,7 @@ srcref(srcfile, lloc)
 
   Methods are defined for \code{print}, \code{summary}, \code{open},
   and \code{close} for classes \code{srcfile} and \code{srcfilecopy}.
-  The \code{open} method opens its internal \code{file} connection at
+  The \code{open} method opens its internal \code{\link{file}} connection at
   a particular line; if it was already open, it will be repositioned
   to that line.
 

@@ -47,7 +47,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
     
     Alternatively, \code{file} can be a readable text-mode
-    \code{\link{connection}} (which will be opened for reading if
+    \link{connection} (which will be opened for reading if
     necessary, and if so \code{\link{close}}d (and hence destroyed) at
     the end of the function call).  (If \code{\link{stdin}()} is used,
     the prompts for lines may be somewhat confusing.  Terminate input

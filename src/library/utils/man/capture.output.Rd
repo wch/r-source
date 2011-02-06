@@ -1,6 +1,6 @@
 % File src/library/utils/man/capture.output.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{capture.output}
@@ -16,7 +16,7 @@ capture.output(\dots, file = NULL, append = FALSE)
 }
 \arguments{
   \item{\dots}{Expressions to be evaluated.}
-  \item{file}{A file name or a connection, or \code{NULL} to return
+  \item{file}{A file name or a \link{connection}, or \code{NULL} to return
     the output as a character vector.  If the connection is not open,
     it will be opened initially and closed on exit.}
   \item{append}{logical.  If \code{file} a file name or unopened

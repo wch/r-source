@@ -21,7 +21,7 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
     of \code{NULL} corresponds to all libraries currently known.  For a
     source package this should specify the parent directory of the
     package's sources.}
-  \item{filename}{usually, a connection or a character string giving the
+  \item{filename}{usually, a \link{connection} or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}

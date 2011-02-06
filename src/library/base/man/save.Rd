@@ -32,7 +32,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     character strings).}
   \item{list}{A character vector containing the names of objects to be
     saved.}
-  \item{file}{a (writable binary-mode) connection or the name of the
+  \item{file}{a (writable binary-mode) \link{connection} or the name of the
     file where the data will be saved.  Must be a file name for
     \code{version = 1}.} 
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is

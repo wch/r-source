@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -20,7 +20,7 @@ dget(file)
 \arguments{
   \item{x}{an object.}
   \item{file}{either a character string naming a file or a
-    connection. \code{""} indicates output to the console.}
+    \link{connection}. \code{""} indicates output to the console.}
   \item{control}{character vector indicating deparsing options.
     See \code{\link{.deparseOpts}} for their description.}
 }

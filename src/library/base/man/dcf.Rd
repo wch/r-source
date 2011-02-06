@@ -1,6 +1,6 @@
 % File src/library/base/man/dcf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dcf}
@@ -19,7 +19,7 @@ write.dcf(x, file = "", append = FALSE,
           width = 0.9 * getOption("width"))
 }
 \arguments{
-  \item{file}{either a character string naming a file or a connection.
+  \item{file}{either a character string naming a file or a \link{connection}.
     \code{""} indicates output to the console.  For \code{read.dcf} this
     can name a compressed file (see \code{\link{gzfile}}).}
   \item{fields}{Fields to read from the DCF file.  Default is to read all

@@ -69,7 +69,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The remaining details apply to method \code{"internal"} only.
 
-  Note that \samp{https://} connections are
+  Note that \samp{https://} URLs are
 #ifdef unix
   not supported.
 #endif

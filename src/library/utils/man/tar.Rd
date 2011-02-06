@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-10 R Core Development Team
+% Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -20,7 +20,7 @@ tar(tarfile, files = NULL,
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.  Alternatively, a
-    connection that can be used for binary writes.}
+    \link{connection} that can be used for binary writes.}
 
   \item{files}{A character vector of filepaths to be archived:
     the default is to archive all files under the current directory.}

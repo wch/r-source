@@ -1,6 +1,6 @@
 % File src/library/base/man/readBin.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readBin}
@@ -18,7 +18,7 @@ writeBin(object, con, size = NA_integer_,
          endian = .Platform$endian, useBytes = FALSE)
 }
 \arguments{
-  \item{con}{A connection object or a character string naming a file or
+  \item{con}{A \link{connection} object or a character string naming a file or
     a raw vector.}
   \item{what}{Either an object whose mode will give the mode of the
     vector to be read, or a character vector of length one describing

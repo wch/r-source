@@ -1,6 +1,6 @@
 % File src/library/base/man/readChar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readChar}
@@ -18,7 +18,7 @@ writeChar(object, con, nchars = nchar(object, type="chars"),
           eos = "", useBytes = FALSE)
 }
 \arguments{
-  \item{con}{A connection object, or a character string naming a file,
+  \item{con}{A \link{connection} object, or a character string naming a file,
     or a raw vector.}
   \item{nchars}{integer, giving the lengths in characters of (unterminated)
     character strings to be read or written.  Must be >= 0 and not
