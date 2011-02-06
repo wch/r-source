@@ -583,7 +583,7 @@ get_exclude_patterns <- function()
                 unlink(x)
             })
             printLog(Log,
-                     "  NB: *.R converted to .rda: other files may need to be removed")
+                     "  NB: *.R converted to .rda: other files may need to be removed\n")
         }
     }
 
