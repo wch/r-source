@@ -1685,9 +1685,9 @@ ODBC driver (and the Visual FoxPro driver can also be used via
 @chapter Connections
 
 @cindex Connections
-@emph{Connections} are used in @R{} in the sense of Chambers (1998), a
-set of functions to replace the use of file names by a flexible
-interface to file-like objects.
+@emph{Connections} are used in @R{} in the sense of Chambers (1998) and
+Ripley (2001), a set of functions to replace the use of file names by a
+flexible interface to file-like objects.
 
 
 @menu
@@ -2261,6 +2261,11 @@ K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
 Addison-Wesley.
 Also downloadable at @uref{http://www.postgresql.org/docs/awbook.html}.
+
+@noindent
+B.@: D.@: Ripley (2001) Connections. \@emph{R News}, @strong{1/1}, 16--7.
+  \@uref{http://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+
 
 @noindent
 T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival
