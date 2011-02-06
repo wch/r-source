@@ -136,10 +136,10 @@
       \command{R CMD INSTALL --use-zip-data} was incorrectly implemented
       as \option{--use-zipdata} since \R 2.9.0.
       
-      \command{source(file, echo=TRUE)} could fail if the file contained
-      \samp{#line} directives.  It now recovers more gracefully, but may
-      still display the wrong line if the directive gives incorrect
-      information.
+      \item \command{source(file, echo=TRUE)} could fail if the file
+      contained \samp{#line} directives.  It now recovers more
+      gracefully, but may still display the wrong line if the directive
+      gives incorrect information.
       
     }
   }
