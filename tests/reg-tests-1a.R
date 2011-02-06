@@ -434,8 +434,6 @@ x <- seq(-3, 3, len=200)
 stopifnot(
  abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Meps,
  abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Meps,
- Mod(cosh(x) - cos(1i*x))	< 20*Meps,
- Mod(sinh(x) - sin(1i*x)/1i)	< 20*Meps,
  abs(tanh(x)*cosh(x) - sinh(x)) < 20*Meps
 )
 
@@ -4087,11 +4085,6 @@ stopifnot(is.character(all.equal(r1, r2)))
 xx <- as.raw(40:48)
 for(i in xx) print(i)
 ## was error < 2.3.0
-
-
-## atan2 with one complex argument
-atan2(1, 1i)
-## was error in 2.2.1
 
 
 ## as.list on a symbol, for S-compatibility

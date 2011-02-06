@@ -142,7 +142,38 @@ static double complex mycpow (double complex X, double complex Y)
     }
     return  Res;
 }
-#else /* not Win32 */
+#elif !defined HAVE_CPOW
+/* FreeBSD lacks even this */
+static double complex mycpow (double complex X, double complex Y)
+{
+     double complex Res; int k;
+    if (X == 0.0) {
+	if(cimag(Y) == 0.0)
+	    Res = R_pow(0.0, creal(Y)) + 0.0*I;
+	else
+	    Res = R_NaN + R_NaN*I;
+    } else if (cimag(Y) == 0.0 && creal(Y) == (k = (int)__real__ Y)
+	       && abs(k) <= 65536) {
+	return R_cpow_n(X, k);
+    } else {
+	double rho, r,i, theta;
+	r = hypot (creal(X), cimag(X));
+	i = carg (X);
+	theta = i * creal(Y);
+
+	if (cimag(Y) == 0.0)
+	    rho = pow (r, creal(Y));
+	else {
+	    r = log (r);
+	    /* rearrangement of cexp(X * clog(Y)) */
+	    theta += r * cimag(Y);
+	    rho = exp (r * creal(Y) - i * cimag(Y));
+	}
+	Res = rho * cos (theta) + (rho * sin (theta)) * I;
+    }
+    return  Res;   
+}
+#else
 /* reason for this:
  * 1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
  * 2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate;
@@ -280,12 +311,20 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 6:	/* abs */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
+#if HAVE_CABS
 		REAL(y)[i] = cabs(C99_COMPLEX2(x, i));
+#else
+		REAL(y)[i] = hypot(COMPLEX(x)[i].r, COMPLEX(x)[i].i);
+#endif
 	    break;
 	case 4:	/* Arg */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)
+#if HAVE_CARG
 		REAL(y)[i] = carg(C99_COMPLEX2(x, i));
+#else
+		REAL(y)[i] = atan2(COMPLEX(x)[i].i, COMPLEX(x)[i].r);
+#endif
 	    break;
 	case 5:	/* Conj */
 	    y = allocVector(CPLXSXP, n);
@@ -378,7 +417,11 @@ static double complex z_tan(double complex z)
 {
     double complex r;
     double y = cimag(z);
+#ifndef HAVE_CTAN
+    error("ctan is not available on this platform");
+#else
     r = ctan(z);
+#endif
     if(R_FINITE(y) && fabs(y) > 25.0) {
 	/* at this point the real part is nearly zero, and the
 	   imaginary part is one: but some OSes get the imag wrong */
@@ -440,6 +483,94 @@ static Rboolean cmath1(double complex (*f)(double complex),
 
     return(naflag);
 }
+
+#ifndef HAVE_CLOG
+double complex clog(double complex x)
+{
+    double xr = creal(x), xi = cimag(x);
+    return log(hypot(xr, xi)) + atan2(xi, xr)*I;
+}
+#endif
+#ifndef HAVE_CSQRT
+/* FreeBSD does have this one */
+double complex csqrt(double complex x)
+{
+    return mycpow(x, 0.5+0.0*I);
+}
+#endif
+#ifndef HAVE_CEXP
+double complex cexp(double complex x)
+{
+    double expx = exp(creal(x)), y = cimag(x);
+    return expx * cos(y) + (expx * sin(y)) * I;
+}
+#endif
+#ifndef HAVE_CCOS
+double complex ccos(double complex x)
+{
+    error("ccos is not available on this platform");
+}
+#endif
+#ifndef HAVE_CSIN
+double complex csin(double complex x)
+{
+    error("csin is not available on this platform");
+}
+#endif
+#ifndef HAVE_CASIN
+double complex casin(double complex x)
+{
+    error("casin is not available on this platform");
+}
+#endif
+#ifndef HAVE_CACOS
+double complex cacos(double complex x)
+{
+    error("cacos is not available on this platform");
+}
+#endif
+#ifndef HAVE_CATAN
+double complex catan(double complex x)
+{
+    error("catan is not available on this platform");
+}
+#endif
+#ifndef HAVE_CCOSH
+double complex ccosh(double complex x)
+{
+    error("ccosh is not available on this platform");
+}
+#endif
+#ifndef HAVE_CSINH
+double complex csinh(double complex x)
+{
+    error("csinh is not available on this platform");
+}
+#endif
+#ifndef HAVE_CTANH
+double complex ctanh(double complex x)
+{
+    error("ctanh is not available on this platform");
+}
+#endif
+#ifndef HAVE_CASINH
+double complex casinh(double complex x)
+{
+    error("casinh is not available on this platform");
+}
+#endif
+#ifndef HAVE_CACOSH
+double complex cacosh(double complex x)
+{
+    error("cacosh is not available on this platform");
+}
+#endif
+#ifndef HAVE_CATANH
+double complex catanh(double complex x)
+{
+    error("catanh is not available on this platform");
+}
+#endif
 
 SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -508,7 +639,9 @@ static void z_logbase(Rcomplex *r, Rcomplex *z, Rcomplex *base)
 static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 {
     double complex dr, dcsn = toC99(csn), dccs = toC99(ccs);
-			    
+#ifndef HAVE_CATAN
+    error("catan is not available on this platform");
+#else			    
     if (dccs == 0) {
 	if(dcsn == 0) {
 	    r->r = NA_REAL; r->i = NA_REAL;
@@ -521,6 +654,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 	if(creal(dr) > M_PI) dr -= 2 * M_PI;
     }
     SET_C99_COMPLEX(r, 0, dr);
+#endif
 }
 
 /* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */

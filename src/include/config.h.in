@@ -79,6 +79,15 @@
 /* Define to 1 if you have the <bzlib.h> header file. */
 #undef HAVE_BZLIB_H
 
+/* Define to 1 if you have the `cabs' function. */
+#undef HAVE_CABS
+
+/* Define to 1 if you have the `cacos' function. */
+#undef HAVE_CACOS
+
+/* Define to 1 if you have the `cacosh' function. */
+#undef HAVE_CACOSH
+
 /* Define to 1 if you have cairo-ps. */
 #undef HAVE_CAIRO_PDF
 
@@ -87,6 +96,30 @@
 
 /* Define to 1 if you have cairo-svg. */
 #undef HAVE_CAIRO_SVG
+
+/* Define to 1 if you have the `carg' function. */
+#undef HAVE_CARG
+
+/* Define to 1 if you have the `casin' function. */
+#undef HAVE_CASIN
+
+/* Define to 1 if you have the `casinh' function. */
+#undef HAVE_CASINH
+
+/* Define to 1 if you have the `catan' function. */
+#undef HAVE_CATAN
+
+/* Define to 1 if you have the `catanh' function. */
+#undef HAVE_CATANH
+
+/* Define to 1 if you have the `ccos' function. */
+#undef HAVE_CCOS
+
+/* Define to 1 if you have the `ccosh' function. */
+#undef HAVE_CCOSH
+
+/* Define to 1 if you have the `cexp' function. */
+#undef HAVE_CEXP
 
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
@@ -102,11 +135,32 @@
 /* Define to 1 if you have the `chmod' function. */
 #undef HAVE_CHMOD
 
+/* Define to 1 if you have the `clog' function. */
+#undef HAVE_CLOG
+
 /* Define this if Rcomplex and C99 double complex are compatible. */
 #undef HAVE_COMPATIBLE_C99_COMPLEX
 
 /* Defined if framework CoreFoundation is present */
 #undef HAVE_COREFOUNDATION_FW
+
+/* Define to 1 if you have the `cpow' function. */
+#undef HAVE_CPOW
+
+/* Define to 1 if you have the `csin' function. */
+#undef HAVE_CSIN
+
+/* Define to 1 if you have the `csinh' function. */
+#undef HAVE_CSINH
+
+/* Define to 1 if you have the `csqrt' function. */
+#undef HAVE_CSQRT
+
+/* Define to 1 if you have the `ctan' function. */
+#undef HAVE_CTAN
+
+/* Define to 1 if you have the `ctanh' function. */
+#undef HAVE_CTANH
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */

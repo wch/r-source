@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-01-30 r54162)
+R version 2.13.0 Under development (unstable) (2011-02-06 r54248)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -21,10 +21,6 @@ Type 'q()' to quit R.
 > ## complex
 > z <- 0i ^ (-3:3)
 > stopifnot(Re(z) == 0 ^ (-3:3))
-> set.seed(123)
-> z <- complex(real = rnorm(100), imag = rnorm(100))
-> stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) )) < 20 * Meps)
-> ## end of moved from complex.Rd
 > 
 > 
 > ## powers, including complex ones
@@ -56,6 +52,15 @@ Type 'q()' to quit R.
 +           all.equal(unname(m[,"0.5"]),
 +                     sqrt(abs(a))*ifelse(a < 0, 1i, 1),
 +                     tol= 20*Meps))
+> 
+> ## 2.10.0-2.12.1 got z^n wrong in the !HAVE_C99_COMPLEX case
+> z <- 0.2853725+0.3927816i
+> z2 <- z^(1:20)
+> z3 <- z^-(1:20)
+> z0 <- cumprod(rep(z, 20))
+> stopifnot(all.equal(z2, z0), all.equal(z3, 1/z0))
+> ## was z^3 had value z^2 ....
+> 
 > ## fft():
 > for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
 
@@ -120,69 +125,8 @@ n= 29 : 435+0i -14.5+133.3253i -14.5+65.87416i -14.5+43.03447i -14.5+31.34124i -
 n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98076i -15+20.64573i -15+16.65919i -15+13.50606i -15+10.89814i -15+8.66025i -15+6.67843i -15+4.8738i -15+3.18835i -15+1.57656i -15+0i -15-1.57656i -15-3.18835i -15-4.8738i -15-6.67843i -15-8.66025i -15-10.89814i -15-13.50606i -15-16.65919i -15-20.64573i -15-25.98076i -15-33.69055i -15-46.16525i -15-70.56945i -15-142.7155i 
 > 
 > 
-> ## Complex Trig.:
-> abs(Im(cos(acos(1i))) -	 1) < 2*Meps
-[1] TRUE
-> abs(Im(sin(asin(1i))) -	 1) < 2*Meps
-[1] TRUE
-> ##P (1 - Im(sin(asin(Ii))))/Meps
-> ##P (1 - Im(cos(acos(Ii))))/Meps
-> abs(Im(asin(sin(1i))) -	 1) < 2*Meps
-[1] TRUE
-> cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
-[1] TRUE
-> abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
-[1] TRUE
-> 
-> 
-> set.seed(123) # want reproducible output
-> Isi <- Im(sin(asin(1i + rnorm(100))))
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> Isi <- Im(cos(acos(1i + rnorm(100))))
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> 
-> 
 > ## polyroot():
 > stopifnot(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
-> 
-> 
-> ## PR#7781
-> ## This is not as given by e.g. glibc on AMD64
-> (z <- tan(1+1000i)) # 0+1i from R's own code.
-[1] 0+1i
-> stopifnot(is.finite(z))
-> ##
-> 
-> 
-> ## Branch cuts in complex inverse trig functions
-> atan(2)
-[1] 1.107149
-> atan(2+0i)
-[1] 1.107149+0i
-> tan(atan(2+0i))
-[1] 2+0i
-> ## should not expect exactly 0i in result
-> round(atan(1.0001+0i), 7)
-[1] 0.7854482+0i
-> round(atan(0.9999+0i), 7)
-[1] 0.7853482+0i
-> ## previously not as in Abramowitz & Stegun.
-> 
-> 
-> ## typo in z_atan2.
-> (z <- atan2(0+1i, 0+0i))
-[1] 1.570796+0i
-> stopifnot(all.equal(z, pi/2+0i))
-> ## was NA in 2.1.1
-> 
 > 
 > ## precision of complex numbers
 > signif(1.678932e80+0i, 5)
@@ -219,11 +163,89 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 [1] 8.6789-9.2383i
 > ## prior to 2.2.0 rounded real and imaginary parts separately.
 > 
-> ## 2.10.0-2.12.1 got z^n wrong in the !HAVE_C99_COMPLEX case
-> z <- 0.2853725+0.3927816i
-> z2 <- z^(1:20)
-> z3 <- z^-(1:20)
-> z0 <- cumprod(rep(z, 20))
-> stopifnot(all.equal(z2, z0), all.equal(z3, 1/z0))
-> ## was z^3 had value z^2 ....
+> options(error = expression(NULL)) # A platform may not have complex trig
+> 
+> 
+> ## Complex Trig.:
+> abs(Im(cos(acos(1i))) -	 1) < 2*Meps
+[1] TRUE
+> abs(Im(sin(asin(1i))) -	 1) < 2*Meps
+[1] TRUE
+> ##P (1 - Im(sin(asin(Ii))))/Meps
+> ##P (1 - Im(cos(acos(Ii))))/Meps
+> abs(Im(asin(sin(1i))) -	 1) < 2*Meps
+[1] TRUE
+> cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+[1] TRUE
+> abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
+[1] TRUE
+> 
+> 
+> set.seed(123) # want reproducible output
+> Isi <- Im(sin(asin(1i + rnorm(100))))
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> Isi <- Im(cos(acos(1i + rnorm(100))))
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> 
+> set.seed(123)
+> z <- complex(real = rnorm(100), imag = rnorm(100))
+> stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) )) < 20 * Meps)
+> ## end of moved from complex.Rd
+> 
+> 
+> ## PR#7781
+> ## This is not as given by e.g. glibc on AMD64
+> (z <- tan(1+1000i)) # 0+1i from R's own code.
+[1] 0+1i
+> stopifnot(is.finite(z))
+> ##
+> 
+> 
+> ## Branch cuts in complex inverse trig functions
+> atan(2)
+[1] 1.107149
+> atan(2+0i)
+[1] 1.107149+0i
+> tan(atan(2+0i))
+[1] 2+0i
+> ## should not expect exactly 0i in result
+> round(atan(1.0001+0i), 7)
+[1] 0.7854482+0i
+> round(atan(0.9999+0i), 7)
+[1] 0.7853482+0i
+> ## previously not as in Abramowitz & Stegun.
+> 
+> 
+> ## typo in z_atan2.
+> (z <- atan2(0+1i, 0+0i))
+[1] 1.570796+0i
+> stopifnot(all.equal(z, pi/2+0i))
+> ## was NA in 2.1.1
+> 
+> 
+> ## Hyperbolic
+> x <- seq(-3, 3, len=200)
+> Meps <- .Machine$double.eps
+> stopifnot(
++  Mod(cosh(x) - cos(1i*x))	< 20*Meps,
++  Mod(sinh(x) - sin(1i*x)/1i)	< 20*Meps,
++ )
+Error in stopifnot(Mod(cosh(x) - cos((0+1i) * x)) < 20 * Meps, Mod(sinh(x) -  : 
+  argument is missing, with no default
+> ## end of moved from Hyperbolic.Rd
+> 
+> 
+> ## atan2 with one complex argument
+> atan2(1, 1i)
+[1] 0-Infi
+> ## was error in 2.2.1
+> 
 > 

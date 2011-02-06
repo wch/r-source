@@ -28272,11 +28272,18 @@ else
 fi
 
   fi
-  if test "${r_cv_c99_complex}" = "yes"; then
-    for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-	 	   ccosh csinh ctanh cacosh casinh catanh
-    do
-      as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+    if test "${r_cv_c99_complex}" = "no"; then
+    as_fn_error "Support for C99 double complex type is required." "$LINENO" 5
+  fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c99_complex" >&5
+$as_echo "$r_cv_c99_complex" >&6; }
+for ac_func in cabs carg cexp clog csqrt cpow ccos csin ctan \
+	       cacos casin catan \
+	       ccosh csinh ctanh cacosh casinh catanh
+do
+as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
 $as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
 if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
@@ -28284,7 +28291,7 @@ if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
-#include<complex.h>
+#include <complex.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -28317,20 +28324,14 @@ eval ac_res=\$$as_ac_Symbol
 	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
 $as_echo "$ac_res" >&6; }
 if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
-
-else
-  r_cv_c99_complex=no
-fi
-    done
-  fi
-    if test "${r_cv_c99_complex}" = "no"; then
-     as_fn_error "Support for C99 complex type is required." "$LINENO" 5
-  fi
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c99_complex" >&5
-$as_echo "$r_cv_c99_complex" >&6; }
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is compatible with Rcomplex" >&5
+done
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C99 double complex is compatible with Rcomplex" >&5
 $as_echo_n "checking whether C99 double complex is compatible with Rcomplex... " >&6; }
 if test "${r_cv_compat_c99_complex+set}" = set; then :
   $as_echo_n "(cached) " >&6
@@ -35170,11 +35171,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35173: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35174: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35177: \$? = $ac_status" >&5
+   echo "$as_me:35178: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35269,11 +35270,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35272: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35273: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35276: \$? = $ac_status" >&5
+   echo "$as_me:35277: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35321,11 +35322,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35324: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35325: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35328: \$? = $ac_status" >&5
+   echo "$as_me:35329: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

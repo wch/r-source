@@ -298,12 +298,15 @@
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
 
-      \item The C99 complex arithmetic functions (such as \code{csin})
-      are now required.  However, the arrays of types \code{double
-      complex} and \code{Rcomplex} are not required to be compatible,
-      and conversion rather than coercion is used if necessary.  (They
-      are not compatible on x86_64 Linux for recent versions of
-      \command{gcc -O2}.)
+      \item The C99 double complex type is now required.  However, the
+      arrays of types \code{double complex} and \code{Rcomplex} are not
+      required to be compatible, and conversion rather than coercion is
+      used if necessary.  (They are not compatible on x86_64 Linux for
+      recent versions of \command{gcc -O2}.)
+
+      The C99 complex trigonometric functions (such as \code{csin}) are
+      not required (FreeBSD lacks most of them): the corresponding
+      functions in \R will not be operational without them.
     }
   }
 
@@ -323,7 +326,7 @@
 
       \item A \samp{LazyDataCompression} field in the \file{DESCRIPTION}
       file will be used to set the value for the
-      \option{--data-compress} of \command{R CMD INSTALL}. 
+      \option{--data-compress} option of \command{R CMD INSTALL}. 
     }
   }
 
@@ -519,8 +522,9 @@
       \item Since \R 2.10.0, \code{z^n} was computed incorrectly for
       \code{n >= 3} and \code{n <= -3} on platforms for which the macro
       \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
-      rare, but now include x86_64 Linux with \command{gcc 4.5.x}
-      at the default \code{-O2} optimization (but not at \code{-O}).
+      rare (but apparently included FreeBSD), but now include x86_64
+      Linux with \command{gcc 4.5.x} at the default \code{-O2}
+      optimization (but not at \code{-O}).
 
       \item Fixes for subsetting or subassignment of \code{"raster"}
       objects when not both \code{i} and \code{j} are specified.

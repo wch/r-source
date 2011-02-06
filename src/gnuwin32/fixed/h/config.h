@@ -77,6 +77,15 @@
 /* Define to 1 if you have the <bzlib.h> header file. */
 /* #undef HAVE_BZLIB_H */
 
+/* Define to 1 if you have the `cabs' function. */
+#define HAVE_CABS 1
+
+/* Define to 1 if you have the `cacos' function. */
+#define HAVE_CACOS 1
+
+/* Define to 1 if you have the `cacosh' function. */
+#define HAVE_CACOSH 1
+
 /* Define to 1 if you have cairo-ps. */
 /* #undef HAVE_CAIRO_PDF */
 
@@ -85,6 +94,15 @@
 
 /* Define to 1 if you have cairo-svg. */
 /* #undef HAVE_CAIRO_SVG */
+
+/* Define to 1 if you have the `carg' function. */
+#define HAVE_CARG 1
+
+/* Define to 1 if you have the `ccosh' function. */
+#define HAVE_CCOSH 1
+
+/* Define to 1 if you have the `cexp' function. */
+#define HAVE_CEXP 1
 
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
@@ -100,11 +118,32 @@
 /* Define to 1 if you have the `chmod' function. */
 #define HAVE_CHMOD 1
 
+/* Define to 1 if you have the `clog' function. */
+#define HAVE_CLOG 1
+
 /* Define this if Rcomplex and C99 double complex are compatible. */
 #define HAVE_COMPATIBLE_C99_COMPLEX 1
 
 /* Defined if framework CoreFoundation is present */
 /* #undef HAVE_COREFOUNDATION_FW */
+
+/* Define to 1 if you have the `cpow' function. */
+#define HAVE_CPOW 1
+
+/* Define to 1 if you have the `csin' function. */
+#define HAVE_CSIN 1
+
+/* Define to 1 if you have the `csinh' function. */
+#define HAVE_CSINH 1
+
+/* Define to 1 if you have the `csqrt' function. */
+#define HAVE_CSQRT 1
+
+/* Define to 1 if you have the `ctan' function. */
+#define HAVE_CTAN 1
+
+/* Define to 1 if you have the `ctanh' function. */
+#define HAVE_CTANH 1
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */

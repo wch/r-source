@@ -3401,20 +3401,17 @@ AC_DEFUN([R_C99_COMPLEX],
     AC_CHECK_TYPE([double complex], , r_cv_c99_complex=no,
                   [#include <complex.h>])
   fi
-  if test "${r_cv_c99_complex}" = "yes"; then
-    for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-	 	   ccosh csinh ctanh cacosh casinh catanh
-    do
-      R_CHECK_DECL($ac_func, , [r_cv_c99_complex=no], [#include<complex.h>])
-    done
-  fi
   dnl we are supposed to have a C99 compiler, so fail at this point.
   if test "${r_cv_c99_complex}" = "no"; then
-     AC_MSG_ERROR([Support for C99 complex type is required.])
+    AC_MSG_ERROR([Support for C99 double complex type is required.])
   fi
 ])
-  dnl Now check if the representation is the same as Rcomplex
-  AC_CACHE_CHECK([whether C99 double complex is compatible with Rcomplex],
+R_CHECK_FUNCS([cabs carg cexp clog csqrt cpow ccos csin ctan \
+	       cacos casin catan \
+	       ccosh csinh ctanh cacosh casinh catanh], 
+               [#include <complex.h>])
+dnl Now check if the representation is the same as Rcomplex
+AC_CACHE_CHECK([whether C99 double complex is compatible with Rcomplex],
   [r_cv_compat_c99_complex],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
