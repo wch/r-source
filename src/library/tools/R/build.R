@@ -582,7 +582,8 @@ get_exclude_patterns <- function()
                      envir = envir)
                 unlink(x)
             })
-            warnLog(Log, "*.R converted to .rda: other files may need to be removed")
+            printLog(Log,
+                     "  NB: *.R converted to .rda: other files may need to be removed")
         }
     }
 
