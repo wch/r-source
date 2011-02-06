@@ -1775,7 +1775,8 @@ dependence on @code{R (>= 2.10)} if @command{bzip2} or @command{xz}
 compression is selected for any of the files.  If this is thought
 undesirable, @option{--resave-data="gzip"} will re-save with
 @command{gzip} compression any @acronym{ASCII} or uncompressed saves,
-and any saves from before @R{} 1.4.0.
+and any saves from before @R{} 1.4.0.  It can also compress tabular
+files and convert @file{.R} files to saved images.
 
 It can be useful to run @code{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.

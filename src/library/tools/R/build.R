@@ -497,7 +497,7 @@ get_exclude_patterns <- function()
         if (resave_data == "no") return()
         ddir <- file.path(pkgname, "data")
         if(resave_data == "best") {
-            messageLog(Log, "re-saving data files")
+            messageLog(Log, "re-saving image files")
             resaveRdaFiles(ddir)
             rdas <- checkRdaFiles(ddir)
             if(any(rdas$compress %in% c("bzip2", "xz")))
@@ -508,7 +508,7 @@ get_exclude_patterns <- function()
                 update <- with(rdas, ASCII | compress == "none"
                                | version <= 2)
                 if(any(update)) {
-                    messageLog(Log, "re-saving data files")
+                    messageLog(Log, "re-saving image files")
                     resaveRdaFiles(row.names(rdas)[update], "gzip")
                 }
             }
@@ -543,6 +543,7 @@ get_exclude_patterns <- function()
         if (!length(dataFiles)) return()
         tabs <- grep("\\.(CSV|csv|TXT|tab|txt)$", dataFiles, value = TRUE)
         if (length(tabs)) {
+            messageLog(Log, "re-saving tabular files")
             if (resave_data == "gzip") {
                 lapply(tabs, function(nm) {
                     x <- readLines(nm)
@@ -567,7 +568,22 @@ get_exclude_patterns <- function()
                 if (!OK) fixup_R_dep(pkgname, "2.10")
             }
         }
-        ## Then the .R's
+        Rs <- grep("\\.[Rr]$", dataFiles, value = TRUE)
+        if (length(Rs)) {
+            messageLog(Log, "re-saving .R files")
+            ## ensure utils is visible
+            library("utils")
+            lapply(Rs, function(x){
+                envir <- new.env(hash = TRUE)
+                sys.source(x, chdir = TRUE, envir = envir)
+                save(list = ls(envir, all.names = TRUE),
+                     file = sub("\\.[Rr]$", ".rda", x),
+                     compress = TRUE, compression_level = 9,
+                     envir = envir)
+                unlink(x)
+            })
+            warnLog(Log, "*.R converted to .rda: other files may need to be removed")
+        }
     }
 
     force <- FALSE
@@ -799,8 +815,8 @@ get_exclude_patterns <- function()
         ## work on 'data' directory if present
         if(file_test("-d", file.path(pkgname, "data"))) {
             add_datalist(pkgname)
-            resave_data_rda(pkgname, resave_data)
             resave_data_others(pkgname, resave_data)
+            resave_data_rda(pkgname, resave_data)
         }
 
         ## Finalize
