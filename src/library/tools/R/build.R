@@ -541,6 +541,23 @@ get_exclude_patterns <- function()
                           list_files_with_type(ddir, "data"),
                           invert = TRUE, value = TRUE)
         if (!length(dataFiles)) return()
+        Rs <- grep("\\.[Rr]$", dataFiles, value = TRUE)
+        if (length(Rs)) { # these might use .txt etc
+            messageLog(Log, "re-saving .R files")
+            ## ensure utils is visible
+            library("utils")
+            lapply(Rs, function(x){
+                envir <- new.env(hash = TRUE)
+                sys.source(x, chdir = TRUE, envir = envir)
+                save(list = ls(envir, all.names = TRUE),
+                     file = sub("\\.[Rr]$", ".rda", x),
+                     compress = TRUE, compression_level = 9,
+                     envir = envir)
+                unlink(x)
+            })
+            printLog(Log,
+                     "  NB: *.R converted to .rda: other files may need to be removed\n")
+        }
         tabs <- grep("\\.(CSV|csv|TXT|tab|txt)$", dataFiles, value = TRUE)
         if (length(tabs)) {
             messageLog(Log, "re-saving tabular files")
@@ -567,23 +584,6 @@ get_exclude_patterns <- function()
                 })
                 if (!OK) fixup_R_dep(pkgname, "2.10")
             }
-        }
-        Rs <- grep("\\.[Rr]$", dataFiles, value = TRUE)
-        if (length(Rs)) {
-            messageLog(Log, "re-saving .R files")
-            ## ensure utils is visible
-            library("utils")
-            lapply(Rs, function(x){
-                envir <- new.env(hash = TRUE)
-                sys.source(x, chdir = TRUE, envir = envir)
-                save(list = ls(envir, all.names = TRUE),
-                     file = sub("\\.[Rr]$", ".rda", x),
-                     compress = TRUE, compression_level = 9,
-                     envir = envir)
-                unlink(x)
-            })
-            printLog(Log,
-                     "  NB: *.R converted to .rda: other files may need to be removed\n")
         }
     }
 
