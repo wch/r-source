@@ -262,7 +262,7 @@
       There is another new option, \option{--resave-data}, to call
       \code{tools::resaveRdaFiles()} on the \file{data} directory, to
       compress tabular files (\file{.tab}, \file{.csv} etc) and to
-      convert \files{.R} files to \file{.rda} files.  This is likely to
+      convert \file{.R} files to \file{.rda} files.  This is likely to
       become the default.
 
       It now adds a \file{datalist} file for \file{data} directories of
