@@ -123,6 +123,14 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	nos <- "[^\"]*"
 	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
 		       nos, "$", sep = "")
+        ## A helper function for echoing source.  This is simpler than the
+        ## same-named one in Sweave
+	trySrcLines <- function(srcfile, showfrom, showto) {
+	    lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)), silent=TRUE)
+	    if (inherits(lines, "try-error")) 
+    	    	lines <- character(0)
+    	    lines
+	}	       
     }
     yy <- NULL
     lastshown <- 0
@@ -141,33 +149,40 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	srcref <- attr(exprs, "wholeSrcref")
 	    else if (i <= length(srcrefs))
 	    	srcref <- srcrefs[[i]]
+ 	    if (!is.null(srcref)) {
+	    	if (i == 1) lastshown <- min(skip.echo, srcref[3L]-1)
+	    	if (lastshown < srcref[3L]) {
+	    	    srcfile <- attr(srcref, "srcfile")
+	    	    dep <- trySrcLines(srcfile, lastshown+1, srcref[3L])
+	    	    if (length(dep)) {
+			if (tail)
+			    leading <- length(dep)
+			else
+			    leading <- srcref[1L]-lastshown
+			lastshown <- srcref[3L]
+			while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
+			    dep <- dep[-1L]
+			    leading <- leading - 1L
+			}
+			dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
+				    dep, sep="", collapse="\n")
+			nd <- nchar(dep, "c")
+		    } else
+		    	srcref <- NULL  # Give up and deparse
+	    	}
+	    }
 	    if (is.null(srcref)) {
 	    	if (!tail) {
 		    # Deparse.  Must drop "expression(...)"
-		    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
-			      collapse = "\n"), 12, 1e+06)
+		    dep <- substr(paste(deparse(ei, control = "showAttributes"),
+			      collapse = "\n"), 12L, 1e+06L)
 		    ## We really do want chars here as \n\t may be embedded.
 		    dep <- paste(prompt.echo,
 				 gsub("\n", paste("\n", continue.echo, sep=""), dep),
 				 sep="")
-		    nd <- nchar(dep, "c") - 1
+		    nd <- nchar(dep, "c") - 1L
 		}
-	    } else {
-	    	if (i == 1) lastshown <- min(skip.echo, srcref[3L]-1)
-	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3L])
-	    	if (tail)
-	    	    leading <- length(dep)
-	    	else
-	    	    leading <- srcref[1L]-lastshown
-	    	lastshown <- srcref[3L]
-	    	while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
-	    	    dep <- dep[-1L]
-	    	    leading <- leading - 1L
-	    	}
-	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
-	    		     dep, sep="", collapse="\n")
-	    	nd <- nchar(dep, "c")
-	    }
+	    }	    
 	    if (nd) {
 		do.trunc <- nd > max.deparse.length
 		dep <- substr(dep, 1L, if (do.trunc) max.deparse.length else nd)
