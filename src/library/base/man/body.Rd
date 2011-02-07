@@ -1,6 +1,6 @@
 % File src/library/base/man/body.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{body}
@@ -23,7 +23,7 @@ body(fun, envir = environment(fun)) <- value
 \details{
   For the first form, \code{fun} can be a character string
   naming the function to be manipulated, which is searched for from the
-  parent environment.  If it is not specified, the function calling
+  parent frame.  If it is not specified, the function calling
   \code{body} is used.
 
   The bodies of all but the simplest are braced expressions, that is

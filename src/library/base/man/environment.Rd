@@ -1,6 +1,6 @@
 % File src/library/base/man/environment.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{environment}
@@ -72,7 +72,7 @@ env.profile(env)
   \code{new.env} returns a new (empty) environment enclosed in the
   parent's environment, by default.
 
-  \code{parent.env} returns the parent environment of its argument.
+  \code{parent.env} returns the enclosing environment of its argument.
 
   \code{parent.env<-} sets the enclosing environment of its first
   argument.
@@ -98,7 +98,9 @@ env.profile(env)
   defined.  The enclosing environment is distinguished from the
   \emph{parent frame}:  the latter (returned by
   \code{\link{parent.frame}}) refers to the environment of the caller
-  of a function.
+  of a function.  Since confusion is so easy, it is best never to use
+  \sQuote{parent} in connection with an environment (despite the
+  presence of the function \code{parent.env}).
 
   When \code{\link{get}} or \code{\link{exists}} search an environment
   with the default \code{inherits = TRUE}, they look for the variable
@@ -114,10 +116,10 @@ env.profile(env)
   available as \code{baseenv()}.  The ultimate enclosure of any environment
   is the empty environment \code{emptyenv()}, to which nothing may
   be assigned.
-  
-  If one follows the \code{parent.env()} chain of enclosures back far
-  enough from any environment, eventually one reaches the empty
-  environment.
+
+  If one follows the chain of enclosures found by repeatedly calling
+  \code{parent.env} from any environment, eventually one reaches the
+  empty environment.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
   it can be used to destructively change environments in ways that
