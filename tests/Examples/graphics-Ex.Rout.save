@@ -1,7 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-14 r53588)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-02-07 r54269)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -145,6 +146,29 @@ Hair    Brown Blue Hazel Green
  1000 1e+06     2 ; 500 1000 5000 10000 50000 1e+05 5e+05 1e+06 
  1000 1e+07     1 ; 1000 10000 1e+05 1e+06 1e+07 
 > par(op)
+> 
+> ## An example using axTicks() without reference to an existing plot
+> ## (copying R's internal procedures for setting axis ranges etc.),
+> ## standard logarithmic y axis labels
+> ylims <- c(0.2, 88)
+> get_axp <- function(x) 10^c(ceiling(x[1]), floor(x[2]))
+> ## mimic par("yaxs")=="i"
+> usr.i <- log10(ylims)
+> (aT.i <- axTicks(side=2, usr=usr.i,
++                  axp=c(get_axp(usr.i), n=3), log=TRUE))
+[1]  0.2  0.5  1.0  2.0  5.0 10.0 20.0 50.0
+> ## mimic (default) par("yaxs")=="r"
+> usr.r <- extendrange(r = log10(ylims), f = 0.04)
+> (aT.r <- axTicks(side=2, usr=usr.r,
++                  axp=c(get_axp(usr.r),3), log=TRUE))
+[1]   0.2   0.5   1.0   2.0   5.0  10.0  20.0  50.0 100.0
+> 
+> ## Prove that we got it right :
+> plot(0:1,ylims,log="y",yaxs="i")
+> stopifnot(all.equal(aT.i, axTicks(side=2)))
+> 
+> plot(0:1,ylims,log="y",yaxs="r")
+> stopifnot(all.equal(aT.r, axTicks(side=2)))
 > 
 > 
 > 
@@ -2929,7 +2953,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.556 0.487 8.208 0 0 
+Time elapsed:  4.298 0.093 4.391 0 0 
 > grDevices::dev.off()
 null device 
           1 
