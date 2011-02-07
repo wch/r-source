@@ -115,6 +115,7 @@ stopifnot(
 
 
 ## atan2 with one complex argument
-atan2(1, 1i)
-## was error in 2.2.1
+z <- atan2(1, 1i)
+## was error in 2.2.1.
+## We don't print the result as it is OS-specific (0-Infi would be standard).
 

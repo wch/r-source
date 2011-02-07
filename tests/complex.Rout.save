@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-06 r54248)
+R version 2.13.0 Under development (unstable) (2011-02-07 r54253)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -244,8 +244,8 @@ Error in stopifnot(Mod(cosh(x) - cos((0+1i) * x)) < 20 * Meps, Mod(sinh(x) -  :
 > 
 > 
 > ## atan2 with one complex argument
-> atan2(1, 1i)
-[1] 0-Infi
-> ## was error in 2.2.1
+> z <- atan2(1, 1i)
+> ## was error in 2.2.1.
+> ## We don't print the result as it is OS-specific (0-Infi would be standard).
 > 
 > 
