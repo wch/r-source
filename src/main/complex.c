@@ -144,6 +144,7 @@ static double complex mycpow (double complex X, double complex Y)
 }
 #elif !defined HAVE_CPOW
 /* FreeBSD lacks even this */
+/* I think this is trying too hard: cexp(Y*clog(X)) should suffice */
 static double complex mycpow (double complex X, double complex Y)
 {
      double complex Res; int k;
@@ -171,7 +172,7 @@ static double complex mycpow (double complex X, double complex Y)
 	}
 	Res = rho * cos (theta) + (rho * sin (theta)) * I;
     }
-    return  Res;   
+    return  Res;
 }
 #else
 /* reason for this:
@@ -413,15 +414,17 @@ void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
     }
 }
 
+#ifndef HAVE_CTAN
+static double complex ctan(double complex x)
+{
+    error("ctan is not available on this platform");
+}
+#endif
+
 static double complex z_tan(double complex z)
 {
-    double complex r;
     double y = cimag(z);
-#ifndef HAVE_CTAN
-    error("ctan is not available on this platform");
-#else
-    r = ctan(z);
-#endif
+    double complex r = ctan(z);
     if(R_FINITE(y) && fabs(y) > 25.0) {
 	/* at this point the real part is nearly zero, and the
 	   imaginary part is one: but some OSes get the imag wrong */
@@ -485,7 +488,8 @@ static Rboolean cmath1(double complex (*f)(double complex),
 }
 
 #ifndef HAVE_CLOG
-double complex clog(double complex x)
+/* FIXME: add full IEC60559 support */
+static double complex clog(double complex x)
 {
     double xr = creal(x), xi = cimag(x);
     return log(hypot(xr, xi)) + atan2(xi, xr)*I;
@@ -493,80 +497,81 @@ double complex clog(double complex x)
 #endif
 #ifndef HAVE_CSQRT
 /* FreeBSD does have this one */
-double complex csqrt(double complex x)
+static double complex csqrt(double complex x)
 {
     return mycpow(x, 0.5+0.0*I);
 }
 #endif
 #ifndef HAVE_CEXP
-double complex cexp(double complex x)
+/* FIXME: check/add full IEC60559 support */
+static double complex cexp(double complex x)
 {
     double expx = exp(creal(x)), y = cimag(x);
     return expx * cos(y) + (expx * sin(y)) * I;
 }
 #endif
 #ifndef HAVE_CCOS
-double complex ccos(double complex x)
+static double complex ccos(double complex x)
 {
     error("ccos is not available on this platform");
 }
 #endif
 #ifndef HAVE_CSIN
-double complex csin(double complex x)
+static double complex csin(double complex x)
 {
     error("csin is not available on this platform");
 }
 #endif
 #ifndef HAVE_CASIN
-double complex casin(double complex x)
+static double complex casin(double complex x)
 {
     error("casin is not available on this platform");
 }
 #endif
 #ifndef HAVE_CACOS
-double complex cacos(double complex x)
+static double complex cacos(double complex x)
 {
     error("cacos is not available on this platform");
 }
 #endif
 #ifndef HAVE_CATAN
-double complex catan(double complex x)
+static double complex catan(double complex x)
 {
     error("catan is not available on this platform");
 }
 #endif
 #ifndef HAVE_CCOSH
-double complex ccosh(double complex x)
+static double complex ccosh(double complex x)
 {
     error("ccosh is not available on this platform");
 }
 #endif
 #ifndef HAVE_CSINH
-double complex csinh(double complex x)
+static double complex csinh(double complex x)
 {
     error("csinh is not available on this platform");
 }
 #endif
 #ifndef HAVE_CTANH
-double complex ctanh(double complex x)
+static double complex ctanh(double complex x)
 {
     error("ctanh is not available on this platform");
 }
 #endif
 #ifndef HAVE_CASINH
-double complex casinh(double complex x)
+static double complex casinh(double complex x)
 {
     error("casinh is not available on this platform");
 }
 #endif
 #ifndef HAVE_CACOSH
-double complex cacosh(double complex x)
+static double complex cacosh(double complex x)
 {
     error("cacosh is not available on this platform");
 }
 #endif
 #ifndef HAVE_CATANH
-double complex catanh(double complex x)
+static double complex catanh(double complex x)
 {
     error("catanh is not available on this platform");
 }
@@ -641,7 +646,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
     double complex dr, dcsn = toC99(csn), dccs = toC99(ccs);
 #ifndef HAVE_CATAN
     error("catan is not available on this platform");
-#else			    
+#else
     if (dccs == 0) {
 	if(dcsn == 0) {
 	    r->r = NA_REAL; r->i = NA_REAL;
@@ -658,7 +663,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 }
 
 /* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
-static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, 
+static SEXP cmath2(SEXP op, SEXP sa, SEXP sb,
 		   void (*f)(Rcomplex *, Rcomplex *, Rcomplex *))
 {
     int i, n, na, nb;
