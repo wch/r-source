@@ -21,8 +21,7 @@
 # to just keep it for everything.
 
 Sweave <- function(file, driver=RweaveLatex(),
-                   syntax=getOption("SweaveSyntax"), 
-                   ..., directives=TRUE)
+                   syntax=getOption("SweaveSyntax"), ...)
 {
     if(is.character(driver))
         driver <- get(driver, mode="function")()
@@ -90,11 +89,7 @@ Sweave <- function(file, driver=RweaveLatex(),
             chunkopts <- SweaveParseOptions(chunkopts,
                                             drobj$options,
                                             driver$checkopts)
-            if (directives)
-            	chunk <- paste("#line ", linenum+1L, ' "', file, '"', sep="")
-            else
-            	chunk <- character()
-            	
+            chunk <- paste("#line ", linenum+1L, ' "', file, '"', sep="")
             attr(chunk, "srclines") <- linenum
             chunknr <- chunknr+1L
             chunkopts$chunknr <- chunknr
@@ -111,23 +106,19 @@ Sweave <- function(file, driver=RweaveLatex(),
                 if(!(chunkref %in% names(namedchunks)))
                     warning(gettextf("reference to unknown chunk '%s'",
                                      chunkref), domain = NA)
-                line <- namedchunks[[chunkref]]
+                namedchunk <- namedchunks[[chunkref]]
                 # Record the last line of the chunk in the terminator
                 # so terminal comments can be echoed
-                namedlines <- attr(line, "srclines")
+                namedlines <- attr(namedchunk, "srclines")
                 if (is.null(namedlines)) namedlines <- 0L
-                if (directives) {
-                    line <- c(line,
+                line <- c(namedchunk,
                 	  paste("#line ", namedlines[length(namedlines)],
                 	        ' "#pop named chunk#"', sep=""),
                 	  'stop("Internal Sweave error")',
                           paste("#line ", linenum+1L, ' "', file, '"', sep=""))
                 #FIXME:  this should really be done through a more general
                 #        mechanism for adding non-executable info to the parse
-                    line[1L] <- sub('"$', paste("#from line#", linenum, 
-                                                '#starts at#', namedlines[1], '#"', sep=""), 
-                                    line[1L])
-                }
+                line[1L] <- sub('"$', paste("#from line#", linenum, '#starts at#', namedlines[1], '#"', sep=""), line[1L])
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
@@ -920,10 +911,9 @@ RweaveTryStop <- function(err, options){
 ###**********************************************************
 
 Stangle <- function(file, driver=Rtangle(),
-                    syntax=getOption("SweaveSyntax"), 
-                    ..., directives=FALSE)
+                    syntax=getOption("SweaveSyntax"), ...)
 {
-    Sweave(file=file, driver=driver, ..., directives=directives)
+    Sweave(file=file, driver=driver, ...)
 }
 
 Rtangle <-  function()
