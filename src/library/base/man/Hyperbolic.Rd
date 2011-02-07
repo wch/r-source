@@ -1,6 +1,6 @@
 % File src/library/base/man/Hyperbolic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Hyperbolic}
@@ -34,9 +34,11 @@ atanh(x)
    \code{\link[=S3groupGeneric]{Math}} group generic.
 
    Branch cuts are consistent with the inverse trigonometric functions
-   \code{asin()} et seq, and agree with those defined in Abramowitz and
-   Stegun, figure 4.7, page 86.
-
+   \code{asin} \emph{et seq}, and agree with those defined in Abramowitz and
+   Stegun, figure 4.7, page 86.  However, the behaviour on a cut is
+   platform-dependent: the C99 standard mandates continuity coming round
+   the endpoint in a counter-clockwise direction, but current
+   implementations often do not do so.
 }
 \section{S4 methods}{
   All are S4 generic functions: methods can be defined
