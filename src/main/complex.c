@@ -42,6 +42,17 @@
 #undef HAVE_CATANH
 #endif
 
+#ifdef Win32
+/* Have these, but do not work for cabs(z) > 1 */
+#undef HAVE_CASIN
+#undef HAVE_CACOS
+#undef HAVE_CACOSH
+#endif
+
+#ifndef HAVE_HYPOT
+# define hypot pythag
+#endif
+
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
@@ -466,40 +477,6 @@ static double complex z_tan(double complex z)
     return r;
 }
 
-#ifdef Win32
-static double complex z_asin(double complex z)
-{
-    /* broken for cabs(z) >= 1 */
-    double alpha, t1, t2, x = __real__ z, y = __imag__ z;
-    double complex r;
-    t1 = 0.5 * hypot(x + 1, y);
-    t2 = 0.5 * hypot(x - 1, y);
-    alpha = t1 + t2;
-    __real__ r = asin(t1 - t2);
-    __imag__ r = log(alpha + sqrt(alpha*alpha - 1));
-    if(y < 0 || (y == 0 && x > 1)) __imag__ r *= -1;
-    return r;
-}
-
-static double complex z_acos(double complex z)
-{
-    /* broken for cabs(z) >= 1 */
-    return M_PI_2 - z_asin(z);
-}
-
-static double complex z_acosh(double complex z)
-{
-    /* workaround for PR#9403, acosh(2+0i) */
-    double complex r;
-    if(__imag__ z == 0.0) {
-	__real__ r = acosh(__real__ z);
-	__imag__ r = 0.0;
-    } else
-	r = cacosh(z);
-    return r;
-}
-#endif
-
 static Rboolean cmath1(double complex (*f)(double complex),
 		       Rcomplex *x, Rcomplex *y, int n)
 {
@@ -525,6 +502,7 @@ static double complex clog(double complex x)
     return log(hypot(xr, xi)) + atan2(xi, xr)*I;
 }
 #endif
+
 #ifndef HAVE_CSQRT
 #define csqrt R_csqrt
 /* FreeBSD does have this one */
@@ -533,6 +511,7 @@ static double complex csqrt(double complex x)
     return mycpow(x, 0.5+0.0*I);
 }
 #endif
+
 #ifndef HAVE_CEXP
 #define cexp R_cexp
 /* FIXME: check/add full IEC60559 support */
@@ -542,6 +521,7 @@ static double complex cexp(double complex x)
     return expx * cos(y) + (expx * sin(y)) * I;
 }
 #endif
+
 #ifndef HAVE_CCOS
 #define ccos R_ccos
 static double complex ccos(double complex x)
@@ -550,6 +530,7 @@ static double complex ccos(double complex x)
     return cos(xr)*cosh(xi) - sin(xr)*sinh(xi)*I;
 }
 #endif
+
 #ifndef HAVE_CSIN
 #define csin R_csin
 static double complex csin(double complex x)
@@ -558,19 +539,28 @@ static double complex csin(double complex x)
     return sin(xr)*cosh(xi) + cos(xr)*sinh(xi)*I;
 }
 #endif
+
 #ifndef HAVE_CASIN
 #define casin R_casin
 static double complex casin(double complex z)
 {
-    double alpha, t1, t2, x = creal(z), y = creal(z), ri;
+    double alpha, t1, t2, x = creal(z), y = cimag(z), ri;
     t1 = 0.5 * hypot(x + 1, y);
     t2 = 0.5 * hypot(x - 1, y);
     alpha = t1 + t2;
     ri = log(alpha + sqrt(alpha*alpha - 1));
-    if(y < 0 || (y == 0 && x > 1)) ri *= -1;
+    if(y < 0 || (y == 0 && x > 1)) ri *= -1; /* really, why? */
+# ifdef __GNUC__
+    double complex r;
+    __real__ r = asin(t1  - t2);
+    __imag__ r = ri;
+    return r;
+# else
     return asin(t1  - t2) + ri*I;
+# endif
 }
 #endif
+
 #ifndef HAVE_CACOS
 #define cacos R_cacos
 static double complex cacos(double complex z)
@@ -578,6 +568,7 @@ static double complex cacos(double complex z)
     return M_PI_2 - casin(z);
 }
 #endif
+
 #ifndef HAVE_CATAN
 #define catan R_catan
 /* One critical case is atan(1i) */
@@ -597,6 +588,7 @@ static double complex catan(double complex z)
 #endif
 }
 #endif
+
 #ifndef HAVE_CCOSH
 #define ccosh R_ccosh
 static double complex ccosh(double complex z)
@@ -604,6 +596,7 @@ static double complex ccosh(double complex z)
     return ccos(-cimag(z) + creal(z)*I);
 }
 #endif
+
 #ifndef HAVE_CSINH
 #define csinh R_csinh
 static double complex csinh(double complex z)
@@ -612,6 +605,7 @@ static double complex csinh(double complex z)
     return cimag(a) - creal(a)*I;
 }
 #endif
+
 #ifndef HAVE_CTANH
 #define ctanh R_ctanh
 static double complex ctanh(double complex z)
@@ -620,6 +614,7 @@ static double complex ctanh(double complex z)
     return cimag(a) - creal(a)*I;
 }
 #endif
+
 #ifndef HAVE_CASINH
 #define casinh R_casinh
 static double complex casinh(double complex z)
@@ -628,14 +623,23 @@ static double complex casinh(double complex z)
     return  cimag(a) - creal(a)*I;
 }
 #endif
+
 #ifndef HAVE_CACOSH
 #define cacosh R_cacosh
 static double complex cacosh(double complex z)
 {
     double complex a = cacos(z);
+# ifdef __GNUC__
+    double complex r;
+    __real__ r = -cimag(a);
+    __imag__ r = creal(a);
+    return r;
+# else
     return  -cimag(a) + creal(a)*I;
+# endif
 }
 #endif
+
 #ifndef HAVE_CATANH
 #define catanh R_catanh
 static double complex catanh(double complex z)
@@ -664,23 +668,16 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 20: naflag = cmath1(ccos, COMPLEX(x), COMPLEX(y), n); break;
     case 21: naflag = cmath1(csin, COMPLEX(x), COMPLEX(y), n); break;
     case 22: naflag = cmath1(z_tan, COMPLEX(x), COMPLEX(y), n); break;
+    case 23: naflag = cmath1(cacos, COMPLEX(x), COMPLEX(y), n); break;
+    case 24: naflag = cmath1(casin, COMPLEX(x), COMPLEX(y), n); break;
     case 25: naflag = cmath1(catan, COMPLEX(x), COMPLEX(y), n); break;
 
     case 30: naflag = cmath1(ccosh, COMPLEX(x), COMPLEX(y), n); break;
     case 31: naflag = cmath1(csinh, COMPLEX(x), COMPLEX(y), n); break;
     case 32: naflag = cmath1(ctanh, COMPLEX(x), COMPLEX(y), n); break;
+    case 33: naflag = cmath1(cacosh, COMPLEX(x), COMPLEX(y), n); break;
     case 34: naflag = cmath1(casinh, COMPLEX(x), COMPLEX(y), n); break;
     case 35: naflag = cmath1(catanh, COMPLEX(x), COMPLEX(y), n); break;
-
-#ifdef Win32
-    case 23: naflag = cmath1(z_acos, COMPLEX(x), COMPLEX(y), n); break;
-    case 24: naflag = cmath1(z_asin, COMPLEX(x), COMPLEX(y), n); break;
-    case 33: naflag = cmath1(z_acosh, COMPLEX(x), COMPLEX(y), n); break;
-#else
-    case 23: naflag = cmath1(cacos, COMPLEX(x), COMPLEX(y), n); break;
-    case 24: naflag = cmath1(casin, COMPLEX(x), COMPLEX(y), n); break;
-    case 33: naflag = cmath1(cacosh, COMPLEX(x), COMPLEX(y), n); break;
-#endif
 
 #ifdef NOTYET
 	MATH1(40, lgammafn);
