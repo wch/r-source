@@ -538,10 +538,12 @@
       as \option{--use-zipdata} since \R 2.9.0.
       
       \item \command{source(file, echo=TRUE)} could fail if the file
-      contained \samp{#line} directives.  It now recovers more
-      gracefully, but may still display the wrong line if the directive
-      gives incorrect information.
-      
+      contained \samp{#line} directives.  It now recovers more gracefully, but
+      may still display the wrong line if the directive gives incorrect
+      information.
+
+      \item \code{atan(1i)} returned \code{NaN+Infi} (rather than
+      \code{0+Infi}) on platforms without C99 complex support. 
     }
   }
 }

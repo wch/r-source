@@ -3906,7 +3906,9 @@ the configure flag @option{--disable-largefile} was needed (since
 Rainer Hurling has reported success on @cputype{x86_64} FreeBSD 9.0 (and
 on earlier versions in the past).  Since Darwin (the base OS of Mac OS
 X) is based on FreeBSD we find testing on Darwin tends to pick up most
-potential problems on FreeBSD.
+potential problems on FreeBSD.  However, FreeBSD lacks adequate
+collation support for multi-byte locales (Mac OS X includes a version of
+ICU), and also does not contain C99 complex math functions.
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the

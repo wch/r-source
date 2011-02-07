@@ -23,6 +23,25 @@
 #include <config.h>
 #endif
 
+#if 0
+/* For testing missing fns */
+#undef HAVE_CEXP
+#undef HAVE_CLOG
+#undef HAVE_CSQRT
+#undef HAVE_CSIN
+#undef HAVE_CCOS
+#undef HAVE_CTAN
+#undef HAVE_CASIN
+#undef HAVE_CACOS
+#undef HAVE_CATAN
+#undef HAVE_CSINH
+#undef HAVE_CCOSH
+#undef HAVE_CTANH
+#undef HAVE_CASINH
+#undef HAVE_CACOSH
+#undef HAVE_CATANH
+#endif
+
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
@@ -90,7 +109,8 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     return R_NilValue; /* -Wall */
 }
 
-static double complex R_cpow_n(double complex X, int k) {
+static double complex R_cpow_n(double complex X, int k)
+{
     if(k == 0) return (double complex) 1.;
     else if(k == 1) return X;
     else if(k < 0) return 1. / R_cpow_n(X, -k);
@@ -98,7 +118,7 @@ static double complex R_cpow_n(double complex X, int k) {
 	double complex z = (double complex) 1.;;
 	while (k > 0) {
 	    if (k & 1) z = z * X;
-	    if(k == 1) break;
+	    if (k == 1) break;
 	    k >>= 1; /* efficient division by 2; now have k >= 1 */
 	    X = X * X;
 	}
@@ -177,7 +197,8 @@ static double complex mycpow (double complex X, double complex Y)
 #else
 /* reason for this:
  * 1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
- * 2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate;
+ [FIXME: But is that not actualy correct?: 1/(0+0i) == Inf+NaNi]
+ * 2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate in glibc;
  *	cut-off 65536 : guided from empirical speed measurements
 */
 
@@ -210,7 +231,7 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     int i,i1, i2, n, n1, n2;
     SEXP ans;
 
-    /* Note: "s1" and "s1" are protected in the calling code. */
+    /* Note: "s1" and "s2" are protected in the calling code. */
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
      /* S4-compatibility change: if n1 or n2 is 0, result is of length 0 */
@@ -415,9 +436,17 @@ void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
 }
 
 #ifndef HAVE_CTAN
-static double complex ctan(double complex x)
+#define ctan R_ctan
+static double complex ctan(double complex z)
 {
-    error("ctan is not available on this platform");
+    double x2, y2, den, ri;
+    x2 = 2.0 * creal(z);
+    y2 = 2.0 * cimag(z);
+    den = cos(x2) + cosh(y2);
+    /* any threshold between -log(DBL_EPSILON) and log(DBL_XMAX) will do*/
+    if (ISNAN(y2) || fabs(y2) < 50.0) ri = sinh(y2)/den;
+    else ri = (y2 < 0 ? -1.0 : 1.0);
+    return sin(x2)/den + ri * I;
 }
 #endif
 
@@ -427,7 +456,7 @@ static double complex z_tan(double complex z)
     double complex r = ctan(z);
     if(R_FINITE(y) && fabs(y) > 25.0) {
 	/* at this point the real part is nearly zero, and the
-	   imaginary part is one: but some OSes get the imag wrong */
+	   imaginary part is one: but some OSes get the imag as NaN */
 #if __GNUC__
 	__imag__ r = y < 0 ? -1.0 : 1.0;
 #else
@@ -460,7 +489,7 @@ static double complex z_acos(double complex z)
 
 static double complex z_acosh(double complex z)
 {
-    /* workaround for PR#9403 */
+    /* workaround for PR#9403, acosh(2+0i) */
     double complex r;
     if(__imag__ z == 0.0) {
 	__real__ r = acosh(__real__ z);
@@ -488,6 +517,7 @@ static Rboolean cmath1(double complex (*f)(double complex),
 }
 
 #ifndef HAVE_CLOG
+#define clog R_clog
 /* FIXME: add full IEC60559 support */
 static double complex clog(double complex x)
 {
@@ -496,6 +526,7 @@ static double complex clog(double complex x)
 }
 #endif
 #ifndef HAVE_CSQRT
+#define csqrt R_csqrt
 /* FreeBSD does have this one */
 static double complex csqrt(double complex x)
 {
@@ -503,6 +534,7 @@ static double complex csqrt(double complex x)
 }
 #endif
 #ifndef HAVE_CEXP
+#define cexp R_cexp
 /* FIXME: check/add full IEC60559 support */
 static double complex cexp(double complex x)
 {
@@ -511,69 +543,105 @@ static double complex cexp(double complex x)
 }
 #endif
 #ifndef HAVE_CCOS
+#define ccos R_ccos
 static double complex ccos(double complex x)
 {
-    error("ccos is not available on this platform");
+    double xr = creal(x), xi = cimag(x);
+    return cos(xr)*cosh(xi) - sin(xr)*sinh(xi)*I;
 }
 #endif
 #ifndef HAVE_CSIN
+#define csin R_csin
 static double complex csin(double complex x)
 {
-    error("csin is not available on this platform");
+    double xr = creal(x), xi = cimag(x);
+    return sin(xr)*cosh(xi) + cos(xr)*sinh(xi)*I;
 }
 #endif
 #ifndef HAVE_CASIN
-static double complex casin(double complex x)
+#define casin R_casin
+static double complex casin(double complex z)
 {
-    error("casin is not available on this platform");
+    double alpha, t1, t2, x = creal(z), y = creal(z), ri;
+    t1 = 0.5 * hypot(x + 1, y);
+    t2 = 0.5 * hypot(x - 1, y);
+    alpha = t1 + t2;
+    ri = log(alpha + sqrt(alpha*alpha - 1));
+    if(y < 0 || (y == 0 && x > 1)) ri *= -1;
+    return asin(t1  - t2) + ri*I;
 }
 #endif
 #ifndef HAVE_CACOS
-static double complex cacos(double complex x)
+#define cacos R_cacos
+static double complex cacos(double complex z)
 {
-    error("cacos is not available on this platform");
+    return M_PI_2 - casin(z);
 }
 #endif
 #ifndef HAVE_CATAN
-static double complex catan(double complex x)
+#define catan R_catan
+/* One critical case is atan(1i) */
+static double complex catan(double complex z)
 {
-    error("catan is not available on this platform");
+    double x = creal(z), y = cimag(z), rr, ri;
+    rr = 0.5 * atan2(2 * x, (1 - x * x - y * y));
+    ri = 0.25 * log((x * x + (y + 1) * (y + 1)) /
+		    (x * x + (y - 1) * (y - 1)));
+#ifdef __GNUC__
+    double complex r;
+    __real__ r = rr;
+    __imag__ r = ri;
+    return r;
+#else
+    return rr + ri*I; /* which may give NaNs */
+#endif
 }
 #endif
 #ifndef HAVE_CCOSH
-static double complex ccosh(double complex x)
+#define ccosh R_ccosh
+static double complex ccosh(double complex z)
 {
-    error("ccosh is not available on this platform");
+    return ccos(-cimag(z) + creal(z)*I);
 }
 #endif
 #ifndef HAVE_CSINH
-static double complex csinh(double complex x)
+#define csinh R_csinh
+static double complex csinh(double complex z)
 {
-    error("csinh is not available on this platform");
+    double complex a = csin(-cimag(z) + creal(z)*I);
+    return cimag(a) - creal(a)*I;
 }
 #endif
 #ifndef HAVE_CTANH
-static double complex ctanh(double complex x)
+#define ctanh R_ctanh
+static double complex ctanh(double complex z)
 {
-    error("ctanh is not available on this platform");
+    double complex a = ctan(-cimag(z) + creal(z)*I);
+    return cimag(a) - creal(a)*I;
 }
 #endif
 #ifndef HAVE_CASINH
-static double complex casinh(double complex x)
+#define casinh R_casinh
+static double complex casinh(double complex z)
 {
-    error("casinh is not available on this platform");
+    double complex a = casin(-cimag(z) + creal(z)*I);
+    return  cimag(a) - creal(a)*I;
 }
 #endif
 #ifndef HAVE_CACOSH
-static double complex cacosh(double complex x)
+#define cacosh R_cacosh
+static double complex cacosh(double complex z)
 {
-    error("cacosh is not available on this platform");
+    double complex a = cacos(z);
+    return  -cimag(a) + creal(a)*I;
 }
 #endif
 #ifndef HAVE_CATANH
-static double complex catanh(double complex x)
+#define catanh R_catanh
+static double complex catanh(double complex z)
 {
-    error("catanh is not available on this platform");
+    double complex a = catan(-cimag(z) + creal(z)*I);
+    return cimag(a) - creal(a)*I;
 }
 #endif
 
@@ -644,12 +712,9 @@ static void z_logbase(Rcomplex *r, Rcomplex *z, Rcomplex *base)
 static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 {
     double complex dr, dcsn = toC99(csn), dccs = toC99(ccs);
-#ifndef HAVE_CATAN
-    error("catan is not available on this platform");
-#else
     if (dccs == 0) {
 	if(dcsn == 0) {
-	    r->r = NA_REAL; r->i = NA_REAL;
+	    r->r = NA_REAL; r->i = NA_REAL; /* Why not R_NaN? */
 	    return;
 	} else
 	    dr = fsign_int(M_PI_2, creal(dcsn));
@@ -659,7 +724,6 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 	if(creal(dr) > M_PI) dr -= 2 * M_PI;
     }
     SET_C99_COMPLEX(r, 0, dr);
-#endif
 }
 
 /* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
