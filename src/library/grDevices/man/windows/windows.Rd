@@ -207,7 +207,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     one pixel. 
     \item The minimum radius of a circle is 1 pixel.
     \item Colours are interpreted via the unprofiled colour mapping of
-    the graphics card -- this is likely to be close to sRGB.
+    the graphics card -- this is \emph{assumed} to conform to sRGB.
   }
 }
 

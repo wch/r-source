@@ -175,11 +175,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   output, you may need to specify a larger value for \code{maxRasters}.
 }
 \section{Color models}{
-  The default color model is RGB, and model \code{"gray"} maps RGB
+  The default color model is sRGB, and model \code{"gray"} maps sRGB
   colors to greyscale using perceived luminosity (biased towards green).
-  \code{"cmyk"} outputs in CMYK colorspace.  Nothing in \R specifies the
-  interpretation of the RGB or CMYK color spaces, and the simplest
-  possible conversion to CMYK is used
+  \code{"cmyk"} outputs in CMYK colorspace.  The simplest
+  possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 }
 \section{Conventions}{
@@ -197,7 +196,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     points radius are rendered using char 108 in the Dingbats font:
     all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
     curve for each quadrant.
-    \item Colours are interpreted by the viewing/printing application.
+    \item Colours are specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.

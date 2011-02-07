@@ -253,8 +253,8 @@ X11.options(\dots, reset = FALSE)
       "Xlib"}, 0.01 otherwise.
     \item For \code{type = "Xlib"} circle radii are in pixels with
     minimum one.
-    \item Colours are interpreted by the X11 server, normally in a fair
-    approximation to sRGB.
+    \item Colours are interpreted by the X11 server, which is
+    \emph{assumed} to conform to sRGB.
   }
 }
 \seealso{

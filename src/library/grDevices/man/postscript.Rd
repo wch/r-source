@@ -290,12 +290,11 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \file{CM_symbol_10.afm}.
 }
 \section{Color models}{
-  The default color model is RGB, with pure gray colors expressed as
-  greyscales.  Color model \code{"rgb-nogray"} uses only RGB, model
+  The default color model is sRGB, with pure gray colors expressed as
+  greyscales.  Color model \code{"rgb-nogray"} uses only sRGB, model
   \code{"cmyk"} only CMYK, and model \code{"gray"} only greyscales (and
-  selecting any other colour is an error).  Nothing in \R specifies the
-  interpretation of the RGB or CMYK color spaces, and the simplest
-  possible conversion to CMYK is used
+  selecting any other colour is an error).  The simplest
+  possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 }
 
@@ -334,7 +333,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     \item Line widths are as a multiple of 1/96 inch, with a minimum
     of 0.01 enforced.   
     \item Circle of any radius are allowed.
-    \item Colours are interpreted by the viewing/printing application.
+    \item Colours are specified as sRGB.
   }
 
   At very small line widths, the line type may be forced to solid.

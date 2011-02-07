@@ -113,8 +113,7 @@ quartz.options(\dots, reset = FALSE)
     \item The default font family is Arial.
     \item Line widths are a multiple of 1/96 inch with no minimum set by \R.
     \item Circle radii are real-valued with no minimum set by \R.
-    \item Colour interpretation is by the viewer, including the screen
-    display.
+    \item Colours are specified as sRGB.
   }
 }
 \seealso{
