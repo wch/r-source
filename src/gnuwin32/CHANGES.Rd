@@ -52,6 +52,13 @@
       they no longer work with older versions than \samp{libpng-1.4.5}.
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Work around for the incorrect values given by Windows'
+      \code{casinh} function on the branch cuts.
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.12.1 patched}{

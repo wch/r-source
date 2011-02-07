@@ -119,3 +119,18 @@ z <- atan2(1, 1i)
 ## was error in 2.2.1.
 ## We don't print the result as it is OS-specific (0-Infi would be standard).
 
+
+## values near and on branch cuts
+options(digits=5)
+z <- c(2+0i, 2-0.0001i, -2+0i, -2+0.0001i)
+asin(z)
+acos(z)
+atanh(z)
+z <- c(0+2i, 0.0001+2i, 0-2i, -0.0001i-2i)
+asinh(z)
+acosh(z)
+atan(z)
+## According to C99, should have continuity from the side given.
+## Both glibc 2.12 and Mac OS X 10.6 use continuity from above in the first set
+## Windows gave incorrect (NaN) values on the cuts.
+

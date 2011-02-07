@@ -249,3 +249,24 @@ Error in stopifnot(Mod(cosh(x) - cos((0+1i) * x)) < 20 * Meps, Mod(sinh(x) -  :
 > ## We don't print the result as it is OS-specific (0-Infi would be standard).
 > 
 > 
+> ## values near and on branch cuts
+> options(digits=5)
+> z <- c(2+0i, 2-0.0001i, -2+0i, -2+0.0001i)
+> asin(z)
+[1]  1.5708-1.317i  1.5707-1.317i -1.5708+1.317i -1.5707+1.317i
+> acos(z)
+[1] 0.0000+1.317i 0.0001+1.317i 3.1416-1.317i 3.1415-1.317i
+> atanh(z)
+[1]  0.5493-1.5708i  0.5493-1.5708i -0.5493+1.5708i -0.5493+1.5708i
+> z <- c(0+2i, 0.0001+2i, 0-2i, -0.0001i-2i)
+> asinh(z)
+[1]  1.317+1.5708i  1.317+1.5707i -1.317-1.5708i -1.317-1.5708i
+> acosh(z)
+[1]  1.4436+1.5708i  1.4436+1.5708i -1.4436+1.5708i -1.4437+1.5708i
+> atan(z)
+[1]  1.5708+0.5493i  1.5708+0.5493i -1.5708-0.5493i -1.5708-0.5493i
+> ## According to C99, should have continuity from the side given.
+> ## Both glibc 2.12 and Mac OS X 10.6 use continuity from above in the first set
+> ## Windows gave incorrect (NaN) values on the cuts.
+> 
+> 
