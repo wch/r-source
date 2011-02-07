@@ -1,6 +1,6 @@
 % File src/library/base/man/formals.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{formals}
@@ -20,10 +20,11 @@ formals(fun, envir = environment(fun)) <- value
   \item{value}{a list (or pairlist) of \R expressions.}
 }
 \details{
-  For the first form, \code{fun} can also be a character string
-  naming the function to be manipulated, which is searched for from the
-  parent environment.
-  If it is not specified, the function calling \code{formals} is used.
+  
+  For the first form, \code{fun} can also be a character string naming
+  the function to be manipulated, which is searched for from the parent
+  frame.  If it is not specified, the function calling \code{formals} is
+  used.
 
   Only \emph{closures} have formals, not primitive functions.
 }

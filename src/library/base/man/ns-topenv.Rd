@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-topenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-topenv}
@@ -24,7 +24,7 @@ topenv(envir = parent.frame(),
 }
 \details{
   \code{topenv} returns the first top level environment found when
-  searching \code{envir} and its parent environments.  An environment is
+  searching \code{envir} and its enclosing environments.  An environment is
   considered top level if it is the internal environment of a name space,
   a package environment in the search path, or \code{.GlobalEnv}.
 }

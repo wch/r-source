@@ -76,8 +76,8 @@ alist(\dots)
   environment to a named list.  The user can request that all named
   objects are copied.  The list is in no particular order (the order
   depends on the order of creation of objects and whether the
-  environment is hashed).  No parent environments are searched.  (Objects
-  copied are duplicated so this can be an expensive operation.)
+  environment is hashed).  No enclosing environments are searched.
+  (Objects copied are duplicated so this can be an expensive operation.)
   Note that there is an inverse operation, the
   \code{\link{as.environment}()} method for list objects.
 
