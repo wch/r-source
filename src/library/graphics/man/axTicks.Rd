@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axTicks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{axTicks}
@@ -19,19 +19,24 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   \item{side}{integer in 1:4, as for \code{\link{axis}}.}
   \item{axp}{numeric vector of length three, defaulting to
     \code{\link{par}("xaxp")} or \code{\link{par}("yaxp")}
-    depending on the \code{side} argument.}
-  \item{usr}{numeric vector of length four, defaulting to
-    \code{\link{par}("usr")} giving horizontal (\sQuote{x}) and vertical
-    (\sQuote{y}) user coordinate limits.}
+    depending on the \code{side} argument (\code{par("xaxp")}
+    if \code{side} is 1 or 3, \code{par("yaxp")} if side is 2 or 4).}
+  \item{usr}{numeric vector of length two giving user coordinate
+    limits, defaulting to the relevant portion of
+    \code{\link{par}("usr")} (\code{par("usr")[1:2]} or
+    \code{par("usr")[3:4]} for \code{side} in (1,3) or (2,4)
+    respectively).}
   \item{log}{logical indicating if log coordinates are active; defaults
-    to \code{\link{par}("xlog")} or \code{\link{par}("ylog")}.}
+    to \code{\link{par}("xlog")} or \code{\link{par}("ylog")}
+    depending on \code{side}.}
 }
 \details{
   The \code{axp}, \code{usr}, and \code{log} arguments must be consistent
   as their default values (the \code{par(..)} results) are.  If you
   specify all three (as non-NULL), the graphics environment is not used
-  at all.  Note that the meaning of \code{axp} alters very much when \code{log}
-  is \code{TRUE}, see the documentation on \code{\link{par}(xaxp=.)}.
+  at all.  Note that the meaning of \code{axp} differs significantly
+  when \code{log} is \code{TRUE}; see the documentation on
+  \code{\link{par}(xaxp=.)}.
 
   \code{axTicks()} can be regarded as an \R implementation  of the
   C function \code{CreateAtVector()} in \file{..../src/main/plot.c}
@@ -64,6 +69,27 @@ for(x in 9999*c(1,2,8)) {
     rug(T, col="red")
 }
 par(op)
+
+## An example using axTicks() without reference to an existing plot
+## (copying R's internal procedures for setting axis ranges etc.),
+## standard logarithmic y axis labels
+ylims <- c(0.2, 88)
+get_axp <- function(x) 10^c(ceiling(x[1]), floor(x[2]))
+## mimic par("yaxs")=="i"
+usr.i <- log10(ylims)
+(aT.i <- axTicks(side=2, usr=usr.i,
+                 axp=c(get_axp(usr.i), n=3), log=TRUE))
+## mimic (default) par("yaxs")=="r"
+usr.r <- extendrange(r = log10(ylims), f = 0.04)
+(aT.r <- axTicks(side=2, usr=usr.r,
+                 axp=c(get_axp(usr.r),3), log=TRUE))
+
+## Prove that we got it right :
+plot(0:1,ylims,log="y",yaxs="i")
+stopifnot(all.equal(aT.i, axTicks(side=2)))
+
+plot(0:1,ylims,log="y",yaxs="r")
+stopifnot(all.equal(aT.r, axTicks(side=2)))
 }
 \keyword{dplot}
 
