@@ -53,6 +53,7 @@ Sweave <- function(file, driver=RweaveLatex(),
     mode <- "doc"
     chunknr <- 0L
     chunk <- NULL
+    chunkopts <- NULL
 
     namedchunks <- list()
     for(linenum in seq_along(text)) {
@@ -106,19 +107,21 @@ Sweave <- function(file, driver=RweaveLatex(),
                 if(!(chunkref %in% names(namedchunks)))
                     warning(gettextf("reference to unknown chunk '%s'",
                                      chunkref), domain = NA)
-                namedchunk <- namedchunks[[chunkref]]
+                line <- namedchunks[[chunkref]]
                 # Record the last line of the chunk in the terminator
                 # so terminal comments can be echoed
-                namedlines <- attr(namedchunk, "srclines")
-                if (is.null(namedlines)) namedlines <- 0L
-                line <- c(namedchunk,
-                	  paste("#line ", namedlines[length(namedlines)],
-                	        ' "#pop named chunk#"', sep=""),
-                	  'stop("Internal Sweave error")',
-                          paste("#line ", linenum+1L, ' "', file, '"', sep=""))
-                #FIXME:  this should really be done through a more general
-                #        mechanism for adding non-executable info to the parse
-                line[1L] <- sub('"$', paste("#from line#", linenum, '#starts at#', namedlines[1], '#"', sep=""), line[1L])
+                chunklines <- attr(line, "srclines")
+                if (is.null(chunklines)) chunklines <- 0L
+                if (!is.null(keep.source <- chunkopts$keep.source) && keep.source) {
+		    #FIXME:  this should really be done through a more general
+		    #        mechanism for adding non-executable info to the parse
+		    line <- c(line,
+			      paste("#line ", chunklines[length(chunklines)],
+				    ' "#end named chunk#"', sep=""),
+			      'invisible(.Last.value) # End of chunk marker',
+			      paste("#line ", linenum+1L, ' "', file, '"', sep=""))
+		    line[1L] <- sub('"$', paste("#from line#", linenum, '#starts at#', chunklines[1], '#"', sep=""), line[1L])
+		}
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
@@ -516,7 +519,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 	  }
 
 	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#"
-	  popregexp   <- "#pop named chunk#"
+	  popregexp   <- "#end named chunk#"
 
           openSinput <- FALSE
           openSchunk <- FALSE
