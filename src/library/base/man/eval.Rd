@@ -1,6 +1,6 @@
 % File src/library/base/man/eval.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{eval}
@@ -28,7 +28,7 @@ local(expr, envir = new.env())
   \item{enclos}{Relevant when \code{envir} is a (pair)list or a data frame.
     Specifies the enclosure, i.e., where \R looks for objects not found
     in \code{envir}.  This can be \code{NULL} (interpreted as the base
-    package environment) or an environment.}
+    package environment, \code{\link{baseenv}()}) or an environment.}
   \item{n}{number of parent generations to go back}
 }
 \details{
@@ -69,7 +69,7 @@ local(expr, envir = new.env())
 }
 \value{
   The result of evaluating the object: for an expression vector this is
-  the result of evaluating the last elements.
+  the result of evaluating the last element.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
