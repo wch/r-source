@@ -2280,20 +2280,6 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     call = eval(call, envir);
 
-    /*
-    cptr = R_GlobalContext;
-    while (cptr->nextcontext != NULL) {
-	if (cptr->callflag & CTXT_FUNCTION ) {
-		if(cptr->cloenv == rho)
-		   break;
-	}
-    }
-    if( cptr->cloenv == rho )
-	call = eval(call, cptr->sysparent);
-    else
-	error(_("do.call: could not find parent environment"));
-    */
-
     UNPROTECT(1);
     return call;
 }
