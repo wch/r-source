@@ -400,6 +400,9 @@
       \item \code{Sweave()} with \code{keep.source=TRUE} could
       duplicate some lines and omit comments. (Reported by John
       Maindonald and others.)
+
+      \item \code{library()} failed to cache meta data (unlike
+      \code{loadNamespace()}) causing failures in packages without a namespace.
     }
   }
 }
