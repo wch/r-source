@@ -774,14 +774,16 @@ static void z_acos(Rcomplex *r, Rcomplex *z)
 	/* to agree with figure 4.4, p79.  Continuity */
 	/* on the branch cuts (pure imaginary axis; x==0, |y|>1) */
 	/* is standard: z_asin() is continuous from the right */
-	/*  if y >= 1, and continuous from the left if y <= -1.	*/
+	/* if y >= 1, and continuous from the left if y <= -1.	*/
 
 static void z_atan(Rcomplex *r, Rcomplex *z)
 {
-    double x, y;
+    double x, y, den;
     x = z->r;
     y = z->i;
-    r->r = 0.5 * atan(2 * x / ( 1 - x * x - y * y));
+    /* Fix for, e.g. atan(1i) */
+    den = 1 - x * x - y * y;
+    r->r = den == 0.0 ? 0.0 : 0.5 * atan(2 * x / den);
     r->i = 0.25 * log((x * x + (y + 1) * (y + 1)) /
 		      (x * x + (y - 1) * (y - 1)));
     if(x*x + y*y > 1) {
