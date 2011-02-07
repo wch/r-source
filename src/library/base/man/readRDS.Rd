@@ -22,7 +22,7 @@ readRDS(file, refhook = NULL)
     is saved to or read from.}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default except for text-mode connections), a
-    binary one is used.  See the commnents in the help for \code{\link{save}}.}
+    binary one is used.  See the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
@@ -64,7 +64,7 @@ readRDS(file, refhook = NULL)
 
 \note{
   Prior to \R 2.13.0 these functions were known as \code{.readRDS()} and
-  \code{.saveRDS()} andmarked as \sQuote{internal}.  Otherwise their
+  \code{.saveRDS()} and marked as \sQuote{internal}.  Otherwise their
   interface has been stable since \R 1.7.0, except that support for
   support for types of compression was added in \R 2.10.0 (previously
   only \code{"gzip"} was available).

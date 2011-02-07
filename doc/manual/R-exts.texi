@@ -9940,7 +9940,7 @@ HP-UX on Itanium) and not on little-endian systems (such as @code{i686}
 and @code{x86_64} on all OSes, and Linux on Alpha and Itanium).  It can
 be useful when manipulating binary files.  The macro
 @code{SUPPORT_OPENMP} is defined on suitable systems as from @R{}
-2.13.0, and can be used in conjuction with the @code{SUPPORT_OPENMP_*}
+2.13.0, and can be used in conjunction with the @code{SUPPORT_OPENMP_*}
 macros in packages that want to make use of OpenMP.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})

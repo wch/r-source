@@ -2146,7 +2146,7 @@ if it defaults to @samp{C}.
 Internally Mac OS X uses a form similar to Linux but without specifying
 the encoding (which is normally @code{UTF-8}).  It is based on ICU
 locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
-XPG ones, but utilties such as @code{Sys.setlocale()} do now normally
+XPG ones, but utilities such as @code{Sys.setlocale()} do now normally
 accept XPG forms.
 
 

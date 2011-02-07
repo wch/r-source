@@ -23,7 +23,7 @@ unserialize(connection, refhook = NULL)
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise binary one.  The default is \code{TRUE} for a
     text-mode connection and \code{FALSE} otherwise.
-    See also the commnents in the help for \code{\link{save}}.}
+    See also the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}

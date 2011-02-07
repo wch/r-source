@@ -5,7 +5,7 @@
 
 \name{promptData}
 \alias{promptData}
-\title{Generate Outiine Documentation for a Data Set}
+\title{Generate Outline Documentation for a Data Set}
 \description{
   Generates a shell of documentation for a data set.
 }
