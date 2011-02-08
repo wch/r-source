@@ -172,8 +172,8 @@ get_exclude_patterns <- function()
             "  --install-args=       command-line args to be passed to INSTALL,",
             "                        separated by spaces",
             "  --resave-data=        re-save data files as compactly as possible",
-            '                        "no" (default), "best", "gzip"',
-            "  --noresave-data",
+            '                        "no", "best", "gzip" (default)',
+            "  --noresave-data       same as --reave-data=no",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -543,7 +543,7 @@ get_exclude_patterns <- function()
         if (!length(dataFiles)) return()
         Rs <- grep("\\.[Rr]$", dataFiles, value = TRUE)
         if (length(Rs)) { # these might use .txt etc
-            messageLog(Log, "re-saving .R files")
+            messageLog(Log, "re-saving .R files as .rda")
             ## ensure utils is visible
             library("utils")
             lapply(Rs, function(x){
@@ -592,7 +592,7 @@ get_exclude_patterns <- function()
     binary <- FALSE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
-    resave_data <- "no"
+    resave_data <- "gzip"
     pkgs <- character()
     options(showErrorCalls=FALSE, warn = 1)
 

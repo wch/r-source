@@ -259,11 +259,13 @@
       \command{R CMD INSTALL} for \option{--build} (but not when
       installing to rebuild vignettes).
 
-      There is another new option, \option{--resave-data}, to call
+      There is new option, \option{--resave-data}, to call
       \code{tools::resaveRdaFiles()} on the \file{data} directory, to
       compress tabular files (\file{.tab}, \file{.csv} etc) and to
-      convert \file{.R} files to \file{.rda} files.  This is likely to
-      become the default.
+      convert \file{.R} files to \file{.rda} files.  The default,
+      \option{--resave-data=gzip}, is to do so in a way compatible even
+      with years-old versions of \R, but better compression is given by
+      \option{--resave-data=best}, requiring \R >= 2.10.0.
 
       It now adds a \file{datalist} file for \file{data} directories of
       more than 1Mb.
@@ -275,9 +277,9 @@
 
       It checks for inefficiently saved \file{data/*.rda} and
       \file{data/*.RData} files, and reports on those large than 100Kb.
-      A more complete check (including of the type of compression) can be
-      switched on by setting environment variable
-      \env{_R_CHECK_COMPACT_DATA2_}.
+      A more complete check (including of the type of compression, but
+      potentially much slower) can be switched on by setting environment
+      variable \env{_R_CHECK_COMPACT_DATA2_} to \samp{TRUE}.
 
       The types of files in the \code{data} directory are now checked,
       as packages as \emph{still} misusing it for non-\R data files.
