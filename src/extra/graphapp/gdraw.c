@@ -540,6 +540,7 @@ void gfillpolypolygon(drawing d, rgb fill, point *p, int npoly, int *nper)
 void gdrawimage(drawing d, image img, rect dr, rect sr)
 {
     HDC dc = GETHDC(d);
+    HDC bc;
     bitmap b;
     image i = img;
 
@@ -551,9 +552,20 @@ void gdrawimage(drawing d, image img, rect dr, rect sr)
     }
 
     b = imagetobitmap(i);
+    /* The next line assumes that the context returned is a NEW
+       context, but that should be ok because the object 'b'
+       has just been created in the line above, which means
+       that get_context() should create a new context. */
+    bc = get_context(b);
 
-    BitBlt(dc, dr.x, dr.y, dr.width, dr.height, 
-           get_context(b), sr.x, sr.y, SRCCOPY);
+    BitBlt(dc, dr.x, dr.y, dr.width, dr.height,
+           bc, sr.x, sr.y, SRCCOPY);
+
+    /* DO NOT rely on the del() mechanism to (eventually) clean up
+       the context 'bc' (via deletion_traversal() in objects.c).
+       That leads to running out of contexts (see MAX_CONTEXTS
+       in contexts.c).  Instead, explicitly dispose of the context here */
+    del_context(b);
 
     if (i != img)
 	del(i);
@@ -567,6 +579,7 @@ void gdrawimage(drawing d, image img, rect dr, rect sr)
 void gmaskimage(drawing d, image img, rect dr, rect sr, image mask)
 {
     HDC dc = GETHDC(d);
+    HDC bc, mbc, mbwc;
     bitmap b, mb, mbw;
     image i = img;
     image m = mask;
@@ -581,15 +594,23 @@ void gmaskimage(drawing d, image img, rect dr, rect sr, image mask)
 
     b = imagetobitmap(i);
     mb = imagetobitmap(m);
-
     mbw = newbitmap(dr.width, dr.height, 1);
-    BitBlt(get_context(mbw), sr.x, sr.y, sr.width, sr.height, 
-           get_context(mb), sr.x, sr.y, SRCCOPY);
-    
-    MaskBlt(dc, dr.x, dr.y, dr.width, dr.height, 
-            get_context(b), sr.x, sr.y, 
+
+    bc = get_context(b);
+    mbc = get_context(mb);
+    mbwc = get_context(mbw);
+
+    BitBlt(mbwc, sr.x, sr.y, sr.width, sr.height,
+           mbc, sr.x, sr.y, SRCCOPY);
+
+    MaskBlt(dc, dr.x, dr.y, dr.width, dr.height,
+            bc, sr.x, sr.y,
             (HBITMAP) mbw->handle, 0, 0,
             MAKEROP4(SRCCOPY, SRCAND));
+
+    del_context(b);
+    del_context(mb);
+    del_context(mbw);
 
     if (i != img)
 	del(i);
