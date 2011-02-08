@@ -54,11 +54,9 @@ atan2(y, x)
    axis: \eqn{\left(-\infty i, -1i\right]}{(-1i*Inf, -1i]} and
    \eqn{\left[1i, \infty i\right)}{[1i, 1i*Inf)}.
 
-   The behaviour on the cuts depends on the implementation (usually from
-   the OS).  Most implementations use continuity from one side of the
-   cut (but may differ as to which side: the C99 standard mandates
-   continuity coming round the endpoint in a counter-clockwise
-   direction, but current implementations often do not do so).
+   The behaviour actually on the cuts follows the C99 standard which
+   requires continuity coming round the endpoint in a counter-clockwise
+   direction.
 }
 \section{S4 methods}{
   All except \code{atan2} are S4 generic functions: methods can be defined

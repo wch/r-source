@@ -34,11 +34,10 @@ atanh(x)
    \code{\link[=S3groupGeneric]{Math}} group generic.
 
    Branch cuts are consistent with the inverse trigonometric functions
-   \code{asin} \emph{et seq}, and agree with those defined in Abramowitz and
-   Stegun, figure 4.7, page 86.  However, the behaviour on a cut is
-   platform-dependent: the C99 standard mandates continuity coming round
-   the endpoint in a counter-clockwise direction, but current
-   implementations often do not do so.
+   \code{asin} \emph{et seq}, and agree with those defined in Abramowitz
+   and Stegun, figure 4.7, page 86.   The behaviour actually on the cuts
+   follows the C99 standard which requires continuity coming round the
+   endpoint in a counter-clockwise direction.
 }
 \section{S4 methods}{
   All are S4 generic functions: methods can be defined

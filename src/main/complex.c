@@ -23,6 +23,9 @@
 #include <config.h>
 #endif
 
+/* Note: gcc warns in several places about C99 features as extensions.
+   This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263 */
+
 #if 0
 /* For testing missing fns */
 #undef HAVE_CEXP
@@ -37,18 +40,6 @@
 #undef HAVE_CSINH
 #undef HAVE_CCOSH
 #undef HAVE_CTANH
-#undef HAVE_CASINH
-#undef HAVE_CACOSH
-#undef HAVE_CATANH
-#endif
-
-#ifdef Win32
-/* Have these, but do not work for cabs(z) > 1, 
-   or at least actually on the branch cuts */
-#undef HAVE_CASIN
-#undef HAVE_CACOS
-#undef HAVE_CASINH
-#undef HAVE_CACOSH
 #endif
 
 #ifndef HAVE_HYPOT
@@ -83,7 +74,7 @@ static R_INLINE double complex toC99(Rcomplex *x)
     __imag__ ans = x->i;
     return ans;
 #else
-    /* gcc 4.2.1 incorrectly reports this as a GNU extension: it is C99.
+    /* gcc incorrectly reports this as a GNU extension.
        And it seems that gcc on some platforms (e.g. AIX) does not
        handle this correctly with the platform's complex.h. */
     return x->r + x->i * I;
@@ -443,41 +434,16 @@ void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
     }
 }
 
-#ifndef HAVE_CTAN
-#define ctan R_ctan
-static double complex ctan(double complex z)
-{
-    /* A&S 4.3.57 */
-    double x2, y2, den, ri;
-    x2 = 2.0 * creal(z);
-    y2 = 2.0 * cimag(z);
-    den = cos(x2) + cosh(y2);
-    /* any threshold between -log(DBL_EPSILON) and log(DBL_XMAX) will do*/
-    if (ISNAN(y2) || fabs(y2) < 50.0) ri = sinh(y2)/den;
-    else ri = (y2 < 0 ? -1.0 : 1.0);
-    return sin(x2)/den + ri * I;
-}
-#endif
+/* These substitute functions are rarely used, and not extensively
+   tested, e.g. over CRAN.  Please do not change without very good
+   reason!
 
-static double complex z_tan(double complex z)
-{
-    double y = cimag(z);
-    double complex r = ctan(z);
-    if(R_FINITE(y) && fabs(y) > 25.0) {
-	/* at this point the real part is nearly zero, and the
-	   imaginary part is one: but some OSes get the imag as NaN */
-#if __GNUC__
-	__imag__ r = y < 0 ? -1.0 : 1.0;
-#else
-	r = creal(r) + (y < 0 ? -1.0 : 1.0) * I;
-#endif
-    }
-    return r;
-}
+   Currently (Feb 2011) they are used on FreeBSD.
+*/
 
 #ifndef HAVE_CLOG
 #define clog R_clog
-/* FIXME: add full IEC60559 support */
+/* FIXME: maybe add full IEC60559 support */
 static double complex clog(double complex x)
 {
     double xr = creal(x), xi = cimag(x);
@@ -522,6 +488,22 @@ static double complex csin(double complex x)
 }
 #endif
 
+#ifndef HAVE_CTAN
+#define ctan R_ctan
+static double complex ctan(double complex z)
+{
+    /* A&S 4.3.57 */
+    double x2, y2, den, ri;
+    x2 = 2.0 * creal(z);
+    y2 = 2.0 * cimag(z);
+    den = cos(x2) + cosh(y2);
+    /* any threshold between -log(DBL_EPSILON) and log(DBL_XMAX) will do*/
+    if (ISNAN(y2) || fabs(y2) < 50.0) ri = sinh(y2)/den;
+    else ri = (y2 < 0 ? -1.0 : 1.0);
+    return sin(x2)/den + ri * I;
+}
+#endif
+
 #ifndef HAVE_CASIN
 #define casin R_casin
 static double complex casin(double complex z)
@@ -535,18 +517,9 @@ static double complex casin(double complex z)
     /* This comes from 
        'z_asin() is continuous from below if x >= 1
         and continuous from above if x <= -1.'
-	Other implementations do not agree: some even have the
-	values on the cuts as errors.
     */
     if(y < 0 || (y == 0 && x > 1)) ri *= -1;
-# ifdef __GNUC__
-    double complex r;
-    __real__ r = asin(t1  - t2);
-    __imag__ r = ri;
-    return r;
-# else
     return asin(t1  - t2) + ri*I;
-# endif
 }
 #endif
 
@@ -560,21 +533,13 @@ static double complex cacos(double complex z)
 
 #ifndef HAVE_CATAN
 #define catan R_catan
-/* One critical case is atan(1i) */
 static double complex catan(double complex z)
 {
     double x = creal(z), y = cimag(z), rr, ri;
     rr = 0.5 * atan2(2 * x, (1 - x * x - y * y));
     ri = 0.25 * log((x * x + (y + 1) * (y + 1)) /
 		    (x * x + (y - 1) * (y - 1)));
-#ifdef __GNUC__
-    double complex r;
-    __real__ r = rr;
-    __imag__ r = ri;
-    return r;
-#else
-    return rr + ri*I; /* which may give NaNs */
-#endif
+    return rr + ri*I;
 }
 #endif
 
@@ -602,48 +567,69 @@ static double complex ctanh(double complex z)
 }
 #endif
 
-#ifndef HAVE_CASINH
-#define casinh R_casinh
-static double complex casinh(double complex z)
+static double complex z_tan(double complex z)
 {
-# ifdef __GNUC__
-    double complex a, b, r;
-    __real__ b = -cimag(z);
-    __imag__ b = creal(z);
-    a = casin(b);
-    __real__ r = cimag(a);
-    __imag__ r = -creal(a);
+    double y = cimag(z);
+    double complex r = ctan(z);
+    if(R_FINITE(y) && fabs(y) > 25.0) {
+	/* at this point the real part is nearly zero, and the
+	   imaginary part is one: but some OSes get the imag as NaN */
+#if __GNUC__
+	__imag__ r = y < 0 ? -1.0 : 1.0;
+#else
+	r = creal(r) + (y < 0 ? -1.0 : 1.0) * I;
+#endif
+    }
     return r;
-# else
-    return -I * casin(z * I);  /* A&S 4.6.14 */
-#endif
 }
-#endif
 
-#ifndef HAVE_CACOSH
-#define cacosh R_cacosh
-static double complex cacosh(double complex z)
+/* Don't rely on the OS at the branch cuts */
+
+static double complex z_asin(double complex z)
 {
-    double complex a = cacos(z);
-# ifdef __GNUC__
-    double complex r;
-    __real__ r = -cimag(a);
-    __imag__ r = creal(a);
-    return r;
-# else
-    return  a * I; /* A&S 4.6.15, has +/- */
-# endif
+    if(cimag(z) == 0 && fabs(creal(z)) > 1) {
+	double alpha, t1, t2, x = creal(z), ri;
+	t1 = 0.5 * fabs(x + 1);
+	t2 = 0.5 * fabs(x - 1);
+	alpha = t1 + t2;
+	ri = log(alpha + sqrt(alpha*alpha - 1));
+	if(x > 1) ri *= -1;
+	return asin(t1  - t2) + ri*I;
+    }
+    return casin(z);
 }
-#endif
 
-#ifndef HAVE_CATANH
-#define catanh R_catanh
-static double complex catanh(double complex z)
+static double complex z_acos(double complex z)
 {
-    return -I * catan(z * I);  /* A&S 4.6.16 */
+    if(cimag(z) == 0 && fabs(creal(z)) > 1) return M_PI_2 - z_asin(z);
+    return cacos(z);
 }
-#endif
 
+static double complex z_atan(double complex z)
+{
+    if(creal(z) == 0 && fabs(cimag(z)) > 1) {
+	double y = cimag(z), rr, ri;
+	rr = (y > 0) ? M_PI_2 : -M_PI_2;
+	ri = 0.25 * log(((y + 1) * (y + 1))/((y - 1) * (y - 1)));
+	return rr + ri*I;
+    }
+    return catan(z);
+}
+
+static double complex z_acosh(double complex z)
+{
+    return z_acos(z) * I;
+}
+
+static double complex z_asinh(double complex z)
+{
+    return -I * z_asin(z * I);
+}
+
+static double complex z_atanh(double complex z)
+{
+    return -I * z_atan(z * I);
+}
 
 typedef double complex (*cm1_fun)(double complex);
 static Rboolean cmath1(double complex (*f)(double complex),
@@ -679,15 +665,15 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 20: naflag = cmath1(ccos, COMPLEX(x), COMPLEX(y), n); break;
     case 21: naflag = cmath1(csin, COMPLEX(x), COMPLEX(y), n); break;
     case 22: naflag = cmath1(z_tan, COMPLEX(x), COMPLEX(y), n); break;
-    case 23: naflag = cmath1(cacos, COMPLEX(x), COMPLEX(y), n); break;
-    case 24: naflag = cmath1(casin, COMPLEX(x), COMPLEX(y), n); break;
-    case 25: naflag = cmath1(catan, COMPLEX(x), COMPLEX(y), n); break;
+    case 23: naflag = cmath1(z_acos, COMPLEX(x), COMPLEX(y), n); break;
+    case 24: naflag = cmath1(z_asin, COMPLEX(x), COMPLEX(y), n); break;
+    case 25: naflag = cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
     case 30: naflag = cmath1(ccosh, COMPLEX(x), COMPLEX(y), n); break;
     case 31: naflag = cmath1(csinh, COMPLEX(x), COMPLEX(y), n); break;
     case 32: naflag = cmath1(ctanh, COMPLEX(x), COMPLEX(y), n); break;
-    case 33: naflag = cmath1(cacosh, COMPLEX(x), COMPLEX(y), n); break;
-    case 34: naflag = cmath1(casinh, COMPLEX(x), COMPLEX(y), n); break;
-    case 35: naflag = cmath1(catanh, COMPLEX(x), COMPLEX(y), n); break;
+    case 33: naflag = cmath1(z_acosh, COMPLEX(x), COMPLEX(y), n); break;
+    case 34: naflag = cmath1(z_asinh, COMPLEX(x), COMPLEX(y), n); break;
+    case 35: naflag = cmath1(z_atanh, COMPLEX(x), COMPLEX(y), n); break;
 
     default:
 	/* such as sign, gamma */
