@@ -210,10 +210,10 @@ static double complex mycpow (double complex X, double complex Y)
 }
 #else
 /* reason for this:
- * 1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
- [FIXME: But is that not actualy correct?: 1/(0+0i) == Inf+NaNi]
- * 2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate in glibc;
- *	cut-off 65536 : guided from empirical speed measurements
+  1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
+     [FIXME: But is that not actually correct?: 1/(0+0i) == Inf+NaNi]
+  2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate in glibc;
+       cut-off 65536 : guided from empirical speed measurements
  */
 
 static double complex mycpow (double complex X, double complex Y)
