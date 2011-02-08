@@ -24,7 +24,9 @@
 #endif
 
 /* Note: gcc warns in several places about C99 features as extensions.
-   This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263 */
+   This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
+   Not seen on all OSes, but seen on MinGW and Mac OS X headers.
+*/
 
 #if 0
 /* For testing missing fns */
@@ -61,6 +63,14 @@ static R_INLINE double fsign_int(double x, double y)
 #include "arithmetic.h"		/* complex_*  */
 #include <complex.h>
 
+/* GCC has problems with header files on e.g. Solaris.
+   Probably needed elsewhere, e.g. AIX */
+#if defined(__GNUC__) && defined(__sun__)
+# undef  I
+# define I (__extension__ 1.0iF)
+#endif
+
+
 #ifdef HAVE_COMPATIBLE_C99_COMPLEX
 # define toC99(x) *((double complex *) x)
 # define C99_COMPLEX2(x, i) (((double complex *) COMPLEX(x))[i])
@@ -74,9 +84,6 @@ static R_INLINE double complex toC99(Rcomplex *x)
     __imag__ ans = x->i;
     return ans;
 #else
-    /* gcc incorrectly reports this as a GNU extension.
-       And it seems that gcc on some platforms (e.g. AIX) does not
-       handle this correctly with the platform's complex.h. */
     return x->r + x->i * I;
 #endif
 }
@@ -204,7 +211,7 @@ static double complex mycpow (double complex X, double complex Y)
  [FIXME: But is that not actualy correct?: 1/(0+0i) == Inf+NaNi]
  * 2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate in glibc;
  *	cut-off 65536 : guided from empirical speed measurements
-*/
+ */
 
 static double complex mycpow (double complex X, double complex Y)
 {
@@ -631,7 +638,6 @@ static double complex z_atanh(double complex z)
     return -I * z_atan(z * I);
 }
 
-typedef double complex (*cm1_fun)(double complex);
 static Rboolean cmath1(double complex (*f)(double complex),
 		       Rcomplex *x, Rcomplex *y, int n)
 {
