@@ -1857,6 +1857,13 @@ a @file{inst/doc/html/index.html} file it should contain relative links
 only to files under the installed @file{doc} directory, or perhaps (not
 really an index) to HTML help files or to the @file{DESCRIPTION} file.
 
+Do watch that vignettes are not too large -- one in a @acronym{CRAN}
+package was 72Mb!  This is usually caused by the inclusion of overly
+detailed figures, which will not render well in PDF viewers.  Sometimes
+it is much better generate fairly high resolution bitmap (PNG, JPEG)
+figures and include those in the PDF document.
+
+
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
 @cindex CRAN
@@ -1923,6 +1930,18 @@ Many aspects of help rendering changed in @R{} 2.10.0, and in particular
 the interpretation of comment lines (which are rendered as blank lines,
 so do not put comment lines in the middle of a paragraph of text).
 
+@item
+Ensure that the package sources are not unnecessarily large.  In
+particular, in @R{} >= 2.13.0 @command{R CMD check} will warn about
+inefficient compression of data if environment variable
+@env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}, or @command{R CMD
+build --resave-data} will compact data as best it can.  Watch out for
+unnecessary files in @file{inst/data}: for example @file{Rplots.ps} or
+@file{Rplots.pdf} left over from @code{Sweave} runs.  As a general rule,
+@file{doc} directories should not exceed 5Mb, and where @file{data}
+directories need to be 10Mb or more, consideration should be given to a
+separate package containing just the data.  (Similarly for large
+@file{jar} files and other libraries that need to be installed.)
 @end enumerate
 
 @noindent
