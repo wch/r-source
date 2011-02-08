@@ -289,7 +289,7 @@ veryclean: distclean
 	  ../../doc/html/resources.html ../../doc/html/NEWS.html \
 	  ../../SVN-REVISION # not in SVN sources
 
-cleanwin:
+cleanwin: MkRules fixfiles
 	$(RM) *.o *.dll *.a *~ \#*\# .RData .Rhistory Makedeps *.d
 	$(MAKE) -C ../extra/graphapp -f Makefile.win clean
 	$(MAKE) -C fixed clean

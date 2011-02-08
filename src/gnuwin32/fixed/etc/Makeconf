@@ -37,6 +37,8 @@ NM = $(BINPREF)nm
 RESCOMP = $(BINPREF)windres
 ## MAIN_LD needs to be set by the package
 LINKER=$(MAIN_LD)
+## as a default
+DLL=$(CC)
 
 ## Things defined in Renviron on Unix
 AWK = gawk
