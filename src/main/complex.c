@@ -25,7 +25,7 @@
 
 /* Note: gcc warns in several places about C99 features as extensions.
    This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
-   Not seen on all OSes, but seen on MinGW and Mac OS X headers.
+   The system <complex.h> header can work around it: some do.
 */
 
 #if 0
@@ -64,8 +64,11 @@ static R_INLINE double fsign_int(double x, double y)
 #include <complex.h>
 
 /* GCC has problems with header files on e.g. Solaris.
-   Probably needed elsewhere, e.g. AIX */
-#if defined(__GNUC__) && defined(__sun__)
+   That OS defines the imaginary type, but GCC does not.
+   Probably needed elsewhere, e.g. AIX.
+   And use on Win32 suppresses warnings.
+*/
+#if defined(__GNUC__) && (defined(__sun__) || defined(Win32))
 # undef  I
 # define I (__extension__ 1.0iF)
 #endif
