@@ -403,6 +403,9 @@
 
       \item \code{library()} failed to cache meta data (unlike
       \code{loadNamespace()}) causing failures in packages without a namespace.
+
+      \item The one- and two-argument complex maths functions failed to
+      warn if NAs were generated (as their numeric analogues do).
     }
   }
 }
