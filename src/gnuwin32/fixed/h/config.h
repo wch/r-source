@@ -83,9 +83,6 @@
 /* Define to 1 if you have the `cacos' function. */
 #define HAVE_CACOS 1
 
-/* Define to 1 if you have the `cacosh' function. */
-#define HAVE_CACOSH 1
-
 /* Define to 1 if you have cairo-ps. */
 /* #undef HAVE_CAIRO_PDF */
 
@@ -101,14 +98,8 @@
 /* Define to 1 if you have the `casin' function. */
 #define HAVE_CASIN 1
 
-/* Define to 1 if you have the `casinh' function. */
-#define HAVE_CASINH 1
-
 /* Define to 1 if you have the `catan' function. */
 #define HAVE_CATAN 1
-
-/* Define to 1 if you have the `catanh' function. */
-#define HAVE_CATANH 1
 
 /* Define to 1 if you have the `ccos' function. */
 #define HAVE_CCOS 1

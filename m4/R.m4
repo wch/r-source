@@ -3407,8 +3407,7 @@ AC_DEFUN([R_C99_COMPLEX],
   fi
 ])
 R_CHECK_FUNCS([cabs carg cexp clog csqrt cpow ccos csin ctan \
-	       cacos casin catan \
-	       ccosh csinh ctanh cacosh casinh catanh], 
+	       cacos casin catan ccosh csinh ctanh], 
                [#include <complex.h>])
 dnl Now check if the representation is the same as Rcomplex
 AC_CACHE_CHECK([whether C99 double complex is compatible with Rcomplex],
