@@ -417,6 +417,24 @@
 }
 
 \section{CHANGES IN R VERSION 2.12.1 patched}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Complex arithmetic (notably \code{z^n} for complex \code{z}
+      and integer \code{n}) gave incorrect results since \R 2.10.0 on
+      platforms without complex C99 complex support.  This and some
+      lesser issues in trignometric functions have been corrected.
+
+      Such platforms were rare (Cygwin, and apparently FreeBSD).
+      However, because of new optimizations in the way complex arguments
+      are handled, the same code was selected on x86_64 Linux
+      with \command{gcc 4.5.x} at the default \code{-O2} optimization
+      (but not at \code{-O}).
+
+      \item There is a workaround for crashes seen with several packages
+      on systems using \samp{zlib 1.2.5}: see the INSTALLATION section.
+    }
+  }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item PCRE has been updated to 8.12 (two bug-fix releases since 8.10).
@@ -530,13 +548,6 @@
 
       \item \code{format(*, zero.print)} did not always replace the full
       zero parts.
-
-      \item Since \R 2.10.0, \code{z^n} was computed incorrectly for
-      \code{n >= 3} and \code{n <= -3} on platforms for which the macro
-      \samp{HAVE_C99_COMPLEX} was not defined.  Such platforms have been
-      rare (but apparently included FreeBSD), but now include x86_64
-      Linux with \command{gcc 4.5.x} at the default \code{-O2}
-      optimization (but not at \code{-O}).
 
       \item Fixes for subsetting or subassignment of \code{"raster"}
       objects when not both \code{i} and \code{j} are specified.
