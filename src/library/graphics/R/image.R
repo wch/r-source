@@ -24,7 +24,8 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 		   ylim = range(y),
 		   col = heat.colors(12), add = FALSE,
 		   xaxs = "i", yaxs = "i", xlab, ylab,
-                   breaks, oldstyle=FALSE, ...)
+                   breaks, oldstyle=FALSE, 
+                   useRaster = FALSE, ...)
 {
     if (missing(z)) {
 	if (!missing(x)) {
@@ -97,5 +98,24 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
     if (length(y) <= 1) y <- par("usr")[3:4]
     if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
         stop("dimensions of z are not length(x)(-1) times length(y)(-1)")
-    .Internal(image(as.double(x), as.double(y), as.integer(zi), col))
+    if (useRaster) {
+        # check that the grid is regular
+        dx <- diff(x)
+        dy <- diff(y)
+        if ((length(dx) && !isTRUE(all.equal(dx, rep(dx[1], length(dx))))) ||
+            (length(dy) && !isTRUE(all.equal(dy, rep(dy[1], length(dy))))))
+            stop("useRaster=TRUE can only be used with a regular grid")
+        # this is the same logic as used in do_col2RGB
+        if (!is.character(col)) {
+            p <- palette()
+            pl <- length(p)
+            col <- p[((as.integer(col) - 1L) %% pl) + 1L]
+        }
+        zc <- col[zi + 1L]
+        dim(zc) <- dim(z)
+        zc <- t(zc)[ncol(zc):1L,]
+        rasterImage(as.raster(zc),
+                    min(x), min(y), max(x), max(y),
+                    interpolate=FALSE)
+    } else .Internal(image(as.double(x), as.double(y), as.integer(zi), col))
 }

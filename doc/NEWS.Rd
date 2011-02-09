@@ -233,6 +233,11 @@
       value.
 
       \item xz has been updated to 5.0.1 (very minor bugfix release).
+
+      \item \code{image()} has gained a logical \code{useRaster}
+      argument allowing it to use a bitmap raster for plotting a
+      regular grid instead of polygons. This can be more efficient, but
+      may not be supported by all devices. The default is \code{FALSE}.
     }
   }
 

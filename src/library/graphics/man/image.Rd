@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{image}
@@ -12,7 +12,7 @@ image(x, \dots)
 
 \method{image}{default}(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
-      breaks, oldstyle = FALSE, \dots)
+      breaks, oldstyle = FALSE, useRaster = FALSE, \dots)
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -38,7 +38,7 @@ image(x, \dots)
     \code{\link{topo.colors}}, \code{\link{terrain.colors}} or similar
     functions.}
   \item{add}{logical; if \code{TRUE}, add to current plot (and disregard
-    the following arguments).  This is rarely useful because
+    the following four arguments).  This is rarely useful because
     \code{image} \sQuote{paints} over existing graphics.}
   \item{xaxs, yaxs}{style of x and y axis.  The default \code{"i"} is
     appropriate for images.  See \code{\link{par}}.}
@@ -51,6 +51,9 @@ image(x, \dots)
     are equally spaced, and \code{zlim[1]} and \code{zlim[2]} were taken
     to be midpoints.  The default is to have colour intervals of equal
     lengths between the limits.}
+  \item{useRaster}{logical; if \code{TRUE} a bitmap raster is used to
+    plot the image instead of polygons. The grid must be regular in that
+    case, otherwise an error is raised.}
   \item{\dots}{graphical parameters for \code{\link{plot}} may also be
     passed as arguments to this function, as can the plot aspect ratio
     \code{asp} and \code{axes} (see \code{\link{plot.window}}).}
@@ -90,6 +93,10 @@ image(x, \dots)
   number and the y axis to column number, with column 1 at the bottom,
   i.e. a 90 degree counter-clockwise rotation of the conventional
   printed layout of a matrix.
+
+  Images for large \code{z} on a regular grid are more efficient with
+  \code{useRaster} enabled and can prevent rare anti-aliasing artifacts,
+  but may not be supported by all graphics devices.
 }
 \note{
   Based on a function by Thomas Lumley
