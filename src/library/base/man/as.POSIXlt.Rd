@@ -72,7 +72,7 @@ as.POSIXlt(x, tz = "", \dots)
   If \code{format} is specified, remember that some of the format
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
-  \code{\link{Sys.setlocale}}.  This most often affecs the use of
+  \code{\link{Sys.setlocale}}.  This most often affects the use of
   \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
   
   Logical \code{NA}s can be converted to either of the classes, but no
@@ -83,12 +83,30 @@ as.POSIXlt(x, tz = "", \dots)
 
   If you are given a numeric time as the number of seconds since an
   epoch, see the examples.
+
+  Character input is first converted to class \code{"POSIXlt"} by
+  \code{\link{strptime}}: numeric input is first converted to
+  \code{"POSIXct"}.  Any conversion that needs to go between the two
+  date-time classes requires a timezone: conversion from
+  \code{"POSIXlt"} to \code{"POSIXct"} will validate times in the
+  selected timezone.  One issue is what happens at transitions
+  to and from DST, for example in the UK
+\preformatted{
+  as.POSIXct(strptime('2011-03-27 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
+  as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
+}
+  are respectively invalid (the clocks went forward at 1:00 GMT to 2:00
+  BST) and ambiguous (the clocks went back at 2:00 BST to 1:00 GMT).  What
+  happens in such cases is OS-specific: one should expect the first to
+  be \code{NA}, but the second could be interpreted as either BST or
+  GMT (and common OSes give both possible values).
 }
 
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
   appropriate class.  If \code{tz} was specified, \code{as.POSIXlt}
-  will give an appropriate \code{"tzone"} attribute.
+  will give an appropriate \code{"tzone"} attribute.  Date-times known
+  to be invalid will be returned as \code{NA}.
 }
 \note{
   If you want to extract specific aspects of a time (such as the day of
