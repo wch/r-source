@@ -1953,30 +1953,31 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         if(!nzchar("du")) return()
         checkingLog(Log, "installed package size")
-        owd <- setwd(pkgdir)
+        owd <- setwd(file.path(libdir, pkgname))
         res <- system2("du", , TRUE,TRUE)
         res2 <- read.table(con <- textConnection(res),
                            header = FALSE, as.is = FALSE); close(con)
         total <- res2[nrow(res2), 1L]
-        rest <- res2[-nrow(res2), ]
-        rest[,2] <- sub("./", "", rest[, 2L])
-        rest <- rest[!grepl("/", rest[, 2L]), ]
-        rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
-        if(total > 1024) {
+        if(total > 1024*5) {
             resultLog(Log, "NOTE")
             printLog(Log, sprintf("  installed size is %4.1fMb\n",
                                   total/1024))
+            rest <- res2[-nrow(res2), ]
+            rest[,2] <- sub("./", "", rest[, 2L])
+            rest <- rest[!grepl("/", rest[, 2L]), ]
+            rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
+            if(nrow(rest)) {
+                tf <- tempfile()
+                printLog(Log, "  sub-directories of 1Mb or more:\n")
+                res <- data.frame(dir = rest[,2L],
+                                  size = sprintf('%4.1fMb', rest[,1L]/1024))
+                sink(tf)
+                print(res, row.names = FALSE)
+                sink()
+                printLog(Log, paste("    ", readLines(tf), "\n", sep=""))
+                unlink(tf)
+            }
         } else resultLog(Log, "OK")
-        if(nrow(rest)) {
-            tf <- tempfile()
-            printLog(Log, "  sub-directories of 1Mb or more:\n")
-            res <- data.frame(dir = rest[,2L],
-                              size = sprintf('%4.1fMb', rest[,1L]/1024))
-            sink(tf)
-            print(res, row.names = FALSE)
-            sink()
-            printLog(Log, paste("    ", readLines(tf), "\n", sep=""))
-        }
         setwd(owd)
     }
 
