@@ -1,6 +1,6 @@
 % File src/library/stats/man/loess.control.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{loess.control}
@@ -13,7 +13,7 @@ loess.control(surface = c("interpolate", "direct"),
 }
 \alias{loess.control}
 \arguments{
- \item{surface}{should be fitted surface be computed exactly or via
+ \item{surface}{should the fitted surface be computed exactly or via
    interpolation from a kd tree?}
  \item{statistics}{should the statistics be computed exactly or
    approximately? Exact computation can be very slow.}

@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -28,13 +28,9 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   }
   \item{fixed}{
     logical.  If \code{TRUE} match \code{split} exactly, otherwise
-    use regular expressions.  Has priority over \code{perl} and
-    \code{extended}.
+    use regular expressions.  Has priority over \code{perl}.
   }
-  \item{perl}{
-    logical.  Should perl-compatible regexps be used?
-    Has priority over \code{extended}.
-  }
+  \item{perl}{logical.  Should perl-compatible regexps be used?}
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character, and inputs with
     marked encodings are not converted.}
@@ -70,7 +66,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   Note that this means that if there is a match at the beginning of a
   (non-empty) string, the first element of the output is \code{""}, but
   if there is a match at the end of the string, the output is the same
-  as with the match removed. 
+  as with the match removed.
 }
 \value{
   A list of the same length as \code{x}, the \code{i}-th element of which

@@ -15,11 +15,11 @@
 #  http://www.r-project.org/Licenses/
 
 ## Copyright (C) 1997-1999  Adrian Trapletti
-## Copyright (C) 1999-2006  The R Development Core Team
+## Copyright (C) 1999-2010  The R Development Core Team
 ## This version distributed under LGPL (version 2 or later)
 
 
-kernel <- function (coef, m = length(coef)+1, r, name="unknown")
+kernel <- function (coef, m = 2, r, name="unknown")
 {
     mkName <- function(name, args)
         paste(name,"(", paste(args, collapse=","), ")", sep="")
@@ -86,10 +86,11 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
                modified.daniell = modified.daniell.kernel(m),
                stop("unknown named kernel"))
     } else {
-        if (!is.vector(coef))
+        if (!is.numeric(coef))
             stop ("'coef' must be a vector")
-        if ((length(coef) != m+1) | (length(coef) <= 0L))
+        if (length(coef) < 1L)
             stop ("'coef' does not have the correct length")
+        m <- length(coef) - 1L
         kernel <- list (coef=coef, m=m)
         attr(kernel, "name") <- name
         class(kernel) <- "tskernel"

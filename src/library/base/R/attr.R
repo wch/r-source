@@ -24,17 +24,17 @@
 	if(h.dmn <- !is.na(idmn <- match("dimnames", names(value)))) {
 	    dn1 <- value[[idmn]];	value <- value[-idmn] }
 	attributes(obj) <- value
-        dm <- dim(obj)
-	## for list-like objects with a length() method:
+        dm <- attr(obj, "dim")
+	## for list-like objects with a length() method, e.g. POSIXlt
 	L <- length(if(is.list(obj)) unclass(obj) else obj)
-	if(h.nam && is.null(dm) && L == length(n1))
-	    names(obj) <- n1
-	if(h.dim && L == prod(d1))
-	    dim(obj) <- dm <- d1
+        ## Be careful to set dim before dimnames.
+	if(h.dim && L == prod(d1)) attr(obj, "dim") <- dm <- d1
 	if(h.dmn && !is.null(dm)) {
             ddn <- sapply(dn1, length)
-            if( all((dm == ddn)[ddn > 0]) ) dimnames(obj) <- dn1
+            if( all((dm == ddn)[ddn > 0]) ) attr(obj, "dimnames") <- dn1
         }
+        ## don't set if it has 'dim' now
+	if(h.nam && is.null(dm) && L == length(n1)) attr(obj, "names") <- n1
     }
     obj
 }

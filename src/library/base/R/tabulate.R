@@ -18,6 +18,8 @@ tabulate <- function(bin, nbins = max(1L, bin, na.rm=TRUE))
 {
     if(!is.numeric(bin) && !is.factor(bin))
 	stop("'bin' must be numeric or a factor")
+    if (nbins > .Machine$integer.max)
+        stop("attempt to make a table with >= 2^31 elements")
     .C("R_tabulate",
        as.integer(bin),
        as.integer(length(bin)),

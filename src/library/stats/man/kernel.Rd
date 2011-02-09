@@ -1,6 +1,6 @@
 % File src/library/stats/man/kernel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{kernel}
@@ -19,7 +19,7 @@
   methods for these kernel objects.
 }
 \usage{
-kernel(coef, m, r, name)
+kernel(coef, m = 2, r, name)
 
 df.kernel(k)
 bandwidth.kernel(k)
@@ -33,13 +33,13 @@ is.tskernel(k)
     (including coefficient zero) \emph{or} the name of a kernel
     (currently \code{"daniell"}, \code{"dirichlet"}, \code{"fejer"} or
     \code{"modified.daniell"}.}
-  \item{m}{the kernel dimension(s).  When \code{m}
+  \item{m}{the kernel dimension(s) if \code{coef} is a name.  When \code{m}
     has length larger than one, it means the convolution of
     kernels of dimension \code{m[j]}, for \code{j in 1:length(m)}.
     Currently this is supported only for the named "*daniell" kernels.}
   \item{name}{the name the kernel will be called.}
   \item{r}{the kernel order for a Fejer kernel.}
-  \item{k,x}{a \code{"tskernel"} object.}
+  \item{k, x}{a \code{"tskernel"} object.}
   \item{type, xlab, ylab, main, \dots}{arguments passed to
     \code{\link{plot.default}}.}
 }

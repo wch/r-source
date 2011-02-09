@@ -1,6 +1,6 @@
 % File src/library/base/man/Bessel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Bessel}
@@ -36,7 +36,7 @@ besselY(x, nu)
 }
 \value{
   Numeric vector of the same length of \code{x} with the (scaled, if
-  \code{expon.scale=TRUE}) values of the corresponding Bessel function.
+  \code{expon.scaled=TRUE}) values of the corresponding Bessel function.
 }
 \details{
   If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
@@ -48,7 +48,7 @@ besselY(x, nu)
 }
 \source{
   The C code is a translation of Fortran routines from
-  \url{http://www.netlib.org/specfun/r[ijky]besl}.
+  \url{http://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
@@ -64,7 +64,7 @@ besselY(x, nu)
   Original Fortran code:
   W. J. Cody, Argonne National Laboratory \cr
   Translation to C and adaption to \R:
-  Martin Maechler \email{maechler@stat.math.ethz.ch.}
+  Martin Maechler \email{maechler@stat.math.ethz.ch}.
 }
 \examples{
 require(graphics)

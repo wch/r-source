@@ -34,6 +34,10 @@
       \item The Cocoa back-end for the \code{quartz()} graphics device
       on Mac OS X provides a way to disable event loop processing
       temporarily (useful, e.g., for forked instances of \R).
+
+      \item \code{kernel()}'s default for \code{m} was not appropriate
+      if \code{coef} was a set of coefficients.  (Reported by Pierre
+      Chausse.)
     }
   }
 
@@ -149,13 +153,12 @@
       as \option{--use-zipdata} since \R 2.9.0.
       
       \item \command{source(file, echo=TRUE)} could fail if the file
-      contained \samp{#line} directives.  It now recovers more
-      gracefully, but may still display the wrong line if the directive
-      gives incorrect information.
+      contained \samp{#line} directives.  It now recovers more gracefully, but
+      may still display the wrong line if the directive gives incorrect
+      information.
 
-      \item \code{atan(1i)} returned \code{NaN+Infi} (rather than the
-      conventional value of \code{0+Infi}) on platforms without C99
-      complex support.
+      \item \code{atan(1i)} returned \code{NaN+Infi} (rather than
+      \code{0+Infi}) on platforms without C99 complex support. 
     }
   }
 }

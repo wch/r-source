@@ -1,6 +1,6 @@
 % File src/library/base/man/browser.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{browser}
@@ -46,20 +46,20 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
   call is nested within another debugging function:  it will look further
   up the call stack to report its location.
 
-  At the browser prompt the user can enter commands or \R expressions.
-  The commands are
+  At the browser prompt the user can enter commands or \R expressions,
+  followed by a newline.  The commands are
 
   \describe{
-    \item{\code{c}}{(or just return) exit the browser and continue
-      execution at the next statement.}
+    \item{\code{c}}{(or just an empty line) exit the browser
+    and continue execution at the next statement.}
     \item{\code{cont}}{synonym for \code{c}.}
-    \item{\code{n}}{enter the step-through debugger. This changes the
+    \item{\code{n}}{enter the step-through debugger.  This changes the
       meaning of \code{c}: see the documentation for \code{\link{debug}}.}
     \item{\code{where}}{print a stack trace of all active function calls.}
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
   }
-  (Leading and trailing whitespace is ignored, except for return).
+  (Leading and trailing whitespace is ignored, except for an empty line).
 
   Anything else entered at the browser prompt is interpreted as an
   \R expression to be evaluated in the calling environment: in
