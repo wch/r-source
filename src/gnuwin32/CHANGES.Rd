@@ -55,8 +55,12 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Work around for the incorrect values given by Windows'
+      \item Workaround for the incorrect values given by Windows'
       \code{casinh} function on the branch cuts.
+
+      \item Bug fix for drawing raster objects on \code{windows()}.  The
+      symptom was the occasional raster image not being drawn, especially
+      when drawing multiple raster images in a single expression. 
     }
   }
 }

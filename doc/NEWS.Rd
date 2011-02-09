@@ -408,10 +408,6 @@
 
       \item The one- and two-argument complex maths functions failed to
       warn if NAs were generated (as their numeric analogues do).
-
-      \item Bug fix for drawing raster objects on Windows.  The symptom
-      was the occasional raster image not being drawn, especially when
-      drawing multiple raster images in a single expression.
     }
   }
 }
