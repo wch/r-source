@@ -74,10 +74,6 @@
 
       \item \code{setRepositories()} gains an \code{addURLs} argument.
 
-      \item \code{kernel()}'s default for \code{m} was not appropriate
-      if \code{coef} was a set of coefficients.  (Reported by Pierre
-      Chausse.)
-
       \item \code{chisq.test()} now also returns a \code{stdres}
       component, for standardized residuals (which have unit variance,
       unlike the Pearson residuals).
@@ -440,6 +436,10 @@
       \item The Cocoa back-end for the \code{quartz()} graphics device
       on Mac OS X provides a way to disable event loop processing
       temporarily (useful, e.g., for forked instances of \R).
+
+      \item \code{kernel()}'s default for \code{m} was not appropriate
+      if \code{coef} was a set of coefficients.  (Reported by Pierre
+      Chausse.)
     }
   }
 
