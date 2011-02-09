@@ -228,6 +228,7 @@ structure for a new package: see its help page for details.
 * Package subdirectories::      
 * Package bundles::             
 * Data in packages::            
+* Non-R scripts in packages::   
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -786,7 +787,7 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 
 Support for package bundles was removed in @R{} 2.11.0.
 
-@node Data in packages,  , Package bundles, Package structure
+@node Data in packages, Non-R scripts in packages, Package bundles, Package structure
 @subsection Data in packages
 
 The @file{data} subdirectory is for data files, either to be made
@@ -854,6 +855,28 @@ to @command{R CMD INSTALL} or (for @R{} >= 2.13.0) by using the
 values are @code{bzip2}, @code{xz} and the default, @code{gzip}.  The
 only way to discover which is best is to try them all and look at the
 size of the @file{@var{pkgname}/data/Rdata.rdb} file.
+
+@node Non-R scripts in packages,  , Data in packages, Package structure
+@subsection Non-R scripts in packages
+
+Code which needs to be compiled (C, C++, FORTRAN, Fortran 95 @dots{})
+is included in the @file{src} subdirectory and discussed elsewhere in
+this document.
+
+Subdirectory @file{exec} could be used for scripts for interpreters such
+as the shell (e.g.@: @pkg{arulesSequences}), BUGS, Java, JavaScript,
+Matlab, Perl (@pkg{FEST}), php (@pkg{amap}), Python or Tcl, or even @R{}.
+However, it seems more common to use the @file{inst} directory, for
+example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
+@file{Amelia/tklibs}, @file{CGIwithR/inst/cgi-bin},
+@file{NMF/inst/matlab} and @file{emdbook/inst/BUGS}.
+
+If your package requires one of these interpreters or an extension then
+this should be declared in the @samp{SystemRequirements} field of its
+@file{DESCRIPTION} file.  Windows users should be aware that the Tcl
+extensions @samp{BWidget} and @samp{Tktable} which are included with the
+@R{} for Windows installer @emph{are} extensions and need to be declared.
+
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
@@ -1932,16 +1955,18 @@ so do not put comment lines in the middle of a paragraph of text).
 
 @item
 Ensure that the package sources are not unnecessarily large.  In
-particular, in @R{} >= 2.13.0 @command{R CMD check} will warn about
+particular, @command{R CMD check} will report on installed packages of
+more that 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data if environment variable
-@env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}, or @command{R CMD
+@env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD
 build --resave-data} will compact data as best it can.  Watch out for
-unnecessary files in @file{inst/data}: for example @file{Rplots.ps} or
+unnecessary files in @file{inst/doc}: for example @file{Rplots.ps} or
 @file{Rplots.pdf} left over from @code{Sweave} runs.  As a general rule,
 @file{doc} directories should not exceed 5Mb, and where @file{data}
 directories need to be 10Mb or more, consideration should be given to a
-separate package containing just the data.  (Similarly for large
-@file{jar} files and other libraries that need to be installed.)
+separate package containing just the data.  (Similarly for external data
+directories, large @file{jar} files and other libraries that need to be
+installed.)
 @end enumerate
 
 @noindent
