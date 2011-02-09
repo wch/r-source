@@ -815,7 +815,7 @@ case they should only be to packages listed in the @code{Depends} and
 package.  To check for such references, load all the images into a
 vanilla @R{} session, and look at the output of @code{loadedNamespaces()}.
 
-If your data files are enormous and you are not using @samp{LazyData}
+If your data files are large and you are not using @samp{LazyData}
 you can speed up installation by providing a file @file{datalist} in the
 @file{data} subdirectory.  This should have one line per topic that
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
@@ -1224,19 +1224,8 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example (GNU syntax, allowed on Windows)
-
-@example
-ifeq "$@{R_ARCH@}" "/x64"
-PKG_LIBS = @var{value for 64-bit Windows}
-else
-PKG_LIBS = @var{value for 32-bit Windows}
-endif
-@end example
-
-@noindent
-To make this simpler, as from @R{} 2.11.1 (but not in @R{} 2.11.0) you
-can use
+32- and 64-bit code, for example (as from @R{} 2.11.1, GNU syntax,
+allowed on Windows)
 
 @example
 ifeq "$(WIN)" "64"
@@ -1249,8 +1238,9 @@ endif
 On Windows there is normally a choice between linking to an import
 library or directly to a DLL.  Where possible, the latter is much more
 reliable: import libraries are tied to a specific toolchain, and in
-particular on 64-bit Windows two different conventions are common, and
-@R{} 2.11.x and 2.12.x use different ones.  So for example instead of
+particular on 64-bit Windows two different conventions have been
+commonly used and @R{} 2.11.x and 2.12.x used different ones.  So for
+example instead of
 
 @example
 PKG_LIBS = -L$(XML_DIR)/lib -lxml2
@@ -1821,6 +1811,13 @@ linked into the @HTML{} help system for each package.  If you do supply
 a @file{inst/doc/html/index.html} file it should contain relative links
 only to files under the installed @file{doc} directory, or perhaps (not
 really an index) to HTML help files or to the @file{DESCRIPTION} file.
+
+Do watch that vignettes are not too large -- one in a @acronym{CRAN}
+package was 72Mb!  This is usually caused by the inclusion of overly
+detailed figures, which will not render well in PDF viewers.  Sometimes
+it is much better generate fairly high resolution bitmap (PNG, JPEG)
+figures and include those in the PDF document.
+
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
@@ -9919,7 +9916,7 @@ HP-UX on Itanium) and not on little-endian systems (such as @code{i686}
 and @code{x86_64} on all OSes, and Linux on Alpha and Itanium).  It can
 be useful when manipulating binary files.  The macro
 @code{SUPPORT_OPENMP} is defined on suitable systems as from @R{}
-2.13.0, and can be used in conjuction with the @code{SUPPORT_OPENMP_*}
+2.13.0, and can be used in conjunction with the @code{SUPPORT_OPENMP_*}
 macros in packages that want to make use of OpenMP.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
