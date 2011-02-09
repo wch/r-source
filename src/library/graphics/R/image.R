@@ -105,11 +105,13 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
         if ((length(dx) && !isTRUE(all.equal(dx, rep(dx[1], length(dx))))) ||
             (length(dy) && !isTRUE(all.equal(dy, rep(dy[1], length(dy))))))
             stop("useRaster=TRUE can only be used with a regular grid")
-        # this is the same logic as used in do_col2RGB
+        # this should be mostly equivalent to RGBpar3 with bg=NA
         if (!is.character(col)) {
             p <- palette()
             pl <- length(p)
-            col <- p[((as.integer(col) - 1L) %% pl) + 1L]
+            col <- as.integer(col)
+            col[col < 1L] <- NA_integer_
+            col <- p[((col - 1L) %% pl) + 1L]
         }
         zc <- col[zi + 1L]
         dim(zc) <- dim(z)
