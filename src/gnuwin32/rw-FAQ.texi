@@ -1278,7 +1278,7 @@ need to install R and/or packages from their sources.  To install just a
 few packages with static HTML pages use
 
 @example
-R CMD INSTALL --html @var{pkg1} @var{pkg2} \ldots
+R CMD INSTALL --html @var{pkg1} @var{pkg2} @dots{}
 @end example
 
 To install R itself with static HTML pages change the following line in
