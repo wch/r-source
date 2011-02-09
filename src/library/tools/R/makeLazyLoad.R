@@ -31,7 +31,7 @@ code2LazyLoadDB <-
         if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
             stop("name space must not be loaded.")
         ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
-        makeLazyLoadDB(ns, dbbase)
+        makeLazyLoadDB(ns, dbbase, compress = compress)
     }
     else {
         loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
