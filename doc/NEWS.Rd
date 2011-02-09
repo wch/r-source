@@ -235,6 +235,8 @@
       \item nls(*, algorithm="port") now shares more code with nlminb(),
       and is more consistent with the other algorithms in its return
       value.
+
+      \item xz has been updated to 5.0.1 (very minor bugfix release).
     }
   }
 
