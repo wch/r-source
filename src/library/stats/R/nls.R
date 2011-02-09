@@ -685,21 +685,23 @@ summary.nls <-
 
 .p.nls.convInfo <- function(x, digits)
 {
-    with(x$convInfo,
-     {
-         if(identical(x$call$algorithm, "port"))
-             cat("\nAlgorithm \"port\", convergence message:",
-                 stopMessage, "\n")
-         else {
-             if(!isConv || getOption("show.nls.convergence", TRUE))
-                 cat("\nNumber of iterations",
-                     if(isConv) "to convergence:" else "till stop:", finIter,
-                     "\nAchieved convergence tolerance:",
-                     format(finTol, digits=digits),"\n")
-             if(!isConv)
-                 cat("Reason stopped:", stopMessage, "\n")
-         }
-     })
+    if(!is.null(x$convInfo)) # older fits will not have this
+        with(x$convInfo,
+         {
+             if(identical(x$call$algorithm, "port"))
+                 cat("\nAlgorithm \"port\", convergence message:",
+                     stopMessage, "\n")
+             else {
+                 if(!isConv || getOption("show.nls.convergence", TRUE))
+                     cat("\nNumber of iterations",
+                         if(isConv) "to convergence:" else "till stop:", finIter,
+                         "\nAchieved convergence tolerance:",
+                         format(finTol, digits=digits),"\n")
+                 if(!isConv)
+                     cat("Reason stopped:", stopMessage, "\n")
+             }
+         })
+
     invisible()
 }
 
