@@ -30,6 +30,8 @@
 
 #if 0
 /* For testing missing fns */
+#undef HAVE_CARG
+#undef HAVE_CABS
 #undef HAVE_CEXP
 #undef HAVE_CLOG
 #undef HAVE_CSQRT
@@ -51,14 +53,6 @@
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
-
-static R_INLINE double fsign_int(double x, double y)
-{
-    if (ISNAN(x) || ISNAN(y))
-	return x + y;
-    return ((y >= 0) ? fabs(x) : -fabs(x));
-}
-
 
 #include "arithmetic.h"		/* complex_*  */
 #include <complex.h>
@@ -719,8 +713,11 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 	if(dcsn == 0) {
 	    r->r = NA_REAL; r->i = NA_REAL; /* Why not R_NaN? */
 	    return;
-	} else
-	    dr = fsign_int(M_PI_2, creal(dcsn));
+	} else {
+	    double y = creal(dcsn);
+	    if (ISNAN(y)) dr = y;
+	    else dr = ((y >= 0) ? M_PI_2 : -M_PI_2);
+	}
     } else {
 	dr = catan(dcsn / dccs);
 	if(creal(dccs) < 0) dr += M_PI;
