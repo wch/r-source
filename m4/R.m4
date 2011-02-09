@@ -3407,50 +3407,7 @@ AC_DEFUN([R_C99_COMPLEX],
   fi
 ])
 R_CHECK_FUNCS([cabs carg cexp clog csqrt cpow ccos csin ctan \
-	       cacos casin catan ccosh csinh ctanh], 
-               [#include <complex.h>])
-dnl Now check if the representation is the same as Rcomplex
-AC_CACHE_CHECK([whether C99 double complex is compatible with Rcomplex],
-  [r_cv_compat_c99_complex],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include "confdefs.h"
-#include <complex.h>
-#include <stdlib.h>
-/* #include <stdio.h> */
-typedef struct {
-        double r;
-        double i;
-} Rcomplex;
-
-int main () {
-    /* We assume that we can cast between Rcomplex and double complex
-      arrays, so test that directly */
-    double complex x[3], *xz;
-    Rcomplex *z;
-    z = (Rcomplex *) calloc(3, sizeof(Rcomplex));
-    z[0].r = 3.14159265;
-    z[0].i = 2.172;
-    z[1].i = 3.14159265;
-    z[1].r = 2.172;
-    z[2].r = 123.456;
-    z[2].i = 0.123456;
-    xz = (double complex *) z;
-    /* printf("%f+%fi\n", creal(xz[2]), cimag(xz[2])); */
-    if(cabs(xz[2] - 123.456 - 0.123456 * _Complex_I) > 1e-4) exit(1);
-    x[0] = 3.14159265 + 2.172 * _Complex_I;
-    x[1] = 2.172 + 3.14159265 * _Complex_I;
-    x[2] = 123.456 + 0.123456 * _Complex_I;
-    z = (Rcomplex *) x;
-    /* printf("%f+%fi\n", z[2].r, z[2].i); */
-    if (z[2].r != 123.456 || z[2].i != 0.123456) exit(1);
-    exit(0);
-}
-]])], [r_cv_compat_c99_complex=yes], [r_cv_compat_c99_complex=no], [r_cv_compat_c99_complex=no])
-])
-if test "${r_cv_compat_c99_complex}" = "yes"; then
-AC_DEFINE(HAVE_COMPATIBLE_C99_COMPLEX, 1, [Define this if Rcomplex and C99 double complex are compatible.])
-AC_SUBST(HAVE_COMPATIBLE_C99_COMPLEX)
-fi
+	       cacos casin catan ccosh csinh ctanh], [#include <complex.h>])
 ])# R_COMPLEX
 
 ## R_CHECK_DECL(SYMBOL,

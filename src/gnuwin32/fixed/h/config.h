@@ -127,9 +127,6 @@
 /* Define to 1 if you have the `clog' function. */
 #define HAVE_CLOG 1
 
-/* Define this if Rcomplex and C99 double complex are compatible. */
-#define HAVE_COMPATIBLE_C99_COMPLEX 1
-
 /* Defined if framework CoreFoundation is present */
 /* #undef HAVE_COREFOUNDATION_FW */
 

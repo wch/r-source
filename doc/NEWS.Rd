@@ -302,15 +302,11 @@
       environment variable \env{R_STRICT_PACKAGE_CHECK} is set to a true
       value.
 
-      \item The C99 double complex type is now required.  However, the
-      arrays of types \code{double complex} and \code{Rcomplex} are not
-      required to be compatible, and conversion rather than coercion is
-      used if necessary.  (They are not compatible on x86_64 Linux for
-      recent versions of \command{gcc -O2}.)
+      \item The C99 double complex type is now required.
 
       The C99 complex trigonometric functions (such as \code{csin}) are
-      not required (FreeBSD lacks most of them): the corresponding
-      functions in \R will not be operational without them.
+      not required (FreeBSD lacks most of them): substitutes are used if
+      they are missing.
     }
   }
 

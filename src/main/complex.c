@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-/* Note: gcc warns in several places about C99 features as extensions.
+/* Note: gcc may warn in several places about C99 features as extensions.
    This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
    The system <complex.h> header can work around it: some do.
 */
@@ -68,11 +68,6 @@
 #endif
 
 
-#ifdef HAVE_COMPATIBLE_C99_COMPLEX
-# define toC99(x) *((double complex *) x)
-# define C99_COMPLEX2(x, i) (((double complex *) COMPLEX(x))[i])
-# define SET_C99_COMPLEX(x, i, value) ((double complex *) x)[i] = value
-#else
 static R_INLINE double complex toC99(Rcomplex *x)
 {
 #if __GNUC__
@@ -84,14 +79,15 @@ static R_INLINE double complex toC99(Rcomplex *x)
     return x->r + x->i * I;
 #endif
 }
-# define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + i)
-static R_INLINE void SET_C99_COMPLEX(Rcomplex *x, int i, double complex value)
+#define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + i)
+
+static R_INLINE void 
+SET_C99_COMPLEX(Rcomplex *x, int i, double complex value)
 {
     Rcomplex *ans = x+i;
     ans->r = creal(value);
     ans->i = cimag(value);
 }
-#endif
 
 SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
@@ -102,7 +98,6 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     case PLUSOP:
 	return s1;
     case MINUSOP:
-
 	ans = duplicate(s1);
 	n = LENGTH(s1);
 	for (i = 0; i < n; i++) {
@@ -178,7 +173,7 @@ static double complex mycpow (double complex X, double complex Y)
      double complex Res; int k;
     if (X == 0.0) {
 	if(cimag(Y) == 0.0)
-	    Res = R_pow(0.0, creal(Y)) + 0.0*I;
+	    Res = R_pow(0.0, creal(Y));
 	else
 	    Res = R_NaN + R_NaN*I;
     } else if (cimag(Y) == 0.0 && creal(Y) == (k = (int)__real__ Y)

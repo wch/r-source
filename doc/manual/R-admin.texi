@@ -4367,7 +4367,7 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added for @R{} 2.6.0.  @R{} 2.13.0 requires C99 complex math
+workarounds added for @R{} 2.6.0.  @R{} 2.13.0 requires C99 complex type
 support, which should appear in 2011
 (@uref{http://cygwin.net/ml/cygwin-patches/2010-q4/msg00000.html}, based
 on NetBSD code which is it seems in turn derived from the code of
