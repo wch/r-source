@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -190,8 +190,9 @@ strptime(x, format, tz = "")
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
   \code{isdst} component and to set the \code{"tzone"} attribute if
-  \code{tz != ""}.  If the specified time is invalid (in the specified
-  timezone) all the components of the result are \code{NA}.
+  \code{tz != ""}.  If the specified time is invalid (for example
+  \samp{"2010-02-30 08:00"}) all the components of the result are
+  \code{NA}.
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
@@ -210,8 +211,9 @@ strptime(x, format, tz = "")
   correctly.
 
   Remember that in most timezones some times do not occur and some occur
-  twice because of transitions to/from summer time.  What happens in
-  those cases is OS-specific.
+  twice because of transitions to/from summer time.  \code{strptime}
+  does not validate such times (it does not assume a specific timezone),
+  but conversion by \code{\link{as.POSIXct}}) will do so.
 }
 \references{
   International Organization for Standardization (2004, 2000, 1988, 1997,
@@ -229,18 +231,16 @@ strptime(x, format, tz = "")
 
   Your system's help pages on \code{strftime} and \code{strptime} to
   see how to specify their formats.
-#ifdef unix
-  (On some systems \code{strptime} is replaced by corrected code from
-  \samp{glibc}, when all the conversion specifications described here
-  are supported, but with no alternative number representation nor era
-  available in any locale.)
-#endif
-#ifdef windows
+
+  (On some Unix-like systems \code{strptime} is replaced by corrected
+  code from \samp{glibc}, when all the conversion specifications
+  described here are supported, but with no alternative number
+  representation nor era available in any locale.)
+
   Windows users will find no help page for \code{strptime}: code based
   on \samp{glibc} is used (with corrections), so all the conversion
   specifications described here are supported, but with no alternative
   number representation nor era available in any locale.
-#endif
 }
 \examples{\donttest{
 ## locale-specific version of date()
