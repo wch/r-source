@@ -3908,7 +3908,7 @@ on earlier versions in the past).  Since Darwin (the base OS of Mac OS
 X) is based on FreeBSD we find testing on Darwin tends to pick up most
 potential problems on FreeBSD.  However, FreeBSD lacks adequate
 collation support for multi-byte locales (Mac OS X includes a version of
-ICU), and also does not contain C99 complex math functions.
+ICU), and also does not (yet) implement C99 complex math functions.
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the
@@ -4176,10 +4176,7 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  A version of @command{gcc}
-optimized for Sparc (using technology from Sun's compilers) is available
-from
-Sun.@footnote{@uref{http://www.sun.com/@/download/@/index.jsp?@/cat=Application%20Development&tab=3&subcat=Development%20Tools}}
+one version of Solaris on a later version.
 
 Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 needed
 
@@ -4207,16 +4204,17 @@ be in the
 
 Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.3.3
 and @command{gcc}@tie{}3.4.6 from OpenCSW.} for @cputype{x86} and
-@cputype{amd64} have been less successful: @cputype{x86} builds have
-built successfully but failed or gave incorrect results on various
-tests, whereas for @cputype{amd64} the builds have failed to complete in
+@cputype{amd64} have been less successful.
+
+@cputype{x86} builds have built successfully but failed or gave
+incorrect results on various tests, unless built without any
+optimization in @code{CFLAGS}: the issue seems to be that @command{gcc}
+and the system libraries differ over the use of SSE registers.
+
+For @cputype{amd64} the builds have failed to complete in
 several different ways, most recently with relocation errors for
 @file{libRblas.so}.
 
-@cputype{x86} builds without any optimization in @code{CFLAGS} seem to
-be more successful except for some examples of complex arithmetic: the
-issue seems to be that @command{gcc} and the system libraries differ
-over the use of SSE registers.
 
 
 @node AIX, Cygwin, Solaris, Platform notes
