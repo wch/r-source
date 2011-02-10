@@ -3337,12 +3337,12 @@ function(x, ...)
 function(pkgDir)
 {
     Sys.setlocale("LC_CTYPE", "C")
-    options(warn = -1)
+    options(warn=-1)
     check_one <- function(x, ds)
     {
         if(!length(x)) return()
         ## avoid as.list methods
-        if(is.list(x)) lapply(unclass(x), check_one)
+        if(is.list(x)) lapply(unclass(x), check_one, ds = ds)
         if(is.character(x)) {
             xx <- unclass(x)
             enc <- Encoding(xx)
@@ -3356,8 +3356,8 @@ function(pkgDir)
         }
         a <- attributes(x)
         if(!is.null(a)) {
-            lapply(a, check_one)
-            check_one(names(a))
+            lapply(a, check_one, ds = ds)
+            check_one(names(a), ds)
         }
         invisible()
     }
@@ -3370,7 +3370,8 @@ function(pkgDir)
     names(ans) <- files
     old <- setwd(pkgDir)
     for(f in files)
-        .try_quietly(utils::data(list = f, package = character(0L), envir = dataEnv))
+        .try_quietly(utils::data(list = f, package = character(),
+                                 envir = dataEnv))
     setwd(old)
 
     non_ASCII <- where <- character()
@@ -3382,8 +3383,7 @@ function(pkgDir)
     })
     sink()
     unknown <- unique(cbind(non_ASCII, where))
-    structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
-                   unknown = unknown),
+    structure(list(latin1 = latin1, utf8 = utf8, unknown = unknown),
               class = "check_package_datasets")
 }
 
