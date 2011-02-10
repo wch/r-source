@@ -32,6 +32,7 @@
 /* For testing missing fns */
 #undef HAVE_CARG
 #undef HAVE_CABS
+#undef HAVE_CPOW
 #undef HAVE_CEXP
 #undef HAVE_CLOG
 #undef HAVE_CSQRT
@@ -61,6 +62,7 @@
    That OS defines the imaginary type, but GCC does not.
    Probably needed elsewhere, e.g. AIX.
    And use on Win32 suppresses warnings.
+   The warning is also seen on Mac OS 10.5.
 */
 #if defined(__GNUC__) && (defined(__sun__) || defined(Win32))
 # undef  I
@@ -131,7 +133,7 @@ static double complex R_cpow_n(double complex X, int k)
 
 #ifdef Win32
 /* Need this because the system one is explicitly linked
-   against MSVCRT's pow, and gets (0+0i)^Y as 0+0i for all Y */
+   against MSVCRT's (slow) pow, and gets (0+0i)^Y as 0+0i for all Y */
 static double complex mycpow (double complex X, double complex Y)
 {
     double complex Res; int k;
@@ -145,7 +147,7 @@ static double complex mycpow (double complex X, double complex Y)
 	}
     } else if (__imag__ Y == 0.0 && __real__ Y == (k = (int)__real__ Y)
 	       && abs(k) <= 65536) {
-	return R_cpow_n(X, k);
+	Res = R_cpow_n(X, k);
     } else {
 	double rho, r,i, theta;
 	r = hypot (__real__ X, __imag__ X);
@@ -165,38 +167,6 @@ static double complex mycpow (double complex X, double complex Y)
     }
     return  Res;
 }
-#elif !defined HAVE_CPOW
-/* FreeBSD lacks even this */
-/* I think this is trying too hard: cexp(Y*clog(X)) should suffice */
-static double complex mycpow (double complex X, double complex Y)
-{
-     double complex Res; int k;
-    if (X == 0.0) {
-	if(cimag(Y) == 0.0)
-	    Res = R_pow(0.0, creal(Y));
-	else
-	    Res = R_NaN + R_NaN*I;
-    } else if (cimag(Y) == 0.0 && creal(Y) == (k = (int)__real__ Y)
-	       && abs(k) <= 65536) {
-	return R_cpow_n(X, k);
-    } else {
-	double rho, r,i, theta;
-	r = hypot (creal(X), cimag(X));
-	i = carg (X);
-	theta = i * creal(Y);
-
-	if (cimag(Y) == 0.0)
-	    rho = pow (r, creal(Y));
-	else {
-	    r = log (r);
-	    /* rearrangement of cexp(X * clog(Y)) */
-	    theta += r * cimag(Y);
-	    rho = exp (r * creal(Y) - i * cimag(Y));
-	}
-	Res = rho * cos (theta) + (rho * sin (theta)) * I;
-    }
-    return  Res;
-}
 #else
 /* reason for this:
   1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
@@ -207,19 +177,33 @@ static double complex mycpow (double complex X, double complex Y)
 
 static double complex mycpow (double complex X, double complex Y)
 {
-    double iY = cimag(Y);
-    if (iY == 0.0) {/* X ^ <real> */
-	double complex Z; int k;
-	if (X == 0.0) {
-	    Z = R_pow(0., creal(Y));
-	} else if(creal(Y) == (k = (int)creal(Y)) && abs(k) <= 65536) {
-	    Z = R_cpow_n(X, k);
-	} else {
-	    Z = cpow(X, Y);
-	}
-	return Z;
+    double complex Z, yr = creal(Y), yi = cimag(Y); int k;
+    if (X == 0.0) {
+	if(yi == 0.0) Z = R_pow(0.0, creal(Y));
+	else Z = R_NaN + R_NaN*I;
+    } else if (yi == 0.0 && yr == (k = (int) yr) && abs(k) <= 65536) {
+	Z = R_cpow_n(X, k);
     } else
-	return cpow(X, Y);
+#ifdef HAVE_CPOW
+	Z = cpow(X, Y);
+#else
+    {
+	double rho, r, i, theta;
+	r = hypot(creal(X), cimag(X));
+	i = atan2(cimag(X), creal(X));
+	theta = i * yr;
+	if (yi == 0.0)
+	    rho = pow(r, yr);
+	else {
+	    r = log (r);
+	    /* rearrangement of cexp(X * clog(Y)) */
+	    theta += r * yi;
+	    rho = exp(r * yr - i * yi);
+	}
+	Z = rho * cos (theta) + (rho * sin (theta)) * I;
+    }
+#endif
+    return Z;
 }
 #endif
 
