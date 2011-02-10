@@ -4206,13 +4206,17 @@ be in the
 @env{LD_LIBRARY_PATH} during configuration.
 
 Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.3.3
-and @command{gcc}@tie{}3.4.6 from OpenCSW.} on @cputype{x86} and
+and @command{gcc}@tie{}3.4.6 from OpenCSW.} for @cputype{x86} and
 @cputype{amd64} have been less successful: @cputype{x86} builds have
-failed on tests using complex arithmetic@footnote{such as those of
-@code{fft}: these can often be resolved by turning off optimization},
-whereas on @cputype{amd64} the builds have failed to complete in several
-different ways, most recently with relocation errors for
+built successfully but failed or gave incorrect results on various
+tests, whereas for @cputype{amd64} the builds have failed to complete in
+several different ways, most recently with relocation errors for
 @file{libRblas.so}.
+
+@cputype{x86} builds without any optimization seem to be more
+successful except for some examples of complex arithmetic: the issue
+seems to be that @command{gcc} and the system libraries differ over the
+use of SSE registers.
 
 
 @node AIX, Cygwin, Solaris, Platform notes
@@ -4368,10 +4372,11 @@ environment can be found in the ``R on AIX'' project on R-Forge
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
 workarounds added for @R{} 2.6.0.  @R{} 2.13.0 requires C99 complex type
-support, which should appear in 2011
-(@uref{http://cygwin.net/ml/cygwin-patches/2010-q4/msg00000.html}, based
-on NetBSD code which is it seems in turn derived from the code of
-@uref{http://www.moshier.net/c9x_readme.html}).
+support, which should appear in
+2011@footnote{@uref{http://cygwin.net/ml/cygwin-patches/2010-q4/msg00000.html}.},
+based on NetBSD code@footnote{which it seems is derived from the code of
+@uref{http://www.moshier.net/c9x_readme.html}.} used in @samp{netlib
+1.19.0}.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
