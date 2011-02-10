@@ -3793,13 +3793,14 @@ function(pkgDir)
         }
         a <- attributes(x)
         if(!is.null(a)) {
-            lapply(a, check_one)
-            check_one(names(a))
+            lapply(a, check_one, ds = ds)
+            check_one(names(a), ds)
         }
         invisible()
     }
 
     sink(tempfile()) ## suppress startup messages to stdout
+    on.exit(sink())
     files <- list_files_with_type(file.path(pkgDir, "data"), "data")
     files <- unique(basename(file_path_sans_ext(files)))
     ans <- vector("list", length(files))
@@ -3807,7 +3808,8 @@ function(pkgDir)
     names(ans) <- files
     old <- setwd(pkgDir)
     for(f in files)
-        .try_quietly(utils::data(list = f, package = character(), envir = dataEnv))
+        .try_quietly(utils::data(list = f, package = character(),
+                                 envir = dataEnv))
     setwd(old)
 
     non_ASCII <- where <- character()
@@ -3817,7 +3819,6 @@ function(pkgDir)
         for(ds in ls(envir = dataEnv, all.names = TRUE))
             check_one(get(ds, envir = dataEnv), ds)
     })
-    sink()
     unknown <- unique(cbind(non_ASCII, where))
     structure(list(latin1 = latin1, utf8 = utf8, unknown = unknown),
               class = "check_package_datasets")
