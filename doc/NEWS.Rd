@@ -160,8 +160,9 @@
       \item \code{atan(1i)} returned \code{NaN+Infi} (rather than
       \code{0+Infi}) on platforms without C99 complex support. 
 
-      \item \code{library()} failed to cache meta data (unlike
-      \code{loadNamespace()}) causing failures in packages without a namespace.
+      \item \code{library()} failed to cache S4 metadata (unlike
+      \code{loadNamespace()}) causing failures in S4-using packages
+      without a namespace.
     }
   }
 }

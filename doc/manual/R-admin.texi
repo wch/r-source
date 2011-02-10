@@ -2150,7 +2150,7 @@ if it defaults to @samp{C}.
 Internally Mac OS X uses a form similar to Linux but without specifying
 the encoding (which is normally @code{UTF-8}).  It is based on ICU
 locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
-XPG ones, but utilties such as @code{Sys.setlocale()} do now normally
+XPG ones, but utilities such as @code{Sys.setlocale()} do now normally
 accept XPG forms.
 
 
@@ -2688,9 +2688,9 @@ Roman and Courier New, and contain fonts rather similar to the first two
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
-@code{libpng} (version 1.2.3 or later, including 1.4.x and 1.5.x) and
-@code{zlib} (version 1.1.3 or later) or @code{libtiff} (any recent
-version of 3.x.y -- 3.8.2 and 3.9.[124] have been tested) respectively.
+@code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
+@code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.8.2 and
+3.9.[124] have been tested) respectively.
 
 If you have them installed (including the appropriate headers and of
 suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
@@ -3916,7 +3916,9 @@ the configure flag @option{--disable-largefile} was needed (since
 Rainer Hurling has reported success on @cputype{x86_64} FreeBSD 9.0 (and
 on earlier versions in the past).  Since Darwin (the base OS of Mac OS
 X) is based on FreeBSD we find testing on Darwin tends to pick up most
-potential problems on FreeBSD.
+potential problems on FreeBSD.  However, FreeBSD lacks adequate
+collation support for multi-byte locales (Mac OS X includes a version of
+ICU), and also does not (yet) implement C99 complex math functions.
 
 The native BSD @command{make} suffices to build @R{} but a number of
 packages require @acronym{GNU} @command{make}, despite the
@@ -4184,10 +4186,7 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  A version of @command{gcc}
-optimized for Sparc (using technology from Sun's compilers) is available
-from
-Sun.@footnote{@uref{http://www.sun.com/@/download/@/index.jsp?@/cat=Application%20Development&tab=3&subcat=Development%20Tools}}
+one version of Solaris on a later version.
 
 Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 needed
 
@@ -4214,13 +4213,18 @@ be in the
 @env{LD_LIBRARY_PATH} during configuration.
 
 Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.3.3
-and @command{gcc}@tie{}3.4.6 from OpenCSW.} on @cputype{x86} and
-@cputype{amd64} have been less successful: @cputype{x86} builds have
-failed on tests using complex arithmetic@footnote{such as those of
-@code{fft}: these can often be resolved by turning off optimization},
-whereas on @cputype{amd64} the builds have failed to complete in several
-different ways, most recently with relocation errors for
+and @command{gcc}@tie{}3.4.6 from OpenCSW.} for @cputype{x86} and
+@cputype{amd64} have been less successful.
+
+@cputype{x86} builds have built successfully but failed or gave
+incorrect results on various tests, unless built without any
+optimization in @code{CFLAGS}: the issue seems to be that @command{gcc}
+and the system libraries differ over the use of SSE registers.
+
+For @cputype{amd64} the builds have failed to complete in
+several different ways, most recently with relocation errors for
 @file{libRblas.so}.
+
 
 
 @node AIX, Cygwin, Solaris, Platform notes
@@ -4375,7 +4379,12 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added for @R{} 2.6.0.
+workarounds added for @R{} 2.6.0.  @R{} 2.13.0 requires C99 complex type
+support, which should appear in
+2011@footnote{@uref{http://cygwin.net/ml/cygwin-patches/2010-q4/msg00000.html}.},
+based on NetBSD code@footnote{which it seems is derived from the code of
+@uref{http://www.moshier.net/c9x_readme.html}.} used in @samp{netlib
+1.19.0}.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
