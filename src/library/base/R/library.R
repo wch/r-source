@@ -376,15 +376,20 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     else stop(gettextf(".First.lib failed for '%s'",
                                        package), domain = NA)
             }
-            ## If there are generics then the package should
+            ## If there are generics or metadata the package should
             ## depend on methods and so have turned methods dispatch on.
-            nogenerics <-
-                !.isMethodsDispatchOn() || checkNoGenerics(env, package)
+            if(.isMethodsDispatchOn()) {
+                nogenerics <- checkNoGenerics(env, package)
+                doCache <- !nogenerics || methods:::.hasS4MetaData(env)
+            }
+            else {
+                nogenerics <- TRUE; doCache <- FALSE
+            }
             if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
                 checkConflicts(package, pkgname, pkgpath, nogenerics, env)
 
-            if(!nogenerics)
+            if(doCache)
                 methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
             runUserHook(package, pkgpath)
             on.exit()
