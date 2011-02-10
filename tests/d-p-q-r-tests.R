@@ -748,4 +748,11 @@ stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
 stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
 ## jumped to zero too early up to R 2.10.1 (PR#14216)
 
+## logit() == qlogit() on the right extreme:
+x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))
+stopifnot(All.eq(x, qlogis(plogis(x, log.p=TRUE),
+                           log.p=TRUE)))
+## qlogis() gave Inf much too early for R <= 2.12.1
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

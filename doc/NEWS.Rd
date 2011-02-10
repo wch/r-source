@@ -327,7 +327,7 @@
 
       \item A \samp{LazyDataCompression} field in the \file{DESCRIPTION}
       file will be used to set the value for the
-      \option{--data-compress} option of \command{R CMD INSTALL}. 
+      \option{--data-compress} option of \command{R CMD INSTALL}.
     }
   }
 
@@ -397,7 +397,7 @@
 
       \item Added \code{PROTECT} calls to some constructed expressions
       used in C level \code{eval} calls.
-      
+
       \item \code{Sweave()} with \code{keep.source=TRUE} could
       duplicate some lines and omit comments. (Reported by John
       Maindonald and others.)
@@ -555,18 +555,22 @@
 
       \command{R CMD INSTALL --use-zip-data} was incorrectly implemented
       as \option{--use-zipdata} since \R 2.9.0.
-      
+
       \item \command{source(file, echo=TRUE)} could fail if the file
       contained \samp{#line} directives.  It now recovers more gracefully, but
       may still display the wrong line if the directive gives incorrect
       information.
 
       \item \code{atan(1i)} returned \code{NaN+Infi} (rather than
-      \code{0+Infi}) on platforms without C99 complex support. 
+      \code{0+Infi}) on platforms without C99 complex support.
 
       \item \code{library()} failed to cache S4 metadata (unlike
       \code{loadNamespace()}) causing failures in S4-using packages
       without a namespace.
+
+      \item The logit() function \code{qlogis(lp, log.p=TRUE)} no
+      longer prematurely overflows to \code{Inf} when p := exp(lp) is
+      close to 1.
     }
   }
 }

@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51722)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-02-10 r54320)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1283,6 +1284,13 @@ Warning messages:
 > stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
 > ## jumped to zero too early up to R 2.10.1 (PR#14216)
 > 
+> ## logit() == qlogit() on the right extreme:
+> x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))
+> stopifnot(All.eq(x, qlogis(plogis(x, log.p=TRUE),
++                            log.p=TRUE)))
+> ## qlogis() gave Inf much too early for R <= 2.12.1
+> 
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.494 0.007 1.501 0 0 
+Time elapsed:  1.892 0.01 1.902 0 0 
 > 
