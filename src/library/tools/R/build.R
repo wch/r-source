@@ -173,7 +173,7 @@ get_exclude_patterns <- function()
             "                        separated by spaces",
             "  --resave-data=        re-save data files as compactly as possible",
             '                        "no", "best", "gzip" (default)',
-            "  --noresave-data       same as --reave-data=no",
+            "  --no-resave-data      same as --resave-data=no",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -478,15 +478,17 @@ get_exclude_patterns <- function()
         on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
         Sys.setlocale("LC_CTYPE", "C")
         flatten <- function(x) {
-            if(length(x) == 3)
+            if(length(x) == 3L)
                 paste(x$name, " (", x$op, " ", x$version, ")", sep = "")
-            else x[[1]]
+            else x[[1L]]
         }
-        deps <- .split_dependencies(desc["Depends"])
-        deps <- deps[names(deps) != "R"] # could be more than one
-        desc["Depends"] <- paste(c(sprintf("R (>= %s)", ver),
-                                   sapply(deps, flatten)),
-                                 collapse = ", ")
+        deps <- desc["Depends"]
+        desc["Depends"] <- if(!is.na(deps)) {
+            deps <- .split_dependencies(deps)
+            deps <- deps[names(deps) != "R"] # could be more than one
+            paste(c(sprintf("R (>= %s)", ver), sapply(deps, flatten)),
+                  collapse = ", ")
+        } else sprintf("R (>= %s)", ver)
         write.dcf(t(as.matrix(desc)), file.path(pkgname, "DESCRIPTION"))
         printLog(Log,
                  "  NB: this package now depends on R (>= ", ver, ")\n")
