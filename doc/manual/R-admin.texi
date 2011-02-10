@@ -4213,10 +4213,10 @@ tests, whereas for @cputype{amd64} the builds have failed to complete in
 several different ways, most recently with relocation errors for
 @file{libRblas.so}.
 
-@cputype{x86} builds without any optimization seem to be more
-successful except for some examples of complex arithmetic: the issue
-seems to be that @command{gcc} and the system libraries differ over the
-use of SSE registers.
+@cputype{x86} builds without any optimization in @code{CFLAGS} seem to
+be more successful except for some examples of complex arithmetic: the
+issue seems to be that @command{gcc} and the system libraries differ
+over the use of SSE registers.
 
 
 @node AIX, Cygwin, Solaris, Platform notes
