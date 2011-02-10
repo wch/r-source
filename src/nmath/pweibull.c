@@ -39,8 +39,7 @@ double pweibull(double x, double shape, double scale, int lower_tail, int log_p)
     if (lower_tail)
 	return (log_p
 		/* log(1 - exp(x))  for x < 0 : */
-		? (x > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
-		: -expm1(x));
+		? R_Log1_Exp(x) : -expm1(x));
     /* else:  !lower_tail */
     return R_D_exp(x);
 }
