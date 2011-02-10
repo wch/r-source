@@ -61,7 +61,7 @@
 /* GCC has problems with header files on e.g. Solaris.
    That OS defines the imaginary type, but GCC does not.
    Probably needed elsewhere, e.g. AIX.
-   And use on Win32 suppresses warnings.
+   And use on Win32/64 suppresses warnings.
    The warning is also seen on Mac OS 10.5.
 */
 #if defined(__GNUC__) && (defined(__sun__) || defined(Win32))
@@ -114,7 +114,7 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     return R_NilValue; /* -Wall */
 }
 
-static double complex R_cpow_n(double complex X, int k)
+static R_INLINE double complex R_cpow_n(double complex X, int k)
 {
     if(k == 0) return (double complex) 1.;
     else if(k == 1) return X;
@@ -131,48 +131,15 @@ static double complex R_cpow_n(double complex X, int k)
     }
 }
 
-#ifdef Win32
-/* Need this because the system one is explicitly linked
-   against MSVCRT's (slow) pow, and gets (0+0i)^Y as 0+0i for all Y */
-static double complex mycpow (double complex X, double complex Y)
-{
-    double complex Res; int k;
-    if (X == 0.0) {
-	if(cimag(Y) == 0.0){
-	    __real__ Res = R_pow(0.0, __real__ Y);
-	    __imag__ Res = 0.0;
-	} else {
-	    __real__ Res = R_NaN;
-	    __imag__ Res = R_NaN;
-	}
-    } else if (__imag__ Y == 0.0 && __real__ Y == (k = (int)__real__ Y)
-	       && abs(k) <= 65536) {
-	Res = R_cpow_n(X, k);
-    } else {
-	double rho, r,i, theta;
-	r = hypot (__real__ X, __imag__ X);
-	i = carg (X);
-	theta = i * __real__ Y;
-
-	if (__imag__ Y == 0.0)
-	    rho = pow (r, __real__ Y);
-	else {
-	    r = log (r);
-	    /* rearrangement of cexp(X * clog(Y)) */
-	    theta += r * __imag__ Y;
-	    rho = exp (r * __real__ Y - i * __imag__ Y);
-	}
-	__real__ Res = rho * cos (theta);
-	__imag__ Res = rho * sin (theta);
-    }
-    return  Res;
-}
-#else
 /* reason for this:
   1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
      [FIXME: But is that not actually correct?: 1/(0+0i) == Inf+NaNi]
-  2)   X ^ n  (e.g. for n = 2, 3)  is unnecessarily inaccurate in glibc;
+
+  2)   X^n  (e.g. for n = +/- 2, 3) is unnecessarily inaccurate in glibc;
        cut-off 65536 : guided from empirical speed measurements
+
+  3) On Windows the system cpow is explicitly linked against the 
+     (slow) MinGW pow, and gets (0+0i)^Y as 0+0i for all Y.
  */
 
 static double complex mycpow (double complex X, double complex Y)
@@ -184,7 +151,7 @@ static double complex mycpow (double complex X, double complex Y)
     } else if (yi == 0.0 && yr == (k = (int) yr) && abs(k) <= 65536) {
 	Z = R_cpow_n(X, k);
     } else
-#ifdef HAVE_CPOW
+#if defined(HAVE_CPOW) && !defined(Win32)
 	Z = cpow(X, Y);
 #else
     {
@@ -195,8 +162,8 @@ static double complex mycpow (double complex X, double complex Y)
 	if (yi == 0.0)
 	    rho = pow(r, yr);
 	else {
-	    r = log (r);
 	    /* rearrangement of cexp(X * clog(Y)) */
+	    r = log(r);
 	    theta += r * yi;
 	    rho = exp(r * yr - i * yi);
 	}
@@ -205,7 +172,6 @@ static double complex mycpow (double complex X, double complex Y)
 #endif
     return Z;
 }
-#endif
 
 /* See arithmetic.c */
 #define mod_iterate(n1,n2,i1,i2) for (i=i1=i2=0; i<n; \
