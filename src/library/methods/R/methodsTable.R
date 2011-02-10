@@ -669,8 +669,11 @@
         generics[[i]] <- getGeneric(groups[[i]])
     .checkGroupSigLength(groups, generics)
   }
-  else if(is(generic, "groupGenericFunction"))
-    .checkGroupSigLength(list(generic@generic), list(generic))
+  if(is(generic, "groupGenericFunction")) {
+      .checkGroupSigLength(list(generic@generic), list(generic))
+      for(g in getGroupMembers(generic))
+          .updateMethodsInTable(getGeneric(g), where, attach)
+  }
   .resetInheritedMethods(fenv, mtable)
   mtable
 }
