@@ -2624,8 +2624,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 #ifdef BYTECODE
-static int R_bcVersion = 5;
-static int R_bcMinVersion = 4;
+static int R_bcVersion = 6;
+static int R_bcMinVersion = 6;
 
 static SEXP R_AddSym = NULL;
 static SEXP R_SubSym = NULL;
@@ -2795,6 +2795,9 @@ enum {
   DDVAL_MISSOK_OP,
   VISIBLE_OP,
   SETVAR2_OP,
+  STARTASSIGN2_OP,
+  ENDASSIGN2_OP,
+  SETTER_CALL_OP,
   OPCOUNT
 };
 
@@ -3071,31 +3074,38 @@ typedef int BCODE;
 #define BCCODE(e) INTEGER(BCODE_CODE(e))
 #endif
 
-#define DO_GETVAR(dd,keepmiss) do {			\
+static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
+			    Rboolean dd, Rboolean keepmiss)
+{
+    SEXP value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho);
+    if (value == R_UnboundValue)
+	error(_("object '%s' not found"), CHAR(PRINTNAME(symbol)));
+    else if (value == R_MissingArg) {
+	if (! keepmiss) {
+	    const char *n = CHAR(PRINTNAME(symbol));
+	    if(*n) error(_("argument \"%s\" is missing, with no default"), n);
+	    else error(_("argument is missing, with no default"));
+	}
+    }
+    else if (TYPEOF(value) == PROMSXP) {
+	if (PRVALUE(value) == R_UnboundValue) {
+	    /**** R_isMissing is inefficient */
+	    if (keepmiss && R_isMissing(symbol, rho))
+		value = R_MissingArg;
+	    else value = forcePromise(value);
+	}
+	else value = PRVALUE(value);
+	SET_NAMED(value, 2);
+    }
+    else if (!isNull(value) && NAMED(value) < 1)
+	SET_NAMED(value, 1);
+    return value;
+}
+
+#define DO_GETVAR(dd,keepmiss) do { \
   SEXP symbol = VECTOR_ELT(constants, GETOP()); \
-  value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho); \
   R_Visible = TRUE; \
-  if (value == R_UnboundValue) \
-    error(_("object '%s' not found"), CHAR(PRINTNAME(symbol))); \
-  else if (value == R_MissingArg) { \
-    if (! keepmiss) { \
-      const char *n = CHAR(PRINTNAME(symbol)); \
-      if(*n) error(_("argument \"%s\" is missing, with no default"), n); \
-      else error(_("argument is missing, with no default")); \
-    } \
-  } \
-  else if (TYPEOF(value) == PROMSXP) { \
-    if (PRVALUE(value) == R_UnboundValue) { \
-      if (keepmiss && R_isMissing(symbol, rho)) /**** this is inefficient */ \
-        value = R_MissingArg;		    \
-      else value = forcePromise(value); \
-    } \
-    else value = PRVALUE(value); \
-    SET_NAMED(value, 2); \
-  } \
-  else if (!isNull(value) && NAMED(value) < 1) \
-    SET_NAMED(value, 1); \
-  BCNPUSH(value); \
+  BCNPUSH(getvar(symbol, rho, dd, keepmiss));	\
   NEXT(); \
 } while (0)
 
@@ -3151,6 +3161,24 @@ static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
   return dispatched;
 }
 
+static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
+			     SEXP rho, SEXP *pv)
+{
+    int result;
+    SEXP ncall, last, prom;
+
+    PROTECT(ncall = duplicate(call));
+    last = ncall;
+    while (CDR(last) != R_NilValue)
+	last = CDR(last);
+    prom = mkPROMISE(CAR(last), rho);
+    SET_PRVALUE(prom, rhs);
+    SETCAR(last, prom);
+    result = tryDispatch(generic, ncall, lhs, rho, pv);
+    UNPROTECT(1);
+    return result;
+}
+
 #define DO_STARTDISPATCH(generic) do { \
   SEXP call = VECTOR_ELT(constants, GETOP()); \
   int label = GETOP(); \
@@ -3179,6 +3207,47 @@ static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
   SEXP args = R_BCNodeStackTop[-2]; \
   value = fun(call, symbol, args, rho); \
   R_BCNodeStackTop -= 3; \
+  R_BCNodeStackTop[-1] = value; \
+  NEXT(); \
+} while (0)
+
+#define DO_START_ASSIGN_DISPATCH(generic) do { \
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
+  int label = GETOP(); \
+  SEXP lhs = R_BCNodeStackTop[-2]; \
+  SEXP rhs = R_BCNodeStackTop[-1]; \
+  if (NAMED(lhs) == 2) { \
+    lhs = R_BCNodeStackTop[-2] = duplicate(lhs); \
+    SET_NAMED(lhs, 1); \
+  } \
+  if (isObject(lhs) && \
+      tryAssignDispatch(generic, call, lhs, rhs, rho, &value)) { \
+    R_BCNodeStackTop--;	\
+    R_BCNodeStackTop[-1] = value; \
+    BC_CHECK_SIGINT(); \
+    pc = codebase + label; \
+  } \
+  else { \
+    SEXP tag = TAG(CDR(call)); \
+    SEXP cell = CONS(lhs, R_NilValue); \
+    BCNSTACKCHECK(3); \
+    R_BCNodeStackTop[0] = call; \
+    R_BCNodeStackTop[1] = cell; \
+    R_BCNodeStackTop[2] = cell; \
+    R_BCNodeStackTop += 3; \
+    if (tag != R_NilValue) \
+      SET_TAG(cell, CreateTag(tag)); \
+  } \
+  NEXT(); \
+} while (0)
+
+#define DO_DFLT_ASSIGN_DISPATCH(fun, symbol) do { \
+  SEXP rhs = R_BCNodeStackTop[-4]; \
+  SEXP call = R_BCNodeStackTop[-3]; \
+  SEXP args = R_BCNodeStackTop[-2]; \
+  PUSHCALLARG(rhs); \
+  value = fun(call, symbol, args, rho); \
+  R_BCNodeStackTop -= 4; \
   R_BCNodeStackTop[-1] = value; \
   NEXT(); \
 } while (0)
@@ -3820,27 +3889,24 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(OR, 0): Builtin2(do_logic, R_OrSym, rho);
     OP(NOT, 0): Builtin1(do_logic, R_NotSym, rho);
     OP(DOTSERR, 0): error(_("'...' used in an incorrect context"));
-    OP(STARTASSIGN, 2):
+    OP(STARTASSIGN, 1):
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
-	SEXP valsym = VECTOR_ELT(constants, GETOP());
-	EnsureLocal(symbol, rho);
 	value = R_BCNodeStackTop[-1];
-	defineVar(valsym, value, rho); /**** not adjusting NAMED OK? */
-	/* right-hand side value is now on top of stack */
+	BCNPUSH(EnsureLocal(symbol, rho));
+	BCNPUSH(value);
+	/* top three stack entries are now RHS value, LHS value, RHS value */
 	NEXT();
       }
-    OP(ENDASSIGN, 2):
+    OP(ENDASSIGN, 1):
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
-	SEXP valsym = VECTOR_ELT(constants, GETOP());
 	value = BCNPOP();
 	switch (NAMED(value)) {
 	case 0: SET_NAMED(value, 1); break;
 	case 1: SET_NAMED(value, 2); break;
 	}
 	defineVar(symbol, value, rho);
-	unbindVar(valsym, rho);
 	/* original right-hand side value is now on top of stack again */
 	/* we do not duplicate the right-hand side value, so to be
 	   conservative mark the value as NAMED = 2 */
@@ -3849,15 +3915,16 @@ static SEXP bcEval(SEXP body, SEXP rho)
       }
     OP(STARTSUBSET, 2): DO_STARTDISPATCH("[");
     OP(DFLTSUBSET, 0): DO_DFLTDISPATCH(do_subset_dflt, R_SubsetSym);
-    OP(STARTSUBASSIGN, 2): DO_STARTDISPATCH("[<-");
-    OP(DFLTSUBASSIGN, 0): DO_DFLTDISPATCH(do_subassign_dflt, R_SubassignSym);
+    OP(STARTSUBASSIGN, 2): DO_START_ASSIGN_DISPATCH("[<-");
+    OP(DFLTSUBASSIGN, 0):
+      DO_DFLT_ASSIGN_DISPATCH(do_subassign_dflt, R_SubassignSym);
     OP(STARTC, 2): DO_STARTDISPATCH("c");
     OP(DFLTC, 0): DO_DFLTDISPATCH(do_c_dflt, R_CSym);
     OP(STARTSUBSET2, 2): DO_STARTDISPATCH("[[");
     OP(DFLTSUBSET2, 0): DO_DFLTDISPATCH(do_subset2_dflt, R_Subset2Sym);
-    OP(STARTSUBASSIGN2, 2): DO_STARTDISPATCH("[[<-");
+    OP(STARTSUBASSIGN2, 2): DO_START_ASSIGN_DISPATCH("[[<-");
     OP(DFLTSUBASSIGN2, 0):
-      DO_DFLTDISPATCH(do_subassign2_dflt, R_Subassign2Sym);
+      DO_DFLT_ASSIGN_DISPATCH(do_subassign2_dflt, R_Subassign2Sym);
     OP(DOLLAR, 2):
       {
 	int dispatched = FALSE;
@@ -3883,23 +3950,26 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	int dispatched = FALSE;
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
-	SEXP x = R_BCNodeStackTop[-1];
-	value = R_BCNodeStackTop[-2];
+	SEXP x = R_BCNodeStackTop[-2];
+	SEXP rhs = R_BCNodeStackTop[-1];
+	if (NAMED(x) == 2) {
+	  x = R_BCNodeStackTop[-2] = duplicate(x);
+	  SET_NAMED(x, 1);
+	}
 	if (isObject(x)) {
-	    SEXP ncall;
+	    SEXP ncall, prom;
 	    PROTECT(ncall = duplicate(call));
 	    /**** hack to avoid evaluating the symbol */
 	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
-	    /**** this may result in multiple evaluation of the
-		  assigned value */
+	    prom = mkPROMISE(CADDDR(ncall), rho);
+	    SET_PRVALUE(prom, rhs);
 	    dispatched = tryDispatch("$<-", ncall, x, rho, &value);
 	    UNPROTECT(1);
 	}
+	if (! dispatched)
+	  value = R_subassign3_dflt(call, x, symbol, rhs);
 	R_BCNodeStackTop--;
-	if (dispatched)
-	  R_BCNodeStackTop[-1] = value;
-	else
-	  R_BCNodeStackTop[-1] = R_subassign3_dflt(call, x, symbol, value);
+	R_BCNodeStackTop[-1] = value;
 	NEXT();
       }
     OP(ISNULL, 0): DO_ISTEST(isNull);
@@ -3994,7 +4064,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
     }
     OP(GETVAR_MISSOK, 1): DO_GETVAR(FALSE, TRUE);
     OP(DDVAL_MISSOK, 1): DO_GETVAR(TRUE, TRUE);
-    OP(VISIBLE,0): R_Visible = TRUE; NEXT();
+    OP(VISIBLE, 0): R_Visible = TRUE; NEXT();
     OP(SETVAR2, 1):
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
@@ -4004,6 +4074,90 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    R_BCNodeStackTop[-1] = value;
 	}
 	setVar(symbol, value, ENCLOS(rho));
+	NEXT();
+      }
+    OP(STARTASSIGN2, 1):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = R_BCNodeStackTop[-1];
+	BCNPUSH(getvar(symbol, ENCLOS(rho), FALSE, FALSE));
+	BCNPUSH(value);
+	/* top three stack entries are now RHS value, LHS value, RHS value */
+	NEXT();
+      }
+    OP(ENDASSIGN2, 1):
+      {
+	SEXP symbol = VECTOR_ELT(constants, GETOP());
+	value = BCNPOP();
+	switch (NAMED(value)) {
+	case 0: SET_NAMED(value, 1); break;
+	case 1: SET_NAMED(value, 2); break;
+	}
+	setVar(symbol, value, ENCLOS(rho));
+	/* original right-hand side value is now on top of stack again */
+	/* we do not duplicate the right-hand side value, so to be
+	   conservative mark the value as NAMED = 2 */
+	SET_NAMED(R_BCNodeStackTop[-1], 2);
+	NEXT();
+      }
+    OP(SETTER_CALL, 2):
+      {
+        SEXP lhs = R_BCNodeStackTop[-5];
+        SEXP rhs = R_BCNodeStackTop[-4];
+	SEXP fun = R_BCNodeStackTop[-3];
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP vexpr = VECTOR_ELT(constants, GETOP());
+	SEXP args, prom, last;
+	if (NAMED(lhs) == 2) {
+	  lhs = R_BCNodeStackTop[-5] = duplicate(lhs);
+	  SET_NAMED(lhs, 1);
+	}
+	switch (ftype) {
+	case BUILTINSXP:
+	  /* push RHS value onto arguments with 'value' tag */
+	  PUSHCALLARG(rhs);
+	  SET_TAG(R_BCNodeStackTop[-1], install("value"));
+	  /* CONS LHS value onto args */
+	  args = R_BCNodeStackTop[-2] = CONS(lhs, R_BCNodeStackTop[-2]);
+	  /* make the call */
+	  checkForMissings(args, call);
+	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  break;
+	case SPECIALSXP:
+	  /* duplicate arguments and put into stack for GC protection */
+	  args = R_BCNodeStackTop[-2] = duplicate(CDR(call));
+	  /* insert evaluated promise for LHS as first argument */
+          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  SET_PRVALUE(prom, lhs);
+	  SETCAR(args, prom);
+	  /* insert evaluated promise for RHS as last argument */
+	  last = args;
+	  while (CDR(last) != R_NilValue)
+	      last = CDR(last);
+	  prom = mkPROMISE(vexpr, rho);
+	  SET_PRVALUE(prom, rhs);
+	  SETCAR(last, prom);
+	  /* make the call */
+	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  break;
+	case CLOSXP:
+	  /* push evaluated promise for RHS onto arguments with 'value' tag */
+	  prom = mkPROMISE(vexpr, rho);
+	  SET_PRVALUE(prom, rhs);
+	  PUSHCALLARG(prom);
+	  SET_TAG(R_BCNodeStackTop[-1], install("value"));
+	  /* CONS evaluated promise for LHS onto args */
+          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  SET_PRVALUE(prom, lhs);
+	  args = R_BCNodeStackTop[-2] = CONS(prom, R_BCNodeStackTop[-2]);
+	  /* make the call */
+	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
+	  break;
+	default: error(_("bad function"));
+	}
+	R_BCNodeStackTop -= 4;
+	R_BCNodeStackTop[-1] = value;
+	ftype = 0;
 	NEXT();
       }
     LASTOP;
