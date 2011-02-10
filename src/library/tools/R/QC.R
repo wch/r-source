@@ -3778,7 +3778,7 @@ function(pkgDir)
     {
         if(!length(x)) return()
         ## avoid as.list methods
-        if(is.list(x)) lapply(unclass(x), check_one)
+        if(is.list(x)) lapply(unclass(x), check_one, ds = ds)
         if(is.character(x)) {
             xx <- unclass(x)
             enc <- Encoding(xx)
