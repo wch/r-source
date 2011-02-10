@@ -58,7 +58,7 @@ rlogis(n, location = 0, scale = 1)
 }
 \note{
   \code{qlogis(p)} is the same as the well known \sQuote{\emph{logit}}
-  function, \eqn{logit(p) = \log p/(1-p)}{logit(p) = log(p/(1-p)},
+  function, \eqn{logit(p) = \log p/(1-p)}{logit(p) = log(p/(1-p))},
   and \code{plogis(x)} has consequently been called the \sQuote{inverse logit}.
 
   The distribution function is a rescaled hyperbolic tangent,
@@ -67,7 +67,7 @@ rlogis(n, location = 0, scale = 1)
 }
 \source{
   \code{[dpr]logis} are calculated directly from the definitions.
-  
+
   \code{rlogis} uses inversion.
 }
 \references{
@@ -80,7 +80,7 @@ rlogis(n, location = 0, scale = 1)
   Wiley, New York.
 }
 \seealso{
-  \link{Distributions} for other standard distributions.  
+  \link{Distributions} for other standard distributions.
 }
 \examples{
 var(rlogis(4000, 0, scale = 5))# approximately (+/- 3)
