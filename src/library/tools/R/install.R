@@ -758,9 +758,11 @@
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("unable to collate files", pkg_name)
 
-	    if (file.exists(file.path("R", "sysdata.rda"))) {
-		res <- try(sysdata2LazyLoadDB("R/sysdata.rda",
-						      file.path(instdir, "R")))
+	    if (file.exists(f <- file.path("R", "sysdata.rda"))) {
+                comp <- TRUE
+                if (file.info(f)$size > 1e6) comp <- 3 # "xz"
+		res <- try(sysdata2LazyLoadDB(f, file.path(instdir, "R"),
+                                              compress = comp))
 		if (inherits(res, "try-error"))
 		    pkgerrmsg("unable to build sysdata DB", pkg_name)
 	    }

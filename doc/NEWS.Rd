@@ -328,6 +328,10 @@
       \item A \samp{LazyDataCompression} field in the \file{DESCRIPTION}
       file will be used to set the value for the
       \option{--data-compress} option of \command{R CMD INSTALL}.
+      
+      \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
+      in the lazyload daabase using \command{xz} compression: this for
+      example halves the installed size of package \pkg{Imap}.
     }
   }
 

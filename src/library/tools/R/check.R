@@ -1948,13 +1948,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     }
 
-    ## This requires a GNU-like 'du' with 1k block sizes
+    ## This requires a GNU-like 'du' with 1k block sizes, so use -k
     check_install_sizes <- function()
     {
-        if(!nzchar("du")) return()
+        if(!nzchar(Sys.which("du"))) return()
         checkingLog(Log, "installed package size")
         owd <- setwd(file.path(libdir, pkgname))
-        res <- system2("du", , TRUE,TRUE)
+        res <- system2("du", "-k", TRUE,TRUE)
         res2 <- read.table(con <- textConnection(res),
                            header = FALSE, as.is = FALSE); close(con)
         total <- res2[nrow(res2), 1L]
