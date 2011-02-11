@@ -2561,7 +2561,7 @@ DL_FUNC R_ExternalPtrAddrFn(SEXP s)
 
 /* The following functions are replacements for the accessor macros.
    They are used by code that does not have direct access to the
-   internal representation of objects.  The assignment functions
+   internal representation of objects.  The replacement functions
    implement the write barrier. */
 
 /* General Cons Cell Attributes */

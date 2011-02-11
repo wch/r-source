@@ -6022,7 +6022,7 @@ UTILITIES
 	previously in package base, as well as the following new ones:
 
 	-  checkAssignFuns() for checking whether the final argument of
-	   assignment functions in a package is named `value'.
+	   replacement functions in a package is named `value'.
 
 	-  checkDocArgs() for checking whether all arguments shown in
 	   \usage of Rd files are documented in the corresponding
@@ -6040,7 +6040,7 @@ UTILITIES
 	package DESCRIPTION file.  It also tests for syntax errors in
 	the R code, whether all methods in the code have all arguments
 	of the corresponding generic, for arguments shown in \usage but
-	not documented in \arguments, and whether assignment functions
+	not documented in \arguments, and whether replacement functions
 	have their final argument named `value'.
 
 

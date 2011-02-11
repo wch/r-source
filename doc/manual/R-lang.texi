@@ -4408,7 +4408,7 @@ are generally accessed via @code{get} and @code{assign}, although they
 can also be represented by text strings in some limited circumstances
 when there is no ambiguity (e.g.@: @code{"x" <- 1}). As @code{get} and
 @code{assign} are not restricted to names that are identifiers they do
-not recognise subscripting operators or assignment functions. The
+not recognise subscripting operators or replacement functions. The
 following pairs are @emph{not} equivalent
 @findex get
 @findex assign
