@@ -83,7 +83,7 @@
       spreadsheet intended for Windows or Mac OS X Excel).
 
       \item Assignment expressions of the form \code{foo::bar(x) <- y}
-      and \code{foo:::bar(x) <- y} now work; the assignment functions
+      and \code{foo:::bar(x) <- y} now work; the replacement functions
       used are \code{foo::`bar<-`} and \code{foo:::`bar<-`}.
 
       \item \code{Sys.getenv()} gains a \code{names} argument so

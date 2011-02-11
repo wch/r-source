@@ -1,7 +1,7 @@
  /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2009	The R Development Core Team.
+ *  Copyright (C) 1998--2011	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -403,7 +403,7 @@ SEXP eval(SEXP e, SEXP rho)
 	tmp = e;
 	/* Make sure constants in expressions are NAMED before being
 	   used as values.  Setting NAMED to 2 makes sure weird calls
-	   to assignment functions won't modify constants in
+	   to replacement functions won't modify constants in
 	   expressions.  */
 	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
 	break;
@@ -457,9 +457,9 @@ SEXP eval(SEXP e, SEXP rho)
 	   complex assignment expression created in applydefine().  If
 	   the RHS value is freshly created it will have NAMED = 0 and
 	   we want it to stay that way or a BUILTIN or SPECIAL
-	   assignment function might have to duplicate the value
+	   replacement function might have to duplicate the value
 	   before inserting it to avoid creating cycles.  (Closure
-	   assignment functions will get the value via the SYMSXP case
+	   replacement functions will get the value via the SYMSXP case
 	   from evaluating their 'value' argument so the value will
 	   end up getting duplicated if NAMED = 2.) LT */
 	break;
@@ -1585,15 +1585,15 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    then removed by the inner one.  This could be addressed by
 	    using multiple temporaries or using a promise for this
 	    variable as is done for the RHS.  Printing of the
-	    assignment function call in error messages might then need
+	    replacement function call in error messages might then need
 	    to be adjusted.
 
 	    With assignments of the form f(g(x, z), y) <- w the value
 	    of 'z' will be computed twice, once for a call to g(x, z)
-	    and once for the call to the assignment function g<-.  It
+	    and once for the call to the replacement function g<-.  It
 	    might be possible to address this by using promises.
 	    Using more temporaries would not work as it would mess up
-	    assignment functions that use substitute and/or
+	    replacement functions that use substitute and/or
 	    nonstandard evaluation (and there are packages that do
 	    that -- igraph is one).
 

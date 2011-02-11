@@ -1837,9 +1837,9 @@ details on the document format.  Package vignettes found in directory
 @file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
 code chunks they contain to ensure consistency between code and
 documentation.  (Code chunks with option @code{eval=FALSE} are not
-tested.) The @R{} working directory for all vignette tests in @code{R
+tested.)  The @R{} working directory for all vignette tests in @code{R
 CMD check} is the @emph{installed} version of the @file{doc}
-subdirectory. Make sure all files needed by the vignette (data sets,
+subdirectory.  Make sure all files needed by the vignette (data sets,
 @dots{}) are accessible by either placing them in the @file{inst/doc}
 hierarchy of the source package, or using calls to @code{system.file()}.
 
@@ -7697,7 +7697,7 @@ code making the modification to do the duplication, even if it is
 The case @code{NAMED(foo) == 1} allows some optimization, but it can be
 ignored (and duplication done whenever @code{NAMED(foo) > 0}).  (This
 optimization is not currently usable in user code.)  It is intended
-for use within assignment functions.  Suppose we used
+for use within replacement functions.  Suppose we used
 
 @example
 x <- 1:10
