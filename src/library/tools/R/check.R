@@ -1147,7 +1147,21 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
             } else resultLog(Log, "OK")
         }
-    }
+
+        ## Check for ASCII and uncompressed/unoptimized saves in 'sysdata':
+        ## no base package has this
+        if (R_check_compact_data && file.exists(file.path("R", "sysdata.rda"))) {
+            checkingLog(Log, "R/sysdata.rda")
+            out <- R_runR(paste("tools:::.check_package_compact_sysdata('.',",
+                                R_check_compact_data2, ")"),
+                          R_opts2)
+            if (length(out)) {
+                bad <- grep("^Warning:", out)
+                if (length(bad)) warnLog() else noteLog(Log)
+                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
+            } else resultLog(Log, "OK")
+        }
+   }
 
     check_src_dir <- function()
     {
