@@ -222,6 +222,9 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         yy <- system(make)
         if(make == "" || yy > 0) stop("running 'make' failed")
     } else {
+        ## Badly-written vignettes open a pdf() device on Rplots.pdf and
+        ## fail to close it.
+        graphics.off()
         if(clean) {
             f <- list.files(all.files = TRUE) %w/o% c(".", "..", pdfs)
             newer <- file_test("-nt", f, ".build.timestamp")
