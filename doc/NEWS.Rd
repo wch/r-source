@@ -570,11 +570,15 @@
 
       \item \code{library()} failed to cache S4 metadata (unlike
       \code{loadNamespace()}) causing failures in S4-using packages
-      without a namespace.
+      without a namespace (e.g. those using reference classes).
 
       \item The logit() function \code{qlogis(lp, log.p=TRUE)} no
       longer prematurely overflows to \code{Inf} when p := exp(lp) is
       close to 1.
+
+      \item Updating S4 methods for a group generic function requires
+      resetting the methods tables for the members of the group (patch
+      contributed by Martin Morgan).
     }
   }
 }
