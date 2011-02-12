@@ -841,7 +841,7 @@
                                                 "gzip" = TRUE,
                                                 "bzip2" = 2,
                                                 "xz" = 3,
-                                                TRUE)  # defualt to gzip
+                                                TRUE)  # default to gzip
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))
 		    if (inherits(res, "try-error"))
