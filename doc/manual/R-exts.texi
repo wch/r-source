@@ -1705,9 +1705,10 @@ files are tested and converted to LF line-endings if necessary.
 Run-time checks whether the package works correctly should be performed
 using @code{R CMD check} prior to invoking the build procedure.
 
-To exclude files from being put into the package, one can specify a list
-of exclude patterns in file @file{.Rbuildignore} in the top-level source
-directory.  These patterns should be Perl-like regexps (see the help for
+To exclude files@footnote{including @emph{non-empty} directories.} from
+being put into the package, one can specify a list of exclude patterns
+in file @file{.Rbuildignore} in the top-level source directory.  These
+patterns should be Perl-like regular expressions (see the help for
 @code{regexp} in @R{} for the precise details), one per line, to be
 matched against the file names relative to the top-level source
 directory.  In addition, directories from source control
