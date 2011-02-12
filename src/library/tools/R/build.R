@@ -746,8 +746,8 @@ get_exclude_patterns <- function()
         ## remove exclude files
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE)
-        ## this does not include dirs, so add non-empty ones back
-        allfiles <- c(allfiles, unique(dirname(allfiles)))
+        ## this does not include dirs, and we don't want '.'
+        allfiles <- c(allfiles, list.dirs(".")[-1L])
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))

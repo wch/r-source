@@ -938,9 +938,10 @@ static SEXP filename(const char *dir, const char *file)
 
 #include <tre/tre.h>
 
-static void list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
-		       Rboolean allfiles, Rboolean recursive,
-                       const regex_t *reg, int *countmax, PROTECT_INDEX idx)
+static void
+list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
+	   Rboolean allfiles, Rboolean recursive,
+	   const regex_t *reg, int *countmax, PROTECT_INDEX idx)
 {
     DIR *dir;
     struct dirent *de;
@@ -1010,16 +1011,14 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     PROTECT_INDEX idx;
     SEXP d, p, ans;
-    int allfiles, fullnames, count, pattern, recursive, igcase, flags;
-    int i, ndir;
+    int i, allfiles, fullnames, count, pattern, recursive, igcase, flags;
     const char *dnp;
     regex_t reg;
     int countmax = 128;
 
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
-    if (!isString(d))
-	error(_("invalid '%s' argument"), "directory");
+    if (!isString(d)) error(_("invalid '%s' argument"), "directory");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != NA_STRING)
@@ -1030,7 +1029,6 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     fullnames = asLogical(CAR(args)); args = CDR(args);
     recursive = asLogical(CAR(args)); args = CDR(args);
     igcase = asLogical(CAR(args));
-    ndir = length(d);
     flags = REG_EXTENDED;
     if (igcase) flags |= REG_ICASE;
 
@@ -1038,15 +1036,96 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid 'pattern' regular expression"));
     PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
     count = 0;
-    for (i = 0; i < ndir ; i++) {
+    for (i = 0; i < LENGTH(d) ; i++) {
 	if (STRING_ELT(d, i) == NA_STRING) continue;
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
 	list_files(dnp, fullnames ? dnp : NULL, &count, &ans, allfiles,
 		   recursive, pattern ? &reg : NULL, &countmax, idx);
     }
     REPROTECT(ans = lengthgets(ans, count), idx);
-    if (pattern)
-	tre_regfree(&reg);
+    if (pattern) tre_regfree(&reg);
+    ssort(STRING_PTR(ans), count);
+    UNPROTECT(1);
+    return ans;
+}
+
+static void list_dirs(const char *dnp, const char *stem, int *count, 
+		      SEXP *pans, int *countmax, PROTECT_INDEX idx)
+{
+    DIR *dir;
+    struct dirent *de;
+    char p[PATH_MAX], stem2[PATH_MAX];
+#ifdef Windows
+    /* > 2GB files might be skipped otherwise */
+    struct _stati64 sb;
+#else
+    struct stat sb;
+#endif
+    R_CheckUserInterrupt();
+    if ((dir = opendir(dnp)) != NULL) {
+	if (*count == *countmax - 1) {
+	    *countmax *= 2;
+	    REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
+	}
+	SET_STRING_ELT(*pans, (*count)++, mkChar(dnp));
+	while ((de = readdir(dir))) {
+#ifdef Win32
+	    if (strlen(dnp) == 2 && dnp[1] == ':')
+		snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
+	    else
+		snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#else
+	    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
+#endif
+#ifdef Windows
+	    _stati64(p, &sb);
+#else
+	    stat(p, &sb);
+#endif
+	    if ((sb.st_mode & S_IFDIR) > 0) {
+		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+		    if (stem) {
+#ifdef Win32
+			if(strlen(stem) == 2 && stem[1] == ':')
+			    snprintf(stem2, PATH_MAX, "%s%s", stem,
+				     de->d_name);
+			else
+			    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				     R_FileSep, de->d_name);
+#else
+			snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				 R_FileSep, de->d_name);
+#endif
+		    } else strcpy(stem2, de->d_name);
+		    list_dirs(p, stem2, count, pans, countmax, idx);
+		}
+	    }
+	}
+	closedir(dir);
+    }
+}
+
+SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    PROTECT_INDEX idx;
+    SEXP d, ans;
+    int fullnames, count, i;
+    const char *dnp;
+    int countmax = 128;
+
+    checkArity(op, args);
+    d = CAR(args);
+    if (!isString(d)) error(_("invalid '%s' argument"), "directory");
+    fullnames = asLogical(CADR(args));
+
+    PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
+    count = 0;
+    for (i = 0; i < LENGTH(d) ; i++) {
+	if (STRING_ELT(d, i) == NA_STRING) continue;
+	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
+	list_dirs(dnp, fullnames ? dnp : NULL, &count, &ans, &countmax, idx);
+    }
+    REPROTECT(ans = lengthgets(ans, count), idx);
     ssort(STRING_PTR(ans), count);
     UNPROTECT(1);
     return ans;

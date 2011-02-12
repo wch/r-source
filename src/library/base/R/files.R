@@ -80,6 +80,10 @@ list.files <- function(path = ".", pattern = NULL, all.files = FALSE,
 
 dir <- list.files
 
+list.dirs <- function(path = ".", full.names = TRUE)
+    .Internal(list.dirs(path, full.names))
+
+
 file.path <-
 function(..., fsep=.Platform$file.sep)
     .Internal(file.path(list(...), fsep))

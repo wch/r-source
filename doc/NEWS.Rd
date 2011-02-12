@@ -228,9 +228,9 @@
       \code{xpd} specification (allowing clipping to be turned off
       completely).
 
-      \item nls(*, algorithm="port") now shares more code with nlminb(),
-      and is more consistent with the other algorithms in its return
-      value.
+      \item nls(algorithm="port") now shares more code with
+      \code{nlminb()}, and is more consistent with the other
+      \code{nls()} algorithms in its return value.
 
       \item xz has been updated to 5.0.1 (very minor bugfix release).
 
@@ -238,6 +238,9 @@
       argument allowing it to use a bitmap raster for plotting a
       regular grid instead of polygons. This can be more efficient, but
       may not be supported by all devices. The default is \code{FALSE}.
+
+      \item New function \code{list.dirs()} lists all sub-directories,
+      (even empty ones which cannot be deduced from \code{list.files()}).
     }
   }
 
@@ -272,6 +275,9 @@
 
       It now adds a \file{datalist} file for \file{data} directories of
       more than 1Mb.
+
+      Patterns in \file{.Rbuildignore} are now also matched against all
+      directory names (including those of empty directories).
 
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
