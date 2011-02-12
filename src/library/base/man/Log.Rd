@@ -1,6 +1,6 @@
 % File src/library/base/man/Log.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{log}
@@ -46,8 +46,8 @@ expm1(x)
 }
 \value{
   A vector of the same length as \code{x} containing the transformed
-  values.  \code{log(0)} gives \code{-Inf}, and negative values give
-  \code{NaN}.
+  values.  \code{log(0)} gives \code{-Inf}, and \code{log(x)} for
+  negative values of \code{x} is \code{NaN}.  \code{exp(-Inf)} is \code{0}.
 
   For complex inputs to the log functions, the value is a complex number
   with imaginary part in the range \eqn{[-\pi, \pi]}{[-pi, pi]}: which
