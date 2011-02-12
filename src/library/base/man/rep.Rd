@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -31,15 +31,16 @@ rep.int(x, times)
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
-      \item{\code{times}}{A vector giving the number of
+      \item{\code{times}}{A integer vector giving the (non-negative) number of
         times to repeat each element if of length \code{length(x)}, or to
-        repeat the whole vector if of length 1.}
+        repeat the whole vector if of length 1.  Negative or \code{NA}
+	values are an error.}
       \item{\code{length.out}}{non-negative integer. The desired length of the
         output vector.  Other inputs will be coerced to an integer
-	vector and the first element taken. Ignored if \code{NA} or invalid.}
+	vector and the first element taken.  Ignored if \code{NA} or invalid.}
       \item{\code{each}}{non-negative integer.  Each element of \code{x}
 	is repeated \code{each} times.  Other inputs will be coerced to
-	an integer vector and the first element taken. Treated as
+	an integer vector and the first element taken.  Treated as
 	\code{1} if \code{NA} or invalid.}
     }
   }
@@ -87,9 +88,9 @@ rep.int(x, times)
   Function \code{rep.int} is a simple case handled by internal code, and
   provided as a separate function purely for S compatibility.
 
-  Function \code{rep} is a primitive, but (partial)
-  matching of argument names is performed as for normal functions.
-  You can no longer pass a missing argument to e.g. \code{length.out}.
+  Function \code{rep} is a primitive, but (partial) matching of argument
+  names is performed as for normal functions.  You can no longer pass a
+  missing argument to e.g. \code{length.out}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
