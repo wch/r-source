@@ -384,20 +384,6 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
-        cp_r <- function(from, to)
-        {
-            ## used for inst/
-            if (WINDOWS) {
-                file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
-            } else {
-                from <- shQuote(from)
-                to <- shQuote(to)
-                system(paste0("cp -r ", from, "/* ", to,
-                              " || (cd ", from, " && ", TAR, " -cf - . | (cd '",
-                              to, "' && ", TAR, " -xf - ))"))
-            }
-        }
-
         shlib_install <- function(instdir, arch)
         {
             files <- Sys.glob(paste0("*", SHLIB_EXT))
@@ -869,14 +855,23 @@
 	    files <- Sys.glob(file.path("exec", "*"))
 	    if (length(files)) {
 		file.copy(files, file.path(instdir, "exec"), TRUE)
+                ## not actually needed, given dir.create call.
 		Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
 	    }
 	}
 
 	if (install_inst && dir.exists("inst") && length(dir("inst"))) {
 	    starsmsg(stars, "inst")
-	    ## FIXME avoid installing .svn etc?
-	    cp_r("inst", instdir)
+            inst_dirs <- list.dirs("inst")[-1L] # not inst itself
+            vcs <- basename(inst_dirs) %in% .vc_dir_names
+            omit <- inst_dirs[vcs]
+            inst_dirs <- inst_dirs[!vcs]
+            lapply(gsub("^inst", instdir, inst_dirs),
+                   function(p) dir.create(p, FALSE, TRUE)) # be paraoid
+            inst_files <- list.files("inst", all.files = TRUE, recursive = TRUE)
+            ## This assumes that these are only at one level: NOT RIGHT
+            inst_files <- inst_files[! dirname(inst_files) %in% .vc_dir_names]
+            file.copy(inst_files, gsub("^inst", instdir, inst_files))
 	}
 
 	if (install_tests && dir.exists("tests")) {
@@ -946,6 +941,7 @@
         ## Remove stuff we should not have installed in the first place.
         ## When installing from a source directory under version
         ## control, we should really exclude the version control subdirs.
+        ## FIXME: still needed?
         for(d in .vc_dir_names) {
             ## FIXME
             if (!WINDOWS)
