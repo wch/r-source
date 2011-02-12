@@ -183,6 +183,10 @@
       \item Updating S4 methods for a group generic function requires
       resetting the methods tables for the members of the group (patch
       contributed by Martin Morgan).
+      
+      \item In some circumstances (including for package \pkg{XML}),
+      \command{R CMD INSTALL} installed version-control directories from
+      source packages.
     }
   }
 }

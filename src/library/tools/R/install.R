@@ -977,10 +977,10 @@
         ## control, we should really exclude the subdirs CVS, .svn
         ## (Subversion), .arch-ids (arch), .git and .hg (mercurial).
         for(d in c("CVS", ".svn", ".arch-ids", ".git", ".hg")) {
-            ## FIXME
+            ## FIXME This could be run on Windows, if we check find.exe exists.
             if (!WINDOWS)
                 system(paste("find",  shQuote(instdir), "-name", d,
-                             "-type d -prune -exe rm \\{\\} \\;"),
+                             "-type d -prune -exec rm -r \\{\\} \\;"),
                        ignore.stderr = TRUE)
         }
 
