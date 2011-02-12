@@ -499,9 +499,9 @@ get_exclude_patterns <- function()
         if (resave_data == "no") return()
         ddir <- file.path(pkgname, "data")
         if(resave_data == "best") {
-            files <- c(Sys.glob(c(file.path(ddir, "*.rda"),
-                                  file.path(ddir, "*.RData"))),
-                       file.path(pkgname, "R", "sysdata.rda"))
+            files <- Sys.glob(c(file.path(ddir, "*.rda"),
+                                file.path(ddir, "*.RData"),
+                                file.path(pkgname, "R", "sysdata.rda")))
             messageLog(Log, "re-saving image files")
             resaveRdaFiles(files)
             rdas <- checkRdaFiles(files)
@@ -533,7 +533,7 @@ get_exclude_patterns <- function()
         fi <- file.info(Sys.glob(file.path(pkgname, "data", "*")))
         size <- sum(fi$size)
         if(size <= 1024^2) return()
-        z <- list_data_in_pkg(pkgname)
+        z <- list_data_in_pkg(pkgname, dataDir = file.path(pkgname, "data"))
         if(!length(z)) return()
         con <- file(dlist, "w")
         for (nm in names(z)) {
