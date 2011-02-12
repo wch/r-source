@@ -499,19 +499,29 @@ get_exclude_patterns <- function()
         if (resave_data == "no") return()
         ddir <- file.path(pkgname, "data")
         if(resave_data == "best") {
+            files <- c(Sys.glob(c(file.path(ddir, "*.rda"),
+                                  file.path(ddir, "*.RData"))),
+                       file.path(pkgname, "R", "sysdata.rda"))
             messageLog(Log, "re-saving image files")
-            resaveRdaFiles(ddir)
-            rdas <- checkRdaFiles(ddir)
+            resaveRdaFiles(files)
+            rdas <- checkRdaFiles(files)
             if(any(rdas$compress %in% c("bzip2", "xz")))
                 fixup_R_dep(pkgname, "2.10")
         } else {
             rdas <- checkRdaFiles(ddir)
             if(nrow(rdas)) {
-                update <- with(rdas, ASCII | compress == "none"
-                               | version <= 2)
+                update <- with(rdas, ASCII | compress == "none" | version < 2)
                 if(any(update)) {
                     messageLog(Log, "re-saving image files")
                     resaveRdaFiles(row.names(rdas)[update], "gzip")
+                }
+            }
+            if(file.exists(f <- file.path(pkgname, "R", "sysdata.rda"))) {
+                rdas <- checkRdaFiles(f)
+                update <- with(rdas, ASCII | compress == "none" | version < 2)
+                if(any(update)) {
+                    messageLog(Log, "re-saving sysdata.rda")
+                    resaveRdaFiles(f, "gzip")
                 }
             }
         }
