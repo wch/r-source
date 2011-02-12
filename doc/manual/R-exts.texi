@@ -1785,6 +1785,11 @@ CMD check} is the @emph{installed} version of the @file{doc}
 subdirectory.  Make sure all files needed by the vignette (data sets,
 @dots{}) are accessible by either placing them in the @file{inst/doc}
 hierarchy of the source package, or using calls to @code{system.file()}.
+Unfortunately, this currently means that all other files needed to
+re-make the vignettes (such as LaTeX style files, BiBTeX input files and
+files for any figures not created by running the code in the vignette)
+must under @file{inst} (usually under @file{inst/doc}) and so be
+installed.
 
 @code{R CMD build} will automatically create PDF versions of the
 vignettes for distribution with the package sources.  By including the
@@ -1818,15 +1823,15 @@ as then no definition of the command is necessary.
 At install time an @HTML{} index for all vignettes is automatically
 created from the @code{\VignetteIndexEntry} statements unless a file
 @file{index.html} exists in directory @file{inst/doc}. This index is
-linked into the @HTML{} help system for each package.  If you do supply
-a @file{inst/doc/html/index.html} file it should contain relative links
-only to files under the installed @file{doc} directory, or perhaps (not
-really an index) to HTML help files or to the @file{DESCRIPTION} file.
+linked from the @HTML{} help index for the package.  If you do supply a
+@file{inst/doc/index.html} file it should contain relative links only to
+files under the installed @file{doc} directory, or perhaps (not really
+an index) to HTML help files or to the @file{DESCRIPTION} file.
 
 Do watch that vignettes are not too large -- one in a @acronym{CRAN}
 package was 72Mb!  This is usually caused by the inclusion of overly
 detailed figures, which will not render well in PDF viewers.  Sometimes
-it is much better generate fairly high resolution bitmap (PNG, JPEG)
+it is much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
 
