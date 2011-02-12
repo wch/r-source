@@ -294,10 +294,7 @@ tar <- function(tarfile, files = NULL,
     else stop("'tarfile' must be a character string or a connection")
 
     files <- list.files(files, recursive = TRUE, all.files = TRUE,
-                        full.names = TRUE)
-    ## this omits directories: get back the non-empty ones
-    bf <- unique(dirname(files))
-    files <- c(bf[!bf %in% c(".", files)], files)
+                        full.names = TRUE, include.dirs = TRUE)
 
     for (f in unique(files)) {
         info <- file.info(f)

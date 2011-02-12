@@ -11,11 +11,11 @@
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE)
+           ignore.case = FALSE, include.dirs = FALSE)
 
        dir(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE)
+           ignore.case = FALSE, include.dirs = FALSE)
 
 list.dirs(path = ".", full.names = TRUE)
 }
@@ -33,6 +33,8 @@ list.dirs(path = ".", full.names = TRUE)
     If \code{FALSE}, the file names (rather than paths) are returned.}
   \item{recursive}{logical.  Should the listing recurse into directories?}
   \item{ignore.case}{logical.  Should pattern-matching be case-insensitive?}
+  \item{include.dirs}{logical.  Should subdirectory names be included in
+    recursive listings?  (There always are in non-recursive ones).}
 }
 \description{
   These functions produce a character vector of the names of files or
@@ -45,10 +47,9 @@ list.dirs(path = ".", full.names = TRUE)
   is skipped, with a warning.
 
   The files are sorted in alphabetical order, on the full path
-  if \code{full.names = TRUE}.  For \code{list.files}/\code{dir}
-  directories are included only if \code{recursive = FALSE}.
+  if \code{full.names = TRUE}.
 
-  \code{list.dir} implicitly has \code{all.files = TRUE, recursive =
+  \code{list.dirs} implicitly has \code{all.files = TRUE, recursive =
     TRUE}, and the answer includes \code{path} itself (provided it is a
   readable directory). 
 }

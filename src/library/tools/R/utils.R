@@ -428,7 +428,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
-## (arch), .bzr, .git and .hg (mercurial). 
+## (arch), .bzr, .git and .hg (mercurial).
 
 .vc_dir_names <-
     c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
@@ -960,7 +960,7 @@ function(path = ".", full.names = FALSE, recursive = FALSE)
     ## Note that list.files(recursive = TRUE) excludes directories.
     files <- list.files(path, all.files = TRUE)
     dirs <- files[file_test("-d", file.path(path, files))]
-    if(recursive)
+    if(recursive) # this misses empty dirs
         dirs <- unique(c(dirs,
                          dirname(list.files(path, all.files = TRUE,
                                             recursive = TRUE))))

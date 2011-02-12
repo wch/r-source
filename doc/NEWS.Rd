@@ -238,7 +238,11 @@
       argument allowing it to use a bitmap raster for plotting a
       regular grid instead of polygons. This can be more efficient, but
       may not be supported by all devices. The default is \code{FALSE}.
-
+      
+      \item \code{list.files()}/\code{dir()} gains a new argument
+      \code{include.dirs()} to include directories in the listing when
+      \code{recursive = TRUE}.
+      
       \item New function \code{list.dirs()} lists all sub-directories,
       (even empty ones which cannot be deduced from \code{list.files()}).
     }

@@ -30,7 +30,7 @@ function(dir = ".", fields = NULL,
     paths <- ""
     if(is.logical(subdirs) && subdirs) {
         owd <- setwd(dir)
-        paths <- unique(dirname(list.files(".", recursive=TRUE)))
+        paths <- list.dirs(".")
         setwd(owd)
         paths <- c("", paths[paths != "."])
     } else if(is.character(subdirs)) paths <- c("", subdirs)

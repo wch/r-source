@@ -77,8 +77,6 @@ tar(tarfile, files = NULL,
   \samp{nul} to a multiple of 20 blocks (10KB).  Implementations differ
   to whether the block padding should occur before or after compression
   (or both).
-
-  The internal implementation currently skips empty directories.
 }
 
 \value{
