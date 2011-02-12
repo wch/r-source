@@ -877,7 +877,6 @@
 	    starsmsg(stars, "inst")
 	    ## FIXME avoid installing .svn etc?
 	    cp_r("inst", instdir)
-	    ## file.copy("inst", "instdir", recursive = TRUE)
 	}
 
 	if (install_tests && dir.exists("tests")) {

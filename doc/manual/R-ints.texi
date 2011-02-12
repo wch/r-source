@@ -3568,6 +3568,10 @@ Default:none.
 Comma-separated list of architectures that will be omitted from
 running examples in a multi-arch setup.
 Default:none.
+@item _R_CHECK_VC_DIRS_
+Should the unpacked package directory be checked for version-control
+directories (@file{CVS}, @file{.svn} @dots{}).
+Default:true for tarballs
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

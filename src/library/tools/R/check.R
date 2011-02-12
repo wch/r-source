@@ -491,7 +491,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
-        all_dirs <- .list_dirs(".", full.names = TRUE, recursive = TRUE)
+        all_dirs <- list.dirs(".")
 
         ## several packages have had check dirs in the sources, e.g.
         ## ./languageR/languageR.Rcheck
@@ -536,9 +536,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                      "Most likely, these were included erroneously.\n")
         }
 
-        if(istar) {
+        if(istar || R_check_vc_dirs) {
             ## Packages also should not contain version control subdirs
-            ## provided that we check a .tar.gz.
+            ## provided that we check a .tar.gz or know we unpacked one.
             ind <- basename(all_dirs) %in% .vc_dir_names
             if(any(ind)) {
                 if(!any) warnLog()
@@ -546,8 +546,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,
                          "Found the following directory(s) with ",
                          "names of version control directories:\n",
-                         paste("  ", all_dirs[ind], sep = "",
-                               collapse = "\n"),
+                         paste("  ", all_dirs[ind], sep = "", collapse = "\n"),
                          "\n",
                          "These should not be in a package tarball.\n")
             }
@@ -2435,6 +2434,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA2_", "FALSE"))
     R_check_compact_data <- R_check_compact_data2 ||
     	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
+    R_check_vc_dirs <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
