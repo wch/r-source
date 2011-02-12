@@ -412,9 +412,9 @@
       platforms without complex C99 complex support.  This and some
       lesser issues in trignometric functions have been corrected.
 
-      Such platforms were rare (Cygwin, and apparently FreeBSD).
-      However, because of new optimizations in the way complex arguments
-      are handled, the same code was selected on x86_64 Linux
+      Such platforms were rare (we know of Cygwin and FreeBSD).
+      However, because of new compiler optimizations in the way complex
+      arguments are handled, the same code was selected on x86_64 Linux
       with \command{gcc 4.5.x} at the default \code{-O2} optimization
       (but not at \code{-O}).
 
@@ -428,8 +428,8 @@
       \item PCRE has been updated to 8.12 (two bug-fix releases since 8.10).
 
       \item \code{rep()}, \code{seq()}, \code{seq.int()} and
-      \code{seq_len()} report more often when the first element of an
-      incorrect length argument is taken.
+      \code{seq_len()} report more often when the first element is taken
+      of an argument of incorrect length.
 
       \item The Cocoa back-end for the \code{quartz()} graphics device
       on Mac OS X provides a way to disable event loop processing
