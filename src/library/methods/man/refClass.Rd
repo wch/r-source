@@ -253,8 +253,8 @@ A method may override a method of the same name in a superclass.
 The overriding method can call the superclass method by 
 \code{callSuper(...)} as described below.
 
-All reference classes inheit from the class \code{"envRefClass"},
-including the following methods.
+All reference classes inherit from the class \code{"envRefClass"},
+which provides the following methods.
 
 \describe{
 \item{\code{$callSuper(...)}}{ %$
@@ -500,12 +500,12 @@ described here.
 \R interfaces to the languages exist in a number of packages.
 
 The reference class definitions here provide a hook for
-methods defined in the interface to used and extended in \R.
-Access to fields and/or methods in the foreign language can be
+classes in the foreign language to be exposed in \R.
+Access to fields and/or methods in the class can be
 implemented by defining an \R reference class corresponding to
 classes made available through the interface.
 Typically, the inter-system interface will take care of the details of
-such methods, given a description of the foreign class (what fields
+creating the \R class, given a description of the foreign class (what fields
 and methods it has, the classes for the fields, whether any are
 read-only, etc.)
 The specifics for the fields and methods can be implemented via
@@ -516,6 +516,9 @@ actual access handled by the inter-system interface.
 
 \R methods and/or fields can be included in the class definition as for any
 reference class.
+The methods can use or set fields and can call other methods transparently
+whether the field or method comes from the interface or is defined
+directly in \R.
 
 For an inter-system interface using this approach, see the code for package \code{Rcpp}, version
 0.8.7 or later.
@@ -563,8 +566,7 @@ mEditor <- setRefClass("matrixEditor",
          backup <-
              list(i, j, data[i,j])
          data[i,j] <<- value
-         edits <<- c(list(backup),
-                     edits)
+         edits <<- c(edits, list(backup))
          invisible(value)
      },
      undo = function() {
@@ -572,7 +574,7 @@ mEditor <- setRefClass("matrixEditor",
         and update the edits field accordingly.
         '
          prev <- edits
-         if(length(prev)) prev <- prev[[1]]
+         if(length(prev)) prev <- prev[[length(prev)]]
          else stop("No more edits to undo")
          edit(prev[[1]], prev[[2]], prev[[3]])
          ## trim the edits list
