@@ -3963,6 +3963,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
 	    prom = mkPROMISE(CADDDR(ncall), rho);
 	    SET_PRVALUE(prom, rhs);
+	    SETCAR(CDR(CDDR(ncall)), prom);
 	    dispatched = tryDispatch("$<-", ncall, x, rho, &value);
 	    UNPROTECT(1);
 	}
