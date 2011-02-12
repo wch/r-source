@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-22 r53649)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.12.1 Patched (2011-02-12 r54356)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.4.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1038,9 +1038,9 @@ Error in standardGeneric("numMax") :
 > 
 > ## A generic version of paste(), dispatching on the "..." argument:
 > setGeneric("paste", signature = "...")
-Creating a generic for 'paste' in package '.GlobalEnv'
+Creating a generic for ‘paste’ in package ‘.GlobalEnv’
     (the supplied definition differs from and overrides the implicit generic
-    in package 'base': Signatures differ:  (...), (sep, collapse))
+    in package ‘base’: Signatures differ:  (...), (sep, collapse))
 [1] "paste"
 > 
 > setMethod("paste", "Number", function(..., sep, collapse) c(...))
@@ -1309,7 +1309,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x10265ee00>
+<environment: 0x38ea480>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -1355,7 +1355,7 @@ NULL
 > 
 > cleanEx()
 
-detaching 'package:stats4'
+detaching ‘package:stats4’
 
 > nameEx("is")
 > ### * is
@@ -1739,7 +1739,7 @@ showClass("trackMultiCurve")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-'stdout'.
+‘stdout’.
 > 
 > promptClass("track", stdout())
 \name{track-class}
@@ -1788,7 +1788,7 @@ showClass("track")
 }
 \keyword{classes}
 A shell of class documentation has been written to the connection
-'stdout'.
+‘stdout’.
 > ## End Don't show
 > ## Not run: 
 > ##D > promptClass("track")
@@ -1833,8 +1833,7 @@ A shell of class documentation has been written to the connection
 +          backup <-
 +              list(i, j, data[i,j])
 +          data[i,j] <<- value
-+          edits <<- c(list(backup),
-+                      edits)
++          edits <<- c(edits, list(backup))
 +          invisible(value)
 +      },
 +      undo = function() {
@@ -1842,7 +1841,7 @@ A shell of class documentation has been written to the connection
 +         and update the edits field accordingly.
 +         '
 +          prev <- edits
-+          if(length(prev)) prev <- prev[[1]]
++          if(length(prev)) prev <- prev[[length(prev)]]
 +          else stop("No more edits to undo")
 +          edit(prev[[1]], prev[[2]], prev[[3]])
 +          ## trim the edits list
@@ -2887,7 +2886,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x100dc6838>
+<environment: 0x322be08>
 
 Signatures:
         object    
@@ -3236,7 +3235,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.287 0.046 3.335 0 0 
+Time elapsed:  5.505 0.053 5.576 0 0 
 > grDevices::dev.off()
 null device 
           1 
