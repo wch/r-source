@@ -4632,7 +4632,7 @@ also need @code{zip} and @code{unzip} from the Info-ZIP project
 @file{Rtools*.exe}.
 
 @c So needed for end users:
-@c basename comm cp echo gzip make mkdir rm sh sort tar uniq zip
+@c basename comm cp diff echo gzip make mkdir rm sh sort tar uniq zip
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that called `MinGW make' at the MinGW SourceForge site).
