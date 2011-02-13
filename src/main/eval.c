@@ -3417,17 +3417,19 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
 static R_INLINE void checkForMissings(SEXP args, SEXP call)
 {
     SEXP a, c;
-    int n, k;
-    for (a = args, n = 1; a != R_NilValue; a = CDR(a), n++)
+    int n;
+    for (a = args, c = CDR(call), n = 1;
+	 a != R_NilValue; 
+	 a = CDR(a), c = CDR(c), n++)
 	if (CAR(a) == R_MissingArg) {
 	    /* check for an empty argument in the call */
-	    if (call != R_NilValue) {
-		for (k = 1, c = CDR(call); c != R_NilValue; c = CDR(c), k++)
-		    if (CAR(c) == R_MissingArg)
-			errorcall(call, "argument %d is empty", k);
-	    }
-	    /* otherwise signal a 'missing argument' error */
-	    errorcall(call, "argument %d is missing", n);
+	    if (CAR(c) == R_MissingArg)
+		errorcall(call, "argument %d is empty", n);
+	    /* check for a missing argument as in evalList */
+	    else if (TYPEOF(CAR(c)) == SYMSXP)
+		errorcall(call, _("'%s' is missing"),
+			  CHAR(PRINTNAME(CAR(c)))); 
+	    /* otherwise, as in evalList, R_MissingArg is accepted */
 	}
 }
 
