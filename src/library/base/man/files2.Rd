@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files2}
@@ -31,7 +31,7 @@ Sys.umask(mode = "0000")
 }
 \details{
   \code{dir.create} creates the last element of the path, unless
-  \code{recursive = TRUE}.  Trailing path separators are removed.
+  \code{recursive = TRUE}.  Trailing path separators are discarded.
 #ifdef windows
   On Windows drives are allowed in the path specification and unless
   the path is rooted, it will be interpreted relative to the current
@@ -42,24 +42,25 @@ Sys.umask(mode = "0000")
   as for the system function \code{mkdir}.  What modes can be set is
   OS-dependent, and it is unsafe to assume that more than three octal
   digits will be used.  For more details see your OS's documentation on the
-  system call \code{mkdir} (and not that on the command-line utility of
-  that name). 
+  system call \code{mkdir}, e.g. \command{man 2 mkdir} (and not that on
+  the command-line utility of that name). 
 #endif
 
   \code{Sys.chmod} sets the file permissions of one or more files.
 #ifdef unix
-  It may not be supported (when a warning is issued).
+  It may not be supported on a system (when a warning is issued).
   See the comments for \code{dir.create} for how modes are interpreted.
   Changing mode on a symbolic link is unlikely to work (nor be
   necessary).  For more details see your OS's documentation on the
-  system call \code{chmod} (and not that on the command-line utility of
-  that name). 
+  system call \code{chmod}, e.g. \command{man 2 chmod} (and not that on
+  the command-line utility of that name).  Note that it is usual for the
+  mode set \bold{not} to be modified by the current \code{umask}.
 #endif
 #ifdef windows
   The interpretation of \code{mode} in the Windows system function is
   non-POSIX and only supports setting the read-only attribute of the
   file.  So \R interprets \code{mode} to mean set read-only if and only
-  if \code{mode & 0200 == 0} (interpreted in octal).  Windows has a much
+  if \code{(mode & 0200) == 0} (interpreted in octal).  Windows has a much
   more extensive system of file permissions on some file systems
   (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
@@ -67,8 +68,8 @@ Sys.umask(mode = "0000")
   \code{Sys.umask} sets the \code{umask}.
 #ifdef unix
   It may not be supported (when a warning is issued and \code{"0000"}
-  returned).  For more details see your OS's documentation on the
-  system call \code{umask}. 
+  is returned).  For more details see your OS's documentation on the
+  system call \code{umask}, e.g. \command{man 2 umask}.
 #endif
 #ifdef windows
   All files on Windows are regarded as readable, and files being
