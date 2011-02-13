@@ -64,6 +64,9 @@
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
       in the lazyload daabase using \command{xz} compression: this for
       example halves the installed size of package \pkg{Imap}.
+
+      \item \command{R CMD INSTALL} now ensures that directories
+      installed from \file{inst} have search permission for everyone.
     }
   }
   
