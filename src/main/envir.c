@@ -2853,9 +2853,13 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     case VECSXP: {
 	/* implement as.environment.list() {isObject(.) is false for a list} */
-	return(eval(lang4(install("list2env"), arg,
-			  /*envir = */R_NilValue, /* parent = */R_EmptyEnv),
-		    rho));
+	SEXP call, val;
+	PROTECT(call = lang4(install("list2env"), arg,
+			     /* envir = */R_NilValue,
+			     /* parent = */R_EmptyEnv));
+	val = eval(call, rho);
+	UNPROTECT(1);
+	return val;
     }
     default:
 	errorcall(call, _("invalid object for 'as.environment'"));

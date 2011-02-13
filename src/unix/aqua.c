@@ -59,7 +59,10 @@ QuartzFunctions_t *getQuartzFunctions(void) {
 	fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
 	if (!fn) {
 	    /* we need to load grDevices - not sure if this is the best way, though ... */
-	    eval(LCONS(install("library"),CONS(install("grDevices"),R_NilValue)),R_GlobalEnv);
+	    SEXP call = lang2(install("library"), install("grDevices"));
+	    PROTECT(call);
+	    eval(call, R_GlobalEnv);
+	    UNPROTECT(1);
 	    fn = (QuartzFunctions_t *(*)(void)) R_FindSymbol("getQuartzAPI", "grDevices", NULL);
 	    if (!fn) error(_("unable to load Quartz"));
 	}

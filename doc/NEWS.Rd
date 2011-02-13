@@ -190,6 +190,9 @@
       \item In some circumstances (including for package \pkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
+
+      \item Added \code{PROTECT} calls to some constructed expressions
+      used in C level \code{eval} calls.
     }
   }
 }
