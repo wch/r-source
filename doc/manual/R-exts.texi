@@ -729,23 +729,26 @@ space. (Note that it is not possible to generate this index file
 automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory (except perhaps hidden files with names
-starting with @samp{.}).  Subdirectories of @file{inst} should not
+to the installation directory (except on Unix-alikes, hidden files with
+names starting with @samp{.}).  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of
 the @file{inst} happens after @file{src} is built so its @file{Makefile}
-can create files to be installed.  Note that with the exceptions of
-@file{INDEX}, @file{LICENSE}/@file{LICENCE}, @file{COPYING} and
-@file{NEWS}, information files at the top level of the package will
-@emph{not} be installed and so not be known to users of Windows and Mac
-OS X compiled packages (and not seen by those who use @command{R CMD
-INSTALL} or @command{install.packages} on the tarball).  So any
-information files you wish an end user to see should be included in
-@file{inst}.
+can create files to be installed.  Prior to @R{} 2.12.2, the files were
+installed on POSIX platforms with the permissions in the package
+sources, so care should be taken to ensure these are not too
+restrictive: @command{R CMD build} will make suitable adjustments.
 
-Note that if the named exceptions also occur in @file{inst}, the version
-in @file{inst} will be that seen in the installed package.
+Note that with the exceptions of @file{INDEX},
+@file{LICENSE}/@file{LICENCE}, @file{COPYING} and @file{NEWS},
+information files at the top level of the package will @emph{not} be
+installed and so not be known to users of Windows and Mac OS X compiled
+packages (and not seen by those who use @command{R CMD INSTALL} or
+@command{install.packages} on the tarball).  So any information files
+you wish an end user to see should be included in @file{inst}.  Note
+that if the named exceptions also occur in @file{inst}, the versions in
+@file{inst} will be that seen in the installed package.
 
 @findex CITATION
 @cindex citation
@@ -1755,7 +1758,8 @@ using @code{R CMD check} prior to invoking the build procedure.
 
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
-directory.  These patterns should be Perl-like regexps (see the help for
+directory.  These patterns should be Perl-like regular expressions 
+(see the help for
 @code{regexp} in @R{} for the precise details), one per line, to be
 matched against the file names@footnote{including directory names as
 from @R{} 2.13.0: earlier versions accepted the names of non-empty
@@ -1781,13 +1785,13 @@ installed in an available library tree (see the Note: below).
 
 Similarly, if the @file{.Rd} documentation files contain any
 @code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
-temporarily installed to execute them.  Post-execution binary copies
-of those pages containing build-time macros will be saved in
-@file{build/partial.rdb}.  If there are any install-time or
-render-time macros, a @file{.pdf} version of the package manual will be built
-and installed in the @file{build/} subdirectory.  (This allows CRAN or
-other repositories to display the manual even if they are unable to
-install the package.)
+temporarily installed to execute them.  Post-execution binary copies of
+those pages containing build-time macros will be saved in
+@file{build/partial.rdb}.  If there are any install-time or render-time
+macros, a @file{.pdf} version of the package manual will be built and
+installed in the @file{build/} subdirectory.  (This allows CRAN or other
+repositories to display the manual even if they are unable to install
+the package.)
 
 One of the checks that @code{R CMD build} runs is for empty source
 directories.  These are in most cases unintentional, in which case they
@@ -1964,8 +1968,12 @@ so do not put comment lines in the middle of a paragraph of text).
 
 @item
 Ensure that the package sources are not unnecessarily large.  In
-particular, @command{R CMD check} will report on installed packages of
-more that 5Mb, detailing directories of more than 1Mb.  It warns about
+particular, @command{R CMD check} will report@footnote{provided a
+POSIX-compliant @command{du} program is found on the system: it is
+possible that some other @command{du} program will incorrectly report
+double the actual size.  This can be disabled by setting
+@env{_R_CHECK_USE_DU_} to a false value.} on installed packages of more
+that 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data if environment variable
 @env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD
 build --resave-data} will compact data as best it can.  Watch out for

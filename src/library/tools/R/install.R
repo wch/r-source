@@ -124,8 +124,8 @@
             "      --merge-multiarch	bi-arch by merging",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
-            paste("for this one it is ",
-                  ifelse(static_html, "--html", "--no-html"), ".", sep = ""),
+            paste0("for this one it is ",
+                   ifelse(static_html, "--html", "--no-html"), "."),
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -384,19 +384,19 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
-        cp_r <- function(from, to)
-        {
-            ## used for inst/
-            if (WINDOWS) {
-                file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
-            } else {
-                from <- shQuote(from)
-                to <- shQuote(to)
-                system(paste0("cp -r ", from, "/* ", to,
-                              " || (cd ", from, " && ", TAR, " -cf - . | (cd '",
-                              to, "' && ", TAR, " -xf - ))"))
-            }
-        }
+##         cp_r <- function(from, to)
+##         {
+##             ## formerly used for inst/
+##             if (WINDOWS) {
+##                 file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
+##             } else {
+##                 from <- shQuote(from)
+##                 to <- shQuote(to)
+##                 system(paste0("cp -r ", from, "/* ", to,
+##                               " || (cd ", from, " && ", TAR, " -cf - . | (cd '",
+##                               to, "' && ", TAR, " -xf - ))"))
+##             }
+##         }
 
         shlib_install <- function(instdir, arch)
         {
@@ -671,7 +671,7 @@
                     owd <- setwd("src")
                     system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                                  "Makeconf")
-                    site <- file.path(paste(R.home("etc"), rarch, sep=""),
+                    site <- file.path(paste0(R.home("etc"), rarch),
                                       "Makevars.site")
                     makefiles <- c(system_makefile,
                                    if(file.exists(site)) site,
@@ -869,14 +869,36 @@
 	    files <- Sys.glob(file.path("exec", "*"))
 	    if (length(files)) {
 		file.copy(files, file.path(instdir, "exec"), TRUE)
-		Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
+                if (!WINDOWS)
+                    Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
 	    }
 	}
 
 	if (install_inst && dir.exists("inst") && length(dir("inst"))) {
 	    starsmsg(stars, "inst")
-	    ## FIXME avoid installing .svn etc?
-	    cp_r("inst", instdir)
+            ## regexp to match a VC dir in the path:
+            ## maybe need more quoting in future
+            re <- paste0("/(", paste(gsub(".", "\\.", .vc_dir_names,
+                                         fixed = TRUE) , collapse="|"),
+                         ")(/|$)")
+            i_dirs <- list.dirs("inst")[-1L] # not inst itself
+            i_dirs <- grep(re, i_dirs, invert = TRUE, value = TRUE)
+            ## This ignores any restrictive permissions in the source
+            ## tree, since the later .Internal(dirchmod()) call will
+            ## fix the permissions.
+            lapply(gsub("^inst", instdir, i_dirs),
+                   function(p) dir.create(p, FALSE, TRUE)) # be paraoid
+            i_files <- list.files("inst", all.files = TRUE,
+                                  full.names = TRUE, recursive = TRUE)
+            i_files <- grep(re, i_files, invert = TRUE, value = TRUE)
+            i2_files <- gsub("^inst", instdir, i_files)
+            file.copy(i_files, i2_files)
+            if (!WINDOWS) {
+                ## make executable if the source file was (for owner)
+                modes <- file.info(i_files)$mode
+                execs <- as.logical(modes & as.octmode("100"))
+                Sys.chmod(i2_files[execs], "755") # respect umask?
+            }
 	}
 
 	if (install_tests && dir.exists("tests")) {
@@ -941,18 +963,6 @@
 	    if (inherits(res, "try-error"))
 		errmsg("installing namespace metadata failed")
 	}
-
-        ## <NOTE>
-        ## Remove stuff we should not have installed in the first place.
-        ## When installing from a source directory under version
-        ## control, we should really exclude the version control subdirs.
-        for(d in .vc_dir_names) {
-            ## FIXME
-            if (!WINDOWS)
-                system(paste("find",  shQuote(instdir), "-name", d,
-                             "-type d -prune -exe rm \\{\\} \\;"),
-                       ignore.stderr = TRUE)
-        }
 
         if (clean) run_clean()
 

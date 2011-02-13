@@ -1964,7 +1964,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     ## This requires a GNU-like 'du' with 1k block sizes, so use -k
     check_install_sizes <- function()
     {
-        if(!nzchar(Sys.which("du"))) return()
+        if(!(R_check_use_du && nzchar(Sys.which("du")))) return()
         checkingLog(Log, "installed package size")
         owd <- setwd(file.path(libdir, pkgname))
         res <- system2("du", "-k", TRUE,TRUE)
@@ -2436,6 +2436,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
     R_check_vc_dirs <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
+    R_check_use_du <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_USE_DU_", "TRUE"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-

@@ -784,6 +784,7 @@ get_exclude_patterns <- function()
         }
         setwd(Tdir)
         if (!WINDOWS) {
+            ## FIXME: could use  .Internal(dirchmod(instdir))
             ## Fix permissions
             allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
