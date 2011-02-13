@@ -877,7 +877,8 @@
 	if (install_inst && dir.exists("inst") && length(dir("inst"))) {
 	    starsmsg(stars, "inst")
             i_dirs <- list.dirs("inst")[-1L] # not inst itself
-            i_dirs <- grep(re, i_dirs, invert = TRUE, value = TRUE)
+            i_dirs <- grep(.vc_dir_names_re, i_dirs,
+                           invert = TRUE, value = TRUE)
             ## This ignores any restrictive permissions in the source
             ## tree, since the later .Internal(dirchmod()) call will
             ## fix the permissions.
