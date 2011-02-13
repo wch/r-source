@@ -729,23 +729,26 @@ space. (Note that it is not possible to generate this index file
 automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory (except perhaps hidden files with names
-starting with @samp{.}).  Subdirectories of @file{inst} should not
+to the installation directory (except on Unix-alikes, hidden files with
+names starting with @samp{.}).  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of
 the @file{inst} happens after @file{src} is built so its @file{Makefile}
-can create files to be installed.  Note that with the exceptions of
-@file{INDEX}, @file{LICENSE}/@file{LICENCE}, @file{COPYING} and
-@file{NEWS}, information files at the top level of the package will
-@emph{not} be installed and so not be known to users of Windows and Mac
-OS X compiled packages (and not seen by those who use @command{R CMD
-INSTALL} or @command{install.packages} on the tarball).  So any
-information files you wish an end user to see should be included in
-@file{inst}.
+can create files to be installed.  On POSIX platforms the files are
+installed with the permissions in the package sources, so care should be
+taken to ensure these are not too restrictive: @command{R CMD build}
+will make suitable adjustments.
 
-Note that if the named exceptions also occur in @file{inst}, the version
-in @file{inst} will be that seen in the installed package.
+Note that with the exceptions of @file{INDEX},
+@file{LICENSE}/@file{LICENCE}, @file{COPYING} and @file{NEWS},
+information files at the top level of the package will @emph{not} be
+installed and so not be known to users of Windows and Mac OS X compiled
+packages (and not seen by those who use @command{R CMD INSTALL} or
+@command{install.packages} on the tarball).  So any information files
+you wish an end user to see should be included in @file{inst}.  Note
+that if the named exceptions also occur in @file{inst}, the versions in
+@file{inst} will be that seen in the installed package.
 
 @findex CITATION
 @cindex citation

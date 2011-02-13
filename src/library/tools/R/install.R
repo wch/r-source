@@ -868,7 +868,7 @@
 		    setwd(owd)
 		}
 	    } else warning("empty 'data' directory", call. = FALSE)
-	}
+        }
 
 	if (install_demo && dir.exists("demo")) {
 	    starsmsg(stars, "demo")
@@ -889,7 +889,8 @@
 	    files <- Sys.glob(file.path("exec", "*"))
 	    if (length(files)) {
 		file.copy(files, file.path(instdir, "exec"), TRUE)
-		Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
+                if (!WINDOWS)
+                    Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
 	    }
 	}
 
@@ -905,14 +906,6 @@
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
 
-	## Defunct:
-	## FIXME: remove these at some point
-	if (file.exists("install.R"))
-	    warning("use of file 'install.R' is no longer supported",
-		    call. = FALSE, domain = NA)
-	if (file.exists("R_PROFILE.R"))
-	    warning("use of file 'R_PROFILE.R' is no longer supported",
-		    call. = FALSE, domain = NA)
 	value <- parse_description_field(desc, "SaveImage", default = NA)
 	if (!is.na(value))
 	    warning("field 'SaveImage' is defunct: please remove it",
