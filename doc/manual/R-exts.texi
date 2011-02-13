@@ -778,7 +778,8 @@ Subdirectory @file{exec} could contain additional executables the
 package needs, typically scripts for interpreters such as the shell,
 Perl, or Tcl.  This mechanism is currently used only by a very few
 packages, and still experimental.  NB: only files (and not directories)
-under @file{exec} are installed.
+under @file{exec} are installed, and they are all marked as executable
+(mode @code{755}) on POSIX platforms.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
