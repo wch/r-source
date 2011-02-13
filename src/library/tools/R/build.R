@@ -744,10 +744,12 @@ get_exclude_patterns <- function()
         prepare_pkg(normalizePath(pkgname, "/"), desc, Log);
         owd <- setwd(pkgname)
         ## remove exclude files
+##         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
+##                         full.names = TRUE)
+##         ## this does not include dirs, and we don't want '.'
+##         allfiles <- c(allfiles, list.dirs(".")[-1L])
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
-                        full.names = TRUE)
-        ## this does not include dirs, and we don't want '.'
-        allfiles <- c(allfiles, list.dirs(".")[-1L])
+                        full.names = TRUE, include.dirs = TRUE)
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))
@@ -757,7 +759,8 @@ get_exclude_patterns <- function()
         ##  to be matched against the file names relative to
         ##  the top-level source directory.'
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
-        if (file.exists(ignore_file)) ignore <- c(ignore, readLines(ignore_file))
+        if (file.exists(ignore_file))
+            ignore <- c(ignore, readLines(ignore_file))
         for(e in ignore[nzchar(ignore)])
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = WINDOWS)
@@ -783,24 +786,8 @@ get_exclude_patterns <- function()
             print(res) # FIXME print to Log?
         }
         setwd(Tdir)
-        if (!WINDOWS) {
-            ## FIXME: could use  .Internal(dirchmod(instdir))
-            ## Fix permissions
-            allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
-                            full.names = TRUE)
-            allfiles <- c(allfiles, unique(dirname(allfiles)))
-            isdir <- file_test("-d", allfiles)
-	    ## 'Directories should really be mode 00755 if possible.'
-            Sys.chmod(allfiles[isdir], "0755")
-	    ## 'Files should be readable by everyone, and writable
-	    ## only for user.  This leaves a bit of uncertainty
-	    ## about the execute bits.'
-            files <- allfiles[!isdir]
-            mode <- file.info(files)$mode
-            ## equivalent of mode = (mode | 0644) & 0755
-            mode <- (mode | "0644") & "0755"
-            Sys.chmod(files, mode)
-        }
+        ## Fix permissions for all files to be at least 644, and dirs 755
+        if (!WINDOWS) .Internal(dirchmod(instdir))
         ## Add build stamp to the DESCRIPTION file.
         add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"))
         messageLog(Log,
@@ -855,10 +842,11 @@ get_exclude_patterns <- function()
                 do_exit(1)
             }
         } else {
+            ## FIXME: use utils::tar in due course.
             if (grepl("darwin", R.version$os)) {
                 ## precaution for Mac OS X to omit resource forks
                 ## we can't tell the running OS version from R.version$os
-                Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
+                Sys.setenv(COPYFILE_DISABLE = 1) # >= Leopard
                 Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
             }
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))

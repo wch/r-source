@@ -433,6 +433,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 .vc_dir_names <-
     c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
 
+## and RE version (beware of the need for escapes if amending)
+
+.vc_dir_names_re <-
+    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg)(/|$)"
+
 ### * Internal utility functions.
 
 ### ** %w/o%

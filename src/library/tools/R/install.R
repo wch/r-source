@@ -876,21 +876,17 @@
 
 	if (install_inst && dir.exists("inst") && length(dir("inst"))) {
 	    starsmsg(stars, "inst")
-            ## regexp to match a VC dir in the path:
-            ## maybe need more quoting in future
-            re <- paste0("/(", paste(gsub(".", "\\.", .vc_dir_names,
-                                         fixed = TRUE) , collapse="|"),
-                         ")(/|$)")
             i_dirs <- list.dirs("inst")[-1L] # not inst itself
             i_dirs <- grep(re, i_dirs, invert = TRUE, value = TRUE)
             ## This ignores any restrictive permissions in the source
             ## tree, since the later .Internal(dirchmod()) call will
             ## fix the permissions.
             lapply(gsub("^inst", instdir, i_dirs),
-                   function(p) dir.create(p, FALSE, TRUE)) # be paraoid
+                   function(p) dir.create(p, FALSE, TRUE)) # be paranoid
             i_files <- list.files("inst", all.files = TRUE,
                                   full.names = TRUE, recursive = TRUE)
-            i_files <- grep(re, i_files, invert = TRUE, value = TRUE)
+            i_files <- grep(.vc_dir_names_re, i_files,
+                            invert = TRUE, value = TRUE)
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
