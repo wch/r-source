@@ -115,7 +115,7 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL)
 {
-    ## this requires on Windows make tar gzip
+    ## this requires on Windows sh make tar gzip
 
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -179,7 +179,7 @@ get_exclude_patterns <- function()
 
     add_build_stamp_to_description_file <- function(ldpath)
     {
-        lines <- readLines(ldpath)
+        lines <- readLines(ldpath, warn = FALSE)
         lines <- lines[nzchar(lines)] # Remove blank lines.
         ## Do not keep previous build stamps.
         lines <- lines[!grepl("^Packaged:", lines)]
@@ -298,8 +298,10 @@ get_exclude_patterns <- function()
                         Ssystem(Sys.getenv("MAKE", "make"),
                                 c(makefiles, "clean"))
                     }
-                    unlink(c(Sys.glob(c("*.o")),
+                    ## Also cleanup possible Unix leftovers ...
+                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
                              paste(pkgname, c(".a", ".dll", ".def"), sep="")))
+                    if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
                     if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
             } else {
@@ -527,12 +529,11 @@ get_exclude_patterns <- function()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
-    gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this
     ## enables people to use Cygwin or MSYS tar.
     TAR <- Sys.getenv("TAR", if (WINDOWS) "tar --force-local" else "tar")
     GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
-    libdir <- tempfile("Rinst");
+    libdir <- tempfile("Rinst")
 
     for(pkg in pkgs) {
         Log <- newLog() # if not stdin; on.exit(closeLog(Log))
@@ -700,7 +701,7 @@ get_exclude_patterns <- function()
             if (grepl("darwin", R.version$os)) {
                 ## precaution for Mac OS X to omit resource forks
                 ## we can't tell the running OS version from R.version$os
-                Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
+                Sys.setenv(COPYFILE_DISABLE = 1) # >= Leopard
                 Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
             }
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
