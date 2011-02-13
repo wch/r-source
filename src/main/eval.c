@@ -3417,19 +3417,30 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
 static R_INLINE void checkForMissings(SEXP args, SEXP call)
 {
     SEXP a, c;
-    int n;
-    for (a = args, c = CDR(call), n = 1;
-	 a != R_NilValue; 
-	 a = CDR(a), c = CDR(c), n++)
+    int n, k;
+    for (a = args, n = 1; a != R_NilValue; a = CDR(a), n++)
 	if (CAR(a) == R_MissingArg) {
-	    /* check for an empty argument in the call */
-	    if (CAR(c) == R_MissingArg)
-		errorcall(call, "argument %d is empty", n);
-	    /* check for a missing argument as in evalList */
-	    else if (TYPEOF(CAR(c)) == SYMSXP)
-		errorcall(call, _("'%s' is missing"),
-			  CHAR(PRINTNAME(CAR(c)))); 
-	    /* otherwise, as in evalList, R_MissingArg is accepted */
+	    /* check for an empty argument in the call -- start from
+	       the beginning in case of ... arguments */
+	    if (call != R_NilValue) {
+		for (k = 1, c = CDR(call); c != R_NilValue; c = CDR(c), k++)
+		    if (CAR(c) == R_MissingArg)
+			errorcall(call, "argument %d is empty", k);
+	    }
+	    /* An error from evaluating a symbol will already have
+	       been signaled.  The interpreter, in evalList, does
+	       _not_ signal an error for a call expression that
+	       produces an R_MissingArg value; for example
+	       
+	           c(alist(a=)$a)
+
+	       does not signal an error. If we decide we do want an
+	       error in this case we can modify evalList for the
+	       interpreter and here use the code below. */
+#ifdef NO_COMPUTED_MISSINGS
+	    /* otherwise signal a 'missing argument' error */
+	    errorcall(call, "argument %d is missing", n);
+#endif
 	}
 }
 
