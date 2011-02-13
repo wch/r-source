@@ -474,6 +474,9 @@
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
       in the lazyload daabase using \command{xz} compression: this for
       example halves the installed size of package \pkg{Imap}.
+
+      \item \command{R CMD INSTALL} now ensures that directories
+      installed from \file{inst} have search permission for everyone.
     }
   }
   
@@ -593,6 +596,10 @@
       \item Updating S4 methods for a group generic function requires
       resetting the methods tables for the members of the group (patch
       contributed by Martin Morgan).
+      
+      \item In some circumstances (including for package \pkg{XML}),
+      \command{R CMD INSTALL} installed version-control directories from
+      source packages.
     }
   }
 }

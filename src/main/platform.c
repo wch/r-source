@@ -1464,7 +1464,8 @@ static void chmod_one(const char *name)
     struct stat sb;
     int n;
 #ifndef Win32
-    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR;
+    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR,
+	dirmask = S_IXUSR | S_IXGRP | S_IXOTH;
 #endif
 
     if (streql(name, ".") || streql(name, "..")) return;
@@ -1476,6 +1477,9 @@ static void chmod_one(const char *name)
     chmod(name, sb.st_mode | mask);
 #endif
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+#ifndef Win32
+    chmod(name, sb.st_mode | dirmask);
+#endif
 	if ((dir = opendir(name)) != NULL) {
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
@@ -1495,6 +1499,7 @@ static void chmod_one(const char *name)
 }
 
 
+/* recursively fix up permissions: used for R CMD INSTALL */
 SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP dr;
