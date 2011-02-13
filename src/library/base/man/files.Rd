@@ -43,7 +43,7 @@ file.link(from, to)
 
   \code{file.create} creates files with the given names if they do not
   already exist and truncates them if they do.  They are created with the
-  maximal permissions allowed by the \code{umask} setting.
+  maximal permissions allowed by the \code{umask} setting (where relevant).
 
   \code{file.exists} returns a logical vector indicating whether the
   files named by its argument exist.  (Here \sQuote{exists} is in the
@@ -80,7 +80,9 @@ file.link(from, to)
   \code{file.copy} works in a similar way to \code{file.append} but with
   the arguments in the natural order for copying.  Copying to existing
   destination files is skipped unless \code{overwrite = TRUE}.
-  The \code{to} argument can specify a single existing directory.
+  The \code{to} argument can specify a single existing directory.  As
+  from \R 2.13.0 file read/write/execute permissions are copied where
+  possible. 
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the

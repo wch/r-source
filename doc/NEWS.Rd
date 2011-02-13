@@ -243,8 +243,11 @@
       \code{include.dirs()} to include directories in the listing when
       \code{recursive = TRUE}.
       
-      \item New function \code{list.dirs()} lists all sub-directories,
-      (even empty ones which cannot be deduced from \code{list.files()}).
+      \item New function \code{list.dirs()} lists all directories,
+      (even empty ones).
+
+      \item \code{file.copy()} now copies read/write/execute permissions
+      on files (it already did so for directories in recursive copies).
     }
   }
 

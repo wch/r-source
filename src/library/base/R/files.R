@@ -102,7 +102,7 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
     if (nt == 1 && file.exists(to) && file.info(to)$isdir) {
-        ## on Windows we need \ for compiled code
+        ## on Windows we need \ for the compiled code (e.g. mkdir).
         if(.Platform$OS.type == "windows") {
             from <- gsub("/", "\\", from, fixed = TRUE)
             to <- gsub("/", "\\", to, fixed = TRUE)
@@ -110,7 +110,8 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
         return(.Internal(file.copy(from, to, overwrite, recursive)))
         # to <- file.path(to, basename(from))
     } else if (nf > nt) stop("more 'from' files than 'to' files")
-    else if (recursive) warning("'recursive' will be ignored")
+    else if (recursive)
+        warning("'recursive' will be ignored as 'to' is not a single existing directory")
     if(nt > nf) from <- rep(from, length.out = nt)
     okay <- file.exists(from)
     if (!overwrite) okay[file.exists(to)] <- FALSE
