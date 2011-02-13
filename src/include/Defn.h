@@ -1063,6 +1063,7 @@ SEXP R_LoadFromFile(FILE*, int);
 SEXP R_NewHashedEnv(SEXP, SEXP);
 extern int R_Newhashpjw(const char *);
 FILE* R_OpenLibraryFile(const char *);
+SEXP R_Primitive(const char *);
 void R_RestoreGlobalEnv(void);
 void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
 void R_SaveGlobalEnv(void);
