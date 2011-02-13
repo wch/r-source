@@ -1718,7 +1718,7 @@ machines.  Thus the allocation is in units of 8 bytes, and is rounded
 up.  (Prior to @R{} 2.6.0 @code{CHARSXP}s were used, and so one byte was
 added prior to rounding up.  This had the effect of over-allocating
 areas for @code{double}s by one and thereby masked several subtle
-programming errors.)
+programming errors in package code.)
 
 The vectors allocated are protected via the setting of @code{R_VStack},
 as the garbage collector marks everything that can be reached from that

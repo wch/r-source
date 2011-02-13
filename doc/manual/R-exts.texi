@@ -735,10 +735,10 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of
 the @file{inst} happens after @file{src} is built so its @file{Makefile}
-can create files to be installed.  On POSIX platforms the files are
-installed with the permissions in the package sources, so care should be
-taken to ensure these are not too restrictive: @command{R CMD build}
-will make suitable adjustments.
+can create files to be installed.  Prior to @R{} 2.12.2, the files were
+installed on POSIX platforms with the permissions in the package
+sources, so care should be taken to ensure these are not too
+restrictive: @command{R CMD build} will make suitable adjustments.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE}, @file{COPYING} and @file{NEWS},
@@ -1715,15 +1715,15 @@ being put into the package, one can specify a list of exclude patterns
 in file @file{.Rbuildignore} in the top-level source directory.  These
 patterns should be Perl-like regular expressions (see the help for
 @code{regexp} in @R{} for the precise details), one per line, to be
-matched against the file names relative to the top-level source
-directory.  In addition, directories from source control
-systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
-@file{.bzr} or @file{.git} or @file{.hg}.}, directories with names
-ending @file{.Rcheck} or @file{Old} or @file{old} and files
-@file{GNUMakefile}, @file{Read-and-delete-me} or with base names
-starting with @samp{.#}, or starting and ending with @samp{#}, or ending
-in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
-addition, those files in the @file{R}, @file{demo} and @file{man}
+matched@footnote{case-insensitively on Windows.} against the file names
+relative to the top-level source directory.  In addition, directories
+from source control systems@footnote{called @file{CVS} or @file{.svn} or
+@file{.arch-ids} or @file{.bzr} or @file{.git} or @file{.hg}.},
+directories with names ending @file{.Rcheck} or @file{Old} or @file{old}
+and files @file{GNUMakefile}, @file{Read-and-delete-me} or with base
+names starting with @samp{.#}, or starting and ending with @samp{#}, or
+ending in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.
+In addition, those files in the @file{R}, @file{demo} and @file{man}
 directories which are flagged by @code{R CMD check} as having invalid
 names will be excluded.
 
