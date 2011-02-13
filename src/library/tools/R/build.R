@@ -115,7 +115,7 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL)
 {
-    ## this requires on Windows make tar gzip
+    ## this requires on Windows sh make tar gzip
 
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -302,7 +302,6 @@ get_exclude_patterns <- function()
                         Ssystem(Sys.getenv("MAKE", "make"),
                                 c(makefiles, "clean"))
                     }
-                    if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                     ## Also cleanup possible Unix leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
                              paste(pkgname, c(".a", ".dll", ".def"), sep="")))
@@ -676,12 +675,10 @@ get_exclude_patterns <- function()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
-    gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this
     ## enables people to use Cygwin or MSYS tar.
     TAR <- Sys.getenv("TAR", if (WINDOWS) "tar --force-local" else "tar")
-    GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
-    libdir <- tempfile("Rinst");
+    libdir <- tempfile("Rinst")
 
     for(pkg in pkgs) {
         Log <- newLog() # if not stdin; on.exit(closeLog(Log))
@@ -714,6 +711,7 @@ get_exclude_patterns <- function()
         }
         intname <- desc["Package"]
         ## make a copy, cd to parent of copy
+        ## we could probably do this by file.copy() now it preserves modes.
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
@@ -851,10 +849,10 @@ get_exclude_patterns <- function()
             }
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
             ## should not be any symlinks, so remove -h?
-            cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
-            res <- system(cmd)
+            res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
             if (!res)
-                res <- system(paste(shQuote(GZIP), "-9f", shQuote(filepath)))
+                res <- system(paste(shQuote(Sys.getenv("R_GZIPCMD", "gzip")),
+                                    "-9f", shQuote(filepath)))
             if (res) {
                 errorLog(Log, "packaging into .tar.gz failed")
                 do_exit(1L)
