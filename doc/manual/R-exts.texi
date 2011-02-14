@@ -1984,6 +1984,13 @@ directories need to be 10Mb or more, consideration should be given to a
 separate package containing just the data.  (Similarly for external data
 directories, large @file{jar} files and other libraries that need to be
 installed.)
+
+There are a several tools available to reduce the size of PDF files,
+including Adobe Acrobat (not Reader), Multivalent
+(@uref{http://multivalent.sourceforge.net/download.html}) and qpdf
+(@uref{http://qpdf.sourceforge.net/}).  Note that these do not all try
+the same size-reduction strategies, and Acrobat can be much better at
+reducing the size of embedded images.
 @end enumerate
 
 @noindent

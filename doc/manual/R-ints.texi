@@ -3572,13 +3572,14 @@ Default: none.
 Should the unpacked package directory be checked for version-control
 directories (@file{CVS}, @file{.svn} @dots{})?
 Default: true for tarballs.
-@item _R_CHECK_USE_DU_
+@item _R_CHECK_PKG_SIZES_
 Should @command{du} be used to find the installed sizes of packages?
-@command{R CMD check} does check for the availability of @command{du},
+@command{R CMD check} does check for the availability of @command{du}.
 but this option allows the check to be overruled if an unsuitable
 command is found (including one that does not respect the @option{-k}
-flag to report in units of 1Kb). 
-Default: true.
+flag to report in units of 1Kb, or reports in a different format -- the
+GNU, Mac OS X and Solaris @command{du} commands have been tested).
+Default: true if @command{du} is found.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

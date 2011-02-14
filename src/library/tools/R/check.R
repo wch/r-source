@@ -1961,33 +1961,35 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     }
 
-    ## This requires a GNU-like 'du' with 1k block sizes, so use -k
+    ## This requires a GNU-like 'du' with 1k block sizes,
+    ## so use -k (which POSIX requires).
+    ## It also depends on the total being last.
     check_install_sizes <- function()
     {
-        if(!(R_check_use_du && nzchar(Sys.which("du")))) return()
         checkingLog(Log, "installed package size")
         owd <- setwd(file.path(libdir, pkgname))
-        res <- system2("du", "-k", TRUE,TRUE)
-        res2 <- read.table(con <- textConnection(res),
-                           header = FALSE, as.is = FALSE); close(con)
+        res <- system2("du", "-k", TRUE, TRUE)
+        sizes <- as.integer(sub("\\D.*", "", res))
+        dirs <- sub("^\\d*\\s*", "", res)
+        res2 <- data.frame(size = sizes, dir = I(dirs))
         total <- res2[nrow(res2), 1L]
-        if(total > 1024*5) {
+        if(total > 1024*5) { # report at 5Mb
             resultLog(Log, "NOTE")
-            printLog(Log, sprintf("  installed size is %4.1fMb\n",
-                                  total/1024))
+            printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]
-            rest[,2] <- sub("./", "", rest[, 2L])
+            rest[, 2L] <- sub("./", "", rest[, 2L])
+            # keep only top-level directories
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
             if(nrow(rest)) {
                 tf <- tempfile()
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
-                res <- data.frame(dir = rest[,2L],
-                                  size = sprintf('%4.1fMb', rest[,1L]/1024))
-                sink(tf)
-                print(res, row.names = FALSE)
-                sink()
-                printLog(Log, paste("    ", readLines(tf), "\n", sep=""))
+                size <- sprintf('%4.1fMb', rest[, 1L]/1024)
+                printLog(Log, paste("    ",
+                                    format(rest[, 2L], justify = "left"),
+                                    "  ",
+                                    format(size, justify = "right"),
+                                    "\n", sep=""))
                 unlink(tf)
             }
         } else resultLog(Log, "OK")
@@ -2436,8 +2438,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
     R_check_vc_dirs <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
-    R_check_use_du <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_USE_DU_", "TRUE"))
+    R_check_pkg_sizes <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE"))
+    if(R_check_pkg_sizes) R_check_pkg_sizes <- nzchar(Sys.which("du"))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
@@ -2648,7 +2651,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
             if (do_install) {
                 check_install()
-                check_install_sizes()
+                if(R_check_pkg_sizes) check_install_sizes()
             }
             if (multiarch) {
                 if (force_multiarch) inst_archs <- archs
