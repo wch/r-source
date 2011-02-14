@@ -592,9 +592,12 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* to the generic code below.  Note that evaluation */
     /* retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, op, "[", args, rho, &ans, 0, 0))
+    if(DispatchOrEval(call, op, "[", args, rho, &ans, 0, 0)) {
 /*     if(DispatchAnyOrEval(call, op, "[", args, rho, &ans, 0, 0)) */
+	if (NAMED(ans))
+	    SET_NAMED(ans, 2);
 	return(ans);
+    }
 
     /* Method dispatch has failed, we now */
     /* run the generic internal code. */
@@ -765,9 +768,12 @@ SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* through to the generic code below.  Note that */
     /* evaluation retains any missing argument indicators. */
 
-    if(DispatchOrEval(call, op, "[[", args, rho, &ans, 0, 0))
+    if(DispatchOrEval(call, op, "[[", args, rho, &ans, 0, 0)) {
 /*     if(DispatchAnyOrEval(call, op, "[[", args, rho, &ans, 0, 0)) */
+	if (NAMED(ans))
+	    SET_NAMED(ans, 2);
 	return(ans);
+    }
 
     /* Method dispatch has failed. */
     /* We now run the generic internal code. */
@@ -837,6 +843,8 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
       UNPROTECT(1);
       if(ans == R_UnboundValue )
 	  return(R_NilValue);
+      if (NAMED(ans))
+	  SET_NAMED(ans, 2);
       return(ans);
     }
 
@@ -1003,6 +1011,8 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(DispatchOrEval(call, op, "$", args, env, &ans, 0, 0)) {
 	UNPROTECT(2);
+	if (NAMED(ans))
+	    SET_NAMED(ans, 2);
 	return(ans);
     }
 
@@ -1130,7 +1140,9 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	}
 	UNPROTECT(2);
 	if( y != R_UnboundValue ) {
-	    if (NAMED(x) > NAMED(y))
+	    if (NAMED(y))
+		SET_NAMED(y, 2);
+	    else if (NAMED(x) > NAMED(y))
 		SET_NAMED(y, NAMED(x));
 	    return(y);
 	}
