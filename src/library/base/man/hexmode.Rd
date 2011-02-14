@@ -1,6 +1,6 @@
 % File src/library/base/man/hexmode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{hexmode}
@@ -9,6 +9,7 @@
 \alias{print.hexmode}
 \alias{as.character.hexmode}
 \alias{[.hexmode}
+\alias{!.hexmode}
 \alias{|.hexmode}
 \alias{&.hexmode}
 \alias{xor.hexmode}
@@ -49,9 +50,10 @@ as.hexmode(x)
   \code{0-9}, \code{a-f}, \code{A-F} (or are \code{NA}) to class
   \code{"hexmode"}.
 
-  There are \code{\link{|}}, \code{\link{&}} and \code{\link{xor}}
-  methods: these recycle their arguments to the length of the longer
-  and then apply the operators bitwise to each element.
+  There is a \code{\link{!}} method and \code{\link{|}}, \code{\link{&}} and
+  \code{\link{xor}} methods: these recycle their arguments to the
+  length of the longer and then apply the operators bitwise to each
+  element.
 }
 \seealso{
   \code{\link{octmode}}, \code{\link{sprintf}} for other options in

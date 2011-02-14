@@ -1,6 +1,6 @@
 % File src/library/base/man/octmode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{octmode}
@@ -9,6 +9,7 @@
 \alias{print.octmode}
 \alias{as.character.octmode}
 \alias{[.octmode}
+\alias{!.octmode}
 \alias{|.octmode}
 \alias{&.octmode}
 \alias{xor.octmode}
@@ -47,9 +48,10 @@ as.octmode(x)
   \code{"double"}) and character vectors whose elements contain only
   digits \code{0-7} (or are \code{NA}) to class \code{"octmode"}.
 
-  There are \code{\link{|}}, \code{\link{&}} and \code{\link{xor}}
-  methods: these recycle their arguments to the length of the longer
-  and then apply the operators bitwise to each element.
+  There is a \code{\link{!}} method and \code{\link{|}}, \code{\link{&}} and
+  \code{\link{xor}} methods: these recycle their arguments to the
+  length of the longer and then apply the operators bitwise to each
+  element.
 }
 \seealso{
   These are auxiliary functions for \code{\link{file.info}}.
@@ -65,6 +67,9 @@ unclass(on[3:4]) # subsetting
 ## manipulate file modes
 fmode <- as.octmode("170")
 (fmode | "644") & "755"
-}
+\donttest{
+umask <- Sys.umask(NA) # depends on platform
+c(fmode, "666", "755") & !umask
+}}
 \keyword{utilities}
 \keyword{print}

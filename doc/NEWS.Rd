@@ -248,6 +248,13 @@
 
       \item \code{file.copy()} now copies read/write/execute permissions
       on files (it already did so for directories in recursive copies).
+
+      \item \code{Sys.umask()} now accepts \code{mode = NA} and returns
+      the current \code{umask} value (still invisibly) without changing it.
+
+      \item The is a \code{!} method for classes \code{"octmode"} and
+      \code{"hexmode"}: this allows \code{xor(a, b)} to work if both
+      \code{a} and \code{b} are from one of those classes.
     }
   }
 

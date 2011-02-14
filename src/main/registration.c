@@ -241,8 +241,9 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(Rg_contourDef, 0),
     CALLDEF(Rg_readonlypars, 0),
 
+    CALLDEF(bitwiseNot, 1),
     CALLDEF(bitwiseAnd, 2),
-    CALLDEF(bitwiseOr, 2),
+    CALLDEF(bitwiseOr,  2),
     CALLDEF(bitwiseXor, 2),
 
     {NULL, NULL, 0}
