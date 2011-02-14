@@ -286,6 +286,11 @@
       Patterns in \file{.Rbuildignore} are now also matched against all
       directory names (including those of empty directories).
 
+      There is a new option, \option{--compact-vignettes} to try
+      reducing the size of PDF files in the \file{inst/doc} directory.
+      Currently this tries \command{qpdf}: other options may be tried in
+      future.
+
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems

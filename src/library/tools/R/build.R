@@ -174,6 +174,7 @@ get_exclude_patterns <- function()
             "  --resave-data=        re-save data files as compactly as possible",
             '                        "no", "best", "gzip" (default)',
             "  --no-resave-data      same as --resave-data=no",
+            "  --compact-vignettes   try to compact vignettes (using qpdf)",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -251,7 +252,7 @@ get_exclude_patterns <- function()
 		pkgInstalled <- temp_install_pkg(pkgdir, libdir)
 	    }
 
-            ## Better to do this in a separate process: it might die
+            ## Good to do this in a separate process: it might die
             creatingLog(Log, "vignettes")
             R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
             if (!is.na(R_LIBS)) {
@@ -273,6 +274,29 @@ get_exclude_patterns <- function()
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 do_exit(1L)
             } else resultLog(Log, "OK")
+        }
+        if (compact_vignettes &&
+            length(pdfs <- Sys.glob(file.path("inst", "doc", "*.pdf")))
+            && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
+            messageLog(Log, "compacting vignettes")
+            tf <- tempfile("qpdf")
+            for (p in pdfs) {
+                old <- file.info(p)$size
+                res <- system2(qpdf, c("--stream-data=compress", p, tf),
+                               FALSE, FALSE)
+                if(!res && file.exists(tf)) {
+                    new <- file.info(tf)$size
+                    if(new/old < 0.9 && new < old - 1e4) {
+                        sz <- if (new < 1024^2)
+                            sprintf("%.0fKb", c(old, new)/1024)
+                        else sprintf("%.1fMb", c(old, new)/1024^2)
+                        printLog(Log, '  compacted ', sQuote(basename(p)),
+                                 ' from ', sz[1L], ' to ', sz[2L], "\n")
+                        file.copy(tf, p, overwrite = TRUE)
+                    }
+                }
+                unlink(tf)
+            }
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
@@ -532,7 +556,7 @@ get_exclude_patterns <- function()
         fi <- file.info(Sys.glob(file.path(pkgname, "data", "*")))
         size <- sum(fi$size)
         if(size <= 1024^2) return()
-        z <- list_data_in_pkg(pkgname, dataDir = file.path(pkgname, "data"))
+        z <- suppressPackageStartupMessages(list_data_in_pkg(pkgname, dataDir = file.path(pkgname, "data"))) # for BARD
         if(!length(z)) return()
         con <- file(dlist, "w")
         for (nm in names(z)) {
@@ -604,6 +628,7 @@ get_exclude_patterns <- function()
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
     resave_data <- "gzip"
+    compact_vignettes <- FALSE
     pkgs <- character()
     options(showErrorCalls=FALSE, warn = 1)
 
@@ -660,6 +685,8 @@ get_exclude_patterns <- function()
             INSTALL_opts <- c(INSTALL_opts, "--no-docs")
         } else if (a == "--no-manual") {
             manual <- FALSE
+        } else if (a == "--compact-vignettes") {
+            compact_vignettes <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

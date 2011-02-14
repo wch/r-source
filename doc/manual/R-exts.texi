@@ -1987,10 +1987,18 @@ installed.)
 
 There are a several tools available to reduce the size of PDF files,
 including Adobe Acrobat (not Reader), Multivalent
-(@uref{http://multivalent.sourceforge.net/download.html}) and qpdf
-(@uref{http://qpdf.sourceforge.net/}).  Note that these do not all try
-the same size-reduction strategies, and Acrobat can be much better at
-reducing the size of embedded images.
+(@uref{http://multivalent.sourceforge.net/download.html}), Pdftk
+(@uref{http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}) and
+@command{qpdf} (@uref{http://qpdf.sourceforge.net/}).  Note that these
+do not all try the same size-reduction strategies, and Acrobat can be
+much better at reducing the size of embedded images.
+
+Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
+for Windows and packages in Debian/Ubuntu), there is an option
+@option{--compact-vignettes} to @command{R CMD build} to run
+@command{qpdf} over PDF files in @file{inst/doc} and replace them if at
+least 10Kb and 10% is saved.  The full path to the @command{qpdf}
+command can be supplied as environment variable @env{R_QPDF}.
 @end enumerate
 
 @noindent
