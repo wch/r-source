@@ -9,7 +9,7 @@
 \alias{Sys.umask}
 \concept{directory}
 \concept{mkdir}
-\title{Manipulaton of Directories and file Permissions}
+\title{Manipulaton of Directories and File Permissions}
 \usage{
 dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
 Sys.chmod(paths, mode = "0777")
@@ -113,4 +113,12 @@ Sys.umask(mode = "0000")
   \code{\link{basename}}, \code{\link{path.expand}}.
 
 }
+
+\examples{\dontrun{
+## Fix up maximal permissions in a file tree, respecting umask
+umask <- Sys.umask(NA)
+Sys.chmod(list.dirs('.'), "777" & !umask)
+f <- list.files('.', all.files = TRUE, full.names = TRUE, recursive =TRUE)
+Sys.chmod(f, (file.info(f)$mode | "664") & !umask)
+}}
 \keyword{file}
