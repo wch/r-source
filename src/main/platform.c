@@ -1464,8 +1464,8 @@ static void chmod_one(const char *name)
     struct stat sb;
     int n;
 #ifndef Win32
-    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR,
-	dirmask = S_IXUSR | S_IXGRP | S_IXOTH;
+    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR, /* 0644 */
+	dirmask = mask | S_IXUSR | S_IXGRP | S_IXOTH; /* 0755 */
 #endif
 
     if (streql(name, ".") || streql(name, "..")) return;
@@ -1474,11 +1474,11 @@ static void chmod_one(const char *name)
 #ifdef Win32
     chmod(name, _S_IWRITE);
 #else
-    chmod(name, sb.st_mode | mask);
+    chmod(name, (sb.st_mode | mask) & dirmask);
 #endif
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 #ifndef Win32
-	chmod(name, sb.st_mode | mask | dirmask);
+	chmod(name, dirmask);
 #endif
 	if ((dir = opendir(name)) != NULL) {
 	    while ((de = readdir(dir))) {
@@ -1498,8 +1498,8 @@ static void chmod_one(const char *name)
     }
 }
 
-
-/* recursively fix up permissions: used for R CMD INSTALL */
+/* recursively fix up permissions: used for R CMD INSTALL and build.
+   NB: this overrides umask. */
 SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP dr;
@@ -1511,8 +1511,6 @@ SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return R_NilValue;
 }
-
-
 
 
 SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2271,24 +2269,22 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_UMASK
     SEXP ans;
     int mode;
-    mode_t res;
+    mode_t res = 0;
 
     checkArity(op, args);
     mode = asInteger(CAR(args));
-    if (mode == NA_LOGICAL)
-	error(_("invalid '%s' value"), "umask");
-    res = umask(mode);
-    PROTECT(ans = ScalarInteger(res));
+#ifdef HAVE_UMASK
+    if (mode == NA_INTEGER) {
+	res = umask(0);
+	umask(res);
+    } else
+	res = umask(mode);
 #else
-    SEXP ans = R_NilValue;
-
-    checkArity(op, args);
     warning(_("insufficient OS support on this platform"));
-    PROTECT(ans = ScalarInteger(0));
 #endif
+    PROTECT(ans = ScalarInteger(res));
     setAttrib(ans, R_ClassSymbol, mkString("octmode"));
     UNPROTECT(1);
     return ans;

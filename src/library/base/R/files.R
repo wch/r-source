@@ -205,7 +205,7 @@ Sys.chmod <- function(paths, mode = "0777")
     .Internal(Sys.chmod(paths, as.octmode(mode)))
 
 Sys.umask <- function(mode = "0000")
-    .Internal(Sys.umask(as.octmode(mode)))
+    .Internal(Sys.umask(if(is.na(mode)) NA_integer_ else as.octmode(mode)))
 
 Sys.readlink <- function(paths)
     .Internal(Sys.readlink(paths))

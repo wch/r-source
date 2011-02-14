@@ -21,7 +21,7 @@ Sys.umask(mode = "0000")
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical. Should elements of the path other than the
     last be created?  If true, like Unix's \command{mkdir -p}.}
-  \item{mode}{the file mode to be used on Unix-alikes: it will be
+  \item{mode}{the mode to be used on Unix-alikes: it will be
     coerced by \code{\link{as.octmode}}.  For \code{Sys.chmod} it is
     recycled along \code{paths}.}
 }
@@ -65,9 +65,10 @@ Sys.umask(mode = "0000")
   (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
 
-  \code{Sys.umask} sets the \code{umask}.
+  \code{Sys.umask} sets the \code{umask} and returns the previous value:
+  as a special case \code{mode = NA} just returns the current value.
 #ifdef unix
-  It may not be supported (when a warning is issued and \code{"0000"}
+  It may not be supported (when a warning is issued and \code{"0"}
   is returned).  For more details see your OS's documentation on the
   system call \code{umask}, e.g. \command{man 2 umask}.
 #endif
@@ -76,7 +77,12 @@ Sys.umask(mode = "0000")
   executable is not a Windows concept.  So \code{umask} only controls
   whether a file is writable: a setting of \code{"200"} makes files (but
   not directories) created subsequently read-only.
-#endif  
+#endif
+
+  How modes are handled depends on the file system, even on Unix-alikes
+  (although their documentation is often written assuming a POSIX file
+  system).  So treat documentation cautiously if you are using, say, a
+  FAT/FAT32 or network-mounted file system. 
 }
 \value{
   \code{dir.create} and \code{Sys.chmod} return invisibly a logical vector
