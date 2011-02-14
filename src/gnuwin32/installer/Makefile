@@ -114,10 +114,18 @@ md5sums:
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
 
+PDF_FILES = $(wildcard $(RPREFIX)/library/*/doc/*.pdf)
+
 fixups:
 	echo "make.packages.html(.Library,temp=FALSE,verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
 	$(CP) -prf $(R_HOME)/Tcl $(RPREFIX)
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
+ifneq ($(strip $(QPDF)),)
+	@for f in $(PDF_FILES); do \
+	  $(QPDF)/bin/qpdf --stream-data=compress $${f} tmp.pdf; \
+	  mv tmp.pdf $${f}; \
+	done
+endif
 
 32bit:
 ifeq "$(WIN)" "64"

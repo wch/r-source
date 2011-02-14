@@ -69,6 +69,9 @@ BUILD_HTML = NO
 # location where Inno Setup 5.3.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno
 
+# optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.
+QPDF=
+
 # home of 32-bit files for combined installer on 64-bit build
 HOME32=
 
