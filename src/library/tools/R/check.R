@@ -1982,7 +1982,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
             if(nrow(rest)) {
-                tf <- tempfile()
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
                 size <- sprintf('%4.1fMb', rest[, 1L]/1024)
                 printLog(Log, paste("    ",
@@ -1990,7 +1989,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                     "  ",
                                     format(size, justify = "right"),
                                     "\n", sep=""))
-                unlink(tf)
             }
         } else resultLog(Log, "OK")
         setwd(owd)
