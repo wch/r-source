@@ -3701,12 +3701,19 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    value = forcePromise(value);
 	    SET_NAMED(value, 2);
 	}
-	if (TYPEOF(value) != BUILTINSXP)
-	    error(_("\"%s\" is not a BUILTIN function"),
-		  CHAR(PRINTNAME(symbol)));
 	if(RTRACE(value)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
+	}
+	if (TYPEOF(value) != BUILTINSXP) {
+	    /* probably means a package redefined the base function so
+	       try to get the real thing from the internal table of
+	       primitives */
+	    value = R_Primitive(CHAR(PRINTNAME(symbol)));
+	    if (TYPEOF(value) != BUILTINSXP)
+		/* if that doesn't work we signal an error */
+		error(_("\"%s\" is not a BUILTIN function"),
+		      CHAR(PRINTNAME(symbol)));
 	}
 
 	/* push the function and push space for creating the argument list. */
@@ -3857,23 +3864,31 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = SYMVALUE(symbol);
 	int flag;
 	const void *vmax = vmaxget();
-	if (TYPEOF(fun) == PROMSXP) {
-	    fun = forcePromise(fun);
-	    SET_NAMED(fun, 2);
-	}
 	if(RTRACE(fun)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
 	}
-	if (TYPEOF(fun) != SPECIALSXP)
-	    error(_("\"%s\" is not a SPECIAL function"),
-		  CHAR(PRINTNAME(symbol)));
+	if (TYPEOF(fun) == PROMSXP) {
+	    fun = forcePromise(fun);
+	    SET_NAMED(fun, 2);
+	}
+	if (TYPEOF(fun) != SPECIALSXP) {
+	    /* probably means a package redefined the base function so
+	       try to get the real thing from the internal table of
+	       primitives */
+	    fun = R_Primitive(CHAR(PRINTNAME(symbol)));
+	    if (TYPEOF(fun) != SPECIALSXP)
+		/* if that doesn't work we signal an error */
+		error(_("\"%s\" is not a SPECIAL function"),
+		      CHAR(PRINTNAME(symbol)));
+	}
+	BCNPUSH(fun);  /* for GC protection */
 	flag = PRIMPRINT(fun);
 	R_Visible = flag != 1;
 	value = PRIMFUN(fun) (call, fun, CDR(call), rho);
 	if (flag < 2) R_Visible = flag != 1;
 	vmaxset(vmax);
-	BCNPUSH(value);
+	R_BCNodeStackTop[-1] = value; /* replaces fun on stack */
 	NEXT();
       }
     OP(MAKECLOSURE, 1):
