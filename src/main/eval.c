@@ -453,7 +453,7 @@ SEXP eval(SEXP e, SEXP rho)
 	   in contrast to the handling of promises bound to symbols in
 	   the SYMSXP case above.  The reason is that one (typically
 	   the only) place promises appear in source code is as
-	   wrappers for the RHS value in assignment function calls for
+	   wrappers for the RHS value in replacement function calls for
 	   complex assignment expression created in applydefine().  If
 	   the RHS value is freshly created it will have NAMED = 0 and
 	   we want it to stay that way or a BUILTIN or SPECIAL
@@ -1520,7 +1520,7 @@ static void tmp_cleanup(void *data)
 
 /* This macro stores the current assignment target in the saved
    binding location. It duplicates if necessary to make sure
-   assignment functions are always called with a target with NAMED ==
+   replacement functions are always called with a target with NAMED ==
    1. The SET_CAR is intended to protect against possible GC in
    R_SetVarLocValue; this might occur it the binding is an active
    binding. */
