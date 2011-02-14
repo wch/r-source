@@ -58,7 +58,7 @@ PDFLATEX = @PDFLATEX@
 ## (as reported by MM)
 ../NEWS.pdf: NEWS.rds
 	@if test -z "$(PDFLATEX)"; then \
-	  $(ECHO) "'pdflatex' is needed but missing on your system."; \
+	  $(ECHO) "'pdflatex' is needed to make NEWS.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
