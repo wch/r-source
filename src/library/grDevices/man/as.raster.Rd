@@ -43,6 +43,9 @@ as.raster(x, \dots)
   The \code{as.raster()} function is generic so methods can be
   written to convert other R objects to a raster object.
 
+  The default implementation for numeric matrices interprets scalar
+  values on black-to-white scale.
+  
   Raster objects can be subsetted like a matrix and it is
   possible to assign to a subset of a raster object.
 

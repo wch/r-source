@@ -1,24 +1,28 @@
 
-# A raster object is a vector of colours
+# A raster object is a character vector
+# of colour strings
 # plus a number of rows and columns
 # The vector gives colours in ROW ORDER,
 # starting from the TOP row
+#
+# due to the inherent inefficiency of
+# raster implementation the graphics
+# routines also support "nativeRaster"
+# which is the native R representation
+# (integer matrix) of colors in the same
+# order as raster, suitable for practical
+# use with images
 
-is.raster <- function(x) {
+is.raster <- function(x)
     inherits(x, "raster")
-}
 
-as.raster <- function(x, ...) {
+as.raster <- function(x, ...)
     UseMethod("as.raster")
-}
 
-as.raster.raster<- function(x, ...) {
-    x
-}
+as.raster.raster<- function(x, ...)  x
 
-as.raster.logical <- function(x, max=1, ...) {
+as.raster.logical <- function(x, max=1, ...)
     as.raster(matrix(x, ...), max)
-}
 
 as.raster.numeric <- as.raster.logical
 
@@ -30,9 +34,13 @@ as.raster.matrix <- function(x, max=1, ...) {
         r <- t(x)
     } else if (is.numeric(x) || is.logical(x)) {
         # Assume greyscale or b&w values
-        # Use rgb() to allow for different 'max' value
+        # We have to use rgb() indirectly as it
+        # doesn't hande NAs correctly
         tx <- t(x)
+        tx.na <- which(is.na(tx))
+        if (length(tx.na)) tx[tx.na] <- 0
         r <- rgb(tx, tx, tx, maxColorValue = max)
+        if (length(tx.na)) r[tx.na] <- NA
     } else {
         stop("A raster matrix must be character, or numeric, or logical")
     }

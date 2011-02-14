@@ -255,6 +255,9 @@
       \item The is a \code{!} method for classes \code{"octmode"} and
       \code{"hexmode"}: this allows \code{xor(a, b)} to work if both
       \code{a} and \code{b} are from one of those classes.
+
+      \item \code{as.raster()} no longer fails for vectors or matrices
+      containing \code{NA}s.
     }
   }
 
