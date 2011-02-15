@@ -1,6 +1,6 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
@@ -9,8 +9,8 @@
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{
   Searches for approximate matches to \code{pattern} (the first argument)
-  within the string \code{x} (the second argument) using the Levenshtein
-  edit distance.
+  within each element of the string \code{x} (the second argument) using
+  the Levenshtein edit distance.
 }
 \usage{
 agrep(pattern, x, ignore.case = FALSE, value = FALSE,
@@ -52,6 +52,13 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   As from \R 2.10.0 this uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
   character matching much better than the previous version.
+}
+
+\note{
+  Since someone who read the description carelessly even filed a bug
+  report on it, do note that this matches substrings of each element of
+  \code{x} (just as \code{\link{grep}} does) and \bold{not} whole
+  elements.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
