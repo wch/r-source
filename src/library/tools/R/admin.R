@@ -904,6 +904,27 @@ compactPDF <- function(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"))
     invisible()
 }
 
+### * add_datalist
+
+add_datalist <- function(pkgpath)
+{
+    dlist <- file.path(pkgpath, "data", "datalist")
+    if (file.exists(dlist)) return()
+    fi <- file.info(Sys.glob(file.path(pkgpath, "data", "*")))
+    size <- sum(fi$size)
+    if(size <= 1024^2) return()
+    z <- suppressPackageStartupMessages(list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
+    if(!length(z)) return()
+    con <- file(dlist, "w")
+    for (nm in names(z)) {
+        zz <- z[[nm]]
+        if (length(zz) == 1L && zz == nm) writeLines(nm, con)
+        else cat(nm, ": ", paste(zz, collapse = " "), "\n",
+                 sep = "", file = con)
+    }
+    close(con)
+    invisible()
+}
 
 
 ### Local variables: ***

@@ -17,8 +17,8 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rd2txt_options",
        "testInstalledBasic", "testInstalledPackage",
        "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
        "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles",
-       "compactPDF", "HTMLheader", "toHTML", "toRd", "parseLatex",
-       "deparseLatex", "latexToUtf8")
+       "compactPDF", "add_datalist", "HTMLheader", "toHTML", "toRd",
+       "parseLatex", "deparseLatex", "latexToUtf8")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
