@@ -2648,9 +2648,6 @@ static SEXP R_SubassignSym = NULL;
 static SEXP R_CSym = NULL;
 static SEXP R_Subset2Sym = NULL;
 static SEXP R_Subassign2Sym = NULL;
-static SEXP FakeCall0 = NULL;
-static SEXP FakeCall1 = NULL;
-static SEXP FakeCall2 = NULL;
 static SEXP R_TrueValue = NULL;
 static SEXP R_FalseValue = NULL;
 
@@ -2683,10 +2680,6 @@ void R_initialize_bcode(void)
   R_Subset2Sym = R_Bracket2Symbol; /* "[[" */
   R_Subassign2Sym = install("[[<-");
 
-  FakeCall0 = CONS(R_NilValue, R_NilValue);
-  FakeCall1 = CONS(R_NilValue, FakeCall0);
-  FakeCall2 = CONS(R_NilValue, FakeCall1);
-  R_PreserveObject(FakeCall2);
   R_TrueValue = mkTrue();
   SET_NAMED(R_TrueValue, 2);
   R_PreserveObject(R_TrueValue);
@@ -2816,6 +2809,7 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 #define DO_FAST_RELOP2(op,a,b) do { \
     double __a__ = (a), __b__ = (b); \
     SEXP val; \
+    SKIP_OP(); \
     if (ISNAN(__a__) || ISNAN(__b__)) val = ScalarLogical(NA_LOGICAL); \
     else val = (__a__ op __b__) ? R_TrueValue : R_FalseValue; \
     R_BCNodeStackTop[-2] = val; \
@@ -2908,31 +2902,35 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 }
 
 #define Builtin1(do_fun,which,rho) do {				 \
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
   R_BCNodeStackTop[-1] = CONS(R_BCNodeStackTop[-1], R_NilValue); \
-  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), \
+  R_BCNodeStackTop[-1] = do_fun(call, SYMVALUE(which), \
 				R_BCNodeStackTop[-1], rho); \
   NEXT(); \
 } while(0)
 
 #define NewBuiltin1(do_fun,which,rho) do {		\
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
   SEXP x = R_BCNodeStackTop[-1]; \
-  R_BCNodeStackTop[-1] = do_fun(FakeCall1, SYMVALUE(which), x, rho);	\
+  R_BCNodeStackTop[-1] = do_fun(call, SYMVALUE(which), x, rho);	\
   NEXT(); \
 } while(0)
 
 #define Builtin2(do_fun,which,rho) do {		     \
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
   SEXP tmp = CONS(R_BCNodeStackTop[-1], R_NilValue); \
   R_BCNodeStackTop[-2] = CONS(R_BCNodeStackTop[-2], tmp); \
   R_BCNodeStackTop--; \
-  R_BCNodeStackTop[-1] = do_fun(FakeCall2, SYMVALUE(which), \
+  R_BCNodeStackTop[-1] = do_fun(call, SYMVALUE(which), \
 				R_BCNodeStackTop[-1], rho); \
   NEXT(); \
 } while(0)
 
 #define NewBuiltin2(do_fun,opval,opsym,rho) do {	\
+  SEXP call = VECTOR_ELT(constants, GETOP()); \
   SEXP x = R_BCNodeStackTop[-2]; \
   SEXP y = R_BCNodeStackTop[-1]; \
-  R_BCNodeStackTop[-2] = do_fun(FakeCall2, opval, opsym, x, y,rho);	\
+  R_BCNodeStackTop[-2] = do_fun(call, opval, opsym, x, y,rho);	\
   R_BCNodeStackTop--; \
   NEXT(); \
 } while(0)
@@ -2944,6 +2942,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 # define DO_FAST_BINOP(op,a,b) do { \
     SEXP val = allocVector(REALSXP, 1); \
+    SKIP_OP(); \
     REAL(val)[0] = (a) op (b); \
     R_BCNodeStackTop[-2] = val; \
     R_BCNodeStackTop--; \
@@ -3053,6 +3052,7 @@ static struct { void *addr; int argc; } opinfo[OPCOUNT];
 
 #define NEXT() (__extension__ ({goto *(*pc++).v;}))
 #define GETOP() (*pc++).i
+#define SKIP_OP() (pc++)
 
 #define BCCODE(e) (BCODE *) INTEGER(BCODE_CODE(e))
 #else
@@ -3070,6 +3070,7 @@ typedef int BCODE;
 
 #define NEXT() goto loop
 #define GETOP() *pc++
+#define SKIP_OP() (pc++)
 
 #define BCCODE(e) INTEGER(BCODE_CODE(e))
 #endif
@@ -3900,24 +3901,24 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	BCNPUSH(value);
 	NEXT();
       }
-    OP(UMINUS, 0): Arith1(R_SubSym);
-    OP(UPLUS, 0): Arith1(R_AddSym);
-    OP(ADD, 0): FastBinary(+, PLUSOP, R_AddSym);
-    OP(SUB, 0): FastBinary(-, MINUSOP, R_SubSym);
-    OP(MUL, 0): FastBinary(*, TIMESOP, R_MulSym);
-    OP(DIV, 0): FastBinary(/, DIVOP, R_DivSym);
-    OP(EXPT, 0): Arith2(POWOP, R_ExptSym);
-    OP(SQRT, 0): Math1(R_SqrtSym);
-    OP(EXP, 0): Math1(R_ExpSym);
-    OP(EQ, 0): FastRelop2(==, EQOP, R_EqSym);
-    OP(NE, 0): FastRelop2(!=, NEOP, R_NeSym);
-    OP(LT, 0): FastRelop2(<, LTOP, R_LtSym);
-    OP(LE, 0): FastRelop2(<=, LEOP, R_LeSym);
-    OP(GE, 0): FastRelop2(>=, GEOP, R_GeSym);
-    OP(GT, 0): FastRelop2(>, GTOP, R_GtSym);
-    OP(AND, 0): Builtin2(do_logic, R_AndSym, rho);
-    OP(OR, 0): Builtin2(do_logic, R_OrSym, rho);
-    OP(NOT, 0): Builtin1(do_logic, R_NotSym, rho);
+    OP(UMINUS, 1): Arith1(R_SubSym);
+    OP(UPLUS, 1): Arith1(R_AddSym);
+    OP(ADD, 1): FastBinary(+, PLUSOP, R_AddSym);
+    OP(SUB, 1): FastBinary(-, MINUSOP, R_SubSym);
+    OP(MUL, 1): FastBinary(*, TIMESOP, R_MulSym);
+    OP(DIV, 1): FastBinary(/, DIVOP, R_DivSym);
+    OP(EXPT, 1): Arith2(POWOP, R_ExptSym);
+    OP(SQRT, 1): Math1(R_SqrtSym);
+    OP(EXP, 1): Math1(R_ExpSym);
+    OP(EQ, 1): FastRelop2(==, EQOP, R_EqSym);
+    OP(NE, 1): FastRelop2(!=, NEOP, R_NeSym);
+    OP(LT, 1): FastRelop2(<, LTOP, R_LtSym);
+    OP(LE, 1): FastRelop2(<=, LEOP, R_LeSym);
+    OP(GE, 1): FastRelop2(>=, GEOP, R_GeSym);
+    OP(GT, 1): FastRelop2(>, GTOP, R_GtSym);
+    OP(AND, 1): Builtin2(do_logic, R_AndSym, rho);
+    OP(OR, 1): Builtin2(do_logic, R_OrSym, rho);
+    OP(NOT, 1): Builtin1(do_logic, R_NotSym, rho);
     OP(DOTSERR, 0): error(_("'...' used in an incorrect context"));
     OP(STARTASSIGN, 1):
       {
