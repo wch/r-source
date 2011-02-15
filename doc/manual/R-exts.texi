@@ -1915,6 +1915,16 @@ directories need to be 10Mb or more, consideration should be given to a
 separate package containing just the data.  (Similarly for external data
 directories, large @file{jar} files and other libraries that need to be
 installed.)
+
+There are a several tools available to reduce the size of PDF files,
+including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
+`Save as', and select `Reduce file size' from the `Quartz filter'
+menu'.}, some versions of Multivalent, Pdftk
+(@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}) and
+@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), as well as
+numerous commercial and shareware Windows programs.  Note that these do
+not all try the same size-reduction strategies, and Acrobat can be much
+better at reducing the size of embedded images.
 @end enumerate
 
 @noindent
