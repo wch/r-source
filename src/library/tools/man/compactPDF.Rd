@@ -38,10 +38,8 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"))
 \seealso{
   \code{\link{resaveRdaFiles}}.
 
-  Other (and sometimes more effective) tools to compact PDF files are
-  Adobe Acrobat (not Reader), Multivalent
-  (\url{http://multivalent.sourceforge.net/download.html}) and
-  (\url{http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}).
+  Many other (and sometimes more effective) tools to compact PDF files
+  are available, including Adobe Acrobat (not Reader).
 }
 
 \keyword{ utilities }
