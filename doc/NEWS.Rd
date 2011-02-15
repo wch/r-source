@@ -441,6 +441,9 @@
 
       \item The one- and two-argument complex maths functions failed to
       warn if NAs were generated (as their numeric analogues do).
+
+      \item Added \code{.requireCachedGenerics} to the
+      \code{dont.mind} list to avoid warnings about duplicates.
     }
   }
 }
