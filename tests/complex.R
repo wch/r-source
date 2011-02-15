@@ -51,8 +51,6 @@ signif(1.678932-1.238276e-5i, 5)
 signif(8.678932-9.238276i, 5)
 ## prior to 2.2.0 rounded real and imaginary parts separately.
 
-options(error = expression(NULL)) # A platform may not have complex trig
-
 
 ## Complex Trig.:
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
@@ -109,16 +107,9 @@ x <- seq(-3, 3, len=200)
 Meps <- .Machine$double.eps
 stopifnot(
  Mod(cosh(x) - cos(1i*x))	< 20*Meps,
- Mod(sinh(x) - sin(1i*x)/1i)	< 20*Meps,
+ Mod(sinh(x) - sin(1i*x)/1i)	< 20*Meps
 )
 ## end of moved from Hyperbolic.Rd
-
-
-## atan2 with one complex argument
-z <- atan2(1, 1i)
-## was error in 2.2.1.
-## We don't print the result as it is OS-specific (0-Infi would be standard).
-
 
 ## values near and on branch cuts
 options(digits=5)
@@ -130,7 +121,9 @@ z <- c(0+2i, 0.0001+2i, 0-2i, -0.0001i-2i)
 asinh(z)
 acosh(z)
 atan(z)
-## According to C99, should have continuity from the side given.
+## According to C99, should have continuity from the side given if there
+## are not signed zeros
 ## Both glibc 2.12 and Mac OS X 10.6 use continuity from above in the first set
+## but they seem to assume signed zeros.
 ## Windows gave incorrect (NaN) values on the cuts.
 
