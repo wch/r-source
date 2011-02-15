@@ -268,19 +268,28 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 
 tar <- function(tarfile, files = NULL,
                 compression = c("none", "gzip", "bzip2", "xz"),
-                compression_level = 6, tar = Sys.getenv("tar"))
+                compression_level = 6, tar = Sys.getenv("tar"),
+                extra_flags = "")
 {
     if(is.character(tarfile)) {
-        TAR <- tar
-        if(nzchar(TAR) && TAR != "internal") {
+        if(nzchar(tar) && tar != "internal") {
             ## FIXME: could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
-                            "none" = "cf",
-                            "gzip" = "zcf",
-                            "bzip2" = "jcf",
-                            "xz" = "Jcf")
-            cmd <- paste(TAR, flags, shQuote(tarfile),
+                            "none" = "-cf",
+                            "gzip" = "-zcf",
+                            "bzip2" = "-jcf",
+                            "xz" = "-Jcf")
+
+            if (grepl("darwin", R.version$os)) {
+                ## precaution for Mac OS X to omit resource forks
+                ## we can't tell the running OS version from R.version$os
+                ## but at least it will not be older
+                tar <- paste("COPYFILE_DISABLE=1", tar) # >= 10.5, Leopard
+                if (grepl("darwin8", R.version$os)) # 10.4, Tiger
+                    tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
+            }
+            cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
         }
