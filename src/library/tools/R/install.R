@@ -889,6 +889,8 @@
                                   full.names = TRUE, recursive = TRUE)
             i_files <- grep(.vc_dir_names_re, i_files,
                             invert = TRUE, value = TRUE)
+            i_files <- i_files[!i_files %in%
+                               c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
