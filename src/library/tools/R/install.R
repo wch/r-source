@@ -897,9 +897,9 @@
 	if (install_inst && dir.exists("inst") &&
             length(dir("inst", all.files = TRUE))) {
 	    starsmsg(stars, "inst")
-	    ## FIXME avoid installing .svn etc?
 	    cp_r("inst", instdir)
-	    ## file.copy("inst", "instdir", recursive = TRUE)
+            ## remove some Sweave detritus
+            unlink(Sys.glob(file.path(instdir, "doc/Rplots.*")))
 	}
 
 	if (install_tests && dir.exists("tests")) {
