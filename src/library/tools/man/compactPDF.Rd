@@ -39,7 +39,8 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"))
   \code{\link{resaveRdaFiles}}.
 
   Many other (and sometimes more effective) tools to compact PDF files
-  are available, including Adobe Acrobat (not Reader).
+  are available, including Adobe Acrobat (not Reader) and GhostScript.
+  See the \sQuote{Writing R Extensions} manual.
 }
 
 \keyword{ utilities }

@@ -1575,7 +1575,7 @@
 
 
 ## called for base packages from src/Makefile[.win] and from
-## .install.packages in this file.
+## .install.packages in this file.  Really *help* indices.
 .writePkgIndices <-
     function(dir, outDir, OS = .Platform$OS.type, html = TRUE)
 {
