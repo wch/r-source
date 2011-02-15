@@ -86,10 +86,8 @@ summaryLog <- function(Log)
 ### formerly Perl R::Utils::get_exclude_patterns
 
 ## Return list of file patterns excluded by R CMD build and check.
-## Kept here so that we ensure that the lists are in sync, but not
-## exported.
-## <NOTE>
-## Has Unix-style '/' path separators hard-coded.
+## Kept here so that we ensure that the lists are in sync, but not exported.
+## Has Unix-style '/' path separators hard-coded, but that is what dir() uses.
 get_exclude_patterns <- function()
     c("^\\.Rbuildignore$",
       "(^|/)\\.DS_Store$",
@@ -105,10 +103,10 @@ get_exclude_patterns <- function()
       ## Windows dependency files
       "^src/.*\\.d$", "^src/Makedeps$",
       ## IRIX, of some vintage
-      "^src/so_locations$"
+      "^src/so_locations$",
+      ## Sweave detrius
+      "^inst/doc/Rplots\\.(ps|pdf)$"
       )
-## </NOTE>
-
 
 
 ### based on Perl build script
@@ -279,24 +277,7 @@ get_exclude_patterns <- function()
             length(pdfs <- Sys.glob(file.path("inst", "doc", "*.pdf")))
             && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
             messageLog(Log, "compacting vignettes")
-            tf <- tempfile("qpdf")
-            for (p in pdfs) {
-                old <- file.info(p)$size
-                res <- system2(qpdf, c("--stream-data=compress", p, tf),
-                               FALSE, FALSE)
-                if(!res && file.exists(tf)) {
-                    new <- file.info(tf)$size
-                    if(new/old < 0.9 && new < old - 1e4) {
-                        sz <- if (new < 1024^2)
-                            sprintf("%.0fKb", c(old, new)/1024)
-                        else sprintf("%.1fMb", c(old, new)/1024^2)
-                        printLog(Log, '  compacted ', sQuote(basename(p)),
-                                 ' from ', sz[1L], ' to ', sz[2L], "\n")
-                        file.copy(tf, p, overwrite = TRUE)
-                    }
-                }
-                unlink(tf)
-            }
+            compactPDF(pdfs, qpdf)
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
@@ -702,9 +683,6 @@ get_exclude_patterns <- function()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
-    ## The tar.exe in Rtools has --force-local by default, but this
-    ## enables people to use Cygwin or MSYS tar.
-    TAR <- Sys.getenv("TAR", if (WINDOWS) "tar --force-local" else "tar")
     libdir <- tempfile("Rinst")
 
     for(pkg in pkgs) {
@@ -742,18 +720,13 @@ get_exclude_patterns <- function()
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
-        ## -h means dereference symbolic links: some prefer -L
-        res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
-        if (!res) {
-            Tdir <- tempfile("Rbuild")
-            dir.create(Tdir, mode = "0755")
-            setwd(Tdir)
-            res <- system(paste(TAR, "-xf",  shQuote(filepath)))
-        }
-        if (res) {
+        Tdir <- tempfile("Rbuild")
+        dir.create(Tdir, mode = "0755")
+        if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
             errorLog(Log, "copying to build directory failed")
             do_exit(1L)
         }
+        setwd(Tdir)
 
         ## Now correct the package name (PR#9266)
         if (pkgname != intname) {
@@ -769,10 +742,6 @@ get_exclude_patterns <- function()
         prepare_pkg(normalizePath(pkgname, "/"), desc, Log);
         owd <- setwd(pkgname)
         ## remove exclude files
-##         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
-##                         full.names = TRUE)
-##         ## this does not include dirs, and we don't want '.'
-##         allfiles <- c(allfiles, list.dirs(".")[-1L])
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE, include.dirs = TRUE)
         allfiles <- substring(allfiles, 3L)  # drop './'
@@ -867,27 +836,24 @@ get_exclude_patterns <- function()
                 do_exit(1)
             }
         } else {
-            ## FIXME: use utils::tar in due course.
-            if (grepl("darwin", R.version$os)) {
-                ## precaution for Mac OS X to omit resource forks
-                ## we can't tell the running OS version from R.version$os
-                Sys.setenv(COPYFILE_DISABLE = 1) # >= Leopard
-                Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
-            }
-            messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
-            ## should not be any symlinks, so remove -h?
-            res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
-            if (!res)
-                res <- system(paste(shQuote(Sys.getenv("R_GZIPCMD", "gzip")),
-                                    "-9f", shQuote(filepath)))
+            filename <- paste(pkgname, "_", desc["Version"], ".tar.gz", sep="")
+            filepath <- file.path(startdir, filename)
+            ## NB: naughty reg-packages.R relies on this exact format!
+            messageLog(Log, "building ", sQuote(filename))
+            ## The tar.exe in Rtools has --force-local by default, but this
+            ## enables people to use Cygwin or MSYS tar.
+            TAR <- Sys.getenv("TAR",
+                              if (WINDOWS) "tar --force-local" else "tar")
+            res <- utils::tar(filepath, pkgname, compression = "gzip",
+                              compression_level = 9, tar = TAR)
             if (res) {
                 errorLog(Log, "packaging into .tar.gz failed")
                 do_exit(1L)
             }
-            setwd(startdir)
-            unlink(Tdir, recursive = TRUE)
             message("") # blank line
         }
+        setwd(startdir)
+        unlink(Tdir, recursive = TRUE)
         on.exit() # cancel closeLog
         closeLog(Log)
     }

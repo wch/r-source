@@ -40,6 +40,7 @@ build.pkg <- function(dir) {
     stopifnot(dir.exists(dir))
     Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
     ## return name of tar file built
+    ## Naughty, naughty: this is undocumented and subject to change!
     r <- tail(system(paste(Rcmd, "build", dir), intern = TRUE), 3)
     sub(".*'", "", sub("'$", "",
                        grep("building.*tar\\.gz", r, value=TRUE)))
