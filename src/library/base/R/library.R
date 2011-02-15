@@ -152,7 +152,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".First.lib", ".Last.lib",
                        ".packageName", ".noGenerics", ".required",
-                       ".no_S3_generics", ".Depends")
+                       ".no_S3_generics", ".Depends", ".requireCachedGenerics")
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
