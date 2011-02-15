@@ -247,10 +247,10 @@ tar <- function(tarfile, files = NULL,
             ## FIXME: could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
-                            "none" = "cf",
-                            "gzip" = "zcf",
-                            "bzip2" = "jcf",
-                            "xz" = "Jcf")
+                            "none" = "-cf",
+                            "gzip" = "-zcf",
+                            "bzip2" = "-jcf",
+                            "xz" = "-Jcf")
             cmd <- paste(TAR, flags, shQuote(tarfile),
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))

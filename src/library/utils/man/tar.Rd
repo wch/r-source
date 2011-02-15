@@ -40,13 +40,22 @@ tar(tarfile, files = NULL,
   This is either a wrapper for a \command{tar} command or uses an
   internal implementation in \R.  The latter is used if \code{tarfile}
   is a connection or if the argument \code{tar} is \code{"internal"} or
-  \code{""}.
+  \code{""}.  Note that whereas Unix-alike versions of \R set the
+  environment variable \env{TAR}, its value is not the default for this
+  function.
+}
 
-  Beware of portability considerations: the \sQuote{tar} format no
-  longer has an agreed standard (\sQuote{Unix Standard Tar} was part of
-  POSIX 1003.1:1998 but has been removed in favour of \command{pax}),
-  and in any case many common implementations diverged from the former
-  standard.  Known problems arise from
+\section{Portability}{
+  The \sQuote{tar} format no longer has an agreed standard!
+  \sQuote{Unix Standard Tar} was part of POSIX 1003.1:1998 but has been
+  removed in favour of \command{pax}, and in any case many common
+  implementations diverged from the former standard.  Most \R platforms
+  use a version of GNU \command{tar} (including \command{Rtools} on
+  Windows, but the behaviour seems to be changed with each version), Mac
+  OS 10.6 and FreeBSD use \command{bsdttar} from the \samp{libarchive
+  project}, and commercial Unixes will have their own versions.
+
+  Known problems arise from
   \itemize{
     \item The handling of file names of more than 100 bytes.  These were
     unsupported in early versions of \command{tar}, and supported in one
