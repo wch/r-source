@@ -880,15 +880,30 @@ resaveRdaFiles <- function(paths,
 
 ### * compactPDF
 
-compactPDF <- function(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"))
+compactPDF <-
+    function(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
+             gs_cmd = Sys.getenv("R_GSCMD", ""),
+             gs_quality = c("printer", "ebook", "screen"),
+             gs_extras = character())
 {
     if(!nzchar(Sys.which(qpdf))) return()
     if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
-    tf <- tempfile("qpdf")
+    gs_quality <- match.arg(gs_quality)
+    tf <- tempfile("pdf")
     for (p in paths) {
         old <- file.info(p)$size
-        res <- system2(qpdf, c("--stream-data=compress", p, tf), FALSE, FALSE)
+        res <- if (nzchar(gs_cmd))
+            system2(gs_cmd,
+                    c("-q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite",
+                      sprintf("-dPDFSETTINGS=/%s", gs_quality),
+                      "-dCompatibilityLevel=1.5",
+                      "-dAutoRotatePages=/None",
+                      sprintf("-sOutputFile=%s", tf),
+                      gs_extras,
+                      p), FALSE, FALSE)
+        else
+            system2(qpdf, c("--stream-data=compress", p, tf), FALSE, FALSE)
         if(!res && file.exists(tf)) {
             new <- file.info(tf)$size
             if(new/old < 0.9 && new < old - 1e4) {

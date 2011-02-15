@@ -277,7 +277,7 @@ get_exclude_patterns <- function()
             length(pdfs <- Sys.glob(file.path("inst", "doc", "*.pdf")))
             && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
             messageLog(Log, "compacting vignettes")
-            compactPDF(pdfs, qpdf)
+            compactPDF(pdfs, qpdf, "")
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)

@@ -260,7 +260,8 @@
       containing \code{NA}s.
 
       \item Package \pkg{tools} has a new function \code{compactPDF()}
-      to try to reduce the size of PDF files.
+      to try to reduce the size of PDF files \emph{via} \command{qpdf}
+      or \command{gs}.
 
       \item \code{tar()} has a new argument \code{extra_flags}.
     }
@@ -303,7 +304,7 @@
 
       There is a new option, \option{--compact-vignettes} to try
       reducing the size of PDF files in the \file{inst/doc} directory.
-      Currently this tries \command{qpdf}: other options may be tried in
+      Currently this tries \command{qpdf}: other options may be used in
       future.
 
       \item \command{R CMD check} now also checks for filenames that are
