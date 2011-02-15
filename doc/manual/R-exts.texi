@@ -1786,15 +1786,14 @@ details on the document format.  Package vignettes found in directory
 code chunks they contain to ensure consistency between code and
 documentation.  (Code chunks with option @code{eval=FALSE} are not
 tested.)  The @R{} working directory for all vignette tests in @code{R
-CMD check} is the @emph{installed} version of the @file{doc}
-subdirectory.  Make sure all files needed by the vignette (data sets,
-@dots{}) are accessible by either placing them in the @file{inst/doc}
-hierarchy of the source package, or using calls to @code{system.file()}.
-Unfortunately, this currently means that all other files needed to
-re-make the vignettes (such as LaTeX style files, BiBTeX input files and
-files for any figures not created by running the code in the vignette)
-must under @file{inst} (usually under @file{inst/doc}) and so be
-installed.
+CMD check} is a @emph{copy} of the @file{doc} subdirectory.  Make sure
+all files needed by the vignette (data sets, @dots{}) are accessible by
+either placing them in the @file{inst/doc} hierarchy of the source
+package, or using calls to @code{system.file()}.  Unfortunately, this
+currently means that all other files needed to re-make the vignettes
+(such as LaTeX style files, BiBTeX input files and files for any figures
+not created by running the code in the vignette) must under
+@file{inst/doc} and so will be installed.
 
 @code{R CMD build} will automatically create PDF versions of the
 vignettes for distribution with the package sources.  By including the
@@ -1921,10 +1920,35 @@ including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
 `Save as', and select `Reduce file size' from the `Quartz filter'
 menu'.}, some versions of Multivalent, Pdftk
 (@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}) and
-@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), as well as
-numerous commercial and shareware Windows programs.  Note that these do
-not all try the same size-reduction strategies, and Acrobat can be much
-better at reducing the size of embedded images.
+@command{qpdf} (@uref{http://qpdf.sourceforge.net/}), 
+and Ghostscript (which converts PDF to PDF by
+
+@example
+ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
+@end example
+
+@noindent
+and suitable options might be
+
+@example
+-dPDFSETTINGS=/screen
+-dPDFSETTINGS=/ebook
+@end example
+
+@noindent
+(see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
+for more) and consider all the options for image downsampling) as well
+as numerous commercial and shareware Windows programs.  Note that these
+do not all try the same size-reduction strategies, and Acrobat can be
+much better at reducing the size of embedded images than some of the
+others.
+
+Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
+for Windows and packages in Debian/Ubuntu), there is an option
+@option{--compact-vignettes} to @command{R CMD build} to run
+@command{qpdf} over PDF files in @file{inst/doc} and replace them if at
+least 10Kb and 10% is saved.  The full path to the @command{qpdf}
+command can be supplied as environment variable @env{R_QPDF}.
 @end enumerate
 
 @noindent
