@@ -2862,7 +2862,7 @@ static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}
 	UNPROTECT(1);
     }
-    return do_relop_dflt(R_NilValue, op, x, y);
+    return do_relop_dflt(call, op, x, y);
 }
 
 static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x, SEXP rho)
@@ -2877,7 +2877,7 @@ static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x, SEXP rho)
     }
     UNPROTECT(1);
   }
-  return R_unary(R_NilValue, op, x);
+  return R_unary(call, op, x);
 }
 
 static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
@@ -2898,7 +2898,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}
 	UNPROTECT(1);
     }
-    return R_binary(R_NilValue, op, x, y);
+    return R_binary(call, op, x, y);
 }
 
 #define Builtin1(do_fun,which,rho) do {				 \
