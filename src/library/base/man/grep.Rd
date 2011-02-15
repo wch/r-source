@@ -13,8 +13,9 @@
 \alias{gregexpr}
 \description{
   \code{grep}, \code{grepl}, \code{regexpr} and \code{gregexpr} search
-  for matches to argument \code{pattern} within a character vector: they
-  differ in the format of and amount of detail in the results.
+  for matches to argument \code{pattern} within each element of a
+  character vector: they differ in the format of and amount of detail in
+  the results.
 
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
@@ -137,6 +138,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   encoding).  If \code{useBytes = FALSE} a non-ASCII substituted result
   will often be in UTF-8 with a marked encoding (e.g. if there is a
   UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
+  Such strings can be re-encoded by \code{\link{enc2native}}.
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or
@@ -205,13 +207,13 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
 
   \code{\link{agrep}} for approximate matching.
-
-  \code{\link{enc2native}} to re-encode the result of \code{sub}.
+  
+  \code{\link{charmatch}}, \code{\link{pmatch}} for partial matching,
+  \code{\link{match}} for matching to whole strings.
 
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
-  \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
-
+  
   \code{\link{apropos}} uses regexps and has more examples.
 }
 \examples{
