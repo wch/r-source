@@ -738,7 +738,13 @@ the @file{inst} happens after @file{src} is built so its @file{Makefile}
 can create files to be installed.  Prior to @R{} 2.12.2, the files were
 installed on POSIX platforms with the permissions in the package
 sources, so care should be taken to ensure these are not too
-restrictive: @command{R CMD build} will make suitable adjustments.
+restrictive: @command{R CMD build} will make suitable adjustments.  To
+exclude files from being installed, one can specify a list of exclude
+patterns in file @file{.Rinstignore} in the top-level source directory.
+These patterns should be Perl-like regular expressions (see the help for
+@code{regexp} in @R{} for the precise details), one per line, to be
+matched@footnote{case-insensitively on Windows.} against the file and
+directory names.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE}, @file{COPYING} and @file{NEWS},
@@ -1846,15 +1852,15 @@ details on the document format.  Package vignettes found in directory
 code chunks they contain to ensure consistency between code and
 documentation.  (Code chunks with option @code{eval=FALSE} are not
 tested.)  The @R{} working directory for all vignette tests in @code{R
-CMD check} is the @emph{installed} version of the @file{doc}
-subdirectory.  Make sure all files needed by the vignette (data sets,
-@dots{}) are accessible by either placing them in the @file{inst/doc}
-hierarchy of the source package, or using calls to @code{system.file()}.
-Unfortunately, this currently means that all other files needed to
-re-make the vignettes (such as LaTeX style files, BiBTeX input files and
-files for any figures not created by running the code in the vignette)
-must under @file{inst} (usually under @file{inst/doc}) and so be
-installed.
+CMD check} is a @emph{copy} of the @file{doc} subdirectory.  Make sure
+all files needed by the vignette (data sets, @dots{}) are accessible by
+either placing them in the @file{inst/doc} hierarchy of the source
+package, or using calls to @code{system.file()}.  All other files needed
+to re-make the vignettes (such as LaTeX style files, BiBTeX input files
+and files for any figures not created by running the code in the
+vignette) must under @file{inst/doc} in the sources, but a file
+@file{.Rinstignore} can be used to exclude them from the installed
+package.
 
 @code{R CMD build} will automatically create PDF versions of the
 vignettes for distribution with the package sources.  By including the
@@ -1972,7 +1978,7 @@ particular, @command{R CMD check} will report@footnote{provided a
 POSIX-compliant @command{du} program is found on the system: it is
 possible that some other @command{du} program will incorrectly report
 double the actual size.  This can be disabled by setting
-@env{_R_CHECK_USE_DU_} to a false value.} on installed packages of more
+@env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of more
 that 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data if environment variable
 @env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD

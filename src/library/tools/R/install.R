@@ -883,12 +883,25 @@
             ## This ignores any restrictive permissions in the source
             ## tree, since the later .Internal(dirchmod()) call will
             ## fix the permissions.
+
+            ## handle .Rinstignore:
+            ignore_file <- ".Rinstignore"
+            ignore <- if (file.exists(ignore_file)) {
+                ignore <- readLines(ignore_file)
+                ignore[nzchar(ignore)]
+            } else character()
+            for(e in ignore)
+                i_dirs <- grep(e, i_dirs, perl = TRUE, invert = TRUE,
+                               value = TRUE, ignore.case = WINDOWS)
             lapply(gsub("^inst", instdir, i_dirs),
                    function(p) dir.create(p, FALSE, TRUE)) # be paranoid
             i_files <- list.files("inst", all.files = TRUE,
                                   full.names = TRUE, recursive = TRUE)
             i_files <- grep(.vc_dir_names_re, i_files,
                             invert = TRUE, value = TRUE)
+            for(e in ignore)
+                i_files <- grep(e, i_files, perl = TRUE, invert = TRUE,
+                                value = TRUE, ignore.case = WINDOWS)
             i_files <- i_files[!i_files %in%
                                c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
             i2_files <- gsub("^inst", instdir, i_files)

@@ -357,6 +357,13 @@
       package.  This helps when installing packages with static HTML
       pages for use on a webserver.  It will also allow future versions
       of \R to use different stylesheets for the packages they install.
+
+      \item A top-level file \file{.Rinstignore} in the package sources
+      can list (in the same way as \file{.Rbuildignore}) file under
+      \code{inst} that should not be installed.  Why should there be any
+      such files?  Because all the files needed to re-build vignettes
+      need to be under \code{inst/doc}, but they may not need to be
+      installed.
     }
   }
 
