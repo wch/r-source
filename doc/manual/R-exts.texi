@@ -1987,8 +1987,8 @@ installed.)
 
 There are a several tools available to reduce the size of PDF files,
 including Adobe Acrobat (not Reader), Multivalent
-(@uref{http://multivalent.sourceforge.net/download.html}), Pdftk
-(@uref{http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}) and
+(@uref{http://multivalent.sourceforge.net/@/download.html}), Pdftk
+(@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}) and
 @command{qpdf} (@uref{http://qpdf.sourceforge.net/}).  Note that these
 do not all try the same size-reduction strategies, and Acrobat can be
 much better at reducing the size of embedded images.

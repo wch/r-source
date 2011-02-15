@@ -2599,8 +2599,8 @@ types: this is checked at configuration.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{http://code.google.com/@/p/libarchive/}, as used by Mac OS 10.6) or
-@command{tar} from the Heirloom Toolchest
+@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and
+Mac OS 10.6) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
