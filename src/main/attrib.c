@@ -211,17 +211,20 @@ SEXP R_copyDFattr(SEXP in, SEXP out)
 /* 'name' should be 1-element STRSXP or SYMSXP */
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
+    PROTECT(vec);
+    PROTECT(name);
+
     if (isString(name))
 	name = install(translateChar(STRING_ELT(name, 0)));
-    if (val == R_NilValue)
+    if (val == R_NilValue) {
+	UNPROTECT(2);
 	return removeAttrib(vec, name);
+    }
 
     /* We allow attempting to remove names from NULL */
     if (vec == R_NilValue)
 	error(_("attempt to set an attribute on NULL"));
 
-    PROTECT(vec);
-    PROTECT(name);
     if (NAMED(val)) val = duplicate(val);
     SET_NAMED(val, NAMED(val) | NAMED(vec));
     UNPROTECT(2);

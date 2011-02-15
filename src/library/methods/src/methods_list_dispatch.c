@@ -721,6 +721,7 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
        dispatch is done. */
     SEXP s, attrib;
     int found = 1; /* we "know" the class attribute is there */
+    PROTECT(def);
     for(s = attrib = ATTRIB(def); s != R_NilValue; s = CDR(s)) {
 	SEXP t = TAG(s);
 	if(t == R_target) {
@@ -737,19 +738,22 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	}
     }
     defineVar(R_dot_Method, def, ev);
+    UNPROTECT(1);
+
     /* this shouldn't be needed but check the generic being
        "loadMethod", which would produce a recursive loop */
     if(strcmp(CHAR(asChar(fname)), "loadMethod") == 0)
 	return def;
     if(found < length(attrib)) {
 	SEXP e, val;
+	PROTECT(def);
 	PROTECT(e = allocVector(LANGSXP, 4));
 	SETCAR(e, R_loadMethod_name); val = CDR(e);
 	SETCAR(val, def); val = CDR(val);
 	SETCAR(val, fname); val = CDR(val);
 	SETCAR(val, ev);
 	val = eval(e, ev);
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return val;
     }
     else return def;
