@@ -207,7 +207,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi) || !nzchar(texi2dvi))
+    if(is.null(texi2dvi) || !nzchar(texi2dvi) || texi2dvi == "texi2dvi")
         texi2dvi <- Sys.which("texi2dvi")
 
     envSep <- .Platform$path.sep
@@ -385,6 +385,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         idxfile <- paste(base, ".idx", sep="")
         latex <- if(pdf) Sys.getenv("PDFLATEX", "pdflatex")
         else  Sys.getenv("LATEX", "latex")
+        if(!nzchar(Sys.which(latex)))
+            stop(if(pdf) "pdflatex" else "latex", " is not available",
+                 domain = NA)
         bibtex <- Sys.getenv("BIBTEX", "bibtex")
         makeindex <- Sys.getenv("MAKEINDEX", "makeindex")
         if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
