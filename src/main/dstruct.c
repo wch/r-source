@@ -29,11 +29,41 @@
 /*  mkPRIMSXP - return a builtin function      */
 /*              either "builtin" or "special"  */
 
+/*  The value produced is cached do avoid the need for GC protection
+    in cases where a .Primitive is produced by unserializing or
+    reconstructed after a package has clobbered the value assigned to
+    a symbol in the base package. */
+
 SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 {
-    SEXP result = allocSExp(eval ? BUILTINSXP : SPECIALSXP);
-    SET_PRIMOFFSET(result, offset);
-    return (result);
+    SEXP result;
+    SEXPTYPE type = eval ? BUILTINSXP : SPECIALSXP;
+    static SEXP PrimCache = NULL;
+    static int FunTabSize = 0;
+    
+    if (PrimCache == NULL) {
+	/* compute the number of entires in R_FunTab */
+	while (R_FunTab[FunTabSize].name)
+	    FunTabSize++;
+
+	/* allocate and protect the cache */
+	PrimCache = allocVector(VECSXP, FunTabSize);
+	R_PreserveObject(PrimCache);
+    }
+
+    if (offset < 0 || offset >= FunTabSize)
+	error("offset is out of R_FunTab range");
+
+    result = VECTOR_ELT(PrimCache, offset);
+
+    if (result == R_NilValue) {
+	result = allocSExp(type);
+	SET_PRIMOFFSET(result, offset);
+    }
+    else if (TYPEOF(result) != type)
+	error("requested primitive type is not consistent with cached value");
+
+    return result;
 }
 
 /* This is called by function() {}, where an invalid
