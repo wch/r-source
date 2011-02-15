@@ -878,6 +878,34 @@ resaveRdaFiles <- function(paths,
     }
 }
 
+### * compactPDF
+
+compactPDF <- function(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"))
+{
+    if(!nzchar(Sys.which(qpdf))) return()
+    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+        paths <- Sys.glob(file.path(paths, "*.pdf"))
+    tf <- tempfile("qpdf")
+    for (p in paths) {
+        old <- file.info(p)$size
+        res <- system2(qpdf, c("--stream-data=compress", p, tf), FALSE, FALSE)
+        if(!res && file.exists(tf)) {
+            new <- file.info(tf)$size
+            if(new/old < 0.9 && new < old - 1e4) {
+                sz <- if (new < 1024^2) sprintf("%.0fKb", c(old, new)/1024)
+                else sprintf("%.1fMb", c(old, new)/1024^2)
+                cat('  compacted ', sQuote(basename(p)),
+                    ' from ', sz[1L], ' to ', sz[2L], "\n", sep = "")
+                file.copy(tf, p, overwrite = TRUE)
+            }
+        }
+        unlink(tf)
+    }
+    invisible()
+}
+
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

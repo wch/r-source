@@ -258,6 +258,11 @@
 
       \item \code{as.raster()} no longer fails for vectors or matrices
       containing \code{NA}s.
+
+      \item Package \pkg{tools} has a new function \code{compactPDF()}
+      to try to reduce the size of PDF files.
+
+      \item \code{tar()} has a new argument \code{extra_flags}.
     }
   }
 
