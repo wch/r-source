@@ -172,6 +172,10 @@ are now much more widely available, including on Windows.
 @section Imports
 @findex scan
 
+@menu
+* Encodings::                   
+@end menu
+
 The easiest form of data to import into @R{} is a simple text file, and
 this will often be acceptable for problems of small or medium scale.
 The primary function to import from a text file is @code{scan}, and this
@@ -205,6 +209,50 @@ using the DBMS to extract a plain file, but for many such DBMSs the
 extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
 discussed in @ref{Network interfaces}.
+
+@node Encodings,  , Imports, Imports
+@subsection Encodings
+@cindex Encodings
+
+Unless the file to be imported from is entirely in ASCII, it is usually
+necessary to know how it was encoded.  For text files, a good way to
+find out something about its structure is the @command{file}
+command-line tool (for Windows, included in @code{Rtools}).  This
+reports something like
+
+@example
+text.Rd: UTF-8 Unicode English text
+text2.dat: ISO-8859 English text
+text3.dat: Little-endian UTF-16 Unicode English character data,
+   with CRLF line terminators
+intro.dat: UTF-8 Unicode text
+intro.dat: UTF-8 Unicode (with BOM) text
+@end example
+
+@noindent
+Modern Unix-alike systems, including Mac OS X, are likely to produce
+UTF-8 files.  Windows may produce what it calls `Unicode' files
+(@code{UCS-2LE} or just possibly @code{UTF-16LE}@footnote{the
+distinction is subtle,
+@uref{http://en.wikipedia.org/@/wiki/@/UTF-16/UCS-2}, and the use of
+surrogate pairs is very rare.}).  Otherwise most files will be in a
+8-bit encoding unless from a Chinese/Japanese/Korean locale (which have
+a very wide range of encodings in common use).  It is not possible to
+automatically detect with certainty which 8-bit encoding (although
+guesses may be possible and @command{file} may guess as it did in the
+example above), so you may simply have to ask the originator for some
+clues (e.g.@: `Russian on Windows').
+
+`BOMs' (Byte Order Marks,
+@uref{http://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
+Unicode files.  In the Unix world BOMs are rarely used, whereas in the
+Windows world they almost always are for UCS-2/UTF-16 files, and often
+are for UTF-8 files.  The @command{file} utility will not even
+recognize UCS-2 files without a BOM, but many other utilities will
+refuse to read files with a BOM and the @acronym{IANA} standards for
+@code{UTF-16LE} and @code{UTF-16BE} probibit it.  We have too often been
+reduced to looking at the file with the utility @command{od} or a hex
+editor to work out its encoding.
 
 @node Export to text files, XML, Imports, Introduction
 @section Export to text files
@@ -373,6 +421,15 @@ standard datasets but also more complex data structures.
 standard for general data markup and exchange.  It is being used by
 different communities to describe geographical data such as maps,
 graphical displays, mathematics and so on.
+
+XML provides a way to specify the file's encoding, e.g.@:
+
+@example
+<?xml version="1.0" encoding="UTF-8"?>
+@end example
+
+@noindent
+altthough it does not require it.
 
 The @pkg{XML} package provides general facilities for reading and
 writing @acronym{XML} documents within both @R{} and S-PLUS in the hope
@@ -573,6 +630,48 @@ hexadecimal representations like @code{\040} and @code{\0x2A}.  Any
 other escaped character is treated as itself, including backslash.  Note
 that Unicode escapes such as @code{\u@var{xxxx}} are never interpreted.
 
+@item @strong{Encoding}
+
+This can be specified by the @code{fileEncoding} argument, for example
+
+@example
+fileEncoding="UCS-2LE"    # Windows 'Unicode' files
+fileEncoding="UTF-8"
+@end example
+
+@noindent
+If you know (correctly) the file's encoding this will almost always
+work.  However, we know of one exception, UTF-8 files with a BOM, 3
+initial bytes.  Many people claim that UTF-8 files should never have a
+BOM, but some software (apparently including Excel:mac) uses them, and
+many Unix-alike OSes do not accept them.  So faced with a file which
+@command{file} reports as
+
+@example
+intro.dat: UTF-8 Unicode (with BOM) text
+@end example
+
+@noindent
+it can be read on Windows by
+
+@example
+read.table("intro.dat", fileEncoding = "UTF-8")
+@end example
+
+@noindent
+but in a UTF-8 locale on a Unix-alike is likely to need
+
+@example
+con <- file("intro.dat", "r")
+seek(con, 3)
+foo <- read.table("intro.dat")
+close(con)
+@end example
+
+@noindent
+Another problem with this (real-life) example is that whereas
+@command{file-5.03} reported the BOM, @command{file-4.17} found on Mac
+OS 10.5 (Leopard) did not.
 @end enumerate
 
 @findex read.csv

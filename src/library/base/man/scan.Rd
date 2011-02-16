@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -151,7 +151,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection nor the keyboard) so the
-    character data can be re-encoded.  See \code{\link{file}}.
+    character data can be re-encoded.  See the \sQuote{Encoding} section
+    of the help for \code{\link{file}}, and the \sQuote{R Data
+      Import/Export Manual}.
   }
   
   \item{encoding}{encoding to be assumed for input strings.  If the
