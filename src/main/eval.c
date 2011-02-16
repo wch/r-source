@@ -4139,8 +4139,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  /* push RHS value onto arguments with 'value' tag */
 	  PUSHCALLARG(rhs);
 	  SET_TAG(R_BCNodeStackTop[-1], install("value"));
-	  /* CONS LHS value onto args */
-	  args = R_BCNodeStackTop[-2] = CONS(lhs, R_BCNodeStackTop[-2]);
+	  /* replace first argument with LHS value */
+	  args = R_BCNodeStackTop[-2];
+	  SETCAR(args, lhs);
 	  /* make the call */
 	  checkForMissings(args, call);
 	  value = PRIMFUN(fun) (call, fun, args, rho);
@@ -4168,10 +4169,11 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  SET_PRVALUE(prom, rhs);
 	  PUSHCALLARG(prom);
 	  SET_TAG(R_BCNodeStackTop[-1], install("value"));
-	  /* CONS evaluated promise for LHS onto args */
+	  /* replace first argument with evaluated promise for LHS */
           prom = mkPROMISE(R_TmpvalSymbol, rho);
 	  SET_PRVALUE(prom, lhs);
-	  args = R_BCNodeStackTop[-2] = CONS(prom, R_BCNodeStackTop[-2]);
+	  args = R_BCNodeStackTop[-2];
+	  SETCAR(args, prom);
 	  /* make the call */
 	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
 	  break;
