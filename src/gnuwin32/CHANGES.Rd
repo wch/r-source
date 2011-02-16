@@ -28,6 +28,11 @@
       \item The internal method for \code{untar()} does a better job of
       unravelling symbolic links in the tarball (but still with many
       limitations).
+      
+      \item Bug fixes for drawing raster objects on \code{windows()}.  The
+      symptom was the occasional raster image not being drawn, especially
+      when drawing multiple raster images in a single expression.
+      Thanks to Michael Sumner for report and testing.
     }
   }
 }
