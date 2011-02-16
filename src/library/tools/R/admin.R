@@ -891,8 +891,9 @@ compactPDF <-
         paths <- Sys.glob(file.path(paths, "*.pdf"))
     gs_quality <- match.arg(gs_quality)
     tf <- tempfile("pdf")
+    dummy <- rep.int(NA_real_, length(paths))
+    ans <- data.frame(old = dummy, new = dummy, row.names = paths)
     for (p in paths) {
-        old <- file.info(p)$size
         res <- if (nzchar(gs_cmd))
             system2(gs_cmd,
                     c("-q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite",
@@ -905,18 +906,33 @@ compactPDF <-
         else
             system2(qpdf, c("--stream-data=compress", p, tf), FALSE, FALSE)
         if(!res && file.exists(tf)) {
-            new <- file.info(tf)$size
+            old <- file.info(p)$size; new <-  file.info(tf)$size
             if(new/old < 0.9 && new < old - 1e4) {
-                sz <- if (new < 1024^2) sprintf("%.0fKb", c(old, new)/1024)
-                else sprintf("%.1fMb", c(old, new)/1024^2)
-                cat('  compacted ', sQuote(basename(p)),
-                    ' from ', sz[1L], ' to ', sz[2L], "\n", sep = "")
                 file.copy(tf, p, overwrite = TRUE)
+                ans[p, ] <- c(old, new)
             }
         }
         unlink(tf)
     }
-    invisible()
+    structure(na.omit(ans), class = c("compactPDF", "data.frame"))
+}
+
+format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)
+{
+    if(!nrow(x)) return(character())
+    z <- y <- x[with(x, new/old < ratio & new < old - diff), ]
+    if(!nrow(z)) return(character())
+    z[] <- lapply(y, function(x) sprintf("%.0fKb", x/1024))
+    large <- y$new >= 1024^2
+    z[large, ] <- lapply(y[large, ], function(x) sprintf("%.1fMb", x/1024^2))
+    paste('  compacted', sQuote(basename(row.names(y))),
+          'from', z[, 1L], 'to', z[, 2L])
+}
+
+print.compactPDF <- function(x, ...)
+{
+    writeLines(format(x, ...))
+    x
 }
 
 ### * add_datalist

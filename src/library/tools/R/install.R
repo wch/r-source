@@ -112,6 +112,7 @@
             "      --data-compress=	none, gzip (default), bzip2 or xz compression",
             "			to be used for lazy-loading of data",
             "      --resave-data	re-save data files as compactly as possible",
+            "      --compact-docs	re-compress PDF files under inst/doc",
             "      --no-test-load	skip test of loading installed package",
            "\nfor Unix",
             "      --configure-args=ARGS",
@@ -912,6 +913,13 @@
                 execs <- as.logical(modes & as.octmode("100"))
                 Sys.chmod(i2_files[execs], "755") # respect umask?
             }
+            if (compact_docs) {
+                pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",
+                            recursive = TRUE, full.names = TRUE)
+                ## print selectively
+                res <- compactPDF(pdfs)
+                print(res[res$old > 1e5, ])
+            }
 	}
 
 	if (install_tests && dir.exists("tests")) {
@@ -1030,6 +1038,7 @@
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
+    compact_docs <- FALSE
 
     install_libs <- TRUE
     install_R <- TRUE
@@ -1140,6 +1149,8 @@
         } else if (a == "--merge-multiarch") {
             if (WINDOWS) merge <- TRUE
             else warning("--merge-multiarch is Windows-only", call.=FALSE)
+        } else if (a == "--compact-docs") {
+            compact_docs <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

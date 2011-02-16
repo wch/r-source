@@ -365,6 +365,11 @@
       such files?  Because all the files needed to re-build vignettes
       need to be under \code{inst/doc}, but they may not need to be
       installed.
+
+      \item \command{R CMD INSTALL} has a new option
+      \option{--compact-docs} to compact any PDFs under the
+      \file{inst/doc} directory.  Currently this uses \command{qpdf},
+      which must be installed (see \sQuote{Writing R Extensions}).
     }
   }
 

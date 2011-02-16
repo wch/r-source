@@ -46,6 +46,12 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
   also produce much smaller PDF files).
 }
 
+\value{
+  An object of class \code{c("compactPDF", "data.frame")} with a
+  \code{format} and \code{print} method.  This has two columns, the old
+  and new sizes in bytes for the files that were changed.
+}
+
 \note{
   The external tools used may change in future releases.
 }

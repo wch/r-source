@@ -3580,6 +3580,9 @@ command is found (including one that does not respect the @option{-k}
 flag to report in units of 1Kb, or reports in a different format -- the
 GNU, Mac OS X and Solaris @command{du} commands have been tested).
 Default: true if @command{du} is found.
+@item _R_CHECK_DOC_SIZES_
+Should @command{qpdf} be used to find the installed sizes of PDFs?
+Default: true if @command{qpdf} is found.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

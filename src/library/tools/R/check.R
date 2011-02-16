@@ -133,8 +133,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             check_R_code() # unstated dependencies, S3 methods, replacement, foreign
             check_R_files() # codetools etc
         }
+
         check_Rd_files(haveR)
+
+        check_data() # 'data' dir and sysdata.rda
+
         if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir()
+
+        if(R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
 
         setwd(pkgoutdir)
 
@@ -1103,7 +1109,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 # wrapLog(msg_DESCRIPTION)
             } else resultLog(Log, "OK")
         } ## FIXME, what if no install?
+    }
 
+    check_data <- function()
+    {
         ## Check contents of 'data'
         if (!is_base_pkg && dir.exists("data")) {
             checkingLog(Log, "contents of 'data' directory")
@@ -1161,6 +1170,30 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
         }
    }
+
+    check_doc_size <- function()
+    {
+        ## Have already checked that inst/doc exists and qpdf can be found
+        pdfs <- dir('inst/doc', pattern="\\.pdf",
+                    recursive = TRUE, full.names = TRUE)
+        if (length(pdfs)) {
+            checkingLog(Log, "sizes of PDF files under inst/doc")
+            td <- tempfile('pdf')
+            dir.create(td)
+            file.copy(pdfs, td)
+            res <- compactPDF(td)
+            res <- format(res, diff = 1e5)
+            if(length(res)) {
+                resultLog(Log, "NOTE")
+                printLog(Log,
+                         "  'qpdf' reported some significant size reductions:\n",
+                         paste("  ", res, collapse="\n"),
+                         "\n",
+                         "  consider running tools::compactPDF() on these files\n",
+                         "  (assuming that they are actually needed).\n")
+            } else resultLog(Log, "OK")
+        }
+    }
 
     check_src_dir <- function()
     {
@@ -2437,8 +2470,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     R_check_vc_dirs <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
     R_check_pkg_sizes <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE"))
-    if(R_check_pkg_sizes) R_check_pkg_sizes <- nzchar(Sys.which("du"))
+    	config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE")) &&
+        nzchar(Sys.which("du"))
+    R_check_doc_sizes <-
+    	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE")) &&
+        nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))
 
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
@@ -2460,7 +2496,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 R_check_executables <- R_check_permissions <-
                     R_check_dot_internal <- R_check_ascii_code <-
                     	R_check_ascii_data <- R_check_compact_data <-
-                            R_check_compact_data2 <- FALSE
+                            R_check_compact_data2 <-
+                                R_check_pkg_sizes <- R_check_doc_sizes <- FALSE
 
     startdir <- getwd()
     if (is.null(startdir))
