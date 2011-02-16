@@ -937,10 +937,10 @@ print.compactPDF <- function(x, ...)
 
 ### * add_datalist
 
-add_datalist <- function(pkgpath)
+add_datalist <- function(pkgpath, force = FALSE)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
-    if (file.exists(dlist)) return()
+    if (!force && file.exists(dlist)) return()
     fi <- file.info(Sys.glob(file.path(pkgpath, "data", "*")))
     size <- sum(fi$size)
     if(size <= 1024^2) return()
