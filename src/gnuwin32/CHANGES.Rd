@@ -4,7 +4,7 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.12.1 patched}{
+\section{CHANGES IN R VERSION 2.12.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item Building badly-written vignettes which used the default

@@ -4,7 +4,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.12.1 patched}{
+\section{CHANGES IN R VERSION 2.12.2}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
