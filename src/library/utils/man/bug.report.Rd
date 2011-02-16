@@ -20,7 +20,7 @@ bug.report(subject = "",
     multiple bugs.}
   \item{ccaddress}{Optional email address for copies (default is current
     username).  Use \code{ccaddress = FALSE} for no copies.}
-  \item{method}{Submission method, one of \code{"mailx"},
+  \item{method}{Submission method, one of \code{"mailx"}, \code{"mailto"},
     \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.}
   \item{address}{Recipient's email address.}
   \item{file}{File to use for setting up the email (or storing it when
@@ -47,26 +47,30 @@ bug.report(subject = "",
   \code{BugReports} field in the \file{DESCRIPTION} file, that URL
   will be opened using \code{\link{browseURL}}, otherwise an email
   directed to the package maintainer will be generated.
+  
+  The rest of this section applies when the action to email the
+  maintainer.
 
-  Currently direct submission of bug reports works only on Unix systems.
-  If the submission method is \code{"mailx"}, then the default editor is
-  used to write the bug report.  Which editor is used can be controlled
-  using \code{\link{options}}, type \code{getOption("editor")} to see
-  what editor is currently defined.  After saving the bug report (in the
-  temporary file opened) and exiting the editor, the user is asked if
-  the email should be send directly: if requested this is attempted (but
-  may not work).  By default a copy of the mail is sent to the current
-  user.
+  If method is \code{"none"} or \code{NULL} (the default on Windows),
+  then only an editor is opened to help writing the bug report.  Which
+  editor is used can be controlled using \code{\link{options}}, type
+  \code{getOption("editor")} to see what editor is currently defined.
+  
+  If the submission method is \code{"mailx"} (Unix only) then after
+  exiting the editor, the user is asked if the email should be send
+  directly: if requested this is attempted (but may not work).  By
+  default a copy of the mail is sent to the current username (see
+  argument \code{ccaddress}).
 
-  If method is \code{"gnudoit"}, then an emacs mail buffer is opened
-  and used for sending the email.
+  If the method is \code{"mailto"} (Windows only) then your default mail
+  program (often Outlook Express) is opened with a template email to be
+  completed and sent.
 
-  If method is \code{"none"} or \code{NULL} (and in every case on
-  Windows systems), then only an editor is opened to help writing the
-  bug report.
+  If the method is \code{"gnudoit"} (Unix only), an Emacs mail buffer is
+  opened and used for sending the email.
 
-  If method is \code{"ess"} the body of the mail is simply sent to
-  stdout.
+  If the method is \code{"ess"} (Unix only), the body of the mail is
+  simply sent to \code{stdout}.
 }
 \value{Nothing useful.}
 \section{When is there a bug?}{
