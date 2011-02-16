@@ -9,7 +9,7 @@
     \itemize{
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
       and integer \code{n}) gave incorrect results since \R 2.10.0 on
-      platforms without complex C99 complex support.  This and some
+      platforms without C99 complex support.  This and some
       lesser issues in trignometric functions have been corrected.
 
       Such platforms were rare (we know of Cygwin and FreeBSD).
@@ -38,6 +38,9 @@
       \item \code{kernel()}'s default for \code{m} was not appropriate
       if \code{coef} was a set of coefficients.  (Reported by Pierre
       Chausse.)
+
+      \item \code{bug.report()} has been updated for the current \R bug
+      tracker, which does not accept emailed submissions.
     }
   }
 
@@ -193,6 +196,10 @@
 
       \item Added \code{PROTECT} calls to some constructed expressions
       used in C level \code{eval} calls.
+
+      \item \code{utils:::create.post()} (used by \code{bug.report()}
+      and \code{help.request()}) failed to quote arguments to the
+      mailer, and so often failed.
     }
   }
 }
