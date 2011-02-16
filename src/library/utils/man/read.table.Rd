@@ -178,7 +178,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection) so the character data can
-    be re-encoded.  See \code{\link{file}} and \sQuote{Note}.
+    be re-encoded.  See the \sQuote{Encoding} section of the help for
+    \code{\link{file}}, the \sQuote{R Data Import/Export Manual} and
+    \sQuote{Note}.
   }
   
   \item{encoding}{encoding to be assumed for input strings.  It is
