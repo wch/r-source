@@ -1,6 +1,6 @@
 % File src/library/utils/man/bug.report.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{bug.report}
@@ -16,10 +16,10 @@ bug.report(subject = "",
            lib.loc = NULL)
 }
 \arguments{
-  \item{subject}{Subject of the email. Please do not use single quotes
-    (\samp{'}) in the subject! File separate bug reports for multiple bugs}
+  \item{subject}{Subject of the email. File separate bug reports for
+    multiple bugs.}
   \item{ccaddress}{Optional email address for copies (default is current
-    user).  Use \code{ccaddress = FALSE} for no copies.}
+    username).  Use \code{ccaddress = FALSE} for no copies.}
   \item{method}{Submission method, one of \code{"mailx"},
     \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.}
   \item{address}{Recipient's email address.}
@@ -38,9 +38,8 @@ bug.report(subject = "",
   current version and configuration of \R are included automatically.
 }
 \details{
-  If \code{package} is \code{NULL}, invokes an editor to write a bug
-  report and optionally mail it to the automated r-bugs repository at
-  \email{r-bugs@r-project.org}.  
+  If \code{package} is \code{NULL} or a base package, this opens the R
+  bugs tracker at \url{http://bugs.r-project.org/}.
   
   If \code{package} is specified, it is assumed that the bug report is
   about that package, and parts of its \file{DESCRIPTION} file are
@@ -51,21 +50,20 @@ bug.report(subject = "",
 
   Currently direct submission of bug reports works only on Unix systems.
   If the submission method is \code{"mailx"}, then the default editor is
-  used to write the bug report. Which editor is used can be controlled
-  using \code{\link{options}}, type \code{getOption("editor")} to see what
-  editor is currently defined. Please use the help pages of the
-  respective editor for details of usage. After saving the bug report
-  (in the temporary file opened) and exiting the editor
-  the report is mailed using a Unix command line mail utility such as
-  \code{mailx}.  A copy of the mail is sent to the current user.
+  used to write the bug report.  Which editor is used can be controlled
+  using \code{\link{options}}, type \code{getOption("editor")} to see
+  what editor is currently defined.  After saving the bug report (in the
+  temporary file opened) and exiting the editor, the user is asked if
+  the email should be send directly: if requested this is attempted (but
+  may not work).  By default a copy of the mail is sent to the current
+  user.
 
   If method is \code{"gnudoit"}, then an emacs mail buffer is opened
   and used for sending the email.
 
   If method is \code{"none"} or \code{NULL} (and in every case on
   Windows systems), then only an editor is opened to help writing the
-  bug report.  The report can then be copied to your favorite email
-  program and be sent to the r-bugs list.
+  bug report.
 
   If method is \code{"ess"} the body of the mail is simply sent to
   stdout.
@@ -156,20 +154,22 @@ bug.report(subject = "",
   bug.  This ensures that the site profile and saved data files are not
   read.
 
-  A bug report can be generated using the
-  \code{bug.report()} function.  This automatically includes the version
-  information and sends the bug to the correct address.  Alternatively
-  the bug report can be emailed to \email{r-bugs@r-project.org} or
-  submitted to the Web page at \url{http://bugs.r-project.org}.
+  A bug report can be generated using the function \code{bug.report()}.
+  For reports on \R this will open the Web page at
+  \url{http://bugs.R-project.org/}: for a contributed package it will
+  open the package's bug tracker Web page or help you compose an email
+  to the maintainer.
 
-  Bug reports on \strong{contributed packages} should be sent to the
-  package maintainer rather than to r-bugs, by specifying the \code{package}
-  argument to \code{bug.report()}.
+  Bug reports on \strong{contributed packages} should not be sent to the
+  R bug tracker: rather make use of the \code{package} argument.
 }
-\seealso{\code{\link{help.request}} which you possibly should try
+\seealso{
+  \code{\link{help.request}} which you possibly should try
   \emph{before} \code{bug.report}.
+  
   The R FAQ, also \code{\link{sessionInfo}()} from which you may add
-  to the bug report.}
+  to the bug report.
+}
 \author{This help page is adapted from the Emacs manual and the R FAQ}
 \keyword{utilities}
 \keyword{error}

@@ -85,36 +85,37 @@ create.post <- function(instructions = "\\n",
 	system(paste(getOption("editor"), file))
 
         if(is.character(ccaddress) && nzchar(ccaddress)) {
-            cmdargs <- paste("-s '", subject, "' -c", ccaddress,
-                             address, "<", file, "2>/dev/null")
+            cmdargs <- paste("-s", shQuote(subject),
+                             "-c", shQuote(ccaddress),
+                             shQuote(address),
+                             "<", file, "2>/dev/null")
         }
         else
-            cmdargs <- paste("-s '", subject, "'", address, "<",
+            cmdargs <- paste("-s", shQuote(subject),
+                             shQuote(address), "<",
                              file, "2>/dev/null")
-
+        print(cmdargs)
         status <- 1L
         answer <- readline(paste("Email the ", description, " now? (yes/no) ",
                                  sep = ""))
         answer <- grep("yes", answer, ignore.case=TRUE)
         if(length(answer)) {
             cat("Sending email ...\n")
-            status <- system(paste("mailx", cmdargs))
+            status <- system(paste("mailx", cmdargs), , TRUE, TRUE)
             if(status)
-                status <- system(paste("Mail", cmdargs))
+                status <- system(paste("Mail", cmdargs), , TRUE, TRUE)
             if(status)
-                status <- system(paste("/usr/ucb/mail", cmdargs))
+                status <- system(paste("/usr/ucb/mail", cmdargs), , TRUE, TRUE)
 
             if(status == 0L) unlink(file)
-            else{
+            else {
                 cat("Sending email failed!\n")
                 cat("The unsent", description, "can be found in file",
                     file, "\n")
             }
         } else
-            cat("The unsent", description, "can be found in file",
-                file, "\n")
-    }
-    else if(method == "ess") {
+            cat("The unsent", description, "can be found in file", file, "\n")
+    } else if(method == "ess") {
 	body <- gsub("\\\\n", "\n", body)
 	cat(body)
     }

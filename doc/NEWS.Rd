@@ -482,6 +482,9 @@
       \item \code{kernel()}'s default for \code{m} was not appropriate
       if \code{coef} was a set of coefficients.  (Reported by Pierre
       Chausse.)
+
+      \item \code{bug.report()} has been updated for the current \R bug
+      tracker, which does not accept emailed submissions.
     }
   }
 
@@ -634,6 +637,10 @@
       \item In some circumstances (including for package \pkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
+
+      \item \code{utils:::create.post()} (used by \code{bug.report()}
+      and \code{help.request()}) failed to quote arguments to the
+      mailer, and so often failed.
     }
   }
 }
