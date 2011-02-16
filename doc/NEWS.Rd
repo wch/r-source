@@ -432,9 +432,6 @@
       \item The \code{str()} method for class \code{"POSIXt"} now gives
       sensible output for 0-length input.
 
-      \item Added \code{PROTECT} calls to some constructed expressions
-      used in C level \code{eval} calls.
-
       \item \code{Sweave()} with \code{keep.source=TRUE} could
       duplicate some lines and omit comments. (Reported by John
       Maindonald and others.)
@@ -453,7 +450,7 @@
     \itemize{
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
       and integer \code{n}) gave incorrect results since \R 2.10.0 on
-      platforms without complex C99 complex support.  This and some
+      platforms without C99 complex support.  This and some
       lesser issues in trignometric functions have been corrected.
 
       Such platforms were rare (we know of Cygwin and FreeBSD).
@@ -637,6 +634,9 @@
       \item In some circumstances (including for package \pkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
+
+      \item Added \code{PROTECT} calls to some constructed expressions
+      used in C level \code{eval} calls.
 
       \item \code{utils:::create.post()} (used by \code{bug.report()}
       and \code{help.request()}) failed to quote arguments to the
