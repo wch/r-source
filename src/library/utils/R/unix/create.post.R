@@ -94,7 +94,6 @@ create.post <- function(instructions = "\\n",
             cmdargs <- paste("-s", shQuote(subject),
                              shQuote(address), "<",
                              file, "2>/dev/null")
-        print(cmdargs)
         status <- 1L
         answer <- readline(paste("Email the ", description, " now? (yes/no) ",
                                  sep = ""))
