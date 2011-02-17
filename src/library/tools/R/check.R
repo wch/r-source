@@ -140,7 +140,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir()
 
-        if(R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
+        miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
+        if (any(f <- file.exists(miss))) {
+            checkingLog(Log, "for left-overs from vignette generation")
+            warnLog(paste("  file", paste(sQuote(miss[f]), collapse = ", "),
+                          "will not be installed: please remove it"))
+        }
+        if (R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
 
         setwd(pkgoutdir)
 
