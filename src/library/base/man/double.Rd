@@ -1,6 +1,6 @@
 % File src/library/base/man/double.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{double}
@@ -62,6 +62,24 @@ as.single(x, \dots)
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double \link{type} or not.
 }
+\section{Double-precision values}{
+  All \R platforms are required to work with values conforming to the
+  IEC 60559 (also known as IEEE 754) standard.  This basically works
+  with a precision of 53 bits, and represents to that precision a range
+  of absolute values from about \eqn{2 \times 10^{-308}}{2e-308} to
+  \eqn{2 \times 10^{308}}{2e+308}.  It also has special values
+  \code{\link{NaN}} (many of them), plus and minus infinity and plus and
+  minus zero (although \R acts as if these are the same).  There are
+  also \emph{denormal(ized)} (or \emph{subnormal}) numbers with absolute
+  values above or below the range given above but represented to less
+  precision.
+
+  See \code{\link{.Machine}} for precise information on these limits.
+  Note that ultimately how double precision numbers are handled is down
+  to the CPU/FPU and compiler.
+
+  In IEEE 754-2008/IEC60559:2011 this is called \sQuote{binary64} format.
+}
 %% keep next the same in double.Rd & numeric.Rd
 \section{Note on names}{
   It is a historical anomaly that \R has three names for its
@@ -84,6 +102,14 @@ as.single(x, \dots)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+
+  \url{http://en.wikipedia.org/wiki/IEEE_754-1985},
+  \url{http://en.wikipedia.org/wiki/IEEE_754-2008},
+  \url{http://en.wikipedia.org/wiki/Double_precision},
+  \url{http://en.wikipedia.org/wiki/Denormal_number}.
+
+  \url{http://grouper.ieee.org/groups/754/} for links to information
+  on the standards.
 }
 \seealso{
   \code{\link{integer}}, \code{\link{numeric}}, \code{\link{storage.mode}}.

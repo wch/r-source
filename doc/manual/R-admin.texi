@@ -4462,7 +4462,7 @@ directory.
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-Studio compilers causes @R{}'s @code{NaN} to be set incorrectly.
+Studio compilers has caused @R{}'s @code{NaN} to be set incorrectly.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.

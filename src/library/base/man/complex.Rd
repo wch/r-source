@@ -68,7 +68,12 @@ Conj(z)
   group generic.
 
   In addition, the elementary trigonometric, logarithmic, exponential,
-  square root and hyperbolic functions are implemented for complex values.
+  square root and hyperbolic functions are implemented for complex
+  values.
+
+  Internally, complex numbers are stored as a pair of \link{double}
+  precision numbers, either or both of which can be \code{\link{NaN}} or
+  plus or minus infinity.
 }
 \section{S4 methods}{
   \code{as.complex} is primitive and can have S4 methods set.
