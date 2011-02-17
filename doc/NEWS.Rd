@@ -259,6 +259,10 @@
       \item \code{as.raster()} no longer fails for vectors or matrices
       containing \code{NA}s.
 
+      \item New hook \code{"before.new.plot"} allows functions to be run
+      just before advancing the frame in \code{plot.new}, which is
+      potentially useful for custom figure layout implementations.
+
       \item Package \pkg{tools} has a new function \code{compactPDF()}
       to try to reduce the size of PDF files \emph{via} \command{qpdf}
       or \command{gs}.

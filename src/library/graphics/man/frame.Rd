@@ -25,9 +25,10 @@ frame()
   \code{windows} and \code{quartz}), the window is first painted with the
   canvas colour and then the background colour.
   
-  There is a hook called \code{"plot.new"} (see \code{\link{setHook}})
-  called immediately after advancing the frame, which is used in the
-  testing code to annotate the new page.  The hook function(s) are
+  There are two hooks called \code{"before.plot.new"} and
+  \code{"plot.new"} (see \code{\link{setHook}}) called immediately
+  before and after advancing the frame. The latter is used
+  in the testing code to annotate the new page. The hook function(s) are
   called with no argument.  (If the value is a character string,
   \code{get} is called on it from within the \pkg{graphics} name space.)
 }

@@ -346,6 +346,11 @@ plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
 
 plot.new <- function()
 {
+    # TODO: define a general runHook() and use instead
+    for (fun in getHook("before.plot.new")) {
+        if (is.character(fun)) fun <- get(fun)
+        try(fun())
+    }
     .Internal(plot.new())
     for(fun in getHook("plot.new")) {
         if(is.character(fun)) fun <- get(fun)
