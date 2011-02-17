@@ -543,6 +543,7 @@ SEXP do_loadfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_savefile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_putconst(SEXP, SEXP, SEXP, SEXP);
 SEXP do_enablejit(SEXP, SEXP, SEXP, SEXP);
+SEXP do_constidx(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 /* Connections */

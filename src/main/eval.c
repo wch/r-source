@@ -652,6 +652,29 @@ SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(old);
 }
 
+SEXP attribute_hidden do_constidx(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x, consts;
+    int i, n;
+
+    checkArity(op, args);
+
+    x = CAR(args);
+    consts = CADR(args);
+
+    if (TYPEOF(consts) != VECSXP)
+	errorcall(call, "bad constant pool");
+    n = LENGTH(consts);
+
+    for (i = 0; i < n; i++) {
+	SEXP y = VECTOR_ELT(consts, i);
+	if (x == y || R_compute_identical(x, y, TRUE, TRUE, TRUE))
+	    return ScalarInteger(i + 1);
+    }
+    
+    return ScalarInteger(0);
+}
+
 /* forward declaration */
 static SEXP bytecodeExpr(SEXP);
 #endif
