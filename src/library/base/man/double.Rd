@@ -67,7 +67,7 @@ as.single(x, \dots)
   IEC 60559 (also known as IEEE 754) standard.  This basically works
   with a precision of 53 bits, and represents to that precision a range
   of absolute values from about \eqn{2 \times 10^{-308}}{2e-308} to
-  \eqn{2 \times 10^{+308}}{2e308}.  It also has special values
+  \eqn{2 \times 10^{308}}{2e+308}.  It also has special values
   \code{\link{NaN}} (many of them), plus and minus infinity and plus and
   minus zero (although \R acts as if these are the same).  There are
   also \emph{denormal(ized)} (or \emph{subnormal}) numbers with absolute

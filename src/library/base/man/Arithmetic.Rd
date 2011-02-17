@@ -94,24 +94,24 @@ x \%/\% y
   given if this is detected.
 
   \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
-  e.g. \code{1 \%/\% 0.2}, but the results are subject to rounding error
-  and so may be platform-dependent.  Because the IEC 60059
+  e.g. \code{1 \%/\% 0.2}, but the results are subject to representation
+  error and so may be platform-dependent.  Because the IEC 60059
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
   most platforms give \code{5}.
   
   Users are sometimes surprised by the value returned, for example why
-  \code{(-8)^(1/3)} is \code{NaN}.  For \link{numeric} inputs, \R makes use of
-  IEC 60559 arithmetic on all platforms, together with the C system
-  function \samp{pow} for the \code{^} operator.  The relevant standards
-  define the result in many corner cases.  In particular, the result in
-  the example above is mandated by the C99 standard.  On many Unix-alike
-  systems the command \command{man pow} gives details of the values in a
-  large number of corner cases.
+  \code{(-8)^(1/3)} is \code{NaN}.  For \link{double} inputs, \R makes
+  use of IEC 60559 arithmetic on all platforms, together with the C
+  system function \samp{pow} for the \code{^} operator.  The relevant
+  standards define the result in many corner cases.  In particular, the
+  result in the example above is mandated by the C99 standard.  On many
+  Unix-alike systems the command \command{man pow} gives details of the
+  values in a large number of corner cases.
 
-  Arithmetic on doubles in \R is supposed to be done in \sQuote{round to
-    nearest, ties to even} mode, but this does depend on the compiler
-  and FPU being used correctly.
+  Arithmetic on type \link{double} in \R is supposed to be done in
+  \sQuote{round to nearest, ties to even} mode, but this does depend on
+  the compiler and FPU being set up correctly. 
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Arith}} group generic,
