@@ -32,8 +32,8 @@ SEXP R_cutree(SEXP merge, SEXP which)
     Rboolean found_j, *sing;
     int *m_nr, *z;
 
-    merge = coerceVector(merge, INTSXP);
-    which = coerceVector(which, INTSXP);
+    PROTECT(merge = coerceVector(merge, INTSXP));
+    PROTECT(which = coerceVector(which, INTSXP));
 
     n = nrows(merge)+1;
     /* using 1-based indices ==> "--" */
@@ -107,6 +107,6 @@ SEXP R_cutree(SEXP merge, SEXP which)
 	    for(l = 1, m1 = j*n; l <= n; l++, m1++)
 		INTEGER(ans)[m1] = l;
 
-    UNPROTECT(1);
+    UNPROTECT(3);
     return(ans);
 }
