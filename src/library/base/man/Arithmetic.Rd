@@ -101,13 +101,17 @@ x \%/\% y
   most platforms give \code{5}.
   
   Users are sometimes surprised by the value returned, for example why
-  \code{(-8)^(1/3) = NaN}.  For \link{numeric} inputs, \R makes use of
+  \code{(-8)^(1/3)} is \code{NaN}.  For \link{numeric} inputs, \R makes use of
   IEC 60559 arithmetic on all platforms, together with the C system
   function \samp{pow} for the \code{^} operator.  The relevant standards
   define the result in many corner cases.  In particular, the result in
   the example above is mandated by the C99 standard.  On many Unix-alike
   systems the command \command{man pow} gives details of the values in a
   large number of corner cases.
+
+  Arithmetic on doubles in \R is supposed to be done in \sQuote{round to
+    nearest, ties to even} mode, but this does depend on the compiler
+  and FPU being used correctly.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Arith}} group generic,
@@ -126,6 +130,13 @@ x \%/\% y
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+
+  D. Goldberg (1991) \emph{What Every Computer Scientist Should Know
+    about Floating-Point Arithmetic}  ACM Computing Surveys, \bold{23(1)}.\cr
+  Postscript version available at
+  \url{http://www.validlab.com/goldberg/paper.ps}
+  Extended PDF version at \url{http://www.validlab.com/goldberg/paper.pdf}
+
 }
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special

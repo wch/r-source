@@ -1,6 +1,6 @@
 % File src/library/base/man/is.finite.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{is.finite}
@@ -77,19 +77,21 @@ is.nan(x)
 \seealso{
   \code{\link{NA}}, \sQuote{\emph{Not Available}} which is not a number
   as well, however usually used for missing values and applies to many
-  modes, not just numeric.
+  modes, not just numeric and complex.
+
+  \code{\link{Arithmetic}}, \code{\link{double}}.
 }
 \references{
   The IEC 60559 standard, also known as the
   ANSI/IEEE 754 Floating-Point Standard.
+
+  \url{http://en.wikipedia.org/wiki/NaN}.
 
   D. Goldberg (1991) \emph{What Every Computer Scientist Should Know
     about Floating-Point Arithmetic}  ACM Computing Surveys, \bold{23(1)}.\cr
   Postscript version available at
   \url{http://www.validlab.com/goldberg/paper.ps}
   Extended PDF version at \url{http://www.validlab.com/goldberg/paper.pdf}
-  
-  \url{http://grouper.ieee.org/groups/754/} for accessible information.
 
   The C99 function \code{isfinite} is used for \code{is.finite} if available.
 }
@@ -97,8 +99,8 @@ is.nan(x)
 pi / 0 ## = Inf a non-zero number divided by zero creates infinity
 0 / 0  ## =  NaN
 
-1/0 + 1/0# Inf
-1/0 - 1/0# NaN
+1/0 + 1/0 # Inf
+1/0 - 1/0 # NaN
 
 stopifnot(
     1/0 == Inf,

@@ -92,7 +92,7 @@
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.  As
   all current implementations of \R use 32-bit integers and almost all
-  use IEC 60059 floating-point (double precision) arithmetic, all but
+  use IEC 60559 floating-point (double precision) arithmetic, all but
   the last two values are the same for almost all \R builds.
 
   Note that on most platforms smaller positive values than
@@ -104,7 +104,7 @@
   allocated for a long double (which are used internally by \R for
   accumulators in e.g. \code{\link{sum}}, and can be read by
   \code{\link{readBin}}).  Often what is stored is the 80-bit extended
-  double type of IEC 60059, padded to the double alignment used on the
+  double type of IEC 60559, padded to the double alignment used on the
   platform --- this seems to be the case for the common \R platforms
   using ix86 and x86_64 chips.
 }

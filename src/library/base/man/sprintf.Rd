@@ -82,14 +82,14 @@ gettextf(fmt, \dots, domain = NULL)
       \code{\%a} uses lower-case for \code{x}, \code{p} and the hex
       values: format \code{\%A} uses upper-case.
 
-      This might not be supported on all platforms as it is a feature of C99.
+      This should be supported on all platforms as it is a feature of C99.
       The format is not uniquely defined: although it would be possible
       to make the leading \code{h} always zero or one, this is not
       always done.  Most systems will suppress trailing zeros, but a few
       do not.  On a well-written platform, for normal numbers there will
       be a leading one before the decimal point plus (by default) 13
       hexadecimal digits, hence 53 bits.  (The treatment of denormalized
-      numbers is very platform-dependent.)
+      (aka \sQuote{subnormal} numbers is very platform-dependent.)
     }
     \item{\code{s}}{Character string.  Character \code{NA}s are
       converted to \code{"NA"}.
