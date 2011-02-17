@@ -103,11 +103,11 @@ write.csv2(\dots)
 
   These functions check for a user interrupt every 1000 lines of output.
 
-  If \code{file} is not open for writing, an attempt is made to open it
+  If \code{file} is a non-open connection, an attempt is made to open it
   and then close it after use.
   
   To write a Unix-style file on Windows, use a binary connection
-  e.g. \code{file = file("fn", "wb")}.
+  e.g. \code{file = file("filename", "wb")}.
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If
@@ -145,6 +145,11 @@ write.csv2(\dots)
   Macintosh (which seems to mean MacRoman), Windows (perhaps Latin-1)
   and \sQuote{PC-8} files.  OpenOffice 3.x asks for the character set
   when opening the file.
+
+  There is an IETF RFC4180 (\url{http://tools.ietf.org/html/rfc4180})
+  for CSV files, which mandates comma as the separator and CRLF line
+  endings.  \code{write.csv} writes compliant files on Windows: use
+  \code{eol="\r\n"} on other platforms.
 }
 \note{
   \code{write.table} can be slow for data frames with large numbers

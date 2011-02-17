@@ -126,12 +126,11 @@ that can take far more time than the statistical analysis itself, even
 though most readers will find the latter far more appealing.
 
 This manual describes the import and export facilities available either
-in @R{} itself or via packages which are available from @acronym{CRAN}.
-Some of the packages described are still under development but they
-already provide useful functionality.
+in @R{} itself or via packages which are available from @acronym{CRAN}
+or elsewhere.
 
-Unless otherwise stated, everything described in this manual is
-available on all platforms running @R{}.
+Unless otherwise stated, everything described in this manual is (at
+least in principle) available on all platforms running @R{}.
 
 In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
@@ -146,9 +145,9 @@ several packages to interact with DBMSs are discussed here.
 There are packages to allow functionality developed in languages such as
 @code{Java}, @code{perl} and @code{python} to be directly integrated
 with @R{} code, making the use of facilities in these languages even
-more appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
-packages from the Omegahat project, @uref{http://www.omegahat.org}, and
-the @pkg{rJava} package from @acronym{CRAN}.)
+more appropriate.  (See the @pkg{rJava} package from @acronym{CRAN} and
+the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
+Omegahat project, @uref{http://www.omegahat.org}.)
 
 
 @cindex Unix tools
@@ -160,7 +159,7 @@ such as @code{awk} and @code{perl} to manipulate data before import or
 after export.  The case study in Becker, Chambers & Wilks (1988, Chapter
 9) is an example of this, where Unix tools were used to check and
 manipulate the data before input to @Sl{}. The traditional Unix tools
-are now much more widely available, including on Windows.
+are now much more widely available, including for Windows.
 
 @menu
 * Imports::                     
@@ -183,18 +182,18 @@ underlies most of the more convenient functions discussed in
 @ref{Spreadsheet-like data}.
 
 However, all statistical consultants are familiar with being presented
-by a client with a floppy disc or CD-R of data in some proprietary
-binary format, for example `an Excel spreadsheet' or `an SPSS file'.
-Often the simplest thing to do is to use the originating application to
-export the data as a text file (and statistical consultants will have
-copies of the most common applications on their computers for that
-purpose).  However, this is not always possible, and @ref{Importing from
-other statistical systems} discusses what facilities are available to
-access such files directly from @R{}.  For Excel spreadsheets, the
-available methods are summarized in @ref{Reading Excel spreadsheets}.
-For ODS spreadsheets from Open Office, see the Omegahat
-package@footnote{Currently not available from their repository but as a
-source package for download from
+by a client with a memory stick (formerly, a floppy disc or CD-R) of
+data in some proprietary binary format, for example `an Excel
+spreadsheet' or `an SPSS file'.  Often the simplest thing to do is to
+use the originating application to export the data as a text file (and
+statistical consultants will have copies of the most common applications
+on their computers for that purpose).  However, this is not always
+possible, and @ref{Importing from other statistical systems} discusses
+what facilities are available to access such files directly from @R{}.
+For Excel spreadsheets, the available methods are summarized in
+@ref{Reading Excel spreadsheets}.  For ODS spreadsheets from Open
+Office, see the Omegahat package@footnote{Currently not available from
+that repository but as a source package for download from
 @url{http://www.omegahat.org/ROpenOffice/}.} @pkg{ROpenOffice}.
 
 In a few cases, data have been stored in a binary form for compactness
@@ -247,11 +246,11 @@ clues (e.g.@: `Russian on Windows').
 @uref{http://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
 Unicode files.  In the Unix world BOMs are rarely used, whereas in the
 Windows world they almost always are for UCS-2/UTF-16 files, and often
-are for UTF-8 files.  The @command{file} utility will not even
-recognize UCS-2 files without a BOM, but many other utilities will
-refuse to read files with a BOM and the @acronym{IANA} standards for
-@code{UTF-16LE} and @code{UTF-16BE} probibit it.  We have too often been
-reduced to looking at the file with the utility @command{od} or a hex
+are for UTF-8 files.  The @command{file} utility will not even recognize
+UCS-2 files without a BOM, but many other utilities will refuse to read
+files with a BOM and the @acronym{IANA} standards for @code{UTF-16LE}
+and @code{UTF-16BE} probibit it.  We have too often been reduced to
+looking at the file with the command-line utility @command{od} or a hex
 editor to work out its encoding.
 
 @node Export to text files, XML, Imports, Introduction
@@ -320,10 +319,15 @@ is specified.  Excel is one such system.
 A common field separator to use in the file is a comma, as that is
 unlikely to appear in any of the fields in English-speaking countries.
 Such files are known as CSV (comma separated values) files, and wrapper
-function @code{write.csv} provides appropriate defaults.  In some locales
-the comma is used as the decimal point (set this in @code{write.table}
-by @code{dec = ","}) and there CSV files use the semicolon as the field
-separator: use @code{write.csv2} for appropriate defaults.
+function @code{write.csv} provides appropriate defaults.  In some
+locales the comma is used as the decimal point (set this in
+@code{write.table} by @code{dec = ","}) and there CSV files use the
+semicolon as the field separator: use @code{write.csv2} for appropriate
+defaults.  There is an IETF standard for CSV files (which mandates
+commas and CRLF line endings, for which use @code{eol = "\r\n"}), RFC4180
+(see @uref{http://tools.ietf.org/html/rfc4180}), but what is more
+important in practice is that the file is readable by the application it
+is targeted at.
 
 Using a semicolon or tab (@code{sep = "\t"}) are probably the safest
 options.
@@ -399,7 +403,7 @@ and the @code{options(width)} setting may need to be increased.
 Function @code{write.foreign} in package @pkg{foreign} uses
 @code{write.table} to produce a text file and also writes a code file
 that will read this text file into another statistical package. There is
-currently support for export to @code{SPSS} and @code{Stata}.
+currently support for export to @code{SAS}, @code{SPSS} and @code{Stata}.
 
 @node XML,  , Export to text files, Introduction
 @section XML
@@ -432,21 +436,14 @@ XML provides a way to specify the file's encoding, e.g.@:
 altthough it does not require it.
 
 The @pkg{XML} package provides general facilities for reading and
-writing @acronym{XML} documents within both @R{} and S-PLUS in the hope
-that we can easily make use of this technology as it evolves.  Several
-people are exploring how we can use @acronym{XML} for, amongst other
-things, representing datasets to be shared across different
-applications; storing @R{} and S-PLUS objects so they can be shared by
-both systems; representing plots via @acronym{SVG} (Scalable Vector
-Graphics, a dialect of @acronym{XML}); representing function
-documentation; generating ``live'' analyses/reports that contain text,
-data and code.
-
-A description of the facilities of the @pkg{XML} package is outside the
-scope of this document: see the package's Web page at
+writing @acronym{XML} documents within @R{}.  A description of the
+facilities of the @pkg{XML} package is outside the scope of this
+document: see the package's Web page at
 @uref{http://www.omegahat.org/RSXML} for details and examples.  Package
 @pkg{StatDataML} on @acronym{CRAN} is one example building on @pkg{XML}.
 
+NB: @pkg{XML} is available for Windows, normally from the `CRAN extras'
+repository (which is selected by default on Windows).
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
 @chapter Spreadsheet-like data
@@ -492,7 +489,8 @@ read.table("file.dat", fileEncoding="latin1")
 @end example
 
 @noindent
-Note that this will work in any locale which can represent Latin-1 strings.
+Note that this will work in any locale which can represent Latin-1
+strings, but not many Greek/Russian/Chinese/Japanese @dots{} locales.
 
 
 @item @strong{Header line}
@@ -641,11 +639,10 @@ fileEncoding="UTF-8"
 
 @noindent
 If you know (correctly) the file's encoding this will almost always
-work.  However, we know of one exception, UTF-8 files with a BOM, 3
-initial bytes.  Many people claim that UTF-8 files should never have a
-BOM, but some software (apparently including Excel:mac) uses them, and
-many Unix-alike OSes do not accept them.  So faced with a file which
-@command{file} reports as
+work.  However, we know of one exception, UTF-8 files with a BOM.  Some
+people claim that UTF-8 files should never have a BOM, but some software
+(apparently including Excel:mac) uses them, and many Unix-alike OSes do
+not accept them.  So faced with a file which @command{file} reports as
 
 @example
 intro.dat: UTF-8 Unicode (with BOM) text
@@ -663,7 +660,7 @@ but in a UTF-8 locale on a Unix-alike is likely to need
 
 @example
 con <- file("intro.dat", "r")
-seek(con, 3)
+seek(con, 3)  # step over the 3 initial bytes, the BOM
 foo <- read.table("intro.dat")
 close(con)
 @end example
@@ -686,7 +683,7 @@ arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
 variations @code{read.csv2} and @code{read.delim2} are appropriate for
 use in those locales where the comma is used for the decimal point and
-(for @code{read.csv2}) spreadsheets use semicolons to separate fields.
+(for @code{read.csv2}) for spreadsheets use semicolons to separate fields.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
@@ -715,7 +712,7 @@ to specify @code{comment.char = ""}, @code{colClasses} as one of the
 atomic vector types (logical, integer, numeric, complex, character or
 perhaps raw) for each column, and to give @code{nrows}, the number of
 rows to be read (and a mild over-estimate is better than not specifying
-this at all).  See the examples in later subsections.
+this at all).  See the examples in later sections.
 
 
 @node Fixed-width-format files, Data Interchange Format (DIF), Variations on read.table, Spreadsheet-like data
@@ -1359,12 +1356,12 @@ versions had a substantially different interface.  The current version
 requires the @pkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @pkg{DBI}.
 
-MySQL exists on Unix/Linux?Mac OS X and Windows: as from version 3.23.x
-(Jan 2001) it is released under GPL but commercial licenses are also
-available.  MySQL was originally a `light and lean' database.  (It
-preserves the case of names where the operating file system is
-case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
-on both Linux and Windows.
+MySQL exists on Unix/Linux/Mac OS X and Windows: there is a `Community
+Edition' released under GPL but commercial licenses are also available.
+MySQL was originally a `light and lean' database.  (It preserves the
+case of names where the operating file system is case-sensitive, so not
+on Windows.)
+
 
 @findex dbDriver
 @findex dbConnect
@@ -2202,12 +2199,6 @@ package @pkg{rscproxy} and makes an @acronym{DCOM} server.  This can be
 used to pass simple objects (vectors and matrices) to and from @R{} and
 to submit commands to @R{}.  (It is not clear if this is still
 functional: there is another version in the @pkg{RExcelInstaller} package.)
-
-The program comes with a Visual Basic demonstration and an Excel plug-in
-by Erich Neuwirth available.  This interface is in the other direction
-to most of those considered here in that it is another application
-(Excel, or written in Visual Basic) that is the client and @R{} is the
-server.
 
 Another (D)COM server is available from @uref{http://www.omegahat.org/},
 which allows R objects to be exported as COM values.  That site also
