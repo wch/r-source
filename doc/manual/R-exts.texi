@@ -2008,24 +2008,27 @@ ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
 and suitable options might be
 
 @example
--dPDFSETTINGS=/screen
 -dPDFSETTINGS=/ebook
+-dPDFSETTINGS=/printer
 @end example
 
 @noindent
 (see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
 for more) and consider all the options for image downsampling) as well
 as numerous commercial and shareware Windows programs.  Note that these
-do not all try the same size-reduction strategies, and Acrobat can be
-much better at reducing the size of embedded images than some of the
-others.
+do not all try the same size-reduction strategies, and Acrobat and
+@command{ps2pdf} can be much better at reducing the size of embedded
+images than some of the others.
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
 for Windows and packages in Debian/Ubuntu), there is an option
 @option{--compact-vignettes} to @command{R CMD build} to run
 @command{qpdf} over PDF files in @file{inst/doc} and replace them if at
 least 10Kb and 10% is saved.  The full path to the @command{qpdf}
-command can be supplied as environment variable @env{R_QPDF}.
+command can be supplied as environment variable @env{R_QPDF} (and is on
+the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
+function @code{tools::compactPDF} which has other options including
+running Ghostscript.
 @end enumerate
 
 @noindent
