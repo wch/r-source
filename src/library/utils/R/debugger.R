@@ -33,8 +33,10 @@ debugger <- function(dump = last.dump)
 {
     debugger.look <- function(.selection)
     {
+        ## allow e.g. '...' to fail
         for(.obj in ls(envir=dump[[.selection]], all.names=TRUE))
-            assign(.obj, get(.obj, envir=dump[[.selection]]))
+            tryCatch(assign(.obj, get(.obj, envir=dump[[.selection]])),
+                     error=function(e) {})
         cat(gettext("Browsing in the environment with call:\n   "),
             calls[.selection], "\n", sep="")
         rm(.obj, .selection)
@@ -69,7 +71,7 @@ limitedLabels <- function(value, maxwidth = getOption("width") - 5)
     srcrefs <- sapply(value, function(v) if (!is.null(srcref <- attr(v, "srcref"))) {
 				srcfile <- attr(srcref, "srcfile")
 				paste(basename(srcfile$filename), "#", srcref[1L],": ", sep="")
-			     } else "")    
+			     } else "")
     value <- paste(srcrefs, as.character(value), sep="")
     if(is.null(maxwidth) || maxwidth < 40)
         maxwidth <- 40

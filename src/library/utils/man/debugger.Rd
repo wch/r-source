@@ -1,6 +1,6 @@
 % File src/library/utils/man/debugger.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{debugger}
@@ -25,7 +25,7 @@ debugger(dump = last.dump)
 \details{
   To use post-mortem debugging, set the option \code{error} to be a call
   to \code{dump.frames}.  By default this dumps to an \R object
-  \code{"last.dump"} in the workspace, but it can be set to dump to a
+  \code{last.dump} in the workspace, but it can be set to dump to a
   file (a dump of the object produced by a call to \code{\link{save}}).
   The dumped object contain the call stack, the active environments and
   the last error message as returned by \code{\link{geterrmessage}}.
@@ -33,14 +33,16 @@ debugger(dump = last.dump)
   When dumping to file, \code{dumpto} gives the name of the dumped
   object and the file name has \file{.rda} appended.
 
-  A dump object of class \code{"dump.frames"} can be examined
-  by calling \code{debugger}. This will give the error message and a
-  list of environments from which to select repeatedly. When an
-  environment is selected, it is copied and the \code{browser} called
-  from within the copy.
+  A dump object of class \code{"dump.frames"} can be examined by calling
+  \code{debugger}.  This will give the error message and a list of
+  environments from which to select repeatedly.  When an environment is
+  selected, it is copied and the \code{\link{browser}} called from
+  within the copy.  Note that not all the information in the original
+  frame will be available, e.g. promises which have not yet been
+  evaluated and the contents of any \code{\dots} argument.
 
   If \code{dump.frames} is installed as the error handler, execution
-  will continue even in non-interactive sessions. See the examples for
+  will continue even in non-interactive sessions.  See the examples for
   how to dump and then quit.
 }
 \value{
@@ -51,9 +53,9 @@ debugger(dump = last.dump)
   \code{\link{environment}} applied to closures will not work correctly
   inside \code{debugger}.
 
-  If the error occurred when computing the default value of a formal argument
-  the debugger will report "recursive default argument reference" when
-  trying to examine that environment. 
+  If the error occurred when computing the default value of a formal
+  argument the debugger will report \dQuote{recursive default argument
+  reference} when trying to examine that environment.
   
   Of course post-mortem debugging will not work if \R is too damaged to
   produce and save the dump, for example if it has run out of workspace.

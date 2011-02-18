@@ -209,6 +209,10 @@
       \item \code{utils:::create.post()} (used by \code{bug.report()}
       and \code{help.request()}) failed to quote arguments to the
       mailer, and so often failed.
+
+      \item \code{debugger()} could fail to read the environment of a
+      call to a function with a \code{\dots} argument.  (Reported by
+      Charlie Roosen.) 
     }
   }
 }
