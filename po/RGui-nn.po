@@ -1,20 +1,20 @@
 # Translation of R Gui to Norwegian Nynorsk
 # Copyright (C) YEAR The R Foundation
 # This file is distributed under the same license as the R package.
-# Karl Ove Hufthammer <karl@huftis.org>, 2010.
+# Karl Ove Hufthammer <karl@huftis.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:10+0000\n"
-"PO-Revision-Date: 2010-09-26 10:36+0100\n"
+"POT-Creation-Date: 2011-02-18 12:30+0000\n"
+"PO-Revision-Date: 2011-01-28 10:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nn\n"
 "X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -141,8 +141,8 @@ msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
-"     «Shift + Insert», «Ctrl + V» eller «Ctrl +Y» for å lima inn innhaldet frå "
-"utklippstavla\n"
+"     «Shift + Insert», «Ctrl + V» eller «Ctrl +Y» for å lima inn innhaldet "
+"frå utklippstavla\n"
 
 #: console.c:2237
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -417,32 +417,31 @@ msgstr "For å køyra ei linje eller eit utval R-kode, merk koden, og anten\n"
 
 #: editor.c:603
 msgid "     Press Ctrl-R\n"
-msgstr "     Trykk «Ctrl + R»\n"
+msgstr "     trykk «Ctrl + R»,\n"
 
 #: editor.c:604
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Vel «Køyr linje eller utval» frå «Rediger»-menyen\n"
+msgstr "     vel «Køyr linje eller utval» frå «Rediger»-menyen,\n"
 
 #: editor.c:605
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Trykk «Køyr linje eller utval»-ikonet på verktøylinja\n"
+msgstr "     eller trykk «Køyr linje eller utval»-ikonet på verktøylinja.\n"
 
 #: editor.c:606
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
-"Dette vil kopiera dei merkte kommandoen til konsollen, og samtidig køyra "
-"dei.\n"
+"Dette vil kopiera dei merkte kommandoane til konsollen, og så køyra dei.\n"
 
 #: editor.c:607
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
-"Viss det ikkje finst noko utvalet, vert berre den gjeldande linja køyrd,\n"
+"Viss det ikkje finst noko utval, vert berre den gjeldande linja køyrd, og\n"
 
 #: editor.c:608
 msgid "the cursor by one line.\n"
-msgstr "og skrivemerket vert flytta til neste linje.\n"
+msgstr "skrivemerket vert flytta til neste linje.\n"
 
 #: editor.c:620 editor.c:697 editor.c:758
 msgid "Run line or selection"
@@ -517,7 +516,7 @@ msgstr "Lukk skript"
 
 #: editor.c:756 rui.c:1160
 msgid "Clear console"
-msgstr "Tøm konsol"
+msgstr "Tøm konsoll"
 
 #: editor.c:760
 msgid "Run all"
@@ -722,7 +721,7 @@ msgstr "Tøm vindauge"
 
 #: rui.c:877 rui.c:1179
 msgid "Buffered output"
-msgstr "Bufra utdata"
+msgstr "Bufra utdataa"
 
 #: rui.c:917
 msgid "Packages"
@@ -734,7 +733,7 @@ msgstr "Last pakke …"
 
 #: rui.c:920
 msgid "Set CRAN mirror..."
-msgstr "Vel CRAN-arkiv …"
+msgstr "Vel CRAN-plassering …"
 
 #: rui.c:922
 msgid "Select repositories..."
@@ -750,7 +749,7 @@ msgstr "Oppdater pakkar …"
 
 #: rui.c:929
 msgid "Install package(s) from local zip files..."
-msgstr "Installer pakkar frå lokalize ZIP-filer …"
+msgstr "Installer pakkar frå lokale ZIP-filer …"
 
 #: rui.c:957
 msgid "FAQ on R"
@@ -802,11 +801,11 @@ msgstr "Overlappande"
 
 #: rui.c:1020 ../extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
-msgstr "Still opp &bortover"
+msgstr "Still opp &nedover"
 
 #: rui.c:1021 ../extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
-msgstr "Still opp &nedover"
+msgstr "Still opp &bortover"
 
 #: rui.c:1022
 msgid "Minimize group"
@@ -866,7 +865,7 @@ msgstr "Kopier og lim inn"
 
 #: rui.c:1162
 msgid "Data editor..."
-msgstr "Dataredigering …"
+msgstr "Rediger data …"
 
 #: rui.c:1167
 msgid "Toolbar"
@@ -894,11 +893,11 @@ msgstr "Bryt til feilsøking"
 
 #: rui.c:1180
 msgid "Word completion"
-msgstr "Ordfullføring"
+msgstr "Autofullføring av ord"
 
 #: rui.c:1182
 msgid "Filename completion"
-msgstr "Filnamnfullføring"
+msgstr "Autofullføring av filnamn"
 
 #: rui.c:1189
 msgid "List objects"
@@ -998,7 +997,7 @@ msgstr "Fann ikkje «%s»"
 
 #: ../extra/graphapp/gmenus.c:56
 msgid "Arrange Icons"
-msgstr "Ordna ikon"
+msgstr "Ordna ikona"
 
 #: ../library/grDevices/src/devWindows.c:879
 msgid "Portable network graphics file"
