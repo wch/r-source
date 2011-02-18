@@ -525,6 +525,10 @@
 
       \item \command{R CMD INSTALL} now ensures that directories
       installed from \file{inst} have search permission for everyone.
+
+      It no longer installs files \file{inst/doc/Rplots.ps} and
+      \file{inst/doc/Rplots.pdf}.  These are almost certainly left-overs
+      from \code{Sweave} runs, and are often large.
     }
   }
   
