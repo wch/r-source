@@ -2814,6 +2814,8 @@ enum {
   STARTASSIGN2_OP,
   ENDASSIGN2_OP,
   SETTER_CALL_OP,
+  GETTER_CALL_OP,
+  SWAP_OP,
   OPCOUNT
 };
 
@@ -4207,6 +4209,53 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	ftype = 0;
 	NEXT();
       }
+    OP(GETTER_CALL, 1):
+      {
+        SEXP lhs = R_BCNodeStackTop[-5];
+	SEXP fun = R_BCNodeStackTop[-3];
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	SEXP args, prom;
+	switch (ftype) {
+	case BUILTINSXP:
+	  /* replace first argument with LHS value */
+	  args = R_BCNodeStackTop[-2];
+	  SETCAR(args, lhs);
+	  /* make the call */
+	  checkForMissings(args, call);
+	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  break;
+	case SPECIALSXP:
+	  /* duplicate arguments and put into stack for GC protection */
+	  args = R_BCNodeStackTop[-2] = duplicate(CDR(call));
+	  /* insert evaluated promise for LHS as first argument */
+          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  SET_PRVALUE(prom, lhs);
+	  SETCAR(args, prom);
+	  /* make the call */
+	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  break;
+	case CLOSXP:
+	  /* replace first argument with evaluated promise for LHS */
+          prom = mkPROMISE(R_TmpvalSymbol, rho);
+	  SET_PRVALUE(prom, lhs);
+	  args = R_BCNodeStackTop[-2];
+	  SETCAR(args, prom);
+	  /* make the call */
+	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
+	  break;
+	default: error(_("bad function"));
+	}
+	R_BCNodeStackTop -= 2;
+	R_BCNodeStackTop[-1] = value;
+	ftype = 0;
+	NEXT();
+      }
+    OP(SWAP, 0): {
+	value = R_BCNodeStackTop[-1];
+	R_BCNodeStackTop[-1] = R_BCNodeStackTop[-2];
+	R_BCNodeStackTop[-2] = value;
+	NEXT();
+    }
     LASTOP;
   }
 
