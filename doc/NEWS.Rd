@@ -491,6 +491,11 @@
 
       \item \code{bug.report()} has been updated for the current \R bug
       tracker, which does not accept emailed submissions.
+
+      \item \command{R CMD check} now checks for the correct use of
+      \samp{$(LAPACK_LIBS)} (as well as \samp{$(BLAS_LIBS)}), since
+      several CRAN recent submissions have ignored \sQuote{Writing R
+	Extensions}.
     }
   }
 
