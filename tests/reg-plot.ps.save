@@ -4729,6 +4729,97 @@ o
 435.34 36.72 (i) .5 0 t
 30.96 304.84 (x) .5 90 t
 ep
+%%Page: 29 29
+bp
+[ /CIEBasedABC
+  << /DecodeLMN
+       [ { dup 0.03928 le {12.92321 div} {0.055 add 1.055 div 2.4 exp } ifelse } bind dup dup ]
+     /MatrixLMN [0.412457 0.212673 0.019334 0.357576 0.715152 0.119192 0.180437 0.072175 0.950301]
+     /WhitePoint [0.9505 1.0 1.0890]
+  >>
+] setcolorspace
+77.04 91.44 793.65 518.24 cl
+18.00 18.00 823.89 577.28 cl
+/Font1 findfont 12 s
+0 setgray
+48.24 193.83 (0-5yrs) 0 0 t
+48.24 300.53 (6-11yrs) 0 0 t
+48.24 407.23 (12+ yrs) 0 0 t
+98.46 91.44 793.65 518.24 cl
+0.7451 setgray
+0.75 setlinewidth
+[ 0.00 3.00] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+98.46 198.14 m
+695.19 0 l
+o
+np
+98.46 304.84 m
+695.19 0 l
+o
+np
+98.46 411.54 m
+695.19 0 l
+o
+0 setgray
+0.75 setlinewidth
+[] 0 setdash
+124.21 198.14 2.70 c p1
+767.90 304.84 2.70 c p1
+744.06 411.54 2.70 c p1
+18.00 18.00 823.89 577.28 cl
+0 setgray
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+171.89 91.44 m
+596.01 0 l
+o
+np
+171.89 91.44 m
+0 -7.20 l
+o
+np
+291.09 91.44 m
+0 -7.20 l
+o
+np
+410.29 91.44 m
+0 -7.20 l
+o
+np
+529.50 91.44 m
+0 -7.20 l
+o
+np
+648.70 91.44 m
+0 -7.20 l
+o
+np
+767.90 91.44 m
+0 -7.20 l
+o
+/Font1 findfont 12 s
+171.89 65.52 (20) .5 0 t
+291.09 65.52 (40) .5 0 t
+410.29 65.52 (60) .5 0 t
+529.50 65.52 (80) .5 0 t
+648.70 65.52 (100) .5 0 t
+767.90 65.52 (120) .5 0 t
+np
+98.46 91.44 m
+695.19 0 l
+0 426.80 l
+-695.19 0 l
+0 -426.80 l
+o
+ep
 %%Trailer
-%%Pages: 28
+%%Pages: 29
 %%EOF

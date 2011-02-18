@@ -141,3 +141,7 @@ x <- as.Date("2008-04-22 09:45") + (i <- c(0,4))
 plot(x,    xaxt="n")# not ok in 2.6.2, nor 2.7.0
 plot(x, i, yaxt="n")# ok in 2.6.2  and 2.7.0
 plot(i, x, xaxt="n")# ok in 2.6.2 and not in 2.7.0
+
+## table methods should be bypassed:
+dotchart(table(infert$education))
+## failed in 2.12.[12]

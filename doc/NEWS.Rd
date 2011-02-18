@@ -268,6 +268,10 @@
       or \command{gs}.
 
       \item \code{tar()} has a new argument \code{extra_flags}.
+
+      \item \code{dotchart()} accepts more general objects \code{x} such
+      as 1D tables which can be coerced by \code{as.numeric()} to a
+      numeric vector, with a warning since that might not be appropriate.
     }
   }
 
