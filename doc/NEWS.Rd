@@ -454,6 +454,10 @@
 
       \item Added \code{.requireCachedGenerics} to the
       \code{dont.mind} list to avoid warnings about duplicates.
+
+      \item \code{$<-.data.frame} messed with the class attribute,
+      breaking any S4 subclass.  The S4 \code{data.frame} class now has its own
+      \code{$<-} method, and turns dispatch on for this primitive.
     }
   }
 }

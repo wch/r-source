@@ -266,7 +266,7 @@
           array = "Ops", nonStructure = "Ops"),
           array = "[", structure = "[", nonStructure = "[",
           structure = "Math", nonStructure = "Math",
-          refClass = "$"
+          refClass = "$", data.frame = "$<-"
                 )
     assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,
