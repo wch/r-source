@@ -2816,6 +2816,7 @@ enum {
   SETTER_CALL_OP,
   GETTER_CALL_OP,
   SWAP_OP,
+  DUP2ND_OP,
   OPCOUNT
 };
 
@@ -4254,6 +4255,11 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	value = R_BCNodeStackTop[-1];
 	R_BCNodeStackTop[-1] = R_BCNodeStackTop[-2];
 	R_BCNodeStackTop[-2] = value;
+	NEXT();
+    }
+    OP(DUP2ND, 0): {
+	value = R_BCNodeStackTop[-2];
+	BCNPUSH(value);
 	NEXT();
     }
     LASTOP;
