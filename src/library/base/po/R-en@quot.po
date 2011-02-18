@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
-"PO-Revision-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
+"PO-Revision-Date: 2011-02-18 12:36\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -678,8 +678,8 @@ msgstr "no files to copy to"
 msgid "more 'from' files than 'to' files"
 msgstr "more ‘from’ files than ‘to’ files"
 
-msgid "'recursive' will be ignored"
-msgstr "‘recursive’ will be ignored"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr "‘recursive’ will be ignored as ‘to’ is not a single existing directory"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "file can not be copied both ‘from’ and ‘to’"
@@ -1142,15 +1142,6 @@ msgstr "not loading a name space"
 msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr "name space %s is imported by %s so cannot be unloaded"
 
-msgid "imperative name space directives are disabled"
-msgstr "imperative name space directives are disabled"
-
-msgid "all objects in base name space are currently exported."
-msgstr "all objects in base name space are currently exported."
-
-msgid "can only export from a name space"
-msgstr "can only export from a name space"
-
 msgid "not a name space"
 msgstr "not a name space"
 
@@ -1300,6 +1291,12 @@ msgstr "length of ‘scale’ must equal the number of columns of ‘x’"
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "either specify ‘nmax’ or 'n', but not both."
+
+msgid "argument 'length.out' must be of length 1"
+msgstr "argument ‘length.out’ must be of length 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr "first element used of ‘length.out’ argument"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "invalid (to - from)/by in seq(.)"

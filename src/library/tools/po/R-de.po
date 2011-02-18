@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-09-22 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -592,10 +592,10 @@ msgstr "Änderungen benötigen den angegebenen 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Der Standard JSS style darf nicht geändert werden"
 
-msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
-msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgid "use of '--use-zip-data' is defunct"
 msgstr ""
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
@@ -744,9 +744,6 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-msgid "'--auto-zip' is for Windows only"
-msgstr "'--auto-zip'ist nur für Windows"
-
 msgid "--merge-multiarch is Windows-only"
 msgstr "--merge-multiarchist nur für Windows"
 
@@ -817,6 +814,9 @@ msgstr "Quellenliste muss Namen für alle Elemente besitzen"
 
 msgid "source must be an environment or a list"
 msgstr "Quelle muss eine Umgebung oder eine Liste sein"
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr ""
 
 msgid "this cannot be used for package 'base'"
 msgstr "dies kann für Paket 'base' nicht benutzt werden"
@@ -1099,6 +1099,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "'--auto-zip' is for Windows only"
+#~ msgstr "'--auto-zip'ist nur für Windows"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "kann HTML Paketindex nicht aktualisieren"

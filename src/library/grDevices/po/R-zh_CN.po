@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -230,8 +230,16 @@ msgstr "栅格阵列必需是三维的"
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "栅格阵列必需有三个或四个平面"
 
-msgid "No valid indices"
+msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr ""
+
+#, fuzzy
+msgid "invalid raster subsetting"
+msgstr "第一个参数不对"
+
+#, fuzzy
+msgid "invalid raster subassignment"
+msgstr "第一个参数不对"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "这种操作对光栅对象没有意义"

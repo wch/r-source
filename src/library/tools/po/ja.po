@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12+0000\n"
+"POT-Creation-Date: 2011-02-18 12:36+0000\n"
 "PO-Revision-Date: 2010-04-03 09:52+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -30,6 +30,6 @@ msgstr " md5 はファイル '%s' で失敗しました "
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "
 
-#: text.c:189 text.c:208
+#: text.c:222 text.c:241
 msgid "out of memory"
 msgstr "メモリが足りません "

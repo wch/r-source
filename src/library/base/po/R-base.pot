@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -623,7 +623,7 @@ msgstr ""
 msgid "more 'from' files than 'to' files"
 msgstr ""
 
-msgid "'recursive' will be ignored"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
@@ -1061,15 +1061,6 @@ msgstr ""
 msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr ""
 
-msgid "imperative name space directives are disabled"
-msgstr ""
-
-msgid "all objects in base name space are currently exported."
-msgstr ""
-
-msgid "can only export from a name space"
-msgstr ""
-
 msgid "not a name space"
 msgstr ""
 
@@ -1218,6 +1209,12 @@ msgid "length of 'scale' must equal the number of columns of 'x'"
 msgstr ""
 
 msgid "either specify 'nmax' or 'n', but not both."
+msgstr ""
+
+msgid "argument 'length.out' must be of length 1"
+msgstr ""
+
+msgid "first element used of 'length.out' argument"
 msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"

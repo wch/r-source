@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
-"PO-Revision-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
+"PO-Revision-Date: 2011-02-18 12:36\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -166,6 +166,9 @@ msgstr "invalid specification of ‘breaks’"
 msgid "'x' must be a numeric vector or matrix"
 msgstr "‘x’ must be a numeric vector or matrix"
 
+msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
+msgstr "‘x’ is neither a vector nor a matrix: using as.numeric(x)"
+
 msgid "'x' must be an array"
 msgstr "‘x’ must be an array"
 
@@ -240,6 +243,9 @@ msgstr "breaks must all be finite"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
 msgstr "dimensions of z are not length(x)(-1) times length(y)(-1)"
+
+msgid "useRaster=TRUE can only be used with a regular grid"
+msgstr "useRaster=TRUE can only be used with a regular grid"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "‘respect’ must be logical or matrix with same dimension as ‘mat’"

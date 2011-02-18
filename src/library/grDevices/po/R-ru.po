@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-04-09 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -237,8 +237,16 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr ""
 "Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
-msgid "No valid indices"
+msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr ""
+
+#, fuzzy
+msgid "invalid raster subsetting"
+msgstr "неправильный первый аргумент"
+
+#, fuzzy
+msgid "invalid raster subassignment"
+msgstr "неправильный первый аргумент"
 
 msgid "Operator not meaningful for raster objects"
 msgstr ""

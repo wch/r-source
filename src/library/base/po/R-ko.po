@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -684,9 +684,8 @@ msgstr "복사한것에서 파일이 없습니다"
 msgid "more 'from' files than 'to' files"
 msgstr "복사하는 파일보다 많은 복사 전 파일이 있습니다"
 
-#, fuzzy
-msgid "'recursive' will be ignored"
-msgstr "drop인수는 무시됩니다"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "동일 파일에 복사할수가 없습니다"
@@ -1184,15 +1183,6 @@ msgstr "이름 공간을 적재하지 않습니다"
 msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr "name space '%s'가 적재 되었습니다"
 
-msgid "imperative name space directives are disabled"
-msgstr "명령적인 이름공간의 지령은 사용 불가능합니다"
-
-msgid "all objects in base name space are currently exported."
-msgstr "base 이름 공간의 모드 오브젝트는 현재 export되어 있습니다"
-
-msgid "can only export from a name space"
-msgstr "name space으로부터만 export할수가 있습니다"
-
 msgid "not a name space"
 msgstr "이름 공간이 아닙니다"
 
@@ -1357,6 +1347,13 @@ msgstr "'scale'의 길이는 'x'의 열수에 동일하지 않으면 되지 않�
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "'nmax' 또는 'n'를 지정해 주십시오. 그러나 양쪽 모두는 안됩니다"
+
+#, fuzzy
+msgid "argument 'length.out' must be of length 1"
+msgstr "'length.out'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "first element used of 'length.out' argument"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)안의 (to - from)/by가 부적절합니다"
@@ -1748,6 +1745,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "'recursive' will be ignored"
+#~ msgstr "drop인수는 무시됩니다"
+
+#~ msgid "imperative name space directives are disabled"
+#~ msgstr "명령적인 이름공간의 지령은 사용 불가능합니다"
+
+#~ msgid "all objects in base name space are currently exported."
+#~ msgstr "base 이름 공간의 모드 오브젝트는 현재 export되어 있습니다"
+
+#~ msgid "can only export from a name space"
+#~ msgstr "name space으로부터만 export할수가 있습니다"
 
 #~ msgid "shared library '%s' not found"
 #~ msgstr "공용 라이브러리 '%s'가 검색되지 않습니다"

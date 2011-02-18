@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -668,8 +668,8 @@ msgstr "нет файлов, чтобы скопировать на"
 msgid "more 'from' files than 'to' files"
 msgstr "больше файлов 'from', чем 'to'"
 
-msgid "'recursive' will be ignored"
-msgstr "'recursive' будет проигнорирован"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
@@ -1139,15 +1139,6 @@ msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr ""
 "пространство имен %s импортировано из %s и поэтому его нельзя выгрузить"
 
-msgid "imperative name space directives are disabled"
-msgstr "императивные директивы пространства имен отменены"
-
-msgid "all objects in base name space are currently exported."
-msgstr "все объекты в базовом пространстве имен экспортированы."
-
-msgid "can only export from a name space"
-msgstr "могу экспортировать только из пространства имен"
-
 msgid "not a name space"
 msgstr "не пространство имен"
 
@@ -1298,6 +1289,13 @@ msgstr "длина 'scale' должна равняться числу колонок 'x'"
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "укажите либо 'nmax', либо 'n', но не оба."
+
+#, fuzzy
+msgid "argument 'length.out' must be of length 1"
+msgstr "'length.out' должен быть длиной 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "неправильный (to - from)/by в seq(.)"
@@ -1677,6 +1675,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'recursive' will be ignored"
+#~ msgstr "'recursive' будет проигнорирован"
+
+#~ msgid "imperative name space directives are disabled"
+#~ msgstr "императивные директивы пространства имен отменены"
+
+#~ msgid "all objects in base name space are currently exported."
+#~ msgstr "все объекты в базовом пространстве имен экспортированы."
+
+#~ msgid "can only export from a name space"
+#~ msgstr "могу экспортировать только из пространства имен"
 
 #~ msgid "'fromLast' must be TRUE or FALSE"
 #~ msgstr "'fromLast' должен быть TRUE или FALSE"

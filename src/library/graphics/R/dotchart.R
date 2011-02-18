@@ -39,11 +39,13 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	if (is.null(groups))
 	    groups <- col(x, as.factor = TRUE)
 	glabels <- levels(groups)
-    }
-    else {
-	if (is.null(labels))
-	    labels <- names(x)
+    } else {
+	if (is.null(labels)) labels <- names(x)
 	glabels <- if(!is.null(groups)) levels(groups)
+        if (!is.vector(x)) { # e.g. a table
+            warning("'x' is neither a vector nor a matrix: using as.numeric(x)")
+            x <- as.numeric(x)
+        }
     }
 
     plot.new() # for strwidth()

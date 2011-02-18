@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-11-15 19:09+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -560,10 +560,10 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
-msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgid "use of '--use-zip-data' is defunct"
 msgstr ""
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
@@ -705,9 +705,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "'--auto-zip' is for Windows only"
-msgstr ""
-
 msgid "--merge-multiarch is Windows-only"
 msgstr ""
 
@@ -774,6 +771,9 @@ msgid "source list must have names for all elements"
 msgstr ""
 
 msgid "source must be an environment or a list"
+msgstr ""
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 msgstr ""
 
 msgid "this cannot be used for package 'base'"

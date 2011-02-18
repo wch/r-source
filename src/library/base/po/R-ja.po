@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -671,8 +671,8 @@ msgstr " そこへコピーすべきファイルがありません "
 msgid "more 'from' files than 'to' files"
 msgstr " コピー先ファイルよりも多くのコピー元ファイルがあります "
 
-msgid "'recursive' will be ignored"
-msgstr " 'recursive' は無視されます "
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr " 同じファイルにコピーすることはできません "
@@ -1153,16 +1153,6 @@ msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr ""
 " 名前空間 %s は %s によってインポートされているのでアンロード出来ません "
 
-msgid "imperative name space directives are disabled"
-msgstr ""
-" 命令的な名前空間の指令(imperative name space directive)は無効とされています "
-
-msgid "all objects in base name space are currently exported."
-msgstr " ベース名前空間中の全てのオブジェクトは現在エクスポートされています "
-
-msgid "can only export from a name space"
-msgstr " 名前空間からだけエクスポートできます "
-
 msgid "not a name space"
 msgstr " 名前空間ではありません "
 
@@ -1320,6 +1310,13 @@ msgstr " 'scale' の長さは 'x' の列数に等しくなければなりませ�
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr " 'nmax' か 'n' を指定して下さい。しかし両方はだめです "
+
+#, fuzzy
+msgid "argument 'length.out' must be of length 1"
+msgstr " 'length.out' は長さ 1 でなければなりません "
+
+msgid "first element used of 'length.out' argument"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
@@ -1683,6 +1680,21 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'recursive' will be ignored"
+#~ msgstr " 'recursive' は無視されます "
+
+#~ msgid "imperative name space directives are disabled"
+#~ msgstr ""
+#~ " 命令的な名前空間の指令(imperative name space directive)は無効とされていま"
+#~ "す "
+
+#~ msgid "all objects in base name space are currently exported."
+#~ msgstr ""
+#~ " ベース名前空間中の全てのオブジェクトは現在エクスポートされています "
+
+#~ msgid "can only export from a name space"
+#~ msgstr " 名前空間からだけエクスポートできます "
 
 #~ msgid "'fromLast' must be TRUE or FALSE"
 #~ msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "

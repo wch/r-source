@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12+0000\n"
+"POT-Creation-Date: 2011-02-18 12:36+0000\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -155,7 +155,7 @@ msgstr ""
 msgid "'theta' should be of type character"
 msgstr "'theta' deve essere di tipo character"
 
-#: nls.c:290 port.c:382
+#: nls.c:290 port.c:366
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -199,70 +199,70 @@ msgstr "codei di errore forkal %d"
 msgid "invalid value of lag.max"
 msgstr "valore di lag.max non valido"
 
-#: port.c:130
+#: port.c:131
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:326
+#: port.c:310
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:336
+#: port.c:320
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:386
+#: port.c:370
 msgid "'rho' must be an environment"
 msgstr "'rho' deve essere un environment"
 
-#: port.c:388 port.c:539
+#: port.c:372 port.c:523
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:390
+#: port.c:374
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:393
+#: port.c:377
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:407
+#: port.c:391
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:453
+#: port.c:437
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:474
+#: port.c:458
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:487
+#: port.c:471
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:508
+#: port.c:492
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:521
+#: port.c:505
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:540
+#: port.c:524
 msgid "m must be a list"
 msgstr "m deve essere di tipo list"
 
-#: port.c:560
+#: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 

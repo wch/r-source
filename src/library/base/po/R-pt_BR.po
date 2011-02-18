@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2011-01-02 18:10+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -678,8 +678,8 @@ msgstr "nenhum arquivo para onde copiar"
 msgid "more 'from' files than 'to' files"
 msgstr "mais arquivos 'from' do que 'to'"
 
-msgid "'recursive' will be ignored"
-msgstr "argumento 'recursive' será ignorado"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "arquivo não pode ser copiado ao mesmo tempo em 'from' e 'to'"
@@ -1152,15 +1152,6 @@ msgstr "não carregando um espaço de nomes"
 msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr "espaço de nomes %s importado por %s então não é possível descarregar"
 
-msgid "imperative name space directives are disabled"
-msgstr "diretivas imperativas de espaço de nomes estão desabilitadas"
-
-msgid "all objects in base name space are currently exported."
-msgstr "todos os objetos no espaço de nomes base estão atualmente exportados"
-
-msgid "can only export from a name space"
-msgstr "somente é possível exportar a partir de um espaço de nomes"
-
 msgid "not a name space"
 msgstr "não é um espaço de nomes"
 
@@ -1313,6 +1304,13 @@ msgstr "comprimento de 'scale' deve ser igual ao número de colunas de 'x'"
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "especifique 'nmax' ou 'n', mas não ambos."
+
+#, fuzzy
+msgid "argument 'length.out' must be of length 1"
+msgstr "'length.out' deve ter comprimento 1"
+
+msgid "first element used of 'length.out' argument"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "(to-from)/by inválido em seq(.)"
@@ -1681,6 +1679,19 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "'recursive' will be ignored"
+#~ msgstr "argumento 'recursive' será ignorado"
+
+#~ msgid "imperative name space directives are disabled"
+#~ msgstr "diretivas imperativas de espaço de nomes estão desabilitadas"
+
+#~ msgid "all objects in base name space are currently exported."
+#~ msgstr ""
+#~ "todos os objetos no espaço de nomes base estão atualmente exportados"
+
+#~ msgid "can only export from a name space"
+#~ msgstr "somente é possível exportar a partir de um espaço de nomes"
 
 #~ msgid "'fromLast' must be TRUE or FALSE"
 #~ msgstr "'fromLast' deve ser TRUE ou FALSE"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-18 14:46\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -658,8 +658,8 @@ msgstr "拷贝时没有可以写的文件"
 msgid "more 'from' files than 'to' files"
 msgstr "'from'的文件比'to'的文件要多"
 
-msgid "'recursive' will be ignored"
-msgstr "忽略'recursive'"
+msgid "'recursive' will be ignored as 'to' is not a single existing directory"
+msgstr ""
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "不能同时又读又写同一个文件"
@@ -1120,15 +1120,6 @@ msgstr "不载入名字空间"
 msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr "名字空间%s是由%s引进的，因此无法将之卸下"
 
-msgid "imperative name space directives are disabled"
-msgstr "強制名字指令功能被关闭"
-
-msgid "all objects in base name space are currently exported."
-msgstr "基本名字空间里的所有对象现在都已被出口"
-
-msgid "can only export from a name space"
-msgstr "只能从名字空间里出口"
-
 msgid "not a name space"
 msgstr "不是名字空间"
 
@@ -1278,6 +1269,13 @@ msgstr "'scale'的长度必需和'x'列的数目相同"
 
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "'nmax'和'n'两者只能有一个设定"
+
+#, fuzzy
+msgid "argument 'length.out' must be of length 1"
+msgstr "'length.out'的长度必需为一"
+
+msgid "first element used of 'length.out' argument"
+msgstr ""
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "seq(.)里的(to - from)/by 有错"
@@ -1633,6 +1631,18 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'recursive' will be ignored"
+#~ msgstr "忽略'recursive'"
+
+#~ msgid "imperative name space directives are disabled"
+#~ msgstr "強制名字指令功能被关闭"
+
+#~ msgid "all objects in base name space are currently exported."
+#~ msgstr "基本名字空间里的所有对象现在都已被出口"
+
+#~ msgid "can only export from a name space"
+#~ msgstr "只能从名字空间里出口"
 
 #~ msgid "'fromLast' must be TRUE or FALSE"
 #~ msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"

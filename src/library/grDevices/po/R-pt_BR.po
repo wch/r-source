@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-12-28 14:54+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,8 +227,16 @@ msgstr "Um array raster deve ter exatamente 3 dimensões"
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Um array raster deve ter exatamente 3 ou 4 planos"
 
-msgid "No valid indices"
+msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr ""
+
+#, fuzzy
+msgid "invalid raster subsetting"
+msgstr "primeiro argumento inválido"
+
+#, fuzzy
+msgid "invalid raster subassignment"
+msgstr "primeiro argumento inválido"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Operador não tem significância para objetos raster"

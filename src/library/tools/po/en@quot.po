@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12+0000\n"
-"PO-Revision-Date: 2011-01-28 18:12+0000\n"
+"POT-Creation-Date: 2011-02-18 12:36+0000\n"
+"PO-Revision-Date: 2011-02-18 12:36+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -52,6 +52,6 @@ msgstr "md5 failed on file ‘%s’"
 msgid "invalid argument type"
 msgstr "invalid argument type"
 
-#: text.c:189 text.c:208
+#: text.c:222 text.c:241
 msgid "out of memory"
 msgstr "out of memory"

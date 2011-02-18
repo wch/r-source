@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-10-03 18:49-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -609,10 +609,10 @@ msgstr "Les modifications nécessite le 'style' spécifié"
 msgid "The default JSS style may not be modified."
 msgstr "Le style par défaut JSS ne peut être modifié."
 
-msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
-msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgid "use of '--use-zip-data' is defunct"
 msgstr ""
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
@@ -763,9 +763,6 @@ msgstr "aucun fichier source n'est trouvé"
 msgid "empty 'data' directory"
 msgstr "répertoire 'data' vide"
 
-msgid "'--auto-zip' is for Windows only"
-msgstr "'--auto-zip'  est pour Windows seulement"
-
 msgid "--merge-multiarch is Windows-only"
 msgstr "'--merge-multiarch est pour Windows seulement"
 
@@ -835,6 +832,9 @@ msgstr "la liste de source doit avoir des noms pour tous ses éléments"
 
 msgid "source must be an environment or a list"
 msgstr "source doit être un environnement ou une liste"
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr ""
 
 msgid "this cannot be used for package 'base'"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
@@ -1125,6 +1125,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "'--auto-zip' is for Windows only"
+#~ msgstr "'--auto-zip'  est pour Windows seulement"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "impossible de mettre à jour l'index HTML du package"

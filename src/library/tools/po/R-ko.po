@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -581,10 +581,10 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
-msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgid "use of '--use-zip-data' is defunct"
 msgstr ""
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
@@ -738,9 +738,6 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "'--auto-zip' is for Windows only"
-msgstr ""
-
 msgid "--merge-multiarch is Windows-only"
 msgstr ""
 
@@ -812,6 +809,9 @@ msgstr "source 리스트는 모든 요소의 이름을 가지고 있어야만 �
 
 msgid "source must be an environment or a list"
 msgstr "소스는 환경 또는 리스트이어야만 합니다"
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr ""
 
 msgid "this cannot be used for package 'base'"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"

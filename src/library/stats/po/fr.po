@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12+0000\n"
+"POT-Creation-Date: 2011-02-18 12:36+0000\n"
 "PO-Revision-Date: 2010-10-03 17:46-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -154,7 +154,7 @@ msgstr "convergence obtenue"
 msgid "'theta' should be of type character"
 msgstr "'theta' doit être de type caractère"
 
-#: nls.c:290 port.c:382
+#: nls.c:290 port.c:366
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
@@ -199,76 +199,76 @@ msgstr "code d'erreur forkal %d"
 msgid "invalid value of lag.max"
 msgstr "valeur incorrecte de 'lag.max'"
 
-#: port.c:130
+#: port.c:131
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset : alg = %d doit être 1, 2, 3, ou 4"
 
-#: port.c:326
+#: port.c:310
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 "la fonction de gradient doit renvoyer un vecteur numérique de longueur %d"
 
-#: port.c:336
+#: port.c:320
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "la function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
 
-#: port.c:386
+#: port.c:370
 msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: port.c:388 port.c:539
+#: port.c:372 port.c:523
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' doit être un vecteur numérique non vide"
 
-#: port.c:390
+#: port.c:374
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Qaund Hessian est défini, un gradient doit l'être aussi"
 
-#: port.c:393
+#: port.c:377
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur "
 "%d"
 
-#: port.c:407
+#: port.c:391
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques"
 
-#: port.c:453
+#: port.c:437
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' n'est applicable que pour des listes nommées"
 
-#: port.c:474
+#: port.c:458
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() introuvable"
 
-#: port.c:487
+#: port.c:471
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' doit être une matrice numérique de dimension (%d, %d)"
 
-#: port.c:508
+#: port.c:492
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de "
 "longueur %d"
 
-#: port.c:521
+#: port.c:505
 msgid "invalid type for eval_check_store"
 msgstr "type incorrect pour 'eval_check_store'"
 
-#: port.c:540
+#: port.c:524
 msgid "m must be a list"
 msgstr "'m' doit être une liste"
 
-#: port.c:560
+#: port.c:544
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 

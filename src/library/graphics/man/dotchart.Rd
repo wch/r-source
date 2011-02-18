@@ -1,6 +1,6 @@
 % File src/library/graphics/man/dotchart.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dotchart}
@@ -19,7 +19,10 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
 \arguments{
   \item{x}{either a vector or matrix of numeric values (\code{NA}s are
     allowed).  If \code{x} is a matrix the overall plot consists of
-    juxtaposed dotplots for each row.}
+    juxtaposed dotplots for each row.  Inputs which satisfy
+    \code{\link{is.numeric}(x)} but not
+    \code{is.vector(x) || is.matrix(x)} are coerced by
+    \code{\link{as.numeric}}, with a warning.}
   \item{labels}{a vector of labels for each point.
     For vectors the default is to use \code{names(x)} and for matrices
     the row labels \code{dimnames(x)[[1]]}.}

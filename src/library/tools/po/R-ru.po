@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-02-18 12:36\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -594,10 +594,10 @@ msgstr "Изменения требуют определенного 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
-msgid "use of '--auto-zip' is deprecated: use '--install-args' instead"
+msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
-msgid "use of '--use-zip-data' is deprecated: use '--install-args' instead"
+msgid "use of '--use-zip-data' is defunct"
 msgstr ""
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
@@ -744,9 +744,6 @@ msgstr "не найдено файлов исходников"
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
-msgid "'--auto-zip' is for Windows only"
-msgstr "'--auto-zip' -- это только для Windows"
-
 msgid "--merge-multiarch is Windows-only"
 msgstr "--merge-multiarch -- это только для Windows"
 
@@ -817,6 +814,9 @@ msgstr "в списке исходников должны быть для всех элементов"
 
 msgid "source must be an environment or a list"
 msgstr "исходник должен быть окружением или списком"
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr ""
 
 msgid "this cannot be used for package 'base'"
 msgstr "это нельзя использовать для пакета 'base'"
@@ -1098,6 +1098,9 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "'--auto-zip' is for Windows only"
+#~ msgstr "'--auto-zip' -- это только для Windows"
 
 #~ msgid "cannot update HTML package index"
 #~ msgstr "не могу обновить HTML-индекс пакетов"
