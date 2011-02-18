@@ -456,11 +456,24 @@ getGeneric <-
     }
     if(is.function(value))
         value
-    else if(mustFind)
-        ## the C code will have thrown an error if f is not a single string
-        stop(gettextf("no generic function found for \"%s\"", f), domain = NA)
-    else
-        NULL
+    else {
+        if(nzchar(package) && is.na(match(package, c("methods", "base")))) {
+            ## try to load package, or attach it if necessary
+            ev <- tryCatch(loadNamespace(package), error = function(e)e)
+            if(is(ev, "error") &&
+               require(package, character.only =TRUE))
+                ev <- as.environment(paste("package",package,sep=":"))
+            if(is.environment(ev))
+                value <- .getGeneric(f, ev, package)
+        }
+        if(is.function(value))
+            value
+        else if(mustFind)
+            ## the C code will have thrown an error if f is not a single string
+            stop(gettextf("no generic function found for \"%s\"", f), domain = NA)
+        else
+            NULL
+    }
 }
 
 ## low-level version
@@ -1482,13 +1495,6 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
         formals(generic) <- fg
     generic
 }
-
-
-.setDeprecatedAction <- function(f, what)
-    switch(what,
-           warn = , stop = , once = , ignore =  .deprecatedActions[[f]] <<- what,
-           warning('"', what, '" is not a known action (warn, stop, once, ignore); no action recorded for function "', f, '"')
-           )
 
 .NamespaceOrPackage <- function(what)
 {

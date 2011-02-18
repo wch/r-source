@@ -53,21 +53,21 @@
         value <- ".Data"
    value
 }
-.dataPartReplace <- function(from, to, value){
+.dataPartReplace <- list(f1 = function(from, to, value){
     from@.Data <- value
     from
-}
+},
 
-.dataPartReplace2 <- function(from, to, value){
+f2 = function(from, to, value){
     from@.Data <- as(value, THISCLASS, strict = FALSE)
     from
-}
+},
 
 ## and a version of dataPartReplace w/o the unused `to' argument
-.dataPartReplace2args <- function(from, value) {
+f2args = function(from, value) {
     from@.Data <- value
     from
-}
+})
 
 S3Part <- function(object, strictS3 = FALSE, S3Class) {
     if(!isS4(object))
@@ -130,19 +130,21 @@ S3Part <- function(object, strictS3 = FALSE, S3Class) {
 }
 
 ## templates for replacement methods for S3 classes in classes that extend oldClass
-.S3replace1 <- function(from, to, value) {
+.S3replace <-
+    list( e1  = quote( {
     S3Part(from, needClass = NEED) <- value
     from
-}
+}),
 
-.S3replace2 <- function(from, to, value) {
+e2= quote( {
     if(is(value, CLASS)) {
         S3Part(from,  needClass = NEED) <- value
         from
     }
     else
       stop("Replacement value must be of class \"", CLASS, "\", got one of class \"", class(value)[[1L]], "\"")
-}
+})
+   )
 
 .S3coerce <- function(from, to) {
     S3Part(from)
@@ -233,9 +235,9 @@ makeExtends <- function(Class, to,
             else
                 easy <- FALSE
             if(easy)
-                replace <- .dataPartReplace
+                replace <- .dataPartReplace$f1
             else {
-                replace <- .dataPartReplace2
+                replace <- .dataPartReplace$f2
                 bdy <- body(replace)
                 body(replace, envir = environment(replace)) <-
                     substituteDirect(bdy, list(THISCLASS = dataPartClass))
@@ -297,7 +299,7 @@ makeExtends <- function(Class, to,
     else if(is(replace, "function")) {
         ## turn function of two or three arguments into correct 3-arg form
         if(length(formals(replace)) == 2) {
-            replace <- .ChangeFormals(replace, .dataPartReplace2args, "'replace' argument to setIs ")
+            replace <- .ChangeFormals(replace, .dataPartReplace$f2args, "'replace' argument to setIs ")
             tmp  <- .ErrorReplace
             body(tmp, envir = environment(replace)) <- body(replace)
             replace <- tmp
@@ -316,29 +318,44 @@ makeExtends <- function(Class, to,
 
 .findAll <- function(what, where = topenv(parent.frame())) {
     ## search in envir. & parents thereof
-    ## must avoid R's find() function because it uses
-    ## regular expressions
+    ## For namespaces, this follows R's soft namespace policy
+    ## by not stopping when it reaches the basenamespace
+    ## The code used to do so and then had a kludge for looking
+    ## in the methods namespace.  But that failed anyway on
+    ## non-namespace (package) environments and was inconsistent
+    ## with the normal R lookup with namespace environments.
     value <- list()
-    if(is.environment(where))
-        repeat {
+    if(is.environment(where)) {
+        if(isNamespace(where)) repeat {
             if(exists(what, where, inherits = FALSE))
                 value <- c(value, list(where))
-            ## two forms of test for the end of the parent env. chain
-            if(isBaseNamespace(where) || identical(where, emptyenv()))
+            if(identical(where, emptyenv()))
                 break
             where <- parent.env(where)
         }
+        else {  # typically, a package environment: look here, then in the search list
+            if(exists(what, where, inherits = FALSE))
+                value <- c(value, list(where))
+            for(i in seq_along(search())) {
+                if(exists(what, i, inherits = FALSE)) {
+                    evi <- as.environment(i)
+                    addMe<- TRUE
+                    for(other in value)
+                        if(identical(other, evi)) {
+                            addMe <- FALSE
+                            break
+                        }
+                    if(addMe)
+                        value <- c(value, list(evi))
+                }
+            }
+        }
+    }
     else
         for(i in where) {
             if(exists(what, i, inherits = FALSE))
                 value <- c(value, list(i))
         }
-    ## FIXME:  namespaces don't seem to include methods package
-    ## objects in their parent env., but they must be importing
-    ## methods to get to this code
-    if(length(value)== 0 && isNamespace(where) &&
-       exists(what, .methodsNamespace, inherits = FALSE))
-	value <- list(.methodsNamespace)
     value
 }
 
@@ -372,10 +389,10 @@ makeExtends <- function(Class, to,
         pos <- match(what, S3Class, 0L)
         if(pos > 1) # not the complete S3 class, probably an error
           body(replace, environment(replace)) <-
-            substituteDirect(body(.S3replace2), list(CLASS = what, NEED = need))
+            substituteDirect(.S3replace$e2, list(CLASS = what, NEED = need))
         else
           body(replace, environment(replace))  <-
-            substituteDirect(body(.S3replace1), list(NEED = need))
+            substituteDirect(.S3replace$e1, list(NEED = need))
         exti@replace <- replace
         exts[[i]] <- exti
     }

@@ -328,6 +328,11 @@
 
       The types of files in the \code{data} directory are now checked,
       as packages as \emph{still} misusing it for non-\R data files.
+
+      \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
+      and \code{hasMethods} are revised to deal consistently with
+      the package= argument and be consistent with soft namespace
+      policy for finding objects.
     }
   }
 
