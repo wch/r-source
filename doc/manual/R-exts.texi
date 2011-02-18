@@ -878,18 +878,26 @@ this document.
 
 Subdirectory @file{exec} could be used for scripts for interpreters such
 as the shell (e.g.@: @pkg{arulesSequences}), BUGS, Java, JavaScript,
-Matlab, Perl (@pkg{FEST}), php (@pkg{amap}), Python or Tcl, or even @R{}.
-However, it seems more common to use the @file{inst} directory, for
-example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
-@file{Amelia/tklibs}, @file{CGIwithR/inst/cgi-bin},
+Matlab, Perl (@pkg{FEST}), php (@pkg{amap}), Python or Tcl, or even
+@R{}.  However, it seems more common to use the @file{inst} directory,
+for example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
+@file{Amelia/inst/tklibs}, @file{CGIwithR/inst/cgi-bin},
 @file{NMF/inst/matlab} and @file{emdbook/inst/BUGS}.
 
 If your package requires one of these interpreters or an extension then
 this should be declared in the @samp{SystemRequirements} field of its
 @file{DESCRIPTION} file.  Windows users should be aware that the Tcl
 extensions @samp{BWidget} and @samp{Tktable} which are included with the
-@R{} for Windows installer @emph{are} extensions and need to be declared.
+@R{} for Windows installer @emph{are} extensions and do need to be
+declared.  @samp{Tktable} does ship as part of the Tcl/Tk provided on
+CRAN for Mac OS X, but you will need to tell your users how to make use
+of it:
 
+@example
+> addTclPath('/usr/local/lib/Tktable2.9')
+> tclRequire('Tktable')
+<Tcl> 2.9
+@end example
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
