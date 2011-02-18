@@ -41,6 +41,11 @@
 
       \item \code{bug.report()} has been updated for the current \R bug
       tracker, which does not accept emailed submissions.
+
+      \item \command{R CMD check} now checks for the correct use of
+      \samp{$(LAPACK_LIBS)} (as well as \samp{$(BLAS_LIBS)}), since
+      several CRAN recent submissions have ignored \sQuote{Writing R
+	Extensions}.
     }
   }
 
@@ -70,6 +75,10 @@
 
       \item \command{R CMD INSTALL} now ensures that directories
       installed from \file{inst} have search permission for everyone.
+
+      It no longer installs files \file{inst/doc/Rplots.ps} and
+      \file{inst/doc/Rplots.pdf}.  These are almost certainly left-overs
+      from \code{Sweave} runs, and are often large.
     }
   }
   
