@@ -238,11 +238,11 @@
       argument allowing it to use a bitmap raster for plotting a
       regular grid instead of polygons. This can be more efficient, but
       may not be supported by all devices. The default is \code{FALSE}.
-      
+
       \item \code{list.files()}/\code{dir()} gains a new argument
       \code{include.dirs()} to include directories in the listing when
       \code{recursive = TRUE}.
-      
+
       \item New function \code{list.dirs()} lists all directories,
       (even empty ones).
 
@@ -252,7 +252,7 @@
       \item \code{Sys.umask()} now accepts \code{mode = NA} and returns
       the current \code{umask} value (still invisibly) without changing it.
 
-      \item The is a \code{!} method for classes \code{"octmode"} and
+      \item There is a \code{!} method for classes \code{"octmode"} and
       \code{"hexmode"}: this allows \code{xor(a, b)} to work if both
       \code{a} and \code{b} are from one of those classes.
 
@@ -531,7 +531,7 @@
       \item A \samp{LazyDataCompression} field in the \file{DESCRIPTION}
       file will be used to set the value for the
       \option{--data-compress} option of \command{R CMD INSTALL}.
-      
+
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
       in the lazyload daabase using \command{xz} compression: this for
       example halves the installed size of package \pkg{Imap}.
@@ -544,7 +544,7 @@
       from \code{Sweave} runs, and are often large.
     }
   }
-  
+
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item The \sQuote{experimental} alternative specification of a
@@ -661,7 +661,7 @@
       \item Updating S4 methods for a group generic function requires
       resetting the methods tables for the members of the group (patch
       contributed by Martin Morgan).
-      
+
       \item In some circumstances (including for package \pkg{XML}),
       \command{R CMD INSTALL} installed version-control directories from
       source packages.
@@ -675,7 +675,10 @@
 
       \item \code{debugger()} could fail to read the environment of a
       call to a function with a \code{\dots} argument.  (Reported by
-      Charlie Roosen.) 
+      Charlie Roosen.)
+
+      \item \code{prettyNum(c(1i, NA), drop0=TRUE)} or
+      \code{str(NA_complex_)} now work correctly.
     }
   }
 }

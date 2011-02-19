@@ -1555,6 +1555,12 @@ unlink(tf)
 ## bzfile warned and did not work < R 2.13.0
 
 
+## NA_complex_ in prettyNum()
+format(c(pi+0i, NA),   drop0=TRUE)
+prettyNum(NA_complex_, drop0=TRUE)
+## gave errors in R < 2.12.2
+
+
 
 
 proc.time()

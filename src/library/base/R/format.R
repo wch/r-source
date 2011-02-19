@@ -327,20 +327,26 @@ prettyNum <-
 	## should be rare .. taking an easy route
 	z.sp <- strsplit(sub("([0-9] *)([-+])( *[0-9])",
 			     "\\1::\\2::\\3", x), "::", fixed=TRUE)
-	z.im <- sapply(z.sp, `[[`, 3L)
-	## drop ending 'i' (and later re-add it)
-	has.i <- grep("i$", z.im)
-	z.im[has.i] <- sub("i$", '', z.im[has.i])
-	r <- lapply(list(sapply(z.sp, `[[`, 1L), z.im),
-		    function(.)
-		    prettyNum(.,
-			      big.mark=big.mark, big.interval=big.interval,
-			      small.mark=small.mark, small.interval=small.interval,
-			      decimal.mark=decimal.mark, preserve.width=preserve.width,
-			      zero.print=zero.print, drop0trailing=drop0trailing,
-			      is.cmplx=FALSE, ...))
-	r[[2]][has.i] <- P0(r[[2]][has.i], "i")
-	return(paste(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]], sep=""))
+	## be careful, if x had an  "	NA":
+	i3 <- vapply(z.sp, length, 0L) == 3L # those are re + im *i
+	if(any(i3)) {
+	    z.sp <- z.sp[i3]
+	    z.im <- sapply(z.sp, `[[`, 3L)
+	    ## drop ending 'i' (and later re-add it)
+	    has.i <- grep("i$", z.im)
+	    z.im[has.i] <- sub("i$", '', z.im[has.i])
+	    r <- lapply(list(sapply(z.sp, `[[`, 1L), z.im),
+			function(.)
+			prettyNum(.,
+				  big.mark=big.mark, big.interval=big.interval,
+				  small.mark=small.mark, small.interval=small.interval,
+				  decimal.mark=decimal.mark, preserve.width=preserve.width,
+				  zero.print=zero.print, drop0trailing=drop0trailing,
+				  is.cmplx=FALSE, ...))
+	    r[[2]][has.i] <- P0(r[[2]][has.i], "i")
+	    x[i3] <- paste(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]], sep="")
+	}
+	return(x)
     }
     preserve.width <- match.arg(preserve.width)
     x.sp <- strsplit(x, ".", fixed=TRUE)
