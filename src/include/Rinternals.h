@@ -585,10 +585,6 @@ int  Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
-Rcomplex Rf_asComplex(SEXP);
-int Rf_asInteger(SEXP);
-int Rf_asLogical(SEXP);
-double Rf_asReal(SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
 Rboolean R_compute_identical(SEXP, SEXP, Rboolean num_eq,
@@ -830,10 +826,11 @@ SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 int R_has_slot(SEXP obj, SEXP name);
 
-/* class definition, new objects */
+// class definition, new objects -- in ../main/objects.c :
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
 SEXP R_do_new_object(SEXP class_def);
+int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
 
 /* preserve objects across GCs */
 void R_PreserveObject(SEXP);

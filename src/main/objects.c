@@ -904,6 +904,59 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/**
+ * Return the 0-based index of an is() match in a vector of class-name
+ * strings terminated by an empty string.  Returns -1 for no match.
+ *
+ * @param x  an R object, about which we want is(x, .) information.
+ * @param valid vector of possible matches terminated by an empty string.
+ * @param rho  the environment in which the class definitions exist.
+ *
+ * @return index of match or -1 for no match
+ */
+int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
+{
+    int ans;
+    SEXP cl = getAttrib(x, R_ClassSymbol);
+    const char *class = CHAR(asChar(cl));
+    for (ans = 0; ; ans++) {
+	if (!strlen(valid[ans])) // empty string
+	    break;
+	if (!strcmp(class, valid[ans])) return ans;
+    }
+    /* if not found directly, now search the non-virtual super classes :*/
+    if(IS_S4_OBJECT(x)) {
+	/* now try the superclasses, i.e.,  try   is(x, "....") : */
+	SEXP classExts, superCl, _call;
+	static SEXP s_contains = NULL, s_selectSuperCl = NULL;
+	int i;
+	if(!s_contains) {
+	    s_contains      = install("contains");
+	    s_selectSuperCl = install(".selectSuperClasses");
+	}
+
+	PROTECT(classExts = R_do_slot(R_getClassDef(class), s_contains));
+	PROTECT(_call = lang3(s_selectSuperCl, classExts,
+			      /* dropVirtual = */ ScalarLogical(1)));
+	superCl = eval(_call, rho);
+	UNPROTECT(2);
+	PROTECT(superCl);
+	for(i=0; i < length(superCl); i++) {
+	    const char *s_class = CHAR(STRING_ELT(superCl, i));
+	    for (ans = 0; ; ans++) {
+		if (!strlen(valid[ans]))
+		    break;
+		if (!strcmp(s_class, valid[ans])) {
+		    UNPROTECT(1);
+		    return ans;
+		}
+	    }
+	}
+	UNPROTECT(1);
+    }
+    return -1;
+}
+
 /*
    ==============================================================
 
