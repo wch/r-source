@@ -143,8 +143,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         miss <- file.path("inst", "doc", c("Rplots.ps", "Rplots.pdf"))
         if (any(f <- file.exists(miss))) {
             checkingLog(Log, "for left-overs from vignette generation")
-            warnLog(paste("  file", paste(sQuote(miss[f]), collapse = ", "),
-                          "will not be installed: please remove it"))
+            noteLog(Log)
+            printLog(Log,
+                     paste("  file", paste(sQuote(miss[f]), collapse = ", "),
+                           "will not be installed: please remove it\n"))
         }
         if (R_check_doc_sizes && dir.exists("inst/doc")) check_doc_size()
 
