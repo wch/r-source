@@ -597,8 +597,9 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	    SEXP arg, class_obj; int check_err;
 	    PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
 	    if(check_err)
-		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
-		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+		      R_curErrorBuf());
 	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
 	    class = CHAR(STRING_ELT(class_obj, 0));
 	}
@@ -608,8 +609,9 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	SEXP arg; int check_err;
 	PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); nprotect++;
 	if(check_err)
-	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
-		  CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
+	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+		  CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+		  R_curErrorBuf());
 	class = CHAR(asChar(arg));
     }
     method = R_find_method(mlist, class, fname);
@@ -698,7 +700,8 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	   leaves the previous function, methods list unchanged */
 	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
 	if(error_flag)
-	    Rf_error(_("error in evaluating a 'primitive' next method"));
+	    Rf_error(_("error in evaluating a 'primitive' next method: %s"),
+		     R_curErrorBuf());
     }
     else
 	val = eval(e, ev);
@@ -952,8 +955,9 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		UNPROTECT(1); /* for arg */
 	    }
 	    if(check_err)
-		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
-		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),
+		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)),
+		      R_curErrorBuf());
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
 	lwidth += strlen(STRING_VALUE(thisClass)) + 1;
