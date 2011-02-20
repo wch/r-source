@@ -41,16 +41,32 @@ create.post <- function(instructions = "\\n",
                         file = "R.post",
                         info = NULL)
 {
-    methods <- c("mailx", "gnudoit", "none", "ess")
     method <-
 	if(is.null(method)) "none"
-	else methods[pmatch(method, methods)]
+	else match.arg(method, c("mailx", "gnudoit", "none", "ess"))
 
     body <- paste(instructions,
 		  "--please do not edit the information below--\\n\\n",
 		  info,
 		  bug.report.info(),
 		  sep="", collapse="")
+
+    none_method <- function() {
+        disclaimer <-
+            paste("# Your mailer is set to \"none\",\n",
+                  "# hence we cannot send the, ", description, " directly from R.\n",
+                  "# Please copy the ", description, " (after finishing it) to\n",
+                  "# your favorite email program and send it to\n#\n",
+                  "#       ", address, "\n#\n",
+                  "######################################################\n",
+                  "\n\n", sep = "")
+
+        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file=file)
+        cat("The", description, "is being opened for you to edit.\n")
+        file.edit(file)
+        cat("The unsent ", description, " can be found in file",
+            sQuote(file), "\n", sep ="")
+    }
 
     if(method == "gnudoit") {
 	cmd <- paste("gnudoit -q '",
@@ -61,19 +77,7 @@ create.post <- function(instructions = "\\n",
 		     sep="")
 	system(cmd)
     } else if(method=="none") {
-        disclaimer <-
-            paste("# Your mailer is set to \"none\" (default on Windows),\n",
-                  "# hence we cannot send the, ", description, " directly from R.\n",
-                  "# Please copy the ", description, " (after finishing it) to\n",
-                  "# your favorite email program and send it to\n#\n",
-                  "#       ", address, "\n#\n",
-                  "######################################################\n",
-                  "\n\n", sep = "")
-
-        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file = file)
-        cat("The", description, "is being opened for you to edit.\n")
-	system(paste(getOption("editor"), file))
-        cat("The unsent", description, "can be found in file", file, "\n")
+        none_method()
     } else if(method == "mailx") {
         if(missing(address)) stop("must specify 'address'")
         if(missing(subject)) stop("'subject' missing")
@@ -81,8 +85,7 @@ create.post <- function(instructions = "\\n",
 
 	cat(gsub("\\\\n", "\n", body), file=file)
         cat("The", description, "is being opened for you to edit.\n")
-        ## FIXME: why not file.edit?
-	system(paste(getOption("editor"), file))
+        file.edit(file)
 
         if(is.character(ccaddress) && nzchar(ccaddress)) {
             cmdargs <- paste("-s", shQuote(subject),
@@ -110,12 +113,27 @@ create.post <- function(instructions = "\\n",
             else {
                 cat("Sending email failed!\n")
                 cat("The unsent", description, "can be found in file",
-                    file, "\n")
+                    sQuote(file), "\n")
             }
         } else
             cat("The unsent", description, "can be found in file", file, "\n")
     } else if(method == "ess") {
 	body <- gsub("\\\\n", "\n", body)
 	cat(body)
+    } else if(method == "mailto") {
+        if (missing(address)) stop("must specify 'address'")
+        if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
+        cat("The", description, "is being opened in your default mail program\nfor you to complete and send.\n")
+        arg <- paste("mailto:", address,
+                     "?subject=", subject,
+                     if(!missing(ccaddress) && is.character(ccaddress))
+                         paste("&cc=", ccaddress, sep=""),
+                     "&body=", body0 <- gsub("\\\\n", "\n", body), sep = "")
+        open_prog <- if(grepl("-apple-darwin", R.version$platform)) "open" else "xdg-open"
+ 	res <- system2(open_prog, shQuote(arg))
+        if(res) {
+            cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
+            none_method()
+        }
     }
 }

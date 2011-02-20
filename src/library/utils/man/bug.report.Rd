@@ -17,7 +17,7 @@ bug.report(subject = "", ccaddress, method = getOption("mailer"),
     \code{"mailx"} (default, current username) and \code{"mailto"}
     (default, none) methods.  Use \code{ccaddress = FALSE} for no copy.}
   \item{method}{Submission method, one of \code{"mailx"}, \code{"mailto"},
-    \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.}
+    \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.  See \sQuote{Details}.}
   \item{address}{Recipient's email address, where applicable.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
@@ -48,9 +48,8 @@ bug.report(subject = "", ccaddress, method = getOption("mailer"),
   maintainer.
 
   If method is \code{"none"} or \code{NULL} (the default on Windows),
-  then only an editor is opened to help writing the bug report.  Which
-  editor is used can be selected using \code{\link{options}}, type
-  \code{getOption("editor")} to see what editor is currently defined.
+  then only an editor is opened to help writing the bug report.  See
+  \code{\link{file.edit}}.
   
   If the submission method is \code{"mailx"} (Unix only, the default
   there) then after exiting the editor, the user is asked if the email
@@ -58,10 +57,17 @@ bug.report(subject = "", ccaddress, method = getOption("mailer"),
   work).  By default a copy of the mail is sent to the current username
   (see argument \code{ccaddress}).
 
-  If the method is \code{"mailto"} (Windows only) then your default mail
-  program (often Outlook Express (XP/Vista), Windows Live Mail (7) or
-  Outlook) is opened with a template email to be completed and sent.
-
+  If the method is \code{"mailto"} then your default mail
+  program
+#ifdef windows
+  (often Outlook Express (XP/Vista), Windows Live Mail (7) or Outlook)
+#endif
+  is opened with a template email to be completed and sent.
+#ifdef unix
+  (The default mailer is invoked by opening a \samp{mailto:} URL
+  \emph{via} \command{open} on Mac OS X or \command{xdg-open} elsewhere.)
+#endif  
+  
   If the method is \code{"gnudoit"} (Unix only), an Emacs mail buffer is
   opened and used for sending the email.
 
