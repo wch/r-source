@@ -17,7 +17,7 @@ Name: "manuals"; Description: "On-line PDF Manuals"; Types: user user32 user64 f
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 full custom
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
-Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
+Name: "manuals/libdocs"; Description: "Docs for Packages grid, Matrix and survival"; Types: full custom
 Name: "tcl"; Description: "SupportFiles for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/noarch"; Description: "Main Files"; Types: user user32 user64 full custom
 Name: "tcl/32"; Description: "i386 Files for Package tcltk"; Types: user user32 full custom

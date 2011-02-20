@@ -155,6 +155,7 @@
             else if (grepl("^Tcl", g))
                 component <- "tcl/noarch"
             else if (grepl("^library/grid/doc", g) ||
+                     grepl("^library/survival/doc", g) ||
                      grepl("^library/Matrix/doc", g))
                 component <- "manuals/libdocs"
             else if (grepl("^share/locale", g) ||
@@ -415,7 +416,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="libdocs" Title="Docs for Packages grid and Matrix" Description="Docs for packages grid and Matrix: mainly PDF vignettes and their sources and code" Level="1000"',
+        '      <Feature Id="libdocs" Title="Docs for Packages grid, Matrix and survival" Description="Docs for packages grid, Matrix and survival: mainly PDF vignettes and their sources and code" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'manuals/libdocs'])
         cat(file = con,

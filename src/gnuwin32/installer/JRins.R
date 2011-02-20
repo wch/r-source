@@ -122,6 +122,7 @@
 	else if (grepl("^Tcl", f))
 	    component <- "tcl/noarch"
 	else if (grepl("^library/grid/doc", f) ||
+                 grepl("^library/survival/doc", f) ||
                  grepl("^library/Matrix/doc", f))
 	    component <- "manuals/libdocs"
 	else if (grepl("^share/locale", f) ||
