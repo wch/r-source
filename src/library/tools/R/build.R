@@ -591,10 +591,8 @@ get_exclude_patterns <- function()
     binary <- FALSE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
-    resave_data <- "gzip"
-    compact_vignettes <- FALSE
     pkgs <- character()
-    options(showErrorCalls=FALSE, warn = 1)
+    options(showErrorCalls = FALSE, warn = 1)
 
     ## read in ~/.R/build.Renviron[.rarch]
     rarch <- .Platform$r_arch
@@ -603,6 +601,13 @@ get_exclude_patterns <- function()
         readRenviron(Renv)
     else if (file.exists(Renv <- "~/.R/build.Renviron")) readRenviron(Renv)
 
+    ## Configurable variables.
+    compact_vignettes <-
+        config_val_to_logical(Sys.getenv("_R_BUILD_COMPACT_VIGNETTES_",
+                                         "FALSE"))
+    resave_data <-
+        Sys.getenv("_R_BUILD_RESAVE_DATA_", "gzip")
+    
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
@@ -662,6 +667,7 @@ get_exclude_patterns <- function()
                 " are only for '--binary'  and will be ignored")
 
     Sys.unsetenv("R_DEFAULT_PACKAGES")
+
     startdir <- getwd()
     if (is.null(startdir))
         stop("current working directory cannot be ascertained")
