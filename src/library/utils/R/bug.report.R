@@ -1,9 +1,6 @@
-bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
-                       method = getOption("mailer"),
-                       address = "r-bugs@r-project.org",
-                       file = "R.bug.report",
-                       package = NULL,
-                       lib.loc = NULL)
+bug.report <- function(subject = "", ccaddress, method = getOption("mailer"),
+                       address,
+                       file = "R.bug.report", package = NULL, lib.loc = NULL)
 {
     baseR <- function() {
         writeLines(c("  Bug reports on R and the base packages need to be submitted",

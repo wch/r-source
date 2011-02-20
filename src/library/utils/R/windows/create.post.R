@@ -31,7 +31,7 @@ bug.report.info <- function() {
 create.post <- function(instructions = "\\n",
                         description = "post",
                         subject = "",
-                        ccaddress = Sys.getenv("USER"),
+                        ccaddress,
                         method = getOption("mailer"),
                         address = "the relevant mailing list",
                         file = "R.post",
@@ -43,7 +43,7 @@ create.post <- function(instructions = "\\n",
 		  bug.report.info(),
 		  "\\n", sep="", collapse="")
 
-    if (method == "none") {
+    none_method <- function() {
         disclaimer <-
             paste("# R for Windows will not send your ", description,
                   " automatically.\n",
@@ -53,25 +53,28 @@ create.post <- function(instructions = "\\n",
                   "######################################################\n",
                   "\n\n", sep = "")
 
-        cat(disclaimer, file=file)
-        body <- gsub("\\\\n", "\n", body)
-        cat(body, file=file, append=TRUE)
+        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file=file)
         file.edit(file)
         cat("The unsent ", description, " can be found in file\n",
             normalizePath(file), "\n", sep ="")
-    } else if (method == "mailto") {
+    }
+
+    if (method == "none")
+        none_method()
+    else if (method == "mailto") {
+        if (missing(address)) stop("must specify 'address'")
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
-	body0 <- gsub("\\\\n", "%0A", body)
-        cat("The", description, "is being opened for you to edit and send.\n")
- 	tryCatch(shell(paste("start \"title\" \"mailto:", address,
-                             "?subject=", subject, "&body=", body0,
-                             sep = "")),
-                 error = function(e) {
-                     cat(body, file=file, append=TRUE)
-                     file.edit(file)
-                     cat("The unsent ", description, " can be found in file\\n",
-                         normalizePath(file), "\n", sep ="")
-                 })
+        cat("The", description, "is being opened in your default mail program\nfor you to complete and send.\n")
+        cmd <- paste("start \"title\" \"mailto:", address,
+                     "?subject=", subject,
+                     if(!missing(ccaddress) && is.character(ccaddress))
+                         paste("&cc=", ccaddress, sep=""),
+                     "&body=", body0 <- gsub("\\\\n", "%0A", body),
+                     sep = "")
+ 	tryCatch(shell(cmd, mustWork = TRUE), error = function(e) {
+            cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
+            none_method()
+        })
     } else stop("unknown 'method'")
     invisible()
 }

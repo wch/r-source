@@ -35,9 +35,9 @@ bug.report.info <- function() {
 create.post <- function(instructions = "\\n",
                         description = "post",
                         subject = "",
-                        ccaddress = Sys.getenv("USER"),
+                        ccaddress,
                         method = getOption("mailer"),
-                        address ="the relevant mailing list",
+                        address = "the relevant mailing list",
                         file = "R.post",
                         info = NULL)
 {
@@ -70,18 +70,18 @@ create.post <- function(instructions = "\\n",
                   "######################################################\n",
                   "\n\n", sep = "")
 
-        cat(disclaimer, file=file)
-	body <- gsub("\\\\n", "\n", body)
-	cat(body, file=file, append=TRUE)
+        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file = file)
         cat("The", description, "is being opened for you to edit.\n")
 	system(paste(getOption("editor"), file))
         cat("The unsent", description, "can be found in file", file, "\n")
     } else if(method == "mailx") {
+        if(missing(address)) stop("must specify 'address'")
         if(missing(subject)) stop("'subject' missing")
+        if(missing(ccaddress)) ccaddress <- Sys.getenv("user")
 
-	body <- gsub("\\\\n", "\n", body)
-	cat(body, file=file, append=FALSE)
+	cat(gsub("\\\\n", "\n", body), file=file)
         cat("The", description, "is being opened for you to edit.\n")
+        ## FIXME: why not file.edit?
 	system(paste(getOption("editor"), file))
 
         if(is.character(ccaddress) && nzchar(ccaddress)) {

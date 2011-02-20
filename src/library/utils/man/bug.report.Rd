@@ -7,22 +7,18 @@
 \alias{bug.report}
 \title{Send a Bug Report}
 \usage{
-bug.report(subject = "",
-           ccaddress = Sys.getenv("USER"),
-           method = getOption("mailer"),
-           address = "r-bugs@r-project.org",
-           file = "R.bug.report",
-           package = NULL,
-           lib.loc = NULL)
+bug.report(subject = "", ccaddress, method = getOption("mailer"),
+           address, file = "R.bug.report", package = NULL, lib.loc = NULL)
 }
 \arguments{
   \item{subject}{Subject of the email. File separate bug reports for
     multiple bugs.}
-  \item{ccaddress}{Optional email address for copies (default is current
-    username).  Use \code{ccaddress = FALSE} for no copies.}
+  \item{ccaddress}{Optional email address for copies with the
+    \code{"mailx"} (default, current username) and \code{"mailto"}
+    (default, none) methods.  Use \code{ccaddress = FALSE} for no copy.}
   \item{method}{Submission method, one of \code{"mailx"}, \code{"mailto"},
     \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.}
-  \item{address}{Recipient's email address.}
+  \item{address}{Recipient's email address, where applicable.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
   \item{package}{Optional character vector naming a single package which is 
@@ -48,7 +44,7 @@ bug.report(subject = "",
   will be opened using \code{\link{browseURL}}, otherwise an email
   directed to the package maintainer will be generated.
   
-  The rest of this section applies when the action to email the
+  The rest of this section applies when the action to email the package
   maintainer.
 
   If method is \code{"none"} or \code{NULL} (the default on Windows),
@@ -56,15 +52,15 @@ bug.report(subject = "",
   editor is used can be selected using \code{\link{options}}, type
   \code{getOption("editor")} to see what editor is currently defined.
   
-  If the submission method is \code{"mailx"} (Unix only) then after
-  exiting the editor, the user is asked if the email should be sent
-  directly: if requested this is attempted (but may not work).  By
-  default a copy of the mail is sent to the current username (see
-  argument \code{ccaddress}).
+  If the submission method is \code{"mailx"} (Unix only, the default
+  there) then after exiting the editor, the user is asked if the email
+  should be sent directly: if requested this is attempted (but may not
+  work).  By default a copy of the mail is sent to the current username
+  (see argument \code{ccaddress}).
 
   If the method is \code{"mailto"} (Windows only) then your default mail
-  program (often Outlook Express) is opened with a template email to be
-  completed and sent.
+  program (often Outlook Express (XP/Vista), Windows Live Mail (7) or
+  Outlook) is opened with a template email to be completed and sent.
 
   If the method is \code{"gnudoit"} (Unix only), an Emacs mail buffer is
   opened and used for sending the email.
