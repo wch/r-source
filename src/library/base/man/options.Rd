@@ -147,8 +147,8 @@ getOption(x, default = NULL)
       environment variable \env{R_KEEP_PKG_SOURCE} is set to
       \code{yes}.
 
-      Note this does not apply to packages using lazy-loading or saved
-      images.  Whether they have kept source is determined when they are
+      Note this does not apply to packages using lazy-loading.  Whether
+      they have kept source is determined when they are
       installed (and is almost certainly false).}
 
     \item{\code{mailer}:}{default mailer used by

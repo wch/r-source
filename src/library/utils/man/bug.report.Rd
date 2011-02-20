@@ -48,15 +48,16 @@ bug.report(subject = "",
   will be opened using \code{\link{browseURL}}, otherwise an email
   directed to the package maintainer will be generated.
 
-  Currently direct submission of bug reports works only on Unix systems.
-  If the submission method is \code{"mailx"}, then the default editor is
-  used to write the bug report.  Which editor is used can be controlled
-  using \code{\link{options}}, type \code{getOption("editor")} to see
-  what editor is currently defined.  After saving the bug report (in the
-  temporary file opened) and exiting the editor, the user is asked if
-  the email should be send directly: if requested this is attempted (but
-  may not work).  By default a copy of the mail is sent to the current
-  user.
+  If method is \code{"none"} or \code{NULL} (the default on Windows),
+  then only an editor is opened to help writing the bug report.  Which
+  editor is used can be selected using \code{\link{options}}, type
+  \code{getOption("editor")} to see what editor is currently defined.
+  
+  If the submission method is \code{"mailx"} (Unix only) then after
+  exiting the editor, the user is asked if the email should be sent
+  directly: if requested this is attempted (but may not work).  By
+  default a copy of the mail is sent to the current username (see
+  argument \code{ccaddress}).
 
   If method is \code{"gnudoit"}, then an emacs mail buffer is opened
   and used for sending the email.
