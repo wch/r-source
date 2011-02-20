@@ -37,14 +37,13 @@ create.post <- function(instructions = "\\n",
                         subject = "",
                         ccaddress = Sys.getenv("USER"),
                         method = getOption("mailer"),
-                        address ="the relevant mailing list",
+                        address = "the relevant mailing list",
                         file = "R.post",
                         info = NULL)
 {
-    methods <- c("mailx", "gnudoit", "none", "ess")
     method <-
 	if(is.null(method)) "none"
-	else methods[pmatch(method, methods)]
+	else match.arg(method, c("mailx", "gnudoit", "none", "ess"))
 
     body <- paste(instructions,
 		  "--please do not edit the information below--\\n\\n",
