@@ -676,6 +676,10 @@
       and \code{help.request()}) failed to quote arguments to the
       mailer, and so often failed.
 
+      \item \code{bug.report()} was naive about how to extract
+      maintainer email addresses from package descriptions, so would
+      often try mailing to incorrect addresses.
+
       \item \code{debugger()} could fail to read the environment of a
       call to a function with a \code{\dots} argument.  (Reported by
       Charlie Roosen.)
