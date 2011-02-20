@@ -39,7 +39,7 @@ create.post <- function(instructions = "\\n",
 {
     body <- paste(instructions,
 		  "--please do not edit the information below--\\n\\n",
-		  info, 
+		  info,
 		  bug.report.info(),
 		  "\\n", sep="", collapse="")
 
@@ -57,27 +57,22 @@ create.post <- function(instructions = "\\n",
         body <- gsub("\\\\n", "\n", body)
         cat(body, file=file, append=TRUE)
         file.edit(file)
-        cat("The unsent", description, "can be found in file",
-            tools::file_path_as_absolute(file), "\n")
-    }
-    else if (method == "mailto") {
-        if (missing(subject)) stop("'subject' missing")
-        if (nchar(subject) < 1) subject <- "<<Enter Meaningful Subject>>"
-
-	body <- gsub("\\\\n", "%0A", body)
+        cat("The unsent ", description, " can be found in file\n",
+            normalizePath(file), "\n", sep ="")
+    } else if (method == "mailto") {
+        if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
+	body0 <- gsub("\\\\n", "%0A", body)
         cat("The", description, "is being opened for you to edit and send.\n")
-	mail <- try(shell(paste("start \"title\" \"mailto:", address,
-                                "?subject=", subject, "&body=", body,
-                                sep = "")))
-        if (inherits(mail, "try-error")) {
-            body <- gsub("%0A", "\n", body)
-            cat(body, file=file, append=TRUE)
-            file.edit(file)
-            cat("The unsent", description, "can be found in file",
-                tools::file_path_as_absolute(file), "\n")
-        }
-
-    }
+ 	tryCatch(shell(paste("start \"title\" \"mailto:", address,
+                             "?subject=", subject, "&body=", body0,
+                             sep = "")),
+                 error = function(e) {
+                     cat(body, file=file, append=TRUE)
+                     file.edit(file)
+                     cat("The unsent ", description, " can be found in file\\n",
+                         normalizePath(file), "\n", sep ="")
+                 })
+    } else stop("unknown 'method'")
     invisible()
 }
 

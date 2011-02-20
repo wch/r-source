@@ -53,11 +53,11 @@ bug.report(subject = "",
 
   If method is \code{"none"} or \code{NULL} (the default on Windows),
   then only an editor is opened to help writing the bug report.  Which
-  editor is used can be controlled using \code{\link{options}}, type
+  editor is used can be selected using \code{\link{options}}, type
   \code{getOption("editor")} to see what editor is currently defined.
   
   If the submission method is \code{"mailx"} (Unix only) then after
-  exiting the editor, the user is asked if the email should be send
+  exiting the editor, the user is asked if the email should be sent
   directly: if requested this is attempted (but may not work).  By
   default a copy of the mail is sent to the current username (see
   argument \code{ccaddress}).
