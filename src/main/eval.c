@@ -3450,11 +3450,12 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
     return mat;
 }
 
-#define FIXUP_SCALAR_LOGICAL(arg, op) do { \
+#define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
 	SEXP val = R_BCNodeStackTop[-1]; \
 	if (TYPEOF(val) != LGLSXP || LENGTH(val) != 1) { \
 	    if (!isNumber(val))	\
-		error(_("invalid %s type in 'x %s y'"), arg, op); \
+		errorcall(VECTOR_ELT(constants, callidx), \
+			  _("invalid %s type in 'x %s y'"), arg, op);	\
 	    R_BCNodeStackTop[-1] = ScalarLogical(asLogical(val)); \
 	} \
     } while(0)
@@ -4075,16 +4076,18 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
     }
-    OP(AND1ST, 1): {
+    OP(AND1ST, 2): {
+	int callidx = GETOP();
 	int label = GETOP();
-        FIXUP_SCALAR_LOGICAL("'x'", "&&");
+        FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
         value = R_BCNodeStackTop[-1];
 	if (LOGICAL(value)[0] == FALSE)
 	    pc = codebase + label;
 	NEXT();
     }
-    OP(AND2ND, 0): {
-        FIXUP_SCALAR_LOGICAL("'y'", "&&");
+    OP(AND2ND, 1): {
+	int callidx = GETOP();
+	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "&&");
         value = R_BCNodeStackTop[-1];
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
@@ -4095,16 +4098,18 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	R_BCNodeStackTop -= 1;
 	NEXT();
     }
-    OP(OR1ST, 1):  {
+    OP(OR1ST, 2):  {
+	int callidx = GETOP();
 	int label = GETOP();
-        FIXUP_SCALAR_LOGICAL("'x'", "||");
+        FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
         value = R_BCNodeStackTop[-1];
 	if (LOGICAL(value)[0] != NA_LOGICAL && LOGICAL(value)[0]) /* is true */
 	    pc = codebase + label;
 	NEXT();
     }
-    OP(OR2ND, 0):  {
-        FIXUP_SCALAR_LOGICAL("'y'", "||");
+    OP(OR2ND, 1):  {
+	int callidx = GETOP();
+	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "||");
         value = R_BCNodeStackTop[-1];
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second
