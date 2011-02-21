@@ -3540,12 +3540,15 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	pc = codebase + label;
 	NEXT();
       }
-    OP(BRIFNOT, 1):
+    OP(BRIFNOT, 2):
       {
-	int label = GETOP(), cond;
+	SEXP call = VECTOR_ELT(constants, GETOP());
+	int label = GETOP();
+	int cond;
 	value = BCNPOP();
-	/**** should probably inline this and use proper call here: */
-	cond = asLogicalNoNA(value, R_NilValue);
+	/**** should probably inline this and avoid looking up call
+	      unless it is needed */
+	cond = asLogicalNoNA(value, call);
 	if (! cond) {
 	    BC_CHECK_SIGINT();
 	    pc = codebase + label;
