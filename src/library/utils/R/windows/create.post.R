@@ -20,13 +20,13 @@ create.post <- function(instructions = character(),
                         subject = "",
                         method = getOption("mailer"),
                         address = "the relevant mailing list",
-                        ccaddress = getOption("ccaddress"),
-                        file = "R.post",
-                        info = NULL)
+                        ccaddress = getOption("ccaddress", ""),
+                        filename = "R.post",
+                        info = character())
 {
-    body <- paste(c(instructions,
-                    "--please do not edit the information below--", "",
-                    info), collapse="\\n")
+    body <- c(instructions,
+              "--please do not edit the information below--", "",
+              info)
 
     none_method <- function() {
         disclaimer <-
@@ -38,10 +38,12 @@ create.post <- function(instructions = character(),
                   "######################################################\n",
                   "\n\n", sep = "")
 
-        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file=file)
-        file.edit(file)
+        cat(c(disclaimer, body), file=filename, sep = "\n")
+        cat("The", description, "is being opened for you to edit.\n")
+        flush.console()
+        file.edit(filename)
         cat("The unsent ", description, " can be found in file\n",
-            normalizePath(file), "\n", sep ="")
+            normalizePath(filename), "\n", sep ="")
     }
 
     if (method == "none")
@@ -55,7 +57,7 @@ create.post <- function(instructions = character(),
                      "?subject=", subject,
                      if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
-                     "&body=", body0 <- gsub("\\\\n", "%0A", body),
+                     "&body=", paste(body, collapse="%0A"),
                      sep = "")
  	tryCatch(shell(cmd, mustWork = TRUE), error = function(e) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")

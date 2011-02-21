@@ -21,7 +21,7 @@ bug.report.info <- function()
           c("", "GUI:",
             paste(" R-GUI ", Sys.getenv("R_GUI_APP_VERSION"),
                   " (", Sys.getenv("R_GUI_APP_REVISION"),")", sep='')),
-      if (.Platform$OS.type == "windows") win.version(),
+      if (.Platform$OS.type == "windows") c("", win.version()),
       "",
       "Locale:", paste(" ", Sys.getlocale(), sep = ""),
       "",
