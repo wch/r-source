@@ -1,8 +1,21 @@
-help.request <- function (subject = "",
-			  ccaddress = getOption("ccaddress"),
-			  method = getOption("mailer"),
-			  address = "r-help@R-project.org",
-			  file = "R.help.request")
+#  File src/library/utils/R/unix/help.request.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+help.request <- function (subject = "", address = "r-help@R-project.org",
+			  file = "R.help.request", ...)
 {
     no <- function(answer) answer == "n"
     yes <- function(answer) answer == "y"
@@ -117,9 +130,6 @@ help.request <- function (subject = "",
 		"\\n<<Write your query here, using your example code to illustrate>>",
 		"\\n<<End with your name and affiliation>>\\n\\n\\n\\n"),
 		description = "help request",
-		subject = subject,
-		ccaddress = ccaddress,
-		method = method,
-		address = address,
-		file = file)
+		subject = subject, address = address,
+                filename = file, info = bug.report.info(), ...)
 }

@@ -446,8 +446,8 @@ getOption(x, default = NULL)
       is called with a URL as its argument.}
 
     \item{\code{ccaddress}:}{default Cc: address used by
-      \code{\link{bug.report}} and \code{\link{help.request}}.  Can be
-      \code{FALSE} or \code{""}.}
+      \code{\link{create.post}} (and hence\code{\link{bug.report}} and
+      \code{\link{help.request}}).  Can be \code{FALSE} or \code{""}.}
     
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
@@ -484,9 +484,9 @@ getOption(x, default = NULL)
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
     
-    \item{\code{mailer}:}{default mailer used by
-      \code{\link{bug.report}} and \code{\link{help.request}}.  Can be
-      \code{"none"}.}
+    \item{\code{mailer}:}{default emailing method used by
+      \code{\link{create.post}} and hence \code{\link{bug.report}} and
+      \code{\link{help.request}}.}
     
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
       if available?.  Defaults to \code{TRUE}.  Currently applies to

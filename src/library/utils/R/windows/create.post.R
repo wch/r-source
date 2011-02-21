@@ -14,34 +14,19 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-bug.report.info <- function() {
-    paste("R Version:\\n ",
-		  paste(names(version), version, sep=" = ", collapse="\\n "),
-                  "\\n\\n",
-                  win.version(),
-		  "\\n\\n",
-                  "Locale:\\n",
-                  Sys.getlocale(),
-		  "\\n\\n",
-		  "Search Path:\\n ",
-		  paste(search(), collapse=", "),
-		  "\\n", sep="", collapse="")
-}
 
-create.post <- function(instructions = "\\n",
+create.post <- function(instructions = character(),
                         description = "post",
                         subject = "",
-                        ccaddress = getOption("ccaddress"),
                         method = getOption("mailer"),
                         address = "the relevant mailing list",
+                        ccaddress = getOption("ccaddress"),
                         file = "R.post",
                         info = NULL)
 {
-    body <- paste(instructions,
-		  "--please do not edit the information below--\\n\\n",
-		  info,
-		  bug.report.info(),
-		  "\\n", sep="", collapse="")
+    body <- paste(c(instructions,
+                    "--please do not edit the information below--", "",
+                    info), collapse="\\n")
 
     none_method <- function() {
         disclaimer <-

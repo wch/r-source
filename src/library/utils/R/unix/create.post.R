@@ -14,42 +14,29 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-bug.report.info <- function() {
-    paste("R Version:\\n ",
-    paste(names(R.version),R.version, sep=" = ",collapse="\\n "),
-    if (nzchar(Sys.getenv("R_GUI_APP_VERSION")))
-      paste("\\n\\nGUI:\\n R-GUI ",Sys.getenv("R_GUI_APP_VERSION"),
-	    " (",Sys.getenv("R_GUI_APP_REVISION"),")",sep='')
-    else
-      ""
-    ,
-    "\\n\\n",
-    "Locale:\\n",
-    Sys.getlocale(),
-    "\\n\\n",
-    "Search Path:\\n ",
-    paste(search(), collapse=", "),
-    "\\n", sep="", collapse="")
-}
-
-create.post <- function(instructions = "\\n",
+create.post <- function(instructions = character(),
                         description = "post",
                         subject = "",
-                        ccaddress = getOption(ccaddress),
                         method = getOption("mailer"),
                         address = "the relevant mailing list",
-                        file = "R.post",
-                        info = NULL)
+                        ccaddress = getOption("ccaddress", ""),
+                        filename = "R.post",
+                        info = character())
 {
     method <-
 	if(is.null(method)) "none"
-	else match.arg(method, c("mailx", "gnudoit", "none", "ess"))
+	else match.arg(method, c("mailto", "mailx", "gnudoit", "none", "ess"))
+    ## FIXME: fall back to browser
+    open_prog <- if(grepl("-apple-darwin", R.version$platform)) "open" else "xdg-open"
+    if (method == "mailto" && !nzchar(Sys.which(open_prog))) {
+        warning("cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'")
+        flush.console()
+        Sys.sleep(5)
+    }
 
-    body <- paste(instructions,
-		  "--please do not edit the information below--\\n\\n",
-		  info,
-		  bug.report.info(),
-		  sep="", collapse="")
+    body <- c(instructions,
+              "--please do not edit the information below--", "",
+              info)
 
     none_method <- function() {
         disclaimer <-
@@ -61,42 +48,42 @@ create.post <- function(instructions = "\\n",
                   "######################################################\n",
                   "\n\n", sep = "")
 
-        cat(c(disclaimer, gsub("\\\\n", "\n", body)), file=file)
+        cat(c(disclaimer, body), file=filename, sep = "\n")
         cat("The", description, "is being opened for you to edit.\n")
-        file.edit(file)
-        cat("The unsent ", description, " can be found in file",
-            sQuote(file), "\n", sep ="")
+        file.edit(filename)
+        cat("The unsent ", description, " can be found in file ",
+            sQuote(filename), "\n", sep ="")
     }
 
     if(method == "gnudoit") {
 	cmd <- paste("gnudoit -q '",
 		     "(mail nil \"", address, "\")",
-		     "(insert \"", body, "\")",
+		     "(insert \"", paste(body, collapse="\\n"), "\")",
 		     "(search-backward \"Subject:\")",
 		     "(end-of-line)'",
 		     sep="")
 	system(cmd)
-    } else if(method=="none") {
+    } else if(method == "none") {
         none_method()
     } else if(method == "mailx") {
         if(missing(address)) stop("must specify 'address'")
-        if(missing(subject)) stop("'subject' missing")
+        if(!nzchar(subject)) stop("'subject' is missing")
         if(length(ccaddress) != 1L) stop("'ccaddress' must be of length 1")
 
-	cat(gsub("\\\\n", "\n", body), file=file)
+	cat(body, file=filename, sep = "\n")
         cat("The", description, "is being opened for you to edit.\n")
-        file.edit(file)
+        file.edit(filename)
 
         if(is.character(ccaddress) && nzchar(ccaddress)) {
             cmdargs <- paste("-s", shQuote(subject),
                              "-c", shQuote(ccaddress),
                              shQuote(address),
-                             "<", file, "2>/dev/null")
+                             "<", filename, "2>/dev/null")
         }
         else
             cmdargs <- paste("-s", shQuote(subject),
                              shQuote(address), "<",
-                             file, "2>/dev/null")
+                             filename, "2>/dev/null")
         status <- 1L
         answer <- readline(paste("Email the ", description, " now? (yes/no) ",
                                  sep = ""))
@@ -109,17 +96,16 @@ create.post <- function(instructions = "\\n",
             if(status)
                 status <- system(paste("/usr/ucb/mail", cmdargs), , TRUE, TRUE)
 
-            if(status == 0L) unlink(file)
+            if(status == 0L) unlink(filename)
             else {
                 cat("Sending email failed!\n")
                 cat("The unsent", description, "can be found in file",
-                    sQuote(file), "\n")
+                    sQuote(filename), "\n")
             }
         } else
-            cat("The unsent", description, "can be found in file", file, "\n")
+            cat("The unsent", description, "can be found in file", filename, "\n")
     } else if(method == "ess") {
-	body <- gsub("\\\\n", "\n", body)
-	cat(body)
+	cat(body, sep = "\n")
     } else if(method == "mailto") {
         if (missing(address)) stop("must specify 'address'")
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
@@ -129,12 +115,14 @@ create.post <- function(instructions = "\\n",
                      "?subject=", subject,
                      if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
-                     "&body=", body0 <- gsub("\\\\n", "\n", body), sep = "")
-        open_prog <- if(grepl("-apple-darwin", R.version$platform)) "open" else "xdg-open"
+                     "&body=", paste(body, collapse="\n"), sep = "")
  	res <- system2(open_prog, shQuote(arg))
         if(res) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
+            flush.console()
+            Sys.sleep(5)
             none_method()
         }
     }
+    invisible()
 }

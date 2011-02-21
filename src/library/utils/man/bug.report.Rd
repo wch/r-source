@@ -7,34 +7,28 @@
 \alias{bug.report}
 \title{Send a Bug Report}
 \usage{
-bug.report(subject = "", ccaddress = getOption("ccaddress"),
-           method = getOption("mailer"),
-           address, file = "R.bug.report", package = NULL, lib.loc = NULL)
+bug.report(subject = "",  address,
+           file = "R.bug.report", package = NULL, lib.loc = NULL, \dots)
 }
 \arguments{
-  \item{subject}{Subject of the email. File separate bug reports for
-    multiple bugs.}
-  \item{ccaddress}{Optional email address for copies with the
-    \code{"mailx"} and \code{"mailto"} methods.  Use \code{ccaddress =
-      FALSE} for no copy.}
-  \item{method}{Submission method, one of \code{"mailx"}, \code{"mailto"},
-    \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.  See \sQuote{Details}.}
+  \item{subject}{Subject of the email.}
   \item{address}{Recipient's email address, where applicable: for
     package bug reports sent by email this defaults to the address of
     the package maintainer (the first if more than one is listed).} 
-  \item{file}{File to use for setting up the email (or storing it when
-    method is \code{"none"} or sending mail fails).}
+  \item{file}{filename to use (if needed) for setting up the email.}
   \item{package}{Optional character vector naming a single package which is 
     the subject of the bug report.}
   \item{lib.loc}{A character vector describing the location of \R
     library trees in which to search for the package, or \code{NULL}.
     The default value of \code{NULL} corresponds to all libraries
     currently known.}
+  \item{\dots}{additional named arguments such as \code{method} and
+    \code{ccaddress} to pass to \code{\link{create.post}}.}
 }
 \description{
-  Invokes an editor to write a bug report or opens a web page for
-  bug submission.  Some standard information on the
-  current version and configuration of \R are included automatically.
+  Invokes an editor or email program to write a bug report or opens a
+  web page for bug submission.  Some standard information on the current
+  version and configuration of \R are included automatically.
 }
 \details{
   If \code{package} is \code{NULL} or a base package, this opens the R
@@ -45,36 +39,8 @@ bug.report(subject = "", ccaddress = getOption("ccaddress"),
   added to the standard information.  If the package has a
   \code{BugReports} field in the \file{DESCRIPTION} file, that URL
   will be opened using \code{\link{browseURL}}, otherwise an email
-  directed to the package maintainer will be generated.
-  
-  The rest of this section applies when the action to email the package
-  maintainer.
-
-  If method is \code{"none"} or \code{NULL} (the default on Windows),
-  then only an editor is opened to help writing the bug report.  See
-  \code{\link{file.edit}}.
-  
-  If the submission method is \code{"mailx"} (Unix only, the default
-  there) then after exiting the editor, the user is asked if the email
-  should be sent directly: if requested this is attempted (but may not
-  work).
-
-  If the method is \code{"mailto"} then your default email
-  program
-#ifdef windows
-  (often Outlook Express (XP/Vista), Windows Live Mail (7) or Outlook)
-#endif
-  is opened with a template email to be completed and sent.
-#ifdef unix
-  (The default mailer is invoked by opening a \samp{mailto:} URL
-  \emph{via} \command{open} on Mac OS X or \command{xdg-open} elsewhere.)
-#endif  
-  
-  If the method is \code{"gnudoit"} (Unix only), an Emacs mail buffer is
-  opened and used for sending the email.
-
-  If the method is \code{"ess"} (Unix only), the body of the mail is
-  simply sent to \code{stdout}.
+  directed to the package maintainer will be generated using
+  \code{\link{create.post}}.  
 }
 \value{Nothing useful.}
 \section{When is there a bug?}{
@@ -174,6 +140,8 @@ bug.report(subject = "", ccaddress = getOption("ccaddress"),
 \seealso{
   \code{\link{help.request}} which you possibly should try
   \emph{before} \code{bug.report}.
+
+  \code{\link{create.post}}, which handles emailing reports.
   
   The R FAQ, also \code{\link{sessionInfo}()} from which you may add
   to the bug report.

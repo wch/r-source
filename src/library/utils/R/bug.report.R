@@ -1,7 +1,37 @@
-bug.report <- function(subject = "", ccaddress = getOption("ccaddress"),
-                       method = getOption("mailer"),
-                       address,
-                       file = "R.bug.report", package = NULL, lib.loc = NULL)
+#  File src/library/utils/R/unix/bug.report.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+bug.report.info <- function()
+    c("R Version:",
+      paste(" ", names(R.version), " = ", R.version,  sep=""),
+      if (nzchar(Sys.getenv("R_GUI_APP_VERSION")))
+          c("", "GUI:",
+            paste(" R-GUI ", Sys.getenv("R_GUI_APP_VERSION"),
+                  " (", Sys.getenv("R_GUI_APP_REVISION"),")", sep='')),
+      if (.Platform$OS.type == "windows") win.version(),
+      "",
+      "Locale:", paste(" ", Sys.getlocale(), sep = ""),
+      "",
+      "Search Path:",
+      strwrap(paste(search(), collapse=", "), indent = 1, exdent = 1),
+      "")
+
+bug.report <- function(subject = "", address,
+                       file = "R.bug.report", package = NULL, lib.loc = NULL,
+                       ...)
 {
     baseR <- function() {
         writeLines(c("  Bug reports on R and the base packages need to be submitted",
@@ -23,14 +53,15 @@ bug.report <- function(subject = "", ccaddress = getOption("ccaddress"),
     DESC <- packageDescription(package, lib.loc)
     if (!inherits(DESC, "packageDescription"))
         stop("Package '", package, "' DESCRIPTION not found.")
-    info <- paste("Package: ", DESC$Package, "\\n",
-                  " Version: ", DESC$Version, "\\n",
-                  " Maintainer: ", DESC$Maintainer, "\\n",
-                  " Built: ", DESC$Built, "\\n\\n", sep="", collapse="")
+    info <- paste(c("Package", " Version", " Maintainer", " Built"),
+                  ": ",
+                  c(DESC$Package, DESC$Version, DESC$Maintainer, DESC$Built),
+                  sep  = "")
+    info <- c(info, "", bug.report.info())
     if(identical(DESC$Priority, "base")) return(baseR())
 
     if (!is.null(DESC$BugReports)) {
-        cat(gsub("\\\\n", "\n", c(info, bug.report.info())), sep="")
+        writeLines(info)
         cat("\nThis package has a bug submission web page, which we will now attempt\n",
             "to open.  The information above may be useful in your report. If the web\n",
             "page doesn't work, you should send email to the maintainer,\n",
@@ -43,12 +74,8 @@ bug.report <- function(subject = "", ccaddress = getOption("ccaddress"),
     }
 
     if (missing(address)) address <- findEmail(DESC$Maintainer)
-    create.post(instructions = "\\n<<insert bug report here>>\\n\\n\\n\\n",
+    create.post(instructions = c("", "<<insert bug report here>>", rep("", 3)),
                 description = "bug report",
-                subject = subject,
-                ccaddress = ccaddress,
-                method = method,
-                address = address,
-                file = file,
-                info = info)
+                subject = subject, address = address,
+                filename = file, info = info, ...)
 }

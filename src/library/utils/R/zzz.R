@@ -27,18 +27,16 @@
 	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
 	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),
-	     menu.graphics = TRUE)
+	     menu.graphics = TRUE, mailer = "mailto")
     extra <-
         if(.Platform$OS.type == "windows") {
-            list(mailer = "none",
-                 unzip = "internal",
+            list(unzip = "internal",
                  editor = if(length(grep("Rgui", commandArgs(), TRUE))) "internal" else "notepad",
                  repos = c(CRAN="@CRAN@",
-                 CRANextra="http://www.stats.ox.ac.uk/pub/RWin")
+                           CRANextra="http://www.stats.ox.ac.uk/pub/RWin")
                  )
         } else
-            list(mailer = "mailx",
-                 unzip = Sys.getenv("R_UNZIPCMD"),
+            list(unzip = Sys.getenv("R_UNZIPCMD"),
                  editor = Sys.getenv("EDITOR"),
                  repos = c(CRAN="@CRAN@"))
     op.utils <- c(op.utils, extra)

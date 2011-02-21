@@ -274,14 +274,21 @@
       numeric vector, with a warning since that might not be
       appropriate.
 
-      \item \code{bug.report()} and \code{help.request()} gain a new
-      \code{method="mailto"} on Unix-alikes similar to that on Windows: it
-      invokes a default mailer via \command{open} (Mac OS X) or
-      \code{xdg-open} (elsewhere).
+      \item The previously internal function \code{create.post()} is now
+      exported from \pkg{utils}, and the documentation for
+      \code{bug.report()} and \code{help.request()} now refer to that
+      for \code{create.post()}.
 
-      Their default for \code{ccaddress} is now
+      It has a new \code{method = "mailto"} on Unix-alikes similar to
+      that on Windows: it invokes a default mailer via \command{open}
+      (Mac OS X) or \code{xdg-open} (elsewhere).
+
+      The default for \code{ccaddress} is now
       \code{getOption("ccaddress")} which is by default unset: using the
-      username as a mailing address nowadays rarely works as expected.
+      username as a mailing address nowadays rarely works as expected. 
+
+      \item The default for \code{options("mailer")} is now
+      \code{"mailto"} on all platforms.
     }
   }
 
