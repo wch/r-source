@@ -274,9 +274,14 @@
       numeric vector, with a warning since that might not be
       appropriate.
 
-      \item \item{bug.report()} gains a new \code{method="mailto"} on
-      Unix-alikes similar to that on Windows: it invokes a default
-      mailer via \command{open} (Mac OS X) or \code{xdg-open} (elsewhere).
+      \item \code{bug.report()} and \code{help.request()} gain a new
+      \code{method="mailto"} on Unix-alikes similar to that on Windows: it
+      invokes a default mailer via \command{open} (Mac OS X) or
+      \code{xdg-open} (elsewhere).
+
+      Their default for \code{ccaddress} is now
+      \code{getOption("ccaddress")} which is by default unset: using the
+      username as a mailing address nowadays rarely works as expected.
     }
   }
 

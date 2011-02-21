@@ -1,4 +1,5 @@
-bug.report <- function(subject = "", ccaddress, method = getOption("mailer"),
+bug.report <- function(subject = "", ccaddress = getOption("ccaddress"),
+                       method = getOption("mailer"),
                        address,
                        file = "R.bug.report", package = NULL, lib.loc = NULL)
 {

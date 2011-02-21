@@ -1,5 +1,5 @@
 help.request <- function (subject = "",
-			  ccaddress = Sys.getenv("USER"),
+			  ccaddress = getOption("ccaddress"),
 			  method = getOption("mailer"),
 			  address = "r-help@R-project.org",
 			  file = "R.help.request")

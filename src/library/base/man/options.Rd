@@ -155,9 +155,6 @@ getOption(x, default = NULL)
       they have kept source is determined when they are
       installed (and is almost certainly false).}
 
-    \item{\code{mailer}:}{default mailer used by
-      \code{\link{bug.report}()}.  Can be \code{"none"}.}
-
     \item{\code{max.contour.segments}:}{positive integer, defaulting to
       \code{250000} and usually not set.  A limit on the number of
       segments in a single contour line in \code{\link{contour}} or
@@ -448,6 +445,10 @@ getOption(x, default = NULL)
       a non-default browser on Windows.  Alternatively, an \R function that
       is called with a URL as its argument.}
 
+    \item{\code{ccaddress}:}{default Cc: address used by
+      \code{\link{bug.report}} and \code{\link{help.request}}.  Can be
+      \code{FALSE} or \code{""}.}
+    
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
       If this is unset (the default), 0, negative or \code{NA}, variable
@@ -482,7 +483,11 @@ getOption(x, default = NULL)
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
-
+    
+    \item{\code{mailer}:}{default mailer used by
+      \code{\link{bug.report}} and \code{\link{help.request}}.  Can be
+      \code{"none"}.}
+    
     \item{\code{menu.graphics}:}{Logical: should graphical menus be used
       if available?.  Defaults to \code{TRUE}.  Currently applies to
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},

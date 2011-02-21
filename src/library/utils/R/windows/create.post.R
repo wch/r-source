@@ -31,7 +31,7 @@ bug.report.info <- function() {
 create.post <- function(instructions = "\\n",
                         description = "post",
                         subject = "",
-                        ccaddress,
+                        ccaddress = getOption("ccaddress"),
                         method = getOption("mailer"),
                         address = "the relevant mailing list",
                         file = "R.post",
@@ -64,10 +64,11 @@ create.post <- function(instructions = "\\n",
     else if (method == "mailto") {
         if (missing(address)) stop("must specify 'address'")
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
+        if(length(ccaddress) != 1L) stop("'ccaddress' must be of length 1")
         cat("The", description, "is being opened in your default mail program\nfor you to complete and send.\n")
         cmd <- paste("start \"title\" \"mailto:", address,
                      "?subject=", subject,
-                     if(!missing(ccaddress) && is.character(ccaddress))
+                     if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
                      "&body=", body0 <- gsub("\\\\n", "%0A", body),
                      sep = "")

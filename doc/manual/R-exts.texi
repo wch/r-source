@@ -1809,8 +1809,8 @@ repositories to display the manual even if they are unable to install
 the package.)
 
 One of the checks that @code{R CMD build} runs is for empty source
-directories.  These are in most cases unintentional, in which case they
-should be removed and the build re-run.
+directories.  These are in most (but not all) cases unintentional, in
+which case they should be removed and the build re-run.
 
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
@@ -1822,13 +1822,13 @@ environment variable @env{_R_BUILD_RESAVE_DATA_}) and @code{best}
 effective compression.  Using @code{best} adds a dependence on @code{R
 (>= 2.10)} to the @file{DESCRIPTION} file if @command{bzip2} or
 @command{xz} compression is selected for any of the files.  If this is
-thought undesirable, @option{--resave-data=gzip} will re-save with
-@command{gzip} compression any @acronym{ASCII} or uncompressed saves,
-and any saves from before @R{} 1.4.0.
+thought undesirable, @option{--resave-data=gzip} (which is the default
+if that option is not supplied) will do what compression it can with
+@command{gzip}.
 
 The @option{--compact-vignettes} option will run
-@code{tools::compactPDF} over the PDF files in @file{inst/doc} (but not
-its subdirectories) to losslessly compress them.  This is not enabled by
+@code{tools::compactPDF} over the PDF files in @file{inst/doc} (and its
+subdirectories) to losslessly compress them.  This is not enabled by
 default (it can be selected by environment variable
 @env{_R_BUILD_COMPACT_VIGNETTES_}) and needs @command{qpdf}
 (@uref{http://qpdf.sourceforge.net/}) to be available.
