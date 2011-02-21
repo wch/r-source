@@ -1586,8 +1586,14 @@ df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
 df3 <- data.frame(a=1:2, b=2:3)
 df3[df3 == 2]            # had spurious names
 # but not allowed
-try(df2[df2 == 2] <- 1:2)
-try(m2[m2 == 2] <- 1:2)
+## (modified to make printed result the same whether numeric() is
+##  compiled or interpreted)
+## try(df2[df2 == 2] <- 1:2)
+## try(m2[m2 == 2] <- 1:2)
+tryCatch(df2[df2 == 2] <- 1:2,
+         error = function(e) paste("Error:", conditionMessage(e)))
+tryCatch(m2[m2 == 2] <- 1:2,
+         error = function(e) paste("Error:", conditionMessage(e)))
 ##
 
 
