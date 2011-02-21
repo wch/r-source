@@ -481,8 +481,8 @@
       breaking any S4 subclass.  The S4 \code{data.frame} class now has its own
       \code{$<-} method, and turns dispatch on for this primitive.
 
-      \item a change to R_tryEval had broken error messages in method
-      selection; the error message is now printed.
+      \item A change to the C function \samp{R_tryEval} had broken error
+      messages in S4 method selection; the error message is now printed.
     }
   }
 }
