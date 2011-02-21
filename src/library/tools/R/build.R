@@ -171,6 +171,7 @@ get_exclude_patterns <- function()
             "                        separated by spaces",
             "  --resave-data=        re-save data files as compactly as possible",
             '                        "no", "best", "gzip" (default)',
+            "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
             "  --compact-vignettes   try to compact vignettes (using qpdf)",
             "",
@@ -607,7 +608,7 @@ get_exclude_patterns <- function()
                                          "FALSE"))
     resave_data <-
         Sys.getenv("_R_BUILD_RESAVE_DATA_", "gzip")
-    
+
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
@@ -798,7 +799,11 @@ get_exclude_patterns <- function()
 
         ## work on 'data' directory if present
         if(file_test("-d", file.path(pkgname, "data"))) {
-            add_datalist(pkgname)
+            ## in some cases data() needs the package installed as
+            ## there are links to the package's namespace
+            tryCatch(add_datalist(pkgname),
+                     error = function(e)
+                     printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
             resave_data_others(pkgname, resave_data)
             resave_data_rda(pkgname, resave_data)
         }
