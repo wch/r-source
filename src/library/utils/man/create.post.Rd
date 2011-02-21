@@ -57,9 +57,10 @@ create.post(instructions = character(), description = "post",
 
       This works where default mailers are set up (usual on Mac OS X and
       Windows, and where \command{xdg-open} is available and configured on
-      other Unix-alikes).
+      other Unix-alikes: if that fails it tries the browser set by
+      \env{R_BROWSER}).
 
-      The default as from \R 2.13.0.
+      The factory-fresh default method as from \R 2.13.0.
     }
     
     \item{\code{mailx}}{(Unix-alikes only.)
