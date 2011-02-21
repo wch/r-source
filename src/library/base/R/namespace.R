@@ -141,7 +141,6 @@ loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
                            partial = FALSE, declarativeOnly = FALSE)
 {
-    ## eventually allow version as second component; ignore for now.
     package <- as.character(package)[[1L]]
 
     ## check for cycles
@@ -160,7 +159,10 @@ loadNamespace <- function (package, lib.loc = NULL,
     }
     loading <- dynGet("__NameSpacesLoading__", NULL)
     if (match(package, loading, 0L))
-        stop("cyclic name space dependencies are not supported")
+        stop("cyclic name space dependency detected when loading ",
+             sQuote(package), ", already loading ",
+             paste(sQuote(loading), collapse = ", "),
+             domain = NA)
     "__NameSpacesLoading__" <- c(package, loading)
 
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
