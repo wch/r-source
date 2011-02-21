@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -35,11 +35,18 @@
   from the directory names.  As from \R 2.13.0 this works entirely on a
   copy of the supplied source directories.
 
-  Use \command{R CMD \var{foo} --help}
-  to obtain usage information on utility \code{\var{foo}}.
+  Use \command{R CMD \var{foo} --help} to obtain usage information on
+  utility \code{\var{foo}}.
 
-  Several of the options to \code{build --binary} are passed to
-  \code{\link{INSTALL}} so consult its help for the details.
+  The options to \command{R CMD build --binary} are passed to
+  \code{\link{INSTALL}} via \option{--install-args=} so consult its help
+  for further details.
+
+  The defaults for some of the options to \command{R CMD build} can be
+  set by environment variables \env{_R_BUILD_RESAVE_DATA_} and
+  \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing \R Extensions}.
+  Many of the checks in \command{R CMD check} can be turned off or on by
+  enviroment variables: see Chapter 6 of the \sQuote{R Internals} manual.
 }
 #ifdef windows
 \note{
