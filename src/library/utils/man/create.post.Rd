@@ -57,7 +57,10 @@ create.post(instructions = character(), description = "post",
 
       This works where default mailers are set up (usual on Mac OS X and
       Windows, and where \command{xdg-open} is available and configured on
-      other Unix-alikes).}
+      other Unix-alikes).
+
+      The default as from \R 2.13.0.
+    }
     
     \item{\code{mailx}}{(Unix-alikes only.)
       A file editor (see \code{\link{file.edit}}) is
@@ -67,9 +70,9 @@ create.post(instructions = character(), description = "post",
       given.}
     
     \item{\code{gnudoit}}{(Unix-alikes only.)
-      An Emacs mail buffer is opened for the email to be edited and
+      An (X)emacs mail buffer is opened for the email to be edited and
       sent: this requires the \command{gnudoit} program to be
-      avaialble.}
+      available.  Currently \code{subject} is ignored.}
     
     \item{\code{ess}}{(Unix-alikes only.)
       The body of the template email is sent to \code{stdout}.}

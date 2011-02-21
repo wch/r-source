@@ -28,11 +28,18 @@ create.post <- function(instructions = character(),
 	else match.arg(method, c("mailto", "mailx", "gnudoit", "none", "ess"))
     ## FIXME: fall back to browser
     open_prog <- if(grepl("-apple-darwin", R.version$platform)) "open" else "xdg-open"
-    if (method == "mailto" && !nzchar(Sys.which(open_prog))) {
-        warning("cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'")
-        flush.console()
-        Sys.sleep(5)
-    }
+    if (method == "mailto")
+        if(!nzchar(Sys.which(open_prog))) {
+            browser <- Sys.getenv("R_BROWSER", "")
+            if(!nzchar(browser)) {
+                warning("cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'")
+                flush.console()
+                Sys.sleep(5)
+            } else {
+                message("Using the browser to open a mailto: URI")
+                open_prog <- browser
+            }
+        }
 
     body <- c(instructions,
               "--please do not edit the information below--", "",
@@ -56,6 +63,7 @@ create.post <- function(instructions = character(),
     }
 
     if(method == "gnudoit") {
+        ## FIXME: insert subject and ccaddress
 	cmd <- paste("gnudoit -q '",
 		     "(mail nil \"", address, "\")",
 		     "(insert \"", paste(body, collapse="\\n"), "\")",
@@ -115,8 +123,8 @@ create.post <- function(instructions = character(),
                      "?subject=", subject,
                      if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
-                     "&body=", paste(body, collapse="\n"), sep = "")
- 	res <- system2(open_prog, shQuote(arg))
+                     "&body=", paste(body, collapse="\r\n"), sep = "")
+ 	res <- system2(open_prog, shQuote(arg), FALSE, FALSE)
         if(res) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
             flush.console()
