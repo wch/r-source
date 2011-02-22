@@ -1,6 +1,6 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
@@ -18,16 +18,18 @@
   \code{unlink} deletes the file(s) or directories specified by \code{x}.
 }
 \details{
+  Tilde-expansion (see \code{\link{path.expand}}) is done on \code{x} as
+  from \R 2.13.0.
+  
   If \code{recursive = FALSE} directories are not deleted,
   not even empty ones.
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
-  Some earlier versions of \R would not try to remove broken symbolic links.
-#endif  
   
+#endif  
   Wildcard expansion is done by the internal code of
-  \code{\link{Sys.glob}}. Wildcards never match a leading \file{.} in
+  \code{\link{Sys.glob}}.  Wildcards never match a leading \file{.} in
   the filename, and files \file{.} and \file{..} will never be
   considered for deletion.
 #ifdef unix
@@ -40,8 +42,8 @@
   metacharacters by backslashes usually works.  If a
   metacharacter matches nothing it is considered as a literal character.
 
-  \code{recursive = TRUE} is not supported on all platforms, and may be
-  ignored, with a warning.
+  \code{recursive = TRUE} may not be supported on a platforms, when it
+  will be ignored, with a warning.
 #endif
 #ifdef Windows
   Character classes such as \file{[a-z]} are supported.  The
@@ -53,8 +55,6 @@
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
 #endif
-
-  This will not do tilde expansion on \code{x} on most OSes.
 }
 \value{
   \code{0} for success, \code{1} for failure.

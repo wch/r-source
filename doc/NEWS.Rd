@@ -289,6 +289,9 @@
 
       \item The default for \code{options("mailer")} is now
       \code{"mailto"} on all platforms.
+
+      \item \code{unlink()} now does tilde-expansion (like most other
+      file functions).
     }
   }
 

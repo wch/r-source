@@ -21,7 +21,8 @@ list.dirs(path = ".", full.names = TRUE)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
-    corresponds to the working directory \code{\link{getwd}()}.  Missing
+    corresponds to the working directory, \code{\link{getwd}()}.  Tilde
+    expansion (see \code{\link{path.expand}}) is performed.  Missing
     values will be ignored.}
   \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
