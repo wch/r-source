@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ls.diag}
-\title{Compute Diagnostics for `lsfit' Regression Results}
+\title{Compute Diagnostics for \code{lsfit} Regression Results}
 \usage{
 ls.diag(ls.out)
 }

@@ -9,7 +9,7 @@
 \alias{confint,ANY-method}
 \alias{confint,profile.mle-method}
 \alias{confint,mle-method}
-\title{Methods for Function `confint' in Package `stats4'}
+\title{Methods for Function \code{confint} in Package \pkg{stats4}}
 \description{Generate confidence intervals}
 \section{Methods}{
   \describe{

@@ -8,7 +8,7 @@
 \alias{profile-methods}
 \alias{profile,ANY-method}
 \alias{profile,mle-method}
-\title{Methods for Function profile in Package `stats4'}
+\title{Methods for Function \code{profile} in Package \pkg{stats4}}
 \description{Profile likelihood for \code{"mle"} objects.}
 \usage{
 \S4method{profile}{mle}(fitted, which = 1:p, maxsteps = 100, alpha = 0.01,

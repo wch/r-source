@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ls.print}
-\title{Print `lsfit' Regression Results}
+\title{Print \code{lsfit} Regression Results}
 \usage{
 ls.print(ls.out, digits = 4, print.it = TRUE)
 }

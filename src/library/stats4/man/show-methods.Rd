@@ -8,7 +8,7 @@
 \alias{show-methods}
 \alias{show,mle-method}
 \alias{show,summary.mle-method}
-\title{Methods for Function show in Package `stats4'}
+\title{Methods for Function \code{show} in Package \pkg{stats4}}
 \description{Show objects of classes \code{mle} and \code{summary.mle}}
 \section{Methods}{
   \describe{

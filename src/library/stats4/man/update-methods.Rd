@@ -8,7 +8,7 @@
 \alias{update-methods}
 \alias{update,ANY-method}
 \alias{update,mle-method}
-\title{Methods for Function `update' in Package `stats4'}
+\title{Methods for Function \code{update} in Package \pkg{stats4}}
 \description{
   Update \code{"mle"} objects.
 }

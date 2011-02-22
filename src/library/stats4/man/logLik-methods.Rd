@@ -8,7 +8,7 @@
 \alias{logLik-methods}
 \alias{logLik,ANY-method}
 \alias{logLik,mle-method}
-\title{Methods for Function `logLik' in Package `stats4'}
+\title{Methods for Function \code{logLik} in Package \pkg{stats4}}
 \description{
   Extract the maximized log-likelihood from \code{"mle"} objects.
 }

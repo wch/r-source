@@ -9,7 +9,7 @@
 \alias{coef,ANY-method}
 \alias{coef,mle-method}
 \alias{coef,summary.mle-method}
-\title{Methods for Function `coef' in Package `stats4'}
+\title{Methods for Function \code{coef} in Package \pkg{stats4}}
 \description{
   Extract the coefficient vector from \code{"mle"} objects.
 }

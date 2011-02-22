@@ -6,7 +6,7 @@
 \name{add_datalist}
 \alias{add_datalist}
 \title{
-  Add a 'datalist' File to a Package
+  Add a \file{datalist} File to a Package
 }
 \description{
   The \code{\link{data}()} command with no arguments lists all the
@@ -21,7 +21,7 @@ add_datalist(pkgpath, force = FALSE)
 \arguments{
   \item{pkgpath}{The path to a (source) package.}
 
-  \item{force}{logical: should can existing \code{data/datalist} file be
+  \item{force}{logical: can existing \file{data/datalist} file be
     over-written.} 
 }
 

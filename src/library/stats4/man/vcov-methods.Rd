@@ -8,7 +8,7 @@
 \alias{vcov-methods}
 \alias{vcov,ANY-method}
 \alias{vcov,mle-method}
-\title{Methods for Function `vcov' in Package `stats4'}
+\title{Methods for Function \code{vcov} in Package \pkg{stats4}}
 \description{
   Extract the approximate variance-covariance matrix from \code{"mle"}
   objects.
