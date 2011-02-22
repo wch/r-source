@@ -119,13 +119,13 @@ create.post <- function(instructions = character(),
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
         if(length(ccaddress) != 1L) stop("'ccaddress' must be of length 1")
         cat("The", description, "is being opened in your default mail program\nfor you to complete and send.\n")
+        ## The mailto: standard (RFC2368) says \r\n for the body
         arg <- paste("mailto:", address,
                      "?subject=", subject,
                      if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
                      "&body=", paste(body, collapse="\r\n"), sep = "")
- 	res <- system2(open_prog, shQuote(arg), FALSE, FALSE)
-        if(res) {
+        if(system2(open_prog, shQuote(URLencode(arg)), FALSE, FALSE)) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
             flush.console()
             none_method()
