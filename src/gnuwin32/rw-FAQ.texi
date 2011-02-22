@@ -140,8 +140,9 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Current binary versions of R run on Windows 2000 or later, including
-on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
+Current binary versions of R run on Windows XP or later, including on
+64-bit versions: @xref{Can I use R on 64-bit Windows?}.  (It may run on
+Windows 2000, but has not been tested there recently.)
 
 We only test on versions of Windows currently supported by Microsoft,
 mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
@@ -444,7 +445,7 @@ On the command line as name=value pairs.  For example in the shortcut to
 
 @item
 In an environment file @file{.Renviron} in the working directory
-or your home directory, for example containing the line
+or in your home directory, for example containing the line
 
 @example
 R_LIBS=p:/myRlib
@@ -515,9 +516,9 @@ Windows registry:
     (where @code{[version]} is currently @RVER@) contains the path to the R 
     home directory.
 @end itemize
-If you do not have administrative privileges on the machine while running
-the installer, then the entries are created under @code{HKEY_CURRENT_USER}.
-As from R 2.11.0 the same entries are also created under
+If you do not have administrative privileges on the machine while
+running the installer, then the entries are created under
+@code{HKEY_CURRENT_USER}.  The same entries are also created under
 @code{Software\R-core\R32} or @code{Software\R-core\R64}, for 32- and
 64-bit R respectively.
 
@@ -526,7 +527,7 @@ only) (@samp{Associate R with .RData files}) then entries are created
 under @code{HKEY_CLASSES_ROOT\.RData} and
 @code{HKEY_CLASSES_ROOT\RWorkspace}.
 
-After installation you can add the Registry entries in by running
+After installation you can add the Registry entries by running
 @code{RSetReg.exe} in a sub-folder of the @code{bin} folder, and remove
 them by running this with argument @code{/U}.  Note that this requires
 administrative privileges unless run with argument @code{/Personal} and
@@ -640,7 +641,7 @@ by looking at the number of graphs of `CPU Usage History' on the
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
 @section Does R run under Windows Vista/7/Server 2008?
 
-It does.  A few issues have been reported that related to the way
+It does.  A few issues have been reported that are related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)
 
@@ -798,8 +799,8 @@ can explore those for your keyboard via the `On-Screen Keyboard' (under
 Accessories, Accessibility on XP).
 
 On all Windows versions you should be able to get tilde by holding the
-down the left Alt key and typing 0126 on the numeric keypad, then
-releasing the Alt key.
+down the left Alt key and typing 0126 on the numeric keypad (if you have
+one), then releasing the Alt key.
 
 @node Can I use R on 64-bit Windows?, Should I run 32-bit or 64-bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
@@ -842,16 +843,16 @@ extra features of all x86-64 chips (more registers, SSE2/3 instructions,
 @dots{}) and so the code may run faster despite using larger pointers.
 
 For advanced users the choice may be dictated by whether the contributed
-packages needed are available in 64-bit builds (and if they are not that
-is some indication that installing them from sources is problematic).
-At the time of writing the most commonly-used CRAN packages without
-64-bit versions were @code{BRugs} and @code{rggobi}. The considerations
-can be more complex: for example 32/64-bit @code{RODBC} need 32/64 ODBC
-drivers respectively, and where both exist they may not be able to be
-installed together.  An extreme example is the Microsoft Access/Excel
-ODBC drivers: if you have installed 64-bit Microsoft Office you can only
-install the 64-bit drivers and so need to use 64-bit @code{RODBC} and
-hence R.
+packages needed are available in 64-bit builds (and if CRAN binary
+packages are not that is some indication that installing them from
+sources is problematic).  At the time of writing the most commonly-used
+CRAN packages without 64-bit versions were @code{BRugs} and
+@code{rggobi}. The considerations can be more complex: for example
+32/64-bit @code{RODBC} need 32/64 ODBC drivers respectively, and where
+both exist they may not be able to be installed together.  An extreme
+example is the Microsoft Access/Excel ODBC drivers: if you have
+installed 64-bit Microsoft Office you can only install the 64-bit
+drivers and so need to use 64-bit @code{RODBC} and hence R.
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
@@ -962,7 +963,7 @@ control panel, and the appropriate language has to be set under
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. Lucida Console, not the OEM raster
 fonts) and a suitable codepage (which for the Windows Cmd shell can be
-done by @command{chcp}).
+done using @command{chcp}).
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.
@@ -982,7 +983,7 @@ start R, or setting it in the @file{Rconsole} file.
 @section I would like to be able to use Japanese fonts.
 
 for example, in the console and to annotate graphs.  Similar comments
-apply to any non-Western European language.
+apply to any non-Western-European language.
 
 With suitable fonts, this should just work.  You will need to set MS
 Mincho or MS Gothic as the console font to ensure that single- and
@@ -1281,8 +1282,9 @@ few packages with static HTML pages use
 R CMD INSTALL --html @var{pkg1} @var{pkg2} @dots{}
 @end example
 
-To install R itself with static HTML pages change the following line in
-file @file{MkRules.local} (after copying @file{MkRules.dist} to
+To install R itself with static HTML pages you need to build it from the
+sources for yourself.  Change the following line in file
+@file{MkRules.local} (after copying @file{MkRules.dist} to
 @file{MkRules.local} if that has not already been done).
 
 @example
@@ -1789,7 +1791,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-10-01
+@set LASTEDIT 2011-02-22
 @ifhtml
 @html
 <hr WIDTH="100%">
