@@ -2152,11 +2152,17 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
 	strncpy(dir, translateChar(STRING_ELT(to, 0)), PATH_MAX);
+	p = R_ExpandFileName(dir); /* expand target */
+	if (p != dir)
+	    strncpy(dir, p, PATH_MAX);
 	if (*(dir + (strlen(dir) - 1)) !=  sep)
 	    strncat(dir, filesep, PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		strncpy(from, translateChar(STRING_ELT(fn, i)), PATH_MAX);
+		p = R_ExpandFileName(from); /* expand source */
+		if (p != from)
+		    strncpy(from, p, PATH_MAX);
 		/* If there is a trailing sep, this is a mistake */
 		p = from + (strlen(from) - 1);
 		if(*p == sep) *p = '\0';
