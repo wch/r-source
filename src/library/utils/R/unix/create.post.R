@@ -26,7 +26,6 @@ create.post <- function(instructions = character(),
     method <-
 	if(is.null(method)) "none"
 	else match.arg(method, c("mailto", "mailx", "gnudoit", "none", "ess"))
-    ## FIXME: fall back to browser
     open_prog <- if(grepl("-apple-darwin", R.version$platform)) "open" else "xdg-open"
     if (method == "mailto")
         if(!nzchar(Sys.which(open_prog))) {
@@ -57,21 +56,13 @@ create.post <- function(instructions = character(),
 
         cat(c(disclaimer, body), file=filename, sep = "\n")
         cat("The", description, "is being opened for you to edit.\n")
+        flush.console()
         file.edit(filename)
         cat("The unsent ", description, " can be found in file ",
             sQuote(filename), "\n", sep ="")
     }
 
-    if(method == "gnudoit") {
-        ## FIXME: insert subject and ccaddress
-	cmd <- paste("gnudoit -q '",
-		     "(mail nil \"", address, "\")",
-		     "(insert \"", paste(body, collapse="\\n"), "\")",
-		     "(search-backward \"Subject:\")",
-		     "(end-of-line)'",
-		     sep="")
-	system(cmd)
-    } else if(method == "none") {
+    if(method == "none") {
         none_method()
     } else if(method == "mailx") {
         if(missing(address)) stop("must specify 'address'")
@@ -114,6 +105,15 @@ create.post <- function(instructions = character(),
             cat("The unsent", description, "can be found in file", filename, "\n")
     } else if(method == "ess") {
 	cat(body, sep = "\n")
+    } else  if(method == "gnudoit") {
+        ## FIXME: insert subject and ccaddress
+	cmd <- paste("gnudoit -q '",
+		     "(mail nil \"", address, "\")",
+		     "(insert \"", paste(body, collapse="\\n"), "\")",
+		     "(search-backward \"Subject:\")",
+		     "(end-of-line)'",
+		     sep="")
+	system(cmd)
     } else if(method == "mailto") {
         if (missing(address)) stop("must specify 'address'")
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
@@ -128,7 +128,6 @@ create.post <- function(instructions = character(),
         if(res) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
             flush.console()
-            Sys.sleep(5)
             none_method()
         }
     }

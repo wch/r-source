@@ -14,7 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-
 create.post <- function(instructions = character(),
                         description = "post",
                         subject = "",
@@ -24,14 +23,18 @@ create.post <- function(instructions = character(),
                         filename = "R.post",
                         info = character())
 {
+    method <-
+	if(is.null(method)) "none"
+	else match.arg(method, c("mailto", "mailx", "gnudoit", "none", "ess"))
+
     body <- c(instructions,
               "--please do not edit the information below--", "",
               info)
 
     none_method <- function() {
         disclaimer <-
-            paste("# R for Windows will not send your ", description,
-                  " automatically.\n",
+            paste("# Your mailer is set to \"none\",\n",
+                  "# hence we cannot send the, ", description, " directly from R.\n",
                   "# Please copy the ", description, " (after finishing it) to\n",
                   "# your favorite email program and send it to\n#\n",
                   "#       ", address, "\n#\n",
@@ -48,22 +51,37 @@ create.post <- function(instructions = character(),
 
     if (method == "none")
         none_method()
-    else if (method == "mailto") {
+    else if(method == "ess")
+	cat(body, sep = "\n")
+    else if(method == "gnudoit") {
+        ## FIXME: insert subject and ccaddress
+	cmd <- paste("gnudoit -q '",
+		     "(mail nil \"", address, "\")",
+		     "(insert \"", paste(body, collapse="\\n"), "\")",
+		     "(search-backward \"Subject:\")",
+		     "(end-of-line)'",
+		     sep="")
+	system(cmd)
+    } else if (method == "mailto") {
         if (missing(address)) stop("must specify 'address'")
         if (!nzchar(subject)) subject <- "<<Enter Meaningful Subject>>"
         if(length(ccaddress) != 1L) stop("'ccaddress' must be of length 1")
         cat("The", description, "is being opened in your default mail program\nfor you to complete and send.\n")
-        cmd <- paste("start \"title\" \"mailto:", address,
+        uri <-  paste("mailto:", address,
                      "?subject=", subject,
                      if(is.character(ccaddress) && nzchar(ccaddress))
                          paste("&cc=", ccaddress, sep=""),
-                     "&body=", paste(body, collapse="%0A"),
+                     "&body=", paste(body, collapse="\r\n"),
                      sep = "")
- 	tryCatch(shell(cmd, mustWork = TRUE), error = function(e) {
+        tryCatch(shell.exec(URLencode(uri)), error = function(e) {
             cat("opening the mailer failed, so reverting to 'mailer=\"none\"'\n")
+            flush.console()
+            Sys.sleep(5)
             none_method()
         })
-    } else stop("unknown 'method'")
+    } else if(method == "mailx")
+	stop("method 'mailx' is Unix-only")
+
     invisible()
 }
 

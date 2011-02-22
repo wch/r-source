@@ -29,13 +29,14 @@ create.post(instructions = character(), description = "post",
   \item{subject}{Subject of the email. Optional except for the
     \code{"mailx"} method.}
   \item{method}{Submission method, one of \code{"none"}, \code{"mailto"},
-    \code{"mailx"}, \code{"gnudoit"} or \code{"ess"}.  See \sQuote{Details}.}
+    \code{"gnudoit"}, \code{"ess"} or (Unix only) \code{"mailx"}.
+    See \sQuote{Details}.}
   \item{address}{Recipient's email address, where applicable: for
     package bug reports sent by email this defaults to the address of
     the package maintainer (the first if more than one is listed).} 
   \item{ccaddress}{Optional email address for copies with the
     \code{"mailx"} and \code{"mailto"} methods.
-    Use \code{ccaddress = FALSE} for no copy.}
+    Use \code{ccaddress = ""} for no copy.}
   \item{filename}{Filename to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
   \item{info}{character vector of information to include in the template
@@ -51,16 +52,17 @@ create.post(instructions = character(), description = "post",
       the completed email is in file \code{file} ready to be read/pasted
       into an email program.}
 
-    \item{\code{mailto}}{This opens the default email program with a
-      template email (including address, Cc: address and subject) for you
-      to edit and send.
+    \item{\code{mailto}}{
+      This opens the default email program with a template email
+      (including address, Cc: address and subject) for you to edit and
+      send.
 
       This works where default mailers are set up (usual on Mac OS X and
       Windows, and where \command{xdg-open} is available and configured on
       other Unix-alikes: if that fails it tries the browser set by
       \env{R_BROWSER}).
 
-      The factory-fresh default method as from \R 2.13.0.
+      This is the \sQuote{factory-fresh} default method as from \R 2.13.0.
     }
     
     \item{\code{mailx}}{(Unix-alikes only.)
@@ -70,12 +72,12 @@ create.post(instructions = character(), description = "post",
       as \code{mailx}, to the address (and optionally, the Cc: address)
       given.}
     
-    \item{\code{gnudoit}}{(Unix-alikes only.)
+    \item{\code{gnudoit}}{
       An (X)emacs mail buffer is opened for the email to be edited and
       sent: this requires the \command{gnudoit} program to be
       available.  Currently \code{subject} is ignored.}
     
-    \item{\code{ess}}{(Unix-alikes only.)
+    \item{\code{ess}}{
       The body of the template email is sent to \code{stdout}.}
   }
 }
