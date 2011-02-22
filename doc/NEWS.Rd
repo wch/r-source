@@ -483,6 +483,9 @@
 
       \item A change to the C function \samp{R_tryEval} had broken error
       messages in S4 method selection; the error message is now printed.
+      
+      \item \code{Map()} did not look up a character argument \code{f}
+      in the correct frame, thanks to lazy evaluation.  \PR{14495}
     }
   }
 }

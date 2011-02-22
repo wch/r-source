@@ -1552,7 +1552,7 @@ writeLines(as.character(51:70), con)
 close(con)
 stopifnot(length(readLines(tf)) == 70)
 unlink(tf)
-## bzfile warned and did not work < R 2.13.0
+## bzfile warned and did not work R < 2.13.0
 
 
 ## NA_complex_ in prettyNum()
@@ -1561,6 +1561,8 @@ prettyNum(NA_complex_, drop0=TRUE)
 ## gave errors in R < 2.12.2
 
 
-
+## Map() needed to call match.fun() itself (PR#14495)
+local({a <- sum; Map("a", list(1:5))})
+## failed R < 2.13.0
 
 proc.time()
