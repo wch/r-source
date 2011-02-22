@@ -23,7 +23,7 @@
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
-  Some earlier versions of \R would bot try to remove broken symbolic links.
+  Some earlier versions of \R would not try to remove broken symbolic links.
 #endif  
   
   Wildcard expansion is done by the internal code of
