@@ -46,7 +46,7 @@
   set by environment variables \env{_R_BUILD_RESAVE_DATA_} and
   \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing \R Extensions}.
   Many of the checks in \command{R CMD check} can be turned off or on by
-  enviroment variables: see Chapter 6 of the \sQuote{R Internals} manual.
+  environment variables: see Chapter 6 of the \sQuote{R Internals} manual.
 }
 #ifdef windows
 \note{

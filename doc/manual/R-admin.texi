@@ -1617,7 +1617,7 @@ more than one library, of course.
 
 If installing packages on a Unix-alike to be used by other users, ensure
 that the system @code{umask} is set to give sufficient permissions (see
-also @code{Sys.umask} in @R{}).  (To a large extent this is unecessary
+also @code{Sys.umask} in @R{}).  (To a large extent this is unnecessary
 in recent versions of @R{}, which install packages as if @code{umask = 022}.)
 
 For most users it suffices to call
@@ -3918,7 +3918,7 @@ packages require @acronym{GNU} @command{make}, despite the
 recommendations of the ``Writing R Extensions'' manual.  (The BSD
 version is @command{bsdmake} on Darwin.)
 
-The simplest way to get the additional sofware needed to build @R{} is
+The simplest way to get the additional software needed to build @R{} is
 to install a pre-compiled version first, e.g.@: by
 
 @example

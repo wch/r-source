@@ -9,7 +9,7 @@
   Add a 'datalist' File to a Package
 }
 \description{
-  The \code{\link{data}()} command with no arguemnts lists all the
+  The \code{\link{data}()} command with no arguments lists all the
   datasets available via \code{data} in attached packages, and to do a
   per-package list is stored at install time.  This can be slow for
   packages with huge datasets, and can be expedited by a supplying

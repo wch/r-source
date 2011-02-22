@@ -249,7 +249,7 @@ Windows world they almost always are for UCS-2/UTF-16 files, and often
 are for UTF-8 files.  The @command{file} utility will not even recognize
 UCS-2 files without a BOM, but many other utilities will refuse to read
 files with a BOM and the @acronym{IANA} standards for @code{UTF-16LE}
-and @code{UTF-16BE} probibit it.  We have too often been reduced to
+and @code{UTF-16BE} prohibit it.  We have too often been reduced to
 looking at the file with the command-line utility @command{od} or a hex
 editor to work out its encoding.
 
@@ -433,7 +433,7 @@ XML provides a way to specify the file's encoding, e.g.@:
 @end example
 
 @noindent
-altthough it does not require it.
+although it does not require it.
 
 The @pkg{XML} package provides general facilities for reading and
 writing @acronym{XML} documents within @R{}.  A description of the

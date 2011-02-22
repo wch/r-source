@@ -1816,7 +1816,7 @@ The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
 size.  It will also compress tabular files and convert @file{.R} files
 to saved images.  It can take values @code{no}, @code{gzip} (the default
-if this option is not suppplied, which can be changed by setting the
+if this option is not supplied, which can be changed by setting the
 environment variable @env{_R_BUILD_RESAVE_DATA_}) and @code{best}
 (equivalent to giving it without a value), which chooses the most
 effective compression.  Using @code{best} adds a dependence on @code{R
