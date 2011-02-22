@@ -264,34 +264,6 @@ function(package, dir, lib.loc = NULL)
     undoc_things
 }
 
-## print.undoc <-
-## function(x, ...)
-## {
-##     for(i in which(sapply(x, length) > 0L)) {
-##         tag <- names(x)[i]
-##         msg <- switch(tag,
-##                       "code objects" =
-##                       gettext("Undocumented code objects:"),
-##                       "data sets" =
-##                       gettext("Undocumented data sets:"),
-##                       "S4 classes" =
-##                       gettext("Undocumented S4 classes:"),
-##                       "S4 methods" =
-##                       gettext("Undocumented S4 methods:"),
-##                       prim_extra =
-##                       gettext("Prototyped non-primitives:"),
-##                       gettextf("Undocumented %s:", tag))
-##         writeLines(msg)
-##         ## We avoid markup for indicating S4 methods, hence need to
-##         ## special-case output for these ...
-##         if(tag == "S4 methods")
-##             writeLines(strwrap(x[[i]], indent = 2L, exdent = 4L))
-##         else
-##             .pretty_print(x[[i]])
-##     }
-##     invisible(x)
-## }
-
 format.undoc <-
 function(x, ...)
 {
@@ -1051,31 +1023,6 @@ function(package, lib.loc = NULL)
     bad_Rd_objects
 } ## end{ codocClasses }
 
-## print.codocClasses <-
-## function(x, ...)
-## {
-##     if(!length(x))
-##         return(invisible(x))
-##     capWord <- function(w) sub("\\b(\\w)", "\\U\\1", w, perl=TRUE)
-##     wrapPart <- function(nam) {
-## 	if(length(O <- docObj[[nam]]))
-## 	    strwrap(sprintf("%s: %s", gettextf(capWord(nam)),
-## 			    paste(O, collapse = " ")),
-## 		    indent = 2L, exdent = 8L)
-##     }
-##     for (docObj in names(x)) {
-##         writeLines(gettextf("S4 class codoc mismatches from documentation object '%s':",
-##                             docObj))
-##         docObj <- x[[docObj]]
-##         writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
-## 		     wrapPart("code"),
-## 		     wrapPart("inherited"),
-## 		     wrapPart("docs")))
-##         writeLines("")
-##     }
-##     invisible(x)
-## }
-
 format.codocClasses <-
 function(x, ...)
 {
@@ -1260,27 +1207,6 @@ function(package, lib.loc = NULL)
         as.character(data_frames_checked)
     bad_Rd_objects
 }
-
-## print.codocData <-
-## function(x, ...)
-## {
-##     format_args <- function(s) paste(s, collapse = " ")
-##     for(docObj in names(x)) {
-##         writeLines(gettextf("Data codoc mismatches from documentation object '%s':",
-##                             docObj))
-##         docObj <- x[[docObj]]
-##         writeLines(c(gettextf("Variables in data frame '%s'",
-##                               docObj[["name"]]),
-##                      strwrap(gettextf("Code: %s",
-##                                       format_args(docObj[["code"]])),
-##                              indent = 2L, exdent = 8L),
-##                      strwrap(gettextf("Docs: %s",
-##                                       format_args(docObj[["docs"]])),
-##                              indent = 2L, exdent = 8L)))
-##         writeLines("")
-##     }
-##     invisible(x)
-## }
 
 format.codocData <-
 function(x, ...)
@@ -1500,52 +1426,6 @@ function(package, dir, lib.loc = NULL)
     attr(bad_doc_objects, "bad_lines") <- bad_lines
     bad_doc_objects
 }
-
-## print.checkDocFiles <-
-## function(x, ...)
-## {
-##     for(doc_obj in names(x)) {
-##         arg_names_in_usage_missing_in_arg_list <- x[[doc_obj]][["missing"]]
-##         if(length(arg_names_in_usage_missing_in_arg_list)) {
-##             writeLines(gettextf("Undocumented arguments in documentation object '%s'",
-##                                 doc_obj))
-##             .pretty_print(unique(arg_names_in_usage_missing_in_arg_list))
-##         }
-##         duplicated_args_in_arg_list <- x[[doc_obj]][["duplicated"]]
-##         if(length(duplicated_args_in_arg_list)) {
-##             writeLines(gettextf("Duplicated \\argument entries in documentation object '%s':",
-##                                 doc_obj))
-##             .pretty_print(duplicated_args_in_arg_list)
-##         }
-##         arg_names_in_arg_list_missing_in_usage <- x[[doc_obj]][["overdoc"]]
-##         if(length(arg_names_in_arg_list_missing_in_usage)) {
-##             writeLines(gettextf("Documented arguments not in \\usage in documentation object '%s':",
-##                                 doc_obj))
-##             .pretty_print(unique(arg_names_in_arg_list_missing_in_usage))
-##         }
-##         functions_not_in_aliases <- x[[doc_obj]][["unaliased"]]
-##         if(length(functions_not_in_aliases)) {
-##             writeLines(gettextf("Objects in \\usage without \\alias in documentation object '%s':",
-##                                 doc_obj))
-##             .pretty_print(unique(functions_not_in_aliases))
-##         }
-
-##         writeLines("")
-##     }
-
-##     if(!identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
-##                   FALSE)
-##        && length(bad_lines <- attr(x, "bad_lines"))) {
-##         for(doc_obj in names(bad_lines)) {
-##             writeLines(gettextf("Bad \\usage lines found in documentation object '%s':",
-##                                 doc_obj))
-##             writeLines(paste(" ", bad_lines[[doc_obj]]))
-##         }
-##         writeLines("")
-##     }
-
-##     invisible(x)
-## }
 
 format.checkDocFiles <-
 function(x, ...)
@@ -1824,31 +1704,6 @@ function(package, dir, lib.loc = NULL)
     bad_doc_objects
 }
 
-## print.checkDocStyle <-
-## function(x, ...) {
-##     for(docObj in names(x)) {
-##         ## <NOTE>
-##         ## With \method{GENERIC}{CLASS} now being transformed to show
-##         ## both GENERIC and CLASS info, documenting S3 methods on the
-##         ## same page as their generic is not necessarily a problem any
-##         ## more (as one can refer to the generic or the methods in the
-##         ## documentation, in particular for the primary argument).
-##         ## Hence, even if we still provide information about this, we
-##         ## no longer print it by default.  One can still access it via
-##         ##   lapply(checkDocStyle("foo"), "[[", "withGeneric")
-##         ## (but of course it does not print that nicely anymore),
-##         ## </NOTE>
-##         methods_with_full_name <- x[[docObj]][["withFullName"]]
-##         if(length(methods_with_full_name)) {
-##             writeLines(gettextf("S3 methods shown with full name in documentation object '%s':",
-##                                 docObj))
-##             .pretty_print(methods_with_full_name)
-##             writeLines("")
-##         }
-##     }
-##     invisible(x)
-## }
-
 format.checkDocStyle <-
 function(x, ...)
 {
@@ -2045,22 +1900,6 @@ function(package, dir, file, lib.loc = NULL,
     else
         bad_exprs
 }
-
-## print.checkFF <-
-## function(x, ...)
-## {
-##     if(length(x)) {
-##         writeLines(gettextf("Foreign function calls without 'PACKAGE' argument:"))
-##         for(i in seq_along(x)) {
-##             writeLines(paste(deparse(x[[i]][[1L]]),
-##                              "(",
-##                              deparse(x[[i]][[2L]]),
-##                              ", ...)",
-##                              sep = ""))
-##         }
-##     }
-##     invisible(x)
-## }
 
 format.checkFF <-
 function(x, ...)
@@ -2315,23 +2154,6 @@ function(package, dir, lib.loc = NULL)
     bad_methods
 }
 
-## print.checkS3methods <-
-## function(x, ...)
-## {
-##     format_args <- function(s)
-##         paste("function(", paste(s, collapse = ", "), ")", sep = "")
-##     for(entry in x) {
-##         writeLines(c(paste(names(entry)[1L], ":", sep = ""),
-##                      strwrap(format_args(entry[[1L]]),
-##                              indent = 2L, exdent = 11L),
-##                      paste(names(entry)[2L], ":", sep = ""),
-##                      strwrap(format_args(entry[[2L]]),
-##                              indent = 2L, exdent = 11L),
-##                      ""))
-##     }
-##     invisible(x)
-## }
-
 format.checkS3methods <-
 function(x, ...)
 {
@@ -2493,13 +2315,6 @@ function(package, dir, lib.loc = NULL)
     bad_replace_funs
 }
 
-## print.checkReplaceFuns <-
-## function(x, ...)
-## {
-##     if(length(x)) .pretty_print(unclass(x))
-##     invisible(x)
-## }
-
 format.checkReplaceFuns <-
 function(x, ...)
 {
@@ -2624,23 +2439,6 @@ function(package, dir, file, lib.loc = NULL)
     class(bad_exprs) <- "checkTnF"
     bad_exprs
 }
-
-## print.checkTnF <-
-## function(x, ...)
-## {
-##     for(fname in names(x)) {
-##         writeLines(gettextf("File '%s':", fname))
-##         xfname <- x[[fname]]
-##         for(i in seq_along(xfname)) {
-##             writeLines(strwrap(gettextf("found T/F in %s",
-##                                         paste(deparse(xfname[[i]]),
-##                                               collapse = "")),
-##                                exdent = 4L))
-##         }
-##         writeLines("")
-##     }
-##     invisible(x)
-## }
 
 format.checkTnF <-
 function(x, ...)
@@ -3105,31 +2903,6 @@ function(dfile)
     out
 }
 
-## print.check_package_description_encoding <-
-## function(x, ...)
-## {
-##     if(length(x$non_portable_encoding))
-##        writeLines(c(gettextf("Encoding '%s' is not portable",
-##                              x$non_portable_encoding),
-##                     ""))
-##     if(length(x$missing_encoding))
-##         writeLines(gettext("Unknown encoding with non-ASCII data"))
-##     if(length(x$fields_with_non_ASCII_tags)) {
-##         writeLines(gettext("Fields with non-ASCII tags:"))
-##         .pretty_print(x$fields_with_non_ASCII_tags)
-##         writeLines(c(gettext("All field tags must be ASCII."), ""))
-##     }
-##     if(length(x$fields_with_non_ASCII_values)) {
-##         writeLines(gettext("Fields with non-ASCII values:"))
-##         .pretty_print(x$fields_with_non_ASCII_values)
-##     }
-##     if(any(as.integer(sapply(x, length)) > 0L))
-##         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
-##                      ""))
-
-##     invisible(x)
-## }
-
 format.check_package_description_encoding <-
 function(x, ...)
 {
@@ -3206,33 +2979,6 @@ function(dfile, dir)
     class(out) <- "check_package_license"
     out
 }
-
-## print.check_package_license <-
-## function(x, ...)
-## {
-##     if(length(x)) {
-##         check <- Sys.getenv("_R_CHECK_LICENSE_")
-##         check <- if(check %in% c("maybe", ""))
-##             !(x$is_standardizable) || length(x$bad_pointers)
-##         else
-##             isTRUE(as.logical(check))
-##         if(check) {
-##             if(!(x$is_canonical))
-##                 writeLines(c(gettext("Non-standard license specification:"),
-##                              strwrap(x$license, indent = 2L, exdent = 2L),
-##                              gettextf("Standardizable: %s",
-##                                       x$is_standardizable),
-##                              if(x$is_standardizable)
-##                              c(gettext("Standardized license specification:"),
-##                                strwrap(x$standardization,
-##                                        indent = 2L, exdent = 2L))))
-##             if(length(x$bad_pointers))
-##                 writeLines(gettextf("Invalid license file pointers: %s",
-##                                     paste(x$bad_pointers, collapse = " ")))
-##         }
-##     }
-##     invisible(x)
-## }
 
 format.check_package_license <-
 function(x, ...)
@@ -3330,19 +3076,6 @@ function(dir)
     class(bad_flags) <- "check_make_vars"
     bad_flags
 }
-
-## print.check_make_vars <-
-## function(x, ...)
-## {
-##     if(length(x)) {
-##         for(i in seq_along(x)) {
-##             writeLines(c(gettextf("Non-portable flags in variable '%s':",
-##                                   names(x)[i]),
-##                          sprintf("  %s", paste(x[[i]], collapse = " "))))
-##         }
-##     }
-##     invisible(x)
-## }
 
 format.check_make_vars <-
 function(x, ...)
@@ -3556,14 +3289,6 @@ function(package, lib.loc = NULL)
     out
 }
 
-## print.check_code_usage_in_package <-
-## function(x, ...)
-## {
-##     if(length(x))
-##         writeLines(strwrap(x, indent = 0L, exdent = 2L))
-##     invisible(x)
-## }
-
 format.check_code_usage_in_package <-
 function(x, ...)
 {
@@ -3722,24 +3447,6 @@ function(package, dir, lib.loc = NULL)
     res1 <- split(db[bad, "report"], db[bad, 3L])
     structure(list(bad = res1), class = "check_Rd_xrefs")
 }
-
-## print.check_Rd_xrefs <-
-## function(x, ...)
-## {
-##     xx <- x$bad
-##     if(length(xx)) {
-##         for(i in seq_along(xx)) {
-##             writeLines(gettextf("Missing link(s) in documentation object '%s':",
-##                                 names(xx)[i]))
-##             ## NB, link might be empty, and was in mvbutils
-##             .pretty_print(sQuote(unique(xx[[i]])))
-##             writeLines("")
-##         }
-##         msg <- strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual."))
-##         writeLines(c(msg, ""))
-##     }
-##     invisible(x)
-## }
 
 format.check_Rd_xrefs <-
 function(x, ...)
@@ -4064,18 +3771,6 @@ function(dir, doDelete = FALSE)
     class(wrong_things) <- "subdir_tests"
     wrong_things
 }
-
-## print.subdir_tests <-
-## function(x, ...)
-## {
-##     for(i in which(sapply(x, length) > 0L)) {
-##         tag <- names(x)[i]
-##         writeLines(sprintf("Subdirectory '%s' contains invalid file names:",
-##                            names(x)[i]))
-##         .pretty_print(x[[i]])
-##     }
-##     invisible(x)
-## }
 
 format.subdir_tests <-
 function(x, ...)
@@ -4467,28 +4162,6 @@ function(package, dir, lib.loc = NULL)
     res
 }
 
-## print.check_packages_used <-
-## function(x, ...)
-## {
-##     if(length(xx <- x$imports)) {
-##         if (length(xx) > 1L) {
-##             writeLines(gettext("'::' or ':::' imports not declared from:"))
-##             .pretty_print(sort(xx))
-##         } else
-##             writeLines(gettextf("'::' or ':::' import not declared from: %s", xx))
-##     }
-##     if(length(xx <- x$others)) {
-##         if (length(xx) > 1L) {
-##             writeLines(gettext("'library' or 'require' calls not declared from:"))
-##             .pretty_print(sort(x$others))
-##         } else
-##             writeLines(gettextf("'library' or 'require' call not declared from: %s", xx))
-##     }
-##     if(nzchar(x$methods_message))
-##         writeLines(x$methods_message)
-##     invisible(x)
-## }
-
 format.check_packages_used <-
 function(x, ...)
 {
@@ -4865,28 +4538,6 @@ function(dir)
     sapply(Rd_db(dir = dir), .Rd_get_example_code)
 }
 
-## print.check_T_and_F <-
-## function(x, ...)
-## {
-##     if(length(x$bad_closures)) {
-##         msg <- ngettext(length(x$bad_closures),
-##                         "Found possibly global 'T' or 'F' in the following function:",
-##                         "Found possibly global 'T' or 'F' in the following functions:"
-##                         )
-##         writeLines(strwrap(msg))
-##         .pretty_print(x$bad_closures)
-##     }
-##     if(length(x$bad_examples)) {
-##         msg <- ngettext(length(x$bad_examples),
-##                         "Found possibly global 'T' or 'F' in the following Rd example file:",
-##                         "Found possibly global 'T' or 'F' in the following Rd example files:"
-##                         )
-##         writeLines(strwrap(msg))
-##         writeLines(paste(" ", x$bad_examples))
-##     }
-##     invisible(x)
-## }
-
 format.check_T_and_F <-
 function(x, ...)
 {
@@ -4970,20 +4621,6 @@ function(package, dir, lib.loc = NULL)
     class(out) <- "check_dotInternal"
     out
 }
-
-## print.check_dotInternal <-
-## function(x, ...)
-## {
-##     if(length(x$bad_closures)) {
-##         msg <- ngettext(length(x$bad_closures),
-##                         "Found .Internal call in the following function:",
-##                         "Found .Internal calls in the following functions:"
-##                         )
-##         writeLines(strwrap(msg))
-##         .pretty_print(x$bad_closures)
-##     }
-##     invisible(x)
-## }
 
 format.check_dotInternal <-
 function(x, ...)
@@ -5282,28 +4919,6 @@ function(package, dir, lib.loc = NULL)
     out
 }
 
-## print.check_Rd_metadata <-
-## function(x, ...)
-## {
-##     if(length(x$files_with_duplicated_name)) {
-##         bad <- x$files_with_duplicated_name
-##         for(nm in names(bad)) {
-##             writeLines(gettextf("Rd files with duplicated name '%s':", nm))
-##             .pretty_print(bad[[nm]])
-##         }
-##     }
-
-##     if(length(x$files_with_duplicated_aliases)) {
-##         bad <- x$files_with_duplicated_aliases
-##         for(nm in names(bad)) {
-##             writeLines(gettextf("Rd files with duplicated alias '%s':", nm))
-##             .pretty_print(bad[[nm]])
-##         }
-##     }
-
-##     invisible(x)
-## }
-
 format.check_Rd_metadata <-
 function(x, ...)
 {
@@ -5403,32 +5018,6 @@ function(package, dir, lib.loc = NULL)
 
     out
 }
-
-## print.check_Rd_contents <-
-## function(x, ...)
-## {
-##     for(nm in names(x)) {
-##         y <- x[[nm]]
-##         arguments_with_no_description <-
-##             y[["arguments_with_no_description"]]
-##         if(length(arguments_with_no_description)) {
-##             writeLines(gettextf("Argument items with no description in Rd object '%s':",
-##                                 nm))
-##             .pretty_print(arguments_with_no_description)
-##         }
-##         offending_autogenerated_content <-
-##             y[["offending_autogenerated_content"]]
-##         if(length(offending_autogenerated_content)) {
-##             writeLines(gettextf("Auto-generated content requiring editing in Rd object '%s':",
-##                                 nm))
-##             writeLines(sprintf("  %s",
-##                                offending_autogenerated_content[, 1L]))
-##         }
-##         writeLines("")
-##     }
-
-##     invisible(x)
-## }
 
 format.check_Rd_contents <-
 function(x, ...)
