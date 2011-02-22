@@ -575,9 +575,9 @@ get_exclude_patterns <- function()
                 lapply(tabs, function(nm) {
                     x <- readLines(nm)
                     nm3 <- paste(nm, c("gz", "bz2", "xz"), sep = ".")
-                    con <- gzfile(nm3[1L], "wb", compress=9); writeLines(x, con); close(con)
-                    con <- bzfile(nm3[2L], "wb", compress=9); writeLines(x, con); close(con)
-                    con <- xzfile(nm3[3L], "wb", compress=9); writeLines(x, con); close(con)
+                    con <- gzfile(nm3[1L], "wb", compression=9); writeLines(x, con); close(con)
+                    con <- bzfile(nm3[2L], "wb", compression=9); writeLines(x, con); close(con)
+                    con <- xzfile(nm3[3L], "wb", compression=9); writeLines(x, con); close(con)
                     sizes <- file.info(nm3)$size * c(0.9, 1, 1)
                     ind <- which.min(sizes)
                     if(ind > 1) OK <<- FALSE
