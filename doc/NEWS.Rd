@@ -99,15 +99,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{identical} could in rare cases generate a warning
+      \item \code{identical()} could in rare cases generate a warning
       about non-pairlist attributes on CHARSXPs.  As these are used for
       internal purposes, the attribute check should be skipped.
       (Reported by Niels Richard Hansen).
 
       \item If the filename extension (usually \file{.Rnw}) was not
       included in a call to \code{Sweave()}, source references would not
-      work properly, and the \code{keep.source} option
-      failed.  (\PR{14459})
+      work properly and the \code{keep.source} option failed.  (\PR{14459})
 
       \item \code{format.data.frame()} now keeps zero character column names.
 
@@ -191,9 +190,8 @@
       \code{loadNamespace()}) causing failures in S4-using packages
       without a namespace (e.g. those using reference classes).
 
-      \item The logit() function \code{qlogis(lp, log.p=TRUE)} no
-      longer prematurely overflows to \code{Inf} when p := exp(lp) is
-      close to 1.
+      \item The function \code{qlogis(lp, log.p=TRUE)} no longer
+      prematurely overflows to \code{Inf} when exp(lp) is close to 1.
 
       \item Updating S4 methods for a group generic function requires
       resetting the methods tables for the members of the group (patch
