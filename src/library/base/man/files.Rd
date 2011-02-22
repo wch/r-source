@@ -111,6 +111,10 @@ file.link(from, to)
   There is no guarantee that these functions will handle Windows
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
+  
+  Most (but not all, in particular not \code{file.copy} to a directory)
+  of these functions accept UTF-8 filepaths that cannot be translated to
+  the current locale.
 }
 #endif
 

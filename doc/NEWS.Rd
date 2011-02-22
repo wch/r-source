@@ -487,7 +487,7 @@
       \item \code{Map()} did not look up a character argument \code{f}
       in the correct frame, thanks to lazy evaluation.  \PR{14495}
 
-      \item \code{file.copy()} did not expand \code{from} and \code{to}
+      \item \code{file.copy()} did not tilde-expand \code{from} and \code{to}
       when \code{to} was a directory.  \PR{14507}
     }
   }

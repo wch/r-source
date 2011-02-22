@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.readlink}
@@ -18,7 +18,7 @@
 Sys.readlink(paths)
 }
 \arguments{
-  \item{paths}{character vector of file paths.}
+  \item{paths}{character vector of file paths.  Tilde expansion is done.}
 }
 \value{
   A character vector of the the same length as \code{paths}.  The

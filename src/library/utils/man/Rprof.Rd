@@ -73,6 +73,12 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   built for C-level profiling.
 }
 #endif
+#ifdef windows
+\note{
+  \code{filename} can be a UTF-8-encoded filepath that cannot be translated to
+  the current locale.
+}
+#endif
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
   \dQuote{Writing \R Extensions} (see the \file{doc/manual} subdirectory

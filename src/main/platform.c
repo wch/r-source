@@ -2151,7 +2151,9 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	recursive = asLogical(CADDDR(args));
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
-	strncpy(dir, translateChar(STRING_ELT(to, 0)), PATH_MAX);
+	strncpy(dir, 
+		R_ExpandFileName(translateChar(STRING_ELT(to, 0))),
+		PATH_MAX);
 	p = R_ExpandFileName(dir); /* expand target */
 	if (p != dir)
 	    strncpy(dir, p, PATH_MAX);
@@ -2159,7 +2161,9 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    strncat(dir, filesep, PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		strncpy(from, translateChar(STRING_ELT(fn, i)), PATH_MAX);
+		strncpy(from, 
+			R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
+			PATH_MAX);
 		p = R_ExpandFileName(from); /* expand source */
 		if (p != from)
 		    strncpy(from, p, PATH_MAX);
@@ -2315,7 +2319,8 @@ SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_READLINK
     for (i = 0; i < n; i++) {
 	memset(buf, 0, PATH_MAX+1);
-	res = readlink(translateChar(STRING_ELT(paths, i)), buf, PATH_MAX);
+	res = readlink(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
+		       buf, PATH_MAX);
 	if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
 	else if (errno == EINVAL) SET_STRING_ELT(ans, i, mkChar(""));
 	else SET_STRING_ELT(ans, i,  NA_STRING);

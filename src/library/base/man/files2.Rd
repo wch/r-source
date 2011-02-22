@@ -16,8 +16,10 @@ Sys.chmod(paths, mode = "0777")
 Sys.umask(mode = "0000")
 }
 \arguments{
-  \item{path}{a character vector containing a single path name.}
-  \item{paths}{character vectors containing file or directory paths.}
+  \item{path}{a character vector containing a single path name.  Tilde
+    expansion (\code{\link{path.expand}}) is done.}
+  \item{paths}{character vectors containing file or directory paths.  Tilde
+    expansion (\code{\link{path.expand}}) is done.}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical. Should elements of the path other than the
     last be created?  If true, like Unix's \command{mkdir -p}.}

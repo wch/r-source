@@ -33,8 +33,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{list}{A character vector containing the names of objects to be
     saved.}
   \item{file}{a (writable binary-mode) \link{connection} or the name of the
-    file where the data will be saved.  Must be a file name for
-    \code{version = 1}.} 
+    file where the data will be saved (when tilde expansion,
+    \code{\link{path.expand}}, is done).  Must be a file name for
+    \code{version = 1}.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
     leads to a binary file being written.}
@@ -124,6 +125,11 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   2.3.0 and for \code{save.image} in 2.4.0.  Any recent version of \R
   can read compressed save files, and a compressed file can be
   uncompressed (by \code{gzip -d}) for use with very old versions of \R.
+#ifdef windows
+
+  \code{file} can be a UTF-8-encoded filepath that cannot be translated to
+  the current locale.
+#endif
 }
 
 \section{Warnings}{

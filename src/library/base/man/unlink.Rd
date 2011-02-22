@@ -23,7 +23,7 @@
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and sockets.
-  Some earlier versions of \R would bot try to remove broken symbolic links.
+  Some earlier versions of \R would not try to remove broken symbolic links.
 #endif  
   
   Wildcard expansion is done by the internal code of
@@ -53,6 +53,8 @@
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
 #endif
+
+  This will not do tilde expansion on \code{x} on most OSes.
 }
 \value{
   \code{0} for success, \code{1} for failure.
