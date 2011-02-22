@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -9,7 +9,6 @@
 \alias{file.copy}
 \alias{file.create}
 \alias{file.exists}
-\alias{file.rcopy}
 \alias{file.remove}
 \alias{file.rename}
 \alias{file.symlink}
@@ -25,7 +24,10 @@ file.symlink(from, to)
 }
 \arguments{
   \item{\dots, file1, file2}{character vectors, containing file names or paths.}
-  \item{from, to}{character string, containing a file name or path.}
+  \item{from, to}{character string (\code{file.rename}) or vector,
+    containing file names or paths.  For \code{file.copy} and
+    \code{file.symlink} \code{to} can alternatively be the path to a
+    single existing directory.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical. If \code{to} is a directory, should
@@ -42,7 +44,7 @@ file.symlink(from, to)
 
   \code{file.create} creates files with the given names if they do not
   already exist and truncates them if they do.  They are created with the
-  maximal permissions allowed by the \code{umask} setting.
+  maximal permissions allowed by the \code{umask} setting (where relevant).
 
   \code{file.exists} returns a logical vector indicating whether the
   files named by its argument exist.  (Here \sQuote{exists} is in the
