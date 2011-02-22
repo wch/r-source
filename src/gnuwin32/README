@@ -2,12 +2,14 @@ R @FULLVERSION@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 2000 and later (including 64-bit versions of Windows) on ix86
-and x86_64 chips.  It is designed to be as close as possible to the
-implementation on Unix, but see the list of differences below.  The
-port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
+Windows XP and later (including 64-bit versions of Windows, perhaps
+also Windows 2000) on ix86 and x86_64 chips.  It is designed to be as
+close as possible to the implementation on Unix, but see the list of
+differences below.  The port was by Guido Masarotto, Brian Ripley and
+Duncan Murdoch.
 
 See the file 'CHANGES' for the new features of this version.
+(CHANGES.Rd if you got R by subversion.)
 
 
 Installation
@@ -15,7 +17,7 @@ Installation
 
 The distribution is distributed as a 37Mb installer @RWVER@-win.exe.
 
-Just run this for a Windows-XP style installer.  It contains all the R
+Just run this for a Windows-style installer.  It contains all the R
 components, and you can select what you want installed.
 
 For more details, including command-line options for the installer
@@ -35,11 +37,11 @@ GUI:
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window.  It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
-Set the 'Start in' field of the shortcut to the directory you want to
-use as the working directory (where workspaces and files are saved to
-and loaded from).  The installer creates a shortcut on the desktop for
-you (by default).
+...\@RWVER@\bin\i386\Rgui.exe (or x64\Rgui.exe) and adding the
+arguments in the Target field.  Set the 'Start in' field of the
+shortcut to the directory you want to use as the working directory
+(where workspaces and files are saved to and loaded from).  The
+installer creates a shortcut on the desktop for you (by default).
 
 You have a choice of interface: SDI (separate windows) or MDI
 (multiple child windows in one large window).  MDI is the default:
