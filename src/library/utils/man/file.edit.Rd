@@ -13,7 +13,8 @@ file.edit(\dots, title = file, editor = getOption("editor"),
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
-    files to be edited.}
+    files to be displayed.  These will be tilde-expanded: see
+    \code{\link{path.expand}}.}
   \item{title}{the title to use in the editor; defaults to the filename.}  
   \item{editor}{the text editor to be used.  See \sQuote{Details}.}
   \item{fileEncoding}{the encoding to assume for the file: the default
@@ -21,9 +22,6 @@ file.edit(\dots, title = file, editor = getOption("editor"),
     of the help for \code{\link{file}}.}
 }
 \details{
-  Path expansion (see \code{\link{path.expand}} will be done on
-  \code{names}.
-
   The behaviour of this function is very system dependent.  Currently
   files can be opened only one at a time on Unix; on Windows, the
   internal editor allows multiple files to be opened, but has a limit of
