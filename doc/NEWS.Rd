@@ -281,7 +281,7 @@
 
       It has a new \code{method = "mailto"} on Unix-alikes similar to
       that on Windows: it invokes a default mailer via \command{open}
-      (Mac OS X) or \code{xdg-open} (elsewhere).
+      (Mac OS X) or \code{xdg-open} or the default browser (elsewhere).
 
       The default for \code{ccaddress} is now
       \code{getOption("ccaddress")} which is by default unset: using the
@@ -344,7 +344,7 @@
       variable \env{_R_CHECK_COMPACT_DATA2_} to \samp{TRUE}.
 
       The types of files in the \code{data} directory are now checked,
-      as packages as \emph{still} misusing it for non-\R data files.
+      as packages are \emph{still} misusing it for non-\R data files.
 
       \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
       and \code{hasMethods} are revised to deal consistently with
@@ -390,11 +390,11 @@
       of \R to use different stylesheets for the packages they install.
 
       \item A top-level file \file{.Rinstignore} in the package sources
-      can list (in the same way as \file{.Rbuildignore}) file under
-      \code{inst} that should not be installed.  Why should there be any
+      can list (in the same way as \file{.Rbuildignore}) files under
+      \code{inst} that should not be installed.  (Why should there be any
       such files?  Because all the files needed to re-build vignettes
       need to be under \code{inst/doc}, but they may not need to be
-      installed.
+      installed.)
 
       \item \command{R CMD INSTALL} has a new option
       \option{--compact-docs} to compact any PDFs under the
@@ -582,15 +582,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{identical} could in rare cases generate a warning
+      \item \code{identical()} could in rare cases generate a warning
       about non-pairlist attributes on CHARSXPs.  As these are used for
       internal purposes, the attribute check should be skipped.
       (Reported by Niels Richard Hansen).
 
       \item If the filename extension (usually \file{.Rnw}) was not
       included in a call to \code{Sweave()}, source references would not
-      work properly, and the \code{keep.source} option
-      failed.  (\PR{14459})
+      work properly and the \code{keep.source} option failed.  (\PR{14459})
 
       \item \code{format.data.frame()} now keeps zero character column names.
 
@@ -674,9 +673,8 @@
       \code{loadNamespace()}) causing failures in S4-using packages
       without a namespace (e.g. those using reference classes).
 
-      \item The logit() function \code{qlogis(lp, log.p=TRUE)} no
-      longer prematurely overflows to \code{Inf} when p := exp(lp) is
-      close to 1.
+      \item The function \code{qlogis(lp, log.p=TRUE)} no longer
+      prematurely overflows to \code{Inf} when exp(lp) is close to 1.
 
       \item Updating S4 methods for a group generic function requires
       resetting the methods tables for the members of the group (patch
