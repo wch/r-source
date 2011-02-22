@@ -1184,6 +1184,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## Have already checked that inst/doc exists and qpdf can be found
         pdfs <- dir('inst/doc', pattern="\\.pdf",
                     recursive = TRUE, full.names = TRUE)
+        pdfs <- pdfs %w/o% "inst/doc/Rplots.pdf"
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under inst/doc")
             td <- tempfile('pdf')
@@ -1194,11 +1195,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(length(res)) {
                 resultLog(Log, "NOTE")
                 printLog(Log,
-                         "  'qpdf' reported some significant size reductions:\n",
+                         "  'qpdf' made some significant size reductions:\n",
                          paste("  ", res, collapse="\n"),
                          "\n",
-                         "  consider running tools::compactPDF() on these files\n",
-                         "  (assuming that they are actually needed).\n")
+                         "  consider running tools::compactPDF() on these files\n")
             } else resultLog(Log, "OK")
         }
     }
