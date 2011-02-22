@@ -6,10 +6,10 @@
 \name{create.post}
 \alias{create.post}
 \title{
-  Ancilliary Function for Preparing Emails and Postings
+  Ancillary Function for Preparing Emails and Postings
 }
 \description{
-  An ancilliary function used by \code{\link{bug.report}} and
+  An ancillary function used by \code{\link{bug.report}} and
   \code{\link{help.request}} to prepare emails for submission to package
   maintainers or to \R mailing lists.
 }
