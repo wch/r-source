@@ -805,10 +805,12 @@ logLik.nls <- function(object, REML = FALSE, ...)
     res <- object$m$resid()
     N <- length(res)
     if(is.null(w <- object$weights)) w <- rep(1, N)
-    val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w)) + log(sum(w*res^2)))/2
+    ## Note the trick for zero weights
+    zw <- w == 0
+    val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w + zw)) + log(sum(w*res^2)))/2
     ## the formula here corresponds to estimating sigma^2.
     attr(val, "df") <- 1L + length(coef(object))
-    attr(val, "nobs") <- attr(val, "nall") <- N
+    attr(val, "nobs") <- attr(val, "nall") <- sum(!zw)
     class(val) <- "logLik"
     val
 }

@@ -1,6 +1,6 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-18 r52028)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-02-23 r54556)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -43,19 +43,19 @@ Type 'q()' to quit R.
 [1] 339.0226
 > 
 > ## with two models:
-> lm1. <- update(lm1, . ~ . -Examination)
-> AIC(lm1, lm1.)
-     df      AIC
-lm1   7 326.0716
-lm1.  6 325.2408
-> BIC(lm1, lm1.)
-     df      BIC
-lm1   7 339.0226
-lm1.  6 336.3417
+> lm2 <- update(lm1, . ~ . -Examination)
+> AIC(lm1, lm2)
+    df      AIC
+lm1  7 326.0716
+lm2  6 325.2408
+> BIC(lm1, lm2)
+    df      BIC
+lm1  7 339.0226
+lm2  6 336.3417
 > 
 > ## Don't show: 
 > ## 2 equivalent ways of calculating the BIC:
-> stopifnot(all.equal(AIC(lm1, k=log(nrow(swiss))), BIC(lm1)))
+> stopifnot(all.equal(AIC(lm1, k=log(nobs(lm1))), BIC(lm1)))
 > ## End Don't show
 > 
 > 
@@ -201,7 +201,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.957 0.01 1.968 0 0 
+Time elapsed:  1.917 0.015 1.938 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -40,7 +40,7 @@ str.logLik <- function(object, digits = max(2, getOption("digits") - 3),
 as.data.frame.logLik <- function (x, ...)
     as.data.frame(c(x), ...)
 
-## >> logLik.nls() in ../../nls/R/nls.R
+## >> logLik.nls() in nls.R
 
 ## from package:nlme
 
@@ -54,6 +54,8 @@ logLik.glm <- function(object, ...)
     ## allow for estimated dispersion
     if(fam %in% c("gaussian", "Gamma", "inverse.gaussian")) p <- p + 1
     val <- p - object$aic / 2
+    ## Note: zero prior weights have NA working residuals.
+    attr(val, "nobs") <- sum(!is.na(object$residuals))
     attr(val, "df") <- p
     class(val) <- "logLik"
     val
@@ -81,10 +83,22 @@ logLik.lm <- function(object, REML = FALSE, ...)
     val <- .5* (sum(log(w)) - N * (log(2 * pi) + 1 - log(N) +
                                    log(sum(w*res^2))))
     if(REML) val <- val - sum(log(abs(diag(object$qr$qr)[1L:p])))
-    attr(val, "nall") <- N0
+    attr(val, "nall") <- N0 # NB, still omits zero weights
     attr(val, "nobs") <- N
     attr(val, "df") <- p + 1
     class(val) <- "logLik"
     val
 }
 
+nobs <- function(object, ...) UseMethod("nobs")
+
+nobs.lm <- function(object, ...)
+    if(!is.null(w <- object$weights)) sum(w != 0) else length(object$residuals)
+nobs.glm <- function(object, ...) sum(!is.na(object$residuals))
+nobs.logLik <- function(object, ...) {
+    res <- attr(object, "nobs")
+    if (is.null(res)) stop("no \"nobs\" attribute is available")
+    res
+}
+nobs.nls <- function(object, ...) length(object$m$resid())
+nobs.default <- function(object, ...) stop("no 'nobs' method is available")

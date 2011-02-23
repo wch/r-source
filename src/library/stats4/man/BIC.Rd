@@ -51,13 +51,13 @@ AIC(lm1)
 BIC(lm1)
 
 ## with two models:
-lm1. <- update(lm1, . ~ . -Examination)
-AIC(lm1, lm1.)
-BIC(lm1, lm1.)
+lm2 <- update(lm1, . ~ . -Examination)
+AIC(lm1, lm2)
+BIC(lm1, lm2)
 
 \testonly{
 ## 2 equivalent ways of calculating the BIC:
-stopifnot(all.equal(AIC(lm1, k=log(nrow(swiss))), BIC(lm1)))
+stopifnot(all.equal(AIC(lm1, k=log(nobs(lm1))), BIC(lm1)))
 }
 }
 \keyword{models}

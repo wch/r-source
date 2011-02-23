@@ -295,6 +295,17 @@
 
       \item \code{file.rename()} now allows vector arguments (of the
       same length).
+
+      \item The \code{"glm"} method for \code{logLik()} now returns an
+      \code{"nobs"} attribute (which \code{stats4::BIC()} assumed it
+      did).
+
+      The \code{"nls"} method for \code{logLik()} gave incorrect results
+      for zero weights.
+     
+      \item There is a new generic function \code{nobs()} in package
+      \pkg{stats}, to extract from model objects a suitable value for
+      use in BIC calculations.
     }
   }
 
@@ -495,6 +506,10 @@
 
       \item \code{file.copy()} did not tilde-expand \code{from} and \code{to}
       when \code{to} was a directory.  \PR{14507}
+
+      \item \code{stats4::BIC()} assumed without checking that an object
+      of class \code{"logLik"} has an \code{"nobs"} attribute:
+      \code{glm()} fits did not and so \code{BIC()} failed for them.
     }
   }
 }
