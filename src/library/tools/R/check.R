@@ -1270,6 +1270,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         any <- FALSE
         for (f in makefiles) {
             lines <- readLines(f, warn = FALSE)
+            ## Combine lines ending in escaped newlines.
+            if(any(ind <- grepl("[\\]$", lines, useBytes = TRUE))) {
+                ## Eliminate escape.
+                lines[ind] <-
+                    sub("[\\]$", "", lines[ind], useBytes = TRUE)
+                ## Determine ids of blocks that need to be joined.
+                ind <- seq_along(ind) - c(0, cumsum(ind)[-length(ind)])
+                ## And join.
+                lines <- unlist(lapply(split(lines, ind), paste,
+                                       collapse = " "))
+            }
             c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
             c2l <- grepl("\\$[{(]{0,1}LAPACK_LIBS", lines, useBytes = TRUE)
             c2b <- grepl("\\$[{(]{0,1}BLAS_LIBS", lines, useBytes = TRUE)
