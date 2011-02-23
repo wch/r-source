@@ -19,10 +19,13 @@ nobs(object, ...)
   \item{object}{A fitted model object.}
   \item{\dots}{Further arguments to be passed to methods.}
 }
+%% default method has use.fallback = FALSE, used in step, add1.default, drop1.default
 \details{
   There are methods in this package for \code{\link{lm}},
   \code{\link{glm}}, \code{\link{nls}} and \code{\link{logLik}} objects,
-  as well as a default method (which throws an error).
+  as well as a default method (which throws an error, unless argument
+  \code{use.fallback = TRUE} when it looks for \code{weights} and
+  \code{residuals} components -- use with care!).
 }
 \value{
   A number.

@@ -101,4 +101,13 @@ nobs.logLik <- function(object, ...) {
     res
 }
 nobs.nls <- function(object, ...) length(object$m$resid())
-nobs.default <- function(object, ...) stop("no 'nobs' method is available")
+
+## it is probably too unsafe to use residuals general, not least
+## because of e.g. weighted fits.
+nobs.default <- function(object, use.fallback = FALSE, ...)
+{
+    if(use.fallback) {
+        if(!is.null(w <- object$weights)) sum(w != 0)
+        else length(object$residuals) # and not residuals(object)
+    } else stop("no 'nobs' method is available")
+}
