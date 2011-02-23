@@ -1,6 +1,6 @@
 % File src/library/stats/man/AIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{AIC}
@@ -30,8 +30,6 @@ AIC(object, \dots, k = 2)
     default \code{k = 2} is the classical AIC.}
 }
 \details{
-  Use \code{AIC(objects, \dots, k = nobs(object))} to work with BIC.
-  
   The default method for \code{AIC}, \code{AIC.default()} entirely
   relies on the existence of a \code{\link{logLik}} method
   computing the log-likelihood for the given class.

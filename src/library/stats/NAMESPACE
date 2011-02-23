@@ -34,7 +34,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        model.matrix.default, model.matrix.lm, model.offset,
        model.response, model.tables, model.weights, mvfft, na.action,
        na.exclude, na.fail, na.omit, na.pass, napredict, naprint,
-       naresid, nextn, nlm, nlminb, nobs, offset, optim, optimise, optimize,
+       naresid, nextn, nlm, nlminb, offset, optim, optimise, optimize,
        p.adjust, p.adjust.methods, pbeta, pbinom, pcauchy, pchisq,
        pexp, pf, pgamma, pgeom, phyper, plnorm, plogis, plot.density,
        plot.lm, plot.mlm, plot.ts, plot.TukeyHSD, pnbinom, pnorm,
@@ -184,7 +184,6 @@ S3method(naprint, exclude)
 S3method(naprint, omit)
 S3method(naresid, default)
 S3method(naresid, exclude)
-S3method(nobs, default)
 S3method(Ops, ts)
 S3method(plot, density)
 S3method(plot, lm)
