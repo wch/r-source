@@ -31,7 +31,9 @@
       \item If \code{options("install.lock")} is set to \code{TRUE},
       binary package installs are protected against failure similar to
       the way source package installs are protected.
-      
+
+      \item \code{file.exists()} and \code{unlink()} have more support
+      for files > 2GB.
     }
   }
 
