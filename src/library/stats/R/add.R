@@ -46,7 +46,8 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames = list(c("<none>", scope), c("df", "AIC")))
     ans[1L,  ] <- extractAIC(object, scale, k = k, ...)
-    n0 <- length(object$residuals)
+    ## n0 <- length(object$residuals)
+    n0 <- nobs(object, use.fallback = TRUE)
     env <- environment(formula(object))
     for(i in seq(ns)) {
 	tt <- scope[i]
@@ -58,7 +59,8 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1L, ] <- extractAIC(nfit, scale, k = k, ...)
-        if(length(nfit$residuals) != n0)
+        ## if(length(nfit$residuals) != n0)
+        if(nobs(nfit, use.fallback = TRUE) != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[, 1L] - ans[1L, 1L]
@@ -344,7 +346,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames =  list(c("<none>", scope), c("df", "AIC")))
     ans[1, ] <- extractAIC(object, scale, k = k, ...)
-    n0 <- length(object$residuals)
+    n0 <- nobs(object, use.fallback = TRUE)
     env <- environment(formula(object))
     for(i in seq(ns)) {
 	tt <- scope[i]
@@ -356,7 +358,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
-        if(length(nfit$residuals) != n0)
+        if(nobs(nfit, use.fallback = TRUE) != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[1L , 1L] - ans[, 1L]
@@ -720,7 +722,7 @@ step <- function(object, scope, scale = 0,
     }
     models <- vector("list", steps)
     if(!is.null(keep)) keep.list <- vector("list", steps)
-    n <- length(object$residuals)
+    n <- nobs(object, use.fallback = TRUE)
     fit <- object
     bAIC <- extractAIC(fit, scale, k = k, ...)
     edf <- bAIC[1L]
@@ -783,7 +785,7 @@ step <- function(object, scope, scale = 0,
         ## may need to look for a `data' argument in parent
 	fit <- update(fit, paste("~ .", change), evaluate = FALSE)
         fit <- eval.parent(fit)
-        if(length(fit$residuals) != n)
+        if(nobs(fit, use.fallback = TRUE) != n)
             stop("number of rows in use has changed: remove missing values?")
         Terms <- terms(fit)
 	bAIC <- extractAIC(fit, scale, k = k, ...)
@@ -844,5 +846,5 @@ extractAIC.negbin <- function(fit, scale, k = 2, ...)
 {
     n <- length(fit$residuals)
     edf <- n - fit$df.residual
-    c(edf, -fit$twologlik + k * edf)
+    c(edf, -fit$twologlik + k * edf) # maybe k+1 if theta is estimated
 }
