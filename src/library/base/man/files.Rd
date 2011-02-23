@@ -114,8 +114,8 @@ file.link(from, to)
   \code{file.symlink}, not least because \R is still widely used on
   Windows XP.
 
-  Most (but not \code{file.copy} to a directory) of these functions
-  accept UTF-8 filepaths not valid in the current locale.
+  Most of these functions accept UTF-8 filepaths not valid in the
+  current locale.
 }
 #endif
 
