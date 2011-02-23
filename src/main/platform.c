@@ -383,11 +383,11 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/*  append.file
+/*  file.append
  *
  *  Given two file names as arguments and arranges for
  *  the second file to be appended to the second.
- *  op = 2 is codeFiles.append.
+ *  op = 1 is codeFiles.append, used in tools:::.file_append_ensuring_LFs
  */
 
 #if defined(BUFSIZ) && (BUFSIZ > 512)
@@ -435,9 +435,9 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     f1 = CAR(args); n1 = length(f1);
     f2 = CADR(args); n2 = length(f2);
     if (!isString(f1))
-	error(_("invalid first filename"));
+	error(_("invalid '%s' argument"), "file1");
     if (!isString(f2))
-	error(_("invalid second filename"));
+	error(_("invalid '%s' argument"), "file2");
     if (n1 < 1)
 	error(_("nothing to append to"));
     if (PRIMVAL(op) > 0 && n1 > 1)
@@ -629,8 +629,6 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LINK
     SEXP ans;
     int i;
-    char from[PATH_MAX], to[PATH_MAX];
-    const char *p;
 #endif
     checkArity(op, args);
     f1 = CAR(args); n1 = length(f1);
@@ -651,6 +649,19 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    STRING_ELT(f2, i%n2) == NA_STRING)
 	    LOGICAL(ans)[i] = 0;
 	else {
+#ifdef Win32
+	    wchar_t *from, *to;
+	    
+	    from = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
+	    LOGICAL(ans)[i] = CreateHardLinkW(to, from, NULL) != 0;
+	    if(!LOGICAL(ans)[i]) {
+		warning(_("cannot link '%ls' to '%ls', reason '%s'"),
+			from, to, formatError(GetLastError()));
+	    }
+#else
+	    char from[PATH_MAX], to[PATH_MAX];
+	    const char *p;
 	    p = R_ExpandFileName(translateChar(STRING_ELT(f1, i%n1)));
 	    if (strlen(p) >= PATH_MAX - 1) {
 		LOGICAL(ans)[i] = 0;
@@ -663,19 +674,12 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 		continue;
 	    }
 	    strcpy(to, p);
-	    /* Rprintf("linking %s to %s\n", from, to); */
-#ifdef Win32
-	    LOGICAL(ans)[i] = CreateHardLink(to, from, NULL) != 0;
-	    if(!LOGICAL(ans)[i]) {
-		warning(_("cannot link '%s' to '%s', reason '%s'"),
-			from, to, formatError(GetLastError()));
-#else
 	    LOGICAL(ans)[i] = link(from, to) == 0;
 	    if(!LOGICAL(ans)[i]) {
 		warning(_("cannot link '%s' to '%s', reason '%s'"),
 			from, to, strerror(errno));
-#endif
 	    }
+#endif
 	}
     }
     UNPROTECT(1);
@@ -693,6 +697,8 @@ int Rwin_wrename(const wchar_t *from, const wchar_t *to);
 
 SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP f1, f2, ans;
+    int i, n1, n2;
 #ifdef Win32
     wchar_t from[PATH_MAX], to[PATH_MAX];
     const wchar_t *w;
@@ -703,40 +709,50 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     checkArity(op, args);
-    if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
-	error(_("'source' must be a single string"));
-    if (TYPEOF(CADR(args)) != STRSXP || LENGTH(CADR(args)) != 1)
-	error(_("'destination' must be a single string"));
-
-    if (STRING_ELT(CAR(args), 0) == NA_STRING ||
-	STRING_ELT(CADR(args), 0) == NA_STRING)
-	error(_("missing values are not allowed"));
+    f1 = CAR(args); n1 = length(f1);
+    f2 = CADR(args); n2 = length(f2);
+    if (!isString(f1))
+	error(_("invalid '%s' argument"), "from");
+    if (!isString(f2))
+	error(_("invalid '%s' argument"), "to");
+    if (n2 != n1)
+	error(_("'from' and 'to' are of different lengths"));
+    PROTECT(ans = allocVector(LGLSXP, n1));
+    for (i = 0; i < n1; i++) {
+	if (STRING_ELT(f1, i) == NA_STRING ||
+	    STRING_ELT(f2, i) == NA_STRING) {
+	    LOGICAL(ans)[i] = 0;
+	    continue;
+	}
 #ifdef Win32
-    w = filenameToWchar(STRING_ELT(CAR(args), 0), TRUE);
-    if (wcslen(w) >= PATH_MAX - 1)
-	error(_("expanded source name too long"));
-    wcsncpy(from, w, PATH_MAX - 1);
-    w = filenameToWchar(STRING_ELT(CADR(args), 0), TRUE);
-    if (wcslen(w) >= PATH_MAX - 1)
-	error(_("expanded destination name too long"));
-    wcsncpy(to, w, PATH_MAX - 1);
-    return Rwin_wrename(from, to) == 0 ? mkTrue() : mkFalse();
+	w = filenameToWchar(STRING_ELT(f1, i), TRUE);
+	if (wcslen(w) >= PATH_MAX - 1)
+	    error(_("expanded 'from' name too long"));
+	wcsncpy(from, w, PATH_MAX - 1);
+	w = filenameToWchar(STRING_ELT(f2, i), TRUE);
+	if (wcslen(w) >= PATH_MAX - 1)
+	    error(_("expanded 'to' name too long"));
+	wcsncpy(to, w, PATH_MAX - 1);
+	LOGICAL(ans)[i] = (Rwin_wrename(from, to) == 0);
 #else
-    p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
-    if (strlen(p) >= PATH_MAX - 1)
-	error(_("expanded source name too long"));
-    strncpy(from, p, PATH_MAX - 1);
-    p = R_ExpandFileName(translateChar(STRING_ELT(CADR(args), 0)));
-    if (strlen(p) >= PATH_MAX - 1)
-	error(_("expanded destination name too long"));
-    strncpy(to, p, PATH_MAX - 1);
-    res = rename(from, to);
-    if(res) {
-	warning(_("cannot rename file '%s' to '%s', reason '%s'"),
-		from, to, strerror(errno));
-    }
-    return res == 0 ? mkTrue() : mkFalse();
+	p = R_ExpandFileName(translateChar(STRING_ELT(f1, i)));
+	if (strlen(p) >= PATH_MAX - 1)
+	    error(_("expanded 'from' name too long"));
+	strncpy(from, p, PATH_MAX - 1);
+	p = R_ExpandFileName(translateChar(STRING_ELT(f2, i)));
+	if (strlen(p) >= PATH_MAX - 1)
+	    error(_("expanded 'to' name too long"));
+	strncpy(to, p, PATH_MAX - 1);
+	res = rename(from, to);
+	if(res) {
+	    warning(_("cannot rename file '%s' to '%s', reason '%s'"),
+		    from, to, strerror(errno));
+	}
+	LOGICAL(ans)[i] = (res == 0);
 #endif
+    }
+    UNPROTECT(1);
+    return ans;
 }
 
 #ifdef HAVE_SYS_TYPES_H

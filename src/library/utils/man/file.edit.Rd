@@ -40,6 +40,10 @@ file.edit(\dots, title = file, editor = getOption("editor"),
   \code{editor}.  On Unix the default is set from the environment
   variables \env{EDITOR} or \env{VISUAL} if either is set, otherwise
   \code{vi} is used.
+#ifdef windows
+  
+  UTF-8-encoded paths not valid in the current locale can be used.  
+#endif  
 }
 \seealso{
   \code{\link{files}},

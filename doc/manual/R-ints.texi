@@ -70,6 +70,7 @@ The current version of this document is @value{VERSION}.
 * .Internal vs .Primitive::     
 * Internationalization in the R sources::  
 * Package Structure::           
+* Files::                       
 * Graphics Devices::            
 * Tools::                       
 * R coding standards::          
@@ -2452,7 +2453,7 @@ This is handled separately: see
 
 See file @file{po/README} for how to update the message templates and catalogs.
 
-@node Package Structure, Graphics Devices, Internationalization in the R sources, Top
+@node Package Structure, Files, Internationalization in the R sources, Top
 @chapter Structure of an Installed Package
 
 @menu
@@ -2502,10 +2503,9 @@ plus a file @file{Rdata.rds} which contain a named character vector used
 by @code{data()} in the (unusual) event that it is used for such a
 package.  Otherwise it is a copy of the @file{data} directory in the
 sources, with saved images re-compressed if @command{R CMD INSTALL
---resave-data} was used.  If @command{R CMD INSTALL --use-data-zip} was
-specified or selected @emph{via} @option{--auto-zip}, the contents of
-the directory are moved to a zip file @file{Rdata.zip} and a listing
-written in file @file{filelist}.
+--resave-data} was used.  Prior to @R{} 2.12.0 the contents of the
+directory could be moved to a zip file @file{Rdata.zip} and a listing
+written in file @file{filelist}: this was principally done on Windows.
 
 Subdirectory @file{demo} supports the @code{demo} function, and is
 copied from the sources.
@@ -2609,8 +2609,98 @@ File @file{aliases.rds} is the same information as @file{AnIndex} as a
 named character vector (names the topics, values the file basename), for
 faster access by @R{} >= 2.11.0.
 
+@node Files, Graphics Devices, Package Structure, Top
+@chapter Files
 
-@node Graphics Devices, Tools, Package Structure, Top
+@R{} provides may functions to work with files and directories: many of
+these have been added relatively recently to facilitate scripting in
+@R{} and in particular the replacement of Perl scripts by @R{} scripts
+in the management of @R{} itself.
+
+These functions are implemented by standard C/POSIX library calls,
+except on Windows.  That means that filenames must be encoded in the
+current locale as the OS provides no other means to access the file
+system: increasingly filenames are stored in UTF-8 and the OS will
+translate filenames to UTF-8 in other locales.  So using a UTF-8 locale
+gives transparent access to the whole file system.
+
+Windows is another story.  There the internal view of filenames is in
+UTF-16LE (so-called `Unicode'), and standard C library calls can only
+access files whose names can be expressed in the current codepage.  To
+circumvent that restriction, there is a parallel set of Windows-specific
+calls which take wide-character arguments for filepaths.  Much of the
+file-handling in @R{} has been moved over to using these functions, so
+filenames can be manipulated in @R{} as UTF-8 encoded character strings,
+converted to wide characters (which on Windows are UTF-16LE) and passed
+to the OS.  The utilities @code{RC_fopen} and @code{filenameToWchar}
+help this process.  Currently @code{file.copy} to a directory,
+@code{list.files}, @code{list.dirs} and @code{path.expand} work only
+with filepaths encoded in the current codepage.
+
+All these functions do tilde expansion, in the same way as
+@code{path.expand}, with the deliberate exception of @code{Sys.glob}.
+
+File names may be case sensitive or not: the latter is the norm on
+Windows and Mac OS X, the former on other Unix-alikes.  Note that this
+is a property of both the OS and the file system: it is often possible
+to map names to upper or lower case when mounting the file system.  This
+can affect the matching of patterns in @code{list.files} and
+@code{Sys.glob}.
+
+File names commonly contain spaces on Windows and Mac OS X but not
+elsewhere.  As file names are handled as character strings by @R{},
+spaces are not usually a concern unless file names are passed to other
+process, e.g.@: by a @code{system} call.
+
+Windows has another couple of peculiarities.  Whereas a POSIX file
+system has a single root directory (and other physical file systems are
+mounted onto logical directories under that root), Windows has separate
+roots for each physical or logical file system (`volumne'), organized
+under @emph{drives} (with file paths starting @code{D:} for an ASCII
+letter, case-insensitively) and @emph{network shares} (with paths like
+@code{\netname\topdir\myfiles\a file}.  There is a current drive, and
+path names without a drive part are relative to the current drive.
+Further, each drive has a current directory, and relative paths are
+relative to that current directory, on a particular drive if one is
+specified.  So @file{D:dir\file} and @file{D:} are valid path
+specifications (the last being the current directory on drive
+@file{D:}).
+
+spaces
+case insensitivity
+
+globbing
+
+@c basename        Wchar   na
+@c dir.create      Wchar   ~
+@c dirname         Wchar   ~
+@c getwd
+@c file.access     Wchar   ~
+@c file.append     RC_fopen
+@c file.copy       no      ~ (+ file.append)
+@c file.create     RC_fopen
+@c file.edit       UTF-8   in R code
+@c file.exists     Wchar   ~
+@c file.info       Wchar   ~
+@c file.link       8-bit   ~
+@c file.remove     Wchar   ~
+@c file.rename     Wchar   ~
+@c file.show       UTF-8   in R code
+@c file.symlink    not     ~
+@c file_test
+@c list.dirs       no      ~
+@c list.files      no      ~
+@c normalizePath   Wchar   ~
+@c path.expand     no
+@c setwd           Wchar   ~
+@c Sys.chmod       Wchar   ~
+@c Sys.glob        Wchar   not
+@c Sys.readlink    not     ~
+@c Sys.umask
+@c unlink          Wchar   ~
+
+
+@node Graphics Devices, Tools, Files, Top
 @chapter Graphics
 
 @R{}'s graphics internals were revised for version 1.4.0 (and tidied up

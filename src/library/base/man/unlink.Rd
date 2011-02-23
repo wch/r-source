@@ -34,13 +34,14 @@
   considered for deletion.
 #ifdef unix
   Wildcards will only be expanded if the system supports it.  Most
-  systems will support not only \file{*} and \file{?}) but character
-  classes such as \file{[a-z]} (see the \code{man} pages for
-  \code{glob}).  The metacharacters \code{* ? [} can occur in Unix
-  filenames, and this makes it difficult to use \code{unlink} to delete
-  such files (see  \code{\link{file.remove}}), although escaping the
-  metacharacters by backslashes usually works.  If a
-  metacharacter matches nothing it is considered as a literal character.
+  systems will support not only \file{*} and \file{?} but also character
+  classes such as \file{[a-z]} (see the \command{man} pages for the system
+  call \code{glob} on your OS).  The metacharacters \code{* ? [} can
+  occur in Unix filenames, and this makes it difficult to use
+  \code{unlink} to delete such files (see \code{\link{file.remove}}),
+  although escaping the metacharacters by backslashes usually works.  If
+  a metacharacter matches nothing it is considered as a literal
+  character.
 
   \code{recursive = TRUE} may not be supported on a platforms, when it
   will be ignored, with a warning.
@@ -54,10 +55,12 @@
 
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
+  
+  UTF-8-encoded paths not valid in the current locale can be used.
 #endif
 }
 \value{
-  \code{0} for success, \code{1} for failure.
+  \code{0} for success, \code{1} for failure, invisibly.
   Not deleting a non-existent file is not a failure, nor is being unable
   to delete a directory if \code{recursive = FALSE}.  However, missing
   values in \code{x} are regarded as failures.

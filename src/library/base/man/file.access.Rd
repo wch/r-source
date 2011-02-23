@@ -14,12 +14,11 @@
 file.access(names, mode = 0)
 }
 \arguments{
-  \item{names}{character vector containing file names.}
-  \item{mode}{integer specifying access mode required.}
+  \item{names}{character vector containing file names.
+    Tilde-expansion will be done: see \code{\link{path.expand}}.}
+  \item{mode}{integer specifying access mode required: see \sQuote{Details}.}
 }
 \details{
-  Tilde-expansion is done on \code{names}: see \code{\link{path.expand}}.
-
   The \code{mode} value can be the exclusive or of the following values
   \describe{
     \item{0}{test for existence.}
@@ -39,6 +38,8 @@ file.access(names, mode = 0)
   this function regards directories and files with extension
   \file{.exe}, \file{.bat}, \file{.cmd} and \file{.com} as executable.
   (\code{\link{system}} and \code{\link{Sys.which}} make the same assumption.)
+  
+  UTF-8-encoded file names not valid in the current locale can be used.
 #endif
 
   Please note that it is not a good idea to use this function to test

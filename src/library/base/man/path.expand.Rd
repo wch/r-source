@@ -1,6 +1,6 @@
 % File src/library/base/man/path.expand.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{path.expand}
@@ -35,7 +35,7 @@ path.expand(path)
 }
 #endif
 \seealso{
-  \code{\link{basename}}
+  \code{\link{basename}}, \code{\link{normalizePath}}.
 }
 \examples{
 path.expand("~/foo")

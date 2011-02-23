@@ -292,6 +292,9 @@
 
       \item \code{unlink()} now does tilde-expansion (like most other
       file functions).
+
+      \item \code{file.rename()} now allows vector arguments (of the
+      same length).
     }
   }
 

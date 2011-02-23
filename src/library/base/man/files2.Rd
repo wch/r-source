@@ -10,6 +10,10 @@
 \concept{directory}
 \concept{mkdir}
 \title{Manipulaton of Directories and File Permissions}
+\description{
+  These functions provide a low-level interface to the computer's
+  file system.
+}
 \usage{
 dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
 Sys.chmod(paths, mode = "0777")
@@ -17,19 +21,15 @@ Sys.umask(mode = "0000")
 }
 \arguments{
   \item{path}{a character vector containing a single path name.  Tilde
-    expansion (\code{\link{path.expand}}) is done.}
+    expansion (see \code{\link{path.expand}}) is done.}
   \item{paths}{character vectors containing file or directory paths.  Tilde
-    expansion (\code{\link{path.expand}}) is done.}
+    expansion (see \code{\link{path.expand}}) is done.}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical. Should elements of the path other than the
-    last be created?  If true, like Unix's \command{mkdir -p}.}
+    last be created?  If true, like the Unix command \command{mkdir -p}.}
   \item{mode}{the mode to be used on Unix-alikes: it will be
     coerced by \code{\link{as.octmode}}.  For \code{Sys.chmod} it is
     recycled along \code{paths}.}
-}
-\description{
-  These functions provide a low-level interface to the computer's
-  file system.
 }
 \details{
   \code{dir.create} creates the last element of the path, unless
@@ -103,6 +103,8 @@ Sys.umask(mode = "0000")
   There is no guarantee that these functions will handle Windows
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
+  
+  UTF-8-encoded dirnames not valid in the current locale can be used.  
 }
 #endif
 
@@ -113,7 +115,6 @@ Sys.umask(mode = "0000")
   \code{\link{file.info}}, \code{\link{file.exists}}, \code{\link{file.path}},
   \code{\link{list.files}}, \code{\link{unlink}},
   \code{\link{basename}}, \code{\link{path.expand}}.
-
 }
 
 \examples{\dontrun{

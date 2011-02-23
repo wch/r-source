@@ -1,6 +1,6 @@
 % File src/library/base/man/file.show.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.show}
@@ -66,6 +66,8 @@ file.show(\dots, header = rep("", nfiles),
   \code{\link{files}},
   \code{\link{list.files}},
   \code{\link{help}}.
+
+  \code{\link{file.edit}}.
 }
 \examples{
 file.show(file.path(R.home("doc"), "COPYRIGHTS"))

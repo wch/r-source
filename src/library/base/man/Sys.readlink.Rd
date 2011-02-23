@@ -18,7 +18,8 @@
 Sys.readlink(paths)
 }
 \arguments{
-  \item{paths}{character vector of file paths.  Tilde expansion is done.}
+  \item{paths}{character vector of file paths.  Tilde expansion is done:
+    see \code{\link{path.expand}}.}
 }
 \value{
   A character vector of the the same length as \code{paths}.  The

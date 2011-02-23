@@ -56,7 +56,13 @@ list.dirs(path = ".", full.names = TRUE)
 }
 \author{Ross Ihaka, Brian Ripley}
 \note{
-  File naming conventions are platform dependent.
+  File naming conventions are platform dependent.  The pattern matching
+  works with the case of file names as returned by the OS
+#ifdef windows
+
+  \code{path} must specify paths which can be represented in the current
+  codepage.
+#endif
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}
   and \code{\link{files}} for many more file handling functions and 

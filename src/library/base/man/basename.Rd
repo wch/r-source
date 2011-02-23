@@ -29,12 +29,15 @@ dirname(path)
   Trailing path separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed
   from the result.
-
+}
+\section{Behaviour on Windows}{
   On Windows this will accept either \code{\\} or \code{/} as the path
   separator, but \code{dirname} will return a path using \code{/}
-  (except if a network share, when the leading \code{\\\\} will be
-  preserved).  Only expect these to be able to handle complete
+  (except if on a network share, when the leading \code{\\\\} will be
+  preserved).  Expect these only to be able to handle complete
   paths, and not for example just a share or a drive.
+
+  UTF-8-encoded dirnames not valid in the current locale can be used.
 }
 \note{
   These are not wrappers for the POSIX system functions of the same

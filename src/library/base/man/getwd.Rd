@@ -1,6 +1,6 @@
 % File src/library/base/man/getwd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getwd}
@@ -12,7 +12,8 @@ getwd()
 setwd(dir)
 }
 \arguments{
-  \item{dir}{A character string.}
+  \item{dir}{A character string: tilde-expansion will be done (see
+    \code{\link{path.expand}}.}
 }
 \description{
   \code{getwd} returns an absolute filepath representing the current
@@ -33,7 +34,7 @@ setwd(dir)
 
 \value{
   \code{getwd} returns a character string or \code{NULL} if the working
-  directory is not available (or if \code{getwd} is not implemented).
+  directory is not available.
   On Windows the path returned will use \code{/} as the path separator
   and be encoded in UTF-8.  The path will not have a trailing \code{/}
   unless it is the root directory (of a drive or share on Windows).
