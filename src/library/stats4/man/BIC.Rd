@@ -1,10 +1,9 @@
 % File src/library/stats4/man/BIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{BIC}
-%\docType{genericFunction}
 \alias{BIC}
 \alias{BIC,ANY-method}
 \alias{BIC,logLik-method}
@@ -29,15 +28,20 @@ BIC(object, \dots)
   }
   \item{\dots}{optionally more fitted model objects.}
 }
+\details{
+  The only method provided in this package is for \code{\link{logLik}}
+  fits: further, it assumes that they have a \code{"nobs"} attribute
+  specifying the appropriate \eqn{n_{obs}}{nobs}.
+}
 \value{
-  If just one object is provided, returns a numeric value
-  with the corresponding BIC; if multiple objects are provided, returns
+  If just one object is provided, a numeric value
+  of the corresponding BIC; if multiple objects are provided, 
   a \code{\link{data.frame}} with rows corresponding to the objects and
   columns representing the number of parameters in the model (\code{df})
   and the BIC.
 }
 \references{
-  Schwarz, G. (1978) "Estimating the Dimension of a Model",
+  Schwarz, G. (1978) Estimating the dimension of a model.
   \emph{Annals of Statistics}, \bold{6}, 461--464.
 }
 \seealso{\code{\link{logLik-methods}}, \code{\link{AIC-methods}}}
