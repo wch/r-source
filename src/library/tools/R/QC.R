@@ -4070,12 +4070,10 @@ function(package, dir, lib.loc = NULL)
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in% c("library", "require")) {
-                ## Zelig has library()
-                if(length(e) >= 2L) {
-                    ## FIXME: and base has library(.lib.loc = .Library)
-                    pkg <- sub('^"(.*)"$', '\\1', pkg)
+            if((Call %in% c("library", "require")) &&
+               (length(e) >= 2L)) {
+                mc <- match.call(get(Call, baseenv()), e)
+                if(!is.null(pkg <- mc$package)) {
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
                     ## package was called if character.only = TRUE and
@@ -4083,23 +4081,24 @@ function(package, dir, lib.loc = NULL)
                     ## (Btw, what if character.only is given a value
                     ## which is an expression evaluating to TRUE?)
                     dunno <- FALSE
-                    pos <- which(!is.na(pmatch(names(e),
-                                               "character.only")))
-                    if(length(pos)
-                       && identical(e[[pos]], TRUE)
-                       && !identical(class(e[[2L]]), "character"))
+                    if(identical(mc$character.only, TRUE)
+                       && !identical(class(pkg), "character"))
                         dunno <- TRUE
-                    ## </NOTE>
+                    ## </NOTE>                        
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
-                    if(! dunno
-                       && ! pkg %in% c(depends_suggests, common_names))
-                        bad_exprs <<- c(bad_exprs, pkg)
+                    if(!dunno) {
+                        pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                        if(! pkg %in% c(depends_suggests, common_names))
+                            bad_exprs <<- c(bad_exprs, pkg)
+                    }
                 }
-            } else if(Call %in%  "::") {
+            } else if(Call %in% "::") {
+                pkg <- deparse(e[[2L]])
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
-            } else if(Call %in%  ":::") {
+            } else if(Call %in% ":::") {
+                pkg <- deparse(e[[2L]])
                 ## <FIXME> fathom out if this package has a namespace
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
