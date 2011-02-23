@@ -3163,14 +3163,13 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
   R_BCNodeStackTop[-1] = __cell__; \
 } while (0)
 
-/* making sure the constant is NAMED can be done at assembly time
-   once duplicate is set up to not copy the constant portion of code
-   and once load is set to make the constants NAMED--basically once
-   there is a proper code data type with appropriate support. */
+/* make sure NAMED = 2 -- lower values might be safe in some cases but
+   not ingeneral, especially if the ocnstant pool was created by
+   unserializing a compiled expression. */
 #define DO_LDCONST(v) do { \
   R_Visible = TRUE; \
   v = VECTOR_ELT(constants, GETOP()); \
-  if (! NAMED(v)) SET_NAMED(v, 1); \
+  if (NAMED(v) < 2) SET_NAMED(v, 2); \
 } while (0)
 
 static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
