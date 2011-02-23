@@ -3660,7 +3660,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
       BCNPOP_IGNORE_VALUE(); R_BCNodeStackTop[-1] = R_NilValue; NEXT();
     OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
     /**** for now LDCONST, LDTRUE, and LDFALSE duplicate/allocate to
-	  be defensive agains bad package C code */
+	  be defensive against bad package C code */
     OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(duplicate(value)); NEXT();
     OP(LDNULL, 0): R_Visible = TRUE; BCNPUSH(R_NilValue); NEXT();
     OP(LDTRUE, 0): R_Visible = TRUE; BCNPUSH(mkTrue()); NEXT();
@@ -3841,10 +3841,15 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	NEXT();
       }
     OP(PUSHARG, 0): PUSHCALLARG(BCNPOP()); NEXT();
-    OP(PUSHCONSTARG, 1): DO_LDCONST(value); PUSHCALLARG(value); NEXT();
+    /**** for now PUSHCONST, PUSHTRUE, and PUSHFALSE duplicate/allocate to
+	  be defensive against bad package C code */
+    OP(PUSHCONSTARG, 1):
+      value = VECTOR_ELT(constants, GETOP());
+      PUSHCALLARG(duplicate(value));
+      NEXT();
     OP(PUSHNULLARG, 0): PUSHCALLARG(R_NilValue); NEXT();
-    OP(PUSHTRUEARG, 0): PUSHCALLARG(R_TrueValue); NEXT();
-    OP(PUSHFALSEARG, 0): PUSHCALLARG(R_FalseValue); NEXT();
+    OP(PUSHTRUEARG, 0): PUSHCALLARG(mkTrue()); NEXT();
+    OP(PUSHFALSEARG, 0): PUSHCALLARG(mkFalse()); NEXT();
     OP(CALL, 1):
       {
 	SEXP fun = R_BCNodeStackTop[-3];
