@@ -48,7 +48,6 @@
     TAR <- Sys.getenv("TAR", 'tar') # used by default on Unix only
     GZIP <- Sys.getenv("R_GZIPCMD") # used on Unix only
     if (!nzchar(GZIP)) GZIP <- "gzip"
-    if (WINDOWS) zip <- "zip"
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
@@ -308,12 +307,14 @@
             ## system(paste("rm -f", filepath))
             unlink(filepath)
             owd <- setwd(lib)
-            ## FIXME: test return value
-            system(paste(ZIP, "-r9Xq", filepath,
-                         paste(curPkg, collapse = " ")))
+            res <- system(paste(ZIP, "-r9Xq", filepath,
+                                paste(curPkg, collapse = " ")))
             setwd(owd)
-            message("packaged installation of ",
-                    sQuote(pkg_name), " as ", filename)
+            if (res)
+                message("running 'zip' failed")
+            else
+                message("packaged installation of ",
+                        sQuote(pkg_name), " as ", filename)
         }
         if (Sys.getenv("_R_INSTALL_NO_DONE_") != "yes") {
             message("")  # ensure next starts on a new line, for R CMD check
