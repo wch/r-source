@@ -159,7 +159,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ob <- objects(lib.pos, all.names = TRUE)
         if(!nogenerics) {
             ##  Exclude generics that are consistent with implicit generic
-            ## from another pacakge.  A better test would be to move this
+            ## from another package.  A better test would be to move this
             ## down into the loop and test against specific other package name
             ## but subtle conflicts like that are likely to be found elsewhere
             these <- objects(lib.pos, all.names = TRUE)
