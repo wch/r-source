@@ -82,6 +82,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     aod
 }
 
+##' @title Check for exact fit
+##' @param object an lm object (hence using "$" instead of methods)
+##' @return (unused / nothing explicitly)
 check_exact <- function(object)
 {
     w <- object$weights
@@ -93,7 +96,8 @@ check_exact <- function(object)
         rss <- sum(w * object$residuals^2)
     }
     if(rss < 1e-10*mss)
-        warning("attempting model selection on an essentially perfect fit is nonsense", call. = FALSE)
+	warning("attempting model selection on an essentially perfect fit is nonsense",
+		call. = FALSE)
 }
 
 add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
@@ -332,7 +336,7 @@ drop1 <- function(object, scope, ...) UseMethod("drop1")
 drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 			  k = 2, trace = FALSE, ...)
 {
-    tl <- attr(object$terms, "term.labels")
+    tl <- attr(terms(object), "term.labels")
     if(missing(scope)) scope <- drop.scope(object)
     else {
 	if(!is.character(scope))
@@ -730,7 +734,7 @@ step <- function(object, scope, scale = 0,
     if(is.na(bAIC))
         stop("AIC is not defined for this model, so 'step' cannot proceed")
     nm <- 1
-    Terms <- fit$terms
+    ## Terms <- fit$terms
     if(trace)
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
 	    cut.string(deparse(formula(fit))), "\n\n", sep='')
