@@ -88,3 +88,6 @@ logLik.lm <- function(object, REML = FALSE, ...)
     val
 }
 
+nobs <- function(object, ...) UseMethod("nobs")
+
+nobs.default <- function(object, ...) attr(object, "nobs")

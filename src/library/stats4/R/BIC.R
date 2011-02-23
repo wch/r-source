@@ -16,12 +16,13 @@
 
 ## created for use in other packages, e.g. flexmix
 setGeneric("AIC")
+setGeneric("nobs")
 
 setGeneric("BIC", function(object, ...) standardGeneric("BIC"))
 
 setMethod("BIC", signature(object="logLik"),
           function(object, ...)
-          -2 * c(object) + attr(object, "df") * log(attr(object, "nobs")) )
+          -2 * c(object) + attr(object, "df") * log(nobs(object)) )
 
 setMethod("BIC", signature(object="ANY"),
 	  ## work like AIC with *multiple* objects

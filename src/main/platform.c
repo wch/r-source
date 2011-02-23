@@ -2194,7 +2194,6 @@ static int do_copy(const char* from, const char* name, const char* to,
     struct stat sb;
     int nc, nfail = 0, res;
     char dest[PATH_MAX], this[PATH_MAX];
-    const char *filesep = "/";
 
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
     snprintf(this, PATH_MAX, "%s%s", from, name);
@@ -2209,12 +2208,12 @@ static int do_copy(const char* from, const char* name, const char* to,
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	res = mkdir(dest, sb.st_mode & 0777); /* the same as cp */
 	if (res && errno != EEXIST) return 1;
-	strcat(dest, R_FileSep);
+	strcat(dest, "/");
 	if ((dir = opendir(this)) != NULL) {
 	    while ((de = readdir(dir))) {
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
-		snprintf(p, PATH_MAX, "%s%s%s", name, filesep, de->d_name);
+		snprintf(p, PATH_MAX, "%s/%s", name, de->d_name);
 		do_copy(from, p, to, over, recursive);
 	    }
 	    closedir(dir);
@@ -2250,7 +2249,6 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP fn, to, ans;
     char *p, dir[PATH_MAX], from[PATH_MAX], name[PATH_MAX];
     int i, nfiles, over, recursive, nfail;
-    const char *filesep = "/", *cur = "./", sep = '/';
 
     checkArity(op, args);
     fn = CAR(args);
@@ -2271,8 +2269,8 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	strncpy(dir, 
 		R_ExpandFileName(translateChar(STRING_ELT(to, 0))),
 		PATH_MAX);
-	if (*(dir + (strlen(dir) - 1)) !=  sep)
-	    strncat(dir, filesep, PATH_MAX);
+	if (*(dir + (strlen(dir) - 1)) !=  '/')
+	    strncat(dir, "/", PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		strncpy(from, 
@@ -2280,14 +2278,14 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 			PATH_MAX);
 		/* If there is a trailing sep, this is a mistake */
 		p = from + (strlen(from) - 1);
-		if(*p == sep) *p = '\0';
-		p = strrchr(from, sep) ;
+		if(*p == '/') *p = '\0';
+		p = strrchr(from, '/') ;
 		if (p) {
 		    strncpy(name, p+1, PATH_MAX);
 		    *(p+1) = '\0';
 		} else {
 		    strncpy(name, from, PATH_MAX);
-		    strncpy(from, cur, PATH_MAX);
+		    strncpy(from, "./", PATH_MAX);
 		}
 		nfail = do_copy(from, name, dir, over, recursive);
 	    } else nfail = 1;
