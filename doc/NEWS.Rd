@@ -305,7 +305,8 @@
      
       \item There is a new generic function \code{nobs()} in package
       \pkg{stats}, to extract from model objects a suitable value for
-      use in BIC calculations.
+      use in BIC calculations.  An S4 generic derived from it is defined
+      in package \pkg{stats4}.
     }
   }
 
