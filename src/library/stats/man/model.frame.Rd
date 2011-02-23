@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -10,7 +10,7 @@
 \alias{model.frame.glm}
 \alias{model.frame.aovlist}
 \alias{get_all_vars}
-\title{Extracting the ``Environment'' of a Model Formula}
+\title{Extracting the Model Frame from a Formula or Fit}
 \usage{
 model.frame(formula, \dots)
 

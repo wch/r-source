@@ -1,6 +1,6 @@
 % File src/library/base/man/noquote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{noquote}
@@ -9,7 +9,7 @@
 \alias{as.matrix.noquote}
 \alias{c.noquote}
 \alias{[.noquote}
-\title{Class for ``no quote'' Printing of Character Strings}
+\title{Class for \sQuote{no quote} Printing of Character Strings}
 \description{
   Print character strings without quotes.
 }

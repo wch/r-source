@@ -1,11 +1,11 @@
 % File src/library/base/man/match.fun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{match.fun}
 \alias{match.fun}
-\title{Function Verification for ``Function Variables''}
+\title{Extract a Function Specified by Name}
 \description{
   When called inside functions that take a function as argument, extract
   the desired function object while avoiding undesired matching to

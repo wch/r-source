@@ -1663,7 +1663,7 @@ The p-value is 0.191
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: anscombe
-> ### Title: Anscombe's Quartet of "Identical" Simple Linear Regressions
+> ### Title: Anscombe's Quartet of 'Identical' Simple Linear Regressions
 > ### Aliases: anscombe
 > ### Keywords: datasets
 > 

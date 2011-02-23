@@ -1,11 +1,11 @@
 % File src/library/base/man/is.object.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{is.object}
 \alias{is.object}
-\title{Is an Object ``internally classed''?}
+\title{Is an Object \sQuote{internally classed}'?}
 \usage{
 is.object(x)
 }

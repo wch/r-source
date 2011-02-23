@@ -1,12 +1,12 @@
 % File src/library/datasets/man/anscombe.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{anscombe}
 \docType{data}
 \alias{anscombe}
-\title{Anscombe's Quartet of ``Identical'' Simple Linear Regressions}
+\title{Anscombe's Quartet of \sQuote{Identical} Simple Linear Regressions}
 \description{
   Four \eqn{x}-\eqn{y} datasets which have the same traditional
   statistical properties (mean, variance, correlation, regression line,

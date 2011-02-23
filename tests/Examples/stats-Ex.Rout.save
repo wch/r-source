@@ -9651,7 +9651,7 @@ NA        0    3    0
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: model.frame
-> ### Title: Extracting the "Environment" of a Model Formula
+> ### Title: Extracting the Model Frame from a Formula or Fit
 > ### Aliases: model.frame model.frame.default model.frame.lm model.frame.glm
 > ###   model.frame.aovlist get_all_vars
 > ### Keywords: models
