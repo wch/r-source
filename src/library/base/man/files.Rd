@@ -92,8 +92,7 @@ file.symlink(from, to)
 #endif
 }
 \value{
-  \code{file.rename} and \code{file.symlink} returns a logical value,
-  true for success.
+  \code{file.rename} returns a logical value, true for success.
 
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.  Using a missing
