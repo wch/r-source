@@ -613,9 +613,7 @@ promptMethods <- function(f, filename = NULL, methods)
 	where <- .genEnv(fdef, topenv(parent.frame()))
 	if(!identical(where, .GlobalEnv))
 	    packageString <-
-		paste0("in Package `", getPackageName(where), "'")
-	## (We want the '`' for LaTeX, as we currently cannot have
-	## \sQuote{} inside a \title.)
+                sprintf("in Package \\pkg{%s}", getPackageName(where))
     }
     fullName <- utils:::topicName("methods", f)
     n <- length(methods)
@@ -652,11 +650,14 @@ promptMethods <- function(f, filename = NULL, methods)
              ## Title and description are ok as auto-generated: should
              ## they be flagged as such (via '~~' which are quite often
              ## left in by authors)?
-             title = paste("\\title{ ~~ Methods for Function", f,
-             packageString, "~~}"),
-             description = paste0("\\description{\n ~~ Methods for function",
-             " \\code{", f, "} ", packageString,
-             " ~~\n}"),
+             title = 
+             sprintf("\\title{ ~~ Methods for Function \\code{%s} %s ~~}",
+                     f, packageString),
+             description =
+             paste0("\\description{\n ~~ Methods for function",
+                    " \\code{", f, "} ",
+                    sub("^in Package", "in package", packageString),
+                    " ~~\n}"),
              ## </FIXME>
              "section{Methods}" = text,
              keywords = c("\\keyword{methods}",
