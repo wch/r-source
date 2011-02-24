@@ -26,6 +26,13 @@ nobs(object, ...)
   as well as a default method (which throws an error, unless argument
   \code{use.fallback = TRUE} when it looks for \code{weights} and
   \code{residuals} components -- use with care!).
+
+  The main usage is in determining the appropriate penalty for BIC, but
+  \code{nobs} is also use by the stepwise fitting methods
+  \code{\link{step}}, \code{\link{add1}} and \code{\link{drop1}} as a
+  quick check that different fits have been fitted to the same set of
+  data (and not, say, that further rows have been dropped because of NAs
+  in the new predictors).
 }
 \value{
   A number.

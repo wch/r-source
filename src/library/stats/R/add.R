@@ -46,7 +46,6 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames = list(c("<none>", scope), c("df", "AIC")))
     ans[1L,  ] <- extractAIC(object, scale, k = k, ...)
-    ## n0 <- length(object$residuals)
     n0 <- nobs(object, use.fallback = TRUE)
     env <- environment(formula(object))
     for(i in seq(ns)) {
@@ -59,7 +58,6 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1L, ] <- extractAIC(nfit, scale, k = k, ...)
-        ## if(length(nfit$residuals) != n0)
         if(nobs(nfit, use.fallback = TRUE) != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
@@ -344,8 +342,6 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(!all(match(scope, tl, 0L) > 0L))
 	    stop("scope is not a subset of term labels")
     }
-#    data <- model.frame(object) # remove NAs
-#    object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1L, ncol = 2L,
                   dimnames =  list(c("<none>", scope), c("df", "AIC")))

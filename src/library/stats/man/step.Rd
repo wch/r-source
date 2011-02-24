@@ -118,6 +118,9 @@ step(object, scope, scale = 0,
   may be a problem if there are missing values and \R's default of
   \code{na.action = na.omit} is used.  We suggest you remove the
   missing values first.
+
+  Calls to the function \code{\link{nobs}} are used to check that the
+  number of observations involved in the fitting process remains unchanged.
 }
 \seealso{
   \code{\link[MASS]{stepAIC}} in \pkg{MASS}, \code{\link{add1}},

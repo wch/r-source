@@ -1,6 +1,6 @@
 % File src/library/stats/man/add1.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{add1}
@@ -117,6 +117,10 @@ drop1(object, scope, \dots)
   values for any of the variables if \code{na.action=na.omit}, but
   this may give biased results.  Only use these functions with data
   containing missing values with great care.
+
+  The default methods make calls to the function \code{\link{nobs}} to
+  check that the number of observations involved in the fitting process
+  remained unchanged. 
 }
 \seealso{
   \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
