@@ -731,10 +731,11 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
         returnMethods <- methods
     else
         returnMethods <- value
+    check <- TRUE
     for(method in theseMethods) {
         prevMethod <- methods[[method]] # NULL or superClass method
         if(is.null(prevMethod)) {
-            ## kludge because default version on $initialize() breaks bootstrapping of methods package
+            ## kludge because default version of $initialize() breaks bootstrapping of methods package
             if(identical(method, "initialize"))
                 superClassMethod <- "initFields"
             else
@@ -748,9 +749,12 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
         }
         def <- makeClassMethod(value[[method]], method, Class,
                                superClassMethod, allMethods)
-        .checkFieldsInMethod(def, fieldNames)
+        check <- check && .checkFieldsInMethod(def, fieldNames, allMethods)
         returnMethods[[method]] <- def
     }
+    if(is.na(check) && .methodsIsLoaded())
+        message(gettextf("Code for methods in class \"%s\" was not checked for suspicious field assignments (recommended package \"codetools\" not available?)",
+                         Class), domain = NA)
     returnMethods
 }
 
@@ -920,12 +924,50 @@ all.equal.environment <- function(target, current, ...) {
 }
 }
 
-.checkFieldsInMethod <- function(methodDef, fieldNames) {
+.assignExpr <- function(e) {
+    value <- list()
+    value[[codetools::getAssignedVar(e)]] <- deparse(e, nlines = 1L)
+    value
+}
+
+.mergeAssigns <- function(previous, new) {
+    for(what in names(new)) {
+        if(is.null(previous[[what]]))
+            previous[[what]] <- new[[what]]
+        else
+            previous[[what]] <- paste(previous[[what]], new[[what]], sep="; ")
+    }
+    previous
+}
+
+
+.assignedVars <- function(e) {
+    locals <- list()
+    globals <- list()
+    walker <- codetools::makeCodeWalker(call = function(e, w) {
+        callto <- e[[1]]
+        if(is.symbol(callto)) switch(as.character(callto),
+               "<-" = , "=" = {
+                   locals <<- .mergeAssigns(locals, .assignExpr(e))
+               },
+               "<<-" = {
+                   globals <<- .mergeAssigns(globals, .assignExpr(e))
+               })
+        for (ee in as.list(e))
+            if (! missing(ee)) codetools::walkCode(ee, w)
+    },
+    leaf = function(e, w) NULL
+    )
+    codetools::walkCode(e, walker)
+    list(locals = locals, globals = globals)
+}
+
+.checkFieldsInMethod <- function(methodDef, fieldNames, methodNames) {
     if(!.hasCodeTools())
         return(NA)
     if(length(fieldNames) == 0)
         return(TRUE)
-    paste0 <- function(x) paste('"', x, '"', sep = "", collapse = ", ")
+    paste0 <- function(x) paste('"', x, '"', sep = "", collapse = "; ")
     if(is(methodDef, "refMethodDef")) {
         methodName <- paste0(methodDef@name)
         className <- paste0(methodDef@refClassName)
@@ -933,21 +975,23 @@ all.equal.environment <- function(target, current, ...) {
     else {
         methodName <- className <- ""
     }
-### this warning is currently suppressed--seems some people
-### actually like using field names as argument names.
-    ## argNames <- names(formals(methodDef))
-    ## argsAreFields <- match(fieldNames, argNames, 0) > 0
-    ## if(any(argsAreFields))
-    ##     warning(gettextf("Field %s masked by argument of the same name in method %s for class %s",
-    ##             paste0(fieldNames[argsAreFields]), methodName, className),
-    ##             domain = NA)
-###
-    locals <- codetools::findLocals(body(methodDef), environment(methodDef))
-    localsAreFields <- match(fieldNames, locals, 0) > 0
+    assigned <- .assignedVars(body(methodDef))
+    locals <- names(assigned$locals)
+    localsAreFields <- match(locals, fieldNames, 0) > 0
     if(any(localsAreFields))
-        warning(gettextf("Local assignment to field name (%s) will not change the field: Did you mean to use \"<<-\"? \n( in method %s for class %s)",
-                paste0(fieldNames[localsAreFields]), methodName, className),
+        warning(gettextf("Local assignment to field name will not change the field:\n    %s\n Did you mean to use \"<<-\"? ( in method %s for class %s)",
+                paste(unlist(assigned$locals)[localsAreFields], collapse="; "), methodName, className),
                 domain = NA)
-    ## !any(argsAreFields | localsAreFields)
-    !any(localsAreFields)
+    globals <- names(assigned$globals)
+    globalsNotFields <- is.na(match(globals, fieldNames))
+    if(any(globalsNotFields))
+        warning(gettextf("Non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)",
+                paste(unlist(assigned$globals)[globalsNotFields], collapse="; "), methodName, className),
+                domain = NA)
+    globalsInMethods <- match(globals, methodNames, 0) > 0
+    if(any(globalsInMethods))
+        stop(gettextf("Non-local assignment to method names is not allowed\n    %s\n( in method %s for class %s)",
+                paste(unlist(assigned$globals)[globalsInMethods], collapse="; "), methodName, className),
+                domain = NA)
+    !any(localsAreFields) && !any(globalsNotFields)
 }

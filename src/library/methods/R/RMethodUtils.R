@@ -1670,3 +1670,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     else
       class(..1)
 }
+
+## a utility to exclude various annoying glitches during
+## loading of the methods package
+.methodsIsLoaded <- function()
+    identical(.saveImage, TRUE)

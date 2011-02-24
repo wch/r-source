@@ -289,11 +289,14 @@ stopifnot(identical(refClassB$new()$foo(), "A Version 2"))
 stopifnot(identical(mnames2, objects(getClass("refClassB")@refMethods)))
 
 if(methods:::.hasCodeTools()) {
-    ## code warnings assigning locally to, or hiding, field names
+    ## code warnings assigning locally to field names
     stopifnot(is(tryCatch(mv$methods(test = function(x) {data <- x[!is.na(x)]; mean(data)}), warning = function(e)e), "warning"))
 
-### formal arg test suppressed--see comment in .checkFieldsInMethod
-    ## stopifnot(is(tryCatch(mv$methods(test2 = function(data) {data[!is.na(x)]}), warning = function(e)e), "warning"))
+    ## warnings for nonlocal assignment that is not a field
+    stopifnot(is(tryCatch(mv$methods(test2 = function(x) {something <<- data[!is.na(x)]}), warning = function(e)e), "warning"))
+
+    ## error for trying to assign to a method name
+    stopifnot(is(tryCatch(mv$methods(test3 = function(x) {edit <<- data[!is.na(x)]}), error = function(e)e), "error"))
 } else
     warning("Can't run some tests:  recommended package codetools is not available")
 
@@ -381,3 +384,5 @@ tt <- TestClass2$new("test", version = 1)
 stopifnot(identical(tt$text, "test:"), identical(tt$version, as.integer(2)))
 tt <- TestClass2$new(version=3) # default text
 stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
+
+
