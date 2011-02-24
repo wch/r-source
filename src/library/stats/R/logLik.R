@@ -106,7 +106,9 @@ nobs.nls <- function(object, ...) length(object$m$resid())
 ## because of e.g. weighted fits.
 nobs.default <- function(object, use.fallback = FALSE, ...)
 {
-    if(use.fallback) {
+    ## MASS::loglm fits have an 'nobs' component
+    if(is.list(object) && !is.null(n <- object[["nobs"]])) n
+    else if(use.fallback) {
         if(!is.null(w <- object$weights)) sum(w != 0)
         else length(object$residuals) # and not residuals(object)
     } else stop("no 'nobs' method is available")
