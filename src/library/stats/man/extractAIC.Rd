@@ -1,6 +1,6 @@
 % File src/library/stats/man/extractAIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 %-- This page by Martin Maechler,  improvements welcome!
@@ -31,9 +31,10 @@ extractAIC(fit, scale, k = 2, \dots)
   \bold{C}riterion for a fitted parametric model.
 }
 \details{
-  This is a generic function, with methods in base \R for \code{"aov"},
-  \code{"coxph"}, \code{"glm"}, \code{"lm"}, \code{"negbin"}
-  and \code{"survreg"} classes.
+  This is a generic function, with methods in base \R for classes
+  \code{"aov"}, \code{"glm"} and \code{"lm"} as well as for
+  \code{"negbin"} (package \pkg{MASS}) and \code{"coxph"} and
+  \code{"survreg"} (package \pkg{survival}).
 
   The criterion used is
   \deqn{AIC = - 2\log L +  k \times \mbox{edf},}{AIC = - 2*log L +  k * edf,}
@@ -51,7 +52,8 @@ extractAIC(fit, scale, k = 2, \dots)
   \eqn{n \log (RSS/n)}{n log (RSS/n)} for unknown scale.
   \code{\link{AIC}} only handles unknown scale and uses the formula
   \eqn{n \log (RSS/n) - n + n \log 2\pi - \sum \log w}{n log (RSS/n) - n + n log 2pi - sum(log w)}
-  where \eqn{w} are the weights.
+  where \eqn{w} are the weights.  Further \code{AIC} counts the scale
+  estimation as a parameter in the \code{edf} and \code{extractAIC} does not.
 
   For \code{glm} fits the family's \code{aic()} function is used to
   compute the AIC: see the note under \code{logLik} about the
@@ -59,19 +61,29 @@ extractAIC(fit, scale, k = 2, \dots)
 
   \code{k = 2} corresponds to the traditional AIC, using \code{k =
     log(n)} provides the BIC (Bayesian IC) instead.
+
+  Note that the methods for this function may differ in their
+  assumptions from those of methods for \code{\link{AIC}} (usually
+  \emph{via} a method for \code{\link{logLik}}).  We have already
+  mentioned the case of \code{"lm"} models with estimated scale, and
+  there are similar issues in the \code{"glm"} and \code{"negbin"}
+  methods where the dispersion parameter may or may not be taken as
+  \sQuote{free}.  This is immaterial as \code{extractAIC} is only used
+  to compare models of the same class (where only differences in AIC
+  values are considered).
 }
 \note{
   This function is used in \code{\link{add1}}, \code{\link{drop1}}
-  and \code{\link{step}} and similar functions in package \pkg{MASS}
+  and \code{\link{step}} and the similar functions in package \pkg{MASS}
   from which it was adopted.
 }
 \value{
-  A numeric vector of length 2, giving
+  A numeric vector of length 2, with first and second elements giving
 
   \item{edf}{the \sQuote{\bold{e}quivalent \bold{d}egrees of \bold{f}reedom}
-  for the fitted model \code{fit}.}
+    for the fitted model \code{fit}.}
 
-\item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}
+  \item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}
 }
 %-- Source in ../R/add.R
 \author{B. D. Ripley}

@@ -1,6 +1,6 @@
 % File src/library/stats/man/logLik.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{logLik}
@@ -27,24 +27,25 @@ logLik(object, \dots)
 \description{
   This function is generic; method functions can be written to handle
   specific classes of objects.  Classes which have methods for this
-  function include: \code{"glm"}, \code{"lm"}, \code{"nls"},
-  \code{"Arima"} and \code{"gls"}, \code{"lme"} and others in package
-  \pkg{nlme}.
+  function include: \code{"glm"}, \code{"lm"}, \code{"nls"} and
+  \code{"Arima"}.  Packages contain methods for other classes, such as
+  \code{"fitdistr"}, \code{"negbin"} and \code{"polr"} in package
+  \pkg{MASS}, \code{"multinom"} in package \pkg{nnet} and \code{"gls"},
+  \code{"gnls"} \code{"lme"} and others in package \pkg{nlme}.
 }
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
 \details{
-  For a \code{"glm"} fit the \code{\link{family}} does not have to specify
-  how to calculate the log-likelihood, so this is based on using the
-  family's \code{aic()} function to compute the AIC.  For the
+  For a \code{"glm"} fit the \code{\link{family}} does not have to
+  specify how to calculate the log-likelihood, so this is based on using
+  the family's \code{aic()} function to compute the AIC.  For the
   \code{\link{gaussian}}, \code{\link{Gamma}} and
   \code{\link{inverse.gaussian}} families it assumed that the dispersion
-  of the GLM is estimated has been counted as a parameter in the AIC
+  of the GLM is estimated and has been counted as a parameter in the AIC
   value, and for all other families it is assumed that the dispersion is
-  known.
-  Note that this procedure does not give the maximized likelihood for
-  \code{"glm"} fits from the Gamma and inverse gaussian families, as the
-  estimate of dispersion used is not the MLE.
+  known.  Note that this procedure does not give the maximized
+  likelihood for \code{"glm"} fits from the Gamma and inverse gaussian
+  families, as the estimate of dispersion used is not the MLE.
 
   For \code{"lm"} fits it is assumed that the scale has been estimated
   (by maximum likelihood or REML), and all the constants in the
