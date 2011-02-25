@@ -981,7 +981,7 @@ derivedDefaultMethodWithTrace    0    0    0    0    0    0    0    1    0    0
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: dotsMethods
-> ### Title: The Use of "..." in Method Signatures
+> ### Title: The Use of '...' in Method Signatures
 > ### Aliases: dotsMethods
 > ### Keywords: programming classes methods
 > 

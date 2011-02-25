@@ -5,7 +5,7 @@
 
 \name{dotsMethods}
 \alias{dotsMethods}
-\title{The Use of "..." in Method Signatures}
+\title{The Use of \code{...} in Method Signatures}
 \description{
   The \dQuote{\dots} argument in \R functions is treated specially, in that it
   matches zero, one or more actual arguments (and so, objects).  A

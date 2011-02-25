@@ -7,7 +7,7 @@
 \docType{methods}
 \alias{AIC-methods}
 \alias{AIC,ANY-method}
-\title{Methods for Function `AIC' in Package `stats4'}
+\title{Methods for Function \code{AIC} in Package \pkg{stats4}}
 \description{
   Calculate the Akaike information criterion for a fitted model object.
 }

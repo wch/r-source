@@ -529,6 +529,8 @@ make install
 @end example
 
 @noindent
+A parallel make can be used (but run @command{make all} first).
+
 This will install to the following directories:
 
 @table @asis
@@ -3435,9 +3437,6 @@ variable @code{MAKE} at configure time, for example
 @example
 ./configure MAKE=gmake
 @end example
-
-@c Note the comment in @ref{Installation} about using a parallel
-@c @command{make}.
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on a Unix-alike
 @section Using FORTRAN

@@ -1,6 +1,6 @@
 % File src/library/stats4/man/logLik-methods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{logLik-methods}
@@ -8,7 +8,7 @@
 \alias{logLik-methods}
 \alias{logLik,ANY-method}
 \alias{logLik,mle-method}
-\title{Methods for Function `logLik' in Package `stats4'}
+\title{Methods for Function \code{logLik} in Package \pkg{stats4}}
 \description{
   Extract the maximized log-likelihood from \code{"mle"} objects.
 }
@@ -19,5 +19,9 @@
     \item{\code{signature(object = "mle")}}{Extract log-likelihood from
       the fit.}
   }
+}
+\note{
+  The \code{mle} method does not know about the number of observations,
+  and so is not suitable for use with \code{\link{BIC}}.
 }
 \keyword{methods}

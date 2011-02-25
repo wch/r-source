@@ -20,8 +20,12 @@ setGeneric("AIC")
 setGeneric("BIC", function(object, ...) standardGeneric("BIC"))
 
 setMethod("BIC", signature(object="logLik"),
-          function(object, ...)
-          -2 * c(object) + attr(object, "df") * log(attr(object, "nobs")) )
+          function(object, ...) {
+              nobs <- log(attr(object, "nobs"))
+              if (is.null(nobs))
+                  stop("no 'nobs' attribute available to compute BIC")
+              -2 * c(object) + attr(object, "df") * nobs
+          })
 
 setMethod("BIC", signature(object="ANY"),
 	  ## work like AIC with *multiple* objects

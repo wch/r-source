@@ -7,7 +7,7 @@
 \alias{plot.table}
 \alias{lines.table}
 \alias{points.table}
-\title{Plot Methods for `table' Objects}
+\title{Plot Methods for \code{table} Objects}
 \description{
   This is a method of the generic \code{plot} function for
   (contingency) \code{\link{table}} objects.  Whereas for two- and more

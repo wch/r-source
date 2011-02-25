@@ -1803,7 +1803,7 @@ armed.forces
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.design
-> ### Title: Plot Univariate Effects of a 'Design' or Model
+> ### Title: Plot Univariate Effects of a Design or Model
 > ### Aliases: plot.design
 > ### Keywords: hplot
 > 

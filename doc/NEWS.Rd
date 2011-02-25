@@ -4,6 +4,22 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.12.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item A change to the C function \samp{R_tryEval} had broken error
+      messages in S4 method selection; the error message is now printed.
+
+      \item PDF output with non-RGB color model used RGB for the line stroke
+      color.  \PR{14511}      
+
+      \item \code{stats4::BIC()} assumed without checking that an object
+      of class \code{"logLik"} has an \code{"nobs"} attribute:
+      \code{glm()} fits did not and so \code{BIC()} failed for them.
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.12.2}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
