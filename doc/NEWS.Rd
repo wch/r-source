@@ -308,9 +308,8 @@
       use in BIC calculations.  An S4 generic derived from it is defined
       in package \pkg{stats4}.
 
-      \item Code for reference-class methods is now examined for
+      \item Code for S4 reference-class methods is now examined for
       possible errors in non-local assignments.
-
     }
   }
 
@@ -512,7 +511,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.2 Patched}{
+\section{CHANGES IN R VERSION 2.12.2 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item A change to the C function \samp{R_tryEval} had broken error
@@ -594,7 +593,7 @@
       \option{--data-compress} option of \command{R CMD INSTALL}.
 
       \item Files \file{R/sysdata.rda} of more than 1Mb are now stored
-      in the lazyload daabase using \command{xz} compression: this for
+      in the lazyload database using \command{xz} compression: this for
       example halves the installed size of package \pkg{Imap}.
 
       \item \command{R CMD INSTALL} now ensures that directories
