@@ -515,6 +515,9 @@
       \item \code{stats4::BIC()} assumed without checking that an object
       of class \code{"logLik"} has an \code{"nobs"} attribute:
       \code{glm()} fits did not and so \code{BIC()} failed for them.
+
+      \item PDF output with non-RGB color model used RGB line stroke
+      color.  \PR{14511}
     }
   }
 }
