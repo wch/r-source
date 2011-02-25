@@ -27,6 +27,8 @@ safe_pf <- function(q, df1, ...)
     pf(q=q, df1=df1, ...)
 }
 
+## NB: functions in this file will use the 'stats' S3 generics for
+## nobs(), terms() ....
 
 add1 <- function(object, scope, ...) UseMethod("add1")
 
@@ -731,10 +733,13 @@ step <- function(object, scope, scale = 0,
         stop("AIC is not defined for this model, so 'step' cannot proceed")
     nm <- 1
     ## Terms <- fit$terms
-    if(trace)
+    if(trace) {
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
 	    cut.string(deparse(formula(fit))), "\n\n", sep='')
+        utils::flush.console()
+    }
 
+    ## FIXME think about df.residual() here
     models[[nm]] <- list(deviance = mydeviance(fit), df.resid = n - edf,
 			 change = "", AIC = bAIC)
     if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
@@ -791,12 +796,15 @@ step <- function(object, scope, scale = 0,
 	bAIC <- extractAIC(fit, scale, k = k, ...)
 	edf <- bAIC[1L]
 	bAIC <- bAIC[2L]
-	if(trace)
+	if(trace) {
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
 		cut.string(deparse(formula(fit))), "\n\n", sep='')
+            utils::flush.console()
+        }
         ## add a tolerance as dropping 0-df terms might increase AIC slightly
 	if(bAIC >= AIC + 1e-7) break
 	nm <- nm + 1
+        ## FIXME: think about using df.residual() here.
 	models[[nm]] <-
 	    list(deviance = mydeviance(fit), df.resid = n - edf,
 		 change = change, AIC = bAIC)
@@ -827,7 +835,7 @@ extractAIC.survreg <- function(fit, scale, k = 2, ...)
 extractAIC.glm <- function(fit, scale = 0, k = 2, ...)
 {
     n <- length(fit$residuals)
-    edf <- n  - fit$df.residual
+    edf <- n  - fit$df.residual # assumes dispersion is known
     aic <- fit$aic
     c(edf, aic + (k-2) * edf)
 }
@@ -835,7 +843,7 @@ extractAIC.glm <- function(fit, scale = 0, k = 2, ...)
 extractAIC.lm <- function(fit, scale = 0, k = 2, ...)
 {
     n <- length(fit$residuals)
-    edf <- n  - fit$df.residual
+    edf <- n  - fit$df.residual # maybe -1 if sigma^2 is estimated
     RSS <- deviance.lm(fit)
     dev <- if(scale > 0) RSS/scale - n else n * log(RSS/n)
     c(edf, dev + k * edf)
@@ -845,6 +853,6 @@ extractAIC.aov <- extractAIC.lm
 extractAIC.negbin <- function(fit, scale, k = 2, ...)
 {
     n <- length(fit$residuals)
-    edf <- n - fit$df.residual
-    c(edf, -fit$twologlik + k * edf) # maybe k+1 if theta is estimated
+    edf <- n - fit$df.residual # may -1 if theta is estimated
+    c(edf, -fit$twologlik + k * edf)
 }
