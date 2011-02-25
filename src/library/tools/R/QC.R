@@ -4068,11 +4068,13 @@ function(package, dir, lib.loc = NULL)
     bad_imports <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
+        dots <- as.name("...")
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
             if((Call %in% c("library", "require")) &&
                (length(e) >= 2L)) {
-                mc <- match.call(get(Call, baseenv()), e)
+                mc <- match.call(get(Call, baseenv()),
+                                 e[sapply(e, `!=`, dots)])
                 if(!is.null(pkg <- mc$package)) {
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
