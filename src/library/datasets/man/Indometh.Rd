@@ -6,15 +6,16 @@
 \name{Indometh}
 \docType{data}
 \alias{Indometh}
-\title{Pharmacokinetics of Indomethicin}
+\title{Pharmacokinetics of Indomethacin}
 \description{
   The \code{Indometh} data frame has 66 rows and 3 columns of data on
-  the pharmacokinetics of indomethicin.
+  the pharmacokinetics of indometacin (or, older spelling,
+  \sQuote{indomethacin}).
 }
 \usage{Indometh}
 \format{
   This data frame contains the following columns:
-  \describe{
+ \describe{
     \item{Subject}{
       an ordered factor with containing the subject codes.  The
       ordering is according to increasing maximum response.
@@ -23,17 +24,17 @@
       a numeric vector of times at which blood samples were drawn (hr).
     }
     \item{conc}{
-      a numeric vector of plasma concentrations of indomethicin (mcg/ml).
+      a numeric vector of plasma concentrations of indometacin (mcg/ml).
     }
   }
 }
 \details{
   Each of the six subjects were given an intravenous injection of
-  indomethicin.
+  indometacin.
 }
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976),
-  Kinetics of Indomethicin absorption, elimination, and
+  Kinetics of Indometacin absorption, elimination, and
     enterohepatic circulation in man.
   \emph{Journal of Pharmacokinetics and Biopharmaceutics}, \bold{4},
   255--280.
@@ -45,6 +46,6 @@
     S and S-PLUS}, Springer.
 }
 \seealso{
-  \code{\link{Indometh}} for models fitted to this dataset.
+  \code{\link{SSbiexp}} for models fitted to this dataset.
 }
 \keyword{datasets}

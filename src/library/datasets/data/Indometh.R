@@ -1,5 +1,5 @@
 ### $Id: Indometh.R,v 1.1 2003/12/11 07:16:04 ripley Exp $
-### Pharmacokinetic data on the drug Indomethicin
+### Pharmacokinetic data on the drug Indomethacin
 ### Kwan, Breault, Umbenhauer, McMahon, and Duggan, (1976) J. of Pharmacokinetics
 ###  and Biopharmaceutics, 4, 255-280.
 ### Cited in Davidian and Giltinan (1995), section 2.1
@@ -27,6 +27,6 @@ row.names = 1:66,
 class = c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame"),
 formula = conc ~ time | Subject,
 labels = list(x = "Time since drug administration",
-  y = "Indomethicin concentration"),
+  y = "Indomethacin concentration"),
 units = list(x = "(hr)", y = "(mcg/ml)"))
 environment(attr(Indometh, "formula")) <- emptyenv()
