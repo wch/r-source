@@ -94,22 +94,28 @@ nobs <- function(object, ...) UseMethod("nobs")
 
 nobs.lm <- function(object, ...)
     if(!is.null(w <- object$weights)) sum(w != 0) else length(object$residuals)
+
 nobs.glm <- function(object, ...) sum(!is.na(object$residuals))
+
 nobs.logLik <- function(object, ...) {
     res <- attr(object, "nobs")
     if (is.null(res)) stop("no \"nobs\" attribute is available")
     res
 }
+
 nobs.nls <- function(object, ...) length(object$m$resid())
 
-## it is probably too unsafe to use residuals general, not least
+## it is probably too unsafe to use residuals generally, not least
 ## because of e.g. weighted fits.
 nobs.default <- function(object, use.fallback = FALSE, ...)
 {
-    ## MASS::loglm fits have an 'nobs' component
+    ## MASS::loglm  and MASS::polr fits have an 'nobs' component
     if(is.list(object) && !is.null(n <- object[["nobs"]])) n
     else if(use.fallback) {
-        if(!is.null(w <- object$weights)) sum(w != 0)
-        else length(object$residuals) # and not residuals(object)
+        if(!is.null(w <- object[["weights"]])) sum(w != 0)
+        else if("residuals" %in% names(object))
+            length(object$residuals) # and not residuals(object)
+            ## perhaps sum(!is.na(object$residuals)) ?
+        else stop("no 'nobs' method is available")
     } else stop("no 'nobs' method is available")
 }
