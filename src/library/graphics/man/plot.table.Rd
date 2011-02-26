@@ -22,6 +22,7 @@
 }
 \arguments{
   \item{x}{a \code{\link{table}} (like) object.}
+  \item{y}{Must be \code{NULL}: there to protect against incorrect calls.}
   \item{type}{plotting type.}
   \item{ylim}{range of y-axis.}
   \item{lwd}{line width for bars when \code{type = "h"} is used in the 1D case.}
