@@ -90,6 +90,9 @@ logLik.lm <- function(object, REML = FALSE, ...)
     val
 }
 
+## Since AIC, BIC call logLik on everything
+logLik.logLik <- function(object, ...) object
+
 nobs <- function(object, ...) UseMethod("nobs")
 
 ## also used for mlm fits
