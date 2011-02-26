@@ -21,7 +21,8 @@
   }
 }
 \note{
-  The \code{mle} method does not know about the number of observations,
-  and so is not suitable for use with \code{\link{BIC}}.
+  The \code{mle} method does not know about the number of observations
+  unless \code{nobs} was specified on the call and so may not be
+  suitable for use with \code{\link{BIC}}.
 }
 \keyword{methods}

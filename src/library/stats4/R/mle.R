@@ -21,6 +21,7 @@ setClass("mle", representation(call = "language",
                                min = "numeric",
                                details = "list",
                                minuslogl = "function",
+                               nobs = "integer",
                                method = "character"))
 
 setClass("summary.mle", representation(call = "language",
@@ -30,8 +31,8 @@ setClass("summary.mle", representation(call = "language",
 setClass("profile.mle", representation(profile="list",
                                        summary="summary.mle"))
 
-mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
-                fixed=list(), ...)
+mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
+                fixed = list(), nobs, ...)
 {
     # Insert sanity checks here...
     call <- match.call()
@@ -57,14 +58,16 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
         do.call("minuslogl", l)
     }
     oout <- if (length(start))
-        optim(start, f, method=method, hessian=TRUE, ...)
-    else list(par=numeric(0L),value=f(start))
+        optim(start, f, method = method, hessian = TRUE, ...)
+    else list(par = numeric(), value = f(start))
     coef <- oout$par
-    vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0L), 0L, 0L)
+    vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(), 0L, 0L)
     min <-  oout$value
     fullcoef[nm] <- coef
-    new("mle", call=call, coef=coef, fullcoef=unlist(fullcoef), vcov=vcov,
-        min=min, details=oout, minuslogl=minuslogl, method=method)
+    new("mle", call = call, coef = coef, fullcoef = unlist(fullcoef),
+        vcov = vcov, min = min, details = oout, minuslogl = minuslogl,
+        nobs = if(missing(nobs)) NA_integer_ else nobs,
+        method = method)
 }
 
 setGeneric("coef")
@@ -312,6 +315,8 @@ function (object, ...)
     if(length(list(...)))
         warning("extra arguments discarded")
     val <- -object@min
+    if ("nobs" %in% slotNames(object) && # introduced in 2.13.0
+        !is.na(no <- object@nobs)) attr(val, "nobs") <- no
     attr(val, "df") <- length(object@coef)
     class(val) <- "logLik"
     val

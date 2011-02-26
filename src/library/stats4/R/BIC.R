@@ -18,9 +18,3 @@
 setGeneric("AIC")
 setGeneric("BIC")
 setGeneric("nobs")
-
-## not really needed.
-setMethod("BIC", signature(object="logLik"),
-          function(object, ...)
-          -2 * c(object) + attr(object, "df") * log(stats4:::nobs(object))
-          )
