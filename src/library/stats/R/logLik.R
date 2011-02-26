@@ -40,9 +40,7 @@ str.logLik <- function(object, digits = max(2, getOption("digits") - 3),
 as.data.frame.logLik <- function (x, ...)
     as.data.frame(c(x), ...)
 
-## >> logLik.nls() in ../../nls/R/nls.R
-
-## from package:nlme
+## >> logLik.nls() in nls.R
 
 ## log-likelihood for glm objects
 logLik.glm <- function(object, ...)
@@ -88,3 +86,5 @@ logLik.lm <- function(object, REML = FALSE, ...)
     val
 }
 
+## Since AIC, BIC call logLik on everything
+logLik.logLik <- function(object, ...) object
