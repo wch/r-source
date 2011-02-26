@@ -6,6 +6,7 @@
 \name{AIC}
 \encoding{UTF-8}
 \alias{AIC}
+\alias{BIC}
 \title{Akaike's An Information Criterion}
 \description{
   Generic function calculating the Akaike information criterion for
@@ -20,6 +21,8 @@
 }
 \usage{
 AIC(object, \dots, k = 2)
+
+BIC(object, \dots)
 }
 \arguments{
   \item{object}{a fitted model object, for which there exists a
@@ -30,8 +33,6 @@ AIC(object, \dots, k = 2)
     default \code{k = 2} is the classical AIC.}
 }
 \details{
-  Use \code{AIC(objects, \dots, k = nobs(object))} to work with BIC.
-  
   The default method for \code{AIC}, \code{AIC.default()} entirely
   relies on the existence of a \code{\link{logLik}} method
   computing the log-likelihood for the given class.
@@ -43,6 +44,11 @@ AIC(object, \dots, k = 2)
   different purposes and so \code{\link{extractAIC}} and \code{AIC} may
   give different values (and do for models of class \code{"lm"}: see the
   help for \code{\link{extractAIC}}).
+  
+  \code{BIC} is defined as \code{AIC(object, \dots, k = log(nobs(object)))}:
+  for back-compatibility with package \pkg{nlme} it is generic, but it
+  is only necessary to set methods for \code{\link{logLik}} and perhaps
+  \code{\link{nobs}}.
 }
 \value{
   If just one object is provided, returns a numeric value
@@ -57,17 +63,20 @@ AIC(object, \dots, k = 2)
   D. Reidel Publishing Company.
 }
 \author{
-  \enc{José}{Jose} Pinheiro and Douglas Bates
+  \enc{José}{Jose} Pinheiro and Douglas Bates, R-core.
 }
 \seealso{
-  \code{\link{extractAIC}}, \code{\link{logLik}}.
+  \code{\link{extractAIC}}, \code{\link{logLik}}, \code{\link{nobs}}.
 }
 \examples{
 lm1 <- lm(Fertility ~ . , data = swiss)
 AIC(lm1)
 stopifnot(all.equal(AIC(lm1),
                     AIC(logLik(lm1))))
-## a version of BIC or Schwarz's BC :
-AIC(lm1, k = log(nrow(swiss)))
+BIC(lm1)
+
+lm2 <- update(lm1, . ~ . -Examination)
+AIC(lm1, lm2)
+BIC(lm1, lm2)
 }
 \keyword{models}

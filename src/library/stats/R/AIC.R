@@ -31,11 +31,32 @@ AIC.default <- function(object, ..., k = 2)
 	val <- lapply(list(object, ...), ll)
 	val <- as.data.frame(t(sapply(val,
 				      function(el)
-				      c(attr(el, "df"), AIC(el, k = k)))))
+				      c(attr(el, "df"), AIC(el, k = k))
+                                      )))
 	names(val) <- c("df", "AIC")
         Call <- match.call()
         Call$k <- NULL
 	row.names(val) <- as.character(Call[-1L])
 	val
     } else AIC(ll(object), k = k)
+}
+
+BIC <- function(object, ...) UseMethod("BIC")
+
+BIC.logLik <- function(object, ...)
+    -2 * c(object) + attr(object, "df") * log(nobs(object))
+
+BIC.default <- function(object, ...)
+{
+    ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
+    if(length(list(...))) {
+        val <- lapply(list(object, ...), ll)
+        val <- as.data.frame(t(sapply(val,
+                                      function(el)
+                                      c(attr(el, "df"), BIC(el))
+                                      )))
+        names(val) <- c("df", "BIC")
+        row.names(val) <- as.character(match.call()[-1])
+        val
+    } else BIC(ll(object))
 }
