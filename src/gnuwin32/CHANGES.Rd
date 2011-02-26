@@ -5,6 +5,13 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.0}{
+  \subsection{WINDOWS VERSION}{
+    \itemize{
+      \item Windows 2000 is no longer supported.  (It went end-of-life in
+      July 2010.)
+    }
+  }
+    
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{win_iconv} has been updated: this version has a change
