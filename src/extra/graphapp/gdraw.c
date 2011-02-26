@@ -36,29 +36,6 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 /* from extra.c */
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
-/* Some of the ideas in haveAlpha are borrowed from Cairo */
-typedef BOOL
-(WINAPI *alpha_blend_t) (HDC, int, int, int, int, HDC, int, int, int, int,
-			 BLENDFUNCTION);
-
-static alpha_blend_t pAlphaBlend;
-
-static int haveAlpha(void)
-{
-    static int haveAlphaBlend = -1;
-
-    if(haveAlphaBlend < 0) {
-	/* AlphaBlend is in msimg32.dll.  */
-	HMODULE msimg32 = LoadLibrary("msimg32");
-	if (msimg32) {
-	    pAlphaBlend =
-		(alpha_blend_t) GetProcAddress(msimg32, "AlphaBlend");
-	    haveAlphaBlend = 1;
-	    /* printf("loaded AlphaBlend %p\n", (void *) AlphaBlend); */
-	} else haveAlphaBlend = 0;
-    }
-    return haveAlphaBlend;
-}
 
 static HDC GETHDC(drawing d)
 {
@@ -354,9 +331,10 @@ void gcopy(drawing d, drawing d2, rect r)
     BitBlt(dc, r.x, r.y, r.width, r.height, sdc, r.x, r.y, SRCCOPY);
 }
 
+/* FIXME: could allow per-pixel alpha */
 void gcopyalpha(drawing d, drawing d2, rect r, int alpha) 
 {
-    if(alpha <= 0 || !haveAlpha()) return;
+    if(alpha <= 0) return;
     {
 	HDC dc = GETHDC(d), sdc = GETHDC(d2);
 	BLENDFUNCTION bl;
@@ -364,9 +342,9 @@ void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
 	bl.BlendFlags = 0;
 	bl.SourceConstantAlpha = alpha;
 	bl.AlphaFormat = 0;
-        pAlphaBlend(dc, r.x, r.y, r.width, r.height,
-                    sdc, r.x, r.y, r.width, r.height,
-                    bl);
+        AlphaBlend(dc, r.x, r.y, r.width, r.height,
+		   sdc, r.x, r.y, r.width, r.height,
+		   bl);
     }
 }
 
