@@ -135,7 +135,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	66 ob
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Time since drug administration"
-  ..$ y: chr "Indomethicin concentration"
+  ..$ y: chr "Indomethacin concentration"
  - attr(*, "units")=List of 2
   ..$ x: chr "(hr)"
   ..$ y: chr "(mcg/ml)"

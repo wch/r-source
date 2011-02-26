@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-01-30 r54155)
+R version 2.13.0 Under development (unstable) (2011-02-26 r54595)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -32,7 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: AIC
 > ### Title: Akaike's An Information Criterion
-> ### Aliases: AIC
+> ### Aliases: AIC BIC
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -42,9 +42,18 @@ Type 'q()' to quit R.
 [1] 326.0716
 > stopifnot(all.equal(AIC(lm1),
 +                     AIC(logLik(lm1))))
-> ## a version of BIC or Schwarz's BC :
-> AIC(lm1, k = log(nrow(swiss)))
+> BIC(lm1)
 [1] 339.0226
+> 
+> lm2 <- update(lm1, . ~ . -Examination)
+> AIC(lm1, lm2)
+    df      AIC
+lm1  7 326.0716
+lm2  6 325.2408
+> BIC(lm1, lm2)
+    df      BIC
+lm1  7 339.0226
+lm2  6 336.3417
 > 
 > 
 > 
