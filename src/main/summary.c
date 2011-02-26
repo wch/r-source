@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2008   The R Development Core Team
+ *  Copyright (C) 1997-2011   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ static Rboolean imin(int *x, int n, int *value, Rboolean narm)
 
 static Rboolean rmin(double *x, int n, double *value, Rboolean narm)
 {
-    double s = 0.0 /* -Wall */;
+    double s = 0.0; /* -Wall */
     int i;
     Rboolean updated = FALSE;
 
@@ -135,7 +135,7 @@ static Rboolean rmin(double *x, int n, double *value, Rboolean narm)
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		if(s != NA_REAL) s = x[i]; /* so any NA trumps all NaNs */
+		if(!ISNA(s)) s = x[i]; /* so any NA trumps all NaNs */
 		if(!updated) updated = TRUE;
 	    }
 	}
@@ -203,7 +203,7 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		if(s != NA_REAL) s = x[i]; /* so any NA trumps all NaNs */
+		if(!ISNA(s)) s = x[i]; /* so any NA trumps all NaNs */
 		if(!updated) updated = TRUE;
 	    }
 	}
@@ -535,7 +535,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (int_a) tmp = Int2Real(itmp);
 			DbgP3(" REAL: (old)cum= %g, tmp=%g\n", zcum.r,tmp);
 			if (ISNAN(tmp)) {
-			    zcum.r += tmp;/* NA or NaN */
+			    if (ISNA(tmp)) zcum.r = tmp;
+			    else zcum.r += tmp;/* NA or NaN */
 			} else if(
 			    (iop == 2 && tmp < zcum.r) ||
 			    (iop == 3 && tmp > zcum.r))	zcum.r = tmp;

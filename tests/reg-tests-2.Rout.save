@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-21 r54518)
+R version 2.13.0 Under development (unstable) (2011-02-26 r54607)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6595,4 +6595,24 @@ Frequency = 0.2
 [7,]  1.1  4.0 -0.1  .    0.2
 [8,] -0.1  .    0.6 -0.1  0.1
 > ## used to print  ". 0" instead of ".  "
+> 
+> 
+> ## tests of NA having precedence over NA
+> min(c(NaN, NA))
+[1] NA
+> min(c(NA, NaN)) # NaN in 2.12.2
+[1] NA
+> min(NaN, NA_real_)  # NaN in 2.12.2
+[1] NA
+> min(NA_real_, NaN)
+[1] NA
+> max(c(NaN, NA))
+[1] NA
+> max(c(NA, NaN))  # NaN in 2.12.2
+[1] NA
+> max(NaN, NA_real_)  # NaN in 2.12.2
+[1] NA
+> max(NA_real_, NaN)
+[1] NA
+> ## might depend on compiler < 2.13.0
 > 

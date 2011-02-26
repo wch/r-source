@@ -1,6 +1,6 @@
 % File src/library/base/man/Extremes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Extremes}
@@ -71,8 +71,8 @@ pmin.int(\dots, na.rm = FALSE)
 
   By definition the min/max of a numeric vector containing an \code{NaN}
   is \code{NaN}, except that the min/max of any vector containing an
-  \code{NA} is \code{NA} even if it also contains an \code{NaN}.  Note
-  that \code{max(NA, Inf) == NA} even though the maximum would be
+  \code{NA} is \code{NA} even if it also contains an \code{NaN}.
+  Note that \code{max(NA, Inf) == NA} even though the maximum would be
   \code{Inf} whatever the missing value actually is.
   
   Character versions are sorted lexicographically, and this depends on

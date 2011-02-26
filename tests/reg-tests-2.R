@@ -2492,3 +2492,15 @@ set.seed(9); m <- matrix(local({x <- rnorm(40)
                                 sign(x)*round(exp(2*x))/10}), 8,5)
 noquote(format(m, zero.print= "."))
 ## used to print  ". 0" instead of ".  "
+
+
+## tests of NA having precedence over NA
+min(c(NaN, NA))
+min(c(NA, NaN)) # NaN in 2.12.2
+min(NaN, NA_real_)  # NaN in 2.12.2
+min(NA_real_, NaN)
+max(c(NaN, NA))
+max(c(NA, NaN))  # NaN in 2.12.2
+max(NaN, NA_real_)  # NaN in 2.12.2
+max(NA_real_, NaN)
+## might depend on compiler < 2.13.0

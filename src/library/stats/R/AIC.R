@@ -28,8 +28,10 @@ AIC.default <- function(object, ..., k = 2)
     ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
     if(length(list(...))) {# several objects: produce data.frame
 	lls <- lapply(list(object, ...), ll)
-        vals <- sapply(lls, function(el)
-                       c(as.numeric(el), attr(el, "df"), attr(el, "nobs")))
+        vals <- sapply(lls, function(el) {
+            no <- attr(el, "nobs")
+            c(as.numeric(el), attr(el, "df"), if(is.null(no)) 0 else no)
+        })
         val <- data.frame(df = vals[2,], ll = vals[1,], nobs = vals[3,])
         if (any(val$nobs != val$nobs[1L]))
             warning("models are not all fitted to the same number of observations")
@@ -55,8 +57,10 @@ BIC.default <- function(object, ...)
     ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
     if(length(list(...))) {
         lls <- lapply(list(object, ...), ll)
-        vals <- sapply(lls, function(el)
-                       c(as.numeric(el), attr(el, "df"), attr(el, "nobs")))
+        vals <- sapply(lls, function(el) {
+            no <- attr(el, "nobs")
+            c(as.numeric(el), attr(el, "df"), if(is.null(no)) 0 else no)
+        })
         val <- data.frame(df = vals[2,], ll = vals[1,], nobs = vals[3,])
         if (any(val$nobs != val$nobs[1L]))
             warning("models are not all fitted to the same number of observations")
