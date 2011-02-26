@@ -116,6 +116,9 @@ nobs.default <- function(object, use.fallback = FALSE, ...)
         else if("residuals" %in% names(object))
             length(object$residuals) # and not residuals(object)
             ## perhaps sum(!is.na(object$residuals)) ?
-        else stop("no 'nobs' method is available")
+        else {
+            warning("no 'nobs' method is available")
+            0L # which is what object$residuals used to give.
+        }
     } else stop("no 'nobs' method is available")
 }
