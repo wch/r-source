@@ -92,8 +92,9 @@ logLik.lm <- function(object, REML = FALSE, ...)
 
 nobs <- function(object, ...) UseMethod("nobs")
 
+## also used for mlm fits
 nobs.lm <- function(object, ...)
-    if(!is.null(w <- object$weights)) sum(w != 0) else length(object$residuals)
+    if(!is.null(w <- object$weights)) sum(w != 0) else NROW(object$residuals)
 
 nobs.glm <- function(object, ...) sum(!is.na(object$residuals))
 
@@ -114,7 +115,7 @@ nobs.default <- function(object, use.fallback = FALSE, ...)
     else if(use.fallback) {
         if(!is.null(w <- object[["weights"]])) sum(w != 0)
         else if("residuals" %in% names(object))
-            length(object$residuals) # and not residuals(object)
+            NROW(object$residuals) # and not residuals(object)
             ## perhaps sum(!is.na(object$residuals)) ?
         else {
             warning("no 'nobs' method is available")
