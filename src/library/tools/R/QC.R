@@ -4068,25 +4068,25 @@ function(package, dir, lib.loc = NULL)
     bad_imports <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
-        dots <- as.name("...")
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
             if((Call %in% c("library", "require")) &&
                (length(e) >= 2L)) {
-                mc <- match.call(get(Call, baseenv()),
-                                 e[sapply(e, `!=`, dots)])
+                ## We need to rempve '...': OTOH the argument could be NULL
+                keep <- sapply(e, function(x) deparse(x) != "...")
+                mc <- match.call(get(Call, baseenv()), e[keep])
                 if(!is.null(pkg <- mc$package)) {
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
                     ## package was called if character.only = TRUE and
                     ## the package argument is not a string constant.
-                    ## (Btw, what if character.only is given a value
+                    ## (BTW, what if character.only is given a value
                     ## which is an expression evaluating to TRUE?)
                     dunno <- FALSE
                     if(identical(mc$character.only, TRUE)
                        && !identical(class(pkg), "character"))
                         dunno <- TRUE
-                    ## </NOTE>                        
+                    ## </NOTE>
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
                     if(!dunno) {
