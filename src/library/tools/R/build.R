@@ -280,7 +280,8 @@ get_exclude_patterns <- function()
             } else resultLog(Log, "OK")
         }
         if (compact_vignettes &&
-            length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE))
+            length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,
+                               full.names = TRUE))
             && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
             messageLog(Log, "compacting vignettes and other PDF files")
             compactPDF(pdfs, qpdf, "")
