@@ -1613,6 +1613,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          paste(c("", bad_vignettes, ""), collapse = "\n"))
             }
         }
+        ## avoid case-insensitive matching
+        if ("makefile" %in% dir(vignette_dir)) {
+            any <- TRUE
+            warnLog("  Found 'inst/doc/makefile': should be 'Makefile'\n")
+        }
         ## Can we run the code in the vignettes?
         if (do_install && do_vignettes) {
             ## copy the inst directory to check directory

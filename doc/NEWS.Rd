@@ -310,6 +310,11 @@
 
       \item Code for S4 reference-class methods is now examined for
       possible errors in non-local assignments.
+
+      \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
+      and \code{hasMethods} are revised to deal consistently with
+      the \code{package=} argument and be consistent with soft namespace
+      policy for finding objects.
     }
   }
 
@@ -353,6 +358,10 @@
       Currently this tries \command{qpdf}: other options may be used in
       future.
 
+      When re-building vignettes and a \file{inst/doc/Makefile} file is
+      found, \code{make check} is run if the makefile has a
+      \code{clean:} target.
+
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems
@@ -367,10 +376,9 @@
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
-      \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
-      and \code{hasMethods} are revised to deal consistently with
-      the package= argument and be consistent with soft namespace
-      policy for finding objects.
+      \item \command{R CMD check} now warns if it finds
+      \file{inst/doc/makefile}, and \command{R CMD build} renames such a
+      file to \file{inst/doc/Makefile}
     }
   }
 

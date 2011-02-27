@@ -192,9 +192,19 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     on.exit(setwd(wd))
     setwd(vigns$dir)
 
-    ## should this recurse into subdirs?
+    ## FIXME: should this recurse into subdirs?
     origfiles <- list.files(all.files = TRUE)
+
+    ## probably 'Makefile' would do here,
+    ## but there are a couple of packages with 'makefile'
+    ## When called from R CMD build this will already have been fixed.
     have.makefile <- "makefile" %in% tolower(origfiles)
+    if(have.makefile) {
+        for(mf in c("Makefile", "makefile")) if (mf %in% origfiles) break
+        if (mf == "makefile")
+            warning("found 'inst/doc/makefile': should be 'Makefile'",
+                    immediate. = TRUE, call. = FALSE, domain = NA)
+    }
     file.create(".build.timestamp")
 
     pdfs <- character()
@@ -217,10 +227,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     }
 
     if(have.makefile) {
-    	make <- Sys.getenv("MAKE")
+    	make <- Sys.getenv("MAKE", "make")
         if(!nzchar(make)) make <- "make"
         yy <- system(make)
-        if(make == "" || yy > 0) stop("running 'make' failed")
+        if(yy > 0) stop("running 'make' failed")
+        ## See if [Mm]akefile has a clean: target, and run it.
+        if(any(grepl("^clean:", readLines(mf, warn = FALSE))))
+            system(paste(make, "clean"))
     } else {
         ## Badly-written vignettes open a pdf() device on Rplots.pdf and
         ## fail to close it.

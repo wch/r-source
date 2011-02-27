@@ -243,9 +243,14 @@ get_exclude_patterns <- function()
         pkgInstalled <- build_Rd_db(pkgdir, libdir)
 
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
-        if (vignettes && dir.exists(file.path("inst", "doc")) &&
-           length(list_files_with_type(file.path("inst", "doc"),
-                                       "vignette"))) {
+        doc_dir <- file.path("inst", "doc")
+        if ("makefile" %in% dir(doc_dir)) { # avoid case-insensitive match
+            messageLog(Log, "renaming 'inst/doc/makefile' to 'inst/doc/Makefile'")
+            file.rename(file.path(doc_dir, "makefile"),
+                        file.path(doc_dir, "Makefile"))
+        }
+        if (vignettes && dir.exists(doc_dir) &&
+           length(list_files_with_type(doc_dir, "vignette"))) {
             if (!pkgInstalled) {
 		messageLog(Log, "installing the package to re-build vignettes")
 		pkgInstalled <- temp_install_pkg(pkgdir, libdir)
@@ -275,8 +280,7 @@ get_exclude_patterns <- function()
             } else resultLog(Log, "OK")
         }
         if (compact_vignettes &&
-            length(pdfs <- dir(file.path("inst", "doc"), pattern = "\\.pdf",
-                               recursive = TRUE))
+            length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE))
             && nzchar(Sys.which(qpdf <-Sys.getenv("R_QPDF", "qpdf")))) {
             messageLog(Log, "compacting vignettes and other PDF files")
             compactPDF(pdfs, qpdf, "")
@@ -707,7 +711,6 @@ get_exclude_patterns <- function()
         }
         intname <- desc["Package"]
         ## make a copy, cd to parent of copy
-        ## we could probably do this by file.copy() now it preserves modes.
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
