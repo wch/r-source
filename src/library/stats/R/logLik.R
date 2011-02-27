@@ -124,5 +124,5 @@ nobs.default <- function(object, use.fallback = FALSE, ...)
             warning("no 'nobs' method is available")
             0L # which is what object$residuals used to give.
         }
-    } else stop("no 'nobs' method is available")
+    } else stop("no 'nobs' method is available") # or maybe NA_integer_
 }

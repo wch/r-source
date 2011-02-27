@@ -60,7 +60,8 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1L, ] <- extractAIC(nfit, scale, k = k, ...)
-        if(nobs(nfit, use.fallback = TRUE) != n0)
+        nnew <- nobs(nfit, use.fallback = TRUE)
+        if(all(is.finite(c(n0, nnew))) && nnew != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[, 1L] - ans[1L, 1L]
@@ -360,7 +361,8 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
 	nfit <- eval(nfit, envir=env) # was  eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
-        if(nobs(nfit, use.fallback = TRUE) != n0)
+        nnew <- nobs(nfit, use.fallback = TRUE)
+        if(all(is.finite(c(n0, nnew))) && nnew != n0)
             stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[1L , 1L] - ans[, 1L]
@@ -724,7 +726,7 @@ step <- function(object, scope, scale = 0,
     }
     models <- vector("list", steps)
     if(!is.null(keep)) keep.list <- vector("list", steps)
-    n <- nobs(object, use.fallback = TRUE)
+    n <- nobs(object, use.fallback = TRUE)  # might be NA
     fit <- object
     bAIC <- extractAIC(fit, scale, k = k, ...)
     edf <- bAIC[1L]
@@ -790,7 +792,8 @@ step <- function(object, scope, scale = 0,
         ## may need to look for a `data' argument in parent
 	fit <- update(fit, paste("~ .", change), evaluate = FALSE)
         fit <- eval.parent(fit)
-        if(nobs(fit, use.fallback = TRUE) != n)
+        nnew <- nobs(fit, use.fallback = TRUE)
+        if(all(is.finite(c(n, nnew))) && nnew != n)
             stop("number of rows in use has changed: remove missing values?")
         Terms <- terms(fit)
 	bAIC <- extractAIC(fit, scale, k = k, ...)

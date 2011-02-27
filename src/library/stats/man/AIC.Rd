@@ -51,7 +51,12 @@ BIC(object, \dots)
   comparison of a Poisson and gamma GLM being meaningless since one has
   a discrete response, the other continuous).
   
-  \code{BIC} is defined as \code{AIC(object, \dots, k = log(nobs(object)))}.
+  \code{BIC} is defined as
+  \code{AIC(object, \dots, k = log(nobs(object)))}.
+  This needs the number of observations to be known: the default method
+  looks first for a \code{"nobs"} attribute on the return value from the
+  \code{\link{logLik}} method, then tries the \code{\link{nobs}}
+  generic, and if neither succeed returns BIC as \code{NA}.
 }
 \value{
   If just one object is provided, a numeric value with the corresponding

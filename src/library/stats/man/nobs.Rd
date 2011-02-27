@@ -5,6 +5,7 @@
 
 \name{nobs}
 \alias{nobs}
+\alias{nobs.default}
 \title{
   Extract the Number of Observations from a Fit.
 }
@@ -14,18 +15,22 @@
 }
 \usage{
 nobs(object, ...)
+
+\method{nobs}{default}(object, use.fallback = FALSE, ...)
 }
 \arguments{
   \item{object}{A fitted model object.}
+  \item{use.fallback}{logical: should fallback methods be used to try to
+    guess the value?}
   \item{\dots}{Further arguments to be passed to methods.}
 }
-%% default method has use.fallback = FALSE, used in step, add1.default, drop1.default
 \details{
-  There are methods in this package for \code{\link{lm}},
-  \code{\link{glm}}, \code{\link{nls}} and \code{\link{logLik}} objects,
-  as well as a default method (which throws an error, unless argument
-  \code{use.fallback = TRUE} when it looks for \code{weights} and
-  \code{residuals} components -- use with care!).
+  This is a generic function, with an S4 generic in package \pkg{nobs}.
+  There are methods in this package for objects of classes
+  \code{"\link{lm}"}, \code{"\link{glm}"}, \code{"\link{nls}"} and
+  \code{"\link{logLik}"}, as well as a default method (which throws an
+  error, unless \code{use.fallback = TRUE} when it looks for
+  \code{weights} and \code{residuals} components -- use with care!).
 
   The main usage is in determining the appropriate penalty for BIC, but
   \code{nobs} is also use by the stepwise fitting methods
@@ -35,7 +40,7 @@ nobs(object, ...)
   in the new predictors).
 }
 \value{
-  A number.
+  A single number, normally an integer.  Could be \code{NA}.
 }
 \seealso{
   \code{\link{AIC}}.

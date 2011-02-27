@@ -30,10 +30,12 @@ AIC.default <- function(object, ..., k = 2)
 	lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
             no <- attr(el, "nobs")
-            c(as.numeric(el), attr(el, "df"), if(is.null(no)) 0 else no)
+            c(as.numeric(el), attr(el, "df"),
+              if(is.null(no)) NA_integer_ else no)
         })
-        val <- data.frame(df = vals[2,], ll = vals[1,], nobs = vals[3,])
-        if (any(val$nobs != val$nobs[1L]))
+        val <- data.frame(df = vals[2L,], ll = vals[1L,])
+        nos <- na.omit(vals[3L,])
+        if (length(nos) && any(nos != nos[1L]))
             warning("models are not all fitted to the same number of observations")
         val <- data.frame(df = val$df, AIC = -2*val$ll + k*val$df)
         Call <- match.call()
@@ -55,20 +57,33 @@ BIC.logLik <- function(object, ...)
 BIC.default <- function(object, ...)
 {
     ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
+    Nobs <- if("stats4" %in% loadedNamespaces()) stats4:::nobs else nobs
     if(length(list(...))) {
         lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
             no <- attr(el, "nobs")
-            c(as.numeric(el), attr(el, "df"), if(is.null(no)) 0 else no)
+            c(as.numeric(el), attr(el, "df"),
+              if(is.null(no)) NA_integer_ else no)
         })
-        val <- data.frame(df = vals[2,], ll = vals[1,], nobs = vals[3,])
-        if (any(val$nobs != val$nobs[1L]))
+        val <- data.frame(df = vals[2L,], ll = vals[1L,], nobs = vals[3L,])
+        nos <- na.omit(val$nobs)
+        if (length(nos) && any(nos != nos[1L]))
             warning("models are not all fitted to the same number of observations")
+        ## if any val$nobs = NA, try to get value via nobs().
+        unknown <- is.na(val$nobs)
+        if(any(unknown))
+            val$nobs[unknown] <-
+                sapply(list(object, ...)[unknown],
+                       function(x, f) tryCatch(f(x), error = function(e) NA_real_),
+                       f = Nobs)
         val <- data.frame(df = val$df, BIC = -2*val$ll + log(val$nobs)*val$df)
-        row.names(val) <- as.character(match.call()[-1])
+        row.names(val) <- as.character(match.call()[-1L])
         val
     } else {
         lls <- ll(object)
-         -2 * as.numeric(lls) + log(attr(lls, "nobs")) * attr(lls, "df")
+        nos <- attr(lls, "nobs")
+        if (is.null(nos))
+            nos <- tryCatch(Nobs(object), error = function(e) NA_real_)
+        -2 * as.numeric(lls) + log(nos) * attr(lls, "df")
     }
 }
