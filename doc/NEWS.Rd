@@ -512,6 +512,16 @@
 }
 
 \section{CHANGES IN R VERSION 2.12.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{max()} and \code{min()} work harder to ensure that
+      \code{NA} has precedence over \code{NaN}, so e.g. \code{min(NaN,
+	NA)} is \code{NA}.  (This was not previously documented except
+      for within a single numeric vector, where compiler optimizations
+      often defeated the code.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item A change to the C function \samp{R_tryEval} had broken error
