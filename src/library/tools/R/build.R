@@ -272,7 +272,12 @@ get_exclude_patterns <- function()
             args <- c("--vanilla",
                       "--default-packages=", # some vignettes assume methods
                       "-e", shQuote("tools::buildVignettes(dir = '.')"))
+            ## since so many people use 'R CMD' in Makefiles,
+            oPATH <- Sys.getenv("PATH")
+            Sys.setenv(PATH = paste(R.home("bin"), oPATH,
+                                    sep = .Platform$path.sep))
             res <- shell_with_capture(cmd, args)
+            Sys.setenv(PATH = oPATH)
             if (res$status) {
                 resultLog(Log, "ERROR")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))

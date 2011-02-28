@@ -1618,6 +1618,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             any <- TRUE
             warnLog("  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored")
         }
+        if ("Makefile" %in% dir(vignette_dir)) {
+            lines <- readLines(file.path(vignette_dir, "Makefile"), warn = FALSE)
+            ## remove comment lines
+            lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
+            if(any(grepl("[^/]R +CMD", lines))) {
+                any <- TRUE
+                warnLog("  Found 'R CMD' in 'inst/doc/Makefile': should be '$(R_HOME)/bin/R CMD'")
+            }
+            if(any(grepl("[^/]Rscript", lines))) {
+                any <- TRUE
+                warnLog("  Found 'Rscript' in 'inst/doc/Makefile': should be '$(R_HOME)/bin/Rscript'")
+            }
+        }
         ## Can we run the code in the vignettes?
         if (do_install && do_vignettes) {
             ## copy the inst directory to check directory

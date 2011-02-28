@@ -1932,8 +1932,11 @@ care of both creation of PDF files and cleaning up afterwards (including
 after @code{Sweave}), i.e., delete all files that shall not appear in
 the final package archive.  Note that the @code{make} step is executed
 independently from the presence of any files in Sweave format, and that
-if it runs @R{} it needs to be careful to respect the environment value
-of @env{R_LIBS} and @env{R_HOME}.  Finally, if there is a
+if it runs @R{} it needs to be careful to respect the environment values
+of @env{R_LIBS} and @env{R_HOME}@footnote{As from @R{} 2.13.0,
+@code{R_HOME/bin} is prepended to the @env{PATH} so that references to
+@command{R} or @command{Rscript} in the @file{Makefile} do make use of
+the currently running version of @R{}.}.  Finally, if there is a
 @file{Makefile} and it has a @samp{clean:} target, @command{make clean}
 is run.
 
