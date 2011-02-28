@@ -82,7 +82,7 @@ function(package, dir, lib.loc = NULL,
         }
     }
     if(weave && latex) {
-        if(!("makefile" %in% tolower(list.files(vigns$dir)))) {
+        if(!("Makefile" %in% list.files(vigns$dir))) {
             ## <NOTE>
             ## This used to run texi2dvi on *all* vignettes, including
             ## the ones already known from the above to give trouble.
@@ -195,16 +195,9 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     ## FIXME: should this recurse into subdirs?
     origfiles <- list.files(all.files = TRUE)
 
-    ## probably 'Makefile' would do here,
-    ## but there are a couple of packages with 'makefile'
-    ## When called from R CMD build this will already have been fixed.
-    have.makefile <- "makefile" %in% tolower(origfiles)
-    if(have.makefile) {
-        for(mf in c("Makefile", "makefile")) if (mf %in% origfiles) break
-        if (mf == "makefile")
-            warning("found 'inst/doc/makefile': should be 'Makefile'",
-                    immediate. = TRUE, call. = FALSE, domain = NA)
-    }
+    ## Note, as from 2.13.0, only this case: R CMD devel already fixed it
+    have.makefile <- "Makefile" %in% origfiles
+
     file.create(".build.timestamp")
 
     pdfs <- character()
@@ -231,8 +224,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         if(!nzchar(make)) make <- "make"
         yy <- system(make)
         if(yy > 0) stop("running 'make' failed")
-        ## See if [Mm]akefile has a clean: target, and run it.
-        if(any(grepl("^clean:", readLines(mf, warn = FALSE))))
+        ## See if Makefile has a clean: target, and if so run it.
+        if(any(grepl("^clean:", readLines("Makefile", warn = FALSE))))
             system(paste(make, "clean"))
     } else {
         ## Badly-written vignettes open a pdf() device on Rplots.pdf and

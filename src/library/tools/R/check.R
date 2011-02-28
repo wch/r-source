@@ -1616,7 +1616,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## avoid case-insensitive matching
         if ("makefile" %in% dir(vignette_dir)) {
             any <- TRUE
-            warnLog("  Found 'inst/doc/makefile': should be 'Makefile'\n")
+            warnLog("  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored")
         }
         ## Can we run the code in the vignettes?
         if (do_install && do_vignettes) {

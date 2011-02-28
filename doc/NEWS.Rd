@@ -378,7 +378,7 @@
 
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
-      file to \file{inst/doc/Makefile}
+      file to \file{inst/doc/Makefile}.
     }
   }
 
