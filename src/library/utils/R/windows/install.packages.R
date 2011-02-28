@@ -36,9 +36,10 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
         stop(gettextf("unable to create temporary directory '%s'",
                       normalizePath(tmpDir, mustWork = FALSE)),
              domain = NA, call. = FALSE)
-    on.exit(unlink(tmpDir, recursive=TRUE))
     cDir <- getwd()
-    on.exit(setwd(cDir), add = TRUE)
+    ## need to ensure we are not in tmpDir when unlinking is attempted
+    on.exit(setwd(cDir))
+    on.exit(unlink(tmpDir, recursive=TRUE), add = TRUE)
     res <- .zip.unpack(pkg, tmpDir)
     setwd(tmpDir)
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
