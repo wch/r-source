@@ -1071,6 +1071,38 @@ be the case when versioned installs were allowed.  Its main use is in
 @file{configure.win} scripts for the installation path of external
 software's DLLs.)
 
+One of the more tricky tasks can be to find the headers and libraries of
+external software.  One tool which is increasingly available on
+Unix-alikes (but not Mac OS X) to do this is @command{pkg-config}.  The
+@file{configure} script will need to test for the presence of the
+command itself (see for example package @pkg{Cairo}), and if present it
+can be asked if the software is installed, of a suitable version and for
+compilation/linking flags by e.g.@:
+
+@example
+$ pkg-config --exists 'QtCore >= 4.0.0'  # check the status
+$ pkg-config --modversion QtCore
+4.7.1
+$ pkg-config --cflags QtCore
+-DQT_SHARED -I/usr/include/QtCore  
+$ pkg-config --libs QtCore
+-lQtCore  
+@end example
+
+@noindent
+Note that @command{pkg-config --libs} gives the information
+required to link against the default version of that library (usually
+the dynamic one), and @command{pkg-config --static} is needed if the
+static library is to be used.
+
+Sometimes the name by which the software is known to
+@command{pkg-config} is not what one might expect (e.g.@:
+@samp{gtk+-2.0} even for 2.22).  To get a complete list use
+
+@example
+pkg-config --list-all | sort
+@end example
+
 @menu
 * Using Makevars::              
 * Configure example::           
