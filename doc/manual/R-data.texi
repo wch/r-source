@@ -109,6 +109,7 @@ principal authors of the packages mentioned are
 @item @pkg{RSQLite} @tab David A, James
 @item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
 @item @pkg{WriteXLS} @tab Marc Schwartz
+@item @pkg{XLConnect} @tab Mirai Solutions GmbH
 @item @pkg{xlsReadWrite} @tab Hans-Peter Suter
 @item @pkg{XML} @tab Duncan Temple Lang
 @end multitable
@@ -2318,6 +2319,10 @@ available in package @pkg{xlsReadWrite}.
 Two packages which can read and and manipulate Excel 2007/10
 spreadsheets but not earlier formats are @pkg{xlsx} (which requires
 Java) and the Omegahat package @pkg{RExcelXML}.
+
+@findex XLConnect
+Package @pkg{XLConnect} can read, write and manipulate both Excel
+97--2003 and Excel 2007/10 spreadsheets, requiring Java.
 
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
