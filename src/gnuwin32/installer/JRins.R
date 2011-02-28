@@ -119,6 +119,8 @@
 	    component <- "tcl/chm"
 	else if (grepl("^Tcl/lib/tcl8.5/tzdata", f))
 	    component <- "tcl/tzdata"
+	else if (grepl("^Tcl/.*\\.msg$", f))
+	    component <- "tcl/msg"
 	else if (grepl("^Tcl", f))
 	    component <- "tcl/noarch"
 	else if (grepl("^library/grid/doc", f) ||

@@ -18,5 +18,6 @@ Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full cu
 Name: "tcl/noarch"; Description: "Main Files"; Types: user full custom
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
+Name: "tcl/msg"; Description: "Message translations for Tcl/Tk"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
