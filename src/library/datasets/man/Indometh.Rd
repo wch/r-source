@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Indometh.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Indometh}
@@ -33,14 +33,15 @@
   indometacin.
 }
 \source{
-  Kwan, Breault, Umbenhauer, McMahon and Duggan (1976),
-  Kinetics of Indometacin absorption, elimination, and
+  Kwan, Breault, Umbenhauer, McMahon and Duggan (1976)
+  Kinetics of Indomethacin absorption, elimination, and
     enterohepatic circulation in man.
-  \emph{Journal of Pharmacokinetics and Biopharmaceutics}, \bold{4},
+  \emph{Journal of Pharmacokinetics and Biopharmaceutics} \bold{4},
   255--280.
 
-  Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for
-    Repeated Measurement Data}, Chapman & Hall (section 5.2.4, p. 134)
+  Davidian, M. and Giltinan, D. M. (1995)
+  \emph{Nonlinear Models for Repeated Measurement Data},
+  Chapman & Hall (section 5.2.4, p. 129)
 
   Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
     S and S-PLUS}, Springer.
