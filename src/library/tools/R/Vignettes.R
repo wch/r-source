@@ -81,7 +81,7 @@ function(package, dir, lib.loc = NULL,
             setwd(startdir)
         }
     }
-    if(weave && latex) {
+    if(tangle && weave && latex) {
         if(!("Makefile" %in% list.files(vigns$dir))) {
             ## <NOTE>
             ## This used to run texi2dvi on *all* vignettes, including

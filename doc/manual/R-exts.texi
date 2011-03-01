@@ -1895,7 +1895,11 @@ letter and be comprised entirely of @acronym{ASCII} letters or digits or
 hyphen or underscore.
 
 A special case are documents in Sweave format, which we call
-@emph{package vignettes}.  Sweave allows the integration of @LaTeX{}
+@emph{package vignettes}.  These are normally given the file extension
+@file{.Rnw}, but for historical reasons extensions@footnote{and to avoid
+problems with case-insensitive file systems, lower-case versions of all
+these extensions.} @file{.Snw}, @file{.Rtex}, @file{.Stex} are
+recognized as vignettes.  Sweave allows the integration of @LaTeX{}
 documents and @R{} code and is contained in package @pkg{utils} which is
 part of the base @R{} distribution, see the @code{Sweave} help page for
 details on the document format.  Package vignettes found in directory

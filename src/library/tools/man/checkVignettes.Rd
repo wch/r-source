@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkVignettes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{checkVignettes}
@@ -34,20 +34,36 @@ checkVignettes(package, dir, lib.loc = NULL,
   \item{weave}{Perform a weave?}
   \item{latex}{logical: if \code{tangle}, \code{weave} and \code{latex}
     are \code{TRUE} and there is no \file{Makefile} in the vignettes
-    directory, run the tangled files through \code{pdflatex}.}
+    directory, run the tangled files through \command{pdflatex}.}
   \item{workdir}{Directory used as working directory while checking the
     vignettes. If \code{"tmp"} then a temporary directory is created,
     this is the default.  If \code{"src"} then the directory containing
     the vignettes itself is used, if \code{"cur"} then the current
     working directory of \R is used.}
-  \item{keepfiles}{Delete file in temporary directory?  This option is
+  %% R CMD check makes a copy and uses workdir = "src"
+  \item{keepfiles}{Delete files in the temporary directory?  This option is
     ignored when \code{workdir != "tmp"}.}
 }
+\details{
+  A \emph{vignette} is a file in the package's \file{inst/doc} directory
+  with extension \file{.Rnw} (preferred), \file{.Snw}, \file{.Rtex} or
+  \file{.Stex} (and lower-case versions are also accepted).
+
+  If \code{tangle} is true, this function runs \code{\link{Stangle}} to
+  produce (one or more) \R code files from each vignette, then runs each
+  code file in a separate R session.
+
+  If \code{weave} is true, each vignette is run through
+  \code{\link{Sweave}}, which will produce a \file{.tex} file for each
+  vignette.  If \code{tangle} and \code{latex} are also true,
+  \code{\link{texi2dvi}(pdf = TRUE)} is run on the \file{.tex} files
+  from those vignettes which did not give errors in the previous steps.
+}
 \value{
-  An object of class \code{"checkVignettes"} which is a list with the
-  error messages found during the tangle and weave steps. There is a
-  \code{print} method for nicely displaying the information 
-  contained in such objects.
+  An object of class \code{"checkVignettes"}, which is a list with the
+  error messages found during the weave, tangle, source and latex
+  steps. There is a \code{print} method for nicely displaying the
+  information contained in such objects.
 }
 \keyword{utilities}
 \keyword{documentation}
