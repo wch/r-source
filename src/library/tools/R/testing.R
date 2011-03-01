@@ -112,10 +112,7 @@ massageExamples <-
 }
 
 ## compares 2 files
-Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
-    Rdiff0(from, to, useDiff, forEx)
-
-Rdiff0 <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
+Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
 {
     clean <- function(txt)
     {
@@ -154,27 +151,37 @@ Rdiff0 <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
     if (!useDiff && (length(left) == length(right))) {
         bleft <- gsub("[[:space:]]+", " ", left)
         bright <- gsub("[[:space:]]+", " ", right)
-        if(all(bleft == bright)) return(0L)
+        if(all(bleft == bright))
+            return(if(Log) list(status = 0L, out = character()) else 0L)
         cat("\n")
         diff <- bleft != bright
         ## FIXME do run lengths here
         for(i in which(diff))
             cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
                 sep = "")
-        return(1L)
+        if (Log) {
+            i <- which(diff)
+            out <- paste(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i],
+                         sep = "")
+            list(status = 1L, out = out)
+        } else 1L
     } else {
         ## FIXME: use C code, or something like merge?
         ## The files can be very big.
-        if(!useDiff) cat("\nfiles differ in number of lines:\n")
+        out <- character()
+        if(!useDiff) {
+            cat("\nfiles differ in number of lines:\n")
+            out <- "files differ in number of lines"
+        }
         a <- tempfile("Rdiffa")
         writeLines(left, a)
         b <- tempfile("Rdiffb")
         writeLines(right, b)
         if (Log) {
             tf <- tempfile()
-            res <- system2("diff", c("-bw", shQuote(a), shQuote(b)),
-                           stdout = tf, stderr = tf)
-            list(res=res, out=readLines(tf))
+            status <- system2("diff", c("-bw", shQuote(a), shQuote(b)),
+                              stdout = tf, stderr = tf)
+            list(status=status, out=c(out, readLines(tf)))
         } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
 }
@@ -351,10 +358,10 @@ testInstalledPackage <-
                 cat("  Comparing ", sQuote(outfile), " to ",
                     sQuote(savefile), " ...", sep = "", file = Log)
             if(!is.null(Log)) {
-                ans <- Rdiff0(outfile, savefile, TRUE, Log = TRUE)
+                ans <- Rdiff(outfile, savefile, TRUE, Log = TRUE)
                 writeLines(ans$out)
                 writeLines(ans$out, Log)
-                res <- ans$res
+                res <- ans$status
             } else res <- Rdiff(outfile, savefile, TRUE)
             if (!res) {
                 message(" OK")

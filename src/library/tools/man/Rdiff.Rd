@@ -6,7 +6,7 @@
   footers and some encoding differences.
 }
 \usage{
-Rdiff(from, to, useDiff = FALSE, forEx = FALSE)
+Rdiff(from, to, useDiff = FALSE, forEx = FALSE, Log = FALSE)
 }
 \arguments{
   \item{from, to}{filepaths to be compared}
@@ -26,7 +26,12 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE)
   \command{diff -bw} is called on the edited files.
 }
 \value{
-  \code{0L} if no differences were found, otherwise \code{1L}
+  If \code{Log} is true, a list with components \code{status} (see
+  below) and \code{out}, a character vector of descriptions of
+  differences, possibly of zero length.
+
+  Otherwise, a status indicator, \code{0L} if and only if no differences
+  were found.
 }
 
 \seealso{
