@@ -113,6 +113,9 @@ massageExamples <-
 
 ## compares 2 files
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
+    Rdiff0(from, to, useDiff, forEx)
+
+Rdiff0 <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
 {
     clean <- function(txt)
     {
@@ -155,22 +158,24 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
         cat("\n")
         diff <- bleft != bright
         ## FIXME do run lengths here
-        for(i in which(diff)) {
+        for(i in which(diff))
             cat(i,"c", i, "\n< ", left[i], "\n", "---\n> ", right[i], "\n",
                 sep = "")
-        }
         return(1L)
     } else {
         ## FIXME: use C code, or something like merge?
         ## The files can be very big.
         if(!useDiff) cat("\nfiles differ in number of lines:\n")
-        ## at one point in pre-2.12.0, two calls to tempfile() gave the
-        ## same value, so work around this.
         a <- tempfile("Rdiffa")
         writeLines(left, a)
         b <- tempfile("Rdiffb")
         writeLines(right, b)
-        return(system(paste("diff -bw", shQuote(a), shQuote(b))))
+        if (Log) {
+            tf <- tempfile()
+            res <- system2("diff", c("-bw", shQuote(a), shQuote(b)),
+                           stdout = tf, stderr = tf)
+            list(res=res, out=readLines(tf))
+        } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
 }
 
@@ -307,6 +312,7 @@ testInstalledPackage <-
 ## run all the tests in a directory: for use by R CMD check.
 ## trackObjs has .Rin files
 
+## used by R CMD check
 .runPackageTestsR <- function(...)
 {
     cat("\n");
@@ -314,12 +320,14 @@ testInstalledPackage <-
     q("no", status = status)
 }
 
-## used by R CMD check
-.runPackageTests <- function(use_gct = FALSE, use_valgrind = FALSE)
+.runPackageTests <- function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL)
 {
+    if (!is.null(Log)) Log <- file(Log, "wt")
     runone <- function(f)
     {
         message("  Running ", sQuote(f))
+        if(!is.null(Log))
+            cat("  Running ", sQuote(f), "\n", sep = "", file = Log)
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla --no-timing",
@@ -339,8 +347,19 @@ testInstalledPackage <-
         if (file.exists(savefile)) {
             message("  Comparing ", sQuote(outfile), " to ",
                     sQuote(savefile), " ...", appendLF = FALSE)
-            res <- Rdiff(outfile, savefile, TRUE)
-            if (!res) message(" OK")
+            if(!is.null(Log))
+                cat("  Comparing ", sQuote(outfile), " to ",
+                    sQuote(savefile), " ...", sep = "", file = Log)
+            if(!is.null(Log)) {
+                ans <- Rdiff0(outfile, savefile, TRUE, Log = TRUE)
+                writeLines(ans$out)
+                writeLines(ans$out, Log)
+                res <- ans$res
+            } else res <- Rdiff(outfile, savefile, TRUE)
+            if (!res) {
+                message(" OK")
+                if(!is.null(Log)) cat(" OK\n", file = Log)
+            }
         }
         0L
     }
@@ -352,11 +371,16 @@ testInstalledPackage <-
     for(f in Rinfiles) {
         Rfile <- sub("\\.Rin$", ".R", f)
         message("  Creating ", sQuote(Rfile), domain = NA)
+        if (!is.null(Log))
+            cat("  Creating ", sQuote(Rfile), "\n", sep = "", file = Log)
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --no-timing --vanilla --slave", f)
-        if (system(cmd))
+        if (system(cmd)) {
             warning("creation of ", sQuote(Rfile), " failed")
-        else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
+            if (!is.null(Log))
+                cat("Warning: creation of ", sQuote(Rfile), " failed\n",
+                    sep = "", file = Log)
+        } else if (file.exists(Rfile)) nfail <- nfail + runone(Rfile)
         if (nfail > 0) return(nfail)
     }
 
@@ -365,6 +389,7 @@ testInstalledPackage <-
         nfail <- nfail + runone(f)
         if (nfail > 0) return(nfail)
     }
+    if (!is.null(Log)) close(Log)
     return(nfail)
 }
 

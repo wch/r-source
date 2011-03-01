@@ -1536,6 +1536,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             extra <- character()
             if (use_gct) extra <- c(extra, "use_gct = TRUE")
             if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
+            tf <- tempfile()
+            extra <- c(extra, paste('Log="', tf, '"', sep=""))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
             cmd <- paste("tools:::.runPackageTestsR(",
@@ -1570,20 +1572,26 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              "\n")
                 }
                 do_exit(1L)
+            } else {
+                resultLog(Log, "OK")
+                if (Log$con > 0L && file.exists(tf)) {
+                    ## write results only to 00check.log
+                    lines <- readLines(tf)
+                    cat(lines, sep="\n", file = Log$con)
+                    unlink(tf)
+                }
             }
             setwd(pkgoutdir)
         }
         if (do_install && do_tests) {
             if (!this_multiarch) {
                 run_one_arch()
-                resultLog(Log, "OK")
             } else {
                 printLog(Log, "\n")
                 for (arch in inst_archs)
                     if (!(arch %in% R_check_skip_tests_arch)) {
                         printLog(Log, "** running tests for arch ", sQuote(arch))
                         run_one_arch(arch)
-                        resultLog(Log, "OK")
                     }
             }
         } else resultLog(Log, "SKIPPED")
