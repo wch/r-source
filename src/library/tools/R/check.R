@@ -550,7 +550,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                      "Most likely, these were included erroneously.\n")
         }
 
-        if(istar || R_check_vc_dirs) {
+        if(!is_base_pkg && (istar || R_check_vc_dirs)) {
             ## Packages also should not contain version control subdirs
             ## provided that we check a .tar.gz or know we unpacked one.
             ind <- basename(all_dirs) %in% .vc_dir_names
