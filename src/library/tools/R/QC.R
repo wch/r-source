@@ -241,8 +241,9 @@ function(package, dir, lib.loc = NULL)
                               S4_methods))))
     }
     if(is_base) {
-        ## we use .ArgsEnv and .GenericArgsEnv in checkS3methods and codoc,
-        ## so we check here that the set of primiitives has not been changed.
+        ## We use .ArgsEnv and .GenericArgsEnv in checkS3methods() and
+        ## codoc(), so we check here that the set of primitives has not
+        ## been changed.
         base_funs <- ls("package:base", all.names=TRUE)
         prim <- sapply(base_funs,
                        function(x) is.primitive(get(x, "package:base")))
@@ -564,10 +565,6 @@ function(package, dir, lib.loc = NULL,
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
-    functions_to_be_ignored <-
-        c(.functions_to_be_ignored_from_usage(basename(dir)),
-          .functions_with_no_useful_S3_method_markup())
-
     bad_doc_objects <- list()
     functions_in_usages <- character()
     variables_in_usages <- character()
@@ -602,10 +599,20 @@ function(package, dir, lib.loc = NULL,
                 data_sets_in_usages_not_in_code[[docObj]] <- data_sets
             exprs <- exprs[!ind]
         }
+        ## Split out replacement function usages.
+        ind <- as.logical(sapply(exprs,
+                                 .is_call_from_replacement_function_usage))
+        replace_exprs <- exprs[ind]
+        exprs <- exprs[!ind]
+        ## Ordinary functions.
         functions <- sapply(exprs, function(e) as.character(e[[1L]]))
+        ## Catch assignments: checkDocFiles() will report these, so drop
+        ## them here.
+        ind <- !(functions %in% c("<-", "="))
+        exprs <- exprs[ind]
+        functions <- functions[ind]
         functions <- .transform_S3_method_markup(as.character(functions))
-        ind <- (! functions %in% functions_to_be_ignored
-                & functions %in% functions_in_code)
+        ind <- functions %in% functions_in_code
         bad_functions <-
             mapply(functions[ind],
                    exprs[ind],
@@ -613,12 +620,9 @@ function(package, dir, lib.loc = NULL,
                    check_codoc(x, as.pairlist(as.alist.call(y[-1L]))),
                    SIMPLIFY = FALSE)
         ## Replacement functions.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
-        if(any(ind)) {
-            exprs <- exprs[ind]
+        if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(exprs,
+                paste(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
                       "<-",
                       sep = "")
@@ -628,7 +632,7 @@ function(package, dir, lib.loc = NULL,
             if(any(ind)) {
                 bad_replace_funs <-
                     mapply(replace_funs[ind],
-                           exprs[ind],
+                           replace_exprs[ind],
                            FUN = function(x, y)
                            check_codoc(x,
                                       as.pairlist(c(as.alist.call(y[[2L]][-1L]),
@@ -660,9 +664,7 @@ function(package, dir, lib.loc = NULL,
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
-        bad_functions <-
-            functions %w/o% c(objects_in_code_or_namespace,
-                              functions_to_be_ignored)
+        bad_functions <- functions %w/o% objects_in_code_or_namespace
         if(length(bad_functions))
             functions_in_usages_not_in_code[[docObj]] <- bad_functions
 
@@ -1295,9 +1297,6 @@ function(package, dir, lib.loc = NULL)
 
     db_argument_names <- lapply(db, .Rd_get_argument_names)
 
-    functions_to_be_ignored <-
-        .functions_to_be_ignored_from_usage(basename(dir))
-
     bad_doc_objects <- list()
 
     for(docObj in db_names) {
@@ -1317,30 +1316,38 @@ function(package, dir, lib.loc = NULL)
                                   !((length(e) == 2L)
                                     && e[[1L]] == as.symbol("data")))))
         exprs <- exprs[ind]
+        ## Split out replacement function usages.
+        ind <- as.logical(sapply(exprs,
+                                 .is_call_from_replacement_function_usage))
+        replace_exprs <- exprs[ind]
+        exprs <- exprs[!ind]
         ## Ordinary functions.
         functions <- as.character(sapply(exprs,
                                          function(e)
                                          as.character(e[[1L]])))
+        ## Catch assignments.
+        ind <- functions %in% c("<-", "=")
+        assignments <- exprs[ind]
+        if(any(ind)) {
+            exprs <- exprs[!ind]
+            functions <- functions[!ind]
+        }
         ## (Note that as.character(sapply(exprs, "[[", 1L)) does not do
         ## what we want due to backquotifying.)
-        ind <- ! functions %in% functions_to_be_ignored
-        functions <- functions[ind]
         arg_names_in_usage <-
-            unlist(sapply(exprs[ind],
+            unlist(sapply(exprs,
                           function(e) .arg_names_from_call(e[-1L])))
         ## Replacement functions.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
-        if(any(ind)) {
+        if(length(replace_exprs)) {
             replace_funs <-
-                paste(sapply(exprs[ind],
+                paste(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
                       "<-",
                       sep = "")
             functions <- c(functions, replace_funs)
             arg_names_in_usage <-
                 c(arg_names_in_usage,
-                  unlist(sapply(exprs[ind],
+                  unlist(sapply(replace_exprs,
                                 function(e)
                                 c(.arg_names_from_call(e[[2L]][-1L]),
                                   .arg_names_from_call(e[[3L]])))))
@@ -1412,13 +1419,15 @@ function(package, dir, lib.loc = NULL)
         if((length(arg_names_in_usage_missing_in_arg_list))
            || anyDuplicated(arg_names_in_arg_list)
            || (length(arg_names_in_arg_list_missing_in_usage))
-           || (length(functions_not_in_aliases)))
+           || (length(functions_not_in_aliases))
+           || (length(assignments)))
             bad_doc_objects[[docObj]] <-
                 list(missing = arg_names_in_usage_missing_in_arg_list,
                      duplicated =
                      arg_names_in_arg_list[duplicated(arg_names_in_arg_list)],
                      overdoc = arg_names_in_arg_list_missing_in_usage,
-                     unaliased = functions_not_in_aliases)
+                     unaliased = functions_not_in_aliases,
+                     assignments = assignments)
 
     }
 
@@ -1455,6 +1464,12 @@ function(x, ...)
               c(gettextf("Objects in \\usage without \\alias in documentation object '%s':",
                          nm),
                 .pretty_format(unique(functions_not_in_aliases)))
+          },
+          if(length(assignments <-
+                    x[[nm]][["assignments"]])) {
+              c(gettextf("Assignments in \\usage in documentation object '%s':",
+                         nm),
+                sprintf("  %s", unlist(lapply(assignments, format))))
           },
           "")
     }
@@ -5075,7 +5090,7 @@ function(x)
     else
         which(names(y) == "")
     if(length(ind)) {
-        names(y)[ind] <- sapply(y[ind],as.character)
+        names(y)[ind] <- sapply(y[ind], paste, collapse = " ")
         y[ind] <- rep.int(list(alist(irrelevant = )[[1L]]), length(ind))
     }
     y

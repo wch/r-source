@@ -15,12 +15,12 @@
   Assign a value to a name.
 }
 \usage{
-x <- value
-x <<- value
-value -> x
-value ->> x
+\special{x <- value}
+\special{x <<- value}
+\special{value -> x}
+\special{value ->> x}
 
-x = value
+\special{x = value}
 }
 \arguments{
   \item{x}{a variable name (possibly quoted).}

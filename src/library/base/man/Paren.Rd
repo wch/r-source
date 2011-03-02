@@ -9,9 +9,9 @@
 \alias{\{}
 \title{Parentheses and Braces}
 \usage{
-( \dots )
+\special{( \dots )}
 
-{ \dots }
+\special{{ \dots }}
 }
 \description{
   Open parenthesis, \code{(}, and open brace, \code{\{}, are

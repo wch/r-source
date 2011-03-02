@@ -22,8 +22,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
             help.db = getOption("help.db"),
             verbose = getOption("verbose"),
             rebuild = FALSE, agrep = NULL, use_UTF8 = FALSE)
-??pattern
-field??pattern
+\special{??pattern}
+\special{field??pattern}
 }
 \arguments{
   \item{pattern}{a character string to be matched in the specified

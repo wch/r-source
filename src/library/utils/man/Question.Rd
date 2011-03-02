@@ -15,9 +15,9 @@
 }
 % it is in fact `?`(e1, e2)
 \usage{
-?topic
+\special{?topic}
 
-type?topic
+\special{type?topic}
 }
 \arguments{
   \item{topic}{Usually, a \link{name} or character string specifying the

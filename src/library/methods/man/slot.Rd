@@ -18,7 +18,7 @@
   in an object.
 }
 \usage{
-object@name
+\special{object@name}% @ really is in base.
 object@name <- value
 
 slot(object, name)

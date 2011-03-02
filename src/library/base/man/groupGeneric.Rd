@@ -27,12 +27,12 @@
   A method defined for an individual member of the group takes
   precedence over a method defined for the group as a whole.
 }
-\usage{% we can get away with this as there is an exception in codoc
+\usage{
 ## S3 methods for group generics have prototypes:
-Math(x, \dots)
-Ops(e1, e2)
-Complex(z)
-Summary(\dots, na.rm = FALSE)
+\special{Math(x, \dots)}
+\special{Ops(e1, e2)}
+\special{Complex(z)}
+\special{Summary(\dots, na.rm = FALSE)}
 }
 \arguments{
   \item{x, z, e1, e2}{objects.}

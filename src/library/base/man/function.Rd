@@ -6,8 +6,8 @@
 \name{function}
 \title{Function Definition}
 \usage{
-function( arglist ) expr
-return(value)
+\special{function( arglist ) expr}
+\special{return(value)}
 }
 \alias{function}
 \alias{return}
