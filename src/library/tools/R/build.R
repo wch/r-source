@@ -173,7 +173,7 @@ get_exclude_patterns <- function()
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
-            "  --compact-vignettes   try to compact vignettes (using qpdf)",
+            "  --compact-vignettes   try to compact PDF files in inst/doc (using qpdf)",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -184,7 +184,7 @@ get_exclude_patterns <- function()
         lines <- readLines(ldpath, warn = FALSE)
         lines <- lines[nzchar(lines)] # Remove blank lines.
         ## Do not keep previous build stamps.
-        lines <- lines[!grepl("^Packaged:", lines)]
+        lines <- lines[!grepl("^Packaged:", lines, useBytes = TRUE)]
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if (user == "unknown") user <- Sys.getenv("LOGNAME")
@@ -382,7 +382,7 @@ get_exclude_patterns <- function()
         }
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
         if (file.exists(oldindex)) {
-            ol <- readLines(oldindex)
+            ol <- readLines(oldindex, FALSE) # e.g. BaM had missing final NL
             nl <- readLines(newindex)
             if (!identical(ol, nl)) {
                 resultLog(Log, "NO")
