@@ -652,29 +652,6 @@ SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(old);
 }
 
-SEXP attribute_hidden do_constidx(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP x, consts;
-    int i, n;
-
-    checkArity(op, args);
-
-    x = CAR(args);
-    consts = CADR(args);
-
-    if (TYPEOF(consts) != VECSXP)
-	errorcall(call, "bad constant pool");
-    n = LENGTH(consts);
-
-    for (i = 0; i < n; i++) {
-	SEXP y = VECTOR_ELT(consts, i);
-	if (x == y || R_compute_identical(x, y, TRUE, TRUE, TRUE))
-	    return ScalarInteger(i + 1);
-    }
-    
-    return ScalarInteger(0);
-}
-
 /* forward declaration */
 static SEXP bytecodeExpr(SEXP);
 #endif
@@ -4563,22 +4540,70 @@ FILE *R_OpenCompiledFile(char *fname, char *buf, size_t bsize)
     else return NULL;
 }
 
-SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_growconst(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP code, c, ans;
+    SEXP constBuf, ans;
     int i, n;
 
     checkArity(op, args);
-    code = CAR(args);
-    if (TYPEOF(code) != VECSXP)
-	error(_("code must be a generic vector"));
-    c = CADR(args);
+    constBuf = CAR(args);
+    if (TYPEOF(constBuf) != VECSXP)
+	error(_("constand buffer must be a generic vector"));
 
-    n = LENGTH(code);
-    ans = allocVector(VECSXP, n + 1);
+    n = LENGTH(constBuf);
+    ans = allocVector(VECSXP, 2 * n);
     for (i = 0; i < n; i++)
-	SET_VECTOR_ELT(ans, i, VECTOR_ELT(code, i));
-    SET_VECTOR_ELT(ans, n, c);
+	SET_VECTOR_ELT(ans, i, VECTOR_ELT(constBuf, i));
+
+    return ans;
+}
+
+SEXP attribute_hidden do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP constBuf, x;
+    int i, constCount;
+
+    checkArity(op, args);
+
+    constBuf = CAR(args);
+    if (TYPEOF(constBuf) != VECSXP)
+	error(_("constBuf must be a generic vector"));
+
+    constCount = asInteger(CADR(args));
+    if (constCount < 0 || constCount >= LENGTH(constBuf))
+	error(_("bad constCount value"));
+
+    x = CADDR(args);
+
+    /* check for a match and return index if one is found */
+    for (i = 0; i < constCount; i++) {
+	SEXP y = VECTOR_ELT(constBuf, i);
+	if (x == y || R_compute_identical(x, y, TRUE, TRUE, TRUE))
+	    return ScalarInteger(i);
+    }
+
+    /* otherwise insert the constant and return index */
+    SET_VECTOR_ELT(constBuf, constCount, x);
+    return ScalarInteger(constCount);
+}
+
+SEXP attribute_hidden do_getconst(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP constBuf, ans;
+    int i, n;
+
+    checkArity(op, args);
+    constBuf = CAR(args);
+    n = asInteger(CADR(args));
+
+    if (TYPEOF(constBuf) != VECSXP)
+	error(_("constant buffer must be a generic vector"));
+    if (n < 0 || n > LENGTH(constBuf))
+	error(_("bad constant count"));
+
+    ans = allocVector(VECSXP, n);
+    for (i = 0; i < n; i++)
+	SET_VECTOR_ELT(ans, i, VECTOR_ELT(constBuf, i));
 
     return ans;
 }

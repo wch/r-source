@@ -930,9 +930,10 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"bcVersion", do_bcversion,     0,      11,     0,      {PP_FUNCALL, PREC_FN, 0}},
 {"load.from.file", do_loadfile, 0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
 {"save.to.file", do_savefile,   0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
-{"putconst", do_putconst,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
+{"growconst", do_growconst,     0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
+{"putconst", do_putconst,       0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
+{"getconst", do_getconst,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 {"enableJIT",    do_enablejit,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
-{"constidx",    do_constidx,      0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
 #endif
 
 {"setNumMathThreads", do_setnumthreads,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
