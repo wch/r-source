@@ -331,7 +331,7 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        db <- .build_Rd_db(dir)
+        db <- .build_Rd_db(dir, stages = "build")
     }
 
     db
