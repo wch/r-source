@@ -2794,6 +2794,7 @@ enum {
   GETTER_CALL_OP,
   SWAP_OP,
   DUP2ND_OP,
+  SWITCH_OP,
   OPCOUNT
 };
 
@@ -4252,6 +4253,43 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	value = R_BCNodeStackTop[-2];
 	BCNPUSH(value);
 	NEXT();
+    }
+    OP(SWITCH, 4): {
+       SEXP call = VECTOR_ELT(constants, GETOP());
+       SEXP names = VECTOR_ELT(constants, GETOP());
+       SEXP coffsets = VECTOR_ELT(constants, GETOP());
+       SEXP ioffsets = VECTOR_ELT(constants, GETOP());
+       value = BCNPOP();
+       if (!isVector(value) || length(value) != 1)
+	   errorcall(call, _("EXPR must be a length 1 vector"));
+       if (TYPEOF(value) == STRSXP) {
+	   int i, n, which;
+	   if (names == R_NilValue)
+	       errorcall(call, _("numeric EXPR required for switch() "
+				 "without named alternatives"));
+	   if (TYPEOF(coffsets) != INTSXP)
+	       errorcall(call, _("bad character switch offsets"));
+	   if (TYPEOF(names) != STRSXP || LENGTH(names) != LENGTH(coffsets))
+	       errorcall(call, _("bad swith names"));
+	   n = LENGTH(names);
+	   which = n - 1;
+	   for (i = 0; i < n - 1; i++)
+	       if (pmatch(STRING_ELT(value, 0),
+			  STRING_ELT(names, i), 1 /* exact */)) {
+		   which = i;
+		   break;
+	       }
+	   pc = codebase + INTEGER(coffsets)[which];
+       }
+       else {
+	   int which = asInteger(value) - 1;
+	   if (TYPEOF(ioffsets) != INTSXP)
+	       errorcall(call, _("bad numeric switch offsets"));
+	   if (which < 0 || which >= LENGTH(ioffsets))
+	       which = LENGTH(ioffsets) - 1;
+	   pc = codebase + INTEGER(ioffsets)[which];
+       }
+       NEXT();
     }
     LASTOP;
   }
