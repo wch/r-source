@@ -68,12 +68,12 @@ file.link(from, to)
 
   \code{file.rename} attempts to rename files (and \code{from} and
   \code{to} must be of the same length).  Where file permissions allow
-  this will first remove an existing element of \code{to}.  This is
-  subject to the limitations of the OS's corresponding system call: in
-  particular in the interpretation of \sQuote{file}: most platforms will
-  not rename files across file systems.  (On Windows, \code{file.rename}
-  works for files (but not directories) across volumes as from \R
-  2.11.0.)
+  this will overwrite an existing element of \code{to}.  This is subject
+  to the limitations of the OS's corresponding system call (see
+  something like \command{man 2 rename} on a Unix-alike): in particular
+  in the interpretation of \sQuote{file}: most platforms will not rename
+  files across file systems.  (On Windows, \code{file.rename} nowadays
+  works for files (but not directories) across volumes.)
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
