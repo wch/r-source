@@ -38,12 +38,13 @@ dir.exists <- function(x)
     is.character(x) && file.exists(x) && file.info(path.expand(x))$isdir
 build.pkg <- function(dir) {
     stopifnot(dir.exists(dir))
+    patt <- paste(basename(dir), ".*tar\\.gz$", sep="_")
+    unlink(dir('.', pattern = patt))
     Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+    r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", dir),
+                     intern = TRUE), 3)
     ## return name of tar file built
-    ## Naughty, naughty: this is undocumented and subject to change!
-    r <- tail(system(paste(Rcmd, "build", dir), intern = TRUE), 3)
-    sub(".*'", "", sub("'$", "",
-                       grep("building.*tar\\.gz", r, value=TRUE)))
+    dir('.', pattern = patt)
 }
 build.pkg("myTst")
 ## clean up any previous attempt (which might have left a 00LOCK)
