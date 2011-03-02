@@ -370,6 +370,9 @@
       remove any directories (and not just files) created during the
       process: e.g. one package created a \file{.R_cache} directory.
 
+      Empty directories are now removed unless the option
+      \option{--keep-empty-dirs} is given.
+
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
       extensions, such as \file{nul.Rd}, as these have caused problems

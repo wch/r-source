@@ -163,6 +163,7 @@ get_exclude_patterns <- function()
             "  -v, --version		print version info and exit",
             "",
             "  --force               force removal of INDEX file",
+            "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
             "  --no-manual           do not build the manual even if \\Sexprs are present",
             "",
@@ -212,9 +213,8 @@ get_exclude_patterns <- function()
 	    printLog(Log, "      -----------------------------------\n")
 	    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
 	    printLog(Log, "      -----------------------------------\n")
-	    printLog(Log, "ERROR: Installation failed\n")
-	    printLog(Log, "Removing installation dir\n")
 	    unlink(libdir, recursive = TRUE)
+	    printLog(Log, "ERROR: package installation failed\n")
 	    do_exit(1)
 	}
 	TRUE
@@ -382,7 +382,7 @@ get_exclude_patterns <- function()
         }
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
         if (file.exists(oldindex)) {
-            ol <- readLines(oldindex, FALSE) # e.g. BaM had missing final NL
+            ol <- readLines(oldindex, warn = FALSE) # e.g. BaM had missing final NL
             nl <- readLines(newindex)
             if (!identical(ol, nl)) {
                 resultLog(Log, "NO")
@@ -471,15 +471,23 @@ get_exclude_patterns <- function()
 
     find_empty_dirs <- function(d)
     {
-        ## dir(recursive = TRUE) does not include directories, so
-        ## we do need to do this recursively
+        ## dir(recursive = TRUE) did not include directories, so
+        ## we needed to do this recursively
         files <- dir(d, all.files = TRUE, full.names = TRUE)
-        if (length(files) <= 2L) # always has ., ..
-            printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
         isdir <- file.info(files)$isdir
-        for (d in files[isdir]) {
-            if (grepl("/\\.+$", d)) next
-            find_empty_dirs(d)
+        for (dd in files[isdir]) {
+            if (grepl("/\\.+$", dd)) next
+            find_empty_dirs(dd)
+        }
+        if (!keep_empty) # might have removed a dir
+            files <- dir(d, all.files = TRUE, full.names = TRUE)
+        if (length(files) <= 2L) { # always has ., ..
+            if (keep_empty) {
+                printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
+            } else {
+                unlink(d, recursive = TRUE)
+                printLog(Log, "Removed empty directory ", sQuote(d), "\n")
+            }
         }
     }
 
@@ -574,7 +582,8 @@ get_exclude_patterns <- function()
             messageLog(Log, "re-saving tabular files")
             if (resave_data == "gzip") {
                 lapply(tabs, function(nm) {
-                    x <- readLines(nm)
+                    ## DiceDesign/data/greenwood.table.txt is missing NL
+                    x <- readLines(nm, warn = FALSE)
                     con <- gzfile(paste(nm, "gz", sep = "."), "wb")
                     writeLines(x, con)
                     close(con)
@@ -583,7 +592,7 @@ get_exclude_patterns <- function()
             } else {
                 OK <- TRUE
                 lapply(tabs, function(nm) {
-                    x <- readLines(nm)
+                    x <- readLines(nm, warn = FALSE)
                     nm3 <- paste(nm, c("gz", "bz2", "xz"), sep = ".")
                     con <- gzfile(nm3[1L], "wb", compression=9); writeLines(x, con); close(con)
                     con <- bzfile(nm3[2L], "wb", compression=9); writeLines(x, con); close(con)
@@ -599,6 +608,7 @@ get_exclude_patterns <- function()
     }
 
     force <- FALSE
+    keep_empty <- FALSE
     vignettes <- TRUE
     binary <- FALSE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
@@ -645,6 +655,8 @@ get_exclude_patterns <- function()
             do_exit(0L)
         } else if (a == "--force") {
             force <- TRUE
+        } else if (a == "--keep-empty-dirs") {
+            keep_empty <- TRUE
         } else if (a == "--no-vignettes") {
             vignettes <- FALSE
         } else if (a == "--binary") {
@@ -754,7 +766,7 @@ get_exclude_patterns <- function()
         ##  the top-level source directory.'
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
         if (file.exists(ignore_file))
-            ignore <- c(ignore, readLines(ignore_file))
+            ignore <- c(ignore, readLines(ignore_file, warn = FALSE))
         for(e in ignore[nzchar(ignore)])
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = WINDOWS)
@@ -809,6 +821,7 @@ get_exclude_patterns <- function()
 
         ## work on 'data' directory if present
         if(file_test("-d", file.path(pkgname, "data"))) {
+            messageLog(Log, "looking to see if a 'data/datalist' file should be added")
             ## in some cases data() needs the package installed as
             ## there are links to the package's namespace
             tryCatch(add_datalist(pkgname),
