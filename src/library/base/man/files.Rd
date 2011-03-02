@@ -66,10 +66,11 @@ file.symlink(from, to)
   \sQuote{file} means a regular file and not, say, an empty directory.
   
   \code{file.rename} attempts to rename a single file.  Where file
-  permissions allow this will first remove an existing file \code{to}.
+  permissions allow this will overwrite an existing file \code{to}.
   This is subject to the limitations of the OS's corresponding system
-  call: in particular in the interpretation of \sQuote{file}: also most
-  platforms will not rename files across file systems.  (On Windows,
+  call (see something like \command{man 2 rename} on a Unix-alike): in
+  particular in the interpretation of \sQuote{file}: also most platforms
+  will not rename files across file systems.  (On Windows,
   \code{file.rename} works for files (but not directories) across
   volumes as from \R 2.11.0.)
 
