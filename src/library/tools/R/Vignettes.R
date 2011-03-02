@@ -234,7 +234,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         if(clean) {
             f <- list.files(all.files = TRUE) %w/o% c(".", "..", pdfs)
             newer <- file_test("-nt", f, ".build.timestamp")
-            file.remove(f[newer])
+            ## some packages, e.g. SOAR, create directories
+            unlink(f[newer], recursive = TRUE)
         }
         f <- list.files(all.files = TRUE)
         file.remove(f %w/o% c(".", "..", pdfs, origfiles))
