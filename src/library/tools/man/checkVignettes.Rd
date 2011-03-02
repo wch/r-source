@@ -45,7 +45,7 @@ checkVignettes(package, dir, lib.loc = NULL,
     ignored when \code{workdir != "tmp"}.}
 }
 \details{
-  A \emph{vignette} is a file in the package's \file{inst/doc} directory
+  A \sQuote{vignette} is a file in the package's \file{inst/doc} directory
   with extension \file{.Rnw} (preferred), \file{.Snw}, \file{.Rtex} or
   \file{.Stex} (and lower-case versions are also accepted).
 
@@ -53,7 +53,7 @@ checkVignettes(package, dir, lib.loc = NULL,
   produce (one or more) \R code files from each vignette, then runs each
   code file in a separate R session.
 
-  If \code{weave} is true, each vignette is run through
+  If \code{weave} is true, the vignettes are run through
   \code{\link{Sweave}}, which will produce a \file{.tex} file for each
   vignette.  If \code{tangle} and \code{latex} are also true,
   \code{\link{texi2dvi}(pdf = TRUE)} is run on the \file{.tex} files

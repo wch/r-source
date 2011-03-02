@@ -315,6 +315,10 @@
       and \code{hasMethods} are revised to deal consistently with
       the \code{package=} argument and be consistent with soft namespace
       policy for finding objects.
+
+      \item \code{tools::Rdiff()} now has the option to return not only
+      the status but a character vector of observed differences (which
+      are still by default sent to \file{stdout}).
     }
   }
 
@@ -375,7 +379,11 @@
 
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
-
+      
+      The \code{00check.log} file is a more complete record of what is
+      output to \file{stdout}: in particular contains more details of
+      the tests.
+      
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
       file to \file{inst/doc/Makefile}.
