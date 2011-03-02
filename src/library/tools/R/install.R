@@ -386,20 +386,6 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
-##         cp_r <- function(from, to)
-##         {
-##             ## formerly used for inst/
-##             if (WINDOWS) {
-##                 file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
-##             } else {
-##                 from <- shQuote(from)
-##                 to <- shQuote(to)
-##                 system(paste0("cp -r ", from, "/* ", to,
-##                               " || (cd ", from, " && ", TAR, " -cf - . | (cd '",
-##                               to, "' && ", TAR, " -xf - ))"))
-##             }
-##         }
-
         shlib_install <- function(instdir, arch)
         {
             files <- Sys.glob(paste0("*", SHLIB_EXT))
@@ -989,11 +975,15 @@
         if (clean) run_clean()
 
         if (test_load) {
+            ## As from R 2.13.0 do this in a separate R process, in case
+            ## it brings down the R process running .install.packages()
+            ## and so do_exit_on_error() is not called.
 	    starsmsg(stars, "testing if installed package can be loaded")
-            res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
-            ## this does sometimes have an incomplete last line.
-            if (inherits(res, "try-error") || !res)
-                errmsg("loading failed")
+            cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
+                         sep = "")
+            ## R_LIBS was set already
+            res <- R_runR(cmd, "--no-save --slave", stdout = "", stderr = "") # from check.R
+            if (res) errmsg("loading failed")
         }
     }
 

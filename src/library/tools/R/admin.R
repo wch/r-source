@@ -804,6 +804,16 @@ function(dir)
     q(status = .Rtest_package_depends_R_version(dir))
 
 
+### * .test_load_package
+
+.test_load_package <- function(pkg_name, lib)
+{
+    res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
+    if (inherits(res, "try-error") || !res)
+        stop("loading failed")
+}
+
+
 ### * checkRdaFiles
 
 checkRdaFiles <- function(paths)

@@ -527,6 +527,11 @@
 
       \item \code{file.copy()} did not tilde-expand \code{from} and \code{to}
       when \code{to} was a directory.  \PR{14507}
+      
+      \item It was possible (but very rare) for the loading test in
+      \command{R CMD INSTALL} to crash \R and so leave around a lock
+      directory and a partially installed package.  That test is now
+      done in a separate process.
     }
   }
 }
