@@ -1,3 +1,8 @@
+% File src/library/tools/man/toRd.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2010-1 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{toRd}
 \alias{toRd}
 \alias{toRd.default}

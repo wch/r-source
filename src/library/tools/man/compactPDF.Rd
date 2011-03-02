@@ -1,4 +1,4 @@
-% File src/library/tools/man/checkRdaFiles.Rd
+% File src/library/tools/man/compactPDF.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2011 R Core Development Team
 % Distributed under GPL 2 or later

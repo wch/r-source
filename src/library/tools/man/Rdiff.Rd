@@ -1,3 +1,8 @@
+% File src/library/tools/man/Rdiff.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2010-1 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{Rdiff}
 \alias{Rdiff}
 \title{Difference R Output Files}
@@ -14,6 +19,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE, Log = FALSE)
     results?}
   \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
     exclude the header.}
+  \item{Log}{logical: should be value include a log of differences found?}
 }
 \details{
   The \R startup banner and any timing information from \command{R CMD
