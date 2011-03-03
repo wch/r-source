@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -39,13 +39,15 @@
   The name of the user file can be specified by the \env{R_ENVIRON_USER}
   environment variable; if this is unset, the user files searched for are
   \file{.Renviron} in the current or in the user's home directory (in
-  that order). See \sQuote{Details} for how the files are read.
+  that order).  See \sQuote{Details} for how the files are read.
 
-  Then \R searches for the site-wide startup profile unless the command
-  line option \option{--no-site-file} was given.  The name of this file
-  is taken from the value of the \env{R_PROFILE} environment variable.
-  If this variable is unset, the default is
-  \file{\var{\link{R_HOME}}/etc/Rprofile.site}, which is used if it exists
+  Then \R searches for the site-wide startup profile file of \R code
+  unless the command line option \option{--no-site-file} was given.  The
+  name of this file is taken from the value of the \env{R_PROFILE}
+  environment variable.  If this variable is does not specify a file
+  which exists (and is readable), the default is
+  \file{\var{\link{R_HOME}}/etc/Rprofile.site}, which is used if it
+  exists
 #ifdef unix
   (which it does not in a \sQuote{factory-fresh} installation).
 #endif
@@ -59,18 +61,18 @@
   executed: see the examples.
 
   Then, unless \option{--no-init-file} was given, \R searches for a user
-  profile file.  The name of this file can be specified by the
-  \env{R_PROFILE_USER} environment variable.  If this is unset, a file
-  called \file{.Rprofile} in the current directory or in the user's
-  home directory (in that order) is searched for.  The user profile is
-  sourced into the user workspace.
+  profile, a file of \R code.  The name of this file can be specified by
+  the \env{R_PROFILE_USER} environment variable.  If this is unset or
+  empty, a file called \file{.Rprofile} is searched for in the
+  current directory or in the user's home directory (in that order).
+  The user profile file is sourced into the workspace.
 
   Note that when the site and user profile files are sourced only the
   \pkg{base} package is loaded, so objects in other packages need to be
   referred to by e.g. \code{utils::dump.frames} or after explicitly
   loading the package concerned.
 
-  It then loads a saved image of the user workspace from \file{.RData}
+  \R then loads a saved image of the user workspace from \file{.RData}
   if there is one (unless \option{--no-restore-data} or
   \option{--no-restore} was specified on the command line).
 
@@ -137,6 +139,10 @@
 }
 \note{
 #ifdef unix
+  The startup options are for \command{R} and not for \command{R CMD}:
+  the only option which the latter processes is \option{--arch} and
+  others are ignored.
+  
   The file \file{\var{\link{R_HOME}}/etc/Renviron} is
   always read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process.  Values in
@@ -146,17 +152,31 @@
   \file{\var{\link{R_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
+  The startup options are for \command{Rgui} and \code{Rterm} but not
+  for \command{Rcmd} (which is run by \command{R CMD}, and \code{CMD}
+  must be the first argument in that usage): attempting to use
+  e.g. \option{--vanilla} will give a warning or error.
+  
   Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.
 #endif
   
-  \command{R CMD check} and \command{R CMD build} do not read the
+  \command{R CMD check} and \command{R CMD build} do not always read the
   standard startup files, but they do read specific \samp{Renviron}
   files such as \file{~/.R/check.Renviron}, \file{~/.R/build.Renviron}
   or sub-architecture-specific versions.
+
+  If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
+  child \R processes (such as those run by \command{R CMD check} and
+  \command{R CMD build}), set the environment variable
+  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to some non-empty and
+  non-existent value (for example, \samp{no_such_file}).
 }
+%% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
+%% R_ENVIRON_USER is used in src/main/Renviron.c
+%% R_PROFILE is used in src/main/startup.c
 \seealso{
   For the definition of the \sQuote{home} directory on Windows see the
   \file{rw-FAQ} Q2.14.  It can be found from a running \R by
