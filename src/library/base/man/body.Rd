@@ -41,11 +41,6 @@ body(fun, envir = environment(fun)) <- value
   \code{"\link{expression}"} the first element is used as the body:  any
   additional elements are ignored, with a warning.
 }
-\note{
-  Prior to \R 2.9.0, list values of \code{value} needed to be supplied
-  as a single-element list of the list: this was undocumented prior to
-  \R 2.8.1 so is unlikely to actually occur.
-}
 \seealso{
   \code{\link{alist}},
   \code{\link{args}},
