@@ -186,10 +186,15 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
 
+    op <- options(warn = 1) # we run vignettes in this process
     wd <- getwd()
     if (is.null(wd))
         stop("current working directory cannot be ascertained")
-    on.exit(setwd(wd))
+    on.exit({
+        setwd(wd)
+        options(op)
+    })
+
     setwd(vigns$dir)
 
     ## FIXME: should this recurse into subdirs?
