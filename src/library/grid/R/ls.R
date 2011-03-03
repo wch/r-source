@@ -29,8 +29,9 @@
 # ... or ...
 # "gridTreeListing", which is list of parent "gridVectorListing" object
 #                    plus children "gridListing" object,
-#      "gTreeListing", or "vpTreeListing",
-#      (vpStack or vpStack produces a "vpTreeListing").
+#      "gTreeListing", or "vpTreeListing", or "vpNameTreeListing"
+#      (vpStack or vpTree produces a "vpTreeListing").
+#      (vpPath [depth > 1] produces a "vpNameTreeListing").
 #
 # "vpListListing", and all "gridTreeListing" objects have a "depth" attribute
 
@@ -365,8 +366,10 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
                              recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x)
-            class(result) <- c("vpTreeListing", "gridTreeListing",
-                               "gridListing")
+            # Inherit updateVPDepth and updateVPPath methods
+            # from vpTreeListing
+            class(result) <- c("vpNameTreeListing", "vpTreeListing",
+                               "gridTreeListing", "gridListing")
         } else {
             path <- explodePath(x$path)
             result <- gridList(vpPathFromVector(c(path[-1L], x$name)),
@@ -379,8 +382,10 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
                              recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x)
-            class(result) <- c("vpTreeListing", "gridTreeListing",
-                               "gridListing")
+            # Inherit updateVPDepth and updateVPPath methods
+            # from vpTreeListing
+            class(result) <- c("vpNameTreeListing", "vpTreeListing",
+                               "gridTreeListing", "gridListing")
         }
     } else {
         result <- character()
@@ -578,6 +583,19 @@ flatListing.gTreeListing <- function(x, gDepth=0, vpDepth=0,
 }
 
 flatListing.vpTreeListing <- function(x, gDepth=0, vpDepth=0,
+                                      gPath="", vpPath="") {
+    # Increase vpDepth and vpPath
+    flatChildren <- flatListing(x$children, gDepth, incDepth(vpDepth, 1),
+                                gPath, incPath(vpPath, x$parent))
+    list(name=c(as.character(x$parent), flatChildren$name),
+         gDepth=c(gDepth, flatChildren$gDepth),
+         vpDepth=c(vpDepth, flatChildren$vpDepth),
+         gPath=c(gPath, flatChildren$gPath),
+         vpPath=c(vpPath, flatChildren$vpPath),
+         type=c(class(x)[1L], flatChildren$type))
+}
+
+flatListing.vpNameTreeListing <- function(x, gDepth=0, vpDepth=0,
                                       gPath="", vpPath="") {
     # Increase vpDepth and vpPath
     flatChildren <- flatListing(x$children, gDepth, incDepth(vpDepth, 1),
