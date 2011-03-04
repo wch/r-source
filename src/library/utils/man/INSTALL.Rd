@@ -108,22 +108,20 @@
   
 #ifdef windows
   
-  Windows-only option \option{--build} can be used to zip up the
-  installed package for distribution: it implies
-  \option{--auto-zip} which selects if data file are zipped up to save
-  disc space.
+  Option \option{--build} can be used to zip up the installed package
+  for distribution.
 #endif
 #ifdef unix
   
-  Some platforms (notably Mac OS X) support sub-architectures in which
-  binaries for different CPUs are installed within the same library
-  tree. For such installations, the default behaviour is to try to build
-  packages for all installed sub-architectures unless the package has a
-  configure script or a \file{src/Makefile}, when only the
-  sub-architecture running \command{R CMD INSTALL} is used.  To use only
-  that sub-architecture, use \option{--no-multiarch}.  To install just
-  the compiled code for another sub-architecture, use
-  \option{--libs-only}.
+  Some platforms (notably Mac OS X and Windows) support
+  sub-architectures in which binaries for different CPUs are installed
+  within the same library tree. For such installations, the default
+  behaviour is to try to build packages for all installed
+  sub-architectures unless the package has a configure script or a
+  \file{src/Makefile}, when only the sub-architecture running \command{R
+  CMD INSTALL} is used.  To use only that sub-architecture, use
+  \option{--no-multiarch}.  To install just the compiled code for
+  another sub-architecture, use \option{--libs-only}.
 #endif
 
   By default a package is installed with static HTML help pages if and
@@ -162,7 +160,7 @@
     Administration} and the chapter on \dQuote{Creating R packages} in
   \dQuote{Writing \R Extensions}
 #ifdef windows
-  (on the Help menu in \code{RGui},
+  (on the Help menu in \code{RGui}),
 #endif
   \code{\link{RShowDoc}} and the \file{doc/manual} subdirectory of the
   \R source tree).
