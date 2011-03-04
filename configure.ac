@@ -1728,9 +1728,8 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 
-## C99 functions: we don't as yet require a C99 compiler/runtime
-## (and not everyone has one).
-R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
+## C99 functions: not all C99 runtimes are complete.
+R_CHECK_FUNCS([expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl], [#include <math.h>])
 
 ## fseeko/ftello may be macros, matherr is redefined
 ## isblank should be a macro according to C99

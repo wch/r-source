@@ -502,6 +502,12 @@
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_NDIR_H */
 
+/* Define to 1 if you have the `nearbyint' function. */
+#define HAVE_NEARBYINT 1
+
+/* Define to 1 if you have the `nearbyintl' function. */
+#define HAVE_NEARBYINTL 1
+
 /* Define to 1 if you have the <netdb.h> header file. */
 /* #undef HAVE_NETDB_H */
 
@@ -579,6 +585,9 @@
 
 /* Define to 1 if you have the `rint' function. */
 #define HAVE_RINT 1
+
+/* Define to 1 if you have the `rintl' function. */
+#define HAVE_RINTL 1
 
 /* Define to 1 if you have the `rl_completion_matches' function. */
 /* #undef HAVE_RL_COMPLETION_MATCHES */
