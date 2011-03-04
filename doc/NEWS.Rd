@@ -325,6 +325,11 @@
       treated more consistently.  In all cases an empty value is
       considered to be set and will stop the default being used, and for
       the last two tilde expansion is performed on the file name.
+      
+      \item Using \command{R --no-environ}, \command{R --no-site-file}
+      or \command{R --no-init-file} sets environment variables so these
+      settings are passed on to child \R processes, notably those run by
+      \code{R CMD INSTALL|check|build}. [Experimental, not on Windows.]
     }
   }
 

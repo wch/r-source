@@ -134,10 +134,6 @@
 }
 \note{
 #ifdef unix
-  The startup options are for \command{R} and not for \command{R CMD}:
-  the only option which the latter processes is \option{--arch} and
-  others are ignored.
-  
   The file \file{\var{\link{R_HOME}}/etc/Renviron} is
   always read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process.  Values in
@@ -166,8 +162,8 @@
   If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
   child \R processes (such as those run by \command{R CMD check} and
   \command{R CMD build}), set the environment variable
-  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to some non-empty and
-  non-existent value (for example, \samp{no_such_file}).
+  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} (respectively) to
+  \code{""} or some non-empty and non-existent value.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c

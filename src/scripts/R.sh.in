@@ -208,6 +208,26 @@ while test -n "${1}"; do
       fi
       args="${args} -e $a"
       ;;
+    --no-environ)
+      export R_ENVIRON=''
+      export R_ENVIRON_USER=''
+      args="${args} ${1}"
+      ;;
+    --no-site-file)
+      export R_PROFILE=''
+      args="${args} ${1}"
+      ;;
+    --no-init-file)
+      export R_PROFILE_USER=''
+      args="${args} ${1}"
+      ;;
+    --vanilla)
+      export R_ENVIRON=''
+      export R_ENVIRON_USER=''
+      export R_PROFILE=''
+      export R_PROFILE_USER=''
+      args="${args} ${1}"
+      ;;
     *)
       args="${args} ${1}" ;;
   esac
