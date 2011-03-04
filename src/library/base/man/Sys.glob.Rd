@@ -30,7 +30,7 @@ Sys.glob(paths, dirmark = FALSE)
   POSIX 1003.2 standard (see
   \url{http://www.opengroup.org/onlinepubs/009695399/functions/glob.html})
   but some OSes will go beyond this.  The \R implementation will always
-  do tilde-expansion (see \code{\link{path.expand}}).
+  do \link{tilde expansion}.
 
   All systems should interpret \code{*} (match zero or more characters),
   \code{?} (match a single character) and (probably) \code{[} (begin a

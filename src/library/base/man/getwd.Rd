@@ -12,8 +12,7 @@ getwd()
 setwd(dir)
 }
 \arguments{
-  \item{dir}{A character string: tilde-expansion will be done (see
-    \code{\link{path.expand}}.}
+  \item{dir}{A character string: \link{tilde expansion} will be done.}
 }
 \description{
   \code{getwd} returns an absolute filepath representing the current

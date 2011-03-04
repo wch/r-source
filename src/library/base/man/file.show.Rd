@@ -15,8 +15,7 @@ file.show(\dots, header = rep("", nfiles),
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
-    files to be displayed.  These will be tilde-expanded: see
-    \code{\link{path.expand}}.}
+    files to be displayed. Paths with have \link{tilde expansion}.}
   \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
     displayed.  Defaults to empty strings.}

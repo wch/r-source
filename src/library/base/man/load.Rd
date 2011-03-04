@@ -14,8 +14,8 @@ load(file, envir = parent.frame())
 }
 \arguments{
   \item{file}{a (readable binary-mode) \link{connection} or a character string
-    giving the name of the file to load (when tilde expansion,
-    \code{\link{path.expand}}, is done).}
+    giving the name of the file to load (when \link{tilde expansion}
+    is done).}
   \item{envir}{the environment where the data should be loaded.}
 }
 \details{

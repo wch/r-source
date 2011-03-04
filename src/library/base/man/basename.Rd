@@ -23,8 +23,7 @@ dirname(path)
   \item{path}{character vector, containing path names.}
 }
 \details{
-  For \code{dirname} tilde expansion is done: see the description of
-  \code{\link{path.expand}}.
+  For \code{dirname} \link{tilde expansion} of the path is done.
   
   Trailing path separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed

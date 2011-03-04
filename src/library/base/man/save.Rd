@@ -33,9 +33,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{list}{A character vector containing the names of objects to be
     saved.}
   \item{file}{a (writable binary-mode) \link{connection} or the name of the
-    file where the data will be saved (when tilde expansion,
-    \code{\link{path.expand}}, is done).  Must be a file name for
-    \code{version = 1}.}
+    file where the data will be saved (when \link{tilde expansion}
+    is done).  Must be a file name for \code{version = 1}.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
     leads to a binary file being written.}
