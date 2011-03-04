@@ -1214,7 +1214,6 @@ will make all the pieces and the installers and put them in the
 building all the parts in the sequence:
 
 @example
-Rpwd.exe @r{(a utility needed in the build)}
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackage @r{(the base packages)}
 htmldocs @r{(the HTML documentation)}
