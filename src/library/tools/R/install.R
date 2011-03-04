@@ -87,7 +87,8 @@
             "  -v, --version		print INSTALL version info and exit",
             "  -c, --clean		remove files created during installation",
             "      --preclean	remove files created during a previous run",
-            "  -d, --debug		turn on script and build-help debugging",
+            "  -d, --debug		turn on debugging messaages",
+            if(WINDOWS) "			and build a debug DLL",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
             "      --no-docs		do not install HTML, LaTeX or examples help",
@@ -99,6 +100,7 @@
             "      --no-lock, --unsafe",
             "			install on top of any existing installation",
             "			without using a lock directory",
+            "      --lock		use a per-library lock directory (default)",
             "      --pkglock		use a per-package lock directory",
             "      --build    	build binaries of the installed package(s)",
             "      --install-tests	install package-specific tests (if any)",
@@ -1096,9 +1098,11 @@
         } else if (a == "--fake") {
             fake <- TRUE
         } else if (a %in% c("--no-lock", "--unsafe")) {
-            lock <- FALSE
+            lock <- pkglock <- FALSE
+        } else if (a == "--lock") {
+            lock <- TRUE; pkglock <- FALSE
         } else if (a == "--pkglock") {
-            pkglock <- TRUE
+            lock <- pkglock <- TRUE
         } else if (a == "--libs-only") {
             libs_only <- TRUE
         } else if (a == "--no-multiarch") {

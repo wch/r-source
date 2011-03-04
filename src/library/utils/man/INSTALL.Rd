@@ -14,12 +14,11 @@
   \item{pkgs}{a space-separated list with the path names of the packages to be
     installed.}
   \item{lib}{the path name of the \R library tree to install to.  Also
-    accepted in the form \samp{--library=lib}.}
+    accepted in the form \samp{--library=lib}.  Paths including spaces should
+    be quoted, using the conventions for the shell in use.}
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be controlled.
-    Most options should only be given once, and paths including spaces should
-    be quoted.  Use \command{R CMD INSTALL --help} for the full current
-    list of options.}
+    Use \command{R CMD INSTALL --help} for the full current list of options.}
 }
 \details{
   This will stop at the first error, so if you want all the \code{pkgs}
@@ -131,16 +130,21 @@
   including all the available options.
 }
 
-#ifdef unix
 \note{
+  The options do not have to precede \samp{pkgs} on the command line,
+  although it will be more legible if they do.  All the options are
+  processed before any packages, and where options have conflicting
+  effects the last  one will win.
+#ifdef unix
+  
   Some parts of the operation of \code{INSTALL} depend on the \R
   temporary directory (see \code{\link{tempdir}}, usually under
   \file{/tmp}) having both write and execution access to the account
   running \R.  This is usually the case, but if \file{/tmp} has been
   mounted as \code{noexec}, environment variable \env{TMPDIR} may need
   to be set to a directory from which execution is allowed.
-}
 #endif
+}
 
 \section{Packages using the methods package}{
   Packages that require the methods package and make use functions such

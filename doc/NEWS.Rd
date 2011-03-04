@@ -455,6 +455,10 @@
       \option{--compact-docs} to compact any PDFs under the
       \file{inst/doc} directory.  Currently this uses \command{qpdf},
       which must be installed (see \sQuote{Writing R Extensions}).
+      
+      \item There is a new option \code{--lock} which can be used to
+      cancel the effect of \code{--no-lock} or \code{--pkglock} earlier
+      on the command line.
     }
   }
 
