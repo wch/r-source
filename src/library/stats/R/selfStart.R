@@ -49,7 +49,7 @@ selfStart.formula <-
         }
         template <- function() {}
         argNams <- c( nm[ is.na( match(nm, parameters) ) ], parameters )
-        args <- rep( alist( a = , b = 3 )[-2L], length( argNams ) )
+	args <- rep(alist(a = ), length(argNams))
         names(args) <- argNams
         formals(template) <- args
     }

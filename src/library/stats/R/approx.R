@@ -17,7 +17,7 @@
 ### approx() and approxfun() are *very similar* -- keep in sync!
 
 ## This function is used in approx, approxfun, spline, and splinefun
-## to massage the input (x,y) pairs into standard form:  
+## to massage the input (x,y) pairs into standard form:
 ## x values unique and increasing, y values collapsed to match
 ## (except if ties=="ordered", then not unique)
 
@@ -31,10 +31,10 @@ regularize.values <- function(x, y, ties) {
 	y <- y[ok]
     }
     nx <- length(x)
-    if (!identical(ties, "ordered")) {	    
+    if (!identical(ties, "ordered")) {
     	o <- order(x)
 	x <- x[o]
-	y <- y[o]	
+	y <- y[o]
 	if (length(ux <- unique(x)) < nx) {
 	    if (missing(ties))
 		warning("collapsing to unique 'x' values")
@@ -55,7 +55,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     if (is.na(method))
 	stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
-    if(lenR == 1) rule <- rule[c(1,1)]    
+    if(lenR == 1) rule <- rule[c(1,1)]
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
@@ -109,14 +109,12 @@ approxfun <- function(x, y = NULL, method = "linear",
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
     rm(rule, ties, lenR)
 
-## Changed here:
-## suggestion:
-    # 1. Test input consistency once
+    ## 1. Test input consistency once
     .C("R_approxtest",as.double(x), as.double(y), as.integer(n),
         as.integer(method), as.double(f), NAOK = TRUE,
         PACKAGE = "stats")
 
-    # 2. Create and return function that does not test input validity...
+    ## 2. Create and return function that does not test input validity...
     function(v) .C("R_approxfun", as.double(x), as.double(y), as.integer(n),
         xout = as.double(v), as.integer(length(v)), as.integer(method),
         as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE,

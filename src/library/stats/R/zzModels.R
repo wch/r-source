@@ -223,7 +223,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
 ##*##         and the clearence
 
 SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
-    ##                 exp(-exp(lKa) * input))/(exp(lKa) - exp(lKe)),
+    ##                 exp(-exp(lKa) * input))/(exp(lKa) - exp(lKe))),
     selfStart(
               function(Dose, input, lKe, lKa, lCl)
           {
