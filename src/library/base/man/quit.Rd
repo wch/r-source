@@ -1,6 +1,6 @@
 % File src/library/base/man/quit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{quit}
@@ -12,7 +12,6 @@
 \usage{
 quit(save = "default", status = 0, runLast = TRUE)
    q(save = "default", status = 0, runLast = TRUE)
-.Last <- function(x) { \dots\dots }
 }
 \arguments{
     \item{save}{a character string indicating whether the environment
@@ -35,13 +34,13 @@ quit(save = "default", status = 0, runLast = TRUE)
     ask in interactive use but may be overridden by command-line
     arguments (which must be supplied in non-interactive use).
 
-    Immediately \emph{before} terminating, the function \code{.Last()}
-    is executed if it exists and \code{runLast} is true. If in
-    interactive use there are errors in
-    the \code{.Last} function, control will be returned to the command
-    prompt, so do test the function thoroughly.  There is a system
-    analogue, \code{.Last.sys()}, which is run after \code{.Last()}
-    if \code{runLast} is true.
+    Immediately \emph{before} terminating, \code{.Last()} is executed if
+    the function \code{.Last} exists and \code{runLast} is true.  If in
+    interactive use there are errors in the \code{.Last} function,
+    control will be returned to the command prompt, so do test the
+    function thoroughly.  There is a system analogue,
+    \code{.Last.sys()}, which is run after \code{.Last()} if
+    \code{runLast} is true.
 
     Exactly what happens at termination of an \R session depends on the
     platform and GUI interface in use.  A typical sequence is to run

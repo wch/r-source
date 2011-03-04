@@ -22,11 +22,6 @@
 \alias{R_PROFILE_USER}
 
 \title{Initialization at Start of an R Session}
-\usage{
-.First <- function() { \dots\dots }
-
-\special{.Rprofile <startup file>}
-}
 \description{
   In \R, the startup mechanism is as follows.
 
@@ -34,17 +29,18 @@
   searches for site and user files to process for setting environment
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R_ENVIRON}; if this is unset or empty,
-  \file{\var{\link{R_HOME}}/etc/Renviron.site} is used (if it exists, which it
-  does not in a \sQuote{factory-fresh} installation).
-  The name of the user file can be specified by the \env{R_ENVIRON_USER}
-  environment variable; if this is unset, the user files searched for are
-  \file{.Renviron} in the current or in the user's home directory (in
-  that order).  See \sQuote{Details} for how the files are read.
+  \file{\var{\link{R_HOME}}/etc/Renviron.site} is used (if it exists,
+  which it does not in a \sQuote{factory-fresh} installation).  The name
+  of the user file can be specified by the \env{R_ENVIRON_USER}
+  environment variable; if this is unset or empty, the user files
+  searched for are \file{.Renviron} in the current or in the user's home
+  directory (in that order).  See \sQuote{Details} for how the files are
+  read.
 
   Then \R searches for the site-wide startup profile file of \R code
   unless the command line option \option{--no-site-file} was given.  The
   name of this file is taken from the value of the \env{R_PROFILE}
-  environment variable.  If this variable is does not specify a file
+  environment variable.  If this variable does not specify a file
   which exists (and is readable), the default is
   \file{\var{\link{R_HOME}}/etc/Rprofile.site}, which is used if it
   exists
@@ -62,10 +58,11 @@
 
   Then, unless \option{--no-init-file} was given, \R searches for a user
   profile, a file of \R code.  The name of this file can be specified by
-  the \env{R_PROFILE_USER} environment variable.  If this is unset or
-  empty, a file called \file{.Rprofile} is searched for in the
-  current directory or in the user's home directory (in that order).
-  The user profile file is sourced into the workspace.
+  the \env{R_PROFILE_USER} environment variable (and \link{tilde
+  expansion} will be performed).  If this is unset or empty, a file
+  called \file{.Rprofile} is searched for in the current directory or in
+  the user's home directory (in that order).  The user profile file is
+  sourced into the workspace.
 
   Note that when the site and user profile files are sourced only the
   \pkg{base} package is loaded, so objects in other packages need to be
@@ -175,7 +172,7 @@
   non-existent value (for example, \samp{no_such_file}).
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
-%% R_ENVIRON_USER is used in src/main/Renviron.c
+%% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c
 %% R_PROFILE is used in src/main/startup.c
 \seealso{
   For the definition of the \sQuote{home} directory on Windows see the

@@ -5,6 +5,7 @@
 
 \name{path.expand}
 \alias{path.expand}
+\alias{tilde expansion}
 \title{Expand File Paths}
 \description{
   Expand a path name, for example by replacing a leading tilde by the
