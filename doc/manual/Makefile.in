@@ -113,21 +113,13 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
-## We have to be careful not to install a local R-admin.html made prior to
-## texinfo 4.7, as doc/html/SearchEngine.html links to it.
-## So use that in the sources if we can -- it is not in the svn archive.
-## There are no cross-references, external or not.
 R-admin.html: $(srcdir)/R-admin.texi
-	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
-	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
+	@if test -z "$(MAKEINFO)"; then \
+	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "file $@ will be missing"; \
 	else \
-	  if test -z "$(MAKEINFO)"; then \
-	    $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
-	    $(ECHO) "file $@ will be missing"; \
-	  else \
-	    $(ECHO) "creating doc/manual/$@"; \
-	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@;\
-	  fi ; \
+	  $(ECHO) "creating doc/manual/$@"; \
+	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@;\
 	fi
 
 R-FAQ.html: $(srcdir)/R-FAQ.texi
