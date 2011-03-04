@@ -86,8 +86,11 @@ FILE *R_OpenSiteFile(void)
 
     fp = NULL;
     if (LoadSiteFile) {
-	/* FIXME: this should tilde-expand */
-	if ((fp = R_fopen(getenv("R_PROFILE"), "r"))) return fp;
+	char *p = getenv("R_PROFILE");
+	if (p) {
+	    if (*p) return R_fopen(R_ExpandFileName(p), "r");
+	    else return NULL;
+	}
 #ifdef R_ARCH
 	snprintf(buf, PATH_MAX, "%s/etc/%s/Rprofile.site", R_Home, R_ARCH);
 	if ((fp = R_fopen(buf, "r"))) return fp;

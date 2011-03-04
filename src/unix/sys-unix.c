@@ -66,8 +66,10 @@ FILE *R_OpenInitFile(void)
 
     fp = NULL;
     if (LoadInitFile) {
-	if(p && strlen(p))
+	if(p) {
+	    if(!*p) return NULL;  /* set to "" */
 	    return R_fopen(R_ExpandFileName(p), "r");
+	}
 	if((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
 	if((home = getenv("HOME")) == NULL)
@@ -110,7 +112,7 @@ static const char *R_ExpandFileName_unix(const char *s, char *buff)
     if(strlen(s) > 1 && s[1] != '/') return s;
     if(HaveHOME < 0) {
 	p = getenv("HOME");
-	if(p && strlen(p) && (strlen(p) < PATH_MAX)) {
+	if(p && *p && (strlen(p) < PATH_MAX)) {
 	    strcpy(UserHOME, p);
 	    HaveHOME = 1;
 	} else

@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.getenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.getenv}
@@ -23,7 +23,8 @@ Sys.getenv(x = NULL, unset = "", names = NA)
   Both arguments will be coerced to character if necessary.
 
   Setting \code{unset = NA} will enable unset variables and those set to
-  the value \code{""} to be distinguished, \emph{if the OS does}.
+  the value \code{""} to be distinguished, \emph{if the OS does}.  POSIX
+  requires the OS to distinguish, and all known current \R platforms do.
 }
 \value{
   A vector of the same length as \code{x}, with (if \code{names ==

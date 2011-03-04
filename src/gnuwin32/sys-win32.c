@@ -46,8 +46,10 @@ FILE *R_OpenInitFile(void)
 
     fp = NULL;
     if (LoadInitFile) {
-	if(p && strlen(p))
+	if(p) {
+	    if(!*p) return NULL;  /* set to "" */
 	    return R_fopen(R_ExpandFileName(p), "r");
+	}
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
 	snprintf(buf, PATH_MAX, "%s/.Rprofile", getenv("R_USER"));

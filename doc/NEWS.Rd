@@ -319,6 +319,12 @@
       \item \code{tools::Rdiff()} now has the option to return not only
       the status but a character vector of observed differences (which
       are still by default sent to \file{stdout}).
+
+      \item The startup environment variables \env{R_ENVIRON_USER},
+      \env{R_ENVIRON}, \env{R_PROFILE_USER} and \env{R_PROFILE} are now
+      treated more consistently.  In all cases an empty value is
+      considered to be set and will stop the default being used, and for
+      the last two tilde expansion is performed on the file name.
     }
   }
 
