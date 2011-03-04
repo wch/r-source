@@ -153,18 +153,16 @@
 
     do_exit_on_error <- function()
     {
-        # message("*** do_exit_on_error ***")
         ## If we are not yet processing a package, we will not have
         ## set curPkg
-        for(p in curPkg) {
-            if (is.na(p) || !nzchar(p)) next
-            pkgdir <- file.path(lib, p)
+        if(length(curPkg)) {
+            pkgdir <- file.path(lib, curPkg)
             if (nzchar(pkgdir) && dir.exists(pkgdir)) {
                 starsmsg(stars, "removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
             if (lock && nzchar(lockdir) &&
-                dir.exists(lp <- file.path(lockdir, p))) {
+                dir.exists(lp <- file.path(lockdir, curPkg))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
@@ -1156,17 +1154,13 @@
     if (!dir.create(tmpdir))
         stop("cannot create temporary directory")
 
-    if (merge && length(pkgs) != 1)
-        stop("ERROR: --merge-multiarch applies only to a single tarball",
-             call.=FALSE)
-
     if (merge) {
-        if (length(pkgs) != 1 || !.file_test("-f", pkgs))
+        if (length(pkgs) != 1L || !.file_test("-f", pkgs))
             stop("ERROR: --merge-multiarch applies only to a single tarball",
                  call.=FALSE)
         f  <- dir(file.path(R.home(), "bin"))
         archs <- f[f %in% c("i386", "x64")]
-        if (length(archs) < 2)
+        if (length(archs) < 2L)
             stop("ERROR: --merge-multiarch can only be used on i386/x64 installations",
                  call.=FALSE)
         args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
