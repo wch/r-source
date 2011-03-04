@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -31,7 +31,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    criterion is a monotone function of \code{spar}, see the details
    below.}
  \item{cv}{ordinary (\code{TRUE}) or \sQuote{generalized} cross-validation
-   (GCV) when \code{FALSE}.}
+   (GCV) when \code{FALSE}; setting it to \code{NA} skips the evaluation
+   of leverages and any score.}
  \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
    knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
@@ -150,7 +151,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
       i=1,\dots,n}, values where \code{data$x} may have repeated values and
     hence be longer than the above \code{x} component; see details.
     }
-  \item{lev}{leverages, the diagonal values of the smoother matrix.}
+  \item{lev}{(when \code{cv} was not \code{NA}) leverages, the diagonal
+  values of the smoother matrix.}
   \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
     on \code{cv}.}
   \item{pen.crit}{penalized criterion}
@@ -236,11 +238,16 @@ stopifnot(all.equal(cars$dist,
 y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
 xx  <- seq(1,length(y18), len=201)
 (s2  <- smooth.spline(y18)) # GCV
-(s02 <- smooth.spline(y18, spar = 0.2))
+(s02  <- smooth.spline(y18, spar = 0.2))
+(s02. <- smooth.spline(y18, spar = 0.2, cv=NA))
 plot(y18, main=deparse(s2$call), col.main=2)
 lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
+\dontshow{
+stopifnot(all.equal(predict(s02, xx),
+		    predict(s02., xx), tol= 1e-15))
+}
 \donttest{
 ## The following shows the problematic behavior of 'spar' searching:
 (s2  <- smooth.spline(y18, control = list(trace=TRUE,tol=1e-6, low= -1.5)))

@@ -285,7 +285,7 @@
 
       The default for \code{ccaddress} is now
       \code{getOption("ccaddress")} which is by default unset: using the
-      username as a mailing address nowadays rarely works as expected. 
+      username as a mailing address nowadays rarely works as expected.
 
       \item The default for \code{options("mailer")} is now
       \code{"mailto"} on all platforms.
@@ -302,7 +302,7 @@
 
       The \code{"nls"} method for \code{logLik()} gave incorrect results
       for zero weights.
-     
+
       \item There is a new generic function \code{nobs()} in package
       \pkg{stats}, to extract from model objects a suitable value for
       use in BIC calculations.  An S4 generic derived from it is defined
@@ -325,11 +325,14 @@
       treated more consistently.  In all cases an empty value is
       considered to be set and will stop the default being used, and for
       the last two tilde expansion is performed on the file name.
-      
+
       \item Using \command{R --no-environ}, \command{R --no-site-file}
       or \command{R --no-init-file} sets environment variables so these
       settings are passed on to child \R processes, notably those run by
       \code{R CMD INSTALL|check|build}. [Experimental, not on Windows.]
+
+      \item \code{smooth.spline()} is somewhat faster and with
+      \code{cv=NA} allows to skip some leverage computations.
     }
   }
 
@@ -397,11 +400,11 @@
 
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
-      
+
       The \code{00check.log} file is a more complete record of what is
       output to \file{stdout}: in particular contains more details of
       the tests.
-      
+
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
       file to \file{inst/doc/Makefile}.
@@ -455,7 +458,7 @@
       \option{--compact-docs} to compact any PDFs under the
       \file{inst/doc} directory.  Currently this uses \command{qpdf},
       which must be installed (see \sQuote{Writing R Extensions}).
-      
+
       \item There is a new option \code{--lock} which can be used to
       cancel the effect of \code{--no-lock} or \code{--pkglock} earlier
       on the command line.
@@ -539,13 +542,13 @@
       \item \code{$<-.data.frame} messed with the class attribute,
       breaking any S4 subclass.  The S4 \code{data.frame} class now has its own
       \code{$<-} method, and turns dispatch on for this primitive.
-      
+
       \item \code{Map()} did not look up a character argument \code{f}
       in the correct frame, thanks to lazy evaluation.  \PR{14495}
 
       \item \code{file.copy()} did not tilde-expand \code{from} and \code{to}
       when \code{to} was a directory.  \PR{14507}
-      
+
       \item It was possible (but very rare) for the loading test in
       \command{R CMD INSTALL} to crash \R and so leave around a lock
       directory and a partially installed package.  That test is now
@@ -564,14 +567,14 @@
       often defeated the code.)
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item A change to the C function \samp{R_tryEval} had broken error
       messages in S4 method selection; the error message is now printed.
 
       \item PDF output with non-RGB color model used RGB for the line stroke
-      color.  \PR{14511}      
+      color.  \PR{14511}
 
       \item \code{stats4::BIC()} assumed without checking that an object
       of class \code{"logLik"} has an \code{"nobs"} attribute:
