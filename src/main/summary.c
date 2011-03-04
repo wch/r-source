@@ -534,7 +534,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else if(ans_type == REALSXP) {
 			if (int_a) tmp = Int2Real(itmp);
 			DbgP3(" REAL: (old)cum= %g, tmp=%g\n", zcum.r,tmp);
-			if (ISNAN(tmp)) {
+			if (ISNA(zcum.r)); /* NA trumps anything */
+			else if (ISNAN(tmp)) {
 			    if (ISNA(tmp)) zcum.r = tmp;
 			    else zcum.r += tmp;/* NA or NaN */
 			} else if(
