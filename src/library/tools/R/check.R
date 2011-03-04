@@ -1536,7 +1536,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             extra <- character()
             if (use_gct) extra <- c(extra, "use_gct = TRUE")
             if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
-            tf <- tempfile()
+            tf <- gsub("\\", "/", tempfile(), fixed=TRUE)
             extra <- c(extra, paste('Log="', tf, '"', sep=""))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
