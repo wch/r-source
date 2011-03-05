@@ -1016,8 +1016,8 @@
     fake <- FALSE
     lazy <- TRUE
     lazy_data <- FALSE
-    ## This is no very useful unless R CMD INSTALL reads a startup file
-    lock <- getOption("install.lock", TRUE) # set for overall or per-package
+    ## This is not very useful unless R CMD INSTALL reads a startup file
+    lock <- getOption("install.lock", NA) # set for overall or per-package
     pkglock <- FALSE  # set for per-package locking
     libs_only <- FALSE
     tar_up <- zip_up <- FALSE
@@ -1316,6 +1316,10 @@
         if (debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
     }
 
+    if (is.na(lock)) {
+        lock <- TRUE
+        pkglock <- length(allpkgs) == 1L
+    }
     if (lock && !pkglock) {
         lockdir <- file.path(lib, "00LOCK")
         mk_lockdir(lockdir)

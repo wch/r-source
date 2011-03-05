@@ -1,11 +1,11 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
 \alias{install.packages}
-\title{Install Packages from CRAN-like Repositories}
+\title{Install Packages from Repositories or Local Files}
 \description{
   Download and install packages from CRAN-like repositories or from
   local files.
@@ -17,7 +17,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  dependencies = NA, type = getOption("pkgType"),
                  configure.args = getOption("configure.args"),
                  configure.vars = getOption("configure.vars"),
-                 clean = FALSE, Ncpus = getOption("Ncpus"),
+                 clean = FALSE, Ncpus = getOption("Ncpus", 1L),
                  libs_only = FALSE, INSTALL_opts, \dots)
 }
 \arguments{
@@ -128,10 +128,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     of the package installation in addition to removing intermediate files.
   }
   \item{Ncpus}{The number of parallel processes to use for a parallel
-    install of source packages.  Values greater than one are supported
-    only if GNU \command{make} is in use (more precisely, if
-    \command{make -j \var{Ncpus}} works).  Defaults to \code{1} if the
-    option is unset.
+    install of more than one source package.  Values greater than one
+    are supported if the \command{make} command specified by
+    \code{Sys.getenv("MAKE", "make")} accepts argument \code{-k -j
+    \var{Ncpus}}.
   }
   \item{libs_only}{
     a logical value: should the \option{--libs-only} option be used to
@@ -213,10 +213,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   library concurrently, and is used to store any previous version of the
   package to restore on error.  A finer-grained locking is provided by
   the option \option{--pkglock} which creates a separate lock for each
-  package: this allows enough freedom for parallel installation (and is
-  the default when \code{Ncpus > 1} and more than one package is to be
-  installed).  Finally locking (and restoration on error) can be
-  suppressed by \option{--no-lock}.
+  package: this allows enough freedom for parallel
+  installation. Per-package locking is the default when installing a
+  single package, and for multiple packages when \code{Ncpus > 1L}
+  Finally locking (and restoration on error) can be suppressed by
+  \option{--no-lock}.
   % and also options(install.lock=FALSE) in an \R startup file.
   
   For a Mac OS X or Windows binary install, no locking is done by

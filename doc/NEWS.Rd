@@ -464,7 +464,7 @@
       on the command line.
 
       \item Option \option{--pkglock} can now be used with more than one
-      package.
+      package, and is the default if only one package is specified.
 
       \item Argument \code{lock} of \code{install.packages()} can now be
       use for Mac binary installs as well as for Windows ones.  The

@@ -102,7 +102,7 @@ install.packages <-
              type = getOption("pkgType"),
              configure.args = getOption("configure.args"),
              configure.vars = getOption("configure.vars"),
-             clean = FALSE, Ncpus = getOption("Ncpus"),
+             clean = FALSE, Ncpus = getOption("Ncpus", 1L),
              libs_only = FALSE, INSTALL_opts, ...)
 {
     if (is.logical(clean) && clean)
@@ -370,7 +370,6 @@ install.packages <-
             update <- update[sort.list(match(pkgs, p0)), ]
         }
 
-        if (is.null(Ncpus)) Ncpus <- 1L
         if (Ncpus > 1L && nrow(update) > 1L) {
             ## if --no-lock/--unsafe was specified in INSTALL_opts
             ## that will override this.
@@ -405,10 +404,8 @@ install.packages <-
             ## system(paste("cat ", mfile))
             cwd <- setwd(tmpd)
             on.exit(setwd(cwd))
-            ## MAKE will be set by sourcing Renviron, but in case not
-            make <- Sys.getenv("MAKE")
-            if(!nzchar(make)) make <- "make"
-            status <- system(paste(make, "-k -j", Ncpus))
+            ## MAKE will be set by sourcing Renviron
+            status <- system(paste(Sys.getenv("MAKE", "make"), "-k -j", Ncpus))
             if(status > 0L) {
                 ## Try to figure out which
                 pkgs <- update[, 1L]
