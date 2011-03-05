@@ -29,7 +29,9 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
-             dependencies = FALSE, ...)
+             dependencies = FALSE,
+             lock = getOption("install.lock", FALSE),
+             ...)
 {
     link.html.help<-function(verbose = FALSE, ...)
     {
@@ -46,7 +48,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
                     domain = NA, call. = FALSE)
     }
 
-    unpackPkg <- function(pkg, pkgname, lib)
+    unpackPkg <- function(pkg, pkgname, lib, lock = FALSE)
     {
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
@@ -68,6 +70,34 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         }
 
         instPath <- file.path(lib, pkgname)
+        if(identical(lock, "pkglock") || isTRUE(lock)) {
+            dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+	    lockdir <- if(identical(lock, "pkglock"))
+                file.path(lib, paste("00LOCK", pkgname, sep="-"))
+            else file.path(lib, "00LOCK")
+	    if (file.exists(lockdir)) {
+		stop("ERROR: failed to lock directory ", sQuote(lib),
+			" for modifying\nTry removing ", sQuote(lockdir))
+	    }
+	    dir.create(lockdir, recursive = TRUE)
+	    if (!dir.exists(lockdir))
+		stop("ERROR: failed to create lock directory ", sQuote(lockdir))
+            ## Back up a previous version
+            if (file.exists(instPath)) {
+                file.copy(instPath, lockdir, recursive = TRUE)
+        	on.exit({
+         	    if (restorePrevious) {
+                        try(unlink(instPath, recursive = TRUE))
+        	    	savedcopy <- file.path(lockdir, pkgname)
+        	    	file.copy(savedcopy, lib, recursive = TRUE)
+        	    	warning(gettextf("restored '%s'", pkgname),
+                                domain = NA, call. = FALSE, immediate. = TRUE)
+        	    }
+        	}, add=TRUE)
+        	restorePrevious <- FALSE
+            }
+	    on.exit(unlink(lockdir, recursive = TRUE), add=TRUE)
+        }
         ## If the package is already installed, remove it.  If it
         ## isn't there, the unlink call will still return success.
         ret <- unlink(instPath, recursive=TRUE)
@@ -75,13 +105,15 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
             ## Move the new package to the install lib and
             ## remove our temp dir
             ret <- file.rename(file.path(tmpDir, pkgname), instPath)
-            if(!ret)
+            if(!ret) {
                 warning(gettextf("unable to move temporary installation '%s' to '%s'",
                                  file.path(tmpDir, pkgname), instPath),
                         domain = NA, call. = FALSE)
+                restorePrevious <- TRUE # Might not be used
+            }
         } else
-        stop("cannot remove prior installation of package ",
-             sQuote(pkgname), call. = FALSE)
+            stop("cannot remove prior installation of package ",
+                 sQuote(pkgname), call. = FALSE)
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)
     }
@@ -97,7 +129,7 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         ## foo.zip might contain package bar or Foo or FOO or ....
         ## but we can't tell without trying to unpack it.
         for(i in seq_along(pkgs))
-            unpackPkg(pkgs[i], pkgnames[i], lib)
+            unpackPkg(pkgs[i], pkgnames[i], lib, lock = lock)
         # link.html.help(verbose=TRUE)
         return(invisible())
     }
@@ -128,14 +160,14 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
             {
                 okp <- p == foundpkgs[, 1L]
                 if(any(okp))
-                    unpackPkg(foundpkgs[okp, 2L], foundpkgs[okp, 1L], lib)
+                    unpackPkg(foundpkgs[okp, 2L], foundpkgs[okp, 1L], lib,
+                              lock = lock)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s", tmpd),
                 "\n", sep = "")
-        # link.html.help(verbose = TRUE)
-    } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
+    } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, recursive = TRUE)
 
     invisible()
 }

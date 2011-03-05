@@ -92,18 +92,8 @@
   install is interrupted from the keyboard: after cleaning up the script
   terminates.
 
-  By default the library directory is \sQuote{locked} by creating a
-  directory \file{00LOCK} within it.  This has two purposes: it
-  prevents any other process installing into that library
-  concurrently, and is used to store any previous version of the
-  package to restore on error.  A finer-grained locking is provided by
-  the option \option{--pkglock} which creates a separate lock for each
-  package: this allows enough freedom for careful parallel
-  installation as done by \code{\link{install.packages}(Ncpus =
-  \var{n})} with \code{\var{n} > 1}.  Finally locking (and restoration
-  on error) can be suppressed by \option{--no-lock} or 
-  \option{--unsafe} (two names for the same option), or by setting
-  \code{option(install.lock=FALSE)} in \R.
+  For details of the locking which is done, see the section
+  \sQuote{Locking} in the help for \code{\link{install.packages}}.
   
 #ifdef windows
   
@@ -124,7 +114,8 @@
 #endif
 
   By default a package is installed with static HTML help pages if and
-  only if \R was: use option \option{--html} to override this.
+  only if \R was: use options \option{--html} and \option{--no-html} to
+  override this.
   
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.

@@ -91,7 +91,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{type}{character, indicating the type of package to download and
     install.
 
-    Possible values are \code{"source"}, \code{"mac.binary"},
+    Possible values are \code{"source"}, \code{"mac.binary"} (obsolete),
     \code{"mac.binary.leopard"} and \code{"win.binary"}: the binary
     types can be listed and downloaded but not installed on other
     platforms.
@@ -146,7 +146,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{c("--html", "--no-multiarch")}.
   }
   \item{\dots}{
-    Arguments to be passed to \code{\link{download.file}}.
+    Arguments to be passed to \code{\link{download.file}}, or to the
+    functions for binary installs on Mac OS X and Windows.
   }
 }
 \details{
@@ -185,18 +186,12 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \env{PATH} set up as required by Rtools.
   
   When installing a binary package, \code{install.packages} will abort
-  the install if it detects that the package already installed and is
+  the install if it detects that the package is already installed and is
   currently in use.  In some circumstances (e.g. multiple instances of
-  R running at the same time and sharing a library) it won't detect a
-  problem, but the installation will fail.  Unlike \link{INSTALL}, it
-  will not by default be able to restore the old version.  If you want
-  this safety feature, set \code{option(install.lock=TRUE)}.  Setting
-  this to \code{TRUE} will also prevent multiple instances of \R from
-  simultaneously installing packages in the same library, and will slow
-  down updates and re-installs.
- 
+  R running at the same time and sharing a library) it will not detect a
+  problem, but the installation may fail.
 #endif
-
+ 
   You are advised to run \code{update.packages} before
   \code{install.packages} to ensure that any already installed
   dependencies have their latest versions.
@@ -206,6 +201,38 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 }
 \value{
   Invisible \code{NULL}.
+}
+\section{Locking}{
+  There are various options for locking: these differ between source and
+  binary installs.
+  
+  By default for a source install, the library directory is
+  \sQuote{locked} by creating a directory \file{00LOCK} within it.  This
+  has two purposes: it prevents any other process installing into that
+  library concurrently, and is used to store any previous version of the
+  package to restore on error.  A finer-grained locking is provided by
+  the option \option{--pkglock} which creates a separate lock for each
+  package: this allows enough freedom for careful parallel installation
+  as done by \code{install.packages(Ncpus = \var{n})} with \code{\var{n}
+  > 1}.  Finally locking (and restoration on error) can be suppressed by
+  \option{--no-lock} or \option{--unsafe} (two names for the same
+  option).
+  % and also options(install.lock=FALSE) in an \R startup file.
+  
+  For a Mac OS X or Windows binary install, no locking is done by
+  default.  Setting argument \code{lock} to \code{TRUE} (it defaults to
+  the value of \code{\link{getOption}("install.lock", FALSE)}) will use
+  per-directory locking as described for source installs: if the value
+  is \code{"pkglock"} per-package locking will be used.
+  
+  If package locking is used on Windows with \code{libs_only=TRUE} and
+  the installation fails, the package will be restored to its previous
+  state.
+  
+  Note that it is possible for the package installation to fail so badly
+  that the lock directory is not removed: this inhibits any further
+  installs to the library directory (or for \code{--pkglock}, of the
+  package) until the lock directory is removed manually.
 }
 
 #ifdef unix

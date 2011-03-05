@@ -459,9 +459,17 @@
       \file{inst/doc} directory.  Currently this uses \command{qpdf},
       which must be installed (see \sQuote{Writing R Extensions}).
 
-      \item There is a new option \code{--lock} which can be used to
-      cancel the effect of \code{--no-lock} or \code{--pkglock} earlier
+      \item There is a new option \option{--lock} which can be used to
+      cancel the effect of \option{--no-lock} or \option{--pkglock} earlier
       on the command line.
+
+      \item Option \option{--pkglock} can now be used with more than one
+      package.
+
+      \item Argument \code{lock} of \code{install.packages()} can now be
+      use for Mac binary installs as well as for Windows ones.  The
+      value \code{"pkglock"} is now accepted, as well as \code{TRUE} and
+      \code{FALSE} (the default).
     }
   }
 

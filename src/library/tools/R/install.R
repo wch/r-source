@@ -141,7 +141,7 @@
             if (lib == .Library && "html" %in% build_help_types)
                 utils::make.packages.html(.Library, docdir = R.home("doc"))
         }
-        if (lock && nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
+        if (nzchar(lockdir)) unlink(lockdir, recursive = TRUE)
     }
 
     do_cleanup_tmpdir <- function()
@@ -161,7 +161,8 @@
                 starsmsg(stars, "removing ", sQuote(pkgdir))
                 unlink(pkgdir, recursive = TRUE)
             }
-            if (lock && nzchar(lockdir) &&
+
+            if (nzchar(lockdir) &&
                 dir.exists(lp <- file.path(lockdir, curPkg))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
@@ -331,7 +332,8 @@
         starsmsg(stars, "installing *binary* package ", sQuote(pkg), " ...")
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
-            if (lock) system(paste("mv", instdir, file.path(lockdir, pkg)))
+            if (nzchar(lockdir))
+                system(paste("mv", instdir, file.path(lockdir, pkg)))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         res <- system(paste("cp -r .", shQuote(instdir),
@@ -513,7 +515,7 @@
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             ## Back up a previous version
-            if (lock) {
+            if (nzchar(lockdir)) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
@@ -1015,9 +1017,9 @@
     fake <- FALSE
     lazy <- TRUE
     lazy_data <- FALSE
-    lock <- getOption("install.lock", TRUE)
-    pkglock <- FALSE
-    pkglockname <- ""
+    ## This is no very useful unless R CMD INSTALL reads a startup file
+    lock <- getOption("install.lock", TRUE) # set for overall or per-package
+    pkglock <- FALSE  # set for per-package locking
     libs_only <- FALSE
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
@@ -1241,13 +1243,6 @@
             warning("invalid package ", sQuote(pkg), call. = FALSE)
             next
         }
-        if (pkglock) {
-            if (nzchar(pkglockname)) {
-                warning("--pkglock applies only to a single package",
-                        call. = FALSE)
-                pkglock <- FALSE
-            } else pkglockname <- pkgname
-        }
     }
 
     if (!length(allpkgs))
@@ -1301,9 +1296,8 @@
     if(!WINDOWS && !more_than_libs) test_load <- FALSE
 
 
-    if (lock) {
-        lockdir <- if (pkglock) file.path(lib, paste("00LOCK", pkglockname, sep="-"))
-        else file.path(lib, "00LOCK")
+    mk_lockdir <- function(lockdir)
+    {
         if (file.exists(lockdir)) {
             message("ERROR: failed to lock directory ", sQuote(lib),
                     " for modifying\nTry removing ", sQuote(lockdir))
@@ -1317,6 +1311,11 @@
             q("no", status = 3, runLast = FALSE)
         }
         if (debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
+    }
+
+    if (lock && !pkglock) {
+        lockdir <- file.path(lib, "00LOCK")
+        mk_lockdir(lockdir)
     }
 
     if  ((tar_up || zip_up) && fake)
@@ -1351,7 +1350,13 @@
     if (debug)
         starsmsg(stars, "DBG: R CMD INSTALL' now doing do_install")
 
-    for(pkg in allpkgs) do_install(pkg)
+    for(pkg in allpkgs) {
+        if (pkglock) {
+            lockdir <- file.path(lib, paste("00LOCK", basename(pkg), sep="-"))
+            mk_lockdir(lockdir)
+        }
+        do_install(pkg)
+    }
     do_cleanup()
     on.exit()
     invisible()
