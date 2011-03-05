@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-03-04 r54664)
+R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -214,7 +214,7 @@ lm2  6 336.3417
 > dchisq(1, df=1:3)
 [1] 0.2419707 0.3032653 0.2419707
 > pchisq(1, df= 3)
-[1] 0.1987480
+[1] 0.198748
 > pchisq(1, df= 3, ncp = 0:4)# includes the above
 [1] 0.19874804 0.13229855 0.08787311 0.05824691 0.03853592
 > 
@@ -477,9 +477,9 @@ s12   0.92099
 > m <- 10; n <- 7; k <- 8
 > x <- 0:(k+1)
 > rbind(phyper(x, m, n, k), dhyper(x, m, n, k))
-     [,1]         [,2]       [,3]      [,4]      [,5]      [,6]      [,7]
-[1,]    0 0.0004113534 0.01336898 0.1170300 0.4193747 0.7821884 0.9635952
-[2,]    0 0.0004113534 0.01295763 0.1036610 0.3023447 0.3628137 0.1814068
+     [,1]         [,2]       [,3]     [,4]      [,5]      [,6]      [,7]
+[1,]    0 0.0004113534 0.01336898 0.117030 0.4193747 0.7821884 0.9635952
+[2,]    0 0.0004113534 0.01295763 0.103661 0.3023447 0.3628137 0.1814068
            [,8]       [,9] [,10]
 [1,] 0.99814891 1.00000000     1
 [2,] 0.03455368 0.00185109     0
@@ -1175,18 +1175,18 @@ Residual standard error: 0.04103 on 7 degrees of freedom
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 attr(,"gradient")
-             lKe         lKa       lCl
- [1,]  0.0000000  0.00000000  0.000000
- [2,]  2.1902842  1.78781716 -2.214486
- [3,]  3.8255178  2.35519507 -3.930988
- [4,]  4.9527133  1.75648252 -5.261945
- [5,]  4.9765205  0.53458070 -5.659813
- [6,]  3.7528222 -0.18560297 -5.084852
- [7,]  2.9068593 -0.22729852 -4.587699
- [8,]  1.8617711 -0.20447579 -3.916808
- [9,]  1.0271293 -0.17383515 -3.318395
-[10,]  0.1483700 -0.13513891 -2.579204
-[11,] -0.8945410 -0.04944021 -0.943593
+            lKe         lKa       lCl
+ [1,]  0.000000  0.00000000  0.000000
+ [2,]  2.190284  1.78781716 -2.214486
+ [3,]  3.825518  2.35519507 -3.930988
+ [4,]  4.952713  1.75648252 -5.261945
+ [5,]  4.976520  0.53458070 -5.659813
+ [6,]  3.752822 -0.18560297 -5.084852
+ [7,]  2.906859 -0.22729852 -4.587699
+ [8,]  1.861771 -0.20447579 -3.916808
+ [9,]  1.027129 -0.17383515 -3.318395
+[10,]  0.148370 -0.13513891 -2.579204
+[11,] -0.894541 -0.04944021 -0.943593
 > getInitial(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data = Theoph.1)
 $lKe
 [1] -2.994845
@@ -1614,8 +1614,8 @@ Call:
 StructTS(x = trees, type = "level")
 
 Variances:
-    level    epsilon  
-0.0003700  0.0719877  
+  level  epsilon  
+0.00037  0.07199  
 > plot(trees)
 > lines(fitted(fit), col = "green")
 > tsdiag(fit)
@@ -3138,8 +3138,8 @@ BJsales.lead  0.0276       0.4970
 , , 2
 
               BJsales BJsales.lead
-BJsales       0.02041      -1.1335
-BJsales.lead -0.02193       0.2940
+BJsales       0.02041       -1.133
+BJsales.lead -0.02193        0.294
 
 , , 3
 
@@ -3298,8 +3298,8 @@ BJsales.lead -0.21501      0.06115
 , , 9
 
               BJsales BJsales.lead
-BJsales      -0.11531      -1.4640
-BJsales.lead  0.03536       0.2700
+BJsales      -0.11531       -1.464
+BJsales.lead  0.03536        0.270
 
 , , 10
 
@@ -3319,9 +3319,9 @@ $x.intercept
      0.19630     -0.07022 
 
 $var.pred
-               BJsales BJsales.lead
-BJsales       0.040100    -0.000931
-BJsales.lead -0.000931     0.068214
+                BJsales BJsales.lead
+BJsales       0.0400996   -0.0009311
+BJsales.lead -0.0009311    0.0682137
 
 > 
 > x <- diff(log(EuStockMarkets))
@@ -4316,12 +4316,12 @@ wt 0.3800887 1.622518
 > glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
 > confint(glm.D93)
 Waiting for profiling to be done...
-                 2.5 %     97.5 %
-(Intercept)  2.6958215  3.3665558
-outcome2    -0.8577018 -0.0625584
-outcome3    -0.6753696  0.0824409
-treatment2  -0.3932548  0.3932548
-treatment3  -0.3932548  0.3932548
+                 2.5 %      97.5 %
+(Intercept)  2.6958215  3.36655581
+outcome2    -0.8577018 -0.06255840
+outcome3    -0.6753696  0.08244089
+treatment2  -0.3932548  0.39325483
+treatment3  -0.3932548  0.39325483
 > confint.default(glm.D93)  # based on asymptotic normality
                  2.5 %      97.5 %
 (Intercept)  2.7095672  3.37947764
@@ -4732,10 +4732,10 @@ attr(,"legend")
 > ## How much do they differ?
 > i <- lower.tri(Cl)
 > cor(cbind(P = Cl[i], S = clS[i], K = clK[i]))
-          P        S         K
-P 1.0000000 0.980239 0.9572562
-S 0.9802390 1.000000 0.9742171
-K 0.9572562 0.974217 1.0000000
+          P         S         K
+P 1.0000000 0.9802390 0.9572562
+S 0.9802390 1.0000000 0.9742171
+K 0.9572562 0.9742171 1.0000000
 > 
 > 
 > ## cov2cor() scales a covariance matrix by its diagonal
@@ -5596,14 +5596,14 @@ NULL
      |     |  `--[dendrogram w/ 2 branches and 2 members at h = 12.6]
      |     |     |--leaf "Arkansas" 
      |     |     `--leaf "Tennessee" 
-     |     `--[dendrogram w/ 2 branches and 3 members at h = 24.0]
+     |     `--[dendrogram w/ 2 branches and 3 members at h = 24]
      |        |--leaf "Georgia" 
      |        `--[dendrogram w/ 2 branches and 2 members at h = 14.5]
      |           |--leaf "Colorado" 
      |           `--leaf "Texas" 
      `--[dendrogram w/ 2 branches and 20 members at h = 54.7]
         |--[dendrogram w/ 2 branches and 10 members at h = 20.6]
-        |  |--[dendrogram w/ 2 branches and 4 members at h = 15.0]
+        |  |--[dendrogram w/ 2 branches and 4 members at h = 15]
         |  |  |--leaf "Idaho" 
         |  |  `--[dendrogram w/ 2 branches and 3 members at h = 12.4]
         |  |     |--leaf "Nebraska" 
@@ -5630,7 +5630,7 @@ NULL
               |     |--leaf "Maine" 
               |     `--leaf "South Dakota" 
               `--[dendrogram w/ 2 branches and 6 members at h = 27.8]
-                 |--[dendrogram w/ 2 branches and 2 members at h = 13.0]
+                 |--[dendrogram w/ 2 branches and 2 members at h = 13]
                  |  |--leaf "North Dakota" 
                  |  `--leaf "Vermont" 
                  `--[dendrogram w/ 2 branches and 4 members at h = 19]
@@ -7674,8 +7674,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 (Dispersion parameter for Gamma family taken to be 0.002446059)
 
-    Null deviance: 3.512826  on 8  degrees of freedom
-Residual deviance: 0.016730  on 7  degrees of freedom
+    Null deviance: 3.51283  on 8  degrees of freedom
+Residual deviance: 0.01673  on 7  degrees of freedom
 AIC: 37.99
 
 Number of Fisher Scoring iterations: 3
@@ -7956,7 +7956,7 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > ### ** Examples
 > 
 > integrate(dnorm, -1.96, 1.96)
-0.9500042 with absolute error < 1.0e-11
+0.9500042 with absolute error < 1e-11
 > integrate(dnorm, -Inf, Inf)
 1 with absolute error < 9.4e-05
 > 
@@ -8415,7 +8415,7 @@ data:  x and x2
 t = 5.6742, df = 96.85, p-value = 7.242e-08
 alternative hypothesis: true difference in means is greater than 0 
 95 percent confidence interval:
- 0.706975      Inf 
+ 0.7069751       Inf 
 sample estimates:
  mean of x  mean of y 
  0.1004483 -0.8990693 
@@ -8827,7 +8827,7 @@ $df
 > x <- 1:5
 > lmx <- lm(x ~ 1)
 > logLik(lmx) # using print.logLik() method
-'log Lik.' -8.82756 (df=2)
+'log Lik.' -8.827561 (df=2)
 > utils::str(logLik(lmx))
 Class 'logLik' : -8.828 (df=2)
 > 
@@ -8844,7 +8844,7 @@ Coefficients:
    -0.21706  
 
 > logLik(fm1)
-'log Lik.' -97.2499 (df=8)
+'log Lik.' -97.24991 (df=8)
 > logLik(fm1, REML = TRUE)
 'log Lik.' -102.6851 (df=8)
 > 
@@ -9228,7 +9228,7 @@ common odds ratio
 +   1 - pchisq(sum(w * (log(or) - weighted.mean(log(or), w)) ^ 2), k - 1)
 + }
 > woolf(UCBAdmissions)
-[1] 0.003427200
+[1] 0.0034272
 > ## => p = 0.003, indicating that there is significant heterogeneity.
 > ## (And hence the Mantel-Haenszel test cannot be used.)
 > 
@@ -10041,7 +10041,7 @@ iteration = 1
 Step:
 [1] -9 -8
 Parameter:
-[1] 1.000000 2.000000
+[1] 1 2
 Function Value
 [1] 1.721748e-13
 Gradient:
@@ -10582,7 +10582,7 @@ attr(,"gradient")
 	One-way analysis of means (not assuming equal variances)
 
 data:  extra and group 
-F = 3.4626, num df = 1.000, denom df = 17.776, p-value = 0.0794
+F = 3.4626, num df = 1.000, denom df = 17.776, p-value = 0.07939
 
 > ## Assuming equal variances
 > oneway.test(extra ~ group, data = sleep, var.equal = TRUE)
@@ -10660,7 +10660,7 @@ $objective
 [1] 0.6653777
 [1] 0.6667786
 [1] 0.6666728
-[1] 0.666632
+[1] 0.6666321
 [1] 0.6667135
 [1] 0.6666728
 $minimum
@@ -10682,7 +10682,7 @@ $objective
 [1] 16.49845
 [1] 17.83592
 [1] 18.66253
-[1] 19.17340
+[1] 19.1734
 [1] 19.48913
 [1] 19.68427
 [1] 19.80487
@@ -10690,7 +10690,7 @@ $objective
 [1] 19.92547
 [1] 19.95393
 [1] 19.97153
-[1] 19.98240
+[1] 19.9824
 [1] 19.98913
 [1] 19.99328
 [1] 19.99585
@@ -11816,7 +11816,7 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 
      Two-sample t test power calculation 
 
-              n = 22.02110
+              n = 22.0211
           delta = 1
              sd = 1
       sig.level = 0.05
@@ -12073,10 +12073,10 @@ Rape    -0.5393836 -0.8179779 -0.1999436
 > plot(prcomp(USArrests))
 > summary(prcomp(USArrests, scale = TRUE))
 Importance of components:
-                         PC1    PC2     PC3     PC4
-Standard deviation     1.575 0.9949 0.59713 0.41645
-Proportion of Variance 0.620 0.2474 0.08914 0.04336
-Cumulative Proportion  0.620 0.8675 0.95664 1.00000
+                          PC1    PC2     PC3     PC4
+Standard deviation     1.5749 0.9949 0.59713 0.41645
+Proportion of Variance 0.6201 0.2474 0.08914 0.04336
+Cumulative Proportion  0.6201 0.8675 0.95664 1.00000
 > biplot(prcomp(USArrests, scale = TRUE))
 > 
 > 
@@ -13710,7 +13710,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared: 0.2691,	Adjusted R-squared: 0.2253 
-F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.001230 
+F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.00123 
 
 > 
 > 
@@ -14468,7 +14468,7 @@ Contrast 1
   14.24547 
 > (t.stat <- sum(cont*score)/se.contrast(fit, as.matrix(cont)))
 Contrast 1 
- -1.263560 
+  -1.26356 
 > summary(fit, split=list(B=1:2), expand.split = TRUE)
             Df  Sum Sq Mean Sq F value   Pr(>F)   
 A            1  18.778  18.778  2.2208 0.146606   
@@ -14945,7 +14945,7 @@ Call:
 smooth.spline(x = y18, spar = 0.2)
 
 Smoothing Parameter  spar= 0.2  lambda= 3.911187e-06 
-Equivalent Degrees of Freedom (Df): 15.25900 
+Equivalent Degrees of Freedom (Df): 15.259 
 Penalized Criterion: 0.4973656 
 GCV: 1.191602 
 > (s02. <- smooth.spline(y18, spar = 0.2, cv=NA))
@@ -15991,7 +15991,7 @@ mean of x mean of y
 	Welch Two Sample t-test
 
 data:  extra[group == 1] and extra[group == 2] 
-t = -1.8608, df = 17.776, p-value = 0.0794
+t = -1.8608, df = 17.776, p-value = 0.07939
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
  -3.3654832  0.2054832 
@@ -16005,7 +16005,7 @@ mean of x mean of y
 	Welch Two Sample t-test
 
 data:  extra by group 
-t = -1.8608, df = 17.776, p-value = 0.0794
+t = -1.8608, df = 17.776, p-value = 0.07939
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
  -3.3654832  0.2054832 
@@ -17492,7 +17492,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared: 0.2691,	Adjusted R-squared: 0.2253 
-F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.001230 
+F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.00123 
 
 > 
 > 
@@ -17537,7 +17537,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.766 0.213 13.485 0 0 
+Time elapsed:  15.321 0.327 15.965 0 0 
 > grDevices::dev.off()
 null device 
           1 

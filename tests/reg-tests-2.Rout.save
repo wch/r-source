@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-26 r54607)
+R version 2.13.0 Under development (unstable) (2011-03-02 r54645)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -4657,9 +4657,9 @@ Analysis of Variance Table
 
 Model 1: y ~ 1
 Model 2: y ~ z
-  Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-1      9 89.130                                  
-2      8  6.316  1    82.814 104.90 7.099e-06 ***
+  Res.Df    RSS Df Sum of Sq     F    Pr(>F)    
+1      9 89.130                                 
+2      8  6.316  1    82.814 104.9 7.099e-06 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > add1(lm1, scope = ~ z)
@@ -6597,7 +6597,7 @@ Frequency = 0.2
 > ## used to print  ". 0" instead of ".  "
 > 
 > 
-> ## tests of NA having precedence over NA
+> ## tests of NA having precedence over NaN -- all must print "NA"
 > min(c(NaN, NA))
 [1] NA
 > min(c(NA, NaN)) # NaN in 2.12.2

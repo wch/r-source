@@ -1,7 +1,8 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-27 r48020)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,8 +24,8 @@ Type 'q()' to quit R.
 > ####			   == (csh)
 > opt.conformance <- 0
 > 
-> DIG <- function(d) if(missing(d)) options("digits")$dig else
-+ 				options(digits=as.integer(d))
+> DIG <- function(d)
++     if(missing(d)) getOption("digits") else options(digits=as.integer(d))
 > 
 > DIG(7)#-- the default; just to make sure ...
 > options(width = 200)
@@ -200,9 +201,9 @@ Type 'q()' to quit R.
 > x <- 0:N1
 > Mhyp <- rbind(phyper(x, N1, N2, n), dhyper(x, N1, N2, n))
 > Mhyp
-     [,1]         [,2]       [,3]      [,4]      [,5]      [,6]      [,7]       [,8]       [,9] [,10] [,11]
-[1,]    0 0.0004113534 0.01336898 0.1170300 0.4193747 0.7821884 0.9635952 0.99814891 1.00000000     1     1
-[2,]    0 0.0004113534 0.01295763 0.1036610 0.3023447 0.3628137 0.1814068 0.03455368 0.00185109     0     0
+     [,1]         [,2]       [,3]     [,4]      [,5]      [,6]      [,7]       [,8]       [,9] [,10] [,11]
+[1,]    0 0.0004113534 0.01336898 0.117030 0.4193747 0.7821884 0.9635952 0.99814891 1.00000000     1     1
+[2,]    0 0.0004113534 0.01295763 0.103661 0.3023447 0.3628137 0.1814068 0.03455368 0.00185109     0     0
 > ##-	 [,1]	      [,2]	 [,3]	  [,4]	    [,5]      [,6]	[,7]
 > ##- [1,]    0 0.0004113534 0.01336898 0.117030 0.4193747 0.7821884 0.9635952
 > ##- [2,]    0 0.0004113534 0.01295763 0.103661 0.3023447 0.3628137 0.1814068
@@ -287,8 +288,16 @@ Type 'q()' to quit R.
 > (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 [1] 2.002566e-308 2.222849e-308 2.225074e-308 2.225074e-308 2.225074e-308 2.227299e-308 2.447581e-308
 > 
-> c(0.099999994, 0.2) # 0.1 0.2 , not 0.10 0.20
+> x2 <- c(0.099999994, 0.2)
+> x2 # digits=7: show all seven "9"s
+[1] 0.09999999 0.20000000
+> print(x2, digits=6) # 0.1 0.2 , not 0.10 0.20
 [1] 0.1 0.2
+> v <- 6:8; names(v) <- v; sapply(v, format.info, x=x2)
+     6  7  8
+[1,] 3 10 11
+[2,] 1  8  9
+[3,] 0  0  0
 > 
 > (z <- sort(c(outer(range(txn), 8^c(0,2:3)))))
 [1] 2.002566e-308 2.447581e-308 1.281643e-306 1.566452e-306 1.025314e-305 1.253162e-305

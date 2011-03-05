@@ -6,8 +6,8 @@
 ####			   == (csh)
 opt.conformance <- 0
 
-DIG <- function(d) if(missing(d)) options("digits")$dig else
-				options(digits=as.integer(d))
+DIG <- function(d)
+    if(missing(d)) getOption("digits") else options(digits=as.integer(d))
 
 DIG(7)#-- the default; just to make sure ...
 options(width = 200)
@@ -146,7 +146,10 @@ length(tx <- tx[is.finite(tx)]) # 11
 (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 
-c(0.099999994, 0.2) # 0.1 0.2 , not 0.10 0.20
+x2 <- c(0.099999994, 0.2)
+x2 # digits=7: show all seven "9"s
+print(x2, digits=6) # 0.1 0.2 , not 0.10 0.20
+v <- 6:8; names(v) <- v; sapply(v, format.info, x=x2)
 
 (z <- sort(c(outer(range(txn), 8^c(0,2:3)))))
 outer(z, 0:6, signif) # had NaN's till 1.1.1

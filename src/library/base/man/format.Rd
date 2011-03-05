@@ -1,6 +1,7 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
+% Copyright 2003-2011 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{format}
@@ -101,11 +102,12 @@ format(x, \dots)
   the width computations and are not encoded.)
 
   Numeric vectors are encoded with the minimum number of decimal places
-  needed to display all the elements to at least the \code{digit}
+  needed to display all the elements to at least the \code{digits}
   significant digits.  However, if all the elements then have trailing
   zeroes, the number of decimal places is reduced until at least one
   element has a non-zero final digit; see also the argument
-  documentation for \code{big.*}, \code{small.*} etc, above.
+  documentation for \code{big.*}, \code{small.*} etc, above.  See the
+  note in \code{\link{print.default}} about \code{digits >= 16}.
 
   Raw vectors are converted to their 2-digit hexadecimal representation
   by \code{\link{as.character}}.

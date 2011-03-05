@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-02 r54207)
+R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -535,7 +535,7 @@ Nonlinear regression model
    data:  parent.frame() 
     a     b 
 1.500 0.243 
- residual sum-of-squares: 0.390
+ residual sum-of-squares: 0.39
 
 Algorithm "port", convergence message: relative convergence (4) 
 attr(,"summary")
@@ -573,7 +573,7 @@ b    NA 0.611
 > test()
 8291.9 :  1 1 
 726.02 :  0.80544 2.42971 
-552.85 :  1.2900 2.1290 
+552.85 :  1.290 2.129 
 70.431 :  1.9565 1.9670 
 26.555 :  1.9788 2.0064 
 26.503 :  1.9798 2.0046 
@@ -658,5 +658,5 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.96 0.03 2.994 0 0 
+Time elapsed:  3.564 0.028 3.639 0 0 
 > 

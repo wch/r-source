@@ -1,13 +1,12 @@
 
-R version 2.9.0 Under development (unstable) (2009-02-18 r47954)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -115,11 +114,11 @@ Moffat Chase     138.983 177.836 141.436
 dist  4.8759333  0.4295826 11.3504 9.3646e-13
 climb 0.0091824  0.0015298  6.0023 1.0781e-06
        Estimate Std. Error t value   Pr(>|t|)
-dist  4.6969341  0.4406227  10.660 4.6417e-12
-climb 0.0099795  0.0015691   6.360 3.8442e-07
+dist  4.6969341  0.4406227   10.66 4.6417e-12
+climb 0.0099795  0.0015691    6.36 3.8442e-07
        Estimate Std. Error t value   Pr(>|t|)
-dist  4.8215499  0.4200774 11.4778 7.0162e-13
-climb 0.0090388  0.0014960  6.0422 9.6065e-07
+dist  4.8215499   0.420077 11.4778 7.0162e-13
+climb 0.0090388   0.001496  6.0422 9.6065e-07
 > 
 > ## Poisson fit
 > fit3 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
@@ -214,9 +213,9 @@ TreatFT      4.56306    2.13334  2.1389 0.03603508
 > fit4 <- glm(SF ~ sex + ldose - 1, family = binomial)
 > coef(summary(fit4))
       Estimate Std. Error z value   Pr(>|z|)
-sexF   -3.4732    0.46852  -7.413 1.2344e-13
-sexM   -2.3724    0.38551  -6.154 7.5579e-10
-ldose   1.0642    0.13108   8.119 4.7015e-16
+sexF   -3.4732    0.46852 -7.4130 1.2344e-13
+sexM   -2.3724    0.38551 -6.1539 7.5579e-10
+ldose   1.0642    0.13108  8.1190 4.7015e-16
 > set.seed(1)
 > ( ys <- simulate(fit4, nsim = 3) )
    sim_1.numdead sim_1.numalive sim_2.numdead sim_2.numalive sim_3.numdead
@@ -335,18 +334,18 @@ ftv2+        0.179009  0.4563778  0.39224 0.6948827
 10     0     0     1
 > for(i in seq_len(3))
 +     print(coef(summary(update(fit6, ys[, i] ~ .))))
-             Estimate Std. Error  z value  Pr(>|z|)
-(Intercept) -0.284354  1.2297301 -0.23123 0.8171338
-age         -0.011485  0.0389166 -0.29513 0.7678972
-lwt         -0.012314  0.0069041 -1.78353 0.0744999
-raceblack    0.844051  0.5514350  1.53064 0.1258573
-raceother    0.565993  0.4665978  1.21302 0.2251216
-smokeTRUE    1.024337  0.4253416  2.40827 0.0160284
-ptdTRUE      1.578045  0.4887012  3.22906 0.0012420
-htTRUE       1.171556  0.7060321  1.65935 0.0970449
-uiTRUE       0.384214  0.4835840  0.79451 0.4268967
-ftv1        -0.790699  0.5271049 -1.50008 0.1335937
-ftv2+        0.522245  0.4498448  1.16094 0.2456647
+             Estimate Std. Error  z value Pr(>|z|)
+(Intercept) -0.284354  1.2297301 -0.23123 0.817134
+age         -0.011485  0.0389166 -0.29513 0.767897
+lwt         -0.012314  0.0069041 -1.78353 0.074500
+raceblack    0.844051  0.5514350  1.53064 0.125857
+raceother    0.565993  0.4665978  1.21302 0.225122
+smokeTRUE    1.024337  0.4253416  2.40827 0.016028
+ptdTRUE      1.578045  0.4887012  3.22906 0.001242
+htTRUE       1.171556  0.7060321  1.65935 0.097045
+uiTRUE       0.384214  0.4835840  0.79451 0.426897
+ftv1        -0.790699  0.5271049 -1.50008 0.133594
+ftv2+        0.522245  0.4498448  1.16094 0.245665
              Estimate Std. Error  z value   Pr(>|z|)
 (Intercept)  0.916922   1.433819  0.63950 5.2250e-01
 age          0.034662   0.041752  0.83019 4.0643e-01

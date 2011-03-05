@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-22 r53649)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Under development (unstable) (2011-03-04 r54667)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -102,8 +102,8 @@ Nonlinear regression model
 +    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
 32.946 : -1.0498 22.1260 
 25.992 : -0.62572 19.10319 
-25.990 : -0.6327 19.1419 
-25.990 : -0.63282 19.14256 
+25.99 : -0.6327 19.1419 
+25.99 : -0.63282 19.14256 
 > # using a self-starting model
 > fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > summary(fm3)
@@ -1281,7 +1281,7 @@ Coefficients:
       0.4378  0.6281     3.2274
 s.e.  0.0764  0.0637     0.0131
 
-sigma^2 estimated as 0.001570:  log likelihood = 300.85,  aic = -593.7
+sigma^2 estimated as 0.00157:  log likelihood = 300.85,  aic = -593.7
 > z <- predict(fit, n.ahead = 24)
 > ts.plot(log10(UKDriverDeaths), z$pred, z$pred+2*z$se, z$pred-2*z$se,
 +         lty = c(1,3,2,2), col = c("black", "red", "blue", "blue"))
@@ -1698,9 +1698,9 @@ The p-value is 0.191
 Analysis of Variance Table
 
 Response: y1
-          Df Sum Sq Mean Sq F value   Pr(>F)   
-x1         1 27.510 27.5100   17.99 0.002170 **
-Residuals  9 13.763  1.5292                    
+          Df Sum Sq Mean Sq F value  Pr(>F)   
+x1         1 27.510 27.5100   17.99 0.00217 **
+Residuals  9 13.763  1.5292                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 Analysis of Variance Table
@@ -1865,7 +1865,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 7.068 on 23 degrees of freedom
 Multiple R-squared: 0.7326,	Adjusted R-squared: 0.6628 
-F-statistic:  10.5 on 6 and 23 DF,  p-value: 1.240e-05 
+F-statistic:  10.5 on 6 and 23 DF,  p-value: 1.24e-05 
 
 > opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0),
 +             mar = c(4.1, 4.1, 2.1, 1.1))
@@ -3506,7 +3506,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.416 0.141 5.609 0 0 
+Time elapsed:  3.634 0.055 3.745 0 0 
 > grDevices::dev.off()
 null device 
           1 

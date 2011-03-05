@@ -96,7 +96,7 @@ getOption(x, default = NULL)
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
-      are 1\dots{}22 with default 7.  See the warning in
+      are 1\dots{}22 with default 7.  See the note in
       \code{\link{print.default}} about values greater than 15.}
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to

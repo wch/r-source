@@ -2494,7 +2494,7 @@ noquote(format(m, zero.print= "."))
 ## used to print  ". 0" instead of ".  "
 
 
-## tests of NA having precedence over NA
+## tests of NA having precedence over NaN -- all must print "NA"
 min(c(NaN, NA))
 min(c(NA, NaN)) # NaN in 2.12.2
 min(NaN, NA_real_)  # NaN in 2.12.2

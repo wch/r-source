@@ -1565,4 +1565,13 @@ prettyNum(NA_complex_, drop0=TRUE)
 local({a <- sum; Map("a", list(1:5))})
 ## failed R < 2.13.0
 
+
+## correct format() / rounding, print()ing -- (PR#14491)
+stopifnot(format.info(7.921,     digits=2) == c(3,1,0),
+          format.info(5.9994001, digits=4) == c(5,3,0))
+## gave (1, 0, 0) in all R versions < 2.13.0
+stopifnot(identical(format(0.2204, digits=3), "0.22"))
+## gave "0.220" previously
+
+
 proc.time()

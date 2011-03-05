@@ -10,6 +10,11 @@
       \item \code{replicate()} (by default) and \code{vapply()} (always)
       now return a higher-dimensional array instead of a matrix in the case
       where the inner function value is an array of dimension >= 2.
+
+      \item Printing and formatting of floating point numbers is now
+      using the correct number of digits, where it previously rarely
+      differed by a few digits, and also would round wrongly (very rarely).
+      (See \dQuote{scientific} entry below.)
     }
   }
   \subsection{NEW FEATURES}{
@@ -333,6 +338,14 @@
 
       \item \code{smooth.spline()} is somewhat faster and with
       \code{cv=NA} allows to skip some leverage computations.
+
+      \item The internal (C) function \samp{scientific()}, at the heart
+      of \R's \code{format.info(x)}, \code{format(x)}, \code{print(x)},
+      etc, for numeric \code{x}, has been re-written in order to provide
+      correct results, fixing \PR{14491}, notably in border cases,
+      including when \code{digits >= 16}, thanks to substantial
+      contributions (code and experiments) from Petr Sawicky.
+      This affects a noticable amount of numeric output from \R.
     }
   }
 

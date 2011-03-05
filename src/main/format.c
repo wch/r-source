@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  The R Development Core Team.
- *  Copyright (C) 2003        The R Foundation
+ *  Copyright (C) 1997--2011  The R Development Core Team.
+ *  Copyright (C) 2003--2011  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,9 +121,56 @@ void formatInteger(int *x, int n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
-static const double tbl[] =
+#ifdef HAVE_NEARBYINT
+#define R_nearbyint nearbyint
+#else
+#define R_nearbyint private_rint
+extern double private_rint(double x);/* in ../nmath/fround.c  */
+#endif
+
+#ifdef HAVE_LONG_DOUBLE
+# ifdef HAVE_NEARBYINTL
+# define R_nearbyintl nearbyintl
+# else
+# define R_nearbyintl private_nearbyintl
+LDOUBLE private_nearbyintl(LDOUBLE x)
 {
-    0.e0, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4, 1.e5, 1.e6, 1.e7, 1.e8, 1.e9
+    LDOUBLE x1;
+    x1 = - floorl( - x + 0.5);
+    x = floorl(x + 0.5);
+    if (x == x1) {
+        return(x);
+    } else {
+        if (x/2.0 == floorl(x/2.0)) {
+            return(x);
+        } else {
+            return(x1);
+        }
+    }
+}
+# endif
+#endif
+
+#define NB 1000
+static void format_via_sprintf(double r, int d, int *kpower, int *nsig)
+{
+    static char buff[NB];
+    int i;
+    snprintf(buff, NB, "%#.*e", d - 1, r);
+    *kpower = strtol(buff + (d + 2), NULL, 10);
+    for (i = d; i >= 2; i--) {
+        if (buff[i] != '0') break;
+    }
+    *nsig = i;
+}
+
+
+static const LDOUBLE tbl[] =
+{
+    /* Powers exactly representable with 64 bit mantissa */
+    1e00, 1e01, 1e02, 1e03, 1e04, 1e05, 1e06, 1e07, 1e08, 1e09,
+    1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
+    1e20, 1e21, 1e22, 1e23, 1e24, 1e25, 1e26, 1e27
 };
 
 static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
@@ -151,42 +198,71 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	} else {
 	    *sgn = 0; r = *x;
 	}
-	kp = floor(log10(r));/*-->	 r = |x| ;  10^k <= r */
-	if (abs(kp) < 10) {
-	    if (kp >= 0)
-		alpha = r / tbl[kp + 1]; /* division slow ? */
-	    else
-		alpha = r * tbl[-kp + 1];
-	}
-	/* on IEEE 1e-308 is not representable except by gradual underflow.
-	   shifting by 30 allows for any potential denormalized numbers x,
-	   and makes the reasonable assumption that R_dec_min_exponent+30
-	   is in range.
-	 */
-	else if (kp <= R_dec_min_exponent) {
-	    alpha = (r * 1e+30)/pow(10.0, (double)(kp+30));
-	}
-	else
-	    alpha = r / pow(10.0, (double)kp);
-
-	/* make sure that alpha is in [1,10) AFTER rounding */
-
-	if (10.0 - alpha < eps*alpha) {
-	    alpha /= 10.0;
-	    kp += 1;
-	}
-	*kpower = kp;
-
-	/* compute number of digits */
-
-	*nsig = R_print.digits;
-	for (j = 1; j <= *nsig; j++) {
-	    if (fabs(alpha - floor(alpha+0.5)) < eps * alpha) {
-		*nsig = j;
-		break;
-	    }
-	    alpha *= 10.0;
-	}
+        if (R_print.digits >= DBL_DIG + 1) {
+            format_via_sprintf(r, R_print.digits, kpower, nsig);
+            return;
+        }
+        kp = floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
+#ifdef HAVE_LONG_DOUBLE
+        LDOUBLE r_prec = r;
+        /* use exact scaling factor in long double precision, if possible */
+        if (abs(kp) <= 27) {
+            if (kp > 0) {
+                r_prec /= tbl[kp];
+            }
+            else if (kp < 0) {
+                r_prec *= tbl[ -kp];
+            }
+        }
+        else
+            r_prec /= powl(10.0, (LDOUBLE)kp);
+        if (r_prec < tbl[R_print.digits - 1]) {
+            r_prec *= 10.0;
+            kp--;
+        }
+        /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits */
+        /* accuracy limited by double rounding problem, alpha already rounded to 64 bits */
+        alpha = R_nearbyintl(r_prec);
+#else
+        /* use exact scaling factor in double precision, if possible */
+        if (abs(kp) <= 22) {
+            if (kp >= 0)
+                r /= tbl[kp];
+            else
+                r *= tbl[ -kp];
+        }
+        /* on IEEE 1e-308 is not representable except by gradual underflow.
+           Shifting by 303 allows for any potential denormalized numbers x,
+           and makes the reasonable assumption that R_dec_min_exponent+303
+           is in range. Representation of 1e+303 has low error.
+         */
+        else if (kp <= R_dec_min_exponent) {
+            r = (r * 1e+303)/pow(10.0, (double)(kp+303));
+        }
+        else
+            r /= pow(10.0, (double)kp);
+        if (r < tbl[R_print.digits - 1]) {
+            r *= 10.0;
+            kp--;
+        }
+        /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits */
+        /* accuracy limited by double rounding problem, alpha already rounded to 53 bits */
+        alpha = R_nearbyint(r);
+#endif
+        *nsig = R_print.digits;
+        for (j = 1; j <= R_print.digits; j++) {
+            alpha /= 10.0;
+            if (alpha == floor(alpha)) {
+                (*nsig)--;
+            } else {
+                break;
+            }
+        }
+        if (*nsig == 0) {
+            *nsig = 1;
+            kp += 1;
+        }
+        *kpower = kp + R_print.digits - 1;
     }
 }
 
