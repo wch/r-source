@@ -509,6 +509,9 @@
 
       \item The \sQuote{experimental} alternative specification of a
       name space via \code{.Export()} etc is now defunct.
+
+      \item The option \code{--unsafe} to \command{R CMD INSTALL} is
+      deprecated: use the identical option \code{--no-lock} instead.
     }
   }
 

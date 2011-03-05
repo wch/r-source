@@ -147,7 +147,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{\dots}{
     Arguments to be passed to \code{\link{download.file}}, or to the
-    functions for binary installs on Mac OS X and Windows.
+    functions for binary installs on Mac OS X and Windows (which accept
+    an argument \code{"lock"}: the the section on \sQuote{Locking}).
   }
 }
 \details{
@@ -212,11 +213,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   library concurrently, and is used to store any previous version of the
   package to restore on error.  A finer-grained locking is provided by
   the option \option{--pkglock} which creates a separate lock for each
-  package: this allows enough freedom for careful parallel installation
-  as done by \code{install.packages(Ncpus = \var{n})} with \code{\var{n}
-  > 1}.  Finally locking (and restoration on error) can be suppressed by
-  \option{--no-lock} or \option{--unsafe} (two names for the same
-  option).
+  package: this allows enough freedom for parallel installation (and is
+  the default when \code{Ncpus > 1} and more than one package is to be
+  installed).  Finally locking (and restoration on error) can be
+  suppressed by \option{--no-lock}.
   % and also options(install.lock=FALSE) in an \R startup file.
   
   For a Mac OS X or Windows binary install, no locking is done by

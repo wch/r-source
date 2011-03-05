@@ -97,8 +97,7 @@
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
             "      --fake		do minimal install for testing purposes",
-            "      --no-lock, --unsafe",
-            "			install on top of any existing installation",
+            "      --no-lock		install on top of any existing installation",
             "			without using a lock directory",
             "      --lock		use a per-library lock directory (default)",
             "      --pkglock		use a per-package lock directory",
@@ -1097,7 +1096,11 @@
             configure_vars <- c(configure_vars, substr(a, 18, 1000))
         } else if (a == "--fake") {
             fake <- TRUE
-        } else if (a %in% c("--no-lock", "--unsafe")) {
+        } else if (a == "--no-lock") {
+            lock <- pkglock <- FALSE
+        } else if (a == "--unsafe") {
+            warning("--unsafe is deprecated: use --no-lock instead",
+                    call. = FALSE, immediate. = TRUE, domain = NA)
             lock <- pkglock <- FALSE
         } else if (a == "--lock") {
             lock <- TRUE; pkglock <- FALSE
@@ -1337,18 +1340,13 @@
     if (build_latex) build_help_types <- c(build_help_types, "latex")
     if (build_example) build_help_types <- c(build_help_types, "example")
     build_help <- length(build_help_types) > 0L
-    if (build_help && !install_help) {
-	warning("--no-help overrides ",
-	        paste("--", build_help_types, sep="", collapse=" "),
-                call. = FALSE)
-    }
 
     if (debug)
         starsmsg(stars, "build_help_types=",
                  paste(build_help_types, collapse=" "))
 
     if (debug)
-        starsmsg(stars, "DBG: R CMD INSTALL' now doing do_install")
+        starsmsg(stars, "DBG: 'R CMD INSTALL' now doing do_install()")
 
     for(pkg in allpkgs) {
         if (pkglock) {
