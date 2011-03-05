@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1090,9 +1090,6 @@ msgstr " 名前空間は既に付加されています "
 msgid "%s not found"
 msgstr " %s を見付けることができません "
 
-msgid "cyclic name space dependencies are not supported"
-msgstr " サイクリックな名前空間の従属性はサポートされていません "
-
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr " 名前空間 '%s' は既に loadNamespace 中に封印(seal)されています "
 
@@ -1680,6 +1677,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "cyclic name space dependencies are not supported"
+#~ msgstr " サイクリックな名前空間の従属性はサポートされていません "
 
 #~ msgid "'recursive' will be ignored"
 #~ msgstr " 'recursive' は無視されます "

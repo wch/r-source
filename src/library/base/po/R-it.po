@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1132,9 +1132,6 @@ msgstr "il namespace è già agganciato"
 msgid "%s not found"
 msgstr "%s non trovato"
 
-msgid "cyclic name space dependencies are not supported"
-msgstr "dipendenze circolari nel namespace non sono supportate"
-
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "namespace '%s' già sigillato in loadNamespace"
 
@@ -1744,6 +1741,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "cyclic name space dependencies are not supported"
+#~ msgstr "dipendenze circolari nel namespace non sono supportate"
 
 #, fuzzy
 #~ msgid "'recursive' will be ignored"

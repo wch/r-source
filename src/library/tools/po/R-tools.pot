@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,9 @@ msgid "Documented arguments not in \\usage in documentation object '%s':"
 msgstr ""
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr ""
+
+msgid "Assignments in \\usage in documentation object '%s':"
 msgstr ""
 
 msgid "Bad \\usage lines found in documentation object '%s':"
@@ -521,6 +524,9 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
+msgid "loading failed"
+msgstr ""
+
 msgid "Changes require specified 'style'"
 msgstr ""
 
@@ -639,6 +645,9 @@ msgid "error reading file '%s'"
 msgstr ""
 
 msgid "this seems to be a bundle -- and they are defunct"
+msgstr ""
+
+msgid "running 'zip' failed"
 msgstr ""
 
 msgid "packaged installation of"

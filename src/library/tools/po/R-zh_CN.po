@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -119,6 +119,10 @@ msgstr "使用手冊对象'%s'里入档的文件参数没有在\\usage里提到:
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "使用手冊对象'%s'里的\\usage对象没有\\alias这条目:"
+
+#, fuzzy
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr "使用手冊对象'%s'里入档的文件参数没有在\\usage里提到:"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "使用手冊对象'%s'有些\\usage不对:"
@@ -564,6 +568,10 @@ msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
+#, fuzzy
+msgid "loading failed"
+msgstr "试用'%s'失败了"
+
 msgid "Changes require specified 'style'"
 msgstr "改动需要特别'style'"
 
@@ -684,6 +692,10 @@ msgstr "文件'%s'里句法分析有错:"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
+
+#, fuzzy
+msgid "running 'zip' failed"
+msgstr "调用'make'失败"
 
 msgid "packaged installation of"
 msgstr "程辑包安装"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1024,8 +1024,23 @@ msgstr "'unzip'必需是单字符串"
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr "'list'必需是为R对象取名的字符向量"
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+#, fuzzy
+msgid "'subject' is missing"
 msgstr "缺少'subject'值"
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr "'port'必需是长度为一的整数"
 
 msgid "no download method found"
 msgstr "没有下载方法"
@@ -1062,6 +1077,9 @@ msgstr "'memory.size()'只在Windows上有用"
 
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
+
+msgid "method 'mailx' is Unix-only"
+msgstr ""
 
 msgid "zipfile '%s' not found"
 msgstr "找不到'%s'这一zip文件"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-30 01:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -21,6 +21,10 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr "не все модели были подогнаны под размер данных"
 
 msgid "empty model supplied"
 msgstr "предложена пустая модель"
@@ -1404,6 +1408,13 @@ msgstr "нет моделей для сравнения"
 msgid "extra arguments discarded"
 msgstr "дополнительные аргументы отброшены"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "нет доступного метода 'as.stepfun' для 'x'"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start' и 'table' должны быть одной длины"
 
@@ -2024,13 +2035,6 @@ msgstr "попытка сгладить пропущенные значения"
 msgid "wrong endrule"
 msgstr "неправильное конечное правило"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'nknots' должен быть числом <= n"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
-"не могу использовать внутренних узлов больше, чем уникальных значений 'x'"
-
 msgid "invalid 'control.spar'"
 msgstr "неправильный 'control.spar'"
 
@@ -2046,8 +2050,29 @@ msgstr "некоторые веса должны быть положительны"
 msgid "need at least four unique 'x' values"
 msgstr "нужны как минимум 4 уникальных значения 'x'"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "кросс-валидация с неуникальными значениями 'x' выглядит сомнительно"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'nknots' должен быть числом <= n"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'n.ahead' должен быть по меньшей мере 1"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr ""
+"не могу использовать внутренних узлов больше, чем уникальных значений 'x'"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "Вы должны указать 1 < df <= n,  n = #{unique x} ="

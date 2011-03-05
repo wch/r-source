@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1080,9 +1080,6 @@ msgstr "пространство имен уже присоединено"
 msgid "%s not found"
 msgstr "%s не найден"
 
-msgid "cyclic name space dependencies are not supported"
-msgstr "циклические зависимости в пространстве имен не поддерживаются"
-
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "пространство имен '%s' уже включено в loadNamespace"
 
@@ -1675,6 +1672,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "cyclic name space dependencies are not supported"
+#~ msgstr "циклические зависимости в пространстве имен не поддерживаются"
 
 #~ msgid "'recursive' will be ignored"
 #~ msgstr "'recursive' будет проигнорирован"

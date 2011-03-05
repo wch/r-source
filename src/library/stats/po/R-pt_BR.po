@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-02 18:06+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
+
+msgid "models are not all fitted to the same number of observations"
+msgstr ""
 
 msgid "empty model supplied"
 msgstr "modelo vazio fornecido"
@@ -1348,6 +1351,12 @@ msgstr ""
 msgid "extra arguments discarded"
 msgstr ""
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+msgid "no 'nobs' method is available"
+msgstr ""
+
 msgid "'start' and 'table' must be same length"
 msgstr ""
 
@@ -1947,12 +1956,6 @@ msgstr ""
 msgid "wrong endrule"
 msgstr ""
 
-msgid "'nknots' must be numeric <= n"
-msgstr ""
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
-
 msgid "invalid 'control.spar'"
 msgstr ""
 
@@ -1968,7 +1971,27 @@ msgstr ""
 msgid "need at least four unique 'x' values"
 msgstr ""
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
+msgstr ""
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'x' deve ser numérico"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'lag.max' deve ser pelo menos 0"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr ""
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
 msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="

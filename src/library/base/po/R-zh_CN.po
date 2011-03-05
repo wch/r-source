@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1064,9 +1064,6 @@ msgstr "已经连接上名字空间了"
 msgid "%s not found"
 msgstr "%s不存在"
 
-msgid "cyclic name space dependencies are not supported"
-msgstr "不支持互相从属的循環名字空间"
-
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名字空间'%s'已经在loadNamespace封條了"
 
@@ -1631,6 +1628,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "cyclic name space dependencies are not supported"
+#~ msgstr "不支持互相从属的循環名字空间"
 
 #~ msgid "'recursive' will be ignored"
 #~ msgstr "忽略'recursive'"

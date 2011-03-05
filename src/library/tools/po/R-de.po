@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-22 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -121,6 +121,10 @@ msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
 "Objekte kommen bei \\usage, aber nicht unter \\alias im Dokuobjekt '%s' vor"
+
+#, fuzzy
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "Ungültige \\usage Zeile im Dokuobjekt '%s' gefunden:"
@@ -586,6 +590,10 @@ msgstr "Fehler: dies ist R Version %s, Paket '%s' benötigt R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "Fehler: Dies ist R Version %s, benötigt wird R %s %s"
 
+#, fuzzy
+msgid "loading failed"
+msgstr "Test von '%s' fehlgeschlagen"
+
 msgid "Changes require specified 'style'"
 msgstr "Änderungen benötigen den angegebenen 'style'"
 
@@ -708,6 +716,10 @@ msgstr "Parse-Fehler in Datei '%s'"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "sieht aus wie ein Bundle --  und diese sind veraltet"
+
+#, fuzzy
+msgid "running 'zip' failed"
+msgstr "Ausführen von 'make ' fehlgeschlagen"
 
 msgid "packaged installation of"
 msgstr "gepackte Installation von"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1102,8 +1102,23 @@ msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+#, fuzzy
+msgid "'subject' is missing"
 msgstr "'subject'는 잘못되어집니다"
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr "'port'는 1 길이의 정수이어야만 합니다"
 
 msgid "no download method found"
 msgstr "다운로드 메소드는 검색되지 않았습니다"
@@ -1142,6 +1157,9 @@ msgid "'memory.size()' is Windows-specific"
 msgstr ""
 
 msgid "'memory.limit()' is Windows-specific"
+msgstr ""
+
+msgid "method 'mailx' is Unix-only"
 msgstr ""
 
 msgid "zipfile '%s' not found"

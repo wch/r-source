@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1127,9 +1127,6 @@ msgstr "l'espace de noms est déjà attaché"
 msgid "%s not found"
 msgstr "%s introuvable"
 
-msgid "cyclic name space dependencies are not supported"
-msgstr "dépendances cycliques d'espaces de noms non supportées"
-
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "l'espace de noms '%s' est déjà verrouillé dans loadNamespace"
 
@@ -1725,6 +1722,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "cyclic name space dependencies are not supported"
+#~ msgstr "dépendances cycliques d'espaces de noms non supportées"
 
 #~ msgid "'recursive' will be ignored"
 #~ msgstr "l'argument 'recursive' sera ignoré"

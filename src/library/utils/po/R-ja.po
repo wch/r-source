@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1073,8 +1073,23 @@ msgid "'files' must a character vector specifying one or more filepaths"
 msgstr ""
 " 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません "
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+#, fuzzy
+msgid "'subject' is missing"
 msgstr " 'subject' が欠けています "
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr " 'port' は長さ 1 の整数でなければなりません "
 
 msgid "no download method found"
 msgstr " ダウンロードの方法が見付かりません "
@@ -1111,6 +1126,9 @@ msgstr " 'memory.size()' は Windows 固有の関数です "
 
 msgid "'memory.limit()' is Windows-specific"
 msgstr " 'memory.limit()' は Windows 固有の関数です "
+
+msgid "method 'mailx' is Unix-only"
+msgstr ""
 
 msgid "zipfile '%s' not found"
 msgstr " zip ファイル '%s' が見付かりません "

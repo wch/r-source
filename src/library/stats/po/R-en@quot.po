@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
-"PO-Revision-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
+"PO-Revision-Date: 2011-03-05 08:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "models are not all fitted to the same number of observations"
+msgstr "models are not all fitted to the same number of observations"
 
 msgid "empty model supplied"
 msgstr "empty model supplied"
@@ -1384,6 +1387,12 @@ msgstr "no models to compare"
 msgid "extra arguments discarded"
 msgstr "extra arguments discarded"
 
+msgid "no \"nobs\" attribute is available"
+msgstr "no “nobs” attribute is available"
+
+msgid "no 'nobs' method is available"
+msgstr "no ‘nobs’ method is available"
+
 msgid "'start' and 'table' must be same length"
 msgstr "‘start’ and ‘table’ must be same length"
 
@@ -1992,12 +2001,6 @@ msgstr "attempt to smooth NA values"
 msgid "wrong endrule"
 msgstr "wrong endrule"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "‘nknots’ must be numeric <= n"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr "cannot use more inner knots than unique ‘x’ values"
-
 msgid "invalid 'control.spar'"
 msgstr "invalid ‘control.spar’"
 
@@ -2013,8 +2016,26 @@ msgstr "some weights should be positive"
 msgid "need at least four unique 'x' values"
 msgstr "need at least four unique ‘x’ values"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr "‘cv’ must not be NA when ‘df’ is specified"
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "crossvalidation with non-unique ‘x’ values seems doubtful"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr "‘all.knots’ is TRUE; ‘nknots’ specification is disregarded"
+
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "‘nknots’ must be numeric (in {1,..,n})"
+
+msgid "'nknots' must be at least 1"
+msgstr "‘nknots’ must be at least 1"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr "cannot use more inner knots than unique ‘x’ values"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr "specified both ‘df’ and 'cv'; will disregard the latter"
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "you must supply 1 < df <= n,  n = #{unique x} ="

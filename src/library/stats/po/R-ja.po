@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-29 21:00+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -12,6 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 1.1.0 \n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr " モデルは全て同じサイズのデータセットに当てはめられませんでした "
 
 msgid "empty model supplied"
 msgstr " 空のモデルが与えられました "
@@ -1390,6 +1394,13 @@ msgstr " 比較すべきモデルがありません "
 msgid "extra arguments discarded"
 msgstr " 余計な引数は捨てられました "
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr " 'x' に対して適用可能な 'as.stepfun' メソッドはありません "
+
 msgid "'start' and 'table' must be same length"
 msgstr " 'strat' と 'table' は同じ長さでなければなりません "
 
@@ -2007,12 +2018,6 @@ msgstr " NA 値を平滑化しようとしました "
 msgid "wrong endrule"
 msgstr "  誤った端点規則です "
 
-msgid "'nknots' must be numeric <= n"
-msgstr " 'nknots' は n 以下の数値でなければなりません "
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr " 相異なる 'x' 値の数より多くの内部結節点を使用することはできません "
-
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "
 
@@ -2028,9 +2033,29 @@ msgstr " 重みの幾つかは正である必要があります "
 msgid "need at least four unique 'x' values"
 msgstr " 'x' には少なくとも 4 つの異なる値が必要です "
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr ""
 " 一意でない 'x' 値によるクロスバリデーションは問題があるかも知れません "
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr " 'nknots' は n 以下の数値でなければなりません "
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr " 'n.ahead' は少なくとも 1 です "
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr " 相異なる 'x' 値の数より多くの内部結節点を使用することはできません "
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr ""

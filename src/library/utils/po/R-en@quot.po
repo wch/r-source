@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
-"PO-Revision-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
+"PO-Revision-Date: 2011-03-05 08:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1053,8 +1053,22 @@ msgstr "‘unzip’ must be a single character string"
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr "‘files’ must a character vector specifying one or more filepaths"
 
-msgid "'subject' missing"
-msgstr "‘subject’ missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+"cannot find program to open ‘mailto:’ URIs: reverting to ‘method=“none”’"
+
+msgid "Using the browser to open a mailto: URI"
+msgstr "Using the browser to open a mailto: URI"
+
+msgid "must specify 'address'"
+msgstr "must specify ‘address’"
+
+msgid "'subject' is missing"
+msgstr "‘subject’ is missing"
+
+msgid "'ccaddress' must be of length 1"
+msgstr "‘ccaddress’ must be of length 1"
 
 msgid "no download method found"
 msgstr "no download method found"
@@ -1091,6 +1105,9 @@ msgstr "‘memory.size()’ is Windows-specific"
 
 msgid "'memory.limit()' is Windows-specific"
 msgstr "‘memory.limit()’ is Windows-specific"
+
+msgid "method 'mailx' is Unix-only"
+msgstr "method ‘mailx’ is Unix-only"
 
 msgid "zipfile '%s' not found"
 msgstr "zipfile ‘%s’ not found"

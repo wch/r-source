@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -11,6 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr "i modelli sono stati stimati per differenti ampiezze campaionarie"
 
 msgid "empty model supplied"
 msgstr "specificato modello vuoto"
@@ -1439,6 +1443,13 @@ msgstr "nessun modello da confrontare"
 msgid "extra arguments discarded"
 msgstr "argometni extra ignorati"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "nessun metodo 'as.stepfun' disponibile per 'x'"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start' e 'table' devono avere la stessa lunghezza"
 
@@ -2095,12 +2106,6 @@ msgstr "tentativo di allisciare valori NA"
 msgid "wrong endrule"
 msgstr "'endrule' sbagliata"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'knots' deve essere numeric <= n"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr "non posso usare più nodi interni che valori unici di 'x'"
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' non valido"
 
@@ -2116,8 +2121,28 @@ msgstr "alcuni pesi dovrebbero essere positivi"
 msgid "need at least four unique 'x' values"
 msgstr "necessari almeno quattro valori distinti 'x'"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "crossvalidation per valori non unici di 'x' sembra essere dubbia"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'knots' deve essere numeric <= n"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'lag.max' deve essere almeno 1"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr "non posso usare più nodi interni che valori unici di 'x'"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "si deve fornire 1 < df <= n, n = #{x distrinti} ="

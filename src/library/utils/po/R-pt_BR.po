@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -989,7 +989,20 @@ msgstr ""
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr ""
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "'ccaddress' must be of length 1"
 msgstr ""
 
 msgid "no download method found"
@@ -1026,6 +1039,9 @@ msgid "'memory.size()' is Windows-specific"
 msgstr ""
 
 msgid "'memory.limit()' is Windows-specific"
+msgstr ""
+
+msgid "method 'mailx' is Unix-only"
 msgstr ""
 
 msgid "zipfile '%s' not found"

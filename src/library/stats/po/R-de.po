@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-22 13:37+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr ""
+"Modelle sind nicht alle mit der gleichen Datensatzgröße angepasst worden"
 
 msgid "empty model supplied"
 msgstr "leeres Modell angegeben"
@@ -1400,6 +1405,13 @@ msgstr "keine Modelle zum Vergleich"
 msgid "extra arguments discarded"
 msgstr "zusätzliche Argumente verworfen"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "keine 'as.stepfun' Methode für 'x' verfügbar"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start' und 'table' müssen dieselbe Länge haben"
 
@@ -2020,13 +2032,6 @@ msgstr "Versuch NAs zu glätten"
 msgid "wrong endrule"
 msgstr "falsche Endregel"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'nknots' muss numerisch <= n sein"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
-"Kann nicht mehr innere Knoten brauchen als es verschiedene 'x' Werte gibt"
-
 msgid "invalid 'control.spar'"
 msgstr "unzulässiges 'control.spar'"
 
@@ -2042,8 +2047,29 @@ msgstr "einige Gewichte sollten positiv sein"
 msgid "need at least four unique 'x' values"
 msgstr "benötige zumindest vier verschiedene 'x' Werte"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "Kreuzvaldierung mit nicht-eindeutigen 'x' Werte erscheint zweifelhaft"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'nknots' muss numerisch <= n sein"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'n.ahead' muss mindestens 1 sein"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr ""
+"Kann nicht mehr innere Knoten brauchen als es verschiedene 'x' Werte gibt"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "Es muss df angegeben werden. 1< df <= n, n=#{verschiedene x} ="

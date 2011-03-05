@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1054,8 +1054,23 @@ msgstr "'unzip' должен быть одной текстовой строкой"
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+#, fuzzy
+msgid "'subject' is missing"
 msgstr "пропущен 'subject'"
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr "'port' должен быть целым длиной 1"
 
 msgid "no download method found"
 msgstr "не найдено метода скачивания"
@@ -1092,6 +1107,9 @@ msgstr "'memory.size()' -- Windows-специфичный"
 
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' -- Windows-специфичный"
+
+msgid "method 'mailx' is Unix-only"
+msgstr ""
 
 msgid "zipfile '%s' not found"
 msgstr "zip-файл '%s' не найден"

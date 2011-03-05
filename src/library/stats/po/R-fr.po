@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-10-04 11:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: French\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr ""
+"tous les modèles n'ont pas été ajustés à la même taille du jeu de données"
 
 msgid "empty model supplied"
 msgstr "modèle fourni vide"
@@ -1449,6 +1454,13 @@ msgstr "pas de modèle à comparer"
 msgid "extra arguments discarded"
 msgstr "arguments supplémentaires ignorés"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "pas de méthode 'as.stepfun' disponible pour 'x'"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start' et 'table' doivent avoir la même longueur"
 
@@ -2091,14 +2103,6 @@ msgstr "tentative de lisser des valeurs NA"
 msgid "wrong endrule"
 msgstr "règle de fin incorrecte"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'nknots' doit être numérique et <= n"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
-"impossible d'utiliser un nombre de noeuds internes supérieur au nombre de "
-"valeurs différentes de 'x'"
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' incorrect"
 
@@ -2114,8 +2118,30 @@ msgstr "certains poids doivent être positifs"
 msgid "need at least four unique 'x' values"
 msgstr "il faut au moins quatre valeurs de 'x' différentes"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "la validation croisée avec des valeurs de 'x' répétées paraît douteuse"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'nknots' doit être numérique et <= n"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'n.ahead' doit valoir au moins 1"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr ""
+"impossible d'utiliser un nombre de noeuds internes supérieur au nombre de "
+"valeurs différentes de 'x'"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "il faut fournir 1 < df <= n,  n = #{unique x} ="

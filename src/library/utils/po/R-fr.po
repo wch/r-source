@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1082,8 +1082,23 @@ msgstr "'unzip' doit être une seule chaîne de caractères"
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
 
-msgid "'subject' missing"
+msgid ""
+"cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
+msgstr ""
+
+msgid "Using the browser to open a mailto: URI"
+msgstr ""
+
+msgid "must specify 'address'"
+msgstr ""
+
+#, fuzzy
+msgid "'subject' is missing"
 msgstr "'subject' manquant"
+
+#, fuzzy
+msgid "'ccaddress' must be of length 1"
+msgstr "'port' doit être de type entier et de longueur 1"
 
 msgid "no download method found"
 msgstr "impossible de trouver une méthode de téléchargement"
@@ -1122,6 +1137,9 @@ msgstr "'memory.size()' est spécifique à Windows"
 
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' est spécifique à Windows"
+
+msgid "method 'mailx' is Unix-only"
+msgstr ""
 
 msgid "zipfile '%s' not found"
 msgstr "fichier zip '%s' introuvable"

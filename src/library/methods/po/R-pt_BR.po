@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-11-07 19:01+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -473,7 +473,7 @@ msgid "argument \"f\" must be a generic function or %s"
 msgstr "função '%s' parece ser uma função genérica, mas com nome genérico '%s'"
 
 #, fuzzy
-msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
+msgid "'%s' is not a known generic function {and 'package' not specified}"
 msgstr "'%s' não é uma função genérica em '%s'; métodos não removidos"
 
 msgid ""
@@ -1017,11 +1017,6 @@ msgstr "'%s' não é uma função genérica em '%s'; métodos não removidos"
 msgid "invalid element in the groupMembers slot (class \"%s\")"
 msgstr ""
 
-msgid ""
-"\" is not a known action (warn, stop, once, ignore); no action recorded for "
-"function \""
-msgstr ""
-
 #, fuzzy
 msgid "argument f must be a generic function with signature \"...\""
 msgstr "função '%s' parece ser uma função genérica, mas com nome genérico '%s'"
@@ -1140,7 +1135,7 @@ msgid "no definition of \"%s\" to use for %s"
 msgstr ""
 
 msgid ""
-"multiple definitions of class \"%s\" visible; using the definition\n"
+"multiple definitions of class \"%s\" visible (%s); using the definition\n"
 "   in package \"%s\" for %s"
 msgstr ""
 
@@ -1610,6 +1605,11 @@ msgid ""
 "or a binding function"
 msgstr ""
 
+msgid ""
+"Code for methods in class \"%s\" was not checked for suspicious field "
+"assignments (recommended package \"codetools\" not available?)"
+msgstr ""
+
 msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
@@ -1635,8 +1635,20 @@ msgid "for method %s()"
 msgstr ""
 
 msgid ""
-"Local assignment to field name (%s) will not change the field: Did you mean "
-"to use \"<<-\"? \n"
+"Local assignment to field name will not change the field:\n"
+"    %s\n"
+" Did you mean to use \"<<-\"? ( in method %s for class %s)"
+msgstr ""
+
+msgid ""
+"Non-local assignment to non-field names (possibly misspelled?)\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+
+msgid ""
+"Non-local assignment to method names is not allowed\n"
+"    %s\n"
 "( in method %s for class %s)"
 msgstr ""
 

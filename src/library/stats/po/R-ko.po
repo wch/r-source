@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -11,6 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr "model는 모두 동일 사이즈의 데이터 세트에 적용시킬수 없습니다"
 
 msgid "empty model supplied"
 msgstr "비어있는 모델이 제공되어졌습니다"
@@ -1440,6 +1444,13 @@ msgstr "비교해야할 모델이 없습니다"
 msgid "extra arguments discarded"
 msgstr "불필요한 인수는 버려졌습니다"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "'x'에 대해서 적용 가능한 'as.stepfun'메소드는 없습니다"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start'와 'table'는 동일 길이가 나오지 않으면 되지 않습니다"
 
@@ -2099,12 +2110,6 @@ msgstr "NA값을 smoothing 하려고 했습니다"
 msgid "wrong endrule"
 msgstr "잘못한 단점규칙입니다"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'nknots'는 n이하의 수치가 아니면 되지 않습니다"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr "유일이 되는 'x'값보다 내부 결절점을 사용할 수가 없습니다"
-
 msgid "invalid 'control.spar'"
 msgstr "무효인 'control.spar'입니다"
 
@@ -2120,8 +2125,28 @@ msgstr "어떠한 중량감는 poitive 일 ��요가 있습니다"
 msgid "need at least four unique 'x' values"
 msgstr "'x'값에는 적어도 4게의 다른 값이 필요합니다"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "유일하지 않는 'x'값에 의한 크로스 확인은 문제가 있을지도 모릅니다"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'nknots'는 n이하의 수치가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'lag.max'는 적어도 1 입니다"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr "유일이 되는 'x'값보다 내부 결절점을 사용할 수가 없습니다"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr ""

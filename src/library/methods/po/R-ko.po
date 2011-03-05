@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-12-06 16:53\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -464,7 +464,7 @@ msgid "argument \"f\" must be a generic function or %s"
 msgstr "함수'%s'는 일반명 '%s'로 이외에, 일반적인 함수인 것처럼 보입니다"
 
 #, fuzzy
-msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
+msgid "'%s' is not a known generic function {and 'package' not specified}"
 msgstr "'%s'는 '%s'의 일반적인 함수가 아닙니다; 제거되지 않는 메소드입니다"
 
 msgid ""
@@ -1056,11 +1056,6 @@ msgstr "'%s'는 일반적인 함수(또는 여기서 보이지 않습니다)가 
 msgid "invalid element in the groupMembers slot (class \"%s\")"
 msgstr "groupMembers slot (클래스 \"%s\")의 무효인 요소입니다"
 
-msgid ""
-"\" is not a known action (warn, stop, once, ignore); no action recorded for "
-"function \""
-msgstr ""
-
 #, fuzzy
 msgid "argument f must be a generic function with signature \"...\""
 msgstr "함수'%s'는 일반명 '%s'로 이외에, 일반적인 함수인 것처럼 보입니다"
@@ -1207,7 +1202,7 @@ msgstr "%s를 사용하는 \"%s\"의 정의가 아닙니다"
 
 #, fuzzy
 msgid ""
-"multiple definitions of class \"%s\" visible; using the definition\n"
+"multiple definitions of class \"%s\" visible (%s); using the definition\n"
 "   in package \"%s\" for %s"
 msgstr "\"%s\"의 다수의 정의는 검색되었습니다; %s에서 사용합니다"
 
@@ -1727,6 +1722,11 @@ msgid ""
 "or a binding function"
 msgstr ""
 
+msgid ""
+"Code for methods in class \"%s\" was not checked for suspicious field "
+"assignments (recommended package \"codetools\" not available?)"
+msgstr ""
+
 msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
 
@@ -1754,8 +1754,20 @@ msgid "for method %s()"
 msgstr ""
 
 msgid ""
-"Local assignment to field name (%s) will not change the field: Did you mean "
-"to use \"<<-\"? \n"
+"Local assignment to field name will not change the field:\n"
+"    %s\n"
+" Did you mean to use \"<<-\"? ( in method %s for class %s)"
+msgstr ""
+
+msgid ""
+"Non-local assignment to non-field names (possibly misspelled?)\n"
+"    %s\n"
+"( in method %s for class %s)"
+msgstr ""
+
+msgid ""
+"Non-local assignment to method names is not allowed\n"
+"    %s\n"
 "( in method %s for class %s)"
 msgstr ""
 

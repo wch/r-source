@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -123,6 +123,11 @@ msgstr ""
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "Объекты \\используются без \\псевдонима в объекте документации '%s':"
+
+#, fuzzy
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr ""
+"Документированные аргументы не \\используются в объекте документации '%s':"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr ""
@@ -588,6 +593,10 @@ msgstr "ОШИБКА: это R версии %s, а пакет '%s' требует R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 
+#, fuzzy
+msgid "loading failed"
+msgstr "тестирование '%s' не удалось"
+
 msgid "Changes require specified 'style'"
 msgstr "Изменения требуют определенного 'style'"
 
@@ -709,6 +718,10 @@ msgstr "ошибка разбора в файле '%s':"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "похоже, что это сборник -- они отключены"
+
+#, fuzzy
+msgid "running 'zip' failed"
+msgstr "не удался запуск 'make'"
 
 msgid "packaged installation of"
 msgstr "пакетная установка"

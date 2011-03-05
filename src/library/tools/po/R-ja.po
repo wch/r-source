@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2010-09-29 21:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -123,6 +123,12 @@ msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
 " ドキュメンテーションオブジェクト'%s' 中の\\alias がオブジェクト内の \\usage "
 "に存在しません: "
+
+#, fuzzy
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr ""
+" ドキュメントオブジェクト '%s' 中の \\usage 中に存在しないドキュメントを持つ"
+"引数： "
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr ""
@@ -599,6 +605,10 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
+#, fuzzy
+msgid "loading failed"
+msgstr " '%s' のテストに失敗しました "
+
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
 
@@ -720,6 +730,10 @@ msgstr " ファイル '%s' 中に構文解析エラー: "
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "バンドルされているようですが、現在は用いられていません "
+
+#, fuzzy
+msgid "running 'zip' failed"
+msgstr " make の実行に失敗しました "
 
 msgid "packaged installation of"
 msgstr " 以下のパッケージ化されたインストール "

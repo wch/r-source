@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12\n"
+"POT-Creation-Date: 2011-03-05 08:18\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "models are not all fitted to the same number of observations"
+msgstr "模型拟合时没有用同样大小的数据集"
 
 msgid "empty model supplied"
 msgstr "提供的模型是空的"
@@ -1354,6 +1358,13 @@ msgstr "没有可用来比较的模型"
 msgid "extra arguments discarded"
 msgstr "额外参数不用"
 
+msgid "no \"nobs\" attribute is available"
+msgstr ""
+
+#, fuzzy
+msgid "no 'nobs' method is available"
+msgstr "没有适用于'x'的'as.stepfun'方法"
+
 msgid "'start' and 'table' must be same length"
 msgstr "'start'和'table'的长度必需相等"
 
@@ -1958,12 +1969,6 @@ msgstr "不能平滑NA值"
 msgid "wrong endrule"
 msgstr "尺尾不对"
 
-msgid "'nknots' must be numeric <= n"
-msgstr "'nknots'必需是小于等于n的数值"
-
-msgid "cannot use more inner knots than unique 'x' values"
-msgstr "内部结点数止比相互不同的'x'数目要多"
-
 msgid "invalid 'control.spar'"
 msgstr "'control.spar'不对"
 
@@ -1979,8 +1984,28 @@ msgstr "至少有一些权数应该是正的"
 msgid "need at least four unique 'x' values"
 msgstr "至少需要四个相互不同的'x'值"
 
+msgid "'cv' must not be NA when 'df' is specified"
+msgstr ""
+
 msgid "crossvalidation with non-unique 'x' values seems doubtful"
 msgstr "用有重复的'x'来做crossvalidation好象不太对"
+
+msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
+msgstr ""
+
+#, fuzzy
+msgid "'nknots' must be numeric (in {1,..,n})"
+msgstr "'nknots'必需是小于等于n的数值"
+
+#, fuzzy
+msgid "'nknots' must be at least 1"
+msgstr "'n.ahead'至少必需为一"
+
+msgid "cannot use more inner knots than unique 'x' values"
+msgstr "内部结点数止比相互不同的'x'数目要多"
+
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
 
 msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "你必需提供1 < df <= n,  n = #{unique x} ="
