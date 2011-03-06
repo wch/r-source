@@ -88,8 +88,8 @@ gettextf(fmt, \dots, domain = NULL)
       always done.  Most systems will suppress trailing zeros, but a few
       do not.  On a well-written platform, for normal numbers there will
       be a leading one before the decimal point plus (by default) 13
-      hexadecimal digits, hence 53 bits.  (The treatment of denormalized
-      (aka \sQuote{subnormal} numbers is very platform-dependent.)
+      hexadecimal digits, hence 53 bits.  The treatment of denormalized
+      (aka \sQuote{subnormal}) numbers is very platform-dependent.
     }
     \item{\code{s}}{Character string.  Character \code{NA}s are
       converted to \code{"NA"}.
