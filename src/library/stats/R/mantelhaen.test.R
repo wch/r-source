@@ -70,10 +70,10 @@ function(x, y = NULL, z = NULL,
             ## Classical Mantel-Haenszel 2 x 2 x K test
             s.x <- apply(x, c(1L, 3L), sum)
             s.y <- apply(x, c(2L, 3L), sum)
-            n <- apply(x, 3L, sum)
-            DELTA <- abs(sum(x[1, 1, ] - s.x[1, ] * s.y[1, ] / n))
-            YATES <- ifelse(correct && (DELTA >= .5), .5, 0)
-            STATISTIC <- ((DELTA - YATES)^2 /
+            n <- as.double(apply(x, 3L, sum)) # avoid overflows below
+            DELTA <- sum(x[1, 1, ] - s.x[1, ] * s.y[1, ] / n)
+            YATES <- ifelse(correct && (abs(DELTA) >= .5), .5, 0)
+            STATISTIC <- ((abs(DELTA) - YATES)^2 /
                           sum(apply(rbind(s.x, s.y), 2L, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1

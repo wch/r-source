@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-03-02 r54645)
+R version 2.13.0 Under development (unstable) (2011-03-06 r54678)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6615,4 +6615,46 @@ Frequency = 0.2
 > max(NA_real_, NaN)
 [1] NA
 > ## might depend on compiler < 2.13.0
+> 
+> 
+> ## PR#14514
+> # Data are from Conover, "Nonparametric Statistics", 3rd Ed, p. 197,
+> # re-arranged to make a lower-tail test the issue of relevance:  we
+> # want to see if pregnant nurses exposed to nitrous oxide have higher
+> # rates of miscarriage, stratifying on the type of nurse.
+> Nitrous <- array(c(32,210,8,26,18,21,3,3,7,75,0,10), dim = c(2,2,3),
++                  dimnames = list(c("Exposed","NotExposed"),
++                  c("FullTerm","Miscarriage"),
++                  c("DentalAsst","OperRoomNurse","OutpatientNurse")))
+> mantelhaen.test(Nitrous, exact=TRUE, alternative="less")
+
+	Exact conditional test of independence in 2 x 2 x k tables
+
+data:  Nitrous 
+S = 57, p-value = 0.1959
+alternative hypothesis: true common odds ratio is less than 1 
+95 percent confidence interval:
+ 0.000000 1.388197 
+sample estimates:
+common odds ratio 
+        0.6652418 
+
+> mantelhaen.test(Nitrous, exact=FALSE, alternative="less")
+
+	Mantel-Haenszel chi-squared test with continuity correction
+
+data:  Nitrous 
+Mantel-Haenszel X-squared = 0.7143, df = 1, p-value = 0.199
+alternative hypothesis: true common odds ratio is less than 1 
+95 percent confidence interval:
+ 0.000000 1.260053 
+sample estimates:
+common odds ratio 
+        0.6645374 
+
+> ## exact = FALSE gave the wrong tail in 2.12.2.
+> 
+> 
+> 
+> 
 > 

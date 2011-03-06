@@ -2504,3 +2504,21 @@ max(c(NA, NaN))  # NaN in 2.12.2
 max(NaN, NA_real_)  # NaN in 2.12.2
 max(NA_real_, NaN)
 ## might depend on compiler < 2.13.0
+
+
+## PR#14514
+# Data are from Conover, "Nonparametric Statistics", 3rd Ed, p. 197,
+# re-arranged to make a lower-tail test the issue of relevance:  we
+# want to see if pregnant nurses exposed to nitrous oxide have higher
+# rates of miscarriage, stratifying on the type of nurse.
+Nitrous <- array(c(32,210,8,26,18,21,3,3,7,75,0,10), dim = c(2,2,3),
+                 dimnames = list(c("Exposed","NotExposed"),
+                 c("FullTerm","Miscarriage"),
+                 c("DentalAsst","OperRoomNurse","OutpatientNurse")))
+mantelhaen.test(Nitrous, exact=TRUE, alternative="less")
+mantelhaen.test(Nitrous, exact=FALSE, alternative="less")
+## exact = FALSE gave the wrong tail in 2.12.2.
+
+
+
+
