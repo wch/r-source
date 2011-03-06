@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-27 r54614)
+R version 2.13.0 Under development (unstable) (2011-03-05 r54672)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1008,10 +1008,12 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > 
 > pf(x, 5, Inf, ncp=0)
 [1] 0.097730624 0.584119813 0.992270750
-> pf(x, 5, 1e6, ncp=1)
-[1] 0.065933194 0.470879987 0.978875867
-> pf(x, 5, 1e7, ncp=1)
-[1] 0.06593309 0.47088028 0.97887641
+> all.equal(pf(x, 5, 1e6, ncp=1), tol = 1e-6,
++           c(0.065933194, 0.470879987, 0.978875867))
+[1] TRUE
+> all.equal(pf(x, 5, 1e7, ncp=1), tol = 1e-6,
++           c(0.06593309, 0.47088028, 0.97887641))
+[1] TRUE
 > all.equal(pf(x, 5, 1e8, ncp=1), tol = 1e-6,
 +           c(0.0659330751, 0.4708802996, 0.9788764591))
 [1] TRUE
