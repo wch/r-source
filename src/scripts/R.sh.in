@@ -113,8 +113,8 @@ Commands:
 Please use 'R CMD command --help' to obtain further information about
 the usage of 'command'.
 
-Options --arch, --no-environ, --no-init-file and --no-site-file can be
-placed between R and CMD, to apply to R processes run by 'command'
+Options --arch, --no-environ, --no-init-file, --no-site-file and --vanilla
+can be placed between R and CMD, to apply to R processes run by 'command'
 
 Report bugs to <r-bugs@r-project.org>."
 

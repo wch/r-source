@@ -68,8 +68,9 @@
   loading the package concerned.
 
   \R then loads a saved image of the user workspace from \file{.RData}
-  if there is one (unless \option{--no-restore-data} or
-  \option{--no-restore} was specified on the command line).
+  in the current directory if there is one (unless
+  \option{--no-restore-data} or \option{--no-restore} was specified on
+  the command line).
 
   Next, if a function \code{.First} is found on the search path,
   it is executed as \code{.First()}.  Finally, function
@@ -93,10 +94,10 @@
 
   On front-ends which support it, the commands history is read from the
   file specified by the environment variable \env{R_HISTFILE} (default
-  \file{.Rhistory}) unless \option{--no-restore-history} was specified
-  (or \option{--no-restore}).
+  \file{.Rhistory} in the current directory) unless
+  \option{--no-restore-history} or \option{--no-restore} was specified.
 
-  The command-line flag \option{--vanilla} implies
+  The command-line option \option{--vanilla} implies
   \option{--no-site-file}, \option{--no-init-file},
   \option{--no-environ} and (except for for \command{R CMD})
   \option{--no-restore}
@@ -135,19 +136,18 @@
 }
 \note{
 #ifdef unix
-  The file \file{\var{\link{R_HOME}}/etc/Renviron} is
-  always read very early in the start-up processing.  It contains
-  environment variables set by \R in the configure process.  Values in
-  that file can be overridden in site or user environment files: do not
-  change \file{\var{\link{R_HOME}}/etc/Renviron} itself.
-  Note that this is distinct from
-  \file{\var{\link{R_HOME}}/etc/Renviron.site}.
+  On Unix versions of \R here is also a  file
+  \file{\var{\link{R_HOME}}/etc/Renviron} which is read very early in
+  the start-up processing.  It contains environment variables set by \R
+  in the configure process.  Values in that file can be overridden in
+  site or user environment files: do not change
+  \file{\var{\link{R_HOME}}/etc/Renviron} itself.  Note that this is
+  distinct from \file{\var{\link{R_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
   The startup options are for \command{Rgui} and \code{Rterm} but not
-  for \command{Rcmd} (which is run by \command{R CMD}, and \code{CMD}
-  must be the first argument in that usage): attempting to use
-  e.g. \option{--vanilla} will give a warning or error.
+  for \command{Rcmd}: attempting to use e.g. \option{--vanilla} will
+  give a warning or error.
   
   Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
@@ -156,16 +156,15 @@
 #endif
   
   \command{R CMD check} and \command{R CMD build} do not always read the
-  standard startup files, but they do read specific \samp{Renviron}
-  files such as \file{~/.R/check.Renviron}, \file{~/.R/build.Renviron}
-  or sub-architecture-specific versions.
+  standard startup files, but they do always read specific
+  \samp{Renviron} files such as \file{~/.R/check.Renviron},
+  \file{~/.R/build.Renviron} or sub-architecture-specific versions.
 
   If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
   child \R processes (such as those run by \command{R CMD check} and
-  \command{R CMD build}), set the environment variable
-  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} (respectively) to (if
-  possible, which it is not on Windows) \code{""} or to the name of a
-  non-existent file.
+  \command{R CMD build}), set the appropriate environment variable
+  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} to (if possible, which it
+  is not on Windows) \code{""} or to the name of a non-existent file.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c

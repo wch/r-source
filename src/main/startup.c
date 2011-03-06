@@ -104,14 +104,18 @@ FILE *R_OpenSiteFile(void)
 	/* Saving and Restoring the Global Environment */
 
 #ifndef Win32
-static char workspace_name[100] = ".RData";
+static char workspace_name[1000] = ".RData";
 
+/*
+  set_workspace_name is in src/gnuwin32/system.c and used to implement
+  drag-and-drop on Windows.
+ */
 #else
 static char workspace_name[PATH_MAX] = ".RData";
 
 void set_workspace_name(const char *fn)
 {
-    strcpy(workspace_name, fn);
+    strncpy(workspace_name, fn, PATH_MAX);
 }
 #endif
 

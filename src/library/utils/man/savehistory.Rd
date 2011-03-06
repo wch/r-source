@@ -1,6 +1,6 @@
 % File src/library/utils/man/savehistory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savehistory}
@@ -50,9 +50,9 @@ timestamp(stamp = date(),
   The history mechanism is controlled by two environment
 #endif
 #ifdef unix
-  This works under the \code{readline} command-line interface but not
-  otherwise (for example, in batch use or in an embedded application,
-  nor currently in \code{R.app}).
+  The functions described here work under the \code{readline}
+  command-line interface but may not otherwise (for example, in batch
+  use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment
 #endif
@@ -88,6 +88,8 @@ timestamp(stamp = date(),
   \code{\link{.Last}}.  See the examples.
 }
 \examples{\dontrun{
+## save the history in the home directory: note that it is not
+## (by default) read from there.
 .Last <- function()
     if(interactive()) try(savehistory("~/.Rhistory"))
 }}
