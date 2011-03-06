@@ -195,7 +195,7 @@ static SEXP ziplist(const char *zipname)
     int err, nfiles;
 
     uf = unzOpen(zipname);
-    if (!uf) error(_("zip file '%s' cannot be opened"));
+    if (!uf) error(_("zip file '%s' cannot be opened"), zipname);
 
     gi.number_entry = 0; /* =Wall */
     err = unzGetGlobalInfo (uf, &gi);

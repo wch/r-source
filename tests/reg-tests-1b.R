@@ -1574,4 +1574,8 @@ stopifnot(identical(format(0.2204, digits=3), "0.22"))
 ## gave "0.220" previously
 
 
+## regression test for PR#14517
+try(unzip('non-existing_file.zip', list=TRUE, unzip="internal"))
+## crashed on some platforms in pre-2.13.0
+
 proc.time()
