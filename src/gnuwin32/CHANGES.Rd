@@ -41,6 +41,11 @@
 
       \item \code{file.exists()} and \code{unlink()} have more support
       for files > 2GB.
+
+      \item The versions of \command{R.exe} in
+      \file{R_HOME/bin/{i386,x64}/bin} now support options such as
+      \command{R --vanilla CMD}: there is no comparable interface for
+      \file{Rcmd.exe}.
     }
   }
 

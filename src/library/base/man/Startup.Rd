@@ -163,8 +163,9 @@
   If you want \code{~/.Renviron} or \code{~/.Rprofile} to be ignored by
   child \R processes (such as those run by \command{R CMD check} and
   \command{R CMD build}), set the environment variable
-  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} (respectively) to
-  \code{""} or some non-empty and non-existent value.
+  \env{R_ENVIRON_USER} or \env{R_PROFILE_USER} (respectively) to (if
+  possible, which it is not on Windows) \code{""} or to the name of a
+  non-existent file.
 }
 %% R_PROFLE_USER is used in src/unix/sys-unix.c and src/gnuwin32/sys-win32.c
 %% R_ENVIRON, R_ENVIRON_USER are used in src/main/Renviron.c

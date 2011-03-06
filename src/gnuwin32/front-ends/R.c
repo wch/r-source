@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-7  R Development Core Team
+ *  Copyright (C) 2000-11  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,9 +27,32 @@ int main (int argc, char **argv)
     int cmdarg = 0;
 
     if (argc > 1) {
-	if (strcmp(argv[1], "CMD") == 0) cmdarg = 2;
-	else if (strcmp(argv[1], "-h") == 0
+	if (strcmp(argv[1], "-h") == 0
 	 	|| strcmp(argv[1], "--help") == 0) cmdarg = 1;
+	else {
+	    /* see if any arg is 'CMD' */
+	    for(int i = 1; i < argc; i++)
+		if(strcmp(argv[i], "CMD") == 0) {
+		    cmdarg = i + 1;
+		    break;		    
+		}
+	    if (cmdarg >= 3) { /* something before CMD */
+		/* Cannot set to empty value on Windows */
+		char *Init = "R_PROFILE_USER=\r", *Site="R_RPOFILE=\r",
+		    *Env1="R_ENVIRON=\r", *Env2="R_ENVIRON_USER=\r";
+		for(int i = 1; i < cmdarg; i++) {
+		    char *a = argv[i];
+		    if (strcmp(a, "--no-init-file") == 0 ||
+			strcmp(a, "--vanilla") == 0) putenv(Init);
+		    if (strcmp(a, "--no-site-file") == 0 ||
+			strcmp(a, "--vanilla") == 0) putenv(Site);
+		    if (strcmp(a, "--no-environ") == 0 ||
+			strcmp(a, "--vanilla") == 0) {
+			putenv(Env1); putenv(Env2);
+		    }
+		}
+	    }
+	}
     }
 
     exit(rcmdfn(cmdarg, argc, argv));

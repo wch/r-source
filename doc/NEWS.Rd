@@ -331,12 +331,12 @@
       considered to be set and will stop the default being used, and for
       the last two tilde expansion is performed on the file name.
 
-      \item Using \command{R --no-environ}, \command{R --no-site-file}
-      or \command{R --no-init-file} sets environment variables so these
-      settings are passed on to child \R processes, notably those run by
-      \code{R CMD INSTALL|check|build}.  \command{R --vanilla CMD} sets
-      these three flags (but not \option{--no-restore})
-      [Experimental, not on Windows.]
+      \item Using \command{R --no-environ CMD}, \command{R
+	--no-site-file CMD} or \command{R --no-init-file CMD} sets
+      environment variables so these settings are passed on to child \R
+      processes, notably those run by \code{INSTALL}, \code{check} and
+      \code{build}. \command{R --vanilla CMD} sets these three options
+      (but not \option{--no-restore}).
 
       \item \code{smooth.spline()} is somewhat faster and with
       \code{cv=NA} allows to skip some leverage computations.

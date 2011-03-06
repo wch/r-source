@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-10  R Development Core Team
+ *  Copyright (C) 2000-11  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 extern char *getRHOME(int), *getRUser(void); /* in ../rhome.c */
 
-void R_Suicide(char *s) /* for use in ../rhome.o */
+void R_Suicide(char *s) /* for call from ../rhome.o */
 {
     fprintf(stderr, "FATAL ERROR:%s\n", s);
     exit(2);
@@ -141,7 +141,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* need to cover Rcmd --help, R CMD --help and R --help,
 	   as well as -h versions.
 	 */
-	if(cmdarg == 2 || (cmdarg == 1 && !strcmp(RCMD, "Rcmd"))) {
+	if(cmdarg >= 2 || (cmdarg == 1 && !strcmp(RCMD, "Rcmd"))) {
 	    fprintf(stderr, "%s%s%s", "Usage: ", RCMD, " command args\n\n");
 	    rcmdusage(RCMD);
 	    return(0);
@@ -177,17 +177,19 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	return system(cmd);
     }
 
-    /* From here on down, this was called as Rcmd or R CMD
-       We follow Unix-alikes as from R 2.12.0 in setting environment
-       variables in Rcmd BATCH.
+    /* From here on down, this was called as Rcmd or R CMD */
 
-       NB: Rcmd_environ uses R_HOME.
-    */
     char RHOME[MAX_PATH];
     strcpy(RHOME, "R_HOME=");
     strcat(RHOME, RHome);
     for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
     putenv(RHOME);
+
+    /* We follow Unix-alikes as from R 2.12.0 in setting environment
+       variables in Rcmd BATCH.
+
+       NB: Rcmd_environ uses R_HOME.
+    */
     strcpy(env_path, RHome); strcat(env_path, "/etc/Rcmd_environ");
     process_Renviron(env_path);
 

@@ -7108,12 +7108,12 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-In addition, you can use@footnote{as from @R{} 2.13.0, and UNIX-only.}
-options @option{--arch=}, @option{--no-environ},
-@option{--no-init-file}, @option{--no-site-file} and @option{--vanilla}
-between @command{R} and @command{CMD}: these affect any @R{} processes
-run by the tools.  (Here @option{--vanilla} is equivalent to
-@option{--no-environ --no-site-file --no-init-file}.)
+In addition, you can use@footnote{as from @R{} 2.13.0.}  options
+@option{--arch=}, @option{--no-environ}, @option{--no-init-file},
+@option{--no-site-file} and @option{--vanilla} between @command{R} and
+@command{CMD}: these affect any @R{} processes run by the tools.  (Here
+@option{--vanilla} is equivalent to @option{--no-environ --no-site-file
+--no-init-file}.)
 
 @example
 R CMD @var{cmd} @var{args}
