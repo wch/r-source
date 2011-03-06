@@ -98,7 +98,8 @@
 
   The command-line flag \option{--vanilla} implies
   \option{--no-site-file}, \option{--no-init-file},
-  \option{--no-restore} and \option{--no-environ}.
+  \option{--no-environ} and (except for for \command{R CMD})
+  \option{--no-restore}
 #ifdef windows
   Under Windows, it also implies \option{--no-Rconsole}, which
   prevents loading the \file{\link{Rconsole}} file.

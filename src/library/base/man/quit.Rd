@@ -18,7 +18,7 @@ quit(save = "default", status = 0, runLast = TRUE)
         (workspace) should be saved, one of \code{"no"}, \code{"yes"},
         \code{"ask"} or \code{"default"}.}
     \item{status}{the (numerical) error status to be returned to the
-        operating system, where relevant. Conventionally \code{0}
+        operating system, where relevant.  Conventionally \code{0}
         indicates successful completion.}
     \item{runLast}{should \code{.Last()} be executed?}
 }

@@ -6781,6 +6781,9 @@ want to save it.
 @node Invoking R, The command-line editor, A sample session, Top
 @appendix Invoking R
 
+Users of @R{} on Windows or Mac OS X should read the OS-specific section
+first, but command-line use is also supported.
+
 @menu
 * Invoking R from the command line::  
 * Invoking R under Windows::    
@@ -6791,9 +6794,8 @@ want to save it.
 @node Invoking R from the command line, Invoking R under Windows, Invoking R, Invoking R
 @appendixsec Invoking R from the command line
 
-When working in UNIX or at a command line in Windows,
-the command @samp{R} can be used both for starting the main @R{} program
-in the form
+When working at a command line on UNIX or Windows, the command @samp{R}
+can be used both for starting the main @R{} program in the form
 
 @display
 @code{R} [@var{options}] [@code{<}@var{infile}] [@code{>}@var{outfile}],
@@ -6803,6 +6805,9 @@ in the form
 or, via the @code{R CMD} interface, as a wrapper to various @R{} tools
 (e.g., for processing files in @R{} documentation format or manipulating
 add-on packages) which are not intended to be called ``directly''.
+
+At the Windows command-line, @command{Rterm.exe} is preferred to
+@command{R}.
 
 You need to ensure that either the environment variable @env{TMPDIR} is
 unset or it points to a valid place to create temporary files and
@@ -6844,12 +6849,13 @@ environment variable @env{R_PROFILE_USER}; if unset, a file called
 directory (in that order) is searched for.
 
 @item
-It also loads a saved image from @file{.RData} if there is one (unless
-@option{--no-restore} or @option{--no-restore-data} was specified).
+It also loads a saved workspace from file @file{.RData} in the current
+directory if there is one (unless @option{--no-restore} or
+@option{--no-restore-data} was specified).
 
 @item
-Finally, if a function @code{.First} exists, it is executed.  This
-function (as well as @code{.Last} which is executed at the end of the
+Finally, if a function @code{.First()} exists, it is executed.  This
+function (as well as @code{.Last()} which is executed at the end of the
 @R{} session) can be defined in the appropriate startup profiles, or
 reside in @file{.RData}.
 @end itemize
@@ -6922,15 +6928,16 @@ Combine @option{--no-save}, @option{--no-environ},
 
 @item -f @var{file}
 @itemx --file=@var{file}
-Take input from @var{file}: @samp{-} means @code{stdin}.
-Implies @option{--no-save} unless @option{--save} has been set.
+(not @command{Rgui.exe}) Take input from @var{file}: @samp{-} means
+@code{stdin}.  Implies @option{--no-save} unless @option{--save} has
+been set.
 
 @item -e @var{expression}
-Use @var{expression} as an input line.  One or more @option{-e} options
-can be used, but not together with @option{-f} or @option{--file}.
-Implies @option{--no-save} unless @option{--save} has been set.  (There
-is a limit of 10,000 bytes on the total length of expressions used in
-this way.)
+(not @command{Rgui.exe}) Use @var{expression} as an input line.  One or
+more @option{-e} options can be used, but not together with @option{-f}
+or @option{--file}.  Implies @option{--no-save} unless @option{--save}
+has been set.  (There is a limit of 10,000 bytes on the total length of
+expressions used in this way.)
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
@@ -6964,11 +6971,11 @@ value accepted is 100000.
 @item --max-mem-size=@var{N}
 (Windows only) Specify a limit for the amount of memory to be used both
 for @R{} objects and working areas.  This is set by default to the
-smaller of 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb
-per process and have the support enabled: see the @file{rw-FAQ} Q2.9;
-3.5Gb on some 64-bit versions of Windows.}  and the amount of physical
-RAM in the machine, and must be between 32Mb and the maximum allowed
-on that version of Windows.
+smaller of the amount of physical RAM in the machine and for 32-bit
+@R{}, 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb per
+process and have the support enabled: see the @file{rw-FAQ} Q2.9; 3.5Gb
+on some 64-bit versions of Windows.}, and must be between 32Mb and the
+maximum allowed on that version of Windows.
 
 @item --quiet
 @itemx --silent
@@ -7015,6 +7022,11 @@ also includes interactive graphics).  Currently, possible values for
 support is available, @samp{Tk}. (For back-compatibility, @samp{x11} and
 @samp{tk} are accepted.)
 
+@item --arch=@var{name}
+(UNIX only) Run the specified sub-architecture.  Most commonly used on
+Mac OS X, where the possible values are @samp{i386}, @samp{x86_64} and
+@samp{ppc}.
+
 @item --args
 This flag does nothing except cause the rest of the command line to be
 skipped: this can be useful to retrieve values from it with
@@ -7044,7 +7056,7 @@ Currently, the following tools are available.
 @item BATCH
 Run @R{} in batch mode.
 @item COMPILE
-(UNIX only) Compile files for use with @R{}.
+(UNIX only) Compile C, C++, Fortran @dots{} files for use with @R{}.
 @item SHLIB
 Build shared library for dynamic loading.
 @item INSTALL
@@ -7096,19 +7108,24 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-In addition, you can use
+In addition, you can use@footnote{as from @R{} 2.13.0, and UNIX-only.}
+options @option{--arch=}, @option{--no-environ},
+@option{--no-init-file}, @option{--no-site-file} and @option{--vanilla}
+between @command{R} and @command{CMD}: these affect any @R{} processes
+run by the tools.  (Here @option{--vanilla} is equivalent to
+@option{--no-environ --no-site-file --no-init-file}.)
 
 @example
 R CMD @var{cmd} @var{args}
 @end example
 
 @noindent
-for any other executable @command{@var{cmd}} on the path: this is useful
-to have the same environment as @R{} or the specific commands run under,
-for example to run @command{ldd} or @command{pdflatex}.  Under Windows
-@var{cmd} can be an executable or a batch file, or if it has extension
-@code{.sh} or @code{.pl} the appropriate interpreter (if available) is
-called to run it.
+for any other executable @command{@var{cmd}} on the path or given by an
+absolute filepath: this is useful to have the same environment as @R{}
+or the specific commands run under, for example to run @command{ldd} or
+@command{pdflatex}.  Under Windows @var{cmd} can be an executable or a
+batch file, or if it has extension @code{.sh} or @code{.pl} the
+appropriate interpreter (if available) is called to run it.
 
 
 @node Invoking R under Windows, Invoking R under Mac OS X, Invoking R from the command line, Invoking R
@@ -7117,9 +7134,8 @@ called to run it.
 There are two ways to run @R{} under Windows.  Within a terminal window
 (e.g.@ @code{cmd.exe} or a more capable shell), the methods described in
 the previous section may be used, invoking by @code{R.exe} or more
-directly by @code{Rterm.exe}.  (These are principally intended for batch
-use.)  For interactive use, there is a console-based GUI
-(@code{Rgui.exe}).
+directly by @code{Rterm.exe}.  For interactive use, there is a
+console-based GUI (@code{Rgui.exe}).
 
 The startup procedure under Windows is very similar to that under
 UNIX, but references to the `home directory' need to be clarified, as
@@ -7255,7 +7271,8 @@ the usual way for the shell running the command.
 
 If you do not wish to hardcode the path to @command{Rscript} but have it
 in your path (which is normally the case for an installed @R{} except on
-Windows), use
+Windows, but e.g.@: Mac OS X users may need to add @file{/usr/local/bin}
+to their path), use
 
 @example
 #! /usr/bin/env Rscript

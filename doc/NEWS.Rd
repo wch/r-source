@@ -334,7 +334,9 @@
       \item Using \command{R --no-environ}, \command{R --no-site-file}
       or \command{R --no-init-file} sets environment variables so these
       settings are passed on to child \R processes, notably those run by
-      \code{R CMD INSTALL|check|build}. [Experimental, not on Windows.]
+      \code{R CMD INSTALL|check|build}.  \command{R --vanilla CMD} sets
+      these three flags (but not \option{--no-restore})
+      [Experimental, not on Windows.]
 
       \item \code{smooth.spline()} is somewhat faster and with
       \code{cv=NA} allows to skip some leverage computations.

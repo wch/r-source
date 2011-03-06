@@ -317,8 +317,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* ------- end of BATCH -------- */
     }
 
-    /* Now Rcmd <cmd> or R CMD <cmd>: some commands are handled internally,
-       some via batch/Perl files */
+    /* Now Rcmd <cmd> or R CMD <cmd>: most commands are nowadays
+     * handled internally on Windows
+     */
 
     /* Not sure that we still need these set -- they are Windows-only */
     char Rversion[25];
