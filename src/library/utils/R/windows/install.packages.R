@@ -27,7 +27,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
         } else stop(gettextf("zipfile '%s' not found", zipname), domain = NA)
     }
 
-## Create a temporary directory and unpack the zip to it
+    ## Create a temporary directory and unpack the zip to it
     ## then get the real package name, copying the
     ## dir over to the appropriate install dir.
     lib <- normalizePath(lib, mustWork = TRUE)
