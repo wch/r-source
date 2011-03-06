@@ -45,7 +45,9 @@ boxplot(x, \dots)
     vectors (unless \code{x} is a list when they are ignored),
     and named arguments are arguments and graphical parameters to be
     passed to \code{\link{bxp}} in addition to the ones
-    given by argument \code{pars} (and override those in \code{pars}).
+    given by argument \code{pars} (and override those in
+    \code{pars}). Note that \code{bxp} may or may not make use of graphical
+    parameters it is passed: see its documentation.
   }
   \item{range}{this determines how far the plot whiskers extend out
     from the box.  If \code{range} is positive, the whiskers extend
