@@ -251,8 +251,9 @@
       \item New function \code{list.dirs()} lists all directories,
       (even empty ones).
 
-      \item \code{file.copy()} now copies read/write/execute permissions
-      on files (it already did so for directories in recursive copies).
+      \item \code{file.copy()} now (by default) copies
+      read/write/execute permissions on files (it already did so for
+      directories in recursive copies).
 
       \item \code{Sys.umask()} now accepts \code{mode = NA} and returns
       the current \code{umask} value (still invisibly) without changing it.

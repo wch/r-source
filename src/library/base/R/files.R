@@ -96,7 +96,9 @@ file.create <- function(..., showWarnings =  TRUE)
 
 file.choose <- function(new=FALSE) .Internal(file.choose(new))
 
-file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
+file.copy <- function(from, to,
+                      overwrite = recursive, recursive = FALSE,
+                      copy.mode = TRUE)
 {
     if (!(nf <- length(from))) stop("no files to copy from")
     if (!(nt <- length(to)))   stop("no files to copy to")
@@ -107,7 +109,7 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
             from <- gsub("/", "\\", from, fixed = TRUE)
             to <- gsub("/", "\\", to, fixed = TRUE)
         }
-        return(.Internal(file.copy(from, to, overwrite, recursive)))
+        return(.Internal(file.copy(from, to, overwrite, recursive, copy.mode)))
     } else if (nf > nt) stop("more 'from' files than 'to' files")
     else if (recursive)
         warning("'recursive' will be ignored as 'to' is not a single existing directory")
@@ -119,7 +121,7 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
     if (any(okay)) { # care: file.create could fail but file.append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
-        Sys.chmod(to[okay], file.info(from[okay])$mode)
+        if(copy.mode) Sys.chmod(to[okay], file.info(from[okay])$mode & "777")
     }
     okay
 }

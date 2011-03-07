@@ -9,6 +9,7 @@
 \alias{Sys.umask}
 \concept{directory}
 \concept{mkdir}
+\alias{umask} % for links
 \title{Manipulaton of Directories and File Permissions}
 \description{
   These functions provide a low-level interface to the computer's

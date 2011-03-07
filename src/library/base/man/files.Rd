@@ -20,7 +20,8 @@ file.exists(\dots)
 file.remove(\dots)
 file.rename(from, to)
 file.append(file1, file2)
-file.copy(from, to, overwrite = recursive, recursive = FALSE)
+file.copy(from, to, overwrite = recursive, recursive = FALSE,
+          copy.mode = TRUE)
 file.symlink(from, to)
 file.link(from, to)
 }
@@ -33,6 +34,8 @@ file.link(from, to)
   \item{showWarnings}{logical; should the warnings on failure be shown?}
   \item{recursive}{logical. If \code{to} is a directory, should
     directories in \code{from} be copied (and their contents).}
+  \item{copy.mode}{logical:  should file permission bits be copied where
+    possible?  This applies to both files and directories.}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -44,8 +47,10 @@ file.link(from, to)
   All of these functions expand path names: see \code{\link{path.expand}}.
 
   \code{file.create} creates files with the given names if they do not
-  already exist and truncates them if they do.  They are created with the
-  maximal permissions allowed by the \code{umask} setting (where relevant).
+  already exist and truncates them if they do.  They are created with
+  the maximal read/write permissions allowed by the
+  \sQuote{\link{umask}} setting (where relevant).  By default a warning
+  is given (with the reason) if the operation fails.
 
   \code{file.exists} returns a logical vector indicating whether the
   files named by its argument exist.  (Here \sQuote{exists} is in the
@@ -82,10 +87,12 @@ file.link(from, to)
 
   \code{file.copy} works in a similar way to \code{file.append} but with
   the arguments in the natural order for copying.  Copying to existing
-  destination files is skipped unless \code{overwrite = TRUE}.
-  The \code{to} argument can specify a single existing directory.  As
-  from \R 2.13.0 file read/write/execute permissions are copied where
-  possible. 
+  destination files is skipped unless \code{overwrite = TRUE}.  The
+  \code{to} argument can specify a single existing directory.  If
+  \code{copy.mode = TRUE} (added in \R 2.13.0) file read/write/execute
+  permissions are copied where possible. (NB: it does not take the
+  \sQuote{\link{umask}} into account for files: it may for directories.
+  And other security attributes such as ACLs are not copied.)
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the

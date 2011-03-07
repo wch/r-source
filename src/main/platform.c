@@ -2075,7 +2075,7 @@ end:
 */
 #ifdef Win32
 static int do_copy(const wchar_t* from, const wchar_t* name,
-		   const wchar_t* to, int over, int recursive)
+		   const wchar_t* to, int over, int recursive, int perms)
 {
     struct _stati64 sb;
     int nc, nfail = 0, res;
@@ -2100,7 +2100,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 		if (!wcscmp(de->d_name, L".") || !wcscmp(de->d_name, L".."))
 		    continue;
 		wsprintfW(p, L"%ls%\\%ls", name, de->d_name);
-		do_copy(from, p, to, over, recursive);
+		do_copy(from, p, to, over, recursive, perms);
 	    }
 	    _wclosedir(dir);
 	} else nfail++; /* we were unable to read a dir */
@@ -2123,17 +2123,17 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 copy_error:
 	if(fp2) fclose(fp2);
 	if(fp1) fclose(fp1);
-	_wchmod(dest, sb.st_mode & 0777);
+	if(perms) _wchmod(dest, sb.st_mode & 0777);
     }
     return nfail;
 }
 
-/* file.copy(files, dir, recursive), only */
+/* file.copy(files, dir, over, recursive=TRUE, perms), only */
 SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, to, ans;
     wchar_t *p, dir[PATH_MAX], from[PATH_MAX], name[PATH_MAX];
-    int i, nfiles, over, recursive, nfail;
+    int i, nfiles, over, recursive, perms, nfail;
 
     checkArity(op, args);
     fn = CAR(args);
@@ -2151,6 +2151,9 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	recursive = asLogical(CADDDR(args));
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
+	perms = asLogical(CAD4R(args));
+	if (perms == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "copy.mode");
 	wcsncpy(dir,
 		filenameToWchar(STRING_ELT(to, 0), TRUE),
 		PATH_MAX);
@@ -2177,7 +2180,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 			wcsncpy(from, L".\\", PATH_MAX);
 		    }
 		}
-		nfail = do_copy(from, name, dir, over, recursive);
+		nfail = do_copy(from, name, dir, over, recursive, perms);
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}
@@ -2189,7 +2192,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 
 static int do_copy(const char* from, const char* name, const char* to,
-		   int over, int recursive)
+		   int over, int recursive, int perms)
 {
     struct stat sb;
     int nc, nfail = 0, res;
@@ -2206,7 +2209,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 	if (!recursive) return 1;
 	nc = strlen(to);
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
-	res = mkdir(dest, sb.st_mode & 0777); /* the same as cp */
+	res = mkdir(dest, perms ? (sb.st_mode & 0777): 0755);
 	if (res && errno != EEXIST) return 1;
 	strcat(dest, "/");
 	if ((dir = opendir(this)) != NULL) {
@@ -2214,7 +2217,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
 		    continue;
 		snprintf(p, PATH_MAX, "%s/%s", name, de->d_name);
-		do_copy(from, p, to, over, recursive);
+		do_copy(from, p, to, over, recursive, perms);
 	    }
 	    closedir(dir);
 	} else nfail++; /* we were unable to read a dir */
@@ -2238,7 +2241,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 copy_error:
 	if(fp2) fclose(fp2);
 	if(fp1) fclose(fp1);
-	chmod(dest, sb.st_mode & 0777);
+	if(perms) chmod(dest, sb.st_mode & 0777);
     }
     return nfail;
 }
@@ -2248,7 +2251,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, to, ans;
     char *p, dir[PATH_MAX], from[PATH_MAX], name[PATH_MAX];
-    int i, nfiles, over, recursive, nfail;
+    int i, nfiles, over, recursive, perms, nfail;
 
     checkArity(op, args);
     fn = CAR(args);
@@ -2266,6 +2269,9 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	recursive = asLogical(CADDDR(args));
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
+	perms = asLogical(CAD4R(args));
+	if (perms == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "copy.mode");
 	strncpy(dir, 
 		R_ExpandFileName(translateChar(STRING_ELT(to, 0))),
 		PATH_MAX);
@@ -2287,7 +2293,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    strncpy(name, from, PATH_MAX);
 		    strncpy(from, "./", PATH_MAX);
 		}
-		nfail = do_copy(from, name, dir, over, recursive);
+		nfail = do_copy(from, name, dir, over, recursive, perms);
 	    } else nfail = 1;
 	    LOGICAL(ans)[i] = (nfail == 0);
 	}
