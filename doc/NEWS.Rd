@@ -536,6 +536,11 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{edit.default} contained a manual dispatch for matrices
+      (the \code{"matrix"} class didn't really exist when it was written). 
+      This caused an infinite recursion in the no-GUI case and has now
+      been removed. 
+
       \item \code{drop.terms} and the \code{[} method for class
       \code{"terms"} no longer add back an intercept.  (Reported by
       Niels Hansen.)

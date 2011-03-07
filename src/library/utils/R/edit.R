@@ -50,9 +50,12 @@ edit.default <-
     function (name = NULL, file = "", title = NULL,
               editor = getOption("editor"), ...)
 {
-    if(is.matrix(name) &&
-       (mode(name) == "numeric" || mode(name) == "character"))
-        edit.matrix(name=name, ...)
+    if(FALSE){}
+# This should no longer be necessary, and caused problems in the no-GUI
+# situation.
+#is.matrix(name) &&
+#       (mode(name) == "numeric" || mode(name) == "character"))
+#        edit.matrix(name=name, ...)
     else {
 	if (is.null(title)) title <- deparse(substitute(name))
         if (is.function(editor))
