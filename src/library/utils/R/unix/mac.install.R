@@ -20,7 +20,9 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),
              method, available = NULL, destdir = NULL,
-             dependencies = FALSE, ...)
+             lock = getOption("install.lock", FALSE),
+             dependencies = FALSE,
+             ...)
     {}
 } else {
 ## edited from windows/.install.winbinary
@@ -33,10 +35,6 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
              lock = getOption("install.lock", FALSE),
              ...)
 {
-    link.html.help<-function(verbose = FALSE, ...)
-    {
-        ## What was here didn't work recently ....
-    }
     untar <- function(what, where)
     {
         ## FIXME: should this look for Sys.getenv('TAR')?
@@ -130,7 +128,6 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         ## but we can't tell without trying to unpack it.
         for(i in seq_along(pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, lock = lock)
-        # link.html.help(verbose=TRUE)
         return(invisible())
     }
     tmpd <- destdir

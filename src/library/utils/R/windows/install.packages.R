@@ -106,9 +106,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 			" for modifying\nTry removing ", sQuote(lockdir))
 	    }
 	    dir.create(lockdir, recursive = TRUE)
-	    if (!dir.exists(lockdir)) {
+	    if (!dir.exists(lockdir))
 		stop("ERROR: failed to create lock directory ", sQuote(lockdir))
-	    }
             ## Back up a previous version
             if (file.exists(instPath)) {
                 file.copy(instPath, lockdir, recursive = TRUE)
@@ -200,12 +199,6 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
              lock = getOption("install.lock", FALSE), ...)
 {
     if(!length(pkgs)) return(invisible())
-
-    .link_html_help <- function(lib)
-    {
-        # update packages.html if .Library was changed?
-        # source version and remove.packages only do so on Unix.
-    }
     ## look for package in use.
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
@@ -269,8 +262,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                normalizePath(tmpd, mustWork = FALSE)),
                 "\n", sep = "")
-        .link_html_help(lib)
-    } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
+    } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, recursive = TRUE)
 
     invisible()
 }
