@@ -13,8 +13,8 @@
 
       \item Printing and formatting of floating point numbers is now
       using the correct number of digits, where it previously rarely
-      differed by a few digits, and also would round wrongly (very rarely).
-      (See \dQuote{scientific} entry below.)
+      differed by a few digits. (See \dQuote{scientific} entry below.)
+      This affects \emph{many} \file{*.Rout.save} checks in packages.
     }
   }
   \subsection{NEW FEATURES}{
@@ -346,7 +346,7 @@
       etc, for numeric \code{x}, has been re-written in order to provide
       correct results, fixing \PR{14491}, notably in border cases,
       including when \code{digits >= 16}, thanks to substantial
-      contributions (code and experiments) from Petr Sawicky.
+      contributions (code and experiments) from Petr Savicky.
       This affects a noticable amount of numeric output from \R.
     }
   }
