@@ -141,11 +141,9 @@ function(formula, data = parent.frame(), ..., subset,
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(eval(m$data, eframe)))
-	m$data <- as.data.frame(data)
-
-    dots <- m$...
-    dots <- lapply(dots, eval, data, eframe)
+    if (is.matrix(md <- eval(m$data, eframe)))
+	m$data <- md <- as.data.frame(data)
+    dots <- lapply(m$..., eval, md, eframe)
     ## need to avoid evaluation of expressions in do.call later.
     ## see PR#10525
     nmdots <- names(dots)
@@ -218,10 +216,9 @@ function(formula,  data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(eval(m$data, eframe)))
-	m$data <- as.data.frame(data)
-    dots <- m$...
-    dots <- lapply(dots, eval, data, eframe)
+    if (is.matrix(md <- eval(m$data, eframe)))
+	m$data <- md <- as.data.frame(data)
+    dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
     m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
@@ -260,10 +257,9 @@ function(formula, data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(eval(m$data, eframe)))
-	m$data <- as.data.frame(data)
-    dots <- m$...
-    dots <- lapply(dots, eval, data, eframe)
+    if (is.matrix(md <- eval(m$data, eframe)))
+	m$data <- md <- as.data.frame(data)
+    dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
     m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
@@ -301,10 +297,9 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(eval(m$data, eframe)))
-	m$data <- as.data.frame(data)
-    dots <- m$...
-    dots <- lapply(dots, eval, data, eframe)
+    if (is.matrix(md <- eval(m$data, eframe)))
+	m$data <- md <- as.data.frame(data)
+    dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
     m[[1L]] <- as.name("model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))

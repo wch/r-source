@@ -588,6 +588,9 @@
       \command{R CMD INSTALL} to crash \R and so leave around a lock
       directory and a partially installed package.  That test is now
       done in a separate process.
+
+      \item \code{plot(<formula>, data=<matrix>,..)} now works in more
+      cases; ditto for \code{points()}, \code{lines()} and \code{text()}.
     }
   }
 }
@@ -616,7 +619,7 @@
       \code{glm()} fits did not and so \code{BIC()} failed for them.
 
       \item In some circumstances a one-sided \code{mantelhaen.test()}
-    reported the p-value for the wrong tail.  (\PR{14514})
+      reported the p-value for the wrong tail.  (\PR{14514})
     }
   }
 }

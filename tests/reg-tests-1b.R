@@ -1578,4 +1578,13 @@ stopifnot(identical(format(0.2204, digits=3), "0.22"))
 try(unzip('non-existing_file.zip', list=TRUE, unzip="internal"))
 ## crashed on some platforms in pre-2.13.0
 
+
+## plot.formula(*, data=<matrix>) etc
+A <- data.matrix(anscombe)
+plot  (y1 ~ x1, data = A, main = "Anscombe's first two sets")
+points(y2 ~ x2, data = A, col=2, pch=2)
+lines (y2 ~ x2, data = A, lwd=2, col="gray")
+## using a matrix failed in R < 2.13.0  *when* there was an extra argument
+
+
 proc.time()
