@@ -416,13 +416,17 @@
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
-      The \code{00check.log} file is a more complete record of what is
+      The \file{00check.log} file is a more complete record of what is
       output to \file{stdout}: in particular contains more details of
       the tests.
 
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
       file to \file{inst/doc/Makefile}.
+
+      \item \command{R CMD check} now uses all syntactically valid Rd
+      usage entries, and warns about assignments (unless these give the
+      usage of replacement functions).
     }
   }
 
