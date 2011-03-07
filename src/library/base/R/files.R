@@ -108,7 +108,6 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
             to <- gsub("/", "\\", to, fixed = TRUE)
         }
         return(.Internal(file.copy(from, to, overwrite, recursive)))
-        # to <- file.path(to, basename(from))
     } else if (nf > nt) stop("more 'from' files than 'to' files")
     else if (recursive)
         warning("'recursive' will be ignored as 'to' is not a single existing directory")
@@ -117,9 +116,10 @@ file.copy <- function(from, to, overwrite = recursive, recursive = FALSE)
     if (!overwrite) okay[file.exists(to)] <- FALSE
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")
-    if (any(okay)) { ## care: create could fail but append work.
+    if (any(okay)) { # care: file.create could fail but file.append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
+        Sys.chmod(to[okay], file.info(from[okay])$mode)
     }
     okay
 }
