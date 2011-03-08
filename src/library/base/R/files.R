@@ -122,7 +122,8 @@ file.copy <- function(from, to,
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
         if(copy.mode) {
-            mask <- as.octmode("777") & !Sys.umask(NA)
+            um <- suppressWarnings(Sys.umask(NA))
+            mask <- as.octmode("777") & !um
             Sys.chmod(to[okay], file.info(from[okay])$mode & mask)
         }
     }

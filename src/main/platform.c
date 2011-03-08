@@ -2195,11 +2195,15 @@ static int do_copy(const char* from, const char* name, const char* to,
 		   int over, int recursive, int perms)
 {
     struct stat sb;
-    int nc, nfail = 0, res, mask, um;
+    int nc, nfail = 0, res, mask;
     char dest[PATH_MAX], this[PATH_MAX];
 
-    um = umask(0); umask(um);
+#ifdef HAVE_UMASK
+    int um = umask(0); umask(um);
     mask = 0777 & ~um;
+#else
+    mask = 0777;
+#endif
     /* REprintf("from: %s, name: %s, to: %s\n", from, name, to); */
     snprintf(this, PATH_MAX, "%s%s", from, name);
     stat(this, &sb);
