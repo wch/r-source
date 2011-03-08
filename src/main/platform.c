@@ -516,7 +516,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    fclose(fp);
 	} else if (show) {
 	    warning(_("cannot create file '%s', reason '%s'"),
-		    CHAR(STRING_ELT(fn, i)), strerror(errno));
+		    translateChar(STRING_ELT(fn, i)), strerror(errno));
 	}
     }
     UNPROTECT(1);
@@ -543,7 +543,7 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	    if(!LOGICAL(ans)[i])
 		warning(_("cannot remove file '%s', reason '%s'"),
-			CHAR(STRING_ELT(f, i)), strerror(errno));
+			translateChar(STRING_ELT(f, i)), strerror(errno));
 	} else LOGICAL(ans)[i] = FALSE;
     }
     UNPROTECT(1);
@@ -2066,6 +2066,9 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     if (show && res && errno == EEXIST)
 	warning(_("'%ls' already exists"), dir);
 end:
+    if (show && res && errno != EEXIST)
+	warning(_("cannot create dir '%ls', reason '%s'"), dir, 
+		strerror(errno));
     return ScalarLogical(res == 0);
 }
 #endif
@@ -2094,7 +2097,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 	/* We could set the mode (only the 200 part matters) later */
 	res = _wmkdir(dest);
 	if (res && errno != EEXIST) {
-	    warning(_("problem creating directory %s: %s"), 
+	    warning(_("problem creating directory %ls: %s"), 
 		    this, strerror(errno));
 	    return 1;
 	}
@@ -2109,7 +2112,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 	    }
 	    _wclosedir(dir);
 	} else {
-	    warning(_("problem reading dir %s: %s"), this, strerror(errno));
+	    warning(_("problem reading dir %ls: %s"), this, strerror(errno));
 	    nfail++; /* we were unable to read a dir */
 	}
     } else { /* a file */
@@ -2122,7 +2125,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 	if (over || !R_WFileExists(dest)) { /* FIXME */
 	    if ((fp1 = _wfopen(this, L"rb")) == NULL ||
 		(fp2 = _wfopen(dest, L"wb")) == NULL) {
-		warning(_("problem copying %s to %s: %s"),
+		warning(_("problem copying %ls to %ls: %s"),
 			this, dest, strerror(errno));
 		nfail++;
 		goto copy_error;
