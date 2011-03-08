@@ -3777,7 +3777,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 8 we used
+on @cputype{x86_64} with Fedora 14 we used
 
 @example
 CC="gcc -m32"
@@ -3792,10 +3792,6 @@ LIBnn=lib
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
-
-There are known problems with several early versions of
-@command{gcc}@tie{}4, but @command{gcc}@tie{}4.1.0 and later have been
-tested extensively.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
