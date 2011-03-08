@@ -621,6 +621,10 @@
 
       \item In some circumstances a one-sided \code{mantelhaen.test()}
       reported the p-value for the wrong tail.  (\PR{14514})
+
+      \item Passing the invalid value \code{lty = NULL} to \code{axis()}
+      sent an invalid value to the graphics device, and might cause the
+      device to segfault.
     }
   }
 }
