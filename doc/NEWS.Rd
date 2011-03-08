@@ -252,11 +252,11 @@
       (even empty ones).
 
       \item \code{file.copy()} now (by default) copies
-      read/write/execute permissions on files (it already did so for
-      directories in recursive copies).
+      read/write/execute permissions on files, moderated by the current
+      setting of \code{Sys.umask()}.
 
       \item \code{Sys.umask()} now accepts \code{mode = NA} and returns
-      the current \code{umask} value (still invisibly) without changing it.
+      the current \code{umask} value (visibly) without changing it.
 
       \item There is a \code{!} method for classes \code{"octmode"} and
       \code{"hexmode"}: this allows \code{xor(a, b)} to work if both

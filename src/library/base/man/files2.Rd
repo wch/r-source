@@ -97,7 +97,8 @@ Sys.umask(mode = "0000")
   for an already existing component for \code{recursive = TRUE}).
 
   \code{Sys.umask} returns the previous value of the \code{umask},
-  invisibly, as a length-one object of class \code{"\link{octmode}"}.
+  as a length-one object of class \code{"\link{octmode}"}: the
+  visibility flag is off unless \code{mode} is \code{NA}.
 }
 #ifdef windows
 \note{

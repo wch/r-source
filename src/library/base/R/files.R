@@ -121,7 +121,10 @@ file.copy <- function(from, to,
     if (any(okay)) { # care: file.create could fail but file.append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
-        if(copy.mode) Sys.chmod(to[okay], file.info(from[okay])$mode & "777")
+        if(copy.mode) {
+            mask <- as.octmode("777") & !Sys.umask(NA)
+            Sys.chmod(to[okay], file.info(from[okay])$mode & mask)
+        }
     }
     okay
 }

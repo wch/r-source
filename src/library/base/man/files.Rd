@@ -90,9 +90,9 @@ file.link(from, to)
   destination files is skipped unless \code{overwrite = TRUE}.  The
   \code{to} argument can specify a single existing directory.  If
   \code{copy.mode = TRUE} (added in \R 2.13.0) file read/write/execute
-  permissions are copied where possible. (NB: it does not take the
-  \sQuote{\link{umask}} into account for files: it may for directories.
-  And other security attributes such as ACLs are not copied.)
+  permissions are copied where possible, restricted by
+  \sQuote{\link{umask}}.  Other security attributes such as ACLs are not
+  copied.
   
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the
