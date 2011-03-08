@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1092,6 +1092,21 @@ msgstr "'tar' hatte Exit-Status ungleich 0"
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "Paket '%s' erfolgreich ausgepackt und MD5 Summen abgeglichen"
 
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr "kann temporäres Verzeichnis '%s' nicht erzeugen"
+
+msgid "restored '%s'"
+msgstr ""
+
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "kann temporäre Installation '%s' nicht nach '%s' verschieben"
 
@@ -1112,21 +1127,6 @@ msgstr "Zipfile '%s' nicht gefunden"
 
 msgid "failed to create '%s'"
 msgstr "Erzeugen von '%s' fehlgeschlagen"
-
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR: failed to create lock directory"
-msgstr "kann temporäres Verzeichnis '%s' nicht erzeugen"
-
-msgid "restored '%s'"
-msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "kein 'libs' Verzeichnis in paket '%s'"

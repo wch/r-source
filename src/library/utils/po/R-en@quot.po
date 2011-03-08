@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
-"PO-Revision-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
+"PO-Revision-Date: 2011-03-08 06:55\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1094,6 +1094,22 @@ msgstr "‘tar’ returned non-zero exit code %d"
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "package ‘%s’ successfully unpacked and MD5 sums checked"
 
+msgid "ERROR: failed to lock directory"
+msgstr "ERROR: failed to lock directory"
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+"for modifying\n"
+"Try removing"
+
+msgid "ERROR: failed to create lock directory"
+msgstr "ERROR: failed to create lock directory"
+
+msgid "restored '%s'"
+msgstr "restored ‘%s’"
+
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "unable to move temporary installation ‘%s’ to ‘%s’"
 
@@ -1114,22 +1130,6 @@ msgstr "zipfile ‘%s’ not found"
 
 msgid "failed to create '%s'"
 msgstr "failed to create ‘%s’"
-
-msgid "ERROR: failed to lock directory"
-msgstr "ERROR: failed to lock directory"
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-"for modifying\n"
-"Try removing"
-
-msgid "ERROR: failed to create lock directory"
-msgstr "ERROR: failed to create lock directory"
-
-msgid "restored '%s'"
-msgstr "restored ‘%s’"
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "there is no ‘libs’ directory in package ‘%s’"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:17+0000\n"
+"POT-Creation-Date: 2011-03-08 06:55+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -197,45 +197,46 @@ msgstr ""
 #: src/main/platform.c:1541 src/main/platform.c:1582 src/main/platform.c:1584
 #: src/main/platform.c:1644 src/main/platform.c:1735 src/main/platform.c:1995
 #: src/main/platform.c:2038 src/main/platform.c:2144 src/main/platform.c:2147
-#: src/main/platform.c:2150 src/main/platform.c:2153 src/main/platform.c:2259
+#: src/main/platform.c:2150 src/main/platform.c:2153 src/main/platform.c:2156
 #: src/main/platform.c:2262 src/main/platform.c:2265 src/main/platform.c:2268
-#: src/main/platform.c:2337 src/main/platform.c:2371 src/main/platform.c:2417
-#: src/main/plot.c:3113 src/main/plot.c:4252 src/main/plot.c:4256
-#: src/main/plot.c:4259 src/main/plot3d.c:2449 src/main/plot3d.c:2453
-#: src/main/plot3d.c:2458 src/main/plot3d.c:2462 src/main/plot3d.c:2466
-#: src/main/plot3d.c:2470 src/main/print.c:231 src/main/print.c:237
-#: src/main/print.c:259 src/main/print.c:265 src/main/print.c:271
-#: src/main/random.c:468 src/main/random.c:472 src/main/random.c:476
-#: src/main/saveload.c:1937 src/main/saveload.c:1940 src/main/saveload.c:1943
-#: src/main/saveload.c:2059 src/main/saveload.c:2239 src/main/saveload.c:2244
-#: src/main/saveload.c:2247 src/main/saveload.c:2350 src/main/scan.c:660
-#: src/main/scan.c:827 src/main/scan.c:840 src/main/scan.c:844
-#: src/main/scan.c:846 src/main/scan.c:857 src/main/scan.c:884
-#: src/main/scan.c:887 src/main/scan.c:940 src/main/scan.c:977
-#: src/main/scan.c:981 src/main/scan.c:991 src/main/scan.c:1205
-#: src/main/scan.c:1433 src/main/scan.c:1484 src/main/scan.c:1496
-#: src/main/scan.c:1500 src/main/scan.c:1506 src/main/scan.c:1720
-#: src/main/scan.c:1721 src/main/scan.c:1723 src/main/scan.c:1724
-#: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
-#: src/main/scan.c:1728 src/main/seq.c:381 src/main/seq.c:388
-#: src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418 src/main/seq.c:426
-#: src/main/sort.c:161 src/main/sysutils.c:565 src/main/sysutils.c:567
-#: src/main/sysutils.c:569 src/main/sysutils.c:574 src/main/sysutils.c:1523
-#: src/main/sysutils.c:1527 src/main/unique.c:825 src/main/unique.c:1104
-#: src/main/unique.c:1164 src/main/unique.c:1171 src/main/util.c:574
-#: src/main/util.c:577 src/main/util.c:1755
-#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
-#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
-#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:153
-#: src/modules/lapack/Lapack.c:243 src/modules/lapack/Lapack.c:668
-#: src/modules/lapack/Lapack.c:764 src/modules/lapack/Lapack.c:821
-#: src/modules/lapack/Lapack.c:1079 src/modules/X11/devX11.c:2916
-#: src/modules/X11/devX11.c:2919 src/modules/X11/devX11.c:2922
-#: src/modules/X11/devX11.c:2947 src/modules/X11/devX11.c:3318
-#: src/modules/X11/devX11.c:3323 src/modules/X11/devX11.c:3327
-#: src/modules/X11/devX11.c:3331 src/modules/X11/devX11.c:3335
-#: src/modules/X11/devX11.c:3346 src/modules/X11/devX11.c:3350
-#: src/unix/sys-std.c:1203 src/unix/sys-std.c:1226
+#: src/main/platform.c:2271 src/main/platform.c:2274 src/main/platform.c:2343
+#: src/main/platform.c:2377 src/main/platform.c:2423 src/main/plot.c:3113
+#: src/main/plot.c:4252 src/main/plot.c:4256 src/main/plot.c:4259
+#: src/main/plot3d.c:2449 src/main/plot3d.c:2453 src/main/plot3d.c:2458
+#: src/main/plot3d.c:2462 src/main/plot3d.c:2466 src/main/plot3d.c:2470
+#: src/main/print.c:231 src/main/print.c:237 src/main/print.c:259
+#: src/main/print.c:265 src/main/print.c:271 src/main/random.c:468
+#: src/main/random.c:472 src/main/random.c:476 src/main/saveload.c:1937
+#: src/main/saveload.c:1940 src/main/saveload.c:1943 src/main/saveload.c:2059
+#: src/main/saveload.c:2239 src/main/saveload.c:2244 src/main/saveload.c:2247
+#: src/main/saveload.c:2350 src/main/scan.c:660 src/main/scan.c:827
+#: src/main/scan.c:840 src/main/scan.c:844 src/main/scan.c:846
+#: src/main/scan.c:857 src/main/scan.c:884 src/main/scan.c:887
+#: src/main/scan.c:940 src/main/scan.c:977 src/main/scan.c:981
+#: src/main/scan.c:991 src/main/scan.c:1205 src/main/scan.c:1433
+#: src/main/scan.c:1484 src/main/scan.c:1496 src/main/scan.c:1500
+#: src/main/scan.c:1506 src/main/scan.c:1720 src/main/scan.c:1721
+#: src/main/scan.c:1723 src/main/scan.c:1724 src/main/scan.c:1725
+#: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
+#: src/main/seq.c:381 src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412
+#: src/main/seq.c:418 src/main/seq.c:426 src/main/sort.c:161
+#: src/main/sysutils.c:565 src/main/sysutils.c:567 src/main/sysutils.c:569
+#: src/main/sysutils.c:574 src/main/sysutils.c:1523 src/main/sysutils.c:1527
+#: src/main/unique.c:825 src/main/unique.c:1104 src/main/unique.c:1164
+#: src/main/unique.c:1171 src/main/util.c:574 src/main/util.c:577
+#: src/main/util.c:1755 src/modules/internet/internet.c:283
+#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
+#: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:243
+#: src/modules/lapack/Lapack.c:668 src/modules/lapack/Lapack.c:764
+#: src/modules/lapack/Lapack.c:821 src/modules/lapack/Lapack.c:1079
+#: src/modules/X11/devX11.c:2916 src/modules/X11/devX11.c:2919
+#: src/modules/X11/devX11.c:2922 src/modules/X11/devX11.c:2947
+#: src/modules/X11/devX11.c:3318 src/modules/X11/devX11.c:3323
+#: src/modules/X11/devX11.c:3327 src/modules/X11/devX11.c:3331
+#: src/modules/X11/devX11.c:3335 src/modules/X11/devX11.c:3346
+#: src/modules/X11/devX11.c:3350 src/unix/sys-std.c:1203
+#: src/unix/sys-std.c:1226
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -5427,12 +5428,12 @@ msgstr "impossibile creare fifo '%s' perché '%s'"
 msgid "'%ls' already exists"
 msgstr "'%s' già esistente"
 
-#: src/main/platform.c:2342
+#: src/main/platform.c:2348
 #, fuzzy
 msgid "'mode' must be of length at least one"
 msgstr "'hadj' deve essere di lunghezza 1"
 
-#: src/main/platform.c:2396
+#: src/main/platform.c:2402
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "nls() non è supportato in questa piattaforma"

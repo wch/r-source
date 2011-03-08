@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2010-09-22 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -772,9 +772,6 @@ msgstr ""
 msgid "invalid package"
 msgstr "ungültiges Paket"
 
-msgid "--pkglock applies only to a single package"
-msgstr "--pkglock bezieht sich nur auf eine einzelnes Paket"
-
 msgid "ERROR: no packages specified"
 msgstr "Fehler: keine Pakete angegeben"
 
@@ -799,12 +796,6 @@ msgstr "Fehler: kann kein lock Verzeichnis erzeugen"
 
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
-
-msgid "--no-help overrides"
-msgstr "--no-help übersteuert"
-
-msgid "--"
-msgstr "--"
 
 msgid "finding HTML links ..."
 msgstr "suche HTML Links ..."
@@ -1111,6 +1102,15 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "--pkglock applies only to a single package"
+#~ msgstr "--pkglock bezieht sich nur auf eine einzelnes Paket"
+
+#~ msgid "--no-help overrides"
+#~ msgstr "--no-help übersteuert"
+
+#~ msgid "--"
+#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip'ist nur für Windows"

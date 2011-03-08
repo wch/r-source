@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -980,6 +980,18 @@ msgstr ""
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr ""
 
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid "for modifying\nTry removing"
+msgstr ""
+
+msgid "ERROR: failed to create lock directory"
+msgstr ""
+
+msgid "restored '%s'"
+msgstr ""
+
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr ""
 
@@ -999,18 +1011,6 @@ msgid "zipfile '%s' not found"
 msgstr ""
 
 msgid "failed to create '%s'"
-msgstr ""
-
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
-msgid "for modifying\nTry removing"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory"
-msgstr ""
-
-msgid "restored '%s'"
 msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"

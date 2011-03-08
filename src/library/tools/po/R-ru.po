@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -773,9 +773,6 @@ msgstr ""
 msgid "invalid package"
 msgstr "неправильный пакет"
 
-msgid "--pkglock applies only to a single package"
-msgstr "--pkglock применим только к одиночному пакету"
-
 msgid "ERROR: no packages specified"
 msgstr "ОШИБКА: пакет не определен"
 
@@ -800,12 +797,6 @@ msgstr "ОШИБКА: не удалось создать блокированную папку"
 
 msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
-
-msgid "--no-help overrides"
-msgstr "--no-help переписан"
-
-msgid "--"
-msgstr "--"
 
 msgid "finding HTML links ..."
 msgstr "нахожу ссылки HTML..."
@@ -1111,6 +1102,15 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "--pkglock applies only to a single package"
+#~ msgstr "--pkglock применим только к одиночному пакету"
+
+#~ msgid "--no-help overrides"
+#~ msgstr "--no-help переписан"
+
+#~ msgid "--"
+#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip' -- это только для Windows"

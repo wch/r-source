@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2010-10-03 18:49-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -792,9 +792,6 @@ msgstr "ERREUR : --merge-multiarch valide seulement sur les systèmes i386/x64"
 msgid "invalid package"
 msgstr "package incorrect"
 
-msgid "--pkglock applies only to a single package"
-msgstr "--pkglock est valide pour un seul package"
-
 msgid "ERROR: no packages specified"
 msgstr "ERREUR : aucun package spécifié"
 
@@ -819,12 +816,6 @@ msgstr "ERREUR : impossible de créer le répertoire verrouillé"
 
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
-
-msgid "--no-help overrides"
-msgstr "--no-help a priorité sur"
-
-msgid "--"
-msgstr "--"
 
 msgid "finding HTML links ..."
 msgstr "recherche des liens HTML ..."
@@ -1139,6 +1130,15 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "--pkglock applies only to a single package"
+#~ msgstr "--pkglock est valide pour un seul package"
+
+#~ msgid "--no-help overrides"
+#~ msgstr "--no-help a priorité sur"
+
+#~ msgid "--"
+#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip'  est pour Windows seulement"

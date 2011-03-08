@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1115,6 +1115,21 @@ msgstr " 'tar' がゼロでない終了コード %d を返しました "
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr " パッケージ '%s' は無事に開封され、MD5 サムもチェックされました "
 
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
+
+msgid "restored '%s'"
+msgstr ""
+
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした "
 
@@ -1135,21 +1150,6 @@ msgstr " zip ファイル '%s' が見付かりません "
 
 msgid "failed to create '%s'"
 msgstr " '%s' を生成できませんでした "
-
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR: failed to create lock directory"
-msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
-
-msgid "restored '%s'"
-msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "いかなる 'libs' ディレクトリもパッケージ '%s' 中にはありません "

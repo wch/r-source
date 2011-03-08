@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1096,6 +1096,21 @@ msgstr "'tar' вернул ненулевой код выхода %d"
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
 
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr "не могу создать временную папку '%s'"
+
+msgid "restored '%s'"
+msgstr ""
+
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "не могу перенести временную установку из '%s' в '%s'"
 
@@ -1116,21 +1131,6 @@ msgstr "zip-файл '%s' не найден"
 
 msgid "failed to create '%s'"
 msgstr "не удалось создать '%s'"
-
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR: failed to create lock directory"
-msgstr "не могу создать временную папку '%s'"
-
-msgid "restored '%s'"
-msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr "нет папки 'libs' в пакете '%s'"

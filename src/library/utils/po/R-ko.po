@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1146,6 +1146,21 @@ msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "패키지 '%s'는 성공적으로 unpack 하였고 MD5 합계가 체크되었습니다"
 
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory"
+msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
+
+msgid "restored '%s'"
+msgstr ""
+
 #, fuzzy
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "'%s'에 임시 설치 '%d'를 이동시킬 수 없습니다"
@@ -1167,21 +1182,6 @@ msgstr "검색되지 않는 zip파일'%s'입니다"
 
 msgid "failed to create '%s'"
 msgstr "'%s'를 작성하는데 실패 되었습니다"
-
-msgid "ERROR: failed to lock directory"
-msgstr ""
-
-msgid ""
-"for modifying\n"
-"Try removing"
-msgstr ""
-
-#, fuzzy
-msgid "ERROR: failed to create lock directory"
-msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
-
-msgid "restored '%s'"
-msgstr ""
 
 msgid "there is no 'libs' directory in package '%s'"
 msgstr ""

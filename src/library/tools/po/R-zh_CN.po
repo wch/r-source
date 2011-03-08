@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -743,9 +743,6 @@ msgstr "错误：--merge-multiarch只适用i386/x64安装"
 msgid "invalid package"
 msgstr "程辑包无效."
 
-msgid "--pkglock applies only to a single package"
-msgstr "--pkglock只适用于单独程序包"
-
 msgid "ERROR: no packages specified"
 msgstr "错误：没有设定程序包"
 
@@ -770,12 +767,6 @@ msgstr "错误：无法建锁住的目录"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
-
-msgid "--no-help overrides"
-msgstr "--no-help覆盖"
-
-msgid "--"
-msgstr "--"
 
 msgid "finding HTML links ..."
 msgstr "搜寻HTML链结…"
@@ -1068,6 +1059,15 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "--pkglock applies only to a single package"
+#~ msgstr "--pkglock只适用于单独程序包"
+
+#~ msgid "--no-help overrides"
+#~ msgstr "--no-help覆盖"
+
+#~ msgid "--"
+#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip'只在Windows上有用"

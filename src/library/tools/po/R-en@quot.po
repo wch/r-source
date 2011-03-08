@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
-"PO-Revision-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-08 06:55\n"
+"PO-Revision-Date: 2011-03-08 06:55\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -772,9 +772,6 @@ msgstr "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 msgid "invalid package"
 msgstr "invalid package"
 
-msgid "--pkglock applies only to a single package"
-msgstr "--pkglock applies only to a single package"
-
 msgid "ERROR: no packages specified"
 msgstr "ERROR: no packages specified"
 
@@ -799,12 +796,6 @@ msgstr "ERROR: failed to create lock directory"
 
 msgid "building a fake installation is disallowed"
 msgstr "building a fake installation is disallowed"
-
-msgid "--no-help overrides"
-msgstr "--no-help overrides"
-
-msgid "--"
-msgstr "--"
 
 msgid "finding HTML links ..."
 msgstr "finding HTML links ..."
