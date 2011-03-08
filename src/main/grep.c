@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -75,12 +75,21 @@ strsplit grep [g]sub [g]regexpr
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
+#ifndef isRaw
+#define isRaw(x) (TYPEOF(x) == RAWSXP)
+#endif
+
+/* we allow reg == NULL if the regex cannot be safely expressed
+   as a string (e.g., when using grepRaw) */
 static void reg_report(int rc,  regex_t *reg, const char *pat)
 {
     char errbuf[1001];
     tre_regerror(rc, reg, errbuf, 1001);
     warning(_("regcomp error:  '%s'"), errbuf);
-    error(_("invalid regular expression '%s'"), pat);
+    if (pat)
+	error(_("invalid regular expression '%s'"), pat);
+    else
+	error(_("invalid regular expression"));
 }
 
 /* FIXME: make more robust, and public */
@@ -897,6 +906,260 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (invert ^ LOGICAL(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
     UNPROTECT(1);
+    return ans;
+}
+
+
+/* fixed, single binary search, no error checking; -1 = no match, otherwise offset
+   NOTE: all offsets here (in & out) are 0-based !! */
+static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
+    const unsigned char *haystack = RAW(text), *needle = RAW(pat);
+    R_size_t n = LENGTH(text);
+    switch (LENGTH(pat)) { /* it may be silly but we optimize small needle
+			      searches, because they can be used to match
+			      single UTF8 chars (up to 3 bytes) */
+    case 1:
+	{
+	    unsigned char c = needle[0];
+	    while (offset < n) {
+		if (haystack[offset] == c)
+		    return offset;
+		offset++;
+	    }
+	    return -1;
+	}
+    case 2:
+	{
+	    n--;
+	    while (offset < n) {
+		if (haystack[offset] == needle[0] && haystack[offset + 1] == needle[1])
+		    return offset;
+		offset++;
+	    }
+	    return -1;
+	}
+    case 3:
+	{
+	    n -= 2;
+	    while (offset < n) {
+		if (haystack[offset    ] == needle[0] &&
+		    haystack[offset + 1] == needle[1] &&
+		    haystack[offset + 2] == needle[2])
+		    return offset;
+		offset++;
+	    }
+	    return -1;
+	}
+    default:
+	{
+	    R_size_t ncmp = LENGTH(pat);
+	    n -= ncmp;
+	    ncmp--;
+	    while (offset < n) {
+		if (haystack[offset] == needle[0] &&
+		    !memcmp(haystack + offset + 1, needle + 1, ncmp))
+		    return offset;
+		offset++;
+	    }
+	}
+    }
+    return -1;
+}
+
+/* grepRaw(pattern, text, offset, ignore.case, fixed, value, all) */
+SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP pat, text, ans, res_head, res_tail;
+    regex_t reg;
+    int nmatches = 0, rc, cflags, eflags = 0;
+    int *res_val;
+    int res_alloc = 512; /* must be divisible by 2 since we may store offset+length
+			    it is the initial size of the integer vector of matches */
+    R_size_t res_ptr, offset, i;
+    int igcase_opt, fixed_opt, all, value;
+
+    checkArity(op, args);
+    pat = CAR(args); args = CDR(args);
+    text = CAR(args); args = CDR(args);
+    offset = asInteger(CAR(args)); args = CDR(args);
+    igcase_opt = asLogical(CAR(args)); args = CDR(args);
+    fixed_opt = asLogical(CAR(args)); args = CDR(args);
+    value = asLogical(CAR(args)); args = CDR(args);
+    all = asLogical(CAR(args));
+    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
+    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    if (all == NA_INTEGER) all = 0;
+    if (value == NA_INTEGER) value = 0;
+    if (fixed_opt && igcase_opt)
+	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
+
+    /* currently we support only offset >= 1 */
+    if (offset < 1)
+	error(_("invalid '%s' argument"), "offset");
+    if (!isRaw(pat))
+	error(_("invalid '%s' argument"), "pattern");
+    if (!isRaw(text))
+	error(_("invalid '%s' argument"), "text");
+    if (offset > LENGTH(text))
+	return allocVector(INTSXP, 0);
+
+    offset--; /* reduce offset to base 0 */
+
+    /* TRE fails miserably for REG_LITERAL -- not only is it slow but
+       it doesn't handle embedded NULs properly (e.g., compile
+       goes into an infinite loop with "\00" pattern) -- so we have
+       to do it by hand */
+    if (fixed_opt) {
+	if (LENGTH(pat) == 0)
+	    return allocVector(value ? (all ? VECSXP : RAWSXP) : INTSXP, 0);
+	if (!all) {
+	    R_size_t res = fgrepraw1(pat, text, offset);
+	    if (res == -1) return allocVector(value ? RAWSXP : INTSXP, 0);
+	    if (!value) return ScalarInteger(res + 1);
+	    /* value=TRUE doesn't really make sense for anything other than
+	       match/nomatch detection since we just return the pattern */
+	    return pat;
+	} else {
+	    /* there are two ways to do it: two pass or one pass. We use the latter
+	       with TRE below, but for a sequential search I assume it's fast enough
+	       so it's not worth the hassle. We just special-case really tiny matches
+	       which should be the most common case anyway. */
+#define MAX_MATCHES_MINIBUF 32
+	    int matches[MAX_MATCHES_MINIBUF];
+	    R_size_t n = LENGTH(text);
+	    while (offset < n) {
+		offset = fgrepraw1(pat, text, offset);
+		if (offset == -1)
+		    break;
+		if (nmatches < MAX_MATCHES_MINIBUF)
+		    matches[nmatches] = offset + 1;
+		nmatches++;
+		offset += LENGTH(pat);
+	    }
+	    if (value) { /* value=TRUE is pathetic for fixed=TRUE as it is just rep(pat, nmatches) */
+		ans = PROTECT(allocVector(VECSXP, nmatches));
+		for (i = 0; i < nmatches; i++)
+		    SET_VECTOR_ELT(ans, i, pat);
+		UNPROTECT(1);
+		return ans;
+	    }
+	    ans = allocVector(INTSXP, nmatches);
+	    if (nmatches <= MAX_MATCHES_MINIBUF) { /* our min-buffer was enough, great */
+		if (nmatches) memcpy(INTEGER(ans), matches, nmatches * sizeof(int));
+		return ans;
+	    }
+	    /* more matches than we could remember, time for pass 2 */
+	    memcpy(INTEGER(ans), matches, sizeof(matches));
+	    /* but we are not completely stupid - we can continue where amnesia hit us */
+	    nmatches = MAX_MATCHES_MINIBUF;
+	    offset = matches[MAX_MATCHES_MINIBUF - 1] + LENGTH(pat) - 1; /* matches are 1-based, we are 0-based hence - 1 */
+	    while (offset < n) {
+		offset = fgrepraw1(pat, text, offset);
+		if (offset == -1)
+		    break;
+		INTEGER(ans)[nmatches++] = offset + 1;
+		offset += LENGTH(pat);
+	    }
+	    return ans;
+	}
+    }	
+
+    cflags = REG_EXTENDED;
+    if (igcase_opt) cflags |= REG_ICASE;
+
+    rc = tre_regncompb(&reg, (const char*) RAW(pat), LENGTH(pat), cflags);
+    if (rc) reg_report(rc, &reg, NULL /* pat is not necessarily a C string */ );
+
+    if (!all) { /* match only once */
+	regmatch_t ptag;
+	rc = tre_regnexecb(&reg, (const char*) RAW(text) + offset, LENGTH(text) - offset, 1, &ptag, 0);
+	tre_regfree(&reg);
+	if (value) {
+	    if (rc != REG_OK)
+		return allocVector(RAWSXP, 0); /* TODO: is this good enough? it is the same as matching an empty string ... */
+	    ans = allocVector(RAWSXP, ptag.rm_eo - ptag.rm_so);
+	    memcpy(RAW(ans), RAW(text) + offset + ptag.rm_so, ptag.rm_eo - ptag.rm_so);
+	    return ans;
+	}
+	return (rc == REG_OK) ? ScalarInteger(ptag.rm_so + 1 + offset) : allocVector(INTSXP, 0);
+    }
+	
+    /* match all - we use a pairlist of integer arrays to expand the result
+       to allow use on big binary strings with many matches (it could be done
+       by re-allocating a temp buffer but I chose sequential allocations to
+       reduce possible fragmentation) */
+    res_head = res_tail = PROTECT(list1(allocVector(INTSXP, res_alloc)));
+    res_val = INTEGER(CAR(res_tail));
+    res_ptr = 0;
+    while (1) {
+	regmatch_t ptag;
+	rc = tre_regnexecb(&reg, (const char*) RAW(text) + offset, LENGTH(text) - offset, 1, &ptag, eflags);
+	if (rc)
+	    break;
+	if (!nmatches) eflags |= REG_NOTBOL;
+	if (res_ptr >= res_alloc) {
+	    if (res_alloc < (2^24)) res_alloc <<= 1;
+	    SETCDR(res_tail, list1(allocVector(INTSXP, res_alloc)));
+	    res_tail = CDR(res_tail);
+	    res_val = INTEGER(CAR(res_tail));
+	    res_ptr = 0;
+	}
+	res_val[res_ptr++] = ptag.rm_so + 1 + offset;
+	if (value) res_val[res_ptr++] = ptag.rm_eo - ptag.rm_so;
+	offset += ptag.rm_eo;
+	nmatches++;
+	if (ptag.rm_eo == 0) { /* empty string matched => trouble */
+	    int infinite_match = 1;
+	    /* the only place where this is acceptable is "^" as that will go away in the next step */
+	    if (nmatches == 1) { /* to see if that is true, re-run the match with REG_NOTBOL (added above) */
+		rc = tre_regnexecb(&reg, (const char*) RAW(text) + offset, LENGTH(text) - offset, 1, &ptag, eflags);
+		if (rc != REG_OK || ptag.rm_eo != 0)
+		    infinite_match = 0;
+	    }
+	    if (infinite_match)	    
+		warning(_("pattern matches an empty string infinitely, returning first match only"));
+	    break;
+	}
+	if (offset >= LENGTH(text)) break;
+    }
+    
+    if (value) { /* for values we store in fact the absolute start offsets and length in the integer vector */
+	SEXP vec = CAR(res_head);
+	R_size_t entry = 0, cptr = 0, clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	res_val = INTEGER(vec);
+	ans = PROTECT(allocVector(VECSXP, nmatches));
+	while (entry < nmatches) {
+	    SEXP rvec = allocVector(RAWSXP, res_val[cptr + 1]);
+	    SET_VECTOR_ELT(ans, entry, rvec);
+	    entry++;
+	    if (LENGTH(rvec))
+		memcpy(RAW(rvec), RAW(text) + res_val[cptr] - 1, res_val[cptr + 1]);
+	    cptr += 2;
+	    if (cptr >= clen) {
+		res_head = CDR(res_head);
+		if (res_head == R_NilValue) break;
+		vec = CAR(res_head);
+		res_val = INTEGER(vec);
+		cptr = 0;
+		clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	    }
+	}
+	UNPROTECT(1);
+    } else { /* if values are not needed, we just collect all the start offsets */
+	ans = allocVector(INTSXP, nmatches);
+	res_val = INTEGER(ans);
+	while (res_head != R_NilValue) {
+	    SEXP vec = CAR(res_head);
+	    R_size_t len = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	    if (len) memcpy(res_val, INTEGER(vec), len * sizeof(int));
+	    res_val += len;
+	    res_head = CDR(res_head);
+	}
+    }
+    UNPROTECT(1);
+    
+    tre_regfree(&reg);
+
     return ans;
 }
 

@@ -14,11 +14,12 @@ STR_BYTE, using bytes
 STR_MBS , using wchar_t for matching, I/O in MBCS
 STR_WIDE, using wchar_t
 
-We've added interfaces tre_regcompb, tre_regexecb and regaexecb to force
-STR_BYTE.  Unless forced, bytes are used in a single-byte locale and
-wchar_t in a MBCS.  We need to force both for useBytes=TRUE and for
-support for UTF-8 encoded strings in a single-byte locale (principally
-on Windows).  You do need to ensure that regcomp and regexec use the
+We've added interfaces tre_regcompb, tre_regncompb, tre_regexecb,
+tre_regnexecb and regaexecb to force STR_BYTE.  Unless forced, bytes
+are used in a single-byte locale and wchar_t in a MBCS.  We need to
+force for useBytes=TRUE, for support for UTF-8 encoded strings
+in a single-byte locale (principally on Windows) and when dealing with
+raw vectors. You do need to ensure that regcomp and regexec use the
 same type.
 
 The offsets in the regmatch_t structure are in characters for

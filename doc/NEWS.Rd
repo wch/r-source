@@ -349,6 +349,10 @@
       including when \code{digits >= 16}, thanks to substantial
       contributions (code and experiments) from Petr Savicky.
       This affects a noticable amount of numeric output from \R.
+
+      \item A new function \code{grepRaw()} has been introduced for
+      finding subsets of raw vectors. It supports both literal searches
+      as well as regular expressions.
     }
   }
 

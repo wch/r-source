@@ -99,6 +99,32 @@ tre_regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
   return ret;
 }
 
+
+/* this version takes bytes literally, to be used with raw vectors */
+int
+tre_regncompb(regex_t *preg, const char *regex, size_t n, int cflags)
+{
+  int ret;
+#if TRE_WCHAR /* wide chars = we need to convert it all to the wide format */
+  tre_char_t *wregex;
+  size_t i;
+
+  wregex = xmalloc(sizeof(tre_char_t) * n);
+  if (wregex == NULL)
+    return REG_ESPACE;
+
+  for (i = 0; i < n; i++)
+    wregex[i] = (tre_char_t) ((unsigned char) regex[i]);
+
+  ret = tre_compile(preg, wregex, n, cflags);
+  xfree(wregex);
+#else /* !TRE_WCHAR */
+  ret = tre_compile(preg, (const tre_char_t *)regex, n, cflags);
+#endif /* !TRE_WCHAR */
+
+  return ret;
+}
+
 int
 tre_regcomp(regex_t *preg, const char *regex, int cflags)
 {

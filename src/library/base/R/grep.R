@@ -73,6 +73,15 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
                        ignore.case, perl, fixed, useBytes))
 }
 
+grepRaw <-
+function(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE,
+         fixed = TRUE, all = FALSE)
+{
+    if (!is.raw(pattern)) pattern <- charToRaw(as.character(pattern))
+    if (!is.raw(x)) x <- charToRaw(as.character(x))
+    .Internal(grepRaw(pattern, x, offset, ignore.case, fixed, value, all))
+}
+
 agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1,
          useBytes = FALSE)

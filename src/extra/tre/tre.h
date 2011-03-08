@@ -173,6 +173,14 @@ extern int
 tre_regnexec(const regex_t *preg, const char *string, size_t len,
 	     size_t nmatch, regmatch_t pmatch[], int eflags);
 
+/* regn*b versions take byte literally as 8-bit values */
+extern int
+tre_regncompb(regex_t *preg, const char *regex, size_t n, int cflags);
+
+extern int
+tre_regnexecb(const regex_t *preg, const char *str, size_t len,
+	      size_t nmatch, regmatch_t pmatch[], int eflags);
+
 #ifdef TRE_WCHAR
 extern int
 tre_regwncomp(regex_t *preg, const wchar_t *regex, size_t len, int cflags);

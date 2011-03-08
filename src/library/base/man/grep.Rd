@@ -1,12 +1,13 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grep}
 \title{Pattern Matching and Replacement}
 \alias{grep}
 \alias{grepl}
+\alias{grepRaw}
 \alias{sub}
 \alias{gsub}
 \alias{regexpr}
@@ -27,6 +28,9 @@ grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
 grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
       useBytes = FALSE)
 
+grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE, 
+    fixed = TRUE, all = FALSE) 
+
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)
 
@@ -46,9 +50,12 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     \code{\link{as.character}} to a character string if possible.  If a
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  Missing values are allowed except for
-    \code{regexpr} and \code{gregexpr}.}
+    \code{regexpr} and \code{gregexpr}. For \code{grepRaw} this value
+    can also be and raw vector (see \sQuote{Details}).}
   \item{x, text}{a character vector where matches are sought, or an
-    object which can be coerced by \code{as.character} to a character vector.}
+    object which can be coerced by \code{as.character} to a character
+    vector. For \code{grepRaw} this can also be a raw vector (see
+    \sQuote{Details}).}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{perl}{logical. Should perl-compatible regexps be used?
@@ -63,7 +70,12 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
   \item{invert}{logical.  If \code{TRUE} return indices or values for
-         elements that do \emph{not} match.}
+    elements that do \emph{not} match.}
+  \item{offset}{integer vector of length one specifying the offset from
+    which the search should start. Must be positive. The beginning of
+    line is defined to be at that offset so \code{"^"} will match there.}
+  \item{all}{logical.  If \code{TRUE} all matches are returned,
+    otherwise just the first one.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For \code{fixed =
       FALSE} this can include backreferences \code{"\\1"} to
@@ -108,6 +120,18 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if
   \code{useBytes = TRUE}.
+
+  \code{grepRaw} works on raw vectors and both \code{pattern} and
+  \code{x} are converted to such via \code{\link{charToRaw}} unless
+  those are already raw vectors. Unlike the other functions it seeks to
+  find patterns within the raw vector (as opposed to finding matching
+  vectors from a list of vectors). This has implications especially in
+  the \code{all = TRUE} case, e.g., patterns matching empty strings are
+  inherently infinite and thus will produce only one match and result in
+  a warning. Certain combinations of arguments such as \code{fixed = TRUE}
+  with \code{values = TRUE} are supported but less meaningful. Matching
+  with \code{fixed = TRUE} (the default for \code{grepRaw}) is purely
+  binary and thus 8-bit safe including values of 0.
 }
 
 \note{
@@ -130,6 +154,17 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   \code{grepl} returns a logical vector (match or not for each element of
   \code{x}).
+
+  \code{grepRaw(value = FALSE)} returns an integer vector of the offsets
+  at which matches have ocurred. If \code{all = FALSE} then it will be
+  either of length zero (no match) or length one (first matching
+  position).
+
+  \code{grepRaw(value = TRUE, all = FALSE)} returns a raw vector which
+  is either empty (no match) or the matched part of \code{x}.
+
+  \code{grepRaw(value = TRUE, all = TRUE)} returns a (potentially
+  empty) list of raw vectors corresponding to the matched parts.
 
   For \code{sub} and \code{gsub} return a character vector of the same
   length and with the same attributes as \code{x} (after possible
