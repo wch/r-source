@@ -948,7 +948,7 @@ showMethods <-
     else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
         if(!is(fdef, "genericFunction"))
-            cat(file = con, out, "<not an S4  generic function>\n")
+            cat(file = con, out, "<not an S4 generic function>\n")
         else
             ## maybe no output for showEmpty=FALSE
             .showMethodsTable(fdef, includeDefs, inherited,
