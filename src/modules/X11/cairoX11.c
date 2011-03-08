@@ -135,7 +135,7 @@ static void CairoLineType(const pGEcontext gc, pX11Desc xd)
     cairo_set_line_join(cc, ljoin);
     cairo_set_miter_limit(cc, gc->lmitre);
 
-    if (gc->lty == 0 || gc->lty == -1)
+    if (gc->lty == 0 || gc->lty == -1 || gc->lty == NA_INTEGER)
 	cairo_set_dash(cc, 0, 0, 0);
     else {
 	double ls[16], lwd = (gc->lwd > 1) ? gc->lwd : 1;

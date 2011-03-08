@@ -993,7 +993,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     /* Optional argument: "lty" */
-    lty = asInteger(FixupLty(CAR(args), NA_INTEGER));
+    lty = asInteger(FixupLty(CAR(args), 0));
     args = CDR(args);
 
     /* Optional argument: "lwd" */

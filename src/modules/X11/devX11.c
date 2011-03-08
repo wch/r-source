@@ -1035,7 +1035,7 @@ static void SetLinetype(const pGEcontext gc, pX11Desc xd)
 	xd->ljoin = gc->ljoin;
 	newlend = gcToX11lend(gc->lend);
 	newljoin = gcToX11ljoin(gc->ljoin);
-	if (newlty == 0) {/* special hack for lty = 0 -- only for X11 */
+	if (newlty == 0 || newlty == NA_INTEGER) {/* special hack for lty = 0 -- only for X11 */
 	    XSetLineAttributes(display, xd->wgc,
 			       (int)(newlwd*xd->lwdscale+0.5),
 			       LineSolid, newlend, newljoin);
