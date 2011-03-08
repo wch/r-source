@@ -948,7 +948,7 @@ showMethods <-
     else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
         if(!is(fdef, "genericFunction"))
-            cat(file = con, out, "<not a generic function>\n")
+            cat(file = con, out, "<not an S4  generic function>\n")
         else
             ## maybe no output for showEmpty=FALSE
             .showMethodsTable(fdef, includeDefs, inherited,
@@ -986,7 +986,7 @@ removeMethods <-
     ## the peculiar order of computations and the explicit use of missing(where).
     fdef <- getGeneric(f, where = where)
     if(!is(fdef, "genericFunction")) {
-        warning(gettextf("\"%s\" is not a generic function in \"%s\"; methods not removed",
+        warning(gettextf("\"%s\" is not an S4 generic function in \"%s\"; methods not removed",
                 f, getPackageName(where)), domain = NA)
         return(FALSE)
     }
@@ -1055,7 +1055,7 @@ resetGeneric <- function(f, fdef = getGeneric(f, where = where),
 			 deflt = finalDefaultMethod(mlist))
 {
     if(!is(fdef, "genericFunction")) {
-            stop(gettextf("error in updating generic function \"%s\"; the function definition is not a generic function (class \"%s\")", f, class(fdef)),
+            stop(gettextf("error in updating S4 generic function \"%s\"; the function definition is not an S4 generic function (class \"%s\")", f, class(fdef)),
                  domain = NA)
         }
     ## reset inherited methods
