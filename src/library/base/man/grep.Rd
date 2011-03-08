@@ -32,7 +32,7 @@ grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
       useBytes = FALSE)
 
 grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE, 
-    fixed = TRUE, all = FALSE) 
+    fixed = FALSE, all = FALSE) 
 
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)

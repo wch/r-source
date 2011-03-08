@@ -75,7 +75,7 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 
 grepRaw <-
 function(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE,
-         fixed = TRUE, all = FALSE)
+         fixed = FALSE, all = FALSE)
 {
     if (!is.raw(pattern)) pattern <- charToRaw(as.character(pattern))
     if (!is.raw(x)) x <- charToRaw(as.character(x))
