@@ -18,6 +18,9 @@
   character vector: they differ in the format of and amount of detail in
   the results.
 
+  \code{grepRaw} searches for substring \code{pattern} matches within a
+  raw vactor \code{x}.
+
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
 }
@@ -54,8 +57,8 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     can also be and raw vector (see \sQuote{Details}).}
   \item{x, text}{a character vector where matches are sought, or an
     object which can be coerced by \code{as.character} to a character
-    vector. For \code{grepRaw} this can also be a raw vector (see
-    \sQuote{Details}).}
+    vector. For \code{grepRaw} this can be (and often is) a raw vector
+    (see \sQuote{Details}).}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{perl}{logical. Should perl-compatible regexps be used?
@@ -124,14 +127,12 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grepRaw} works on raw vectors and both \code{pattern} and
   \code{x} are converted to such via \code{\link{charToRaw}} unless
   those are already raw vectors. Unlike the other functions it seeks to
-  find patterns within the raw vector (as opposed to finding matching
-  vectors from a list of vectors). This has implications especially in
-  the \code{all = TRUE} case, e.g., patterns matching empty strings are
-  inherently infinite and thus will produce only one match and result in
-  a warning. Certain combinations of arguments such as \code{fixed = TRUE}
-  with \code{values = TRUE} are supported but less meaningful. Matching
-  with \code{fixed = TRUE} (the default for \code{grepRaw}) is purely
-  binary and thus 8-bit safe including values of 0.
+  find patterns within the raw vector \code{x} (as opposed to finding
+  matching vectors from a list of vectors). This has implications
+  especially in the \code{all = TRUE} case, e.g., patterns matching
+  empty strings are inherently infinite and thus may lead to unexpected
+  results. Certain combinations of arguments such as \code{fixed = TRUE}
+  with \code{values = TRUE} are supported but less meaningful.
 }
 
 \note{
