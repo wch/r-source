@@ -101,8 +101,8 @@ else
 endif
 
 R-admin.html: $(srcdir)/R-admin.texi
-	$(ECHO) "creating doc/manual/$@"
-	$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@
+	@$(ECHO) "creating doc/manual/$@"
+	@$(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@
 
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
