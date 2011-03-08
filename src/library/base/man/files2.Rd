@@ -60,14 +60,14 @@ Sys.umask(mode = "0000")
   mode set \bold{not} to be modified by the current \code{umask}.
 #endif
 #ifdef windows
-  The interpretation of \code{mode} in the Windows system function is
+  The interpretation of \code{mode} in the Windows system functions is
   non-POSIX and only supports setting the read-only attribute of the
   file.  So \R interprets \code{mode} to mean set read-only if and only
   if \code{(mode & 0200) == 0} (interpreted in octal).  Windows has a much
   more extensive system of file permissions on some file systems
   (e.g. versions of NTFS) which are unrelated to this system call.
 #endif
-
+  
   \code{Sys.umask} sets the \code{umask} and returns the previous value:
   as a special case \code{mode = NA} just returns the current value.
 #ifdef unix
@@ -81,6 +81,7 @@ Sys.umask(mode = "0000")
   whether a file is writable: a setting of \code{"200"} makes files (but
   not directories) created subsequently read-only.
 #endif
+%% http://msdn.microsoft.com/en-us/library/5axxx3be%28v=vs.80%29.aspx
 
   How modes are handled depends on the file system, even on Unix-alikes
   (although their documentation is often written assuming a POSIX file
