@@ -32,7 +32,7 @@ grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
       useBytes = FALSE)
 
 grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE, 
-    fixed = FALSE, all = FALSE) 
+    fixed = FALSE, all = FALSE, invert = FALSE) 
 
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)
@@ -131,7 +131,16 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   matching vectors from a list of vectors). This has implications
   especially in the \code{all = TRUE} case, e.g., patterns matching
   empty strings are inherently infinite and thus may lead to unexpected
-  results. Certain combinations of arguments such as \code{fixed = TRUE}
+  results. In the context of \code{grepRaw} the argument \code{invert}
+  is interpreted as complement of the match which is only meaningful for
+  \code{value = TRUE} and \code{offset} determines the start of the
+  search, not of the complement. If \code{value = FALSE} then
+  \code{invert = TRUE} is ignored (with a warning). Note that
+  \code{invert = TRUE} with \code{all = TRUE} will essentially split
+  \code{x} into pieces delimited by the pattern including leading and
+  trailing empty strings (consequently the use of regular expressions
+  with \code{"^"} or \code{"$"} in that case may lead to less intuitive
+  results). Some combinations of arguments such as \code{fixed = TRUE}
   with \code{values = TRUE} are supported but less meaningful.
 }
 
@@ -202,7 +211,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   very long strings, you will want to consider the options used.
   Generally PCRE will be faster than the default regular expression
   engine, and \code{fixed = TRUE} faster still (especially when each
-  pattern is matched only a few times).
+  pattern is matched only a few times or for \code{grepRaw}).
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as

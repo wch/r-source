@@ -913,14 +913,14 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 /* fixed, single binary search, no error checking; -1 = no match, otherwise offset
    NOTE: all offsets here (in & out) are 0-based !! */
 static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
-    const unsigned char *haystack = RAW(text), *needle = RAW(pat);
+    Rbyte *haystack = RAW(text), *needle = RAW(pat);
     R_size_t n = LENGTH(text);
     switch (LENGTH(pat)) { /* it may be silly but we optimize small needle
 			      searches, because they can be used to match
 			      single UTF8 chars (up to 3 bytes) */
     case 1:
 	{
-	    unsigned char c = needle[0];
+	    Rbyte c = needle[0];
 	    while (offset < n) {
 		if (haystack[offset] == c)
 		    return offset;
@@ -966,7 +966,7 @@ static R_size_t fgrepraw1(SEXP pat, SEXP text, R_size_t offset) {
     return -1;
 }
 
-/* grepRaw(pattern, text, offset, ignore.case, fixed, value, all) */
+/* grepRaw(pattern, text, offset, ignore.case, fixed, value, all, invert) */
 SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, res_head, res_tail;
@@ -976,7 +976,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     int res_alloc = 512; /* must be divisible by 2 since we may store offset+length
 			    it is the initial size of the integer vector of matches */
     R_size_t res_ptr, offset, i;
-    int igcase_opt, fixed_opt, all, value;
+    int igcase_opt, fixed_opt, all, value, invert;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -985,13 +985,24 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     value = asLogical(CAR(args)); args = CDR(args);
-    all = asLogical(CAR(args));
+    all = asLogical(CAR(args)); args = CDR(args);
+    invert = asLogical(CAR(args));
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (all == NA_INTEGER) all = 0;
     if (value == NA_INTEGER) value = 0;
+    if (invert == NA_INTEGER) invert = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
+
+    /* invert=TRUE, value=FALSE will really give you a headache thinking about it
+       so we better not go there (the code below will actually respect it for
+       all cases except for fixed=FALSE, all=TRUE so we could support it at
+       some point but I fail to see any real use of it) */
+    if (invert && !value) {
+	warning(_("argument '%s' will be ignored"), "invert = TRUE");
+	invert = 0;
+    }
 
     /* currently we support only offset >= 1 */
     if (offset < 1)
@@ -1014,6 +1025,21 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return allocVector(value ? (all ? VECSXP : RAWSXP) : INTSXP, 0);
 	if (!all) {
 	    R_size_t res = fgrepraw1(pat, text, offset);
+	    if (invert) {
+		Rbyte *ansp;
+		if (res == -1) return value ? text : ScalarInteger(1);
+		if (!value) return ScalarInteger(((res == 0) ? LENGTH(pat) : 0) + 1);
+		ans = allocVector(RAWSXP, LENGTH(text) - LENGTH(pat));
+		ansp = RAW(ans);
+		if (res) {
+		    memcpy(ansp, RAW(text), res);
+		    ansp += res; 
+		}
+		res += LENGTH(pat);
+		if (res < LENGTH(text))
+		    memcpy(ansp, RAW(text) + res, LENGTH(text) - res);
+		return ans;
+	    }
 	    if (res == -1) return allocVector(value ? RAWSXP : INTSXP, 0);
 	    if (!value) return ScalarInteger(res + 1);
 	    /* value=TRUE doesn't really make sense for anything other than
@@ -1036,7 +1062,53 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		nmatches++;
 		offset += LENGTH(pat);
 	    }
-	    if (value) { /* value=TRUE is pathetic for fixed=TRUE as it is just rep(pat, nmatches) */
+	    if (value) {
+		if (invert) { /* invert is actually useful here as it is performing something like strsplit */
+		    R_size_t pos = 0;
+		    SEXP elt, mvec = NULL;
+		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
+
+		    if (!nmatches) return text;
+
+		    /* if there are more matches than in the buffer, we actually need to get them first */
+		    if (nmatches > MAX_MATCHES_MINIBUF) { 
+			mvec = PROTECT(allocVector(INTSXP, nmatches));
+			fmatches = INTEGER(mvec);
+			memcpy(fmatches, matches, sizeof(matches));
+			nmatches = MAX_MATCHES_MINIBUF;
+			offset = matches[MAX_MATCHES_MINIBUF - 1] + LENGTH(pat) - 1;
+			while (offset < n) {
+			    offset = fgrepraw1(pat, text, offset);
+			    if (offset == -1)
+				break;
+			    INTEGER(ans)[nmatches++] = offset + 1;
+			    offset += LENGTH(pat);
+			}
+		    }
+
+		    /* there are always nmatches + 1 pieces (unlike strsplit) */
+		    ans = PROTECT(allocVector(VECSXP, nmatches + 1));
+		    /* add all pieces before matches */
+		    for (i = 0; i < nmatches; i++) {
+			R_size_t elt_size = fmatches[i] - 1 - pos;
+			elt = allocVector(RAWSXP, elt_size);
+			SET_VECTOR_ELT(ans, i, elt);
+			if (elt_size)
+			    memcpy(RAW(elt), RAW(text) + pos, elt_size);
+			pos = fmatches[i] - 1 + LENGTH(pat);
+		    }
+		    /* add the rest after last match */
+		    elt = allocVector(RAWSXP, LENGTH(text) - (fmatches[nmatches - 1] - 1 + LENGTH(pat)));
+		    SET_VECTOR_ELT(ans, nmatches, elt);
+		    if (LENGTH(elt))
+			memcpy(RAW(elt), RAW(text) + LENGTH(text) - LENGTH(elt), LENGTH(elt));
+		    if (mvec)
+			UNPROTECT(1);
+		    UNPROTECT(1);
+		    return ans;
+		}
+
+		/* value=TRUE is pathetic for fixed=TRUE without invert as it is just rep(pat, nmatches) */
 		ans = PROTECT(allocVector(VECSXP, nmatches));
 		for (i = 0; i < nmatches; i++)
 		    SET_VECTOR_ELT(ans, i, pat);
@@ -1075,10 +1147,24 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	rc = tre_regnexecb(&reg, (const char*) RAW(text) + offset, LENGTH(text) - offset, 1, &ptag, 0);
 	tre_regfree(&reg);
 	if (value) {
-	    if (rc != REG_OK)
-		return allocVector(RAWSXP, 0); /* TODO: is this good enough? it is the same as matching an empty string ... */
-	    ans = allocVector(RAWSXP, ptag.rm_eo - ptag.rm_so);
-	    memcpy(RAW(ans), RAW(text) + offset + ptag.rm_so, ptag.rm_eo - ptag.rm_so);
+	    if (rc != REG_OK || ptag.rm_eo == ptag.rm_so) /* TODO: is this good enough? it is the same as matching an empty string ... */
+		return invert ? text : allocVector(RAWSXP, 0);
+	    if (invert) {
+		Rbyte *ansp;
+		R_size_t len;
+		ans = allocVector(RAWSXP, LENGTH(text) - (ptag.rm_eo - ptag.rm_so));
+		ansp = RAW(ans);
+		if (ptag.rm_so) {
+		    memcpy(ansp, RAW(text), ptag.rm_so);
+		    ansp += ptag.rm_so;
+		}
+		len = LENGTH(text) - ptag.rm_eo;
+		if (len)
+		    memcpy(ansp, RAW(text) + ptag.rm_eo, len);
+	    } else {
+		ans = allocVector(RAWSXP, ptag.rm_eo - ptag.rm_so);
+		memcpy(RAW(ans), RAW(text) + offset + ptag.rm_so, ptag.rm_eo - ptag.rm_so);
+	    }
 	    return ans;
 	}
 	return (rc == REG_OK) ? ScalarInteger(ptag.rm_so + 1 + offset) : allocVector(INTSXP, 0);
@@ -1108,7 +1194,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (value) res_val[res_ptr++] = ptag.rm_eo - ptag.rm_so;
 	offset += ptag.rm_eo;
 	nmatches++;
-	if (ptag.rm_eo == 0) { /* empty string matched => trouble */
+	if (ptag.rm_eo == 0) { /* empty string matched => trouble; FIXME: we may want to consider just advancing anyway */
 	    int infinite_match = 1;
 	    /* the only place where this is acceptable is "^" as that will go away in the next step */
 	    if (nmatches == 1) { /* to see if that is true, re-run the match with REG_NOTBOL (added above) */
@@ -1126,14 +1212,25 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     if (value) { /* for values we store in fact the absolute start offsets and length in the integer vector */
 	SEXP vec = CAR(res_head);
 	R_size_t entry = 0, cptr = 0, clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	R_size_t inv_start = 0; /* 0-based start position of the pieces for invert */
 	res_val = INTEGER(vec);
-	ans = PROTECT(allocVector(VECSXP, nmatches));
+	ans = PROTECT(allocVector(VECSXP, invert ? (nmatches + 1) : nmatches));
 	while (entry < nmatches) {
-	    SEXP rvec = allocVector(RAWSXP, res_val[cptr + 1]);
-	    SET_VECTOR_ELT(ans, entry, rvec);
-	    entry++;
-	    if (LENGTH(rvec))
-		memcpy(RAW(rvec), RAW(text) + res_val[cptr] - 1, res_val[cptr + 1]);
+	    if (invert) { /* for invert=TRUE store the current peice up to the match */
+		SEXP rvec = allocVector(RAWSXP, res_val[cptr] - 1 - inv_start);
+		SET_VECTOR_ELT(ans, entry, rvec);
+		entry++;
+		if (LENGTH(rvec))
+		    memcpy(RAW(rvec), RAW(text) + inv_start, LENGTH(rvec));
+		inv_start = res_val[cptr] - 1 + res_val[cptr + 1];
+	    } else { /* for invert=FALSE store the matched piece */
+		SEXP rvec = allocVector(RAWSXP, res_val[cptr + 1]);
+		SET_VECTOR_ELT(ans, entry, rvec);
+		entry++;
+		if (LENGTH(rvec))
+		    memcpy(RAW(rvec), RAW(text) + res_val[cptr] - 1, LENGTH(rvec));
+	    }
+	    /* advance in the elements -- possibly jumping to the next list block */
 	    cptr += 2;
 	    if (cptr >= clen) {
 		res_head = CDR(res_head);
@@ -1143,6 +1240,12 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		cptr = 0;
 		clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
 	    }
+	}
+	if (invert) { /* add the last piece after the last match */
+	    SEXP lvec = allocVector(RAWSXP, LENGTH(text) - inv_start);
+	    SET_VECTOR_ELT(ans, nmatches, lvec);
+	    if (LENGTH(lvec))
+		memcpy(RAW(lvec), RAW(text) + inv_start, LENGTH(lvec));
 	}
 	UNPROTECT(1);
     } else { /* if values are not needed, we just collect all the start offsets */
