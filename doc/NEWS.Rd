@@ -353,6 +353,13 @@
       \item A new function \code{grepRaw()} has been introduced for
       finding subsets of raw vectors. It supports both literal searches
       as well as regular expressions.
+
+      \item The package \code{compiler} is now provided as a base
+      package. See \code{?compile} for information on how to use the
+      compiler. This package implements a byte code compiler for \R. By
+      default the compiler is not used in this release.  If you build R
+      from source you can use \code{make bytecode} to compile the base
+      and recommended packages.
     }
   }
 

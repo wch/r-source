@@ -2484,6 +2484,8 @@ AC_CONFIG_FILES(
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
+  src/library/compiler/DESCRIPTION
+  src/library/compiler/Makefile
   src/library/datasets/DESCRIPTION
   src/library/datasets/Makefile
   src/library/graphics/DESCRIPTION

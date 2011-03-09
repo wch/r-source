@@ -38310,6 +38310,7 @@ int
 main ()
 {
   char *data, *data2, *data3;
+  const char *cdata2;
   int i, pagesize;
   int fd, fd2;
 
@@ -38334,10 +38335,10 @@ main ()
   fd2 = open ("conftest.txt", O_RDWR | O_CREAT | O_TRUNC, 0600);
   if (fd2 < 0)
     return 4;
-  data2 = "";
-  if (write (fd2, data2, 1) != 1)
+  cdata2 = "";
+  if (write (fd2, cdata2, 1) != 1)
     return 5;
-  data2 = mmap (0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd2, 0L);
+  data2 = (char *) mmap (0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd2, 0L);
   if (data2 == MAP_FAILED)
     return 6;
   for (i = 0; i < pagesize; ++i)
@@ -42007,7 +42008,7 @@ esac
 
 ac_config_headers="$ac_config_headers src/include/config.h"
 
-ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/ldpaths m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/blas/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/tre/Makefile src/extra/xdr/Makefile src/extra/xz/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/R.sh src/scripts/Rcmd src/scripts/f77_f2c src/scripts/mkinstalldirs src/scripts/pager src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/ldpaths m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/blas/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/tre/Makefile src/extra/xdr/Makefile src/extra/xz/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/compiler/DESCRIPTION src/library/compiler/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/R.sh src/scripts/Rcmd src/scripts/f77_f2c src/scripts/mkinstalldirs src/scripts/pager src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
 
 
 ac_config_commands="$ac_config_commands stamp-h"
@@ -43379,6 +43380,8 @@ do
     "src/library/Makefile") CONFIG_FILES="$CONFIG_FILES src/library/Makefile" ;;
     "src/library/base/DESCRIPTION") CONFIG_FILES="$CONFIG_FILES src/library/base/DESCRIPTION" ;;
     "src/library/base/Makefile") CONFIG_FILES="$CONFIG_FILES src/library/base/Makefile" ;;
+    "src/library/compiler/DESCRIPTION") CONFIG_FILES="$CONFIG_FILES src/library/compiler/DESCRIPTION" ;;
+    "src/library/compiler/Makefile") CONFIG_FILES="$CONFIG_FILES src/library/compiler/Makefile" ;;
     "src/library/datasets/DESCRIPTION") CONFIG_FILES="$CONFIG_FILES src/library/datasets/DESCRIPTION" ;;
     "src/library/datasets/Makefile") CONFIG_FILES="$CONFIG_FILES src/library/datasets/Makefile" ;;
     "src/library/graphics/DESCRIPTION") CONFIG_FILES="$CONFIG_FILES src/library/graphics/DESCRIPTION" ;;
