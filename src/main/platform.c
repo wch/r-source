@@ -2119,7 +2119,7 @@ static int do_copy(const wchar_t* from, const wchar_t* name,
 	FILE *fp1 = NULL, *fp2 = NULL;
 	wchar_t buf[APPENDBUFSIZE];
 
-	nfail = 1;
+	nfail = 0;
 	nc = wcslen(to);
 	wsprintfW(dest, L"%ls%ls", to, name);
 	if (over || !R_WFileExists(dest)) { /* FIXME */
@@ -2264,7 +2264,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 	FILE *fp1 = NULL, *fp2 = NULL;
 	char buf[APPENDBUFSIZE];
 
-	nfail = 1;
+	nfail = 0;
 	nc = strlen(to);
 	snprintf(dest, PATH_MAX, "%s%s", to, name);
 	if (over || !R_FileExists(dest)) {
