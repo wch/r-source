@@ -4611,22 +4611,23 @@ location where Inno Setup was installed.
 
 This item is installed by the @file{Rtools*.exe} installer.
 
-@c INSTALL may use sh make zip
+@c INSTALL may use sh make zip (and tar if R_INSTALL_TAR is used)
 @c build uses make tar gzip
 @c Rdiff.sh USED to use diff echo grep sed tr
 @c Rd2dvi USED to use basename echo mkdir rm sed
 
-@c src/library/Recommended/Makefile.win uses basename and tar
-
+@c basename is used in src/library/Recommended/Makefile.win
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win, tools/{copy,move}-if-change
 @c cp is used as $(CP) in numerous Makefiles
 @c cut is used to make RVER
 @c date is used when building base and tools
 @c diff is used by tools::Rdiff and tests/Makefile.common
+@c du is used by R CMD check
 @c expr is used in tools/GETVERSION
 @c find is used in installer/Makefile
 @c expr is used in tools/GETCONFIG
+@c grep is used in doc/maual/Makefile.win
 @c gzip is used in src/library/Makefile.win, R CMD build
 @c ls is used in src/library/*/Makefile.win
 @c mkdir is used in numerous Makefiles
@@ -4638,8 +4639,8 @@ This item is installed by the @file{Rtools*.exe} installer.
 @c AFAICS [g]awk, egrep, head, rmdir, tail, tr are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
-@code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
-@code{expr} @code{grep}, @code{gzip}, @code{ls}, @code{make},
+@code{cp}, @code{cut}, @code{date}, @code{diff}, @code{du}, @code{echo},
+@code{expr}, @code{grep}, @code{gzip}, @code{ls}, @code{make},
 @code{makeinfo}, @code{mkdir}, @code{mv}, @code{rm}, @code{rsync},
 @code{sed}, @code{sh}, @code{sort}, @code{tar}, @code{texindex},
 @code{touch} and @code{uniq}; we use those from the Cygwin distribution
