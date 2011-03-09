@@ -36,7 +36,8 @@
       
       \item \code{Sweave()} with \code{concordance=TRUE} could lead to
       invalid PDF files; \file{Sweave.sty} has been updated to avoid
-      this.      
+      this.
+    }
   }
 }
 
