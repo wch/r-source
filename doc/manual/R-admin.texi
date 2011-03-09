@@ -4391,11 +4391,7 @@ environment can be found in the ``R on AIX'' project on R-Forge
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
 workarounds added for @R{} 2.6.0.  @R{} 2.13.0 requires C99 complex type
-support, which should appear in
-2011@footnote{@uref{http://cygwin.net/ml/cygwin-patches/2010-q4/msg00000.html}.},
-based on NetBSD code@footnote{which it seems is derived from the code of
-@uref{http://www.moshier.net/c9x_readme.html}.} used in @samp{netlib
-1.19.0}.
+support, which is available as from Cygwin 1.7.8 (March 2011).
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
@@ -4425,6 +4421,9 @@ TK_LIB_SPEC='-ltk84'
 The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
+At the time of writing not all the tests pass: there are incorrect
+results from the new-to-Cygwin complex trig functions and from
+wide-character regular expressions code.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
