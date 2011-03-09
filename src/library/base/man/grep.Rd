@@ -19,7 +19,7 @@
   the results.
 
   \code{grepRaw} searches for substring \code{pattern} matches within a
-  raw vactor \code{x}.
+  raw vector \code{x}.
 
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
@@ -157,7 +157,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{x}).
 
   \code{grepRaw(value = FALSE)} returns an integer vector of the offsets
-  at which matches have ocurred. If \code{all = FALSE} then it will be
+  at which matches have occurred. If \code{all = FALSE} then it will be
   either of length zero (no match) or length one (first matching
   position).
 
