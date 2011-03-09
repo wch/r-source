@@ -585,6 +585,17 @@ void attribute_hidden R_init_jit_enabled(void)
 	    R_jit_enabled = val;
 	}
     }
+
+    if (R_compile_pkgs <= 0) {
+	char *compile = getenv("R_COMPILE_PKGS");
+	if (compile != NULL) {
+	    int val = atoi(compile);
+	    if (val > 0)
+		R_compile_pkgs = TRUE;
+	    else
+		R_compile_pkgs = FALSE;
+	}
+    }
 }
     
 SEXP attribute_hidden R_cmpfun(SEXP fun)
@@ -650,6 +661,17 @@ SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	loadCompilerNamespace();
     R_jit_enabled = new;
     return ScalarInteger(old);
+}
+
+SEXP attribute_hidden do_compilepkgs(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int old = R_compile_pkgs, new;
+    checkArity(op, args);
+    new = asLogical(CAR(args));
+    if (new != NA_LOGICAL && new)
+	loadCompilerNamespace();
+    R_compile_pkgs = new;
+    return ScalarLogical(old);
 }
 
 /* forward declaration */
