@@ -367,10 +367,10 @@ processing (such as extracting the email addresses of all listed
 contributors).  The @samp{Author@@R} field can be used to provide a
 refined, machine-readable description of the package ``authors'' (in
 particular specifying their precise @emph{roles}), via suitable @R{}
-code (see @code{?citation} for more information).  In @R{} 2.12.0 or
-later, auto-generated citation information takes advantage of this
-specification, and eventually, Author and Maintainer fields will be
-auto-generated from it if needed.
+code (see @code{?citation} for more information).  Auto-generated
+citation information takes advantage of this specification, and
+eventually, Author and Maintainer fields will be auto-generated from it
+if needed.
 
 The mandatory @samp{Maintainer} field should give a @emph{single} name
 with a @emph{valid} (RFC 2822) email address in angle brackets (for
@@ -383,31 +383,29 @@ The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
-The @samp{Depends} field gives a comma-separated list of
-package names which this package depends on.  The package name may be
-optionally followed by a comment in parentheses.  The comment should
-contain a comparison operator@footnote{only @samp{>=} and @samp{<=} were
-supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
-package versions by @code{install.packages}.}, whitespace and a valid
-version number).  You can also use the special package name @samp{R} if
-your package depends on a certain version of @R{} --- e.g., if the
-package works only with @R{} version 2.11.0 or later, include @samp{R
-(>= 2.11.0)} in the @samp{Depends} field.  Both @code{library} and the
-@R{} package checking facilities use this field, hence it is an error to
-use improper syntax or misuse the @samp{Depends} field for comments on
-other software that might be needed.  Other dependencies (external to
-the @R{} system) should be listed in the @samp{SystemRequirements}
-field, possibly amplified in a separate @file{README} file.  The @R{}
+The @samp{Depends} field gives a comma-separated list of package names
+which this package depends on.  The package name may be optionally
+followed by a comment in parentheses.  The comment should contain a
+comparison operator@footnote{only @samp{>=} is supported for package
+versions by @code{install.packages}.}, whitespace and a valid version
+number).  You can also use the special package name @samp{R} if your
+package depends on a certain version of @R{} --- e.g., if the package
+works only with @R{} version 2.11.0 or later, include @samp{R (>=
+2.11.0)} in the @samp{Depends} field.  Both @code{library} and the @R{}
+package checking facilities use this field, hence it is an error to use
+improper syntax or misuse the @samp{Depends} field for comments on other
+software that might be needed.  Other dependencies (external to the @R{}
+system) should be listed in the @samp{SystemRequirements} field,
+possibly amplified in a separate @file{README} file.  The @R{}
 @command{INSTALL} facilities check if the version of @R{} used is recent
 enough for the package being installed, and the list of packages which
 is specified will be attached (after checking version requirements)
 before the current package, both when @code{library} is called and when
 preparing for lazy-loading.
 
-As from @R{} 2.7.0 a package (or @samp{R}) can appear more than once in
-the @samp{Depends}, but only the first occurrence will be used in
-earlier versions of @R{}.  (Unfortunately all occurrences will be checked,
-so only @samp{>=} and @samp{<=} can be used.)
+A package (or @samp{R}) can appear more than once in the @samp{Depends},
+but only the first occurrence will be used in versions of @R{} prior to
+2.7.0: these are now very unlikely to be encountered.
 
 The @samp{Imports} field lists packages whose name spaces are
 imported from (as specified in the @file{NAMESPACE} file) but which do
@@ -863,11 +861,11 @@ including choosing the best type for that particular image.
 Some packages using @samp{LazyData} will benefit from using a form of
 compression other than @command{gzip} in the installed lazy-loading
 database.  This can be selected by the @option{--data-compress} option
-to @command{R CMD INSTALL} or (for @R{} >= 2.12.2) by using the
-@samp{LazyDataCompression} field in the @file{DESCRIPTION} file.  Useful
-values are @code{bzip2}, @code{xz} and the default, @code{gzip}.  The
-only way to discover which is best is to try them all and look at the
-size of the @file{@var{pkgname}/data/Rdata.rdb} file.
+to @command{R CMD INSTALL} or by using the @samp{LazyDataCompression}
+field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
+@code{xz} and the default, @code{gzip}.  The only way to discover which
+is best is to try them all and look at the size of the
+@file{@var{pkgname}/data/Rdata.rdb} file.
 
 @node Non-R scripts in packages,  , Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -1291,8 +1289,8 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment or make variables can be used to select different macros for
-32- and 64-bit code, for example (as from @R{} 2.11.1, GNU syntax,
-allowed on Windows)
+32- and 64-bit code, for example (GNU @command{make} syntax, allowed on
+Windows)
 
 @example
 ifeq "$(WIN)" "64"
@@ -1306,8 +1304,7 @@ On Windows there is normally a choice between linking to an import
 library or directly to a DLL.  Where possible, the latter is much more
 reliable: import libraries are tied to a specific toolchain, and in
 particular on 64-bit Windows two different conventions have been
-commonly used and @R{} 2.11.x and 2.12.x used different ones.  So for
-example instead of
+commonly used.  So for example instead of
 
 @example
 PKG_LIBS = -L$(XML_DIR)/lib -lxml2
@@ -1571,12 +1568,11 @@ directly.
 @code{R CMD check} and @code{R CMD build} run @R{} with
 @option{--vanilla}, so none of the user's startup files are read.  If
 you need @env{R_LIBS} set (to find packages in a non-standard library)
-you can set it in the environment: also as from @R{} 2.12.0 you can use
-files@footnote{On systems which use sub-architectures,
-architecture-specific versions such as @file{~/.R/check.Renviron.i386}
-take precedence.}  @file{~/.R/check.Renviron} and
-@file{~/.R/build.Renviron} to set environment variables when using these
-utilities.
+you can set it in the environment: also you can use files@footnote{On
+systems which use sub-architectures, architecture-specific versions such
+as @file{~/.R/check.Renviron.i386} take precedence.}
+@file{~/.R/check.Renviron} and @file{~/.R/build.Renviron} to set
+environment variables when using these utilities.
 @end quotation
 
 @quotation Note to Windows users
@@ -3261,13 +3257,12 @@ An installed file named @file{CITATION} will be used by the
 @file{inst} subdirectory of the package sources.)
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
-declared encoding@footnote{as from @R{} 2.8.0: this used to default to
-Latin-1 but no longer does so}, or in ASCII if note is declared).  If no
-such file is present, @code{citation} auto-generates citation
-information from the package @file{DESCRIPTION} metadata, and an example
-of what that would look like as a @file{CITATION} file can be seen in
-recommended package @pkg{nlme} (see below): recommended packages
-@pkg{boot}, @pkg{cluster} and @pkg{mgcv} have further examples.
+declared encoding, or in ASCII if none is declared).  If no such file is
+present, @code{citation} auto-generates citation information from the
+package @file{DESCRIPTION} metadata, and an example of what that would
+look like as a @file{CITATION} file can be seen in recommended package
+@pkg{nlme} (see below): recommended packages @pkg{boot}, @pkg{cluster}
+and @pkg{mgcv} have further examples.
 
 A @file{CITATION} file will contain calls to function @code{bibentry}
 (new style, only works with @R{} 2.12.0 or later), or to the functions
@@ -4314,9 +4309,9 @@ link to the file rather than the topic (since there is no way to know
 which topics are in which files in an uninstalled package).  The
 @strong{only} reason to use these forms for base and recommended
 packages is to force a reference to a package that might be further down
-the search path.  Because they have been frequently misused, as from
-@R{} 2.10.0 the HTML help system looks for topic @code{@var{foo}} in
-package @pkg{@var{pkg}} if it does not find file @file{@var{foo}.html}.
+the search path.  Because they have been frequently misused, the HTML
+help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
+if it does not find file @file{@var{foo}.html}.
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
@@ -4374,10 +4369,9 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
-As from \R 2.11.0 Greek letters (both cases) will be rendered in HTML if
-preceded by a backslash, @code{\dots} and @code{\ldots} will be rendered
-as ellipses and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical
-symbols.
+Greek letters (both cases) will be rendered in HTML if preceded by a
+backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
+and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 
 Note that only basic @LaTeX{} can be used, there being no provision to
 specify @LaTeX{} style files such as the AMS extensions.
@@ -6165,8 +6159,8 @@ to be used to aid interfacing existing C or FORTRAN code.
 Logical values are sent as @code{0} (@code{FALSE}), @code{1}
 (@code{TRUE}) or @code{INT_MIN = -2147483648} (@code{NA}, but only if
 @code{NAOK} is true), and the compiled code should return one of these
-three values.  (As from @R{} 2.12.0 non-zero values other than
-@code{INT_MIN} are mapped to @code{TRUE}.)
+three values.  (Non-zero values other than @code{INT_MIN} are mapped to
+@code{TRUE}.)
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
 checked for missing values @code{NA} and for the @acronym{IEEE} special
@@ -10146,11 +10140,11 @@ version includes the patchlevel (as in @samp{9.0}).
 @section Inlining C functions
 @findex R_INLINE
 
-The C99 keyword @code{inline} is recognized by most compilers used to
-build @R{} (all since @R{} 2.12.0) whereas others need @code{__inline__}
-or do not support inlining.  Portable code can be written using the
-macro @code{R_INLINE} (defined in file @file{Rconfig.h} included by
-@file{R.h}), as for example from package @pkg{cluster}
+The C99 keyword @code{inline} should be recognized by all compilers now
+used to build @R{}.  Portable code which might be used with earlier
+versions of @R{} can be written using the macro @code{R_INLINE} (defined
+in file @file{Rconfig.h} included by @file{R.h}), as for example from
+package @pkg{cluster}
 
 @example
 #include <R.h>
@@ -11308,8 +11302,8 @@ The @R{} for Windows installers have for a long time allowed the value
 of @code{R_HOME} to be recorded in the Windows Registry: this is
 optional but selected by default.  @emph{Where} is it is recorded has
 changed over the years to allow for multiple versions of @R{} to be
-installed at once, and as from @R{} 2.11.0, to allow 32- and 64-bit
-versions of @R{} to be installed on the same machine.
+installed at once, and to allow 32- and 64-bit versions of @R{} to be
+installed on the same machine.
 
 The basic Registry location is @code{Software\R-core\R}.  For an
 administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
@@ -11319,9 +11313,9 @@ the information for the last 32-bit install, and a 64-bit application
 that for the last 64-bit install.  For a personal install, the
 information is under @code{HKEY_CURRENT_USER\Software\R-core\R} which is
 seen by both 32-bit and 64-bit applications and so records the last
-install of either architecture.  To circumvent this, as from @R{} 2.11.0
-there are locations @code{Software\R-core\R32} and @code{Software\R-core\R64}
-which always refer to one architecture.
+install of either architecture.  To circumvent this, there are locations
+@code{Software\R-core\R32} and @code{Software\R-core\R64} which always
+refer to one architecture.
 
 When @R{} is installed and recording is not disabled then two string
 values are written at that location for keys @code{InstallPath} and
@@ -11356,10 +11350,9 @@ use its value for @code{InstallPath}.
 @end itemize
 
 Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
-are in @file{R_HOME\bin}, but this will not be so from @R{} 2.12.0, when
-they are in @file{R_HOME\bin\i386} or @file{R_HOME\bin\x64}.  So you
-need to arrange to look first in the architecture-specific subdirectory
-and then in @file{R_HOME\bin}.
+are in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
+@file{R_HOME\bin\x64}.  So you need to arrange to look first in the
+architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
 @unnumbered Function and variable index
