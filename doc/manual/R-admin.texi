@@ -2593,17 +2593,20 @@ functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{wctrans}, @code{wctype}, and @code{iswctype}.} for wide-character
 types: this is checked at configuration.
 
-A @command{tar} program is needed to unpack the sources and packages
-(including the recommended packages).  A version@footnote{Such as
-@acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and
-Mac OS 10.6) or @command{tar} from the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
-automagically detect compressed archives is preferred for use with
+A @command{tar} program is needed to unpack the sources.  A
+version@footnote{Such as @acronym{GNU} @command{tar} 1.15 or later,
+@command{bsdtar} (from @uref{http://code.google.com/@/p/libarchive/}, as
+used by FreeBSD and Mac OS 10.6) or @command{tar} from the Heirloom
+Toolchest (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that
+can automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
 @enindex TAR
 @command{tar}: use environment variable @env{TAR} to override this.
+This @command{tar} program is used by @command{R CMD build} where
+@command{tar -zcf} must be accepted (and is expected to produce a
+@command{gzip}-compressed tarball): this is not used if @env{TAR} is
+unset or set to @code{""}.
 
 There need to be suitable versions of the tools @command{grep},
 @command{sed} and @command{tr}: the problems are usually with old AT&T

@@ -1787,7 +1787,7 @@ tests, vignettes} which differ by sub-architecture.
 
 @findex R CMD build
 @cindex Package builder
-Using @code{R CMD build}, the @R{} package builder, one can build @R{}
+Using @command{R CMD build}, the @R{} package builder, one can build @R{}
 packages from their sources (for example, for subsequent release).
 
 Prior to actually building the package in the standard gzipped tar file
@@ -1797,7 +1797,7 @@ to be up-to-date, and C, C++ and FORTRAN source files and relevant make
 files are tested and converted to LF line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
-using @code{R CMD check} prior to invoking the build procedure.
+using @command{R CMD check} prior to invoking the build procedure.
 
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
@@ -1814,7 +1814,7 @@ and files @file{GNUMakefile}, @file{Read-and-delete-me} or with base
 names starting with @samp{.#}, or starting and ending with @samp{#}, or
 ending in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.
 In addition, those files in the @file{R}, @file{demo} and @file{man}
-directories which are flagged by @code{R CMD check} as having invalid
+directories which are flagged by @command{R CMD check} as having invalid
 names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
@@ -1836,7 +1836,7 @@ installed in the @file{build/} subdirectory.  (This allows CRAN or other
 repositories to display the manual even if they are unable to install
 the package.)
 
-One of the checks that @code{R CMD build} runs is for empty source
+One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, in
 which case they should be removed and the build re-run.
 
@@ -1861,16 +1861,23 @@ default (it can be selected by environment variable
 @env{_R_BUILD_COMPACT_VIGNETTES_}) and needs @command{qpdf}
 (@uref{http://qpdf.sourceforge.net/}) to be available.
 
-It can be useful to run @code{R CMD check --check-subdirs=yes} on the
+It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
 
-@code{R CMD build} can also build pre-compiled version of packages for
-binary distributions, but @code{R CMD INSTALL --build} is preferred (and
+@command{R CMD build} can also build pre-compiled version of packages for
+binary distributions, but @command{R CMD INSTALL --build} is preferred (and
 is more flexible).
 
-Note that prior to @R{} 2.13.0, @code{R CMD build} did some cleaning in
+Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
 the supplied source directory, but this was undocumented and is no
 longer done.
+
+@command{R CMD build} requires a suitable @command{tar} program that can
+produce a compressed tarball: almost certainly one will have been found
+when @R{} was configured on a Unix-alike (and @code{Rtools} contains
+one), but if there are problems, set the environment variable @env{TAR}
+to the path to a suitable program or to @code{"internal"} if none is
+available.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes

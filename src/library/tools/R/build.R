@@ -857,10 +857,13 @@ get_exclude_patterns <- function()
             filepath <- file.path(startdir, filename)
             ## NB: naughty reg-packages.R relies on this exact format!
             messageLog(Log, "building ", sQuote(filename))
-            ## The tar.exe in Rtools has --force-local by default, but this
-            ## enables people to use Cygwin or MSYS tar.
-            TAR <- Sys.getenv("TAR",
-                              if (WINDOWS) "tar --force-local" else "tar")
+            ## This should be set on a Unix-alike, but might get set to ""
+            TAR <- Sys.getenv("TAR")
+            if(!nzchar(TAR)) {
+                ## The tar.exe in Rtools has --force-local by default,
+                ## but this enables people to use Cygwin or MSYS tar.
+                TAR <- if (WINDOWS) "tar --force-local" else "internal"
+            }
             res <- utils::tar(filepath, pkgname, compression = "gzip",
                               compression_level = 9, tar = TAR)
             if (res) {
