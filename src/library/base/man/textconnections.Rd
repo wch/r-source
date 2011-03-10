@@ -35,8 +35,10 @@ textConnectionValue(con)
 }
 \details{
   An input text connection is opened and the character vector is copied
-  at time the connection object is created, and \code{close}
-  destroys the copy.
+  at time the connection object is created, and \code{close} destroys
+  the copy.  \code{object} should be the name of a character vector:
+  however, short expressions will be accepted provided they \link{deparse} to
+  less than 60 bytes.
 
   An output text connection is opened and creates an \R character vector
   of the given name in the user's workspace or in the calling environment,
