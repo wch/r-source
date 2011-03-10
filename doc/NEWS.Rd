@@ -354,12 +354,13 @@
       finding subsets of raw vectors. It supports both literal searches
       as well as regular expressions.
 
-      \item The package \code{compiler} is now provided as a base
-      package. See \code{?compile} for information on how to use the
-      compiler. This package implements a byte code compiler for \R. By
-      default the compiler is not used in this release.  If you build R
-      from source you can use \code{make bytecode} to compile the base
-      and recommended packages.
+      \item The package \pkg{compiler} is now provided as a standard
+      package.  See \code{?compiler::compile} for information on how to
+      use the compiler.  This package implements a byte code compiler
+      for \R: by default the compiler is not used in this release.  If
+      you build \R from source on a Unix-alike you can use
+      \command{make bytecode} to compile the standard and
+      recommended packages.
     }
   }
 
@@ -541,8 +542,8 @@
       \item The \sQuote{experimental} alternative specification of a
       name space via \code{.Export()} etc is now defunct.
 
-      \item The option \code{--unsafe} to \command{R CMD INSTALL} is
-      deprecated: use the identical option \code{--no-lock} instead.
+      \item The option \option{--unsafe} to \command{R CMD INSTALL} is
+      deprecated: use the identical option \option{--no-lock} instead.
     }
   }
 
