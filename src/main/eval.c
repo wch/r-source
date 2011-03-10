@@ -4347,14 +4347,14 @@ SEXP R_bcEncode(SEXP bytes)
     v = ipc[0];
     if (v < R_bcMinVersion || v > R_bcVersion) {
 	code = allocVector(INTSXP, m * 2);
-	pc = (BCODE *) CHAR(code);
+	pc = (BCODE *) INTEGER(code);
 	pc[0].i = v;
 	pc[1].v = opinfo[BCMISMATCH_OP].addr;
 	return code;
     }
     else {
 	code = allocVector(INTSXP, m * n);
-	pc = (BCODE *) CHAR(code);
+	pc = (BCODE *) INTEGER(code);
 
 	for (i = 0; i < n; i++) pc[i].i = ipc[i];
 
@@ -4390,7 +4390,7 @@ SEXP R_bcDecode(SEXP code) {
     int m = (sizeof(BCODE) + sizeof(int) - 1) / sizeof(int);
 
     n = LENGTH(code) / m;
-    pc = (BCODE *) CHAR(code);
+    pc = (BCODE *) INTEGER(code);
 
     bytes = allocVector(INTSXP, n);
     ipc = INTEGER(bytes);
