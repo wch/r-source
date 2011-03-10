@@ -388,7 +388,7 @@ which this package depends on.  The package name may be optionally
 followed by a comment in parentheses.  The comment should contain a
 comparison operator@footnote{only @samp{>=} is supported for package
 versions by @code{install.packages}.}, whitespace and a valid version
-number).  You can also use the special package name @samp{R} if your
+number.  You can also use the special package name @samp{R} if your
 package depends on a certain version of @R{} --- e.g., if the package
 works only with @R{} version 2.11.0 or later, include @samp{R (>=
 2.11.0)} in the @samp{Depends} field.  Both @code{library} and the @R{}
@@ -4352,12 +4352,13 @@ The following example is from @file{Poisson.Rd}:
 @end example
 
 @iftex
-For the @LaTeX{} manual, this becomes
+For the @LaTeX{} manual, this becomes (after expanding macros in
+@file{R.sty})
 
 @quotation
 @cartouche
 @tex
-$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
+$$ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}} $$
 for $x = 0, 1, 2, \ldots$.
 @end tex
 @end cartouche
