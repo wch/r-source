@@ -7,7 +7,6 @@
 \title{Pattern Matching and Replacement}
 \alias{grep}
 \alias{grepl}
-\alias{grepRaw}
 \alias{sub}
 \alias{gsub}
 \alias{regexpr}
@@ -18,9 +17,6 @@
   character vector: they differ in the format of and amount of detail in
   the results.
 
-  \code{grepRaw} searches for substring \code{pattern} matches within a
-  raw vector \code{x}.
-
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
 }
@@ -30,9 +26,6 @@ grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
 
 grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
       useBytes = FALSE)
-
-grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE, 
-    fixed = FALSE, all = FALSE, invert = FALSE) 
 
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)
@@ -53,12 +46,9 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     \code{\link{as.character}} to a character string if possible.  If a
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  Missing values are allowed except for
-    \code{regexpr} and \code{gregexpr}. For \code{grepRaw} this value
-    can also be and raw vector (see \sQuote{Details}).}
+    \code{regexpr} and \code{gregexpr}.}
   \item{x, text}{a character vector where matches are sought, or an
-    object which can be coerced by \code{as.character} to a character
-    vector. For \code{grepRaw} this can be (and often is) a raw vector
-    (see \sQuote{Details}).}
+    object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{perl}{logical. Should perl-compatible regexps be used?
@@ -73,12 +63,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     byte-by-byte rather than character-by-character.  See
     \sQuote{Details}.}
   \item{invert}{logical.  If \code{TRUE} return indices or values for
-    elements that do \emph{not} match.}
-  \item{offset}{integer vector of length one specifying the offset from
-    which the search should start. Must be positive. The beginning of
-    line is defined to be at that offset so \code{"^"} will match there.}
-  \item{all}{logical.  If \code{TRUE} all matches are returned,
-    otherwise just the first one.}
+         elements that do \emph{not} match.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For \code{fixed =
       FALSE} this can include backreferences \code{"\\1"} to
@@ -123,25 +108,6 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if
   \code{useBytes = TRUE}.
-
-  \code{grepRaw} works on raw vectors and both \code{pattern} and
-  \code{x} are converted to such via \code{\link{charToRaw}} unless
-  those are already raw vectors. Unlike the other functions it seeks to
-  find patterns within the raw vector \code{x} (as opposed to finding
-  matching vectors from a list of vectors). This has implications
-  especially in the \code{all = TRUE} case, e.g., patterns matching
-  empty strings are inherently infinite and thus may lead to unexpected
-  results. In the context of \code{grepRaw} the argument \code{invert}
-  is interpreted as complement of the match which is only meaningful for
-  \code{value = TRUE} and \code{offset} determines the start of the
-  search, not of the complement. If \code{value = FALSE} then
-  \code{invert = TRUE} is ignored (with a warning). Note that
-  \code{invert = TRUE} with \code{all = TRUE} will essentially split
-  \code{x} into pieces delimited by the pattern including leading and
-  trailing empty strings (consequently the use of regular expressions
-  with \code{"^"} or \code{"$"} in that case may lead to less intuitive
-  results). Some combinations of arguments such as \code{fixed = TRUE}
-  with \code{values = TRUE} are supported but less meaningful.
 }
 
 \note{
@@ -164,17 +130,6 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   \code{grepl} returns a logical vector (match or not for each element of
   \code{x}).
-
-  \code{grepRaw(value = FALSE)} returns an integer vector of the offsets
-  at which matches have occurred. If \code{all = FALSE} then it will be
-  either of length zero (no match) or length one (first matching
-  position).
-
-  \code{grepRaw(value = TRUE, all = FALSE)} returns a raw vector which
-  is either empty (no match) or the matched part of \code{x}.
-
-  \code{grepRaw(value = TRUE, all = TRUE)} returns a (potentially
-  empty) list of raw vectors corresponding to the matched parts.
 
   For \code{sub} and \code{gsub} return a character vector of the same
   length and with the same attributes as \code{x} (after possible
@@ -211,7 +166,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   very long strings, you will want to consider the options used.
   Generally PCRE will be faster than the default regular expression
   engine, and \code{fixed = TRUE} faster still (especially when each
-  pattern is matched only a few times or for \code{grepRaw}).
+  pattern is matched only a few times).
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
@@ -260,6 +215,8 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   for character translations.
   
   \code{\link{apropos}} uses regexps and has more examples.
+
+  \code{\link{grepRaw}} for matching raw vectors.
 }
 \examples{
 grep("[a-z]", letters)
