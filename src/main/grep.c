@@ -973,8 +973,9 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     int nmatches = 0, rc, cflags, eflags = 0;
     int *res_val;
-    int res_alloc = 512; /* must be divisible by 2 since we may store offset+length
-			    it is the initial size of the integer vector of matches */
+    int res_alloc = 512; /* must be divisible by 2 since we may store
+			    offset+length it is the initial size of
+			    the integer vector of matches */
     R_size_t res_ptr, offset, i;
     int igcase_opt, fixed_opt, all, value, invert;
 
@@ -995,10 +996,11 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
 
-    /* invert=TRUE, value=FALSE will really give you a headache thinking about it
-       so we better not go there (the code below will actually respect it for
-       all cases except for fixed=FALSE, all=TRUE so we could support it at
-       some point but I fail to see any real use of it) */
+    /* invert=TRUE, value=FALSE will really give you a headache
+       thinking about it so we better not go there (the code below
+       will actually respect it for all cases except for fixed=FALSE,
+       all=TRUE so we could support it at some point but I fail to see
+       any real use of it) */
     if (invert && !value) {
 	warning(_("argument '%s' will be ignored"), "invert = TRUE");
 	invert = 0;
@@ -1046,10 +1048,12 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	       match/nomatch detection since we just return the pattern */
 	    return pat;
 	} else {
-	    /* there are two ways to do it: two pass or one pass. We use the latter
-	       with TRE below, but for a sequential search I assume it's fast enough
-	       so it's not worth the hassle. We just special-case really tiny matches
-	       which should be the most common case anyway. */
+	    /* There are two ways to do it: two pass or one pass. We
+	       use the latter with TRE below, but for a sequential
+	       search I assume it's fast enough so it's not worth the
+	       hassle. We just special-case really tiny matches which
+	       should be the most common case anyway.
+	    */
 #define MAX_MATCHES_MINIBUF 32
 	    int matches[MAX_MATCHES_MINIBUF];
 	    R_size_t n = LENGTH(text);
@@ -1063,14 +1067,16 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		offset += LENGTH(pat);
 	    }
 	    if (value) {
-		if (invert) { /* invert is actually useful here as it is performing something like strsplit */
+		if (invert) { /* invert is actually useful here as it
+				 is performing something like strsplit */
 		    R_size_t pos = 0;
 		    SEXP elt, mvec = NULL;
 		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
 
 		    if (!nmatches) return text;
 
-		    /* if there are more matches than in the buffer, we actually need to get them first */
+		    /* if there are more matches than in the buffer, 
+		       we actually need to get them first */
 		    if (nmatches > MAX_MATCHES_MINIBUF) { 
 			mvec = PROTECT(allocVector(INTSXP, nmatches));
 			fmatches = INTEGER(mvec);
@@ -1081,7 +1087,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 			    offset = fgrepraw1(pat, text, offset);
 			    if (offset == -1)
 				break;
-			    INTEGER(ans)[nmatches++] = offset + 1;
+			    INTEGER(mvec)[nmatches++] = offset + 1;
 			    offset += LENGTH(pat);
 			}
 		    }
@@ -1108,7 +1114,8 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    return ans;
 		}
 
-		/* value=TRUE is pathetic for fixed=TRUE without invert as it is just rep(pat, nmatches) */
+		/* value=TRUE is pathetic for fixed=TRUE without
+		   invert as it is just rep(pat, nmatches) */
 		ans = PROTECT(allocVector(VECSXP, nmatches));
 		for (i = 0; i < nmatches; i++)
 		    SET_VECTOR_ELT(ans, i, pat);
@@ -1122,7 +1129,8 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    /* more matches than we could remember, time for pass 2 */
 	    memcpy(INTEGER(ans), matches, sizeof(matches));
-	    /* but we are not completely stupid - we can continue where amnesia hit us */
+	    /* but we are not completely stupid - we can continue
+	       where amnesia hit us */
 	    nmatches = MAX_MATCHES_MINIBUF;
 	    offset = matches[MAX_MATCHES_MINIBUF - 1] + LENGTH(pat) - 1; /* matches are 1-based, we are 0-based hence - 1 */
 	    while (offset < n) {
@@ -1216,7 +1224,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	res_val = INTEGER(vec);
 	ans = PROTECT(allocVector(VECSXP, invert ? (nmatches + 1) : nmatches));
 	while (entry < nmatches) {
-	    if (invert) { /* for invert=TRUE store the current peice up to the match */
+	    if (invert) { /* for invert=TRUE store the current piece up to the match */
 		SEXP rvec = allocVector(RAWSXP, res_val[cptr] - 1 - inv_start);
 		SET_VECTOR_ELT(ans, entry, rvec);
 		entry++;
