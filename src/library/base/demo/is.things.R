@@ -1,12 +1,10 @@
 ## being a 'builtin' function is not the same as being in base
-## and what about objects starting with '.'?
 ls.base <- ls("package:base", all=TRUE)
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
-bi <- ls.base[base.is.f]
 cat("\nNumber of base objects:\t\t", length(ls.base),
     "\nNumber of functions in base:\t", sum(base.is.f),
     "\n\t starting with 'is.' :\t  ",
-    length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n", sep = "")
+    sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 ## 0.14  : 31
 ## 0.50  : 33
 ## 0.60  : 34
