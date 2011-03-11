@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-11 07:15\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -206,6 +206,10 @@ msgstr " 有効な再スタート指定ではありません "
 
 msgid "argument 'where' of length 0"
 msgstr " 長さ 0 の引数 'where' です "
+
+#, fuzzy
+msgid "argument 'object' must deparse to a single character string"
+msgstr " 'pattern' は空でない文字列でなければなりません "
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr ""

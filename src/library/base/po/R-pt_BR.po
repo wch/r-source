@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-11 07:15\n"
 "PO-Revision-Date: 2011-01-02 18:10+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -210,6 +210,10 @@ msgstr "especificação de reinício inválida"
 
 msgid "argument 'where' of length 0"
 msgstr "argumento 'where' com comprimento 0"
+
+#, fuzzy
+msgid "argument 'object' must deparse to a single character string"
+msgstr "'pattern' deve ser uma string de caracteres não vazia"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"

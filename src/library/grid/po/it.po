@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-01-28 18:12+0000\n"
+"POT-Creation-Date: 2011-03-11 07:15+0000\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -43,24 +43,24 @@ msgstr ""
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1601
+#: grid.c:1615
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1917
+#: grid.c:1931
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2786
+#: grid.c:2800
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:3276
+#: grid.c:3290
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col non valido"
 
-#: grid.c:3362
+#: grid.c:3376
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 

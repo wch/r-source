@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-11 07:15\n"
 "PO-Revision-Date: 2010-10-01 20:57+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -215,6 +215,10 @@ msgstr "mauvaise spécification de redémarrage"
 
 msgid "argument 'where' of length 0"
 msgstr "argument 'where' de longueur nulle"
+
+#, fuzzy
+msgid "argument 'object' must deparse to a single character string"
+msgstr "'pattern' doit être une chaîne de caractères non vide"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' doit être un de 'start', 'current' ou 'end'"
