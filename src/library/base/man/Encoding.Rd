@@ -92,6 +92,9 @@ x
 xx <- iconv(x, "latin1", "UTF-8")
 Encoding(c(x, xx))
 c(x, xx)
+Encoding(xx) <- "bytes"
+xx # will be encoded in hex
+cat("xx = ", xx, "\n", sep = "")
 }
 \keyword{utilities}
 \keyword{character}

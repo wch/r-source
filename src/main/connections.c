@@ -3355,13 +3355,14 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cenddata = con;
     }
     if(!con->canwrite) error(_("cannot write to this connection"));
+    /* NB: translateChar0() is the same as CHAR() for IS_BYTES strings */
     if(useBytes)
 	ssep = CHAR(STRING_ELT(sep, 0));
     else
-	ssep = translateChar(STRING_ELT(sep, 0));
+	ssep = translateChar0(STRING_ELT(sep, 0));
 
     /* New for 2.7.0: split the output if sink was split.
-       It would be slightly simpler just to cal Rvprintf if the
+       It would be slightly simpler just to call Rvprintf if the
        connection was stdout(), but this way is more efficent */
     if(con_num == R_OutputCon) {
 	int j = 0;
@@ -3371,7 +3372,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for(i = 0; i < length(text); i++)
 		Rconn_printf(con0, "%s%s",
 			     useBytes ? CHAR(STRING_ELT(text, i)) :
-			     translateChar(STRING_ELT(text, i)), ssep);
+			     translateChar0(STRING_ELT(text, i)), ssep);
 	    con0->fflush(con0);
 	    con_num = getActiveSink(j++);
 	} while (con_num > 0);
@@ -3379,7 +3380,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0; i < length(text); i++)
 	    Rconn_printf(con, "%s%s",
 			 useBytes ? CHAR(STRING_ELT(text, i)) :
-			 translateChar(STRING_ELT(text, i)), ssep);
+			 translateChar0(STRING_ELT(text, i)), ssep);
     }
 
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
@@ -3748,23 +3749,25 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 		    outlen += strlen(CHAR(STRING_ELT(object, i))) + 1;
 	    else
 		for(i = 0, outlen = 0; i < len; i++)
-		    outlen += strlen(translateChar(STRING_ELT(object, i))) + 1;
+		    outlen += strlen(translateChar0(STRING_ELT(object, i))) + 1;
 	    PROTECT(ans = allocVector(RAWSXP, outlen));
 	    bytes = RAW(ans);
+	    /* translateChar0() is the same as CHAR for IS_BYTES strings */
 	    for(i = 0, np = 0; i < len; i++) {
 		if(useBytes)
 		    s = CHAR(STRING_ELT(object, i));
 		else
-		    s = translateChar(STRING_ELT(object, i));
+		    s = translateChar0(STRING_ELT(object, i));
 		memcpy(bytes+np, s, strlen(s) + 1);
 		np +=  strlen(s) + 1;
 	    }
 	} else {
+	    /* translateChar0() is the same as CHAR for IS_BYTES strings */
 	    for(i = 0; i < len; i++) {
 		if(useBytes)
 		    s = CHAR(STRING_ELT(object, i));
 		else
-		    s = translateChar(STRING_ELT(object, i));
+		    s = translateChar0(STRING_ELT(object, i));
 		n = con->write(s, sizeof(char), strlen(s) + 1, con);
 		if(!n) {
 		    warning(_("problem writing to connection"));

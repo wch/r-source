@@ -39,9 +39,10 @@ writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
   strings with marked encodings are converted to the current encoding
   before being passed to the connection (which might do further
   re-encoding).  \code{useBytes = TRUE} suppresses the re-encoding of
-  marked strings so they are passed byte-by-byte to the connection.:
+  marked strings so they are passed byte-by-byte to the connection:
   this can be useful when strings have already been re-encoded by
-  e.g. \code{\link{iconv}}.
+  e.g. \code{\link{iconv}}.  (It is invoked automatically for strings
+  with marked encoding \code{"bytes"}.)
 }
 \seealso{
   \code{\link{connections}}, \code{\link{writeChar}}, \code{\link{writeBin}},

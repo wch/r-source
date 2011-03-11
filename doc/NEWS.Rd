@@ -371,11 +371,15 @@
       \item Initial support for a new marked encoding \code{"bytes"} for
       character strings.  This is intended to be used for non-ASCII
       strings which should be treated as a set of bytes, and never
-      re-encoded as if they were in the encoding of the currrent locale.
+      re-encoded as if they were in the encoding of the currrent locale:
+      so \code{useBytes = TRUE} is autmatically selected in functions
+      such as \code{writeBin()} and \code{writeLines()}.
 
-      In future such strings will be safeguarded against re-encoding,
-      and automtatically use \code{useBytes = TRUE} for functions such
-      as \code{grep()} and \code{writeLines()}.
+      Such strings cannot be collated, and only a few operations are
+      supported (such as \code{substr()}).
+
+      Printing and \code{cat()} will print non-ASCII bytes with a
+      \samp{\xab} escape.
     }
   }
 

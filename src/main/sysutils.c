@@ -658,6 +658,7 @@ cetype_t getCharCE(SEXP x)
 	error(_("'%s' must be called on a CHARSXP"), "getCharCE");
     if(IS_UTF8(x)) return CE_UTF8;
     else if(IS_LATIN1(x)) return CE_LATIN1;
+    else if(IS_BYTES(x)) return CE_BYTES;
     else return CE_NATIVE;
 }
 
@@ -718,7 +719,10 @@ const char *translateChar(SEXP x)
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateChar");
     if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
-    if(IS_BYTES(x)) return ans;
+    if(IS_BYTES(x)) {
+	warning(_("translating strings with \"bytes\" encoding is not sensible"));
+	return ans;
+    }
     if(utf8locale && IS_UTF8(x)) return ans;
     if(latin1locale && IS_LATIN1(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
@@ -811,6 +815,14 @@ next_char:
     return p;
 }
 
+const char *translateChar0(SEXP x)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "translateChar0");
+    if(IS_BYTES(x)) return CHAR(x);
+    return translateChar(x);
+}
+
 const char *translateCharUTF8(SEXP x)
 {
     void *obj;
@@ -822,17 +834,18 @@ const char *translateCharUTF8(SEXP x)
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
     if(x == NA_STRING) return ans;
-    if(IS_UTF8(x) || IS_BYTES(x)) return ans;
+    if(IS_UTF8(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
+    if(IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not possible"));
 
     obj = Riconv_open("UTF-8", IS_LATIN1(x) ? "latin1" : "");
     if(obj == (void *)(-1)) 
 #ifdef Win32
-		error("unsupported conversion from %s in codepage %d",
-		      "latin1", localeCP);
+	error(_("unsupported conversion from %s in codepage %d"), 
+	      "latin1", localeCP);
 #else
-	        error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", "UTF-8");
+       error(_("unsupported conversion from '%s' to '%s'"), "latin1", "UTF-8");
 #endif
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
@@ -893,10 +906,11 @@ const wchar_t *wtransChar(SEXP x)
     Rboolean knownEnc = FALSE;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    /* FIXME: what to do about "bytes" encoding */
-
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "wtransChar");
+
+    if(IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not possible"));
 
     if(IS_LATIN1(x)) {
 	if(!latin1_wobj) {

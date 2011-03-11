@@ -430,11 +430,11 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		i = Rstrlen(s, quote);
 		cnt = LENGTH(s);
 	    } else {
-		p = translateChar(s);
+		p = translateChar0(s);
 		if(p == CHAR(s)) {
 		    i = Rstrlen(s, quote);
 		    cnt = LENGTH(s);
-		} else { /* drop anything after embedded nul */
+		} else {
 		    cnt = strlen(p);
 		    i = Rstrwid(p, cnt, CE_NATIVE, quote);
 		}
@@ -443,13 +443,34 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	} else
 #endif
 	{
-	    p = translateChar(s);
-	    if(p == CHAR(s)) {
-		i = Rstrlen(s, quote);
-		cnt = LENGTH(s);
-	    } else { /* drop anything after embedded nul */
+	    if(IS_BYTES(s)) {
+		p = CHAR(s);
 		cnt = strlen(p);
-		i = Rstrwid(p, cnt, CE_NATIVE, quote);
+		const char *q;
+		char *pp = R_alloc(4*cnt+1, 1), *qq = pp, buf[5];
+		for (q = p; *q; q++) {
+		    unsigned char k = (unsigned char) *q;
+		    if (k >= 0x20 && k < 0x80) {
+			*qq++ = *q;
+			if (quote && *q == '"') cnt++;
+		    } else {
+			snprintf(buf, 5, "\\x%02x", k);
+			for(j = 0; j < 4; j++) *qq++ = buf[j];
+			cnt += 3;
+		    }
+		}
+		*qq = '\0';
+		p = pp;
+		i = cnt;
+	    } else {
+		p = translateChar(s);
+		if(p == CHAR(s)) {
+		    i = Rstrlen(s, quote);
+		    cnt = LENGTH(s);
+		} else {
+		    cnt = strlen(p);
+		    i = Rstrwid(p, cnt, CE_NATIVE, quote);
+		}
 	    }
 	}
     }

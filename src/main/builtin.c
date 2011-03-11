@@ -396,23 +396,41 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef Win32
 # include "rgui_UTF8.h"
+#endif
 static const char *trChar(SEXP x)
 {
-    char *p;
     static char buf[106];
     int n = strlen(CHAR(x));
-    /* Long strings will be rare, and few per cat() call so we
-       can afford to be profligate here: translateChar is */
-    if (n < 100) p = buf; else p = R_alloc(n+7, 1);
-    if (WinUTF8out && getCharCE(x) == CE_UTF8) {
-	strcpy(p, UTF8in); strcat(p, CHAR(x)); strcat(p, UTF8out);
-	return p;
-    } else
-	return translateChar(x);
-}
-#else
-# define trChar(x) translateChar(x)
+    cetype_t ienc = getCharCE(x);
+
+    if (ienc == CE_BYTES) {
+	const char *p = CHAR(x), *q;
+	char *pp = R_alloc(4*n+1, 1), *qq = pp, buf[5];
+	for (q = p; *q; q++) {
+	    unsigned char k = (unsigned char) *q;
+	    if (k >= 0x20 && k < 0x80) {
+		*qq++ = *q;
+	    } else {
+		snprintf(buf, 5, "\\x%02x", k);
+		for(int j = 0; j < 4; j++) *qq++ = buf[j];
+	    }
+	}
+	*qq = '\0';
+	return pp;
+    } else {
+	char *p;
+	/* Long strings will be rare, and few per cat() call so we
+	   can afford to be profligate here: translateChar is */
+	if (n < 100) p = buf; else p = R_alloc(n+7, 1);
+#ifdef Win32
+	if (WinUTF8out && ienc == CE_UTF8) {
+	    strcpy(p, UTF8in); strcat(p, CHAR(x)); strcat(p, UTF8out);
+	    return p;
+	} else
 #endif
+	    return translateChar(x);
+    }
+}
 
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 {
