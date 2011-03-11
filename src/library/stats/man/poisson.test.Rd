@@ -1,3 +1,8 @@
+% File src/library/stats/man/poisson.test.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2011 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{poisson.test}
 \alias{poisson.test}
 \title{Exact Poisson tests}

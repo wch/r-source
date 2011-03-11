@@ -1,3 +1,8 @@
+% File src/library/compiler/man/compile.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2011 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{compile}
 \alias{compile}
 \alias{cmpfun}
@@ -141,8 +146,9 @@ la2 <- function(X, FUN, ...) {
 la1c <- cmpfun(la1)
 la2c <- cmpfun(la2)
 # some timings
-x<-1:10
-y<-1:100
+x <- 1:10
+y <- 1:100
+\donttest{
 system.time(for (i in 1:10000) lapply(x, is.null))
 system.time(for (i in 1:10000) la1(x, is.null))
 system.time(for (i in 1:10000) la1c(x, is.null))
@@ -154,4 +160,16 @@ system.time(for (i in 1:1000) la1c(y, is.null))
 system.time(for (i in 1:1000) la2(y, is.null))
 system.time(for (i in 1:1000) la2c(y, is.null))
 }
+\testonly{
+for (i in 1:10000) lapply(x, is.null)
+for (i in 1:10000) la1(x, is.null)
+for (i in 1:10000) la1c(x, is.null)
+for (i in 1:10000) la2(x, is.null)
+for (i in 1:10000) la2c(x, is.null)
+for (i in 1:1000) lapply(y, is.null)
+for (i in 1:1000) la1(y, is.null)
+for (i in 1:1000) la1c(y, is.null)
+for (i in 1:1000) la2(y, is.null)
+for (i in 1:1000) la2c(y, is.null)
+}}
 \keyword{programming}

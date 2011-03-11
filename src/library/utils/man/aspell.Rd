@@ -1,3 +1,8 @@
+% File src/library/utils/man/aspell.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2011 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{aspell}
 \alias{aspell}
 \title{Spell Check Interface}
