@@ -2593,20 +2593,17 @@ functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{wctrans}, @code{wctype}, and @code{iswctype}.} for wide-character
 types: this is checked at configuration.
 
-A @command{tar} program is needed to unpack the sources.  A
-version@footnote{Such as @acronym{GNU} @command{tar} 1.15 or later,
-@command{bsdtar} (from @uref{http://code.google.com/@/p/libarchive/}, as
-used by FreeBSD and Mac OS 10.6) or @command{tar} from the Heirloom
-Toolchest (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that
-can automagically detect compressed archives is preferred for use with
+A @command{tar} program is needed to unpack the sources and packages
+(including the recommended packages).  A version@footnote{Such as
+@acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
+@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and
+Mac OS 10.6) or @command{tar} from the Heirloom Toolchest
+(@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
+automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
 @enindex TAR
 @command{tar}: use environment variable @env{TAR} to override this.
-This @command{tar} program is used by @command{R CMD build} where
-@command{tar -zcf} must be accepted (and is expected to produce a
-@command{gzip}-compressed tarball): this is not used if @env{TAR} is
-unset or set to @code{""}.
 
 There need to be suitable versions of the tools @command{grep},
 @command{sed} and @command{tr}: the problems are usually with old AT&T
@@ -4630,7 +4627,6 @@ This item is installed by the @file{Rtools*.exe} installer.
 @c expr is used in tools/GETVERSION
 @c find is used in installer/Makefile
 @c expr is used in tools/GETCONFIG
-@c grep is used in doc/maual/Makefile.win
 @c gzip is used in src/library/Makefile.win, R CMD build
 @c ls is used in src/library/*/Makefile.win
 @c mkdir is used in numerous Makefiles
@@ -4638,15 +4634,14 @@ This item is installed by the @file{Rtools*.exe} installer.
 @c sed is used in tools/GETVERSION, many Makefiles
 @c touch is used in Makefiles
 @c unzip is used in making R, e.g. for zoneinfo.zip
-@c wc is used in doc/manual/Makefile.win
-@c AFAICS [g]awk, egrep, head, rmdir, tail, tr are no longer used
+@c AFAICS [g]awk, egrep, grep, head, rmdir, tail, tr, wc are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{du}, @code{echo},
-@code{expr}, @code{grep}, @code{gzip}, @code{ls}, @code{make},
-@code{makeinfo}, @code{mkdir}, @code{mv}, @code{rm}, @code{rsync},
-@code{sed}, @code{sh}, @code{sort}, @code{tar}, @code{texindex},
-@code{touch} and @code{uniq}; we use those from the Cygwin distribution
+@code{expr}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
+@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
+@code{sort}, @code{tar}, @code{texindex}, @code{touch} and @code{uniq};
+we use those from the Cygwin distribution
 (@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
 also need @code{zip} and @code{unzip} from the Info-ZIP project
 (@uref{http://www.info-zip.org/}).  All of these tools are in

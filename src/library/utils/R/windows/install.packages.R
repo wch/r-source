@@ -222,7 +222,6 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     if(is.null(contriburl)) {
         for(i in seq_along(pkgs))
             unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock)
-        .link_html_help(lib)
         return(invisible())
     }
     tmpd <- destdir

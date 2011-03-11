@@ -6,8 +6,7 @@ ECHO = echo
 
 include ../../src/gnuwin32/MkRules
 
-ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
-# MiKTeX
+ifeq "$(MIKTEX)" "TRUE"
 R_TEXOPTS=--include-directory=../../share/texmf/tex/latex
 TEXI2DVI=texi2dvi
 else

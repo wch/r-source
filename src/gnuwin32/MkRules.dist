@@ -64,6 +64,9 @@ ICU_PATH=/sources/icu
 # set this to YES to build static HTML help
 BUILD_HTML = NO
 
+# unset this if you are *not* using MiKTeX
+MIKTEX = TRUE
+
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.3.x was installed. Spaces allowed.
