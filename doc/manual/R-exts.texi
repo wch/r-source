@@ -4352,13 +4352,13 @@ The following example is from @file{Poisson.Rd}:
 @end example
 
 @iftex
-For the @LaTeX{} manual, this becomes (after expanding macros in
-@file{R.sty})
-
+For the @LaTeX{} manual, this becomes
+@c: Name-and-shame for Brian Diggs:
+@c: this is TeXinfo markup, not the result of the conversions.
 @quotation
 @cartouche
 @tex
-$$ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}} $$
+$$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
 for $x = 0, 1, 2, \ldots$.
 @end tex
 @end cartouche
