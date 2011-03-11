@@ -658,6 +658,10 @@
       \item \code{Sweave()} with \code{concordance=TRUE} could lead to
       invalid PDF files; \file{Sweave.sty} has been updated to avoid
       this.
+      
+      \item Non-ascii characters in the titles of help pages were 
+      not rendered properly in some locales, and could cause errors
+      or warnings.
     }
   }
 }

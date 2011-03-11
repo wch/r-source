@@ -677,7 +677,7 @@ Rd2HTML <-
 
 	of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
 	    '<html><head><title>')
-	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd, encoding="UTF-8")),
+	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),
 	                     width=65, initial="R: ")
 	if (length(headtitle) > 1) headtitle <- paste(headtitle[1], "...", sep="")
 	of1(htmlify(headtitle))
