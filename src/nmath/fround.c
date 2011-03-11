@@ -39,6 +39,7 @@
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
+/* also used in fprec.c and main/format.c */
 double attribute_hidden private_rint(double x)
 {
     double tmp, sgn = 1.0;

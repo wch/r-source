@@ -121,31 +121,32 @@ void formatInteger(int *x, int n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
+/* This block could be conditional on ifndef HAVE_LONG_DOUBLE */
 #ifdef HAVE_NEARBYINT
-#define R_nearbyint nearbyint
+# define R_nearbyint nearbyint
+#elif defined(HAVE_RINTL)
+# define R_nearbyint rint
 #else
-#define R_nearbyint private_rint
+# define R_nearbyint private_rint
 extern double private_rint(double x);/* in ../nmath/fround.c  */
 #endif
 
 #ifdef HAVE_LONG_DOUBLE
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
+# elif defined(HAVE_RINTL)
+# define R_nearbyintl rintl
 # else
 # define R_nearbyintl private_nearbyintl
 LDOUBLE private_nearbyintl(LDOUBLE x)
 {
     LDOUBLE x1;
-    x1 = - floorl( - x + 0.5);
+    x1 = - floorl(-x + 0.5);
     x = floorl(x + 0.5);
-    if (x == x1) {
-        return(x);
-    } else {
-        if (x/2.0 == floorl(x/2.0)) {
-            return(x);
-        } else {
-            return(x1);
-        }
+    if (x == x1) return(x);
+    else {
+	/* FIXME: we should test for floorl, also C99 */
+        if (x/2.0 == floorl(x/2.0)) return(x); else return(x1);
     }
 }
 # endif
@@ -158,9 +159,8 @@ static void format_via_sprintf(double r, int d, int *kpower, int *nsig)
     int i;
     snprintf(buff, NB, "%#.*e", d - 1, r);
     *kpower = strtol(buff + (d + 2), NULL, 10);
-    for (i = d; i >= 2; i--) {
+    for (i = d; i >= 2; i--)
         if (buff[i] != '0') break;
-    }
     *nsig = i;
 }
 
@@ -191,8 +191,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	*kpower = 0;
 	*nsig = 1;
 	*sgn = 0;
-    }
-    else {
+    } else {
 	if(*x < 0.0) {
 	    *sgn = 1; r = -*x;
 	} else {
@@ -207,38 +206,29 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
         LDOUBLE r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
         if (abs(kp) <= 27) {
-            if (kp > 0) {
-                r_prec /= tbl[kp];
-            }
-            else if (kp < 0) {
-                r_prec *= tbl[ -kp];
-            }
-        }
-        else
-            r_prec /= powl(10.0, (LDOUBLE)kp);
+            if (kp > 0) r_prec /= tbl[kp]; else if (kp < 0) r_prec *= tbl[ -kp];
+        } else
+            r_prec /= powl(10.0, (LDOUBLE) kp);
         if (r_prec < tbl[R_print.digits - 1]) {
             r_prec *= 10.0;
             kp--;
         }
-        /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits */
-        /* accuracy limited by double rounding problem, alpha already rounded to 64 bits */
+        /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits
+	   accuracy limited by double rounding problem, 
+	   alpha already rounded to 64 bits */
         alpha = R_nearbyintl(r_prec);
 #else
         /* use exact scaling factor in double precision, if possible */
         if (abs(kp) <= 22) {
-            if (kp >= 0)
-                r /= tbl[kp];
-            else
-                r *= tbl[ -kp];
+            if (kp >= 0) r /= tbl[kp]; else r *= tbl[ -kp];
         }
         /* on IEEE 1e-308 is not representable except by gradual underflow.
            Shifting by 303 allows for any potential denormalized numbers x,
            and makes the reasonable assumption that R_dec_min_exponent+303
            is in range. Representation of 1e+303 has low error.
          */
-        else if (kp <= R_dec_min_exponent) {
+        else if (kp <= R_dec_min_exponent)
             r = (r * 1e+303)/pow(10.0, (double)(kp+303));
-        }
         else
             r /= pow(10.0, (double)kp);
         if (r < tbl[R_print.digits - 1]) {
