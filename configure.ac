@@ -73,6 +73,23 @@ AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}",
 AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 [Define this to be the name of the OS of your system.])
 
+## exclude some unsupported OSes
+case "${host_os}" in
+   ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
+   ## with 11 being 10.7.  We no longer support < 10.4 (Tiger)
+   ## http://en.wikipedia.org/wiki/Darwin_OS
+   darwin1.*)
+     AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
+     ;; 
+  darwin[[567]]*)
+     AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
+     ;; 
+  aix[123]*|aix4.[01]*)
+    ## These need a form of linking we no longer support
+    AC_MSG_ERROR([AIX prior to 4.2 is not supported])
+    ;;
+esac
+
 R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
 R_OS="${host_os}"
@@ -667,9 +684,8 @@ AC_SUBST(LIBM)
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
   darwin*)
-    ## MacOS <= 10.2 doesn't have dlcompat, >= 10.3 include it in libSystem
-    ## since R 2.3 we don't provide a work-around for missing dl anymore
-    AC_SEARCH_LIBS(dlopen, dl,,[AC_MSG_ERROR([Please install dlcompat or update to a more recent OS X.])])
+    ## MacOS <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
+    AC_SEARCH_LIBS(dlopen, dl,,[AC_MSG_ERROR([Your OS X is too old.])])
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
@@ -901,24 +917,13 @@ case "${host_os}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   darwin*)
-    ## This is needed for Apple's dlsym included in >= 10.3 
-    ## and so we've changed dlfcn-darwin.c for 2.1.0
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
-    ## http://fink.sourceforge.net/doc/porting/basics.php.
-    if test "${GCC}" = yes; then
-      ## only old Apple builds of gcc support (and need?) -no-cpp-precomp
-      APPLEBLD=`${CC} --version|sed -n -e 's:.*Apple.*build \([[0-9]]\{1,\}\).*:\1:p' 2>/dev/null`
-      if test -n "${APPLEBLD}" -a "${APPLEBLD}" -lt 5300 2>/dev/null; then
-        R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
-      fi
-    fi
     ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     AC_DEFINE(USE_BUILTIN_RINT, 1,
               [Define if your rint() is broken on your system.
-               Apparently needed on HPUX.])
+               Apparently once needed on HPUX.])
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
@@ -1194,10 +1199,6 @@ fi
 dylib_undefined_allowed=yes
 is_cygwin=no
 case "${host_os}" in
-  aix[123]*|aix4.[01]*)
-    ## These need a form of linking we no longer support
-    AC_MSG_ERROR([AIX prior to 4.2 is not supported])
-    ;;
   aix*)
     use_exportfiles=yes
     ## All AIX code is PIC.
@@ -1242,9 +1243,6 @@ case "${host_os}" in
     darwin_pic="-fPIC"
     dylib_undefined_allowed=no
     darwin_dylib_ldflags="-dynamiclib"
-    ## Used to need this for GUI and quartz device, but neither are in
-    ## R or libR.dylib any longer (2.1.0).
-    ## main_ldflags="-framework Carbon"
     ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
     if test "${GCC}" = yes; then
       case "${CC_VERSION}" in
@@ -1273,25 +1271,6 @@ case "${host_os}" in
 	  ;;
     esac
     case "${host_os}" in
-      ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
-      ## darwin 6, and the real difference is between darwin < and >= 5.
-      ## It would be nice to use R.bin (or libR.dylib) as bundle_loader
-      ## together with '-undefined suppress' for darwin 5 or better, but
-      ## the paths to these change when installing.
-      ## The Darwin 1.[012] special casing is from libtool and could be
-      ## eliminated ('-flat_namespace' is the default if available).
-      ## FIXME: Rblas is entirely untested and possibly doesn't work
-      ## for any darwin before darwin7!
-      darwin1.[[012]]*)
-        shlib_ldflags="-bundle -undefined suppress"
-        darwin_pic="${darwin_pic} -fno-common"
-        ;;
-      ## although OS X 10.3 (Panther = Darwin 7) has some useful features,
-      ## dlopen doesn't work with dylibs and RTLD_LOCAL, so we can't use them.
-      darwin[[567]]*)
-	shlib_ldflags="-flat_namespace -bundle -undefined suppress"
-        darwin_pic="${darwin_pic} -fno-common"
-        ;;
       ## * recent ld has -single_module so it doesn't need -fno-common
       ##   we have to use dylib instead of a bundle
       ## * dylib+single_module+flat_namespace=pretty much what other platforms call .so
@@ -1898,7 +1877,7 @@ fi
 
 if test "${acx_blas_ok}" != "yes"; then
   case "${host_os}" in
-    darwin[[1-7]]*|aix*)
+    aix*)
       ;;
     *)
       if test "${use_blas_shlib}" = "unset"; then

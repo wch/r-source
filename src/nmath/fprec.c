@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2001, 2005-2006 The R Development Core Team
+ *  Copyright (C) 2000-11 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,15 +38,16 @@
 #include <config.h>
 #include "nmath.h"
 
-#ifndef HAVE_RINT
-#define USE_BUILTIN_RINT
-#endif
 
-#ifdef USE_BUILTIN_RINT
-#define R_rint private_rint
+#ifdef HAVE_NEARBYINT
+# define R_rint nearbyint
+/* USE_BUILTIN_RINT is in config.h: mysterious, once needed on HP-UX
+   rint is C99, so all platforms should have it (and AFAIK, all do) */
+#elif !defined(HAVE_RINT) || defined(USE_BUILTIN_RINT)
+# define R_rint private_rint
 extern double private_rint(double x);
 #else
-#define R_rint rint
+# define R_rint rint
 #endif
 /* Improvements by Martin Maechler, May 1997;
    further ones, Feb.2000:
