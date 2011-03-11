@@ -1,6 +1,6 @@
 % File src/library/base/man/unique.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{unique}
@@ -62,6 +62,12 @@ unique(x, incomparables = FALSE, \dots)
   Values in \code{incomparables} will never be marked as duplicated.
   This is intended to be used for a fairly small set of values and will
   not be efficient for a very large set.
+  
+  When used on a data frame with more than one column, or an array or
+  matrix when comparing dimensions of length greater than one, this
+  tests for identity of character representations.  This will
+  catch people who unwisely rely on exact equality of floating-point
+  numbers!
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only
