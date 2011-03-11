@@ -152,6 +152,8 @@
                 component <- "tcl/chm"
             else if (grepl("^Tcl/lib/tcl8.5/tzdata", g))
                 component <- "tcl/tzdata"
+            else if (grepl("^Tcl/.*\\.msg$", f))
+                component <- "tcl/msg"
             else if (grepl("^Tcl", g))
                 component <- "tcl/noarch"
             else if (grepl("^library/grid/doc", g) ||
@@ -475,6 +477,15 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
         '      <Feature Id="tcl2" Title="Timezone files" Description="Timezone files for Tcl" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/tzdata'])
+        cat(file = con,
+            "      <ComponentRef Id='", id, "' />\n", sep="")
+    cat(file = con, '      </Feature>\n')
+
+    cat(file = con, sep="\n",
+        '',
+        '      <Feature Id="tcl3" Title="Message translations for Tcl/Tk" Description="Timezone files for Tcl" Level="1000"',
+        '       InstallDefault="local" AllowAdvertise="no">')
+    for(id in ids[comps == 'tcl/msg'])
         cat(file = con,
             "      <ComponentRef Id='", id, "' />\n", sep="")
     cat(file = con, '      </Feature>\n')
