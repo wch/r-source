@@ -287,6 +287,7 @@ static void Randomize(RNGtype kind)
        simultaneously */
     seed = (int) GetTickCount() + getpid();
 #elif HAVE_TIME
+    /* C89, so should work */
     seed = (Int32) time(NULL);
 #else
     /* unlikely, but use random contents */

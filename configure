@@ -21088,6 +21088,9 @@ fi
 
 fi
 
+if test "${ac_cv_search_opendir}" = "no"; then
+   as_fn_error "Building R requires the 'opendir' system call" "$LINENO" 5
+fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sys/wait.h that is POSIX.1 compatible" >&5
 $as_echo_n "checking for sys/wait.h that is POSIX.1 compatible... " >&6; }
 if test "${ac_cv_header_sys_wait_h+set}" = set; then :
@@ -22763,7 +22766,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:22766: \"$ac_link\") >&5
+(eval echo $as_me:22769: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -22838,7 +22841,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:22841: \"$ac_link\") >&5
+(eval echo $as_me:22844: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26428,7 +26431,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-## C99 functions: not all C99 runtimes are complete.
+## C99 functions: not all C99 runtimes are complete: we have substitutes
 for ac_func in expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26479,10 +26482,127 @@ _ACEOF
 fi
 done
 
+## va_copy is C99
+for ac_func in va_copy
+do
+as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
+$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
+if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <stdarg.h>
 
-## fseeko/ftello may be macros, matherr is redefined
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  eval "$as_ac_Symbol=yes"
+else
+  eval "$as_ac_Symbol=no"
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$as_ac_Symbol
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+if test "${ac_cv_have_decl_va_copy}" = "no"; then
+   as_fn_error "Building R requires the 'va_copy' system call" "$LINENO" 5
+fi
 ## isblank should be a macro according to C99
-for ac_func in fseeko ftello isblank matherr
+for ac_func in isblank
+do :
+  ac_fn_c_check_func "$LINENO" "isblank" "ac_cv_func_isblank"
+if test "x$ac_cv_func_isblank" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_ISBLANK 1
+_ACEOF
+
+fi
+done
+
+## time is C89
+for ac_func in time
+do
+as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
+$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
+if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <time.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  eval "$as_ac_Symbol=yes"
+else
+  eval "$as_ac_Symbol=no"
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$as_ac_Symbol
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+## fseeko/ftello are POSIX, may be macros
+## matherr is redefined id present in arithmetic.c
+for ac_func in fseeko ftello matherr
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -26496,6 +26616,7 @@ fi
 done
 
 
+## POSIX functions
 for ac_func in fcntl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26696,57 +26817,6 @@ _ACEOF
 fi
 done
 
-## va_copy is C99
-for ac_func in va_copy __va_copy
-do
-as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
-$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
-if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <stdarg.h>
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-#ifndef $ac_func
-  char *p = (char *) $ac_func;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  eval "$as_ac_Symbol=yes"
-else
-  eval "$as_ac_Symbol=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-fi
-eval ac_res=\$$as_ac_Symbol
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-done
-
 for ac_func in fdopen popen
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26798,9 +26868,9 @@ fi
 done
 
 if test "${ac_cv_have_decl_popen}" = "no"; then
-   as_fn_error "Building R requires the 'stat' system call" "$LINENO" 5
+   as_fn_error "Building R requires the 'popen' system call" "$LINENO" 5
 fi
-## system is C89: [un]setenv are POSIX and BSD
+## system is C89: [un]setenv are POSIX
 for ac_func in setenv system unsetenv
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26812,57 +26882,6 @@ else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <stdlib.h>
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-#ifndef $ac_func
-  char *p = (char *) $ac_func;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  eval "$as_ac_Symbol=yes"
-else
-  eval "$as_ac_Symbol=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-fi
-eval ac_res=\$$as_ac_Symbol
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-done
-
-## strcoll is C89
-for ac_func in strcoll
-do
-as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
-$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
-if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <string.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -27002,6 +27021,9 @@ _ACEOF
 fi
 done
 
+if test "${ac_cv_have_decl_stat}" = "no"; then
+   as_fn_error "Building R requires the 'stat' system call" "$LINENO" 5
+fi
 for ac_func in gettimeofday
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -27063,56 +27085,6 @@ else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <sys/times.h>
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-#ifndef $ac_func
-  char *p = (char *) $ac_func;
-#endif
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  eval "$as_ac_Symbol=yes"
-else
-  eval "$as_ac_Symbol=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-fi
-eval ac_res=\$$as_ac_Symbol
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-done
-
-for ac_func in time
-do
-as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
-$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
-if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <time.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -27294,7 +27266,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_REALPATH $ac_have_decl
 _ACEOF
 
-
+## glob is POSIX
 for ac_func in glob
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -27348,13 +27320,6 @@ fi
 done
 
 
-## we can't use dir() or unlink(recursive=TRUE) without these
-if test "${ac_cv_have_decl_stat}" = "no"; then
-   as_fn_error "Building R requires the 'stat' system call" "$LINENO" 5
-fi
-if test "${ac_cv_search_opendir}" = "no"; then
-   as_fn_error "Building R requires the 'opendir' system call" "$LINENO" 5
-fi
 ## Lots of uses of getwd(), file.access(), Sys.glob()
 case "${host_os}" in
   mingw*)
@@ -35104,11 +35069,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35107: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35072: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35111: \$? = $ac_status" >&5
+   echo "$as_me:35076: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35203,11 +35168,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35206: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35171: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35210: \$? = $ac_status" >&5
+   echo "$as_me:35175: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35255,11 +35220,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35258: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35223: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35262: \$? = $ac_status" >&5
+   echo "$as_me:35227: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -38310,7 +38275,6 @@ int
 main ()
 {
   char *data, *data2, *data3;
-  const char *cdata2;
   int i, pagesize;
   int fd, fd2;
 
@@ -38335,10 +38299,10 @@ main ()
   fd2 = open ("conftest.txt", O_RDWR | O_CREAT | O_TRUNC, 0600);
   if (fd2 < 0)
     return 4;
-  cdata2 = "";
-  if (write (fd2, cdata2, 1) != 1)
+  data2 = "";
+  if (write (fd2, data2, 1) != 1)
     return 5;
-  data2 = (char *) mmap (0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd2, 0L);
+  data2 = mmap (0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd2, 0L);
   if (data2 == MAP_FAILED)
     return 6;
   for (i = 0; i < pagesize; ++i)

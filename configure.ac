@@ -724,6 +724,9 @@ AC_SUBST(READLINE_LIBS)
 AC_HEADER_STDC
 AC_HEADER_TIME
 AC_HEADER_DIRENT
+if test "${ac_cv_search_opendir}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'opendir' system call])
+fi
 AC_HEADER_SYS_WAIT
 ## <NOTE>
 ## Some of these are also checked for when Autoconf computes the default
@@ -1728,32 +1731,40 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 
-## C99 functions: not all C99 runtimes are complete.
+## C99 functions: not all C99 runtimes are complete: we have substitutes
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl], [#include <math.h>])
-
-## fseeko/ftello may be macros, matherr is redefined
+## va_copy is C99
+R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
+if test "${ac_cv_have_decl_va_copy}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'va_copy' system call])
+fi
 ## isblank should be a macro according to C99
-AC_CHECK_FUNCS(fseeko ftello isblank matherr)
+AC_CHECK_FUNCS(isblank)
+## time is C89
+R_CHECK_FUNCS([time], [#include <time.h>])
 
+## fseeko/ftello are POSIX, may be macros
+## matherr is redefined id present in arithmetic.c
+AC_CHECK_FUNCS(fseeko ftello matherr)
+
+## POSIX functions
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
 R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
 R_CHECK_FUNCS([sigaction sigaltstack sigemptyset], [#include <signal.h>])
-## va_copy is C99
-R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 if test "${ac_cv_have_decl_popen}" = "no"; then
-   AC_MSG_ERROR([Building R requires the 'stat' system call])
+   AC_MSG_ERROR([Building R requires the 'popen' system call])
 fi
-## system is C89: [un]setenv are POSIX and BSD
+## system is C89: [un]setenv are POSIX
 R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
-## strcoll is C89
-R_CHECK_FUNCS([strcoll], [#include <string.h>])
 R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
 R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
+if test "${ac_cv_have_decl_stat}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'stat' system call])
+fi
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
-R_CHECK_FUNCS([time], [#include <time.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
@@ -1775,18 +1786,11 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif])
-
+## glob is POSIX
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
 
-## we can't use dir() or unlink(recursive=TRUE) without these
-if test "${ac_cv_have_decl_stat}" = "no"; then
-   AC_MSG_ERROR([Building R requires the 'stat' system call])
-fi
-if test "${ac_cv_search_opendir}" = "no"; then
-   AC_MSG_ERROR([Building R requires the 'opendir' system call])
-fi
 ## Lots of uses of getwd(), file.access(), Sys.glob()
 case "${host_os}" in
   mingw*)

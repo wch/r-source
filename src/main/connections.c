@@ -261,22 +261,11 @@ static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 int vasprintf(char **strp, const char *fmt, va_list ap);
 #endif
 
-#if !HAVE_VA_COPY && HAVE___VA_COPY
-# define va_copy __va_copy
-# undef HAVE_VA_COPY
-# define HAVE_VA_COPY 1
-#endif
-
-#ifdef HAVE_VA_COPY
 # define BUFSIZE 10000
-#else
-# define BUFSIZE 100000
-#endif
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     char buf[BUFSIZE], *b = buf;
     int res;
-#ifdef HAVE_VA_COPY
     const void *vmax = vmaxget();
     int usedRalloc = FALSE, usedVasprintf = FALSE;
     va_list aq;
@@ -312,15 +301,6 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	}
     }
 #endif /* HAVE_VASPRINTF */
-#else  /* no VA_COPY */
-    res = vsnprintf(buf, BUFSIZE, format, ap);
-    if(res >= BUFSIZE || res < 0) {
-	/* res is the desired output length or just a failure indication */
-	    buf[BUFSIZE - 1] = '\0';
-	    warning(_("printing of extremely long output is truncated"));
-	    res = BUFSIZE;
-    }
-#endif /* HAVE_VA_COPY */
     if(con->outconv) { /* translate the buffer */
 	char outbuf[BUFSIZE+1], *ob;
 	const char *ib = b;
@@ -345,10 +325,8 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 				       zero-length input */
     } else
 	con->write(b, 1, res, con);
-#ifdef HAVE_VA_COPY
     if(usedRalloc) vmaxset(vmax);
     if(usedVasprintf) free(b);
-#endif
     return res;
 }
 
@@ -2600,7 +2578,6 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	already = strlen(this->lastline);
     SEXP tmp;
 
-#ifdef HAVE_VA_COPY
     va_list aq;
     va_copy(aq, ap);
     if(already >= BUFSIZE) {
@@ -2635,19 +2612,6 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    warning(_("printing of extremely long output is truncated"));
 	}
     }
-#else /* no va_copy: very rare so don't try too hard */
-    if(already >= BUFSIZE) {
-	res = -1;
-    } else {
-	strcpy(b, this->lastline);
-	p = b + already;
-	buffree = BUFSIZE - already;
-	res = vsnprintf(p, buffree, format, ap);
-	b[BUFSIZE-1] = '\0';
-    }
-    if (res >= buffree || res < 0)
-	warning(_("printing of extremely long output is truncated"));
-#endif
 
     /* copy buf line-by-line to object */
     for(p = b; ; p = q+1) {
@@ -4464,10 +4428,6 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(errcon == NA_LOGICAL) error(_("invalid '%s' argument"), "type");
     tee = asLogical(CADDDR(args));
     if(tee == NA_LOGICAL) error(_("invalid '%s' argument"), "split");
-
-#ifndef HAVE_VA_COPY
-    if(tee) error(_("this platform does not support 'split=TRUE'"));
-#endif
 
     if(!errcon) {
 	/* allow space for cat() to use sink() */

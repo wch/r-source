@@ -647,9 +647,6 @@
 /* Define to 1 if you have the `strcasecmp' function. */
 #define HAVE_STRCASECMP 1
 
-/* Define to 1 if you have the `strcoll' function. */
-#define HAVE_STRCOLL 1
-
 /* Define to 1 if you have the `strdup' function. */
 #define HAVE_STRDUP 1
 
@@ -842,9 +839,6 @@
 
 /* Define to 1 if you have the `__fsetlocking' function. */
 /* #undef HAVE___FSETLOCKING */
-
-/* Define to 1 if you have the `__va_copy' function. */
-#define HAVE___VA_COPY 1
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST const

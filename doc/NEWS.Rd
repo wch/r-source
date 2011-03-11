@@ -465,9 +465,11 @@
 
       \item The C99 double complex type is now required.
 
-      The C99 complex trigonometric functions (such as \code{csin}) are
+      The C99 complex trigonometric functions (such as \samp{csin}) are
       not required (FreeBSD lacks most of them): substitutes are used if
       they are missing.
+
+      \item The C99 system call \samp{va_copy} is now required.
     }
   }
 

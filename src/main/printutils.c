@@ -692,22 +692,11 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 ;
 #endif
 
-#if !HAVE_VA_COPY && HAVE___VA_COPY
-# define va_copy __va_copy
-# undef HAVE_VA_COPY
-# define HAVE_VA_COPY 1
-#endif
-
-#ifdef HAVE_VA_COPY
 # define R_BUFSIZE BUFSIZE
-#else
-# define R_BUFSIZE 100000
-#endif
 void Rcons_vprintf(const char *format, va_list arg)
 {
     char buf[R_BUFSIZE], *p = buf;
     int res;
-#ifdef HAVE_VA_COPY
     const void *vmax = vmaxget();
     int usedRalloc = FALSE, usedVasprintf = FALSE;
     va_list aq;
@@ -739,29 +728,16 @@ void Rcons_vprintf(const char *format, va_list arg)
 	}
     }
 #endif /* HAVE_VASPRINTF */
-#else
-    res = vsnprintf(p, R_BUFSIZE, format, arg);
-    if(res >= R_BUFSIZE || res < 0) {
-	/* res is the desired output length or just a failure indication */
-	    buf[R_BUFSIZE - 1] = '\0';
-	    warning(_("printing of extremely long output is truncated"));
-	    res = R_BUFSIZE;
-    }
-#endif /* HAVE_VA_COPY */
     R_WriteConsole(p, strlen(p));
-#ifdef HAVE_VA_COPY
     if(usedRalloc) vmaxset(vmax);
     if(usedVasprintf) free(p);
-#endif
 }
 
 void Rvprintf(const char *format, va_list arg)
 {
     int i=0, con_num=R_OutputCon;
     Rconnection con;
-#ifdef HAVE_VA_COPY
     va_list argcopy;
-#endif
     static int printcount = 0;
 
     if (++printcount > 100) {
@@ -771,19 +747,12 @@ void Rvprintf(const char *format, va_list arg)
 
     do{
       con = getConnection(con_num);
-#ifdef HAVE_VA_COPY
       va_copy(argcopy, arg);
-      /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+      /* Parentheses added for Fedora with -D_FORTIFY_SOURCE=2 */
       (con->vfprintf)(con, format, argcopy);
       va_end(argcopy);
-#else /* don't support sink(,split=TRUE) */
-      (con->vfprintf)(con, format, arg);
-#endif
       con->fflush(con);
       con_num = getActiveSink(i++);
-#ifndef HAVE_VA_COPY
-      if (con_num>0) error("Internal error: this platform does not support split output");
-#endif
     } while(con_num>0);
 
 

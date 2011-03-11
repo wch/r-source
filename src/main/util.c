@@ -1844,16 +1844,9 @@ int Scollate(SEXP a, SEXP b)
 }
 
 # else
-
-#  ifdef HAVE_STRCOLL
-#   define STRCOLL strcoll
-#  else
-#   define STRCOLL strcmp
-#  endif
-
 int Scollate(SEXP a, SEXP b)
 {
-    return STRCOLL(translateChar(a), translateChar(b));
+    return strcoll(translateChar(a), translateChar(b));
 }
 
 # endif
