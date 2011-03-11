@@ -366,7 +366,7 @@
       file now causes classes to be exported according to the same
       pattern, for example the default from \code{package.skeleton}
       to specify all names starting with a letter.  An explicit
-      directive to \code{exportPattern} will still over-ride.
+      directive to \code{exportClassPattern} will still over-ride.
     }
   }
 
