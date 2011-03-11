@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2010  The R Development Core Team.
+ *  Copyright (C) 1999-2011  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3439,9 +3439,6 @@ void attribute_hidden InitStringHash()
     R_StringHash = R_NewHashTable(char_hash_size);
 }
 
-#define INT_IS_LATIN1(x) (x & LATIN1_MASK)
-#define INT_IS_UTF8(x)   (x & UTF8_MASK)
-
 /* #define DEBUG_GLOBAL_STRING_HASH 1 */
 
 /* Resize the global R_StringHash CHARSXP cache */
@@ -3536,6 +3533,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     case CE_NATIVE:
     case CE_UTF8:
     case CE_LATIN1:
+    case CE_BYTES:
     case CE_SYMBOL:
     case CE_ANY:
 	break;
@@ -3554,6 +3552,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	switch(enc) {
 	case CE_UTF8: SET_UTF8(c); break;
 	case CE_LATIN1: SET_LATIN1(c); break;
+	case CE_BYTES: SET_BYTES(c); break;
 	default: break;
 	}
 	error(_("embedded nul in string: '%s'"),
@@ -3564,6 +3563,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     switch(enc) {
     case CE_UTF8: need_enc = UTF8_MASK; break;
     case CE_LATIN1: need_enc = LATIN1_MASK; break;
+    case CE_BYTES: need_enc = BYTES_MASK; break;
     default: need_enc = 0;
     }
 
@@ -3596,6 +3596,9 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	    break;
 	case CE_LATIN1:
 	    SET_LATIN1(cval);
+	    break;
+	case CE_BYTES:
+	    SET_BYTES(cval);
 	    break;
 	default:
 	    error("unknown encoding mask: %d", enc);
@@ -3647,6 +3650,8 @@ void do_show_cache(int n)
 		    Rprintf("U");
 		else if (IS_LATIN1(CXHEAD(chain)))
 		    Rprintf("L");
+		else if (IS_BYTES(CXHEAD(chain)))
+		    Rprintf("B");
 		Rprintf("|%s| ", CHAR(CXHEAD(chain)));
 		chain = CXTAIL(chain);
 	    } while(! ISNULL(chain));
@@ -3672,6 +3677,8 @@ void do_write_cache()
 			fprintf(f, "U");
 		    else if (IS_LATIN1(CXHEAD(chain)))
 			fprintf(f, "L");
+		    else if (IS_BYTES(CXHEAD(chain)))
+			fprintf(f, "B");
 		    fprintf(f, "|%s| ", CHAR(CXHEAD(chain)));
 		    chain = CXTAIL(chain);
 		} while(! ISNULL(chain));

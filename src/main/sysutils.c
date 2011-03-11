@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2010   The R Development Core Team
+ *  Copyright (C) 1997-2011   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,6 +148,7 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     }
     if(IS_LATIN1(fn)) from = "latin1";
     if(IS_UTF8(fn)) from = "UTF-8";
+    if(IS_BYTES(fn)) error("encoding of filename cannot be 'bytes'");
     obj = Riconv_open("UCS-2LE", from);
     if(obj == (void *)(-1))
 	error("unsupported conversion from '%s' in 'filenameToWchar' in codepage %d", 
@@ -717,6 +718,7 @@ const char *translateChar(SEXP x)
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateChar");
     if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
+    if(IS_BYTES(x)) return ans;
     if(utf8locale && IS_UTF8(x)) return ans;
     if(latin1locale && IS_LATIN1(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
@@ -820,7 +822,7 @@ const char *translateCharUTF8(SEXP x)
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
     if(x == NA_STRING) return ans;
-    if(IS_UTF8(x)) return ans;
+    if(IS_UTF8(x) || IS_BYTES(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
 
     obj = Riconv_open("UTF-8", IS_LATIN1(x) ? "latin1" : "");
@@ -890,6 +892,8 @@ const wchar_t *wtransChar(SEXP x)
     size_t inb, outb, res, top;
     Rboolean knownEnc = FALSE;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    /* FIXME: what to do about "bytes" encoding */
 
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "wtransChar");

@@ -198,7 +198,7 @@ static void substr(char *buf, const char *str, int ienc, int sa, int so)
 	    if (i < sa - 1) { str+= used; continue; }
 	    for (j = 0; j < used; j++) *buf++ = *str++;
 	}
-    } else if (ienc == CE_LATIN1) {
+    } else if (ienc == CE_LATIN1 || ienc == CE_BYTES) {
 	for (str += (sa - 1), i = sa; i <= so; i++) *buf++ = *str++;
     } else {
 	if (mbcslocale && !strIsASCII(str)) {
@@ -282,7 +282,7 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	}
 	if (in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
 	memcpy(buf, str, in);
-    } else if (ienc == CE_LATIN1) {
+    } else if (ienc == CE_LATIN1 || ienc == CE_BYTES) {
 	in = strlen(str);
 	out = so - sa + 1;
 	memcpy(buf + sa - 1, str, (in < out) ? in : out);

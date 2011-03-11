@@ -27,12 +27,15 @@ enc2utf8(x)
 }
 \details{
   Character strings in \R can be declared to be in \code{"latin1"} or
-  \code{"UTF-8"}.  These declarations can be read by \code{Encoding},
-  which will return a character vector of values \code{"latin1"},
-  \code{"UTF-8"} or \code{"unknown"}, or set, when \code{value} is
-  recycled as needed and other values are silently treated as
-  \code{"unknown"}.  ASCII strings will never be marked with a declared
-  encoding, since their representation is the same in all supported encodings.
+  \code{"UTF-8"} or \code{"bytes"}.  These declarations can be read by
+  \code{Encoding}, which will return a character vector of values
+  \code{"latin1"}, \code{"UTF-8"} \code{"bytes"} or \code{"unknown"}, or
+  set, when \code{value} is recycled as needed and other values are
+  silently treated as \code{"unknown"}.  ASCII strings will never be
+  marked with a declared encoding, since their representation is the
+  same in all supported encodings.  Strings marked as \code{"bytes"} are
+  intended to be non-ASCII strings which should be manipulated as bytes,
+  and never converted to a character encoding.
 
   \code{enc2native} and \code{enc2utf8} convert elements of character
   vectors to the native encoding or UTF-8 respectively, taking any

@@ -364,9 +364,18 @@
 
       \item Providing an \code{exportPattern} directive in a NAMESPACE
       file now causes classes to be exported according to the same
-      pattern, for example the default from \code{package.skeleton}
+      pattern, for example the default from \code{package.skeleton()}
       to specify all names starting with a letter.  An explicit
       directive to \code{exportClassPattern} will still over-ride.
+
+      \item Initial support for a new marked encoding \code{"bytes"} for
+      character strings.  This is intended to be used for non-ASCII
+      strings which should be treated as a set of bytes, and never
+      re-encoded as if they were in the encoding of the currrent locale.
+
+      In future such strings will be safeguarded against re-encoding,
+      and automtatically use \code{useBytes = TRUE} for functions such
+      as \code{grep()} and \code{writeLines()}.
     }
   }
 

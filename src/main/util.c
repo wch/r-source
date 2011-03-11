@@ -1003,6 +1003,7 @@ SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	if(IS_LATIN1(STRING_ELT(x, i))) tmp = "latin1";
 	else if(IS_UTF8(STRING_ELT(x, i))) tmp = "UTF-8";
+	else if(IS_BYTES(STRING_ELT(x, i))) tmp = "bytes";
 	else tmp = "unknown";
 	SET_STRING_ELT(ans, i, mkChar(tmp));
     }
@@ -1032,10 +1033,12 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	this = CHAR(STRING_ELT(enc, i % m)); /* ASCII */
 	if(streql(this, "latin1")) ienc = CE_LATIN1;
 	else if(streql(this, "UTF-8")) ienc = CE_UTF8;
+	else if(streql(this, "bytes")) ienc = CE_BYTES;
 	tmp = STRING_ELT(x, i);
 	if(tmp == NA_STRING) continue;
 	if (! ((ienc == CE_LATIN1 && IS_LATIN1(tmp)) ||
 	       (ienc == CE_UTF8 && IS_UTF8(tmp)) ||
+	       (ienc == CE_BYTES && IS_BYTES(tmp)) ||
 	       (ienc == CE_NATIVE && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
 	    SET_STRING_ELT(x, i, mkCharLenCE(CHAR(tmp), LENGTH(tmp), ienc));
     }

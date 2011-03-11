@@ -368,7 +368,10 @@ need to know the charset to handle ASCII strings.  From @R{} 2.8.0 it is
 guaranteed that they will not be set for @code{CHARSXP}s created by @R{}
 itself.)  As from @R{} 2.8.0 bit 5 is used to indicate that a
 @code{CHARSXP} is hashed by its address, that is @code{NA_STRING} or in
-the @code{CHARSXP} cache: this is not serialized.
+the @code{CHARSXP} cache: this is not serialized.  As from @R{} 2.13.0,
+bit 1 is used to indicate if the @code{CHARSXP} should be treated as a
+set of bytes, not necessarily representing a character in any known
+encoding.
 
 @node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The `data'

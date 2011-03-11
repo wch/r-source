@@ -107,22 +107,27 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 #define CHAR_RW(x)	((char *) CHAR(x))
 
 /* CHARSXP charset bits */
+#define BYTES_MASK (1<<1)
 #define LATIN1_MASK (1<<2)
 #define UTF8_MASK (1<<3)
 #define CACHED_MASK (1<<5)
 #define HASHASH_MASK 1
-/**** HASHASH uses the first bit -- see HASHAS_MASK defined below */
+/**** HASHASH uses the first bit -- see HASHASH_MASK defined below */
 
 #ifdef USE_RINTERNALS
+# define IS_BYTES(x) ((x)->sxpinfo.gp & BYTES_MASK)
+# define SET_BYTES(x) (((x)->sxpinfo.gp) |= BYTES_MASK)
 # define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
 # define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 # define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
-# define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+# define ENC_KNOWN(x) ((x)->sxpinfo.gp & (BYTES_MASK | LATIN1_MASK | UTF8_MASK))
 # define SET_CACHED(x) (((x)->sxpinfo.gp) |= CACHED_MASK)
 # define IS_CACHED(x) (((x)->sxpinfo.gp) & CACHED_MASK)
 #else
 /* Needed only for write-barrier testing */
+int IS_BYTES(SEXP x);
+void SET_BYTES(SEXP x);
 int IS_LATIN1(SEXP x);
 void SET_LATIN1(SEXP x);
 int IS_UTF8(SEXP x);

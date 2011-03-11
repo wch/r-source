@@ -45,6 +45,7 @@
  EncodeReal2
  GRecording
  IS_ACTIVE_BINDING
+ IS_BYTES
  IS_LATIN1
  IS_UTF8
  InitDynload
@@ -398,6 +399,7 @@
  Rwin_rename
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT
+ SET_BYTES
  SET_CACHED
  SET_LATIN1
  SET_PRIMOFFSET
