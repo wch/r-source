@@ -1731,20 +1731,24 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 
-## C99 functions: not all C99 runtimes are complete: we have substitutes
+## C99 functions: 
+## not all C99 runtimes are complete, but we have some substitutes
+## FreeBSD 8.2 lacks log2
+## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl], [#include <math.h>])
-## va_copy is C99
+## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
 if test "${ac_cv_have_decl_va_copy}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'va_copy' system call])
 fi
-## isblank should be a macro according to C99
+## isblank should be a macro according to C99.  It was missing on Solaris 8
 AC_CHECK_FUNCS(isblank)
+
 ## time is C89
 R_CHECK_FUNCS([time], [#include <time.h>])
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is redefined id present in arithmetic.c
+## matherr is SVID, redefined in arithmetic.c if present
 AC_CHECK_FUNCS(fseeko ftello matherr)
 
 ## POSIX functions
@@ -1756,8 +1760,8 @@ R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 if test "${ac_cv_have_decl_popen}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'popen' system call])
 fi
-## system is C89: [un]setenv are POSIX
-R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
+## Windows has neither setenv nor unsetenv
+R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
 R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
 if test "${ac_cv_have_decl_stat}" = "no"; then
@@ -1774,10 +1778,10 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid link readlink symlink 
 ## It is not always declared, so we do not require a declaration.
 AC_CHECK_FUNCS(putenv)
 AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
-## this is a GNU extension so usually hidden
+## this is a GNU extension so usually hidden.  Not on Solaris
 AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
-## mempcpy is a GNU extension used by the included gettext
+## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
 AC_CHECK_FUNCS(mempcpy)
 ## realpath is a POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
@@ -1786,7 +1790,7 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif])
-## glob is POSIX
+## glob is POSIX: we have a substitute on Windows
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
@@ -1854,6 +1858,7 @@ fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
+## mkdtemp is not on Solaris
 AC_REPLACE_FUNCS(acosh asinh atanh mkdtemp snprintf strdup strncasecmp vsnprintf)
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([acosh, asinh, atanh], , , [#include <math.h>])

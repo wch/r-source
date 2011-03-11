@@ -464,7 +464,7 @@
 #define HAVE_LONG_LONG_INT 1
 
 /* Define if your system has lzma >= 4.999. */
-#undef HAVE_LZMA
+/* #undef HAVE_LZMA */
 
 /* Define to 1 if you have the <lzma.h> header file. */
 /* #undef HAVE_LZMA_H */
@@ -667,9 +667,6 @@
 
 /* Define to 1 if you have the `sysconf' function. */
 /* #undef HAVE_SYSCONF */
-
-/* Define to 1 if you have the `system' function. */
-#define HAVE_SYSTEM 1
 
 /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
    */
@@ -890,7 +887,7 @@
 #define PACKAGE_TARNAME "R"
 
 /* Define to the home page for this package. */
-#undef PACKAGE_URL
+#define PACKAGE_URL "http://www.r-project.org"
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "@VERSION@"
@@ -991,7 +988,7 @@
 #define SUPPORT_LIBXML 1
 
 /* Define if you C/C++/Fortran OpenMP support for package code. */
-#undef SUPPORT_OPENMP
+/* #undef SUPPORT_OPENMP */
 
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */

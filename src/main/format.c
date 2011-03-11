@@ -145,7 +145,8 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
     x = floorl(x + 0.5);
     if (x == x1) return(x);
     else {
-	/* FIXME: we should test for floorl, also C99 */
+	/* FIXME: we should really test for floorl, also C99.
+	   But FreeBSD 7.x does have it, but not nearbyintl */
         if (x/2.0 == floorl(x/2.0)) return(x); else return(x1);
     }
 }

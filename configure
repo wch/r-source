@@ -26431,7 +26431,10 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-## C99 functions: not all C99 runtimes are complete: we have substitutes
+## C99 functions:
+## not all C99 runtimes are complete, but we have some substitutes
+## FreeBSD 8.2 lacks log2
+## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 for ac_func in expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26482,7 +26485,7 @@ _ACEOF
 fi
 done
 
-## va_copy is C99
+## va_copy is C99: required as from R 2.13.0
 for ac_func in va_copy
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -26536,7 +26539,7 @@ done
 if test "${ac_cv_have_decl_va_copy}" = "no"; then
    as_fn_error "Building R requires the 'va_copy' system call" "$LINENO" 5
 fi
-## isblank should be a macro according to C99
+## isblank should be a macro according to C99.  It was missing on Solaris 8
 for ac_func in isblank
 do :
   ac_fn_c_check_func "$LINENO" "isblank" "ac_cv_func_isblank"
@@ -26547,6 +26550,7 @@ _ACEOF
 
 fi
 done
+
 
 ## time is C89
 for ac_func in time
@@ -26601,7 +26605,7 @@ done
 
 
 ## fseeko/ftello are POSIX, may be macros
-## matherr is redefined id present in arithmetic.c
+## matherr is SVID, redefined in arithmetic.c if present
 for ac_func in fseeko ftello matherr
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -26870,8 +26874,8 @@ done
 if test "${ac_cv_have_decl_popen}" = "no"; then
    as_fn_error "Building R requires the 'popen' system call" "$LINENO" 5
 fi
-## system is C89: [un]setenv are POSIX
-for ac_func in setenv system unsetenv
+## Windows has neither setenv nor unsetenv
+for ac_func in setenv unsetenv
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -27202,7 +27206,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_PUTENV $ac_have_decl
 _ACEOF
 
-## this is a GNU extension so usually hidden
+## this is a GNU extension so usually hidden.  Not on Solaris
 for ac_func in vasprintf
 do :
   ac_fn_c_check_func "$LINENO" "vasprintf" "ac_cv_func_vasprintf"
@@ -27226,7 +27230,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_VASPRINTF $ac_have_decl
 _ACEOF
 
-## mempcpy is a GNU extension used by the included gettext
+## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
 for ac_func in mempcpy
 do :
   ac_fn_c_check_func "$LINENO" "mempcpy" "ac_cv_func_mempcpy"
@@ -27266,7 +27270,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_REALPATH $ac_have_decl
 _ACEOF
 
-## glob is POSIX
+## glob is POSIX: we have a substitute on Windows
 for ac_func in glob
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -27580,6 +27584,7 @@ fi
 
 
 ## Do we need substitutes?
+## mkdtemp is not on Solaris
 for ac_func in acosh asinh atanh mkdtemp snprintf strdup strncasecmp vsnprintf
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -35069,11 +35074,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35072: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35077: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35076: \$? = $ac_status" >&5
+   echo "$as_me:35081: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35168,11 +35173,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35171: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35176: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35175: \$? = $ac_status" >&5
+   echo "$as_me:35180: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35220,11 +35225,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35223: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35228: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35227: \$? = $ac_status" >&5
+   echo "$as_me:35232: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
