@@ -666,13 +666,13 @@ function(x)
 ### * .Rd_get_title
 
 .Rd_get_title <-
-function(x, encoding="")
+function(x)
 {
     title <- .Rd_get_section(x, "title")
 
     result <- character()
     if(length(title)) {
-        result <- .Rd_get_text(title, encoding=encoding)
+        result <- .Rd_get_text(title)
         result <- result[result != ""]
     }
     paste(result, collapse=" ")
@@ -680,8 +680,12 @@ function(x, encoding="")
 
 ### * .Rd_get_text
 
+# Return display form of text, encoded in UTF-8.  Note that
+# textConnection converts to the local encoding, and we convert back,
+# so unrepresentable characters will be lost
+
 .Rd_get_text <-
-function(x, encoding="") {
+function(x) {
     # We'd like to use capture.output here, but don't want to depend
     # on utils, so we duplicate some of it
     rval <- NULL
@@ -689,11 +693,11 @@ function(x, encoding="") {
     
     save <- options(useFancyQuotes = FALSE)
     sink(file)
-    tryCatch(Rd2txt(x, fragment=TRUE, encoding=encoding),
+    tryCatch(Rd2txt(x, fragment=TRUE),
              finally = {sink(); options(save); close(file)})    
     
-    if (is.null(rval)) character()
-    else rval
+    if (is.null(rval)) rval <- character()
+    else enc2utf8(rval)
 }
      
 ### * .Rd_get_xrefs
