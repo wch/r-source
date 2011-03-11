@@ -361,6 +361,12 @@
       you build \R from source on a Unix-alike you can use
       \command{make bytecode} to compile the standard and
       recommended packages.
+
+      \item Providing an \code{exportPattern} directive in a NAMESPACE
+      file now causes classes to be exported according to the same
+      pattern, for example the default from \code{package.skeleton}
+      to specify all names starting with a letter.  An explicit
+      directive to \code{exportPattern} will still over-ride.
     }
   }
 

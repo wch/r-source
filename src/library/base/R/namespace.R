@@ -437,13 +437,17 @@ loadNamespace <- function (package, lib.loc = NULL,
             ##we take any pattern, but check to see if the matches are classes
             pClasses <- character()
             aClasses <- methods:::getClasses(ns)
-            for (p in nsInfo$exportClassPatterns) {
+            classPatterns <- nsInfo$exportClassPatterns
+            ## defaults to exportPatterns
+            if(!length(classPatterns))
+                classPatterns <- nsInfo$exportPatterns
+            for (p in classPatterns) {
                 pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
             }
             pClasses <- unique(pClasses)
             if( length(pClasses) ) {
                 good <- vapply(pClasses, methods:::isClass, NA, where = ns)
-                if( !any(good) )
+                if( !any(good) && length(nsInfo$exportClassPatterns))
                     warning(gettextf("exportClassPattern specified in NAMESPACE but no matching classes in package %s", sQuote(package)),
                             call. = FALSE, domain = NA)
                 expClasses <- c(expClasses, pClasses[good])
