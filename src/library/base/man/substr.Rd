@@ -1,6 +1,6 @@
 % File src/library/base/man/substr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{substr}
@@ -47,8 +47,11 @@ substring(text, first, last = 1000000L) <- value
 
   Elements of the result will be have the encoding declared as that of
   the current locale (see \code{\link{Encoding}} if the corresponding
-  input had a declared encoding and the current locale is either Latin-1
-  or UTF-8.
+  input had a declared Latin-1 or UTF-8 encoding and the current locale
+  is either Latin-1 or UTF-8.
+
+  If an input element has declared \code{"bytes"} encoding, the
+  subsetting is done in units of bytes not characters.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the
@@ -69,8 +72,8 @@ substring(text, first, last = 1000000L) <- value
   These functions are often used with \code{\link{nchar}} to truncate a
   display.  That does not really work (you want to limit the width, not
   the number of characters, so it would be better to use
-  \code{\link{strtrim}}), but at least make sure you use
-  \code{nchar(type="c")} (the default since \R 2.6.0).
+  \code{\link{strtrim}}), but at least make sure you use the default
+  \code{nchar(type="c")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

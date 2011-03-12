@@ -1,6 +1,6 @@
 % File src/library/base/man/pmatch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pmatch}
@@ -48,6 +48,9 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
   does match empty strings, and it does not allow multiple exact matches.
 
   \code{NA} values are treated as if they were the string constant \code{"NA"}.
+  
+  Character strings with marked encoding \code{"bytes"} cannot be
+  compared, so give an error.
 }
 \value{
   An integer vector (possibly including \code{NA} if \code{nomatch =

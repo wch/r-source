@@ -42,7 +42,7 @@ Support for UTF-8-encoded strings in non-UTF-8 locales
 Comparison is done directly unless you happen to be comparing the same
 string in different encodings.
 
-nzchar and nchar(, "bytes") are indpendent of the encoding
+nzchar and nchar(, "bytes") are independent of the encoding
 nchar(, "char") nchar(, "width") handle UTF-8 directly, translate Latin-1
 substr substr<-  handle UTF-8 and Latin-1 directly
 tolower toupper chartr  translate UTF-8 to wchar, rest to current charset
@@ -51,6 +51,16 @@ abbreviate strtrim  translate
 
 All the string matching functions handle UTF-8 directly, otherwise
 translate (latin1 to UTF-8, otherwise to native).
+
+Support for "bytes" marked encoding
+===================================
+
+nzchar and nchar(, "bytes") are independent of the encoding.
+
+nchar(, "char") nchar(, "width") give NA (if allowed) or error.
+substr substr<-  work in bytes
+
+abbreviate chartr make.names strtrim tolower toupper give error.
 
 */
 
@@ -140,6 +150,10 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		nc = 0;
 		for( ; *p; p += utf8clen(*p)) nc++;
 		INTEGER(s)[i] = nc;
+	    } else if (IS_BYTES(sxi)) {
+		if (!allowNA && nc < 0)
+		    error(_("number of characters is not computable for element %d in \"bytes\" encoding"), i+1);
+		INTEGER(s)[i] = NA_INTEGER;
 	    } else if (mbcslocale) {
 		nc = mbstowcs(NULL, translateChar(sxi), 0);
 		if (!allowNA && nc < 0)
@@ -157,6 +171,10 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nc += Ri18n_wcwidth(wc1);
 		}
 		INTEGER(s)[i] = nc;
+	    } else if (IS_BYTES(sxi)) {
+		if (!allowNA && nc < 0)
+		    error(_("width is not computable for element %d in \"bytes\" encoding"), i+1);
+		INTEGER(s)[i] = NA_INTEGER;
 	    } else if (mbcslocale) {
 		xi = translateChar(sxi);
 		nc = mbstowcs(NULL, xi, 0);

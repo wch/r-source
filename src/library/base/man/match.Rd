@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -65,6 +65,9 @@ x \%in\% table
   
   That \code{\%in\%} never returns \code{NA} makes it particularly
   useful in \code{if} conditions.
+  
+  Character strings with marked encoding \code{"bytes"} cannot be
+  compared, so give an error.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -42,12 +42,19 @@ paste(\dots, sep = " ", collapse = NULL)
   zero if all the objects are, unless \code{collapse} is non-NULL in
   which case it is a single empty string.
   
-  If any input into an element of the result is in UTF-8, that element
-  will be in UTF-8, otherwise in the current encoding in which case the
-  encoding of the element is declared if the current locale is either
-  Latin-1 or UTF-8, at least one of the corresponding inputs (including
-  separators) had a declared encoding and all inputs were either ASCII
-  or declared.
+  If any input into an element of the result is in UTF-8 (and none are
+  declared with encoding \code{"bytes"}), that element will be in UTF-8,
+  otherwise in the current encoding in which case the encoding of the
+  element is declared if the current locale is either Latin-1 or UTF-8,
+  at least one of the corresponding inputs (including separators) had a
+  declared encoding and all inputs were either ASCII or declared.
+
+  If an input into an element is declared with encoding \code{"bytes"},
+  no translation will be done of any of the elements and the resulting
+  element will have encoding \code{"bytes"}.  If \code{collapse} is
+  non-NULL, this applies also to the second, collapsing, phase, but some
+  translation may have been done in pasting object together in the first
+  phase.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

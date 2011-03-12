@@ -26,7 +26,8 @@ nzchar(x)
   \item{type}{character string: partial matching to one of
     \code{c("bytes", "chars", "width")}.  See \sQuote{Details}.}
   \item{allowNA}{logical: should \code{NA} be returned for invalid
-    multibyte strings (rather than throwing an error)?}
+    multibyte strings or \code{"bytes"}-encoded strings (rather than
+    throwing an error)?}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
@@ -57,6 +58,11 @@ nzchar(x)
   will be \code{NA}.  Otherwise the number of characters will be
   non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test of
   validity.
+
+  A character string marked with \code{"bytes"} encoding has a number of
+  bytes, but neither a known number of characters nor a width, so the
+  latter two types are \code{NA} if \code{allowNA = TRUE}, otherwise an
+  error.
 
   Names, dims and dimnames are copied from the input.
 
