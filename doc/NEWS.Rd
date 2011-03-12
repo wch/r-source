@@ -370,18 +370,18 @@
       to specify all names starting with a letter.  An explicit
       directive to \code{exportClassPattern} will still over-ride.
 
-      \item Initial support for a new marked encoding \code{"bytes"} for
-      character strings has been added.  This is intended to be used for
-      non-ASCII strings which should be treated as a set of bytes, and
-      never re-encoded as if they were in the encoding of the currrent
-      locale: so \code{useBytes = TRUE} is autmatically selected in
-      functions such as \code{writeBin()} and \code{writeLines()}.
+      \item There is an additional marked encoding \code{"bytes"} for
+      character strings.  This is intended to be used for non-ASCII
+      strings which should be treated as a set of bytes, and never
+      re-encoded as if they were in the encoding of the currrent locale:
+      \code{useBytes = TRUE} is autmatically selected in functions such
+      as \code{writeBin()}, \code{writeLines()}, \code{grep()} and
+      \code{strsplit()}.
 
-      Such strings cannot be collated, and only a few operations are
-      supported (such as \code{substr()}).
+      Only a few character operations are supported (such as \code{substr()}).
 
-      Printing and \code{cat()} will print non-ASCII bytes in such
-      strings with a \samp{\xab} escape.
+      Printing, \code{format()} and \code{cat()} will represent non-ASCII
+      bytes in such strings by a \samp{\xab} escape.
     }
   }
 
@@ -625,7 +625,7 @@
       cases; similarly for \code{points()}, \code{lines()} and
       \code{text()}.
       
-        \item \code{edit.default} contained a manual dispatch for matrices
+      \item \code{edit.default()} contained a manual dispatch for matrices
       (the \code{"matrix"} class didn't really exist when it was written). 
       This caused an infinite recursion in the no-GUI case and has now
       been removed. 

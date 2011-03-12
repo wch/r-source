@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -33,7 +33,8 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   \item{perl}{logical.  Should perl-compatible regexps be used?}
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character, and inputs with
-    marked encodings are not converted.}
+    marked encodings are not converted.  This is forced (with a warning)
+    if any input is found which is marked as \code{"bytes"}.}
 }
 \details{
   Argument \code{split} will be coerced to character, so

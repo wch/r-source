@@ -3507,6 +3507,7 @@ function(pkgDir)
             enc <- Encoding(xx)
             latin1 <<- latin1 + sum(enc == "latin1")
             utf8 <<- utf8 + sum(enc == "UTF-8")
+            bytes <<- bytes + sum(enc == "bytes")
             unk <- xx[enc == "unknown"]
             ind <- .Call(check_nonASCII2, unk)
             if(length(ind)) {
@@ -3536,14 +3537,15 @@ function(pkgDir)
     setwd(old)
 
     non_ASCII <- where <- character()
-    latin1 <- utf8 <- 0L
+    latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
     suppressPackageStartupMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
             check_one(get(ds, envir = dataEnv), ds)
     })
     unknown <- unique(cbind(non_ASCII, where))
-    structure(list(latin1 = latin1, utf8 = utf8, unknown = unknown),
+    structure(list(latin1 = latin1, utf8 = utf8, bytes = bytes,
+                   unknown = unknown),
               class = "check_package_datasets")
 }
 
@@ -3555,10 +3557,13 @@ function(x, ...)
 
     c(character(),
       if(n <- x$latin1) {
-          sprintf("Note: found %d marked Latin-1 string(s)", n)
+          sprintf("Note: found %d marked Latin-1 strings", n)
       },
       if(n <- x$utf8) {
-          sprintf("Note: found %d marked UTF-8 string(s)", n)
+          sprintf("Note: found %d marked UTF-8 strings", n)
+      },
+      if(n <- x$bytes) {
+          sprintf("Note: found %d strings marked as \"bytes\"", n)
       },
       if(nrow(x$unknown)) {
           c("Warning: found non-ASCII string(s)",

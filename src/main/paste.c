@@ -51,13 +51,13 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, k, maxlen, nx, pwidth, sepw, u_sepw, ienc;
     const char *s, *csep, *cbuf, *u_csep=NULL;
     char *buf;
-    Rboolean allKnown, anyKnown, sepASCII, sepKnown, use_UTF8, sepUTF8;
+    Rboolean allKnown, anyKnown, sepASCII, sepKnown, use_UTF8, sepUTF8,
+	use_Bytes, sepBytes;
     const void *vmax;
 
     checkArity(op, args);
 
-    /* We use formatting and so we */
-    /* must initialize printing. */
+    /* We use formatting and so we must initialize printing. */
 
     PrintDefaults();
 
@@ -78,6 +78,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     sepASCII = strIsASCII(csep);
     sepKnown = ENC_KNOWN(sep) > 0;
     sepUTF8 = IS_UTF8(sep);
+    sepBytes = IS_BYTES(sep);
 
     collapse = CADDR(args);
     if (!isNull(collapse))
@@ -122,11 +123,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	 * declared encoding, we should mark.
 	 * Need to be careful only to include separator if it is used.
 	 */
-	anyKnown = FALSE; allKnown = TRUE; use_UTF8 = FALSE;
+	anyKnown = FALSE; allKnown = TRUE; use_UTF8 = FALSE; use_Bytes = FALSE;
 	if(nx > 1) {
 	    allKnown = sepKnown || sepASCII;
 	    anyKnown = sepKnown;
 	    use_UTF8 = sepUTF8;
+	    use_Bytes = sepBytes;
 	}
 
 	pwidth = 0;
@@ -135,13 +137,17 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (k > 0) {
 		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
 		if(IS_UTF8(cs)) use_UTF8 = TRUE;
+		if(IS_BYTES(cs)) use_Bytes = TRUE;
 	    }
 	}
+	if (use_Bytes) use_UTF8 = FALSE;
 	vmax = vmaxget();
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
-		if(use_UTF8)
+		if(use_Bytes)
+		    pwidth += strlen(CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+		else if(use_UTF8)
 		    pwidth += strlen(translateCharUTF8(STRING_ELT(VECTOR_ELT(x, j), i % k)));
 		else
 		    pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k)));
@@ -164,7 +170,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strcpy(buf, s);
 		    buf += strlen(s);
 		} else {
-		    s = translateChar(cs);
+		    s = use_Bytes ? CHAR(cs) : translateChar(cs);
 		    strcpy(buf, s);
 		    buf += strlen(s);
 		    allKnown = allKnown && (strIsASCII(s) || (ENC_KNOWN(cs)> 0));
@@ -184,6 +190,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	ienc = 0;
 	if(use_UTF8) ienc = CE_UTF8;
+	else if(use_Bytes) ienc = CE_BYTES;
 	else if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
@@ -196,9 +203,15 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     if(collapse != R_NilValue && (nx = LENGTH(ans)) > 0) {	
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
-	for (i = 0; i < nx; i++) 
+	use_Bytes = IS_BYTES(sep);
+	for (i = 0; i < nx; i++) {
 	    if(IS_UTF8(STRING_ELT(ans, i))) use_UTF8 = TRUE;
-	if(use_UTF8)
+	    if(IS_BYTES(STRING_ELT(ans, i))) use_Bytes = TRUE;
+	}
+	if(use_Bytes) {
+	    csep = CHAR(sep);
+	    use_UTF8 = FALSE;
+	} else if(use_UTF8)
 	    csep = translateCharUTF8(sep);
 	else
 	    csep = translateChar(sep);
@@ -211,7 +224,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(use_UTF8) {
 		pwidth += strlen(translateCharUTF8(STRING_ELT(ans, i)));
 		vmaxset(vmax);
-	    } else
+	    } else /* already translated */
 		pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
 	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
@@ -236,6 +249,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	ienc = CE_NATIVE;
 	if(use_UTF8) ienc = CE_UTF8;
+	else if(use_Bytes) ienc = CE_BYTES;
 	else if(anyKnown && allKnown) {
 	    if(known_to_be_latin1) ienc = CE_LATIN1;
 	    if(known_to_be_utf8) ienc = CE_UTF8;
@@ -456,7 +470,21 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(xx = duplicate(x));
 	    for (i = 0; i < n; i++) {
 		SEXP tmp =  STRING_ELT(xx, i);
-		s = translateChar(tmp);
+		if(IS_BYTES(tmp)) {
+		    const char *p = CHAR(tmp), *q;
+		    char *pp = R_alloc(4*strlen(p)+1, 1), *qq = pp, buf[5];
+		    for (q = p; *q; q++) {
+			unsigned char k = (unsigned char) *q;
+			if (k >= 0x20 && k < 0x80) {
+			    *qq++ = *q;
+			} else {
+			    snprintf(buf, 5, "\\x%02x", k);
+			    for(int j = 0; j < 4; j++) *qq++ = buf[j];
+			}
+		    }
+		    *qq = '\0';
+		    s = pp;
+		} else s = translateChar(tmp);
 		if(s != CHAR(tmp)) SET_STRING_ELT(xx, i, mkChar(s));
 	    }
 

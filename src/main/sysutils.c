@@ -148,10 +148,10 @@ wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand)
     }
     if(IS_LATIN1(fn)) from = "latin1";
     if(IS_UTF8(fn)) from = "UTF-8";
-    if(IS_BYTES(fn)) error("encoding of filename cannot be 'bytes'");
+    if(IS_BYTES(fn)) error(_("encoding of a filename cannot be 'bytes'"));
     obj = Riconv_open("UCS-2LE", from);
     if(obj == (void *)(-1))
-	error("unsupported conversion from '%s' in 'filenameToWchar' in codepage %d", 
+	error(_("unsupported conversion from '%s' in codepage %d"), 
 	      from, localeCP);
 
     if(expand) inbuf = R_ExpandFileName(CHAR(fn)); else inbuf = CHAR(fn);
@@ -587,7 +587,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	obj = Riconv_open(to, from);
 	if(obj == (iconv_t)(-1))
 #ifdef Win32
-	    error("unsupported conversion from '%s' to '%s' in codepage %d", 
+	    error(_("unsupported conversion from '%s' to '%s' in codepage %d"), 
 		  from, to, localeCP);
 #else
 	    error(_("unsupported conversion from '%s' to '%s'"), from, to);
@@ -719,10 +719,8 @@ const char *translateChar(SEXP x)
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateChar");
     if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
-    if(IS_BYTES(x)) {
-	warning(_("translating strings with \"bytes\" encoding is not sensible"));
-	return ans;
-    }
+    if(IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
     if(utf8locale && IS_UTF8(x)) return ans;
     if(latin1locale && IS_LATIN1(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
@@ -733,7 +731,7 @@ const char *translateChar(SEXP x)
 	    /* should never happen */
 	    if(obj == (void *)(-1))
 #ifdef Win32
-		error("unsupported conversion from %s in codepage %d",
+		error(_("unsupported conversion from '%s' in codepage %d"),
 		      "latin1", localeCP);
 #else
 	        error(_("unsupported conversion from '%s' to '%s'"),
@@ -748,7 +746,7 @@ const char *translateChar(SEXP x)
 	    /* should never happen */
 	    if(obj == (void *)(-1)) 
 #ifdef Win32
-		error("unsupported conversion from %s in codepage %d",
+		error(_("unsupported conversion from '%s' in codepage %d"),
 		      "latin1", localeCP);
 #else
 	        error(_("unsupported conversion from '%s' to '%s'"),
@@ -837,12 +835,12 @@ const char *translateCharUTF8(SEXP x)
     if(IS_UTF8(x)) return ans;
     if(strIsASCII(CHAR(x))) return ans;
     if(IS_BYTES(x))
-	error(_("translating strings with \"bytes\" encoding is not possible"));
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
 
     obj = Riconv_open("UTF-8", IS_LATIN1(x) ? "latin1" : "");
     if(obj == (void *)(-1)) 
 #ifdef Win32
-	error(_("unsupported conversion from %s in codepage %d"), 
+	error(_("unsupported conversion from '%s' in codepage %d"),
 	      "latin1", localeCP);
 #else
        error(_("unsupported conversion from '%s' to '%s'"), "latin1", "UTF-8");
@@ -910,7 +908,7 @@ const wchar_t *wtransChar(SEXP x)
 	error(_("'%s' must be called on a CHARSXP"), "wtransChar");
 
     if(IS_BYTES(x))
-	error(_("translating strings with \"bytes\" encoding is not possible"));
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
 
     if(IS_LATIN1(x)) {
 	if(!latin1_wobj) {
@@ -936,7 +934,7 @@ const wchar_t *wtransChar(SEXP x)
 	obj = Riconv_open(TO_WCHAR, "");
 	if(obj == (void *)(-1))
 #ifdef Win32
-	    error("unsupported conversion to '%s' from codepage %d",
+	    error(_("unsupported conversion to '%s' from codepage %d"),
 		  TO_WCHAR, localeCP);
 #else
 	    error(_("unsupported conversion from '%s' to '%s'"), "", TO_WCHAR);

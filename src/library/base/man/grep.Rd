@@ -102,8 +102,10 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches in multibyte locales, but for
-  \code{regexpr} it changes the interpretation of the output.  As from
-  \R 2.10.0 it inhibits the conversion of inputs with marked encodings.
+  \code{regexpr} it changes the interpretation of the output.
+  It inhibits the conversion of inputs with marked encodings, and is
+  forced (with a warning) if any input is found which is marked as
+  \code{"bytes"}.
   
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if

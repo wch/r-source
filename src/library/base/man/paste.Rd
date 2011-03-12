@@ -1,6 +1,6 @@
 % File src/library/base/man/paste.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{paste}
@@ -44,10 +44,10 @@ paste(\dots, sep = " ", collapse = NULL)
   
   If any input into an element of the result is in UTF-8, that element
   will be in UTF-8, otherwise in the current encoding in which case the
-  encoding of an element of the element is declared if the current
-  locale is either Latin-1 or UTF-8, at least one of the corresponding
-  inputs (including separators) had a declared encoding and all inputs
-  were either ASCII or declared.
+  encoding of the element is declared if the current locale is either
+  Latin-1 or UTF-8, at least one of the corresponding inputs (including
+  separators) had a declared encoding and all inputs were either ASCII
+  or declared.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
