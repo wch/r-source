@@ -3557,13 +3557,22 @@ function(x, ...)
 
     c(character(),
       if(n <- x$latin1) {
-          sprintf("Note: found %d marked Latin-1 strings", n)
+          sprintf(
+                  ngettext(n,
+                   "Note: found %d marked Latin-1 string",
+                   "Note: found %d marked Latin-1 strings"), n)
       },
       if(n <- x$utf8) {
-          sprintf("Note: found %d marked UTF-8 strings", n)
+          sprintf(
+                  ngettext(n,
+                           "Note: found %d marked UTF-8 string",
+                           "Note: found %d marked UTF-8 strings"), n)
       },
       if(n <- x$bytes) {
-          sprintf("Note: found %d strings marked as \"bytes\"", n)
+          sprintf(
+                  ngettext(n,
+                           "Note: found %d string marked as \"bytes\"",
+                           "Note: found %d strings marked as \"bytes\""), n)
       },
       if(nrow(x$unknown)) {
           c("Warning: found non-ASCII string(s)",
