@@ -101,7 +101,7 @@
       are still not preserved; this may be addressed in the future).
 
       \item \code{options("install.lock")} may be set to \code{FALSE}
-      so that \code{install.packages()} defaults to \option{--unsafe}
+      so that \code{install.packages()} defaults to \option{--no-lock}
       installs, or (on Windows) to \code{TRUE} so that binary installs
       implement locking.
 
@@ -119,8 +119,8 @@
       \item \code{aperm()} becomes S3 generic and gets a \code{table}
       method which preserves the class.
 
-      \item \code{merge()} and \code{as.hclust()} methods for
-      \code{"dendrogram"} objects are provided.
+      \item \code{merge()} and \code{as.hclust()} methods for objects of
+      class \code{"dendrogram"} are now provided.
 
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
       character method (suggestion of Joshua Ulrich).
@@ -139,7 +139,7 @@
       implements \code{min()}, \code{max()} and \code{range()} for
       ordered factors.
 
-      \item \code{`mostattributes<-`} now consults the \code{"dim"}
+      \item \code{mostattributes<-()} now consults the \code{"dim"}
       attribute and not the \code{dim()} function, making it more useful
       for objects (such as data frames) from classes with methods for
       \code{dim()}.  It also uses \code{attr<-()} in preference to the
@@ -195,13 +195,13 @@
       \item \code{file.edit()} gains a \code{fileEncoding} argument to
       specify the encoding of the file(s).
 
-      \item The format of the HTML package lists has changed.  If there
-      is more than one library, a table of links to libraries is
-      provided at the top and bottom of the page.  Where a library
-      contains more than 100 packages, an alphabetic index is given at
-      the top of the section for that library.  (As a consequence,
-      package names are now sorted case-insensitively whatever the
-      locale.)
+      \item The format of the HTML package listings has changed.  If
+      there is more than one library tree , a table of links to
+      libraries is provided at the top and bottom of the page.  Where a
+      library contains more than 100 packages, an alphabetic index is
+      given at the top of the section for that library.  (As a
+      consequence, package names are now sorted case-insensitively
+      whatever the locale.)
 
       \item \code{isSeekable()} now returns \code{FALSE} on connections
       which have non-default \code{encoding}.  Although documented to
@@ -229,15 +229,16 @@
 
       \item The primitive function \code{c()} is now of type BUILTIN.
 
-      \item plot(<dendrogram>, .., nodePar=*) now obeys an optional
+      \item \code{plot(<dendrogram>, .., nodePar=*)} now obeys an optional
       \code{xpd} specification (allowing clipping to be turned off
       completely).
 
-      \item nls(algorithm="port") now shares more code with
+      \item\code{ nls(algorithm="port")} now shares more code with
       \code{nlminb()}, and is more consistent with the other
       \code{nls()} algorithms in its return value.
 
-      \item xz has been updated to 5.0.1 (very minor bugfix release).
+      \item \command{xz} has been updated to 5.0.1 (very minor bugfix
+      release).
 
       \item \code{image()} has gained a logical \code{useRaster}
       argument allowing it to use a bitmap raster for plotting a
@@ -330,7 +331,8 @@
       \env{R_ENVIRON}, \env{R_PROFILE_USER} and \env{R_PROFILE} are now
       treated more consistently.  In all cases an empty value is
       considered to be set and will stop the default being used, and for
-      the last two tilde expansion is performed on the file name.
+      the last two tilde expansion is performed on the file name.  (Note
+      that setting an empty value is probably impossible on Windows.)
 
       \item Using \command{R --no-environ CMD}, \command{R
 	--no-site-file CMD} or \command{R --no-init-file CMD} sets
@@ -339,28 +341,28 @@
       \code{build}. \command{R --vanilla CMD} sets these three options
       (but not \option{--no-restore}).
 
-      \item \code{smooth.spline()} is somewhat faster and with
-      \code{cv=NA} allows to skip some leverage computations.
+      \item \code{smooth.spline()} is somewhat faster.  With
+      \code{cv=NA} it allows some leverage computations to be skipped,
 
       \item The internal (C) function \samp{scientific()}, at the heart
       of \R's \code{format.info(x)}, \code{format(x)}, \code{print(x)},
       etc, for numeric \code{x}, has been re-written in order to provide
-      correct results, fixing \PR{14491}, notably in border cases,
-      including when \code{digits >= 16}, thanks to substantial
-      contributions (code and experiments) from Petr Savicky.
-      This affects a noticable amount of numeric output from \R.
+      slightly more correct results, fixing \PR{14491}, notably in
+      border cases including when \code{digits >= 16}, thanks to
+      substantial contributions (code and experiments) from Petr
+      Savicky.  This affects a noticable amount of numeric output from
+      \R.
 
       \item A new function \code{grepRaw()} has been introduced for
       finding subsets of raw vectors. It supports both literal searches
-      as well as regular expressions.
+      and regular expressions.
 
-      \item The package \pkg{compiler} is now provided as a standard
+      \item Package \pkg{compiler} is now provided as a standard
       package.  See \code{?compiler::compile} for information on how to
       use the compiler.  This package implements a byte code compiler
       for \R: by default the compiler is not used in this release.  If
-      you build \R from source on a Unix-alike you can use
-      \command{make bytecode} to compile the standard and
-      recommended packages.
+      you build \R from source on a Unix-alike you can use \command{make
+      bytecode} to compile the standard and recommended packages.
 
       \item Providing an \code{exportPattern} directive in a NAMESPACE
       file now causes classes to be exported according to the same
@@ -369,17 +371,17 @@
       directive to \code{exportClassPattern} will still over-ride.
 
       \item Initial support for a new marked encoding \code{"bytes"} for
-      character strings.  This is intended to be used for non-ASCII
-      strings which should be treated as a set of bytes, and never
-      re-encoded as if they were in the encoding of the currrent locale:
-      so \code{useBytes = TRUE} is autmatically selected in functions
-      such as \code{writeBin()} and \code{writeLines()}.
+      character strings has been added.  This is intended to be used for
+      non-ASCII strings which should be treated as a set of bytes, and
+      never re-encoded as if they were in the encoding of the currrent
+      locale: so \code{useBytes = TRUE} is autmatically selected in
+      functions such as \code{writeBin()} and \code{writeLines()}.
 
       Such strings cannot be collated, and only a few operations are
       supported (such as \code{substr()}).
 
-      Printing and \code{cat()} will print non-ASCII bytes with a
-      \samp{\xab} escape.
+      Printing and \code{cat()} will print non-ASCII bytes in such
+      strings with a \samp{\xab} escape.
     }
   }
 
@@ -424,7 +426,7 @@
       future.
 
       When re-building vignettes and a \file{inst/doc/Makefile} file is
-      found, \code{make check} is run if the makefile has a
+      found, \code{make clean} is run if the makefile has a
       \code{clean:} target.
 
       After re-building vignettes the default clean-up operation will
@@ -432,7 +434,8 @@
       process: e.g. one package created a \file{.R_cache} directory.
 
       Empty directories are now removed unless the option
-      \option{--keep-empty-dirs} is given.
+      \option{--keep-empty-dirs} is given (and a few packages do
+      deliberately include empty directories).
 
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
@@ -479,8 +482,8 @@
       \item The C99 double complex type is now required.
 
       The C99 complex trigonometric functions (such as \samp{csin}) are
-      not required (FreeBSD lacks most of them): substitutes are used if
-      they are missing.
+      not currently required (FreeBSD lacks most of them): substitutes
+      are used if they are missing.
 
       \item The C99 system call \samp{va_copy} is now required.
     }
@@ -517,7 +520,7 @@
       on the command line.
 
       \item Option \option{--pkglock} can now be used with more than one
-      package, and is the default if only one package is specified.
+      package, and is now the default if only one package is specified.
 
       \item Argument \code{lock} of \code{install.packages()} can now be
       use for Mac binary installs as well as for Windows ones.  The
@@ -570,11 +573,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{edit.default} contained a manual dispatch for matrices
-      (the \code{"matrix"} class didn't really exist when it was written). 
-      This caused an infinite recursion in the no-GUI case and has now
-      been removed. 
-
       \item \code{drop.terms} and the \code{[} method for class
       \code{"terms"} no longer add back an intercept.  (Reported by
       Niels Hansen.)
@@ -605,26 +603,32 @@
       \item The one- and two-argument complex maths functions failed to
       warn if NAs were generated (as their numeric analogues do).
 
-      \item Added \code{.requireCachedGenerics} to the
-      \code{dont.mind} list to avoid warnings about duplicates.
+      \item Added \code{.requireCachedGenerics} to the \code{dont.mind}
+      list for \code{library()} to avoid warnings about duplicates.
 
       \item \code{$<-.data.frame} messed with the class attribute,
       breaking any S4 subclass.  The S4 \code{data.frame} class now has its own
       \code{$<-} method, and turns dispatch on for this primitive.
 
       \item \code{Map()} did not look up a character argument \code{f}
-      in the correct frame, thanks to lazy evaluation.  \PR{14495}
+      in the correct frame, thanks to lazy evaluation.  (\PR{14495})
 
       \item \code{file.copy()} did not tilde-expand \code{from} and \code{to}
-      when \code{to} was a directory.  \PR{14507}
+      when \code{to} was a directory.  (\PR{14507})
 
       \item It was possible (but very rare) for the loading test in
-      \command{R CMD INSTALL} to crash \R and so leave around a lock
-      directory and a partially installed package.  That test is now
-      done in a separate process.
+      \command{R CMD INSTALL} to crash a child \R process and so leave
+      around a lock directory and a partially installed package.  That
+      test is now done in a separate process.
 
       \item \code{plot(<formula>, data=<matrix>,..)} now works in more
-      cases; ditto for \code{points()}, \code{lines()} and \code{text()}.
+      cases; similarly for \code{points()}, \code{lines()} and
+      \code{text()}.
+      
+        \item \code{edit.default} contained a manual dispatch for matrices
+      (the \code{"matrix"} class didn't really exist when it was written). 
+      This caused an infinite recursion in the no-GUI case and has now
+      been removed. 
     }
   }
 }
@@ -646,7 +650,7 @@
       messages in S4 method selection; the error message is now printed.
 
       \item PDF output with non-RGB color model used RGB for the line stroke
-      color.  \PR{14511}
+      color.  (\PR{14511})
 
       \item \code{stats4::BIC()} assumed without checking that an object
       of class \code{"logLik"} has an \code{"nobs"} attribute:
@@ -663,7 +667,7 @@
       invalid PDF files; \file{Sweave.sty} has been updated to avoid
       this.
       
-      \item Non-ascii characters in the titles of help pages were 
+      \item Non-ASCII characters in the titles of help pages were 
       not rendered properly in some locales, and could cause errors
       or warnings.
     }
