@@ -11,6 +11,10 @@ function(files, filter, control = list(), encoding = "unknown",
     if(is.na(program))
         stop("No suitable spell check program found.")
 
+    ## Be nice.
+    if(inherits(files, "Rd"))
+        files <- list(files)
+
     files_are_names <- is.character(files)
 
     filter_args <- list()
