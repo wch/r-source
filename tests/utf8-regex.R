@@ -149,3 +149,12 @@ stopifnot(identical(z, strsplit(x, "e", fixed = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", perl = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", perl = TRUE, useBytes = TRUE)))
+
+## moved from reg-tests-1b.R.
+## fails to match on Cygwin, Mar 2011
+## regexpr(fixed = TRUE) with a single-byte pattern matching to a MBCS string
+x <- iconv("fa\xE7ile a ", "latin1", "UTF-8")
+stopifnot(identical(regexpr(" ", x), regexpr(" ", x, fixed=TRUE)))
+# fixed=TRUE reported match position in bytes in R <= 2.10.0
+stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
+## always worked.

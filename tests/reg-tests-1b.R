@@ -933,13 +933,6 @@ stopifnot(identical(NaN, weighted.mean(0[0])),
 ## all three gave 0  in 2.10.x and 2.11.x (but not previously)
 
 
-## regexpr(fixed = TRUE) with a single-byte pattern matching to a MBCS string
-x <- iconv("fa\xE7ile a ", "latin1", "UTF-8")
-stopifnot(identical(regexpr(" ", x), regexpr(" ", x, fixed=TRUE)))
-# fixed=TRUE reported match position in bytes in R <= 2.10.0
-stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
-## always worked.
-
 ## unname() on 0-length vector
 stopifnot(identical(1[FALSE], unname(c(a=1)[FALSE])))
 ## failed to drop names in 2.10.0
