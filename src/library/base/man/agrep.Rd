@@ -52,6 +52,12 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   As from \R 2.10.0 this uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
   character matching much better than the previous version.
+  
+  The main effect of \code{useBytes} is to avoid errors/warnings about
+  invalid inputs and spurious matches in multibyte locales.
+  It inhibits the conversion of inputs with marked encodings, and is
+  forced (with a warning) if any input is found which is marked as
+  \code{"bytes"}.
 }
 
 \note{

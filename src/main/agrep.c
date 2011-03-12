@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2009  The R Development Core Team
+ *  Copyright (C) 2002--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -71,10 +71,24 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (igcase_opt) cflags |= REG_ICASE;
 
+    n = LENGTH(vec);
+    if (!useBytes) {
+	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	if (!haveBytes)
+	    for (i = 0; i < n; i++)
+		if (IS_BYTES(STRING_ELT(vec, i))) {
+		    haveBytes = TRUE;
+		    break;
+		}
+	if (haveBytes) {
+	    warning(_("string marked as \"bytes\" found, so using useBytes = TRUE"));
+	    useBytes = TRUE;
+	}
+    }
     if (!useBytes) {
 	useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
 	if (!useWC) {
-	    for (i = 0 ; i < LENGTH(vec) ; i++) {
+	    for (i = 0 ; i < n ; i++) {
 		if (STRING_ELT(vec, i) == NA_STRING) continue;
 		if (!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
 		    useWC = TRUE;
