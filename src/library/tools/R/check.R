@@ -239,9 +239,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(bad_files)) {
             errorLog(Log)
             wrapLog("Found the following file(s) with non-portable file names:\n")
-            printLog(Log,
-                     paste("  ", bad_files, sep = "", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(bad_files), "\n")
             wrapLog("These are not valid file names",
                     "on all R platforms.\n",
                     "Please rename the files and try again.\n",
@@ -258,7 +256,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(dups)) {
             errorLog(Log)
             wrapLog("Found the following file(s) with duplicate lower-cased file names:\n")
-            printLog(Log, paste("  ", dups, sep="", collapse = "\n"), "\n")
+            printLog(Log, .format_lines_with_indent(dups), "\n")
             wrapLog("File names must not differ just by case",
                     "to be usable on all R platforms.\n",
                     "Please rename the files and try again.\n",
@@ -274,9 +272,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(non_ASCII_files)) {
             warnLog()
             wrapLog("Found the following file(s) with non-portable file names:\n")
-            printLog(Log,
-                     paste("  ", non_ASCII_files, sep ="", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(non_ASCII_files), "\n")
             wrapLog("These are not fully portable file names.\n",
                     "See section 'Package structure'",
                     "in manual 'Writing R Extensions'.\n")
@@ -318,9 +314,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(bad_files)) {
             errorLog(Log)
             wrapLog("Found the following files with insufficient permissions:\n")
-            printLog(Log,
-                     paste("  ", bad_files, sep = "", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(bad_files), "\n")
             wrapLog("Permissions should be at least 700 for directories and 400 for files.\nPlease fix permissions and try again.\n")
             do_exit(1L)
         }
@@ -338,9 +332,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (length(bad_files)) {
             warnLog()
             wrapLog("The following files should most likely be executable (for the owner):\n")
-            printLog(Log,
-                     paste("  ", bad_files, sep = "", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(bad_files), "\n")
             printLog(Log, "Please fix their permissions\n")
         } else resultLog(Log, "OK")
     }
@@ -410,9 +402,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
         if (length(topfiles)) {
             warnLog()
-            printLog(Log,
-                     paste("  ", topfiles, sep = "",  collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(topfiles), "\n")
             wrapLog("These files are defunct.",
                     "See manual 'Writing R Extensions'.\n")
         } else resultLog(Log, "OK")
@@ -521,8 +511,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             printLog(Log,
                      "Found the following directory(s) with ",
                      "names of check directories:\n",
-                     paste("  ", all_dirs[ind], sep = "",
-                           collapse = "\n"),
+                     .format_lines_with_indent(all_dirs[ind]),
                      "\n",
                      "Most likely, these were included erroneously.\n")
         }
@@ -544,8 +533,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             printLog(Log,
                      "Found the following directory(s) with ",
                      "names of Rd2dvi build directories:\n",
-                     paste("  ", all_dirs[ind], sep = "",
-                           collapse = "\n"),
+                     .format_lines_with_indent(all_dirs[ind]),
                      "\n",
                      "Most likely, these were included erroneously.\n")
         }
@@ -560,7 +548,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,
                          "Found the following directory(s) with ",
                          "names of version control directories:\n",
-                         paste("  ", all_dirs[ind], sep = "", collapse = "\n"),
+                         .format_lines_with_indent(all_dirs[ind]),
                          "\n",
                          "These should not be in a package tarball.\n")
             }
@@ -691,9 +679,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(length(out)) {
                 if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
                 any <- TRUE
-                printLog(Log,
-                         paste("  ", out, sep = "", collapse = "\n"),
-                         "\n")
+                printLog(Log, .format_lines_with_indent(out), "\n")
             }
         }
 
@@ -711,9 +697,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(!any) noteLog(Log)
             any <- TRUE
             wrapLog("Found the following CITATION file(s) in a non-standard place:\n")
-            printLog(Log,
-                     paste("  ", files, sep ="", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(files), "\n")
             wrapLog("Most likely inst/CITATION should be used instead.\n")
         }
 
@@ -730,7 +714,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             else warnLog()
             wrapLog("Found the following files with",
                     "non-ASCII characters:\n")
-            printLog(Log, paste(c(out, ""), collapse = "\n"))
+            printLog(Log, .format_lines_with_indent(out), "\n")
             wrapLog("Portable packages must use only ASCII",
                     "characters in their R code,\n",
                     "except perhaps in comments.\n")
@@ -1147,7 +1131,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
-                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
+                printLog(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
 
@@ -1160,7 +1144,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
-                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
+                printLog(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
 
@@ -1174,7 +1158,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
-                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
+                printLog(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
    }
@@ -1196,7 +1180,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 resultLog(Log, "NOTE")
                 printLog(Log,
                          "  'qpdf' made some significant size reductions:\n",
-                         paste("  ", res, collapse="\n"),
+                         paste("  ", res, collapse = "\n"),
                          "\n",
                          "  consider running tools::compactPDF() on these files\n")
             } else resultLog(Log, "OK")
@@ -1224,9 +1208,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
         if (length(bad_files)) {
             warnLog("Found the following sources/headers with CR or CRLF line endings:")
-            printLog(Log,
-                     paste("  ", bad_files, sep = "", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(bad_files), "\n")
             printLog(Log, "Some Unix compilers require LF line endings.\n")
         } else resultLog(Log, "OK")
 
@@ -1243,9 +1225,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
         if (length(bad_files)) {
             warnLog("Found the following Makefiles with CR or CRLF line endings:")
-            printLog(Log,
-                     paste("  ", bad_files, sep = "", collapse = "\n"),
-                     "\n")
+            printLog(Log, .format_lines_with_indent(bad_files), "\n")
             printLog(Log, "Some Unix compilers require LF line endings.\n")
         } else resultLog(Log, "OK")
 
@@ -1428,9 +1408,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(length(bad_lines)) {
                 any <- TRUE
                 warnLog("Found the following significant warnings:\n")
-                printLog(Log,
-                         paste("  ", bad_lines, sep = "", collapse = "\n"),
-                         "\n")
+                printLog(Log, .format_lines_with_indent(bad_lines), "\n")
                 wrapLog("Deprecated functions may be defunct as",
                         "soon as of the next release of R.\n",
                         "See ?Deprecated.\n")
@@ -1567,9 +1545,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                       lines, invert = TRUE, value = TRUE)
                     printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
                     printLog(Log, "Last 13 lines of output:\n")
-                    printLog(Log,
-                             paste("  ", lines, sep="", collapse="\n"),
-                             "\n")
+                    printLog(Log, .format_lines_with_indent(lines), "\n")
                 }
                 do_exit(1L)
             } else {
@@ -1838,7 +1814,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             execs <- execs[file_test("-ot", execs, ".install_timestamp")]
         if (length(execs)) {
             warnLog("Found the following executable file(s):")
-            printLog(Log, paste("  ", execs, sep="", collapse = "\n"), "\n")
+            printLog(Log, .format_lines_with_indent(execs), "\n")
             wrapLog("Source packages should not contain undeclared executable files.\n",
                     "See section 'Package structure'",
                     "in manual 'Writing R Extensions'.\n")
@@ -2037,8 +2013,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 }
                 if (length(lines)) {
                     warnLog("Found the following significant warnings:")
-                    printLog(Log, "  ",
-                             paste(lines, collapse = "\n  "), "\n")
+                    printLog(Log, .format_lines_with_indent(lines), "\n")
                     printLog(Log, sprintf("See %s for details.\n",
                                           sQuote(outfile)))
                 } else resultLog(Log, "OK")
@@ -2787,6 +2762,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     } ## end for (pkg in pkgs)
 
 } ## end{ .check_packages }
+
+.format_lines_with_indent <-
+function(x)
+    paste("  ", x, sep = "", collapse = "\n")
+
+    ## Hard-wire indent of 2 for now.          
 
 ### Local variables:
 ### mode: R
