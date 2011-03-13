@@ -417,7 +417,7 @@ packages (as their class definitions can change and the
 @file{DESCRIPTION} file is used to decide which packages to re-install
 when this happens).  Packages declared in the @samp{Depends} field
 should not also be in the @samp{Imports} field.  Version requirements
-can be specified, but will @strong{not} be checked when the namespace is
+can be specified, but will @strong{not} be checked when the name space is
 loaded (whereas they are checked by @command{R CMD check}).
 
 The @samp{Suggests} field uses the same syntax as
@@ -590,7 +590,7 @@ create objects these can use code `earlier' in the package (see the
 @samp{Collate} field) plus, @emph{only if lazyloading is used},
 functions in the @samp{Depends} packages provided that the objects
 created do not depend on those packages except @emph{via} name space
-imports.  (Packages without namespaces will work under somewhat less
+imports.  (Packages without name spaces will work under somewhat less
 restrictive assumptions.)
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
@@ -1662,10 +1662,11 @@ used in the same locale.
 @item
 It is checked that the package can be loaded, first with the usual
 default packages and then only with package @pkg{base} already
-loaded. If the package has a namespace, it is checked if this can be
-loaded in an empty session with only the @pkg{base} namespace loaded.
-(Namespaces and packages can be loaded very early in the session, before
-the default packages are available, so packages should work then.)
+loaded. If the package has a name space, it is checked if this can be
+loaded in an empty session with only the @pkg{base} name space loaded.
+(Name spaces and packages can be loaded very early in the session,
+before the default packages are available, so packages should work
+then.)
 
 @item
 The @R{} files are checked for correct calls to @code{library.dynam}.
@@ -2227,7 +2228,11 @@ exportPattern("^[^\\.]")
 @end example
 
 @noindent
-exports all variables that do not start with a period.
+exports all variables that do not start with a period.  However, such
+broad patterns are not recommended for production code: it is better to
+list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
+this pattern applies to S4 classes, but did not in earlier versions of
+@R{}.)
 
 A package with a name space implicitly imports the base name space.
 Variables exported from other packages with name spaces need to be
@@ -2256,7 +2261,7 @@ specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.
 
 It is possible to export variables from a name space that it has
-imported from other namespaces.
+imported from other name spaces.
 
 If a package only needs a few objects from another package it can use a
 fully qualified variable reference in the code instead of a formal
@@ -2622,26 +2627,33 @@ the @pkg{stats4} package has
 
 @example
 export(mle)
-importFrom(graphics, plot)
-importFrom(stats, AIC, coef, confint, logLik, optim, profile,
-	   qchisq, update, vcov)
+importFrom("graphics", plot)
+importFrom("stats", optim, qchisq)
+## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
+importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile, 
+           update, vcov)
 exportClasses(mle, profile.mle, summary.mle)
-exportMethods(BIC, coef, confint, logLik, plot, profile,
-              summary, show, update, vcov)
-export(AIC)
+## All methods for imported generics:
+exportMethods(coef, confint, logLik, plot, profile, summary, show, update, vcov)
+## implicit generics which do not have any methods here
+export(AIC, BIC, nobs)
 @end example
 
+@findex exportPattern
+@findex exportClassPattern
 @noindent
-All S4 classes need to be listed in an @code{exportClasses}
-directive. Alternatively, a pattern can be specified using
-@code{exportClassPattern}. Generics for which S4 methods are defined
+All S4 classes to be used outside the package need to be listed in an
+@code{exportClasses} directive. Alternatively, they can be specified
+using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
+defaults to the same pattern as @code{exportPattern}.} in the same style
+as for @code{exportPattern} Generics for which S4 methods are defined
 need to be declared in an @code{exportMethods} directive, and where the
 generics are formed by taking over existing functions, those functions
 need to be imported (explicitly unless they are defined in the
 @code{base} name space).
 
-Note that exporting methods on a generic in the namespace will also
-export the generic, and exporting a generic in the namespace will also
+Note that exporting methods on a generic in the name space will also
+export the generic, and exporting a generic in the name space will also
 export its methods.  Where a generic has been created in the package
 solely to add S4 methods to it, it can be declared @emph{via} either or
 both of @code{exports} or @code{exportMethods}, but the latter seems
@@ -2650,8 +2662,8 @@ hand, where a generic is created in a package without setting any
 methods for it (such as @code{AIC} in @pkg{stats4}), @code{exports} must
 be used.
 
-Further, a package using classes and methods defined in another package
-needs to import them, with directives
+Further, a package using S4 classes and methods defined in another
+package needs to import them, with directives
 
 @findex importClassesFrom
 @findex importMethodsFrom
@@ -2696,12 +2708,12 @@ exportClasses(c1, c2)
 respectively.
 
 Note that @code{importMethodsFrom} will also import any generics defined
-in the namespace on those methods.
+in the name space on those methods.
 
 If your package imports the whole of a name space, it will automatically
-import the classes from that namespace.  It will also import methods,
+import the classes from that name space.  It will also import methods,
 but it is best to do so explicitly, especially where there are methods
-being imported from more than one namespace.
+being imported from more than one name space.
 
 
 @node Writing portable packages, Diagnostic messages, Package name spaces, Creating R packages
