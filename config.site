@@ -233,3 +233,8 @@
 ## archives in a non-POSIX format that untar() cannot read,
 ## so should be avoided.
 ## TAR=
+
+## Library path
+## This is be default created from libraries added to LIBS.
+## Allow user to override.
+## R_LD_LIBRARY_PATH=

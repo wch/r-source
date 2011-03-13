@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2010 R Core Team
+### Copyright (C) 1998-2011 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -633,7 +633,7 @@ AM_CONDITIONAL(CROSS_COMPILING, [test "${cross_compiling}" = yes])
 ## Should be needed for tests using AC_RUN_IFELSE()?
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
-## Note: earlier versions used LIBS rather than LDFLAGS.
+R_LD_LIBRARY_PATH_save=${R_LD_LIBRARY_PATH}
 case "${host_os}" in
   darwin*)
     ## Darwin provides a full path in the ID of each library such 
@@ -655,7 +655,6 @@ case "${host_os}" in
     done
     ;;
 esac
-## </FIXME>
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
@@ -2287,13 +2286,11 @@ done
 LIBS="${LIBS1} ${LIBS2}"
 
 ## R_LD_LIBRARY_PATH.
-## <FIXME>
-## This should not be necessary when using libtool for linking.
-## In any case, is this really good enough?
-## On Linux, do not add the ld.so system directories '/lib' and
+
+## On Linux, do not add the ld.so system directories such as '/lib' and
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
-## On OS X (Darwin) /usr/X11R6/lib shadows OpenGL framework and is not
+## On OS X (Darwin) /usr/X11R6/lib shadows the OpenGL framework and is not
 ## needed in DYLD_LIBRARY_PATH.
 case "${host_os}" in
   linux*)
@@ -2309,6 +2306,11 @@ case "${host_os}" in
     r_ld_library_defaults=
     ;;
 esac
+if test -n "${R_LD_LIBRARY_PATH_save}"; then
+  R_LD_LIBRARY_PATH=${R_LD_LIBRARY_PATH_save}
+else
+## We already added -L's from LDFLAGS (except on Darwin): 
+## seem to be doing it again
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
            ${TCLTK_LIBS}; do
   case "${arg}" in
@@ -2338,6 +2340,8 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
       ;;
   esac
 done
+fi
+
 ## Handle JAVA_LD_LIBRARY_PATH specially so that users can conveniently set just
 ## R_JAVA_LD_LIBRARY_PATH in their environment.
 if test -n "${JAVA_LD_LIBRARY_PATH}"; then

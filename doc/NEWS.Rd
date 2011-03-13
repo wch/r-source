@@ -490,6 +490,11 @@
       are used if they are missing.
 
       \item The C99 system call \samp{va_copy} is now required.
+
+      \item If environment variable \env{R_LD_LIBRARY_PATH} is set
+      during configuration (for example in \file{config.site}) it is
+      used unchanged in file \file{etc/ldpaths} rather than being
+      appended to.
     }
   }
 
