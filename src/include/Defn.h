@@ -1254,7 +1254,7 @@ extern char *alloca(size_t);
 #endif
 
 /* Or use typedef? */
-#ifdef HAVE_LONG_DOUBLE
+#if SIZEOF_LONG_DOUBLE
 # define LDOUBLE long double
 #else
 # define LDOUBLE double

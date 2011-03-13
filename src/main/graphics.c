@@ -3013,11 +3013,7 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
     if((code & 3) == 0) return; /* no arrows specified */
     if(length == 0) return; /* zero-length arrow heads */
 
-#ifdef HAVE_HYPOT
     if(hypot(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
-#else
-    if(pythag(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
-#endif
 	/* effectively 0-length arrow */
 	warning(_("zero-length arrow is of indeterminate angle and so skipped"));
 	return;

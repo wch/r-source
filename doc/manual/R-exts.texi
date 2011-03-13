@@ -9627,13 +9627,6 @@ as @R{}) for the cases where @var{x}, @var{y} or @var{i} are 0 or
 missing or infinite or @code{NaN}.
 @end deftypefun
 
-@deftypefun double pythag (double @var{a}, double @var{b})
-@code{pythag(@var{a}, @var{b})} computes @code{sqrt(@var{a}^2 +
-@var{b}^2)} without overflow or destructive underflow: for example it
-still works when both @var{a} and @var{b} are between @code{1e200} and
-@code{1e300} (in @acronym{IEEE} double precision).
-@end deftypefun
-
 @deftypefun double log1p (double @var{x})
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.

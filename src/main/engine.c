@@ -1447,11 +1447,7 @@ static int clipTextCode(double x, double y, const char *str, cetype_t enc,
     xInches = fromDeviceX(x, GE_INCHES, dd);
     yInches = fromDeviceY(y, GE_INCHES, dd);
 
-#ifdef HAVE_HYPOT
     length = hypot(widthInches, heightInches);
-#else
-    length = pythag(widthInches, heightInches);
-#endif
     theta2 = angle + atan2(heightInches, widthInches);
 
     x  = xInches - hadj*widthInches*cos(angle);

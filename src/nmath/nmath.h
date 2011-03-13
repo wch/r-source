@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2004  The R Development Core Team
+ *  Copyright (C) 1998-2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #  include <config.h>
 #endif
 
-#ifdef HAVE_LONG_DOUBLE
+#if SIZEOF_LONG_DOUBLE
 #  define LDOUBLE long double
 #else
 #  define LDOUBLE double

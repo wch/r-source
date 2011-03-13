@@ -121,17 +121,8 @@ void formatInteger(int *x, int n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
-/* This block could be conditional on ifndef HAVE_LONG_DOUBLE */
-#ifdef HAVE_NEARBYINT
-# define R_nearbyint nearbyint
-#elif defined(HAVE_RINTL)
-# define R_nearbyint rint
-#else
-# define R_nearbyint private_rint
-extern double private_rint(double x);/* in ../nmath/fround.c  */
-#endif
-
-#ifdef HAVE_LONG_DOUBLE
+/* long double is C99, so should always be defined */
+#if SIZEOF_LONG_DOUBLE
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
 # elif defined(HAVE_RINTL)
@@ -150,6 +141,15 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
         if (x/2.0 == floorl(x/2.0)) return(x); else return(x1);
     }
 }
+# endif
+# else /* no long double */
+# ifdef HAVE_NEARBYINT
+#  define R_nearbyint nearbyint
+# elif defined(HAVE_RINTL)
+#  define R_nearbyint rint
+# else
+#  define R_nearbyint private_rint
+extern double private_rint(double x);/* in ../nmath/fround.c  */
 # endif
 #endif
 

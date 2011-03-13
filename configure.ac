@@ -1707,7 +1707,8 @@ AC_CHECK_DECLS([alloca], , ,
 #endif])
 
 ## C99 functions: 
-## not all C99 runtimes are complete, but we have some substitutes
+## not all C99 runtimes are complete,
+## but we have substitutes for expm1 hypot log1p and (internally) nearbyint
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
@@ -1826,6 +1827,12 @@ else
   RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
 fi
 AC_SUBST(RMATH_HAVE_EXPM1)
+if test "${ac_cv_have_decl_hypot}" = yes; then
+  RMATH_HAVE_HYPOT="# define HAVE_HYPOT 1"
+else
+  RMATH_HAVE_HYPOT="# undef HAVE_HYPOT"
+fi
+AC_SUBST(RMATH_HAVE_HYPOT)
 if test "${ac_cv_have_decl_log1p}" = yes; then
   RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
 else

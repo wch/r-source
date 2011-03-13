@@ -31,10 +31,6 @@
 #include <Print.h>
 #include <R_ext/Boolean.h>
 
-#ifndef HAVE_HYPOT
-# define hypot pythag
-#endif
-
 /* Conversion of degrees to radians */
 
 #define DegToRad(x) (DEG2RAD * x)

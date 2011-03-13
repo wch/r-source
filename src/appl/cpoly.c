@@ -71,11 +71,6 @@
 # define attribute_hidden
 #endif
 
-
-#ifndef HAVE_HYPOT
-# define hypot pythag
-#endif
-
 static void calct(Rboolean *);
 static Rboolean fxshft(int, double *, double *);
 static Rboolean vrshft(int, double *, double *);

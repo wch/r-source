@@ -39,12 +39,16 @@
 
 #define R_VERSION_STRING "@PACKAGE_VERSION@"
 
-#ifndef HAVE_LOG1P
-@RMATH_HAVE_LOG1P@
-#endif
-
 #ifndef HAVE_EXPM1
 @RMATH_HAVE_EXPM1@
+#endif
+
+#ifndef HAVE_HYPOT
+@RMATH_HAVE_HYPOT@
+#endif
+
+#ifndef HAVE_LOG1P
+@RMATH_HAVE_LOG1P@
 #endif
 
 #ifndef HAVE_WORKING_LOG1P
@@ -57,6 +61,8 @@ double  Rlog1p(double);
 #define log1p Rlog1p
 #endif
 
+/* For back-compatibility for now (2.13.x) */
+#define pythag hypot
 
 	/* Undo SGI Madness */
 
@@ -270,7 +276,6 @@ double  Rlog1p(double);
 #define pt		Rf_pt
 #define ptukey		Rf_ptukey
 #define punif		Rf_punif
-#define pythag		Rf_pythag
 #define pweibull	Rf_pweibull
 #define pwilcox		Rf_pwilcox
 #define qbeta		Rf_qbeta
@@ -564,7 +569,9 @@ double	bessel_y_ex(double, double, double *);
 
 	/* General Support Functions */
 
-double 	pythag(double, double);
+#ifndef HAVE_HYPOT
+double 	hypot(double, double);
+#endif
 #ifndef HAVE_EXPM1
 double  expm1(double); /* = exp(x)-1 {care for small x} */
 #endif

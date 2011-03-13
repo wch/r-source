@@ -1352,7 +1352,6 @@
  process_site_Renviron
  process_system_Renviron
  process_user_Renviron
- pythag_
  qr_coef_cmplx
  qr_coef_real
  qr_qy_cmplx

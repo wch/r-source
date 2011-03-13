@@ -41,10 +41,6 @@
  * CC	 ------
  * CC	 it should make use of BLAS routines as [linkpack's dpofa!] */
 
-#ifndef HAVE_HYPOT
-# define hypot pythag
-#endif
-
 
 void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f,

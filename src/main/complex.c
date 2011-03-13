@@ -47,10 +47,6 @@
 #undef HAVE_CTANH
 #endif
 
-#ifndef HAVE_HYPOT
-# define hypot pythag
-#endif
-
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */

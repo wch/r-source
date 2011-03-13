@@ -391,6 +391,10 @@
       required to support, \code{Rvprintf} and \code{REvprintf} are only
       defined by \file{R_ext/Print.h} in C++ code if the macro
       \code{R_USE_C99_IN_CXX} is defined when it is included.
+
+      \item \code{pythag} duplicated the C99 function \code{hypot}.  It
+      is no longer provided, but is used a substitute for \code{hypot}
+      in the very unlikely event that the latter is not available.
     }
   }
 
@@ -568,6 +572,10 @@
 
       \item The option \option{--unsafe} to \command{R CMD INSTALL} is
       deprecated: use the identical option \option{--no-lock} instead.
+
+      \item The function \code{pythag} in \file{Rmath.h} is deprecated
+      in favour of the C99 function \code{hypot}.  A re-define for
+      \code{pythag} is provided for \R 2.13.x only.
     }
   }
 
