@@ -573,9 +573,9 @@
       \item The option \option{--unsafe} to \command{R CMD INSTALL} is
       deprecated: use the identical option \option{--no-lock} instead.
 
-      \item The function \code{pythag} in \file{Rmath.h} is deprecated
-      in favour of the C99 function \code{hypot}.  A re-define for
-      \code{pythag} is provided for \R 2.13.x only.
+      \item The entry point \code{pythag} in \file{Rmath.h} is deprecated
+      in favour of the C99 function \code{hypot}.  A wrapper for
+      \code{hypot} is provided for \R 2.13.x only.
     }
   }
 
