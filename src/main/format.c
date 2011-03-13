@@ -122,7 +122,7 @@ void formatInteger(int *x, int n, int *fieldwidth)
 */
 
 /* long double is C99, so should always be defined */
-#if SIZEOF_LONG_DOUBLE
+#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
 /* Cygwin had rintl but not nearbyintl */
@@ -204,13 +204,21 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
             return;
         }
         kp = floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
-#if SIZEOF_LONG_DOUBLE
+#if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
         LDOUBLE r_prec = r;
         /* use exact scaling factor in long double precision, if possible */
         if (abs(kp) <= 27) {
             if (kp > 0) r_prec /= tbl[kp]; else if (kp < 0) r_prec *= tbl[ -kp];
-        } else
+        }
+#ifdef HAVE_POWL
+	else
             r_prec /= powl(10.0, (LDOUBLE) kp);
+#else
+        else if (kp <= R_dec_min_exponent)
+            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
+        else
+            r_prec /= pow(10.0, (double) kp);
+#endif
         if (r_prec < tbl[R_print.digits - 1]) {
             r_prec *= 10.0;
             kp--;

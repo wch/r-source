@@ -555,6 +555,9 @@
 /* Define if you have POSIX.1 compatible sigsetjmp/siglongjmp. */
 #define HAVE_POSIX_SETJMP 1
 
+/* Define to 1 if you have the `powl' function. */
+#define HAVE_POWL 1
+
 /* Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE. (For intl) */
 /* #undef HAVE_PTHREAD_MUTEX_RECURSIVE */
 
