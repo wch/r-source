@@ -77,7 +77,7 @@ msgstr ""
 msgid "cannot compile a non-function"
 msgstr ""
 
-msgid "compiling '%f'"
+msgid "compiling '%s'"
 msgstr ""
 
 msgid "saving to file '%s' ..."
