@@ -28,16 +28,18 @@
  *
  */
 
-#include <config.h> /* needed for HAVE_*, IEEE_754 and USE_BUILTIN_RINT */
+#include <config.h> /* needed for HAVE_*, IEEE_754 */
 #include "nmath.h"
 
 
+/*  nearbyint is C99, so all platforms should have it (and AFAIK, all do) */
 #ifdef HAVE_NEARBYINT
 # define R_rint nearbyint
-/* USE_BUILTIN_RINT is in config.h: mysterious, once needed on HP-UX
-   rint is C99, so all platforms should have it (and AFAIK, all do) */
-#elif !defined(HAVE_RINT) || defined(USE_BUILTIN_RINT)
-#define R_rint private_rint
+#elif defined(HAVE_RINT)
+# define R_rint rint
+#else
+# define R_rint private_rint
+extern double private_rint(double x);
 
 /* also used potentially in fprec.c and main/format.c */
 double attribute_hidden private_rint(double x)
@@ -64,8 +66,6 @@ double attribute_hidden private_rint(double x)
     }
     return sgn * tmp;
 }
-#else
-#define R_rint rint
 #endif
 
 double fround(double x, double digits) {

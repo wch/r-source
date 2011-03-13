@@ -25063,9 +25063,6 @@ fi
   hpux*)
     $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
-
-$as_echo "#define USE_BUILTIN_RINT 1" >>confdefs.h
-
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
@@ -25729,7 +25726,6 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
     fi
     ;;
   freebsd*)
-    ## Only sure for FreeBSD 3 and above.
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
@@ -26408,6 +26404,7 @@ _ACEOF
 ## not all C99 runtimes are complete, but we have some substitutes
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
+## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 for ac_func in expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -35047,11 +35044,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35050: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35047: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35054: \$? = $ac_status" >&5
+   echo "$as_me:35051: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35146,11 +35143,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35149: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35146: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35153: \$? = $ac_status" >&5
+   echo "$as_me:35150: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35198,11 +35195,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35201: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35198: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35205: \$? = $ac_status" >&5
+   echo "$as_me:35202: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

@@ -921,9 +921,6 @@ case "${host_os}" in
     ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    AC_DEFINE(USE_BUILTIN_RINT, 1,
-              [Define if your rint() is broken on your system.
-               Apparently once needed on HPUX.])
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
@@ -1325,7 +1322,6 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     fi
     ;;
   freebsd*)
-    ## Only sure for FreeBSD 3 and above.
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
@@ -1714,6 +1710,7 @@ AC_CHECK_DECLS([alloca], , ,
 ## not all C99 runtimes are complete, but we have some substitutes
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
+## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 nearbyint nearbyintl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])

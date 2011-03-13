@@ -978,10 +978,6 @@
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #undef TIME_WITH_SYS_TIME
 
-/* Define if your rint() is broken on your system. Apparently needed on HPUX.
-   */
-#undef USE_BUILTIN_RINT
-
 /* Define to use ICU for collation. */
 #undef USE_ICU
 

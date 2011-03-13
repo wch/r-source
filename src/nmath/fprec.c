@@ -39,16 +39,16 @@
 #include "nmath.h"
 
 
+/*  nearbyint is C99, so all platforms should have it (and AFAIK, all do) */
 #ifdef HAVE_NEARBYINT
 # define R_rint nearbyint
-/* USE_BUILTIN_RINT is in config.h: mysterious, once needed on HP-UX
-   rint is C99, so all platforms should have it (and AFAIK, all do) */
-#elif !defined(HAVE_RINT) || defined(USE_BUILTIN_RINT)
+#elif defined(HAVE_RINT)
+# define R_rint rint
+#else
 # define R_rint private_rint
 extern double private_rint(double x);
-#else
-# define R_rint rint
 #endif
+
 /* Improvements by Martin Maechler, May 1997;
    further ones, Feb.2000:
    Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */

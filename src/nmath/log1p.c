@@ -34,6 +34,8 @@
  *	written by W. Fullerton of Los Alamos Scientific Laboratory.
  */
 
+/* Every currently known platform has log1p (which is C99), 
+   but NetBSD/OpenBSD were at least at one time inaccurate */
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -137,6 +139,9 @@ double log1p(double x)
 #endif
 
 
+
+/* Used as a substitute for the C99 function hypot, which all currently
+   known platforms have */
 
 /* pythag(a,b)	finds sqrt(a^2 + b^2)
  *		without overflow or destructive underflow.
