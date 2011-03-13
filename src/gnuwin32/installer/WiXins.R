@@ -474,7 +474,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl2" Title="Timezone files" Description="Timezone files for Tcl" Level="1000"',
+        '      <Feature Id="tcl2" Title="Timezone Files" Description="Timezone files for Tcl" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/tzdata'])
         cat(file = con,
@@ -483,7 +483,7 @@ sprintf("           <Verb Id='open' Command='Open' TargetFile='%s' Argument='\"%
 
     cat(file = con, sep="\n",
         '',
-        '      <Feature Id="tcl3" Title="Message translations for Tcl/Tk" Description="Timezone files for Tcl" Level="1000"',
+        '      <Feature Id="tcl3" Title="Message Translations for Tcl/Tk" Description="Timezone files for Tcl" Level="1000"',
         '       InstallDefault="local" AllowAdvertise="no">')
     for(id in ids[comps == 'tcl/msg'])
         cat(file = con,
