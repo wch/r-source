@@ -29,7 +29,7 @@
 */
 
 #if 0
-/* For testing missing fns */
+/* For testing substitute fns */
 #undef HAVE_CARG
 #undef HAVE_CABS
 #undef HAVE_CPOW
@@ -45,6 +45,11 @@
 #undef HAVE_CSINH
 #undef HAVE_CCOSH
 #undef HAVE_CTANH
+#endif
+
+#ifdef __CYGWIN__
+/* as of 1.7.8 it had cacos, but it does not work */
+#undef HAVE_CACOS
 #endif
 
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
