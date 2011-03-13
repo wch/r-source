@@ -3333,6 +3333,7 @@ static int count_one (unsigned int namescount, char * *names, void *data)
 if test "$ac_cv_func_iconvlist" = yes; then
   AC_DEFINE(HAVE_ICONVLIST, 1, [Define if you have the `iconvlist' function.])
 fi
+AM_ICONV dnl from gettext.m4
 ])# R_ICONV
 
 

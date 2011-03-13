@@ -686,7 +686,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 #endif
 }
 
-/* Should be defined in config.h */
+/* Should be defined in config.h, but prior to 2.13.0 was only checked
+   if the NLS was enabled  */
 #ifndef ICONV_CONST
 # define ICONV_CONST
 #endif

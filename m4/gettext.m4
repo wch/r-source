@@ -389,7 +389,7 @@ AC_DEFUN([gt_INTL_MACOSX],
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
     AC_DEFINE([HAVE_CFPREFERENCESCOPYAPPVALUE], 1,
-      [Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in the CoreFoundation framework.])
+      [Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in the CoreFoundation framework. (For intl)])
   fi
   dnl Check for API introduced in MacOS X 10.3.
   AC_CACHE_CHECK([for CFLocaleCopyCurrent], gt_cv_func_CFLocaleCopyCurrent,
@@ -401,7 +401,7 @@ AC_DEFUN([gt_INTL_MACOSX],
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
     AC_DEFINE([HAVE_CFLOCALECOPYCURRENT], 1,
-      [Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the CoreFoundation framework.])
+      [Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the CoreFoundation framework. (For intl)])
   fi
   INTL_MACOSX_LIBS=
   if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
@@ -546,7 +546,7 @@ AC_DEFUN([AM_ICONV_LINK],
     fi
   ])
   if test "$am_cv_func_iconv" = yes; then
-    AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function.])
+    AC_DEFINE(HAVE_ICONV, 1, [Define if you have the iconv() function. (For intl)])
   fi
   if test "$am_cv_lib_iconv" = yes; then
     AC_MSG_CHECKING([how to link with libiconv])
@@ -657,7 +657,7 @@ int main ()
     *) value=0;;
   esac
   AC_DEFINE_UNQUOTED(INTDIV0_RAISES_SIGFPE, $value,
-    [Define if integer division by zero raises signal SIGFPE.])
+    [Define if integer division by zero raises signal SIGFPE. (For intl)])
 ])
 # intl.m4 serial 3 (gettext-0.16)
 dnl Copyright (C) 1995-2006 Free Software Foundation, Inc.
@@ -706,7 +706,7 @@ AC_DEFUN([AM_INTL_SUBDIR],
 
   AC_CHECK_TYPE([ptrdiff_t], ,
     [AC_DEFINE([ptrdiff_t], [long],
-       [Define as the type of the result of subtracting two pointers, if the system doesn't define it.])
+       [Define as the type of the result of subtracting two pointers, if the system doesn't define it.  (For intl)])
     ])
   AC_CHECK_HEADERS([stddef.h stdlib.h string.h])
   AC_CHECK_FUNCS([asprintf fwprintf putenv setenv setlocale snprintf wcslen])
@@ -836,7 +836,7 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
     [int foo (int a) { a = __builtin_expect (a, 10); return a == 10 ? 0 : 1; }],
     [],
     [AC_DEFINE([HAVE_BUILTIN_EXPECT], 1,
-       [Define to 1 if the compiler understands __builtin_expect.])])
+       [Define to 1 if the compiler understands __builtin_expect.  (For intl)])])
 
   AC_CHECK_HEADERS([argz.h inttypes.h limits.h unistd.h sys/param.h])
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
@@ -916,7 +916,7 @@ AC_DEFUN([gt_CHECK_DECL],
     gt_value=0
   fi
   AC_DEFINE_UNQUOTED([HAVE_DECL_]translit($1, [a-z], [A-Z]), [$gt_value],
-    [Define to 1 if you have the declaration of `$1', and to 0 if you don't.])
+    [Define to 1 if you have the declaration of `$1', and to 0 if you don't.  (For intl)])
 ])
 # intmax.m4 serial 3 (gettext-0.16)
 dnl Copyright (C) 2002-2005 Free Software Foundation, Inc.
@@ -948,7 +948,7 @@ AC_DEFUN([gt_TYPE_INTMAX_T],
        gt_cv_c_intmax_t=no)])
   if test $gt_cv_c_intmax_t = yes; then
     AC_DEFINE(HAVE_INTMAX_T, 1,
-      [Define if you have the 'intmax_t' type in <stdint.h> or <inttypes.h>.])
+      [Define if you have the 'intmax_t' type in <stdint.h> or <inttypes.h>.  (For intl)])
   fi
 ])
 # inttypes-pri.m4 serial 4 (gettext-0.16)
@@ -980,7 +980,7 @@ char *p = PRId32;
   fi
   if test "$gt_cv_inttypes_pri_broken" = yes; then
     AC_DEFINE_UNQUOTED(PRI_MACROS_BROKEN, 1,
-      [Define if <inttypes.h> exists and defines unusable PRI* macros.])
+      [Define if <inttypes.h> exists and defines unusable PRI* macros.  (For intl)])
     PRI_MACROS_BROKEN=1
   else
     PRI_MACROS_BROKEN=0
@@ -1010,7 +1010,7 @@ AC_DEFUN([gl_AC_HEADER_INTTYPES_H],
   if test $gl_cv_header_inttypes_h = yes; then
     AC_DEFINE_UNQUOTED(HAVE_INTTYPES_H_WITH_UINTMAX, 1,
       [Define if <inttypes.h> exists, doesn't clash with <sys/types.h>,
-       and declares uintmax_t. ])
+       and declares uintmax_t.  (For intl)])
   fi
 ])
 # lcmessage.m4 serial 4 (gettext-0.14.2)
@@ -1165,7 +1165,7 @@ AC_DEFUN([gl_LOCK_BODY],
              case "$host_os" in
                solaris* | hpux*)
                  AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], 1,
-                   [Define if the pthread_in_use() detection is hard.])
+                   [Define if the pthread_in_use() detection is hard.  (For intl)])
              esac
             ])
         else
@@ -1185,11 +1185,11 @@ AC_DEFUN([gl_LOCK_BODY],
         if test -n "$gl_have_pthread"; then
           gl_threads_api=posix
           AC_DEFINE([USE_POSIX_THREADS], 1,
-            [Define if the POSIX multithreading library can be used.])
+            [Define if the POSIX multithreading library can be used.  (For intl)])
           if test -n "$LIBMULTITHREAD" || test -n "$LTLIBMULTITHREAD"; then
             if test $gl_have_weak = yes; then
               AC_DEFINE([USE_POSIX_THREADS_WEAK], 1,
-                [Define if references to the POSIX multithreading library should be made weak.])
+                [Define if references to the POSIX multithreading library should be made weak.  (For intl)])
               LIBTHREAD=
               LTLIBTHREAD=
             fi
@@ -1198,7 +1198,7 @@ AC_DEFUN([gl_LOCK_BODY],
           # pthread_rwlock_* functions.
           AC_CHECK_TYPE([pthread_rwlock_t],
             [AC_DEFINE([HAVE_PTHREAD_RWLOCK], 1,
-               [Define if the POSIX multithreading library has read/write locks.])],
+               [Define if the POSIX multithreading library has read/write locks.  (For intl)])],
             [],
             [#include <pthread.h>])
           # glibc defines PTHREAD_MUTEX_RECURSIVE as enum, not as a macro.
@@ -1210,7 +1210,7 @@ int x = (int)PTHREAD_MUTEX_RECURSIVE;
 return !x;
 #endif],
             [AC_DEFINE([HAVE_PTHREAD_MUTEX_RECURSIVE], 1,
-               [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.])])
+               [Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE.  (For intl)])])
         fi
       fi
     fi
@@ -1231,10 +1231,10 @@ return !x;
           LIBMULTITHREAD="$LIBTHREAD"
           LTLIBMULTITHREAD="$LTLIBTHREAD"
           AC_DEFINE([USE_SOLARIS_THREADS], 1,
-            [Define if the old Solaris multithreading library can be used.])
+            [Define if the old Solaris multithreading library can be used.  (For intl)])
           if test $gl_have_weak = yes; then
             AC_DEFINE([USE_SOLARIS_THREADS_WEAK], 1,
-              [Define if references to the old Solaris multithreading library should be made weak.])
+              [Define if references to the old Solaris multithreading library should be made weak.  (For intl)])
             LIBTHREAD=
             LTLIBTHREAD=
           fi
@@ -1256,11 +1256,11 @@ return !x;
         LIBMULTITHREAD="$LIBTHREAD"
         LTLIBMULTITHREAD="$LTLIBTHREAD"
         AC_DEFINE([USE_PTH_THREADS], 1,
-          [Define if the GNU Pth multithreading library can be used.])
+          [Define if the GNU Pth multithreading library can be used.  (For intl)])
         if test -n "$LIBMULTITHREAD" || test -n "$LTLIBMULTITHREAD"; then
           if test $gl_have_weak = yes; then
             AC_DEFINE([USE_PTH_THREADS_WEAK], 1,
-              [Define if references to the GNU Pth multithreading library should be made weak.])
+              [Define if references to the GNU Pth multithreading library should be made weak.  (For intl)])
             LIBTHREAD=
             LTLIBTHREAD=
           fi
@@ -1278,7 +1278,7 @@ return !x;
            }; then
           gl_threads_api=win32
           AC_DEFINE([USE_WIN32_THREADS], 1,
-            [Define if the Win32 multithreading API can be used.])
+            [Define if the Win32 multithreading API can be used.  (For intl)])
         fi
       fi
     fi
@@ -1383,7 +1383,7 @@ AC_DEFUN([gt_TYPE_LONGDOUBLE],
          gt_cv_c_long_double=yes, gt_cv_c_long_double=no)
      fi])
   if test $gt_cv_c_long_double = yes; then
-    AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.])
+    AC_DEFINE(HAVE_LONG_DOUBLE, 1, [Define if you have the 'long double' type.  (For intl)])
   fi
 ])
 # longlong.m4 serial 8
@@ -1420,7 +1420,7 @@ AC_DEFUN([AC_TYPE_LONG_LONG_INT],
        [ac_cv_type_long_long_int=no])])
   if test $ac_cv_type_long_long_int = yes; then
     AC_DEFINE([HAVE_LONG_LONG_INT], 1,
-      [Define to 1 if the system has the type `long long int'.])
+      [Define to 1 if the system has the type `long long int'.  (For intl)])
   fi
 ])
 
@@ -1431,7 +1431,7 @@ AC_DEFUN([gl_AC_TYPE_LONG_LONG],
   ac_cv_type_long_long=$ac_cv_type_long_long_int
   if test $ac_cv_type_long_long = yes; then
     AC_DEFINE(HAVE_LONG_LONG, 1,
-      [Define if you have the 'long long' type.])
+      [Define if you have the 'long long' type.  (For intl)])
   fi
 ])
 # nls.m4 serial 3 (gettext-0.15)
@@ -1933,7 +1933,7 @@ int main ()
   case $gt_cv_func_printf_posix in
     *yes)
       AC_DEFINE(HAVE_POSIX_PRINTF, 1,
-        [Define if your printf() function supports format strings with positions.])
+        [Define if your printf() function supports format strings with positions.  (For intl)])
       ;;
   esac
 ])
@@ -2088,7 +2088,7 @@ Found it
   AC_MSG_RESULT([$gl_cv_size_max])
   if test "$gl_cv_size_max" != yes; then
     AC_DEFINE_UNQUOTED([SIZE_MAX], [$gl_cv_size_max],
-      [Define as the maximum value of type 'size_t', if the system doesn't define it.])
+      [Define as the maximum value of type 'size_t', if the system doesn't define it.  (For intl)])
   fi
 ])
 # stdint_h.m4 serial 6
@@ -2114,7 +2114,7 @@ AC_DEFUN([gl_AC_HEADER_STDINT_H],
   if test $gl_cv_header_stdint_h = yes; then
     AC_DEFINE_UNQUOTED(HAVE_STDINT_H_WITH_UINTMAX, 1,
       [Define if <stdint.h> exists, doesn't clash with <sys/types.h>,
-       and declares uintmax_t. ])
+       and declares uintmax_t.  (For intl)])
   fi
 ])
 # uintmax_t.m4 serial 9
@@ -2141,10 +2141,10 @@ AC_DEFUN([gl_AC_TYPE_UINTMAX_T],
       || ac_type='unsigned long'
     AC_DEFINE_UNQUOTED(uintmax_t, $ac_type,
       [Define to unsigned long or unsigned long long
-       if <stdint.h> and <inttypes.h> don't define.])
+       if <stdint.h> and <inttypes.h> don't define.  (For intl)])
   else
     AC_DEFINE(HAVE_UINTMAX_T, 1,
-      [Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>.])
+      [Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>.  (For intl)])
   fi
 ])
 # ulonglong.m4 serial 6
@@ -2181,7 +2181,7 @@ AC_DEFUN([AC_TYPE_UNSIGNED_LONG_LONG_INT],
        [ac_cv_type_unsigned_long_long_int=no])])
   if test $ac_cv_type_unsigned_long_long_int = yes; then
     AC_DEFINE([HAVE_UNSIGNED_LONG_LONG_INT], 1,
-      [Define to 1 if the system has the type `unsigned long long int'.])
+      [Define to 1 if the system has the type `unsigned long long int'.  (For intl)])
   fi
 ])
 
@@ -2192,7 +2192,7 @@ AC_DEFUN([gl_AC_TYPE_UNSIGNED_LONG_LONG],
   ac_cv_type_unsigned_long_long=$ac_cv_type_unsigned_long_long_int
   if test $ac_cv_type_unsigned_long_long = yes; then
     AC_DEFINE(HAVE_UNSIGNED_LONG_LONG, 1,
-      [Define if you have the 'unsigned long long' type.])
+      [Define if you have the 'unsigned long long' type.  (For intl)])
   fi
 ])
 # visibility.m4 serial 1 (gettext-0.15)
@@ -2245,7 +2245,7 @@ AC_DEFUN([gl_VISIBILITY],
   AC_SUBST([CFLAG_VISIBILITY])
   AC_SUBST([HAVE_VISIBILITY])
   AC_DEFINE_UNQUOTED([HAVE_VISIBILITY], [$HAVE_VISIBILITY],
-    [Define to 1 or 0, depending whether the compiler supports simple visibility declarations.])
+    [Define to 1 or 0, depending whether the compiler supports simple visibility declarations.  (For intl)])
 ])
 # wchar_t.m4 serial 1 (gettext-0.12)
 dnl Copyright (C) 2002-2003 Free Software Foundation, Inc.
@@ -2264,7 +2264,7 @@ AC_DEFUN([gt_TYPE_WCHAR_T],
        wchar_t foo = (wchar_t)'\0';], ,
        gt_cv_c_wchar_t=yes, gt_cv_c_wchar_t=no)])
   if test $gt_cv_c_wchar_t = yes; then
-    AC_DEFINE(HAVE_WCHAR_T, 1, [Define if you have the 'wchar_t' type.])
+    AC_DEFINE(HAVE_WCHAR_T, 1, [Define if you have the 'wchar_t' type.  (For intl)])
   fi
 ])
 # wint_t.m4 serial 1 (gettext-0.12)
@@ -2284,7 +2284,7 @@ AC_DEFUN([gt_TYPE_WINT_T],
        wint_t foo = (wchar_t)'\0';], ,
        gt_cv_c_wint_t=yes, gt_cv_c_wint_t=no)])
   if test $gt_cv_c_wint_t = yes; then
-    AC_DEFINE(HAVE_WINT_T, 1, [Define if you have the 'wint_t' type.])
+    AC_DEFINE(HAVE_WINT_T, 1, [Define if you have the 'wint_t' type.  (For intl)])
   fi
 ])
 # xsize.m4 serial 3
