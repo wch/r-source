@@ -910,6 +910,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     cleanup();
     show(RConsole);
+    R_ProcessEvents();
     UNPROTECT(1);
     return ans;
 }

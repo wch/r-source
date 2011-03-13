@@ -104,6 +104,10 @@
       \item The internal method for \code{untar()} does a better job of
       unravelling symbolic links in the tarball (but still with many
       limitations).
+      
+      \item The graphical dialog version of \code{select.list()} could
+      cause later dialogs to fail if Windows events were not processed
+      between the calls.
     }
   }
 }
