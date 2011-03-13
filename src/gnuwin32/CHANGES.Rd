@@ -33,6 +33,10 @@
       symptom was the occasional raster image not being drawn, especially
       when drawing multiple raster images in a single expression.
       Thanks to Michael Sumner for report and testing.
+      
+      \item The graphical dialog version of \code{select.list()} could
+      cause later dialogs to fail if Windows events were not processed
+      between the calls.
     }
   }
 }
