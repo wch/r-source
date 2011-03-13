@@ -8,11 +8,11 @@ function(given = NULL, family = NULL, middle = NULL,
          email = NULL, role = NULL, comment = NULL,
          first = NULL, last = NULL)
 {
-    ## arrange all arguments in lists of equal length
+    ## Arrange all arguments in lists of equal length.
     args <- list(given = given, family = family, middle = middle,
                  email = email, role = role, comment = comment,
 		 first = first, last = last)
-    args <- lapply(args, function(x) if(inherits(x, "list")) x else list(x))
+    args <- lapply(args, .listify)
     args_length <- sapply(args, length)
     if(!all(args_length_ok <- args_length %in% c(1L, max(args_length))))
         warning(sprintf("Not all arguments are of the same length, the following need to be recycled: %s",
@@ -185,8 +185,7 @@ function(x, name)
 function(x, name, value)
 {
     name <- match.arg(name, c("given", "family", "role", "email", "comment"))
-    x <- unclass(x)
-    if(!inherits(value, "list")) value <- list(value)
+    x <- .listify(unclass(x))
     value <- rep(value, length.out = length(x))
 
     if(name == "role")
@@ -349,8 +348,8 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
     ## arrange all arguments in lists of equal length
     args <- c(list(bibtype = bibtype, textVersion = textVersion,
               header = header, footer = footer, key = key), list(...))
-    args <- lapply(args, function(x) if(inherits(x, "list")) x else list(x))
-    other <- lapply(other, function(x) if(inherits(x, "list")) x else list(x))
+    args <- lapply(args, .listify)
+    other <- lapply(other, .listify)
     max_length <- max(sapply(c(args, other), length))
 
     args_length <- sapply(args, length)
@@ -435,12 +434,20 @@ function(x, i)
     rval
 }
 
+bibentry_format_styles <-
+    c("text", "Bibtex", "citation", "html", "latex", "textVersion")
+
 format.bibentry <-
-function(x,
-         style = c("text", "html", "latex", "Bibtex", "textVersion"),
-         .bibstyle = "JSS", ...)
+function(x, style = "text", .bibstyle = "JSS", ...)
 {
-    style <- match.arg(style)
+    ind <- pmatch(tolower(style), tolower(bibentry_format_styles),
+                  nomatch = 0L)
+    if(all(ind == 0L))
+        stop(gettextf("'style' should be one of %s",
+                      paste(dQuote(bibentry_format_styles),
+                            collapse = ", ")),
+             domain = NA)
+    style <- bibentry_format_styles[ind]
 
     .format_bibentry_via_Rd <- function(f) {
         out <- file()
@@ -453,6 +460,30 @@ function(x,
                    f(con, fragment = TRUE, out = out, ...)
                    paste(readLines(out), collapse = "\n")
                })
+    }
+
+    .format_bibentry_as_citation <- function(x) {
+        bibtex <- length(x) < 2L
+
+        c(if(!is.null(a <- attr(x, "mheader"))) strwrap(a) else "",
+          unlist(lapply(x, function(y) {
+              paste(c(if(!is.null(y$header))
+                      c(strwrap(y$header), ""),
+                      if(!is.null(y$textVersion)) {
+                          strwrap(y$textVersion, prefix = "  ")
+                      } else {
+                          format(y)
+                      },
+                      if(bibtex) {
+                          c("\nA BibTeX entry for LaTeX users is\n",
+                            paste("  ", unclass(toBibtex(y)),
+                                  sep = ""))
+                      },
+                      if(!is.null(y$footer))
+                      c("", strwrap(y$footer))),
+                    collapse = "\n")
+          })),
+          if(!is.null(a <- attr(x, "mfooter"))) strwrap(a) else "")
     }
 
     switch(style,
@@ -468,57 +499,35 @@ function(x,
                out <- lapply(unclass(x), attr, "textVersion")
                out[!sapply(out, length)] <- ""
                unlist(out)
-           }
+           },
+           "citation" = .format_bibentry_as_citation(x)
            )
 }
 
 print.bibentry <-
-function(x,
-         style = c("text", "Bibtex", "citation", "html", "latex",
-                   "textVersion"),
-         .bibstyle = "JSS", ...)
+function(x, style = "text", .bibstyle = "JSS", ...)
 {
-    style <- match.arg(style)
+    y <- format(x, style)
+    n <- length(y)
 
-    ## Printing in citation style does extra headers/footers and more,
-    ## so is handled directly.
-
-    .format_bibentry_as_citation <- function(x) {
-        bibtex <- length(x) < 2L
-        c("",
-          if(!is.null(attr(x, "mheader")))
-          c(strwrap(attr(x, "mheader")), ""),
-          do.call(paste,
-                  c(lapply(x, function(y) {
-                      paste(c(if(!is.null(y$header))
-                              c(strwrap(y$header), ""),
-                              if(!is.null(y$textVersion)) {
-                                  strwrap(y$textVersion, prefix = "  ")
-                              } else {
-                                  format(y)
-                              },
-                              if(bibtex) {
-                                  c("\nA BibTeX entry for LaTeX users is\n",
-                                    paste("  ", unclass(toBibtex(y)),
-                                          sep = ""))
-                              },
-                              if(!is.null(y$footer))
-                              c("", strwrap(y$footer))),
-                            collapse = "\n")
-                  }),
-                    list(sep = "\n\n"))),
-          if(!is.null(attr(x, "mfooter")))
-          c("", strwrap(attr(x, "mfooter"))),
-          "")
-    }
-
-    if(style == "citation")
-        writeLines(.format_bibentry_as_citation(x))
-    else
-        writeLines(paste(format(x, style), collapse = "\n\n"))
+    if(n > length(x)) {
+        ## Printing in citation style does extra headers/footers (which
+        ## however we may empty), so it is handled differently.
+        if(nzchar(header <- y[1L]))
+            header <- c("", header, "")
+        if(nzchar(footer <- y[n]))
+            footer <- c("", footer, "")
+        writeLines(c(header,
+                     paste(y[-c(1L, n)], collapse = "\n\n"),
+                     footer))
+    } else
+        writeLines(paste(y, collapse = "\n\n"))
 
     invisible(x)
 }
+
+bibentry_attribute_names <-
+    c("bibtype", "textVersion", "header", "footer", "key")
 
 `$.bibentry` <-
 function(x, name)
@@ -528,8 +537,7 @@ function(x, name)
     ## otherwise (to mirror the behaviour of the input format for
     ## bibentry())
     ## </COMMENT>
-    is_attribute <-
-        name %in% c("bibtype", "textVersion", "header", "footer", "key")
+    is_attribute <- name %in% bibentry_attribute_names
     rval <- if(is_attribute) lapply(unclass(x), attr, name)
         else lapply(unclass(x), "[[", name)
     if(length(rval) == 1L) rval <- rval[[1L]]
@@ -539,14 +547,13 @@ function(x, name)
 `$<-.bibentry` <-
 function(x, name, value)
 {
-    is_attribute <-
-        name %in% c("bibtype", "textVersion", "header", "footer", "key")
+    is_attribute <- name %in% bibentry_attribute_names
+
     x <- unclass(x)
     name <- tolower(name)
 
     ## recycle value
-    if(!inherits(value, "list")) value <- list(value)
-    value <- rep(value, length.out = length(x))
+    value <- rep(.listify(value), length.out = length(x))
 
     ## check bibtype
     if(name == "bibtype") {
@@ -724,7 +731,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     if((!is.null(meta$Priority)) && (meta$Priority == "base")) {
     	cit <- citation("base", auto = FALSE)
     	attr(cit, "mheader")[1L] <-
-            paste("The '", package, "' package is part of R.  ",
+            paste("The ", sQuote(package), " package is part of R.  ",
                   attr(cit, "mheader")[1L], sep = "")
         return(.citation(cit))
     }
@@ -829,3 +836,20 @@ function(x, style = "citation", ...)
     NextMethod("print", x, style = style, ...)
     invisible(x)
 }
+
+as.bibentry <-
+function(x)
+    UseMethod("as.bibentry")
+
+as.bibentry.bibentry <- identity
+
+as.bibentry.citation <-
+function(x)
+{
+    class(x) <- "bibentry"
+    x
+}
+
+.listify <-
+function(x)
+    if(inherits(x, "list")) x else list(x)
