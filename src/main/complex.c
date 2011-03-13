@@ -375,12 +375,12 @@ void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
     if (dig > 306) {
 	double pow10 = 1.0e4;
 	digits = (double)(dig - 4);
-	r->r = rround(pow10 * x->r, digits)/pow10;
-	r->i = rround(pow10 * x->i, digits)/pow10;
+	r->r = fround(pow10 * x->r, digits)/pow10;
+	r->i = fround(pow10 * x->i, digits)/pow10;
     } else {
 	digits = (double)(dig);
-	r->r = rround(x->r, digits);
-	r->i = rround(x->i, digits);
+	r->r = fround(x->r, digits);
+	r->i = fround(x->i, digits);
     }
 }
 
@@ -637,8 +637,8 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void z_rround(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 {
-    r->r = rround(x->r, p->r); /* #defined to fround in Rmath.h */
-    r->i = rround(x->i, p->r);
+    r->r = fround(x->r, p->r);
+    r->i = fround(x->i, p->r);
 }
 
 static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)

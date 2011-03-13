@@ -1707,11 +1707,12 @@ AC_CHECK_DECLS([alloca], , ,
 
 ## C99 functions: 
 ## not all C99 runtimes are complete,
-## but we have substitutes for expm1 hypot log1p and (internally) nearbyint
+## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin lacks powl
+## Cygwin and FreeBSD lack powl
+## Cygwin has rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])

@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2010  Robert Gentleman, Ross Ihaka
- *                            and the R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +33,7 @@
 
 #include <Defn.h>
 #include <Fileio.h>
-#include <Rmath.h> /* for rround */
+#include <Rmath.h> /* for fround */
 #include "Runix.h"
 
 #ifdef HAVE_UNISTD_H
@@ -229,17 +228,17 @@ void R_getProcTime(double *data)
     data[4] = (double) children.ru_stime.tv_sec +
 	1e-3 * (children.ru_stime.tv_usec/1000);
 #else
-    data[0] = rround(timeinfo.tms_utime / clk_tck, 3);
-    data[1] = rround(timeinfo.tms_stime / clk_tck, 3);
-    data[3] = rround(timeinfo.tms_cutime / clk_tck, 3);
-    data[4] = rround(timeinfo.tms_cstime / clk_tck, 3);
+    data[0] = fround(timeinfo.tms_utime / clk_tck, 3);
+    data[1] = fround(timeinfo.tms_stime / clk_tck, 3);
+    data[3] = fround(timeinfo.tms_cutime / clk_tck, 3);
+    data[4] = fround(timeinfo.tms_cstime / clk_tck, 3);
 #endif
 #ifdef HAVE_GETTIMEOFDAY
     gettimeofday(&tv, NULL);
     now = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
     data[2] = now - StartTime2;
 #endif
-    data[2] = rround(data[2], 3);
+    data[2] = fround(data[2], 3);
 }
 
 attribute_hidden

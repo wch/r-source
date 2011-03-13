@@ -4384,7 +4384,7 @@ This is unsupported, but experiments have been conducted and a few
 workarounds added.  @R{} 2.13.0 requires C99 complex type support, which
 is available as from Cygwin 1.7.8 (March 2011).  However, the (new)
 implementation of @code{cacos} gives incorrect results, so
-@code{HAVE_CACOS} needs to be undefined in @file{src/include/config.h}.
+@code{HAVE_CACOS} is undefined in @file{src/main/complex.c}.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
@@ -4415,7 +4415,8 @@ The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
 At the time of writing not all the tests pass: there are incorrect
-results from wide-character regular expressions code.
+results from wide-character regular expressions code and from sourcing
+CR-delimited files.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms

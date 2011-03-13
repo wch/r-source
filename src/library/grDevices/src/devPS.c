@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2010  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1998--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +40,7 @@ mbcsToSbcs(const char *in, char *out, const char *encoding, int enc);
 
 #include <R_ext/Riconv.h>
 
-#include <Rmath.h>		/* for rround */
+#include <Rmath.h>		/* for fround */
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/Error.h>
@@ -2723,8 +2722,8 @@ static void PostScriptMoveTo(FILE *fp, double x, double y)
 static void PostScriptRLineTo(FILE *fp, double x0, double y0,
 			      double x1, double y1)
 {
-    double x = rround(x1, 2) - rround(x0, 2),
-	y = rround(y1, 2) - rround(y0, 2);
+    double x = fround(x1, 2) - fround(x0, 2),
+	y = fround(y1, 2) - fround(y0, 2);
     /* Warning: some machines seem to compute these differently from
        others, and we do want to diff the output.  x and y should be
        above around 0.01 or negligible (1e-14), and it is the latter case

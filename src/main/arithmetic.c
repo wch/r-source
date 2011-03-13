@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2010	    The R Development Core Team.
+ *  Copyright (C) 1998--2011	    The R Development Core Team.
  *  Copyright (C) 2003-4	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1407,8 +1407,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (PRIMVAL(op)) {
 
     case  0: return Math2(args, atan2);
-    case 10001: return Math2(args, rround); /* #defined to fround in Rmath.h */
-    case 10004: return Math2(args, prec);/* signif() #defined to fprec in Rmath.h */
+    case 10001: return Math2(args, fround);
+    case 10004: return Math2(args, fprec); /* signif() */
 
     case  2: return Math2(args, lbeta);
     case  3: return Math2(args, beta);

@@ -79,17 +79,16 @@ strsplit grep [g]sub [g]regexpr
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
 #endif
 
-/* we allow reg == NULL if the regex cannot be safely expressed
+/* we allow pat == NULL if the regex cannot be safely expressed
    as a string (e.g., when using grepRaw) */
 static void reg_report(int rc,  regex_t *reg, const char *pat)
 {
     char errbuf[1001];
     tre_regerror(rc, reg, errbuf, 1001);
-    warning(_("regcomp error:  '%s'"), errbuf);
     if (pat)
-	error(_("invalid regular expression '%s'"), pat);
+	error(_("invalid regular expression '%s', reason '%s'"), pat, errbuf);
     else
-	error(_("invalid regular expression"));
+	error(_("invalid regular expression, reason '%s'"), errbuf);
 }
 
 /* FIXME: make more robust, and public */
