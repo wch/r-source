@@ -629,6 +629,11 @@
       (the \code{"matrix"} class didn't really exist when it was written). 
       This caused an infinite recursion in the no-GUI case and has now
       been removed. 
+
+      \item Some bugs in method caching were fixed that caused errors when
+      setting methods for distinct generics of the same name from different
+      packages (related problems in exporting and loading namespaces
+      continue to, at least, generate invalid warnings in this case).
     }
   }
 }

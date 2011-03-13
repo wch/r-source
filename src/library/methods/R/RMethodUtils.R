@@ -830,38 +830,19 @@ cacheMetaData <-
         packages <- c(packages, attr(others, "package"))
     }
     ## check for duplicates
-    dups <- duplicated(generics) & duplicated(packages)
-    generics <- generics[!dups]
+    dups <- duplicated(generics)
+    if(any(dups)) { # check packages the same
+        dups <- duplicated(paste(generics, packages, sep="::"))
+        if(any(dups)) {
+            generics <- generics[!dups]
+            packages <- packages[!dups]
+        }
+    }
     pkg <- getPackageName(where)
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
-        if(!identical(fpkg, pkg) && doCheck) {
-            if(attach) {
-                env <- as.environment(where)
-                ## All instances of this generic in different attached packages must
-                ## agree with the cached version of the generic for consistent
-                ## method selection.
-                if(exists(f, envir = env, inherits = FALSE)) {
-                    def <- get(f, envir = env)
-                    fdef <- .genericOrImplicit(f, fpkg, env)
-                    if(is.function(def)) {
-                        ## exclude a non-function of the same name as a primitive with methods (!)
-                        if(identical(environment(def), environment(fdef)))
-                            next        # the methods are identical
-                        else if( is(fdef, "genericFunction")) {
-                            .assignOverBinding(f, fdef,  env, FALSE)
-                        }
-                    }     # else, go ahead to update primitive methods
-                }
-                else          # either imported generic or a primitive
-                    fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
-            }
-            else
-                fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
-        }
-        else
-            fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
+        fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         if(!is(fdef, "genericFunction"))
             next ## silently ignores all generics not visible from searchWhere
         if(attach)
