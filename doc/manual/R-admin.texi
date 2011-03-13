@@ -4077,13 +4077,12 @@ When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
 disables @acronym{IEEE} arithmetic and @command{make check} will fail.
 
-For the Solaris Studio compilers a little juggling of paths was needed to
-ensure @acronym{GNU} @code{libiconv} is used rather than the Solaris
-@code{iconv}: at one time we used
+For the Solaris Studio compilers a little juggling of paths was needed
+to ensure @acronym{GNU} @code{libiconv} (in @file{/usr/local}) was used
+rather than the Solaris @code{iconv}:
 
 @example
 CC="cc -xc99"
-CPPFLAGS=-I/opt/csw/include
 CFLAGS="-O -xlibmieee"
 F77=f95
 FFLAGS=-O4
@@ -4091,22 +4090,19 @@ CXX="CC -library=stlport4"
 CXXFLAGS=-O
 FC=f95
 FCFLAGS=$FFLAGS
-FCLIBS=-lfai -lfsu
-LDFLAGS=-L/opt/csw/lib
+FCLIBS="-lfai -lfsu"
+R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/gcc4/lib:/opt/csw/lib"
 @end example
 
 @noindent
-to ensure that the @code{libiconv} version of @file{iconv.h} was found,
-and later used self-compiled versions of @code{libiconv} and
-@code{readline} from @file{/usr/local} (replacing @file{/opt/csw} in the
-flags).  For a 64-bit target add @option{-m64} to the compiler macros
-and use something like @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
+For a 64-bit target add @option{-m64} to the compiler macros
+and use something like @code{LDFLAGS=-L/usr/local/lib/sparcv9} or
 @code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.
 
 With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
 
 @example
-FCLIBS=-lfai -lfai2 -lfsu
+FCLIBS="-lfai -lfai2 -lfsu"
 @end example
 (and possibly other Fortran libraries, but this suffices for the
 packages currently on CRAN).
