@@ -46,6 +46,7 @@
  GRecording
  IS_ACTIVE_BINDING
  IS_BYTES
+ IS_CACHED
  IS_LATIN1
  IS_UTF8
  InitDynload
@@ -88,8 +89,12 @@
  R_Collected
  R_CommentSxp
  R_CommentSymbol
+ R_ConnIdSymbol
  R_ConsoleIob
+ R_DevicesSymbol
+ R_DisableNLinBrowser
  R_DotEnvSymbol
+ R_DoubleColonSymbol
  R_EditFiles
  R_ErrorCon
  R_ExactSymbol
@@ -150,8 +155,10 @@
  R_ParseErrorFile
  R_ParseErrorMsg
  R_ParseFile
+ R_ParseLatex
  R_ParseRd
  R_PendingPromises
+ R_Primitive
  R_Quiet
  R_RecursiveSymbol
  R_RestartStack
@@ -169,6 +176,7 @@
  R_ShowFiles
  R_ShowWarnCalls
  R_SrcfileSymbol
+ R_Srcref
  R_SrcrefSymbol
  R_StdinEnc
  R_StringHash
@@ -177,6 +185,7 @@
  R_TextBufferGetc
  R_TextBufferInit
  R_TmpvalSymbol
+ R_TripleColonSymbol
  R_UTF8fixslash
  R_UseNamesSymbol
  R_VSize
@@ -185,6 +194,7 @@
  R_WarnEscapes
  R_WarnLength
  R_Warnings
+ R_WholeSrcrefSymbol
  R_XDRDecodeDouble
  R_XDRDecodeInteger
  R_XDREncodeDouble
@@ -192,6 +202,8 @@
  R_Zero_Hack
  R_binary
  R_check_locale
+ R_cmpfun
+ R_compile_pkgs
  R_compress1
  R_compress2
  R_compress3
@@ -206,6 +218,12 @@
  R_dlsym
  R_do_data_class
  R_do_set_class
+ R_dot_Class
+ R_dot_Generic
+ R_dot_GenericCallEnv
+ R_dot_GenericDefEnv
+ R_dot_Group
+ R_dot_Methods
  R_fixbackslash
  R_fixslash
  R_getClockIncrement
@@ -217,9 +235,11 @@
  R_getVarsFromFrame
  R_gmtime
  R_init_base
+ R_init_jit_enabled
  R_initialize_bcode
  R_isMissing
  R_is_running
+ R_jit_enabled
  R_lazyLoadDBflush
  R_lazyLoadDBinsertValue
  R_localtime
@@ -258,6 +278,7 @@
  Rf_ComplexFromReal
  Rf_ComplexFromString
  Rf_CustomPrintValue
+ Rf_DispatchAnyOrEval
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
@@ -310,6 +331,7 @@
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
+ Rf_check1arg
  Rf_check_stack_balance
  Rf_con_pushback
  Rf_convertToC
@@ -361,6 +383,7 @@
  Rf_setRVector
  Rf_ssort
  Rf_stirlerr
+ Rf_strmat2intmat
  Rf_substituteList
  Rf_ucstomb
  Rf_unbindVar
@@ -425,6 +448,7 @@
  _nl_normalize_codeset
  _pcre_OP_lengths
  _pcre_default_tables
+ _pcre_find_bracket
  _pcre_is_newline
  _pcre_ord2utf8
  _pcre_try_flipped
@@ -610,6 +634,7 @@
  do_comment
  do_commentgets
  do_compcases
+ do_compilepkgs
  do_complex
  do_contour
  do_contourLines
@@ -661,6 +686,7 @@
  do_eapply
  do_edit
  do_emptyenv
+ do_enablejit
  do_encodeString
  do_encoding
  do_env2list
@@ -682,6 +708,7 @@
  do_fileedit
  do_fileexists
  do_fileinfo
+ do_filelink
  do_filepath
  do_fileremove
  do_filerename
@@ -702,9 +729,11 @@
  do_gcinfo
  do_gctime
  do_gctorture
+ do_gctorture2
  do_get
  do_getClipboardFormats
  do_getGraphicsEvent
+ do_getGraphicsEventEnv
  do_getIdentification
  do_getNSRegistry
  do_getNumRtoCConverters
@@ -718,6 +747,7 @@
  do_getWindowTitle
  do_getallconnections
  do_getconnection
+ do_getconst
  do_getenv
  do_geterrmessage
  do_getlocale
@@ -725,10 +755,12 @@
  do_getwd
  do_glob
  do_globalenv
- do_gpregexpr
  do_gray
  do_gregexpr
  do_grep
+ do_grepraw
+ do_gpregexpr
+ do_growconst
  do_gsub
  do_gzcon
  do_gzfile
@@ -754,6 +786,7 @@
  do_is
  do_isNSEnv
  do_is_builtin_internal
+ do_isatty
  do_isfinite
  do_isincomplete
  do_isinfinite
@@ -773,6 +806,8 @@
  do_lengthgets
  do_levelsgets
  do_libfixup
+ do_list2env
+ do_listdirs
  do_listfiles
  do_load
  do_loadFromConn2
@@ -804,6 +839,8 @@
  do_math4
  do_matprod
  do_matrix
+ do_memCompress
+ do_memDecompress
  do_memlimits
  do_memoryprofile
  do_memretrace
@@ -849,8 +886,10 @@
  do_parentenvgets
  do_parentframe
  do_parse
+ do_parseLatex
  do_parseRd
  do_paste
+ do_path
  do_pathexpand
  do_persp
  do_pgsub
@@ -884,6 +923,7 @@
  do_range
  do_rank
  do_rapply
+ do_raster
  do_rawShift
  do_rawToBits
  do_rawToChar
@@ -895,6 +935,7 @@
  do_readRegistry
  do_readbin
  do_readchar
+ do_readlink
  do_readln
  do_readtablehead
  do_recall
@@ -911,6 +952,7 @@
  do_repeat
  do_resetCondHands
  do_restart
+ do_retracemem
  do_return
  do_rgb
  do_rmultinom
@@ -930,6 +972,7 @@
  do_seq_len
  do_serializeToConn
  do_set
+ do_setGraphicsEventEnv
  do_setInternet2
  do_setSessionTimeLimit
  do_setStatusBar
@@ -940,6 +983,8 @@
  do_setenv
  do_seterrmessage
  do_setlocale
+ do_setmaxnumthreads
+ do_setnumthreads
  do_setseed
  do_setwd
  do_setwinprogressbar
@@ -1004,6 +1049,7 @@
  do_title
  do_tolower
  do_trace
+ do_tracemem
  do_transpose
  do_trunc
  do_truncate
@@ -1015,14 +1061,17 @@
  do_unregNS
  do_unserializeFromConn
  do_unsetenv
+ do_untracemem
  do_unz
  do_unzip
  do_updateform
  do_url
  do_usemethod
  do_utf8ToInt
+ do_vapply
  do_version
  do_warning
+ do_which
  do_while
  do_windialog
  do_windialogstring
@@ -1039,6 +1088,7 @@
  do_writelines
  do_writetable
  do_xspline
+ do_xtfrm
  do_zeroin
  do_zeroin2
  dos_wglob
@@ -1163,14 +1213,18 @@
  lzma_filter_flags_decode
  lzma_filter_flags_encode
  lzma_filter_flags_size
+ lzma_filters_copy
+ lzma_filters_update
  lzma_footer_magic
  lzma_free
  lzma_get_check
  lzma_header_magic
  lzma_index_append
+ lzma_index_block_count
  lzma_index_buffer_decode
  lzma_index_buffer_encode
  lzma_index_cat
+ lzma_index_checks
  lzma_index_count
  lzma_index_decoder
  lzma_index_dup
@@ -1185,15 +1239,28 @@
  lzma_index_hash_init
  lzma_index_hash_size
  lzma_index_init
+ lzma_index_iter_init
+ lzma_index_iter_locate
+ lzma_index_iter_next
+ lzma_index_iter_rewind
  lzma_index_locate
  lzma_index_memusage
+ lzma_index_memused
  lzma_index_padding_size
+ lzma_index_prealloc
  lzma_index_read
  lzma_index_rewind
  lzma_index_size
+ lzma_index_stream_count
+ lzma_index_stream_flags
+ lzma_index_stream_padding
  lzma_index_stream_size
  lzma_index_total_size
  lzma_index_uncompressed_size
+ lzma_index_iter_init
+ lzma_index_iter_locate
+ lzma_index_iter_next
+ lzma_index_iter_rewind
  lzma_lz_decoder_init
  lzma_lz_decoder_memusage
  lzma_lz_decoder_uncompressed
@@ -1239,6 +1306,7 @@
  lzma_mode_is_supported
  lzma_next_end
  lzma_next_filter_init
+ lzma_next_filter_update
  lzma_properties_decode
  lzma_properties_encode
  lzma_properties_size
@@ -1440,12 +1508,27 @@
  tre_mem_destroy
  tre_mem_new_impl
  tre_parse
+ tre_regaexec
+ tre_regaexecb
+ tre_reganexec
+ tre_regaparams_default
+ tre_regawexec
+ tre_regawnexec
  tre_regcomp
  tre_regcompb
  tre_regerror
  tre_regexec
  tre_regexecb
  tre_regfree
+ tre_regncomp
+ tre_regncompb
+ tre_regnexec
+ tre_regnexecb
+ tre_reguexec
+ tre_regwcomp
+ tre_regwexec
+ tre_regwncomp
+ tre_regwnexec
  tre_stack_destroy
  tre_stack_new
  tre_stack_num_objects
