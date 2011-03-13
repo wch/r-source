@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-11 07:15\n"
+"POT-Creation-Date: 2011-03-13 10:49\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1161,9 +1161,6 @@ msgstr "заменяю предыдущий импорт %s во время загрузки %s"
 msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
 
-msgid "got invalid index for importing"
-msgstr "получен неправильный индекс для импорта"
-
 msgid "found methods to import for function %s but not the generic itself"
 msgstr "найдены методы импорта для функции %s но они сами не общие"
 
@@ -1676,6 +1673,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "got invalid index for importing"
+#~ msgstr "получен неправильный индекс для импорта"
 
 #~ msgid "cyclic name space dependencies are not supported"
 #~ msgstr "циклические зависимости в пространстве имен не поддерживаются"

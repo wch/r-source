@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-13 10:50\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1066,6 +1066,21 @@ msgstr "Successione delle chiamate:"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+msgid "Note: found %d marked Latin-1 string"
+msgid_plural "Note: found %d marked Latin-1 strings"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Note: found %d marked UTF-8 string"
+msgid_plural "Note: found %d marked UTF-8 strings"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Note: found %d string marked as \"bytes\""
+msgid_plural "Note: found %d strings marked as \"bytes\""
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "Warning in file '%s':"
