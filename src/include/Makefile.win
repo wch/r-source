@@ -32,41 +32,17 @@ iconv.h: ../gnuwin32/fixed/h/iconv.h
 psignal.h: ../gnuwin32/fixed/h/psignal.h
 	@cp $< $@
 
-SC_proxy.h: ../gnuwin32/front-ends/SC_proxy.h
-	@cp $< $@
-
-SC_system.h: ../gnuwin32/front-ends/SC_system.h
-	@cp $< $@
-
-rproxy.h: ../gnuwin32/front-ends/rproxy.h
-	@cp $< $@
-
-bdx.h: ../gnuwin32/front-ends/bdx.h
-	@cp $< $@
-
-bdx_SEXP.h: ../gnuwin32/front-ends/bdx_SEXP.h
-	@cp $< $@
-
-bdx_com.h: ../gnuwin32/front-ends/bdx_com.h
-	@cp $< $@
-
-bdx_util.h: ../gnuwin32/front-ends/bdx_util.h
-	@cp $< $@
-
-com_util.h: ../gnuwin32/front-ends/com_util.h
-	@cp $< $@
-
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
 	@sh $(R_HOME)/tools/GETCONFIG > Rconfig.h
 
 Rversion.h: $(R_HOME)/VERSION $(R_HOME)/SVN-REVISION $(R_HOME)/tools/GETVERSION
 	@sh $(R_HOME)/tools/GETVERSION > $@
 
-Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION
+Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION Makefile.win
 	@$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
-	  -e /@RMATH_HAVE_EXPM1@/d  \
+	  -e 's/@RMATH_HAVE_EXPM1@/# define HAVE_EXPM1 1/'  \
+	  -e 's/@RMATH_HAVE_HYPOT@/# define HAVE_HYPOT 1/'  \
 	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
-	  -e  's/@RMATH_HAVE_WORKING_LOG@/# define HAVE_WORKING_LOG 1/' \
 	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < $(R_HOME)/VERSION`/" $< > Rmath.h0
 
 Rmath.h: Rmath.h0
