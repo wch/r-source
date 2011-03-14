@@ -1178,7 +1178,7 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
     ## look for the generic to see if it is a primitive
     fGen <- getFunction(f, TRUE, FALSE, where = where)
     if(!is.primitive(fGen)) {
-        mdef <- getMethod(f, signature, optional = TRUE, where = where, fdef = fdef)
+        mdef <- getMethod(f, signature, optional = TRUE, where = where, fdef = fGen)
         return(is(mdef, "SealedMethodDefinition"))
     }
     ## else, a primitive
