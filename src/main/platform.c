@@ -2383,7 +2383,7 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_CHMOD
     SEXP paths, smode, ans;
-    int i, m, n, *modes, mode, res;
+    int i, m, n, *modes, mode, res, um = 0;
 
     checkArity(op, args);
     paths = CAR(args);
@@ -2394,10 +2394,19 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
     modes = INTEGER(smode);
     m = LENGTH(smode);
     if(!m) error(_("'mode' must be of length at least one"));
+    int useUmask = asLogical(CADDR(args));
+    if (useUmask == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "use_umask");
+#ifdef HAVE_UMASK
+    um = umask(0); umask(um);
+#endif
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	mode = modes[i % m];
 	if (mode == NA_INTEGER) mode = 0777;
+#ifdef HAVE_UMASK
+	if(useUmask) mode = mode & ~um;
+#endif
 #ifdef Win32
 	/* Windows' _[w]chmod seems only to support read access
 	   or read-write access.  _S_IWRITE is 0200.

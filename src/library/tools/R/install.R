@@ -899,7 +899,7 @@
                 ## make executable if the source file was (for owner)
                 modes <- file.info(i_files)$mode
                 execs <- as.logical(modes & as.octmode("100"))
-                Sys.chmod(i2_files[execs], "755") # respect umask?
+                Sys.chmod(i2_files[execs], "755")
             }
             if (compact_docs) {
                 pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",

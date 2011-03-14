@@ -199,7 +199,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             }
             if(dothis) {
                 close(out)
-                Sys.chmod(name, mode)
+                Sys.chmod(name, mode, FALSE) # override umask
                 .Call("R_setFileTime", name, ft, PACKAGE = "base")
             }
         } else if(ctype %in% c("1", "2")) { # hard and symbolic links
@@ -241,7 +241,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             contents <- c(contents, name)
             if(!list) {
                 mydir.create(name)
-                Sys.chmod(name, mode) # FIXME: check result
+                Sys.chmod(name, mode, TRUE) # FIXME: check result
                 ## not much point, since dir will be populated afterwards
                 ## .Call("R_setFileTime", name, ft)
             }

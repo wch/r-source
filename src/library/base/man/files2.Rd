@@ -17,8 +17,8 @@
 }
 \usage{
 dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
-Sys.chmod(paths, mode = "0777")
-Sys.umask(mode = "0000")
+Sys.chmod(paths, mode = "0777", use_umask=TRUE)
+Sys.umask(mode = NA)
 }
 \arguments{
   \item{path}{a character vector containing a single path name.  Tilde
@@ -31,6 +31,8 @@ Sys.umask(mode = "0000")
   \item{mode}{the mode to be used on Unix-alikes: it will be
     coerced by \code{\link{as.octmode}}.  For \code{Sys.chmod} it is
     recycled along \code{paths}.}
+  \item{use_umask}{logical: should the mode be restricted by the
+    \code{umask} setting?}
 }
 \details{
   \code{dir.create} creates the last element of the path, unless
@@ -56,8 +58,7 @@ Sys.umask(mode = "0000")
   Changing mode on a symbolic link is unlikely to work (nor be
   necessary).  For more details see your OS's documentation on the
   system call \code{chmod}, e.g. \command{man 2 chmod} (and not that on
-  the command-line utility of that name).  Note that it is usual for the
-  mode set \bold{not} to be modified by the current \code{umask}.
+  the command-line utility of that name).
 #endif
 #ifdef windows
   The interpretation of \code{mode} in the Windows system functions is

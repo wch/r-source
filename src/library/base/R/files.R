@@ -121,11 +121,8 @@ file.copy <- function(from, to,
     if (any(okay)) { # care: file.create could fail but file.append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
-        if(copy.mode) {
-            um <- suppressWarnings(Sys.umask(NA))
-            mask <- as.octmode("777") & !um
-            Sys.chmod(to[okay], file.info(from[okay])$mode & mask)
-        }
+        if(copy.mode)
+            Sys.chmod(to[okay], file.info(from[okay])$mode, TRUE)
     }
     okay
 }
@@ -207,10 +204,10 @@ Sys.glob <- function(paths, dirmark = FALSE)
 unlink <- function(x, recursive = FALSE)
     .Internal(unlink(as.character(x), recursive))
 
-Sys.chmod <- function(paths, mode = "0777")
-    .Internal(Sys.chmod(paths, as.octmode(mode)))
+Sys.chmod <- function(paths, mode = "0777", use_umask= TRUE)
+    .Internal(Sys.chmod(paths, as.octmode(mode), use_umask))
 
-Sys.umask <- function(mode = "0000")
+Sys.umask <- function(mode = NA)
     .Internal(Sys.umask(if(is.na(mode)) NA_integer_ else as.octmode(mode)))
 
 Sys.readlink <- function(paths)

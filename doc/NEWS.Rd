@@ -393,6 +393,12 @@
       \item New functions have been added for source reference access:
       \code{getSrcFilename()}, \code{getSrcDirectory()},
       \code{getSrcLocation()} and \code{getSrcref()}.
+
+      \item \code{Sys.chmod()} has an extra argument \code{use_umask}
+      which defaults to true and restricts the file mode by the current
+      setting of \code{umask}.  This means that all the \R functions
+      which manipulate file/directory permissions by default respect
+      \code{umask}, notably \command{R CMD INSTALL}.
     }
   }
 
