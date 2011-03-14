@@ -38,6 +38,15 @@ R:
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 	@gzip -9f ../../library/grDevices/afm/*.afm
 
+bytecode: R
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) "--- compiling R code in package '$${pkg}' ---"; \
+          touch $(top_builddir)/src/library/$${pkg}/all.R; \
+	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
+	    R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
+	    R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 all; \
+	done
+
 ## do Rdobjects before metadata before help indices
 docs:
 	@$(MAKE) -f Makefile.win Rdobjects

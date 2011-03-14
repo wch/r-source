@@ -21,6 +21,18 @@ all:
 	@$(MK) NEWSdocs htmldocs docfiles
 	@$(MK)  -C ../../po -f Makefile.win
 
+bytecode:
+	@$(MK) MkRules
+	@if test -f  ../../SVN-REVISION ; then \
+	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
+	fi
+	@$(MK) rbuild
+	@$(MK) -C ../library -f Makefile.win bytecode WIN=$(WIN)
+	@$(MK) -C ../library -f Makefile.win docs
+	@$(MK) NEWSdocs htmldocs docfiles
+	@$(MK)  -C ../../po -f Makefile.win
+
+
 rpackages:
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
@@ -332,6 +344,12 @@ link-recommended:
 recommended:
 	@$(ECHO) "--- Making recommended packages"
 	@$(MK) -C ../library/Recommended -f Makefile.win
+
+## FIXME: this does not work if 'recommended' has already been done
+bytecode-recommended:
+	@$(ECHO) "--- Making and compiling recommended packages"
+	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  $(MK) -C ../library/Recommended -f Makefile.win
 
 docfiles:
 	@$(MK) -f Makefile.docs
