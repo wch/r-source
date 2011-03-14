@@ -1,3 +1,8 @@
+% File src/library/utils/man/sourceutils.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2011 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{sourceutils}
 \alias{getSrcFilename}
 \alias{getSrcDirectory}
@@ -63,7 +68,9 @@ fn <- function(x) {
 }			    
 
 # Show the temporary file directory
-getSrcDirectory(fn, full=TRUE)  
+# where the example was saved
+
+getSrcDirectory(fn)  
 getSrcLocation(fn, "line")
 }
 \keyword{ utilities }
