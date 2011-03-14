@@ -13,6 +13,7 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        edit, emacs, example, file_test, file.edit, find, fix,
        fixInNamespace, findLineNum, flush.console, formatOL, formatUL,
        getAnywhere, getCRANmirrors, getFromNamespace, getS3method,
+       getSrcDirectory, getSrcFilename, getSrcLocation, getSrcref, 
        glob2rx, head, head.matrix, help, help.request, help.search,
        help.start, history, install.packages, installed.packages,
        is.relistable, limitedLabels, loadhistory, localeToCharset,
@@ -25,13 +26,13 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        rc.settings, rc.status, readCitationFile, read.DIF, read.csv,
        read.csv2, read.delim, read.delim2, read.fwf, read.fortran,
        read.socket, read.table, recover, relist, remove.packages,
-       rtags, savehistory, select.list, sessionInfo, setBreakpoint,
-       setRepositories, stack, str, strOptions, summaryRprof, tail,
-       tail.matrix, tar, timestamp, toBibtex, toLatex, type.convert,
-       unstack, untar, unzip, update.packageStatus, update.packages,
-       upgrade, url.show, vi, vignette, write.csv, write.csv2,
-       write.socket, write.table, wsbrowser, xedit, xemacs, zip,
-       zip.file.extract)
+       removeSource, rtags, savehistory, select.list, sessionInfo,
+       setBreakpoint, setRepositories, stack, str, strOptions,
+       summaryRprof, tail, tail.matrix, tar, timestamp, toBibtex,
+       toLatex, type.convert, unstack, untar, unzip,
+       update.packageStatus, update.packages, upgrade, url.show, vi,
+       vignette, write.csv, write.csv2, write.socket, write.table,
+       wsbrowser, xedit, xemacs, zip, zip.file.extract)
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 

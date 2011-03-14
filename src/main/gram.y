@@ -46,6 +46,9 @@ typedef struct yyltype
   int last_line;
   int last_column;
   int last_byte;
+  
+  int first_parsed;
+  int last_parsed;
 } yyltype;
 
 # define YYLTYPE yyltype
@@ -59,6 +62,8 @@ typedef struct yyltype
 	  (Current).last_line    = YYRHSLOC (Rhs, N).last_line;		\
 	  (Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
 	  (Current).last_byte    = YYRHSLOC (Rhs, N).last_byte;		\
+	  (Current).first_parsed = YYRHSLOC (Rhs, 1).first_parsed;      \
+	  (Current).last_parsed  = YYRHSLOC (Rhs, N).last_parsed;	\
 	}								\
       else								\
 	{								\
@@ -68,6 +73,8 @@ typedef struct yyltype
 	    YYRHSLOC (Rhs, 0).last_column;				\
 	  (Current).first_byte   = (Current).last_byte =		\
 	    YYRHSLOC (Rhs, 0).last_byte;				\
+	  (Current).first_parsed = (Current).last_parsed =		\
+	    YYRHSLOC (Rhs, 0).last_parsed;				\
 	}								\
     while (YYID (0))
 
@@ -105,7 +112,7 @@ static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc(int);
 static int	xxcharcount, xxcharsave;
-static int	xxlinesave, xxbytesave, xxcolsave;
+static int	xxlinesave, xxbytesave, xxcolsave, xxparsesave;
 
 static SEXP	SrcRefs = NULL;
 static SrcRefState ParseState;
@@ -382,6 +389,7 @@ static int prevpos = 0;
 static int prevlines[PUSHBACK_BUFSIZE];
 static int prevcols[PUSHBACK_BUFSIZE];
 static int prevbytes[PUSHBACK_BUFSIZE];
+static int prevparse[PUSHBACK_BUFSIZE];
 
 static int xxgetc(void)
 {
@@ -392,7 +400,8 @@ static int xxgetc(void)
     oldpos = prevpos;
     prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
     prevbytes[prevpos] = ParseState.xxbyteno;
-    prevlines[prevpos] = ParseState.xxlineno;    
+    prevlines[prevpos] = ParseState.xxlineno;  
+    prevparse[prevpos] = ParseState.xxparseno;
 
     /* We only advance the column for the 1st byte in UTF-8, so handle later bytes specially */
     if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8)  {
@@ -412,6 +421,7 @@ static int xxgetc(void)
 	ParseState.xxlineno += 1;
 	ParseState.xxcolno = 0;
     	ParseState.xxbyteno = 0;
+    	ParseState.xxparseno += 1;
     } else {
         ParseState.xxcolno++;
     	ParseState.xxbyteno++;
@@ -436,6 +446,8 @@ static int xxungetc(int c)
     ParseState.xxlineno = prevlines[prevpos];
     ParseState.xxbyteno = prevbytes[prevpos];
     ParseState.xxcolno  = prevcols[prevpos];
+    ParseState.xxparseno = prevparse[prevpos];
+    
     prevpos = (prevpos + PUSHBACK_BUFSIZE - 1) % PUSHBACK_BUFSIZE;
 
     R_ParseContextLine = ParseState.xxlineno;
@@ -454,13 +466,15 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
     SEXP val;
 
-    PROTECT(val = allocVector(INTSXP, 6));
+    PROTECT(val = allocVector(INTSXP, 8));
     INTEGER(val)[0] = lloc->first_line;
     INTEGER(val)[1] = lloc->first_byte;
     INTEGER(val)[2] = lloc->last_line;
     INTEGER(val)[3] = lloc->last_byte;
     INTEGER(val)[4] = lloc->first_column;
     INTEGER(val)[5] = lloc->last_column;
+    INTEGER(val)[6] = lloc->first_parsed;
+    INTEGER(val)[7] = lloc->last_parsed;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
     UNPROTECT(1);
@@ -487,6 +501,8 @@ static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
 	wholeFile.last_line = ParseState.xxlineno;
 	wholeFile.last_byte = ParseState.xxbyteno;
 	wholeFile.last_column = ParseState.xxcolno;
+	wholeFile.first_parsed = 1;
+	wholeFile.last_parsed = ParseState.xxparseno;
 	setAttrib(val, R_WholeSrcrefSymbol, makeSrcref(&wholeFile, srcfile));
     }
     UNPROTECT(1);
@@ -1119,6 +1135,7 @@ void R_InitSrcRefState(SrcRefState *state)
     state->xxlineno = 1;
     state->xxcolno = 0;
     state->xxbyteno = 0;
+    state->xxparseno = 1;
 }
 
 void R_FinalizeSrcRefState(SrcRefState *state)
@@ -1135,6 +1152,7 @@ static void UseSrcRefState(SrcRefState *state)
 	ParseState.xxlineno = state->xxlineno;
 	ParseState.xxcolno = state->xxcolno;
 	ParseState.xxbyteno = state->xxbyteno;
+	ParseState.xxparseno = state->xxparseno;
     } else 
     	R_InitSrcRefState(&ParseState);
 }
@@ -1148,6 +1166,7 @@ static void PutSrcRefState(SrcRefState *state)
 	state->xxlineno = ParseState.xxlineno;
 	state->xxcolno = ParseState.xxcolno;
 	state->xxbyteno = ParseState.xxbyteno;
+	state->xxparseno = ParseState.xxparseno;
     } else 
     	R_FinalizeSrcRefState(&ParseState);
 }
@@ -2428,6 +2447,7 @@ static int processLineDirective()
 	setParseFilename(yylval);
     while ((c = xxgetc()) != '\n' && c != R_EOF) /* skip */ ;
     ParseState.xxlineno = linenumber;
+    /* we don't change xxparseno here:  it counts parsed lines, not official lines */
     R_ParseContext[R_ParseContextLast] = '\0';  /* Context report shouldn't show the directive */
     return(c);
 }
@@ -2448,6 +2468,7 @@ static int token(void)
 	yylloc.first_line = xxlinesave;
 	yylloc.first_column = xxcolsave;
 	yylloc.first_byte = xxbytesave;
+	yylloc.first_parsed = xxparsesave;
 	return c;
     }
     xxcharsave = xxcharcount; /* want to be able to go back one token */
@@ -2458,6 +2479,7 @@ static int token(void)
     yylloc.first_line = ParseState.xxlineno;
     yylloc.first_column = ParseState.xxcolno;
     yylloc.first_byte = ParseState.xxbyteno;
+    yylloc.first_parsed = ParseState.xxparseno;
 
     if (c == R_EOF) return END_OF_INPUT;
 
@@ -2638,6 +2660,7 @@ static void setlastloc(void)
     yylloc.last_line = ParseState.xxlineno;
     yylloc.last_column = ParseState.xxcolno;
     yylloc.last_byte = ParseState.xxbyteno;
+    yylloc.last_parsed = ParseState.xxparseno;
 }
 
 static int yylex(void)
@@ -2716,6 +2739,7 @@ static int yylex(void)
 		xxlinesave = yylloc.first_line;
 		xxcolsave  = yylloc.first_column;
 		xxbytesave = yylloc.first_byte;
+		xxparsesave = yylloc.first_parsed;
 		SavedLval = yylval;
 		setlastloc();
 		return '\n';

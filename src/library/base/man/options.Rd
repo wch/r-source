@@ -138,10 +138,11 @@ getOption(x, default = NULL)
       where it is possible you may want to increase that.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
-      functions (newly defined or loaded) is stored in their
-      \code{"source"} attribute (see \code{\link{attr}}) allowing
-      comments to be kept in the right places.
-
+      functions (newly defined or loaded) is stored internally
+      allowing comments to be kept in the right places.  Retrieve the
+      source by printing or using \code{deparse(fn, control =
+      "useSource")}.
+ 
       The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
       interactive use.}
 

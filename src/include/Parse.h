@@ -33,9 +33,11 @@ typedef struct {
     Rboolean keepSrcRefs;	/* Whether to attach srcrefs to objects as they are parsed */
     SEXP SrcFile;		/* The srcfile object currently being parsed */
     PROTECT_INDEX SrcFileProt;	/* The SrcFile may change */
-    int xxlineno;		/* Position information about the current parse */
-    int xxcolno;
-    int xxbyteno;
+    				/* Position information about the current parse */
+    int xxlineno;		/* Line number according to #line directives */
+    int xxcolno;		/* Character number on line */
+    int xxbyteno;		/* Byte number on line */
+    int xxparseno;              /* Line number ignoring #line directives */
 } SrcRefState;
 
 void R_InitSrcRefState(SrcRefState *state);

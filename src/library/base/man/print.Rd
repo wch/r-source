@@ -47,7 +47,7 @@ print(x, \dots)
     printed; for sparse tables, using \code{"."} can produce stronger results.}
   \item{justify}{character indicating if strings should left- or
     right-justified or left alone, passed to \code{\link{format}}.}
-  \item{useSource}{logical indicating if a \code{"source"} attribute
+  \item{useSource}{logical indicating if internally stored source
     should be used for printing when present, e.g., if
     \code{\link{options}(keep.source=TRUE)} has been in use.}
 }

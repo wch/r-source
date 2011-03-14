@@ -4816,21 +4816,19 @@ chapter.
 @cindex Tidying R code
 
 @R{} treats function code loaded from packages and code entered by users
-differently.  Code entered by users has the source code stored in an
-attribute, and when the function is listed, the original source is
+differently.  By default code entered by users has the source code stored 
+internally, and when the function is listed, the original source is
 reproduced.  Loading code from a package (by default) discards the
 source code, and the function listing is re-created from the parse tree
 of the function.
 
 Normally keeping the source code is a good idea, and in particular it
-avoids comments being moved around in the source.  However, we can make
+avoids comments being removed from the source.  However, we can make
 use of the ability to re-create a function listing from its parse tree
 to produce a tidy version of the function, for example with consistent
-indentation and spaces around operators.  This tidied version is much
-easier to read, not least by other users who are used to the standard
-format.  Although the deparsing cannot do so, we recommend the
-consistent use of the preferred assignment operator @samp{<-} (rather
-than @samp{=}) for assignment.
+indentation and spaces around operators.  If the original source
+does not follow the standard format this tidied version can be much
+easier to read.  
 
 We can subvert the keeping of source in two ways.
 
@@ -4839,11 +4837,11 @@ We can subvert the keeping of source in two ways.
 The option @code{keep.source} can be set to @code{FALSE} before the code
 is loaded into @R{}.
 @item
-The stored source code can be removed by removing the @code{source}
-attribute, for example by
+The stored source code can be removed by calling the @code{removeSource()}
+function, for example by
 
 @example
-attr(myfun, "source") <- NULL
+myfun <- removeSource(myfun)
 @end example
 
 @end enumerate
@@ -4869,12 +4867,15 @@ and run @R{} with this as the source file, for example by @kbd{R
 @file{new.myfuns.R} will contain the functions in alphabetical order in
 the standard layout.  Warning:  comments in your functions will be lost.
 
-The standard format provides a good starting point for further tidying.
-Many package authors use a version of Emacs (on a Unix-alike or Windows)
-to edit @R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs
-package.  See @ref{R coding standards, , R coding standards, R-ints, R
-Internals} for style options within the ESS[S] mode recommended for the
-source code of @R{} itself.
+The standard format provides a good starting point for further
+tidying. Although the deparsing cannot do so, we recommend the
+consistent use of the preferred assignment operator @samp{<-} (rather
+than @samp{=}) for assignment. Many package authors use a version of
+Emacs (on a Unix-alike or Windows) to edit @R{} code, using the ESS[S]
+mode of the @acronym{ESS} Emacs package.  See @ref{R coding standards,
+, R coding standards, R-ints, R Internals} for style options within
+the ESS[S] mode recommended for the source code of @R{} itself.
+
 
 
 @node Profiling R code for speed, Profiling R code for memory use, Tidying R code, Tidying and profiling R code

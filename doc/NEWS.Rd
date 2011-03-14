@@ -382,6 +382,17 @@
 
       Printing, \code{format()} and \code{cat()} will represent non-ASCII
       bytes in such strings by a \samp{\xab} escape.
+      
+      \item The new function \code{removeSource()} removes the internally
+      stored source from a function.
+
+      \item \code{"srcref"} attributes now include two additional 
+      line number values, recording the line numbers in the order they 
+      were parsed.
+      
+      \item New functions have been added for source reference access:
+      \code{getSrcFilename()}, \code{getSrcDirectory()},
+      \code{getSrcLocation()} and \code{getSrcref()}.
     }
   }
 
@@ -581,6 +592,11 @@
       \item The entry point \code{pythag} in \file{Rmath.h} is deprecated
       in favour of the C99 function \code{hypot}.  A wrapper for
       \code{hypot} is provided for \R 2.13.x only.
+      
+      \item Direct access to the \code{"source"} attribute of functions
+      is deprecated; use \code{deparse(fn, control="useSource")} to access
+      it, and \code{removeSource(fn)} to remove it.
+      
     }
   }
 
