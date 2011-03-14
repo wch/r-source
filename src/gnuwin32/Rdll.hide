@@ -755,11 +755,11 @@
  do_getwd
  do_glob
  do_globalenv
+ do_gpregexpr
  do_gray
  do_gregexpr
  do_grep
  do_grepraw
- do_gpregexpr
  do_growconst
  do_gsub
  do_gzcon
@@ -1240,8 +1240,12 @@
  lzma_index_hash_size
  lzma_index_init
  lzma_index_iter_init
+ lzma_index_iter_init
+ lzma_index_iter_locate
  lzma_index_iter_locate
  lzma_index_iter_next
+ lzma_index_iter_next
+ lzma_index_iter_rewind
  lzma_index_iter_rewind
  lzma_index_locate
  lzma_index_memusage
@@ -1257,10 +1261,6 @@
  lzma_index_stream_size
  lzma_index_total_size
  lzma_index_uncompressed_size
- lzma_index_iter_init
- lzma_index_iter_locate
- lzma_index_iter_next
- lzma_index_iter_rewind
  lzma_lz_decoder_init
  lzma_lz_decoder_memusage
  lzma_lz_decoder_uncompressed
