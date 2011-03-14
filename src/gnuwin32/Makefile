@@ -21,7 +21,9 @@ all:
 	@$(MK) NEWSdocs htmldocs docfiles
 	@$(MK)  -C ../../po -f Makefile.win
 
-bytecode:
+bytecode: bytecode-base bytecode-recommended
+
+bytecode-base:
 	@$(MK) MkRules
 	@if test -f  ../../SVN-REVISION ; then \
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
