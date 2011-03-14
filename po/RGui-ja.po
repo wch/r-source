@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:29+0000\n"
+"POT-Creation-Date: 2011-03-14 07:39+0000\n"
 "PO-Revision-Date: 2010-09-29 06:37+0900 \n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -565,7 +565,7 @@ msgstr " OK "
 msgid "Cancel"
 msgstr " キャンセル "
 
-#: extra.c:2150 rui.c:1234
+#: extra.c:2151 rui.c:1234
 msgid "Select file"
 msgstr " ファイルを選択 "
 

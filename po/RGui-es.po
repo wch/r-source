@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:29+0000\n"
+"POT-Creation-Date: 2011-03-14 07:39+0000\n"
 "PO-Revision-Date: 2010-04-13 09:37+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -563,7 +563,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: extra.c:2150 rui.c:1234
+#: extra.c:2151 rui.c:1234
 msgid "Select file"
 msgstr "Selecionar archivo"
 

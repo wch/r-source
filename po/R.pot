@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:48+0000\n"
+"POT-Creation-Date: 2011-03-14 07:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,8 +113,8 @@ msgstr ""
 #: src/gnuwin32/extra.c:326 src/gnuwin32/extra.c:350 src/gnuwin32/extra.c:358
 #: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:573
 #: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:842 src/gnuwin32/extra.c:845
-#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1643
-#: src/gnuwin32/extra.c:1668 src/main/agrep.c:67 src/main/agrep.c:70
+#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1644
+#: src/gnuwin32/extra.c:1669 src/main/agrep.c:67 src/main/agrep.c:70
 #: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
 #: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
 #: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
@@ -171,10 +171,10 @@ msgstr ""
 #: src/main/envir.c:2475 src/main/envir.c:2733 src/main/envir.c:2747
 #: src/main/envir.c:2754 src/main/envir.c:2770 src/main/envir.c:3333
 #: src/main/eval.c:281 src/main/eval.c:2057 src/main/eval.c:2086
-#: src/main/eval.c:2090 src/main/grep.c:759 src/main/grep.c:764
-#: src/main/grep.c:1038 src/main/grep.c:1040 src/main/grep.c:1042
-#: src/main/grep.c:1486 src/main/grep.c:1490 src/main/grep.c:1495
-#: src/main/grep.c:2172 src/main/grep.c:2177 src/main/memory.c:3346
+#: src/main/eval.c:2090 src/main/grep.c:758 src/main/grep.c:763
+#: src/main/grep.c:1037 src/main/grep.c:1039 src/main/grep.c:1041
+#: src/main/grep.c:1485 src/main/grep.c:1489 src/main/grep.c:1494
+#: src/main/grep.c:2171 src/main/grep.c:2176 src/main/memory.c:3346
 #: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
 #: src/main/paste.c:87 src/main/paste.c:368 src/main/paste.c:375
 #: src/main/paste.c:382 src/main/paste.c:387 src/main/paste.c:392
@@ -280,9 +280,9 @@ msgstr ""
 msgid "invalid timestamp"
 msgstr ""
 
-#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1859
-#: src/gnuwin32/extra.c:2040 src/gnuwin32/extra.c:2043
-#: src/gnuwin32/extra.c:2046 src/main/character.c:579 src/main/colors.c:362
+#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1860
+#: src/gnuwin32/extra.c:2041 src/gnuwin32/extra.c:2044
+#: src/gnuwin32/extra.c:2047 src/main/character.c:579 src/main/colors.c:362
 #: src/main/connections.c:3236 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:592 src/main/datetime.c:662 src/main/datetime.c:907
 #: src/main/dotcode.c:197 src/main/errors.c:837 src/main/errors.c:868
@@ -326,93 +326,93 @@ msgstr ""
 msgid "Select one"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1058
+#: src/gnuwin32/extra.c:1059
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1095 src/main/connections.c:1879
+#: src/gnuwin32/extra.c:1096 src/main/connections.c:1879
 msgid "Unable to open the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1100 src/main/connections.c:1883
+#: src/gnuwin32/extra.c:1101 src/main/connections.c:1883
 msgid "Unable to write to the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1124 src/gnuwin32/extra.c:1225 src/main/util.c:885
+#: src/gnuwin32/extra.c:1125 src/gnuwin32/extra.c:1226 src/main/util.c:885
 msgid "'path' must be a character vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1285 src/gnuwin32/extra.c:1358
+#: src/gnuwin32/extra.c:1286 src/gnuwin32/extra.c:1359
 msgid "'default' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1287 src/gnuwin32/extra.c:1360
+#: src/gnuwin32/extra.c:1288 src/gnuwin32/extra.c:1361
 msgid "'default' is overlong"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1291 src/gnuwin32/extra.c:1364
+#: src/gnuwin32/extra.c:1292 src/gnuwin32/extra.c:1365
 msgid "'caption' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1293
+#: src/gnuwin32/extra.c:1294
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1295
+#: src/gnuwin32/extra.c:1296
 msgid "'filterindex' must be an integer value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1446
+#: src/gnuwin32/extra.c:1447
 msgid "'title' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1463
+#: src/gnuwin32/extra.c:1464
 msgid "'text' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1493
+#: src/gnuwin32/extra.c:1494
 #, c-format
 msgid "'%s' must be length 1"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1609
+#: src/gnuwin32/extra.c:1610
 #, c-format
 msgid "'%s' must be a list"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1613
+#: src/gnuwin32/extra.c:1614
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1645 src/gnuwin32/extra.c:1647
-#: src/gnuwin32/extra.c:1670 src/gnuwin32/extra.c:1672
-#: src/gnuwin32/extra.c:1719 src/main/gevents.c:59 src/main/gevents.c:96
+#: src/gnuwin32/extra.c:1646 src/gnuwin32/extra.c:1648
+#: src/gnuwin32/extra.c:1671 src/gnuwin32/extra.c:1673
+#: src/gnuwin32/extra.c:1720 src/main/gevents.c:59 src/main/gevents.c:96
 msgid "invalid device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1648
+#: src/gnuwin32/extra.c:1649
 msgid "requires SDI mode"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1713 src/main/gevents.c:56 src/main/gevents.c:93
+#: src/gnuwin32/extra.c:1714 src/main/gevents.c:56 src/main/gevents.c:93
 msgid "invalid graphical device number"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1723
+#: src/gnuwin32/extra.c:1724
 msgid "bad device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:2058
+#: src/gnuwin32/extra.c:2059
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr ""
 
-#: src/gnuwin32/extra.c:2122 src/gnuwin32/extra.c:2130
+#: src/gnuwin32/extra.c:2123 src/gnuwin32/extra.c:2131
 msgid "invalid input in Rmbstowcs"
 msgstr ""
 
-#: src/gnuwin32/extra.c:2152 src/main/platform.c:1224
+#: src/gnuwin32/extra.c:2153 src/main/platform.c:1224
 msgid "file choice cancelled"
 msgstr ""
 
@@ -461,24 +461,24 @@ msgstr ""
 msgid "character string expected as third argument"
 msgstr ""
 
-#: src/gnuwin32/sys-win32.c:254 src/unix/sys-unix.c:314
+#: src/gnuwin32/sys-win32.c:254 src/unix/sys-unix.c:313
 #, c-format
 msgid "running command '%s' had status %d"
 msgstr ""
 
-#: src/gnuwin32/system.c:121 src/unix/sys-unix.c:416
+#: src/gnuwin32/system.c:121 src/unix/sys-unix.c:415
 msgid "reached session elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:123 src/unix/sys-unix.c:418
+#: src/gnuwin32/system.c:123 src/unix/sys-unix.c:417
 msgid "reached elapsed time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:129 src/unix/sys-unix.c:424
+#: src/gnuwin32/system.c:129 src/unix/sys-unix.c:423
 msgid "reached session CPU time limit"
 msgstr ""
 
-#: src/gnuwin32/system.c:131 src/unix/sys-unix.c:426
+#: src/gnuwin32/system.c:131 src/unix/sys-unix.c:425
 msgid "reached CPU time limit"
 msgstr ""
 
@@ -790,33 +790,33 @@ msgid "invalid multibyte format string"
 msgstr ""
 
 #: src/main/agrep.c:69 src/main/character.c:1022 src/main/character.c:1026
-#: src/main/grep.c:761 src/main/grep.c:1488 src/main/grep.c:1492
-#: src/main/grep.c:2174
+#: src/main/grep.c:760 src/main/grep.c:1487 src/main/grep.c:1491
+#: src/main/grep.c:2173
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
 
-#: src/main/agrep.c:84 src/main/grep.c:174 src/main/grep.c:801
+#: src/main/agrep.c:84 src/main/grep.c:173 src/main/grep.c:800
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 msgstr ""
 
-#: src/main/agrep.c:107 src/main/grep.c:828 src/main/grep.c:2216
+#: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2215
 msgid "regular expression is invalid in this locale"
 msgstr ""
 
-#: src/main/agrep.c:113 src/main/grep.c:88
+#: src/main/agrep.c:113
 #, c-format
 msgid "regcomp error:  '%s'"
 msgstr ""
 
-#: src/main/agrep.c:149 src/main/grep.c:222 src/main/grep.c:309
-#: src/main/grep.c:417 src/main/grep.c:572 src/main/grep.c:878
-#: src/main/grep.c:2272 src/main/grep.c:2338
+#: src/main/agrep.c:149 src/main/grep.c:221 src/main/grep.c:308
+#: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
+#: src/main/grep.c:2271 src/main/grep.c:2337
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr ""
 
-#: src/main/apply.c:41 src/main/apply.c:103 src/main/complex.c:732
+#: src/main/apply.c:41 src/main/apply.c:103 src/main/complex.c:737
 msgid "invalid length"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgstr ""
 msgid "unimplemented real function of 1 argument"
 msgstr ""
 
-#: src/main/arithmetic.c:1131 src/main/complex.c:624 src/main/complex.c:694
+#: src/main/arithmetic.c:1131 src/main/complex.c:629 src/main/complex.c:699
 msgid "unimplemented complex function"
 msgstr ""
 
@@ -1444,7 +1444,7 @@ msgstr ""
 msgid "non-character names"
 msgstr ""
 
-#: src/main/character.c:679 src/main/grep.c:153
+#: src/main/character.c:679 src/main/grep.c:152
 msgid "non-character argument"
 msgstr ""
 
@@ -1743,23 +1743,23 @@ msgstr ""
 msgid "Invalid color specification"
 msgstr ""
 
-#: src/main/complex.c:108
+#: src/main/complex.c:113
 msgid "invalid complex unary operator"
 msgstr ""
 
-#: src/main/complex.c:240
+#: src/main/complex.c:245
 msgid "unimplemented complex operation"
 msgstr ""
 
-#: src/main/complex.c:343
+#: src/main/complex.c:348
 msgid "non-numeric argument to function"
 msgstr ""
 
-#: src/main/complex.c:793
+#: src/main/complex.c:798
 msgid "invalid polynomial coefficient"
 msgstr ""
 
-#: src/main/complex.c:798
+#: src/main/complex.c:803
 msgid "root finding code failed"
 msgstr ""
 
@@ -3932,41 +3932,41 @@ msgstr ""
 msgid "Metric information not available for this device"
 msgstr ""
 
-#: src/main/grep.c:90 src/main/grep.c:843 src/main/grep.c:1563
-#: src/main/grep.c:2231
+#: src/main/grep.c:89
 #, c-format
-msgid "invalid regular expression '%s'"
+msgid "invalid regular expression '%s', reason '%s'"
 msgstr ""
 
-#: src/main/grep.c:92
-msgid "invalid regular expression"
+#: src/main/grep.c:91
+#, c-format
+msgid "invalid regular expression, reason '%s'"
 msgstr ""
 
-#: src/main/grep.c:149 src/main/grep.c:752 src/main/grep.c:754
-#: src/main/grep.c:1024 src/main/grep.c:1032 src/main/grep.c:1479
-#: src/main/grep.c:1481 src/main/grep.c:2164 src/main/grep.c:2166
+#: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
+#: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
+#: src/main/grep.c:1480 src/main/grep.c:2163 src/main/grep.c:2165
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr ""
 
-#: src/main/grep.c:215 src/main/grep.c:302 src/main/grep.c:410
-#: src/main/grep.c:872 src/main/grep.c:2265
+#: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
+#: src/main/grep.c:871 src/main/grep.c:2264
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr ""
 
-#: src/main/grep.c:280 src/main/grep.c:377
+#: src/main/grep.c:279 src/main/grep.c:376
 #, c-format
 msgid "'split' string %d is invalid UTF-8"
 msgstr ""
 
-#: src/main/grep.c:284 src/main/grep.c:381 src/main/grep.c:554
+#: src/main/grep.c:283 src/main/grep.c:380 src/main/grep.c:553
 #, c-format
 msgid "'split' string %d is invalid in this locale"
 msgstr ""
 
-#: src/main/grep.c:389 src/main/grep.c:841 src/main/grep.c:1561
-#: src/main/grep.c:2229
+#: src/main/grep.c:388 src/main/grep.c:840 src/main/grep.c:1560
+#: src/main/grep.c:2228
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -3974,49 +3974,54 @@ msgid ""
 "\tat '%s'\n"
 msgstr ""
 
-#: src/main/grep.c:391
+#: src/main/grep.c:390
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr ""
 
-#: src/main/grep.c:395 src/main/grep.c:847 src/main/grep.c:1568
-#: src/main/grep.c:2236
+#: src/main/grep.c:394 src/main/grep.c:846 src/main/grep.c:1567
+#: src/main/grep.c:2235
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
 
-#: src/main/grep.c:824 src/main/grep.c:2212
+#: src/main/grep.c:823 src/main/grep.c:2211
 msgid "regular expression is invalid UTF-8"
 msgstr ""
 
-#: src/main/grep.c:1241
+#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2230
+#, c-format
+msgid "invalid regular expression '%s'"
+msgstr ""
+
+#: src/main/grep.c:1240
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
 
-#: src/main/grep.c:1536
+#: src/main/grep.c:1535
 msgid "'pattern' is invalid UTF-8"
 msgstr ""
 
-#: src/main/grep.c:1538
+#: src/main/grep.c:1537
 msgid "'replacement' is invalid UTF-8"
 msgstr ""
 
-#: src/main/grep.c:1542
+#: src/main/grep.c:1541
 msgid "'pattern' is invalid in this locale"
 msgstr ""
 
-#: src/main/grep.c:1545
+#: src/main/grep.c:1544
 msgid "'replacement' is invalid in this locale"
 msgstr ""
 
-#: src/main/grep.c:1550
+#: src/main/grep.c:1549
 msgid "zero-length pattern"
 msgstr ""
 
-#: src/main/grep.c:1692 src/main/grep.c:1708 src/main/grep.c:1756
-#: src/main/grep.c:1772 src/main/grep.c:1819 src/main/grep.c:1835
+#: src/main/grep.c:1691 src/main/grep.c:1707 src/main/grep.c:1755
+#: src/main/grep.c:1771 src/main/grep.c:1818 src/main/grep.c:1834
 msgid "result string is too long"
 msgstr ""
 
@@ -7978,39 +7983,39 @@ msgstr ""
 msgid "Sys.sleep is not implemented on this system"
 msgstr ""
 
-#: src/unix/sys-unix.c:266
+#: src/unix/sys-unix.c:265
 msgid "non-empty character argument expected"
 msgstr ""
 
-#: src/unix/sys-unix.c:269
+#: src/unix/sys-unix.c:268
 msgid "'intern' must be logical and not NA"
 msgstr ""
 
-#: src/unix/sys-unix.c:281
+#: src/unix/sys-unix.c:280
 #, c-format
 msgid "cannot popen '%s', probable reason '%s'"
 msgstr ""
 
-#: src/unix/sys-unix.c:286
+#: src/unix/sys-unix.c:285
 #, c-format
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr ""
 
-#: src/unix/sys-unix.c:303
+#: src/unix/sys-unix.c:302
 #, c-format
 msgid "error in running command: '%s'"
 msgstr ""
 
-#: src/unix/sys-unix.c:305
+#: src/unix/sys-unix.c:304
 msgid "error in running command"
 msgstr ""
 
-#: src/unix/sys-unix.c:309
+#: src/unix/sys-unix.c:308
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
 msgstr ""
 
-#: src/unix/sys-unix.c:395
+#: src/unix/sys-unix.c:394
 msgid "Sys.info() is not implemented on this system"
 msgstr ""
 

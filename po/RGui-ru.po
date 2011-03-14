@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:29+0000\n"
+"POT-Creation-Date: 2011-03-14 07:39+0000\n"
 "PO-Revision-Date: 2010-09-30 01:27-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
@@ -555,7 +555,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Отменить"
 
-#: extra.c:2150 rui.c:1234
+#: extra.c:2151 rui.c:1234
 msgid "Select file"
 msgstr "Выбрать файл"
 

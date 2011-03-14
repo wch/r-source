@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-14 07:39\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -188,6 +188,10 @@ msgstr "An entrée de bibliographie of type (bibtype) '"
 
 msgid "' has to correctly specify the field(s):"
 msgstr "' doit spécifier le(s) champ(s) de manière correcte :"
+
+#, fuzzy
+msgid "'style' should be one of %s"
+msgstr "'bibtype' doit être l'un de"
 
 msgid "' has to specify the field(s):"
 msgstr "' doit spécifier le(s) champ(s) :"

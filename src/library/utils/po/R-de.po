@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-14 07:39\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -180,6 +180,10 @@ msgstr "Ein bibentry mit bibtype '"
 
 msgid "' has to correctly specify the field(s):"
 msgstr "' muss die Felder korrekt spezifizieren:"
+
+#, fuzzy
+msgid "'style' should be one of %s"
+msgstr "'bibtype' muss aus Folgenden sein"
 
 msgid "' has to specify the field(s):"
 msgstr "' muss folgende Felder spezifizieren:"

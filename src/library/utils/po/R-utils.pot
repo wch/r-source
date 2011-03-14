@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-14 07:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -153,6 +153,9 @@ msgid "A bibentry of bibtype '"
 msgstr ""
 
 msgid "' has to correctly specify the field(s):"
+msgstr ""
+
+msgid "'style' should be one of %s"
 msgstr ""
 
 msgid "' has to specify the field(s):"

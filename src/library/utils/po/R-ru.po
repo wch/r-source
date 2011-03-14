@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-14 07:39\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -184,6 +184,10 @@ msgstr "Библиографическая запись типа bibtype '"
 
 msgid "' has to correctly specify the field(s):"
 msgstr "' должна корректно определять пол(я):"
+
+#, fuzzy
+msgid "'style' should be one of %s"
+msgstr "'bibtype' не имеет ни одного из"
 
 msgid "' has to specify the field(s):"
 msgstr "' должна определять пол(я):"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-14 07:39\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -177,6 +177,10 @@ msgstr " 以下の bibtype の bibentry ' "
 
 msgid "' has to correctly specify the field(s):"
 msgstr " ' は欄を正確に指定しなければなりません： "
+
+#, fuzzy
+msgid "'style' should be one of %s"
+msgstr " 'bibtype' は以下のどれかである必要があります "
 
 msgid "' has to specify the field(s):"
 msgstr " ' は欄を指定しなければなりません： "
