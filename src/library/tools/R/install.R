@@ -114,6 +114,7 @@
             "      --resave-data	re-save data files as compactly as possible",
             "      --compact-docs	re-compress PDF files under inst/doc",
             "      --no-test-load	skip test of loading installed package",
+            "      --no-clean-on-error	do not remove installed package on error",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -154,7 +155,7 @@
     {
         ## If we are not yet processing a package, we will not have
         ## set curPkg
-        if(length(curPkg)) {
+        if(clean_on_error && length(curPkg)) {
             pkgdir <- file.path(lib, curPkg)
             if (nzchar(pkgdir) && dir.exists(pkgdir)) {
                 starsmsg(stars, "removing ", sQuote(pkgdir))
@@ -1025,6 +1026,7 @@
     multiarch <- TRUE
     force_biarch <- FALSE
     test_load <- TRUE
+    clean_on_error <- TRUE
     merge <- FALSE
 
     get_user_libPaths <- FALSE
@@ -1144,6 +1146,8 @@
             install_help <- FALSE
         } else if (a == "--no-test-load") {
             test_load <- FALSE
+        } else if (a == "--no-clean-on-error") {
+            clean_on_error  <- FALSE
         } else if (a == "--merge-multiarch") {
             if (WINDOWS) merge <- TRUE
             else warning("--merge-multiarch is Windows-only", call.=FALSE)

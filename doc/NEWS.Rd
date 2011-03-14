@@ -552,6 +552,10 @@
       use for Mac binary installs as well as for Windows ones.  The
       value \code{"pkglock"} is now accepted, as well as \code{TRUE} and
       \code{FALSE} (the default).
+      
+      \item There is a new option \option{--no-clean-on-error} for
+      \command{R CMD INSTALL} retain a partially installed package for
+      forensic analysis.
     }
   }
 
