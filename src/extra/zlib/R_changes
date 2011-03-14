@@ -17,6 +17,8 @@ linked to libz.  This is not needed on Windows where the DLL is named
 Rzlib.dll and symbols are imported from a named DLL.  But Rzlib.def is
 used to confine exports to symbols marked ZEXPORT in zlib.h.
 
+From 2.13.0, Z_PREFIX is defined in zconf.h, except on Windows.
+
 
 diff -u ./gzio.c /data/gannet/ripley/R/svn/R-patched/src/extra/zlib/gzio.c
 --- ./gzio.c	2005-07-11 21:31:48.000000000 +0100

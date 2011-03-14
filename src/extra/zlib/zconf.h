@@ -11,6 +11,11 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+/* R change */
+#ifndef WIN32
+#define Z_PREFIX
+#endif
 /*
  * If you *really* need a unique prefix for all types and library functions,
  * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
