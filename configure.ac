@@ -2390,14 +2390,12 @@ AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
 AM_NLS
 if test "${USE_NLS}" = "yes"; then
   AM_GNU_GETTEXT_VERSION(0.14.5)
-  AM_GNU_GETTEXT(, [need-ngettext], [../extra/intl])
+  AM_GNU_GETTEXT([no-libtool], [need-ngettext], [../extra/intl])
   if test -n "$INTL_MACOSX_LIBS"; then
     XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
   fi
 else
   USE_INCLUDED_LIBINTL=no
-  ## for ICONV_CONST
-  AM_ICONV
 fi
 AC_SUBST(XTRA_INTL_CPPFLAGS)
 

@@ -360,9 +360,9 @@
       \item Package \pkg{compiler} is now provided as a standard
       package.  See \code{?compiler::compile} for information on how to
       use the compiler.  This package implements a byte code compiler
-      for \R: by default the compiler is not used in this release.  If
-      you build \R from source you can use \command{make bytecode}
-      to compile the standard and recommended packages.
+      for \R: by default the compiler is not used in this release.  See
+      the \sQuote{R Installation and Administration Manual} for how to
+      compile the base and recommended packages.
 
       \item Providing an \code{exportPattern} directive in a NAMESPACE
       file now causes classes to be exported according to the same
