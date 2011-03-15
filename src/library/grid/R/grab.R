@@ -84,7 +84,7 @@ wrap.up <- function(x) {
   recordGrob(upViewport(n), list(n=x))
 }
 
-wrap.down <- function(x) {
+wrap.vpPath <- function(x) {
   recordGrob(downViewport(path), list(path=x))
 }
 
