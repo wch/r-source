@@ -17,6 +17,57 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Notes on so-called 'Large File Support':
+
+   The C stdio functions such as fseek and ftell are defined using
+   'long' for file positioning: also fread/fwrite use size_t for size
+   and number of items.  (The latter can cause problems with
+   reading/writing large blocks, but not in R.)  POSIX introduced
+   off_t and fseeko/ftello to allow larger file sizes, since 'long'
+   may limit file positioning to 2GB.  (C99 introduced fpos_t and
+   f[gs]etpos.)
+
+   Note that the issue really only arises if 'long' is 32-bit, which
+   is not the case on all known 64-bit platforms except Windows.
+   However, off_t (defined in sys/types.h) is itself often 32-bit,
+   which has led to workarounds.  On Linux systems, the macros
+
+   __USE_FILE_OFFSET64
+   __USE_LARGEFILE64
+
+   select between __off_t and __off64_t.  Since these are different
+   types, the functions using them have to be remapped, and the
+   __off64_t versions call fopen64, fseeko64, ftello64 and so on.
+
+   These macros are not intended to be used directly but via (features.h)
+
+   _FILE_OFFSET_BITS=N  Select default filesystem interface.
+   _LARGEFILE_SOURCE    Some more functions for correct standard I/O.
+   _LARGEFILE64_SOURCE  Additional functionality from LFS for large files.
+
+   The last makes system calls like open64 visible directly, and so
+   should not be needed in R.
+
+   This is commonly known as LFS; _but_ 'LFS Linux' is something else.
+   See http://en.wikipedia.org/wiki/Large_file_support and
+   http://www.suse.de/~aj/linux_lfs.html
+
+   Solaris has a similar scheme: see 'man lf64', 'man lfcompile' and
+   'man lfcompile64'.
+
+   On Mac OS X, off_t is typedef-ed to __darwin_off_t, which is
+   __int64_t, so the issue never arises.
+
+   The situation with Windows is similar, but off64_t, fseeko64 etc
+   need to be selected explicitly (even on Win64).
+
+   There are also issues with the glob(), readdir(), stat() system
+   calls: see platform.c and sysutils.c
+
+   saveload.c uses f[gs]etpos: they have 64-bit versions on LFS Linux
+   and Solaris.  But this only used for pre-1.4.0 formats.
+*/
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -48,7 +99,7 @@ static void con_destroy(int i);
 # undef truncate
 #endif
 
-/* This should work on Win64, as long is 4 bytes but long long is 8 bytes. */
+/* This works on Win64 where long is 4 bytes but long long is 8 bytes. */
 #if defined __GNUC__ && __GNUC__ >= 2
 __extension__ typedef long long int _lli_t;
 #else
