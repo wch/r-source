@@ -1355,12 +1355,7 @@ void R_CleanTempDir(void)
 #else
 static int R_unlink(const char *name, int recursive)
 {
-#ifdef Win32
-    struct _stati64 sb;
-#else
     struct stat sb;
-#endif
-
     int res, res2;
 
     if (streql(name, ".") || streql(name, "..")) return 0;
@@ -1386,11 +1381,7 @@ static int R_unlink(const char *name, int recursive)
 		    else
 			snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
 				 de->d_name);
-#ifdef Win32
-		    _stati64(p, &sb);
-#else
 		    stat(p, &sb);
-#endif
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			ans += R_unlink(p, recursive);
 		    } else

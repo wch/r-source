@@ -46,6 +46,8 @@
       \file{R_HOME/bin/{i386,x64}/bin} now support options such as
       \command{R --vanilla CMD}: there is no comparable interface for
       \file{Rcmd.exe}.
+
+      \item A few more file operations will now work with >2GB files.
     }
   }
 
