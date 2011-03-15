@@ -32,40 +32,6 @@ removeSource <- function(fn) {
     body(fn) <- recurse(body(fn))
     fn
 }
-#  File src/library/utils/R/removeSource.R
-#  Part of the R package, http://www.R-project.org
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
-
-removeSource <- function(fn) {
-    stopifnot(is.function(fn))
-    if (is.primitive(fn)) return(fn)
-    attr(fn, "source") <- NULL
-    attr(body(fn), "wholeSrcref") <- NULL
-    attr(body(fn), "srcfile") <- NULL    
-    
-    recurse <- function(part) {
-        attr(part, "srcref") <- NULL
-        if (is.language(part) && is.recursive(part)) {
-            for (i in seq_along(part))
-            	part[[i]] <- recurse(part[[i]])
-        }
-        part
-    }
-    body(fn) <- recurse(body(fn))
-    fn
-}
 
 getSrcFilename <- function(x, full.names=FALSE, unique=TRUE) {
     srcref <- getSrcref(x)
