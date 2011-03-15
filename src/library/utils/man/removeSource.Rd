@@ -1,31 +1,36 @@
+% File src/library/utils/man/removeSource.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2011 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{removeSource}
 \alias{removeSource}
 \title{
-Remove stored source from a function.
+  Remove Stored Source from a Function.
 }
 \description{
-When \code{options("keep.source")} is \code{TRUE}, 
-a copy of the original source code to a function is stored with it.  This function
-removes that copy.
+  When \code{options("keep.source")} is \code{TRUE}, a copy of the
+  original source code to a function is stored with it.  This function
+  removes that copy.
 }
 \usage{
 removeSource(fn)
 }
 \arguments{
   \item{fn}{
-A single function from which to remove the source.
-}
+    A single function from which to remove the source.
+  }
 }
 \details{
-This removes both the \code{"source"} attribute (from \R version 2.13.x or earlier)
-and the \code{"srcref"} and related attributes.
+  This removes both the \code{"source"} attribute (from \R version
+  2.13.x or earlier) and the \code{"srcref"} and related attributes.
 }
 \value{
-A copy of the function with the source removed.
+  A copy of the function with the source removed.
 }
 \seealso{
-\code{\link{srcref}} for a description of source reference records, \code{\link{deparse}}
-for a description of how functions are deparsed.
+  \code{\link{srcref}} for a description of source reference records,
+  \code{\link{deparse}} for a description of how functions are deparsed.
 }
 \examples{
 fn <- function(x) {
