@@ -53,6 +53,7 @@ static R_size_t objectsize(SEXP s)
 	break;
     case LISTSXP:
     case LANGSXP:
+    case BCODESXP:
 	cnt += objectsize(TAG(s));
 	cnt += objectsize(CAR(s));
 	cnt += objectsize(CDR(s));
@@ -106,8 +107,6 @@ static R_size_t objectsize(SEXP s)
 	for (i = 0; i < length(s); i++)
 	    cnt += objectsize(VECTOR_ELT(s, i));
 	isVec = TRUE;
-	break;
-    case BCODESXP:
 	break;
     case EXTPTRSXP:
 	cnt += sizeof(void *);  /* the actual pointer */
