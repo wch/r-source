@@ -18,6 +18,22 @@
  *  http://www.r-project.org/Licenses/
  */
 
+
+/* Notes on so-called 'Large File Support'
+
+   The 'stat' structure returns a file size as 'off_t'.  On some
+   32-bit systems this will fail if called on a file > 2GB.  On
+   systems with LFS selected (see the notes in connections.c) the call
+   is re-mapped to *stat64, which uses off64_t for the file size.
+
+   file.info() returns file sizes as an R double.
+
+   On Windows we need to remap for ourselves.  There are various
+   versions of the 'stat' structure (some with 64-bit times and not
+   available in the original MSVCRT.dll): we use _stati64 that simply
+   replaces off_t by __int64_t.
+ */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -1339,7 +1355,12 @@ void R_CleanTempDir(void)
 #else
 static int R_unlink(const char *name, int recursive)
 {
+#ifdef Win32
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
+
     int res, res2;
 
     if (streql(name, ".") || streql(name, "..")) return 0;
@@ -1365,7 +1386,11 @@ static int R_unlink(const char *name, int recursive)
 		    else
 			snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep,
 				 de->d_name);
+#ifdef Win32
+		    _stati64(p, &sb);
+#else
 		    stat(p, &sb);
+#endif
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			ans += R_unlink(p, recursive);
 		    } else
@@ -1477,7 +1502,11 @@ static void chmod_one(const char *name)
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
+#ifdef Windows
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
     int n;
 #ifndef Win32
     mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR, /* 0644 */
@@ -1486,10 +1515,11 @@ static void chmod_one(const char *name)
 
     if (streql(name, ".") || streql(name, "..")) return;
     if (!R_FileExists(name)) return;
-    stat(name, &sb);
 #ifdef Win32
+    _stati64(name, &sb);
     chmod(name, _S_IWRITE);
 #else
+    stat(name, &sb);
     chmod(name, (sb.st_mode | mask) & dirmask);
 #endif
     if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */

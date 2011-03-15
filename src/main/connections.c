@@ -56,7 +56,7 @@
    'man lfcompile64'.
 
    On Mac OS X, off_t is typedef-ed to __darwin_off_t, which is
-   __int64_t, so the issue never arises.
+   __int64_t, so the issue never arises.  Similarly on FreeBSD.
 
    The situation with Windows is similar, but off64_t, fseeko64 etc
    need to be selected explicitly (even on Win64).
@@ -65,7 +65,8 @@
    calls: see platform.c and sysutils.c
 
    saveload.c uses f[gs]etpos: they have 64-bit versions on LFS Linux
-   and Solaris.  But this only used for pre-1.4.0 formats.
+   and Solaris.  But this only used for pre-1.4.0 formats, and fpos_t
+   is 64-bit on Windows.
 */
 
 #ifdef HAVE_CONFIG_H

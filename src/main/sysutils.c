@@ -55,6 +55,21 @@ int (*ptr_CocoaSystem)(char*);
 extern	Rboolean useaqua;
 #endif
 
+#ifdef Win32
+Rboolean attribute_hidden R_FileExists(const char *path)
+{
+    struct _stati64 sb;
+    return _stati64(R_ExpandFileName(path), &sb) == 0;
+}
+
+double attribute_hidden R_FileMtime(const char *path)
+{
+    struct _stati64 sb;
+    if (_stati64(R_ExpandFileName(path), &sb) != 0)
+	error(_("cannot determine file modification time of '%s'"), path);
+    return sb.st_mtime;
+}
+#else
 Rboolean attribute_hidden R_FileExists(const char *path)
 {
     struct stat sb;
@@ -68,6 +83,7 @@ double attribute_hidden R_FileMtime(const char *path)
 	error(_("cannot determine file modification time of '%s'"), path);
     return sb.st_mtime;
 }
+#endif
 
     /*
      *  Unix file names which begin with "." are invisible.
@@ -1274,10 +1290,18 @@ size_t ucstoutf8(char *s, const unsigned int wc)
 
 static int isDir(char *path)
 {
+#ifdef Win32
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
     int isdir = 0;
     if(!path) return 0;
+#ifdef Win32
+    if(_stati64(path, &sb) == 0) {
+#else
     if(stat(path, &sb) == 0) {
+#endif
 	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
 #ifdef HAVE_ACCESS
 	/* We want to know if the directory is writable by this user,
