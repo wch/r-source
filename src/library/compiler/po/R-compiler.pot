@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-11 07:16\n"
+"POT-Creation-Date: 2011-03-15 19:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,16 @@ msgstr ""
 msgid "not a proper evaluation environment"
 msgstr ""
 
-msgid "'ns' must be a name space or a name space imports environment"
+msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
 
 msgid "bad assignment: %s"
 msgstr ""
 
-msgid "cannot constant-fold literal promises"
+msgid "cannot constant fold literal promises"
 msgstr ""
 
-msgid "cannot constant-fold literal bytecode objects"
+msgid "cannot constant fold literal bytecode objects"
 msgstr ""
 
 msgid "no offset recorded for label \"%s\""
@@ -38,7 +38,7 @@ msgstr ""
 msgid "cannot compile promise literals in code"
 msgstr ""
 
-msgid "handler for '%s' is already defined for another package"
+msgid "possible error in '%s': %s"
 msgstr ""
 
 msgid "bad namespace import frame"
@@ -62,7 +62,7 @@ msgstr ""
 msgid "no visible global function definition for '%s'"
 msgstr ""
 
-msgid "no visible binding for global variable for '%s'"
+msgid "no visible binding for global variable '%s'"
 msgstr ""
 
 msgid "no visible binding for '<<-' assignment to '%s'"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "compiling '%s'"
 msgstr ""
 
-msgid "saving to file '%s' ..."
+msgid "saving to file \"%s\" ..."
 msgstr ""
 
 msgid "done"
@@ -98,13 +98,13 @@ msgstr ""
 msgid "file '%s' does not exist"
 msgstr ""
 
-msgid "\"%s\" is not a valid compiler option"
+msgid "'%s' is not a valid compiler option"
 msgstr ""
 
 msgid "function is not compiled"
 msgstr ""
 
-msgid        "local assignment to syntactic function:"
-msgid_plural "local assignments to syntactic functions:"
+msgid        "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
 msgstr[0]    ""
 msgstr[1]    ""
