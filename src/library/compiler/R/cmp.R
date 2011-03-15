@@ -76,7 +76,7 @@ is.ddsym <- function(name) {
 asS4 <- function(object, flag = TRUE, complete = TRUE) {
     flag <- methods:::as(flag, "logical")
     if(length(flag) != 1L || is.na(flag))
-        stop("Expected a single logical value for the S4 state flag")
+        stop("expected a single logical value for the S4 state flag")
     .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
 }
 
@@ -122,7 +122,7 @@ frameTypes <- function(env) {
         ng <- ng + 1
     }
     rep(c("local", "namespace", "global"), c(nl, nn, ng))
-}    
+}
 
 ## Given a symbol name and a namespace environment (or a namespace
 ## imports environment) find the namespace in which the symbol's value
@@ -136,7 +136,7 @@ findHomeNS <- function(sym, ns) {
         ## namespace.
         name <- attr(ns, "name")
         if (is.null(name))
-            stop("'ns' must be a namespace or a name space imports frame")
+            stop("'ns' must be a namespace or a namespace imports environment")
         ns <- getNamespace(sub("imports:", "", attr(ns, "name")))
     }
     if (exists(sym, ns, inherits = FALSE))
@@ -202,19 +202,23 @@ nsName <- function(ns) {
 getAssignedVar <- function(e) {
     v <- e[[2]]
     if (missing(v))
-        stop(paste("bad assignment:", pasteExpr(e)))
+        stop(gettextf("bad assignment: %s", pasteExpr(e)),
+             domain = NA)
     else if (typeof(v) %in% c("symbol", "character"))
         as.character(v)
     else {
         while (typeof(v) == "language") {
             if (length(v) < 2)
-                stop(paste("bad assignment:", pasteExpr(e)))
+                stop(gettextf("bad assignment: %s", pasteExpr(e)),
+                     domain = NA)
             v <- v[[2]]
             if (missing(v))
-                stop(paste("bad assignment:", pasteExpr(e)))
+                stop(gettextf("bad assignment: %s", pasteExpr(e)),
+                     domain = NA)
         }
         if (typeof(v) != "symbol")
-            stop(paste("bad assignment:", pasteExpr(e)))
+            stop(gettextf("bad assignment: %s", pasteExpr(e)),
+                 domain = NA)
         as.character(v)
     }
 }
@@ -235,7 +239,7 @@ findLocals1 <- function(e, shadowed = character(0)) {
                                   length(e[[2]]) == 1)
                                   c(e[[2]], findLocals1(e[[3]], shadowed))
                               else findLocalsList1(e[1], shadowed),
-                   "function" = character(0),   
+                   "function" = character(0),
                    "~" = character(0),
                    "local" = if (! v %in% shadowed && length(e) == 2)
                                  character(0)
@@ -250,7 +254,7 @@ findLocals1 <- function(e, shadowed = character(0)) {
     }
     else character(0)
 }
-    
+
 findLocalsList1 <- function(elist, shadowed)
     unique(unlist(lapply(elist, findLocals1, shadowed)))
 
@@ -272,9 +276,13 @@ findLocalsList <- function(elist, cntxt) {
         ## **** need to fix the termination condition used in codetools!!!
         if (last.nsf == nsf) {
             rdsf <- vals %in% specialSyntaxFuns
-            if (any(rdsf))
-                warning(paste("local assignments to syntactic functions:",
-                               vals[rdsf]))
+            if (any(rdsf)) {
+                msg <- ngettext(sum(rdsf),
+                                "local assignment to syntactic function: ",
+                                "local assignments to syntactic functions: ")
+                warning(msg, paste(vals[rdsf], collapse = ", "),
+                        domain = NA)
+            }
             return(vals)
         }
     }
@@ -348,7 +356,7 @@ findCenvVar <- function(var, cenv) {
     if (! is.null(frame)) {
         if (exists(var, frame, inherits = FALSE) && var != "...") {
             value <- new.env(parent = emptyenv())
-            delayedAssign("value", get(var, frame, inherits = FALSE), 
+            delayedAssign("value", get(var, frame, inherits = FALSE),
                           assign.env = value)
         }
         else
@@ -361,7 +369,7 @@ findCenvVar <- function(var, cenv) {
 
 isBaseVar <- function(var, cntxt) {
     info <- getInlineInfo(var, cntxt)
-    (! is.null(info) && 
+    (! is.null(info) &&
      (identical(info$frame, .BaseNamespaceEnv) ||
       identical(info$frame, baseenv())))
 }
@@ -473,9 +481,11 @@ constantFold <- function(e, cntxt) {
     else if (type == "symbol")
         constantFoldSym(e, cntxt)
     else if (type == "promise")
-        cntxt$stop("can't constant fold literal promises", cntxt)
+        cntxt$stop(gettext("cannot constant fold literal promises"),
+                   cntxt)
     else if (type == "bytecode")
-        cntxt$stop("can't constant fold literal bytecode objects", cntxt)
+        cntxt$stop(gettext("cannot constant fold literal bytecode objects"),
+                   cntxt)
     else checkConst(e)
 }
 
@@ -496,7 +506,7 @@ foldFuns <- c("+", "-", "*", "/", "^", "(",
 languageFuns <- c("^", "~", "<", "<<-", "<=", "<-", "=", "==", ">", ">=",
                   "|", "||", "-", ":", "!", "!=", "/", "(", "[", "[<-", "[[",
                   "[[<-", "{", "@", "$", "$<-", "*", "&", "&&", "%/%", "%*%",
-                  "%%", "+", 
+                  "%%", "+",
                   "::", ":::", "@<-",
                   "break", "for", "function", "if", "next", "repeat", "while",
                   "local", "return", "switch")
@@ -756,8 +766,8 @@ make.codeBuf <- function(expr) {
     patchlabels <- function() {
         offset <- function(lbl) {
             if (is.null(labels[[lbl]]))
-                stop(paste("no offset recorded for label \"", lbl, "\"",
-                           sep = ""))
+                stop(gettextf("no offset recorded for label \"%s\"", lbl),
+                     domain = NA)
             labels[[lbl]]
         }
         for (i in 1 : codeCount) {
@@ -810,11 +820,8 @@ make.toplevelContext <- function(cenv, options = NULL)
                    suppressUndefined = getCompilerOption("suppressUndefined",
                                                          options),
                    call = NULL,
-                   stop = function(msg, cntxt) {
-                       call <- cntxt$call
-                       if (is.null(call)) call <- FALSE
-                       stop(msg, call. = call)
-                   },
+                   stop = function(msg, cntxt)
+                       stop(simpleError(msg, cntxt$call)),
                    warn = function(x, cntxt) cat(paste("Note:", x, "\n"))),
               class = "compiler_context")
 
@@ -876,9 +883,11 @@ cmp <- function(e, cb, cntxt) {
         else if (typeof(e) == "symbol")
             cmpSym(e, cb, cntxt)
         else if (typeof(e) == "bytecode")
-            cntxt$stop("can't compile byte code literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile byte code literals in code"),
+                       cntxt)
         else if (typeof(e) == "promise")
-            cntxt$stop("can't compile promise literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile promise literals in code"),
+                       cntxt)
         else
             cmpConst(e, cb, cntxt)
     }
@@ -990,9 +999,11 @@ cmpCallArgs <- function(args, cb, cntxt) {
             cb$putcode(DODOTS.OP)
         }
         else if (typeof(a) == "bytecode")
-            cntxt$stop("can't compile byte code literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile byte code literals in code"),
+                       cntxt)
         else if (typeof(a) == "promise")
-            cntxt$stop("can't compile promise literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile promise literals in code"),
+                       cntxt)
         else {
             if (is.symbol(a) || typeof(a) == "language") {
                 ci <- cb$putconst(genCode(a, pcntxt))
@@ -1034,8 +1045,9 @@ checkCall <- function(def, call, signal = warning) {
         msg <- try({match.call(def, call); NULL})
         options(show.error.messages=old)
         if (! is.null(msg)) {
-            msg<-sub("\n$","",sub("^E.*: ","",msg))
-            emsg<-paste("possible error in ", deparse(call),": ", msg, sep="")
+            msg <- sub("\n$", "", sub("^E.*: ", "", msg))
+            emsg <- gettextf("possible error in '%s': %s",
+                             deparse(call, 20)[1], msg)
             if (! is.null(signal)) signal(emsg)
             FALSE
         }
@@ -1064,9 +1076,10 @@ inlineHandlers <- new.env(hash = TRUE, parent = emptyenv())
 setInlineHandler <- function(name, h, package = "base") {
     if (exists(name, inlineHandlers, inherits = FALSE)) {
         entry <- get(name, inlineHandlers)
-        if (entry$package != package)
-            stop("handler for ", sQuote(package),
-                 " is already defined for another package")
+        if (entry$package != package) {
+            fmt <- "handler for '%s' is already defined for another package"
+            stop(gettextf(fmt, name), domain = NA)
+        }
     }
     entry <- list(handler = h, package = package)
     assign(name, entry, inlineHandlers)
@@ -1106,7 +1119,7 @@ haveInlineHandler <- function(name, package = "base") {
 ## or
 ##
 ##     declare(notinline = c("diag", "dim"))
-## 
+##
 ## **** need to figure out if there is a sensible way to declare things at
 ## **** the package level
 
@@ -1125,7 +1138,7 @@ getInlineInfo <- function(name, cntxt) {
                     top <- topenv(cntxt$env$env)
                     if (! isNamespace(top) ||
                         ! identical(frame, parent.env(top)))
-                        cntxt$stop("bad namespace import frame")
+                        cntxt$stop(gettext("bad namespace import frame"))
                     frame <- top
                 }
                 info$package <- nsName(findHomeNS(name, frame))
@@ -1282,9 +1295,10 @@ setterInlineHandlers <- new.env(hash = TRUE, parent = emptyenv())
 setSetterInlineHandler <- function(name, h, package = "base") {
     if (exists(name, setterInlineHandlers, inherits = FALSE)) {
         entry <- get(name, setterInlineHandlers)
-        if (entry$package != package)
-            stop("handler for ", sQuote(package),
-                 " is already defined for another package")
+        if (entry$package != package) {
+            fmt <- "handler for '%s' is already defined for another package"
+            stop(gettextf(fmt, name), domain = NA)
+        }
     }
     entry <- list(handler = h, package = package)
     assign(name, entry, setterInlineHandlers)
@@ -1318,9 +1332,10 @@ getterInlineHandlers <- new.env(hash = TRUE, parent = emptyenv())
 setGetterInlineHandler <- function(name, h, package = "base") {
     if (exists(name, getterInlineHandlers, inherits = FALSE)) {
         entry <- get(name, getterInlineHandlers)
-        if (entry$package != package)
-            stop("handler for ", sQuote(package),
-                 " is already defined for another package")
+        if (entry$package != package) {
+            fmt <- "handler for '%s' is already defined for another package"
+            stop(gettextf(fmt, name), domain = NA)
+        }
     }
     entry <- list(handler = h, package = package)
     assign(name, entry, getterInlineHandlers)
@@ -1490,7 +1505,7 @@ cmpSetterCall <- function(place, vexpr, cb, cntxt) {
     if (is.null(afun))
         ## **** warn instead and arrange for cmpSpecial?
         ## **** or generate code to signal runtime error?
-        cntxt$stop("invalid function in complex assignment")
+        cntxt$stop(gettext("invalid function in complex assignment"))
     else if (typeof(afun) == "symbol") {
         if (! trySetterInline(afun, place, acall, cb, ncntxt)) {
             ci <- cb$putconst(afun)
@@ -1965,13 +1980,15 @@ cmpBuiltinArgs <- function(args, names, cb, cntxt, missingOK = FALSE) {
                 cmpTag(n, cb)
             }
             else
-                cntxt$stop("missing arguments are not allowed", cntxt)
+                cntxt$stop(gettext("missing arguments are not allowed"), cntxt)
         }
         ## **** handle ... here ??
         else if (typeof(a) == "bytecode")
-            cntxt$stop("can't compile byte code literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile byte code literals in code"),
+                       cntxt)
         else if (typeof(a) == "promise")
-            cntxt$stop("can't compile promise literals in code", cntxt)
+            cntxt$stop(gettext("cannot compile promise literals in code"),
+                       cntxt)
         else {
             if (is.symbol(a)) {
                 ca <- constantFold(a, cntxt)
@@ -2250,7 +2267,7 @@ cmpSimpleInternal <- function(e, cb, cntxt) {
 
 safeBaseInternals <- c("atan2", "besselY", "beta", "choose",
                        "drop", "inherits", "is.vector", "lbeta", "lchoose",
-                       "nchar", "polyroot", "typeof", "vector", "which.max", 
+                       "nchar", "polyroot", "typeof", "vector", "which.max",
                        "which.min", "is.loaded", "identical")
 
 for (i in safeBaseInternals) setInlineHandler(i,  cmpSimpleInternal)
@@ -2259,9 +2276,9 @@ safeStatsInternals <- c("dbinom", "dcauchy", "dgeom", "dhyper", "dlnorm",
                         "dlogis", "dnorm", "dpois", "dunif", "dweibull",
                         "fft", "mvfft", "pbinom", "pcauchy",
                         "pgeom", "phyper", "plnorm", "plogis", "pnorm",
-                        "ppois", "punif", "pweibull", "qbinom", "qcauchy", 
+                        "ppois", "punif", "pweibull", "qbinom", "qcauchy",
                         "qgeom", "qhyper", "qlnorm", "qlogis", "qnorm",
-                        "qpois", "qunif", "qweibull", "rbinom", "rcauchy", 
+                        "qpois", "qunif", "qweibull", "rbinom", "rcauchy",
                         "rgeom", "rhyper", "rlnorm", "rlogis", "rnorm",
                         "rpois", "rsignrank",  "runif", "rweibull",
                         "rwilcox", "ptukey", "qtukey")
@@ -2290,7 +2307,7 @@ setInlineHandler("switch", function(e, cb, cntxt) {
         miss <- missingArgs(cases)
         nm <- names(cases)
 
-        ## allow for corner cases like switch(x, 1) which always 
+        ## allow for corner cases like switch(x, 1) which always
         ## returns 1 if x is a character scalar.
         if (is.null(nm) && length(cases) == 1)
             nm <- ""
@@ -2329,7 +2346,7 @@ setInlineHandler("switch", function(e, cb, cntxt) {
 
         if (! cntxt$tailcall)
             endLabel <- cb$makelabel()
-    
+
         ## create the map from names to labels for a character switch
         if (haveNames) {
             unm <- unique(nm[nm != ""])
@@ -2477,29 +2494,33 @@ notifyLocalFun <- function(fun, cntxt) {
 
 notifyUndefFun <- function(fun, cntxt) {
     if (! suppressUndef(fun, cntxt)) {
-        msg <- paste("no visible global function definition for", sQuote(fun))
+        msg <- gettextf("no visible global function definition for '%s'",
+                        as.character(fun))
         cntxt$warn(msg, cntxt)
     }
 }
 
 notifyUndefVar <- function(var, cntxt) {
     if (! suppressUndef(var, cntxt)) {
-        msg <- paste("no visible binding for global variable", sQuote(var))
+        msg <- gettextf("no visible binding for global variable '%s'",
+                        as.character(var))
         cntxt$warn(msg, cntxt)
     }
 }
 
 notifyNoSuperAssignVar <- function(symbol, cntxt) {
     if (! suppressAll(cntxt)) {
-        msg <- paste("no visible binding for '<<-' assignment to",
-                     sQuote(symbol))
+        msg <- gettextf("no visible binding for '<<-' assignment to '%s'",
+                        as.character(symbol))
         cntxt$warn(msg, cntxt)
     }
 }
 
 notifyWrongArgCount <- function(fun, cntxt) {
     if (! suppressAll(cntxt))
-        cntxt$warn(paste("wrong number of arguments to", sQuote(fun)), cntxt)
+        cntxt$warn(gettextf("wrong number of arguments to '%s'",
+                            as.character(fun)),
+                   cntxt)
 }
 
 notifyWrongDotsUse <- function(var, cntxt) {
@@ -2521,11 +2542,12 @@ notifyBadCall <- function(w, cntxt) {
 
 notifyBadAssignFun <- function(fun, cntxt) {
     if (! suppressAll(cntxt))
-        cntxt$warn("invalid function in complex assignment")
+        cntxt$warn(gettext("invalid function in complex assignment"))
 }
 
 notifyMultipleSwitchDefaults <- function(ndflt, cntxt)
-    cntxt$warn("more than one default provided in switch call", cntxt)
+    cntxt$warn(gettext("more than one default provided in switch call"),
+               cntxt)
 
 
 ##
@@ -2555,7 +2577,7 @@ cmpfun <- function(f, options = NULL) {
     }
     else if (typeof(f) == "builtin" || type == "special")
         f
-    else stop("can't compile a non-function")
+    else stop("cannot compile a non-function")
 }
 
 cmpframe <- function(inpos, file) {
@@ -2573,14 +2595,14 @@ cmpframe <- function(inpos, file) {
     for (f in ls(pos=inpos,all=TRUE)) {
         def <- get(f, pos=inpos)
         if (typeof(def) == "closure") {
-                cat(paste("compiling", f, "\n"))
+                cat(gettextf("compiling '%s'", f), "\n", sep = "")
                 fc <- cmpfun(def)
                 assign(f, fc, pos=outpos)
         }
     }
-    cat(paste("saving to file \"", file, "\" ... ", sep=""))
+    cat(gettextf("saving to file \"%s\" ... ", file))
     save(list=ls(pos=outpos,all=T), file=file)
-    cat("done\n")
+    cat(gettext("done"), "\n", sep = "")
 }
 
 cmplib <- function(package, file) {
@@ -2600,7 +2622,7 @@ cmplib <- function(package, file) {
 cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
                     verbose = FALSE, options = NULL) {
     if (! is.environment(env) || ! identical(env, topenv(env)))
-        stop("env must be a top level environment")
+        stop("'env' must be a top level environment")
     if (missing(outfile)) {
         basename <- sub("\\.[a-zA-Z0-9]$", "", infile)
         outfile <- paste(basename, ".Rc", sep="")
@@ -2632,20 +2654,19 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
             }
             cforms[[i]] <- genCode(e, cntxt)
         }
-        cat(paste("saving to file \"", outfile, "\" ... ", sep=""))
+        cat(gettextf("saving to file \"%s\" ... ", outfile))
         .Internal(save.to.file(cforms, outfile, ascii))
-        cat("done\n")
+        cat(gettext("done"), "\n", sep = "")
     }
-    else warning(" empty input file; no output written");
+    else warning("empty input file; no output written");
     invisible(NULL)
 }
 
-loadcmp <- function (file, envir = .GlobalEnv, chdir = FALSE) 
-{
-    if (!(is.character(file) && file.exists(file))) 
-        stop(paste("file `", file, "' does not exist", sep = ""))
+loadcmp <- function (file, envir = .GlobalEnv, chdir = FALSE) {
+    if (!(is.character(file) && file.exists(file)))
+        stop(gettextf("file '%s' does not exist", file), domain = NA)
     exprs <- .Internal(load.from.file(file))
-    if (length(exprs) == 0) 
+    if (length(exprs) == 0)
         return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {
         owd <- getwd()
@@ -2669,7 +2690,8 @@ setCompilerOptions <- function(...) {
     nm <- names(options)
     for (n in nm)
         if (! exists(n, compilerOptions))
-            stop(paste("\"", n, "\" is not a valid compiler option", sep = ""))
+            stop(gettextf("'%s' is not a valid compiler option", n),
+                 domain = NA)
     old <- list()
     for (n in nm) {
         op <- options[[n]]
@@ -2729,7 +2751,7 @@ bcDecode <- function(code) {
     }
     ncode
 }
-    
+
 disassemble <- function(code) {
     .CodeSym <- as.name(".Code")
     disasm.const<-function(x)
@@ -2743,7 +2765,7 @@ disassemble <- function(code) {
     if (typeof(code)=="closure") {
         code <- .Internal(bodyCode(code))
         if (typeof(code) != "bytecode")
-            stop("functions is not compiled")
+            stop("function is not compiled")
     }
     dput(disasm(.Internal(disassemble(code))))
 }
