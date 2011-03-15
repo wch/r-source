@@ -367,6 +367,7 @@ data.frame <-
 	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1L]
+    mirn <- missing(row.names) # record before possibly changing
     mrn <- is.null(row.names) # missing or NULL
     x <- list(...)
     n <- length(x)
@@ -418,7 +419,7 @@ data.frame <-
                 vnames[[i]] <- tmpname
             }
         } # end of ncols[i] <= 1
-	if(mrn && nrows[i] > 0L) {
+	if(mirn && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
             ## Avoid all-blank names
             nc <- nchar(rowsi, allowNA = FALSE)
