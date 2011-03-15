@@ -1502,7 +1502,7 @@ static void chmod_one(const char *name)
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
-#ifdef Windows
+#ifdef Win32
     struct _stati64 sb;
 #else
     struct stat sb;
