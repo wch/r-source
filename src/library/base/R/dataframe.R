@@ -418,7 +418,7 @@ data.frame <-
                 vnames[[i]] <- tmpname
             }
         } # end of ncols[i] <= 1
-	if(missing(row.names) && nrows[i] > 0L) {
+	if(mrn && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
             ## Avoid all-blank names
             nc <- nchar(rowsi, allowNA = FALSE)

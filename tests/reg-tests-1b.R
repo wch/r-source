@@ -1580,4 +1580,11 @@ lines (y2 ~ x2, data = A, lwd=2, col="gray")
 ## using a matrix failed in R < 2.13.0  *when* there was an extra argument
 
 
+## PR#14530
+dfA <- data.frame(A=1:2, B=3:4, row.names=letters[1:2])
+dfB <- dfA[2:1,]
+res <- try(data.frame(dfA, dfA[2:1,], check.rows=TRUE))
+stopifnot(inherits(res, "try-error"))
+## worked in 2.12.2.
+
 proc.time()

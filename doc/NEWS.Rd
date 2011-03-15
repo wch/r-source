@@ -667,7 +667,10 @@
       \item \code{edit.default()} contained a manual dispatch for matrices
       (the \code{"matrix"} class didn't really exist when it was written). 
       This caused an infinite recursion in the no-GUI case and has now
-      been removed. 
+      been removed.
+
+      \item \code{data.frame(check.rows = TRUE)} sometimes worked when
+      it should have detected an error.  (\PR{14530})
     }
   }
 }
