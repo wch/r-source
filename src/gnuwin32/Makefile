@@ -347,9 +347,9 @@ recommended:
 	@$(ECHO) "--- Making recommended packages"
 	@$(MK) -C ../library/Recommended -f Makefile.win
 
-## FIXME: this does not work if 'recommended' has already been done
 bytecode-recommended:
 	@$(ECHO) "--- Making and compiling recommended packages"
+	@rm ../library/Recommended/*.ts
 	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  $(MK) -C ../library/Recommended -f Makefile.win
 
