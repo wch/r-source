@@ -1,6 +1,6 @@
 % File src/library/utils/man/txtProgressBar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-10 R Core Development Team
+% Copyright 2008-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
@@ -14,7 +14,7 @@
 }
 \usage{
 txtProgressBar(min = 0, max = 1, initial = 0, char = "=",
-               width = NA, title, label, style = 1)
+               width = NA, title, label, style = 1, file = "")
 
 getTxtProgressBar(pb)
 setTxtProgressBar(pb, value, title = NULL, label = NULL)
@@ -30,13 +30,15 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
     of \code{char}.  If \code{NA}, the default, the number of characters
     is that which fits into \code{getOption("width")}.}
   \item{style}{the \sQuote{style} of the bar -- see \sQuote{Details}.}
+  \item{file}{an open connection object or \code{""} which indicates
+    the console: \code{\link{stderr}()} might be useful here.}
   \item{pb, con}{an object of class \code{"txtProgressBar"}.}
   \item{title, label}{ignored, for compatibility with other progress bars.}
   \item{\dots}{for consistency with the generic.}
 }
 \details{
   \code{txtProgressBar} will display a progress bar on the \R console
-  via a text representation.
+  (or a connection) via a text representation.
   
   \code{setTxtProgessBar} will update the value.  Missing
   (\code{\link{NA}}) and out-of-range values of \code{value} will be
@@ -62,7 +64,10 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 \note{
   Using \code{style} 2 or 3 or reducing the value with \code{style = 1}
   uses \samp{\r} to return to the left margin -- the interpretation of
-  carriage return is up to the terminal or console in which \R is running.
+  carriage return is up to the terminal or console in which \R is
+  running, and this is liable to produce ugly output on a connection
+  other than \code{stderr()}, including when \code{stdout()} is
+  redirected to a file.
 }
 \seealso{
 #ifdef windows

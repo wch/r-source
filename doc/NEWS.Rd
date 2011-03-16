@@ -7,7 +7,8 @@
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item dummy
+      \item \code{txtProgressBar()} can write to an open connection
+      instead of the console.
     }
   }
   
