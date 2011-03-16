@@ -61,7 +61,7 @@ hsv <- function(h=1, s=1, v=1, gamma = 1, alpha = 1)
     alphaspec <- !missing(alpha)
     if (gamma != 1)
         warning("The 'gamma' argument is deprecated and has no effect")
-    result <- .Internal(hsv(h, s, v, gamma, alpha))
+    result <- .Internal(hsv(h, s, v, alpha))
     ## If alpha not specified only return #RRGGBB
     if (!alphaspec)
         structure(substr(result, 1L, 7L), names=names(result))
