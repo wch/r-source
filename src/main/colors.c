@@ -94,31 +94,28 @@ static unsigned int CheckAlpha(int x)
 
 SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP c, h, s, v, gm, a;
-    double hh, ss, vv, gg, aa, r=0., g=0., b=0.; /* -Wall */
-    int i, max, nh, ns, nv, ng, na;
+    SEXP c, h, s, v, a;
+    double hh, ss, vv, aa, r=0., g=0., b=0.; /* -Wall */
+    int i, max, nh, ns, nv, na;
 
     checkArity(op, args);
 
     PROTECT(h = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     PROTECT(s = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     PROTECT(v = coerceVector(CAR(args),REALSXP)); args = CDR(args);
-    PROTECT(gm = coerceVector(CAR(args),REALSXP)); args = CDR(args);
     PROTECT(a = coerceVector(CAR(args),REALSXP)); args = CDR(args);
 
     nh = LENGTH(h);
     ns = LENGTH(s);
     nv = LENGTH(v);
-    ng = LENGTH(gm);
     na = LENGTH(a);
-    if (nh <= 0 || ns <= 0 || nv <= 0 || ng <= 0 || na <= 0) {
-	UNPROTECT(5);
+    if (nh <= 0 || ns <= 0 || nv <= 0 || na <= 0) {
+	UNPROTECT(4);
 	return(allocVector(STRSXP, 0));
     }
     max = nh;
     if (max < ns) max = ns;
     if (max < nv) max = nv;
-    if (max < ng) max = ng;
     if (max < na) max = na;
     PROTECT(c = allocVector(STRSXP, max));
     if(max == 0) return(c);
@@ -127,7 +124,6 @@ SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	hh = REAL(h)[i % nh];
 	ss = REAL(s)[i % ns];
 	vv = REAL(v)[i % nv];
-	gg = REAL(gm)[i % ng];
 	aa = REAL(a)[i % na];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1 ||
 	    aa < 0 || aa > 1)
@@ -138,7 +134,7 @@ SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 					     ScaleColor(b),
 					     ScaleAlpha(aa))));
     }
-    UNPROTECT(6);
+    UNPROTECT(5);
     return c;
 }
 
