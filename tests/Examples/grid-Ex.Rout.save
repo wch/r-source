@@ -1,7 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-12-31 r53893)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.14.0 Under development (unstable) (2011-03-16 r54820)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1333,6 +1334,87 @@ List of 6
 > 
 > 
 > cleanEx()
+> nameEx("showGrob")
+> ### * showGrob
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: showGrob
+> ### Title: Label grid grobs.
+> ### Aliases: showGrob
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+>     grid.newpage()
+>     gt <- gTree(childrenvp=vpStack(
++                   viewport(x=0, width=.5, just="left", name="vp"),
++                   viewport(y=.5, height=.5, just="bottom", name="vp2")),
++                 children=gList(rectGrob(vp="vp::vp2", name="child")),
++                 name="parent")
+>     grid.draw(gt)
+>     showGrob()
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(gPath="child")
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(recurse=FALSE)
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(depth=1)
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(depth=2)
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(depth=1:2)
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(gt)
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(gt, gPath="child")
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+>     showGrob(just="left", gp=gpar(col="red", cex=.5), rot=45)
+>     showGrob(labelfun=function(grob, ...) {
++         x <- grobX(grob, "west")
++         y <- grobY(grob, "north")
++         gTree(children=gList(rectGrob(x=x, y=y,
++                 width=stringWidth(grob$name) + unit(2, "mm"),
++                 height=stringHeight(grob$name) + unit(2, "mm"),
++                 gp=gpar(col=NA, fill=rgb(1, 0, 0, .5)),
++                 just=c("left", "top")),
++                 textGrob(grob$name,
++                          x=x + unit(1, "mm"), y=y - unit(1, "mm"),
++                          just=c("left", "top"))))
++     })
+Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
+  semi-transparency is not supported on this device: reported only once per page
+> 
+> ## Not run: 
+> ##D     # Examples from higher-level packages
+> ##D 
+> ##D     library(lattice)
+> ##D     # Ctrl-c after first example
+> ##D     example(histogram)
+> ##D     showGrob()
+> ##D     showGrob(gPath="plot_01.ylab")
+> ##D     
+> ##D     library(ggplot2)
+> ##D     # Ctrl-c after first example
+> ##D     example(qplot)
+> ##D     showGrob()
+> ##D     showGrob(recurse=FALSE)
+> ##D     showGrob(gPath="panel-3-3")
+> ##D     showGrob(gPath="axis.title", grep=TRUE)
+> ##D     showGrob(depth=2)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("showViewport")
 > ### * showViewport
 > 
@@ -1346,8 +1428,6 @@ List of 6
 > ### ** Examples
 > 
 > showViewport(viewport(width=.5, height=.5))
-Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJust(x$just,  :
-  semi-transparency is not supported on this device: reported only once per page
 > 
 > showViewport(vpStack(viewport(width=.5, height=.5),
 +                      viewport(width=.5, height=.5)),
@@ -1670,7 +1750,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.838 0.043 3.886 0 0 
+Time elapsed:  2.409 0.025 2.434 0 0 
 > grDevices::dev.off()
 null device 
           1 
