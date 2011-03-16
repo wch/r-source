@@ -65,7 +65,8 @@ export(
        "grid.grab", "grid.grabExpr",
        "grid.cap",
        "setChildren",
-
+       "showGrob",
+       
        # Listing grobs and viewports
        "grid.ls",
        "nestedListing", "pathListing", "grobPathListing",
@@ -311,6 +312,8 @@ S3method("drawVP", "viewport")
 S3method("drawVP", "vpList")
 S3method("drawVP", "vpStack")
 S3method("drawVP", "vpTree")
+S3method("labelGrob", "grob")
+S3method("labelGrob", "gTree")
 S3method("leafPaths", "viewport")
 S3method("leafPaths", "vpList")
 S3method("leafPaths", "vpStack")

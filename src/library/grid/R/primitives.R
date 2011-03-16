@@ -314,10 +314,18 @@ drawDetails.segments <- function(x, recording=TRUE) {
   grid.Call.graphics("L_segments", x$x0, x$y0, x$x1, x$y1, x$arrow)
 }
 
+segmentBounds <- function(x, theta) {
+    n <- max(length(x$x0), length(x$x1),
+             length(x$y0), length(x$y1))
+    x0 <- rep(x$x0, length.out=n)
+    x1 <- rep(x$x1, length.out=n)
+    y0 <- rep(x$y0, length.out=n)
+    y1 <- rep(x$y1, length.out=n)
+    grid.Call("L_locnBounds", unit.c(x0, x1), unit.c(y0, y1), theta)
+}
+  
 xDetails.segments <- function(x, theta) {
-    bounds <- grid.Call("L_locnBounds",
-                        unit.c(x$x0, x$x1),
-                        unit.c(x$y0, x$y1), theta)
+    bounds <- segmentBounds(x, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -325,9 +333,7 @@ xDetails.segments <- function(x, theta) {
 }
 
 yDetails.segments <- function(x, theta) {
-    bounds <- grid.Call("L_locnBounds",
-                        unit.c(x$x0, x$x1),
-                        unit.c(x$y0, x$y1), theta)
+    bounds <- segmentBounds(x, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -335,23 +341,19 @@ yDetails.segments <- function(x, theta) {
 }
 
 widthDetails.segments <- function(x) {
-  bounds <- grid.Call("L_locnBounds",
-                      unit.c(x$x0, x$x1),
-                      unit.c(x$y0, x$y1), 0)
-  if (is.null(bounds))
-    unit(0, "inches")
-  else
-    unit(bounds[3L], "inches")
+    bounds <- segmentBounds(x, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[3L], "inches")
 }
 
 heightDetails.segments <- function(x) {
-  bounds <- grid.Call("L_locnBounds",
-                      unit.c(x$x0, x$x1),
-                      unit.c(x$y0, x$y1), 0)
-  if (is.null(bounds))
-    unit(0, "inches")
-  else
-    unit(bounds[4L], "inches")
+    bounds <- segmentBounds(x, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[4L], "inches")
 }
 
 segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),

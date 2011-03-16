@@ -3,6 +3,14 @@ Changes from grid_2.12.0 to grid_2.13.0:
 
 1.  Added grid.function() for drawing lines to represent functions.
 
+2.  Fixed bug in calculation of x, y, width, and height of segments
+    grobs.
+
+3.  Fixed bug in grid.grab(wrap=TRUE) when the scene includes 
+    downViewport()s.
+
+4.  Added showGrob() function.
+
 
 Changes from grid_2.11.0 to grid_2.12.0:
 --------------------------------------
