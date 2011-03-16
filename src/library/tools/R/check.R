@@ -2027,8 +2027,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     ## It also depends on the total being last.
     check_install_sizes <- function()
     {
+        ## if we used a log, the installation need not still exist.
+        pd <- file.path(libdir, pkgname)
+        if (!dir.exists(pd)) return()
         checkingLog(Log, "installed package size")
-        owd <- setwd(file.path(libdir, pkgname))
+        owd <- setwd(pd)
         res <- system2("du", "-k", TRUE, TRUE)
         sizes <- as.integer(sub("\\D.*", "", res))
         dirs <- sub("^\\d*\\s*", "", res)
@@ -2767,7 +2770,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 function(x)
     paste("  ", x, sep = "", collapse = "\n")
 
-    ## Hard-wire indent of 2 for now.          
+    ## Hard-wire indent of 2 for now.
 
 ### Local variables:
 ### mode: R
