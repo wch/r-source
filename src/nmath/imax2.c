@@ -32,9 +32,3 @@ int imax2(int x, int y)
 {
     return (x < y) ? y : x;
 }
-
-/* force to be pulled in */
-double pythag(double a, double b)
-{
-    return hypot(a, b);
-}

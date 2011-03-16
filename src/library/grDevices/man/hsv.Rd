@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/hsv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{hsv}
@@ -11,14 +11,13 @@
   value.
 }
 \usage{
-hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
+hsv(h = 1, s = 1, v = 1, alpha)
 }
 \arguments{
   \item{h,s,v}{numeric vectors of values in the range \code{[0, 1]} for
     \sQuote{hue}, \sQuote{saturation} and \sQuote{value} to be combined
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
-  \item{gamma}{a gamma-correction exponent, \eqn{\gamma}. Deprecated.}
   \item{alpha}{numeric vector of values in the range \code{[0, 1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
@@ -31,12 +30,6 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   given values in HSV space.  The values returned by \code{hsv} can be
   used with a \code{col=} specification in graphics functions or in
   \code{par}.
-}
-\section{Gamma correction}{
-  The \code{gamma} argument is deprecated and has no effect.
-
-  An HSV colorspace is relative to an RGB colorspace, which in R
-  is sRGB, which has an implicit gamma correction.
 }
 \seealso{
   \code{\link{hcl}} for a perceptually based version of \code{hsv()},

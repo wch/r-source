@@ -669,13 +669,6 @@ get_exclude_patterns <- function()
             resave_data <- "no"
         } else if (substr(a, 1, 14) == "--resave-data=") {
             resave_data <- substr(a, 15, 1000)
-        } else if (WINDOWS && a == "--auto-zip") {
-            warning("use of '--auto-zip' is defunct")
-        } else if (a == "--use-zip-data") {
-            warning("use of '--use-zip-data' is defunct")
-        } else if (a == "--no-docs") {
-            warning("use of '--no-docs' is deprecated: use '--install-args' instead")
-            INSTALL_opts <- c(INSTALL_opts, "--no-docs")
         } else if (a == "--no-manual") {
             manual <- FALSE
         } else if (a == "--compact-vignettes") {

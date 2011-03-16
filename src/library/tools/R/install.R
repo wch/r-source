@@ -1100,10 +1100,6 @@
             fake <- TRUE
         } else if (a == "--no-lock") {
             lock <- pkglock <- FALSE
-        } else if (a == "--unsafe") {
-            warning("--unsafe is deprecated: use --no-lock instead",
-                    call. = FALSE, immediate. = TRUE, domain = NA)
-            lock <- pkglock <- FALSE
         } else if (a == "--lock") {
             lock <- TRUE; pkglock <- FALSE
         } else if (a == "--pkglock") {

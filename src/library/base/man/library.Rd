@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -28,7 +28,7 @@ library(package, help, pos = 2, lib.loc = NULL,
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        character.only = FALSE, save = FALSE)
+        character.only = FALSE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -72,7 +72,6 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed, and most often, no errors/warnings are
     printed if package loading fails.}
-  \item{save}{For back-compatibility: only \code{FALSE} is allowed.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}

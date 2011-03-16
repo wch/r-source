@@ -5,6 +5,31 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.0}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+    }
+  }
+  
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{require()} no longer has a \code{save} argument.
+
+      \item The \code{gamma} argument to \code{hsv()},
+      \code{rainbow()}, and \code{rgb2hsv()} has been removed.
+
+      \item The \option{--no-docs} option for
+      \command{R CMD build --binary} is defnct: use
+      \option{--install-args} instead.
+
+      \item The option \option{--unsafe} to \command{R CMD INSTALL} is
+      defunct: use the identical option \option{--no-lock} instead.
+
+      \item The entry point \code{pythag} in \file{Rmath.h} is defunct:
+      use instead the C99 function \code{hypot}.
+    }
+}
+
+\section{CHANGES IN R VERSION 2.13.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{replicate()} (by default) and \code{vapply()} (always)
@@ -606,7 +631,6 @@
       \item Direct access to the \code{"source"} attribute of functions
       is deprecated; use \code{deparse(fn, control="useSource")} to access
       it, and \code{removeSource(fn)} to remove it.
-      
     }
   }
 

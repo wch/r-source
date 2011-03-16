@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/palettes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Palettes}
@@ -14,8 +14,7 @@
   Create a vector of \code{n} contiguous colors.
 }
 \usage{
-rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n,
-        gamma = 1, alpha = 1)
+rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, alpha = 1)
 heat.colors(n, alpha = 1)
 terrain.colors(n, alpha = 1)
 topo.colors(n, alpha = 1)
@@ -29,8 +28,6 @@ cm.colors(n, alpha = 1)
   \item{start}{the (corrected) hue in [0,1] at which the rainbow
     begins.}
   \item{end}{the (corrected) hue in [0,1] at which the rainbow ends.}
-  \item{gamma}{the gamma correction, see argument \code{gamma} in
-    \code{\link{hsv}}. Deprecated.}
   \item{alpha}{the alpha transparency, a number in [0,1], see argument
     \code{alpha} in \code{\link{hsv}}.}
 }
