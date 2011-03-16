@@ -7,6 +7,7 @@
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{NEW FEATURES}{
     \itemize{
+      \item dummy
     }
   }
   
