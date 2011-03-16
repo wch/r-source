@@ -110,7 +110,7 @@ rainbow <-
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
 	hsv(h = seq.int(start, ifelse(start > end, 1, 0) + end,
-                        length.out = n) %% 1, s, v, gamma, alpha)
+                        length.out = n) %% 1, s, v, alpha)
     } else character()
 }
 
