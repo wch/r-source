@@ -27,6 +27,7 @@
       \item The entry point \code{pythag} in \file{Rmath.h} is defunct:
       use instead the C99 function \code{hypot}.
     }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.13.0}{
