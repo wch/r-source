@@ -567,8 +567,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} (but not e.g.@: Solaris 8's
-@command{make}).
+at least with @acronym{GNU} @command{make} (and current Solaris and
+FreeBSD @command{make}, but not some older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -2765,10 +2765,10 @@ to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{http://site.icu-project.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
-Linux distributions, Solaris 9/10, AIX and Windows, usually as
-@code{libicu} or @code{icu4c}.  It will be used by default where
-available (including on Mac OS X >= 10.4): should a broken version of
-ICU be found this can be suppressed by @option{--without-ICU}.
+Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
+or @code{icu4c}.  It will be used by default where available (including
+on Mac OS X >= 10.4): should a broken version of ICU be found this can
+be suppressed by @option{--without-ICU}.
 
 @c The Perl scripts left are
 @c tools: help2man.pl install-info.pl
@@ -4093,19 +4093,20 @@ LIBS=-L/usr/X11/lib
 there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
 for @R{} are available from @uref{http://www.sunfreeware.com/} for both
-32-bit architectures, but recently have often been several versions old.
+32-bit architectures, but recently have often been several versions
+old.@footnote{For example, 2.11.1 at the time of release of 2.13.0.}
 (Recent Sun machines are AMD Opterons or Intel Xeons (@cputype{amd64})
 rather than @cputype{x86}, but 32-bit @cputype{x86} executables are the
 default.)
 
-There are also reports of success on OpenSolaris (also known as Solaris
+There were also reports of success on OpenSolaris (also known as Solaris
 Express Community Edition, and dropped in August 2010) on @cputype{x86}.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
-path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
-(if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
+path.  A version of the preferred @acronym{GNU} @command{tar} is (if
+installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.  It may be necessary to avoid the tools in
 @file{/usr/ucb}: in particular @file{/usr/ucb/tr} has caused problems in
 the past.  POSIX-compliant versions of some tools can be found in
@@ -4119,8 +4120,9 @@ You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
 
 The native @command{make} suffices to build @R{} but a small number of
-rogue packages require @acronym{GNU} @command{make} (many without
-declaring it as @samp{SystemRequirements} in the @file{DESCRIPTION} file).
+packages require @acronym{GNU} @command{make} (most without good reason
+and without declaring it as @samp{SystemRequirements} in the
+@file{DESCRIPTION} file).
 
 Some people have reported that the Solaris @code{libintl} needs to be
 avoided, for example by using @option{--disable-nls} or
@@ -4157,10 +4159,27 @@ With Solaris Studio 12.2 on Sparc, @code{FCLIBS} needs to be
 @example
 FCLIBS="-lfai -lfai2 -lfsu"
 @end example
+
+@noindent
 (and possibly other Fortran libraries, but this suffices for the
 packages currently on CRAN).
 
-@noindent
+Currently @cputype{amd64} and @cputype{sparcv9} builds work
+out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2:
+@file{libRblas.so} and @file{lapack.so} are generated with code that
+causes relocation errors (which is being linked from the Fortran
+libraries).  The trick seems to be manually set @code{FLIBS}, for
+example to
+
+@example
+FLIBS = -R/opt/solstudio12.2/lib/amd64 -lfai -lfui \
+  /opt/solstudio12.2/lib/amd64/libfsu.so -lsunquad -lsunmath -lmtsk -lm
+
+FLIBS = -R/opt/solstudio12.2/prod/lib/sparc/64 -lifai -lsunimath -lfai -lfai2 \
+ -lfsumai -lfprodai -lfminlai -lfmaxlai -lfminvai -lfmaxvai -lfui \
+ -lsunmath -lmtsk /opt/solstudio12.2/prod/lib/sparc/64/libfsu.so.1
+@end example
+
 
 By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
@@ -4200,7 +4219,7 @@ modern of the options: the default (but still needed to be specified as
 it is needed for linking) is @samp{Cstd} which dates from 1998: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
-built with @samp{Cstd} and so an @R{} package using such a package also
+built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the flag @option{-library=stlport4,Crun} is
 needed.
 
@@ -4272,9 +4291,9 @@ and @command{gcc}@tie{}3.4.6 from OpenCSW.} for @cputype{x86} and
 @cputype{amd64} have been less successful.
 
 @cputype{x86} builds have built successfully but failed or gave
-incorrect results on various tests, unless built without any
-optimization in @code{CFLAGS}: the issue seems to be that @command{gcc}
-and the system libraries differ over the use of SSE registers.
+incorrect results on various tests unless built without any optimization
+in @code{CFLAGS}: the issue seems to be that @command{gcc} and the
+system libraries differ over the use of SSE registers.
 
 For @cputype{amd64} the builds have failed to complete in
 several different ways, most recently with relocation errors for
