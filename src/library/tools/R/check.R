@@ -1579,6 +1579,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!dir.exists(vignette_dir) ||
             !length(vf <- list_files_with_type(vignette_dir, "vignette")))
             return()
+        if(do_install && !is_base_pkg) {
+            checkingLog(Log, "for unstated dependencies in vignettes")
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n", pkgname))
+            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                noteLog(Log)
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
+        }
 
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE

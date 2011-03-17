@@ -166,6 +166,7 @@
                 dir.exists(lp <- file.path(lockdir, curPkg))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
+                    ## FIXME: this does not preserve dates
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     unlink(lp, recursive = TRUE)
                 } else system(paste("mv", lp, pkgdir))

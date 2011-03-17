@@ -810,7 +810,7 @@ function(dir)
 {
     res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
     if (inherits(res, "try-error") || !res)
-        stop("loading failed")
+        stop("loading failed", call. = FALSE)
 }
 
 
