@@ -1,3 +1,19 @@
+#  File src/library/tools/R/citation.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
 ## Tools for computing on CITATION info.
 
 .parse_CITATION_file <-
@@ -5,7 +21,7 @@ function(cfile, encoding = NULL)
 {
     if(is.null(encoding))
         encoding <- "ASCII"
-    
+
     ## The parser can only read valid strings, but single-byte locales
     ## can mark their encoding.  The following allows latin1 and UTF-8
     ## citation files to be read in UTF-8 and any single-byte locale
@@ -61,7 +77,7 @@ function(file, encoding = "ASCII")
                               all(grepl("^[[:space:]]*$", e)))
                         })]
     }
-    
+
     out <- lapply(exprs,
            function(e) {
                nm <- as.character(e[[1L]])

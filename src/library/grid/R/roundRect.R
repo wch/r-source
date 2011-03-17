@@ -1,9 +1,25 @@
+#  File src/library/grid/R/roundrect.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
 
 # Good idea to choose r as absolute unit or "snpc"
 roundrectGrob <- function(x=0.5, y=0.5, width=1, height=1,
                           default.units="npc",
                           r=unit(0.1, "snpc"),
-                          just="centre", 
+                          just="centre",
                           name=NULL, gp=NULL, vp=NULL) {
     if (!is.unit(x))
         x <- unit(x, default.units)
