@@ -4291,7 +4291,7 @@ function(db, files)
             tryCatch(parse(file = f, n = -1L),
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
-                                   file,
+                                   if(inherits(f, "connection")) summary(f)$description else f,
                                    .massage_file_parse_error_message(conditionMessage(e))),
                           domain = NA, call. = FALSE))
 
@@ -4320,8 +4320,7 @@ function(package, dir, lib.loc = NULL)
         ## Using sources from directory @code{dir} ...
         ## FIXME: not yet supported by .createExdotR.
         if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA)
+            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         dfile <- file.path(dir, "DESCRIPTION")
@@ -4351,8 +4350,7 @@ function(dir, lib.loc = NULL)
     ## Argument handling.
     ## Using sources from directory @code{dir} ...
     if(!file_test("-d", dir))
-        stop(gettextf("directory '%s' does not exist", dir),
-             domain = NA)
+        stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else
         dir <- file_path_as_absolute(dir)
     dfile <- file.path(dir, "DESCRIPTION")
@@ -4383,10 +4381,8 @@ function(package, dir, lib.loc = NULL)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
-        ## FIXME: not yet supported by .createExdotR.
         if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA)
+            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         dfile <- file.path(dir, "DESCRIPTION")
