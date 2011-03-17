@@ -4286,17 +4286,16 @@ function(db, files)
         }
     }
 
-    for (f in files) {
-        exprs <-
-            tryCatch(parse(file = f, n = -1L),
-                     error = function(e)
-                     stop(gettextf("parse error in file '%s':\n%s",
-                                   if(inherits(f, "connection")) summary(f)$description else f,
-                                   .massage_file_parse_error_message(conditionMessage(e))),
-                          domain = NA, call. = FALSE))
-
-        for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
-    }
+    for (f in files)
+        tryCatch({
+            exprs <- parse(file = f, n = -1L)
+            for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+        },
+                 error = function(e)
+                 warning(gettextf("parse error in file '%s':\n%s",
+                                  if(inherits(f, "connection")) summary(f)$description else f,
+                                  .massage_file_parse_error_message(conditionMessage(e))),
+                         domain = NA, call. = FALSE))
 
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
