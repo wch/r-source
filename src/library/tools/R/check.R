@@ -1579,7 +1579,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!dir.exists(vignette_dir) ||
             !length(vf <- list_files_with_type(vignette_dir, "vignette")))
             return()
-        if(do_install && !is_base_pkg) {
+        ## we could also use the sources via dir=<foo>
+        if(do_install && !is_base_pkg && !extra_arch) {
             checkingLog(Log, "for unstated dependencies in vignettes")
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n", pkgname))
