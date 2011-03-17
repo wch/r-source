@@ -633,7 +633,9 @@ AM_CONDITIONAL(CROSS_COMPILING, [test "${cross_compiling}" = yes])
 ## Should be needed for tests using AC_RUN_IFELSE()?
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
+## OTOH, R_LD_LIBRARY_PATH in the environment is meant to be the final version.
 R_LD_LIBRARY_PATH_save=${R_LD_LIBRARY_PATH}
+R_LD_LIBRARY_PATH=
 case "${host_os}" in
   darwin*)
     ## Darwin provides a full path in the ID of each library such 
