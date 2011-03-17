@@ -4167,24 +4167,32 @@ packages currently on CRAN).
 Currently @cputype{amd64} and @cputype{sparcv9} builds work
 out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2:
 @file{libRblas.so} and @file{lapack.so} are generated with code that
-causes relocation errors (which is being linked from the Fortran
-libraries).  The trick seems to be manually set @code{FLIBS}, for
-example to
+causes relocation errors (which is being linked in from the Fortran
+libraries).  This means that building @R{} as a shared library may be
+impossible with Solaris Studio 12.2.  The trick seems to be manually set
+@code{FLIBS}.  For example, on @cputype{amd64}, set in @file{Makeconf}
 
 @example
-FLIBS = -R/opt/solstudio12.2/lib/amd64 -lfai -lfui \
-  /opt/solstudio12.2/lib/amd64/libfsu.so -lsunquad -lsunmath -lmtsk -lm
+FLIBS_IN_SO = -R/opt/solstudio12.2/lib/amd64 \
+  /opt/solstudio12.2/lib/amd64/libfsu.so
+@end example
 
+@noindent
+and set @code{FLIBS} in @file{etc/Makeconf} to the same value.
+
+For 64-bit Sparc, use something like
+@example
 FLIBS = -R/opt/solstudio12.2/prod/lib/sparc/64 -lifai -lsunimath -lfai -lfai2 \
  -lfsumai -lfprodai -lfminlai -lfmaxlai -lfminvai -lfmaxvai -lfui \
  -lsunmath -lmtsk /opt/solstudio12.2/prod/lib/sparc/64/libfsu.so.1
 @end example
 
+@noindent
+in @file{Makeconf} and @file{etc/Makefconf}.
 
 By default the Solaris Studio compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
-@code{log}: use @option{-xlibmieee} to ensure this.  Also, errors have
-been reported on @cputype{amd64} if @option{-xc99} is omitted.
+@code{log}: use @option{-xlibmieee} to ensure this.
 
 You can target specific Sparc architectures for (slightly) higher
 performance: Oracle recommend
@@ -4196,7 +4204,8 @@ performance: Oracle recommend
 
 @noindent
 (in @code{CFLAGS} etc.) as a good compromise for recent Sparc chipsets.
-Using @code{-libmil} allows more system mathematical functions to be inlined.
+Using @code{-libmil} in @code{CFLAGS} allows more system mathematical
+functions to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
