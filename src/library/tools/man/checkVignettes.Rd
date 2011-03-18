@@ -32,9 +32,9 @@ checkVignettes(package, dir, lib.loc = NULL,
     search for \code{package}.}
   \item{tangle}{Perform a tangle and \code{\link{source}} the extracted code?}
   \item{weave}{Perform a weave?}
-  \item{latex}{logical: if \code{tangle}, \code{weave} and \code{latex}
+  \item{latex}{logical: if \code{weave} and \code{latex}
     are \code{TRUE} and there is no \file{Makefile} in the vignettes
-    directory, run the tangled files through \command{pdflatex}.}
+    directory, run the weaved files through \command{pdflatex}.}
   \item{workdir}{Directory used as working directory while checking the
     vignettes. If \code{"tmp"} then a temporary directory is created,
     this is the default.  If \code{"src"} then the directory containing
@@ -50,19 +50,19 @@ checkVignettes(package, dir, lib.loc = NULL,
   \file{.Stex} (and lower-case versions are also accepted).
 
   If \code{tangle} is true, this function runs \code{\link{Stangle}} to
-  produce (one or more) \R code files from each vignette, then runs each
-  code file in a separate R session.
+  produce (one or more) \R code files from each vignette, then
+  \code{source}s each code file in turn.
 
   If \code{weave} is true, the vignettes are run through
   \code{\link{Sweave}}, which will produce a \file{.tex} file for each
-  vignette.  If \code{tangle} and \code{latex} are also true,
+  vignette.  If \code{latex} is also true,
   \code{\link{texi2dvi}(pdf = TRUE)} is run on the \file{.tex} files
   from those vignettes which did not give errors in the previous steps.
 }
 \value{
   An object of class \code{"checkVignettes"}, which is a list with the
-  error messages found during the weave, tangle, source and latex
-  steps. There is a \code{print} method for nicely displaying the
+  error messages found during the tangle, source, weave and latex
+  steps. There is a \code{print} method for displaying the
   information contained in such objects.
 }
 \keyword{utilities}
