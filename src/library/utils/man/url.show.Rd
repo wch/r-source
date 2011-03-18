@@ -1,6 +1,6 @@
 % File src/library/utils/man/url.show.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{url.show}
@@ -21,6 +21,10 @@ url.show(url, title = url, file = tempfile(),
   \item{delete.file}{Delete the file afterwards?}
   \item{method}{File transfer method: see \code{\link{download.file}}}
   \item{\dots}{Arguments to pass to \code{\link{file.show}}.}
+}
+\note{
+  Since this is for text files, it will convert to CRLF line endings on
+  Windows.
 }
 \seealso{
   \code{\link{url}}, \code{\link{file.show}}, \code{\link{download.file}}
