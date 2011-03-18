@@ -98,6 +98,9 @@
   can be set by the site in \file{Rprofile.site}, which should be
   followed by a call to \code{.libPaths(.libPaths())} to make use of the
   updated value.
+
+  For consistency, the paths are always normalized by
+  \code{\link{normalizePath}(winslash="/")}.
 }
 \value{
   A character vector of file paths.

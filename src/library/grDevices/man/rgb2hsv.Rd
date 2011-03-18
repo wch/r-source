@@ -27,9 +27,12 @@ rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)
     RGB coding as in \code{\link{col2rgb}()}.}
 }
 \details{
- Value (brightness) gives the amount of light in the color.\cr
- Hue describes the dominant wavelength.\cr
- Saturation is the amount of Hue mixed into the color.
+  Value (brightness) gives the amount of light in the color.\cr
+  Hue describes the dominant wavelength.\cr
+  Saturation is the amount of Hue mixed into the color.
+
+  An HSV colorspace is relative to an RGB colorspace, which in \R
+  is sRGB, which has an implicit gamma correction.
 }
 \value{
   A matrix with a column for each color.  The three rows of the matrix
