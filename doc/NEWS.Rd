@@ -4,11 +4,14 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.13.0}{
+\section{CHANGES IN R VERSION 2.14.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{txtProgressBar()} can write to an open connection
       instead of the console.
+
+      \item \code{rstandard.glm} gains a \code{type} argument for optional 
+      standardized Pearson residuals 
     }
   }
   
