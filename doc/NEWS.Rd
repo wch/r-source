@@ -20,14 +20,14 @@
       \code{rainbow()}, and \code{rgb2hsv()} has been removed.
 
       \item The \option{--no-docs} option for
-      \command{R CMD build --binary} is defnct: use
+      \command{R CMD build --binary} is defunct: use
       \option{--install-args} instead.
 
       \item The option \option{--unsafe} to \command{R CMD INSTALL} is
       defunct: use the identical option \option{--no-lock} instead.
 
-      \item The entry point \code{pythag} in \file{Rmath.h} is defunct:
-      use instead the C99 function \code{hypot}.
+      \item The entry point \code{pythag} formerly in \file{Rmath.h} is
+      defunct: use instead the C99 function \code{hypot}.
     }
   }
 }
