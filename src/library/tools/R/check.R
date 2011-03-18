@@ -738,7 +738,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in R code")
             if (do_install) {
-                Rcmd <- paste("options(warn=1)\n",
+                Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
                 out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -750,7 +750,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else {
                 ## this needs to read the package code, and will fail on
                 ## syntax errors such as non-ASCII code.
-                Rcmd <- paste("options(warn=1)\n",
+                Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
                 out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -1091,7 +1091,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## Check undeclared dependencies in examples (if any)
         if (dir.exists("man") && do_install && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in examples")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                           sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -1485,7 +1485,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         if (!extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in tests")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                           sprintf("tools:::.check_packages_used_in_tests(\"%s\")\n", pkgdir))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -1582,7 +1582,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## we could also use the sources via dir=<foo>
         if(do_install && !is_base_pkg && !extra_arch) {
             checkingLog(Log, "for unstated dependencies in vignettes")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                           sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n", pkgname))
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
