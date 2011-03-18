@@ -990,6 +990,10 @@ struct {
     char *name;
     int token;
 }
+
+/* When adding keywords here, make sure all the handlers 
+   are also modified:  checkRd, Rd2HTML, Rd2latex, Rd2txt, any other new ones... */
+   
 static keywords[] = {
     /* These sections contain Latex-like text */
     
