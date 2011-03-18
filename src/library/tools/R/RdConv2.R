@@ -696,6 +696,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if (tag == "\\ifelse")
                        checkContent(block[[3L]])
                },
+               "\\href" = {
+                   if (!identical(RdTags(block[[1L]]), "VERB"))
+                   	stopRd(block, Rdfile, "First argument to \\href must be verbatim URL")
+               	   checkContent(block[[2L]], tag)
+               },
                "\\out" = {
                	   tags <- RdTags(block)
                	   if (!all(tags == "VERB"))

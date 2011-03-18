@@ -41,6 +41,9 @@
       \item Non-ascii characters in the titles of help pages were 
       not rendered properly in some locales, and could cause errors
       or warnings.
+      
+      \item \code{checkRd()} gave a spurious error if the \code{\\href} 
+      macro was used.
     }
   }
 }
