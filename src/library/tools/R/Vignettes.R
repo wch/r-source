@@ -81,7 +81,7 @@ function(package, dir, lib.loc = NULL,
             setwd(startdir)
         }
     }
-    if(tangle && weave && latex) {
+    if(weave && latex) {
         if(!("Makefile" %in% list.files(vigns$dir))) {
             ## <NOTE>
             ## This used to run texi2dvi on *all* vignettes, including
@@ -131,9 +131,9 @@ function(x, ...)
         }
     }
 
-    mycat(x$weave,  "*** Weave Errors ***")
     mycat(x$tangle, "*** Tangle Errors ***")
     mycat(x$source, "*** Source Errors ***")
+    mycat(x$weave,  "*** Weave Errors ***")
     mycat(x$latex,  "*** PDFLaTeX Errors ***")
 
     invisible(x)
@@ -440,6 +440,33 @@ function(vigDeps)
         NA
 }
 
+
+.run_one_vignette <- function(vig_name, docDir)
+{
+    td <- tempfile()
+    dir.create(td)
+    file.copy(docDir, td, recursive = TRUE)
+    od <- setwd(file.path(td, "doc"))
+    file.create('.timestamp')
+    sources_before <- list_files_with_exts('.', c("r", "s", "R", "S"))
+    result <- NULL
+    tryCatch(utils::Stangle(vig_name, quiet = TRUE),
+             error = function(e) result <<- conditionMessage(e))
+    if(length(result)) {
+        cat("  When tangling ", sQuote(vig_name), ":\n", sep="")
+        stop(result, call. = FALSE, domain = NA)
+    }
+    sources <- list_files_with_exts('.', c("r", "s", "R", "S"))
+    s1 <- sources[!file_test("-ot", sources, ".timestamp")]
+    for(ff in  s1) {
+        tryCatch(source(ff, echo = TRUE),
+                  error = function(e) result <<- conditionMessage(e))
+        if(length(result)) {
+            cat("  When sourcing ", sQuote(basename(ff)), ":\n", sep="")
+            stop(result, call. = FALSE, domain = NA)
+        }
+    }
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -1628,6 +1628,33 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
         ## Can we run the code in the vignettes?
         if (do_install && do_vignettes) {
+            ## First extract code from each vignette and run it.
+            vigns <- pkgVignettes(dir = pkgdir)
+            problems <- list()
+            res <- character()
+            for(v in vigns$docs) {
+                Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
+                              basename(v), "','", vignette_dir, "')", sep = "")
+                out <- R_runR(Rcmd,
+                              if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
+                if(length(grep("^Error:", out)))
+                    res <- c(res, "...", utils::tail(out, 10) )
+            }
+            if (R_check_suppress_RandR_message)
+                res <- grep('^Xlib: *extension "RANDR" missing on display', res,
+                            invert = TRUE, value = TRUE)
+            if(length(res)) {
+                any <- TRUE
+                if(length(grep("there is no package called", res))) {
+                    warnLog("Errors in running code in vignettes:")
+                    printLog(Log, paste(c(res, "", ""), collapse = "\n"))
+                } else {
+                    errorLog(Log, "Errors in running code in vignettes:")
+                    printLog(Log, paste(c(res, "", ""), collapse = "\n"))
+                    do_exit(1L)
+                }
+            }
+
             ## copy the inst directory to check directory
             ## so we can work in place.
             dir.create(vd2 <- "inst")
@@ -1645,13 +1672,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                           "checkVignettes(dir = '", pkgoutdir,
                           "', workdir='src'",
                           if (!R_check_weave_vignettes) ", weave = FALSE",
-                          if (R_check_weave_vignettes) ", tangle = FALSE",
+                          ", tangle = FALSE",
                           if (R_check_latex_vignettes) ", latex = TRUE",
                           ")\n", sep = "")
             ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems if set
-            out <- R_runR(Rcmd,
-                          if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
-                          "SWEAVE_STYLEPATH_DEFAULT=FALSE")
+            out <- R_runR(Rcmd, R_opts2, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
             if (R_check_suppress_RandR_message)
                 out <- grep('^Xlib: *extension "RANDR" missing on display', out,
                             invert = TRUE, value = TRUE)

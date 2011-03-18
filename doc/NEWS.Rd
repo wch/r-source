@@ -15,6 +15,18 @@
     }
   }
   
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now extracts and runs the \R code for
+      each vignette in a separate directory and \R process.  Failure to run
+      the code is now a check error unless it is caused by a missing
+      package.
+
+      Option \option{--use-valgrind} now applies only to these runs, and
+      not when running code to rebuild the vignettes.
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{require()} no longer has a \code{save} argument.
