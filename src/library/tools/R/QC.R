@@ -4288,16 +4288,29 @@ function(db, files)
         }
     }
 
-    for (f in files)
+    if (is.character(files)) {
+        for (f in files) {
+            tryCatch({
+                exprs <- parse(file = f, n = -1L)
+                for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+            },
+                     error = function(e)
+                     warning(gettextf("parse error in file '%s':\n%s", f,
+                                      .massage_file_parse_error_message(conditionMessage(e))),
+                             domain = NA, call. = FALSE))
+        }
+    } else {
+        ## called for examples with translation
         tryCatch({
-            exprs <- parse(file = f, n = -1L)
+            exprs <- parse(file = files, n = -1L)
             for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
         },
                  error = function(e)
                  warning(gettextf("parse error in file '%s':\n%s",
-                                  if(inherits(f, "connection")) summary(f)$description else f,
+                                  summary(files)$description,
                                   .massage_file_parse_error_message(conditionMessage(e))),
                          domain = NA, call. = FALSE))
+    }
 
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
