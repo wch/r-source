@@ -862,6 +862,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define PrintValueEnv		Rf_PrintValueEnv
 # define PrintValueRec		Rf_PrintValueRec
 # define PrintVersion		Rf_PrintVersion
+# define PrintVersion_part_1	Rf_PrintVersion_part_1
 # define PrintVersionString    	Rf_PrintVersionString
 # define PrintWarnings		Rf_PrintWarnings
 # define promiseArgs		Rf_promiseArgs
@@ -1055,6 +1056,7 @@ void PrintGreeting(void);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
 void PrintVersion(char *);
+void PrintVersion_part_1(char *);
 void PrintVersionString(char *);
 void PrintWarnings(void);
 void process_site_Renviron(void);
