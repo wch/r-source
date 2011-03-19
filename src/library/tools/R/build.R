@@ -83,6 +83,8 @@ summaryLog <- function(Log)
                          sQuote(Log$filename)))
 }
 
+
+
 ### formerly Perl R::Utils::get_exclude_patterns
 
 ## Return list of file patterns excluded by R CMD build and check.
@@ -151,6 +153,16 @@ get_exclude_patterns <- function()
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
+
+    parse_description_field <- function(desc, field, default=TRUE)
+    {
+        tmp <- desc[field]
+        if (is.na(tmp)) default
+        else switch(tmp,
+                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                    default)
+    }
 
     Usage <- function() {
         cat("Usage: R CMD build [options] pkgdirs",
@@ -251,7 +263,7 @@ get_exclude_patterns <- function()
         }
         if (vignettes && dir.exists(doc_dir) &&
            length(list_files_with_type(doc_dir, "vignette")) &&
-            !file.exists(file.path(doc_dir, ".noBuildVignettes")) ) {
+            parse_description_field(desc, "BuildVignettes", TRUE)) {
             if (!pkgInstalled) {
 		messageLog(Log, "installing the package to re-build vignettes")
 		pkgInstalled <- temp_install_pkg(pkgdir, libdir)

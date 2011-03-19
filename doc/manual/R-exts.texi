@@ -503,10 +503,16 @@ the field's value to @samp{yes} or @samp{true} for lazy-loading and
 also accepted.)  If the package you are writing uses the @pkg{methods}
 package, specify @samp{LazyLoad: yes}.
 
-The @samp{ZipData} field controls whether the automatic
-Windows build will zip up the data directory or no: set this to
-@samp{no} if your package will not work with a zipped data directory.
-(Setting to any other value is deprecated.)
+The @samp{ZipData} field controls whether the automatic Windows build
+will zip up the data directory or no: set this to @samp{no} if your
+package will not work with a zipped data directory.  (Setting to any
+other value is deprecated, and is unused as from @R{} 2.13.0.)
+
+The @samp{BuildVignettes} field can be set to a false value to stop
+@command{R CMD build} from attempting to rebuild the vignettes, as well
+as preventing @command{R CMD check} from testing this.  This will only
+be used exceptionally, for example if the PDFs need large figures which
+are not part of the package sources.
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
@@ -1822,10 +1828,10 @@ Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
-option@footnote{or the package contains a file
-@file{inst/doc/.noBuildVignettes}}, it will attempt to rebuild the
-vignettes (@pxref{Writing package vignettes}) in the package.  To do so
-it installs the current package into a temporary library tree, but any
+option@footnote{or the package's description contains
+@samp{BuildVignettes: FALSE}.}, it will attempt to rebuild the vignettes
+(@pxref{Writing package vignettes}) in the package.  To do so it
+installs the current package into a temporary library tree, but any
 dependent packages need to be installed in an available library tree
 (see the Note: below).
 

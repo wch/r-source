@@ -83,6 +83,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
+
+    parse_description_field <- function(desc, field, default=TRUE)
+    {
+        tmp <- desc[field]
+        if (is.na(tmp)) default
+        else switch(tmp,
+                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                    default)
+    }
+
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
                           is_base_pkg, subdirs, extra_arch)
     {
@@ -168,7 +179,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         ## Check package vignettes.
         setwd(pkgoutdir)
-        run_vignettes()
+        run_vignettes(desc)
 
     } ## end{ check_pkg }
 
@@ -1573,7 +1584,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else resultLog(Log, "SKIPPED")
     }
 
-    run_vignettes <- function()
+    run_vignettes <- function(desc)
     {
         vignette_dir <- file.path(pkgdir, "inst", "doc")
         if (!dir.exists(vignette_dir) ||
@@ -1601,9 +1612,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             bad_vignettes <- vf[!file.exists(pdfs)]
             if(length(bad_vignettes)) {
                 any <- TRUE
-                warnLog("Package vignettes without corresponding PDF:\n")
+                warnLog("Package vignette(s) without corresponding PDF:")
                 printLog(Log,
-                         paste(c("", bad_vignettes, ""), collapse = "\n"))
+                         paste(c(paste("  ", basename(bad_vignettes)), "", ""),
+                               collapse = "\n"))
             }
         }
         ## avoid case-insensitive matching
@@ -1664,7 +1676,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
 
             if (do_rebuild_vignettes &&
-                !file.exists(file.path(vignette_dir, ".noBuildVignettes")) ) {
+                parse_description_field(desc, "BuildVignettes", TRUE)) {
                 checkingLog(Log, "re-building of vignettes")
                 ## copy the inst directory to check directory
                 ## so we can work in place.
