@@ -402,7 +402,7 @@
       
       \item \code{tempfile()} has an extra argument \code{fileext} to
       create a temporary filename with a specified extension.
-      (Suggestion and initial implementation by Dirk Eddelbeuttel.)
+      (Suggestion and initial implementation by Dirk Eddelbuettel.)
     }
   }
 
