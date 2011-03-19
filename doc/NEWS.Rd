@@ -17,15 +17,8 @@
   
   \subsection{UTILITIES}{
     \itemize{
-      \item \command{R CMD check} now extracts and runs the \R code for
-      each vignette in a separate directory and \R process.  Failure to run
-      the code is now a check error unless it is caused by a missing
-      package.  Rather than call \code{tools::checkVignettes()},
-      it calls \code{tool::buildVignettes()} to see if the vignettes can
-      be rebuilt as they would be by \command{R CMD build}.
-      
-      Option \option{--use-valgrind} now applies only to these runs, and
-      not when running code to rebuild the vignettes.
+      \item \command{R CMD check} now gives an error if the \R code in a
+      vignette fails, unless this is caused by a missing package.
     }
   }
   
@@ -520,6 +513,14 @@
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
+      It now extracts and runs the \R code for each vignette in a
+      separate directory and \R process. Rather than call
+      \code{tools::checkVignettes()}, it calls
+      \code{tool::buildVignettes()} to see if the vignettes can be
+      re-built as they would be by \command{R CMD build}.  Option
+      \option{--use-valgrind} now applies only to these runs, and not
+      when running code to rebuild the vignettes.
+      
       The \file{00check.log} file is a more complete record of what is
       output to \file{stdout}: in particular contains more details of
       the tests.
