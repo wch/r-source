@@ -233,7 +233,7 @@
       \code{xpd} specification (allowing clipping to be turned off
       completely).
 
-      \item\code{ nls(algorithm="port")} now shares more code with
+      \item \code{nls(algorithm="port")} now shares more code with
       \code{nlminb()}, and is more consistent with the other
       \code{nls()} algorithms in its return value.
 
@@ -458,8 +458,9 @@
       \option{--keep-empty-dirs} is given (and a few packages do
       deliberately include empty directories).
 
-      If there is  file \file{inst/doc/.noBuildVignettes} in the package
-      sources, re-building the vignettes is skipped.
+      If there is a field \code{BuildVignettes} in the package
+      \file{DESCRIPTION} file with a false value, re-building the
+      vignettes is skipped.
 
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
@@ -475,6 +476,16 @@
       The types of files in the \code{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
+      It now extracts and runs the \R code for each vignette in a
+      separate directory and \R process. Rather than call
+      \code{tools::checkVignettes()}, it calls
+      \code{tool::buildVignettes()} to see if the vignettes can be
+      re-built as they would be by \command{R CMD build}.  Option
+      \option{--use-valgrind} now applies only to these runs, and not
+      when running code to rebuild the vignettes.  This version does a
+      much better job of suppressing output from successful vignette
+      tests.
+      
       The \file{00check.log} file is a more complete record of what is
       output to \file{stdout}: in particular contains more details of
       the tests.
