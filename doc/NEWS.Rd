@@ -441,7 +441,7 @@
       Patterns in \file{.Rbuildignore} are now also matched against all
       directory names (including those of empty directories).
 
-      There is a new option, \option{--compact-vignettes} to try
+      There is a new option, \option{--compact-vignettes}, to try
       reducing the size of PDF files in the \file{inst/doc} directory.
       Currently this tries \command{qpdf}: other options may be used in
       future.
@@ -457,6 +457,9 @@
       Empty directories are now removed unless the option
       \option{--keep-empty-dirs} is given (and a few packages do
       deliberately include empty directories).
+
+      If there is  file \file{inst/doc/.noBuildVignettes} in the package
+      sources, re-building the vignettes is skipped.
 
       \item \command{R CMD check} now also checks for filenames that are
       case-insensitive matches to Windows' reserved file names with
@@ -476,14 +479,14 @@
       output to \file{stdout}: in particular contains more details of
       the tests.
 
+      \command{R CMD check} now check all syntactically valid Rd usage
+      entries, and warns about assignments (unless these give the usage
+      of replacement functions).
+ 
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
       file to \file{inst/doc/Makefile}.
-
-      \item \command{R CMD check} now uses all syntactically valid Rd
-      usage entries, and warns about assignments (unless these give the
-      usage of replacement functions).
-    }
+   }
   }
 
   \subsection{INSTALLATION}{
@@ -554,7 +557,7 @@
       \code{FALSE} (the default).
       
       \item There is a new option \option{--no-clean-on-error} for
-      \command{R CMD INSTALL} retain a partially installed package for
+      \command{R CMD INSTALL} to retain a partially installed package for
       forensic analysis.
     }
   }
@@ -606,7 +609,6 @@
       \item Direct access to the \code{"source"} attribute of functions
       is deprecated; use \code{deparse(fn, control="useSource")} to access
       it, and \code{removeSource(fn)} to remove it.
-      
     }
   }
 
@@ -691,8 +693,8 @@
       \item A change to the C function \samp{R_tryEval} had broken error
       messages in S4 method selection; the error message is now printed.
 
-      \item PDF output with non-RGB color model used RGB for the line stroke
-      color.  (\PR{14511})
+      \item PDF output with a non-RGB color model used RGB for the line
+      stroke color.  (\PR{14511})
 
       \item \code{stats4::BIC()} assumed without checking that an object
       of class \code{"logLik"} has an \code{"nobs"} attribute:

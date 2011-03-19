@@ -1822,10 +1822,12 @@ Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
-option, it will attempt to rebuild the vignettes (@pxref{Writing package
-vignettes}) in the package.  To do so it installs the current package
-into a temporary library tree, but any dependent packages need to be
-installed in an available library tree (see the Note: below).
+option@footnote{or the package contains a file
+@file{inst/doc/.noBuildVignettes}}, it will attempt to rebuild the
+vignettes (@pxref{Writing package vignettes}) in the package.  To do so
+it installs the current package into a temporary library tree, but any
+dependent packages need to be installed in an available library tree
+(see the Note: below).
 
 Similarly, if the @file{.Rd} documentation files contain any
 @code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
