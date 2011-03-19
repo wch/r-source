@@ -233,29 +233,36 @@ SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans, pattern, tempdir;
-    const char *tn, *td;
+    SEXP  ans, pattern, fileext, tempdir;
+    const char *tn, *td, *te;
     char *tm;
-    int i, n1, n2, slen;
+    int i, n1, n2, n3, slen;
 
     checkArity(op, args);
-    pattern = CAR(args); n1 = length(pattern);
-    tempdir = CADR(args); n2 = length(tempdir);
+    pattern = CAR(args); n1 = length(pattern); args = CDR(args);
+    tempdir = CAR(args); n2 = length(tempdir); args = CDR(args);
+    fileext = CAR(args); n3 = length(fileext);
     if (!isString(pattern))
 	error(_("invalid filename pattern"));
     if (!isString(tempdir))
 	error(_("invalid '%s' value"), "tempdir");
+    if (!isString(fileext))
+	error(_("invalid file extension"));
     if (n1 < 1)
 	error(_("no 'pattern'"));
     if (n2 < 1)
 	error(_("no 'tempdir'"));
+    if (n3 < 1)
+        error(_("no 'fileext'"));
     slen = (n1 > n2) ? n1 : n2;
+    slen = (n3 > slen) ? n3 : slen;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
 	tn = translateChar( STRING_ELT( pattern , i%n1 ) );
 	td = translateChar( STRING_ELT( tempdir , i%n2 ) );
+	te = translateChar( STRING_ELT( fileext , i%n3 ) );
 	/* try to get a new file name */
-	tm = R_tmpnam(tn, td);
+	tm = R_tmpnam2(tn, td, te);
 	SET_STRING_ELT(ans, i, mkChar(tm));
 	if(tm) free(tm);
     }
@@ -1397,7 +1404,12 @@ void attribute_hidden InitTempDir()
 
 char * R_tmpnam(const char * prefix, const char * tempdir)
 {
-    char tm[PATH_MAX], tmp1[PATH_MAX], *res;
+    return R_tmpnam2(prefix, tempdir, "");
+}
+
+char * R_tmpnam2(const char * prefix, const char * tempdir, const char * fileext)
+{
+    char tm[PATH_MAX], *res;
     unsigned int n, done = 0;
 #ifdef Win32
     char filesep[] = "\\";
@@ -1406,14 +1418,23 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 #endif
 
     if(!prefix) prefix = "";	/* NULL */
-    if(strlen(tempdir) >= PATH_MAX) error(_("invalid 'tempdir' in R_tmpnam"));
-    strcpy(tmp1, tempdir);
+    if(!fileext) fileext = "";  /*  "   */
+    
+#if RAND_MAX > 16777215
+#define RAND_WIDTH 8
+#else
+#define RAND_WIDTH 12
+#endif
+    
+    if(strlen(tempdir) + 1 + strlen(prefix) + RAND_WIDTH + strlen(fileext) >= PATH_MAX) 
+    	error(_("temporary name too long"));
+    	
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end.  Need at least 6 hex digits */
 #if RAND_MAX > 16777215
-	sprintf(tm, "%s%s%s%x", tmp1, filesep, prefix, rand());
+	snprintf(tm, PATH_MAX, "%s%s%s%x%s", tempdir, filesep, prefix, rand(), fileext);
 #else
-	sprintf(tm, "%s%s%s%x%x", tmp1, filesep, prefix, rand(), rand());
+	snprintf(tm, PATH_MAX, "%s%s%s%x%x%s", tempdir, filesep, prefix, rand(), rand(), fileext);
 #endif
 	if(!R_FileExists(tm)) {
 	    done = 1;
@@ -1424,7 +1445,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 	error(_("cannot find unused tempfile name"));
     res = (char *) malloc((strlen(tm)+1) * sizeof(char));
     if(!res)
-	error(_("allocation failed in R_tmpnam"));
+	error(_("allocation failed in R_tmpnam2"));
     strcpy(res, tm);
     return res;
 }
