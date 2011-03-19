@@ -15,6 +15,13 @@
     }
   }
   
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Function \code{R_tmpnam2} has been added to the API to allow
+      a temporary filename to include a specified extension.
+    }
+  }
+  
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
@@ -437,6 +444,10 @@
       setting of \code{umask}.  This means that all the \R functions
       which manipulate file/directory permissions by default respect
       \code{umask}, notably \command{R CMD INSTALL}.
+      
+      \item \code{tempfile()} has an extra argument \code{fileext} to
+      create a temporary filename with a specified extension.
+      (Suggestion and initial implementation by Dirk Eddelbeuttel.)
     }
   }
 

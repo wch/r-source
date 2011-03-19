@@ -10038,9 +10038,11 @@ HSV to RGB and back.  Note that all colours must be in [0,1].
 A system-independent interface to produce the name of a temporary
 file is provided as
 
-@deftypefun {char *} R_tmpnam (const char *@var{prefix})
+@deftypefun {char *} R_tmpnam (const char *@var{prefix}, const char *@var{tmpdir})
+@deftypefunx {char *} R_tmpnam2 (const char *@var{prefix}, const char *@var{tmpdir}, const char *@var{fileext})
 Return a pathname for a temporary file with name beginning with
-@var{prefix}.  A @code{NULL} prefix is replaced by @code{""}.
+@var{prefix} and ending with @var{fileext} in directory @var{tmpdir}.
+A @code{NULL} prefix or extension is replaced by @code{""}.
 @end deftypefun
 
 @c ----

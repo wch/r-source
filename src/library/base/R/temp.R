@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-tempfile <- function(pattern = "file", tmpdir = tempdir())
-    .Internal(tempfile(pattern, tmpdir))
+tempfile <- function(pattern = "file", tmpdir = tempdir(), fileext = "")
+    .Internal(tempfile(pattern, tmpdir, fileext))
 
 tempdir <- function() .Internal(tempdir())

@@ -81,6 +81,7 @@ double R_atof(const char *str);
 double R_strtod(const char *c, char **end);
 
 char *R_tmpnam(const char *prefix, const char *tempdir);
+char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
 
 void	hsv2rgb(double h, double s, double v,
 		double *r, double *g, double *b);
