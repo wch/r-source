@@ -186,6 +186,9 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
 
+    ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
+    Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
+
     op <- options(warn = 1) # we run vignettes in this process
     wd <- getwd()
     if (is.null(wd))
@@ -200,7 +203,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     ## FIXME: should this recurse into subdirs?
     origfiles <- list.files(all.files = TRUE)
 
-    ## Note, as from 2.13.0, only this case: R CMD devel already fixed it
+    ## Note, as from 2.13.0, only this case
     have.makefile <- "Makefile" %in% origfiles
 
     file.create(".build.timestamp")
@@ -230,7 +233,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         yy <- system(make)
         if(yy > 0) stop("running 'make' failed")
         ## See if Makefile has a clean: target, and if so run it.
-        if(any(grepl("^clean:", readLines("Makefile", warn = FALSE))))
+        if(clean &&
+           any(grepl("^clean:", readLines("Makefile", warn = FALSE))))
             system(paste(make, "clean"))
     } else {
         ## Badly-written vignettes open a pdf() device on Rplots.pdf and
@@ -440,6 +444,8 @@ function(vigDeps)
         NA
 }
 
+### * .run_one_vignette
+### helper for R CMD check
 
 .run_one_vignette <- function(vig_name, docDir)
 {
@@ -447,22 +453,24 @@ function(vigDeps)
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
     od <- setwd(file.path(td, "doc"))
-    file.create('.timestamp')
     sources_before <- list_files_with_exts('.', c("r", "s", "R", "S"))
+    old <- file.info(sources_before)$mtime
     result <- NULL
     tryCatch(utils::Stangle(vig_name, quiet = TRUE),
              error = function(e) result <<- conditionMessage(e))
     if(length(result)) {
-        cat("  When tangling ", sQuote(vig_name), ":\n", sep="")
+        cat("\n  When tangling ", sQuote(vig_name), ":\n", sep="")
         stop(result, call. = FALSE, domain = NA)
     }
     sources <- list_files_with_exts('.', c("r", "s", "R", "S"))
-    s1 <- sources[!file_test("-ot", sources, ".timestamp")]
-    for(ff in  s1) {
+    existed <- sources %in% sources_before
+    s1 <- sources[!sources %in% sources_before]
+    s2 <- sources_before[file.info(sources_before)$mtime > old]
+    for(ff in  c(s1, s2)) {
         tryCatch(source(ff, echo = TRUE),
                   error = function(e) result <<- conditionMessage(e))
         if(length(result)) {
-            cat("  When sourcing ", sQuote(basename(ff)), ":\n", sep="")
+            cat("\n  When sourcing ", sQuote(basename(ff)), ":\n", sep="")
             stop(result, call. = FALSE, domain = NA)
         }
     }

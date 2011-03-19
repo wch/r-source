@@ -1594,10 +1594,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE
         ## Do PDFs exist for all package vignettes?
-        ## A base source package may not have PDFs to avoid blowing out
-        ## the distribution size.  *Note* that it is assumed that base
-        ## packages can be woven (i.e., that they only contain
-        ## "standard" LaTeX).
+        ## A base source package (grid) may not have PDFs to avoid
+        ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
             pdfs <- sub("\\.[[:alpha:]]+$", ".pdf", vf)
             bad_vignettes <- vf[!file.exists(pdfs)]
@@ -1626,9 +1624,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 warnLog("  Found 'Rscript' in 'inst/doc/Makefile': should be '$(R_HOME)/bin/Rscript'")
             }
         }
-        ## Can we run the code in the vignettes?
+        if (!any) resultLog(Log, "OK")
+
         if (do_install && do_vignettes) {
-            ## First extract code from each vignette and run it.
+            ## Can we run the code in the vignettes?
+            ## Should checking the vignettes assume the system default
+            ## packages, or just base?
+            ## FIXME: should we do this for multiple sub-archs?
+
+            checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
             res <- character()
@@ -1637,8 +1641,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               basename(v), "','", vignette_dir, "')", sep = "")
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
-                if(length(grep("^Error:", out)))
-                    res <- c(res, "...", utils::tail(out, 10) )
+                # cat("\n===============", basename(v), "==============\n"); writeLines(out)
+                if(length(grep("^  When (tangling|sourcing)", out)))
+                    res <- c(res,
+                             paste("when running code in", sQuote(basename(v))),
+                             "  ...",
+                             utils::tail(out, Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10)))
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
@@ -1653,54 +1661,50 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     printLog(Log, paste(c(res, "", ""), collapse = "\n"))
                     do_exit(1L)
                 }
-            }
+            } else resultLog(Log, "OK")
 
-            ## copy the inst directory to check directory
-            ## so we can work in place.
-            dir.create(vd2 <- "inst")
-            if (!dir.exists(vd2)) {
-                errorLog(Log, "unable to create 'inst'")
-                do_exit(1L)
-            }
-            file.copy(vignette_dir, vd2, recursive = TRUE)
-
-            Rcmd <- "options(warn=1)\nlibrary(tools)\n"
-            ## Should checking the vignettes assume the system default
-            ## packages, or just base?
-            ## FIXME: should we do this for multiple sub-archs?
-            Rcmd <- paste(Rcmd,
-                          "checkVignettes(dir = '", pkgoutdir,
-                          "', workdir='src'",
-                          if (!R_check_weave_vignettes) ", weave = FALSE",
-                          ", tangle = FALSE",
-                          if (R_check_latex_vignettes) ", latex = TRUE",
-                          ")\n", sep = "")
-            ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems if set
-            out <- R_runR(Rcmd, R_opts2, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
-            if (R_check_suppress_RandR_message)
-                out <- grep('^Xlib: *extension "RANDR" missing on display', out,
-                            invert = TRUE, value = TRUE)
-            ## Vignette could redefine the prompt, e.g. to 'R>' ...
-            out <- grep("^[[:alnum:]]*[>]", out,
-                        invert = TRUE, value = TRUE)
-            ## Or to "empty".  As empty lines in the output will most
-            ## likely not indicate a problem ...
-            out <- grep("^[[:space:]]*$", out,
-                        invert = TRUE, value = TRUE)
-            if (length(out)) {
-                if (any(grepl("^\\*\\*\\* (Tangle|Weave|Source) Errors \\*\\*\\*$", out))) {
-                    if (!any) warnLog()
-                } else {
-                    if (!any) noteLog(Log)
+            if (do_rebuild_vignettes &&
+                !file.exists(file.path(vignette_dir, ".noBuildVignettes")) ) {
+                checkingLog(Log, "re-building of vignettes")
+                ## copy the inst directory to check directory
+                ## so we can work in place.
+                dir.create(vd2 <- "inst")
+                if (!dir.exists(vd2)) {
+                    errorLog(Log, "unable to create 'inst'")
+                    do_exit(1L)
                 }
-                any <- TRUE
-                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                file.copy(vignette_dir, vd2, recursive = TRUE)
+
+                ## since so many people use 'R CMD' in Makefiles,
+                oPATH <- Sys.getenv("PATH")
+                Sys.setenv(PATH = paste(R.home("bin"), oPATH,
+                           sep = .Platform$path.sep))
+                on.exit(Sys.setenv(PATH = oPATH))
+                Rcmd <- "options(warn=1)\nlibrary(tools)\n"
+                Rcmd <- paste(Rcmd,
+                              "buildVignettes(dir = '", pkgoutdir, "')",
+                              sep = "")
+                outfile <- tempfile()
+                status <- R_runR(Rcmd, R_opts2,
+                                 stdout = outfile, stderr = outfile)
+                if (status) {
+                    noteLog(Log)
+                    out <- readLines(outfile)
+                    ## A reasonable heuristic might be to search for
+                    ## Error: processing vignette
+                    if (R_check_suppress_RandR_message)
+                        out <- grep('^Xlib: *extension "RANDR" missing on display', out,
+                                    invert = TRUE, value = TRUE)
+                    out <- utils::tail(out, 25)
+                    printLog(Log,
+                             paste(c("Error in re-building vignettes:",
+                                     "  ...", out, "", ""), collapse = "\n"))
+                } else resultLog(Log, "OK")
+            } else {
+                checkingLog(Log, "re-building of vignettes")
+                resultLog(Log, "SKIPPED")
             }
-        } else {
-            any <- TRUE
-            resultLog(Log, "SKIPPED")
         }
-        if (!any) resultLog(Log, "OK")
     }
 
     check_pkg_manual <- function(pkgdir, pkgname)
@@ -2316,7 +2320,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
-            "      --no-vignettes    do not check vignettes in Sweave format",
+            "      --no-vignettes    do not check Sweave vignettes",
+            "      --no-rebuild-vignettes    do not re-build PDFs of vignettes",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -2362,6 +2367,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     do_install <- TRUE; install <- ""
     do_tests <- TRUE
     do_vignettes <- TRUE
+    do_rebuild_vignettes <- TRUE
     do_manual <- TRUE
     use_gct <- FALSE
     use_valgrind <- FALSE
@@ -2414,6 +2420,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             install <- substr(a, 11, 1000)
         } else if (a == "--no-tests") {
             do_tests  <- FALSE
+        } else if (a == "--no-rebuild-vignettes") {
+            do_rebuild_vignettes  <- FALSE
         } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
         } else if (a == "--no-manual") {
@@ -2458,7 +2466,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     if (install == "fake") {
         ## If we fake installation, then we cannot *run* any code.
-        do_examples <- do_tests <- do_vignettes <- 0
+        do_examples <- do_tests <- do_vignettes <- do_rebuild_vignettes <- 0
         spec_install <- TRUE
         multiarch <- FALSE
     }
@@ -2504,10 +2512,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         config_val_to_logical(Sys.getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE"))
     R_check_all_non_ISO_C <-
         config_val_to_logical(Sys.getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE"))
-    R_check_weave_vignettes <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE"))
-    R_check_latex_vignettes <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE"))
     R_check_subdirs_strict <-
         Sys.getenv("_R_CHECK_SUBDIRS_STRICT_", "default")
     R_check_Rd_xrefs <-
@@ -2679,6 +2683,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
         if (!do_tests && !spec_install) opts <- c(opts, "--no-tests")
         if (!do_vignettes && !spec_install) opts <- c(opts, "--no-vignettes")
+        if (!do_rebuild_vignettes && !spec_install)
+            opts <- c(opts, "--no-rebuild-vignettes")
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
         if (length(opts) > 1L)

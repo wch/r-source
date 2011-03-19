@@ -3544,11 +3544,6 @@ Default: false.
 @item _R_CHECK_FORCE_SUGGESTS_
 If true, give an error if suggested packages are not available.
 Default: true.
-@item _R_CHECK_LATEX_VIGNETTES_
-If true (and @code{R_check_weave_vignettes} is also true),
-@command{latex} package vignettes in the process of checking them: this
-will show up @code{Sweave} source errors, including missing source
-files.  Default: true.
 @item _R_CHECK_RD_CONTENTS_
 If true, check @file{Rd} files for auto-generated content which needs editing,
 and missing argument documentation.
@@ -3567,19 +3562,20 @@ Default: false.
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
 @file{src} only if there is no @file{configure} file).
-@item _R_CHECK_USE_INSTALL_LOG_
-If true, record the output from installing a package as part of its
-check to a log file (@file{00install.out} by default), even when running
-interactively.
-Default: true.
-@item _R_CHECK_WEAVE_VIGNETTES_
-If true, weave package vignettes in the process of checking them.
-Default: true.
 @item _R_CHECK_USE_CODETOOLS_
 If true, make use of the @pkg{codetools} package, which provides a
 detailed analysis of visibility of objects (but may give false
 positives).
 Default: true.
+@item _R_CHECK_USE_INSTALL_LOG_
+If true, record the output from installing a package as part of its
+check to a log file (@file{00install.out} by default), even when running
+interactively.
+Default: true.
+@item _R_CHECK_VIGNETTES_NLINES_
+Maximum umber of lines to show of the bottom of the output when reporting
+errors in running vignettes.
+Default: 10.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
 This was off by default in R versions prior to 2.10.0 as it gave false
