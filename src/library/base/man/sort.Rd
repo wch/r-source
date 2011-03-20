@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -98,7 +98,8 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   named \code{x} and \code{ix} containing the sorted numbers and the
   ordering index vector.  In the latter case, if \code{method ==
     "quick"} ties may be reversed in the ordering, unlike
-  \code{sort.list}, as quicksort is not stable.
+  \code{sort.list}, as quicksort is not stable.  NB: the index vector
+  refers to element numbers after \emph{after removal of \code{NA}s}. 
 
   All attributes are removed from the return value (see Becker \emph{et
     al}, 1988, p.146) except names, which are sorted.  (If
