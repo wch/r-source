@@ -1741,7 +1741,7 @@ possible.
 The code in package vignettes (@pxref{Writing package vignettes}) is
 executed, and the vignettes re-made from their sources as a check of
 completeness of the sources (unless there is a @samp{BuildVignettes}
-field in the package's @file{DESCRIPTION} file with a false value.
+field in the package's @file{DESCRIPTION} file with a false value).
 
 @item
 The PDF version of the package's manual is created (to check that the

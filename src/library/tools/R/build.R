@@ -178,15 +178,11 @@ get_exclude_patterns <- function()
             "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
             "  --no-manual           do not build the manual even if \\Sexprs are present",
-            "  --resave-data=        re-save data files as compactly as possible",
+            "  --resave-data=        re-save data files as compactly as possible:",
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
-            "  --compact-vignettes   try to compact PDF files in inst/doc (using qpdf)",
-            "",
-            "  --binary              build pre-compiled binary packages, with option:",
-            "  --install-args=       command-line args to be passed to INSTALL,",
-            "                        separated by spaces",
+            "  --compact-vignettes   try to compact PDF files under inst/doc (using qpdf)",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -621,7 +617,6 @@ get_exclude_patterns <- function()
     force <- FALSE
     keep_empty <- FALSE
     vignettes <- TRUE
-    binary <- FALSE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
     pkgs <- character()
@@ -670,11 +665,6 @@ get_exclude_patterns <- function()
             keep_empty <- TRUE
         } else if (a == "--no-vignettes") {
             vignettes <- FALSE
-        } else if (a == "--binary") {
-            binary <- TRUE
-            message("--binary is deprecated")
-        } else if (substr(a, 1, 15) == "--install-args=") {
-            INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
         } else if (a == "--resave-data") {
             resave_data <- "best"
         } else if (a == "--no-resave-data") {
@@ -690,10 +680,6 @@ get_exclude_patterns <- function()
         } else pkgs <- c(pkgs, a)
         args <- args[-1L]
     }
-    if (!binary && length(INSTALL_opts))
-        message("** Options ",
-                sQuote(paste(INSTALL_opts, collapse=" ")),
-                " are only for '--binary'  and will be ignored")
 
     Sys.unsetenv("R_DEFAULT_PACKAGES")
 
@@ -838,46 +824,25 @@ get_exclude_patterns <- function()
         }
 
         ## Finalize
-        if (binary) {
-            messageLog(Log, "building binary distribution")
-            setwd(startdir)
-            libdir <- tempfile("Rinst")
-            dir.create(libdir, mode = "0755")
-            srcdir <- file.path(Tdir, pkgname)
-            cmd <- if (WINDOWS)
-                paste(shQuote(file.path(R.home("bin"), "Rcmd.exe")),
-                      "INSTALL -l", shQuote(libdir),
-                      "--build", paste(INSTALL_opts, collapse = " "),
-                      shQuote(pkgdir))
-            else
-                 paste(shQuote(file.path(R.home("bin"), "R")),
-                       "CMD INSTALL -l", shQuote(libdir),
-                      "--build", paste(INSTALL_opts, collapse = " "),
-                       shQuote(pkgdir))
-            if (system(cmd)) {
-                errorLog(Log, "Installation failed")
-                do_exit(1)
-            }
-        } else {
-            filename <- paste(pkgname, "_", desc["Version"], ".tar.gz", sep="")
-            filepath <- file.path(startdir, filename)
-            ## NB: naughty reg-packages.R relies on this exact format!
-            messageLog(Log, "building ", sQuote(filename))
-            ## This should be set on a Unix-alike, but might get set to ""
-            TAR <- Sys.getenv("TAR")
-            if(!nzchar(TAR)) {
-                ## The tar.exe in Rtools has --force-local by default,
-                ## but this enables people to use Cygwin or MSYS tar.
-                TAR <- if (WINDOWS) "tar --force-local" else "internal"
-            }
-            res <- utils::tar(filepath, pkgname, compression = "gzip",
-                              compression_level = 9, tar = TAR)
-            if (res) {
-                errorLog(Log, "packaging into .tar.gz failed")
-                do_exit(1L)
-            }
-            message("") # blank line
+        filename <- paste(pkgname, "_", desc["Version"], ".tar.gz", sep="")
+        filepath <- file.path(startdir, filename)
+        ## NB: naughty reg-packages.R relies on this exact format!
+        messageLog(Log, "building ", sQuote(filename))
+        ## This should be set on a Unix-alike, but might get set to ""
+        TAR <- Sys.getenv("TAR")
+        if(!nzchar(TAR)) {
+            ## The tar.exe in Rtools has --force-local by default,
+            ## but this enables people to use Cygwin or MSYS tar.
+            TAR <- if (WINDOWS) "tar --force-local" else "internal"
         }
+        res <- utils::tar(filepath, pkgname, compression = "gzip",
+                          compression_level = 9, tar = TAR)
+        if (res) {
+            errorLog(Log, "packaging into .tar.gz failed")
+            do_exit(1L)
+        }
+        message("") # blank line
+
         setwd(startdir)
         unlink(Tdir, recursive = TRUE)
         on.exit() # cancel closeLog
