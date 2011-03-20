@@ -23,10 +23,10 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE,
     be coerced by \code{charToRaw} to a raw vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{offset}{An integer pecifying the offset from
+  \item{offset}{An integer specifying the offset from
     which the search should start.  Must be positive.  The beginning of
     line is defined to be at that offset so \code{"^"} will match there.}
-  \item{value}{logical.  Determines the retutn value: see \sQuote{Value}.}
+  \item{value}{logical.  Determines the return value: see \sQuote{Value}.}
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a pattern to be
     matched as is.}
   \item{all}{logical.  If \code{TRUE} all matches are returned,
