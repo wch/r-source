@@ -297,7 +297,7 @@ One of the ``standard'' short specifications
 @example
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-1.0 Artistic-2.0
 @end example
-as made available @emph{via} @uref{http:/www.r-project.org/@/Licenses/} and
+as made available @emph{via} @uref{http://www.r-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
 @item
@@ -323,7 +323,8 @@ to a file named @file{LICENSE} or @file{LICENCE} in the package (source
 and installation) top-level directory.
 @item
 The string @samp{Unlimited}, meaning that there are no restrictions on
-distribution or use other than those imposed by relevant laws.
+distribution or use other than those imposed by relevant laws (including
+copyright laws).
 @end itemize
 If a package license @emph{extends} a base FOSS license (e.g., using
 GPL-3 or AGPL-3 with an attribution clause), the extension should be
@@ -339,7 +340,8 @@ License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
 License: Artistic-1.0 | AGPL-3 + file LICENSE
 @end example
-Please note in particular that ``Public domain'' is not a valid license.
+Please note in particular that ``Public domain'' is not a valid license,
+since it is not recognized in some jurisdictions.
 
 It is very important that you include this license information!
 Otherwise, it may not even be legally correct for others to distribute
@@ -351,13 +353,12 @@ Please ensure that the license you choose also covers any dependencies
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
 
-The mandatory @samp{Description} field should give a comprehensive description of
-what the package does.  One can use several (complete) sentences, but
-only one paragraph.
+The mandatory @samp{Description} field should give a comprehensive
+description of what the package does.  One can use several (complete)
+sentences, but only one paragraph.
 
 The mandatory @samp{Title} field should give a short description of the
-package. Some package listings may truncate the title to 65 characters
-in order to keep the overall size of the listing limited.
+package. Some package listings may truncate the title to 65 characters.
 It should be capitalized, not use any markup, not have any continuation
 lines, and not end in a period.
 
@@ -420,16 +421,15 @@ should not also be in the @samp{Imports} field.  Version requirements
 can be specified, but will @strong{not} be checked when the name space is
 loaded (whereas they are checked by @command{R CMD check}).
 
-The @samp{Suggests} field uses the same syntax as
-@samp{Depends} and lists packages that are not necessarily needed.  This
-includes packages used only in examples, tests or vignettes
-(@pxref{Writing package vignettes}), and packages loaded in the body of
-functions.  E.g., suppose an example from package @pkg{foo} uses a
-dataset from package @pkg{bar}. Then it is not necessary to have
-@pkg{bar} use of @pkg{foo} unless one wants to execute all the
-examples/tests/vignettes: it is useful to have @pkg{bar}, but not
-necessary.   Version requirements can be specified, and will be used by
-@command{R CMD check}.
+The @samp{Suggests} field uses the same syntax as @samp{Depends} and
+lists packages that are not necessarily needed.  This includes packages
+used only in examples, tests or vignettes (@pxref{Writing package
+vignettes}), and packages loaded in the body of functions.  E.g.,
+suppose an example from package @pkg{foo} uses a dataset from package
+@pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
+unless one wants to execute all the examples/tests/vignettes: it is
+useful to have @pkg{bar}, but not necessary.  Version requirements can
+be specified, and will be used by @command{R CMD check}.
 
 Finally, the @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
@@ -510,7 +510,7 @@ other value is deprecated, and is unused as from @R{} 2.13.0.)
 
 The @samp{BuildVignettes} field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well
-as preventing @command{R CMD check} from testing this.  This will only
+as preventing @command{R CMD check} from testing this.  This should only
 be used exceptionally, for example if the PDFs need large figures which
 are not part of the package sources.
 
@@ -618,8 +618,8 @@ charset.} fail when the package is installed.  Any byte will be
 allowed@footnote{It is good practice to encode them as octal or hex
 escape sequences.} in a quoted character string (but @code{\uxxxx}
 escapes should not be used unless the package depends on @code{R (>=
-2.10)}), but non-@acronym{ASCII} character strings may not be usable in
-some locales and may display incorrectly in others.
+2.10)}): however, non-@acronym{ASCII} character strings may not be
+usable in some locales and may display incorrectly in others.
 
 
 @findex .First.lib
@@ -670,8 +670,8 @@ The sources and headers for the compiled code are in @file{src}, plus
 optionally a file @file{Makevars} or @file{Makefile}.  When a package is
 installed using @code{R CMD INSTALL}, @command{make} is used to control
 compilation and linking into a shared object for loading into @R{}.
-There are default variables and rules for this (determined when @R{} is
-configured and recorded in
+There are default @command{make} variables and rules for this
+(determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
 C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is not supported.
 If you have Ratfor source code, you need to convert it to FORTRAN.  Only
@@ -707,12 +707,12 @@ should be general enough to eliminate the need for a package-specific
 care is needed to make it general enough to work on all @R{} platforms.
 If it has any targets at all, it should have an appropriate first target
 named @samp{all} and a (possibly empty) target @samp{clean} which
-removes all files generated by Make (to be used by @samp{R CMD INSTALL
---clean} and @samp{R CMD INSTALL --preclean}).  There are
-platform-specific file names on Windows: @file{src/Makevars.win} takes
-precedence over @file{src/Makevars} and @file{src/Makefile.win} must be
-used. Some @command{make} programs require makefiles to have a complete
-final line, including a newline.
+removes all files generated by running @command{make} (to be used by
+@samp{R CMD INSTALL --clean} and @samp{R CMD INSTALL --preclean}).
+There are platform-specific file names on Windows:
+@file{src/Makevars.win} takes precedence over @file{src/Makevars} and
+@file{src/Makefile.win} must be used. Some @command{make} programs
+require makefiles to have a complete final line, including a newline.
 
 A few packages use the @file{src} directory for purposes other than
 making a shared object (e.g.@: to create executables).  Such packages
@@ -724,11 +724,11 @@ The @file{data} subdirectory is for data files: @xref{Data in packages}.
 The @file{demo} subdirectory is for @R{} scripts (for running @emph{via}
 @code{demo()}) that demonstrate some of the functionality of the
 package.  Demos may be interactive and are not checked automatically, so
-if testing is desired use code in the @file{tests} directory.  The
-script files must start with a (lower or upper case) letter and have one
-of the extensions @file{.R} or @file{.r}.  If present, the @file{demo}
-subdirectory should also have a @file{00Index} file with one line for
-each demo, giving its name and a description separated by white
+if testing is desired use code in the @file{tests} directory to achieve
+this.  The script files must start with a (lower or upper case) letter
+and have one of the extensions @file{.R} or @file{.r}.  If present, the
+@file{demo} subdirectory should also have a @file{00Index} file with one
+line for each demo, giving its name and a description separated by white
 space. (Note that it is not possible to generate this index file
 automatically.)
 
@@ -792,7 +792,7 @@ package needs, typically scripts for interpreters such as the shell,
 Perl, or Tcl.  This mechanism is currently used only by a very few
 packages, and still experimental.  NB: only files (and not directories)
 under @file{exec} are installed, and they are all marked as executable
-(mode @code{755}) on POSIX platforms.
+(mode @code{755}, moderated by @samp{umask}) on POSIX platforms.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -848,7 +848,7 @@ later, and so the package should have an appropriate @samp{Depends}
 entry in its DESCRIPTION file.
 
 If your package is to be distributed, do consider the resource
-implications for your users of large datasets: they can make packages
+implications of large datasets for your users: they can make packages
 very slow to download and use up unwelcome amounts of storage space, as
 well as taking many seconds to load.  It is normally best to distribute
 large datasets as @file{.rda} images prepared by @code{save(, compress =
@@ -1362,8 +1362,8 @@ DLL.
 As from @R{} 2.13.0 there is some support for packages which wish to use
 OpenMP@footnote{@uref{http://www.openmp.org/},
 @uref{http://en.wikipedia.org/@/wiki/@/OpenMP},
-@uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}, as @R{} itself
-does.  The @command{make} macros
+@uref{https://computing.llnl.gov/@/tutorials/@/openMP/}}.  The
+@command{make} macros
 
 @example
 SHLIB_OPENMP_CFLAGS
@@ -1380,8 +1380,8 @@ appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS} and so on,
 and also in @code{PKG_LIBS}.  C/C++ code that needs to be conditioned on
 the use of OpenMP can be used inside @code{#ifdef SUPPORT_OPENMP}, a
 macro defined in the header @file{Rconfig.h} (@pxref{Platform and
-version information}): however the use of OMP is most often indicate by
-@samp{#pragma} statements.  
+version information}): however the use of OpenMP is most often indicated
+by @samp{#pragma} statements.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1392,8 +1392,9 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 There is nothing to say what version of OpenMP is supported: version 3.0
-is supported by recent versions of the main platforms (except Windows),
-but portable packages cannot assume that end users have recent versions.
+is supported by recent versions of the main platforms (except Windows,
+where there is currently no support), but portable packages cannot
+assume that end users have recent versions.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
@@ -1520,9 +1521,9 @@ A user can then be advised to specify the location of the ODBC driver
 manager files by options like (lines broken for easier reading)
 
 @example
-R CMD INSTALL
-  --configure-args='--with-odbc-include=/opt/local/include
-  --with-odbc-lib=/opt/local/lib --with-odbc-manager=iodbc'
+R CMD INSTALL \
+  --configure-args='--with-odbc-include=/opt/local/include \
+  --with-odbc-lib=/opt/local/lib --with-odbc-manager=iodbc' \
   RODBC
 @end example
 
@@ -1738,8 +1739,9 @@ possible.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
-executed, and the vignettes re-made from the sources as a check of
-completeness (unless there is an @file{inst/doc/Makefile} file).
+executed, and the vignettes re-made from their sources as a check of
+completeness of the sources (unless there is a @samp{BuildVignettes}
+field in the package's @file{DESCRIPTION} file with a false value.
 
 @item
 The PDF version of the package's manual is created (to check that the
@@ -1804,7 +1806,7 @@ to be up-to-date, and C, C++ and FORTRAN source files and relevant make
 files are tested and converted to LF line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
-using @command{R CMD check} prior to invoking the build procedure.
+using @command{R CMD check} prior to invoking the final build procedure.
 
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
@@ -1829,9 +1831,9 @@ of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
 option@footnote{or the package's description contains
-@samp{BuildVignettes: FALSE}.}, it will attempt to rebuild the vignettes
-(@pxref{Writing package vignettes}) in the package.  To do so it
-installs the current package into a temporary library tree, but any
+@samp{BuildVignettes: no} or similar.}, it will attempt to rebuild the
+vignettes (@pxref{Writing package vignettes}) in the package.  To do so
+it installs the current package into a temporary library tree, but any
 dependent packages need to be installed in an available library tree
 (see the Note: below).
 
@@ -1846,8 +1848,8 @@ repositories to display the manual even if they are unable to install
 the package.)
 
 One of the checks that @command{R CMD build} runs is for empty source
-directories.  These are in most (but not all) cases unintentional, in
-which case they should be removed and the build re-run.
+directories.  These are in most (but not all) cases unintentional, if
+they are intentional use the option @option{--keep-empty-dirs}.
 
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
@@ -1873,9 +1875,9 @@ default (it can be selected by environment variable
 It can be useful to run @command{R CMD check --check-subdirs=yes} on the
 built tarball as a final check on the contents.
 
-@command{R CMD build} can also build pre-compiled version of packages for
-binary distributions, but @command{R CMD INSTALL --build} is preferred (and
-is more flexible).
+@command{R CMD build} can also build pre-compiled version of packages
+for binary distributions, but it is now deprecated in favour of
+@command{R CMD INSTALL --build}.
 
 Note that prior to @R{} 2.13.0, @command{R CMD build} did some cleaning in
 the supplied source directory, but this was undocumented and is no
@@ -1899,62 +1901,67 @@ location for these is subdirectory @file{inst/doc} of a source package,
 the contents will be copied to subdirectory @file{doc} when the package
 is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
-be in arbitrary format, however we strongly recommend to provide them in
-PDF format, such that users on almost all platforms can easily read
-them.  To ensure that they can be accessed from a browser (and HTML
-index is provided), the file names should start with an @acronym{ASCII}
-letter and be comprised entirely of @acronym{ASCII} letters or digits or
-hyphen or underscore.
+be in arbitrary format, however we strongly recommend providing them in
+PDF format, so users on almost all platforms can easily read them.  To
+ensure that they can be accessed from a browser (as an HTML index is
+provided), the file names should start with an @acronym{ASCII} letter
+and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
+or underscore.
 
-A special case are documents in Sweave format, which we call
-@emph{package vignettes}.  These are normally given the file extension
-@file{.Rnw}, but for historical reasons extensions@footnote{and to avoid
-problems with case-insensitive file systems, lower-case versions of all
-these extensions.} @file{.Snw}, @file{.Rtex}, @file{.Stex} are
-recognized as vignettes.  Sweave allows the integration of @LaTeX{}
-documents and @R{} code and is contained in package @pkg{utils} which is
-part of the base @R{} distribution, see the @code{Sweave} help page for
-details on the document format.  Package vignettes found in directory
-@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
-code chunks they contain to ensure consistency between code and
-documentation.  (Code chunks with option @code{eval=FALSE} are not
-tested.)  The @R{} working directory for all vignette tests in @code{R
-CMD check} is a @emph{copy} of the @file{doc} subdirectory.  Make sure
-all files needed by the vignette (data sets, @dots{}) are accessible by
-either placing them in the @file{inst/doc} hierarchy of the source
-package, or using calls to @code{system.file()}.  All other files needed
-to re-make the vignettes (such as LaTeX style files, BiBTeX input files
-and files for any figures not created by running the code in the
-vignette) must under @file{inst/doc} in the sources, but a file
-@file{.Rinstignore} can be used to exclude them from the installed
-package.
+A special case are documents with sources in Sweave format, which we
+call @emph{package vignettes}.  These are normally given the file
+extension @file{.Rnw}, but for historical reasons
+extensions@footnote{and to avoid problems with case-insensitive file
+systems, lower-case versions of all these extensions.} @file{.Snw},
+@file{.Rtex}, @file{.Stex} are recognized as vignettes.  Sweave allows
+the integration of @LaTeX{} documents: see the @code{Sweave} help page
+in @R{}for details on the document format.  Package vignettes found in
+directory @file{inst/doc} are tested by @code{R CMD check} by executing
+all @R{} code chunks they contain (except those with option
+@code{eval=FALSE}).  The @R{} working directory for all vignette tests
+in @code{R CMD check} is a @emph{copy} of the @file{doc} subdirectory.
+Make sure all files needed by the vignette (data sets, @dots{}) are
+accessible by either placing them in the @file{inst/doc} hierarchy of
+the source package or by using calls to @code{system.file()}.  All other
+files needed to re-make the vignette PDFs (such as LaTeX style files,
+BiBTeX input files and files for any figures not created by running the
+code in the vignette) must under @file{inst/doc} in the sources, but a
+file @file{.Rinstignore} can be used to exclude them from the installed
+package.  References to parallel source directories such as
+@example
+\graphicspath{{../../manual/}}
+@end example
+@noindent
+will work in @command{R CMD build}, but may not in @command{R CMD check}.
 
-@code{R CMD build} will automatically create PDF versions of the
-vignettes for distribution with the package sources.  By including the
-PDF version in the package sources it is not necessary that the
-vignettes can be compiled at install time, i.e., the package author can
-use private @LaTeX{} extensions which are only available on his
-machine.@footnote{provided the conditions of the package's licence are
-met: many would see these as incompatible with an Open Source licence.}
+@code{R CMD build} will automatically@footnote{unless inhibited by using
+@samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
+versions of the vignettes for distribution with the package sources.  By
+including the PDF version in the package sources it is not necessary
+that the vignettes can be compiled at install time, i.e., the package
+author can use private @LaTeX{} extensions which are only available on
+his machine.@footnote{provided the conditions of the package's licence
+are met: many would see these as incompatible with an Open Source
+licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
-Sweave format.  If no @file{Makefile} is found in directory
-@file{inst/doc}, then @code{tools::texi2dvi(pdf = TRUE)} is run on all
-vignettes.  Whenever a @file{Makefile} is found, then @code{R CMD build}
-will try to run @command{make} after the @code{Sweave} runs, so PDF
-manuals can be created from arbitrary source formats (plain @LaTeX{}
-files, @dots{}).  The first target in the @file{Makefile} should take
-care of both creation of PDF files and cleaning up afterwards (including
-after @code{Sweave}), i.e., delete all files that shall not appear in
-the final package archive.  Note that the @code{make} step is executed
-independently from the presence of any files in Sweave format, and that
-if it runs @R{} it needs to be careful to respect the environment values
-of @env{R_LIBS} and @env{R_HOME}@footnote{As from @R{} 2.13.0,
-@code{R_HOME/bin} is prepended to the @env{PATH} so that references to
-@command{R} or @command{Rscript} in the @file{Makefile} do make use of
-the currently running version of @R{}.}.  Finally, if there is a
-@file{Makefile} and it has a @samp{clean:} target, @command{make clean}
-is run.
+Sweave format in @file{inst/doc} (but not in sub-directories).  If no
+@file{Makefile} is found in directory @file{inst/doc}, then
+@code{tools::texi2dvi(pdf = TRUE)} is run on all vignettes.  Whenever a
+@file{Makefile} is found, then @code{R CMD build} will try to run
+@command{make} after the @code{Sweave} runs, so PDF manuals can be
+created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
+The first target in the @file{Makefile} should take care of both
+creation of PDF files and cleaning up afterwards (including after
+@code{Sweave}), i.e., delete all files that shall not appear in the
+final package archive.  Note that the @code{make} step is executed even
+if there are no files in Sweave format, and that if it runs @R{} it
+needs to be careful to respect the environment values of @env{R_LIBS}
+and @env{R_HOME}@footnote{As from @R{} 2.13.0, @code{R_HOME/bin} is
+prepended to the @env{PATH} so that references to @command{R} or
+@command{Rscript} in the @file{Makefile} do make use of the currently
+running version of @R{}.}.  Finally, if there is a @file{Makefile} and
+it has a @samp{clean:} target, @command{make clean} is run.
 
 It is no longer necessary to provide a @file{00Index.dcf} file in the
 @file{inst/doc} directory---the corresponding information is generated
@@ -1972,10 +1979,10 @@ linked from the @HTML{} help index for the package.  If you do supply a
 files under the installed @file{doc} directory, or perhaps (not really
 an index) to HTML help files or to the @file{DESCRIPTION} file.
 
-Do watch that vignettes are not too large -- one in a @acronym{CRAN}
-package was 72Mb!  This is usually caused by the inclusion of overly
-detailed figures, which will not render well in PDF viewers.  Sometimes
-it is much better to generate fairly high resolution bitmap (PNG, JPEG)
+Do watch that PDFs are not too large -- one in a @acronym{CRAN} package
+was 72Mb!  This is usually caused by the inclusion of overly detailed
+figures, which will not render well in PDF viewers.  Sometimes it is
+much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
 
@@ -2049,10 +2056,10 @@ so do not put comment lines in the middle of a paragraph of text).
 Ensure that the package sources are not unnecessarily large.  In
 particular, @command{R CMD check} will report@footnote{provided a
 POSIX-compliant @command{du} program is found on the system: it is
-possible that some other @command{du} program will incorrectly report
+possible that some other @command{du} programs will incorrectly report
 double the actual size.  This can be disabled by setting
-@env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of more
-that 5Mb, detailing directories of more than 1Mb.  It warns about
+@env{_R_CHECK_PKG_SIZE_} to a false value.} on installed packages of
+more than 5Mb, detailing directories of more than 1Mb.  It warns about
 inefficient compression of data if environment variable
 @env{_R_CHECK_COMPACT_DATA2_} is set to @samp{TRUE}: @command{R CMD
 build --resave-data} will compact data as best it can.  Watch out for
@@ -2069,7 +2076,7 @@ including Adobe Acrobat (not Reader), Apple's Preview@footnote{Select
 `Save as', and select `Reduce file size' from the `Quartz filter' menu':
 this can be accessed in other ways, for example by Automator.}, some
 versions of Multivalent, Pdftk
-(@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}) and
+(@uref{http://www.pdflabs.com/@/tools/@/pdftk-the-pdf-toolkit/}),
 @command{qpdf} (@uref{http://qpdf.sourceforge.net/}), and Ghostscript
 (which converts PDF to PDF by
 
@@ -2087,17 +2094,17 @@ and suitable options might be
 
 @noindent
 (see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
-for more) and consider all the options for image downsampling) as well
-as numerous commercial and shareware Windows programs.  Note that these
-do not all try the same size-reduction strategies, and Acrobat and
+for more and consider all the options for image downsampling) as well as
+numerous commercial and shareware Windows programs.  Note that these do
+not all try the same size-reduction strategies, and Acrobat and
 @command{ps2pdf} can be much better at reducing the size of embedded
 images than some of the others.
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
 for Windows and packages in Debian/Ubuntu), there is an option
 @option{--compact-vignettes} to @command{R CMD build} to run
-@command{qpdf} over PDF files in @file{inst/doc} and replace them if at
-least 10Kb and 10% is saved.  The full path to the @command{qpdf}
+@command{qpdf} over PDF files under @file{inst/doc} and replace them if
+at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
 command can be supplied as environment variable @env{R_QPDF} (and is on
 the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
 function @code{tools::compactPDF} which has other options including
@@ -2120,8 +2127,7 @@ that URL in Internet Explorer and (depending on the version) follow the
 instructions to view it as a folder, then copy the submission to the
 folder.} and not @samp{sftp} to connect to this server) and send a
 message to @email{CRAN@@R-project.org} about it.  The @acronym{CRAN}
-maintainers will run these tests before putting a submission in the main
-archive.
+maintainers will run these tests before putting a submission online.
 
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use reasonably recent versions of the
@@ -2653,9 +2659,10 @@ export(AIC, BIC, nobs)
 All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
 using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
-defaults to the same pattern as @code{exportPattern}.} in the same style
-as for @code{exportPattern} Generics for which S4 methods are defined
-need to be declared in an @code{exportMethods} directive, and where the
+defaults to the same pattern as @code{exportPattern}: use something like
+@code{exportClassPattern{"^$"} to override this.} in the same style as
+for @code{exportPattern} Generics for which S4 methods are defined need
+to be declared in an @code{exportMethods} directive, and where the
 generics are formed by taking over existing functions, those functions
 need to be imported (explicitly unless they are defined in the
 @code{base} name space).
