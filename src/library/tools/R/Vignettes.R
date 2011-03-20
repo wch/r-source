@@ -452,9 +452,11 @@ function(vigDeps)
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
-    od <- setwd(file.path(td, "doc"))
+    ## file.copy does not preserve dates, so to be careful ...
+    setwd(docDir)
     sources_before <- list_files_with_exts('.', c("r", "s", "R", "S"))
     old <- file.info(sources_before)$mtime
+    setwd(file.path(td, "doc"))
     result <- NULL
     tryCatch(utils::Stangle(vig_name, quiet = TRUE),
              error = function(e) result <<- conditionMessage(e))
@@ -463,14 +465,13 @@ function(vigDeps)
         stop(result, call. = FALSE, domain = NA)
     }
     sources <- list_files_with_exts('.', c("r", "s", "R", "S"))
-    existed <- sources %in% sources_before
     s1 <- sources[!sources %in% sources_before]
     s2 <- sources_before[file.info(sources_before)$mtime > old]
-    for(ff in  c(s1, s2)) {
-        tryCatch(source(ff, echo = TRUE),
+    for(f in  c(s1, s2)) {
+        tryCatch(source(f, echo = TRUE),
                   error = function(e) result <<- conditionMessage(e))
         if(length(result)) {
-            cat("\n  When sourcing ", sQuote(basename(ff)), ":\n", sep="")
+            cat("\n  When sourcing ", sQuote(f), ":\n", sep="")
             stop(result, call. = FALSE, domain = NA)
         }
     }

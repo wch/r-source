@@ -1590,7 +1590,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (!dir.exists(vignette_dir) ||
             !length(vf <- list_files_with_type(vignette_dir, "vignette")))
             return()
-        ## we could also use the sources via dir=<foo>
         if(do_install && !is_base_pkg && !extra_arch) {
             checkingLog(Log, "for unstated dependencies in vignettes")
             Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
@@ -1678,32 +1677,32 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (do_rebuild_vignettes &&
                 parse_description_field(desc, "BuildVignettes", TRUE)) {
                 checkingLog(Log, "re-building of vignettes")
-                ## copy the inst directory to check directory
-                ## so we can work in place.
-                dir.create(vd2 <- "inst")
+                ## copy the whole pkg directory to check directory
+                ## so we can work in place, and allow ../../foo references.
+                dir.create(vd2 <- "vign_test")
                 if (!dir.exists(vd2)) {
-                    errorLog(Log, "unable to create 'inst'")
+                    errorLog(Log, "unable to create 'vign_test'")
                     do_exit(1L)
                 }
-                file.copy(vignette_dir, vd2, recursive = TRUE)
+                file.copy(pkgdir, vd2, recursive = TRUE)
 
                 ## since so many people use 'R CMD' in Makefiles,
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
                            sep = .Platform$path.sep))
                 on.exit(Sys.setenv(PATH = oPATH))
+                ## we could use clean = FALSE, but that would not be
+                ## testing what R CMD build uses.
                 Rcmd <- "options(warn=1)\nlibrary(tools)\n"
-                Rcmd <- paste(Rcmd,
-                              "buildVignettes(dir = '", pkgoutdir, "')",
-                              sep = "")
+                Rcmd <- paste(Rcmd, "buildVignettes(dir = '",
+                              file.path(pkgoutdir, "vign_test", pkgname),
+                              "')", sep = "")
                 outfile <- tempfile()
                 status <- R_runR(Rcmd, R_opts2,
                                  stdout = outfile, stderr = outfile)
                 if (status) {
                     noteLog(Log)
                     out <- readLines(outfile)
-                    ## A reasonable heuristic might be to search for
-                    ## Error: processing vignette
                     if (R_check_suppress_RandR_message)
                         out <- grep('^Xlib: *extension "RANDR" missing on display', out,
                                     invert = TRUE, value = TRUE)
@@ -1711,7 +1710,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     printLog(Log,
                              paste(c("Error in re-building vignettes:",
                                      "  ...", out, "", ""), collapse = "\n"))
-                } else resultLog(Log, "OK")
+                } else {
+                    ## clean up
+                    unlink(vd2, recursive = TRUE)
+                    resultLog(Log, "OK")
+                }
             } else {
                 checkingLog(Log, "re-building of vignettes")
                 resultLog(Log, "SKIPPED")

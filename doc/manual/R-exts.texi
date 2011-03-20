@@ -1925,14 +1925,15 @@ accessible by either placing them in the @file{inst/doc} hierarchy of
 the source package or by using calls to @code{system.file()}.  All other
 files needed to re-make the vignette PDFs (such as LaTeX style files,
 BiBTeX input files and files for any figures not created by running the
-code in the vignette) must under @file{inst/doc} in the sources, but a
-file @file{.Rinstignore} can be used to exclude them from the installed
-package.  References to parallel source directories such as
+code in the vignette) must in the sources (usually under
+@file{inst/doc}, but a file @file{.Rinstignore} can be used to exclude
+them from the installed package).  References to parallel source
+directories such as
 @example
 \graphicspath@{@{../../manual/@}@}
 @end example
 @noindent
-will work in @command{R CMD build}, but may not in @command{R CMD check}.
+(from @pkg{RODBC}) will work as from @R{} 2.13.0.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
