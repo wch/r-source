@@ -45,6 +45,10 @@
 
       \item The entry point \code{pythag} formerly in \file{Rmath.h} is
       defunct: use instead the C99 function \code{hypot}.
+
+      \item \command{R CMD build --binary} is formally defunct:
+      \command{R CMD INSTALL --build} has long been the preferred
+      alternative.  
     }
   }
 }
@@ -539,9 +543,13 @@
       output to \file{stdout}: in particular contains more details of
       the tests.
 
-      \command{R CMD check} now check all syntactically valid Rd usage
-      entries, and warns about assignments (unless these give the usage
-      of replacement functions).
+      It now check all syntactically valid Rd usage entries, and warns
+      about assignments (unless these give the usage of replacement
+      functions).
+
+      \file{.tar.xz} compressed tarballs are now allowed, if
+      \command{tar} supports them (and setting environment variable
+      \env{TAR} to \samp{internal} does on all platforms).
  
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
