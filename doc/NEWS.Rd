@@ -745,6 +745,10 @@
 
       \item \code{data.frame(check.rows = TRUE)} sometimes worked when
       it should have detected an error.  (\PR{14530})
+
+      \item \code{scan(sep= , strip.white=TRUE)} sometimes stripped
+      trailing spaces from within quoted strings.  (The real bug in
+      \PR{14522}.) 
     }
   }
 }

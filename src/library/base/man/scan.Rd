@@ -111,12 +111,13 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     in the \code{what} argument.  It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     \sQuote{white space} from \code{character} fields (\code{numeric} fields
-    are always stripped).
+    are always stripped).  Note: white space inside quoted strings is
+    not stripped.
 
     If \code{strip.white} is of length 1, it applies to all fields;
     otherwise, if \code{strip.white[i]} is \code{TRUE} \emph{and} the
     \code{i}-th field is of mode character (because \code{what[i]} is)
-    then the leading and trailing white space from field \code{i} is
+    then the leading and trailing unquoted white space from field \code{i} is
     stripped.
   }
 
