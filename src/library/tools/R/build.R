@@ -178,15 +178,15 @@ get_exclude_patterns <- function()
             "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
             "  --no-manual           do not build the manual even if \\Sexprs are present",
-            "",
-            "  --binary              build pre-compiled binary packages, with options:",
-            "  --install-args=       command-line args to be passed to INSTALL,",
-            "                        separated by spaces",
             "  --resave-data=        re-save data files as compactly as possible",
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
             "  --compact-vignettes   try to compact PDF files in inst/doc (using qpdf)",
+            "",
+            "  --binary              build pre-compiled binary packages, with option:",
+            "  --install-args=       command-line args to be passed to INSTALL,",
+            "                        separated by spaces",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -672,6 +672,7 @@ get_exclude_patterns <- function()
             vignettes <- FALSE
         } else if (a == "--binary") {
             binary <- TRUE
+            message("--binary is deprecated")
         } else if (substr(a, 1, 15) == "--install-args=") {
             INSTALL_opts <- c(INSTALL_opts, substr(a, 16, 1000))
         } else if (a == "--resave-data") {

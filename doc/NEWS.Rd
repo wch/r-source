@@ -624,6 +624,10 @@
       \item Direct access to the \code{"source"} attribute of functions
       is deprecated; use \code{deparse(fn, control="useSource")} to access
       it, and \code{removeSource(fn)} to remove it.
+
+      \item \command{R CMD build --binary} is now formally deprecated:
+      \command{R CMD INSTALL --build} has long been the preferred
+      alternative.
     }
   }
 
