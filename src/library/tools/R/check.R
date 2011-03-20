@@ -2633,7 +2633,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else {
             istar <- TRUE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
-            pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2)$", "", pkgname0)
+            pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2|tar\\.xz)$", "", pkgname0)
             pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
         }
         pkgoutdir <- file.path(outdir, paste(pkgname0, "Rcheck", sep = "."))
