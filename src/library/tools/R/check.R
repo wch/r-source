@@ -1658,7 +1658,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
-                             utils::tail(out, Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10)))
+                             utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
