@@ -140,7 +140,7 @@ print.vignette <- function(x, ...){
 edit.vignette <- function(name, ...)
 {
 
-    f <- paste(tempfile(name$topic), ".R", sep="")
+    f <- tempfile(name$topic, fileext=".R")
     Stangle(name$file, output=f, quiet=TRUE)
     file.edit(file=f, ...)
 }

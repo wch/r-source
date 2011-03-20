@@ -82,7 +82,7 @@ print.browseVignettes <- function(x, ...)
                        ""),
                 sprintf("<a href='file://%s'>LaTeX/noweb</a>&nbsp;", src))
     }
-    file <- sprintf("%s.html", tempfile("Rvig."))
+    file <- tempfile("Rvig.", fileext=".html")
     sink(file)
     css_file <- file.path(R.home("doc"), "html", "R.css")
     cat(sprintf("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
