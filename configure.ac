@@ -2391,11 +2391,15 @@ AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
 # gettextize -f -c --intl
 AM_NLS
 if test "${USE_NLS}" = "yes"; then
+  echo
+  echo "Configuring src/extra/intl directory"
   AM_GNU_GETTEXT_VERSION(0.14.5)
   AM_GNU_GETTEXT([no-libtool], [need-ngettext], [../extra/intl])
   if test -n "$INTL_MACOSX_LIBS"; then
     XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
   fi
+  echo "Finished configuring src/extra/intl directory"
+  echo
 else
   USE_INCLUDED_LIBINTL=no
 fi
