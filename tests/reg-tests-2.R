@@ -2520,5 +2520,19 @@ mantelhaen.test(Nitrous, exact=FALSE, alternative="less")
 ## exact = FALSE gave the wrong tail in 2.12.2.
 
 
+## scan(strip.white=TRUE) could strip trailing (but not leading) space
+## inside quoted strings.
+writeLines(' "  A  "; "B" ;"C";" D ";"E ";  F  ;G  ', "foo")
+cat(readLines("foo"), sep = "\n")
+scan('foo', list(""), sep=";")[[1]]
+scan('foo', "", sep=";")
+scan('foo', list(""), sep=";", strip.white = TRUE)[[1]]
+scan('foo', "", sep=";", strip.white = TRUE)
+unlink('foo')
 
+writeLines(' "  A  "\n "B" \n"C"\n" D "\n"E "\n  F  \nG  ', "foo2")
+scan('foo2', "")
+scan('foo2', "", strip.white=TRUE) # documented to be ignored ...
+unlink('foo2')
+## Changed for 2.13.0, found when investigating non-bug PR#14522.
 
