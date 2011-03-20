@@ -1929,7 +1929,7 @@ code in the vignette) must under @file{inst/doc} in the sources, but a
 file @file{.Rinstignore} can be used to exclude them from the installed
 package.  References to parallel source directories such as
 @example
-\graphicspath{{../../manual/}}
+\graphicspath@{@{../../manual/@}@}
 @end example
 @noindent
 will work in @command{R CMD build}, but may not in @command{R CMD check}.
@@ -2660,7 +2660,7 @@ All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
 using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
 defaults to the same pattern as @code{exportPattern}: use something like
-@code{exportClassPattern{"^$"} to override this.} in the same style as
+@code{exportClassPattern("^$")} to override this.} in the same style as
 for @code{exportPattern} Generics for which S4 methods are defined need
 to be declared in an @code{exportMethods} directive, and where the
 generics are formed by taking over existing functions, those functions
