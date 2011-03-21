@@ -175,7 +175,7 @@ static const LDOUBLE tbl[] =
     1e20, 1e21, 1e22, 1e23, 1e24, 1e25, 1e26, 1e27
 };
 
-static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
+static void scientific(double *x, int *sgn, int *kpower, int *nsig)
 {
     /* for a number x , determine
      *	sgn    = 1_{x < 0}  {0/1}
@@ -224,7 +224,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
             kp--;
         }
         /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits
-	   accuracy limited by double rounding problem, 
+	   accuracy limited by double rounding problem,
 	   alpha already rounded to 64 bits */
         alpha = R_nearbyintl(r_prec);
 #else
@@ -283,11 +283,6 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
     int neg, sgn, kpower, nsig;
     int i, naflag, nanflag, posinf, neginf;
 
-    double eps = pow(10.0, -(double)R_print.digits);
-    /* better to err on the side of too few signif digits rather than
-       far too many */
-    if(eps < 2*DBL_EPSILON) eps = 2*DBL_EPSILON;
-
     nanflag = 0;
     naflag = 0;
     posinf = 0;
@@ -303,7 +298,7 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
 	    else if(x[i] > 0) posinf = 1;
 	    else neginf = 1;
 	} else {
-	    scientific(&x[i], &sgn, &kpower, &nsig, eps);
+	    scientific(&x[i], &sgn, &kpower, &nsig);
 
 	    left = kpower + 1;
 	    sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
@@ -381,9 +376,6 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
     Rcomplex tmp;
     Rboolean all_re_zero = TRUE, all_im_zero = TRUE;
 
-    double eps = pow(10.0, -(double)R_print.digits);
-    if(eps < 2*DBL_EPSILON) eps = 2*DBL_EPSILON;
-
     naflag = 0;
     rnanflag = 0;
     rposinf = 0;
@@ -410,7 +402,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 		else rneginf = 1;
 	    } else {
 		if(x[i].r != 0) all_re_zero = FALSE;
-		scientific(&(tmp.r), &sgn, &kpower, &nsig, eps);
+		scientific(&(tmp.r), &sgn, &kpower, &nsig);
 
 		left = kpower + 1;
 		sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
@@ -434,7 +426,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 		else iposinf = 1;
 	    } else {
 		if(x[i].i != 0) all_im_zero = FALSE;
-		scientific(&(tmp.i), &sgn, &kpower, &nsig, eps);
+		scientific(&(tmp.i), &sgn, &kpower, &nsig);
 
 		left = kpower + 1;
 		sleft = ((left <= 0) ? 1 : left);
