@@ -695,6 +695,10 @@
       \item \command{R CMD build --binary} is now formally deprecated:
       \command{R CMD INSTALL --build} has long been the preferred
       alternative.
+
+      \item Single-character package names are deprecated (and \pkg{R}
+      is already disallowed to avoid confusion in \samp{Depends:}
+      fields).
     }
   }
 
