@@ -11,7 +11,10 @@
       instead of the console.
 
       \item \code{rstandard.glm} gains a \code{type} argument for optional 
-      standardized Pearson residuals 
+      standardized Pearson residuals.
+
+      \item Non-portable package names ending in \file{.} are no longer
+      allowed.
     }
   }
   
@@ -630,7 +633,8 @@
 
       \item Packages with names ending in \file{.} are not portable
       since Windows does not work correctly with such directory names.
-      This is now warned about in \command{R CMD check}.
+      This is now warned about in \command{R CMD check}, and will not be
+      allowed in \R 2.14.x.
     }
   }
 
