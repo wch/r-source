@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2010	The R Development Core Team
+ *  Copyright (C) 1995-2011	The R Development Core Team
  *  Copyright (C) 2003		The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -668,6 +668,8 @@ SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	na_fail = TRUE;
 	break;
     case 2:		/* complete */
+	/* did na.omit in R */
+	if (!LENGTH(x)) error(_("no complete element pairs"));
 	break;
     case 3:		/* pairwise.complete */
 	pair = TRUE;

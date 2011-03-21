@@ -2536,3 +2536,17 @@ scan('foo2', "", strip.white=TRUE) # documented to be ignored ...
 unlink('foo2')
 ## Changed for 2.13.0, found when investigating non-bug PR#14522.
 
+
+## PR#14488: missing values in rank correlations
+set.seed(1)
+x <- runif(10)
+y <- runif(10)
+x[3] <- NA; y[5] <- NA
+xy <- cbind(x, y)
+
+cor(x, y, method="spearman", use="complete.obs")
+cor(x, y, method="spearman", use="pairwise.complete.obs")
+cor(na.omit(xy),  method="spearman", use="complete.obs")
+cor(xy,  method="spearman", use="complete.obs")
+cor(xy,  method="spearman", use="pairwise.complete.obs")
+## inconsistent in R < 2.13.0

@@ -748,8 +748,12 @@
 
       \item \code{scan(sep= , strip.white=TRUE)} sometimes stripped
       trailing spaces from within quoted strings.  (The real bug in
-      \PR{14522}.) 
-    }
+      \PR{14522}.)
+
+      \item The rank-correlation methods for \code{cor()} and
+      \code{cov()} with \code{use = "complete.obs"} computed the ranks
+      before removing missing values, whereas the documentation implied
+      incomplete cases were removed first.  (\PR{14488})
   }
 }
 
