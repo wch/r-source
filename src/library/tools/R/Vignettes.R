@@ -470,8 +470,8 @@ function(vigDeps)
     for(f in  c(s1, s2)) {
         tryCatch(source(f, echo = TRUE),
                   error = function(e) result <<- conditionMessage(e))
-        if(length(result)) {
-            cat("\n  When sourcing ", sQuote(f), ":\n", sep="")
+        if(length(result)) { # avoid './foo.R'
+            cat("\n  When sourcing ", sQuote(basename(f)), ":\n", sep="")
             stop(result, call. = FALSE, domain = NA)
         }
     }
