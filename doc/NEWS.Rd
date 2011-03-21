@@ -637,6 +637,10 @@
       \item \command{R CMD build --binary} is now formally deprecated:
       \command{R CMD INSTALL --build} has long been the preferred
       alternative.
+
+      \item Single-character package names are deprecated (and \pkg{R}
+      is already disallowed to avoid confusion in \samp{Depends:}
+      fields).
     }
   }
 
@@ -712,6 +716,10 @@
       incomplete cases were removed first.  (\PR{14488})
 
       They also failed for 1-row matrices.
+      
+      \item The perpendicular adjustment used in placing text and
+      expressions in the margins of plots was not scaled by
+      \code{par("mex")}. (Part of \PR{14532}.) 
     }
   }
 }

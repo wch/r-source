@@ -282,7 +282,9 @@ should contain only letters, numbers and dot, and start with a letter.
 To be portable to Windows, it must not end in a dot.  (Translation
 packages are allowed names of the form @samp{Translation-@var{ll}}.)  Do
 not use @samp{R} as a package name: that has a special meaning in
-package dependency analysis.
+package dependency analysis.  Other single-character names are
+deprecated and will be disallowed as from @R{} 2.14.0, as will names
+ending in a dot.
 
 The mandatory @samp{Version} field gives version of the package.  This is a
 sequence of at least @emph{two} (and usually three) non-negative

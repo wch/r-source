@@ -2130,6 +2130,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,"  Package name is not portable:\n",
                          "  It must start with a letter, contain letters, digits or dot\n",
                          "  and not end with a dot.\n")
+            } else if (nchar(desc["Package"]) == 1L) {
+                warningLog(Log)
+                printLog(Log,
+                         "  Single-character package names are deprecated\n")
             } else resultLog(Log, "OK")
             encoding <- desc["Encoding"]
         } else {
