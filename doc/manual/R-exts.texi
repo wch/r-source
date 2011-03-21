@@ -286,11 +286,12 @@ package dependency analysis.  Other single-character names are
 deprecated and will be disallowed as from @R{} 2.14.0, as will names
 ending in a dot.
 
-The mandatory @samp{Version} field gives version of the package.  This is a
-sequence of at least @emph{two} (and usually three) non-negative
-integers separated by single @samp{.} or @samp{-} characters.  The
-canonical form is as shown in the example, and a version such as
-@samp{0.01} or @samp{0.01.0} will be handled as if it were @samp{0.1-0}.
+The mandatory @samp{Version} field gives the version of the package.
+This is a sequence of at least @emph{two} (and usually three)
+non-negative integers separated by single @samp{.} or @samp{-}
+characters.  The canonical form is as shown in the example, and a
+version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
+were @samp{0.1-0}.
 
 The mandatory @samp{License} field should specify the license of the package in
 the following standardized form.  Alternatives are indicated @emph{via}
