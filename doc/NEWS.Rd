@@ -469,6 +469,11 @@
       \item \code{pythag} duplicated the C99 function \code{hypot}.  It
       is no longer provided, but is used a substitute for \code{hypot}
       in the very unlikely event that the latter is not available.
+
+      \item \code{inspect(obj)} and \code{inspect3(obj, deep, pvec)}
+      are (hidden) C-level entry points to the internal \code{inspect}
+      function and can be used for C-level debugging (e.g., in conjunction
+      with \code{p} command in \code{gdb}).
     }
   }
 
