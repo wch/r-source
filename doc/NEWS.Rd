@@ -774,6 +774,10 @@
       occur during the creation of the device window to prevent crashes.
       It also imposes a limit of 144 ft^2 on the area used by a window
       to catch user errors (unit misinterpretation) early.
+      
+      \item The browser (invoked by \code{debug()}, \code{browser()}
+      or otherwise) would display attributes such as \code{"wholeSrcref"}
+      that were intended for internal use only.
     }
   }
 }
