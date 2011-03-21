@@ -1,4 +1,4 @@
-#  Automatically generated from compiler.nw.
+#  Automatically generated from ../noweb/compiler.nw.
 #
 #  File src/library/compiler/R/cmp.R
 #  Part of the R package, http://www.R-project.org
