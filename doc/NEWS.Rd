@@ -768,7 +768,12 @@
       
       \item The perpendicular adjustment used in placing text and
       expressions in the margins of plots was not scaled by
-      \code{par("mex")}. (Part of \PR{14532}.) 
+      \code{par("mex")}. (Part of \PR{14532}.)
+
+      \item Quartz Cocoa device now catches any Cocoa exceptions that
+      occur during the creation of the device window to prevent crashes.
+      It also imposes a limit of 144 ft^2 on the area used by a window
+      to catch user errors (unit misinterpretation) early.
     }
   }
 }

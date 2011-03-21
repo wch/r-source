@@ -74,26 +74,34 @@ static QuartzFunctions_t *qf;
     return [NSColor colorWithCalibratedRed: R_RED(canvas)/255.0 green:R_GREEN(canvas)/255.0 blue:R_BLUE(canvas)/255.0 alpha:R_ALPHA(canvas)/255.0];
 }
 
+/* can return nil on an error */
 + (QuartzCocoaView*) quartzWindowWithRect: (NSRect) rect andInfo: (void*) info
 {
     QuartzCocoaDevice *ci = (QuartzCocoaDevice*) info;
-    QuartzCocoaView* view = [[QuartzCocoaView alloc] initWithFrame: rect andInfo: info];
-    NSWindow* window = [[NSWindow alloc] initWithContentRect: rect
-                                                   styleMask: NSTitledWindowMask|NSClosableWindowMask|
-        NSMiniaturizableWindowMask|NSResizableWindowMask//|NSTexturedBackgroundWindowMask
-                                                     backing:NSBackingStoreBuffered defer:NO];
-    NSColor *canvasColor = [view canvasColor];
-    [window setBackgroundColor:canvasColor ? canvasColor : [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.5]];
-    [window setOpaque:NO];
-    ci->window = window;
+    QuartzCocoaView* view = nil;
+    NSWindow* window = nil;
+    NSColor* canvasColor = nil;
+
+    /* do everything in a try block -- this is not merely theoretical,
+       for example NSWindow will throw an expection when the supplied
+       rect is too big */
+    @try {
+	view = [[QuartzCocoaView alloc] initWithFrame: rect andInfo: info];
+	window = [[NSWindow alloc] initWithContentRect: rect
+					     styleMask: NSTitledWindowMask|NSClosableWindowMask|
+				   NSMiniaturizableWindowMask|NSResizableWindowMask//|NSTexturedBackgroundWindowMask
+					       backing:NSBackingStoreBuffered defer:NO];
+	NSColor *canvasColor = [view canvasColor];
+	[window setBackgroundColor:canvasColor ? canvasColor : [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.5]];
+	[window setOpaque:NO];
+	ci->window = window;
 	
-    [window setDelegate: view];
-    [window setContentView: view];
-    [window setInitialFirstResponder: view];
-    /* [window setAcceptsMouseMovedEvents:YES]; not neeed now, maybe later */
-    [window setTitle: [NSString stringWithUTF8String: ((QuartzCocoaDevice*)info)->title]];
-    
-    {
+	[window setDelegate: view];
+	[window setContentView: view];
+	[window setInitialFirstResponder: view];
+	/* [window setAcceptsMouseMovedEvents:YES]; not neeed now, maybe later */
+	[window setTitle: [NSString stringWithUTF8String: ((QuartzCocoaDevice*)info)->title]];
+
         NSMenu *menu, *mainMenu;
         NSMenuItem *menuItem;
 	/* soleMenu is set if we have no menu at all, so we have to create it. Otherwise we are loading into an application that has already some menu, so we need only our specific stuff. */
@@ -192,8 +200,22 @@ static QuartzFunctions_t *qf;
             [menu release];
             [menuItem release];
         }        
+    } @catch (NSException *ex) {
+	/* on error release what we know about, issue a warning and return nil */
+	if (window) {
+	    ci->window = nil;
+	    [window release];
+	}
+	if (view)
+	    [view release];
+	if (ex) {
+	    /* we don't bother localizing this since the exception is likely in English anyway */
+	    warning("Unable to create Cocoa Quartz window: %s (%s)",
+		    [[ex reason] UTF8String], [[ex name] UTF8String]);
+	}
+	return nil;
     }
-    
+
     return view;
 }
 
@@ -854,7 +876,12 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
     scalex = dpi[0] / 72.0;
     scaley = dpi[1] / 72.0;
 
-    /* FIXME: check allocations */
+    if (width * height > 20736.0) {
+	warning("Requested on-screen area is too large (%.1f by %.1f inches).", width, height);
+	return NULL;
+    }
+
+    /* FIXME: check allocations [better now, but strdups below are not covered; also check dev->pars] */
     dev = malloc(sizeof(QuartzCocoaDevice));
     memset(dev, 0, sizeof(QuartzCocoaDevice));
 
@@ -873,7 +900,10 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
     };
     
     qd = qf->Create(dd, &qdef);
-    if (!qd) return NULL;
+    if (!qd) {
+	free(dev);
+	return NULL;
+    }
     dev->qd = qd;
     
     /* copy parameters for later */
@@ -890,7 +920,12 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
                                  qf->GetScaledWidth(qd), qf->GetScaledHeight(qd));
         if (!cocoa_initialized) initialize_cocoa();
         /* Rprintf("scale=%f/%f; size=%f x %f\n", scalex, scaley, rect.size.width, rect.size.height); */
-        [QuartzCocoaView quartzWindowWithRect: rect andInfo: dev];
+        if (![QuartzCocoaView quartzWindowWithRect: rect andInfo: dev]) {
+	    free((char*)dev->title);
+	    free(qd);
+	    free(dev);
+	    return NULL;
+	}
     }
     if (dev->view)
         [[dev->view window] makeKeyAndOrderFront: dev->view];
