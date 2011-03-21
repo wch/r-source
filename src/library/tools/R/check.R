@@ -2118,7 +2118,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            resultLog(Log, "OK")
+            if(!grepl("^[[:alpha:]][[:alnum:].]*[[:alnum:]]$",
+                      desc["Package"])) {
+                warningLog(Log)
+                printLog(Log,"  Package name is not portable:\n",
+                         "  It must start with a letter, contain letters, digits or dot\n",
+                         "  and not end with a dot\n")
+            } else resultLog(Log, "OK")
             encoding <- desc["Encoding"]
         } else {
             resultLog(Log, "NO")

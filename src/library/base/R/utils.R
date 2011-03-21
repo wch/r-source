@@ -42,7 +42,8 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
 .standard_regexps <-
 function()
 {
-    list(valid_package_name = "[[:alpha:]][[:alnum:].]*",
+    list(# in due course valid_package_name = "[[:alpha:]][[:alnum:].]*[[:alnum:]]",
+         valid_package_name = "[[:alpha:]][[:alnum:].]*",
          valid_package_version = "([[:digit:]]+[.-]){1,}[[:digit:]]+",
          valid_R_system_version =
          "[[:digit:]]+\\.[[:digit:]]+\\.[[:digit:]]+",
