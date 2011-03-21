@@ -720,6 +720,10 @@
       \item The perpendicular adjustment used in placing text and
       expressions in the margins of plots was not scaled by
       \code{par("mex")}. (Part of \PR{14532}.) 
+      
+      \item The browser (invoked by \code{debug()}, \code{browser()}
+      or otherwise) would display attributes such as \code{"wholeSrcref"}
+      that were intended for internal use only.
     }
   }
 }
