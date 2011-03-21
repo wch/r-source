@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-03-20 r54893)
+R version 2.14.0 Under development (unstable) (2011-03-20 r54899)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6684,4 +6684,29 @@ Read 7 items
 > unlink('foo2')
 > ## Changed for 2.13.0, found when investigating non-bug PR#14522.
 > 
+> 
+> ## PR#14488: missing values in rank correlations
+> set.seed(1)
+> x <- runif(10)
+> y <- runif(10)
+> x[3] <- NA; y[5] <- NA
+> xy <- cbind(x, y)
+> 
+> cor(x, y, method="spearman", use="complete.obs")
+[1] 0.2380952
+> cor(x, y, method="spearman", use="pairwise.complete.obs")
+[1] 0.2380952
+> cor(na.omit(xy),  method="spearman", use="complete.obs")
+          x         y
+x 1.0000000 0.2380952
+y 0.2380952 1.0000000
+> cor(xy,  method="spearman", use="complete.obs")
+          x         y
+x 1.0000000 0.2380952
+y 0.2380952 1.0000000
+> cor(xy,  method="spearman", use="pairwise.complete.obs")
+          x         y
+x 1.0000000 0.2380952
+y 0.2380952 1.0000000
+> ## inconsistent in R < 2.13.0
 > 

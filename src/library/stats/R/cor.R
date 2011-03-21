@@ -22,6 +22,7 @@ cor <- function(x, y = NULL, use = "everything",
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
+    if(is.na(na.method)) stop("invalid 'use' argument")
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y)
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -36,17 +37,31 @@ cor <- function(x, y = NULL, use = "everything",
         stopifnot(is.atomic(y))
     }
 
+    ## Rank transform
+    Rank <- function(u) {
+        ## take care not to drop dims on a 0- or 1-row matrix
+        if(length(u) == 0L) u
+        else if(is.matrix(u)) {
+            if(nrow(u) > 1L) apply(u, 2L, rank, na.last="keep") else row(u)
+        } else rank(u, na.last="keep")
+    }
     if(method == "pearson")
         .Internal(cor(x, y, na.method, FALSE))
-    else if (na.method != 3L) {
-	## Rank transform
-	Rank <- function(u) {
-            ## take care not to drop dims on a 0-row matrix
-            if(length(u) == 0L) u else
-            if(is.matrix(u)) apply(u, 2L, rank, na.last="keep")
-            else rank(u, na.last="keep")
+    else if (na.method %in% c(2L, 5L)) {
+        if (is.null(y)) {
+            .Internal(cor(Rank(na.omit(x)), NULL, na.method,
+                          method == "kendall"))
+        } else {
+            nas <- attr(na.omit(cbind(x,y)), "na.action")
+            dropNA <- function(x, nas) {
+                if(length(nas)) {
+                    if (is.matrix(x)) x[-nas, , drop = FALSE] else x[-nas]
+                } else x
+            }
+            .Internal(cor(Rank(dropNA(x, nas)), Rank(dropNA(y, nas)),
+                          na.method, method == "kendall"))
         }
-
+    } else if (na.method != 3L) {
 	x <- Rank(x)
 	if(!is.null(y)) y <- Rank(y)
         .Internal(cor(x, y, na.method, method == "kendall"))
@@ -109,6 +124,7 @@ cov <- function(x, y = NULL, use = "everything",
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
+    if(is.na(na.method)) stop("invalid 'use' argument")
     method <- match.arg(method)
     if(is.data.frame(y)) y <- as.matrix(y)
     if(is.data.frame(x)) x <- as.matrix(x)
@@ -118,16 +134,32 @@ cov <- function(x, y = NULL, use = "everything",
     stopifnot(is.numeric(x) || is.logical(x), is.atomic(x))
     if(!is.null(y)) stopifnot(is.numeric(y) || is.logical(y), is.atomic(y))
 
+    ## Rank transform
+    Rank <- function(u) {
+        ## take care not to drop dims on a 0- or 1-row matrix
+        if(length(u) == 0L) u
+        else if(is.matrix(u)) {
+            if(nrow(u) > 1L) apply(u, 2L, rank, na.last="keep") else row(u)
+        } else rank(u, na.last="keep")
+    }
+
     if(method == "pearson")
 	.Internal(cov(x, y, na.method, method == "kendall"))
-    else if (na.method != 3L) {
-	## Rank transform
-	Rank <- function(u) {
-	    if(length(u) == 0L) u else
-	    if(is.matrix(u)) apply(u, 2L, rank, na.last="keep")
-	    else rank(u, na.last="keep")
-	}
-
+    else if (na.method %in% c(2L, 5L)) {
+        if (is.null(y)) {
+            .Internal(cov(Rank(na.omit(x)), NULL, na.method,
+                          method == "kendall"))
+        } else {
+            nas <- attr(na.omit(cbind(x,y)), "na.action")
+            dropNA <- function(x, nas) {
+                if(length(nas)) {
+                    if (is.matrix(x)) x[-nas, , drop = FALSE] else x[-nas]
+                } else x
+            }
+            .Internal(cov(Rank(dropNA(x, nas)), Rank(dropNA(y, nas)),
+                          na.method, method == "kendall"))
+        }
+    } else if (na.method != 3L) {
 	x <- Rank(x)
 	if(!is.null(y)) y <- Rank(y)
 	.Internal(cov(x, y, na.method, method == "kendall"))
@@ -142,6 +174,7 @@ var <- function(x, y = NULL, na.rm = FALSE, use) {
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
+    if(is.na(na.method)) stop("invalid 'use' argument")
     if (is.data.frame(x)) x <- as.matrix(x) else stopifnot(is.atomic(x))
     if (is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
     .Internal(cov(x, y, na.method, FALSE))
