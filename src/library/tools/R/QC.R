@@ -2745,7 +2745,8 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        if(!grepl(sprintf("^%s$", valid_package_name_regexp), val)
+        ## We allow 'R', which is not a valid packge name.
+        if(!grepl(sprintf("^(R|%s)$", valid_package_name_regexp), val)
            && !grepl("^Translation-[[:alnum:].]+$", val))
             tmp <- c(tmp, gettext("Malformed package name"))
         if(!is_base_package) {
@@ -2780,7 +2781,7 @@ function(dfile)
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
             paste("^[[:space:]]*",
-                  paste("(", valid_package_name_regexp, ")", sep = ""),
+                  paste("(R|", valid_package_name_regexp, ")", sep = ""),
                   "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
                   "[[:space:]]*$",
                   sep = "")

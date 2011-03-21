@@ -2125,17 +2125,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            if(desc["Package"] == "R") {
-                errorLog(Log)
-                printLog(Log,"  Package name 'R' is not allowed.\n")
-                do_exit(1L)
-            }
-            if(!grepl("^[[:alpha:]][[:alnum:].]*$", desc["Package"])
+            if(!grepl("^[[:alpha:]][[:alnum:].]*[[:alnum:]]$", desc["Package"])
                || grepl("[.]$", desc["Package"])) {
                 warningLog(Log)
                 printLog(Log,"  Package name is not portable:\n",
                          "  It must start with a letter, contain letters, digits or dot\n",
-                         "  and not end with a dot.\n")
+                         "  have at least 2 characters and not end with a dot.\n")
             } else resultLog(Log, "OK")
             encoding <- desc["Encoding"]
         } else {

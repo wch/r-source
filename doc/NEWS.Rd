@@ -14,7 +14,8 @@
       standardized Pearson residuals.
 
       \item Non-portable package names ending in \file{.} are no longer
-      allowed.
+      allowed.  Nor are single-character package names (\pkg{R} was
+      already disallowed).
     }
   }
   
