@@ -705,6 +705,7 @@
       \code{cov()} with \code{use = "complete.obs"} computed the ranks
       before removing missing values, whereas the documentation implied
       incomplete cases were removed first.  (\PR{14488})
+    }
   }
 }
 
