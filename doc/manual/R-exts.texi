@@ -189,7 +189,7 @@ Because some file systems (e.g., those on Windows and by default on Mac
 OS X) are not case-sensitive, to maintain portability it is strongly
 recommended that case distinctions not be used to distinguish different
 packages.  For example, if you have a package named @file{foo}, do not
-also create a package named @file{Foo}.
+also create a package named @file{Foo}.  
 
 To ensure that file names are valid across file systems and supported
 operating system platforms, the @acronym{ASCII} control characters as
@@ -277,10 +277,10 @@ For maximal portability, the @file{DESCRIPTION} file should be written
 entirely in @acronym{ASCII} --- if this is not possible it must contain
 an @samp{Encoding} field (see below).
 
-The mandatory @samp{Package} field gives the name of the package.  This should
-contain only letters, numbers and dot, and start with a letter.
-(Translation packages are allowed names of the form
-@samp{Translation-@var{ll}}.)
+The mandatory @samp{Package} field gives the name of the package.  This
+should contain only letters, numbers and dot, and start with a letter.
+To be portable to Windows, it must not end in a dot.  (Translation
+packages are allowed names of the form @samp{Translation-@var{ll}}.)
 
 The mandatory @samp{Version} field gives version of the package.  This is a
 sequence of at least @emph{two} (and usually three) non-negative
