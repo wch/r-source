@@ -115,6 +115,7 @@ file.link(from, to)
   There is no guarantee that these functions will handle Windows
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
+  Nor are \samp{\\\\?\\} prefixes (and similar) supported.
   
   Recent versions of Windows have a limited version of symbolic links on
   NTFS filesystems, but this has not be implemented in
