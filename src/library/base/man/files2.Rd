@@ -50,6 +50,11 @@ Sys.umask(mode = NA)
   system call \code{mkdir}, e.g. \command{man 2 mkdir} (and not that on
   the command-line utility of that name). 
 #endif
+  One of the idiosyncracies of Windows is that directory creation may
+  report success but create a directory with a different name, for
+  example \code{dir.create("G.S.")} creates \file{"G.S"}.  This is
+  undocumented, and precisely what the circumstances are is unknown (and
+  might depend on the version of Windows).
 
   \code{Sys.chmod} sets the file permissions of one or more files.
 #ifdef unix

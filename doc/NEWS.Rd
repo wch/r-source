@@ -627,6 +627,10 @@
       \item There is a new option \option{--no-clean-on-error} for
       \command{R CMD INSTALL} to retain a partially installed package for
       forensic analysis.
+
+      \item Packages with names ending in \file{.} are not portable
+      since Windows does not work correctly with such directory names.
+      This is now warned about in \command{R CMD check}.
     }
   }
 
