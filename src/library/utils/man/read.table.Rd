@@ -217,7 +217,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   of input (or the whole file if it has less than five lines), or from
   the length of \code{col.names} if it is specified and
   is longer.  This could conceivably be wrong if \code{fill} or
-  \code{blank.lines.skip} are true, so specify \code{col.names} if necessary.
+  \code{blank.lines.skip} are true, so specify \code{col.names} if
+  necessary (as in the \sQuote{Examples}).
 
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
@@ -301,7 +302,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{\link{data.frame}}.
 
   \code{\link{count.fields}} can be useful to determine problems with
-  reading files which result in reports of incorrect record lengths.
+  reading files which result in reports of incorrect record lengths (see
+  the \sQuote{Examples} below).
   
   \url{http://tools.ietf.org/html/rfc4180} for the IANA definition of
   CSV files (which requires comma as separator and CRLF line endings).
@@ -312,6 +314,20 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \emph{Data for models.}
   Chapter 3 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
+}
+
+\examples{
+## using count.fields to handle unknown maximum number of fields
+## when fill=TRUE
+test1 <- c(1:5, "6,7", "8,9,10")
+tf <- tempfile()
+writeLines(test1, tf)
+
+read.csv(tf, fill = TRUE) # 1 column
+ncol <- max(count.fields(tf, sep = ","))
+read.csv(tf, fill = TRUE, header = FALSE,
+         col.names = paste("V", seq_len(ncol), sep = ""))
+unlink(tf)
 }
 
 \keyword{file}
