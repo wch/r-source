@@ -280,7 +280,8 @@ an @samp{Encoding} field (see below).
 The mandatory @samp{Package} field gives the name of the package.  This
 should contain only letters, numbers and dot, and start with a letter
 and not end in a dot.  (Translation packages are allowed names of the
-form @samp{Translation-@var{ll}}.)
+form @samp{Translation-@var{ll}}.)  Do not use @samp{R} as a package
+name: that has a special meaning in package dependency analysis.
 
 The mandatory @samp{Version} field gives version of the package.  This is a
 sequence of at least @emph{two} (and usually three) non-negative
