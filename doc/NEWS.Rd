@@ -764,6 +764,10 @@
       incomplete cases were removed first.  (\PR{14488})
 
       They also failed for 1-row matrices.
+      
+      \item The perpendicular adjustment used in placing text and
+      expressions in the margins of plots was not scaled by
+      \code{par("mex")}. (Part of \PR{14532}.) 
     }
   }
 }
