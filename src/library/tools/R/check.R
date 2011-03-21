@@ -208,6 +208,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## device names (by themselves or with possible extensions),
         ## see e.g.
         ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
+        ## http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#naming_conventions
         ## and http://en.wikipedia.org/wiki/Filename (which as of
         ## 2007-04-22 is wrong about claiming that COM0 and LPT0 are
         ## disallowed):
@@ -2125,8 +2126,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
             desc <- desc[1L, ]
             if(desc["Package"] == "R") {
-                warningLog(Log)
+                errorLog(Log)
                 printLog(Log,"  Package name 'R' is not allowed.\n")
+                do_exit(1L)
             }
             if(!grepl("^[[:alpha:]][[:alnum:].]*$", desc["Package"])
                || grepl("[.]$", desc["Package"])) {

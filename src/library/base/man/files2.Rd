@@ -50,12 +50,16 @@ Sys.umask(mode = NA)
   system call \code{mkdir}, e.g. \command{man 2 mkdir} (and not that on
   the command-line utility of that name). 
 #endif
+  
   One of the idiosyncracies of Windows is that directory creation may
   report success but create a directory with a different name, for
   example \code{dir.create("G.S.")} creates \file{"G.S"}.  This is
   undocumented, and precisely what the circumstances are is unknown (and
-  might depend on the version of Windows).
-
+  might depend on the version of Windows).  Also avoid directory names
+  with a trailing space.
+  %% http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx
+  %% is vague about this!
+  
   \code{Sys.chmod} sets the file permissions of one or more files.
 #ifdef unix
   It may not be supported on a system (when a warning is issued).
@@ -112,6 +116,7 @@ Sys.umask(mode = NA)
   There is no guarantee that these functions will handle Windows
   relative paths of the form \file{d:path}: try \file{d:./path}
   instead.  In particular, \file{d:} is not recognized as a directory.
+  Nor are \samp{\\\\?\\} prefixes (and similar) supported.
   
   UTF-8-encoded dirnames not valid in the current locale can be used.  
 }
