@@ -581,7 +581,8 @@
 
       \item Packages with names ending in \file{.} are not portable
       since Windows does not work correctly with such directory names.
-      This is now warned about in \command{R CMD check}.
+      This is now warned about in \command{R CMD check}, and will not be
+      allowed in \R 2.14.x.
     }
   }
 
