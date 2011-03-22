@@ -581,7 +581,7 @@ R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
 ## Noweb
-AC_PATH_PROG(NOTANGLE, notangle)
+AC_PATH_PROG(NOTANGLE, notangle, false)
 
 ## Cairo needs pkg-config
 AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
