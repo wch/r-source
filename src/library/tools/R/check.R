@@ -1650,7 +1650,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             res <- character()
             for(v in vigns$docs) {
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
-                              basename(v), "','", vignette_dir, "')", sep = "")
+                              basename(v), "', '", vignette_dir, "'",
+                              if (!is.na(enc <- desc["Encoding"]))
+                              paste(", encoding = '", enc, "'", sep = ""),
+                              ")", sep = "")
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
                 # cat("\n===============", basename(v), "==============\n"); writeLines(out)
