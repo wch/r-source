@@ -178,11 +178,11 @@ get_exclude_patterns <- function()
             "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
             "  --no-manual           do not build the manual even if \\Sexprs are present",
-            "  --resave-data=        re-save data files as compactly as possible",
+            "  --resave-data=        re-save data files as compactly as possible:",
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
             "  --no-resave-data      same as --resave-data=no",
-            "  --compact-vignettes   try to compact PDF files in inst/doc (using qpdf)",
+            "  --compact-vignettes   try to compact PDF files under inst/doc (using qpdf)",
             "",
             "  --binary              build pre-compiled binary packages, with option:",
             "  --install-args=       command-line args to be passed to INSTALL,",
@@ -709,6 +709,13 @@ get_exclude_patterns <- function()
         stop("current working directory cannot be ascertained")
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
     libdir <- tempfile("Rinst")
+
+    if (WINDOWS) {
+        ## Some people have *assumed* that R_HOME uses / in Makefiles
+        ## Spaces in paths might still cause trouble.
+        rhome <- chartr("\\", "/", R.home())
+        Sys.setenv(R_HOME = rhome)
+    }
 
     for(pkg in pkgs) {
         Log <- newLog() # if not stdin; on.exit(closeLog(Log))
