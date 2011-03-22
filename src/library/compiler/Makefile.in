@@ -25,4 +25,10 @@ all: Makefile DESCRIPTION
 	@$(MAKE) mkR mkdesc mkpo
 	@$(MAKE) mklazy
 
+NOTANGLE = @NOTANGLE@
+from-noweb: $(srcdir)/R/cmp.R
+$(srcdir)/R/cmp.R: $(srcdir)/noweb/compiler.nw
+	@echo "re-making R/cmp.R"
+	@$(NOTANGLE) -Rcmp.R $(srcdir)/noweb/compiler.nw > $(srcdir)/R/cmp.R
+
 include $(top_srcdir)/share/make/basepkg.mk
