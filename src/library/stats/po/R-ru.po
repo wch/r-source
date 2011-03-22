@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-09-30 01:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -552,6 +552,10 @@ msgstr "недостаточно степеней свободы, чтобы определить контрасты"
 
 msgid "baseline group number out of range"
 msgstr "номер базовой группы -- вне диапазона"
+
+#, fuzzy
+msgid "invalid 'use' argument"
+msgstr "недопустимый аргумент 'method'"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "укажите и 'x', и 'y' или матрице-подобный 'x'"

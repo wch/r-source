@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-09-21 14:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -153,7 +153,8 @@ msgstr "ungültige Optionen in '%s'"
 msgid "NOT changing"
 msgstr "NICHT ändernd"
 
-msgid "argment 'append' is for back-compatibility and will be ignored"
+#, fuzzy
+msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "Argument 'append' dient der Rückwärtskompatibilität und wird ignoriert"
 
 msgid "unknown family '%s'"

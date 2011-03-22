@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-04-09 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -156,7 +156,8 @@ msgstr "неправильные опции в '%s'"
 msgid "NOT changing"
 msgstr "НЕ изменяется"
 
-msgid "argment 'append' is for back-compatibility and will be ignored"
+#, fuzzy
+msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr ""
 "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 

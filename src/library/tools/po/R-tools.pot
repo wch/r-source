@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:50\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -533,6 +533,9 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
+msgid "--binary is deprecated"
+msgstr ""
+
 msgid "use of '--auto-zip' is defunct"
 msgstr ""
 
@@ -656,7 +659,7 @@ msgstr ""
 msgid "as"
 msgstr ""
 
-msgid "'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
+msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr ""
 
 msgid "installing to"

@@ -101,7 +101,7 @@ ps.options <- function(..., reset = FALSE, override.check = FALSE)
     }
     l... <- length(new <- list(...))
     if(m <- match("append", names(new), 0L)) {
-        warning("argment 'append' is for back-compatibility and will be ignored",
+        warning("argument 'append' is for back-compatibility and will be ignored",
                 immediate. = TRUE)
         new <- new[-m]
     }

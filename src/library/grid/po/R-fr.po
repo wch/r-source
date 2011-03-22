@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-10-01 20:59+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -46,6 +46,13 @@ msgstr "'squareShape' doit être compris entre -1 et 1"
 
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "'arrow' doit être un objet 'arrow' ou NULL"
+
+msgid "How did we get here?"
+msgstr "Comment sommes-nous arrivés ici ?"
+
+msgid "Must start new page if showing leaves separately"
+msgstr ""
+"Il faut démarrer une nouvelle page pour afficher les feuilles séparément"
 
 msgid "Invalid 'edit' information"
 msgstr "Information 'edit' incorrecte"
@@ -515,13 +522,6 @@ msgstr "Un chemin de vue doit contenir au moins un nom de vue"
 
 msgid "Invalid viewport name(s)"
 msgstr "Nom(s) de vue(s) incorrect(s)"
-
-msgid "How did we get here?"
-msgstr "Comment sommes-nous arrivés ici ?"
-
-msgid "Must start new page if showing leaves separately"
-msgstr ""
-"Il faut démarrer une nouvelle page pour afficher les feuilles séparément"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Il faut spécifier au moins 'x' ou 'xscale'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-10-04 11:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -560,6 +560,10 @@ msgstr "nombre de degrés de liberté insuffisant pour définir des contrastes"
 
 msgid "baseline group number out of range"
 msgstr "nombre de groupe de base en dehors de l'intervalle"
+
+#, fuzzy
+msgid "invalid 'use' argument"
+msgstr "argument 'method' incorrect"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "fournir 'x' et 'y' ou bien 'x' en matrice"

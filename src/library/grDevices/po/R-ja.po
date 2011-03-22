@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
 "PO-Revision-Date: 2010-09-29 17:19+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -152,7 +152,8 @@ msgstr " '%s' 中に不正なオプションがあります  "
 msgid "NOT changing"
 msgstr " 変更しません "
 
-msgid "argment 'append' is for back-compatibility and will be ignored"
+#, fuzzy
+msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr " 上位互換のための引数 'append' は無視されます "
 
 msgid "unknown family '%s'"

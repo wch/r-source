@@ -910,7 +910,7 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 	else if (R_IsNamespaceEnv(obj))
 	    error(_("cannot save namespace in version 1 workspaces"));
 	if (R_HasFancyBindings(obj))
-	    error(_("cannot save environment with locked/active bindings\
+	    error(_("cannot save environment with locked/active bindings \
 in version 1 workspaces"));
 	HashAdd(obj, env_list);
 	/* FALLTHROUGH */

@@ -383,7 +383,7 @@
             if (file.exists("cleanup.win")) system("sh ./cleanup.win")
         } else if (.file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
-            warning("'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'", call. = FALSE)
+            warning("'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'", call. = FALSE)
 
     }
 
@@ -457,7 +457,7 @@
                                         paste(configure_args, collapse = " ")))
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
-                    errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+                    errmsg("'configure' exists but is not executable -- see the 'R Installation and Administration Manual'")
             }
             if (file.exists("Makefile"))
                 if (system(MAKE)) pkgerrmsg("make failed", pkg_name)
@@ -553,7 +553,7 @@
                     res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
-                    errmsg("'configure' exists but is not executable -- see the 'R Installation and Adminstration Manual'")
+                    errmsg("'configure' exists but is not executable -- see the 'R Installation and Administration Manual'")
             }
         }
 
