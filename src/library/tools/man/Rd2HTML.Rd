@@ -158,14 +158,14 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \dontrun{
 ## Simulate install and rendering of this page in HTML and text format:
 
-Rd <- file.path("src/library/tools/Rd2HTML.Rd")
+Rd <- file.path("src/library/tools/man/Rd2HTML.Rd")
 
-outfile <- paste(tempfile(), ".html", sep="")
+outfile <- tempfile(fileext=".html")
 browseURL(Rd2HTML(Rd, outfile, package="tools", stages=c("install", "render")))
 
-outfile <- paste(tempfile(), ".txt", sep="")
+outfile <- tempfile(fileext=".txt")
 file.show(Rd2txt(Rd, outfile, package="tools", stages=c("install", "render")))
 
-checkRd(con) # A stricter test than Rd2HTML uses
+checkRd(Rd) # A stricter test than Rd2HTML uses
 }}}
 \keyword{ documentation }
