@@ -4293,7 +4293,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	   if (TYPEOF(coffsets) != INTSXP)
 	       errorcall(call, _("bad character switch offsets"));
 	   if (TYPEOF(names) != STRSXP || LENGTH(names) != LENGTH(coffsets))
-	       errorcall(call, _("bad swith names"));
+	       errorcall(call, _("bad switch names"));
 	   n = LENGTH(names);
 	   which = n - 1;
 	   for (i = 0; i < n - 1; i++)
