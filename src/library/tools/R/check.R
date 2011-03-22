@@ -1629,11 +1629,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
             if(any(grepl("[^/]R +CMD", lines))) {
                 any <- TRUE
-                warnLog("  Found 'R CMD' in 'inst/doc/Makefile': should be '$(R_HOME)/bin/R CMD'")
+                warnLog("  Found 'R CMD' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/R\" CMD'")
             }
             if(any(grepl("[^/]Rscript", lines))) {
                 any <- TRUE
-                warnLog("  Found 'Rscript' in 'inst/doc/Makefile': should be '$(R_HOME)/bin/Rscript'")
+                warnLog("  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'")
             }
         }
         if (!any) resultLog(Log, "OK")
