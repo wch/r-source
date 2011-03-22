@@ -228,6 +228,12 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     }
 
     if(have.makefile) {
+        if (WINDOWS) {
+            ## Some people have *assumed* that R_HOME uses / in Makefiles
+            ## Spaces in paths might still cause trouble.
+            rhome <- chartr("\\", "/", R.home())
+            Sys.setenv(R_HOME = rhome)
+        }
     	make <- Sys.getenv("MAKE", "make")
         if(!nzchar(make)) make <- "make"
         yy <- system(make)
