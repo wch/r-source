@@ -539,7 +539,8 @@
       as packages are \emph{still} misusing it for non-\R data files.
 
       It now extracts and runs the \R code for each vignette in a
-      separate directory and \R process. Rather than call
+      separate directory and \R process: this is done in the package's
+      declared encoding.  Rather than call
       \code{tools::checkVignettes()}, it calls
       \code{tool::buildVignettes()} to see if the vignettes can be
       re-built as they would be by \command{R CMD build}.  Option
@@ -558,7 +559,7 @@
 
       \file{.tar.xz} compressed tarballs are now allowed, if
       \command{tar} supports them (and setting environment variable
-      \env{TAR} to \samp{internal} does on all platforms).
+      \env{TAR} to \samp{internal} ensures so on all platforms).
  
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a

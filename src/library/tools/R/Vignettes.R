@@ -453,7 +453,8 @@ function(vigDeps)
 ### * .run_one_vignette
 ### helper for R CMD check
 
-.run_one_vignette <- function(vig_name, docDir)
+.run_one_vignette <-
+    function(vig_name, docDir, encoding = getOption("encoding"))
 {
     td <- tempfile()
     dir.create(td)
@@ -473,7 +474,7 @@ function(vigDeps)
     s1 <- sources[!sources %in% sources_before]
     s2 <- sources_before[file.info(sources_before)$mtime > old]
     for(f in  c(s1, s2)) {
-        tryCatch(source(f, echo = TRUE),
+        tryCatch(source(f, echo = TRUE, encoding = encoding),
                   error = function(e) result <<- conditionMessage(e))
         if(length(result)) { # avoid './foo.R'
             cat("\n  When sourcing ", sQuote(basename(f)), ":\n", sep="")
