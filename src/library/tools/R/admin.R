@@ -524,8 +524,14 @@ function(dir, outDir)
                      stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
                                    srcfile, conditionMessage(e)),
                           domain = NA, call. = FALSE))
-        vignetteIndex$R <-
+        ## remove any zero-length files
+        Rfiles <- Sys.glob(c("*.R", "*.S", "*.r", "*.s"))
+        sizes <- file.info(Rfiles)$size
+        unlink(Rfiles[sizes == 0])
+        ## This is an assumption: Sweave can do much more that this!
+        Rfiles <-
             sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
+        vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
         setwd(cwd)
     }
 
