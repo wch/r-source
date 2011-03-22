@@ -19,10 +19,16 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
-all: Makefile DESCRIPTION
+all: Makefile DESCRIPTION @MAINTAINER_MODE_TRUE@ from-noweb
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkpo
 	@$(MAKE) mklazy
+
+NOTANGLE = @NOTANGLE@
+from-noweb: $(srcdir)/R/cmp.R
+$(srcdir)/R/cmp.R: $(srcdir)/noweb/compiler.nw
+	@echo "re-making R/cmp.R"
+	@$(NOTANGLE) -Rcmp.R $(srcdir)/noweb/compiler.nw > $(srcdir)/R/cmp.R
 
 include $(top_srcdir)/share/make/basepkg.mk
