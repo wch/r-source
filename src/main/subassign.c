@@ -1498,7 +1498,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	xOrig = x; /* will be an S4 object */
         x = R_getS4DataSlot(x, ANYSXP);
 	if(TYPEOF(x) != ENVSXP)
-	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environemnt"));
+	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environment"));
     }
 
     /* ENVSXP special case first */
