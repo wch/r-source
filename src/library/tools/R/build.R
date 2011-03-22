@@ -689,6 +689,13 @@ get_exclude_patterns <- function()
     R_platform <- Sys.getenv("R_PLATFORM", "unknown-binary")
     libdir <- tempfile("Rinst")
 
+    if (WINDOWS) {
+        ## Some people have *assumed* that R_HOME uses / in Makefiles
+        ## Spaces in paths might still cause trouble.
+        rhome <- chartr("\\", "/", R.home())
+        Sys.setenv(R_HOME = rhome)
+    }
+
     for(pkg in pkgs) {
         Log <- newLog() # if not stdin; on.exit(closeLog(Log))
         ## remove any trailing /, for Windows' sake
