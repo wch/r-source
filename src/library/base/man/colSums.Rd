@@ -38,6 +38,12 @@ rowMeans(x, na.rm = FALSE, dims = 1)
     FALSE} and either \code{NaN} or \code{NA} appears in a sum, the
   result will be one of \code{NaN} or \code{NA}, but which might be
   platform-dependent.
+
+  Notice that omission of missing values is done on a per-column or
+  per-row basis, so column means may not be over the same set of rows,
+  and vice versa.  To use only complete rows or columns, first select
+  them with \code{\link{na.omit}} or \code{\link{complete.cases}}
+  (possibly on the transpose of \code{x}). 
 }
 \value{
   A numeric or complex array of suitable size, or a vector if the result is
