@@ -458,11 +458,10 @@ function(vigDeps)
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
-    ## file.copy does not preserve dates, so to be careful ...
-    setwd(docDir)
+    setwd(file.path(td, "doc"))
+    ## file.copy does not preserve dates ...
     sources_before <- list_files_with_exts('.', c("r", "s", "R", "S"))
     old <- file.info(sources_before)$mtime
-    setwd(file.path(td, "doc"))
     result <- NULL
     tryCatch(utils::Stangle(vig_name, quiet = TRUE),
              error = function(e) result <<- conditionMessage(e))

@@ -2745,7 +2745,7 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        ## We allow 'R', which is not a valid packge name.
+        ## We allow 'R', which is not a valid package name.
         if(!grepl(sprintf("^(R|%s)$", valid_package_name_regexp), val)
            && !grepl("^Translation-[[:alnum:].]+$", val))
             tmp <- c(tmp, gettext("Malformed package name"))

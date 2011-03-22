@@ -881,7 +881,6 @@
                 ignore <- readLines(ignore_file)
                 ignore[nzchar(ignore)]
             } else character()
-            ignore <- c(ignore, "inst/doc/.noBuildVignettes")
             for(e in ignore)
                 i_dirs <- grep(e, i_dirs, perl = TRUE, invert = TRUE,
                                value = TRUE, ignore.case = WINDOWS)
