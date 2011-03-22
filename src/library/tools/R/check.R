@@ -1654,7 +1654,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
                 # cat("\n===============", basename(v), "==============\n"); writeLines(out)
-                if(length(grep("^  When (tangling|sourcing)", out)))
+                if(length(grep("^  When (tangling|sourcing)", out,
+                               useBytes = TRUE)))
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
@@ -1662,7 +1663,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
-                            invert = TRUE, value = TRUE)
+                            invert = TRUE, value = TRUE, useBytes = TRUE)
             if(length(res)) {
                 any <- TRUE
                 warnLog("Errors in running code in vignettes:")
@@ -1700,7 +1701,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     out <- readLines(outfile)
                     if (R_check_suppress_RandR_message)
                         out <- grep('^Xlib: *extension "RANDR" missing on display', out,
-                                    invert = TRUE, value = TRUE)
+                                    invert = TRUE, value = TRUE, useBytes = TRUE)
                     out <- utils::tail(out, 25)
                     printLog(Log,
                              paste(c("Error in re-building vignettes:",
