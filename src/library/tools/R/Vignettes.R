@@ -205,6 +205,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
 
     ## Note, as from 2.13.0, only this case
     have.makefile <- "Makefile" %in% origfiles
+    WINDOWS <- .Platform$OS.type == "windows"
 
     file.create(".build.timestamp")
 
