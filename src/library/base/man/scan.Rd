@@ -32,7 +32,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     Tilde-expansion is performed where supported.
     When running \R from a script, \code{file="stdin"} can be used to
     refer to the process's \code{stdin} file stream.
-    
+
     As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
 
     Alternatively, \code{file} can be a \code{\link{connection}},
@@ -127,11 +127,10 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored, except when counting \code{skip} and \code{nlines}.}
 
-  \item{multi.line}{logical. Only used if \code{what} is a list.
-    If \code{FALSE}, all of a record must appear on one line (but more
-    than one record can appear on a single line).  Note that using
-    \code{fill = TRUE} implies that a record will terminated at the end
-    of a line.}
+  \item{multi.line}{logical. Only used if \code{what} is a list.  If
+    \code{FALSE}, all of a record must appear on one line (but more than
+    one record can appear on a single line).  Note that using \code{fill = TRUE}
+    implies that a record will be terminated at the end of a line.}
 
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
@@ -149,14 +148,14 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     Note that Unicode escapes (starting \samp{\\u} or \samp{\\U}: see
     \link{Quotes}) are never processed.
   }
-  
+
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection nor the keyboard) so the
     character data can be re-encoded.  See the \sQuote{Encoding} section
     of the help for \code{\link{file}}, and the \sQuote{R Data
       Import/Export Manual}.
   }
-  
+
   \item{encoding}{encoding to be assumed for input strings.  If the
     value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
     character strings as known to be in Latin-1 or UTF-8: it is not used

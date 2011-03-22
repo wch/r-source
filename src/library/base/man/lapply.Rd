@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -33,7 +33,7 @@ simplify2array(x, higher=TRUE)
   \item{simplify}{logical or character string; should the result be simplified to a vector,
     matrix or higher dimensional array if possible?
     The default, \code{TRUE}, returns a vector or matrix if appropriate,
-    whereas \code{signify = "array"}, rather recommended typically,
+    whereas \code{simplify = "array"}, rather recommended typically,
     the result may be an \code{\link{array}} of \dQuote{rank}
     (\eqn{=}\code{length(dim(.))}) one higher than the result of \code{FUN(X[[i]])}.}
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
