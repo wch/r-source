@@ -6071,14 +6071,14 @@ $7 = 5
 @end group
 @end example
 
-Another alternative available from R 2.13.0 on is the @code{inspect}
+Another alternative available from R 2.13.0 on is the @code{R_inspect}
 function which shows the low-level structure of the objects
 recursively (addresses differ from the above as this example is
 created on another machine):
 
 @example
 @group
-(gdb) p inspect($1)
+(gdb) p R_inspect($1)
 @@100954d18 19 VECSXP g0c2 [OBJ,NAM(2),ATT] (len=2, tl=0)
   @@100954d50 13 INTSXP g0c2 [NAM(2)] (len=3, tl=0) 1,2,3
   @@100954d88 13 INTSXP g0c2 [NAM(2)] (len=3, tl=0) 4,5,6
@@ -6103,9 +6103,9 @@ In general the representation of each object follows the format:
 @end smallexample
 
 For a more fine-grained control over the the depth of the recursion
-and the output of vectors @code{inspect3} takes additional two integer
+and the output of vectors @code{R_inspect3} takes additional two integer
 parameters: maximum depth and the maximal number of elements that will
-be printed for scalar vectors. The defaults in @code{inspect} are
+be printed for scalar vectors. The defaults in @code{R_inspect} are
 currently -1 (no limit) and 5 respectively.
 
 
