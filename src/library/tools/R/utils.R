@@ -265,7 +265,12 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## error messages in log files should work for both regular and
         ## file line error indicators.)
 
-        out <- .shell_with_capture(paste(shQuote(texi2dvi), opt_pdf,
+        ## and work around a bug in texi2dvi
+        ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html
+        ## That has [A-Za-z], earlier versions [A-z], both of which may be
+        ## invalid in some locales.
+        out <- .shell_with_capture(paste("LC_COLLATE=C",
+                                         shQuote(texi2dvi), opt_pdf,
                                          opt_quiet, opt_extra,
                                          shQuote(file)))
 
