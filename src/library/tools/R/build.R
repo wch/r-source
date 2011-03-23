@@ -289,7 +289,34 @@ get_exclude_patterns <- function()
                 resultLog(Log, "ERROR")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 do_exit(1L)
-            } else resultLog(Log, "OK")
+            } else {
+                ## Do any of the .R files which will be generated
+                ## exist in inst/doc?  If so the latter should be removed.
+                sources <- basename(list_files_with_exts(doc_dir, c("r", "s", "R", "S")))
+                if (length(sources)) {
+                    vf <- list_files_with_type(doc_dir, "vignette")
+                    td <- tempfile()
+                    dir.create(td)
+                    file.copy(doc_dir, td, recursive = TRUE)
+                    od <- setwd(file.path(td, "doc"))
+                    unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
+                    for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
+                                          error = function(e) {})
+                    new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
+                    setwd(od)
+                    dups <- sources[sources %in% new_sources]
+                    if(length(dups)) {
+                        warningLog(Log)
+                        printLog(Log,
+                                 paste(c("  Unused files in inst/doc which are pointless or misleading",
+                                         "  as they will be re-created from the vignettes on installation:",
+                                         paste("  ", dups),
+                                         "  have been removed", ""),
+                                       collapse = "\n"))
+                        unlink(file.path(doc_dir, dups))
+                    } else resultLog(Log, "OK")
+                } else resultLog(Log, "OK")
+            }
         }
         if (compact_vignettes &&
             length(pdfs <- dir(doc_dir, pattern = "\\.pdf", recursive = TRUE,

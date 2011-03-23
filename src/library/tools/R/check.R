@@ -1622,16 +1622,18 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
         sources <- basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), c("r", "s", "R", "S")))
-        td <- tempfile()
-        dir.create(td)
-        file.copy(vignette_dir, td, recursive = TRUE)
-        od <- setwd(file.path(td, "doc"))
-        unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
-        for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
-                               error = function(e) {})
-        new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
-        dups <- sources[sources %in% new_sources]
-        if(length(dups)) {
+        if (length(sources)) {
+            td <- tempfile()
+            dir.create(td)
+            file.copy(vignette_dir, td, recursive = TRUE)
+            od <- setwd(file.path(td, "doc"))
+            unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
+            for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
+                                  error = function(e) {})
+            new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
+            setwd(od)
+            dups <- sources[sources %in% new_sources]
+            if(length(dups)) {
                 any <- TRUE
                 warnLog(paste("  Unused files in inst/doc which are pointless or misleading",
                               "  as they will be re-created from the vignettes:",
@@ -1639,8 +1641,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,
                          paste(c(paste("  ", dups), "", ""),
                                collapse = "\n"))
+            }
         }
-        setwd(od)
         ## avoid case-insensitive matching
         if ("makefile" %in% dir(vignette_dir)) {
             any <- TRUE
@@ -1748,6 +1750,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 checkingLog(Log, "re-building of vignettes")
                 resultLog(Log, "SKIPPED")
             }
+        } else {
+            checkingLog(Log, "running R code from vignettes")
+            resultLog(Log, "SKIPPED")
+            checkingLog(Log, "re-building of vignettes")
+            resultLog(Log, "SKIPPED")
         }
     }
 
