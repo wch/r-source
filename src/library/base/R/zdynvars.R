@@ -39,8 +39,11 @@
     .lib.loc <- character()            # Profiles need to set this.
     function(new) {
         if(!missing(new)) {
+            ## paths don't really need to be unique, but searching
+            ## large library trees repeatedly would be inefficient.
+            ## Use normalizePath for display: but also does path.expand
             new <- Sys.glob(path.expand(new))
-            paths <- unique(path.expand(c(new, .Library.site, .Library)))
+            paths <- unique(normalizePath(c(new, .Library.site, .Library), '/'))
             .lib.loc <<- paths[file.info(paths)$isdir %in% TRUE]
         }
         else
