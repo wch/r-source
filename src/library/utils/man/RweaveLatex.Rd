@@ -161,6 +161,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
+    \item{mydevice:}{logical (\code{FALSE}): see section \sQuote{Custom Graphics}.}
     \item{width:}{numeric (6), width of figures in inches. See \sQuote{Details}.}
     \item{height:}{numeric (6), height of figures in inches. See \sQuote{Details}.}
     \item{resolution:}{numeric (300), resolution in pixels per inch: used
@@ -177,10 +178,36 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       which is subject to change in future releases.}
   }
 }
+
+\section{Custom Graphics}{
+  There is a temporary facility to customize graphics in \R 2.13.x: it
+  is intended to be replaced by a more general mechanism in due course.
+
+  If option \code{mydevice} is supplied for a code chunk with both
+  \code{fig} and \code{eval} true, the following call is made to a
+  user-defined function,
+\preformatted{
+  mySweaveDevice(name=, width=, height=)
+}
+  which should open a graphics device.  The chunk's code is then
+  evaluated and \code{\link{dev.off}} is called.
+}
+
 \author{Friedrich Leisch and R-core}
+
 \references{
   Friedrich Leisch: Sweave User Manual, 2008\cr
   \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
+
+\examples{\dontrun{
+## A custom graphics device might be
+mySweaveDevice <- function(name, width, height)
+  grDevices::png(filename = paste(name, "png", sep = "."),
+                 width = width, height = height, res = 100, units = "in",
+                 type = "quartz", bg = "tranparent")
+}}
+
 \seealso{\code{\link{Sweave}}, \code{\link{Rtangle}}}
+
 \keyword{utilities}
