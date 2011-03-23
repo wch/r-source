@@ -1,6 +1,6 @@
 % File src/library/utils/man/vignette.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{vignette}
@@ -56,6 +56,9 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   extracting the \R code from the vignette is to run
   \code{\link{Stangle}} on the source code of the vignette,
   see the examples below.
+}
+\seealso{
+  \code{\link{browseVignettes}} for an HTML-based vignette browser.
 }
 \examples{
 ## List vignettes from all *attached* packages
