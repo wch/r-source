@@ -66,7 +66,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   uses \samp{\r} to return to the left margin -- the interpretation of
   carriage return is up to the terminal or console in which \R is
   running, and this is liable to produce ugly output on a connection
-  other than \code{stderr()}, including when \code{stdout()} is
+  other than a terminal, including when \code{stdout()} is
   redirected to a file.
 }
 \seealso{
