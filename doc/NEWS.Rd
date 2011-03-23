@@ -403,6 +403,11 @@
       \item \code{tempfile()} has an extra argument \code{fileext} to
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
+      
+      \item \code{Sweave()} has options to produce PNG and JPEG figures.
+      There is also a temporary option to call a user-defined graphics device.
+      
+      (Based in part on the contribution of \PR{14418}.)
     }
   }
 
@@ -420,7 +425,7 @@
       \item \code{R_inspect(obj)} and \code{R_inspect3(obj, deep, pvec)}
       are (hidden) C-level entry points to the internal \code{inspect}
       function and can be used for C-level debugging (e.g., in conjunction
-      with \code{p} command in \code{gdb}).
+      with the \code{p} command in \code{gdb}).
     }
   }
 
