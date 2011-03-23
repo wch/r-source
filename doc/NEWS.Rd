@@ -456,6 +456,9 @@
       \item \code{tempfile()} has an extra argument \code{fileext} to
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
+      
+      \item \code{Sweave()} has options to produce PNG and JPEG figures.
+      (Based on the contributions of \PR{14418}.)
     }
   }
 
