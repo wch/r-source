@@ -23,6 +23,13 @@
       \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
 	TRUE} allows Python-style named captures.
       (Wish and contribution of \PR{14518}.)
+
+      \item The placement of plotmath text in the margins now makes the
+      same vertical adjustment as ordinary text, so using ordinary and
+      plotmath on the same margin line will seem better aligned (but not
+      exactly aligned, since ordinary text has descenders below the
+      baseline and plotmath places them on the baseline).  (Related to
+      \PR{14537}.)
     }
   }
   
@@ -36,7 +43,7 @@
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
-      vignette fails, unless this is caused by a missing package.
+      vignette fails to run, unless this is caused by a missing package.
     }
   }
   
