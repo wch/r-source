@@ -28,8 +28,10 @@ Stangle(file, driver = Rtangle(),
   \item{driver}{The actual workhorse, see \sQuote{Details}.}
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.  See section \sQuote{Syntax Definition}.}
-  \item{\dots}{Further arguments passed to the driver's setup function.}
+  \item{\dots}{Further arguments passed to the driver's setup function:
+    see section \sQuote{Drivers} and \code{\link{RweaveLatex}}.}
 }
+
 \details{
   Automatic generation of reports by mixing word processing markup (like
   latex) and S code.  The S code gets replaced by its output (text or
@@ -90,6 +92,22 @@ Stangle(file, driver = Rtangle(),
   the pattern \code{SweaveSyntax.*}.
 }
 
+%% This should really be in the Sweave manual, if we can ever get hold
+%% of it!
+\section{Drivers}{
+  An Sweave driver is a function which returns a list of functions:
+  \describe{
+    \item{\code{setup(file, syntax, \dots)}:}{Set up the driver, e.g. open
+      the output file.}
+    \item{\code{runcode(object, chunk, options)}:}{Process a code chunk.}
+    \item{\code{writedoc(object, chunk)}:}{Write out a documentation chunk.}
+    \item{\code{finish(object, error)}:}{Finish up, or clean up if
+      \code{error} is true.}
+    \item{\code{checkopts(options)}:}{Converts/validates \code{options}
+      given as a named list of character strings.}
+  }
+}
+
 \author{
   Friedrich Leisch and R-core.
 }
@@ -110,6 +128,7 @@ Stangle(file, driver = Rtangle(),
   
   Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.
 }
+
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
 

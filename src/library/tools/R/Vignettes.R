@@ -299,10 +299,10 @@ function(file)
     keywords <- if(!length(keywords)) {
         ## No old-style \VignetteKeywords entries found.
         .get_vignette_metadata(lines, "Keyword")
-    }
-    else
-        unlist(strsplit(keywords[1L], ", *"))
-    list(file = file, title = title, depends = depends,
+    } else unlist(strsplit(keywords[1L], ", *"))
+    ## no point in recording the file path since this is called on
+    ## package installation.
+    list(file = basename(file), title = title, depends = depends,
          keywords = keywords)
 }
 
