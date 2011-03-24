@@ -2573,7 +2573,8 @@ function(dir, force_suggests = TRUE)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
         }
-   }
+    }
+    ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
     vignette_dir <- file.path(dir, "inst", "doc")
