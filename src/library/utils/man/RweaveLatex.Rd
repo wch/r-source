@@ -161,7 +161,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
-    \item{mydevice:}{logical (\code{FALSE}): see section \sQuote{Custom Graphics}.}
+    \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
+	Graphics Devices}.}
     \item{width:}{numeric (6), width of figures in inches. See \sQuote{Details}.}
     \item{height:}{numeric (6), height of figures in inches. See \sQuote{Details}.}
     \item{resolution:}{numeric (300), resolution in pixels per inch: used
@@ -179,18 +180,25 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   }
 }
 
-\section{Custom Graphics}{
-  There is a temporary facility to customize graphics in \R 2.13.x: it
-  is intended to be replaced by a more general mechanism in due course.
-
-  If option \code{mydevice} is supplied for a code chunk with both
-  \code{fig} and \code{eval} true, the following call is made to a
-  user-defined function,
+\section{Custom Graphics Devices}{
+  If option \code{grdevice} is supplied for a code chunk with both
+  \code{fig} and \code{eval} true, the following call is made
 \preformatted{
-  mySweaveDevice(name=, width=, height=)
+  get(options$grdevice, envir = .GlobalEnv)(name=, width=, height=)
 }
   which should open a graphics device.  The chunk's code is then
-  evaluated and \code{\link{dev.off}} is called.
+  evaluated and \code{\link{dev.off}} is called.  Normally a function of
+  the name give will have been defined earlier in the Sweave documents, e.g.
+\preformatted{
+<<hide=TRUE>>=
+my.Swd <- function(name, width, height, ...)
+  grdevices::png(filename = paste(name, "png", sep = "."),
+                 width = width, height = height, res = 100, units = "in",
+                 type = "quartz", bg = "transparent")
+@
+}
+  Currently only one custom device can be used for each chunk, but
+  different devices can be used for different chunks.
 }
 
 \author{Friedrich Leisch and R-core}
@@ -199,14 +207,6 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   Friedrich Leisch: Sweave User Manual, 2008\cr
   \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
-
-\examples{\dontrun{
-## A custom graphics device might be
-mySweaveDevice <- function(name, width, height)
-  grDevices::png(filename = paste(name, "png", sep = "."),
-                 width = width, height = height, res = 100, units = "in",
-                 type = "quartz", bg = "tranparent")
-}}
 
 \seealso{\code{\link{Sweave}}, \code{\link{Rtangle}}}
 

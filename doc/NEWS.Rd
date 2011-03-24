@@ -16,6 +16,9 @@
       \item Non-portable package names ending in \file{.} are no longer
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
+
+      \item The default for \code{Sweave()} is to produce only PDF
+      figures (rather than both EPS and PDF).
     }
   }
   
@@ -457,9 +460,9 @@
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
       
-      \item \code{Sweave()} has options to produce PNG and JPEG figures.
-      There is also a temporary option to call a user-defined graphics device.
-      
+      \item \code{Sweave()} has options to produce PNG and JPEG figures,
+      and to use a custom function to open a graphics device (see
+      \code{?RweaveLatex}).\cr
       (Based in part on the contribution of \PR{14418}.)
     }
   }
