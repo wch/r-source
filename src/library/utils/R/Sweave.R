@@ -317,6 +317,7 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     options
 }
 
+## really part of the RweaveLatex and Rtangle drivers
 SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 {
     if (is.null(SweaveHooks <- getOption("SweaveHooks"))) return(NULL)
@@ -328,7 +329,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
                 z <- c(z, k)
                 if (run) eval(SweaveHooks[[k]](), envir=envir)
             }
-    z
+    z # a character vector.
 }
 
 
@@ -412,14 +413,14 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             grDevices::postscript(file = paste(name, "eps", sep = "."),
                                   width = width, height = height,
                                   paper = "special", horizontal = FALSE)
-        png.Swd <- function(name, width, height, resolution, ...)
+        png.Swd <- function(name, width, height, options, ...)
             grDevices::png(filename = paste(chunkprefix, "png", sep = "."),
                            width = width, height = height,
-                           res = resolution, units = "in")
-        jpeg.Swd <- function(name, width, height, resolution, ...)
+                           res = options$resolution, units = "in")
+        jpeg.Swd <- function(name, width, height, options, ...)
             grDevices::jpeg(filename = paste(chunkprefix, "png", sep = "."),
                             width = width, height = height,
-                            res = resolution, units = "in")
+                            res = options$resolution, units = "in")
 
         if (!(options$engine %in% c("R", "S"))) return(object)
 
@@ -587,7 +588,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 dce <- deparse(ce, width.cutoff = 0.75*getOption("width"))
                 leading <- 1L
             }
-            if (object$debug) cat("\nRnw> ", paste(dce, collapse = "\n+  "),"\n")
+            if (object$debug)
+                cat("\nRnw> ", paste(dce, collapse = "\n+  "),"\n")
 
             if (options$echo && length(dce)) putSinput(dce)
 
@@ -606,7 +608,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             } else output <- NULL
 
             ## or writeLines(output)
-            if (length(output) && object$debug) cat(paste(output, collapse = "\n"))
+            if (length(output) && object$debug)
+                cat(paste(output, collapse = "\n"))
 
             if (length(output) && (options$results != "hide")) {
                 if (openSinput) {
@@ -649,7 +652,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     thisline <- thisline + 2L
                 }
             }
-        }
+        } # end of loop over chunkexps.
 
         ## Echo remaining comments if necessary
         if (options$keep.source) echoComments(srclines[length(srclines)])
@@ -747,6 +750,8 @@ RweaveLatexWritedoc <- function(object, chunk)
 
         chunk[pos[1L]] <- sub(object$syntax$docexpr, val, chunk[pos[1L]])
     }
+
+    ## Process \SweaveOpts{} or similar
     while(length(pos <- grep(object$syntax$docopt, chunk)))
     {
         opts <- sub(paste(".*", object$syntax$docopt, ".*", sep = ""),
@@ -765,7 +770,7 @@ RweaveLatexWritedoc <- function(object, chunk)
                                   chunk[pos[1L]])
             object$haveconcordance <- TRUE
         } else
-        chunk[pos[1L]] <- sub(object$syntax$docopt, "", chunk[pos[1L]])
+            chunk[pos[1L]] <- sub(object$syntax$docopt, "", chunk[pos[1L]])
     }
 
     cat(chunk, sep = "\n", file = object$output)
@@ -805,10 +810,11 @@ RweaveLatexFinish <- function(object, error = FALSE)
     invisible(outputname)
 }
 
+## This is the check function for both RweaveLatex and Rtangle drivers.
 RweaveLatexOptions <- function(options)
 {
     ## ATTENTION: Changes in this function have to be reflected in the
-    ## defaults in the init function!
+    ## defaults in the initialization in RweaveLatexSetup
 
     ## convert a character string to logical
     c2l <- function(x) {

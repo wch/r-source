@@ -152,10 +152,11 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       source file (without extension).}
     
     \item{include:}{logical (\code{TRUE}), indicating whether input
-      statements for text output and includegraphics statements for
-      figures should be auto-generated.  Use \code{include = FALSE} if
-      the output should appear in a different place than the code chunk
-      (by placing the input line manually).}
+      statements for text output (if \code{split = TRUE}) and
+      \samp{\\includegraphics} statements for figures should be
+      auto-generated.  Use \code{include = FALSE} if the output should
+      appear in a different place than the code chunk (by placing the
+      input line manually).}
     
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
       chunk produces graphical output.  Note that only one figure per
@@ -179,7 +180,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       available in \R >= 2.13.0.}
     
     \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
-	Graphics Devices}.  Only available in \R >= 2.13.0.}
+	Graphics Devices}.  Ignored if \code{fig = FALSE}.  Only
+      available in \R >= 2.13.0.}
     
     \item{width:}{numeric (6), width of figures in inches. See
       \sQuote{Details}.}
@@ -202,6 +204,11 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       This is an experimental feature; see the source code for the
       output format, which is subject to change in future releases.}
   }
+
+  In addition, users can specify further options, either in the header
+  of an individual code section or in a \samp{\\SweaveOpts()} line in
+  the document.  Note that (for historical reasons) unrecognized options
+  are taken to be logical.
 }
 
 \section{Custom Graphics Devices}{
