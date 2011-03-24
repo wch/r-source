@@ -1715,6 +1715,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
                            sep = .Platform$path.sep))
                 on.exit(Sys.setenv(PATH = oPATH))
+                ## And too many inst/doc/Makefile are not safe for
+                ## parallel makes
+                Sys.setenv(MAKEFLAGS="")
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
                 Rcmd <- "options(warn=1)\nlibrary(tools)\n"
