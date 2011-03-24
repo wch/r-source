@@ -52,30 +52,11 @@ Stangle(file, driver = Rtangle(),
   both provide drivers based on the default driver
   \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
   the results of computations on code chunks.
-}
 
-\section{Hook Functions}{
-  Hook functions are part of the driver, so this section applies to the
-  default drivers for \code{Sweave} and \code{Stangle} but maybe not for
-  others.
-
-  Before each code chunk is evaluated, zero or more hook functions can
-  be executed.  If \code{getOption("SweaveHooks")} is set, it is taken
-  to be a named list of hook functions.  For each logical option of a
-  code chunk (\code{echo}, \code{print}, \ldots) a hook can be
-  specified, which is executed if and only if the respective option is
-  \code{TRUE}.  Hooks must be named elements of the list returned by
-  \code{getOption("SweaveHooks")} and be functions taking no arguments.
-  E.g., if option \code{"SweaveHooks"} is defined as \code{list(fig =
-  foo)}, and \code{foo} is a function, then it would be executed before
-  the code in each figure chunk.  This is especially useful to set
-  defaults for the graphical parameters in a series of figure chunks.
-
-  Note that the user is free to define new Sweave logical options and
-  associate arbitrary hooks with them.  E.g., one could define a hook
-  function for a new option called \code{clean} that removes all objects
-  in the workspace.  Then all code chunks specified with \code{clean =
-    TRUE} would start operating on an empty workspace.
+  Environment variable \env{SWEAVE_OPTIONS} can be used to override the
+  initial options set by the driver: it should be a comma-separated set
+  of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
+  statement in a document.
 }
 
 \section{Syntax Definition}{
@@ -85,16 +66,15 @@ Stangle(file, driver = Rtangle(),
   further details.)
 
   If \code{syntax = NULL} (the default) then the available syntax
-  objects are consulted in turn, and selected if there \code{extension}
-  component is matches (as a regexp) the file name.  Objects
+  objects are consulted in turn, and selected if their \code{extension}
+  component matches (as a regexp) the file name.  Objects
   \code{SweaveSyntaxNoweb} (with \code{extension = "\\\\.[rsRS]nw$"}) and
   \code{SweaveSyntaxLatex} (with \code{extension = "\\\\.[rsRS]tex$"}) are
   supplied, but users or packages can supply others with names matching
   the pattern \code{SweaveSyntax.*}.
 }
 
-%% This should really be in the Sweave manual, if we can ever get hold
-%% of it!
+%% This should really be in the Sweave manual
 \section{Drivers}{
   An Sweave driver is a function which returns a list of functions:
   \describe{

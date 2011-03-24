@@ -18,9 +18,9 @@
 ### a) User-defined options are unclear: all options not already specified
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
-### c) Really need a way to set options globally, e.g. for all vignettes in a package.
-### d) If there is only one graphics option (as is usual), we don't need to
-### run the code in the figure chunks twice.
+### c) If there is only one graphics option (as is usual), we don't need to
+### run the code in the figure chunks twice. (Fixed for 2.14.0)
+### d) Need to sort out encodings
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input
@@ -40,8 +40,13 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
+    ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
     on.exit(driver$finish(drobj, error = TRUE))
+
+    if (!is.na(envopts<- Sys.getenv("SWEAVE_OPTIONS", NA)))
+        drobj$options <-
+            SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
     text <- SweaveReadFile(file, syntax)
     syntax <- attr(text, "syntax")
@@ -324,7 +329,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 
     z <- character()
     for (k in names(SweaveHooks))
-        if (k != "" && !is.null(options[[k]]) && options[[k]])
+        if (nzchar(k) && is.logical(options[[k]]) && options[[k]])
             if (is.function(SweaveHooks[[k]])) {
                 z <- c(z, k)
                 if (run) eval(SweaveHooks[[k]](), envir=envir)
@@ -512,7 +517,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             }
         }
 
-        chunkregexp <- "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#" #
+        chunkregexp <-
+            "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#" #
         popregexp   <- "#end named chunk#" #
 
         openSinput <- FALSE
@@ -817,10 +823,8 @@ RweaveLatexOptions <- function(options)
     ## defaults in the initialization in RweaveLatexSetup
 
     ## convert a character string to logical
-    c2l <- function(x) {
-        if (is.null(x)) return(FALSE)
-        else return(as.logical(toupper(as.character(x))))
-    }
+    c2l <- function(x)
+        if (is.null(x)) FALSE else as.logical(toupper(as.character(x)))
 
     ## numeric
     NUMOPTS <- c("width", "height", "resolution")
@@ -833,7 +837,8 @@ RweaveLatexOptions <- function(options)
     for (opt in names(options)) {
         if (! (opt %in% NOLOGOPTS)) {
             oldval <- options[[opt]]
-            if (!is.logical(options[[opt]])) options[[opt]] <- c2l(options[[opt]])
+            if (!is.logical(options[[opt]]))
+                options[[opt]] <- c2l(options[[opt]])
             if (is.na(options[[opt]]))
                 stop(gettextf("invalid value for '%s' : %s", opt, oldval),
                      domain = NA)
@@ -847,8 +852,8 @@ RweaveLatexOptions <- function(options)
 
     if (!is.null(options$strip.white))
         options$strip.white <- tolower(as.character(options$strip.white))
-    options$strip.white <- match.arg(options$strip.white,
-                                     c("true", "false", "all"))
+    options$strip.white <-
+        match.arg(options$strip.white, c("true", "false", "all"))
     options
 }
 

@@ -412,6 +412,10 @@
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
       correlations are displayed.  (Wish of \PR{12754}.)
+
+      \item Environment variable \env{SWEAVE_OPTIONS} can be used to
+      supply defaults for existing or new options to be applied after
+      the Sweave driver setup has been run.
     }
   }
 
