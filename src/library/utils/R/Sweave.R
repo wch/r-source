@@ -14,18 +14,26 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-# Correspondence between input and output is maintained in two places:
-# Each chunk has a srclines attribute, recording the input lines it corresponds to
-# Each code chunk will have attached srcrefs that duplicate the srclines.
-# We don't need srclines for code, but we do need it for text, and it's easiest
-# to just keep it for everything.
+### FIXMEs
+### a) User-defined options are unclear: all options not already specified
+### are required to be logical
+### b) It would be nice to allow multiple 'grdevice' options
+### c) Really need a way to set options globally, e.g. for all vignettes in a package.
+### d) If there is only one graphics option (as is usual), we don't need to
+### run the code in the figure chunks twice.
+
+### Correspondence between input and output is maintained in two
+### places: Each chunk has a srclines attribute, recording the input
+### lines it corresponds to Each code chunk will have attached srcrefs
+### that duplicate the srclines.  We don't need srclines for code, but
+### we do need it for text, and it's easiest to just keep it for
+### everything.
 
 Sweave <- function(file, driver = RweaveLatex(),
                    syntax = getOption("SweaveSyntax"), ...)
 {
     if (is.character(driver)) driver <- get(driver, mode = "function")()
     else if (is.function(driver)) driver <- driver()
-
 
     if (is.null(syntax)) syntax <- SweaveGetSyntax(file)
     if (is.character(syntax)) syntax <- get(syntax, mode = "list")
@@ -367,7 +375,7 @@ RweaveLatexSetup <-
 
     options <- list(prefix = TRUE, prefix.string = prefix.string,
                     engine = "R", print = FALSE, eval = TRUE, fig = FALSE,
-                    pdf = TRUE, eps = TRUE, png = FALSE, jpeg = FALSE, mydevice = FALSE,
+                    pdf = TRUE, eps = FALSE, png = FALSE, jpeg = FALSE,
                     width = 6, height = 6, resolution = 300, term = TRUE,
                     echo = TRUE, keep.source = FALSE, results = "verbatim",
                     split = FALSE, strip.white = "true", include = TRUE,
@@ -395,6 +403,24 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
     ## If there were just one figure option set, we could eval the chunk
     ## only once.
     function(object, chunk, options) {
+        pdf.Swd <- function(name, width, height, ...)
+            grDevices::pdf(file = paste(chunkprefix, "pdf", sep = "."),
+                           width = width, height = height,
+                           version = options$pdf.version,
+                           encoding = options$pdf.encoding)
+        eps.Swd <- function(name, width, height, ...)
+            grDevices::postscript(file = paste(name, "eps", sep = "."),
+                                  width = width, height = height,
+                                  paper = "special", horizontal = FALSE)
+        png.Swd <- function(name, width, height, resolution, ...)
+            grDevices::png(filename = paste(chunkprefix, "png", sep = "."),
+                           width = width, height = height,
+                           res = resolution, units = "in")
+        jpeg.Swd <- function(name, width, height, resolution, ...)
+            grDevices::jpeg(filename = paste(chunkprefix, "png", sep = "."),
+                            width = width, height = height,
+                            res = resolution, units = "in")
+
         if (!(options$engine %in% c("R", "S"))) return(object)
 
         if (!object$quiet) {
@@ -410,7 +436,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     if (options$pdf) cat(" pdf")
                     if (options$png) cat(" png")
                     if (options$jpeg) cat(" jpeg")
-                    if (options$mydevice) cat(" mydevice")
+                    if (!is.null(options$grdevice)) cat("", options$grdevice)
                 }
             }
             if (!is.null(options$label))
@@ -646,70 +672,25 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             thisline <- thisline + 1L
         }
 
-        ## FIXME: we need an extensible architecture here, including options
-        ## FIXME: use tryCatch()
         if (options$fig && options$eval) {
-            if (options$eps) {
-                grDevices::postscript(file = paste(chunkprefix, "eps", sep = "."),
-                                      width = options$width, height = options$height,
-                                      paper = "special", horizontal = FALSE)
-
-                err <- try({
+            devs <- list()
+            if (options$pdf) devs <- c(devs, list(pdf.Swd))
+            if (options$eps) devs <- c(devs, list(eps.Swd))
+            if (options$png) devs <- c(devs, list(png.Swd))
+            if (options$jpeg) devs <- c(devs, list(jpeg.Swd))
+            if (!is.null(grd <- options$grdevice))
+                devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
+            for (dev in devs) {
+                dev(name = chunkprefix, width = options$width, height = options$height,
+                    resolution = options$resolution)
+                err <- tryCatch({
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
+                }, error = function(e) {
+                    grDevices::dev.off()
+                    stop(conditionMessage(e), call. = FALSE, domain = NA)
                 })
                 grDevices::dev.off()
-                if (inherits(err, "try-error")) stop(err)
-            }
-
-            if (options$pdf) {
-                grDevices::pdf(file = paste(chunkprefix, "pdf", sep = "."),
-                               width = options$width, height = options$height,
-                               version = options$pdf.version,
-                               encoding = options$pdf.encoding)
-
-                err <- try({
-                    SweaveHooks(options, run = TRUE)
-                    eval(chunkexps, envir = .GlobalEnv)
-                })
-                grDevices::dev.off()
-                if (inherits(err, "try-error")) stop(err)
-            }
-
-            if (options$png) {
-                grDevices::png(filename = paste(chunkprefix, "png", sep = "."),
-                               width = options$width, height = options$height,
-                               res = options$resolution, units = "in")
-                err <- try({
-                    SweaveHooks(options, run = TRUE)
-                    eval(chunkexps, envir = .GlobalEnv
-                         )})
-                grDevices::dev.off()
-                if (inherits(err, "try-error")) stop(err)
-            }
-
-            if (options$jpeg) {
-                grDevices::jpeg(filename = paste(chunkprefix, "png", sep = "."),
-                                width = options$width, height = options$height,
-                                res = options$resolution, units = "in")
-                err <- try({
-                    SweaveHooks(options, run = TRUE)
-                    eval(chunkexps, envir = .GlobalEnv
-                         )})
-                grDevices::dev.off()
-                if (inherits(err, "try-error")) stop(err)
-            }
-
-            if (options$mydevice) {
-                mySweaveDevice <- get("mySweaveDevice", envir = .GlobalEnv)
-                mySweaveDevice(name = chunkprefix,
-                               width = options$width, height = options$height)
-                err <- try({
-                    SweaveHooks(options, run = TRUE)
-                    eval(chunkexps, envir = .GlobalEnv
-                         )})
-                grDevices::dev.off()
-                if (inherits(err, "try-error")) stop(err)
             }
 
             if (options$include) {
@@ -832,10 +813,13 @@ RweaveLatexOptions <- function(options)
         else return(as.logical(toupper(as.character(x))))
     }
 
+    ## numeric
     NUMOPTS <- c("width", "height", "resolution")
 
+    ## not logical
     NOLOGOPTS <- c(NUMOPTS, "results", "prefix.string", "engine",
-                   "label", "strip.white", "pdf.version", "pdf.encoding")
+                   "label", "strip.white", "pdf.version", "pdf.encoding",
+                   "grdevice")
 
     for (opt in names(options)) {
         if (! (opt %in% NOLOGOPTS)) {
@@ -850,8 +834,7 @@ RweaveLatexOptions <- function(options)
 
     if (!is.null(options$results))
         options$results <- tolower(as.character(options$results))
-    options$results <- match.arg(options$results,
-                                 c("verbatim", "tex", "hide"))
+    options$results <- match.arg(options$results, c("verbatim", "tex", "hide"))
 
     if (!is.null(options$strip.white))
         options$strip.white <- tolower(as.character(options$strip.white))

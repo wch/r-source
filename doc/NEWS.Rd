@@ -404,9 +404,9 @@
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
       
-      \item \code{Sweave()} has options to produce PNG and JPEG figures.
-      There is also a temporary option to call a user-defined graphics device.
-      
+      \item \code{Sweave()} has options to produce PNG and JPEG figures,
+      and to use a custom function to open a graphics device (see
+      \code{?RweaveLatex}).\cr
       (Based in part on the contribution of \PR{14418}.)
     }
   }
