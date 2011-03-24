@@ -35,14 +35,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 \details{
   The LaTeX file generated needs to contain the line
   \samp{\\usepackage\{Sweave\}}, and if this is not present in the
-  Sweave source file, it is inserted by the \code{RweaveLatex} driver.
-  If \code{stylepath = TRUE}, a hard-coded path to the file
-  \file{Sweave.sty} in the \R installation is set in place of \code{Sweave}.
-  The hard-coded path makes the TeX file less portable, but avoids the
-  problem of installing the current version of \file{Sweave.sty} to some
-  place in your TeX input path.  However, TeX may not be able to
-  process the hard-coded path if it contains spaces (as it often will
-  under Windows) or TeX special characters.
+  Sweave source file (possibly in a comment), it is inserted by the
+  \code{RweaveLatex} driver.  If \code{stylepath = TRUE}, a hard-coded
+  path to the file \file{Sweave.sty} in the \R installation is set in
+  place of \code{Sweave}.  The hard-coded path makes the TeX file less
+  portable, but avoids the problem of installing the current version of
+  \file{Sweave.sty} to some place in your TeX input path.  However, TeX
+  may not be able to process the hard-coded path if it contains spaces
+  (as it often will under Windows) or TeX special characters.
 
   The default for \code{stylepath} is now taken from the environment
   variable \env{SWEAVE_STYLEPATH_DEFAULT}, or is \code{FALSE} it that is
@@ -106,77 +106,102 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 }
 
 \section{Supported Options}{
-  \code{RweaveLatex} supports the following options for code chunks (the values
-  in parentheses show the default values):
-  \describe{
-    \item{echo:}{logical (\code{TRUE}). Include \R code in the
-      output file?}
+  \code{RweaveLatex} supports the following options for code chunks (the
+  values in parentheses show the default values):
+  \describe{    
+    \item{echo:}{logical (\code{TRUE}). Include \R code in the output
+      file?}
+
     \item{keep.source:}{logical (\code{FALSE}).  When echoing, if
-      \code{keep.source == TRUE} the original source is copied to the file.
-      Otherwise, deparsed source is echoed.}
-    \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk is not
-      evaluated, and hence no text or graphical output produced.}
-    \item{results:}{character string (\code{"verbatim"}).
-      If \code{verbatim}, the output of \R commands is
-      included in the verbatim-like Soutput environment.  If
-      \code{tex}, the output is taken to be already proper latex markup
-      and included as is.  If \code{hide} then all output is
-      completely suppressed (but the code executed during the weave).}
-    \item{print:}{logical (\code{FALSE}).
-      If \code{TRUE}, each expression in the
-      code chunk is wrapped into a \code{print()} statement before evaluation,
-      such that the values of all expressions become visible.}
-    \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of values
-      emulates an interactive R session: values of assignments are not
-      printed, values of single objects are printed.  If \code{FALSE},
-      output comes only from explicit \code{\link{print}} or
-      \code{\link{cat}} statements.}
-    \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output is
-      written to separate files
-      for each code chunk.}
-    \item{strip.white:}{character string (\code{"true"}).  If \code{"true"}, blank
-      lines at the beginning and end of output are removed.  If
-      \code{"all"}, then all blank lines are removed from the output.}
-    \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated filenames of
-      figures and output have a common prefix.}
+      \code{keep.source == TRUE} the original source is copied to the
+      file.  Otherwise, deparsed source is echoed.}
+    
+    \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
+      is not evaluated, and hence no text or graphical output produced.}
+    
+    \item{results:}{character string (\code{"verbatim"}).  If
+      \code{verbatim}, the output of \R commands is included in the
+      verbatim-like Soutput environment.  If \code{tex}, the output is
+      taken to be already proper latex markup and included as is.  If
+      \code{hide} then all output is completely suppressed (but the code
+      executed during the weave).}
+
+    \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, each
+      expression in the code chunk is wrapped into a \code{print()}
+      statement before evaluation, such that the values of all
+      expressions become visible.}
+    
+    \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
+      values emulates an interactive R session: values of assignments
+      are not printed, values of single objects are printed.  If
+      \code{FALSE}, output comes only from explicit \code{\link{print}}
+      or \code{\link{cat}} statements.}
+    
+    \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output
+      is written to separate files for each code chunk.}
+    
+    \item{strip.white:}{character string (\code{"true"}).  If
+      \code{"true"}, blank lines at the beginning and end of output are
+      removed.  If \code{"all"}, then all blank lines are removed from
+      the output.}
+    
+    \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
+      filenames of figures and output have a common prefix.}
+    
     \item{prefix.string:}{a character string, default is the name of the
-      \file{.Snw} source file.}
+      source file (without extension).}
+    
     \item{include:}{logical (\code{TRUE}), indicating whether input
-      statements for text output and includegraphics statements
-      for figures should be auto-generated.  Use \code{include = FALSE} if
+      statements for text output and includegraphics statements for
+      figures should be auto-generated.  Use \code{include = FALSE} if
       the output should appear in a different place than the code chunk
       (by placing the input line manually).}
+    
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
       chunk produces graphical output.  Note that only one figure per
       code chunk can be processed this way.}
-    \item{eps:}{logical (\code{TRUE}), indicating whether EPS figures should be
-      generated.  Ignored if \code{fig = FALSE}.}
-    \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures should be
-      generated.  Ignored if \code{fig = FALSE}.}
+    
+    \item{eps:}{logical (\code{FALSE}), indicating whether EPS figures
+      should be generated.  Ignored if \code{fig = FALSE}.}
+    
+    \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures
+      should be generated.  Ignored if \code{fig = FALSE}.}
+    
     \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
-      the version and encoding.  Defaults taken from \code{pdf.options()}.}
+      the version and encoding.  Defaults taken from
+      \code{pdf.options()}.}
+    
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
+    
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
+    
     \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
-	Graphics Devices}.}
-    \item{width:}{numeric (6), width of figures in inches. See \sQuote{Details}.}
-    \item{height:}{numeric (6), height of figures in inches. See \sQuote{Details}.}
-    \item{resolution:}{numeric (300), resolution in pixels per inch: used
-      for PNG and JPEG graphics.  Note that the default is a fairly high value,
-      for high-quality plots.}
-    \item{expand:}{logical (\code{TRUE}).  Expand references to other chunks
-      so that only R code appears in the output file.  If \code{FALSE}, the
-      chunk reference (e.g. \code{<<chunkname>>}) will appear.  The
-      \code{expand = FALSE} option requires \code{keep.source = TRUE} or it
-      will have no effect.}
-    \item{concordance:}{logical (\code{FALSE}).  Write a concordance file
-      to link the input line numbers to the output line numbers.  This is
-      an experimental feature; see the source code for the output format,
-      which is subject to change in future releases.}
+	Graphics Devices}.
+    }
+    \item{width:}{numeric (6), width of figures in inches. See
+      \sQuote{Details}.}
+    
+    \item{height:}{numeric (6), height of figures in inches. See
+      \sQuote{Details}.}
+    
+    \item{resolution:}{numeric (300), resolution in pixels per inch:
+      used for PNG and JPEG graphics.  Note that the default is a fairly
+      high value, appropriate for high-quality plots.}
+    
+    \item{expand:}{logical (\code{TRUE}).  Expand references to other
+      chunks so that only R code appears in the output file.  If
+      \code{FALSE}, the chunk reference (e.g. \code{<<chunkname>>}) will
+      appear.  The \code{expand = FALSE} option requires
+      \code{keep.source = TRUE} or it will have no effect.}
+    
+    \item{concordance:}{logical (\code{FALSE}).  Write a concordance
+      file to link the input line numbers to the output line numbers.
+      This is an experimental feature; see the source code for the
+      output format, which is subject to change in future releases.}
   }
 }
 
