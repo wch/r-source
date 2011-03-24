@@ -1613,6 +1613,11 @@ SS loadings      1.853   1.807
 Proportion Var   0.309   0.301
 Cumulative Var   0.309   0.610
 
+Factor Correlations:
+        Factor1 Factor2
+Factor1   1.000   0.557
+Factor2   0.557   1.000
+
 Test of the hypothesis that 2 factors are sufficient.
 The chi square statistic is 6.11 on 4 degrees of freedom.
 The p-value is 0.191 
