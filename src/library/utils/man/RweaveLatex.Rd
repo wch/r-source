@@ -120,10 +120,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       is not evaluated, and hence no text or graphical output produced.}
     
     \item{results:}{character string (\code{"verbatim"}).  If
-      \code{verbatim}, the output of \R commands is included in the
-      verbatim-like Soutput environment.  If \code{tex}, the output is
+      \code{"verbatim"}, the output of \R commands is included in the
+      verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the output is
       taken to be already proper latex markup and included as is.  If
-      \code{hide} then all output is completely suppressed (but the code
+      \code{"hide"} then all output is completely suppressed (but the code
       executed during the weave).}
 
     \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, each
@@ -132,10 +132,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       expressions become visible.}
     
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
-      values emulates an interactive R session: values of assignments
+      values emulates an interactive \R session: values of assignments
       are not printed, values of single objects are printed.  If
       \code{FALSE}, output comes only from explicit \code{\link{print}}
-      or \code{\link{cat}} statements.}
+      or similar statements.}
     
     \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output
       is written to separate files for each code chunk.}
@@ -143,7 +143,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{strip.white:}{character string (\code{"true"}).  If
       \code{"true"}, blank lines at the beginning and end of output are
       removed.  If \code{"all"}, then all blank lines are removed from
-      the output.}
+      the output.  If \code{"false"} then blank lines are retained.}
     
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
       filenames of figures and output have a common prefix.}
@@ -168,8 +168,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       should be generated.  Ignored if \code{fig = FALSE}.}
     
     \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
-      the version and encoding.  Defaults taken from
-      \code{pdf.options()}.}
+      the version and encoding.  Defaults taken from \code{pdf.options()}.}
     
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
@@ -180,8 +179,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       available in \R >= 2.13.0.}
     
     \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
-	Graphics Devices}.
-    }
+	Graphics Devices}.  Only available in \R >= 2.13.0.}
+    
     \item{width:}{numeric (6), width of figures in inches. See
       \sQuote{Details}.}
     
@@ -213,7 +212,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 }
   which should open a graphics device.  The chunk's code is then
   evaluated and \code{\link{dev.off}} is called.  Normally a function of
-  the name give will have been defined earlier in the Sweave documents, e.g.
+  the name given will have been defined earlier in the Sweave document, e.g.
 \preformatted{
 <<hide=TRUE>>=
 my.Swd <- function(name, width, height, ...)

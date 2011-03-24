@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rtangle.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rtangle}
@@ -8,7 +8,7 @@
 \alias{RtangleSetup}
 \title{R Driver for Stangle}
 \description{
-  A driver for \code{\link{Stangle}} that extracts R code chunks.
+  A driver for \code{\link{Stangle}} that extracts \R code chunks.
 }
 \usage{
 Rtangle()
@@ -26,12 +26,12 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
     lines specifying the names and numbers of the code chunks. If
     \code{FALSE}, only the code chunks without any decorating comments
     are extracted.}
-  \item{split}{Split output in single files per code chunk?}
+  \item{split}{Split output into a file for each code chunk?}
   \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
 }
-\author{Friedrich Leisch}
+\author{Friedrich Leisch and R-core.}
 \references{
   Friedrich Leisch: Sweave User Manual, 2008\cr
   \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}

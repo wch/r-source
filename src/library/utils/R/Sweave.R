@@ -356,7 +356,7 @@ RweaveLatexSetup <-
     } else prefix.string <- basename(sub("\\.tex$", "", output))
 
     if (!quiet) cat("Writing to file ", output, "\n",
-                   "Processing code chunks ...\n", sep = "")
+                   "Processing code chunks with options ...\n", sep = "")
     output <- file(output, open = "w+")
 
     if (missing(stylepath)) {
@@ -555,13 +555,16 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     if (grepl(chunkregexp, srcfile$filename)) {
                         cntxt <- list(refline, prevsrcfile)
                         srcrefstack <- c(list(cntxt), srcrefstack)
-                        refline <- as.integer(sub(chunkregexp, "\\2", srcfile$filename))
+                        refline <- as.integer(sub(chunkregexp, "\\2",
+                                                  srcfile$filename))
                         ## Echo any remaining comments if necessary
                         echoComments(refline - 1L)
                         if (options$expand)
                             lastshown <-
-                                as.integer(sub(chunkregexp, "\\3", srcfile$filename))
-                        srcfile$filename <- sub(chunkregexp, "\\1", srcfile$filename)
+                                as.integer(sub(chunkregexp, "\\3",
+                                               srcfile$filename))
+                        srcfile$filename <- sub(chunkregexp, "\\1",
+                                                srcfile$filename)
                     } else refline <- NA
                     srcfile$refline <- refline
                 }
