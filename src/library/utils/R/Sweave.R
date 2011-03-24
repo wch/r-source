@@ -681,8 +681,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (!is.null(grd <- options$grdevice))
                 devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
             for (dev in devs) {
-                dev(name = chunkprefix, width = options$width, height = options$height,
-                    resolution = options$resolution)
+                dev(name = chunkprefix, width = options$width,
+                    height = options$height, options)
                 err <- tryCatch({
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
