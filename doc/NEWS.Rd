@@ -44,6 +44,10 @@
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
+
+      \item \command{R CMD Sweave} now supports a \option{--driver}
+      option to select the Sweave driver: the default is equivalent to
+      \option{--driver=RweaveLatex}.
     }
   }
   

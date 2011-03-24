@@ -356,7 +356,7 @@ RweaveLatexSetup <-
     } else prefix.string <- basename(sub("\\.tex$", "", output))
 
     if (!quiet) cat("Writing to file ", output, "\n",
-                   "Processing code chunks ...\n", sep = "")
+                   "Processing code chunks with options ...\n", sep = "")
     output <- file(output, open = "w+")
 
     if (missing(stylepath)) {
@@ -989,16 +989,23 @@ RtangleFinish <- function(object, error = FALSE)
 }
 
 ## For R CMD xxxx
-.Sweave <- function(arg)
+.Sweave <- function(args = NULL)
 {
+    if (is.null(args)) {
+        args <- commandArgs(TRUE)
+        args <- paste(args, collapse=" ")
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
+    }
+
     Usage <- function() {
-        cat("Usage: R CMD Sweave file",
+        cat("Usage: R CMD Sweave [options] file",
             "",
             "A simple front-end for Sweave",
             "",
             "Options:",
             "  -h, --help     print this help message and exit",
             "  -v, --version  print version info and exit",
+            "  --driver=name  use named Sweave driver",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -1006,20 +1013,35 @@ RtangleFinish <- function(object, error = FALSE)
     do_exit <- function(status = 0L)
         q("no", status = status, runLast = FALSE)
 
-    if (length(arg) != 1L) { Usage(); do_exit(1L) }
-    if (arg %in% c("-h", "--help")) { Usage(); do_exit() }
-    if (arg %in% c("-v", "--version")) {
-        cat("Sweave front-end: ",
-            R.version[["major"]], ".",  R.version[["minor"]],
-            " (r", R.version[["svn rev"]], ")\n", sep = "")
-        cat("",
-            "Copyright (C) 2006-2010 The R Core Development Team.",
-            "This is free software; see the GNU General Public License version 2",
-            "or later for copying conditions.  There is NO warranty.",
-            sep = "\n")
-        do_exit()
+    if (!length(args)) {
+        Usage()
+        do_exit(1L)
     }
-    Sweave(arg)
+    driver <- ""
+    while(length(args)) {
+        a <- args[1L]
+        if (a %in% c("-h", "--help")) {
+            Usage()
+            do_exit()
+        }
+        else if (a %in% c("-v", "--version")) {
+            cat("Sweave front-end: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
+            cat("",
+                "Copyright (C) 2006-2011 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep = "\n")
+            do_exit()
+        } else if (substr(a, 1, 9) == "--driver=") {
+            driver <- substr(a, 10, 1000)
+        } else if (substr(a, 1, 1) == "-") {
+            message("Warning: unknown option ", sQuote(a))
+        } else arg <- a
+       args <- args[-1L]
+    }
+    if(nzchar(driver)) Sweave(arg, driver) else Sweave(arg)
     do_exit()
 }
 
