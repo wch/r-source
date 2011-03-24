@@ -19,6 +19,10 @@
 
       \item The default for \code{Sweave()} is to produce only PDF
       figures (rather than both EPS and PDF).
+
+      \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
+	TRUE} allows Python-style named captures.
+      (Wish and contribution of \PR{14518}.)
     }
   }
   

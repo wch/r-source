@@ -1548,7 +1548,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	patlen = strlen(spat);
 	if (!patlen) error(_("zero-length pattern"));
 	replen = strlen(srep);
-    } else if(perl_opt) {
+    } else if (perl_opt) {
 	int cflags = 0, erroffset;
 	const char *errorptr;
 	if (use_UTF8) cflags |= PCRE_UTF8;
@@ -1847,7 +1847,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (fixed_opt) ; 
-    else if(perl_opt) {
+    else if (perl_opt) {
 	if (re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
@@ -2032,20 +2032,92 @@ gregexpr_fixed(const char *pattern, const char *string,
     return ans;
 }
 
+/* This function is used to convert a single ovector (match_start,
+   match_end) pair (in bytes) to a pair of (match_start in 1-indexed
+   unicode characters stored in mptr, match_length in number of
+   unicode characters stored in lenptr)
+
+   We have to do this once for the match and once for every group, so
+   I generalized the method and call it twice from
+   extract_match_and_groups to avoid repetitive code.
+   
+   Toby Dylan Hocking 2011-03-10
+*/
+static int 
+ovector_extract_start_length(Rboolean use_UTF8,int *ovector,
+			     int *mptr,int *lenptr,const char *string)
+{
+    int foundAll = 0;
+    int st = ovector[0];
+    *mptr = st + 1; /* index from one */
+    *lenptr = ovector[1] - st;
+    if (use_UTF8) {
+	/* Unfortunately these are in bytes */
+	if (st > 0) {
+	    *mptr = 1 + getNc(string, st);
+	    if (*mptr <= 0) { /* an invalid string */
+		*mptr = NA_INTEGER;
+		foundAll = 1; /* if we get here, we are done */
+	    }
+	}
+	*lenptr = getNc(string+st, *lenptr);
+	if (*lenptr < 0) {/* an invalid string */
+	    *lenptr = NA_INTEGER;
+	    foundAll = 1;
+	}
+    }
+    return foundAll;
+}
+
+/* this function generalizes the parsing of the "ovector" from pcre
+   which contains the match and group start and end bytes. it is
+   organized as follows: match_start match_end group1_start group1_end
+   group2_start group2_end ... we process these in regexpr and
+   gregexpr, so I made this function to avoid duplicating code between
+   the 2. 
+
+   Toby Dylan Hocking 2011-03-10 */
+static int 
+extract_match_and_groups(Rboolean use_UTF8, int *ovector, int capture_count,
+			 int *mptr, int *lenptr, int *cptr, int *clenptr,
+			 const char *string, int capture_stride)
+{
+    int foundAll=
+	ovector_extract_start_length(use_UTF8, ovector, mptr, lenptr, string);
+    /* also extract capture locations */
+    int ind,capture_num;
+    for(capture_num = 0; capture_num < capture_count; capture_num++) {
+	ind = capture_stride*capture_num;
+	ovector_extract_start_length(use_UTF8, ovector+2*(capture_num+1),
+				     cptr+ind, clenptr+ind, string);
+    }
+    return foundAll;
+}
+
 static SEXP
 gregexpr_perl(const char *pattern, const char *string,
 	      pcre *re_pcre, pcre_extra *re_pe,
-	      Rboolean useBytes, Rboolean use_UTF8)
+	      Rboolean useBytes, Rboolean use_UTF8,
+	      int *ovector, int ovector_size,
+	      int capture_count, SEXP capture_names)
 {
-    int matchIndex = -1, st = 0, foundAll = 0, foundAny = 0, j, start=0;
+    int matchIndex = -1, foundAll = 0, foundAny = 0, j, start=0;
     SEXP ans, matchlen;         /* return vect and its attribute */
+    SEXP capture = R_NilValue, capturelen = R_NilValue, 
+	capturebuf = R_NilValue, capturelenbuf = R_NilValue; /* -Wall */
     SEXP matchbuf, matchlenbuf; /* buffers for storing multiple matches */
     int bufsize = 1024;         /* starting size for buffers */
+    int capture_num; /* counter for capture groups */
+    if (capture_count) {
+	PROTECT(capturelenbuf = allocVector(INTSXP, bufsize*capture_count));
+	PROTECT(capturebuf = allocVector(INTSXP, bufsize*capture_count));
+    }
     PROTECT(matchbuf = allocVector(INTSXP, bufsize));
     PROTECT(matchlenbuf = allocVector(INTSXP, bufsize));
     while (!foundAll) {
-	int rc, ovector[3], slen = strlen(string);
-	rc = pcre_exec(re_pcre, re_pe, string, slen, start, 0, ovector, 3);
+	int rc, slen = strlen(string);
+	rc = pcre_exec(re_pcre, re_pe, string, slen, start, 0, ovector,
+		       ovector_size);
 	if (rc >= 0) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
@@ -2064,34 +2136,49 @@ gregexpr_perl(const char *pattern, const char *string,
 		UNPROTECT(2);
 		PROTECT(matchbuf);
 		PROTECT(matchlenbuf);
+		if (capture_count) {
+		    tmp = allocVector(INTSXP, 2 * bufsize*capture_count);
+		    for(j = 0; j < bufsize;j++)
+			for(capture_num = 0; capture_num < capture_count;
+			    capture_num++)
+			    INTEGER(tmp)[j+2*bufsize*capture_num] = 
+				INTEGER(capturebuf)[j+bufsize*capture_num];
+		    capturebuf = tmp;
+		    UNPROTECT(3);
+		    PROTECT(matchbuf);
+		    PROTECT(matchlenbuf);
+		    PROTECT(capturebuf);
+		    tmp = allocVector(INTSXP, 2 * bufsize*capture_count);
+		    for(j = 0; j < bufsize; j++)
+			for(capture_num = 0; capture_num < capture_count;
+			    capture_num++)
+			    INTEGER(tmp)[j+2*bufsize*capture_num] = 
+				INTEGER(capturelenbuf)[j+bufsize*capture_num];
+		    capturelenbuf = tmp;
+		    UNPROTECT(4);
+		    PROTECT(matchbuf);
+		    PROTECT(matchlenbuf);
+		    PROTECT(capturebuf);
+		    PROTECT(capturelenbuf);
+		}
+
 		bufsize = newbufsize;
 	    }
 	    matchIndex++;
 	    foundAny = 1;
-	    st = ovector[0];
-	    INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
-	    INTEGER(matchlenbuf)[matchIndex] = ovector[1] - st;
+	    foundAll = 
+		extract_match_and_groups(use_UTF8,ovector,
+					 capture_count,
+					 INTEGER(matchbuf)+matchIndex,
+					 INTEGER(matchlenbuf)+matchIndex,
+					 INTEGER(capturebuf)+matchIndex,
+					 INTEGER(capturelenbuf)+matchIndex,
+					 string, bufsize);
 	    /* we need to advance 'start' in bytes */
-	    if (INTEGER(matchlenbuf)[matchIndex] == 0)
+	    if (ovector[1] - ovector[0] == 0)
 		start = ovector[0] + 1;
 	    else
 		start = ovector[1];
-	    if (use_UTF8) {
-		int mlen = ovector[1] - st;
-		/* Unfortunately these are in bytes */
-		if (st > 0) {
-		    INTEGER(matchbuf)[matchIndex] = 1 + getNc(string, st);
-		    if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
-			INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
-			foundAll = 1; /* if we get here, we are done */
-		    }
-		}
-		INTEGER(matchlenbuf)[matchIndex] = getNc(string+st, mlen);
-		if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
-		    INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
-		    foundAll = 1;
-		}
-	    }
 	    if (start >= slen) foundAll = 1;
 	} else {
 	    foundAll = 1;
@@ -2100,14 +2187,44 @@ gregexpr_perl(const char *pattern, const char *string,
     }
     PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
     PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
+    if (capture_count) {
+	SEXP dmn;
+	PROTECT(capture = allocMatrix(INTSXP, matchIndex+1, capture_count));
+	PROTECT(capturelen = allocMatrix(INTSXP, matchIndex+1, capture_count));
+	PROTECT(dmn = allocVector(VECSXP, 2));
+	SET_VECTOR_ELT(dmn, 1, capture_names);
+	setAttrib(capture, R_DimNamesSymbol, dmn);
+	setAttrib(capturelen, R_DimNamesSymbol, dmn);
+	UNPROTECT(1);
+    }
+
     if (foundAny) {
 	/* copy from buffers */
 	for (j = 0; j <= matchIndex; j++) {
 	    INTEGER(ans)[j] = INTEGER(matchbuf)[j];
 	    INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
+	    for(capture_num = 0; capture_num < capture_count; capture_num++) {
+		int return_index = j + (matchIndex+1) * capture_num;
+		int buffer_index = j + bufsize * capture_num;
+		INTEGER(capture)[return_index] =
+		    INTEGER(capturebuf)[buffer_index];
+		INTEGER(capturelen)[return_index] =
+		    INTEGER(capturelenbuf)[buffer_index];
+	    }
 	}
-    } else INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
+    } else {
+	INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
+	for(capture_num = 0; capture_num < capture_count; capture_num++)
+	    INTEGER(capture)[capture_num] = 
+		INTEGER(capturelen)[capture_num] = -1;
+    }
     setAttrib(ans, install("match.length"), matchlen);
+    if (capture_count) {
+	setAttrib(ans, install("capture.start"), capture);
+	setAttrib(ans, install("capture.length"), capturelen);
+	setAttrib(ans, install("capture.names"), capture_names);
+	UNPROTECT(4);
+    }
     UNPROTECT(4);
     return ans;
 }
@@ -2147,6 +2264,11 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     const unsigned char *tables = NULL /* -Wall */;
     Rboolean use_UTF8 = FALSE, use_WC = FALSE;
     const void *vmax;
+    int capture_count, capture_num, 
+	*ovector = NULL, ovector_size = 0, /* -Wall */
+	name_count, name_entry_size, info_code;
+    char *name_table;
+    SEXP capture_names = R_NilValue;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -2234,6 +2356,26 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 	}
+	/* also extract info for named groups */
+	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMECOUNT, &name_count);
+	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMEENTRYSIZE, &name_entry_size);
+	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMETABLE, &name_table);
+	info_code = 
+	    pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_CAPTURECOUNT, 
+			  &capture_count);
+	if(info_code < 0)
+	    error(_("pcre_fullinfo returned '%d' "), info_code);
+	ovector_size = (capture_count + 1) * 3;
+	ovector = (int*)malloc(ovector_size*sizeof(int));
+	SEXP thisname;
+	PROTECT(capture_names = allocVector(STRSXP, capture_count));
+	for(i = 0; i < name_count; i++) {
+	    char *entry = name_table + name_entry_size * i;
+	    PROTECT(thisname = mkChar(entry + 2));
+	    capture_num = (entry[0]<<8) + entry[1] - 1;
+	    SET_STRING_ELT(capture_names, capture_num, thisname);
+	    UNPROTECT(1);
+	}
     } else {
 	int cflags = REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
@@ -2245,10 +2387,23 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (PRIMVAL(op) == 0) { /* regexpr */
-	SEXP matchlen;
+	SEXP matchlen, capture_start = R_NilValue, capturelen = R_NilValue;
 	PROTECT(ans = allocVector(INTSXP, n));
 	matchlen = allocVector(INTSXP, n); /* protected by next line */
 	setAttrib(ans, install("match.length"), matchlen);
+	if (perl_opt && capture_count) {
+	    SEXP dmn;
+	    PROTECT(dmn = allocVector(VECSXP, 2));
+	    SET_VECTOR_ELT(dmn, 1, capture_names);
+	    PROTECT(capture_start = allocMatrix(INTSXP, n, capture_count));
+	    setAttrib(capture_start, R_DimNamesSymbol, dmn);
+	    setAttrib(ans, install("capture.start"), capture_start);
+	    PROTECT(capturelen = allocMatrix(INTSXP, n, capture_count));
+	    setAttrib(capturelen, R_DimNamesSymbol, dmn);
+	    setAttrib(ans, install("capture.length"), capturelen);
+	    setAttrib(ans, install("capture.names"), capture_names);
+	    UNPROTECT(3);
+	}
 
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
@@ -2286,23 +2441,26 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			    strlen(spat):-1;
 		} else if (perl_opt) {
-		    int rc, ovector[3];
-		    rc = pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, ovector, 3);
+		    int rc,ind;
+		    rc = pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, 
+				   ovector, ovector_size);
 		    if (rc >= 0) {
-			int st = ovector[0];
-			INTEGER(ans)[i] = st + 1; /* index from one */
-			INTEGER(matchlen)[i] = ovector[1] - st;
-			if (use_UTF8) {
-			    int mlen = ovector[1] - st, nc;
-			    /* Unfortunately these are in bytes */
-			    if (st > 0) {
-				nc = getNc(s, st); 
-				INTEGER(ans)[i] = (nc >= 0) ? nc+1 : NA_INTEGER; 
-			    }
-			    nc = getNc(s + st, mlen);
-			    INTEGER(matchlen)[i] = (nc >= 0) ? nc : NA_INTEGER;
+			extract_match_and_groups(use_UTF8, ovector, 
+						 capture_count,
+						 INTEGER(ans)+i,
+						 INTEGER(matchlen)+i,
+						 INTEGER(capture_start)+i,
+						 INTEGER(capturelen)+i,
+						 s, n);
+		    } else {
+			INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+			for(capture_num = 0; capture_num < capture_count;
+			    capture_num++) {
+			    ind = i + capture_num*n;
+			    INTEGER(capture_start)[ind] = 
+				INTEGER(capturelen)[ind] = -1;
 			}
-		    } else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+		    }
 		} else {
 		    if (!use_WC)
 			rc = tre_regexecb(&reg, s, 1, regmatch, 0);
@@ -2340,7 +2498,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (fixed_opt)
 			    elt = gregexpr_fixed(spat, s, useBytes, use_UTF8);
 			else
-			    elt = gregexpr_perl(spat, s, re_pcre, re_pe, useBytes, use_UTF8);
+			    elt = gregexpr_perl(spat, s, re_pcre, re_pe, 
+						useBytes, use_UTF8, ovector,
+						ovector_size, capture_count,
+						capture_names);
 		    }
 		} else
 		    elt = gregexpr_Regexc(&reg, STRING_ELT(text, i), useBytes, use_WC);
@@ -2355,6 +2516,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
+	UNPROTECT(1);
+	free(ovector);
     } else
 	tre_regfree(&reg);
 
