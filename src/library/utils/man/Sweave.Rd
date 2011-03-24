@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -25,10 +25,9 @@ Stangle(file, driver = Rtangle(),
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
-  \item{driver}{The actual workhorse, see details below.}
-  \item{syntax}{An object of class \code{SweaveSyntax} or a character
-    string with its name. The default installation provides
-    \code{SweaveSyntaxNoweb} and \code{SweaveSyntaxLatex}.}
+  \item{driver}{The actual workhorse, see \sQuote{Details}.}
+  \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
+    a character string with its name.  See section \sQuote{Syntax Definition}.}
   \item{\dots}{Further arguments passed to the driver's setup function.}
 }
 \details{
@@ -38,43 +37,63 @@ Stangle(file, driver = Rtangle(),
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.
 
-  \code{Sweave} combines the documentation and code chunks together
-  (or their output) into a single document.  \code{Stangle} extracts only
-  the code from the Sweave file creating a valid S source file (that can
-  be run using \code{\link{source}}).  Code inside \code{\\Sexpr\{\}}
-  statements is ignored by \code{Stangle}.
+  \code{Sweave} combines the documentation and code chunks together (or
+  their output) into a single document.  \code{Stangle} extracts only
+  the code from the Sweave file creating an S source file that can be
+  run using \code{\link{source}}.  (Code inside \code{\\Sexpr\{\}}
+  statements is ignored by \code{Stangle}.)
 
-  \code{Stangle} is just a frontend to \code{Sweave} using a simple
-  driver by default, which discards the documentation and concatenates
-  all code chunks the current S engine understands.
-}   
+  \code{Stangle} is just a wrapper to \code{Sweave} specifying a
+  different default driver.  Alternative drivers can be used: the CRAN
+  package \pkg{cacheSweave} and the Bioconductor package \pkg{weaver}
+  both provide drivers based on the default driver
+  \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
+  the results of computations on code chunks.
+}
+
 \section{Hook Functions}{
-  Before each code chunk is evaluated, a number of hook functions can be
-  executed.  If \code{getOption("SweaveHooks")} is set, it is taken to be
-  a collection of hook functions. For each logical option of a code chunk
-  (\code{echo}, \code{print}, \ldots) a hook can be specified, which is
-  executed if and only if the respective option is \code{TRUE}. Hooks must
-  be named elements of the list returned by
-  \code{getOption("SweaveHooks")} and be functions taking no
-  arguments.  E.g., if option \code{"SweaveHooks"} is defined as
-  \code{list(fig = foo)}, and \code{foo} is a function, then it would be
-  executed before the code in each figure chunk. This is especially useful
-  to set defaults for the graphical parameters in a series of figure
-  chunks.
+  Hook functions are part of the driver, so this section applies to the
+  default drivers for \code{Sweave} and \code{Stangle} but maybe not for
+  others.
 
-  Note that the user is free to define new Sweave options and associate
-  arbitrary hooks with them.  E.g., one could define a hook function for
-  option \code{clean} that removes all objects in the global
-  environment.  Then all code chunks with \code{clean = TRUE} would start
-  operating on an empty workspace.
+  Before each code chunk is evaluated, zero or more hook functions can
+  be executed.  If \code{getOption("SweaveHooks")} is set, it is taken
+  to be a named list of hook functions.  For each logical option of a
+  code chunk (\code{echo}, \code{print}, \ldots) a hook can be
+  specified, which is executed if and only if the respective option is
+  \code{TRUE}.  Hooks must be named elements of the list returned by
+  \code{getOption("SweaveHooks")} and be functions taking no arguments.
+  E.g., if option \code{"SweaveHooks"} is defined as \code{list(fig =
+  foo)}, and \code{foo} is a function, then it would be executed before
+  the code in each figure chunk. This is especially useful to set
+  defaults for the graphical parameters in a series of figure chunks.
+
+  Note that the user is free to define new Sweave logical options and
+  associate arbitrary hooks with them.  E.g., one could define a hook
+  function for a new option called \code{clean} that removes all objects
+  in the workspace.  Then all code chunks specified with \code{clean =
+    TRUE} would start operating on an empty workspace.
 }
+
 \section{Syntax Definition}{
-  Sweave allows a very flexible syntax framework for marking
+  Sweave allows a flexible syntax framework for marking
   documentation and text chunks. The default is a noweb-style syntax, as
-  alternative a latex-style syntax can be used. See the user manual for
-  details.
+  alternative a latex-style syntax can be used.  (See the user manual for
+  further details.)
+
+  If \code{syntax = NULL} (the default) then the available syntax
+  objects are consulted in turn, and selected if there \code{extension}
+  component is matches (as a regexp) the file name.  Objects
+  \code{SweaveSyntaxNoweb} (with \code{extension = "\\\\.[rsRS]nw$"}) and
+  \code{SweaveSyntaxLatex} (with \code{extension = "\\\\.[rsRS]tex$"}) are
+  supplied, but users or packages can supply others with names matching
+  the pattern \code{SweaveSyntax.*}.
 }
-\author{Friedrich Leisch}
+
+\author{
+  Friedrich Leisch and R-core.
+}
+
 \references{
   Friedrich Leisch: Dynamic generation of statistical reports using
   literate data analysis. In W. \enc{Härdle}{Haerdle} and
@@ -85,8 +104,11 @@ Stangle(file, driver = Rtangle(),
   Friedrich Leisch: Sweave User Manual, 2008\cr
   \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
+
 \seealso{
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
+  
+  Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.
 }
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")

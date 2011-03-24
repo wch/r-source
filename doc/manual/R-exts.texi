@@ -1913,14 +1913,14 @@ provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
-A special case are documents with sources in Sweave format, which we
+A special case are PDF documents with sources in Sweave format, which we
 call @emph{package vignettes}.  These are normally given the file
 extension @file{.Rnw}, but for historical reasons
 extensions@footnote{and to avoid problems with case-insensitive file
 systems, lower-case versions of all these extensions.} @file{.Snw},
 @file{.Rtex}, @file{.Stex} are recognized as vignettes.  Sweave allows
 the integration of @LaTeX{} documents: see the @code{Sweave} help page
-in @R{}for details on the document format.  Package vignettes found in
+in @R{} for details on the document format.  Package vignettes found in
 directory @file{inst/doc} are tested by @code{R CMD check} by executing
 all @R{} code chunks they contain (except those with option
 @code{eval=FALSE}).  The @R{} working directory for all vignette tests
@@ -1953,9 +1953,9 @@ licence.}
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format in @file{inst/doc} (but not in sub-directories).  If no
 @file{Makefile} is found in directory @file{inst/doc}, then
-@code{tools::texi2dvi(pdf = TRUE)} is run on all vignettes.  Whenever a
-@file{Makefile} is found, then @code{R CMD build} will try to run
-@command{make} after the @code{Sweave} runs, so PDF manuals can be
+@code{tools::texi2dvi(pdf = TRUE)} is run on all processed vignettes.
+Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
+run @command{make} after the @code{Sweave} runs, so PDF manuals can be
 created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
 The first target in the @file{Makefile} should take care of both
 creation of PDF files and cleaning up afterwards (including after
@@ -1996,21 +1996,27 @@ would be generated from vignettes, as these will be re-generated when
 the package is installed (unless the vignette does not generate any @R{}
 code, in which case it is also pointless/misleading).
 
-It is no longer necessary to provide a @file{00Index.dcf} file in the
-@file{inst/doc} directory---the corresponding information is generated
-automatically from the @code{\VignetteIndexEntry} statements in all
-Sweave files when installing from source, or when using the package
-builder (@pxref{Checking and building packages}).  The
-@code{\VignetteIndexEntry} statement is best placed in @LaTeX{} comment,
-as then no definition of the command is necessary.
+Metadata lines can be placed in the source file, preferably in LaTeX
+comments in the preamble.  One such is a @code{\VignetteIndexEntry} of
+the form
+@example
+%\VignetteIndexEntry@{Using Animal@}
+@end example
+@noindent
+Others you may see are @code{\VignettePackage} (currently ignored),
+@code{\VignetteDepends} and @code{\VignetteKeyword} (which replaced
+@code{\VignetteKeywords}).  These are processed at package installation
+time to create the saved data frame @file{Meta/vignette.rds}, but only
+the @code{\VignetteIndexEntry} statements are currently used.
 
-At install time an @HTML{} index for all vignettes is automatically
-created from the @code{\VignetteIndexEntry} statements unless a file
-@file{index.html} exists in directory @file{inst/doc}. This index is
-linked from the @HTML{} help index for the package.  If you do supply a
-@file{inst/doc/index.html} file it should contain relative links only to
-files under the installed @file{doc} directory, or perhaps (not really
-an index) to HTML help files or to the @file{DESCRIPTION} file.
+At install time an @HTML{} index for all vignettes in the package is
+automatically created from the @code{\VignetteIndexEntry} statements
+unless a file @file{index.html} exists in directory
+@file{inst/doc}. This index is linked from the @HTML{} help index for
+the package.  If you do supply a @file{inst/doc/index.html} file it
+should contain relative links only to files under the installed
+@file{doc} directory, or perhaps (not really an index) to HTML help
+files or to the @file{DESCRIPTION} file.
 
 Do watch that PDFs are not too large -- one in a @acronym{CRAN} package
 was 72Mb!  This is usually caused by the inclusion of overly detailed
