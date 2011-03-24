@@ -18,9 +18,7 @@
 ### a) User-defined options are unclear: all options not already specified
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
-### c) Really need a way to set options globally, e.g. for all vignettes in a package.
-### d) If there is only one graphics option (as is usual), we don't need to
-### run the code in the figure chunks twice.
+### d) Need to sort out encodings
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input
@@ -329,8 +327,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 
     z <- character()
     for (k in names(SweaveHooks))
-        ## maybe this should be is.logical() not !is.null?
-        if (nzchar(k) && !is.null(options[[k]]) && options[[k]])
+        if (nzchar(k) && is.logical(options[[k]]) && options[[k]])
             if (is.function(SweaveHooks[[k]])) {
                 z <- c(z, k)
                 if (run) eval(SweaveHooks[[k]](), envir=envir)

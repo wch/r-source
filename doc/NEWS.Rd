@@ -28,10 +28,6 @@
       User-defined numeric (with names starting \code{n_}) and character
       (starting \code{ch_}) options are now allowed: as before all other
       unknown options are taken to be logical.
-
-      Environment variable \env{SWEAVE_OPTIONS} can be used to supply
-      defaults for existing or new options to be applied after the
-      Sweave driver setup has been run.
       
       \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
 	TRUE} allows Python-style named captures.  (Wish and
@@ -496,6 +492,10 @@
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
       correlations are displayed.  (Wish of \PR{12754}.)
+
+      \item Environment variable \env{SWEAVE_OPTIONS} can be used to
+      supply defaults for existing or new options to be applied after
+      the Sweave driver setup has been run.
     }
   }
 
