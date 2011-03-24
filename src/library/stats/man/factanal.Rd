@@ -1,6 +1,6 @@
 % File src/library/stats/man/factanal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{factanal}
@@ -133,6 +133,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{factors}{The argument \code{factors}.}
   \item{dof}{The number of degrees of freedom of the factor analysis model.}
   \item{method}{The method: always \code{"mle"}.}
+  \item{rotmat}{The rotation matrix if relevant.}
   \item{scores}{If requested, a matrix of scores.  \code{napredict} is
     applied to handle the treatment of values omitted by the \code{na.action}.}
   \item{n.obs}{The number of observations if available, or \code{NA}.}
@@ -174,6 +175,9 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \code{print} method), \code{\link{varimax}}, \code{\link{princomp}},
   \code{\link{ability.cov}}, \code{\link{Harman23.cor}},
   \code{\link{Harman74.cor}}.
+  
+  Other rotation methods are available in various contributed packages,
+  including \pkg{GPArotation} and \pkg{psych}.
 }
 
 \examples{

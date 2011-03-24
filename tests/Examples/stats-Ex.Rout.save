@@ -6643,6 +6643,12 @@ SS loadings      1.903   1.876   1.772
 Proportion Var   0.317   0.313   0.295
 Cumulative Var   0.317   0.630   0.925
 
+Factor Correlations:
+        Factor1 Factor2 Factor3
+Factor1   1.000  -0.462   0.460
+Factor2  -0.462   1.000  -0.501
+Factor3   0.460  -0.501   1.000
+
 The degrees of freedom for the model is 0 and the fit was 0.4755 
 > # The following shows the g factor as PC1
 > prcomp(m1)
@@ -6761,6 +6767,11 @@ vocab    0.811
 SS loadings      1.853   1.807
 Proportion Var   0.309   0.301
 Cumulative Var   0.309   0.610
+
+Factor Correlations:
+        Factor1 Factor2
+Factor1   1.000   0.557
+Factor2   0.557   1.000
 
 Test of the hypothesis that 2 factors are sufficient.
 The chi square statistic is 6.11 on 4 degrees of freedom.
