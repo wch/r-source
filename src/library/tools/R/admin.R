@@ -474,18 +474,10 @@ function(dir, outDir)
         return(invisible())
 
     outDir <- file_path_as_absolute(outDir)
-    ## <FIXME>
-    ## Not clear whether we should use the basename of the directory we
-    ## install to, or the package name as obtained from the DESCRIPTION
-    ## file in the directory we install from (different for versioned
-    ## installs).  We definitely do not want the basename of the dir we
-    ## install from.
     packageName <- basename(outDir)
-    ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
-    if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop(gettextf("cannot open directory '%s'", outVignetteDir),
-             domain = NA)
+    ## Fake installs do not have a outVignetteDir.
+    if(!file_test("-d", outVignetteDir)) return(invisible())
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
