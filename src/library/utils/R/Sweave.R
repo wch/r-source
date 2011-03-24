@@ -40,8 +40,13 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
+    ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
     on.exit(driver$finish(drobj, error = TRUE))
+
+    if (!is.na(envopts<- Sys.getenv("SWEAVE_OPTIONS", NA)))
+        drobj$options <-
+            SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
     text <- SweaveReadFile(file, syntax)
     syntax <- attr(text, "syntax")
@@ -317,18 +322,20 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     options
 }
 
+## really part of the RweaveLatex and Rtangle drivers
 SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 {
     if (is.null(SweaveHooks <- getOption("SweaveHooks"))) return(NULL)
 
     z <- character()
     for (k in names(SweaveHooks))
-        if (k != "" && !is.null(options[[k]]) && options[[k]])
+        ## maybe this should be is.logical() not !is.null?
+        if (nzchar(k) && !is.null(options[[k]]) && options[[k]])
             if (is.function(SweaveHooks[[k]])) {
                 z <- c(z, k)
                 if (run) eval(SweaveHooks[[k]](), envir=envir)
             }
-    z
+    z # a character vector.
 }
 
 
@@ -412,17 +419,26 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             grDevices::postscript(file = paste(name, "eps", sep = "."),
                                   width = width, height = height,
                                   paper = "special", horizontal = FALSE)
-        png.Swd <- function(name, width, height, resolution, ...)
+        png.Swd <- function(name, width, height, options, ...)
             grDevices::png(filename = paste(chunkprefix, "png", sep = "."),
                            width = width, height = height,
-                           res = resolution, units = "in")
-        jpeg.Swd <- function(name, width, height, resolution, ...)
+                           res = options$resolution, units = "in")
+        jpeg.Swd <- function(name, width, height, options, ...)
             grDevices::jpeg(filename = paste(chunkprefix, "png", sep = "."),
                             width = width, height = height,
-                            res = resolution, units = "in")
+                            res = options$resolution, units = "in")
 
         if (!(options$engine %in% c("R", "S"))) return(object)
 
+        devs <- list()
+        if (options$fig && options$eval) {
+            if (options$pdf) devs <- c(devs, list(pdf.Swd))
+            if (options$eps) devs <- c(devs, list(eps.Swd))
+            if (options$png) devs <- c(devs, list(png.Swd))
+            if (options$jpeg) devs <- c(devs, list(jpeg.Swd))
+            if (!is.null(grd <- options$grdevice))
+                devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
+        }
         if (!object$quiet) {
             cat(formatC(options$chunknr, width = 2), ":")
             if (options$echo) cat(" echo")
@@ -511,7 +527,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             }
         }
 
-        chunkregexp <- "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#" #
+        chunkregexp <-
+            "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#" #
         popregexp   <- "#end named chunk#" #
 
         openSinput <- FALSE
@@ -530,6 +547,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         srcrefs <- attr(chunkexps, "srcref")
 
+        if (length(devs)) {
+            devs[[1L]](name = chunkprefix,
+                       width = options$width, height = options$height,
+                       options)
+        }
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
@@ -555,13 +577,16 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     if (grepl(chunkregexp, srcfile$filename)) {
                         cntxt <- list(refline, prevsrcfile)
                         srcrefstack <- c(list(cntxt), srcrefstack)
-                        refline <- as.integer(sub(chunkregexp, "\\2", srcfile$filename))
+                        refline <- as.integer(sub(chunkregexp, "\\2",
+                                                  srcfile$filename))
                         ## Echo any remaining comments if necessary
                         echoComments(refline - 1L)
                         if (options$expand)
                             lastshown <-
-                                as.integer(sub(chunkregexp, "\\3", srcfile$filename))
-                        srcfile$filename <- sub(chunkregexp, "\\1", srcfile$filename)
+                                as.integer(sub(chunkregexp, "\\3",
+                                               srcfile$filename))
+                        srcfile$filename <- sub(chunkregexp, "\\1",
+                                                srcfile$filename)
                     } else refline <- NA
                     srcfile$refline <- refline
                 }
@@ -584,7 +609,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 dce <- deparse(ce, width.cutoff = 0.75*getOption("width"))
                 leading <- 1L
             }
-            if (object$debug) cat("\nRnw> ", paste(dce, collapse = "\n+  "),"\n")
+            if (object$debug)
+                cat("\nRnw> ", paste(dce, collapse = "\n+  "),"\n")
 
             if (options$echo && length(dce)) putSinput(dce)
 
@@ -603,7 +629,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             } else output <- NULL
 
             ## or writeLines(output)
-            if (length(output) && object$debug) cat(paste(output, collapse = "\n"))
+            if (length(output) && object$debug)
+                cat(paste(output, collapse = "\n"))
 
             if (length(output) && (options$results != "hide")) {
                 if (openSinput) {
@@ -646,7 +673,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     thisline <- thisline + 2L
                 }
             }
-        }
+        } # end of loop over chunkexps.
 
         ## Echo remaining comments if necessary
         if (options$keep.source) echoComments(srclines[length(srclines)])
@@ -672,17 +699,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             thisline <- thisline + 1L
         }
 
-        if (options$fig && options$eval) {
-            devs <- list()
-            if (options$pdf) devs <- c(devs, list(pdf.Swd))
-            if (options$eps) devs <- c(devs, list(eps.Swd))
-            if (options$png) devs <- c(devs, list(png.Swd))
-            if (options$jpeg) devs <- c(devs, list(jpeg.Swd))
-            if (!is.null(grd <- options$grdevice))
-                devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
-            for (dev in devs) {
-                dev(name = chunkprefix, width = options$width, height = options$height,
-                    resolution = options$resolution)
+        if (length(devs)) {
+            grDevices::dev.off()        # close first one
+            for (dev in devs[-1]) {
+                dev(name = chunkprefix,
+                    width = options$width, height = options$height,
+                    options)
                 err <- tryCatch({
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
@@ -744,6 +766,8 @@ RweaveLatexWritedoc <- function(object, chunk)
 
         chunk[pos[1L]] <- sub(object$syntax$docexpr, val, chunk[pos[1L]])
     }
+
+    ## Process \SweaveOpts{} or similar
     while(length(pos <- grep(object$syntax$docopt, chunk)))
     {
         opts <- sub(paste(".*", object$syntax$docopt, ".*", sep = ""),
@@ -762,7 +786,7 @@ RweaveLatexWritedoc <- function(object, chunk)
                                   chunk[pos[1L]])
             object$haveconcordance <- TRUE
         } else
-        chunk[pos[1L]] <- sub(object$syntax$docopt, "", chunk[pos[1L]])
+            chunk[pos[1L]] <- sub(object$syntax$docopt, "", chunk[pos[1L]])
     }
 
     cat(chunk, sep = "\n", file = object$output)
@@ -802,34 +826,36 @@ RweaveLatexFinish <- function(object, error = FALSE)
     invisible(outputname)
 }
 
+## This is the check function for both RweaveLatex and Rtangle drivers.
 RweaveLatexOptions <- function(options)
 {
     ## ATTENTION: Changes in this function have to be reflected in the
-    ## defaults in the init function!
+    ## defaults in the initialization in RweaveLatexSetup
 
     ## convert a character string to logical
-    c2l <- function(x) {
-        if (is.null(x)) return(FALSE)
-        else return(as.logical(toupper(as.character(x))))
-    }
+    c2l <- function(x)
+        if (is.null(x)) FALSE else as.logical(toupper(as.character(x)))
 
     ## numeric
     NUMOPTS <- c("width", "height", "resolution")
 
-    ## not logical
-    NOLOGOPTS <- c(NUMOPTS, "results", "prefix.string", "engine",
-                   "label", "strip.white", "pdf.version", "pdf.encoding",
-                   "grdevice")
+    ## character (or at least, leave alone on first pass)
+    CHAROPTS <- c("results", "prefix.string", "engine", "label",
+                  "strip.white", "pdf.version", "pdf.encoding",
+                  "grdevice")
 
     for (opt in names(options)) {
-        if (! (opt %in% NOLOGOPTS)) {
+        if (grepl("^ch_", opt) || opt %in% CHAROPTS) {}
+        else if (grepl("^n_", opt) || opt %in% NUMOPTS)
+            options[[opt]] <- as.numeric(options[[opt]])
+        else {
             oldval <- options[[opt]]
-            if (!is.logical(options[[opt]])) options[[opt]] <- c2l(options[[opt]])
+            if (!is.logical(options[[opt]]))
+                options[[opt]] <- c2l(options[[opt]])
             if (is.na(options[[opt]]))
                 stop(gettextf("invalid value for '%s' : %s", opt, oldval),
                      domain = NA)
-        } else if (opt %in% NUMOPTS)
-            options[[opt]] <- as.numeric(options[[opt]])
+        }
     }
 
     if (!is.null(options$results))
@@ -838,8 +864,8 @@ RweaveLatexOptions <- function(options)
 
     if (!is.null(options$strip.white))
         options$strip.white <- tolower(as.character(options$strip.white))
-    options$strip.white <- match.arg(options$strip.white,
-                                     c("true", "false", "all"))
+    options$strip.white <-
+        match.arg(options$strip.white, c("true", "false", "all"))
     options
 }
 

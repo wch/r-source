@@ -120,10 +120,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       is not evaluated, and hence no text or graphical output produced.}
     
     \item{results:}{character string (\code{"verbatim"}).  If
-      \code{verbatim}, the output of \R commands is included in the
-      verbatim-like Soutput environment.  If \code{tex}, the output is
+      \code{"verbatim"}, the output of \R commands is included in the
+      verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the output is
       taken to be already proper latex markup and included as is.  If
-      \code{hide} then all output is completely suppressed (but the code
+      \code{"hide"} then all output is completely suppressed (but the code
       executed during the weave).}
 
     \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, each
@@ -132,10 +132,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       expressions become visible.}
     
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
-      values emulates an interactive R session: values of assignments
+      values emulates an interactive \R session: values of assignments
       are not printed, values of single objects are printed.  If
       \code{FALSE}, output comes only from explicit \code{\link{print}}
-      or \code{\link{cat}} statements.}
+      or similar statements.}
     
     \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output
       is written to separate files for each code chunk.}
@@ -143,7 +143,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{strip.white:}{character string (\code{"true"}).  If
       \code{"true"}, blank lines at the beginning and end of output are
       removed.  If \code{"all"}, then all blank lines are removed from
-      the output.}
+      the output.  If \code{"false"} then blank lines are retained.}
     
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
       filenames of figures and output have a common prefix.}
@@ -152,10 +152,11 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       source file (without extension).}
     
     \item{include:}{logical (\code{TRUE}), indicating whether input
-      statements for text output and includegraphics statements for
-      figures should be auto-generated.  Use \code{include = FALSE} if
-      the output should appear in a different place than the code chunk
-      (by placing the input line manually).}
+      statements for text output (if \code{split = TRUE}) and
+      \samp{\\includegraphics} statements for figures should be
+      auto-generated.  Use \code{include = FALSE} if the output should
+      appear in a different place than the code chunk (by placing the
+      input line manually).}
     
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
       chunk produces graphical output.  Note that only one figure per
@@ -168,8 +169,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       should be generated.  Ignored if \code{fig = FALSE}.}
     
     \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
-      the version and encoding.  Defaults taken from
-      \code{pdf.options()}.}
+      the version and encoding.  Defaults taken from \code{pdf.options()}.}
     
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
@@ -180,8 +180,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       available in \R >= 2.13.0.}
     
     \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
-	Graphics Devices}.
-    }
+	Graphics Devices}.  Ignored if \code{fig = FALSE}.  Only
+      available in \R >= 2.13.0.}
+    
     \item{width:}{numeric (6), width of figures in inches. See
       \sQuote{Details}.}
     
@@ -203,17 +204,23 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       This is an experimental feature; see the source code for the
       output format, which is subject to change in future releases.}
   }
+
+  In addition, users can specify further options, either in the header
+  of an individual code section or in a \samp{\\SweaveOpts()} line in
+  the document.  Note that (for historical reasons) unrecognized options
+  are taken to be logical unless their names start with \code{n_}
+  (numeric) or \code{ch_} (character).
 }
 
 \section{Custom Graphics Devices}{
   If option \code{grdevice} is supplied for a code chunk with both
   \code{fig} and \code{eval} true, the following call is made
 \preformatted{
-  get(options$grdevice, envir = .GlobalEnv)(name=, width=, height=)
+  get(options$grdevice, envir = .GlobalEnv)(name=, width=, height=, options)
 }
   which should open a graphics device.  The chunk's code is then
   evaluated and \code{\link{dev.off}} is called.  Normally a function of
-  the name give will have been defined earlier in the Sweave documents, e.g.
+  the name given will have been defined earlier in the Sweave document, e.g.
 \preformatted{
 <<hide=TRUE>>=
 my.Swd <- function(name, width, height, ...)

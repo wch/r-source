@@ -20,9 +20,22 @@
       \item The default for \code{Sweave()} is to produce only PDF
       figures (rather than both EPS and PDF).
 
+      Provided at least one graphics device is selected for a chunk, the
+      first graphics device is used for the main evaluation of the
+      chunk.  This means that by default when re-building vignettes each
+      chunk is evaluated once and no \file{Rplots.pdf} file is produced.
+
+      User-defined numeric (with names starting \code{n_}) and character
+      (starting \code{ch_}) options are now allowed: as before all other
+      unknown options are taken to be logical.
+
+      Environment variable \env{SWEAVE_OPTIONS} can be used to supply
+      defaults for existing or new options to be applied after the
+      Sweave driver setup has been run.
+      
       \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
-	TRUE} allows Python-style named captures.
-      (Wish and contribution of \PR{14518}.)
+	TRUE} allows Python-style named captures.  (Wish and
+      contribution of \PR{14518}.)
 
       \item The placement of plotmath text in the margins now makes the
       same vertical adjustment as ordinary text, so using ordinary and

@@ -29,7 +29,8 @@ Stangle(file, driver = Rtangle(),
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.  See section \sQuote{Syntax Definition}.}
   \item{\dots}{Further arguments passed to the driver's setup function:
-    see section \sQuote{Drivers} and \code{\link{RweaveLatex}}.}
+    see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
+    \code{\link{Rtangle}}.}
 }
 
 \details{
@@ -51,6 +52,11 @@ Stangle(file, driver = Rtangle(),
   both provide drivers based on the default driver
   \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
   the results of computations on code chunks.
+
+  Environment variable \env{SWEAVE_OPTIONS} can be used to override the
+  initial options set by the driver: it should be a comma-separated set
+  of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
+  statement in a document.
 }
 
 \section{Hook Functions}{
@@ -67,7 +73,7 @@ Stangle(file, driver = Rtangle(),
   \code{getOption("SweaveHooks")} and be functions taking no arguments.
   E.g., if option \code{"SweaveHooks"} is defined as \code{list(fig =
   foo)}, and \code{foo} is a function, then it would be executed before
-  the code in each figure chunk. This is especially useful to set
+  the code in each figure chunk.  This is especially useful to set
   defaults for the graphical parameters in a series of figure chunks.
 
   Note that the user is free to define new Sweave logical options and
