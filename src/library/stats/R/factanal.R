@@ -128,7 +128,13 @@ factanal <-
     load <- fit$loadings
     if(rotation != "none") {
         rot <- do.call(rotation, c(list(load), cn$rotate))
-        load <- if(is.list(rot)) rot$loadings else rot
+        load <- if (is.list(rot)) {
+          load <- rot$loadings
+          fit$rotmat <-
+              if(inherits(rot, "GPArotation")) t(solve(rot$Th))
+              else rot$rotmat
+          rot$loadings
+        } else rot
     }
     fit$loadings <- sortLoadings(load)
     class(fit$loadings) <- "loadings"
@@ -255,6 +261,23 @@ print.factanal <- function(x, digits = 3, ...)
     cat("Uniquenesses:\n")
     print(round(x$uniquenesses, digits), ...)
     print(x$loadings, digits = digits, ...)
+                                        # the following lines added by J. Fox, 26 June 2005
+    if (!is.null(x$rotmat)){
+
+      tmat <- solve(x$rotmat)
+      R <- tmat %*% t(tmat)
+      factors <- x$factors
+      rownames(R) <- colnames(R) <- paste("Factor", 1:factors, sep="")
+
+                                        # the following line changed by Ulrich Keller, 9 Sept 2008
+      if (TRUE != all.equal(c(R), c(diag(factors)))){
+        cat("\nFactor Correlations:\n")
+        print(R, digits=digits, ...)
+      }
+
+
+    }
+                                        # end additions J. Fox, 23 June 2005
     if(!is.null(x$STATISTIC)) {
         factors <- x$factors
         cat("\nTest of the hypothesis that", factors, if(factors == 1)
@@ -281,7 +304,7 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
     p <- nrow(x)
     TT <- diag(nc)
     d <- 0
-    for(i in 1L:1000) {
+    for(i in 1L:1000L) {
         z <- x %*% TT
         B  <- t(x) %*% (z^3 - z %*% diag(drop(rep(1, p) %*% z^2))/p)
         sB <- La.svd(B)
