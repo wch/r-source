@@ -391,18 +391,24 @@ function(pkg, con, vignetteIndex = NULL)
               paste("<h2>Vignettes of package", pkg,"</h2>"))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
-        html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
-                  'Please browse the <a href=".">directory</a>.')
-    }
-    else{
-        html <- c(html, "<dl>")
-        for(k in seq_len(nrow(vignetteIndex))){
-            html <- c(html,
-                      paste('<dt><a href="', vignetteIndex[k, "PDF"], '\">',
-                            vignetteIndex[k, "PDF"], "</a>:", sep=""),
-                      paste("<dd>", vignetteIndex[k, "Title"]))
+        html <-
+            c(html,
+              "Sorry, the package contains no vignette meta-information nor index.",
+              'Please browse the <a href=".">directory</a>.')
+    } else {
+        ## We must not assume that there are PDFs: by default the
+        ## grid vignettes are installed without PDFs.
+        oneLink <- function(s) {
+            ## Format as used in utils::browseVignettes()
+            sprintf("  <li>%s  -  \n    %s  \n    %s  \n    %s \n  </li>\n",
+                    s[, "Title"],
+                    ifelse(nzchar(pdf<- s[, "PDF"]),
+                           sprintf("<a href='%s'>PDF</a>&nbsp;", pdf), ""),
+                    ifelse(nzchar(rcode <- s[, "R"]),
+                           sprintf("<a href='%s'>R</a>&nbsp;", rcode), ""),
+                    sprintf("<a href='%s'>LaTeX/noweb</a>&nbsp;", s[, "File"]))
         }
-        html <- c(html, "</dl>")
+        html <- c(html, oneLink(vignetteIndex))
     }
     html <- c(html, "</body></html>")
     writeLines(html, con=con)
@@ -457,6 +463,7 @@ function(vigDeps)
 .run_one_vignette <-
     function(vig_name, docDir, encoding = getOption("encoding"))
 {
+    ## FIXME: we could assume that Stangle generates a single .R file
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
