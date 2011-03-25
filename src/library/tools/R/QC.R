@@ -4386,13 +4386,13 @@ function(dir, lib.loc = NULL)
 function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
-    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
+        ## fake installs do not have this.
         testsrcdir <- file.path(dir, "doc")
     }
     else if(!missing(dir)) {
@@ -4405,10 +4405,11 @@ function(package, dir, lib.loc = NULL)
         db <- .read_description(dfile)
         testsrcdir <- file.path(dir, "inst", "doc")
     }
-
-    od <- setwd(testsrcdir)
-    on.exit(setwd(od))
-    Rfiles <- dir(".", pattern="\\.R$")
+    if (file_test("-d", testsrcdir)) {
+        od <- setwd(testsrcdir)
+        on.exit(setwd(od))
+        Rfiles <- dir(".", pattern="\\.R$")
+    } else Rfiles <- character()
     .check_packages_used_helper(db, Rfiles)
 }
 
