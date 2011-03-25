@@ -4613,7 +4613,7 @@ SEXP attribute_hidden do_growconst(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     constBuf = CAR(args);
     if (TYPEOF(constBuf) != VECSXP)
-	error(_("constand buffer must be a generic vector"));
+	error(_("constant buffer must be a generic vector"));
 
     n = LENGTH(constBuf);
     ans = allocVector(VECSXP, 2 * n);

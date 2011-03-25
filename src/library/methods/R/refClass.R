@@ -486,7 +486,7 @@ lock =  function(...) {
     fields <- c(...)
     if(is.character(fields) && all(nzchar(fields))) {}
     else
-        stop("Arguments must all be character string names of fieds")
+        stop("Arguments must all be character string names of fields")
     env <- def@fieldPrototypes
     className <- def@className
     for(what in fields) {
