@@ -1621,17 +1621,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
-        sources <- basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), c("r", "s", "R", "S")))
+        sources <-
+            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"),"R"))
         if (length(sources)) {
-            td <- tempfile()
-            dir.create(td)
-            file.copy(vignette_dir, td, recursive = TRUE)
-            od <- setwd(file.path(td, "doc"))
-            unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
-            for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
-                                  error = function(e) {})
-            new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
-            setwd(od)
+            new_sources <- sub("\\.[RrSs](nw|tex)", ".R", basename(vf))
             dups <- sources[sources %in% new_sources]
             if(length(dups)) {
                 any <- TRUE
@@ -1681,7 +1674,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               ")", sep = "")
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
-                # cat("\n===============", basename(v), "==============\n"); writeLines(out)
+
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE)))
                     res <- c(res,

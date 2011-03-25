@@ -292,18 +292,10 @@ get_exclude_patterns <- function()
             } else {
                 ## Do any of the .R files which will be generated
                 ## exist in inst/doc?  If so the latter should be removed.
-                sources <- basename(list_files_with_exts(doc_dir, c("r", "s", "R", "S")))
+                sources <- basename(list_files_with_exts(doc_dir, "R"))
                 if (length(sources)) {
-                    vf <- list_files_with_type(doc_dir, "vignette")
-                    td <- tempfile()
-                    dir.create(td)
-                    file.copy(doc_dir, td, recursive = TRUE)
-                    od <- setwd(file.path(td, "doc"))
-                    unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
-                    for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
-                                          error = function(e) {})
-                    new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
-                    setwd(od)
+                    vf <- basename(list_files_with_type(doc_dir, "vignette"))
+                    new_sources <- sub("\\.[RrSs](nw|tex)", ".R", vf)
                     dups <- sources[sources %in% new_sources]
                     if(length(dups)) {
                         warningLog(Log)

@@ -470,19 +470,18 @@ function(dir, outDir)
     dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
     ## Create a vignette index only if the vignette dir exists.
-    if(!file_test("-d", vignetteDir))
-        return(invisible())
+    if(!file_test("-d", vignetteDir)) return(invisible())
 
     outDir <- file_path_as_absolute(outDir)
     packageName <- basename(outDir)
     outVignetteDir <- file.path(outDir, "doc")
-    ## Fake installs do not have a outVignetteDir.
+    ## --fake  and --no-inst installs do not have a outVignetteDir.
     if(!file_test("-d", outVignetteDir)) return(invisible())
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
     ## (similar to top-level @file{INDEX} files).  Installation already
-    ## copies/d this over.
+    ## copied this over.
     hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
@@ -495,6 +494,7 @@ function(dir, outDir)
         return(invisible())
     }
 
+    ## FIXME: simpler just to do this in outVignetteDir
     vignetteIndex <- .build_vignette_index(vignetteDir)
     ## For base package vignettes there is no PDF in @file{vignetteDir}
     ## but there might/should be one in @file{outVignetteDir}.
@@ -571,7 +571,7 @@ function(src_dir, out_dir, packages)
 
 ### * .install_package_vignettes
 
-## called from src/library/Makefile
+## called from src/library/Makefile and src/gnuwin32/Makefile
 ## this is only used when building R, to build the 'grid' vignettes.
 .install_package_vignettes <-
 function(dir, outDir, keep.source = FALSE)
@@ -647,6 +647,7 @@ function(dir, outDir, keep.source = FALSE)
     setwd(cwd)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
+    ## This also creates the .R files
     .install_package_vignette_index(dir, outDir)
     invisible()
 }
