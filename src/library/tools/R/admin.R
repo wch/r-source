@@ -494,22 +494,19 @@ function(dir, outDir)
         return(invisible())
     }
 
-    ## FIXME: simpler just to do this in outVignetteDir
-    vignetteIndex <- .build_vignette_index(vignetteDir)
-    ## For base package vignettes there is no PDF in @file{vignetteDir}
-    ## but there might/should be one in @file{outVignetteDir}.
+    vignetteIndex <- .build_vignette_index(outVignetteDir)
     if(NROW(vignetteIndex) > 0L) {
-        vignettePDFs <-
-            sub("$", ".pdf",
-                basename(file_path_sans_ext(vignetteIndex$File)))
-        ind <- file_test("-f", file.path(outVignetteDir, vignettePDFs))
-        vignetteIndex$PDF[ind] <- vignettePDFs[ind]
-
-        ## install tangled versions of all vignettes
         cwd <- getwd()
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
         setwd(outVignetteDir)
+        vignettePDFs <-
+            sub("$", ".pdf",
+                basename(file_path_sans_ext(vignetteIndex$File)))
+        ind <- file_test("-f", vignettePDFs)
+        vignetteIndex$PDF[ind] <- vignettePDFs[ind]
+
+        ## install tangled versions of all vignettes
         for(srcfile in vignetteIndex$File)
             tryCatch(utils::Stangle(srcfile, quiet = TRUE),
                      error = function(e)
@@ -517,10 +514,9 @@ function(dir, outDir)
                                    srcfile, conditionMessage(e)),
                           domain = NA, call. = FALSE))
         ## remove any zero-length files
-        Rfiles <- Sys.glob(c("*.R", "*.S", "*.r", "*.s"))
+        Rfiles <- Sys.glob("*.R")
         sizes <- file.info(Rfiles)$size
         unlink(Rfiles[sizes == 0])
-        ## This is an assumption: Sweave can do much more that this!
         Rfiles <-
             sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
         vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
