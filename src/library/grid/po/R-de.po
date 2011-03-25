@@ -1,14 +1,13 @@
-# German translation of 
-# src/library/graphics/po/R-grid.pot
-# Copyright (C) 2005-2010 The R Foundation
+# Translation of src/library/graphics/po/R-grid.pot to German.
+# Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
-"PO-Revision-Date: 2010-09-21 15:11+0200\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-23 15:47+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -43,6 +42,12 @@ msgstr "'squareShape' muss zwischen -1 und 1 sein"
 
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "'arrow' muss ein Pfeil-Objekt oder NULL sein"
+
+msgid "How did we get here?"
+msgstr "Wie konnte es so weit kommen?"
+
+msgid "Must start new page if showing leaves separately"
+msgstr "Muss eine neue Seite anfangen, um die Blätter einzeln zu zeigen"
 
 msgid "Invalid 'edit' information"
 msgstr "ungültige 'edit' Information"
@@ -85,13 +90,11 @@ msgstr ""
 "es kann nur ein Parameter aus 'side=[\"left\", \"right\"]', 'row', 'row."
 "before' oder 'row.after' angegeben werden"
 
-#, fuzzy
 msgid "Invalid 'n'"
-msgstr "unzulässiger 'origin'"
+msgstr "Unzulässiges 'n'"
 
-#, fuzzy
 msgid "Invalid 'f'"
-msgstr "ungültiger 'frame'"
+msgstr "Ungültiges 'f'"
 
 msgid "gpar element '%s' must not be length 0"
 msgstr "gpar element '%s' darf nicht Länge 0 haben"
@@ -498,12 +501,6 @@ msgstr "Ein Viewport-Pfad muss zumindest einen Viewport-Namen enthalten"
 
 msgid "Invalid viewport name(s)"
 msgstr "Unzulässige(r) Viewport-Name(n)"
-
-msgid "How did we get here?"
-msgstr "Wie konnte es so weit kommen?"
-
-msgid "Must start new page if showing leaves separately"
-msgstr "Muss eine neue Seite anfangen, um die Blätter einzeln zu zeigen"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"

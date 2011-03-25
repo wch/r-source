@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-30 15:04+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1653,7 +1653,8 @@ msgstr ""
 " トピック \"%s\" はクラス \"%s\" 中のメソッド名ではありません \n"
 "クラす定義が続きます "
 
-msgid "Arguments must all be character string names of fieds"
+#, fuzzy
+msgid "Arguments must all be character string names of fields"
 msgstr " 引数はすべて欄の文字列の名前でなければなりません "
 
 msgid ""

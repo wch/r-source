@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -34,9 +34,6 @@ msgstr "'bias'的值必需是正数"
 
 msgid "at least 3 columns needed"
 msgstr "至少需要三列"
-
-msgid "The 'gamma' argument is deprecated and has no effect"
-msgstr ""
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb矩阵必需是数字"
@@ -152,7 +149,8 @@ msgstr "'%s'里的选择项出错"
 msgid "NOT changing"
 msgstr "不更换"
 
-msgid "argment 'append' is for back-compatibility and will be ignored"
+#, fuzzy
+msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "'append'不后向相容，因此略过不用"
 
 msgid "unknown family '%s'"

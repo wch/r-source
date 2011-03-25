@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -529,6 +529,10 @@ msgstr "设定对比的自由度不够"
 
 msgid "baseline group number out of range"
 msgstr "基線组在值域外"
+
+#, fuzzy
+msgid "invalid 'use' argument"
+msgstr "'method'参数不对"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "要么同时设定'x'和'y'，要么只设定矩阵式的'x'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -71,11 +71,11 @@ msgstr "指向'%s'的路径里不能有空格,"
 msgid "this may cause problems when running LaTeX"
 msgstr "这可能会对运行LaTeX里产生问题"
 
-msgid "You can now run LaTeX on '%s'"
-msgstr "现在你可以在'%s'上运行LaTeX"
-
 msgid "invalid value for '%s' : %s"
 msgstr "'%s'的值不对: %s"
+
+msgid "Warning: unknown option"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用'what'值里的第一个元素"
@@ -747,6 +747,10 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的对象"
 
+#, fuzzy
+msgid "'file' must be \"\" or an open connection object"
+msgstr "'file'的值必需是字符串或联结"
+
 msgid "must have max > min"
 msgstr "一定得满足max > min这个条件"
 
@@ -1149,6 +1153,9 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "You can now run LaTeX on '%s'"
+#~ msgstr "现在你可以在'%s'上运行LaTeX"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "更新HTML程序包的描述内容"

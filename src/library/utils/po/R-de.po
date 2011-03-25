@@ -1,14 +1,14 @@
-# German translation of src/library/utils/po/R-utils.pot
-# Copyright (C) 2008-2010 The R Foundation
+# Translation of src/library/utils/po/R-utils.pot to German.
+# Copyright (C) 2008-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
-"PO-Revision-Date: 2011-01-18 13:55+0000\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-24 11:19+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -73,11 +73,11 @@ msgstr "Pfad zu '%s' enthält Leerstellen."
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
 
-msgid "You can now run LaTeX on '%s'"
-msgstr "Sie können nun LaTeX auf '%s' ausführen"
-
 msgid "invalid value for '%s' : %s"
 msgstr "unzulässiger Wert für '%s' : %s"
+
+msgid "Warning: unknown option"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
@@ -181,9 +181,8 @@ msgstr "Ein bibentry mit bibtype '"
 msgid "' has to correctly specify the field(s):"
 msgstr "' muss die Felder korrekt spezifizieren:"
 
-#, fuzzy
 msgid "'style' should be one of %s"
-msgstr "'bibtype' muss aus Folgenden sein"
+msgstr "'style' muss einer von %s sein"
 
 msgid "' has to specify the field(s):"
 msgstr "' muss folgende Felder spezifizieren:"
@@ -513,9 +512,8 @@ msgstr " nicht gefunden"
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
 
-#, fuzzy
 msgid "Making packages.html  ..."
-msgstr "Erzeuge packages.html"
+msgstr "Erzeuge packages.html ..."
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
@@ -632,9 +630,8 @@ msgstr "missgestaltete 'instPkgs' Matrix"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "keine installierten Pakete für (falsche?) 'lib.loc=%s'"
 
-#, fuzzy
 msgid "metadata of '%s' is corrupt"
-msgstr "Metadaten für Paket '%s' sind korrumpiert"
+msgstr "Metadaten für '%s' sind korrumpiert"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' muss ein Zeichen oder NULL sein"
@@ -764,6 +761,10 @@ msgstr ""
 
 msgid "no object named '%s' to show"
 msgstr "kein Objket namens '%s' anzuzeigen"
+
+#, fuzzy
+msgid "'file' must be \"\" or an open connection object"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "must have max > min"
 msgstr "es muss max > min sein"
@@ -966,9 +967,8 @@ msgstr "keine Ereignisse aufgezeichnet"
 msgid "'compressed' must be logical or character"
 msgstr "'commpressed' muss Boole'sch oder ein Charakter sein"
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr "kann temporäres Verzeichnis '%s' nicht erzeugen"
+msgstr "kann Verzeichnis '%s' nicht erzeugen"
 
 msgid "invalid octal digit"
 msgstr "unzulässige Oktalziffer"
@@ -982,9 +982,8 @@ msgstr "unvollständiger Block in Datei"
 msgid "checksum error for entry '%s'"
 msgstr "Checksummenfehler für Eintrag '%s'"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr "Erzeugen von '%s' fehlgeschlagen"
+msgstr "Kopieren von %s nach %s fehlgeschlagen"
 
 msgid "unsupported entry type"
 msgstr "nicht unterstützter Eintragstyp"
@@ -1050,27 +1049,27 @@ msgstr "Versuch ignoriert '%s' zu setzen"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' muss ein einzelne Zeichenkette sein"
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'list' muss ein Charaktervektor sein, mit Namen von R Objekten"
+msgstr ""
+"'files' muss ein Charaktervektor sein, der einen oder mehrere Pfade "
+"spezifiziert"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
+"kein programm um 'mailto' URIs zu öffnen: rückfall auf 'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "Nutze Browser, um mailto: URI zu öffnen"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "'address' muss angegeben werden"
 
-#, fuzzy
 msgid "'subject' is missing"
 msgstr "'subject' fehlt"
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr "'port' muss ganze Zahl der Länge 1 sein"
+msgstr "'ccaddress' muss von der Länge 1 sein"
 
 msgid "no download method found"
 msgstr "keine Downloadmethode gefunden"
@@ -1097,19 +1096,20 @@ msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "Paket '%s' erfolgreich ausgepackt und MD5 Summen abgeglichen"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "ERROR: Verzeichnis-Lock fehlgeschlagen"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"Um zu modifizieren\n"
+"Versuche Entfernen"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "kann temporäres Verzeichnis '%s' nicht erzeugen"
+msgstr "ERROR: Kann lock-Verzeichnis nicht erzeugen"
 
 msgid "restored '%s'"
-msgstr ""
+msgstr "'%s' wiederhergestellt"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "kann temporäre Installation '%s' nicht nach '%s' verschieben"
@@ -1124,7 +1124,7 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' ist spezifisch für Windows"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "Methode 'mailx' nur unter UNIX"
 
 msgid "zipfile '%s' not found"
 msgstr "Zipfile '%s' nicht gefunden"
@@ -1157,11 +1157,10 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "Objekt '%s' nicht gefunden"
 msgstr[1] "Objekte '%s' nicht gefunden"
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
-msgstr[0] "Paket %s ist nicht verfügbar"
-msgstr[1] "Pakete %s sind nicht verfügbar"
+msgstr[0] "Paket %s ist nicht verfügbar (für %s)"
+msgstr[1] "Pakete %s sind nicht verfügbar (für %s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1182,6 +1181,9 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "You can now run LaTeX on '%s'"
+#~ msgstr "Sie können nun LaTeX auf '%s' ausführen"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "aktualisiere HTML Paketbeschreibungen"

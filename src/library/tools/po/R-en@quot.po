@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:50\n"
-"PO-Revision-Date: 2011-03-13 10:50\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-25 10:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -605,21 +605,6 @@ msgstr "Changes require specified ‘style’"
 msgid "The default JSS style may not be modified."
 msgstr "The default JSS style may not be modified."
 
-msgid "use of '--auto-zip' is defunct"
-msgstr "use of ‘--auto-zip’ is defunct"
-
-msgid "use of '--use-zip-data' is defunct"
-msgstr "use of ‘--use-zip-data’ is defunct"
-
-msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
-msgstr "use of ‘--no-docs’ is deprecated: use ‘--install-args’ instead"
-
-msgid "** Options"
-msgstr "** Options"
-
-msgid "are only for '--binary'  and will be ignored"
-msgstr "are only for ‘--binary’  and will be ignored"
-
 msgid "Error: cannot rename directory to"
 msgstr "Error: cannot rename directory to"
 
@@ -730,10 +715,10 @@ msgstr "as"
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
-"Adminstration Manual'"
+"Administration Manual'"
 msgstr ""
 "‘cleanup’ exists but is not executable -- see the ‘R Installation and "
-"Adminstration Manual’"
+"Administration Manual’"
 
 msgid "installing to"
 msgstr "installing to"

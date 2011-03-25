@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,10 +68,10 @@ msgstr ""
 msgid "this may cause problems when running LaTeX"
 msgstr ""
 
-msgid "You can now run LaTeX on '%s'"
+msgid "invalid value for '%s' : %s"
 msgstr ""
 
-msgid "invalid value for '%s' : %s"
+msgid "Warning: unknown option"
 msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
@@ -715,6 +715,9 @@ msgid ""
 msgstr ""
 
 msgid "no object named '%s' to show"
+msgstr ""
+
+msgid "'file' must be \"\" or an open connection object"
 msgstr ""
 
 msgid "must have max > min"

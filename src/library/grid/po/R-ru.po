@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-04-09 16:55-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -47,6 +47,12 @@ msgstr "'squareShape' должен быть между -1 и 1"
 
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "'arrow' должен быть объектом-стрелкой или NULL"
+
+msgid "How did we get here?"
+msgstr "Как мы сюда попали?"
+
+msgid "Must start new page if showing leaves separately"
+msgstr "Если листья показываются отдельно, надо запустить новую страницу"
 
 msgid "Invalid 'edit' information"
 msgstr "Неправильная информация 'edit'"
@@ -497,12 +503,6 @@ msgstr ""
 
 msgid "Invalid viewport name(s)"
 msgstr "Неправильное име(на) оконницы"
-
-msgid "How did we get here?"
-msgstr "Как мы сюда попали?"
-
-msgid "Must start new page if showing leaves separately"
-msgstr "Если листья показываются отдельно, надо запустить новую страницу"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Надо задать по крайней мере одно из 'x' или 'xscale'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-04-03 09:46+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -38,6 +38,14 @@ msgstr " 'squareShape' は -1 と 1 の間になければなりません "
 
 msgid "'arrow' must be an arrow object or NULL"
 msgstr " 'arrow' は arrwo オブジェクトかまたは NULL でなければなりません "
+
+msgid "How did we get here?"
+msgstr " どうしてこうなったのかな？ "
+
+msgid "Must start new page if showing leaves separately"
+msgstr ""
+" もし提示したものが別々になったままなら、新しいページを開始する必要がありま"
+"す "
 
 msgid "Invalid 'edit' information"
 msgstr " 不正な 'edit' 情報です "
@@ -503,14 +511,6 @@ msgstr ""
 
 msgid "Invalid viewport name(s)"
 msgstr " 不正な viewport 名です "
-
-msgid "How did we get here?"
-msgstr " どうしてこうなったのかな？ "
-
-msgid "Must start new page if showing leaves separately"
-msgstr ""
-" もし提示したものが別々になったままなら、新しいページを開始する必要がありま"
-"す "
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr " 'x' or 'xscale' のうち少なくとも一つを指定しなければなりません "

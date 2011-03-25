@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -79,11 +79,11 @@ msgstr "путь у '%s' содержит пробелов,"
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
 
-msgid "You can now run LaTeX on '%s'"
-msgstr "Теперь можно запустить LaTeX на '%s'"
-
 msgid "invalid value for '%s' : %s"
 msgstr "неправильное значение '%s': %s"
+
+msgid "Warning: unknown option"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "элементы 'what' после первого будут пропущены"
@@ -767,6 +767,10 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "нет объекта с именем '%s' для показа"
 
+#, fuzzy
+msgid "'file' must be \"\" or an open connection object"
+msgstr "'file' должен быть текстовой строкой строка или соединением"
+
 msgid "must have max > min"
 msgstr "должен быть max > min"
 
@@ -1193,6 +1197,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "You can now run LaTeX on '%s'"
+#~ msgstr "Теперь можно запустить LaTeX на '%s'"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "обновляю HTML-описания пакетов"

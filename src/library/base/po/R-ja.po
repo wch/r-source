@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:49\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-29 07:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -896,13 +896,6 @@ msgstr "DLL '%s' が見付かりません "
 msgid "now dyn.unload(\"%s\") ..."
 msgstr " 今 dyn.unload(\"%s\") 中です ... "
 
-msgid "use of 'save' is deprecated"
-msgstr " '%s' の使用は廃止予定です "
-
-#, fuzzy
-msgid "save != FALSE is defunct"
-msgstr " '%s' は廃止されました。 "
-
 msgid "Loading required package: %s"
 msgstr " 要求されたパッケージ %s をロード中です "
 
@@ -1678,6 +1671,13 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr " '%s' の使用は廃止予定です "
+
+#, fuzzy
+#~ msgid "save != FALSE is defunct"
+#~ msgstr " '%s' は廃止されました。 "
 
 #~ msgid "got invalid index for importing"
 #~ msgstr "インポートに対する不正なインデックスです "

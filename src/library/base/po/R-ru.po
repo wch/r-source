@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:49\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-30 01:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -890,13 +890,6 @@ msgstr "DLL '%s' не найден"
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "сейчас dyn.unload(\"%s\") ..."
 
-msgid "use of 'save' is deprecated"
-msgstr "использование 'save' не рекомендуется"
-
-#, fuzzy
-msgid "save != FALSE is defunct"
-msgstr "'%s' больше не существует."
-
 msgid "Loading required package: %s"
 msgstr "Загрузка требуемого пакета: %s"
 
@@ -1673,6 +1666,13 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr "использование 'save' не рекомендуется"
+
+#, fuzzy
+#~ msgid "save != FALSE is defunct"
+#~ msgstr "'%s' больше не существует."
 
 #~ msgid "got invalid index for importing"
 #~ msgstr "получен неправильный индекс для импорта"

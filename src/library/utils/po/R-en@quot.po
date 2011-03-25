@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
-"PO-Revision-Date: 2011-03-14 07:39\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-25 10:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -90,11 +90,11 @@ msgstr "path to ‘%s’ contains spaces,"
 msgid "this may cause problems when running LaTeX"
 msgstr "this may cause problems when running LaTeX"
 
-msgid "You can now run LaTeX on '%s'"
-msgstr "You can now run LaTeX on ‘%s’"
-
 msgid "invalid value for '%s' : %s"
 msgstr "invalid value for ‘%s’ : %s"
+
+msgid "Warning: unknown option"
+msgstr "Warning: unknown option"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "elements of ‘what’ after the first will be ignored"
@@ -772,6 +772,9 @@ msgstr ""
 
 msgid "no object named '%s' to show"
 msgstr "no object named ‘%s’ to show"
+
+msgid "'file' must be \"\" or an open connection object"
+msgstr "‘file’ must be \"\" or an open connection object"
 
 msgid "must have max > min"
 msgstr "must have max > min"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-05 08:18\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-29 21:00+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -537,6 +537,10 @@ msgstr " 対比を定義するために十分な自由度ではありません "
 
 msgid "baseline group number out of range"
 msgstr " ベースラインのグループ数が範囲を越えています "
+
+#, fuzzy
+msgid "invalid 'use' argument"
+msgstr " 無効な 'method' 引数です "
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr " 'x' to 'y' の両方を与えるか、行列形の 'x' を与えてください "

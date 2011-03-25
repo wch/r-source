@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -43,6 +43,12 @@ msgstr "'squareShape'的值必需在-1和1之间"
 
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "'arrow' 要么是箭头对象，要么是NULL值"
+
+msgid "How did we get here?"
+msgstr "是怎么到这里的？"
+
+msgid "Must start new page if showing leaves separately"
+msgstr "如果分别显示树叶的话需要重新开一页"
 
 msgid "Invalid 'edit' information"
 msgstr "'edit'信息不对"
@@ -484,12 +490,6 @@ msgstr "视口路径至少要有一个视口的名字"
 
 msgid "Invalid viewport name(s)"
 msgstr "视口名字不对"
-
-msgid "How did we get here?"
-msgstr "是怎么到这里的？"
-
-msgid "Must start new page if showing leaves separately"
-msgstr "如果分别显示树叶的话需要重新开一页"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "至少要设定'x'或'xscale'两个中的一个"

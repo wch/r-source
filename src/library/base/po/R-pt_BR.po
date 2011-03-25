@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:49\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2011-01-02 18:10+0200\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -899,12 +899,6 @@ msgstr "DLL '%s' não encontrada"
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "agora dyn.unload(\"%s\") ..."
 
-msgid "use of 'save' is deprecated"
-msgstr "uso de 'save' é obsoleto"
-
-msgid "save != FALSE is defunct"
-msgstr "save != FALSE foi extinto"
-
 msgid "Loading required package: %s"
 msgstr "Carregando pacotes exigidos: %s"
 
@@ -1677,6 +1671,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "use of 'save' is deprecated"
+#~ msgstr "uso de 'save' é obsoleto"
+
+#~ msgid "save != FALSE is defunct"
+#~ msgstr "save != FALSE foi extinto"
 
 #~ msgid "got invalid index for importing"
 #~ msgstr "índice inválido obtido para importação"

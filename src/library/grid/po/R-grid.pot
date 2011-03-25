@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-01-03 16:17\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,6 +36,12 @@ msgid "'squareShape' must be between -1 and 1"
 msgstr ""
 
 msgid "'arrow' must be an arrow object or NULL"
+msgstr ""
+
+msgid "How did we get here?"
+msgstr ""
+
+msgid "Must start new page if showing leaves separately"
 msgstr ""
 
 msgid "Invalid 'edit' information"
@@ -459,12 +465,6 @@ msgid "A viewport path must contain at least one viewport name"
 msgstr ""
 
 msgid "Invalid viewport name(s)"
-msgstr ""
-
-msgid "How did we get here?"
-msgstr ""
-
-msgid "Must start new page if showing leaves separately"
 msgstr ""
 
 msgid "Must specify at least one of 'x' or 'xscale'"

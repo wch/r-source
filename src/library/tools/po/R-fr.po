@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:50\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-10-03 18:49-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -619,21 +619,6 @@ msgstr "Les modifications nécessite le 'style' spécifié"
 msgid "The default JSS style may not be modified."
 msgstr "Le style par défaut JSS ne peut être modifié."
 
-msgid "use of '--auto-zip' is defunct"
-msgstr ""
-
-msgid "use of '--use-zip-data' is defunct"
-msgstr ""
-
-msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
-msgstr ""
-
-msgid "** Options"
-msgstr "** Les options"
-
-msgid "are only for '--binary'  and will be ignored"
-msgstr "sont valides avec --binary seulement et seront ignorées"
-
 msgid "Error: cannot rename directory to"
 msgstr "Erreur: impossible de renommer le répertoire"
 
@@ -748,9 +733,10 @@ msgstr "installation packagée de"
 msgid "as"
 msgstr "comme"
 
+#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
-"Adminstration Manual'"
+"Administration Manual'"
 msgstr ""
 "'cleanup' existe mais n'est pas exécutable -- voyez le manuel d'installation "
 "et d'administration de R"
@@ -1145,6 +1131,12 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "** Options"
+#~ msgstr "** Les options"
+
+#~ msgid "are only for '--binary'  and will be ignored"
+#~ msgstr "sont valides avec --binary seulement et seront ignorées"
 
 #~ msgid "--pkglock applies only to a single package"
 #~ msgstr "--pkglock est valide pour un seul package"

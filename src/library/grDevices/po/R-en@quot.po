@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
-"PO-Revision-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-25 10:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -51,9 +51,6 @@ msgstr "‘bias’ must be positive"
 
 msgid "at least 3 columns needed"
 msgstr "at least 3 columns needed"
-
-msgid "The 'gamma' argument is deprecated and has no effect"
-msgstr "The ‘gamma’ argument is deprecated and has no effect"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb matrix must be numeric"
@@ -169,8 +166,8 @@ msgstr "invalid options in ‘%s’"
 msgid "NOT changing"
 msgstr "NOT changing"
 
-msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr "argment ‘append’ is for back-compatibility and will be ignored"
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "argument ‘append’ is for back-compatibility and will be ignored"
 
 msgid "unknown family '%s'"
 msgstr "unknown family ‘%s’"

@@ -1,14 +1,13 @@
-# Translation of src/library/methods/po/R-methods.pot
-# to German
-# Copyright (C) 2005-2010 The R Foundation
+# Translation of src/library/methods/po/R-methods.pot to German
+# Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
-"PO-Revision-Date: 2010-09-22 13:26+0200\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-24 10:38+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -67,10 +66,12 @@ msgid "Cannot specify array() arguments when specifying .Data"
 msgstr "Kann array() Argumente nicht spezifizieren, wenn .Data spezifiert wir"
 
 msgid "Can't have more than one unnamed argument as environment"
-msgstr ""
+msgstr "Man kann nicht mehr als ein namenloses Argument als Umbgebung haben"
 
 msgid "Unnamed argument to new() must be an environment for the new object"
 msgstr ""
+"Ein namenloses Argument für new() muss eine Umgebung des neuen Objekts\n"
+"sein"
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -366,10 +367,9 @@ msgstr ""
 "erstes Argument sollte(n) Name(n) generischer Funktion(en) sein (bekam "
 "Objekt der Klasse \"%s\""
 
-#, fuzzy
 msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
 msgstr ""
-"\"%s\" ist keine generische Funktion in \"%s\"; Methoden nicht entfernt"
+"\"%s\" ist keine generische S4 Funktion in \"%s\"; Methoden nicht entfernt"
 
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr ""
@@ -379,13 +379,12 @@ msgstr ""
 msgid "restoring default function definition of \"%s\""
 msgstr "stelle Standardfunktionsdefinitionen für \"%s\" wieder her"
 
-#, fuzzy
 msgid ""
 "error in updating S4 generic function \"%s\"; the function definition is not "
 "an S4 generic function (class \"%s\")"
 msgstr ""
-"Fehler beim Aktualisieren der generischen Funktion \"%s\"; "
-"Funktionsdefinition ist keine generische Funktion (Klasse \"%s\")"
+"Fehler beim Aktualisieren der generischen S4 Funktion \"%s\";\n"
+"Funktionsdefinition ist keine generische S4 Funktion (Klasse \"%s\")"
 
 msgid "function \"%s\" is already a group generic; no change"
 msgstr "Funktion \"%s\" ist bereits gruppengenerisch; keine Änderung"
@@ -478,10 +477,9 @@ msgstr "Nur FALSE sinnvoll für 'inherited', wenn 'where' angegeben (bekam"
 msgid "argument \"f\" must be a generic function or %s"
 msgstr "Argument \"f\" muss eine generische Funktion oder %s sein"
 
-#, fuzzy
 msgid "'%s' is not a known generic function {and 'package' not specified}"
 msgstr ""
-"'%s' ist keine generische Funktion in '%s' {und 'package' nicht angegeben"
+"'%s' ist keine bekannte generische Funktion {und 'package' nicht angegeben}"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -1207,13 +1205,12 @@ msgstr ""
 msgid "no definition of \"%s\" to use for %s"
 msgstr "keine Definition von \"%s\", die für \"%s\" genutzt werden kann"
 
-#, fuzzy
 msgid ""
 "multiple definitions of class \"%s\" visible (%s); using the definition\n"
 "   in package \"%s\" for %s"
 msgstr ""
-"mehrfache Definitionen von \"%s\" sichtbar; benutze die Definition aus Paket "
-"\"%s\" für %s"
+"mehrfache Definitionen der Klasse \"%s\" sichtbar (%s); benutze die "
+"Definition aus Paket \"%s\" für %s"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1683,9 +1680,8 @@ msgstr ""
 "anderen\n"
 "Methode aufgerufen werden"
 
-#, fuzzy
 msgid "\"%s\" is not a field in this class"
-msgstr "\"%s\" ist kein Feld in Klasse \"%s\""
+msgstr "\"%s\" ist kein Feld dieser Klasse"
 
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
@@ -1699,12 +1695,14 @@ msgstr ""
 "Die Klassendefinition folgt."
 
 #, fuzzy
-msgid "Arguments must all be character string names of fieds"
-msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
+msgid "Arguments must all be character string names of fields"
+msgstr "Die Argumente müssen alle Zeichenketten für Feldnamen sein"
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
 msgstr ""
+"Geld \"%s\" der Klasse \"%s\" hat eine nicht-standard Bindung und kann\n"
+"nicht geschlossen werden."
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1715,18 +1713,17 @@ msgstr ""
 "existierenden Felddefinition (\"%s\")"
 
 msgid "Field \""
-msgstr ""
+msgstr "Feld \""
 
 msgid "\" is read-only"
-msgstr ""
+msgstr "\" ist nur lesbar"
 
-#, fuzzy
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
 "of class \"%s\""
 msgstr ""
-"erstes Argument sollte(n) Name(n) generischer Funktion(en) sein (bekam "
-"Objekt der Klasse \"%s\""
+"Das contains= Argument sollten Namen von Oberklassen sein: bekam\n"
+"Element der Klasse \"%s\""
 
 msgid "No definition found for inherited class: %s"
 msgstr "keine Definition der geerbten Klasse %s gefunden"
@@ -1735,34 +1732,40 @@ msgid ""
 "Single class name needed for field \"%s\", got a character vector of length "
 "%d"
 msgstr ""
+"Einzelner Klassenname nötig für Feld \"%s\", bekam eine Zeichenkette der\n"
+"Länge \"%d\""
 
 msgid "Class \"%s\" for field \"%s\" is not defined"
-msgstr ""
+msgstr "Klasse \"%s\" des Feldes \"%s\" ist nicht definiert"
 
 msgid ""
 "Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
 "or a binding function"
 msgstr ""
+"Feld \"%s\" wurde angegeben als Objekt der Klasse \"%s\"; muss ein\n"
+"Klassenname sein oder eine Bindungsfunktion"
 
 msgid ""
 "Code for methods in class \"%s\" was not checked for suspicious field "
 "assignments (recommended package \"codetools\" not available?)"
 msgstr ""
+"Kode für die Methoden in der Klasse \"%s\" wurde nicht auf verdächtige\n"
+"Feldzuweisungen gecheckt (empfohlenes Paket \"codetools\" nicht verfügbar?))"
 
 msgid "A list argument for fields must have nonempty names for all the fields"
 msgstr ""
+"Ein Listenargument für Felder muss nicht-leere Namen für alle Felder "
+"bereitstellen"
 
-#, fuzzy
 msgid ""
 "Argument fields must be a list of the field classes or definitions, or else "
 "just the names of the fields; got an object of class \"%s\""
 msgstr ""
-"Argument 'classDef' muss eine Zeichenkette oder eine Klassenrepresentation "
-"sein; bekam ein Objekt aus Klasse \"%s\""
+"Argument fields muss eine Liste von Feldklassen oder Definitionen\n"
+"sein oder einfach die Name der Felder: bekam ein Objekt aus Klasse \"%s\""
 
-#, fuzzy
 msgid "Class \"%s\" is defined but is not a reference class"
-msgstr "\"%s\" ist keine Referenzklasse"
+msgstr "Klasse \"%s\" ist definiert, aber keine Referenzklasse"
 
 msgid "Not a reference class:"
 msgstr "Keine Referenzklasse"
@@ -1778,18 +1781,27 @@ msgid ""
 "    %s\n"
 " Did you mean to use \"<<-\"? ( in method %s for class %s)"
 msgstr ""
+"Lokale Zuweisung zu einem Feldnamen ändert nicht das Feld:\n"
+"    %s\n"
+"War eigentlich \"<<-\" gemeint? (in Methode %s für Klasse %s)"
 
 msgid ""
 "Non-local assignment to non-field names (possibly misspelled?)\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
+"Nicht-lokale Zuweisung zu einem nicht-Feldnamen (evtl. vertippt?)\n"
+"    %s\n"
+"(in Methode %s für Klasse %s) "
 
 msgid ""
 "Non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
+"Nicht-lokale Zuweisung an Methodennamen nicht zulässig\n"
+"    %s\n"
+"(in Methode %s für Klasse %s)"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "

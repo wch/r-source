@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:50\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-30 02:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -603,21 +603,6 @@ msgstr "Изменения требуют определенного 'style'"
 msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
-msgid "use of '--auto-zip' is defunct"
-msgstr ""
-
-msgid "use of '--use-zip-data' is defunct"
-msgstr ""
-
-msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
-msgstr ""
-
-msgid "** Options"
-msgstr "** Опции"
-
-msgid "are only for '--binary'  and will be ignored"
-msgstr "только для '--binary' и будет пропущено"
-
 msgid "Error: cannot rename directory to"
 msgstr "Ошибка: не могу переименовать папку в"
 
@@ -729,9 +714,10 @@ msgstr "пакетная установка"
 msgid "as"
 msgstr "как"
 
+#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
-"Adminstration Manual'"
+"Administration Manual'"
 msgstr ""
 "'cleanup' есть, но невыполним  -- смотрите 'R Installation and Adminstration "
 "Manual'"
@@ -1120,6 +1106,12 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "** Options"
+#~ msgstr "** Опции"
+
+#~ msgid "are only for '--binary'  and will be ignored"
+#~ msgstr "только для '--binary' и будет пропущено"
 
 #~ msgid "--pkglock applies only to a single package"
 #~ msgstr "--pkglock применим только к одиночному пакету"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:50\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
 "PO-Revision-Date: 2010-09-29 21:37+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -615,21 +615,6 @@ msgstr " 指定された 'style' の変更が必要です "
 msgid "The default JSS style may not be modified."
 msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
-msgid "use of '--auto-zip' is defunct"
-msgstr ""
-
-msgid "use of '--use-zip-data' is defunct"
-msgstr ""
-
-msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
-msgstr ""
-
-msgid "** Options"
-msgstr " ** オプション"
-
-msgid "are only for '--binary'  and will be ignored"
-msgstr " 　は '--binary' 専用ですから無視されます "
-
 msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
@@ -741,9 +726,10 @@ msgstr " 以下のパッケージ化されたインストール "
 msgid "as"
 msgstr "として"
 
+#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
-"Adminstration Manual'"
+"Administration Manual'"
 msgstr ""
 " 'cleanup' は存在しますが実行できません -- 参照 'R Installation and "
 "Adminstration Manual' "
@@ -1120,6 +1106,12 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "** Options"
+#~ msgstr " ** オプション"
+
+#~ msgid "are only for '--binary'  and will be ignored"
+#~ msgstr " 　は '--binary' 専用ですから無視されます "
 
 #~ msgid "--pkglock applies only to a single package"
 #~ msgstr " --pkglock は単一のパッケージだけに適用されます "

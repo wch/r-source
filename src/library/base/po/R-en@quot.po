@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.13.0\n"
+"Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-13 10:49\n"
-"PO-Revision-Date: 2011-03-13 10:49\n"
+"POT-Creation-Date: 2011-03-25 10:14\n"
+"PO-Revision-Date: 2011-03-25 10:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -893,12 +893,6 @@ msgstr "DLL ‘%s’ not found"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "now dyn.unload(“%s”) ..."
-
-msgid "use of 'save' is deprecated"
-msgstr "use of ‘save’ is deprecated"
-
-msgid "save != FALSE is defunct"
-msgstr "save != FALSE is defunct"
 
 msgid "Loading required package: %s"
 msgstr "Loading required package: %s"
