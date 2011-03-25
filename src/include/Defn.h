@@ -590,8 +590,6 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #define extern0 extern
 #endif
 
-extern int	gc_inhibit_torture INI_as(1);
-
 LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
 LibExtern int R_interrupts_pending INI_as(0);
 
