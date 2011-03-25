@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2010-09-30 01:42-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -3690,9 +3690,9 @@ msgstr "'ascii' должно быть логическим"
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: буфер слишком мал"
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr "код должен быть общим вектором"
 
 #: src/main/eval.c:4635
@@ -3704,11 +3704,6 @@ msgstr "код должен быть общим вектором"
 #, fuzzy
 msgid "bad constCount value"
 msgstr "нет значений контура"
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr "код должен быть общим вектором"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8262,6 +8257,10 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "код должен быть общим вектором"
 
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr "неправильный аргумент '%s'"

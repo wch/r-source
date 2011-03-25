@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -3636,9 +3636,9 @@ msgstr "'ascii’必需是逻辑值"
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: 缓冲区太小"
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr "代码必需是矢量类属"
 
 #: src/main/eval.c:4635
@@ -3650,11 +3650,6 @@ msgstr "代码必需是矢量类属"
 #, fuzzy
 msgid "bad constCount value"
 msgstr "无等高值"
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr "代码必需是矢量类属"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8132,6 +8127,10 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "代码必需是矢量类属"
 
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr "'%s'参数不对"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -3684,9 +3684,9 @@ msgstr "«ascii» må vera ein logisk verdi"
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: bufferen er for liten"
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr "«code» må vera ein generisk vektor"
 
 #: src/main/eval.c:4635
@@ -3698,11 +3698,6 @@ msgstr "«code» må vera ein generisk vektor"
 #, fuzzy
 msgid "bad constCount value"
 msgstr "ingen konturverdiar"
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr "«code» må vera ein generisk vektor"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8249,6 +8244,10 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "«code» må vera ein generisk vektor"
 
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr "ugyldig «%s»-argument"

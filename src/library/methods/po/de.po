@@ -1,15 +1,13 @@
-# German translation of
-# src/library/methods/po/methods.pot
-#
-# Copyright (C) 2007-2010 The R Foundation
+# Translation of src/library/methods/po/methods.pot to German
+# Copyright (C) 2007-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-05 08:18+0000\n"
-"PO-Revision-Date: 2010-09-21 15:25+0200\n"
+"PO-Revision-Date: 2011-03-23 15:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -143,13 +141,13 @@ msgstr ""
 
 #: methods_list_dispatch.c:600 methods_list_dispatch.c:612
 #: methods_list_dispatch.c:958
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-"Fehler bei der Berechnung des Argumentes '%s' bei der Methodenauswahl für "
-"Funktion '%s'"
+"Fehler bei der Auswertung des Argumentes '%s' bei der Methodenauswahl\n"
+"für Funktion '%s': %s"
 
 #: methods_list_dispatch.c:620
 #, c-format
@@ -182,9 +180,9 @@ msgstr ""
 "keinnkorrespondierendes '...' Argument"
 
 #: methods_list_dispatch.c:703
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "Fehler in der Berechnung einer nächsten 'primitive' Methode"
+msgstr "Fehler in der Bestimmung einer 'primitive' next-Methode: %s"
 
 #: methods_list_dispatch.c:767
 #, c-format

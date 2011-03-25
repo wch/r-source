@@ -1,14 +1,14 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2010 The R Foundation
+# Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2010.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-13 10:49\n"
-"PO-Revision-Date: 2010-09-21 14:27+0200\n"
+"PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: \n"
@@ -88,7 +88,7 @@ msgid "malformed version string"
 msgstr "falsch aufgebaute Versionszeichenkette"
 
 msgid "target is %s, current is %s"
-msgstr ""
+msgstr "Ziel ist %s, aktuell ist %s"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
@@ -211,9 +211,8 @@ msgstr "keine gültige restart Spezifikation"
 msgid "argument 'where' of length 0"
 msgstr "Argument 'where' hat Länge 0"
 
-#, fuzzy
 msgid "argument 'object' must deparse to a single character string"
-msgstr "'pattern' muss nichtleere Zeichenkette sein"
+msgstr "Argument 'object' muss zu einer einzelnen Zeichenkette deparsen"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' muss entweder 'start', 'current' oder 'end' sein"
@@ -657,15 +656,13 @@ msgstr "ungültiges Faktorniveau, NA erzeugt"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
 
-#, fuzzy
 msgid "'%s' not defined for ordered factors"
-msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
+msgstr "'%s' ist nicht definiert für geordnete Faktoren"
 
-#, fuzzy
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
-msgstr "'%s' ist nicht sinnvoll für geordnete Faktoren"
+msgstr "'%s' ist nur sinnvoll für geordnete Faktoren, wenn alle Argumente dieselben \"level sets\" haben"
 
 msgid "no files to copy from"
 msgstr "keine Dateien, um daraus zu kopieren"
@@ -678,6 +675,8 @@ msgstr "mehr 'from' Dateien als 'to' Dateien"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
+"'recursive' wird ignoriert, da 'to' keine einzelnes, existierendes\n"
+"Verzeichnis ist"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "Datei kann nicht sowohl 'from' als auch 'to' der Kopie sein"
@@ -688,16 +687,14 @@ msgstr "keine Dateien, um davon zu linken"
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
 
-#, fuzzy
 msgid "no files to link to"
-msgstr "keine Dateien, um davon zu linken"
+msgstr "keine Dateien, um dorthin zu linken"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
 
-#, fuzzy
 msgid "no file found"
-msgstr "nicht gefunden"
+msgstr "keine Datei gefunden"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' enthält NAs"
@@ -901,9 +898,8 @@ msgstr "nun dyn.unload(\"%s\") ..."
 msgid "use of 'save' is deprecated"
 msgstr "Benutzung von 'save' ist veraltet."
 
-#, fuzzy
 msgid "save != FALSE is defunct"
-msgstr "'%s' ist nicht mehr gültig."
+msgstr "save != FALSE ist nicht mehr möglich."
 
 msgid "Loading required package: %s"
 msgstr "Lade nötiges Paket: %s"
@@ -1303,12 +1299,11 @@ msgstr "Länge von 'scale' muss mit der Spaltenanzahl von 'x' übereinstimmen"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "entweder 'nmax' oder 'n' angeben, aber nicht beide"
 
-#, fuzzy
 msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out' muss Länge 1 haben"
+msgstr "Argument 'length.out' muss Länge 1 haben"
 
 msgid "first element used of 'length.out' argument"
-msgstr ""
+msgstr "erstes Element von 'length.out' Argument benutzt"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "ungültiges (to - from)/by in seq(.)"
@@ -1326,7 +1321,7 @@ msgid "too many arguments"
 msgstr "zu viele Argumente"
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr ""
+msgstr "'compress' wird ignoriert, außer 'file' ist ein Dateiname"
 
 msgid "'connection' must be a connection"
 msgstr "'connection' muss eine Verbindung sein"
@@ -1475,7 +1470,7 @@ msgid "all arguments must have the same length"
 msgstr "alle Argumente müssen die selbe Länge haben"
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr "Versuch eine Tabelle mit mehr als 2^31 Elementen zu erstellen"
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'object' muss von der Klasse \"table\" erben"

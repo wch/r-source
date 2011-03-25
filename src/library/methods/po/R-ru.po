@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-08 06:55\n"
+"POT-Creation-Date: 2011-03-25 10:08\n"
 "PO-Revision-Date: 2010-09-30 02:29-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1649,7 +1649,8 @@ msgstr ""
 "Топик \"%s\" не является именем метода в классе \"%s\"\n"
 "Определение класса ниже"
 
-msgid "Arguments must all be character string names of fieds"
+#, fuzzy
+msgid "Arguments must all be character string names of fields"
 msgstr "Аргументы должны быть текстовыми строками или полями"
 
 msgid ""

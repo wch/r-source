@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -3783,9 +3783,9 @@ msgstr "'ascii'는 논리값 이어야만 합니다"
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName:  버퍼가 너무 작습니다"
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr "코드는 generic 벡터이어야만 합니다"
 
 #: src/main/eval.c:4635
@@ -3797,11 +3797,6 @@ msgstr "코드는 generic 벡터이어야만 합니다"
 #, fuzzy
 msgid "bad constCount value"
 msgstr "등고선값이 없습니다"
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr "코드는 generic 벡터이어야만 합니다"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8451,6 +8446,10 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "코드는 generic 벡터이어야만 합니다"
 
 #, fuzzy
 #~ msgid "invalid '%s' arguemnt"

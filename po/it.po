@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -3787,9 +3787,9 @@ msgstr "'ascii' deve essere di tipo logico"
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: buffer troppo piccolo"
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr "code deve essere un vettore generico"
 
 #: src/main/eval.c:4635
@@ -3801,11 +3801,6 @@ msgstr "code deve essere un vettore generico"
 #, fuzzy
 msgid "bad constCount value"
 msgstr "nessun valore di contour"
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr "code deve essere un vettore generico"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8457,6 +8452,10 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "code deve essere un vettore generico"
 
 #, fuzzy
 #~ msgid "invalid '%s' arguemnt"

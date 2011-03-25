@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2010-09-30 07:32+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -3703,9 +3703,9 @@ msgstr " 'ascii' は論理値でなければなりません "
 msgid "R_CompiledFileName: buffer too small"
 msgstr " R_CompiledFileName: バッファが小さすぎます "
 
-#: src/main/eval.c:4616
+#: src/main/eval.c:4616 src/main/eval.c:4665
 #, fuzzy
-msgid "constand buffer must be a generic vector"
+msgid "constant buffer must be a generic vector"
 msgstr " コードはジェネリックなベクトルでなければなりません "
 
 #: src/main/eval.c:4635
@@ -3717,11 +3717,6 @@ msgstr " コードはジェネリックなベクトルでなければなりま�
 #, fuzzy
 msgid "bad constCount value"
 msgstr " 等高線値がありません "
-
-#: src/main/eval.c:4665
-#, fuzzy
-msgid "constant buffer must be a generic vector"
-msgstr " コードはジェネリックなベクトルでなければなりません "
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
@@ -8279,6 +8274,10 @@ msgstr " X11 モジュールをロードできません "
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr " コードはジェネリックなベクトルでなければなりません "
 
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr " '%s' 引数が不正です "

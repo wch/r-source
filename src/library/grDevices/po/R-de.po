@@ -1,14 +1,13 @@
-# German translation of 
-# src/library/grDevices/po/R-grDevices.pot
-# Copyright (C) 2005-2010 The R Foundation
+# Translation of  src/library/grDevices/po/R-grDevices.pot to German.
+# Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-22 15:33\n"
-"PO-Revision-Date: 2010-09-21 14:35+0200\n"
+"PO-Revision-Date: 2011-03-23 15:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -36,7 +35,7 @@ msgid "at least 3 columns needed"
 msgstr "zumindest 3 Spalten benötigt"
 
 msgid "The 'gamma' argument is deprecated and has no effect"
-msgstr ""
+msgstr "Das 'gamma' Argument ist veraltet und hat keinen Effekt"
 
 msgid "rgb matrix must be numeric"
 msgstr "RGB Matrix muss nummerisch sein"
@@ -153,7 +152,6 @@ msgstr "ungültige Optionen in '%s'"
 msgid "NOT changing"
 msgstr "NICHT ändernd"
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "Argument 'append' dient der Rückwärtskompatibilität und wird ignoriert"
 
@@ -234,15 +232,13 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Ein Rater-Array muss genau 3 oder 4 Ebenen haben"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop' ist implizit immer FALSE in '[.raster'"
 
-#, fuzzy
 msgid "invalid raster subsetting"
-msgstr "ungültiges erstes Argument"
+msgstr "ungültiges Rastersubsetting"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "ungültiges erstes Argument"
+msgstr "ungültige Rasterteilzuweisung"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Operator hat für Rasterobjekte keine Bedeutung"

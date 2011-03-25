@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3622,8 +3622,8 @@ msgstr ""
 msgid "R_CompiledFileName: buffer too small"
 msgstr ""
 
-#: src/main/eval.c:4616
-msgid "constand buffer must be a generic vector"
+#: src/main/eval.c:4616 src/main/eval.c:4665
+msgid "constant buffer must be a generic vector"
 msgstr ""
 
 #: src/main/eval.c:4635
@@ -3632,10 +3632,6 @@ msgstr ""
 
 #: src/main/eval.c:4639
 msgid "bad constCount value"
-msgstr ""
-
-#: src/main/eval.c:4665
-msgid "constant buffer must be a generic vector"
 msgstr ""
 
 #: src/main/eval.c:4667

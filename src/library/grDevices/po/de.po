@@ -1,14 +1,13 @@
-# German translation of 
-# src/library/grDevices/po/grDevices.pot
-# Copyright (C) 2005-2010 The R Foundation
+# Translation of src/library/grDevices/po/grDevices.pot to German.
+# Copyright (C) 2005-2011 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-1010.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-1011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.12.0\n"
+"Project-Id-Version: R-2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-14 07:37+0000\n"
-"PO-Revision-Date: 2010-09-21 14:32+0200\n"
+"PO-Revision-Date: 2011-03-23 15:43+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: \n"
@@ -415,9 +414,8 @@ msgid "unknown 'colormodel', using 'rgb'"
 msgstr "unbekanntes 'colormodel', nutze 'rgb'"
 
 #: devPS.c:6532
-#, fuzzy
 msgid "Failed to load sRGB colorspace"
-msgstr "laden der Kodierung fehlgeschlagen"
+msgstr "Laden des sRGB Farbraumes fehlgeschlagen"
 
 #: devPS.c:6799
 msgid "Corrupt encodings in PDF device"

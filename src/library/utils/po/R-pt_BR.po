@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39\n"
+"POT-Creation-Date: 2011-03-25 10:08\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,9 +66,6 @@ msgid "path to '%s' contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
-msgstr ""
-
-msgid "You can now run LaTeX on '%s'"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-22 15:33+0000\n"
+"POT-Creation-Date: 2011-03-25 10:04+0000\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -3540,9 +3540,9 @@ msgid "not a simple matrix"
 msgstr ""
 
 #: src/main/eval.c:3458
-#, fuzzy, c-format
+#, c-format
 msgid "invalid %s type in 'x %s y'"
-msgstr "invalid colour specification '%s'"
+msgstr ""
 
 #: src/main/eval.c:3524
 msgid "bytecode version mismatch; using eval"
@@ -3621,8 +3621,8 @@ msgstr ""
 msgid "R_CompiledFileName: buffer too small"
 msgstr ""
 
-#: src/main/eval.c:4616
-msgid "constand buffer must be a generic vector"
+#: src/main/eval.c:4616 src/main/eval.c:4665
+msgid "constant buffer must be a generic vector"
 msgstr ""
 
 #: src/main/eval.c:4635
@@ -3631,10 +3631,6 @@ msgstr ""
 
 #: src/main/eval.c:4639
 msgid "bad constCount value"
-msgstr ""
-
-#: src/main/eval.c:4665
-msgid "constant buffer must be a generic vector"
 msgstr ""
 
 #: src/main/eval.c:4667
@@ -3932,9 +3928,9 @@ msgid "invalid regular expression '%s', reason '%s'"
 msgstr ""
 
 #: src/main/grep.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression, reason '%s'"
-msgstr "invalid colour specification '%s'"
+msgstr ""
 
 #: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
 #: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
