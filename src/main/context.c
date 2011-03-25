@@ -280,7 +280,7 @@ void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 	     cptr = cptr->nextcontext)
 	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
 		jumpfun(cptr, mask, val);
-	error(_("no loop to break from, jumping to top level"));
+	error(_("no loop for break/next, jumping to top level"));
     }
     else {				/* return; or browser */
 	for (cptr = R_GlobalContext;
