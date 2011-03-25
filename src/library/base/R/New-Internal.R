@@ -147,6 +147,8 @@ gc <- function(verbose = getOption("verbose"),	reset=FALSE)
 }
 gcinfo <- function(verbose) .Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
+gctorture2 <- function(step, wait = step, inhibit_release = FALSE)
+    .Internal(gctorture2(step, wait, inhibit_release))
 
 is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
 {
