@@ -727,20 +727,62 @@ fileCompletionPreferred <- function()
 ## that can do filename completion themselves should probably not use
 ## this as they will do a better job.
 
+correctFilenameToken <- function()
+{
+    ## Helper function
+
+    ## If a file name contains spaces, the token will only have the
+    ## part after the last space.  This function tries to recover the
+    ## complete initial part.
+
+    ## Find part between last " or ' 
+    linebuffer <- .CompletionEnv[["linebuffer"]]
+    lbss <- head(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
+    whichDoubleQuote <- lbss == '"'
+    whichSingleQuote <- lbss == "'"
+    insideDoubleQuote <- (sum(whichDoubleQuote) %% 2 == 1)
+    insideSingleQuote <- (sum(whichSingleQuote) %% 2 == 1)
+    loc.start <- 
+        if (insideDoubleQuote && insideSingleQuote)
+        {
+            ## Should not happen, but if it does, should take whichever comes later
+            max(which(whichDoubleQuote), which(whichSingleQuote))
+        }
+        else if (insideDoubleQuote)
+            max(which(whichDoubleQuote))
+        else if (insideSingleQuote)
+            which(whichSingleQuote)
+        else ## should not happen, abort non-intrusively
+            .CompletionEnv[["start"]]
+    substring(linebuffer, loc.start + 1L, .CompletionEnv[["end"]])
+}
+
+
+
 
 fileCompletions <- function(token)
 {
     ## uses Sys.glob (conveniently introduced in 2.5.0)
-    ## assume token starts just after the begin quote
+
+    ## token may not start just after the begin quote, e.g., if spaces
+    ## are included.  Get 'correct' partial file name by looking back
+    ## to begin quote
+    pfilename <- correctFilenameToken()
 
     ## Sys.glob doesn't work without expansion.  Is that intended?
-    token.expanded <- path.expand(token)
-    comps <- Sys.glob(sprintf("%s*", token.expanded), dirmark = TRUE)
+    pfilename.expanded <- path.expand(pfilename)
+    comps <- Sys.glob(sprintf("%s*", pfilename.expanded), dirmark = TRUE)
 
     ## for things that only extend beyond the cursor, need to
     ## 'unexpand' path
-    if (token.expanded != token)
+    if (pfilename.expanded != pfilename)
         comps <- sub(path.expand("~"), "~", comps, fixed = TRUE)
+
+    ## for tokens that were non-trivially corrected by adding prefix,
+    ## need to delete extra part
+    if (pfilename != token)
+        comps <- substring(comps, nchar(pfilename) - nchar(token) + 1L, 1000L)
+
     comps
 }
 
