@@ -828,6 +828,13 @@
       \item The browser (invoked by \code{debug()}, \code{browser()}
       or otherwise) would display attributes such as \code{"wholeSrcref"}
       that were intended for internal use only.
+
+      \item R's internal filename completion now properly handles
+      filenames with spaces in them even when the readline library is
+      used.  This resolves \PR{14452} provided the internal filename
+      completion is used (e.g., by setting \code{rc.settings(files =
+      TRUE)}).
+
     }
   }
 }
