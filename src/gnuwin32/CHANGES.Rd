@@ -48,6 +48,10 @@
       \file{Rcmd.exe}.
 
       \item A few more file operations will now work with >2GB files.
+
+      \item The environment variable \env{R_HOME} in an \R session now
+      uses slash as the path separator (as it always has when set by
+      \command{Rcmd.exe}).
     }
   }
 
