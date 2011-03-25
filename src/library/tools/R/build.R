@@ -295,7 +295,7 @@ get_exclude_patterns <- function()
                 sources <- basename(list_files_with_exts(doc_dir, "R"))
                 if (length(sources)) {
                     vf <- basename(list_files_with_type(doc_dir, "vignette"))
-                    new_sources <- sub("\\.[RrSs](nw|tex)", ".R", vf)
+                    new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", vf)
                     dups <- sources[sources %in% new_sources]
                     if(length(dups)) {
                         warningLog(Log)

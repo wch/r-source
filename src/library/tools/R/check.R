@@ -1624,7 +1624,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         sources <-
             basename(list_files_with_exts(file.path(pkgdir, "inst/doc"),"R"))
         if (length(sources)) {
-            new_sources <- sub("\\.[RrSs](nw|tex)", ".R", basename(vf))
+            new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vf))
             dups <- sources[sources %in% new_sources]
             if(length(dups)) {
                 any <- TRUE

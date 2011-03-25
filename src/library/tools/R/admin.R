@@ -517,6 +517,8 @@ function(dir, outDir)
         Rfiles <- Sys.glob("*.R")
         sizes <- file.info(Rfiles)$size
         unlink(Rfiles[sizes == 0])
+        ## or simply sub("\\.[RrSs](nw|tex)$", ".R",
+        ##               basename(vignetteIndex$File))
         Rfiles <-
             sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
         vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
