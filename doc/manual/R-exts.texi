@@ -1944,11 +1944,11 @@ directories such as
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
 versions of the vignettes for distribution with the package sources.  By
 including the PDF version in the package sources it is not necessary
-that the vignettes can be compiled at install time, i.e., the package
-author can use private @LaTeX{} extensions which are only available on
-his machine.@footnote{provided the conditions of the package's licence
-are met: many would see these as incompatible with an Open Source
-licence.}
+that the vignettes can be run and compiled at install time, i.e., the
+package author can use private @R{} packages, screen snapshots and
+@LaTeX{} extensions which are only available on his
+machine.@footnote{provided the conditions of the package's licence are
+met: many would see these as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format in @file{inst/doc} (but not in sub-directories).  If no
@@ -2017,6 +2017,12 @@ the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to HTML help
 files or to the @file{DESCRIPTION} file.
+
+Sweave/Stangle allows the document to specify the @code{split=TRUE}
+option to create a single @R{} file for each code chunk: this will not
+work for vignettes where it is assumed that each vignette source
+generates a single file with the vignette extension replaced by
+@file{.R}.
 
 Do watch that PDFs are not too large -- one in a @acronym{CRAN} package
 was 72Mb!  This is usually caused by the inclusion of overly detailed
