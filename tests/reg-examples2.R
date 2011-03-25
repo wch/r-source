@@ -8,6 +8,8 @@ example(SSasympOrig)
 example(SSlogis)
 example(constrOptim)
 example(aov)
+# signs for promax rotation are arbitrary
+example(factanal)
 example(family)
 example(glm)
 example(glm.control)

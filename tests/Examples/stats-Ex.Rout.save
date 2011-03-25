@@ -6620,36 +6620,6 @@ Proportion Var   0.316   0.314   0.300
 Cumulative Var   0.316   0.630   0.929
 
 The degrees of freedom for the model is 0 and the fit was 0.4755 
-> factanal(m1, factors=3, rotation="promax")
-
-Call:
-factanal(x = m1, factors = 3, rotation = "promax")
-
-Uniquenesses:
-   v1    v2    v3    v4    v5    v6 
-0.005 0.101 0.005 0.224 0.084 0.005 
-
-Loadings:
-   Factor1 Factor2 Factor3
-v1          0.985         
-v2          0.951         
-v3                  1.003 
-v4                  0.867 
-v5  0.910                 
-v6  1.033                 
-
-               Factor1 Factor2 Factor3
-SS loadings      1.903   1.876   1.772
-Proportion Var   0.317   0.313   0.295
-Cumulative Var   0.317   0.630   0.925
-
-Factor Correlations:
-        Factor1 Factor2 Factor3
-Factor1   1.000  -0.462   0.460
-Factor2  -0.462   1.000  -0.501
-Factor3   0.460  -0.501   1.000
-
-The degrees of freedom for the model is 0 and the fit was 0.4755 
 > # The following shows the g factor as PC1
 > prcomp(m1)
 Standard deviations:
