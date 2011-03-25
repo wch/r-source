@@ -233,6 +233,26 @@ my.Swd <- function(name, width, height, ...)
   different devices can be used for different chunks.
 }
 
+\section{Hook Functions}{
+  Before each code chunk is evaluated, zero or more hook functions can
+  be executed.  If \code{getOption("SweaveHooks")} is set, it is taken
+  to be a named list of hook functions.  For each \emph{logical} option of a
+  code chunk (\code{echo}, \code{print}, \ldots) a hook can be
+  specified, which is executed if and only if the respective option is
+  \code{TRUE}.  Hooks must be named elements of the list returned by
+  \code{getOption("SweaveHooks")} and be functions taking no arguments.
+  E.g., if option \code{"SweaveHooks"} is defined as \code{list(fig =
+  foo)}, and \code{foo} is a function, then it would be executed before
+  the code in each figure chunk.  This is especially useful to set
+  defaults for the graphical parameters in a series of figure chunks.
+
+  Note that the user is free to define new Sweave logical options and
+  associate arbitrary hooks with them.  E.g., one could define a hook
+  function for a new option called \code{clean} that removes all objects
+  in the workspace.  Then all code chunks specified with \code{clean =
+    TRUE} would start operating on an empty workspace.
+}
+
 \author{Friedrich Leisch and R-core}
 
 \references{

@@ -16,12 +16,10 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
              split = FALSE, prefix = TRUE, quiet = FALSE)
 }
 \arguments{
-  \item{file}{Name of Sweave source file.}
+  \item{file}{Path to Sweave source file.}
   \item{syntax}{An object of class \code{SweaveSyntax}.}
-  \item{output}{Name of output file, default is to remove extension \file{.nw},
-    \file{.Rnw} or \file{.Snw} and to add extension \file{.R}. Any
-    directory names in \code{file} are also removed such that the output
-    is created in the current working directory.}
+  \item{output}{Name of output file used unless \code{split = TRUE}:
+    see \sQuote{Details}.}
   \item{annotate}{By default, code chunks are separated by comment
     lines specifying the names and numbers of the code chunks. If
     \code{FALSE}, only the code chunks without any decorating comments
@@ -30,6 +28,15 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
+}
+\details{
+  Unless \code{split = TRUE}, the default name of the output file is
+  \code{basename(file)} with an extension corresponding to the Sweave
+  syntax (e.g. \file{Rnw}, \file{Stex}) replaced by \file{R}.
+
+  If spliting is selected (including by the options in the file), each
+  chunk is written to a separate file with extension the name of the
+  \sQuote{engine} (default \file{.R}).
 }
 \author{Friedrich Leisch and R-core.}
 \references{

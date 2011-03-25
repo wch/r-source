@@ -930,6 +930,7 @@ RtangleSetup <- function(file, syntax,
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
+        ## This is odd, since for split = TRUE it uses the engine name.
         output <- paste(prefix.string, "R", sep = ".")
     } else
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
