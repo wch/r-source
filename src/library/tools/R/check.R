@@ -1667,7 +1667,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
             res <- character()
+            cat("\n")
             for(v in vigns$docs) {
+                cat("  ", sQuote(basename(v)), "...")
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
                               basename(v), "', '", vignette_dir, "'",
                               if (!is.na(enc <- desc["Encoding"]))
@@ -1677,11 +1679,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
 
                 if(length(grep("^  When (tangling|sourcing)", out,
-                               useBytes = TRUE)))
+                               useBytes = TRUE))) {
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                    cat(" failed\n")
+                } else cat(" OK\n")
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
