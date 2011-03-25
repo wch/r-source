@@ -1730,7 +1730,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  stdout = outfile, stderr = outfile)
                 if (status) {
                     noteLog(Log)
-                    out <- readLines(outfile)
+                    out <- readLines(outfile, warn = FALSE)
                     if (R_check_suppress_RandR_message)
                         out <- grep('^Xlib: *extension "RANDR" missing on display', out,
                                     invert = TRUE, value = TRUE, useBytes = TRUE)
