@@ -1112,12 +1112,22 @@ R_getDllTable()
     int i;
     SEXP ans;
 
+ again:
     PROTECT(ans = allocVector(VECSXP, CountDLL));
     for(i = 0; i < CountDLL; i++) {
 	SET_VECTOR_ELT(ans, i, Rf_MakeDLLInfo(&(LoadedDLL[i])));
     }
     setAttrib(ans, R_ClassSymbol, mkString("DLLInfoList"));
     UNPROTECT(1);
+
+    /* There is a problem here: The allocations can cause gc, and gc
+       may result in no longer referenced DLLs being unloaded.  So
+       CountDLL can be reduced during this loop.  A simple work-around
+       is to just try again until CountDLL at the end is the same as
+       it was at the beginning.  LT */
+    if (CountDLL != LENGTH(ans))
+	goto again;
+
     return(ans);
 }
 
