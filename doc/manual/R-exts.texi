@@ -1078,7 +1078,9 @@ Additionally, the name of the package (e.g.@: @samp{survival} or
 always @code{$@{R_LIBRARY_DIR@}/$@{R_PACKAGE_NAME@}}, but this used not to
 be the case when versioned installs were allowed.  Its main use is in
 @file{configure.win} scripts for the installation path of external
-software's DLLs.)
+software's DLLs.)  Note that the value of @env{R_PACKAGE_DIR} may
+contain spaces and other shell-unfriendly characters, and so should be
+quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
@@ -1292,8 +1294,8 @@ at all, or it might be the wrong version or architecture.  The correct
 way to do this is @emph{via}
 
 @example
-$(R_HOME)/bin$(R_ARCH_BIN)/Rscript @var{filename}
-$(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
+"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" @var{filename}
+"$(R_HOME)/bin$(R_ARCH_BIN)/Rscript" -e '@var{R expression}'
 @end example
 
 @noindent
@@ -3428,7 +3430,7 @@ installed (and tested) version of @R{} by
 @example
 mkdir Translation-it
 cd Translation-it
-(cd $R_HOME; tar cf - share/locale/it library/*/po/it) | tar xf -
+(cd "$R_HOME"; tar cf - share/locale/it library/*/po/it) | tar xf -
 # the next step is not needed on Windows
 msgfmt -c -o share/locale/it/LC_MESSAGES/RGui.mo $R_SRC_HOME/po/RGui-it.gmo
 # create a DESCRIPTION file
@@ -7022,8 +7024,8 @@ for that we can ask @R{} by something like
 
 @example
 PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
- | $@{R_HOME@}/bin/R --vanilla --slave`
-PKG_LIBS=$(PKGB_PATH)/libpackB.a
+ | "$@{R_HOME@}/bin/R" --vanilla --slave`
+PKG_LIBS="$(PKGB_PATH)/libpackB.a"
 @end example
 
 @noindent
@@ -7035,7 +7037,7 @@ For a dynamic library @file{packB/libs/libpackB.so}
 
 @example
 PKGB_PATH=`echo 'cat(system.file("libs", .Platform$r_arch, package="packB", mustWork=TRUE))' \
- | $@{R_HOME@}/bin/R --vanilla --slave`
+ | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
 @end example
 
@@ -7056,7 +7058,7 @@ by
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
- | $@{R_HOME@}/bin/R --vanilla --slave`
+ | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -rpath "$(PKGB_PATH)" -lpackB
 @end example
 

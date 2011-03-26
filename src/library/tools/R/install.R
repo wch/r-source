@@ -169,7 +169,7 @@
                     ## FIXME: this does not preserve dates
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     unlink(lp, recursive = TRUE)
-                } else system(paste("mv", lp, pkgdir))
+                } else system(paste("mv", shQuote(lp), shQuote(pkgdir)))
             }
         }
 
@@ -334,7 +334,8 @@
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             if (nzchar(lockdir))
-                system(paste("mv", instdir, file.path(lockdir, pkg)))
+                system(paste("mv", shQuote(instdir),
+                             shQUote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         res <- system(paste("cp -r .", shQuote(instdir),
@@ -522,7 +523,8 @@
                     file.copy(instdir, lockdir, recursive = TRUE)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
-                    system(paste("mv", instdir, file.path(lockdir, pkg_name)))
+                    system(paste("mv", shQuote(instdir),
+                                 shQuote(file.path(lockdir, pkg_name))))
                 else
                     file.copy(instdir, lockdir, recursive = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
@@ -982,10 +984,13 @@
             ## it brings down the R process running .install.packages()
             ## and so do_exit_on_error() is not called.
 	    starsmsg(stars, "testing if installed package can be loaded")
+            ## FIXME: maybe 'lib' is not quite good enough
+            ## On a Unix-alike this calls system(input=)
+            ## and that uses a temporary file and redirection.
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
-            ## R_LIBS was set already
-            res <- R_runR(cmd, "--no-save --slave", stdout = "", stderr = "") # from check.R
+            ## R_LIBS was set already.  R_runR is in check.R
+            res <- R_runR(cmd, "--no-save --slave", stdout = "", stderr = "")
             if (res) errmsg("loading failed")
         }
     }
