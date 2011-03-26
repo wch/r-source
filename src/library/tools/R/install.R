@@ -982,6 +982,7 @@
             ## it brings down the R process running .install.packages()
             ## and so do_exit_on_error() is not called.
 	    starsmsg(stars, "testing if installed package can be loaded")
+            ## FIXME: maybe "lib" is not quite good enough
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
             ## R_LIBS was set already

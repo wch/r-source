@@ -32,6 +32,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         if (!is.null(cmd)) {
+            ## In principle this should escape \
             Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
         system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
