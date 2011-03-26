@@ -986,7 +986,7 @@
 	    starsmsg(stars, "testing if installed package can be loaded")
             ## FIXME: maybe 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
-            ## and that uses a temporaty file and redirection.
+            ## and that uses a temporary file and redirection.
             cmd <- paste("tools:::.test_load_package('", pkg_name, "', '", lib, "')",
                          sep = "")
             ## R_LIBS was set already.  R_runR is in check.R

@@ -5,6 +5,16 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.14.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item The \code{yLineBias} of the \code{X11()} and
+      \code{windows()} families of devices has been changed from 0.1 to 0.2:
+      this changes slightly the vertical positioning of text (including axis
+      annotations).   This is mainly for consistency with other devices
+      such as \code{quartz()} and \code{pdf()}.  (Wish of \PR{14538}.)
+    }
+  }
+  
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{txtProgressBar()} can write to an open connection
