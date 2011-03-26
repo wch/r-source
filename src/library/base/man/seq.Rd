@@ -53,8 +53,7 @@ seq_len(length.out)
   argument (before argument matching).
   
   Typical usages are
-\preformatted{
-seq(from, to)
+\preformatted{seq(from, to)
 seq(from, to, by= )
 seq(from, to, length.out= )
 seq(along.with= )

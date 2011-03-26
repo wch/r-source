@@ -28,8 +28,7 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 }
 \details{
   Typical usages are
-\preformatted{
-abline(a, b, untf = FALSE, \dots)
+\preformatted{abline(a, b, untf = FALSE, \dots)
 abline(h=, untf = FALSE, \dots)
 abline(v=, untf = FALSE, \dots)
 abline(coef=, untf = FALSE, \dots)

@@ -57,15 +57,12 @@ is.relistable(x)
   variance-covariance matrix and a mean vector.  It would be most convenient to
   represent it as a list containing a vector and a matrix.  A typical parameter
   might look like
-  \preformatted{
-      list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0))).
-  }
+\preformatted{      list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0))).}
   However, \code{\link{optim}} cannot operate on functions that take
   lists as input; it only likes numeric vectors.  The solution is
   conversion. Given a function \code{mvdnorm(x, mean, vcov, log=FALSE)}
   which computes the required probability density, then
-  \preformatted{
-        ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
+\preformatted{        ipar <- list(mean=c(0, 1), vcov=cbind(c(1, 1), c(1, 0)))
         initial.param <- as.relistable(ipar)
 
         ll <- function(param.vector)
@@ -76,13 +73,11 @@ is.relistable(x)
         }
 
         optim(unlist(initial.param), ll)
-  }
+}
   \code{relist} takes two parameters: skeleton and flesh.  Skeleton is a sample
   object that has the right \code{shape} but the wrong content.  \code{flesh}
   is a vector with the right content but the wrong shape.  Invoking
-  \preformatted{
-    relist(flesh, skeleton)
-  }
+\preformatted{    relist(flesh, skeleton)}
   will put the content of flesh on the skeleton.  You don't need to specify
   skeleton explicitly if the skeleton is stored as an attribute inside flesh.
   In particular, if flesh was created from some object obj with
@@ -93,13 +88,12 @@ is.relistable(x)
 
   As long as \code{skeleton} has the right shape, it should be a precise inverse
   of \code{\link{unlist}}.  These equalities hold:
-  \preformatted{
-   relist(unlist(x), x) == x
+\preformatted{   relist(unlist(x), x) == x
    unlist(relist(y, skeleton)) == y
 
    x <- as.relistable(x)
    relist(unlist(x)) == x
-  }
+}
 }% details
 \value{
   an object of (S3) class \code{"relistable"} (and \code{"\link{list}"}).

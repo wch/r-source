@@ -78,8 +78,7 @@ is.matrix(x)
 }
 \note{
   If you just want to convert a vector to a matrix, something like
-\preformatted{
-  dim(x) <- c(nx, ny)
+\preformatted{  dim(x) <- c(nx, ny)
   dimnames(x) <- list(row_names, col_names)
 }
 will avoid duplicating \code{x}.
