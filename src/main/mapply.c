@@ -28,11 +28,10 @@ SEXP attribute_hidden
 do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 
-    int i, j, m,nc, *lengths, *counters, named, longest=0;
+    int i, j, m, *lengths, *counters, named, longest=0;
     SEXP vnames, fcall = R_NilValue,  mindex, nindex, tmp1, tmp2, ans;
 
     m = length(varyingArgs);
-    nc = length(constantArgs);
     vnames = PROTECT(getAttrib(varyingArgs, R_NamesSymbol));
 
     named = vnames!=R_NilValue;

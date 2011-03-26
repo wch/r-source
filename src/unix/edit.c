@@ -87,12 +87,13 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int   i, rc;
     ParseStatus status;
-    SEXP  x, fn, envir, ti, ed, src, srcfile, Rfn;
+    SEXP  x, fn, envir, ed, src, srcfile, Rfn;
     char *filename, *editcmd;
     const char *cmd;
     const void *vmaxsave;
     FILE *fp;
 #ifdef Win32
+    SEXP ti;
     char *title;
 #endif
 
@@ -133,7 +134,10 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(3);
     }
     PROTECT(srcfile);
-    ti = CAR(args); args = CDR(args);
+#ifdef Win32
+    ti = CAR(args);
+#endif
+    args = CDR(args);
     ed = CAR(args);
     if (!isString(ed)) errorcall(call, _("argument 'editor' type not valid"));
     cmd = translateChar(STRING_ELT(ed, 0));
