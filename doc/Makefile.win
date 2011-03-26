@@ -15,7 +15,7 @@ NEWS.rds: NEWS.Rd
 	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
-	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) "options(warn=1);.saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 ## Force ASCII output, for portability on Windows
 ../NEWS: NEWS.rds
