@@ -408,6 +408,9 @@
       and to use a custom function to open a graphics device (see
       \code{?RweaveLatex}).\cr
       (Based in part on the contribution of \PR{14418}.)
+      
+      The default for \code{Sweave()} is to produce only PDF figures
+      (rather than both EPS and PDF).
 
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
