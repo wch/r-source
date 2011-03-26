@@ -54,7 +54,7 @@
     for (__i__ = 0; __i__ < __n__; __i__++) \
       __tp__[__i__] = __fp__[__i__]; \
   } \
-  (DUPLICATE_ATTRIB)(to, from);		\
+  DUPLICATE_ATTRIB(to, from);		\
   SET_TRUELENGTH(to, TRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
