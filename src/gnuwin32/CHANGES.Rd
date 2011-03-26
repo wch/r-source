@@ -12,6 +12,7 @@
       the vertical positioning of text (including axis annotations).
     }
   }
+}
   
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{WINDOWS VERSION}{
