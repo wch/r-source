@@ -91,6 +91,9 @@
       symptom was the occasional raster image not being drawn, especially
       when drawing multiple raster images in a single expression.
       Thanks to Michael Sumner for report and testing.
+      
+      \item Printing extremely long string values could overflow the
+      stack and cause the GUI to crash.  (\PR{14543})
     }
   }
 }
