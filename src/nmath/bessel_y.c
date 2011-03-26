@@ -23,8 +23,8 @@
 /* From http://www.netlib.org/specfun/rybesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
-#include "bessel.h"
 #include "nmath.h"
+#include "bessel.h"
 
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>

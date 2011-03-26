@@ -24,8 +24,8 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  * Additional code for nu == alpha < 0  MM
  */
-#include "bessel.h"
 #include "nmath.h"
+#include "bessel.h"
 
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
