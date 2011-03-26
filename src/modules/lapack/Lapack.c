@@ -79,13 +79,11 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     int *xdims, n, p, lwork, info = 0;
     double *work, *xvals, tmp;
     SEXP val, nm;
-    const char *meth;
 
     if (!(isString(jobu) && isString(jobv)))
 	error(_("'jobu' and 'jobv' must be character strings"));
     if (!isString(method))
 	error(_("'method' must be a character string"));
-    meth = CHAR(STRING_ELT(method, 0));
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
     xvals = (double *) R_alloc(n * p, sizeof(double));
