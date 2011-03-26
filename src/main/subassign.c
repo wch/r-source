@@ -1189,7 +1189,7 @@ static SEXP GetOneIndex(SEXP sub, int ind)
 static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 {
     SEXP indx, xi, yi, sub = CAR(s);
-    int ii, n, nx, ny, stretch=1;
+    int ii, n, nx, stretch = 1;
 
     if (length(s) > 1)
 	error(_("invalid number of subscripts to list assign"));
@@ -1201,9 +1201,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
     if (n > 1)
     	error(_("invalid subscript in list assign"));
 
-    ny = length(y);
     nx = length(x);
-
 
     if (stretch) {
 	SEXP t = CAR(s);

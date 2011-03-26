@@ -1534,14 +1534,12 @@ static BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param)
 
 SEXP do_getWindowHandles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP which;
     PROTECT_WITH_INDEX(EnumResult = allocVector(VECSXP, 8), &EnumIndex);
     setAttrib(EnumResult, R_NamesSymbol, allocVector(STRSXP, 8));
     EnumCount = 0;
     const char * w;
 
     checkArity(op, args);
-    which = CAR(args);
     w = CHAR(STRING_ELT(CAR(args), 0));
     EnumMinimized = LOGICAL(CADR(args))[0];
 

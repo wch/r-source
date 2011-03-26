@@ -761,12 +761,11 @@ static int SaveSpecialHook(SEXP item)
 static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table)
 {
     int i, len;
-    SEXP names;
 
     R_assert(TYPEOF(s) == STRSXP);
 
-    names = getAttrib(s, R_NamesSymbol);
 #ifdef WARN_ABOUT_NAMES_IN_PERSISTENT_STRINGS
+    SEXP names = getAttrib(s, R_NamesSymbol);
     if (names != R_NilValue)
 	warning(_("names in persistent strings are currently ignored"));
 #endif

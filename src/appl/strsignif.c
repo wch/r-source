@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2008 the R Development Core Team
+ *  Copyright (C) 2001-2011 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
     Rboolean rm_trailing_0 = (*digits) >= 0;
     Rboolean do_fg = !strcmp("fg",*format);/* TRUE  iff  format == "fg" */
     double xx;
-    int iex, j, jL, len_flag = strlen(*flag);
+    int iex, j, len_flag = strlen(*flag);
 
     char *f0  =	 R_alloc(do_fg ? 1+1+len_flag+3 : 1, sizeof(char));
     char *form = R_alloc(1+1+len_flag+3 + strlen(*format), sizeof(char));
@@ -186,7 +186,10 @@ void str_signif(char *x, int *n, const char **type, int *width, int *digits,
 #endif
 			    /* Remove trailing  "0"s __ IFF flag has no '#': */
 			    if(rm_trailing_0) {
-				jL = j = strlen(result[i])-1;
+				j = strlen(result[i])-1;
+#ifdef DEBUG
+				int jL = j;
+#endif
 				while(result[i][j] == '0') j--;
 				result[i][j+1] = '\0';
 #ifdef DEBUG

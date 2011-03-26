@@ -1185,7 +1185,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
-    int i, j, len, numeric, asIs;
+    int i, j, len, asIs;
     Rboolean done = FALSE;
     char *endp;
     const char *tmp = NULL;
@@ -1221,8 +1221,6 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     cvec = CAR(args);
     len = length(cvec);
-
-    numeric = 1;
 
     /* save the dim/dimnames attributes */
 

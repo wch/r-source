@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2009 The R Development Core Team
+ *  Copyright (C) 2000--2011 The R Development Core Team
  *  Copyright (C) 2004--2009 The R Foundation
  *  based on AS 91 (C) 1979 Royal Statistical Society
  *
@@ -47,7 +47,7 @@
 #endif
 
 attribute_hidden
-double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
+double qchisq_appr(double p, double nu, double g /* = log Gamma(nu/2) */,
 		   int lower_tail, int log_p, double tol /* EPS1 */)
 {
 #define C7	4.67
@@ -55,7 +55,7 @@ double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
 #define C9	6.73
 #define C10	13.32
 
-    double p_, alpha, a, c, ch, p1;
+    double alpha, a, c, ch, p1;
     double p2, q, t, x;
 
     /* test arguments and initialise */
@@ -66,8 +66,6 @@ double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
 #endif
     R_Q_P01_check(p);
     if (nu <= 0) ML_ERR_return_NAN;
-
-    p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
 
     alpha = 0.5 * nu;/* = [pq]gamma() shape */
     c = alpha-1;

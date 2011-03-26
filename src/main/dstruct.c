@@ -118,12 +118,11 @@ static int isDDName(SEXP name)
 {
     const char *buf;
     char *endp;
-    long val;
 
     buf = CHAR(name);
     if( !strncmp(buf, "..", 2) && strlen(buf) > 2 ) {
 	buf += 2;
-	val = strtol(buf, &endp, 10);
+	strtol(buf, &endp, 10); // discard value
 	if( *endp != '\0')
 	    return 0;
 	else

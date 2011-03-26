@@ -36,7 +36,7 @@ SEXP attribute_hidden getParseContext(void)
     char context[PARSE_CONTEXT_SIZE+1];
 
     SEXP ans = R_NilValue, ans2;
-    int nn, nnn, nread;
+    int nn, nread;
     char c;
 
     context[last] = '\0';
@@ -50,7 +50,6 @@ SEXP attribute_hidden getParseContext(void)
     }
 
     nn = 16; /* initially allocate space for 16 lines */
-    nnn = nn;
     PROTECT(ans = allocVector(STRSXP, nn));
     c = context[last];
     nread = 0;

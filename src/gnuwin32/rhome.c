@@ -46,10 +46,9 @@ static char rhomebuf[MAX_PATH];
 /* get R_HOME from the module path: used in RSetReg */
 char *getRHOMElong(int m)
 {
-    DWORD nc;
     char *p;
 
-    nc = GetModuleFileName(NULL, rhomebuf, MAX_PATH);
+    GetModuleFileName(NULL, rhomebuf, MAX_PATH);
     for(int i=0; i < m; i++) {GOBACKONESLASH;}
     return (rhomebuf);
 }

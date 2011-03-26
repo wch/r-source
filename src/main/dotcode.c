@@ -804,7 +804,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC ofun = NULL;
     VarFun fun = NULL;
-    SEXP retval, nm, cargs[MAX_ARGS], pargs;
+    SEXP retval, cargs[MAX_ARGS], pargs;
     R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
     int nargs;
     const void *vmax = vmaxget();
@@ -812,7 +812,6 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(args) < 1) errorcall(call, _("'name' is missing"));
     check1arg(args, call, "name");
-    nm = CAR(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call);
     args = CDR(args);

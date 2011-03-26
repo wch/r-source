@@ -1700,7 +1700,6 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con;
     Rboolean wasopen, fragment;
     int ifile, wcall;
-    const char *encoding;
     ParseStatus status;
     RCNTXT cntxt;
 
@@ -1717,9 +1716,8 @@ SEXP attribute_hidden do_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(ifile);
     wasopen = con->isopen;
     source = CAR(args);					args = CDR(args);
-    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	error(_("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */ args = CDR(args);
+    /* encoding is unused */
+    args = CDR(args);
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
     xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
