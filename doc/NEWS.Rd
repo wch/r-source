@@ -27,9 +27,6 @@
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
 
-      \item The default for \code{Sweave()} is to produce only PDF
-      figures (rather than both EPS and PDF).
-
       Provided at least one graphics device is selected for a chunk, the
       first graphics device is used for the main evaluation of the
       chunk.  This means that by default when re-building vignettes each
@@ -498,6 +495,9 @@
       and to use a custom function to open a graphics device (see
       \code{?RweaveLatex}).\cr
       (Based in part on the contribution of \PR{14418}.)
+      
+      The default for \code{Sweave()} is to produce only PDF figures
+      (rather than both EPS and PDF).
 
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
