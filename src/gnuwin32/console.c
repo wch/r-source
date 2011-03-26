@@ -38,6 +38,7 @@ extern void R_ProcessEvents(void);
 #include <wchar.h>
 #include <limits.h>
 #include <R_ext/rlocale.h>
+#include <R_ext/Memory.h>
 #include "graphapp/ga.h"
 #ifdef USE_MDI
 #include "graphapp/stdimg.h"
@@ -278,8 +279,8 @@ static size_t enctowcs(wchar_t *wc, char *s, int n)
 static void xbufadds(xbuf p, const char *s, int user)
 {
     int n = strlen(s) + 1; /* UCS-2 must be shorter */
-    wchar_t tmp[n];
-
+    /* wchar_t tmp[n];  this might blow the stack */
+    wchar_t *tmp = (wchar_t*) R_alloc(n, sizeof(wchar_t));
     enctowcs(tmp, (char *) s, n);
     xbufaddxs(p, tmp, user);
 }
@@ -430,7 +431,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	    Rboolean leftedge;
 
 	    nc = (wcslen(s) + 1) * sizeof(wchar_t); /* overkill */
-	    wchar_t buff[nc];
+	    wchar_t *buff = (wchar_t*) R_alloc(nc, sizeof(wchar_t));
 	    q = buff;
 	    leftedge = FC && (fch == 0);
 	    if(leftedge) fch++;
@@ -939,7 +940,7 @@ static void performCompletion(control c)
     }
 
     /* FIXME: need to escape quotes properly */
-    wchar_t pline[wcslen(partial_line) + 1];
+    wchar_t *pline = (wchar_t*) R_alloc(wcslen(partial_line) + 1, sizeof(wchar_t));
     wcscpy(pline, partial_line);
     /* poor attempt at escaping quotes that sort of works */
     alen = wcslen(pline);
@@ -1038,7 +1039,7 @@ void consolecmd(control c, const char *cmd)
     storekey(c, KILLRESTOFLINE);
     if(isUnicodeWindow(c)) {
 	size_t sz = (strlen(cmd) + 1) * sizeof(wchar_t);
-	wchar_t wcs[strlen(cmd) + 1];
+	wchar_t *wcs = (wchar_t*) R_alloc(strlen(cmd) + 1, sizeof(wchar_t));
 	memset(wcs, 0, sz);
 	mbstowcs(wcs, cmd, sz-1);
 	for(i = 0; wcs[i]; i++) storekey(c, wcs[i]);
