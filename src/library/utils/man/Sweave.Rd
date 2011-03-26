@@ -101,7 +101,8 @@ Stangle(file, driver = Rtangle(),
   2002. ISBN 3-7908-1517-9.
   
   Friedrich Leisch: Sweave User Manual, 2008\cr
-  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
+  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}\cr
+  \bold{NB:} This currently is for \R 2.7.1 and is out of date.
 }
 
 \seealso{

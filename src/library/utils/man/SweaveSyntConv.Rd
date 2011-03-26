@@ -1,6 +1,6 @@
 % File src/library/utils/man/SweaveSyntConv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SweaveSyntConv}
@@ -25,7 +25,8 @@ SweaveSyntConv(file, syntax, output = NULL)
 \author{Friedrich Leisch}
 \references{
   Friedrich Leisch: Sweave User Manual, 2008\cr
-  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
+  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}\cr
+  \bold{NB:} This currently is for \R 2.7.1 and is out of date.
 }
 \seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{
