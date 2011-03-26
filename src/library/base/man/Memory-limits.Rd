@@ -58,12 +58,10 @@
   See the OS/shell's help on commands such as \code{limit} or
   \code{ulimit} for how to impose limitations on the resources available
   to a single process.  For example a \command{bash} user could use
-\preformatted{
-ulimit -t 600 -m 2000000
+\preformatted{ulimit -t 600 -m 2000000
 }
   whereas a \command{csh} user might use
-\preformatted{
-limit cputime 10m
+\preformatted{limit cputime 10m
 limit memoryuse 2048m
 }
   to limit a process to 10 minutes of CPU time and (around) 2Gb of memory.

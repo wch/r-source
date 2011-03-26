@@ -284,8 +284,7 @@ rc.options(\dots)
   (they are unexported because they are not meant to be called directly
   by users).  The usage of these functions are:
 
-  \preformatted{
-    .assignToken(text)
+\preformatted{    .assignToken(text)
     .assignLinebuffer(line)
     .assignStart(start)
     .assignEnd(end)
@@ -300,7 +299,7 @@ rc.options(\dots)
                             minlength = -1)
 
     .addFunctionInfo(...)
-  }
+}
 
   The first four functions set up a completion attempt by specifying the
   token to be completed (\code{text}), and indicating where

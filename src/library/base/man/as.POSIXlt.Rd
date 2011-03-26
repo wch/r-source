@@ -91,8 +91,7 @@ as.POSIXlt(x, tz = "", \dots)
   \code{"POSIXlt"} to \code{"POSIXct"} will validate times in the
   selected timezone.  One issue is what happens at transitions
   to and from DST, for example in the UK
-\preformatted{
-  as.POSIXct(strptime('2011-03-27 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
+\preformatted{as.POSIXct(strptime('2011-03-27 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
   as.POSIXct(strptime('2010-10-31 01:30:00', '\%Y-\%m-\%d \%H:\%M:\%S'))
 }
   are respectively invalid (the clocks went forward at 1:00 GMT to 2:00

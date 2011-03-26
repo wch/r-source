@@ -87,9 +87,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   paths of more than 100 bytes.
 
   You may see warnings from the internal implementation such as
-\preformatted{
-unsupported entry type 'x' 
-}
+\preformatted{unsupported entry type 'x'}
   This often indicates an invalid archive: entry types \code{"A-Z"} are
   allowed as extensions, but other types are reserved (this example is
   from Mac OS 10.6.3).  The only thing you can do with such an archive

@@ -96,11 +96,10 @@
   \code{"traceable"} documented above would be created by a call to
   \code{\link{setMethod}} of the form:
 
-  \preformatted{
-    setMethod("initialize", "traceable",
+\preformatted{    setMethod("initialize", "traceable",
       function(.Object, def, tracer, exit, at, print) \dots
     )
-  }
+}
 
   In this example, no other arguments are meaningful, and the resulting
   method will throw an error if other names are supplied.
@@ -113,11 +112,10 @@
   slot information, the beginning of your method definition might look
   something like this:
 
-  \preformatted{
-    function(.Object, x, ...) \{
+\preformatted{    function(.Object, x, ...) \{
       Object <- callNextMethod(.Object, ...)
       if(!missing(x)) \{ # do something with x
-  }
+}
 
   You could also choose to have the inherited method override, by first
   interpreting \code{x}, and then calling the next method.

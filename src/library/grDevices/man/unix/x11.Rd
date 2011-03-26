@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/x11.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{x11}
@@ -15,6 +15,10 @@
   access to an X server.
 
   \code{x11} is recognized as a synonym for \code{X11}.
+
+  The \R function is a wrapper for two devices, one based on Xlib
+  (\url{http://en.wikipedia.org/wiki/Xlib}) and one using cairographics
+  (\url{http://www.cairographics.org}).
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
@@ -57,11 +61,10 @@ X11.options(\dots, reset = FALSE)
     \code{file} argument to \code{\link{postscript}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
-  \item{type}{character string, one of \code{"Xlib"} (the only type
-    prior to \R 2.7.0) or \code{"cairo"} or \code{"nbcairo"}.  The
-    latter two will only be available if the system was compiled with
-    support for cairo.  Default \code{"cairo"} where available, otherwise
-    \code{"Xlib"}.}
+  \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"} or
+    \code{"nbcairo"}.  The latter two will only be available if the
+    system was compiled with support for cairo.  Default \code{"cairo"}
+    where available and reliable, otherwise \code{"Xlib"}.}
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
   \item{reset}{logical: should the defaults be reset to their defaults?}
@@ -133,7 +136,7 @@ X11.options(\dots, reset = FALSE)
 }
 
 \section{Cairo Fonts}{
-  The cairo-based device works directly with font family names such as
+  The cairographics-based device works directly with font family names such as
   \code{"Helvetica"} which should be selected by \code{\link{par}} or
   \code{\link{gpar}}.  There are mappings for the three
   device-independent font families, \code{"sans"} for a sans-serif font
@@ -165,8 +168,7 @@ X11.options(\dots, reset = FALSE)
   misinterprets its encoding.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem.
-\preformatted{
-<fontconfig>
+\preformatted{<fontconfig>
 <match target="pattern">
   <test name="family"><string>Symbol</string></test>
   <edit name="family" mode="prepend" binding="same">
@@ -183,9 +185,8 @@ X11.options(\dots, reset = FALSE)
   specified as arguments or non-\code{NA} defaults set in
   \code{X11.options}.  The class looked for is \code{R_x11}.  Note that
   the resource specifies the width and height in pixels and not in
-  inches.  See for example
-  \url{http://web.mit.edu/answers/xwindows/xwindows_resources.html} and
-  perhaps \samp{man X} (or \url{http://www.xfree86.org/current/X.7.html}).
+  inches.  See for example \samp{man X} (or
+  \url{http://www.xfree86.org/current/X.7.html}).
   An example line in \file{~/.Xresources} might be
 \preformatted{R_x11*geometry: 900x900-0+0
 }
@@ -201,11 +202,9 @@ X11.options(\dots, reset = FALSE)
   black/white.  The palette is shared between all X11 clients, so it can
   be necessary to limit the number of colours used by \R.
 
-  Cairo-based devices currently support only \sQuote{truecolor}
-  visuals. (Cairo 1.6 will support other visuals.)
-
   The default for \code{type="Xlib"} is to use the best possible colour
-  model for the visual of the X11 server.  This can be overridden by the
+  model for the visual of the X11 server: these days this will almost
+  always be \sQuote{truecolor}.  This can be overridden by the
   \code{colortype} argument of \code{X11.options}.  \bold{Note:} All
   \code{X11} and \code{type = "Xlib"} \code{\link{bmp}}, \code{jpeg},
   \code{png} and \code{tiff} devices share a \code{colortype} which is
@@ -216,11 +215,12 @@ X11.options(\dots, reset = FALSE)
   The colortype types are tried in the order \code{"true"},
   \code{"pseudo"}, \code{"gray"} and \code{"mono"} (black or white
   only).  The values \code{"pseudo"} and \code{"pseudo.cube"} provide
-  colour strategies for a pseudocolor visual.  The first strategy
-  provides on-demand colour allocation which produces exact colours until
-  the colour resources of the display are exhausted (when plotting will
-  fail).  The second allocates (if possible) a standard colour cube, and
-  requested colours are approximated by the closest value in the cube.
+  two colour strategies for a pseudocolor visual.  The first strategy
+  provides on-demand colour allocation which produces exact colours
+  until the colour resources of the display are exhausted (when plotting
+  will fail).  The second allocates (if possible) a standard colour
+  cube, and requested colours are approximated by the closest value in
+  the cube.
 
   With \code{colortype} equal to \code{"pseudo.cube"} or \code{"gray"}
   successively smaller palettes are tried until one is completely
@@ -233,10 +233,10 @@ X11.options(\dots, reset = FALSE)
   RGB, using 64 colours in the palette.
 }
 \section{Anti-aliasing}{
-  Anti-aliasing is only supported for cairo-based devices, and applies to
-  graphics and to fonts.  It is generally preferable for lines and text,
-  but can lead to undesirable effects for fills, e.g. for
-  \code{\link{image}} plots, and so is never used for fills.
+  Anti-aliasing is only supported for cairographics-based devices, and
+  applies to graphics and to fonts.  It is generally preferable for
+  lines and text, but can lead to undesirable effects for fills,
+  e.g. for \code{\link{image}} plots, and so is never used for fills.
 
   \code{antialias = "default"} is in principle platform-dependent, but
   seems most often equivalent to \code{antialias = "gray"}.

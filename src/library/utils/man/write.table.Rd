@@ -114,9 +114,7 @@ write.csv2(\dots)
   \code{col.names = NA} and \code{row.names = TRUE} a blank column name
   is added, which is the convention used for CSV files to be read by
   spreadsheets.  Note that such CSV files can be read in \R by
-\preformatted{
-    read.csv(file = "<filename>", row.names = 1)    
-}
+\preformatted{  read.csv(file = "<filename>", row.names = 1)}
 
   \code{write.csv} and \code{write.csv2} provide convenience wrappers
   for writing CSV files.  They set \code{sep} and \code{dec} (see

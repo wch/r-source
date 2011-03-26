@@ -112,8 +112,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   The most common reason for failure is lack of write permission in the
   current directory.  For \code{save.image} and for saving at the end of
   a session this will shown by messages like
-\preformatted{
-    Error in gzfile(file, "wb") : unable to open connection
+\preformatted{    Error in gzfile(file, "wb") : unable to open connection
     In addition: Warning message:
     In gzfile(file, "wb") :
       cannot open compressed file '.RDataTmp',
