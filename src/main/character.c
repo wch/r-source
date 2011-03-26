@@ -525,7 +525,7 @@ donesc:
 SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans;
-    int i, len, minlen, uclass;
+    int i, len, minlen;
     Rboolean warn = FALSE;
     const char *s;
     const void *vmax;
@@ -539,7 +539,6 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = allocVector(STRSXP, len));
     minlen = asInteger(CADR(args));
-    uclass = asLogical(CADDR(args));
     vmax = vmaxget();
     for (i = 0 ; i < len ; i++) {
 	if (STRING_ELT(x, i) == NA_STRING)

@@ -3213,7 +3213,7 @@ void GMtext(const char *str, cetype_t enc, int side, double line, int outer,
 	 3 = always vertical.
 */
     double angle, xadj;
-    int coords, subcoords;
+    int coords;
 
     /* Init to keep -Wall happy: */
     angle = 0.;
@@ -3227,7 +3227,6 @@ void GMtext(const char *str, cetype_t enc, int side, double line, int outer,
 	case 3:	    coords = OMA3;	break;
 	case 4:	    coords = OMA4;	break;
 	}
-	subcoords = NIC;
     }
     else {
 	switch(side) {
@@ -3236,7 +3235,6 @@ void GMtext(const char *str, cetype_t enc, int side, double line, int outer,
 	case 3:	    coords = MAR3;	break;
 	case 4:	    coords = MAR4;	break;
 	}
-	subcoords = USER;
     }
     /* Note: I changed gpptr(dd)->yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
@@ -3351,7 +3349,7 @@ void GMathText(double x, double y, int coords, SEXP expr,
 void GMMathText(SEXP str, int side, double line, int outer,
 		double at, int las, double yadj, pGEDevDesc dd)
 {
-    int coords = 0, subcoords;
+    int coords = 0;
     double xadj, angle = 0;
 
     /* IF font metric information is not available for device */
@@ -3376,7 +3374,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	case 3:	    coords = OMA3;	break;
 	case 4:	    coords = OMA4;	break;
 	}
-	subcoords = NIC;
     }
     else {
 	switch(side) {
@@ -3385,7 +3382,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	case 3:	    coords = MAR3;	break;
 	case 4:	    coords = MAR4;	break;
 	}
-	subcoords = USER;
     }
     switch(side) {
     case 1:

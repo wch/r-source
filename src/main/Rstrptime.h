@@ -210,7 +210,6 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		     enum locale_status *decided, double *psecs, 
 		     int *poffset)
 {
-    const wchar_t *rp_backup;
     int cnt;
     size_t val;
     int have_I, is_pm;
@@ -251,9 +250,6 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 
 	/* We need this for handling the `E' modifier.  */
     start_over:
-
-	/* Make back up of current processing pointer.  */
-	rp_backup = rp;
 
 	switch (*fmt++)
 	{
@@ -673,7 +669,6 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		   enum locale_status *decided, double *psecs,
 		   int *poffset)
 {
-    const char *rp_backup;
     int cnt;
     size_t val;
     int have_I, is_pm;
@@ -714,9 +709,6 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 
 	/* We need this for handling the `E' modifier.  */
     start_over:
-
-	/* Make back up of current processing pointer.  */
-	rp_backup = rp;
 
 	switch (*fmt++)
 	{

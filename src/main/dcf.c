@@ -242,10 +242,6 @@ static SEXP allocMatrixNA(SEXPTYPE mode, int nrow, int ncol)
 
 static void transferVector(SEXP s, SEXP t)
 {
-    int i, ns, nt;
-
-    nt = LENGTH(t);
-    ns = LENGTH(s);
-    for (i = 0; i < nt; i++)
+    for (int i = 0; i < LENGTH(t); i++)
 	SET_STRING_ELT(s, i, STRING_ELT(t, i));
 }

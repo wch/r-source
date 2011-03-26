@@ -1098,7 +1098,7 @@ void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
     long j;
     int k, its, itdoc;
     double t, y, dy, ytry, scale;
-    double *p, *dp, *ptry;
+    double *p, *ptry;
 
     /* Above have: if(trace != 0) trace := REPORT control argument = STEPS */
     if (trace < 0)
@@ -1108,7 +1108,7 @@ void samin(int n, double *pb, double *yb, optimfn fminfn, int maxit,
 	*yb = fminfn(n, pb, ex);
 	return;
     }
-    p = vect (n); dp = vect (n); ptry = vect (n);
+    p = vect (n); ptry = vect (n);
     GetRNGstate();
     *yb = fminfn (n, pb, ex);  /* init best system state pb, *yb */
     if (!R_FINITE(*yb)) *yb = big;

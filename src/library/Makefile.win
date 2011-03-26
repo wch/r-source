@@ -63,7 +63,7 @@ RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdt
 Rd-ts: $(RD-TS)
 
 %.Rdts:
-	@$(ECHO) "tools:::.install_package_Rd_objects(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
+	@$(ECHO) "options(warn=1);tools:::.install_package_Rd_objects(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
 	@$(ECHO) -n " $*$(ECHO_C)"
 
 Rdobjects:
@@ -75,7 +75,7 @@ help-indices:
 	@$(ECHO) -n "writing indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
-	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "options(warn=1);tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
 	done
 	@$(ECHO)
 
