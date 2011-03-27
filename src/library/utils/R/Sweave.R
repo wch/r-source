@@ -172,7 +172,9 @@ SweaveReadFile <- function(file, syntax)
     ## <FIXME>
     ## This needs to be more refined eventually ...
     if (any(is.na(nchar(text, "c", TRUE)))) {
-        message("Vignette is not valid in the current locale: assuming Latin-1")
+        message("Vignette ", sQuote(basename(f[1L])),
+                " is not valid in the current locale: assuming Latin-1",
+                domain = NA)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin-1:
