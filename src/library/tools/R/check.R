@@ -1664,6 +1664,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## packages, or just base?
             ## FIXME: should we do this for multiple sub-archs?
 
+            ## FIXME: it really is not clear what to do with encodings here.
+            ## If we installed the package, Stangle may have converted
+            ## to the current encoding in an MBCS.
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
@@ -2689,7 +2692,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2|tar\\.xz)$", "", pkgname0)
             pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
         } else {
-            warning(sQuote(pkg), " is neither a file not directory, skipping\n",
+            warning(sQuote(pkg), " is neither a file nor directory, skipping\n",
                     domain = NA, call. = FALSE, immediate. = TRUE)
             next
         }

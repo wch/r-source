@@ -66,7 +66,7 @@ if(file_test("-d", pkgSrcPath)) {
     ## could use file.copy(recursive = TRUE)
     system(paste('cp -r', shQuote(pkgSrcPath), shQuote(tempdir())))
     pkgPath <- file.path(tempdir(), "Pkgs")
-    op <- options(warn=2)    # There should be *NO* warnings here!
+    op <- options(warn = 2)    # There should be *NO* warnings here!
     ## pkgB tests an empty R directory
     dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
                showWarnings = FALSE)

@@ -18,16 +18,19 @@
 }
 \usage{
 Sweave(file, driver = RweaveLatex(),
-       syntax = getOption("SweaveSyntax"), ...)
+       syntax = getOption("SweaveSyntax"), encoding = "", ...)
 
 Stangle(file, driver = Rtangle(),
-        syntax = getOption("SweaveSyntax"), ...)
+        syntax = getOption("SweaveSyntax"), encoding = "", ...)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
   \item{driver}{The actual workhorse, see \sQuote{Details}.}
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
-    a character string with its name.  See section \sQuote{Syntax Definition}.}
+    a character string with its name.
+    See the section \sQuote{Syntax Definition}.}
+  \item{encoding}{The encoding to assume for \code{file}: the default is
+    to assume that the file is in the encoding of the \R session's locale.}
   \item{\dots}{Further arguments passed to the driver's setup function:
     see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
     \code{\link{Rtangle}}.}
@@ -57,6 +60,11 @@ Stangle(file, driver = Rtangle(),
   initial options set by the driver: it should be a comma-separated set
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
+
+  If a non-default encoding is specified, the contents of \code{file}
+  are re-encoded to the current locale as they are read in.   Currently
+  with the default encoding, if the input is not valid in a multibyte
+  locale (typically one using UTF-8) it is re-encoded from Latin-1.
 }
 
 \section{Syntax Definition}{

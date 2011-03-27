@@ -26,7 +26,9 @@
       \item Non-portable package names ending in \file{.} are no longer
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
-
+      
+      \item There have been several enhancements to \code{Sweave()}.
+      
       Provided at least one graphics device is selected for a chunk, the
       first graphics device is used for the main evaluation of the
       chunk.  This means that by default when re-building vignettes each
@@ -35,7 +37,10 @@
       User-defined numeric (with names starting \code{n_}) and character
       (starting \code{ch_}) options are now allowed: as before all other
       unknown options are taken to be logical.
-      
+            
+      \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
+      argument to specify the encoding of the vignette sources.
+
       \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
 	TRUE} allows Python-style named captures.  (Wish and
       contribution of \PR{14518}.)

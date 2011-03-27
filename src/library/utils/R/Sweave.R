@@ -28,7 +28,8 @@
 ### everything.
 
 Sweave <- function(file, driver = RweaveLatex(),
-                   syntax = getOption("SweaveSyntax"), ...)
+                   syntax = getOption("SweaveSyntax"),
+                   encoding = "", ...)
 {
     if (is.character(driver)) driver <- get(driver, mode = "function")()
     else if (is.function(driver)) driver <- driver()
@@ -46,7 +47,7 @@ Sweave <- function(file, driver = RweaveLatex(),
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
-    text <- SweaveReadFile(file, syntax)
+    text <- SweaveReadFile(file, syntax, encoding = encoding)
     syntax <- attr(text, "syntax")
     file <- attr(text, "file")
     drobj$srcfile <- srcfile(file)
@@ -140,7 +141,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     driver$finish(drobj)
 }
 
-SweaveReadFile <- function(file, syntax)
+SweaveReadFile <- function(file, syntax, encoding = "")
 {
     ## file can be a vector to keep track of recursive calls to
     ## SweaveReadFile.  In this case only the first element is
@@ -165,14 +166,18 @@ SweaveReadFile <- function(file, syntax)
     }
 
     ## An incomplete last line is not a real problem.
-    text <- readLines(f[1L], warn = FALSE)
+    con <- file(f[1L], encoding = encoding)
+    text <- readLines(con, warn = FALSE)
+    close(con)
 
     ## <FIXME>
     ## This needs to be more refined eventually ...
-    if (any(is.na(nchar(text, "c", TRUE)))) {
+    if (!nzchar(encoding) && any(is.na(nchar(text, "c", TRUE)))) {
+        message("Vignette is not valid in the current locale: assuming Latin-1")
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
+        ## Try re-encoding from Latin-1:
+        ## this will probably work but may be incorrect
         text <- iconv(text, "latin1", "")
     }
     ## </FIXME>
@@ -201,7 +206,7 @@ SweaveReadFile <- function(file, syntax)
                                  rev(file), collapse="")),
                  domain = NA)
             }
-            itext <- SweaveReadFile(c(ifile, file), syntax)
+            itext <- SweaveReadFile(c(ifile, file), syntax, encoding = encoding)
 
 	    text <-
 		if (pos == 1L) c(itext, text[-pos])
@@ -911,8 +916,9 @@ RweaveTryStop <- function(err, options)
 ###**********************************************************
 
 Stangle <- function(file, driver = Rtangle(),
-                    syntax = getOption("SweaveSyntax"), ...)
-    Sweave(file = file, driver = driver, ...)
+                    syntax = getOption("SweaveSyntax"),
+                    encoding = "", ...)
+    Sweave(file = file, driver = driver, encoding = encoding, ...)
 
 Rtangle <-  function()
 {
