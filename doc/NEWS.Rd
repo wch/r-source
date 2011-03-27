@@ -556,6 +556,16 @@
       during configuration (for example in \file{config.site}) it is
       used unchanged in file \file{etc/ldpaths} rather than being
       appended to.
+      
+      \item \command{configure} looks for support for OpenMP and if
+      found compiles \R with appropriate flags and also makes them
+      available for use in packages: see \sQuote{Writing R Extensions}.
+
+      This is currently experimental, and is only used in \R with a
+      single thread for \code{colSums()} and \code{dist()}.  Expect it
+      to be more widely used in later versions of \R.
+
+      This can be disabled by the \option{--disable-openmp} flag.
     }
   }
 
