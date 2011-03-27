@@ -57,6 +57,10 @@ Stangle(file, driver = Rtangle(),
   initial options set by the driver: it should be a comma-separated set
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
+  
+  Currently the input file is assumed to be in the current locale's
+  encoding, unless it is not valid in a multibyte locale (typically one
+  using UTF-8) when it is re-encoded from Latin-1.
 }
 
 \section{Syntax Definition}{

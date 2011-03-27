@@ -172,9 +172,11 @@ SweaveReadFile <- function(file, syntax)
     ## <FIXME>
     ## This needs to be more refined eventually ...
     if (any(is.na(nchar(text, "c", TRUE)))) {
+        message("Vignette is not valid in the current locale: assuming Latin-1")
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
+        ## Try re-encoding from Latin-1:
+        ## this will probably work but may be incorrect
         text <- iconv(text, "latin1", "")
     }
     ## </FIXME>
@@ -921,6 +923,7 @@ RtangleSetup <- function(file, syntax,
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
+        ## This is odd, since for split = TRUE it uses the engine name.
         output <- paste(prefix.string, "R", sep = ".")
     } else
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))

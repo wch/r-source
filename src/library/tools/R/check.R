@@ -32,6 +32,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         if (!is.null(cmd)) {
+            ## In principle this should escape \
             Rin <- tempfile("Rin"); on.exit(unlink(Rin)); writeLines(cmd, Rin)
         } else Rin <- stdin
         system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
@@ -1670,6 +1671,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## packages, or just base?
             ## FIXME: should we do this for multiple sub-archs?
 
+            ## FIXME: it really is not clear what to do with encodings here.
+            ## If we installed the package, Stangle may have converted
+            ## to the current encoding in an MBCS.
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
@@ -2693,7 +2697,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2|tar\\.xz)$", "", pkgname0)
             pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
         } else {
-            warning(sQuote(pkg), " is neither a file not directory, skipping\n",
+            warning(sQuote(pkg), " is neither a file nor directory, skipping\n",
                     domain = NA, call. = FALSE, immediate. = TRUE)
             next
         }
