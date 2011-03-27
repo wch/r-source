@@ -39,6 +39,9 @@ BINPREF =
 # prefix for 64-bit: usually this, but not for native x64 builds.
 BINPREF64 = x86_64-w64-mingw32-
 
+# Others use a -m64 or -m32 option to select architectures
+M_ARCH =
+
 # 32- or 64-bit Windows?
 WIN = 32
 

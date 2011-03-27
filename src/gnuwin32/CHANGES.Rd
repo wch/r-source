@@ -12,6 +12,14 @@
       the vertical positioning of text (including axis annotations).
     }
   }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item There is support for \sQuote{multilib} toolchains which use
+      options \option{--m32} or \option{--m64} to select the
+      architecture.
+    }
+  }
 }
   
 \section{CHANGES IN R VERSION 2.13.0}{

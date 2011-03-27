@@ -15,8 +15,6 @@ endif
 ## -std=c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
 C99FLAG=-std=gnu99
 
-F77=$(BINPREF)gfortran$(GCC4_SUFF)
-FLIBS=-lgfortran
 ## earlier Rtools needed -sjlj; the alternative is -dw2, which failed building R.
 GCC4_SUFF=
 
@@ -33,7 +31,7 @@ AR=$(BINPREF)ar
 AS=$(BINPREF)as
 # AWK=gawk
 CAT=cat
-CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG)
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
 # as set by make
 CPP=$(CC) -E
@@ -43,13 +41,15 @@ DLLTOOL=$(BINPREF)dlltool
 ## even for native builds
 DLLTOOLFLAGS=--as $(AS) -k
 ECHO=echo
+F77=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
+FLIBS=-lgfortran
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 MKDIR=mkdir
 NM=$(BINPREF)nm
-# PERL=perl
 RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres
+
 # as set by make
 RM=rm -f
 SED=sed
