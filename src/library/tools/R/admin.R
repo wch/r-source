@@ -894,7 +894,8 @@ compactPDF <-
              gs_quality = c("printer", "ebook", "screen"),
              gs_extras = character())
 {
-    if(!nzchar(Sys.which(qpdf))) return()
+    if(!nzchar(Sys.which(qpdf)) && !nzchar(Sys.which(gs_cmd))) 
+    	return()
     if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
     gs_quality <- match.arg(gs_quality)
