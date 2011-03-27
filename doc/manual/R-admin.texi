@@ -4804,8 +4804,8 @@ Several versions of the MinGW-w64 toolchain are available: use one of
 them to replace (or supplement) the 32-bit toolchain's @file{bin}
 directory in your path.  Then copy file @file{src/gnuwin32/MkRules.dist}
 to @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64}
-and @code{BINPREF64} and @code{SYMPAT64} appropriate to your toolchain,
-then make @R{} in the usual way.
+and @code{BINPREF64}, @code{M_ARCH} and @code{SYMPAT64} appropriate to
+your toolchain, then make @R{} in the usual way.
 
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
