@@ -67,7 +67,10 @@ function(package, dir, lib.loc = NULL,
     }
 
     if(tangle) {
-        ## Tangling can create several source files if splitting is on.
+        ## Tangling can create several source files if splitting is on,
+        ## and these can be .R or .S (at least).  However, there is
+        ## no guarantee that running them in alphabetical order in a
+        ## session will work -- with named chunks it normally will not.
         cwd <- getwd()
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
@@ -224,6 +227,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
                           domain = NA, call. = FALSE)
                  })
         setwd(startdir)
+        ## This can fail if run in a directory whose path contains spaces.
         if(!have.makefile)
             texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = quiet)
     }
@@ -461,16 +465,12 @@ function(vigDeps)
 ### helper for R CMD check
 
 .run_one_vignette <-
-    function(vig_name, docDir, encoding = getOption("encoding"))
+    function(vig_name, docDir)
 {
-    ## FIXME: we could assume that Stangle generates a single .R file
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
     setwd(file.path(td, "doc"))
-    ## file.copy does not preserve dates ...
-    sources_before <- list_files_with_exts('.', c("r", "s", "R", "S"))
-    old <- file.info(sources_before)$mtime
     result <- NULL
     tryCatch(utils::Stangle(vig_name, quiet = TRUE),
              error = function(e) result <<- conditionMessage(e))
@@ -478,16 +478,12 @@ function(vigDeps)
         cat("\n  When tangling ", sQuote(vig_name), ":\n", sep="")
         stop(result, call. = FALSE, domain = NA)
     }
-    sources <- list_files_with_exts('.', c("r", "s", "R", "S"))
-    s1 <- sources[!sources %in% sources_before]
-    s2 <- sources_before[file.info(sources_before)$mtime > old]
-    for(f in  c(s1, s2)) {
-        tryCatch(source(f, echo = TRUE, encoding = encoding),
-                  error = function(e) result <<- conditionMessage(e))
-        if(length(result)) { # avoid './foo.R'
-            cat("\n  When sourcing ", sQuote(basename(f)), ":\n", sep="")
-            stop(result, call. = FALSE, domain = NA)
-        }
+    f <- sub("\\.[RrSs](nw|tex)$", ".R", vig_name)
+    tryCatch(source(f, echo = TRUE),
+             error = function(e) result <<- conditionMessage(e))
+    if(length(result)) {
+        cat("\n  When sourcing ", sQuote(f), ":\n", sep="")
+        stop(result, call. = FALSE, domain = NA)
     }
 }
 

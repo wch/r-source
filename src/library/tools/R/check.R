@@ -1671,19 +1671,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## packages, or just base?
             ## FIXME: should we do this for multiple sub-archs?
 
-            ## FIXME: it really is not clear what to do with encodings here.
-            ## If we installed the package, Stangle may have converted
-            ## to the current encoding in an MBCS.
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
             res <- character()
             for(v in vigns$docs) {
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
-                              basename(v), "', '", vignette_dir, "'",
-                              if (!is.na(enc <- desc["Encoding"]))
-                              paste(", encoding = '", enc, "'", sep = ""),
-                              ")", sep = "")
+                              basename(v), "', '", vignette_dir, "'", ")",
+                              sep = "")
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
                 # cat("\n===============", basename(v), "==============\n"); writeLines(out)
