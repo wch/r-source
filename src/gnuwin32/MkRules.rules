@@ -28,7 +28,7 @@ IMPDIR=$(BINDIR)
 endif
 
 AR=$(BINPREF)ar
-AS=$(BINPREF)as
+AS=$(BINPREF)as $(AS_ARCH)
 # AWK=gawk
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
@@ -48,7 +48,7 @@ MAIN_LD=$(CC)
 MKDIR=mkdir
 NM=$(BINPREF)nm
 RANLIB=$(BINPREF)ranlib
-RESCOMP=$(BINPREF)windres
+RESCOMP=$(BINPREF)windres $(RC_ARCH)
 
 # as set by make
 RM=rm -f

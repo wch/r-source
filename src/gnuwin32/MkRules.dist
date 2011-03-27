@@ -41,6 +41,11 @@ BINPREF64 = x86_64-w64-mingw32-
 
 # Others use a -m64 or -m32 option to select architectures
 M_ARCH =
+# and for as (--32 or --64)
+AS_ARCH =
+# and for windres (-F pe-1386 or pe-x86-64)
+RC_ARCH =
+# and this incomplete until we have a fix for dlltool
 
 # 32- or 64-bit Windows?
 WIN = 32
