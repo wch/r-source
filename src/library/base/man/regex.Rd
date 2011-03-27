@@ -308,7 +308,7 @@
   
   As from \R 2.14.0 \code{regexpr} and \code{gregexpr} support
   \sQuote{named capture}.  If groups are named, e.g.,
-  \code{"(?<first>[A-Z][a-z]+)"} then the postions of the matches are
+  \code{"(?<first>[A-Z][a-z]+)"} then the positions of the matches are
   also returned by name.  (Named backreferences are not supported by
   \code{sub}.)
 

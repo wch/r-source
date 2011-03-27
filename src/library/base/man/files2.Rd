@@ -51,7 +51,7 @@ Sys.umask(mode = NA)
   the command-line utility of that name). 
 #endif
   
-  One of the idiosyncracies of Windows is that directory creation may
+  One of the idiosyncrasies of Windows is that directory creation may
   report success but create a directory with a different name, for
   example \code{dir.create("G.S.")} creates \file{"G.S"}.  This is
   undocumented, and precisely what the circumstances are is unknown (and

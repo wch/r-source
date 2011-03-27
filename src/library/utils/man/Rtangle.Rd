@@ -34,7 +34,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \code{basename(file)} with an extension corresponding to the Sweave
   syntax (e.g. \file{Rnw}, \file{Stex}) replaced by \file{R}.
 
-  If spliting is selected (including by the options in the file), each
+  If splitting is selected (including by the options in the file), each
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
 }
