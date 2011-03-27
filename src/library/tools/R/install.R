@@ -1575,7 +1575,8 @@
     ## TCLBIN is needed for tkrplot and tcltk2
     if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64 TCLBIN=64")
 
-    cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
+    cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
+                 p1(makeobjs))
     if (dry_run) {
         cat("make cmd is\n  ", cmd, "\n\nmake would use\n", sep = "")
         system(paste(cmd, "-n"))

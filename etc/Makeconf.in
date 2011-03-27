@@ -2,6 +2,7 @@
 #
 # ${R_HOME}/etc/Makeconf
 
+## This fails if it contains spaces, or if it is quoted
 include $(R_SHARE_DIR)/make/vars.mk
 
 AR = @AR@
@@ -54,7 +55,7 @@ LIBR = @LIBR@
 LIBS = @LIBS@
 ## needed by R CMD config
 LIBnn = @LIBnn@
-LIBTOOL = $(SHELL) $(R_HOME)/bin/libtool
+LIBTOOL = $(SHELL) "$(R_HOME)/bin/libtool"
 LDFLAGS = @LDFLAGS@
 ## needed to build applications linking to static libR
 MAIN_LD = @MAIN_LD@
@@ -92,7 +93,7 @@ TCLTK_CPPFLAGS = @TCLTK_CPPFLAGS@
 TCLTK_LIBS = @TCLTK_LIBS@
 
 ## for linking to libR.a
-STATIC_LIBR = @WANT_R_STATIC_TRUE@ $(R_HOME)/lib$(R_ARCH)/libR.a $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
+STATIC_LIBR = @WANT_R_STATIC_TRUE@ "$(R_HOME)/lib$(R_ARCH)/libR.a" $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
 
 
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@

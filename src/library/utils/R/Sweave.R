@@ -56,6 +56,7 @@ Sweave <- function(file, driver = RweaveLatex(),
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
+    ## FIXME: perhaps we need to edit/insert a \usepackage[]{inputenc} line
     text <- SweaveReadFile(file, syntax, encoding = encoding)
     syntax <- attr(text, "syntax")
     file <- attr(text, "file")

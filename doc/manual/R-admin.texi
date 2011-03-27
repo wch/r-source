@@ -349,11 +349,11 @@ make
 @end example
 
 @noindent
-and so on, as described further below.  This has the advantage of
-always keeping your source tree clean and is particularly
-recommended when you work with a version of @R{} from Subversion.
-(You may need @acronym{GNU} @command{make} to allow this, and the
-pathname of the build directory should not contain spaces.)
+and so on, as described further below.  This has the advantage of always
+keeping your source tree clean and is particularly recommended when you
+work with a version of @R{} from Subversion.  (You may need
+@acronym{GNU} @command{make} to allow this, and you will need no spaces
+in the path to the build directory.)
 
 For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
@@ -625,6 +625,11 @@ make install-strip
 will install stripped executables, and on platforms where this is
 supported, stripped libraries in directories @file{lib} and
 @file{modules} and in the standard packages.
+
+Note that installing @R{} into a directory which contains spaces is not
+supported, and at least some aspects (such as installing source
+packages) will not work.
+@c The main problem is the Makefile include in etc/Makeconf
 
 @cindex Manuals, installing
 
