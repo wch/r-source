@@ -1723,7 +1723,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## testing what R CMD build uses.
                 Rcmd <- "options(warn=1)\nlibrary(tools)\n"
                 Rcmd <- paste(Rcmd, "buildVignettes(dir = '",
-                              file.path(pkgoutdir, "vign_test", pkgname),
+                              file.path(pkgoutdir, "vign_test", pkgname0),
                               "')", sep = "")
                 outfile <- tempfile()
                 status <- R_runR(Rcmd, R_opts2,
@@ -2687,11 +2687,15 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (dir.exists(pkg)) {
             istar <- FALSE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "no"
-        } else {
+        } else if (file.exists(pkg)) {
             istar <- TRUE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
             pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2|tar\\.xz)$", "", pkgname0)
             pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
+        } else {
+            warning(sQuote(pkg), " is neither a file not directory, skipping\n",
+                    domain = NA, call. = FALSE, immediate. = TRUE)
+            next
         }
         pkgoutdir <- file.path(outdir, paste(pkgname0, "Rcheck", sep = "."))
         if (clean && dir.exists(pkgoutdir))
