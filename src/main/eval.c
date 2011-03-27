@@ -1425,7 +1425,7 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (srcrefs != R_NilValue) {
 	    	PROTECT(R_Srcref = VECTOR_ELT(srcrefs, i++));
 	    	if (  TYPEOF(R_Srcref) != INTSXP
-	    	    || length(R_Srcref) != 6) {
+	    	    || length(R_Srcref) < 6) {  /* old code will have length 6; new code length 8 */
 	    	    srcrefs = R_Srcref = R_NilValue;
 	    	    UNPROTECT(1);
 	    	}
