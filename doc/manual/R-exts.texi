@@ -519,8 +519,9 @@ If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
 used as the encoding of the @file{DESCRIPTION} file itself and of the
 @file{R} and @file{NAMESPACE} files, and as the default encoding of
-@file{.Rd} files.  The examples are assumed to be in this encoding when
-running @command{R CMD check}, and it is used for the encoding of the
+@file{.Rd} files and (as from @R{} 2.14.0) for the encoding of the
+vignettes.  The examples are assumed to be in this encoding when running
+@command{R CMD check}, and it is used for the encoding of the
 @code{CITATION} file.  Only encoding names @code{latin1}, @code{latin2}
 and @code{UTF-8} are known to be portable.  (Do not specify an encoding
 unless one is actually needed: doing so makes the package @emph{less}
@@ -1898,6 +1899,10 @@ available.
 @cindex vignettes
 @cindex Sweave
 
+@menu
+* Encodings and vignettes::     
+@end menu
+
 In addition to the help files in @file{Rd} format, @R{} packages allow
 the inclusion of documents in arbitrary other formats.  The standard
 location for these is subdirectory @file{inst/doc} of a source package,
@@ -2028,6 +2033,47 @@ figures, which will not render well in PDF viewers.  Sometimes it is
 much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
+@node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
+@subsection Encodings and vignettes
+
+Since vignette PDFs will in general include descriptive text, @R{}
+input, @R{} output and figures all of which may contain non-ASCII
+characters, the handling of encodings can become very complicated.
+
+The vignette source file should be written in ASCII or in the encoding
+the package declared in its @file{DESCRIPTION} file.  When
+@code{Sweave()} or @code{Stangle()} is called on the vignette source, it
+will be converted@footnote{provided the encoding is known: currently if
+it is not that of a current MBCS locale, it is guessed to be Latin-1.} to
+the encoding of the current @R{} session.  This applies even to comments
+within the source file, since @code{Sweave()} processes comments to look
+for options and metadata lines.
+
+@code{Stangle()} will produce an @R{} code file in the current locale's
+encoding: what that is recorded in a comment at the top of the file.
+
+@code{Sweave()} will produce a @file{.tex} file in the current locale's
+encoding.  That needs to be declared to @LaTeX{} via a line like
+@example
+\usepackage[utf8]@{inputenc@}
+@end example
+@noindent
+The problem is that this cannot be known in advance, so vignette PDFs
+may only be re-createable on the author's own machine.
+
+It will also parse and evaluate the @R{} code in each chunk: this should
+be fine as it has already converted the code to the current locale
+(provided that covers the characters used in the code chunks in the
+sources).  The @R{} output will also be in the current locale, and
+should be covered by the @samp{inputenc} declaration.  One thing people
+often forget is that the @R{} output may not be ASCII even for ASCII
+@R{} sources, for many possible reasons.  One common one is the use of
+`fancy' quotes: see the @R{} help on @code{sQuote}.
+
+The final issue is the encoding of figures -- this applies only to PDF
+figures and not PNG etc.  The PDF figures will contain declarations for
+their encoding, but the Sweave option @code{pdf.encoding} may need to be
+set appropriately.
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
