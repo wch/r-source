@@ -68,7 +68,8 @@
 
       \item \command{R CMD Sweave} now supports a \option{--driver}
       option to select the Sweave driver: the default is equivalent to
-      \option{--driver=RweaveLatex}.
+      \option{--driver=RweaveLatex}.  And also a \option{--encoding}
+      option.
     }
   }
   

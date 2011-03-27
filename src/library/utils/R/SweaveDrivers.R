@@ -605,6 +605,10 @@ RtangleSetup <- function(file, syntax,
     if (!split) {
         if (!quiet) cat("Writing to file", output, "\n")
         output <- file(output, open = "w")
+        lines <- c(sprintf("R code from vignette source '%s'", file),
+                   sprintf("Encoding: %s", localeToCharset()[1L]))
+        lines <- c(paste("###", lines), "")
+        writeLines(lines, output)
     } else {
         if (!quiet) cat("Writing chunks to files ...\n")
         output <- NULL

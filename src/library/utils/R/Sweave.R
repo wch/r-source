@@ -365,9 +365,10 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
             "A simple front-end for Sweave",
             "",
             "Options:",
-            "  -h, --help     print this help message and exit",
-            "  -v, --version  print version info and exit",
-            "  --driver=name  use named Sweave driver",
+            "  -h, --help      print this help message and exit",
+            "  -v, --version   print version info and exit",
+            "  --driver=name   use named Sweave driver",
+            "  --encoding=enc  assume encoding 'enc' for file",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -380,6 +381,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
         do_exit(1L)
     }
     driver <- ""
+    encoding <- ""
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -398,12 +400,15 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
             do_exit()
         } else if (substr(a, 1, 9) == "--driver=") {
             driver <- substr(a, 10, 1000)
+        } else if (substr(a, 1, 11) == "--encoding=") {
+            encoding <- substr(a, 12, 1000)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else arg <- a
        args <- args[-1L]
     }
-    if(nzchar(driver)) Sweave(arg, driver) else Sweave(arg)
+    if(nzchar(driver)) Sweave(arg, driver, encoding = encoding)
+    else Sweave(arg, encoding = encpding)
     do_exit()
 }
 
