@@ -925,6 +925,10 @@ RtangleSetup <- function(file, syntax,
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
         output <- paste(prefix.string, "R", sep = ".")
+        lines <- c(sprintf("R code from vignette source '%s'", file),
+                   sprintf("Encoding: %s", localeToCharset()[1L]))
+        lines <- c(paste("###", lines), "")
+        writeLines(lines, output)
     } else
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
 
