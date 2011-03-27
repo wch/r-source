@@ -464,21 +464,24 @@ function(vigDeps)
 ### helper for R CMD check
 
 .run_one_vignette <-
-    function(vig_name, docDir, encoding = getOption("encoding"))
+    function(vig_name, docDir, encoding = "")
 {
+    ## The idea about encodings here is that Stangle reads the
+    ## file, converts on read and outputs in the current encoding.
+    ## Then source() can assume the current encoding.
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
     setwd(file.path(td, "doc"))
     result <- NULL
-    tryCatch(utils::Stangle(vig_name, quiet = TRUE),
+    tryCatch(utils::Stangle(vig_name, quiet = TRUE, encoding = encoding),
              error = function(e) result <<- conditionMessage(e))
     if(length(result)) {
         cat("\n  When tangling ", sQuote(vig_name), ":\n", sep="")
         stop(result, call. = FALSE, domain = NA)
     }
     f <- sub("\\.[RrSs](nw|tex)$", ".R", vig_name)
-    tryCatch(source(f, echo = TRUE, encoding = encoding),
+    tryCatch(source(f, echo = TRUE),
              error = function(e) result <<- conditionMessage(e))
     if(length(result)) {
         cat("\n  When sourcing ", sQuote(f), ":\n", sep="")

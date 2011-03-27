@@ -965,7 +965,9 @@
 	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {
 	    starsmsg(stars, "building package indices ...")
-	    res <- try(.install_package_indices(".", instdir))
+            enc <- desc["Encoding"]
+            if (is.na(enc)) enc <- ""
+	    res <- try(.install_package_indices(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
 	}

@@ -336,9 +336,10 @@ function(dir, outDir)
 
 
 ### * .install_package_indices
+## called from R CMD INSTALL
 
 .install_package_indices <-
-function(dir, outDir)
+function(dir, outDir, encoding = "")
 {
     options(warn = 1)                   # to ensure warnings get seen
     if(!file_test("-d", dir))
@@ -363,7 +364,7 @@ function(dir, outDir)
          stop(gettextf("cannot open directory '%s'", outMetaDir),
               domain = NA)
     .install_package_Rd_indices(dir, outDir)
-    .install_package_vignette_index(dir, outDir)
+    .install_package_vignette_index(dir, outDir, encoding)
     .install_package_demo_index(dir, outDir)
     invisible()
 }
@@ -463,9 +464,10 @@ function(dir, outDir)
 }
 
 ### * .install_package_vignette_index
+## only called from .install_package_indices
 
 .install_package_vignette_index <-
-function(dir, outDir)
+function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
@@ -508,7 +510,7 @@ function(dir, outDir)
 
         ## install tangled versions of all vignettes
         for(srcfile in vignetteIndex$File)
-            tryCatch(utils::Stangle(srcfile, quiet = TRUE),
+            tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = encoding),
                      error = function(e)
                      stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
                                    srcfile, conditionMessage(e)),

@@ -54,6 +54,14 @@
     }
   }
   
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item When a package is installed, the vignette sources are
+      tangled: this step now converts the vignette sources from the package
+      encoding to the current encoding.
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Function \code{R_tmpnam2} has been added to the API to allow

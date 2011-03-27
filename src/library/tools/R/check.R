@@ -1664,9 +1664,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## packages, or just base?
             ## FIXME: should we do this for multiple sub-archs?
 
-            ## FIXME: it really is not clear what to do with encodings here.
-            ## If we installed the package, Stangle may have converted
-            ## to the current encoding in an MBCS.
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
