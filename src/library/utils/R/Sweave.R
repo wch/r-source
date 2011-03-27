@@ -410,7 +410,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
        args <- args[-1L]
     }
     if(nzchar(driver)) Sweave(arg, driver, encoding = encoding)
-    else Sweave(arg, encoding = encpding)
+    else Sweave(arg, encoding = encoding)
     do_exit()
 }
 

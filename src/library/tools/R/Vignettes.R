@@ -227,6 +227,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
                           domain = NA, call. = FALSE)
                  })
         setwd(startdir)
+        ## This can fail if run in a directory whose path contains spaces.
         if(!have.makefile)
             texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = quiet)
     }
