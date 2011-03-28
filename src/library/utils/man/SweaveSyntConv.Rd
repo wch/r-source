@@ -23,12 +23,11 @@ SweaveSyntConv(file, syntax, output = NULL)
     syntax. Any directory names in \code{file} are also removed such
     that the output is created in the current working directory.}}
 \author{Friedrich Leisch}
-\references{
-  Friedrich Leisch: Sweave User Manual, 2008\cr
-  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}\cr
-  \bold{NB:} This currently is for \R 2.7.1 and is out of date.
+\seealso{
+  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+
+  \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
 }
-\seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
 
