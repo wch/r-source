@@ -20,9 +20,6 @@
       \item \code{txtProgressBar()} can write to an open connection
       instead of the console.
 
-      \item \code{rstandard.glm} gains a \code{type} argument for optional
-      standardized Pearson residuals.
-
       \item Non-portable package names ending in \file{.} are no longer
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
@@ -124,6 +121,9 @@
   }
   \subsection{NEW FEATURES}{
     \itemize{
+       \item \code{rstandard.glm} gains a \code{type} argument for optional
+      standardized Pearson residuals.
+
       \item \code{normalizePath()} has been moved to the \pkg{base}
       package (from \pkg{utils}): this is so it can be used by
       \code{library()} and friends.
