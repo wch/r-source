@@ -204,14 +204,16 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 @WANT_R_STATIC_TRUE@	@$(MAKE) install-static
+## may not need $(rhome)/lib if not static/shared libR, external blas and lapack.
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"
-	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 install-bin: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 install-lib: installdirs
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"
 install-static: installdirs
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change libR.a "$(DESTDIR)$(Rexeclibdir)/libR.a"
 install-strip: installdirs
 	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
