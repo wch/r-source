@@ -1248,6 +1248,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cnt = n;
 	PROTECT(ans = allocVector(REALSXP, p));
 #ifdef HAVE_OPENMP
+	/* This gives a spurious -Wunused-but-set-variable error */
 	if (R_num_math_threads > 0)
 	    nthreads = R_num_math_threads;
 	else

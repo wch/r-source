@@ -2201,6 +2201,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
     R_len_t i;
+    /* actual_size is only used if VALGRIND_LEVEL > 1 */
     R_size_t size = 0, actual_size = 0, alloc_size, old_R_VSize;
     int node_class;
 
@@ -2518,6 +2519,7 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
+    /* first_bad_sexp_type_old_type is only used if PROTECTCHECK */
     SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type = 0;
     SEXP first_bad_sexp_type_sexp = NULL;
     int first_bad_sexp_type_line = 0;
