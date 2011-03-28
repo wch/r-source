@@ -1587,4 +1587,17 @@ res <- try(data.frame(dfA, dfA[2:1,], check.rows=TRUE))
 stopifnot(inherits(res, "try-error"))
 ## worked in 2.12.2.
 
+
+## uniroot(f,..) when f(.) == -Inf :
+ff1 <- function(x) {r <- log(g(x)); print(c(x,r)); r}
+ff <- function(x) log(g(x))
+## now play with different  g(.)'s ..
+g <- function(x) exp( 5*sign(x)*abs(x)^2.1 )
+if(FALSE) ## if you want to see how it *did* go wrong:
+    str(ur <- uniroot(ff1, c(-90,100)))
+str(ur <- uniroot(ff, c(-90,100)))# -> 2 warnings .. -Inf replaced ..
+stopifnot(abs(ur$root) < 0.001)
+## failed badly in R < 2.13.0, as -Inf was replaced by +1e308
+
+
 proc.time()

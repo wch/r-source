@@ -14,25 +14,25 @@
       such as \code{quartz()} and \code{pdf()}.  (Wish of \PR{14538}.)
     }
   }
-  
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{txtProgressBar()} can write to an open connection
       instead of the console.
 
-      \item \code{rstandard.glm} gains a \code{type} argument for optional 
+      \item \code{rstandard.glm} gains a \code{type} argument for optional
       standardized Pearson residuals.
 
       \item Non-portable package names ending in \file{.} are no longer
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
-      
+
       \item There have been several enhancements to \code{Sweave()}.
 
       User-defined numeric (with names starting \code{n_}) and character
       (starting \code{ch_}) options are now allowed: as before all other
       unknown options are taken to be logical.
-            
+
       \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
       argument to specify the encoding of the vignette sources.
 
@@ -48,7 +48,7 @@
       \PR{14537}.)
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item When a package is installed, the vignette sources are
@@ -56,14 +56,14 @@
       encoding to the current encoding.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Function \code{R_tmpnam2} has been added to the API to allow
       a temporary filename to include a specified extension.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
@@ -75,7 +75,7 @@
       option.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{require()} no longer has a \code{save} argument.
@@ -95,10 +95,10 @@
 
       \item \command{R CMD build --binary} is formally defunct:
       \command{R CMD INSTALL --build} has long been the preferred
-      alternative.  
+      alternative.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
@@ -487,14 +487,14 @@
 
       Printing, \code{format()} and \code{cat()} will represent non-ASCII
       bytes in such strings by a \samp{\xab} escape.
-      
+
       \item The new function \code{removeSource()} removes the internally
       stored source from a function.
 
-      \item \code{"srcref"} attributes now include two additional 
-      line number values, recording the line numbers in the order they 
+      \item \code{"srcref"} attributes now include two additional
+      line number values, recording the line numbers in the order they
       were parsed.
-      
+
       \item New functions have been added for source reference access:
       \code{getSrcFilename()}, \code{getSrcDirectory()},
       \code{getSrcLocation()} and \code{getSrcref()}.
@@ -504,16 +504,16 @@
       setting of \code{umask}.  This means that all the \R functions
       which manipulate file/directory permissions by default respect
       \code{umask}, notably \command{R CMD INSTALL}.
-      
+
       \item \code{tempfile()} has an extra argument \code{fileext} to
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
-      
+
       \item \code{Sweave()} has options to produce PNG and JPEG figures,
       and to use a custom function to open a graphics device (see
       \code{?RweaveLatex}).\cr
       (Based in part on the contribution of \PR{14418}.)
-      
+
       The default for \code{Sweave()} is to produce only PDF figures
       (rather than both EPS and PDF).
 
@@ -524,7 +524,7 @@
       \item Environment variable \env{SWEAVE_OPTIONS} can be used to
       supply defaults for existing or new options to be applied after
       the Sweave driver setup has been run.
-      
+
       \item The Sweave manual is now included as a vignette in the
       \pkg{utils} package.
     }
@@ -619,7 +619,7 @@
       when running code to rebuild the vignettes.  This version does a
       much better job of suppressing output from successful vignette
       tests.
-      
+
       The \file{00check.log} file is a more complete record of what is
       output to \file{stdout}: in particular contains more details of
       the tests.
@@ -631,7 +631,7 @@
       \file{.tar.xz} compressed tarballs are now allowed, if
       \command{tar} supports them (and setting environment variable
       \env{TAR} to \samp{internal} ensures so on all platforms).
- 
+
       \item \command{R CMD check} now warns if it finds
       \file{inst/doc/makefile}, and \command{R CMD build} renames such a
       file to \file{inst/doc/Makefile}.
@@ -664,7 +664,7 @@
       during configuration (for example in \file{config.site}) it is
       used unchanged in file \file{etc/ldpaths} rather than being
       appended to.
-      
+
       \item \command{configure} looks for support for OpenMP and if
       found compiles \R with appropriate flags and also makes them
       available for use in packages: see \sQuote{Writing R Extensions}.
@@ -714,7 +714,7 @@
       use for Mac binary installs as well as for Windows ones.  The
       value \code{"pkglock"} is now accepted, as well as \code{TRUE} and
       \code{FALSE} (the default).
-      
+
       \item There is a new option \option{--no-clean-on-error} for
       \command{R CMD INSTALL} to retain a partially installed package for
       forensic analysis.
@@ -772,7 +772,7 @@
       \item The entry point \code{pythag} in \file{Rmath.h} is deprecated
       in favour of the C99 function \code{hypot}.  A wrapper for
       \code{hypot} is provided for \R 2.13.x only.
-      
+
       \item Direct access to the \code{"source"} attribute of functions
       is deprecated; use \code{deparse(fn, control="useSource")} to access
       it, and \code{removeSource(fn)} to remove it.
@@ -840,9 +840,9 @@
       \item \code{plot(<formula>, data=<matrix>,..)} now works in more
       cases; similarly for \code{points()}, \code{lines()} and
       \code{text()}.
-      
+
       \item \code{edit.default()} contained a manual dispatch for matrices
-      (the \code{"matrix"} class didn't really exist when it was written). 
+      (the \code{"matrix"} class didn't really exist when it was written).
       This caused an infinite recursion in the no-GUI case and has now
       been removed.
 
@@ -859,7 +859,7 @@
       incomplete cases were removed first.  (\PR{14488})
 
       They also failed for 1-row matrices.
-      
+
       \item The perpendicular adjustment used in placing text and
       expressions in the margins of plots was not scaled by
       \code{par("mex")}. (Part of \PR{14532}.)
@@ -868,7 +868,7 @@
       occur during the creation of the device window to prevent crashes.
       It also imposes a limit of 144 ft^2 on the area used by a window
       to catch user errors (unit misinterpretation) early.
-      
+
       \item The browser (invoked by \code{debug()}, \code{browser()}
       or otherwise) would display attributes such as \code{"wholeSrcref"}
       that were intended for internal use only.
@@ -877,7 +877,10 @@
       filenames with spaces in them even when the readline library is
       used.  This resolves \PR{14452} provided the internal filename
       completion is used (e.g., by setting \code{rc.settings(files =
-      TRUE)}).
+	TRUE)}).
+
+      \item Inside \code{uniroot(f, ...)}, \code{-Inf} function values
+      are now replaced by a maximally \bold{negative} value.
 
     }
   }
@@ -912,16 +915,16 @@
       \item Passing the invalid value \code{lty = NULL} to \code{axis()}
       sent an invalid value to the graphics device, and might cause the
       device to segfault.
-      
+
       \item \code{Sweave()} with \code{concordance=TRUE} could lead to
       invalid PDF files; \file{Sweave.sty} has been updated to avoid
       this.
-      
-      \item Non-ASCII characters in the titles of help pages were 
+
+      \item Non-ASCII characters in the titles of help pages were
       not rendered properly in some locales, and could cause errors
       or warnings.
-      
-      \item \code{checkRd()} gave a spurious error if the \code{\\href} 
+
+      \item \code{checkRd()} gave a spurious error if the \code{\\href}
       macro was used.
     }
   }

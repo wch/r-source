@@ -71,6 +71,9 @@
  *	ensured to be reduced at least by the factor 1.6
  *
  ************************************************************************
+ *
+ * NOTE:  uniroot() --> do_zeroin2()  --- in  ../main/optimize.c
+ *					      ~~~~~~~~~~~~~~~~~~
  */
 
 #include <float.h>
