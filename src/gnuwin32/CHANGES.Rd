@@ -70,6 +70,9 @@
       \item The environment variable \env{R_HOME} in an \R session now
       uses slash as the path separator (as it always has when set by
       \command{Rcmd.exe}).
+
+      \item \command{Rgui} has a new menu item for the PDF
+      \sQuote{Sweave User Manual}.
     }
   }
 

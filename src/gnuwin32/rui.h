@@ -54,7 +54,8 @@ typedef struct {
 
 struct structHelpMenuItems {
     menuitem mhelp, mmanintro, mmanref, mmandata,
-	mmanext, mmanint, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, 
+	mmanext, mmanint, mmanlang, mmanadmin, mmanSweave,
+	mman0, mapropos, mhelpstart, 
 	mhelpsearch, msearchRsite, mFAQ, mrwFAQ, mCRAN;
     menu mman;
 };
