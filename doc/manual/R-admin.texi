@@ -907,7 +907,7 @@ make bytecode
 @end example
 
 @noindent
-in the top-level build directory.  This will find build (or re-build)
+in the top-level build directory.  This will build (or re-build)
 @R{} in the normal way, then compile the package code (which for the
 recommended packages entails a complete re-install of the package from
 the tarball).  To update @R{}, set the environment variables
