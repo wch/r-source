@@ -40,8 +40,8 @@ influence.measures(model)
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
           sd = sqrt(deviance(model)/df.residual(model)), \dots)
-\method{rstandard}{glm}(model, infl = lm.influence(model, do.coef = FALSE),
-          \dots)
+\method{rstandard}{glm}(model, infl=influence(model, do.coef=FALSE),
+          type=c("deviance","pearson"), \dots)
 
 rstudent(model, \dots)
 \method{rstudent}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
@@ -86,6 +86,7 @@ hat(x, intercept = TRUE)
   \item{dispersion}{dispersion (for \code{\link{glm}} objects) to use,
     see default.}
   \item{hat}{hat values \eqn{H_{ii}}{H[i,i]}, see default.}
+  \item{type}{type of residuals for \code{glm} method for \code{rstandard.}}
 
   \item{x}{the \eqn{X} or design matrix.}
   \item{intercept}{should an intercept column be prepended to \code{x}?}

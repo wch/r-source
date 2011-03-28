@@ -129,14 +129,20 @@ rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
     res
 }
 
-## FIXME ! -- make sure we are following "the literature":
-rstandard.glm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
+### New version from Brett Presnell, March 2011
+### Slightly modified (dispersion bit) by pd
+rstandard.glm <-
+ function(model,
+          infl=influence(model, do.coef=FALSE),
+          type=c("deviance","pearson"), ...)
 {
-    res <- infl$wt.res # = "dev.res"  really
-    res <- res / sqrt(summary(model)$dispersion * (1 - infl$hat))
-    res[is.infinite(res)] <- NaN
-    res
+ type <- match.arg(type)
+ res <- switch(type, pearson = infl$pear.res, infl$dev.res)
+ res <- res/sqrt(summary(model)$dispersion * (1 - infl$hat))
+ res[is.infinite(res)] <- NaN
+ res
 }
+
 
 rstudent <- function(model, ...) UseMethod("rstudent")
 rstudent.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
