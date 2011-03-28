@@ -498,7 +498,7 @@ normalCompletions <-
 ## whatever-the-opposite-of-caution-is (our justification being that
 ## erring on the side of caution is practically useless and not erring
 ## at all is expensive to the point of being impossible (we really
-## don't want to evaluate the dotlot() call in "print(dotplot(x),
+## don't want to evaluate the dotplot() call in "print(dotplot(x),
 ## positi[TAB] )" ))))
 
 
@@ -751,7 +751,7 @@ correctFilenameToken <- function()
         else if (insideDoubleQuote)
             max(which(whichDoubleQuote))
         else if (insideSingleQuote)
-            which(whichSingleQuote)
+            max(which(whichSingleQuote))
         else ## should not happen, abort non-intrusively
             .CompletionEnv[["start"]]
     substring(linebuffer, loc.start + 1L, .CompletionEnv[["end"]])
