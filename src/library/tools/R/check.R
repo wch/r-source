@@ -586,26 +586,30 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## Subdirectory 'data' without data sets?
         if (dir.exists("data") &&
             !length(list_files_with_type("data", "data"))) {
-            if (!any) warnLog("Subdirectory 'data' contains no data sets.")
+            if (!any) warnLog()
             any <- TRUE
-        }
+            printLog(Log, "Subdirectory 'data' contains no data sets.\n")
+       }
         ## Subdirectory 'demo' without demos?
         if (dir.exists("demo") &&
             !length(list_files_with_type("demo", "demo"))) {
-            if (!any) warnLog("Subdirectory 'demo' contains no demos.")
+            if (!any) warnLog()
             any <- TRUE
+            printLog(Log, "Subdirectory 'demo' contains no demos.\n")
         }
 
         ## Subdirectory 'exec' without files?
         if (dir.exists("exec") && !length(dir("exec"))) {
-            if (!any) warnLog("Subdirectory 'exec' contains no files.")
+            if (!any) warnLog()
             any <- TRUE
+            printLog(Log, "Subdirectory 'exec' contains no files.\n")
         }
 
         ## Subdirectory 'inst' without files?
         if (dir.exists("inst") && !length(dir("inst", recursive = TRUE))) {
-            if (!any) warnLog("Subdirectory 'inst' contains no files.")
+            if (!any) warnLog()
             any <- TRUE
+            printLog(Log, "Subdirectory 'inst' contains no files.\n")
         }
 
         ## Subdirectory 'src' without sources?
@@ -675,8 +679,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                 })
             msg <- c(.warnings, .error)
             if(length(msg)) {
-                if(!any) warnLog("Problems with news in inst/NEWS.Rd:")
+                if(!any) warnLog()
                 any <- TRUE
+                printLog(Log, "Problems with news in inst/NEWS.Rd:\n")
                 printLog(Log,
                          paste("  ",
                                unlist(strsplit(msg, "\n", fixed = TRUE)),
@@ -690,8 +695,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             Rcmd <- "tools:::.check_citation(\"inst/CITATION\")\n"
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=utils")
             if(length(out)) {
-                if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
+                if(!any) warnLog()
                 any <- TRUE
+                printLog(Log,
+                         "Invalid citation information in 'inst/CITATION':\n")
                 printLog(Log, .format_lines_with_indent(out), "\n")
             }
         }
@@ -1636,10 +1643,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             setwd(od)
             dups <- sources[sources %in% new_sources]
             if(length(dups)) {
+                if(!any) warnLog()
                 any <- TRUE
-                warnLog(paste("  Unused files in inst/doc which are pointless or misleading",
-                              "  as they will be re-created from the vignettes:",
-                              sep = "\n"))
+                printLog(Log,
+                         paste("  Unused files in inst/doc which are pointless or misleading",
+                               "  as they will be re-created from the vignettes:", "",
+                               sep = "\n"))
                 printLog(Log,
                          paste(c(paste("  ", dups), "", ""),
                                collapse = "\n"))
@@ -1647,20 +1656,26 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
         ## avoid case-insensitive matching
         if ("makefile" %in% dir(vignette_dir)) {
+            if(!any) warnLog()
             any <- TRUE
-            warnLog("  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored")
+            printLog(Log,
+                     "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
         if ("Makefile" %in% dir(vignette_dir)) {
             lines <- readLines(file.path(vignette_dir, "Makefile"), warn = FALSE)
             ## remove comment lines
             lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
             if(any(grepl("[^/]R +CMD", lines))) {
+                if(!any) warnLog()
                 any <- TRUE
-                warnLog("  Found 'R CMD' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/R\" CMD'")
+                printLog(Log,
+                         "  Found 'R CMD' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
             if(any(grepl("[^/]Rscript", lines))) {
+                if(!any) warnLog()
                 any <- TRUE
-                warnLog("  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'")
+                printLog(Log,
+                         "  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
         if (!any) resultLog(Log, "OK")
