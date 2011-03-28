@@ -425,6 +425,12 @@
       
       \item The Sweave manual is now included as a vignette in the
       \pkg{utils} package.
+
+      \item The \code{gctorture2()} function provides a more refined
+      interface to the GC torture process. Environment variables
+      \env{R_GCTORTURE}, \env{R_GCTORTURE_WAIT}, and
+      \env{R_GCTORTURE_INHIBIT_RELEASE} can also be used to control the
+      GC torture process.
     }
   }
 
@@ -436,13 +442,19 @@
       \code{R_USE_C99_IN_CXX} is defined when it is included.
 
       \item \code{pythag} duplicated the C99 function \code{hypot}.  It
-      is no longer provided, but is used a substitute for \code{hypot}
+      is no longer provided, but is used as a substitute for \code{hypot}
       in the very unlikely event that the latter is not available.
 
       \item \code{R_inspect(obj)} and \code{R_inspect3(obj, deep, pvec)}
       are (hidden) C-level entry points to the internal \code{inspect}
       function and can be used for C-level debugging (e.g., in conjunction
       with the \code{p} command in \code{gdb}).
+
+      \item Compiling R with \option{--enable-strict-barrier} now also
+      enables additional checking for use of unprotected objects. In
+      combination with \code{gctorture()} or \code{gctorture2()} and a
+      C-level debugger this can be useful for tracking down memory
+      protection issues.
     }
   }
 
