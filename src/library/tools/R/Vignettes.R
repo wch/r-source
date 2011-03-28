@@ -426,16 +426,17 @@ function(x, ...)
 .writeVignetteHtmlIndex <-
 function(pkg, con, vignetteIndex = NULL)
 {
+    ## FIXME: in principle we could need to set an encoding here
     html <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
               paste("<html><head><title>R:", pkg, "vignettes</title>"),
               '<link rel="stylesheet" type="text/css" href="../html/R.css">',
               "</head><body>",
-              paste("<h2>Vignettes of package", pkg,"</h2>"))
+              paste("<h2>Vignettes from package '", pkg,"'</h2>", sep = ""))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
         html <-
             c(html,
-              "Sorry, the package contains no vignette meta-information nor index.",
+              "Sorry, the package contains no vignette meta-information nor an index.",
               'Please browse the <a href=".">directory</a>.')
     } else {
         ## We must not assume that there are PDFs: by default the
