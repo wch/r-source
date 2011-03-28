@@ -267,6 +267,44 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
     invisible(NULL)
 }
 
+### * .getVignetteEncoding
+
+getVignetteEncoding <-  function(file, ...)
+{
+    lines <- readLines(file, warn = FALSE)
+    .getVignetteEncoding(lines, ...)
+}
+
+.getVignetteEncoding <- function(lines, convert = FALSE)
+{
+    ## Look for input enc lines
+    poss <- grep("^\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputenc\\}",
+                 lines, useBytes = TRUE, value = TRUE)
+    if(!length(poss)) {
+        asc <- iconv(lines, "latin1", "ASCII")
+        ind <- is.na(asc) | asc != lines
+        if(any(ind)) return("non-ASCII")
+        return("") # or "ASCII"
+    }
+    poss <- poss[1L]
+    res <- gsub("^\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1", poss)
+    if (convert) {
+        ## see Rd2latex.R.
+        ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
+        switch(res,
+               "utf8" =, "utf8x" = "UTF-8",
+               "latin1" = "latin1",
+               "latin2" = "latin2",
+               "latin9" = "LATIN-9", # only form known to GNU libiconv
+               "arabic" = "ISO-8859-6",
+               "cyrillic" = "ISO-8859-5",
+               "greek" = "ISO-8859-7",
+               "hebrew" = "ISO-8859-8",
+               "ansinew" = "CP1252",
+               "unknown")
+    } else res
+}
+
 ### * .build_vignette_index
 
 .get_vignette_metadata <-
