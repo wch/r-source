@@ -28,11 +28,6 @@
       already disallowed).
       
       \item There have been several enhancements to \code{Sweave()}.
-      
-      Provided at least one graphics device is selected for a chunk, the
-      first graphics device is used for the main evaluation of the
-      chunk.  This means that by default when re-building vignettes each
-      chunk is evaluated once and no \file{Rplots.pdf} file is produced.
 
       User-defined numeric (with names starting \code{n_}) and character
       (starting \code{ch_}) options are now allowed: as before all other

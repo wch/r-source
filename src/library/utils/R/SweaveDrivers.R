@@ -218,11 +218,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         srcrefs <- attr(chunkexps, "srcref")
 
-        if (length(devs)) {
-            devs[[1L]](name = chunkprefix,
-                       width = options$width, height = options$height,
-                       options)
-        }
+##         if (length(devs)) {
+##             devs[[1L]](name = chunkprefix,
+##                        width = options$width, height = options$height,
+##                        options)
+##         }
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
@@ -372,8 +372,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         if (length(devs)) {
-            grDevices::dev.off()        # close first one
-            for (dev in devs[-1]) {
+##             grDevices::dev.off()        # close first one
+##             for (dev in devs[-1]) {
+            for (dev in devs) {
                 dev(name = chunkprefix,
                     width = options$width, height = options$height,
                     options)
