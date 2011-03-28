@@ -2017,6 +2017,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              ": warning: .*ISO C",
                              ": warning: .* discards qualifiers from pointer target type",
                              ": warning: .* is used uninitialized",
+                             ": warning: .* set but not used",
+                             ": warning: unused",
                              "missing link\\(s\\):")
                 ## Warnings spotted by gcc with
                 ## '-Wimplicit-function-declaration', which is
@@ -2060,7 +2062,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                   lines, invert = TRUE, value = TRUE)
                 }
 
-                ## FIXME: these lines never got into 'lines'
                 ## Warnings spotted by gcc with '-Wunused', which is
                 ## implied by '-Wall'.  Currently only accessible
                 ## via an internal environment variable.
