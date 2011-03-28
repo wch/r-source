@@ -9,7 +9,7 @@
 \title{Utilities for Building and Checking Add-on Packages}
 \description{
   Utilities for checking whether the sources of an \R add-on package
-  work correctly, and for building a source opackage from them.
+  work correctly, and for building a source package from them.
 }
 \usage{
 \special{R CMD check [options] pkgdirs}

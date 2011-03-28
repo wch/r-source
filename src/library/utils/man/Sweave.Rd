@@ -103,13 +103,11 @@ Stangle(file, driver = Rtangle(),
   B. \enc{Rönz}{Roenz}, editors, Compstat 2002 - Proceedings in Computational
   Statistics, pages 575--580. Physika Verlag, Heidelberg, Germany,
   2002. ISBN 3-7908-1517-9.
-  
-  Friedrich Leisch: Sweave User Manual, 2008\cr
-  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}\cr
-  \bold{NB:} This currently is for \R 2.7.1 and is out of date.
 }
 
 \seealso{
+  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+  
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
   
   Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.

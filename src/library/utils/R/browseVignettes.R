@@ -61,15 +61,15 @@ print.browseVignettes <- function(x, ...)
                 paste(deparse(attr(x, "call")), collapse=" "))
         return(invisible(x))
     }
-    oneLink <- function(s)
-    {
+
+    oneLink <- function(s) {
         if (length(s) == 0L) return(character(0L))
         title <- s[, "Title"]
         src <- file.path(s[, "Dir"], "doc", s[, "File"])
-        pdf <- ifelse(s[, "PDF"] != "", # or nzchar(s[, "PDF"]),
+        pdf <- ifelse(nzchar(s[, "PDF"]),
                       file.path(s[, "Dir"], "doc", s[, "PDF"]),
                       "")
-        rcode <- ifelse(s[, "R"] != "", # or nzchar(s[, "R"]),
+        rcode <- ifelse(nzchar(s[, "R"]),
                         file.path(s[, "Dir"], "doc", s[, "R"]),
                       "")
         sprintf("  <li>%s  -  \n    %s  \n    %s  \n    %s \n  </li>\n",
@@ -82,6 +82,7 @@ print.browseVignettes <- function(x, ...)
                        ""),
                 sprintf("<a href='file://%s'>LaTeX/noweb</a>&nbsp;", src))
     }
+
     file <- tempfile("Rvig.", fileext=".html")
     sink(file)
     css_file <- file.path(R.home("doc"), "html", "R.css")

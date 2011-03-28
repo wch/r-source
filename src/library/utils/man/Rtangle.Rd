@@ -34,16 +34,15 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \code{basename(file)} with an extension corresponding to the Sweave
   syntax (e.g. \file{Rnw}, \file{Stex}) replaced by \file{R}.
 
-  If spliting is selected (including by the options in the file), each
+  If splitting is selected (including by the options in the file), each
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
 }
 \author{Friedrich Leisch and R-core.}
-\references{
-  Friedrich Leisch: Sweave User Manual, 2008\cr
-  \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}\cr
-  \bold{NB:} This currently is for \R 2.7.1 and is out of date.
+\seealso{
+  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+
+  \code{\link{Sweave}}, \code{\link{RweaveLatex}}
 }
-\seealso{\code{\link{Sweave}}, \code{\link{RweaveLatex}}}
 \keyword{utilities}
 

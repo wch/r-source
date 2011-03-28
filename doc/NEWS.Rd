@@ -419,6 +419,9 @@
       \item Environment variable \env{SWEAVE_OPTIONS} can be used to
       supply defaults for existing or new options to be applied after
       the Sweave driver setup has been run.
+      
+      \item The Sweave manual is now included as a vignette in the
+      \pkg{utils} package.
     }
   }
 

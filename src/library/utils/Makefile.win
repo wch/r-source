@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 pkg = utils
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-INSTDIRS = Sweave misc
+INSTDIRS = Sweave doc misc
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
