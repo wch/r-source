@@ -2065,10 +2065,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## Warnings spotted by gcc with '-Wunused', which is
                 ## implied by '-Wall'.  Currently only accessible
                 ## via an internal environment variable.
-                check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
+                check_src_flag <-
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
-                    lines <- grep("warning: unused", lines,
-                                  ignore.case = TRUE, invert = TRUE, value = TRUE)
+                    lines <- grep("warning: unused", lines, ignore.case = TRUE,
+                                  invert = TRUE, value = TRUE)
+                    lines <- grep("warning: .* set but not used", lines,
+                                  ignore.case = TRUE,
+                                  invert = TRUE, value = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
 
