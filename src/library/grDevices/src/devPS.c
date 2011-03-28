@@ -6527,12 +6527,12 @@ static void PDFwritesRGBcolorspace(PDFDesc *pd)
 
     snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%sicc%ssrgb",
              R_Home, FILESEP, FILESEP, FILESEP, FILESEP);
-    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) {
-        error(_("Failed to load sRGB colorspace"));
-    }
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "r")))
+        error(_("Failed to load sRGB colorspace file"));
     while (!feof(fp)) {
         char *p;
 	p = fgets(line, 50, fp); /* avoid compiler warning on Fedora */
+	if(!p) error("fgets read error in PDFwritesRGBcolorspace");
         fprintf(pd->pdffp, "%s", line);
     }
     fclose(fp);
