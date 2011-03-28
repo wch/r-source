@@ -427,10 +427,13 @@
       \pkg{utils} package.
 
       \item The \code{gctorture2()} function provides a more refined
-      interface to the GC torture process. Environment variables
+      interface to the GC torture process.  Environment variables
       \env{R_GCTORTURE}, \env{R_GCTORTURE_WAIT}, and
       \env{R_GCTORTURE_INHIBIT_RELEASE} can also be used to control the
       GC torture process.
+
+      \item \code{file.copy(from, to)} no longer regards it as an error
+      to supply a zero-length \code{from}: it now simply does nothing.
     }
   }
 
