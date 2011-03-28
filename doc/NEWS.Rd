@@ -663,8 +663,8 @@
       available for use in packages: see \sQuote{Writing R Extensions}.
 
       This is currently experimental, and is only used in \R with a
-      single thread for \code{colSums()} and \code{dist()}.  Expect it
-      to be more widely used in later versions of \R.
+      single thread for \code{colSums()} and \code{colMeans()}.  Expect
+      it to be more widely used in later versions of \R.
 
       This can be disabled by the \option{--disable-openmp} flag.
     }

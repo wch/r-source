@@ -54,7 +54,7 @@ delim_match(SEXP x, SEXP delims)
     */
 
     char c;
-    const char *s, *s0, *delim_start, *delim_end;
+    const char *s, *delim_start, *delim_end;
     Sint n, i, pos, start, end, delim_depth;
     int lstart, lend;
     Rboolean is_escaped, equal_start_and_end_delims;
@@ -76,7 +76,7 @@ delim_match(SEXP x, SEXP delims)
     for(i = 0; i < n; i++) {
 	memset(&mb_st, 0, sizeof(mbstate_t));
 	start = end = -1;
-	s0 = s = translateChar(STRING_ELT(x, i));
+	s = translateChar(STRING_ELT(x, i));
 	pos = is_escaped = delim_depth = 0;
 	while((c = *s) != '\0') {
 	    if(c == '\n') {
