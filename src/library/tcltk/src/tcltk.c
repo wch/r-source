@@ -261,13 +261,11 @@ SEXP RTcl_ObjFromVar(SEXP args)
 
 SEXP RTcl_AssignObjToVar(SEXP args)
 {
-    Tcl_Obj *tclobj;
-
-    tclobj = Tcl_SetVar2Ex(RTcl_interp,
-                           translateChar(STRING_ELT(CADR(args), 0)),
-                           NULL,
-                           (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
-                           0);
+    Tcl_SetVar2Ex(RTcl_interp,
+		  translateChar(STRING_ELT(CADR(args), 0)),
+		  NULL,
+		  (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
+		  0);
     return R_NilValue;
 }
 

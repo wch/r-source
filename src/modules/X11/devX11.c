@@ -1147,8 +1147,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     X_GTYPE type;
     const char *p = dsp;
     XGCValues gcv;
-    /* Indicates whether the display is created within this particular call: */
-    Rboolean DisplayOpened = FALSE;
     XSizeHints *hint;
 
     if (!XSupportsLocale ())
@@ -1263,7 +1261,6 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    return FALSE;
 	}
 	XSetIOErrorHandler(old);
-	DisplayOpened = TRUE;
 	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
 	displayOpen = TRUE;
 	if(xd->handleOwnEvents == FALSE)
@@ -2361,14 +2358,16 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    char *keystart=keybuffer;
 	    XComposeStatus compose;
   	    KeySym keysym;
-	    int count, keycode;
+	    int keycode;
 	    if (event.xkey.state & ControlMask) {
 	    	keystart += 5; 
 	    	sprintf(keybuffer, "ctrl-"); /* report control keys using labels like "ctrl-A" */
 	    	event.xkey.state &= !ControlMask;
 	    	event.xkey.state |= ShiftMask;
 	    }
-      	    count = XLookupString(&event.xkey, keystart, sizeof(keybuffer)-(keystart-keybuffer), &keysym, &compose);
+      	    XLookupString(&event.xkey, keystart, 
+			  sizeof(keybuffer)-(keystart-keybuffer), 
+			  &keysym, &compose);
       	    /* Rprintf("keysym=%x\n", keysym); */
       	    if ((keycode = translate_key(keysym)) > knUNKNOWN)
       	    	doKeybd(dd, keycode, NULL);

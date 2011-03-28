@@ -88,7 +88,6 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
   unsigned char esc[3];
   int j = 0;
   int raw_fontnum, raw_symbol_fontnum;
-  int previous_raw_fontnum;	/* implement depth-1 stack */
   unsigned short fontword, symbol_fontword;
 
   /* note: string length can grow by a factor of 6, because a single
@@ -110,9 +109,6 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
      updated.  But `symbol_fontword' is fixed */
   fontword = ((unsigned short)raw_fontnum) << FONT_SHIFT;
   symbol_fontword = ((unsigned short)raw_symbol_fontnum) << FONT_SHIFT;
-
-  /* Implement depth-1 stack of fonts, for use by \fP macro */
-  previous_raw_fontnum = raw_fontnum;
 
   while (*src != (unsigned char)'\0')
     {
@@ -683,102 +679,6 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 
 	     We don't implement \rn for Stick fonts, because they have
 	     no associated symbol font. */
-
-	  /* PAUL MURRELL
-	     Only concerned with Hershey fonts
-	  */
-	  /* if (strcmp ((char *)esc, "rn") == 0)
-	  cc	    {
-	  cc  if (_plotter->drawstate->font_type == F_POSTSCRIPT
-	  cc  || _plotter->drawstate->font_type == F_PCL)
-	  cc {
-	  cc  dest[j++]
-	  cc    = (unsigned short)(CONTROL_CODE | C_LEFT_RADICAL_SHIFT);
-		  cc take `radicalex' glyph from PS symbol font
-	  cc  dest[j++]
-	  cc    = symbol_fontword | (unsigned short)RADICALEX;
-	  cc  dest[j++]
-	  cc    = (unsigned short)(CONTROL_CODE | C_RIGHT_RADICAL_SHIFT);
-
-	  cc  continue;	cc back to top of while loop
-	  cc }
-	  cc }
-
-	  cc Attempt to parse as a font-change command, i.e. as one of the
-	     macros \f0, \f1, \f2, etc., or \fP.  \fR, \fI, \fB are the
-	     same as \f1, \f2, \f3 for troff compatibility. cc
-
-	  cc if (esc[0] == 'f' && ((esc[1] >= '0' && esc[1] <= '9')
-	  cc		|| esc[1] == 'P' || esc[1] == 'R'
-	  cc		|| esc[1] == 'I' || esc[1] == 'B'))
-	  cc {
-	      cc If a user-specified, device-specific font [e.g. an X font,
-		 for which we have no internal table listing the other
-		 fonts in its family] is being used, we can't really do
-		 font switching, except via \f0, \f1.  These switch to the
-		 X symbol font and the current user-specified font,
-		 respectively.  (\fP is also supported.) cc
-	  cc if (_plotter->drawstate->font_type == F_OTHER
-	  cc  && ((esc[1] >= '2' && esc[1] <= '9')
-	  cc      || esc[1] == 'I' || esc[1] == 'B'))
-	  cc esc[1] = '1'; cc treat as \f1 cc
-
-	  cc troff compatibility cc
-	  cc if (esc[1] == 'R')
-	  cc esc[1] = '1';
-	  cc else if (esc[1] == 'I')
-	  cc esc[1] = '2';
-	  cc else if (esc[1] == 'B')
-	  cc esc[1] = '3';
-
-	  cc if (esc[1] == 'P') cc \fP seen, so go back to previous font cc
-	  cc raw_fontnum = previous_raw_fontnum;
-	  cc else		cc font specified as index into typeface cc
-	  cc {
-	  cc  int new_font_index = esc[1] - '0';
-
-		  cc switch to specified font (OOB tests here now obsolete?) cc
-	  cc  previous_raw_fontnum = raw_fontnum;
-	  cc  switch (_plotter->drawstate->font_type)
-	  cc    {
-	  cc    case F_HERSHEY:
-	  cc      if ((new_font_index >= _hershey_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  cc	  || new_font_index < 0)
-	  cc	new_font_index = 1; cc OOB -> use default font cc
-	  cc      raw_fontnum = _hershey_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  cc      break;
-	  cc    case F_PCL:
-	  cc      if ((new_font_index >= _pcl_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  cc	  || new_font_index < 0)
-	  cc	new_font_index = 1; cc OOB -> use default font cc
-	  cc      raw_fontnum = _pcl_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  cc      break;
-	  cc    case F_STICK:
-	  cc      if ((new_font_index >= _stick_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  cc	  || new_font_index < 0)
-	  cc	new_font_index = 1; cc OOB -> use default font cc
-	  cc      raw_fontnum = _stick_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  cc      break;
-	  cc    case F_POSTSCRIPT:
-	  cc    default:
-	  cc      if ((new_font_index >= _ps_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  cc	  || new_font_index < 0)
-	  cc	new_font_index = 1; cc OOB -> use default font cc
-	  cc      raw_fontnum = _ps_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  cc      break;
-	  cc    case F_OTHER:
-	  cc      if (new_font_index != 0 && new_font_index != 1)
-	  cc	new_font_index = 1; cc OOB -> use default font cc
-	  cc      raw_fontnum = new_font_index;
-	  cc      break;
-	  cc    }
-	  cc }
-
-	  cc	      fontword = ((unsigned short)raw_fontnum) << FONT_SHIFT;
-
-	  cc  continue;		cc back to top of while loop cc
-	  cc }
-	  */
 
 	  /* couldn't match; unknown escape seq., so pass through unchanged */
 	  dest[j++] = fontword | (unsigned short)'\\';

@@ -1210,13 +1210,13 @@ SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol) {
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LTransform transform;
-    SEXP currentvp, currentgp;
+    SEXP currentvp;
     /* 
      * Get the current device 
      */
     pGEDevDesc dd = getDevice();
     currentvp = gridStateElement(dd, GSS_VP);
-    currentgp = gridStateElement(dd, GSS_GPAR);
+    //currentgp = gridStateElement(dd, GSS_GPAR);
     /* 
      * We do not need the current transformation, but
      * we need the side effects of calculating it in
@@ -2146,16 +2146,12 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
 static int getArrowN(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 		     SEXP y1, SEXP y2, SEXP ynm1, SEXP yn)
 {      
-    int nx1, nx2, nxnm1, nxn, ny1, ny2, nynm1, nyn, maxn;
+    int nx2, nxnm1, nxn, ny1, ny2, nynm1, nyn, maxn;
     maxn = 0;
     /* 
      * x1, y1, xnm1, and ynm1 could be NULL if this is adding
      * arrows to a line.to
      */
-    if (isNull(x1))
-	nx1 = 0;
-    else
-	nx1 = unitLength(x1); 
     if (isNull(y1))
 	ny1 = 0;
     else

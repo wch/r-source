@@ -42,7 +42,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   existing \env{TEXINPUTS} setting (or the current directory if unset),
   then elements of \code{texinputs}, then
   \file{\var{R_HOME}/share/texmf} and finally the default
-  path. Analogous changes are made to \env{BIBINPUTS} and
+  path.  Analogous changes are made to \env{BIBINPUTS} and
   \env{BSTINPUTS} settings.
   
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
@@ -53,6 +53,15 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   to fail (particularly when using the \samp{hyperref} LaTeX package)
   even on valid input.  The argument \code{index = FALSE} is provided to
   allow package manuals to be made when this happens: it uses emulation.
+}
+\note{
+  There are various versions of the \command{texi2dvi} script on
+  Unix-alikes, and quite a number of bugs have been seen, some of which
+  this \R wrapper works around.
+
+  One that is current is that it may not work correctly for paths which
+  contain spaces, nor even if the absolute path to a file would contain
+  spaces.
 }
 \value{
   Invisible \code{NULL}.  Used for the side effect of creating a dvi or

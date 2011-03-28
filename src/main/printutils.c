@@ -499,8 +499,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	mbstate_t mb_st;
 	wchar_t wc;
 	unsigned int k; /* not wint_t as it might be signed */
+#ifndef __STDC_ISO_10646__
 	Rboolean Unicode_warning = FALSE;
-
+#endif
 	if(ienc != CE_UTF8)  mbs_init(&mb_st);
 #ifdef Win32
 	else if(WinUTF8out) { memcpy(q, UTF8in, 3); q += 3; }
@@ -552,7 +553,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			for(j = 0; j < res; j++) *q++ = *p++;
 		    } else {
 #ifndef Win32
+# ifndef __STDC_ISO_10646__
 			Unicode_warning = TRUE;
+# endif
 			if(k > 0xffff)
 			    snprintf(buf, 11, "\\U%08x", k);
 			else
