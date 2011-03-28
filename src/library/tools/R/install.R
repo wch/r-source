@@ -353,7 +353,7 @@
     ## to be run from package source directory
     run_clean <- function()
     {
-        if (dir.exists("src")) {
+        if (dir.exists("src") && length(dir("src"))) {
             if (WINDOWS) archs <- c("i386", "x64")
             else {
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))
@@ -576,7 +576,7 @@
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
         }
 
-        if (install_libs && dir.exists("src")) {
+        if (install_libs && dir.exists("src") && length(dir("src"))) {
             starsmsg(stars, "libs")
             if (!file.exists(file.path(R.home("include"), "R.h")))
                 ## maybe even an error?  But installing Fortran-based packages should work
@@ -742,7 +742,7 @@
             }
         }                               # end of src dir
 
-	if (install_R && dir.exists("R")) {
+	if (install_R && dir.exists("R") && length(dir("R"))) {
 	    starsmsg(stars, "R")
 	    dir.create(file.path(instdir, "R"), recursive = TRUE,
 		       showWarnings = FALSE)
@@ -797,7 +797,7 @@
 	    }
 	}                           # end of R
 
-	if (install_data && dir.exists("data")) {
+	if (install_data && dir.exists("data") && length(dir("data"))) {
 	    starsmsg(stars, "data")
 	    files <- Sys.glob(file.path("data", "*"))
 	    if (length(files)) {
@@ -843,7 +843,7 @@
 	    } else warning("empty 'data' directory", call. = FALSE)
         }
 
-	if (install_demo && dir.exists("demo")) {
+	if (install_demo && dir.exists("demo") && length(dir("demo"))) {
 	    starsmsg(stars, "demo")
 	    dir.create(file.path(instdir, "demo"), recursive = TRUE,
 		       showWarnings = FALSE)
@@ -854,7 +854,7 @@
 	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
 	}
 
-	if (install_exec && dir.exists("exec")) {
+	if (install_exec && dir.exists("exec") && length(dir("exec"))) {
 	    starsmsg(stars, "exec")
 	    dir.create(file.path(instdir, "exec"), recursive = TRUE,
 		       showWarnings = FALSE)
@@ -868,7 +868,7 @@
 	}
 
 	if (install_inst && dir.exists("inst") &&
-            length(dir("inst", all.files = TRUE))) {
+            length(dir("inst", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "inst")
             i_dirs <- list.dirs("inst")[-1L] # not inst itself
             i_dirs <- grep(.vc_dir_names_re, i_dirs,
@@ -914,7 +914,7 @@
             }
 	}
 
-	if (install_tests && dir.exists("tests")) {
+	if (install_tests && dir.exists("tests") && length(dir("tests"))) {
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
@@ -926,7 +926,7 @@
 
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = lazy)
-	if (install_R && dir.exists("R") && value) {
+	if (install_R && dir.exists("R") && length(dir("R")) && value) {
 	    starsmsg(stars, "preparing package for lazy loading")
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())

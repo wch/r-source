@@ -146,13 +146,13 @@ Other types of extensions are supported (but rare): @xref{Package types}.
 The sources of a @R{} package consists of a subdirectory containing a
 file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
-@file{src}, and @file{tests} (some of which can be missing).  The
-package subdirectory may also contain files @file{INDEX},
-@file{NAMESPACE}, @file{configure}, @file{cleanup}, @file{LICENSE},
-@file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other files such as
-@file{INSTALL} (for non-standard installation instructions),
-@file{README} or @file{ChangeLog} will be ignored by @R{}, but may be
-useful to end-users.
+@file{src}, and @file{tests} (some of which can be missing, but which
+should not be empty).  The package subdirectory may also contain files
+@file{INDEX}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
+@file{LICENSE}, @file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other
+files such as @file{INSTALL} (for non-standard installation
+instructions), @file{README} or @file{ChangeLog} will be ignored by
+@R{}, but may be useful to end-users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
