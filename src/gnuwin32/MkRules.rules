@@ -28,7 +28,7 @@ IMPDIR=$(BINDIR)
 endif
 
 AR=$(BINPREF)ar
-AS=$(BINPREF)as $(AS_ARCH)
+AS=$(BINPREF)as
 # AWK=gawk
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
@@ -36,8 +36,7 @@ CP=cp
 # as set by make
 CPP=$(CC) -E
 DLL=$(CC)
-## Seems the way to select archs is -m i386:x86-64 vs -m i386
-DLLTOOL=$(BINPREF)dlltool
+DLLTOOL=$(BINPREF)dlltool $(DT_ARCH)
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
 DLLTOOLFLAGS=--as $(AS) -k

@@ -43,9 +43,10 @@ BINPREF64 = x86_64-w64-mingw32-
 M_ARCH =
 # and for as (--32 or --64)
 AS_ARCH =
-# and for windres (-F pe-1386 or pe-x86-64)
+# and for windres (-F pe-i386 or pe-x86-64)
 RC_ARCH =
-# and this incomplete until we have a fix for dlltool
+# and for dlltool (-m i386 vs i386:x86-64)
+DT_ARCH =
 
 # 32- or 64-bit Windows?
 WIN = 32
