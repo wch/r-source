@@ -893,7 +893,7 @@ RweaveTryStop <- function(err, options)
         cat("\n")
         msg <- paste(" chunk", options$chunknr)
         if (!is.null(options$label))
-            msg <- paste(msg, " (label = ", options$label, ")", sep = "")
+            msg <- paste(msg, " (label=", options$label, ")", sep = "")
         msg <- paste(msg, "\n")
         stop(msg, err, call. = FALSE)
     }
