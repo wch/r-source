@@ -1626,6 +1626,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          paste(c(paste("  ", basename(bad_vignettes)), "", ""),
                                collapse = "\n"))
             }
+            encs <- vapply(vf, getVignetteEncoding, "")
+            bad_vignettes <- vf[encs == "non-ASCII"]
+            if(length(bad_vignettes)) {
+                if(!any) warnLog()
+                any <- TRUE
+                printLog(Log,
+                         "  Non-ASCII package vignette(s) without specified encoding:\n")
+                printLog(Log,
+                         paste(c(paste("  ", basename(bad_vignettes)), "", ""),
+                               collapse = "\n"))
+            }
         }
 
         ## Do any of the .R files which will be generated
