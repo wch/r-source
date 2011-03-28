@@ -103,6 +103,15 @@
       alternative.  
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{plot.lm(which = 5)} was intended to order factor
+      levels in increasing order of mean standardized residual.   It
+      ordered the factor labels correctly, but could plot the wrong
+      group of residuals against the label.  (\PR{14545})
+    }
+  }
 }
 
 \section{CHANGES IN R VERSION 2.13.0}{

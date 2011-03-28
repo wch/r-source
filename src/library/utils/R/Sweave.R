@@ -48,18 +48,21 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
+    text <- SweaveReadFile(file, syntax, encoding = encoding)
+    syntax <- attr(text, "syntax")
+    file <- attr(text, "file")
+    encoding <- attr(text, "encoding")
+
     ## drobj$options is the current set of options for this file.
-    drobj <- driver$setup(file = file, syntax = syntax, ...)
+    drobj <- driver$setup(file = file, syntax = syntax, encoding = encoding,
+                          ...)
     on.exit(driver$finish(drobj, error = TRUE))
 
     if (!is.na(envopts<- Sys.getenv("SWEAVE_OPTIONS", NA)))
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
-    ## FIXME: perhaps we need to edit/insert a \usepackage[]{inputenc} line
-    text <- SweaveReadFile(file, syntax, encoding = encoding)
-    syntax <- attr(text, "syntax")
-    file <- attr(text, "file")
+
     drobj$srcfile <- srcfile(file)
 
     if (identical(attr(text, "hasSweaveInput"), TRUE)) {
@@ -176,23 +179,22 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     }
 
     ## An incomplete last line is not a real problem.
-    con <- file(f[1L], encoding = encoding)
-    text <- readLines(con, warn = FALSE)
-    close(con)
+    text <- readLines(file[1L], warn = FALSE)
 
-    ## <FIXME>
-    ## This needs to be more refined eventually ...
-    if (!nzchar(encoding) && any(is.na(nchar(text, "c", TRUE)))) {
-        warning(sQuote(basename(file)),
-                " is not valid in the current locale: assuming Latin-1",
-                domain = NA, call. = FALSE)
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin-1:
-        ## this will probably work but may be incorrect
-        text <- iconv(text, "latin1", "")
-    }
-    ## </FIXME>
+    ## now sort out an encoding, if needed.
+    if(any(is.na(nchar(text, "c", TRUE)))) {
+        enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
+        if(enc == "non-ASCII") {
+            enc <- if(!nzchar(encoding)) encoding
+            else {
+                warning(sQuote(basename(file)),
+                        " is not valid in the current locale: assuming Latin-1",
+                        domain = NA, call. = FALSE)
+                "latin1"
+            }
+        }
+        text <- iconv(text, enc, "")
+    } else enc <- "ASCII"
 
     pos <- grep(syntax$syntaxname, text)
 
@@ -231,6 +233,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
     attr(text, "syntax") <- syntax
     attr(text, "file") <- f[1L]
+    attr(text, "encoding") <- enc
     text
 }
 

@@ -25,7 +25,7 @@ RweaveLatex <- function()
 
 RweaveLatexSetup <-
     function(file, syntax, output = NULL, quiet = FALSE, debug = FALSE,
-             stylepath, ...)
+             stylepath, encoding = "", ...)
 {
     dots <- list(...)
     if (is.null(output)) {
@@ -35,7 +35,8 @@ RweaveLatexSetup <-
 
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
-    output <- file(output, open = "w+")
+    ## Why w+?
+    output <- file(output, open = "w+", encoding = encoding)
 
     if (missing(stylepath)) {
         p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -593,7 +594,7 @@ Rtangle <-  function()
 
 RtangleSetup <- function(file, syntax,
                          output = NULL, annotate = TRUE, split = FALSE,
-                         prefix = TRUE, quiet = FALSE)
+                         prefix = TRUE, quiet = FALSE, ...)
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
