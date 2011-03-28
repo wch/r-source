@@ -4104,7 +4104,7 @@ function(package, dir, lib.loc = NULL)
             if((Call %in% c("library", "require")) &&
                (length(e) >= 2L)) {
                 ## We need to rempve '...': OTOH the argument could be NULL
-                keep <- sapply(e, function(x) deparse(x) != "...")
+                keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
                 if(!is.null(pkg <- mc$package)) {
                     ## <NOTE>
@@ -4255,7 +4255,7 @@ function(db, files)
             if(Call %in% c("library", "require")) {
                 if(length(e) >= 2L) {
                     ## We need to rempve '...': OTOH the argument could be NULL
-                    keep <- sapply(e, function(x) deparse(x) != "...")
+                    keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                     mc <- match.call(get(Call, baseenv()), e[keep])
                     if(!is.null(pkg <- mc$package)) {
                         pkg <- sub('^"(.*)"$', '\\1', pkg)
