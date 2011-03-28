@@ -34,4 +34,12 @@ $(top_builddir)/library/$(pkg)/iconvlist:
 	-@iconv -l > $@ 2> /dev/null || touch $@
 
 
+instfiles:
+	@if test -d $(srcdir)/inst/doc; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc; \
+	  for f in $(srcdir)/inst/doc/*; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/doc; \
+	  done; \
+	fi
+
 include $(top_srcdir)/share/make/basepkg.mk
