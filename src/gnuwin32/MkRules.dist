@@ -65,8 +65,8 @@ SYMPAT64 = 's/^.* [BCDRT] / /p'
 ICU_PATH=/sources/icu
 
 # optional overrides for making bitmapdll: names of source directories
-# JPEGDIR = jpeg-8a
-# PNGDIR = libpng-1.2.35
+# JPEGDIR = jpeg-8c
+# PNGDIR = libpng
 # TIFFDIR = libtiff
 
 # set this to YES to build static HTML help
