@@ -100,7 +100,7 @@ file.copy <- function(from, to,
                       overwrite = recursive, recursive = FALSE,
                       copy.mode = TRUE)
 {
-    if (!(nf <- length(from))) stop("no files to copy from")
+    if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
     if (nt == 1 && file.exists(to) && file.info(to)$isdir) {
