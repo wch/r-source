@@ -641,7 +641,9 @@
                             starsmsg("***", "arch - ", arch)
                             ss <- paste("src", arch, sep = "-")
                             dir.create(ss, showWarnings = FALSE)
-                            file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
+                            files <- Sys.glob("src/*")
+                            if (!length(files)) next
+                            file.copy(files, ss, recursive = TRUE)
                             setwd(ss)
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra)
@@ -868,7 +870,7 @@
 	}
 
 	if (install_inst && dir.exists("inst") &&
-            length(dir("inst", all.files = TRUE))) {
+            length(dir("inst", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "inst")
             i_dirs <- list.dirs("inst")[-1L] # not inst itself
             i_dirs <- grep(.vc_dir_names_re, i_dirs,
@@ -962,7 +964,7 @@
 	    }
 	}
 
-	## pkg indices
+	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {
 	    starsmsg(stars, "building package indices ...")
 	    res <- try(.install_package_indices(".", instdir))
@@ -1577,7 +1579,8 @@
     ## TCLBIN is needed for tkrplot and tcltk2
     if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64 TCLBIN=64")
 
-    cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
+    cmd <- paste(MAKE, p1(paste("-f", shQuote(makefiles))), p1(makeargs),
+                 p1(makeobjs))
     if (dry_run) {
         cat("make cmd is\n  ", cmd, "\n\nmake would use\n", sep = "")
         system(paste(cmd, "-n"))
