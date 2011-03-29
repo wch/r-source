@@ -1695,11 +1695,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             problems <- list()
             res <- character()
             cat("\n")
+            def_enc <- desc["Encoding"]
+            if( (is.na(def_enc))) def_enc <- ""
             for(v in vigns$docs) {
-                cat("  ", sQuote(basename(v)), "...")
+                enc <- getVignetteEncoding(v, TRUE)
+                if(enc %in% c("", "non-ASCII", "unknown")) enc <- def_enc
+                cat("  ", sQuote(basename(v)),
+                    if(nzchar(enc)) paste("using", sQuote(enc)),
+                    "...")
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
                               basename(v), "', '", vignette_dir, "'",
-                              if (!is.na(enc <- desc["Encoding"]))
+                              if (nzchar(enc))
                               paste(", encoding = '", enc, "'", sep = ""),
                               ")", sep = "")
                 out <- R_runR(Rcmd,
