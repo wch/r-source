@@ -755,7 +755,7 @@
       \code{text()}.
 
       \item \code{edit.default()} contained a manual dispatch for matrices
-      (the \code{"matrix"} class didn't really exist when it was written). 
+      (the \code{"matrix"} class didn't really exist when it was written).
       This caused an infinite recursion in the no-GUI case and has now
       been removed.
 
@@ -790,7 +790,10 @@
       filenames with spaces in them even when the readline library is
       used.  This resolves \PR{14452} provided the internal filename
       completion is used (e.g., by setting \code{rc.settings(files =
-      TRUE)}).
+	TRUE)}).
+
+      \item Inside \code{uniroot(f, ...)}, \code{-Inf} function values
+      are now replaced by a maximally \bold{negative} value.
     }
   }
 }

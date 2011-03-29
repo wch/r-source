@@ -537,7 +537,7 @@ AC_SUBST([R_XTRA_CPPFLAGS2])
 
 AC_PATH_PROG(GETWD, pwd, pwd)
 AC_MSG_CHECKING([whether builddir is srcdir])
-if test "`cd ${srcdir} && ${GETWD}`" = "`${GETWD}`"; then
+if test "`cd \"${srcdir}\" && ${GETWD}`" = "`${GETWD}`"; then
   BUILDDIR_IS_SRCDIR=yes
 else
   BUILDDIR_IS_SRCDIR=no
@@ -1132,22 +1132,22 @@ AC_PATH_PROG(XMKMF, xmkmf, [], [${r_xtra_path}])
 if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null 2>&1 || echo > Makefile
-  cc=`${srcdir}/tools/GETMAKEVAL CC`
+  cc=`"${srcdir}/tools/GETMAKEVAL" CC`
   cc=`echo ${cc} | sed "s/ .*//"`
   ## Paul Gilbert reported on R-devel 2006-04-13 a system with cc=""
   if test -n "${cc}" ; then
     r_cc_cmd=`echo ${CC} | sed "s/ .*//"`
     if test "`which ${cc}`" = "`which ${r_cc_cmd}`"; then
-      shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
-      cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
+      shlib_ldflags=`"${srcdir}/tools/GETMAKEVAL" SHLIBLDFLAGS`
+      cpicflags=`"${srcdir}/tools/GETMAKEVAL" PICFLAGS`
     fi
   fi
-  cxx=`${srcdir}/tools/GETMAKEVAL CXX`
+  cxx=`"${srcdir}/tools/GETMAKEVAL" CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
   if test -n "${cxx}" ; then
     r_cxx_cmd=`echo ${CXX} | sed "s/ .*//"`
     if test "`which ${cxx}`" = "`which ${r_cxx_cmd}`"; then
-      cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
+      cxxpicflags=`"${srcdir}/tools/GETMAKEVAL" CXXPICFLAGS`
     fi
   fi
   rm -f Imakefile Makefile
