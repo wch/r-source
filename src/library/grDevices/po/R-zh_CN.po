@@ -36,7 +36,7 @@ msgid "at least 3 columns needed"
 msgstr "至少需要三列"
 
 msgid "The 'gamma' argument is deprecated and has no effect"
-msgstr ""
+msgstr "'gamma'参数不再有用"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb矩阵必需是数字"
@@ -152,7 +152,6 @@ msgstr "'%s'里的选择项出错"
 msgid "NOT changing"
 msgstr "不更换"
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr "'append'不后向相容，因此略过不用"
 
@@ -232,15 +231,13 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "栅格阵列必需有三个或四个平面"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop'在'[.raster'里永远是为FALSE的隐含值"
 
-#, fuzzy
 msgid "invalid raster subsetting"
-msgstr "第一个参数不对"
+msgstr "光栅子集不对"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "第一个参数不对"
+msgstr "光栅子分配不对"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "这种操作对光栅对象没有意义"
@@ -384,3 +381,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+

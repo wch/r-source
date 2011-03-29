@@ -1,0 +1,115 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-03-15 19:43\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "expected a single logical value for the S4 state flag"
+msgstr "S4状态标志需要一个单独的逻辑值"
+
+msgid "not a proper evaluation environment"
+msgstr "评估环境不对"
+
+msgid "'ns' must be a namespace or a namespace imports environment"
+msgstr "'ns'必需是名字空间或是名字空间进口的环境"
+
+msgid "bad assignment: %s"
+msgstr "分配不对：%s"
+
+msgid "cannot constant fold literal promises"
+msgstr "无法常量折叠字面承诺"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "无法常量折叠字节码目标对象"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "无偏移记录标签\"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "在代码里不能编译字节码文字"
+
+msgid "cannot compile promise literals in code"
+msgstr "在代码里不能编译承诺文字"
+
+msgid "possible error in '%s': %s"
+msgstr "可能在'%s'里出了错: %s "
+
+msgid "bad namespace import frame"
+msgstr "名字空间引进框架时出了问题"
+
+msgid "bad assignment 1"
+msgstr "分配不对1"
+
+msgid "bad assignment 2"
+msgstr "分配不对2"
+
+msgid "invalid function in complex assignment"
+msgstr "算数分配里的函数不对"
+
+msgid "missing arguments are not allowed"
+msgstr "不能有缺少参数"
+
+msgid "empty alternative in numeric switch"
+msgstr "数字交换里不能有空的替代"
+
+msgid "no visible global function definition for '%s'"
+msgstr "'%s'没有看得见的全局函数定义"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "全局变量'%s'没有看得见的捆绑"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "用'<<-'分配到'%s'没有看得见的捆绑"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "'%s'的参数数目不对"
+
+msgid "more than one default provided in switch call"
+msgstr "不能有多个默认调用提供的开关"
+
+msgid "cannot compile a non-function"
+msgstr "不能编译非函数"
+
+msgid "compiling '%s'"
+msgstr "编译'%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "保存到文件\"%s\" ..."
+
+msgid "done"
+msgstr "做好了"
+
+msgid "'env' must be a top level environment"
+msgstr "'env'必需是最上层的环境"
+
+msgid "input and output file names are the same"
+msgstr "输入和输出的文件名字不能是一样的"
+
+msgid "empty input file; no output written"
+msgstr "输入的文件是空的；因此没有写任何输出"
+
+msgid "file '%s' does not exist"
+msgstr "不存在'%s'这个文件"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s'不是有效的编译器选项"
+
+msgid "function is not compiled"
+msgstr "没有编译函数"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "当地分配到句法函数："

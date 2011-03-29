@@ -174,9 +174,8 @@ msgstr "参考项参考种类为'"
 msgid "' has to correctly specify the field(s):"
 msgstr "'必需正确地设定这些项："
 
-#, fuzzy
 msgid "'style' should be one of %s"
-msgstr "'bibtype'必需是这些中的一个"
+msgstr "'style'必需是这些%s中的一个"
 
 msgid "' has to specify the field(s):"
 msgstr "'必需设定这些项："
@@ -496,9 +495,8 @@ msgstr "找不到"
 msgid "cannot update HTML package index"
 msgstr "无法更新HTML程序包索引"
 
-#, fuzzy
 msgid "Making packages.html  ..."
-msgstr "制造packages.html"
+msgstr "制造packages.html..."
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()不能在非互交形式下使用"
@@ -611,9 +609,8 @@ msgstr "'instPkgs'矩阵有错"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
 
-#, fuzzy
 msgid "metadata of '%s' is corrupt"
-msgstr "程序包'%s'里元数据出了错"
+msgstr "'%s'里元数据损坏"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
@@ -939,9 +936,8 @@ msgstr "没有记录下任何事件"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr "无法建立临时目录'%s'"
+msgstr "无法建立目录%s"
 
 msgid "invalid octal digit"
 msgstr "八进制数字格式不对"
@@ -955,9 +951,8 @@ msgstr "不完全文件锁"
 msgid "checksum error for entry '%s'"
 msgstr "项目'%s'检查和错误"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr "无法建立'%s'"
+msgstr "无法把%s拷贝到%s"
 
 msgid "unsupported entry type"
 msgstr "不支持这一项目种类"
@@ -1021,27 +1016,24 @@ msgstr "不能修改'%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'list'必需是为R对象取名的字符向量"
+msgstr "'files'必需是字符向量，设定一个或多个文件路径"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
-msgstr ""
+msgstr "找不到可用来打开'mailto:'URI的程序：因此回到'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "用浏览器来打开mailto: URI"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "必需设定'address'"
 
-#, fuzzy
 msgid "'subject' is missing"
 msgstr "缺少'subject'值"
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr "'port'必需是长度为一的整数"
+msgstr "'ccaddress'长度必需为一"
 
 msgid "no download method found"
 msgstr "没有下载方法"
@@ -1068,19 +1060,20 @@ msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "程序包'%s'打开成功，MD5和检查也通过"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "错误：无法锁定文件目录"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"在修改时\n"
+"试图移动"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "无法建立临时目录'%s'"
+msgstr "错误：无法建立锁定目录"
 
 msgid "restored '%s'"
-msgstr ""
+msgstr "恢复到'%s'"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "无法将临时安装'%s'搬到'%s'"
@@ -1095,7 +1088,7 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "'mailx'只适用于Unix"
 
 msgid "zipfile '%s' not found"
 msgstr "找不到'%s'这一zip文件"
@@ -1126,10 +1119,9 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个对象"
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
-msgstr[0] "没有'%s'这个程序包"
+msgstr[0] "没有%s这个程序包(用于%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

@@ -58,10 +58,10 @@ msgid "Cannot specify array() arguments when specifying .Data"
 msgstr "在指定.Data时不能同时指定array()参数"
 
 msgid "Can't have more than one unnamed argument as environment"
-msgstr ""
+msgstr "用作环境时不能同时有多于一个的不带名字的参数"
 
 msgid "Unnamed argument to new() must be an environment for the new object"
-msgstr ""
+msgstr "new()的不带名字的参数必需是适用于新目标对象的环境"
 
 msgid ""
 "methods may not be defined for primitive function \"%s\" in this version of R"
@@ -309,9 +309,8 @@ msgid ""
 "class \"%s\")"
 msgstr "第一个参数应当为泛型函数的名称(现在却是类别为\"%s\"的对象)"
 
-#, fuzzy
 msgid "\"%s\" is not an S4 generic function in \"%s\"; methods not removed"
-msgstr "'%s'不是在'%s'里的泛型函数；因此方法没有被删除掉"
+msgstr "\"%s\"不是在\"%s\"里的S4泛型函数；因此方法没有被删除掉"
 
 msgid "cannot remove methods for  \"%s\" in locked environment/package \"%s\""
 msgstr "无法将锁住环境/程輯包'%2$s'里的'%1$s'方法删除"
@@ -319,11 +318,10 @@ msgstr "无法将锁住环境/程輯包'%2$s'里的'%1$s'方法删除"
 msgid "restoring default function definition of \"%s\""
 msgstr "重存'%s'的默認函数定义"
 
-#, fuzzy
 msgid ""
 "error in updating S4 generic function \"%s\"; the function definition is not "
 "an S4 generic function (class \"%s\")"
-msgstr "更新泛型函数'%s'时出了错；函数定义不是泛型函数(类别为\"%s\")"
+msgstr "更新S4泛型函数'%s'时出了错；函数定义不是S4泛型函数(类别为\"%s\")"
 
 msgid "function \"%s\" is already a group generic; no change"
 msgstr "函数\"%s\"已经是群體泛型函数了；没有变动"
@@ -408,9 +406,8 @@ msgstr "用'where'时，FALSE只对于'inherited'有意义，(得到了"
 msgid "argument \"f\" must be a generic function or %s"
 msgstr "参数\"f\"必需是泛型函数，或为%s"
 
-#, fuzzy
 msgid "'%s' is not a known generic function {and 'package' not specified}"
-msgstr "'%s'不是'%s'里的泛型函数，{也没有设定'package'}"
+msgstr "没有'%s'这样一个泛型函数，{也没有设定'package'}"
 
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
@@ -1015,11 +1012,10 @@ msgstr ""
 msgid "no definition of \"%s\" to use for %s"
 msgstr "\"%s\"没有定义，不能为%s起作用"
 
-#, fuzzy
 msgid ""
 "multiple definitions of class \"%s\" visible (%s); using the definition\n"
 "   in package \"%s\" for %s"
-msgstr "\"%s\"有多个定义；现在用程序包\"%s\"中%s的定义"
+msgstr "\"%s\"类别有多个定义(%s)；用程序包\"%s\"中%s的定义"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr "类别定义最多只能扩展这些数据种类中的一个: %s"
@@ -1418,9 +1414,8 @@ msgid ""
 "method"
 msgstr "不能直接调用callSuper()：只能用其它的方法来调用它"
 
-#, fuzzy
 msgid "\"%s\" is not a field in this class"
-msgstr "\"%s\"不是在\"%s\"类别里的场"
+msgstr "\"%s\"不是在这个类别内的场"
 
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "methods()里的参数必需带名字，或者是带名字的串列"
@@ -1432,13 +1427,12 @@ msgstr ""
 "\"%s\"主题在\"%s\"类别里不是方法名字\n"
 "类别定义在下面"
 
-#, fuzzy
 msgid "Arguments must all be character string names of fields"
-msgstr "'file'必需是字符串或联结"
+msgstr "所有的参数都必需是场名字的字符串"
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
-msgstr ""
+msgstr "类别为\"%2$s\"的场\"%1$s\"有一个非默认的绑定，无法被锁定"
 
 msgid ""
 "The overriding class(\"%s\") of field \"%s\" is not a subclass of the "
@@ -1446,16 +1440,15 @@ msgid ""
 msgstr "首要类(\"%s\")的域不是存在域定义的子类别(\"%s\")"
 
 msgid "Field \""
-msgstr ""
+msgstr "场\""
 
 msgid "\" is read-only"
-msgstr ""
+msgstr "\"为只读"
 
-#, fuzzy
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
 "of class \"%s\""
-msgstr "第一个参数应当为泛型函数的名称(现在却是类别为\"%s\"的对象)"
+msgstr "contains=参数应当为超类别的名字(现在却是类别为\"%s\"的单元)"
 
 msgid "No definition found for inherited class: %s"
 msgstr "继承类别的定义不存在: %s"
@@ -1463,35 +1456,35 @@ msgstr "继承类别的定义不存在: %s"
 msgid ""
 "Single class name needed for field \"%s\", got a character vector of length "
 "%d"
-msgstr ""
+msgstr "场\"%s\"需要的是单个类别名字，现在得到的却是长度为%d的字符矢量"
 
 msgid "Class \"%s\" for field \"%s\" is not defined"
-msgstr ""
+msgstr "场\"%2$s\"的\"%1$s\"类别没有定义"
 
 msgid ""
 "Field \"%s\" was supplied as an object of class \"%s\"; must be a class name "
 "or a binding function"
-msgstr ""
+msgstr "所提供的场\"%s\"是类别为\"%s\"的目标对象；但需要的是类别名字或结合函数"
 
 msgid ""
 "Code for methods in class \"%s\" was not checked for suspicious field "
 "assignments (recommended package \"codetools\" not available?)"
 msgstr ""
+"没有在类别\"%s\"里的方法源码内检查可能有问题的场分配(可能是因为\"codetools"
+"\"程序包没有装？)"
 
 msgid "A list argument for fields must have nonempty names for all the fields"
-msgstr ""
+msgstr "场的参数列必需包含所有场的名字"
 
-#, fuzzy
 msgid ""
 "Argument fields must be a list of the field classes or definitions, or else "
 "just the names of the fields; got an object of class \"%s\""
 msgstr ""
-"参数'classDef'要么是个字串要么是个类别表现；现在得到的却是类别为\"%s\"的目标"
-"对象"
+"参数场要么是含场类别或定义的列，要么是场的名字；现在得到的却是类别为\"%s\"的"
+"目标对象"
 
-#, fuzzy
 msgid "Class \"%s\" is defined but is not a reference class"
-msgstr "\"%s\"不是引用类别"
+msgstr "\"%s\"类别虽然有定义但它不是引用类别"
 
 msgid "Not a reference class:"
 msgstr "非引用类别"
@@ -1507,18 +1500,27 @@ msgid ""
 "    %s\n"
 " Did you mean to use \"<<-\"? ( in method %s for class %s)"
 msgstr ""
+"场名本地分配不会更改场:\n"
+"    %s\n"
+" 你的意思是不是要用\"<<-\"? ( 方法%s类别%s)"
 
 msgid ""
 "Non-local assignment to non-field names (possibly misspelled?)\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
+"非本地分配到非场的名字(是不是有可能拼错了？)\n"
+"    %s\n"
+" ( 方法%s类别%s)"
 
 msgid ""
 "Non-local assignment to method names is not allowed\n"
 "    %s\n"
 "( in method %s for class %s)"
 msgstr ""
+"非本地分配到方法名是不允许的\n"
+"    %s\n"
+" ( 方法%s类别%s)"
 
 msgid ""
 "invalid ignore= argument; should be a class definition or a character "
