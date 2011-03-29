@@ -69,6 +69,10 @@ is.nan(x)
 
   The basic rule should be that calls and relations with \code{Inf}s
   really are statements with a proper mathematical \emph{limit}.
+
+  Computations involving \code{NaN} will return \code{NaN} or perhaps
+  \code{\link{NA}}: which of those two is not guaranteed and may depend
+  on the \R platform (since compilers may re-order computations).
 }
 \value{
   A logical vector of the same length as \code{x}: \code{dim},

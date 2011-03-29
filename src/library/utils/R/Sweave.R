@@ -19,7 +19,7 @@
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
 ### c) If there is only one graphics option (as is usual), we don't need to
-### run the code in the figure chunks twice. (Fixed for 2.14.0)
+### run the code in the figure chunks twice.
 ### d) Need to sort out encodings
 
 ### Correspondence between input and output is maintained in two
@@ -35,7 +35,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     if (is.character(driver)) driver <- get(driver, mode = "function")()
     else if (is.function(driver)) driver <- driver()
 
-    if (is.null(syntax)) syntax <- SweaveGetSyntax(file)
+    if (is.null(syntax)) syntax <- SweaveGetSyntax(file) # from the extension
     if (is.character(syntax)) syntax <- get(syntax, mode = "list")
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
@@ -49,8 +49,8 @@ Sweave <- function(file, driver = RweaveLatex(),
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
     text <- SweaveReadFile(file, syntax)
-    syntax <- attr(text, "syntax")
-    file <- attr(text, "file")
+    syntax <- attr(text, "syntax") # this is from the file commands.
+    file <- attr(text, "file")  # why?
     drobj$srcfile <- srcfile(file)
 
     if (identical(attr(text, "hasSweaveInput"), TRUE)) {
@@ -320,8 +320,9 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     options <- defaults
     for (k in seq_along(x)) options[[ x[[k]][1L] ]] <- x[[k]][2L]
     if (!is.null(options[["label"]]) && !is.null(options[["engine"]]))
-        options[["label"]] <- sub(paste("\\.", options[["engine"]], "$", sep=""),
-                                  "", options[["label"]])
+        options[["label"]] <-
+            sub(paste("\\.", options[["engine"]], "$", sep=""),
+                "", options[["label"]])
     if (!is.null(check)) options <- check(options)
     options
 }
@@ -1014,6 +1015,8 @@ RtangleFinish <- function(object, error = FALSE)
 ## For R CMD xxxx
 .Sweave <- function(arg)
 {
+    options(warn = 1)
+
     Usage <- function() {
         cat("Usage: R CMD Sweave file",
             "",
@@ -1048,6 +1051,8 @@ RtangleFinish <- function(object, error = FALSE)
 
 .Stangle <- function(arg)
 {
+    options(warn = 1)
+
     Usage <- function() {
         cat("Usage: R CMD Stangle file",
             "",

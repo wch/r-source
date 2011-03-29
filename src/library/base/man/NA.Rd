@@ -53,6 +53,10 @@ is.na(x) <- value
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
+  
+  Computations using \code{NA} will normally result in \code{NA}: a
+  possible exception is where \code{\link{NaN}} is also involved, in
+  which case either might result.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
