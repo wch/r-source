@@ -1,6 +1,6 @@
 % File src/library/base/man/rowsum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rowsum}
@@ -9,9 +9,9 @@
 \alias{rowsum.data.frame}
 \title{Give Column Sums of a Matrix or Data Frame, Based on a Grouping Variable}
 \description{
-  Compute column sums across rows of a matrix-like object for each level of a
-  grouping variable.  \code{rowsum} is generic, with a method for data
-  frames and a default method for vectors and matrices.
+  Compute column sums across rows of a numeric matrix-like object for
+  each level of a grouping variable.  \code{rowsum} is generic, with a
+  method for data frames and a default method for vectors and matrices.
 }
 \usage{
 rowsum(x, group, reorder = TRUE, \dots)
@@ -30,7 +30,7 @@ rowsum(x, group, reorder = TRUE, \dots)
     \code{sort(unique(group))}, if \code{FALSE}, it will be in the order
     that groups were encountered.}
   \item{na.rm}{logical (\code{TRUE} or \code{FALSE}).  Should \code{NA}
-    values be discarded?}
+    (including \code{NaN}) values be discarded?}
   \item{\dots}{other arguments to be passed to or from methods}
 }
 \value{
@@ -49,6 +49,9 @@ rowsum(x, group, reorder = TRUE, \dots)
 
   To sum over all the rows of a matrix (ie, a single \code{group}) use
   \code{\link{colSums}}, which should be even faster.
+
+  For integer arguments, over/underflow in forming the sum results in
+  \code{NA}.
 }
 \seealso{
   \code{\link{tapply}}, \code{\link{aggregate}}, \code{\link{rowSums}}

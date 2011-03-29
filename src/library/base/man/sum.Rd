@@ -1,6 +1,6 @@
 % File src/library/base/man/sum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sum}
@@ -15,7 +15,8 @@ sum(\dots, na.rm = FALSE)
 }
 \arguments{
   \item{\dots}{numeric or complex or logical vectors.}
-  \item{na.rm}{logical.  Should missing values be removed?}
+  \item{na.rm}{logical.  Should missing values (including \code{NaN}) be
+    removed?}
 }
 \value{
   The sum. If all of \code{\dots} are of type integer or logical, then
@@ -31,10 +32,9 @@ sum(\dots, na.rm = FALSE)
   For this to work properly, the arguments \code{\dots} should be
   unnamed, and dispatch is on the first argument.
 
-  If \code{na.rm} is \code{FALSE} an \code{NA}
-  value in any of the arguments will cause
-  a value of \code{NA} to be returned, otherwise
-  \code{NA} values are ignored.
+  If \code{na.rm} is \code{FALSE} an \code{NA} or \code{NaN} value in
+  any of the arguments will cause a value of \code{NA} or \code{NaN} to
+  be returned, otherwise \code{NA} and \code{NaN} values are ignored.
 
   Logical true values are regarded as one, false values as zero.
   For historical reasons, \code{NULL} is accepted and treated as if it

@@ -1268,7 +1268,7 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
     DoHashing(uniqueg, &data);
     PROTECT(matches = HashLookup(uniqueg, g, &data));
 
-    PROTECT(ans=allocMatrix(TYPEOF(x), ng, p));
+    PROTECT(ans = allocMatrix(TYPEOF(x), ng, p));
 
     offset = 0; offsetg = 0;
 
@@ -1293,9 +1293,15 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 			INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			    = NA_INTEGER;
 		} else if (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
-			 != NA_INTEGER)
-		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
-			+= INTEGER(x)[j+offset];
+			   != NA_INTEGER) {
+		    /* check for integer overflows */
+		    int itmp = INTEGER(ans)[INTEGER(matches)[j]-1+offsetg];
+		    double dtmp = itmp;
+		    dtmp += INTEGER(x)[j+offset];
+		    if (dtmp < INT_MIN || dtmp > INT_MAX) itmp = NA_INTEGER;
+		    else itmp += INTEGER(x)[j+offset];
+		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] = itmp;
+		}
 	    }
 	    offset += n;
 	    offsetg += ng;
@@ -1352,8 +1358,14 @@ Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 		if (INTEGER(xcol)[j] == NA_INTEGER) {
 		    if(!narm)
 			INTEGER(col)[INTEGER(matches)[j]-1] = NA_INTEGER;
-		} else if (INTEGER(col)[INTEGER(matches)[j]-1] != NA_INTEGER)
-		    INTEGER(col)[INTEGER(matches)[j]-1] += INTEGER(xcol)[j];
+		} else if (INTEGER(col)[INTEGER(matches)[j]-1] != NA_INTEGER) {
+		    int itmp = INTEGER(col)[INTEGER(matches)[j]-1];
+		    double dtmp = itmp;
+		    dtmp += INTEGER(xcol)[j];
+		    if (dtmp < INT_MIN || dtmp > INT_MAX) itmp = NA_INTEGER;
+		    else itmp += INTEGER(xcol)[j];
+		    INTEGER(col)[INTEGER(matches)[j]-1] = itmp;
+		}
 	    }
 	    SET_VECTOR_ELT(ans, i, col);
 	    UNPROTECT(1);
