@@ -149,6 +149,10 @@ open.srcfilecopy <- function(con, line, ...) {
 
 getSrcLines <- function(srcfile, first, last) {
     if (first > last) return(character())
+    if (inherits(srcfile, "srcfilecopy")) {
+        last <- min(last, length(srcfile$lines))
+    	return(srcfile$lines[first:last])
+    }
     if (!.isOpen(srcfile)) on.exit(close(srcfile))
     conn <- open(srcfile, first)
     lines <- readLines(conn, n = last - first + 1L, warn = FALSE)
@@ -175,7 +179,12 @@ as.character.srcref <- function(x, useSource = TRUE, ...)
 {
     srcfile <- attr(x, "srcfile")
     if (!is.null(srcfile) && !inherits(srcfile, "srcfile")) class(srcfile) <- "srcfile"
-    if (useSource) lines <- try(getSrcLines(srcfile, x[1L], x[3L]), TRUE)
+    if (useSource) {
+    	if (inherits(srcfile, "srcfilecopy"))
+    	    lines <- try(getSrcLines(srcfile, x[7L], x[8L]), TRUE)
+    	else
+ 	    lines <- try(getSrcLines(srcfile, x[1L], x[3L]), TRUE)
+    }
     if (!useSource || inherits(lines, "try-error"))
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
                        x[1L],":",x[5L], " to ",x[3L],":",x[6L], ">", sep="")
