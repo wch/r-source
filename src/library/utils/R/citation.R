@@ -465,7 +465,7 @@ function(x, style = "text", .bibstyle = "JSS", ...)
     .format_bibentry_as_citation <- function(x) {
         bibtex <- length(x) < 2L
 
-        c(if(!is.null(a <- attr(x, "mheader"))) strwrap(a) else "",
+        c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
           unlist(lapply(x, function(y) {
               paste(c(if(!is.null(y$header))
                       c(strwrap(y$header), ""),
@@ -483,7 +483,8 @@ function(x, style = "text", .bibstyle = "JSS", ...)
                       c("", strwrap(y$footer))),
                     collapse = "\n")
           })),
-          if(!is.null(a <- attr(x, "mfooter"))) strwrap(a) else "")
+          paste(strwrap(attr(x, "mfooter")), collapse = "\n")
+          )
     }
 
     switch(style,
