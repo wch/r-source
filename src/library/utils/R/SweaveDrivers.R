@@ -143,7 +143,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             }
         } else chunkout <- object$output
 
-        srcfile <- object$srcfile
+        srcfile <- srcfilecopy(object$filename, chunk)
         SweaveHooks(options, run = TRUE)
 
         ## Note that we edit the error message below, so change both
@@ -191,16 +191,14 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         echoComments <- function(showto) {
             if (options$echo && !is.na(lastshown) && lastshown < showto) {
-                dce <- trySrcLines(prevsrcfile, lastshown + 1L, showto, NULL)
+                dce <- trySrcLines(srcfile, lastshown + 1L, showto, NULL)
+                linedirs <- grepl("^#line ", dce)
+		dce <- dce[!linedirs]
                 leading <<- length(dce) # These are all trailing comments
                 putSinput(dce)
                 lastshown <<- showto
             }
         }
-
-        chunkregexp <-
-            "(.*)#from line#([[:digit:]]+)#starts at#([[:digit:]]+)#" #
-        popregexp   <- "#end named chunk#" #
 
         openSinput <- FALSE
         openSchunk <- FALSE
@@ -209,12 +207,10 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         linesout <- integer()      # maintains concordance
         srcline <- srclines[1L]    # current input line
         thisline <- 0L             # current output line
-        lastshown <- srcline       # last line already displayed;
-                                        # at this point it's the <<>>= line
+        lastshown <- 0L            # last line already displayed;
+                                        
         refline <- NA    # line containing the current named chunk ref
         leading <- 1L    # How many lines get the user prompt
-        ## refline		  # Line number from "from line" filename
-        srcrefstack <- NULL            # Stack of named chunk contexts
 
         srcrefs <- attr(chunkexps, "srcref")
 
@@ -227,52 +223,21 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
                 !is.null(srcref <- srcrefs[[nce]])) {
-                prevsrcfile <- srcfile
                 srcfile <- attr(srcref, "srcfile")
-                showfrom <- srcref[1L]
-                showto <- srcref[3L]
-                if (grepl(popregexp, srcfile$filename)) {
-                    ## echo any trailing comments in the chunk
-                    echoComments(showto)
-                    if (length(srcrefstack)) {
-                        cntxt <- srcrefstack[[1L]]
-                        srcrefstack <- srcrefstack[-1L]
-                        lastshown <- refline
-                        refline <- cntxt[[1L]]
-                        srcfile <- cntxt[[2L]]
-                    }
-                    next                # Skip the sentinel
-                }
+                showfrom <- srcref[7L]
+                showto <- srcref[8L]
 
-                if (is.null(srcfile$refline)) {
-                    if (grepl(chunkregexp, srcfile$filename)) {
-                        cntxt <- list(refline, prevsrcfile)
-                        srcrefstack <- c(list(cntxt), srcrefstack)
-                        refline <- as.integer(sub(chunkregexp, "\\2",
-                                                  srcfile$filename))
-                        ## Echo any remaining comments if necessary
-                        echoComments(refline - 1L)
-                        if (options$expand)
-                            lastshown <-
-                                as.integer(sub(chunkregexp, "\\3",
-                                               srcfile$filename))
-                        srcfile$filename <- sub(chunkregexp, "\\1",
-                                                srcfile$filename)
-                    } else refline <- NA
-                    srcfile$refline <- refline
-                }
-                if (!options$expand && !is.na(refline))
-                    showfrom <- showto <- refline
-
-                if (is.na(lastshown)) {
-                    ## We know the first line has not been shown
-                    dce <- trySrcLines(srcfile, showfrom, showto, ce)
-                    leading <- 1L
-                } else {
-                    dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
-                    leading <- showfrom-lastshown
-                }
-                lastshown <- srcline <- showto
+                dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
+                leading <- showfrom - max(lastshown, 1L)
+                
+                lastshown <- showto
+                srcline <- srcref[3L]
+                
+                linedirs <- grepl("^#line ", dce)
+                dce <- dce[!linedirs]
+                # Need to reduce leading lines if some were just removed
+                leading <- leading - sum(linedirs[seq_len(leading)])
+               
                 while (length(dce) && length(grep("^[[:blank:]]*$", dce[1L]))) {
                     dce <- dce[-1L]
                     leading <- leading - 1L
@@ -348,7 +313,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         } # end of loop over chunkexps.
 
         ## Echo remaining comments if necessary
-        if (options$keep.source) echoComments(srclines[length(srclines)])
+        if (options$keep.source) echoComments(length(srcfile$lines))
 
         if (openSinput) {
             cat("\n\\end{Sinput}\n", file = chunkout)
@@ -449,6 +414,9 @@ RweaveLatexWritedoc <- function(object, chunk)
                                              RweaveLatexOptions)
         if (isTRUE(object$options$concordance)
             && !object$haveconcordance) {
+            if (isTRUE(object$hasSweaveInput))
+            	warning("\\SweaveInput is not compatible with concordances.",
+            	        immediate. = TRUE)
             savelabel <- object$options$label
             object$options$label <- "concordance"
             prefix <- RweaveChunkPrefix(object$options)
@@ -471,7 +439,7 @@ RweaveLatexWritedoc <- function(object, chunk)
 RweaveLatexFinish <- function(object, error = FALSE)
 {
     outputname <- summary(object$output)$description
-    inputname <- object$srcfile$filename
+    inputname <- object$filename
     if (!object$quiet && !error)
         cat("\n",
             sprintf("You can now run (pdf)latex on '%s'", outputname),

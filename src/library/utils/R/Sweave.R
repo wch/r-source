@@ -60,12 +60,8 @@ Sweave <- function(file, driver = RweaveLatex(),
     text <- SweaveReadFile(file, syntax, encoding = encoding)
     syntax <- attr(text, "syntax")
     file <- attr(text, "file")
-    drobj$srcfile <- srcfile(file)
-
-    if (identical(attr(text, "hasSweaveInput"), TRUE)) {
-        file <- "SweaveInput"
-    	drobj$srcfile <- srcfilecopy(file, text)
-    }
+    drobj$filename <- file
+    drobj$hasSweaveInput <- attr(text, "hasSweaveInput")
 
     mode <- "doc"
     chunknr <- 0L
@@ -106,35 +102,12 @@ Sweave <- function(file, driver = RweaveLatex(),
             chunkopts$chunknr <- chunknr
         } else {
             if (mode == "code" && length(grep(syntax$coderef, line))) {
-                ## We have a reference to a named chunk.
-                ## Wrap it in special #line directives so the
-                ## source ref code can see it start and end;
-                ## the stop() afterwards is only to give the parser
-                ## a place to hang the terminal marker,
-                ## it should never be evaluated.
                 chunkref <- sub(syntax$coderef, "\\1", line)
                 if (!(chunkref %in% names(namedchunks)))
                     warning(gettextf("reference to unknown chunk '%s'",
                                      chunkref), domain = NA)
-                line <- namedchunks[[chunkref]]
-                ## Record the last line of the chunk in the terminator
-                ## so terminal comments can be echoed
-                chunklines <- attr(line, "srclines")
-                if (is.null(chunklines)) chunklines <- 0L
-                if (!is.null(keep.source <- chunkopts$keep.source)
-                    && keep.source) {
-		    ##FIXME:  this should really be done through a more general
-		    ##        mechanism for adding non-executable info to the parse
-		    line <- c(line,
-			      paste("#line ", chunklines[length(chunklines)],
-				    ' "#end named chunk#"', sep=""),
-			      'invisible(.Last.value) # End of chunk marker',
-			      paste("#line ", linenum+1L, ' "', file, '"', sep=""))
-		    line[1L] <- sub('"$', paste("#from line#", linenum,
-                                                '#starts at#', chunklines[1], '#"',
-                                                sep = ""),
-                                    line[1L])
-		}
+                line <- c(namedchunks[[chunkref]],
+                          paste("#line ", linenum+1L, ' "', file, '"', sep=""))
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
