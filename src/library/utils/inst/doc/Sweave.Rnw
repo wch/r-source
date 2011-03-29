@@ -663,9 +663,10 @@ R CMD Sweave file.Rnw
    \subsection{After loading package \texttt{R2HTML} Sweave doesn't
      work properly!}
 
-   Package \texttt{R2HTML} registers an Sweave driver for HTML
-   files, and after that the syntax for HTML is in the search list
-   before the default syntax.
+   Package \texttt{R2HTML} registers an Sweave driver for HTML files
+   using the same file extensions as the default \texttt{noweb}
+   syntax, and after that its syntax is on the search list before the
+   default syntax.
 \begin{verbatim}
   options(SweaveSyntax="SweaveSyntaxNoweb")
 \end{verbatim}
