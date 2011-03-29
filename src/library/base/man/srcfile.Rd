@@ -48,7 +48,7 @@ srcref(srcfile, lloc)
     will be coerced to character. }
   \item{srcfile}{ A \code{srcfile} object. }
   \item{first, last, line}{ Line numbers. }
-  \item{lloc}{ A vector of four or six values giving a source location; see
+  \item{lloc}{ A vector of four, six or eight values giving a source location; see
     \sQuote{Details}.}
   \item{x, object, con}{ An object of the appropriate class. }
   \item{useSource}{ Whether to read the \code{srcfile} to obtain the
@@ -73,12 +73,17 @@ srcref(srcfile, lloc)
   \code{srcfile}.
 
   The \code{srcref} function produces an object of class
-  \code{srcref}, which describes a range of characters in a
-  \code{srcfile}.  The \code{lloc} value gives the following values:
-  \code{c(first_line, first_byte, last_line, last_byte, first_column,
-  last_column)}.  (Bytes and columns may be different due to multibyte
-  characters.  If only four values are given, the columns and
-  bytes are assumed to match.)
+  \code{srcref}, which describes a range of characters in a \code{
+  srcfile}.  The \code{lloc} value gives the following values: \code{c
+  (first_line, first_byte, last_line, last_byte, first_column,
+  last_column, first_parsed, last_parsed)}. Bytes (elements 2, 4) and
+  columns (elements 5, 6) may be different due to multibyte
+  characters.  If only four values are given, the columns and bytes
+  are assumed to match.  Lines (elements 1, 3) and parsed lines (
+  elements 7, 8) may differ if a \code{#line} directive is used in
+  code:  the former will respect the directive, the latter will just
+  count lines.  If only 4 or 6 elements are given, the parsed lines
+  will be assumed to match the lines.
 
   Methods are defined for \code{print}, \code{summary}, \code{open},
   and \code{close} for classes \code{srcfile} and \code{srcfilecopy}.
@@ -86,14 +91,20 @@ srcref(srcfile, lloc)
   a particular line; if it was already open, it will be repositioned
   to that line.
 
-  Methods are defined for \code{print}, \code{summary} and
-  \code{as.character} for class \code{srcref}.  The
-  \code{as.character} method will read the associated source file to
-  obtain the text corresponding to the reference.  If an error occurs
-  (e.g. the file no longer exists), text like \code{<srcref: "file"
-  chars 1:1 to 2:10>} will be returned instead, indicating the
-  \code{line:column} ranges of the first and last character.  The
-  \code{summary} method defaults to this type of display.
+  Methods are defined for \code{print}, \code{summary} and 
+  \code{as.character} for class \code{srcref}.  The \code{as.character}
+  method will read the associated source file to obtain the text
+  corresponding to the reference.  The exact behaviour depends on the
+  class of the source file.  If the source file inherits from
+  class \code{"srcfilecopy"}, the lines are taken from the saved copy 
+  using the "parsed" line counts.  If not, an attempt
+  is made to read the file, and the original line numbers of the 
+  \code{srcref} record (i.e. elements 1 and 3) are used.  If an error
+  occurs (e.g. the file no longer exists), text like 
+  \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
+  indicating the \code{line:column} ranges of the first and last
+  character.  The \code{summary} method defaults to this type of
+  display.  
 
   Lists of \code{srcref} objects may be attached to expressions as the
   \code{"srcref"} attribute.  (The list of \code{srcref} objects should be the same
