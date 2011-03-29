@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-03-20 r54899)
+R version 2.14.0 Under development (unstable) (2011-03-29 r55143)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6692,21 +6692,33 @@ Read 7 items
 > x[3] <- NA; y[5] <- NA
 > xy <- cbind(x, y)
 > 
-> cor(x, y, method="spearman", use="complete.obs")
+> cor(x, y, method = "spearman", use = "complete.obs")
 [1] 0.2380952
-> cor(x, y, method="spearman", use="pairwise.complete.obs")
+> cor(x, y, method = "spearman", use = "pairwise.complete.obs")
 [1] 0.2380952
-> cor(na.omit(xy),  method="spearman", use="complete.obs")
+> cor(na.omit(xy),  method = "spearman", use = "complete.obs")
           x         y
 x 1.0000000 0.2380952
 y 0.2380952 1.0000000
-> cor(xy,  method="spearman", use="complete.obs")
+> cor(xy,  method = "spearman", use = "complete.obs")
           x         y
 x 1.0000000 0.2380952
 y 0.2380952 1.0000000
-> cor(xy,  method="spearman", use="pairwise.complete.obs")
+> cor(xy,  method = "spearman", use = "pairwise.complete.obs")
           x         y
 x 1.0000000 0.2380952
 y 0.2380952 1.0000000
 > ## inconsistent in R < 2.13.0
+> 
+> 
+> ## integer overflow in rowsum() went undetected
+> # https://stat.ethz.ch/pipermail/r-devel/2011-March/060304.html
+> x <- 2e9L
+> rowsum(c(x, x), c("a", "a"))
+  [,1]
+a   NA
+> rowsum(data.frame(z = c(x, x)), c("a", "a"))
+   z
+a NA
+> ## overflow in R < 2.13.0.
 > 

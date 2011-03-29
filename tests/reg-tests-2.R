@@ -2544,9 +2544,17 @@ y <- runif(10)
 x[3] <- NA; y[5] <- NA
 xy <- cbind(x, y)
 
-cor(x, y, method="spearman", use="complete.obs")
-cor(x, y, method="spearman", use="pairwise.complete.obs")
-cor(na.omit(xy),  method="spearman", use="complete.obs")
-cor(xy,  method="spearman", use="complete.obs")
-cor(xy,  method="spearman", use="pairwise.complete.obs")
+cor(x, y, method = "spearman", use = "complete.obs")
+cor(x, y, method = "spearman", use = "pairwise.complete.obs")
+cor(na.omit(xy),  method = "spearman", use = "complete.obs")
+cor(xy,  method = "spearman", use = "complete.obs")
+cor(xy,  method = "spearman", use = "pairwise.complete.obs")
 ## inconsistent in R < 2.13.0
+
+
+## integer overflow in rowsum() went undetected
+# https://stat.ethz.ch/pipermail/r-devel/2011-March/060304.html
+x <- 2e9L
+rowsum(c(x, x), c("a", "a"))
+rowsum(data.frame(z = c(x, x)), c("a", "a"))
+## overflow in R < 2.13.0.

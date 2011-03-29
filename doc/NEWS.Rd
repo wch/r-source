@@ -896,6 +896,9 @@
 
       \item Inside \code{uniroot(f, ...)}, \code{-Inf} function values
       are now replaced by a maximally \bold{negative} value.
+
+      \item \code{rowsum()} could silently over/underflow on integer
+      inputs (reported by Bill Dunlap).
     }
   }
 }
