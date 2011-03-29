@@ -54,7 +54,6 @@
 
 ## Defines for C compilation.
 ## Use this to specify defines to be used in the compilation of R,
-## e.g. -DUSE_TYPE_CHECKING_STRICT
 ## DEFS=
 
 ## The following additional CFLAGS to be used only in the main

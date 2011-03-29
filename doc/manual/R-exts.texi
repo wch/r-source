@@ -1921,25 +1921,24 @@ or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
 call @emph{package vignettes}.  These are normally given the file
-extension @file{.Rnw}, but for historical reasons
+extension @file{.Rnw} or @file{Rtex}, but for historical reasons
 extensions@footnote{and to avoid problems with case-insensitive file
 systems, lower-case versions of all these extensions.} @file{.Snw},
-@file{.Rtex}, @file{.Stex} are recognized as vignettes.  Sweave allows
-the integration of @LaTeX{} documents: see the @code{Sweave} help page
-in @R{} for details on the document format.  Package vignettes found in
-directory @file{inst/doc} are tested by @code{R CMD check} by executing
-all @R{} code chunks they contain (except those with option
-@code{eval=FALSE}).  The @R{} working directory for all vignette tests
-in @code{R CMD check} is a @emph{copy} of the @file{doc} subdirectory.
-Make sure all files needed by the vignette (data sets, @dots{}) are
-accessible by either placing them in the @file{inst/doc} hierarchy of
-the source package or by using calls to @code{system.file()}.  All other
-files needed to re-make the vignette PDFs (such as LaTeX style files,
-BiBTeX input files and files for any figures not created by running the
-code in the vignette) must in the sources (usually under
-@file{inst/doc}, but a file @file{.Rinstignore} can be used to exclude
-them from the installed package).  References to parallel source
-directories such as
+@file{.Stex} are recognized as vignettes.  Sweave allows the integration
+of @LaTeX{} documents: see the @code{Sweave} help page in @R{} for
+details on the document format.  Package vignettes found in directory
+@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
+code chunks they contain (except those with option @code{eval=FALSE}).
+The @R{} working directory for all vignette tests in @code{R CMD check}
+is a @emph{copy} of the @file{doc} subdirectory.  Make sure all files
+needed by the vignette (data sets, @dots{}) are accessible by either
+placing them in the @file{inst/doc} hierarchy of the source package or
+by using calls to @code{system.file()}.  All other files needed to
+re-make the vignette PDFs (such as LaTeX style files, BiBTeX input files
+and files for any figures not created by running the code in the
+vignette) must in the sources (usually under @file{inst/doc}, but a file
+@file{.Rinstignore} can be used to exclude them from the installed
+package).  References to parallel source directories such as
 @example
 \graphicspath@{@{../../manual/@}@}
 @end example
@@ -2039,9 +2038,10 @@ figures and include those in the PDF document.
 @node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
 @subsection Encodings and vignettes
 
-Since vignette PDFs will in general include descriptive text, @R{}
-input, @R{} output and figures all of which may contain non-ASCII
-characters, the handling of encodings can become very complicated.
+Vignette PDFs will in general include descriptive text, @R{} input, @R{}
+output and figures, @LaTeX{} include files and bibliographic references.
+Any of which may contain non-ASCII characters, the handling of encodings
+can become very complicated.
 
 The vignette source file should be written in ASCII or contain a
 declaration of the encoding (see below).  This applies even to comments
