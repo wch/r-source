@@ -43,23 +43,24 @@ Sweave <- function(file, driver = RweaveLatex(),
     if (is.character(driver)) driver <- get(driver, mode = "function")()
     else if (is.function(driver)) driver <- driver()
 
-    if (is.null(syntax)) syntax <- SweaveGetSyntax(file)
+    if (is.null(syntax)) syntax <- SweaveGetSyntax(file) # from the extension
     if (is.character(syntax)) syntax <- get(syntax, mode = "list")
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
+
+    text <- SweaveReadFile(file, syntax, encoding = encoding)
+    attr(file, "encoding") <- encoding <- attr(text, "encoding")
 
     ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
     on.exit(driver$finish(drobj, error = TRUE))
 
+    syntax <- attr(text, "syntax") # this is from the file commands.
+
     if (!is.na(envopts<- Sys.getenv("SWEAVE_OPTIONS", NA)))
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
-    ## FIXME: perhaps we need to edit/insert a \usepackage[]{inputenc} line
-    text <- SweaveReadFile(file, syntax, encoding = encoding)
-    syntax <- attr(text, "syntax")
-    file <- attr(text, "file")
     drobj$filename <- file
     drobj$hasSweaveInput <- attr(text, "hasSweaveInput")
 
@@ -149,23 +150,23 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     }
 
     ## An incomplete last line is not a real problem.
-    con <- file(f[1L], encoding = encoding)
-    text <- readLines(con, warn = FALSE)
-    close(con)
+    text <- readLines(file[1L], warn = FALSE)
 
-    ## <FIXME>
-    ## This needs to be more refined eventually ...
-    if (!nzchar(encoding) && any(is.na(nchar(text, "c", TRUE)))) {
-        warning(sQuote(basename(file)),
-                " is not valid in the current locale: assuming Latin-1",
-                domain = NA, call. = FALSE)
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin-1:
-        ## this will probably work but may be incorrect
-        text <- iconv(text, "latin1", "")
+    ## now sort out an encoding, if needed.
+    enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
+    if (enc == "non-ASCII") {
+        enc <- if (nzchar(encoding)) {
+            encoding
+        } else {
+            warning(sQuote(basename(file)),
+                    " is not valid in the current locale: assuming Latin-1",
+                    domain = NA, call. = FALSE)
+            "latin1"
+        }
     }
-    ## </FIXME>
+    if (nzchar(enc)) {
+        text <- iconv(text, enc, "")
+    } else enc <- "ASCII"
 
     pos <- grep(syntax$syntaxname, text)
 
@@ -204,6 +205,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
     attr(text, "syntax") <- syntax
     attr(text, "file") <- f[1L]
+    attr(text, "encoding") <- enc
     text
 }
 
@@ -329,6 +331,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 ### For R CMD xxxx ------------------------------------------
 .Sweave <- function(args = NULL)
 {
+    options(warn = 1)
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         args <- paste(args, collapse=" ")
@@ -390,6 +393,8 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
 
 .Stangle <- function(arg)
 {
+    options(warn = 1)
+
     Usage <- function() {
         cat("Usage: R CMD Stangle file",
             "",

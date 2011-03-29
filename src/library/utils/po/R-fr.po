@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-03-29 21:51\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -70,17 +70,20 @@ msgstr ""
 "erreur d'interprétation ou option vide dans\n"
 "%s"
 
+msgid "Warning: unknown option"
+msgstr ""
+
 msgid "path to '%s' contains spaces,"
 msgstr "le chemin vers '%s' contient des espaces"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
 
+msgid "\\SweaveInput is not compatible with concordances."
+msgstr ""
+
 msgid "invalid value for '%s' : %s"
 msgstr "valeur incorrecte pour '%s' : %s"
-
-msgid "Warning: unknown option"
-msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "les éléments suivants de 'what' seront ignorés"

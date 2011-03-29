@@ -35,7 +35,7 @@ RweaveLatexSetup <-
 
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
-    output <- file(output, open = "w+")
+    output <- file(output, open = "w", encoding = attr(file, "encoding"))
 
     if (missing(stylepath)) {
         p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -562,7 +562,7 @@ Rtangle <-  function()
 
 RtangleSetup <- function(file, syntax,
                          output = NULL, annotate = TRUE, split = FALSE,
-                         prefix = TRUE, quiet = FALSE)
+                         prefix = TRUE, quiet = FALSE, ...)
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
@@ -573,9 +573,12 @@ RtangleSetup <- function(file, syntax,
 
     if (!split) {
         if (!quiet) cat("Writing to file", output, "\n")
+        ## We could at some future point try to write the file in 'encoding'.
         output <- file(output, open = "w")
         lines <- c(sprintf("R code from vignette source '%s'", file),
-                   sprintf("Encoding: %s", localeToCharset()[1L]))
+                   if(attr(file, "encoding") != "ASCII")
+                   sprintf("Encoding: %s", localeToCharset()[1L])
+                   )
         lines <- c(paste("###", lines), "")
         writeLines(lines, output)
     } else {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-03-29 21:49\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -615,9 +615,6 @@ msgid "'%s' not defined for ordered factors"
 msgstr ""
 
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
-msgstr ""
-
-msgid "no files to copy from"
 msgstr ""
 
 msgid "no files to copy to"

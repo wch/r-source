@@ -509,12 +509,18 @@ function(dir, outDir, encoding = "")
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
 
         ## install tangled versions of all vignettes
-        for(srcfile in vignetteIndex$File)
-            tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = encoding),
+        cat("*** tangling vignette sources ...\n")
+        for(srcfile in vignetteIndex$File) {
+            enc <- getVignetteEncoding(srcfile, TRUE)
+            if(enc %in% c("", "non-ASCII", "unknown")) enc <- encoding
+            cat("  ", sQuote(basename(srcfile)),
+                if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
+           tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = enc),
                      error = function(e)
                      stop(gettextf("running Stangle on vignette '%s' failed with message:\n%s",
                                    srcfile, conditionMessage(e)),
                           domain = NA, call. = FALSE))
+        }
         ## remove any zero-length files
         Rfiles <- Sys.glob("*.R")
         sizes <- file.info(Rfiles)$size
@@ -895,7 +901,7 @@ compactPDF <-
              gs_quality = c("printer", "ebook", "screen"),
              gs_extras = character())
 {
-    if(!nzchar(Sys.which(qpdf)) && !nzchar(Sys.which(gs_cmd))) 
+    if(!nzchar(Sys.which(qpdf)) && !nzchar(Sys.which(gs_cmd)))
     	return()
     if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))

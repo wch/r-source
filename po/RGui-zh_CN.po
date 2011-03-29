@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-14 07:39+0000\n"
+"POT-Creation-Date: 2011-03-29 21:49+0100\n"
 "PO-Revision-Date: 2007-11-06 13:34+0800\n"
 "Last-Translator: Yihui Xie <xie@yihui.name>\n"
 "Language-Team: Chinese\n"
@@ -300,7 +300,7 @@ msgstr ""
 "  右键菜单用来复制, 粘贴, 自动调整所选列的宽度\n"
 "\n"
 
-#: dataentry.c:1696 dataentry.c:1806 editor.c:778 rui.c:1196
+#: dataentry.c:1696 dataentry.c:1806 editor.c:778 rui.c:1206
 msgid "Help"
 msgstr "帮助"
 
@@ -316,7 +316,7 @@ msgstr "粘贴到所选单元格"
 msgid "Autosize column"
 msgstr "自动调节列宽"
 
-#: dataentry.c:1702 pager.c:310 rui.c:878
+#: dataentry.c:1702 pager.c:310 rui.c:884
 #: ../library/grDevices/src/devWindows.c:1632
 msgid "Stay on top"
 msgstr "窗口保持在最前面"
@@ -325,12 +325,12 @@ msgstr "窗口保持在最前面"
 msgid "Close"
 msgstr "关闭"
 
-#: dataentry.c:1789 editor.c:724 pager.c:467 rui.c:1132
+#: dataentry.c:1789 editor.c:724 pager.c:467 rui.c:1142
 #: ../library/grDevices/src/devWindows.c:1572
 msgid "File"
 msgstr "文件"
 
-#: dataentry.c:1795 editor.c:742 pager.c:477 rui.c:1153
+#: dataentry.c:1795 editor.c:742 pager.c:477 rui.c:1163
 msgid "Edit"
 msgstr "编辑"
 
@@ -377,7 +377,7 @@ msgstr "无法保存'%s'文件"
 msgid "Save script as"
 msgstr "保存程序脚本为"
 
-#: editor.c:372 editor.c:689 pager.c:431 rui.c:1086
+#: editor.c:372 editor.c:689 pager.c:431 rui.c:1096
 msgid "Open script"
 msgstr "打开程序脚本"
 
@@ -439,12 +439,12 @@ msgstr "撤消"
 msgid "Cut"
 msgstr "剪切"
 
-#: editor.c:625 editor.c:748 pager.c:305 pager.c:478 rui.c:868 rui.c:1098
-#: rui.c:1154
+#: editor.c:625 editor.c:748 pager.c:305 pager.c:478 rui.c:874 rui.c:1108
+#: rui.c:1164
 msgid "Copy"
 msgstr "复制"
 
-#: editor.c:626 editor.c:750 rui.c:869 rui.c:1102 rui.c:1155
+#: editor.c:626 editor.c:750 rui.c:875 rui.c:1112 rui.c:1165
 msgid "Paste"
 msgstr "粘贴"
 
@@ -452,7 +452,7 @@ msgstr "粘贴"
 msgid "Delete"
 msgstr "删除"
 
-#: editor.c:629 editor.c:754 pager.c:308 pager.c:484 rui.c:875 rui.c:1159
+#: editor.c:629 editor.c:754 pager.c:308 pager.c:484 rui.c:881 rui.c:1169
 msgid "Select all"
 msgstr "全选"
 
@@ -468,16 +468,16 @@ msgstr "回到控制台"
 msgid "Print script"
 msgstr "打印程序脚本"
 
-#: editor.c:706 pager.c:446 rui.c:1114
+#: editor.c:706 pager.c:446 rui.c:1124
 #: ../library/grDevices/src/devWindows.c:1534
 msgid "Print"
 msgstr "打印"
 
-#: editor.c:725 pager.c:468 rui.c:1134
+#: editor.c:725 pager.c:468 rui.c:1144
 msgid "New script"
 msgstr "新建程序脚本"
 
-#: editor.c:727 pager.c:469 rui.c:1135
+#: editor.c:727 pager.c:469 rui.c:1145
 msgid "Open script..."
 msgstr "打开程序脚本..."
 
@@ -489,7 +489,7 @@ msgstr "保存"
 msgid "Save as..."
 msgstr "另存为..."
 
-#: editor.c:734 pager.c:470 rui.c:1148
+#: editor.c:734 pager.c:470 rui.c:1158
 #: ../library/grDevices/src/devWindows.c:1635
 msgid "Print..."
 msgstr "打印..."
@@ -498,7 +498,7 @@ msgstr "打印..."
 msgid "Close script"
 msgstr "关闭程序脚本"
 
-#: editor.c:756 rui.c:1160
+#: editor.c:756 rui.c:1170
 msgid "Clear console"
 msgstr "清空控制台"
 
@@ -514,7 +514,7 @@ msgstr "查找..."
 msgid "Replace..."
 msgstr "替换..."
 
-#: editor.c:768 rui.c:1164
+#: editor.c:768 rui.c:1174
 msgid "GUI preferences..."
 msgstr "GUI选项..."
 
@@ -544,7 +544,7 @@ msgstr "确定"
 msgid "Cancel"
 msgstr "取消"
 
-#: extra.c:2151 rui.c:1234
+#: extra.c:2149 rui.c:1244
 msgid "Select file"
 msgstr "选择文件"
 
@@ -556,7 +556,7 @@ msgstr "打开文件时出错"
 msgid "Insufficient memory to display file in internal pager"
 msgstr "用内部文本浏览程序来显示文件时内存不够"
 
-#: pager.c:177 pager.c:189 pager.c:209 rui.c:235 rui.c:262
+#: pager.c:177 pager.c:189 pager.c:209 rui.c:236 rui.c:263
 msgid "No selection"
 msgstr "没有选择内容"
 
@@ -568,11 +568,11 @@ msgstr "粘贴到控制台"
 msgid "Paste commands to console"
 msgstr "粘贴命令到控制台"
 
-#: pager.c:472 rui.c:1149
+#: pager.c:472 rui.c:1159
 msgid "Save to File..."
 msgstr "保存到文件..."
 
-#: pager.c:487 rui.c:1166
+#: pager.c:487 rui.c:1176
 msgid "View"
 msgstr "查看"
 
@@ -631,313 +631,313 @@ msgstr "文件%3$s的第%2$d行'%1$s'略过不用"
 msgid "Rgui Configuration Editor"
 msgstr "Rgui配置编辑器"
 
-#: rui.c:138
+#: rui.c:139
 msgid "Select file to source"
 msgstr "选择要运行的程序文件"
 
-#: rui.c:159
+#: rui.c:160
 msgid "Select image to load"
 msgstr "选择要载入的映像"
 
-#: rui.c:174
+#: rui.c:175
 msgid "Save image in"
 msgstr "保存映像到"
 
-#: rui.c:188
+#: rui.c:189
 msgid "Load history from"
 msgstr "载入历史于"
 
-#: rui.c:197
+#: rui.c:198
 msgid "Save history in"
 msgstr "保存历史到"
 
-#: rui.c:244 rui.c:253
+#: rui.c:245 rui.c:254
 msgid "No text available"
 msgstr "没有可用的文本"
 
-#: rui.c:302
+#: rui.c:303
 msgid "Name of data frame or matrix"
 msgstr "数据框或矩阵名"
 
-#: rui.c:309
+#: rui.c:310
 #, c-format
 msgid "'%s' cannot be found"
 msgstr "找不到'%s'"
 
-#: rui.c:448
+#: rui.c:449
 msgid "Are you sure?"
 msgstr "是否确定?"
 
-#: rui.c:560
+#: rui.c:561
 msgid "Help on"
 msgstr "帮助于"
 
-#: rui.c:611
+#: rui.c:617
 msgid "Search help"
 msgstr "搜索帮助"
 
-#: rui.c:626
+#: rui.c:632
 msgid "Search for words in help list archives and documentation"
 msgstr "搜索邮件列表归档和文档"
 
-#: rui.c:641
+#: rui.c:647
 msgid "Apropos"
 msgstr "模糊查找对象"
 
-#: rui.c:864
+#: rui.c:870
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "鼠标拖放只适用于.R，.RData和.rda后缀的文件"
 
-#: rui.c:870 rui.c:1156
+#: rui.c:876 rui.c:1166
 msgid "Paste commands only"
 msgstr "仅粘贴命令行"
 
-#: rui.c:871 rui.c:1106
+#: rui.c:877 rui.c:1116
 msgid "Copy and paste"
 msgstr "复制并粘贴"
 
-#: rui.c:873
+#: rui.c:879
 msgid "Clear window"
 msgstr "清空窗口"
 
-#: rui.c:877 rui.c:1179
+#: rui.c:883 rui.c:1189
 msgid "Buffered output"
 msgstr "缓冲输出"
 
-#: rui.c:917
+#: rui.c:923
 msgid "Packages"
 msgstr "程序包"
 
-#: rui.c:918
+#: rui.c:924
 msgid "Load package..."
 msgstr "加载程序包..."
 
-#: rui.c:920
+#: rui.c:926
 msgid "Set CRAN mirror..."
 msgstr "设定CRAN镜像..."
 
-#: rui.c:922
+#: rui.c:928
 msgid "Select repositories..."
 msgstr "选择软件库..."
 
-#: rui.c:924
+#: rui.c:930
 msgid "Install package(s)..."
 msgstr "安装程序包..."
 
-#: rui.c:926
+#: rui.c:932
 msgid "Update packages..."
 msgstr "更新程序包..."
 
-#: rui.c:929
+#: rui.c:935
 msgid "Install package(s) from local zip files..."
 msgstr "从本地zip文件安装程序包..."
 
-#: rui.c:957
+#: rui.c:964
 msgid "FAQ on R"
 msgstr "R FAQ"
 
-#: rui.c:959
+#: rui.c:966
 msgid "FAQ on R for &Windows"
 msgstr "Windows下的R FAQ"
 
-#: rui.c:965 rui.c:968
+#: rui.c:972 rui.c:975
 msgid "Manuals (in PDF)"
 msgstr "手册(PDF文件)"
 
-#: rui.c:995
+#: rui.c:1005
 msgid "R functions (text)..."
 msgstr "R函数帮助(文本)..."
 
-#: rui.c:997
+#: rui.c:1007
 msgid "Html help"
 msgstr "Html帮助"
 
-#: rui.c:999
+#: rui.c:1009
 msgid "Search help..."
 msgstr "搜索帮助..."
 
-#: rui.c:1004
+#: rui.c:1014
 msgid "Apropos..."
 msgstr "模糊查找对象..."
 
-#: rui.c:1006
+#: rui.c:1016
 msgid "R Project home page"
 msgstr "R主页"
 
-#: rui.c:1007
+#: rui.c:1017
 msgid "CRAN home page"
 msgstr "CRAN主页"
 
-#: rui.c:1009
+#: rui.c:1019
 msgid "About"
 msgstr "关于"
 
-#: rui.c:1018 ../extra/graphapp/gmenus.c:52
+#: rui.c:1028 ../extra/graphapp/gmenus.c:52
 msgid "Windows"
 msgstr "窗口"
 
-#: rui.c:1019 ../extra/graphapp/gmenus.c:53
+#: rui.c:1029 ../extra/graphapp/gmenus.c:53
 msgid "Cascade"
 msgstr "层叠"
 
-#: rui.c:1020 ../extra/graphapp/gmenus.c:54
+#: rui.c:1030 ../extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
 msgstr "水平铺"
 
-#: rui.c:1021 ../extra/graphapp/gmenus.c:55
+#: rui.c:1031 ../extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
 msgstr "垂直铺"
 
-#: rui.c:1022
+#: rui.c:1032
 msgid "Minimize group"
 msgstr "最小化组"
 
-#: rui.c:1023
+#: rui.c:1033
 msgid "Restore group"
 msgstr "恢复组"
 
-#: rui.c:1090
+#: rui.c:1100
 msgid "Load workspace"
 msgstr "加载工作空间"
 
-#: rui.c:1094
+#: rui.c:1104
 msgid "Save workspace"
 msgstr "保存工作空间"
 
-#: rui.c:1110
+#: rui.c:1120
 msgid "Stop current computation"
 msgstr "中断当前计算"
 
-#: rui.c:1133
+#: rui.c:1143
 msgid "Source R code..."
 msgstr "运行R脚本文件..."
 
-#: rui.c:1136
+#: rui.c:1146
 msgid "Display file(s)..."
 msgstr "显示文件内容..."
 
-#: rui.c:1138
+#: rui.c:1148
 msgid "Load Workspace..."
 msgstr "加载工作空间..."
 
-#: rui.c:1139
+#: rui.c:1149
 msgid "Save Workspace..."
 msgstr "保存工作空间..."
 
-#: rui.c:1141
+#: rui.c:1151
 msgid "Load History..."
 msgstr "加载历史..."
 
-#: rui.c:1143
+#: rui.c:1153
 msgid "Save History..."
 msgstr "保存历史..."
 
-#: rui.c:1146
+#: rui.c:1156
 msgid "Change dir..."
 msgstr "改变工作目录..."
 
-#: rui.c:1151
+#: rui.c:1161
 msgid "Exit"
 msgstr "退出"
 
-#: rui.c:1158
+#: rui.c:1168
 msgid "Copy and Paste"
 msgstr "复制并粘贴"
 
-#: rui.c:1162
+#: rui.c:1172
 msgid "Data editor..."
 msgstr "数据编辑器..."
 
-#: rui.c:1167
+#: rui.c:1177
 msgid "Toolbar"
 msgstr "工具栏"
 
-#: rui.c:1168
+#: rui.c:1178
 msgid "Statusbar"
 msgstr "状态栏"
 
-#: rui.c:1172
+#: rui.c:1182
 msgid "Misc"
 msgstr "其他"
 
-#: rui.c:1173
+#: rui.c:1183
 msgid "Stop current computation           \tESC"
 msgstr "中断当前的计算           \tESC"
 
-#: rui.c:1175
+#: rui.c:1185
 msgid "Stop all computations"
 msgstr "中断所有计算"
 
-#: rui.c:1177
+#: rui.c:1187
 msgid "Break to debugger"
 msgstr "进入调试器"
 
-#: rui.c:1180
+#: rui.c:1190
 msgid "Word completion"
 msgstr "补全单词"
 
-#: rui.c:1182
+#: rui.c:1192
 msgid "Filename completion"
 msgstr "补全文件名"
 
-#: rui.c:1189
+#: rui.c:1199
 msgid "List objects"
 msgstr "列出对象"
 
-#: rui.c:1190
+#: rui.c:1200
 msgid "Remove all objects"
 msgstr "删除所有对象"
 
-#: rui.c:1191
+#: rui.c:1201
 msgid "List search &path"
 msgstr "列出查找路径"
 
-#: rui.c:1197
+#: rui.c:1207
 msgid "Console"
 msgstr "控制台"
 
-#: rui.c:1278
+#: rui.c:1288
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname'大小限制在1000字节以内"
 
-#: rui.c:1320
+#: rui.c:1330
 #, c-format
 msgid "menu %s does not exist"
 msgstr "没有%s菜单"
 
-#: rui.c:1373
+#: rui.c:1383
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu'的长度限制在500字节以内"
 
-#: rui.c:1383
+#: rui.c:1393
 msgid "base menu does not exist"
 msgstr "基础菜单不存在"
 
-#: rui.c:1398
+#: rui.c:1408
 msgid "failed to allocate menu"
 msgstr "无法配置菜单"
 
-#: rui.c:1415 rui.c:1539
+#: rui.c:1425 rui.c:1549
 msgid "menu + item is limited to 1000 bytes"
 msgstr "菜单加菜单项的长度限制在1000字节以内"
 
-#: rui.c:1423 rui.c:1506
+#: rui.c:1433 rui.c:1516
 msgid "menu does not exist"
 msgstr "没有这一菜单"
 
-#: rui.c:1441 rui.c:1464 rui.c:1469
+#: rui.c:1451 rui.c:1474 rui.c:1479
 msgid "failed to allocate char storage"
 msgstr "配置字符储存失败"
 
-#: rui.c:1477
+#: rui.c:1487
 msgid "failed to allocate menuitem"
 msgstr "配置菜单项失败"
 
-#: rui.c:1529
+#: rui.c:1539
 msgid "menu not found"
 msgstr "找不到菜单"
 
-#: rui.c:1547
+#: rui.c:1557
 msgid "menu or item does not exist"
 msgstr "菜单或者菜单项不存在"
 
