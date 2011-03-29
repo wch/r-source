@@ -111,6 +111,9 @@ Stangle(file, driver = Rtangle(),
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
   
   Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.
+
+  Further Sweave drivers are in, for example,  packages \pkg{R2HTML},
+  \pkg{ascii}, \pkg{odfWeave} and \pkg{pgfSweave}.
 }
 
 \examples{
