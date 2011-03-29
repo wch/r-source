@@ -40,6 +40,9 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
+    text <- SweaveReadFile(file, syntax)
+    attr(file, "encoding") <- attr(text, "encoding")
+
     ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
     on.exit(driver$finish(drobj, error = TRUE))
@@ -48,7 +51,6 @@ Sweave <- function(file, driver = RweaveLatex(),
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
-    text <- SweaveReadFile(file, syntax)
     syntax <- attr(text, "syntax") # this is from the file commands.
     file <- attr(text, "file")  # why?
     drobj$srcfile <- srcfile(file)
@@ -171,15 +173,20 @@ SweaveReadFile <- function(file, syntax)
 
     ## <FIXME>
     ## This needs to be more refined eventually ...
-    if (any(is.na(nchar(text, "c", TRUE)))) {
+    l10n <- l10n_info()
+    if (l10n$MBCS && any(is.na(nchar(text, "c", TRUE)))) {
+        ## give up unless UTF-8
+        if (!l10n[["UTF-8"]])
+            stop("Vignette ", sQuote(basename(f[1L])),
+                 " is not valid in the current locale", domain = NA)
         message("Vignette ", sQuote(basename(f[1L])),
                 " is not valid in the current locale: assuming Latin-1",
                 domain = NA)
         ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin-1:
-        ## this will probably work but may be incorrect
+        ## this will probably work except perhaps for some CP1252 files
         text <- iconv(text, "latin1", "")
+        attr(text, "encoding") <- "latin1"
     }
     ## </FIXME>
 
@@ -368,7 +375,11 @@ RweaveLatexSetup <-
 
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
-    output <- file(output, open = "w+")
+    ## Did we re-encode the input?  In which case we need to do
+    ## something about the output.
+    output <- if (identical(attr(file, "encoding"), "latin1")) {
+        file(output, open = "w+", encoding = "latin1")
+    } else file(output, open = "w+")
 
     if (missing(stylepath)) {
         p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -928,8 +939,7 @@ RtangleSetup <- function(file, syntax,
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
         output <- paste(prefix.string, "R", sep = ".")
-        lines <- c(sprintf("R code from vignette source '%s'", file),
-                   sprintf("Encoding: %s", localeToCharset()[1L]))
+        lines <- c(sprintf("R code from vignette source '%s'", file))
         lines <- c(paste("###", lines), "")
         writeLines(lines, output)
     } else
@@ -937,7 +947,11 @@ RtangleSetup <- function(file, syntax,
 
     if (!split) {
         if (!quiet) cat("Writing to file", output, "\n")
-        output <- file(output, open = "w")
+        ## Did we re-encode the input?  In which case we need to do
+        ## something about the output.
+        output <- if (identical(attr(file, "encoding"), "latin1")) {
+            file(output, open = "w", encoding = "latin1")
+        } else file(output, open = "w")
     } else {
         if (!quiet) cat("Writing chunks to files ...\n")
         output <- NULL

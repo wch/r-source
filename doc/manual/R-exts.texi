@@ -2046,10 +2046,12 @@ can become very complicated.
 The vignette source file should be written in ASCII or contain a
 declaration of the encoding (see below).  This applies even to comments
 within the source file, since @code{Sweave()} processes comments to look
-for options and metadata lines.
+for options and metadata lines.  It is @strong{not} assumed that the
+vignette sources are in the packages' encoding (and there are packages
+for which the vignettes have different encodings).
 
-@code{Stangle()} will produce an @R{} code file in the current locale's
-encoding: what that is recorded in a comment at the top of the file.
+@code{Stangle()} will produce an @R{} code file: this is almost always
+ASCII.
 
 @code{Sweave()} will produce a @file{.tex} file in the current locale's
 encoding.  That needs to be declared to @LaTeX{} via a line like
@@ -2057,10 +2059,31 @@ encoding.  That needs to be declared to @LaTeX{} via a line like
 \usepackage[utf8]@{inputenc@}
 @end example
 @noindent
-The problem is that this cannot be known in advance, so vignette PDFs
-may only be re-createable on the author's own machine.  @command{R CMD
-check} will report on any non-ASCII vignettes it finds which do not have
-such a declaration.
+@command{R CMD check} will warn about any non-ASCII vignettes it finds
+which do not have such a declaration.
+
+For @R{} 2.13.0 (at least), how non-ASCII vignettes are handled depends
+on the locale of the @R{} session.
+
+@itemize @bullet
+@item
+In an 8-bit locale the documents and @R{} output are handled
+byte-by-byte.  This may lead to invalid results if the vignette was
+intended to be in UTF-8 and the @R{} output is in the 8-bit locale.
+
+@item
+In a UTF-8 locale the vignette is translated as if in Latin-1, and the
+output file translated back to Latin-1.  It does not actually need to be
+in Latin-1 provided all the bytes used@footnote{and on some platforms
+this will work even with bytes outside Latin-1} in the vignette exist in
+Latin-1: think of this as a way of temporarily escaping 8-bit
+characters.
+
+@item
+In any other multi-byte locale @code{Sweave()} and @code{Stangle()}
+throw an error.
+
+@end itemize
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
 chunk.  The @R{} output will also be in the current locale, and should
