@@ -121,9 +121,6 @@
   }
   \subsection{NEW FEATURES}{
     \itemize{
-       \item \code{rstandard.glm} gains a \code{type} argument for optional
-      standardized Pearson residuals.
-
       \item \code{normalizePath()} has been moved to the \pkg{base}
       package (from \pkg{utils}): this is so it can be used by
       \code{library()} and friends.
@@ -536,6 +533,9 @@
 
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
+      
+      \item \code{rstandard.glm} gains a \code{type} argument for optional 
+      standardized Pearson residuals
     }
   }
 
@@ -896,7 +896,6 @@
 
       \item Inside \code{uniroot(f, ...)}, \code{-Inf} function values
       are now replaced by a maximally \bold{negative} value.
-
     }
   }
 }
