@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.matrix.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{model.matrix}
@@ -25,11 +25,11 @@ model.matrix(object, \dots)
     replacement function and whose names are the names of
     columns of \code{data} containing \code{\link{factor}}s.}   
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
-    \code{data} has no \code{"terms"} attribute.}
+    \code{data} is such that \code{model.frame} is called.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
-  \code{model.matrix} creates a design matrix.
+  \code{model.matrix} creates a design (or model) matrix.
 }
 \details{
   \code{model.matrix} creates a design matrix from the description given
@@ -56,7 +56,7 @@ model.matrix(object, \dots)
   although interactions involving the term are retained.
 }
 \value{
-  The design matrix for a regression model with the specified formula
+  The design matrix for a regression-like model with the specified formula
   and data.
 
   There is an attribute \code{"assign"}, an integer vector with an entry

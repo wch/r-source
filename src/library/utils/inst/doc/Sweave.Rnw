@@ -513,13 +513,45 @@ order, an order which is often not the alphabetical order of the
 files.
 
 
+\section{Adding Drivers}
+
+Adding drivers is relatively simple by modelling them on\footnote{but
+  if you copy, \textbf{do} be careful not to infringe R-core's
+  copyright: the copyright notices in the R sources \textbf{must} also
+  be copied.} the existing \texttt{RweaveLatex} and \texttt{Rtangle}
+drivers.
+
+An Sweave driver is a function of no arguments which should return a
+list of five functions:
+\begin{description}
+\item{\texttt{setup(file, syntax, \dots)}:}{Set up the driver, e.g.{}
+    open the output file.  Its return value is an object which is
+    passed to the next three functions, and can be updated by the next
+    two.  The value should be a list, and contain a component
+    \texttt{options}, a named list of the default settings for the
+    options needed by \texttt{runcode}.}
+\item{\texttt{runcode(object, chunk, options)}:}{Process a code
+    chunk.  Returns a possibly updated \texttt{object}.  Argument
+    \texttt{chunk} is a character vector, and \texttt{options} is a
+    options list for this chunk.}
+\item{\texttt{writedoc(object, chunk)}:}{Write out a documentation
+    chunk.  Returns a possibly updated \texttt{object}.}
+\item{\texttt{finish(object, error)}:}{Finish up, or clean up if
+    \texttt{error} is true.}
+\item{\texttt{checkopts(options)}:}{Converts/validates \texttt{options}
+    given as a named list of character strings.}
+\end{description}
+
+Note that the \texttt{setup} function should have a \texttt{\ldots}
+argument.  It will be passed additional arguments from a
+\texttt{Sweave()} call, but in future \texttt{Sweave} may itself set
+options and pass them on the setup function: one such may be the
+encoding used for the text to be processed.
 
 \bibliographystyle{plainnat}
 \bibliography{Sweave}
 
 \newpage
-
-
 \appendix
 
 
