@@ -136,8 +136,8 @@ transfers both the R commands and their respective output to the \LaTeX{}
 file, embedded in \texttt{Sinput} and \texttt{Soutput} environments,
 respectively.
 
-The second code chunk shows one of the Sweave extension
-to the \texttt{noweb} syntax: Code chunk names can be used to pass options to
+The second code chunk shows one of the Sweave extension to the
+\texttt{noweb} syntax: Code chunk names can be used to pass options to
 Sweave which control the final output.
 \begin{itemize}
  \item The chunk is marked as a figure chunk (\texttt{fig=TRUE}) such
@@ -231,8 +231,20 @@ setting options, then Sweave files can be written to be fully
 compatible with \texttt{noweb} (as only file names appear in code chunk
 names).
 
-Note that \texttt{split=TRUE} should \textbf{not} be use in package
+Note that \texttt{split=TRUE} should \textbf{not} be used in package
 vignettes.
+
+\subsection{Using multiple input files}
+
+\LaTeX{} files can include others via \verb|\input{}| commands.  These
+can also be used in Sweave files, but the included file will not
+included by \LaTeX{} and are not processed by Sweave.  The equivalent
+if you want the included files to be processed is the
+\verb|\SweaveInput{}| command.
+
+Included files should use the same syntax and encoding as the main
+file.
+
 
 \subsection{Using scalars in text}
 
