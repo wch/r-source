@@ -38,6 +38,9 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   If splitting is selected (including by the options in the file), each
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
+  
+  Note that this does not simple extract the code chunks verbatim
+  because code chunks can re-use earlier chunks.
 }
 \author{Friedrich Leisch and R-core.}
 \seealso{
