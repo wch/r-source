@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:42+0100\n"
+"POT-Creation-Date: 2011-03-30 15:16+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -285,7 +285,7 @@ msgstr ""
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
+#: src/main/optimize.c:184 src/main/optimize.c:190 src/main/optimize.c:199
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
@@ -4760,11 +4760,11 @@ msgstr ""
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr ""
 
-#: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
+#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
 msgid "NA replaced by maximum positive value"
 msgstr ""
 
-#: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:394
+#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
 msgid "NA/Inf replaced by maximum positive value"
 msgstr ""
 
@@ -4772,134 +4772,138 @@ msgstr ""
 msgid "invalid function value in 'optimize'"
 msgstr ""
 
-#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:587
+#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
 msgid "attempt to minimize non-function"
 msgstr ""
 
-#: src/main/optimize.c:104 src/main/optimize.c:188
+#: src/main/optimize.c:104 src/main/optimize.c:192
 msgid "'xmin' not less than 'xmax'"
 msgstr ""
 
-#: src/main/optimize.c:154
+#: src/main/optimize.c:145
+msgid "-Inf replaced by maximally negative value"
+msgstr ""
+
+#: src/main/optimize.c:158
 msgid "invalid function value in 'zeroin'"
 msgstr ""
 
-#: src/main/optimize.c:201
+#: src/main/optimize.c:205
 msgid "'maxiter' must be positive"
 msgstr ""
 
-#: src/main/optimize.c:229 src/main/optimize.c:235
+#: src/main/optimize.c:233 src/main/optimize.c:239
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr ""
 
-#: src/main/optimize.c:378
+#: src/main/optimize.c:382
 msgid "non-finite value supplied by 'nlm'"
 msgstr ""
 
-#: src/main/optimize.c:413
+#: src/main/optimize.c:417
 msgid "invalid function value in 'nlm' optimizer"
 msgstr ""
 
-#: src/main/optimize.c:424 src/main/optimize.c:439
+#: src/main/optimize.c:428 src/main/optimize.c:443
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 
-#: src/main/optimize.c:454
+#: src/main/optimize.c:458
 msgid "numeric parameter expected"
 msgstr ""
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:462
 msgid "conflicting parameter lengths"
 msgstr ""
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:466
 msgid "invalid parameter length"
 msgstr ""
 
-#: src/main/optimize.c:472 src/main/optimize.c:479
+#: src/main/optimize.c:476 src/main/optimize.c:483
 msgid "missing value in parameter"
 msgstr ""
 
-#: src/main/optimize.c:484
+#: src/main/optimize.c:488
 msgid "invalid parameter type"
 msgstr ""
 
-#: src/main/optimize.c:492
+#: src/main/optimize.c:496
 msgid "invalid NA value in parameter"
 msgstr ""
 
-#: src/main/optimize.c:502
+#: src/main/optimize.c:506
 msgid "non-positive number of parameters in nlm"
 msgstr ""
 
-#: src/main/optimize.c:504
+#: src/main/optimize.c:508
 msgid "nlm is inefficient for 1-d problems"
 msgstr ""
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:510
 msgid "invalid gradient tolerance in nlm"
 msgstr ""
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:512
 msgid "invalid iteration limit in nlm"
 msgstr ""
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:514
 msgid "minimization function has no good digits in nlm"
 msgstr ""
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:516
 msgid "no analytic gradient to check in nlm!"
 msgstr ""
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:518
 msgid "no analytic Hessian to check in nlm!"
 msgstr ""
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:520
 msgid "probable coding error in analytic gradient"
 msgstr ""
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic Hessian"
 msgstr ""
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:524
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr ""
 
-#: src/main/optimize.c:531
+#: src/main/optimize.c:535
 msgid "Relative gradient close to zero.\n"
 msgstr ""
 
-#: src/main/optimize.c:532 src/main/optimize.c:536
+#: src/main/optimize.c:536 src/main/optimize.c:540
 msgid "Current iterate is probably solution.\n"
 msgstr ""
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:539
 msgid "Successive iterates within tolerance.\n"
 msgstr ""
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:543
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 
-#: src/main/optimize.c:540
+#: src/main/optimize.c:544
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
 "or steptol is too large.\n"
 msgstr ""
 
-#: src/main/optimize.c:545
+#: src/main/optimize.c:549
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr ""
 
-#: src/main/optimize.c:548
+#: src/main/optimize.c:552
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -4908,11 +4912,11 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 
-#: src/main/optimize.c:667
+#: src/main/optimize.c:671
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:675
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 

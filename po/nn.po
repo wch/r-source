@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:42+0100\n"
+"POT-Creation-Date: 2011-03-30 15:16+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -288,7 +288,7 @@ msgstr "ugyldig tidsstempel"
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
+#: src/main/optimize.c:184 src/main/optimize.c:190 src/main/optimize.c:199
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
@@ -4856,11 +4856,11 @@ msgstr "L-BFGS-B krev endelege verdiar av «fn»"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "trace, REPORT må vera størren enn 0 (method = \"SANN\")"
 
-#: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
+#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
 msgid "NA replaced by maximum positive value"
 msgstr "NA bytt ut med den største positive verdien"
 
-#: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:394
+#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf bytte ut med den største positive verdien"
 
@@ -4868,100 +4868,105 @@ msgstr "NA/Inf bytte ut med den største positive verdien"
 msgid "invalid function value in 'optimize'"
 msgstr "ugyldig funksjonsverdi i «optimize»"
 
-#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:587
+#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
 msgid "attempt to minimize non-function"
 msgstr "prøvde å minimera ein ikkje-funksjon"
 
-#: src/main/optimize.c:104 src/main/optimize.c:188
+#: src/main/optimize.c:104 src/main/optimize.c:192
 msgid "'xmin' not less than 'xmax'"
 msgstr "«xmin» er ikkje mindre enn «xmax»"
 
-#: src/main/optimize.c:154
+#: src/main/optimize.c:145
+#, fuzzy
+msgid "-Inf replaced by maximally negative value"
+msgstr "NA/Inf bytte ut med den største positive verdien"
+
+#: src/main/optimize.c:158
 msgid "invalid function value in 'zeroin'"
 msgstr "ugyldig funksjonsverdi i «zeroin»"
 
-#: src/main/optimize.c:201
+#: src/main/optimize.c:205
 msgid "'maxiter' must be positive"
 msgstr "«maxiter» må vera positiv"
 
-#: src/main/optimize.c:229 src/main/optimize.c:235
+#: src/main/optimize.c:233 src/main/optimize.c:239
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "kan ikkje ha NA-verdi for «%s»"
 
-#: src/main/optimize.c:378
+#: src/main/optimize.c:382
 msgid "non-finite value supplied by 'nlm'"
 msgstr "ikkje-endeleg verdi gjeven til «nlm»"
 
-#: src/main/optimize.c:413
+#: src/main/optimize.c:417
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "ugyldig funksjonsverdi i «nlm»-optimisator"
 
-#: src/main/optimize.c:424 src/main/optimize.c:439
+#: src/main/optimize.c:428 src/main/optimize.c:443
 msgid "function value caching for optimization is seriously confused"
 msgstr "funksjonsverdi-caching for optimering er veldig forvirra"
 
-#: src/main/optimize.c:454
+#: src/main/optimize.c:458
 msgid "numeric parameter expected"
 msgstr "venta numerisk parameter"
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:462
 msgid "conflicting parameter lengths"
 msgstr "parameterverdiar i konflikt"
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:466
 msgid "invalid parameter length"
 msgstr "ugyldig parameterlengd"
 
-#: src/main/optimize.c:472 src/main/optimize.c:479
+#: src/main/optimize.c:476 src/main/optimize.c:483
 msgid "missing value in parameter"
 msgstr "manglar verdi i parameter"
 
-#: src/main/optimize.c:484
+#: src/main/optimize.c:488
 msgid "invalid parameter type"
 msgstr "ugyldig parametertype"
 
-#: src/main/optimize.c:492
+#: src/main/optimize.c:496
 msgid "invalid NA value in parameter"
 msgstr "ugyldig NA-verdi i parameter"
 
-#: src/main/optimize.c:502
+#: src/main/optimize.c:506
 msgid "non-positive number of parameters in nlm"
 msgstr "ikkje-positivt tal på parametrar i nlm"
 
-#: src/main/optimize.c:504
+#: src/main/optimize.c:508
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm er ikkje effektiv for 1D-problem"
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:510
 msgid "invalid gradient tolerance in nlm"
 msgstr "ugyldig gradienttoleranse i nlm"
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:512
 msgid "invalid iteration limit in nlm"
 msgstr "ugyldig iterasjonsgrense i nlm"
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:514
 msgid "minimization function has no good digits in nlm"
 msgstr "minimeringsfunksjonen har ingen gyldige siffer i nlm"
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:516
 msgid "no analytic gradient to check in nlm!"
 msgstr "ingen analytisk gradient å sjekka i nlm"
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:518
 msgid "no analytic Hessian to check in nlm!"
 msgstr "inga analytisk Hess-matrise å sjekka i nlm"
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:520
 msgid "probable coding error in analytic gradient"
 msgstr "truleg kodefeil i den analytiske gradienten"
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic Hessian"
 msgstr "truleg kodefeil i den analytiske Hess-matrisa"
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:524
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -4970,23 +4975,23 @@ msgstr ""
 "*** Ukjend feilmelding (msg = %d) i nlm().\n"
 "*** Skal ikkje kunna skje!"
 
-#: src/main/optimize.c:531
+#: src/main/optimize.c:535
 msgid "Relative gradient close to zero.\n"
 msgstr "Relativ gradient nær null.\n"
 
-#: src/main/optimize.c:532 src/main/optimize.c:536
+#: src/main/optimize.c:536 src/main/optimize.c:540
 msgid "Current iterate is probably solution.\n"
 msgstr "Gjeldande iterasjon er truleg ei løysing.\n"
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:539
 msgid "Successive iterates within tolerance.\n"
 msgstr "Etterfølgjande iterasjonar innan toleransenivå.\n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:543
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Det siste globale steg klarte ikkje finna eit punkt lågare enn x.\n"
 
-#: src/main/optimize.c:540
+#: src/main/optimize.c:544
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -4996,11 +5001,11 @@ msgstr ""
 "eller så er funksjonen for ikkje-lineær for denne\n"
 "algoritmen, eller så er «steptol» for stor.\n"
 
-#: src/main/optimize.c:545
+#: src/main/optimize.c:549
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Nådde iterasjonsgrensa. Algoritmen var mislukka.\n"
 
-#: src/main/optimize.c:548
+#: src/main/optimize.c:552
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -5013,12 +5018,12 @@ msgstr ""
 "han vert asymptotisk ein endeleg verdi ovanfrå\n"
 "i éin retning, eller så er «stepmx» for liten.\n"
 
-#: src/main/optimize.c:667
+#: src/main/optimize.c:671
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "den oppgjevne Hess-matrisa har feil lengd eller modus (og vert ikkje brukt)"
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:675
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "den oppgjevne gradienten har feil lengd eller modus (og vert ikkje brukt)"

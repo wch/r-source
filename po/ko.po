@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:42+0100\n"
+"POT-Creation-Date: 2011-03-30 15:16+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -289,7 +289,7 @@ msgstr "태그가 부적절합니다"
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
+#: src/main/optimize.c:184 src/main/optimize.c:190 src/main/optimize.c:199
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
@@ -4972,11 +4972,11 @@ msgstr "L-BFGS-B는 'fn'의 값을 필요로 합니다"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "REPORT는 정의 값이 아니면 되지 않습니다(method  = \"bfgs\")"
 
-#: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
+#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
 msgid "NA replaced by maximum positive value"
 msgstr "NA는 정확한 최대치로 옮겨놓을수 있었습니다"
 
-#: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:394
+#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf는 정의 최대치로 옮겨놓을수 있었습니다"
 
@@ -4984,100 +4984,105 @@ msgstr "NA/Inf는 정의 최대치로 옮겨놓을수 있었습니다"
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'에 있어서의 함수값이 부적절합니다"
 
-#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:587
+#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
 msgid "attempt to minimize non-function"
 msgstr "함수가 아닌것을 최소화 하려고 했습니다"
 
-#: src/main/optimize.c:104 src/main/optimize.c:188
+#: src/main/optimize.c:104 src/main/optimize.c:192
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin'가 'xmax'보다 최소한 크다"
 
-#: src/main/optimize.c:154
+#: src/main/optimize.c:145
+#, fuzzy
+msgid "-Inf replaced by maximally negative value"
+msgstr "NA/Inf는 정의 최대치로 옮겨놓을수 있었습니다"
+
+#: src/main/optimize.c:158
 msgid "invalid function value in 'zeroin'"
 msgstr "'zeroin'에 있어서 함수값이 부적절합니다"
 
-#: src/main/optimize.c:201
+#: src/main/optimize.c:205
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'는 정수가 아니면 안됩니다"
 
-#: src/main/optimize.c:229 src/main/optimize.c:235
+#: src/main/optimize.c:233 src/main/optimize.c:239
 #, fuzzy, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "...의 값은 promise가 아닙니다"
 
-#: src/main/optimize.c:378
+#: src/main/optimize.c:382
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'에 의해 유한하지 않는 값이 제공되어졌습니다"
 
-#: src/main/optimize.c:413
+#: src/main/optimize.c:417
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'최적화에 있어서의 함수값이 부적절합니다"
 
-#: src/main/optimize.c:424 src/main/optimize.c:439
+#: src/main/optimize.c:428 src/main/optimize.c:443
 msgid "function value caching for optimization is seriously confused"
 msgstr "최적화용으로 cache된 함수값이 너무 구별이 되어져있지 않습니다"
 
-#: src/main/optimize.c:454
+#: src/main/optimize.c:458
 msgid "numeric parameter expected"
 msgstr "수치 파라미터가 예상되어져 있습니다"
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:462
 msgid "conflicting parameter lengths"
 msgstr "파라미터의 길이가 모순되고 있습니다"
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:466
 msgid "invalid parameter length"
 msgstr "파라미터의 길이가 부적절합니다"
 
-#: src/main/optimize.c:472 src/main/optimize.c:479
+#: src/main/optimize.c:476 src/main/optimize.c:483
 msgid "missing value in parameter"
 msgstr "파라미터에 결손값이 있습니다"
 
-#: src/main/optimize.c:484
+#: src/main/optimize.c:488
 msgid "invalid parameter type"
 msgstr "파라미터의 유형이 부적절합니다"
 
-#: src/main/optimize.c:492
+#: src/main/optimize.c:496
 msgid "invalid NA value in parameter"
 msgstr "파라미터에 부적절한 NA값이 있습니다"
 
-#: src/main/optimize.c:502
+#: src/main/optimize.c:506
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm의 파라미터가 정확한 값이 아닙니다"
 
-#: src/main/optimize.c:504
+#: src/main/optimize.c:508
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm는 1차원 문제에 효율적이 아닙니다"
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:510
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm에 있어서 기울기의 허용값이 부적절합니다"
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:512
 msgid "invalid iteration limit in nlm"
 msgstr "nlm의 반복 횟수의 한계값이 부적절합니다"
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:514
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm안에 최소화 함수는 충분한 자리수를 가지지 않습니다"
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:516
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm중에서 체크되는 기울기의 해석식이 없습니다!"
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:518
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm중에서 체크해야할 분석Hessian행렬이 없습니다!"
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:520
 msgid "probable coding error in analytic gradient"
 msgstr "분석 기울기식에 코딩의 잘못된 가능성"
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic Hessian"
 msgstr "분석 Hessian 행렬식중에 코딩이 잘못된 가능성이 있습니다"
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:524
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -5086,23 +5091,23 @@ msgstr ""
 "nlm()함수로부터 알수없는 에러메세지 (msg =  %d)\\n\n"
 "*** 이것은 있을수가 있지 않습니다"
 
-#: src/main/optimize.c:531
+#: src/main/optimize.c:535
 msgid "Relative gradient close to zero.\n"
 msgstr "상대기울기가 0에 가까워지고 있습니다\n"
 
-#: src/main/optimize.c:532 src/main/optimize.c:536
+#: src/main/optimize.c:536 src/main/optimize.c:540
 msgid "Current iterate is probably solution.\n"
 msgstr "현재의 반복으로 아마도 해를 얻을수 있었겠지요?\n"
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:539
 msgid "Successive iterates within tolerance.\n"
 msgstr "연속한 반복이 허용 범위내입니다\n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:543
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "최종의 포괄적단계는 x보다 작은점을 검색할수가 없습니다\n"
 
-#: src/main/optimize.c:540
+#: src/main/optimize.c:544
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -5112,11 +5117,11 @@ msgstr ""
 "함수가 이 알고니즘에는 너무 비선영적일까요,\\n\n"
 "steptol은 너무 큽니다.\n"
 
-#: src/main/optimize.c:545
+#: src/main/optimize.c:549
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "반복수가 상한을 초과했습니다. 알고니즘은 실패되었습니다\n"
 
-#: src/main/optimize.c:548
+#: src/main/optimize.c:552
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -5129,12 +5134,12 @@ msgstr ""
 "있는 방향으로 위로부터 점근적인 유한값에 가까워지고 있을까요, \\n\n"
 "또는  stepmx가 너무 작을까요\n"
 
-#: src/main/optimize.c:667
+#: src/main/optimize.c:671
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "제공된 hessian 행렬은 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:675
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "제공된 기울기는 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 

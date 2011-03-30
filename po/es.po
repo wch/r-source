@@ -5,11 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:42+0100\n"
-"PO-Revision-Date: 2010-04-13 13:35+0100\n"
-"Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
+"POT-Creation-Date: 2011-03-30 15:16+0100\n"
+"PO-Revision-Date: 2011-03-30 16:08+0100\n"
+"Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf."
+"de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -290,7 +291,7 @@ msgstr "etiqueta inválida"
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
+#: src/main/optimize.c:184 src/main/optimize.c:190 src/main/optimize.c:199
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
@@ -467,7 +468,7 @@ msgstr "string de caracteres esperado como tercer argumento"
 #: src/gnuwin32/sys-win32.c:254 src/unix/sys-unix.c:313
 #, c-format
 msgid "running command '%s' had status %d"
-msgstr ""
+msgstr "comando ejecutado '%s' tiene estatus %d"
 
 #: src/gnuwin32/system.c:121 src/unix/sys-unix.c:415
 msgid "reached session elapsed time limit"
@@ -819,7 +820,7 @@ msgstr ""
 
 #: src/main/agrep.c:84 src/main/grep.c:173 src/main/grep.c:800
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
-msgstr ""
+msgstr "cadena de caracteres marcada como \"bytes\", usando useBytes = TRUE"
 
 #: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2215
 msgid "regular expression is invalid in this locale"
@@ -877,7 +878,7 @@ msgstr "el modo '%s' no es soportado en call_R"
 #: src/main/apply.c:212
 #, c-format
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
-msgstr ""
+msgstr "dimnames(<value>) no es ni NULL ni un list de longitud %d"
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -1050,12 +1051,12 @@ msgstr "primer argumento no válido: debe ser un arreglo"
 
 #: src/main/array.c:1074 src/main/array.c:1077
 msgid "'a' does not have named dimnames"
-msgstr ""
+msgstr "'a' no tiene un nombre en dimnames"
 
 #: src/main/array.c:1084
 #, c-format
 msgid "perm[%d] does not match a dimension name"
-msgstr ""
+msgstr "perm[%d] no tiene un nombre en dimension"
 
 #: src/main/array.c:1091
 msgid "'perm' is of wrong length"
@@ -1429,7 +1430,7 @@ msgstr "'...' usado en un contexto incorrecto"
 #: src/main/builtin.c:922
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
-msgstr ""
+msgstr "duplicado de interuptores por defecto: '%s' y '%s'"
 
 #: src/main/builtin.c:955
 msgid "'EXPR' is missing"
@@ -1450,6 +1451,8 @@ msgstr "%s' requiere un vector de caracteres"
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
 msgstr ""
+"número de caracteres no es computable para el elemento %d en el \"bytes\" "
+"codificación"
 
 #: src/main/character.c:160 src/main/character.c:188 src/main/character.c:636
 #: src/main/character.c:732
@@ -1461,6 +1464,7 @@ msgstr "string multibyte %d inválida"
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
 msgstr ""
+"el ancho no es computable para el elemento %d en el \"bytes\" codificación"
 
 #: src/main/character.c:252
 msgid "extracting substrings from a non-character object"
@@ -2234,7 +2238,7 @@ msgstr "solo formato ascii puede ser escrito en conexiones de modo texto"
 
 #: src/main/connections.c:3776
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
-msgstr ""
+msgstr "sólo 2^31-1 bytes se pueden escribir en una sola llamada readBin ()"
 
 #: src/main/connections.c:3825 src/main/connections.c:3978
 #: src/main/connections.c:4251 src/main/connections.c:4291
@@ -2361,6 +2365,8 @@ msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr ""
+"no se puede crear una conexión gzcon de una escritura textConnection, tal "
+"vez el use rawConnection"
 
 #: src/main/connections.c:5115 src/main/connections.c:5119
 #: src/main/connections.c:5126 src/main/connections.c:5140
@@ -3671,10 +3677,11 @@ msgstr "función defectuosa"
 #: src/main/eval.c:4291
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr ""
+"EXPR numéricos son necesarios para el switch() sin alternativas con nombre"
 
 #: src/main/eval.c:4294
 msgid "bad character switch offsets"
-msgstr ""
+msgstr "mal carácter en el interruptor offsets"
 
 #: src/main/eval.c:4296
 #, fuzzy
@@ -3683,7 +3690,7 @@ msgstr "nombre de archivo inválido"
 
 #: src/main/eval.c:4310
 msgid "bad numeric switch offsets"
-msgstr ""
+msgstr "mal numérico en el interruptor offsets"
 
 #: src/main/eval.c:4381
 msgid "cannot find index for threaded code address"
@@ -3735,7 +3742,7 @@ msgstr "no hay valores de contorno"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
-msgstr ""
+msgstr "mal contador de constante"
 
 #: src/main/eval.c:4703
 msgid "profile timer in use"
@@ -4108,6 +4115,8 @@ msgstr "expresión regular '%s' inválida"
 #: src/main/grep.c:1240
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
+"patrón coincide con una cadena vacía infinitamente, devolviendo primer "
+"patrón único "
 
 #: src/main/grep.c:1535
 #, fuzzy
@@ -4919,11 +4928,11 @@ msgstr "L-BFGS-B necesita valores finitos de 'fn'"
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "trace, REPORT debe ser > 0 (método = \"SANN\")"
 
-#: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:386
+#: src/main/optimize.c:53 src/main/optimize.c:136 src/main/optimize.c:390
 msgid "NA replaced by maximum positive value"
 msgstr "NA reemplazado por el máximo valor positivo"
 
-#: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:394
+#: src/main/optimize.c:61 src/main/optimize.c:148 src/main/optimize.c:398
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf reemplazado por el máximo valor positivo"
 
@@ -4931,101 +4940,106 @@ msgstr "NA/Inf reemplazado por el máximo valor positivo"
 msgid "invalid function value in 'optimize'"
 msgstr "valor inválido de la función en 'optimize'"
 
-#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:587
+#: src/main/optimize.c:88 src/main/optimize.c:178 src/main/optimize.c:591
 msgid "attempt to minimize non-function"
 msgstr "intento de minimizar algo diferente a una función"
 
-#: src/main/optimize.c:104 src/main/optimize.c:188
+#: src/main/optimize.c:104 src/main/optimize.c:192
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' no es menor que 'xmax'"
 
-#: src/main/optimize.c:154
+#: src/main/optimize.c:145
+#, fuzzy
+msgid "-Inf replaced by maximally negative value"
+msgstr "NA/Inf reemplazado por el máximo valor positivo"
+
+#: src/main/optimize.c:158
 msgid "invalid function value in 'zeroin'"
 msgstr "valor inválido de la función en 'zeroin'"
 
-#: src/main/optimize.c:201
+#: src/main/optimize.c:205
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' debe ser positivo"
 
-#: src/main/optimize.c:229 src/main/optimize.c:235
+#: src/main/optimize.c:233 src/main/optimize.c:239
 #, fuzzy, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "no se espera el valor en '...'"
 
-#: src/main/optimize.c:378
+#: src/main/optimize.c:382
 msgid "non-finite value supplied by 'nlm'"
 msgstr "valor no finito provisto por 'nlm'"
 
-#: src/main/optimize.c:413
+#: src/main/optimize.c:417
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "valor de función inválido en el optimizador 'nlm'"
 
-#: src/main/optimize.c:424 src/main/optimize.c:439
+#: src/main/optimize.c:428 src/main/optimize.c:443
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 "el valor de la función tomado para la optimización está seriamente confuso"
 
-#: src/main/optimize.c:454
+#: src/main/optimize.c:458
 msgid "numeric parameter expected"
 msgstr "parámetro numérico esperado"
 
-#: src/main/optimize.c:458
+#: src/main/optimize.c:462
 msgid "conflicting parameter lengths"
 msgstr "tamaños de parámetros incompatibles"
 
-#: src/main/optimize.c:462
+#: src/main/optimize.c:466
 msgid "invalid parameter length"
 msgstr "tamaño de parámetro inválido"
 
-#: src/main/optimize.c:472 src/main/optimize.c:479
+#: src/main/optimize.c:476 src/main/optimize.c:483
 msgid "missing value in parameter"
 msgstr "valor faltante para el parámetro"
 
-#: src/main/optimize.c:484
+#: src/main/optimize.c:488
 msgid "invalid parameter type"
 msgstr "tipo de parámetro inválido"
 
-#: src/main/optimize.c:492
+#: src/main/optimize.c:496
 msgid "invalid NA value in parameter"
 msgstr "valor NA inválido en parámetro"
 
-#: src/main/optimize.c:502
+#: src/main/optimize.c:506
 msgid "non-positive number of parameters in nlm"
 msgstr "nímero no positivo para el parámetro en nlm"
 
-#: src/main/optimize.c:504
+#: src/main/optimize.c:508
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm es ineficiente para problemas unidimensionales"
 
-#: src/main/optimize.c:506
+#: src/main/optimize.c:510
 msgid "invalid gradient tolerance in nlm"
 msgstr "tolerancia de gradiente inválido en nlm"
 
-#: src/main/optimize.c:508
+#: src/main/optimize.c:512
 msgid "invalid iteration limit in nlm"
 msgstr "límite de iteración inválido en nlm"
 
-#: src/main/optimize.c:510
+#: src/main/optimize.c:514
 msgid "minimization function has no good digits in nlm"
 msgstr "función de minimización no tiene dígitos significativos en nlm"
 
-#: src/main/optimize.c:512
+#: src/main/optimize.c:516
 msgid "no analytic gradient to check in nlm!"
 msgstr "ningún gradiente analítico para verificar en nlm!"
 
-#: src/main/optimize.c:514
+#: src/main/optimize.c:518
 msgid "no analytic Hessian to check in nlm!"
 msgstr "ningún Hessiano analítico para verificar en nlm!"
 
-#: src/main/optimize.c:516
+#: src/main/optimize.c:520
 msgid "probable coding error in analytic gradient"
 msgstr "probable error de código en gradiente analítico"
 
-#: src/main/optimize.c:518
+#: src/main/optimize.c:522
 msgid "probable coding error in analytic Hessian"
 msgstr "probable error de código en Hessiano analítico"
 
-#: src/main/optimize.c:520
+#: src/main/optimize.c:524
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -5034,23 +5048,23 @@ msgstr ""
 "*** mensaje de error desconocido (msg = %d) en nlm()\n"
 "*** no debería suceder!"
 
-#: src/main/optimize.c:531
+#: src/main/optimize.c:535
 msgid "Relative gradient close to zero.\n"
 msgstr "Gradiente relativo próximo a cero.\n"
 
-#: src/main/optimize.c:532 src/main/optimize.c:536
+#: src/main/optimize.c:536 src/main/optimize.c:540
 msgid "Current iterate is probably solution.\n"
 msgstr "iteración actual es probablemente una solución.\n"
 
-#: src/main/optimize.c:535
+#: src/main/optimize.c:539
 msgid "Successive iterates within tolerance.\n"
 msgstr "iteraciones sucesivas dentro de los límites de tolerancia.\n"
 
-#: src/main/optimize.c:539
+#: src/main/optimize.c:543
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "El paso anterior no pudo localizar un punto más bajo que x.\n"
 
-#: src/main/optimize.c:540
+#: src/main/optimize.c:544
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -5060,11 +5074,11 @@ msgstr ""
 "o la función es demasiado no-lineal para este algoritmo, \n"
 "o steptol es muy grande.\n"
 
-#: src/main/optimize.c:545
+#: src/main/optimize.c:549
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Límite de iteración excedido. El algoritmo falló.\n"
 
-#: src/main/optimize.c:548
+#: src/main/optimize.c:552
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -5078,11 +5092,11 @@ msgstr ""
 "o está por encima en alguna dirección,\n"
 "o stepmx es muy pequeño.\n"
 
-#: src/main/optimize.c:667
+#: src/main/optimize.c:671
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "hessiano provisto es de modo o tamaño incorrecto, será ignorado"
 
-#: src/main/optimize.c:671
+#: src/main/optimize.c:675
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "gradiente provisto es de modo o tamaño incorrecto, será ignorado"
 
@@ -5299,7 +5313,7 @@ msgstr "esta plataforma no soporta symlinks"
 
 #: src/main/platform.c:735
 msgid "'from' and 'to' are of different lengths"
-msgstr ""
+msgstr "'from' y 'to' son de longitudes diferentes"
 
 #: src/main/platform.c:746 src/main/platform.c:756
 #, fuzzy
@@ -5398,7 +5412,7 @@ msgstr "problema al ejecutar el editor %s"
 #: src/main/platform.c:2149
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr ""
+msgstr "problema al copiar %ls  a %ls: %s"
 
 #: src/main/platform.c:2265
 #, fuzzy, c-format
@@ -5413,7 +5427,7 @@ msgstr "problema al ejecutar el editor %s"
 #: src/main/platform.c:2295
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr ""
+msgstr "problema al copiar %s a %s: %s"
 
 #: src/main/platform.c:2417
 #, fuzzy
@@ -6718,7 +6732,7 @@ msgstr "largo de datos no es múltiplo de la variable de separación"
 
 #: src/main/split.c:56
 msgid "factor has bad level"
-msgstr ""
+msgstr "factor con mal nivel"
 
 #: src/main/sprintf.c:93
 #, c-format
@@ -6891,6 +6905,7 @@ msgstr ""
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
+"[[<- definido para objectos de tipo \"S4\" solo para subclases de entorno"
 
 #: src/main/subassign.c:1505
 msgid "wrong args for environment subassignment"
@@ -7082,7 +7097,7 @@ msgstr ""
 
 #: src/main/sysutils.c:167
 msgid "encoding of a filename cannot be 'bytes'"
-msgstr ""
+msgstr "codificación de un nombre de archivo no puede ser 'bytes'"
 
 #: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
 #: src/main/sysutils.c:867
@@ -7119,7 +7134,7 @@ msgstr "'tempdir' no especificado"
 
 #: src/main/sysutils.c:256
 msgid "no 'fileext'"
-msgstr ""
+msgstr "no hay 'fileext'"
 
 #: src/main/sysutils.c:348 src/main/sysutils.c:351 src/main/sysutils.c:442
 #: src/main/sysutils.c:444 src/main/sysutils.c:480
@@ -7164,7 +7179,7 @@ msgstr "csduplicated no llamada dentro de una STRSXP"
 
 #: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
 msgid "translating strings with \"bytes\" encoding is not allowed"
-msgstr ""
+msgstr "no se permite traducción de cadenas con \"bytes\" de codificación"
 
 #: src/main/sysutils.c:961
 #, fuzzy, c-format
@@ -8365,7 +8380,7 @@ msgstr "error interno en el código unz"
 #: src/unix/sys-unix.c:308
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr ""
+msgstr "comando ejecuta '%s' tiene estatus %d y mensaje de error '% s' "
 
 #: src/unix/sys-unix.c:394
 msgid "Sys.info() is not implemented on this system"
@@ -8412,12 +8427,15 @@ msgstr "módulo X11 no puede ser cargado"
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
 
-#, fuzzy
-#~ msgid "constand buffer must be a generic vector"
-#~ msgstr "code debe ser un vector genérico"
+#~ msgid "pcre_fullinfo returned '%d' "
+#~ msgstr "pcre_fullinfo retornado '%d' "
 
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr "argumento '%s' inválido"
+
+#, fuzzy
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr "code debe ser un vector genérico"
 
 #~ msgid "invalid 'tempdir' in R_tmpnam"
 #~ msgstr "'tempdir' inválido en R_tmpnam"
