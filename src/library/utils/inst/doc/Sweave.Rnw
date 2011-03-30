@@ -207,7 +207,7 @@ together with their default value, if any):
   \item[split=FALSE:] a logical value. If \texttt{TRUE}, then the output is
    distributed over several files, if \texttt{FALSE} all output is
    written to a single file.  Details depend on the driver.
-   
+
  \item[label:] a text label for the code chunk, which is used for
    file-name creation when \texttt{split=TRUE}.  It is also used in
    the comments added above the chunk when the file is processed by
@@ -524,22 +524,22 @@ drivers.
 An Sweave driver is a function of no arguments which should return a
 list of five functions:
 \begin{description}
-\item{\texttt{setup(file, syntax, \dots)}:}{Set up the driver, e.g.{}
+\item{\texttt{setup(file, syntax, \dots)}:} Set up the driver, e.g.{}
     open the output file.  Its return value is an object which is
     passed to the next three functions, and can be updated by the next
     two.  The value should be a list, and contain a component
     \texttt{options}, a named list of the default settings for the
-    options needed by \texttt{runcode}.}
-\item{\texttt{runcode(object, chunk, options)}:}{Process a code
+    options needed by \texttt{runcode}.
+\item{\texttt{runcode(object, chunk, options)}:} Process a code
     chunk.  Returns a possibly updated \texttt{object}.  Argument
     \texttt{chunk} is a character vector, and \texttt{options} is a
-    options list for this chunk.}
-\item{\texttt{writedoc(object, chunk)}:}{Write out a documentation
-    chunk.  Returns a possibly updated \texttt{object}.}
-\item{\texttt{finish(object, error)}:}{Finish up, or clean up if
-    \texttt{error} is true.}
-\item{\texttt{checkopts(options)}:}{Converts/validates \texttt{options}
-    given as a named list of character strings.}
+    options list for this chunk.
+\item{\texttt{writedoc(object, chunk)}:} Write out a documentation
+    chunk.  Returns a possibly updated \texttt{object}.
+\item{\texttt{finish(object, error)}:} Finish up, or clean up if
+    \texttt{error} is true.
+\item{\texttt{checkopts(options)}:} Converts/validates \texttt{options}
+    given as a named list of character strings.
 \end{description}
 
 Note that the \texttt{setup} function should have a \texttt{\ldots}
