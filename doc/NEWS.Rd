@@ -45,11 +45,15 @@
       be logical.
 
       \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
-      argument to specify the encoding of the vignette sources.
+      argument to specify the encoding of the vignette sources if the
+      latter do not contain a \samp{\\usepackage[]{inputenc}} statement
+      specifying a single input encoding.
 
-      \item Package installation tangles the  vignette sources are
-      tangled: this step now converts the vignette sources from the package
-      encoding to the current encoding.
+      \item Package installation tangles the vignette sources: this step
+      now converts the vignette sources from the vignette/package
+      encoding to the current encoding, and records the encoding (if not
+      ASCII) in a comment line at the top of the installed \file{.R}
+      file.
 
       \item The preferred location for vignette sources is now the
       directory \file{vignettes} and not \file{inst/doc}: \command{R CMD
@@ -59,8 +63,14 @@
 
       \item \command{R CMD Sweave} now supports a \option{--driver}
       option to select the Sweave driver: the default is equivalent to
-      \option{--driver=RweaveLatex}.  And also a \option{--encoding}
-      option.
+      \option{--driver=RweaveLatex}.  Also a \option{--encoding} option.
+
+      \item The \code{RweaveLatex()} driver now normally only runs each
+      figure chunk once for each device (and hence by default once for a
+      PDF figure).  The new options \code{persistent.graphics=TRUE}
+      keeps a graphics device open across chunks and plots each figure
+      chunk on it (the previous behaviour).  This is needed only very
+      rarely.
     }
   }
 

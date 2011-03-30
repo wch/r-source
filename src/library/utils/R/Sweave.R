@@ -30,7 +30,7 @@
 ### then passed as an attribute of 'file' to the driver's setup
 ### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
 ### re-encodes the output back to 'encoding': the Rtangle driver
-### leaves it in the encoding of the current locale ut records what
+### leaves it in the encoding of the current locale it records what
 ### that is in a comment.
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
@@ -39,7 +39,8 @@
 ### should work OK provided the package encoding is Latin-1: it is
 ### UTF-8 then LaTeX needs to be told what to do.  It also assumes
 ### that R output is in the current locale: a package with a different
-### encoding might have data in the package encoding.
+### encoding from the current one might have data in the package
+### encoding.
 
 
 ### Correspondence between input and output is maintained in two

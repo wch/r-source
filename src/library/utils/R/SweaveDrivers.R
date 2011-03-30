@@ -46,7 +46,8 @@ RweaveLatexSetup <-
     }
     if (stylepath) {
         styfile <- file.path(R.home("share"), "texmf", "tex", "latex", "Sweave")
-        if (.Platform$OS.type == "windows") styfile <- chartr("\\", "/", styfile)
+        if (.Platform$OS.type == "windows")
+            styfile <- chartr("\\", "/", styfile)
         if (length(grep(" ", styfile)))
             warning(gettextf("path to '%s' contains spaces,\n", styfile),
                     gettext("this may cause problems when running LaTeX"),
@@ -61,7 +62,8 @@ RweaveLatexSetup <-
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
-                    concordance = FALSE, expand = TRUE)
+                    concordance = FALSE, expand = TRUE,
+                    persistent.graphics = FALSE)
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -112,6 +114,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (!is.null(grd <- options$grdevice))
                 devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
         }
+        devs1 <- devs
         if (!object$quiet) {
             cat(formatC(options$chunknr, width = 2), ":")
             if (options$echo) cat(" echo")
@@ -216,11 +219,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         srcrefs <- attr(chunkexps, "srcref")
 
-##         if (length(devs)) {
-##             devs[[1L]](name = chunkprefix,
-##                        width = options$width, height = options$height,
-##                        options)
-##         }
+        if (!options$persistent.graphics && length(devs)) {
+            devs[[1L]](name = chunkprefix,
+                       width = options$width, height = options$height,
+                       options)
+            devs1 <- devs[-1]
+        }
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
@@ -339,9 +343,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         if (length(devs)) {
-##             grDevices::dev.off()        # close first one
-##             for (dev in devs[-1]) {
-            for (dev in devs) {
+            if(!options$persistent.graphics)
+                grDevices::dev.off()        # close first one
+            for (dev in devs1) {
                 dev(name = chunkprefix,
                     width = options$width, height = options$height,
                     options)
