@@ -13,7 +13,7 @@
 \usage{
 Rtangle()
 RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
-             split = FALSE, prefix = TRUE, quiet = FALSE)
+             split = FALSE, prefix = TRUE, quiet = FALSE, ...)
 }
 \arguments{
   \item{file}{Path to Sweave source file.}
@@ -28,6 +28,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
+  \item{\dots}{Additional arguments ignored by this driver.}
 }
 \details{
   Unless \code{split = TRUE}, the default name of the output file is

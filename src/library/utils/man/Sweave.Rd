@@ -29,8 +29,7 @@ Stangle(file, driver = Rtangle(),
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.
     See the section \sQuote{Syntax Definition}.}
-  \item{encoding}{The encoding to assume for \code{file}: the default is
-    to assume that the file is in the encoding of the \R session's locale.}
+  \item{encoding}{The default encoding to assume for \code{file}.}
   \item{\dots}{Further arguments passed to the driver's setup function:
     see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
     \code{\link{Rtangle}}.}
@@ -60,11 +59,12 @@ Stangle(file, driver = Rtangle(),
   initial options set by the driver: it should be a comma-separated set
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
-
-  If a non-default encoding is specified, the contents of \code{file}
-  are re-encoded to the current locale as they are read in.   Currently
-  with the default encoding, if the input is not valid in a multibyte
-  locale (typically one using UTF-8) it is re-encoded from Latin-1.
+  
+  Non-ASCII source files should contain a line of the form
+  \preformatted{\usepackage[foo]{inputenc}}
+  but if none is supplied the value of the \code{encoding} argument is
+  used (and if that is empty, the encoding of the current locale, or if
+  that is invalid, Latin-1).
 }
 
 \section{Syntax Definition}{
@@ -115,6 +115,9 @@ Stangle(file, driver = Rtangle(),
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
   
   Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.
+
+  Further Sweave drivers are in, for example,  packages \pkg{R2HTML},
+  \pkg{ascii}, \pkg{odfWeave} and \pkg{pgfSweave}.
 }
 
 \examples{
