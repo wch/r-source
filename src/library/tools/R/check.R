@@ -1717,6 +1717,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                    writeLines(out, paste(basename(v), ".log", sep=""))
                     cat(" failed\n")
                 } else cat(" OK\n")
             }

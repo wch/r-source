@@ -1747,6 +1747,13 @@ executed, and the vignettes re-made from their sources as a check of
 completeness of the sources (unless there is a @samp{BuildVignettes}
 field in the package's @file{DESCRIPTION} file with a false value).
 
+If there is an error in executing the @R{} code in vignette
+@file{@var{foo}}, a log file @file{@var{foo}.log} is created in the
+check directory.  The vignettes are re-made in a copy of the package
+sources in the @file{vign_test} subdirectory of the check directory, so
+for further information on errors look in directory
+@file{@var{pkgname}/vign_test/inst/doc}.
+
 @item
 The PDF version of the package's manual is created (to check that the
 @file{Rd} files can be converted successfully).
@@ -2058,6 +2065,8 @@ encoding.  That needs to be declared to @LaTeX{} via a line like
 \usepackage[utf8]@{inputenc@}
 @end example
 @noindent
+@command{R CMD check} will warn about any non-ASCII vignettes it finds
+which do not have such a declaration.
 The problem is that this cannot be known in advance, so vignette PDFs
 may only be re-createable on the author's own machine. @command{R CMD
 check} will report on any non-ASCII vignettes it finds which do not have
@@ -2065,13 +2074,11 @@ such a declaration.  (It is also possible to use the more recent
 @samp{inputenx} @LaTeX{} package.)
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
-chunk: this should be fine as it has already converted the code to the
-current locale (provided that covers the characters used in the code
-chunks in the sources).  The @R{} output will also be in the current
-locale, and should be covered by the @samp{inputenc} declaration.  One
-thing people often forget is that the @R{} output may not be ASCII even
-for ASCII @R{} sources, for many possible reasons.  One common one is
-the use of `fancy' quotes: see the @R{} help on @code{sQuote}.
+chunk.  The @R{} output will also be in the current locale, and should
+be covered by the @samp{inputenc} declaration.  One thing people often
+forget is that the @R{} output may not be ASCII even for ASCII @R{}
+sources, for many possible reasons.  One common one is the use of
+`fancy' quotes: see the @R{} help on @code{sQuote}.
 
 The final issue is the encoding of figures -- this applies only to PDF
 figures and not PNG etc.  The PDF figures will contain declarations for
