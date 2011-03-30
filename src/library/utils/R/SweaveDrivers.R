@@ -35,7 +35,9 @@ RweaveLatexSetup <-
 
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
-    output <- file(output, open = "w", encoding = attr(file, "encoding"))
+    encoding <- attr(file, "encoding")
+    if (encoding == "ASCII") encoding <- ""
+    output <- file(output, open = "w", encoding = encoding)
 
     if (missing(stylepath)) {
         p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -208,7 +210,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         srcline <- srclines[1L]    # current input line
         thisline <- 0L             # current output line
         lastshown <- 0L            # last line already displayed;
-                                        
+
         refline <- NA    # line containing the current named chunk ref
         leading <- 1L    # How many lines get the user prompt
 
@@ -229,15 +231,15 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
                 dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
                 leading <- showfrom - max(lastshown, 1L)
-                
+
                 lastshown <- showto
                 srcline <- srcref[3L]
-                
+
                 linedirs <- grepl("^#line ", dce)
                 dce <- dce[!linedirs]
                 # Need to reduce leading lines if some were just removed
                 leading <- leading - sum(linedirs[seq_len(leading)])
-               
+
                 while (length(dce) && length(grep("^[[:blank:]]*$", dce[1L]))) {
                     dce <- dce[-1L]
                     leading <- leading - 1L

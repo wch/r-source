@@ -150,7 +150,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     }
 
     ## An incomplete last line is not a real problem.
-    text <- readLines(file[1L], warn = FALSE)
+    text <- readLines(f[1L], warn = FALSE)
 
     ## now sort out an encoding, if needed.
     enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
