@@ -1969,8 +1969,7 @@ created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
 The first target in the @file{Makefile} should take care of both
 creation of PDF files and cleaning up afterwards (including after
 @code{Sweave}), i.e., delete all files that shall not appear in the
-final package archive.  Note that the @code{make} step is executed even
-if there are no files in Sweave format, and that if it runs @R{} it
+final package archive.  Note that if the @code{make} step runs @R{} it
 needs to be careful to respect the environment values of @env{R_LIBS}
 and @env{R_HOME}@footnote{As from @R{} 2.13.0, @code{R_HOME/bin} is
 prepended to the @env{PATH} so that references to @command{R} or
