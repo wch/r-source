@@ -1928,24 +1928,25 @@ or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
 call @emph{package vignettes}.  These are normally given the file
-extension @file{.Rnw} or @file{Rtex}, but for historical reasons
+extension @file{.Rnw} or @file{.Rtex}, but for historical reasons
 extensions@footnote{and to avoid problems with case-insensitive file
-systems, lower-case versions of all these extensions.} @file{.Snw},
-@file{.Stex} are recognized as vignettes.  Sweave allows the integration
-of @LaTeX{} documents: see the @code{Sweave} help page in @R{} for
-details on the document format.  Package vignettes found in directory
-@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
-code chunks they contain (except those with option @code{eval=FALSE}).
-The @R{} working directory for all vignette tests in @code{R CMD check}
-is a @emph{copy} of the @file{doc} subdirectory.  Make sure all files
-needed by the vignette (data sets, @dots{}) are accessible by either
-placing them in the @file{inst/doc} hierarchy of the source package or
-by using calls to @code{system.file()}.  All other files needed to
-re-make the vignette PDFs (such as LaTeX style files, BiBTeX input files
-and files for any figures not created by running the code in the
-vignette) must in the sources (usually under @file{inst/doc}, but a file
-@file{.Rinstignore} can be used to exclude them from the installed
-package).  References to parallel source directories such as
+systems, lower-case versions of all these extensions.} @file{.Snw} and
+@file{.Stex} are also recognized as vignettes.  Sweave allows the
+integration of @LaTeX{} documents: see the @code{Sweave} help page in
+@R{} for details on the document format.  Package vignettes found in
+directory @file{inst/doc} are tested by @code{R CMD check} by executing
+all @R{} code chunks they contain (except those with option
+@code{eval=FALSE}).  The @R{} working directory for all vignette tests
+in @code{R CMD check} is a @emph{copy} of the @file{doc} subdirectory.
+Make sure all files needed by the vignette (data sets, @dots{}) are
+accessible by either placing them in the @file{inst/doc} hierarchy of
+the source package or by using calls to @code{system.file()}.  All other
+files needed to re-make the vignette PDFs (such as LaTeX style files,
+BiBTeX input files and files for any figures not created by running the
+code in the vignette) must in the sources (usually under
+@file{inst/doc}, but a file @file{.Rinstignore} can be used to exclude
+them from the installed package).  References to parallel source
+directories such as
 @example
 \graphicspath@{@{../../manual/@}@}
 @end example
@@ -1966,19 +1967,18 @@ By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format in @file{inst/doc} (but not in sub-directories).  If no
 @file{Makefile} is found in directory @file{inst/doc}, then
 @code{tools::texi2dvi(pdf = TRUE)} is run on all processed vignettes.
-Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
-run @command{make} after the @code{Sweave} runs, so PDF manuals can be
-created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
-The first target in the @file{Makefile} should take care of both
-creation of PDF files and cleaning up afterwards (including after
-@code{Sweave}), i.e., delete all files that shall not appear in the
-final package archive.  Note that if the @code{make} step runs @R{} it
-needs to be careful to respect the environment values of @env{R_LIBS}
-and @env{R_HOME}@footnote{As from @R{} 2.13.0, @code{R_HOME/bin} is
-prepended to the @env{PATH} so that references to @command{R} or
-@command{Rscript} in the @file{Makefile} do make use of the currently
-running version of @R{}.}.  Finally, if there is a @file{Makefile} and
-it has a @samp{clean:} target, @command{make clean} is run.
+Whenever a @file{Makefile} is found, @code{R CMD build} will try to run
+@command{make} after the @code{Sweave} runs.  The first target in the
+@file{Makefile} should take care of both creation of PDF files and
+cleaning up afterwards (including after @code{Sweave}), i.e., delete all
+files that shall not appear in the final package archive.  Note that if
+the @code{make} step runs @R{} it needs to be careful to respect the
+environment values of @env{R_LIBS} and @env{R_HOME}@footnote{As from
+@R{} 2.13.0, @code{R_HOME/bin} is prepended to the @env{PATH} so that
+references to @command{R} or @command{Rscript} in the @file{Makefile} do
+make use of the currently running version of @R{}.}.  Finally, if there
+is a @file{Makefile} and it has a @samp{clean:} target, @command{make
+clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
 It must be portable (no @acronym{GNU} extensions) and must work

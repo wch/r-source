@@ -572,17 +572,15 @@ function(src_dir, out_dir, packages)
 ### * .install_package_vignettes
 
 ## called from src/library/Makefile
-## this is only used when building R, to build the 'grid' vignettes.
+## this is only used when building R, to build the 'grid' and 'utils' vignettes.
 .install_package_vignettes <-
 function(dir, outDir, keep.source = FALSE)
 {
     dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
-    if(!file_test("-d", vignetteDir))
-        return(invisible())
+    if(!file_test("-d", vignetteDir)) return(invisible())
     vignetteFiles <- list_files_with_type(vignetteDir, "vignette")
-    if(!length(vignetteFiles))
-        return(invisible())
+    if(!length(vignetteFiles)) return(invisible())
 
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
@@ -600,7 +598,7 @@ function(dir, outDir, keep.source = FALSE)
         return(invisible())
 
     ## For the time being, the primary use of this function is to
-    ## build and install vignettes in base packages (which means grid).
+    ## build and install vignettes in base packages.
     ## Hence, we build in a subdir of the current directory rather than
     ## a temp dir:
     ## this allows inspection of problems and automatic cleanup via Make.
