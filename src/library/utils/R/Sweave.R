@@ -20,7 +20,27 @@
 ### a) User-defined options are unclear: all options not already specified
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
-### d) Need to sort out encodings
+### c) If there is only one graphics option (as is usual), we don't need to
+### run the code in the figure chunks twice.
+
+### Encodings (currently, different from 2.13.x)
+###
+### SweaveReadFile figures out an encoding, uses it (not currently for
+### \SweaveInclude files) and returns it as an attribute.  This is
+### then passed as an attribute of 'file' to the driver's setup
+### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
+### re-encodes the output back to 'encoding': the Rtangle driver
+### leaves it in the encoding of the current locale ut records what
+### that is in a comment.
+###
+### SweaveReadFile first looks for a call to one of the LaTeX packages
+### inputen[cx] and deduces the vignette encoding from that, falling
+### back to the package encoding, then Latin-1 (with a warning).  This
+### should work OK provided the package encoding is Latin-1: it is
+### UTF-8 then LaTeX needs to be told what to do.  It also assumes
+### that R output is in the current locale: a package with a different
+### encoding might have data in the package encoding.
+
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input
