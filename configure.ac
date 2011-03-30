@@ -439,7 +439,7 @@ AC_ARG_WITH([ICU],
 ## Byte-compilation of packages.
 AC_ARG_ENABLE([byte-compiled-packages],
 [AS_HELP_STRING([--enable-byte-compiled-packages],
-                [byte-compile R packages @<:@no@:>@])],
+                [(not yet operational) byte-compile R packages @<:@no@:>@])],
 [want_byte_compiled_packages="${enableval}"],
 [want_byte_compiled_packages=no])
 AM_CONDITIONAL(BYTE_COMPILE_PACKAGES,
