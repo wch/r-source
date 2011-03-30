@@ -2061,6 +2061,11 @@ encoding.  That needs to be declared to @LaTeX{} via a line like
 @noindent
 @command{R CMD check} will warn about any non-ASCII vignettes it finds
 which do not have such a declaration.
+The problem is that this cannot be known in advance, so vignette PDFs
+may only be re-createable on the author's own machine. @command{R CMD
+check} will report on any non-ASCII vignettes it finds which do not have
+such a declaration.  (It is also possible to use the more recent
+@samp{inputenx} @LaTeX{} package.)
 
 For @R{} 2.13.0 (at least), how non-ASCII vignettes are handled depends
 on the locale of the @R{} session.
@@ -2096,6 +2101,14 @@ The final issue is the encoding of figures -- this applies only to PDF
 figures and not PNG etc.  The PDF figures will contain declarations for
 their encoding, but the Sweave option @code{pdf.encoding} may need to be
 set appropriately: see the help for the @code{pdf()} graphics device.
+
+As a real example of the complexities, consider the @pkg{fortunes}
+package version @samp{1.4-0}.  That package does not have a declared
+encoding, and its vignette is ASCII.  However, the data it displays are
+read from a UTF-8 CSV file, and will be assumed to be in the current
+encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
+@code{read.table} been told the data were UTF-8, @file{fortunes.tex}
+would have been in the locale's encoding.
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
