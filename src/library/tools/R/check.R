@@ -1595,10 +1595,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     run_vignettes <- function(desc)
     {
-        vignette_dir <- file.path(pkgdir, "inst", "doc")
-        if (!dir.exists(vignette_dir) ||
-            !length(vf <- list_files_with_type(vignette_dir, "vignette")))
-            return()
+        vigns <- pkgVignettes(dir = pkgdir)
+        if (is.null(vigns)) return()
+        vf <- vigns$docs
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -1617,11 +1616,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## A base source package (grid) may not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
-            pdfs <- sub("\\.[[:alpha:]]+$", ".pdf", vf)
+            pdfs <- file.path(pkgdir, "inst", "doc",
+                              sub("\\.[[:alpha:]]+$", ".pdf", basename(vf)))
             bad_vignettes <- vf[!file.exists(pdfs)]
             if(length(bad_vignettes)) {
                 any <- TRUE
-                warnLog("Package vignette(s) without corresponding PDF:")
+                warnLog()
+                printLog(Log,
+                         "Package vignette(s) without corresponding PDF:\n")
                 printLog(Log,
                          paste(c(paste("  ", basename(bad_vignettes)), "", ""),
                                collapse = "\n"))
@@ -1642,7 +1644,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
         sources <-
-            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"),"R"))
+            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         if (length(sources)) {
             new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vf))
             dups <- sources[sources %in% new_sources]
@@ -1659,14 +1661,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
         ## avoid case-insensitive matching
-        if ("makefile" %in% dir(vignette_dir)) {
+        if ("makefile" %in% dir(vigns$dir)) {
             if(!any) warnLog()
             any <- TRUE
             printLog(Log,
                      "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
-        if ("Makefile" %in% dir(vignette_dir)) {
-            lines <- readLines(file.path(vignette_dir, "Makefile"), warn = FALSE)
+        if ("Makefile" %in% dir(vigns$dir)) {
+            lines <- readLines(file.path(vigns$dir, "Makefile"), warn = FALSE)
             ## remove comment lines
             lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
             if(any(grepl("[^/]R +CMD", lines))) {
@@ -1704,7 +1706,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
-                              basename(v), "', '", vignette_dir, "'",
+                              basename(v), "', '", vigns$dir, "'",
                               if (nzchar(enc))
                               paste(", encoding = '", enc, "'", sep = ""),
                               ")", sep = "")

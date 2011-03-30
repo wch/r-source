@@ -51,6 +51,12 @@
       \item When a package is installed, the vignette sources are
       tangled: this step now converts the vignette sources from the package
       encoding to the current encoding.
+
+      \item The preferred location for vignette sources is now the
+      directory \file{vignettes} and not \file{inst/doc}: \command{R CMD
+	build} will now re-build vignettes in \file{vignettes} and copy
+      the \file{.Rnw} (etc) files and the corresponding PDFs to
+      \file{inst/doc}.
     }
   }
 

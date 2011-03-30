@@ -156,17 +156,17 @@ function(package, dir, lib.loc = NULL)
             stop("argument 'package' must be of length 1")
         docdir <- file.path(find.package(package, lib.loc), "doc")
         ## Using package installed in @code{dir} ...
-    }
-    else {
+    } else {
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA)
-        else
-            docdir <- file.path(file_path_as_absolute(dir), "inst",
-                                "doc")
+            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+        else {
+            docdir <- file.path(file_path_as_absolute(dir), "vignettes")
+            if(!file_test("-d", docdir))
+                docdir <- file.path(file_path_as_absolute(dir), "inst", "doc")
+        }
     }
 
     if(!file_test("-d", docdir)) return(NULL)

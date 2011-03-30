@@ -1924,53 +1924,51 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
-call @emph{package vignettes}.  These are normally given the file
-extension @file{.Rnw} or @file{Rtex}, but for historical reasons
-extensions@footnote{and to avoid problems with case-insensitive file
-systems, lower-case versions of all these extensions.} @file{.Snw},
-@file{.Stex} are recognized as vignettes.  Sweave allows the integration
-of @LaTeX{} documents: see the @code{Sweave} help page in @R{} for
-details on the document format.  Package vignettes found in directory
-@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
-code chunks they contain (except those with option @code{eval=FALSE}).
-The @R{} working directory for all vignette tests in @code{R CMD check}
-is a @emph{copy} of the @file{doc} subdirectory.  Make sure all files
-needed by the vignette (data sets, @dots{}) are accessible by either
-placing them in the @file{inst/doc} hierarchy of the source package or
-by using calls to @code{system.file()}.  All other files needed to
-re-make the vignette PDFs (such as LaTeX style files, BiBTeX input files
-and files for any figures not created by running the code in the
-vignette) must in the sources (usually under @file{inst/doc}, but a file
-@file{.Rinstignore} can be used to exclude them from the installed
-package).  References to parallel source directories such as
-@example
-\graphicspath@{@{../../manual/@}@}
-@end example
-@noindent
-(from @pkg{RODBC}) will work as from @R{} 2.13.0.
+call @emph{package vignettes}.  As from @R{} 2.14.0 the preferred
+location for the Sweave sources is the subdirectory @file{vignettes} of
+the source packages, but for compatibility with earlier versions of
+@R{}, vignette sources will be looked for in @file{inst/doc} if
+@file{vignettes} does not exist.
+
+Vignette sources are normally given the file extension @file{.Rnw} or
+@file{.Rtex}, but for historical reasons extensions@footnote{and to
+avoid problems with case-insensitive file systems, lower-case versions
+of all these extensions.} @file{.Snw} and @file{.Stex} are also
+recognized as vignettes.  Sweave allows the integration of @LaTeX{}
+documents: see the @code{Sweave} help page in @R{} for details on the
+document format.  Package vignettes found in directory @file{inst/doc}
+are tested by @code{R CMD check} by executing all @R{} code chunks they
+contain (except those with option @code{eval=FALSE}).  The @R{} working
+directory for all vignette tests in @code{R CMD check} is a @emph{copy}
+of the @file{doc} subdirectory.  Make sure all files needed to run the
+vignette (data sets, @dots{}) are accessible by either placing them in
+the @file{inst/doc} hierarchy of the source package or by using calls to
+@code{system.file()}.  All other files needed to re-make the vignette
+PDFs (such as LaTeX style files, BiBTeX input files and files for any
+figures not created by running the code in the vignette) must in the
+sources under @file{vignettes}.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
-versions of the vignettes for distribution with the package sources.  By
-including the PDF version in the package sources it is not necessary
-that the vignettes can be run and compiled at install time, i.e., the
-package author can use private @R{} packages, screen snapshots and
-@LaTeX{} extensions which are only available on his
+versions of the vignettes for distribution with the package sources in
+@file{inst/doc}.  By including the PDF version in the package sources it
+is not necessary that the vignettes can be run and compiled at install
+time, i.e., the package author can use private @R{} packages, screen
+snapshots and @LaTeX{} extensions which are only available on his
 machine.@footnote{provided the conditions of the package's licence are
 met: many would see these as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
-Sweave format in @file{inst/doc} (but not in sub-directories).  If no
-@file{Makefile} is found in directory @file{inst/doc}, then
-@code{tools::texi2dvi(pdf = TRUE)} is run on all processed vignettes.
-Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
-run @command{make} after the @code{Sweave} runs, so PDF manuals can be
-created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
-The first target in the @file{Makefile} should take care of both
-creation of PDF files and cleaning up afterwards (including after
-@code{Sweave}), i.e., delete all files that shall not appear in the
-final package archive.  Note that if the @code{make} step runs @R{} it
-needs to be careful to respect the environment values of @env{R_LIBS}
+Sweave format in @file{vignettes}, or if that does not exist,
+@file{inst/doc} (but not in sub-directories).  If no @file{Makefile} is
+found in directory @file{inst/doc}, then @code{tools::texi2dvi(pdf =
+TRUE)} is run on all processed vignettes.  Whenever a @file{Makefile} is
+found, then @code{R CMD build} will try to run @command{make} after the
+@code{Sweave} runs.  The first target in the @file{Makefile} should take
+care of both creation of PDF files and cleaning up afterwards (including
+after @code{Sweave}), i.e., delete all files that shall not appear in
+the final package archive.  Note that if the @code{make} step runs @R{}
+it needs to be careful to respect the environment values of @env{R_LIBS}
 and @env{R_HOME}@footnote{As from @R{} 2.13.0, @code{R_HOME/bin} is
 prepended to the @env{PATH} so that references to @command{R} or
 @command{Rscript} in the @file{Makefile} do make use of the currently

@@ -257,57 +257,68 @@ get_exclude_patterns <- function()
             file.rename(file.path(doc_dir, "makefile"),
                         file.path(doc_dir, "Makefile"))
         }
-        if (vignettes && dir.exists(doc_dir) &&
-           length(list_files_with_type(doc_dir, "vignette")) &&
+        if (vignettes &&
             parse_description_field(desc, "BuildVignettes", TRUE)) {
-            if (!pkgInstalled) {
-		messageLog(Log, "installing the package to re-build vignettes")
-		pkgInstalled <- temp_install_pkg(pkgdir, libdir)
-	    }
+            ## Look for vignettes
+            vigns <- pkgVignettes(dir = '.')
+            if (!is.null(vigns)) {
+                if (!pkgInstalled) {
+                    messageLog(Log,
+                               "installing the package to re-build vignettes")
+                    pkgInstalled <- temp_install_pkg(pkgdir, libdir)
+                }
 
-            ## Good to do this in a separate process: it might die
-            creatingLog(Log, "vignettes")
-            R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
-            if (!is.na(R_LIBS)) {
-                on.exit(Sys.setenv(R_LIBS = R_LIBS), add=TRUE)
-                Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
-            } else {
-                on.exit(Sys.unsetenv("R_LIBS"), add=TRUE)
-                Sys.setenv(R_LIBS = libdir)
-            }
-            cmd <- file.path(R.home("bin"), "Rscript")
-            args <- c("--vanilla",
-                      "--default-packages=", # some vignettes assume methods
-                      "-e", shQuote("tools::buildVignettes(dir = '.')"))
-            ## since so many people use 'R CMD' in Makefiles,
-            oPATH <- Sys.getenv("PATH")
-            Sys.setenv(PATH = paste(R.home("bin"), oPATH,
-                                    sep = .Platform$path.sep))
-            res <- shell_with_capture(cmd, args)
-            Sys.setenv(PATH = oPATH)
-            if (res$status) {
-                resultLog(Log, "ERROR")
-                printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
-                do_exit(1L)
-            } else {
-                ## Do any of the .R files which will be generated
-                ## exist in inst/doc?  If so the latter should be removed.
-                sources <- basename(list_files_with_exts(doc_dir, "R"))
-                if (length(sources)) {
-                    vf <- basename(list_files_with_type(doc_dir, "vignette"))
-                    new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", vf)
-                    dups <- sources[sources %in% new_sources]
-                    if(length(dups)) {
-                        warningLog(Log)
-                        printLog(Log,
-                                 paste(c("  Unused files in inst/doc which are pointless or misleading",
-                                         "  as they will be re-created from the vignettes on installation:",
-                                         paste("  ", dups),
-                                         "  have been removed", ""),
-                                       collapse = "\n"))
-                        unlink(file.path(doc_dir, dups))
+                ## Good to do this in a separate process: it might die
+                creatingLog(Log, "vignettes")
+                R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
+                if (!is.na(R_LIBS)) {
+                    on.exit(Sys.setenv(R_LIBS = R_LIBS), add=TRUE)
+                    Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
+                } else {
+                    on.exit(Sys.unsetenv("R_LIBS"), add=TRUE)
+                    Sys.setenv(R_LIBS = libdir)
+                }
+                cmd <- file.path(R.home("bin"), "Rscript")
+                args <- c("--vanilla",
+                          "--default-packages=", # some vignettes assume methods
+                          "-e", shQuote("tools::buildVignettes(dir = '.')"))
+                ## since so many people use 'R CMD' in Makefiles,
+                oPATH <- Sys.getenv("PATH")
+                Sys.setenv(PATH = paste(R.home("bin"), oPATH,
+                           sep = .Platform$path.sep))
+                res <- shell_with_capture(cmd, args)
+                Sys.setenv(PATH = oPATH)
+                if (res$status) {
+                    resultLog(Log, "ERROR")
+                    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
+                    do_exit(1L)
+                } else {
+                    ## Do any of the .R files which will be generated
+                    ## exist in inst/doc?  If so the latter should be removed.
+                    sources <- basename(list_files_with_exts(doc_dir, "R"))
+                    if (length(sources)) {
+                        vf <- basename(list_files_with_type(doc_dir, "vignette"))
+                        new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", vf)
+                        dups <- sources[sources %in% new_sources]
+                        if(length(dups)) {
+                            warningLog(Log)
+                            printLog(Log,
+                                     paste(c("  Unused files in inst/doc which are pointless or misleading",
+                                             "  as they will be re-created from the vignettes on installation:",
+                                             paste("  ", dups),
+                                             "  have been removed", ""),
+                                           collapse = "\n"))
+                            unlink(file.path(doc_dir, dups))
+                        } else resultLog(Log, "OK")
                     } else resultLog(Log, "OK")
-                } else resultLog(Log, "OK")
+                }
+                ## We may need to install them.
+                if (basename(vigns$dir) == "vignettes") {
+                    dir.create(doc_dir, showWarnings = FALSE)
+                    pdfs <- sub("\\.[RrSs](nw|tex)$", ".pdf", vigns$docs)
+                    file.copy(c(vigns$docs, pdfs), doc_dir)
+                    unlink(pdfs)
+                }
             }
         }
         if (compact_vignettes &&
