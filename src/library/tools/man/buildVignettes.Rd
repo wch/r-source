@@ -38,7 +38,8 @@ pkgVignettes(package, dir, lib.loc = NULL)
   \code{buildVignettes} is called for its side effect of creating the
   PDF versions of all vignettes.
   
-  \code{pkgVignettes} returns an object of class \code{"pkgVignettes"}.
+  \code{pkgVignettes} returns an object of class \code{"pkgVignettes"}
+  if a vignette directory is found, otherwise \code{NULL}.
 }
 \keyword{utilities}
 \keyword{documentation}
