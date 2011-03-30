@@ -1750,6 +1750,13 @@ executed, and the vignettes re-made from their sources as a check of
 completeness of the sources (unless there is a @samp{BuildVignettes}
 field in the package's @file{DESCRIPTION} file with a false value).
 
+If there is an error in executing the @R{} code in vignette
+@file{@var{foo}}, a log file @file{@var{foo}.log} is created in the
+check directory.  The vignettes are re-made in a copy of the package
+sources in the @file{vign_test} subdirectory of the check directory, so
+for further information on errors look in directory
+@file{@var{pkgname}/vign_test/inst/doc}.
+
 @item
 The PDF version of the package's manual is created (to check that the
 @file{Rd} files can be converted successfully).

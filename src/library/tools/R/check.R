@@ -1709,11 +1709,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
                 # cat("\n===============", basename(v), "==============\n"); writeLines(out)
                 if(length(grep("^  When (tangling|sourcing)", out,
-                               useBytes = TRUE)))
+                               useBytes = TRUE))) {
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                    writeLines(out, paste(basename(v), ".log", sep=""))
+                }
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
@@ -2084,10 +2086,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 ## Warnings spotted by gcc with '-Wunused', which is
                 ## implied by '-Wall'.  Currently only accessible
                 ## via an internal environment variable.
-                check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
+                check_src_flag <-
+                    Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
                     lines <- grep("warning: unused", lines,
-                                  ignore.case = TRUE, invert = TRUE, value = TRUE)
+                                  ignore.case = TRUE,
+                                  invert = TRUE, value = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
 
