@@ -2686,8 +2686,8 @@ building vignettes needs @command{tex} and @command{latex}, or
 manuals (including the @R{} reference manual) and vignettes is sensitive
 to the version of the @LaTeX{} package @pkg{hyperref} and we recommend
 that the @TeX{} distribution used is keep up-to-date.  A number of
-@LaTeX{} packages are required (including @pkg{url.sty}) and others such
-as @pkg{hyperref} are desirable.
+@LaTeX{} packages are required (including @pkg{url.sty}, and
+@pkg{listings.sty}) and others such as @pkg{hyperref} are desirable.
 
 
 If you want to build from the R Subversion repository you need both

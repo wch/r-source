@@ -7,10 +7,10 @@
 %\VignetteDepends{stats}
 
 \title{Sweave User Manual}
-\author{Friedrich Leisch}
+\author{Friedrich Leisch and R-core}
 
 \usepackage[round]{natbib}
-\usepackage{graphicx,Rd}
+\usepackage{graphicx, Rd}
 \usepackage{listings}
 
 \lstset{frame=trbl,basicstyle=\small\tt}
@@ -207,8 +207,12 @@ together with their default value, if any):
   \item[split=FALSE:] a logical value. If \texttt{TRUE}, then the output is
    distributed over several files, if \texttt{FALSE} all output is
    written to a single file.  Details depend on the driver.
-  \item[label:] a text label for the code chunk, which is used for
-   file-name creation when \texttt{split=TRUE}.
+   
+ \item[label:] a text label for the code chunk, which is used for
+   file-name creation when \texttt{split=TRUE}.  It is also used in
+   the comments added above the chunk when the file is processed by
+   \texttt{Rtangle} (provided the \texttt{annotate} option is true, as
+   it is by default).
 \end{description}
 
 The first (and only the first) option in a code chunk name can be
@@ -346,6 +350,56 @@ commands: see the two default definitions mentioned above for
 examples.  (More detailed instructions will follow once the API has
 stabilized).
 
+\subsection{Encoding}
+
+\LaTeX{} documents are normally written entirely in ASCII, using
+\LaTeX{} escapes such as \verb|\'e| for accented characters.  This
+can be inconvenient when writing a non-English document, and an
+alternative input encoding can be selected by using a statement such as
+\begin{quote}
+  \verb|\usepackage[latin1]{inputenc}|
+\end{quote}
+in the document's preamble, to tell \LaTeX{} to translate the input to
+its own escapes.  There is a wide range of input encodings which are
+supported, at least partially, and the more recent \LaTeX{} package
+\texttt{inputenx} supports more.  Other encodings commonly encountered
+in Sweave documents are \texttt{latin9}, \texttt{utf8} (but that only
+covers a small subset of UTF-8) and \texttt{ansinew} (the CP1252
+codepage on Windows).
+
+The previous paragraph covered the documentation sections, but what of
+the code sections where \LaTeX{} escapes cannot be used?  The first
+piece of advice is to use only ASCII code sections as anything else
+will reduce the portability of your document.  But R code can be
+included if in the input encoding declared in the preamble.
+
+The next complication is inclusions: the final vignette may well
+include R output, \LaTeX{} or other Sweave files \emph{via}
+\verb|\input{}| and \verb|\SweaveInput{}| lines, a bibliography and
+figures. It is the user's responsibility that the text inclusions are
+covered by the declared input encoding.  \LaTeX{} allows the input
+encoding to be changed by
+\begin{quote}
+  \verb|\inputencoding{something}|
+\end{quote}
+statements: these may not work well in Sweave processing.  It is all
+too easy for BiBTeX to pick up UTF-8-encoded references for a Latin-1
+document, or \emph{vice versa}.
+
+R output is again to a large extent under the user's control.  If a
+Latin-1 Sweave document is processed by R running a Latin-1 locale or
+a UTF-8 document is processed in a UTF-8 locale, the only problems
+which are likely to arise are from handling data in another encoding,
+but it may be necessary to declare the document's encoding to cover
+the R output which is generated even if the document is itself ASCII.
+
+The encoding of figures is not usually an issue as they are either
+bitmaps or include encoding information: it may be necessary to use
+the \texttt{pdf.encoding} Sweave option to set the \texttt{pdf()}
+device up appropriately.
+
+Handling non-ASCII vignettes is a work in progress: they do not work
+well before R 2.13.0.
 
 
 \section{Tangling and weaving}
@@ -356,8 +410,8 @@ package \texttt{utils}.  \texttt{Stangle} can be used to extract only
 the code chunks from an \texttt{.Rnw} file and write to one or several
 files.  \texttt{Sweave()} runs the code chunks through R and replaces
 them with the respective input and/or output.  \texttt{Stangle} is
-actually just a wrapper function for Sweave, which uses a tangling
-instead of a weaving driver by default. See
+actually just a wrapper function for \texttt{Sweave}, which uses a
+tangling instead of a weaving driver by default. See
 <<eval=FALSE>>=
 help("Sweave")
 @
