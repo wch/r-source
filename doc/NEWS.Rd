@@ -24,15 +24,6 @@
       allowed.  Nor are single-character package names (\pkg{R} was
       already disallowed).
 
-      \item There have been several enhancements to \code{Sweave()}.
-
-      User-defined numeric (with names starting \code{n_}) and character
-      (starting \code{ch_}) options are now allowed: as before all other
-      unknown options are taken to be logical.
-
-      \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
-      argument to specify the encoding of the vignette sources.
-
       \item \code{regexpr()} and \code{gregexpr()} with \code{perl =
 	TRUE} allows Python-style named captures.  (Wish and
       contribution of \PR{14518}.)
@@ -46,9 +37,17 @@
     }
   }
 
-  \subsection{PACKAGE INSTALLATION}{
+  \subsection{SWEAVE & VIGNETTES}{
     \itemize{
-      \item When a package is installed, the vignette sources are
+      \item User-defined numeric (with names starting \code{n_}) and
+      character (starting \code{ch_}) options are now allowed in
+      \code{Sweave()}: as before all other unknown options are taken to
+      be logical.
+
+      \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
+      argument to specify the encoding of the vignette sources.
+
+      \item Package installation tangles the  vignette sources are
       tangled: this step now converts the vignette sources from the package
       encoding to the current encoding.
 
@@ -57,6 +56,11 @@
 	build} will now re-build vignettes in \file{vignettes} and copy
       the \file{.Rnw} (etc) files and the corresponding PDFs to
       \file{inst/doc}.
+
+      \item \command{R CMD Sweave} now supports a \option{--driver}
+      option to select the Sweave driver: the default is equivalent to
+      \option{--driver=RweaveLatex}.  And also a \option{--encoding}
+      option.
     }
   }
 
@@ -71,11 +75,6 @@
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
-
-      \item \command{R CMD Sweave} now supports a \option{--driver}
-      option to select the Sweave driver: the default is equivalent to
-      \option{--driver=RweaveLatex}.  And also a \option{--encoding}
-      option.
     }
   }
 

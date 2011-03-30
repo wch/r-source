@@ -19,8 +19,8 @@ pkgVignettes(package, dir, lib.loc = NULL)
   \item{package}{a character string naming an installed package.  If
     given, Sweave files are searched in subdirectory \file{doc}.}
   \item{dir}{a character string specifying the path to a package's root
-    source directory.  This subdirectory \file{inst/doc} is searched for
-    Sweave files.}
+    source directory.  This subdirectory \file{vignettes} (or if it
+    does not exist \file{inst/doc}) is searched for Sweave files.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to

@@ -583,25 +583,21 @@ function(src_dir, out_dir, packages)
 function(dir, outDir, keep.source = FALSE)
 {
     dir <- file_path_as_absolute(dir)
-    vignetteDir <- file.path(dir, "inst", "doc")
-    if(!file_test("-d", vignetteDir)) return(invisible())
-    vignetteFiles <- list_files_with_type(vignetteDir, "vignette")
-    if(!length(vignetteFiles)) return(invisible())
+    vigns <- pkgVignettes(dir = dir)
+    if(is.null(vigns) || !length(vigns$docs)) return(invisible())
 
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
-    ## For the time being, assume that no PDFs are available in
-    ## vignetteDir.
+
     vignettePDFs <-
         file.path(outVignetteDir,
                   sub("$", ".pdf",
-                      basename(file_path_sans_ext(vignetteFiles))))
-    upToDate <- file_test("-nt", vignettePDFs, vignetteFiles)
-    if(all(upToDate))
-        return(invisible())
+                      basename(file_path_sans_ext(vigns$docs))))
+    upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
+    if(all(upToDate)) return(invisible())
 
     ## For the time being, the primary use of this function is to
     ## build and install vignettes in base packages.
@@ -617,7 +613,7 @@ function(dir, outDir, keep.source = FALSE)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
-    for(srcfile in vignetteFiles[!upToDate]) {
+    for(srcfile in vigns$docs[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         message("processing '", basename(srcfile), "'")
         texfile <- paste(base, ".tex", sep = "")
@@ -633,7 +629,7 @@ function(dir, outDir, keep.source = FALSE)
         ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
         ## <FIXME>
         ## What if this fails?
-        texi2dvi(texfile, pdf = TRUE, quiet = TRUE, texinputs = vignetteDir)
+        texi2dvi(texfile, pdf = TRUE, quiet = TRUE, texinputs = vigns$dir)
         ## </FIXME>
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")

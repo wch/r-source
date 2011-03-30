@@ -261,7 +261,7 @@ get_exclude_patterns <- function()
             parse_description_field(desc, "BuildVignettes", TRUE)) {
             ## Look for vignettes
             vigns <- pkgVignettes(dir = '.')
-            if (!is.null(vigns)) {
+            if (!is.null(vigns) && length(vigns$docs)) {
                 if (!pkgInstalled) {
                     messageLog(Log,
                                "installing the package to re-build vignettes")
