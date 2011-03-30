@@ -24,7 +24,8 @@ SweaveSyntConv(file, syntax, output = NULL)
     that the output is created in the current working directory.}}
 \author{Friedrich Leisch}
 \seealso{
-  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+  \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
+  the \pkg{utils} package.
 
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
 }

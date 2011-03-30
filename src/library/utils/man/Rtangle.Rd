@@ -40,7 +40,8 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
 }
 \author{Friedrich Leisch and R-core.}
 \seealso{
-  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+  \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
+  the \pkg{utils} package.
 
   \code{\link{Sweave}}, \code{\link{RweaveLatex}}
 }

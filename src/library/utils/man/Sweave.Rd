@@ -59,7 +59,7 @@ Stangle(file, driver = Rtangle(),
   statement in a document.
   
   Non-ASCII source files should contain a line of the form
-  \preformatted{\usepackage[foo]{inputenc}}
+\preformatted{\usepackage[foo]{inputenc}}
   Currently the input file is assumed to be in the current locale's
   encoding, unless it is not valid in a UTF-8 locale when it is
   re-encoded from Latin-1 for processing, and the output re-encoded back
@@ -94,7 +94,8 @@ Stangle(file, driver = Rtangle(),
 }
 
 \seealso{
-  The \sQuote{Sweave User Manual}, a vignette in the \pkg{utils} package.
+  \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
+  the \pkg{utils} package.
   
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
   
