@@ -82,35 +82,20 @@ Stangle(file, driver = Rtangle(),
   the pattern \code{SweaveSyntax.*}.
 }
 
-%% This should really be in the Sweave manual
-\section{Drivers}{
-  An Sweave driver is a function which returns a list of functions:
-  \describe{
-    \item{\code{setup(file, syntax, \dots)}:}{Set up the driver, e.g. open
-      the output file.}
-    \item{\code{runcode(object, chunk, options)}:}{Process a code chunk.}
-    \item{\code{writedoc(object, chunk)}:}{Write out a documentation chunk.}
-    \item{\code{finish(object, error)}:}{Finish up, or clean up if
-      \code{error} is true.}
-    \item{\code{checkopts(options)}:}{Converts/validates \code{options}
-      given as a named list of character strings.}
-  }
-}
-
 \author{
   Friedrich Leisch and R-core.
 }
 
 \references{
-  Friedrich Leisch: Dynamic generation of statistical reports using
-  literate data analysis. In W. \enc{Härdle}{Haerdle} and
-  B. \enc{Rönz}{Roenz}, editors, Compstat 2002 - Proceedings in Computational
-  Statistics, pages 575--580. Physika Verlag, Heidelberg, Germany,
-  2002. ISBN 3-7908-1517-9.
+  Friedrich Leisch (2002)
+  Dynamic generation of statistical reports using literate data analysis.
+  In W. \enc{Härdle}{Haerdle} and B. \enc{Rönz}{Roenz}, editors,
+  \emph{Compstat 2002 - Proceedings in Computational Statistics},
+  pages 575--580. Physika Verlag, Heidelberg, Germany, ISBN 3-7908-1517-9.
 }
 
 \seealso{
-  The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
+  The \sQuote{Sweave User Manual}, a vignette in the \pkg{utils} package.
   
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
   
