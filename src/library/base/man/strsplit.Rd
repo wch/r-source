@@ -52,7 +52,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   element(s) of \code{x} at all.
 
   The algorithm applied to each input string is
-  \preformatted{
+\preformatted{
     repeat \{
         if the string is empty
             break.
@@ -63,7 +63,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
             add the string to the output.
             break.
     \}
-  }
+}
   Note that this means that if there is a match at the beginning of a
   (non-empty) string, the first element of the output is \code{""}, but
   if there is a match at the end of the string, the output is the same

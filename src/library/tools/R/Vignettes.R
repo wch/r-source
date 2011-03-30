@@ -278,7 +278,7 @@ getVignetteEncoding <-  function(file, ...)
 .getVignetteEncoding <- function(lines, convert = FALSE)
 {
     ## Look for input enc lines in inputenc or inputenx
-    poss <- grep("^\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
+    poss <- grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
                  lines, useBytes = TRUE, value = TRUE)
     if(!length(poss)) {
         asc <- iconv(lines, "latin1", "ASCII")
