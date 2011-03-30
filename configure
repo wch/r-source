@@ -1834,7 +1834,7 @@ Optional Features:
                           [no]
   --enable-prebuilt-html  build static HTML help pages [no]
   --enable-byte-compiled-packages
-                          byte-compile R packages [no]
+                          (not yet operational) byte-compile R packages [no]
   --enable-static[=PKGS]  (libtool) build static libraries [default=no]
   --enable-shared[=PKGS]  (libtool) build shared libraries [default=yes]
 
