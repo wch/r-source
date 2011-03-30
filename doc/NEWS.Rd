@@ -404,14 +404,6 @@
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
 
-      \item \code{Sweave()} has options to produce PNG and JPEG figures,
-      and to use a custom function to open a graphics device (see
-      \code{?RweaveLatex}).\cr
-      (Based in part on the contribution of \PR{14418}.)
-
-      The default for \code{Sweave()} is to produce only PDF figures
-      (rather than both EPS and PDF).
-
       There are improvements in the way \code{Sweave()} and
       \code{Stangle()} handle non-ASCII vignette sources, especially in
       a UTF-8 locale: see \sQuote{Writing R Extensions} which now has a
@@ -420,13 +412,6 @@
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
       correlations are displayed.  (Wish of \PR{12754}.)
-
-      \item Environment variable \env{SWEAVE_OPTIONS} can be used to
-      supply defaults for existing or new options to be applied after
-      the Sweave driver setup has been run.
-
-      \item The Sweave manual is now included as a vignette in the
-      \pkg{utils} package.
 
       \item The \code{gctorture2()} function provides a more refined
       interface to the GC torture process.  Environment variables
@@ -441,7 +426,30 @@
       standardized Pearson residuals
     }
   }
+  
+  \subsection{SWEAVE CHANGES}{
+    \itemize{
+      \item \code{Sweave()} has options to produce PNG and JPEG figures,
+      and to use a custom function to open a graphics device (see
+      \code{?RweaveLatex}).\cr
+      (Based in part on the contribution of \PR{14418}.)
 
+      \item The default for \code{Sweave()} is to produce only PDF
+      figures (rather than both EPS and PDF).
+
+      \item Environment variable \env{SWEAVE_OPTIONS} can be used to
+      supply defaults for existing or new options to be applied after
+      the Sweave driver setup has been run.
+
+      \item The Sweave manual is now included as a vignette in the
+      \pkg{utils} package.
+
+      \item \code{Sweave()} handles \code{keep.source=TRUE} much better:
+      it could duplicate some lines and omit comments. (Reported by John
+      Maindonald and others.)
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Because they use a C99 interface which a C++ compiler is not
@@ -729,10 +737,6 @@
 
       \item The \code{str()} method for class \code{"POSIXt"} now gives
       sensible output for 0-length input.
-
-      \item \code{Sweave()} with \code{keep.source=TRUE} could
-      duplicate some lines and omit comments. (Reported by John
-      Maindonald and others.)
 
       \item The one- and two-argument complex maths functions failed to
       warn if NAs were generated (as their numeric analogues do).
