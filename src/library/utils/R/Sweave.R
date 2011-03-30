@@ -20,7 +20,15 @@
 ### b) It would be nice to allow multiple 'grdevice' options
 ### c) If there is only one graphics option (as is usual), we don't need to
 ### run the code in the figure chunks twice.
-### d) Need to sort out encodings
+
+### Encodings (in 2.13.x: it varies by version)
+### Everything is passed through byte-by-byte except in a UTF-8 locale.
+### In UTF-8, reading a non-UTF-8 Sweave file triggers conversion to
+### UTF-8 as if from Latin-1, and conversion back on output.
+### For Stangle think of the conversion as escaping.
+### For Sweave it is that and a bit more: any R output which was
+### included will have been generated in UTF-8 and hence is converted
+### to Latin-1.  Normally (but not always) that is what you want.
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input

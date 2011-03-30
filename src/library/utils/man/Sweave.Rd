@@ -58,9 +58,12 @@ Stangle(file, driver = Rtangle(),
   of \code{key=value} items, as would be used in a \samp{\\SweaveOpts}
   statement in a document.
   
+  Non-ASCII source files should contain a line of the form
+  \preformatted{\usepackage[foo]{inputenc}}
   Currently the input file is assumed to be in the current locale's
-  encoding, unless it is not valid in a multibyte locale (typically one
-  using UTF-8) when it is re-encoded from Latin-1.
+  encoding, unless it is not valid in a UTF-8 locale when it is
+  re-encoded from Latin-1 for processing, and the output re-encoded back
+  to Latin-1.
 }
 
 \section{Syntax Definition}{
@@ -108,11 +111,12 @@ Stangle(file, driver = Rtangle(),
 \seealso{
   The \sQuote{Sweave User Manual} vignette in the \pkg{utils} package.
   
-  \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
+  \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
   
-  Packages \pkg{cacheSweave}, \pkg{weaver} and \pkg{SweaveListingUtils}.
+  Packages \pkg{cacheSweave}, \pkg{weaver} (Bioconductor) and
+  \pkg{SweaveListingUtils}.
 
-  Further Sweave drivers are in, for example,  packages \pkg{R2HTML},
+  Further Sweave drivers are in, for example, packages \pkg{R2HTML},
   \pkg{ascii}, \pkg{odfWeave} and \pkg{pgfSweave}.
 }
 
