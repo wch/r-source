@@ -9,17 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2010-04-09 16:51-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
+"PO-Revision-Date: 2011-03-30 02:00+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'coef' must not be negative"
 msgstr "'coef'  не должен быть отрицательным"
@@ -38,6 +37,9 @@ msgstr "'bias' должен быть положительным"
 
 msgid "at least 3 columns needed"
 msgstr "нужны по крайней мере 3 колонки"
+
+msgid "The 'gamma' argument is deprecated and has no effect"
+msgstr "Аргумент 'gamma' устарел и не возымеем никакого эффекта"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb-матрица должна быть числовой"
@@ -153,10 +155,8 @@ msgstr "неправильные опции в '%s'"
 msgid "NOT changing"
 msgstr "НЕ изменяется"
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -219,11 +219,10 @@ msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
 
 msgid "range too small for min.n"
-msgstr ""
+msgstr "размах слишком мал для min.m"
 
 msgid "A raster matrix must be character, or numeric, or logical"
-msgstr ""
-"Растровая матрица должна быть символом, числом или логическим выражением"
+msgstr "Растровая матрица должна быть символом, числом или логическим выражением"
 
 msgid "A raster array must be numeric"
 msgstr "Растровая многомерная матрица должна быть числовой"
@@ -232,22 +231,19 @@ msgid "A raster array must have exactly 3 dimensions"
 msgstr "Растровая многомерная матрица должна быть в точности трехмерной"
 
 msgid "A raster array must have exactly 3 or 4 planes"
-msgstr ""
-"Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
+msgstr "Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop' всегда неявно выставлен в FALSE в '[.raster'"
 
-#, fuzzy
 msgid "invalid raster subsetting"
-msgstr "неправильный первый аргумент"
+msgstr "неправильное извлечение элемента растра"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "неправильный первый аргумент"
+msgstr "неправильная замена жлемента растра"
 
 msgid "Operator not meaningful for raster objects"
-msgstr ""
+msgstr "Оператор не имеет смысла для объектов растра"
 
 msgid "no current device to record from"
 msgstr "нет устройства, которое надо записывать"
@@ -277,7 +273,7 @@ msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
 msgid "'x' is a list, but does not have components 'x' and 'y'"
-msgstr ""
+msgstr "'x' является списком, но не содержит компонент 'x' и 'y'"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "длины 'x' и 'y' различаются"
@@ -289,7 +285,7 @@ msgid "at least 2 columns needed"
 msgstr "нужны по крайней мере 2 колонки"
 
 msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
-msgstr ""
+msgstr "'x' является списком, но не содержит компонент 'x', 'y' и 'z'"
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "длины 'x', 'y' и 'z' различаются"
@@ -301,7 +297,7 @@ msgid "sorry, 'gs' cannot be found"
 msgstr "извините, не могу найти 'gs'"
 
 msgid "unrecognized format of gs -help"
-msgstr ""
+msgstr "неподдерживаемый формат gs -help"
 
 msgid "device '%s' is not available"
 msgstr "устройство '%s' недоступно"
