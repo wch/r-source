@@ -82,7 +82,6 @@ Rdfiles:
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
-## only 'grid' has any vignettes
 vignettes:
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
