@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:44\n"
-"PO-Revision-Date: 2010-09-30 01:49-0600\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2011-03-30 02:18+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,7 @@ msgid "malformed version string"
 msgstr "неправильно сформирована строка версии"
 
 msgid "target is %s, current is %s"
-msgstr ""
+msgstr "цель %s, текущая %s"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) должен иметь положительную длину"
@@ -213,9 +213,8 @@ msgstr "неправильное указание 'restart'"
 msgid "argument 'where' of length 0"
 msgstr "аргумент 'where' нулевой длины"
 
-#, fuzzy
 msgid "argument 'object' must deparse to a single character string"
-msgstr "'pattern' должен быть непустой текстовой строкой"
+msgstr "аргумент 'object' должно быть возможно сконвертировать в строку"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' должен быть одним из: 'start', 'current' или 'end'"
@@ -653,15 +652,15 @@ msgstr "неправильный уровень фактора, получились NA"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' не значим для упорядоченных факторов"
 
-#, fuzzy
 msgid "'%s' not defined for ordered factors"
-msgstr "'%s' не значим для упорядоченных факторов"
+msgstr "'%s' не определен для упорядоченных факторов"
 
-#, fuzzy
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
-msgstr "'%s' не значим для упорядоченных факторов"
+msgstr ""
+"'%s' имеет смысл только для упорядоченных факторов если все аргументы имеют "
+"одинаковые наборы градаций"
 
 msgid "no files to copy to"
 msgstr "нет файлов, чтобы скопировать на"
@@ -671,6 +670,8 @@ msgstr "больше файлов 'from', чем 'to'"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
+"'recursive' будет проигнорирован, так как 'to' не является одиночным "
+"каталогом"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "файл не может быть скопирован одновременно 'from' и 'to'"
@@ -681,16 +682,14 @@ msgstr "нет файлов для ссылки с"
 msgid "no files/directory to link to"
 msgstr "нет файлов/папок для ссылки на"
 
-#, fuzzy
 msgid "no files to link to"
-msgstr "нет файлов для ссылки с"
+msgstr "нет файлов для ссылки на"
 
 msgid "'package' must be of length 1"
 msgstr "'пакет' должен быть длиной 1"
 
-#, fuzzy
 msgid "no file found"
-msgstr "не найден"
+msgstr "файл не найден"
 
 msgid "'vec' contains NAs"
 msgstr "'vec' содержит NA"
@@ -890,9 +889,8 @@ msgstr "сейчас dyn.unload(\"%s\") ..."
 msgid "use of 'save' is deprecated"
 msgstr "использование 'save' не рекомендуется"
 
-#, fuzzy
 msgid "save != FALSE is defunct"
-msgstr "'%s' больше не существует."
+msgstr "save != FALSE больше не работает"
 
 msgid "Loading required package: %s"
 msgstr "Загрузка требуемого пакета: %s"
@@ -1285,12 +1283,11 @@ msgstr "длина 'scale' должна равняться числу колонок 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "укажите либо 'nmax', либо 'n', но не оба."
 
-#, fuzzy
 msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out' должен быть длиной 1"
+msgstr "аргумент 'length.out' должен быть длиной 1"
 
 msgid "first element used of 'length.out' argument"
-msgstr ""
+msgstr "только первый элемент аргумента 'length.out' использован"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "неправильный (to - from)/by в seq(.)"
@@ -1308,7 +1305,7 @@ msgid "too many arguments"
 msgstr "слишком много аргументов"
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr ""
+msgstr "'compress' игнорируется если 'file' не является именем файла"
 
 msgid "'connection' must be a connection"
 msgstr "'connection' должно быть соединением"
@@ -1458,7 +1455,7 @@ msgid "all arguments must have the same length"
 msgstr "все аргументы должны иметь одинаковую длину"
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr "попытка создания таблицы с >= 2^31 элементов"
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'объект' должен наследовать классу \"table\""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:08\n"
+"POT-Creation-Date: 2011-03-30 20:23\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -69,6 +69,9 @@ msgstr "'%s'에서 패스(path)는 space를 포함하고 있습니다"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "LaxTeX를 실행하는경우, 이것은 문제를 일으킬지도 모릅니다"
+
+msgid "\\SweaveInput is not compatible with concordances."
+msgstr ""
 
 msgid "invalid value for '%s' : %s"
 msgstr "'%s'에 적절하지 않는 value입니다: %s"

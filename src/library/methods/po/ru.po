@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:45+0100\n"
-"PO-Revision-Date: 2010-09-30 01:50-0600\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2011-03-30 02:18+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -142,11 +142,12 @@ msgstr ""
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
 #: methods_list_dispatch.c:953
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
-msgstr "ошибка при оценке аргумента '%s' при выборе метода для функции '%s'"
+msgstr ""
+"ошибка при оценке аргумента '%s' при выборе метода для функции '%s': %s"
 
 #: methods_list_dispatch.c:618
 #, c-format
@@ -180,9 +181,9 @@ msgstr ""
 "соответствующего аргумента '...'"
 
 #: methods_list_dispatch.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "ошибка при оценке 'primitive' следующего метода"
+msgstr "ошибка при оценке 'primitive' следующего метода: %s"
 
 #: methods_list_dispatch.c:765
 #, c-format

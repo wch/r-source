@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:45+0100\n"
-"PO-Revision-Date: 2010-04-09 16:53-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2011-03-30 02:04+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -176,24 +176,24 @@ msgid "only gray colors are allowed in this color model"
 msgstr "в этой цветовой модели разрешены только оттенки серого"
 
 #: devPS.c:3103 devPS.c:4726 devPS.c:5822
-#, fuzzy, c-format
+#, c-format
 msgid "filename too long in %s()"
 msgstr "слишком длинное имя файла в вызове %s()"
 
 #: devPS.c:3109 devPS.c:4732 devPS.c:5828
 #, c-format
 msgid "memory allocation problem in %s()"
-msgstr ""
+msgstr "проблема с выделением памяти в %s()"
 
 #: devPS.c:3125 devPS.c:5870
-#, fuzzy, c-format
+#, c-format
 msgid "encoding path is too long in %s()"
-msgstr "путь к кодировке слишком длинный"
+msgstr "путь к кодировке слишком длинный в %s()"
 
 #: devPS.c:3139 devPS.c:4772
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file in %s()"
-msgstr "не могу загрузить файл кодировки '%s'"
+msgstr "не могу загрузить файл кодировки в %s()"
 
 #: devPS.c:3184 devPS.c:3247 devPS.c:5929 devPS.c:5984 devPS.c:7494
 msgid "Invalid font type"
@@ -378,14 +378,12 @@ msgid "failed to load default encoding"
 msgstr "не могу загрузить кодировку по умолчанию"
 
 #: devPS.c:5952
-#, fuzzy
 msgid "Failed to initialise default PDF font"
-msgstr "Не удалось инициализировать шрифт XFig по умолчанию"
+msgstr "Не удалось инициализировать шрифт PDF по умолчанию"
 
 #: devPS.c:6007
-#, fuzzy
 msgid "Failed to initialise additional PDF fonts"
-msgstr "Не удалось инициализировать дополнительные шрифты PostScript"
+msgstr "Не удалось инициализировать дополнительные шрифты PDF"
 
 #: devPS.c:6020
 msgid "failed to allocate rasters"
@@ -419,7 +417,7 @@ msgstr "неизвестная 'colormodel', использую 'rgb'"
 #: devPS.c:6531
 #, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr "не удалось загрузить кодировку"
+msgstr "Не удалось загрузить цветовое пространство sRGB"
 
 #: devPS.c:6798
 msgid "Corrupt encodings in PDF device"
@@ -468,9 +466,9 @@ msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
 #: devPS.c:8113 devPS.c:8180 devPS.c:8275 devPicTeX.c:800 devWindows.c:3704
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start %s() device"
-msgstr "не могу запустить устройство"
+msgstr "не могу запустить устройство %s()"
 
 #: devPS.c:8262
 #, c-format

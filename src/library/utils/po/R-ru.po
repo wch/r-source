@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:08\n"
-"PO-Revision-Date: 2011-01-18 13:56+0000\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"POT-Creation-Date: 2011-03-30 20:23\n"
+"PO-Revision-Date: 2011-03-30 02:42+0300\n"
+"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -78,6 +78,9 @@ msgstr "путь у '%s' содержит пробелов,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
+
+msgid "\\SweaveInput is not compatible with concordances."
+msgstr ""
 
 msgid "invalid value for '%s' : %s"
 msgstr "неправильное значение '%s': %s"
@@ -182,9 +185,8 @@ msgstr "Библиографическая запись типа bibtype '"
 msgid "' has to correctly specify the field(s):"
 msgstr "' должна корректно определять пол(я):"
 
-#, fuzzy
 msgid "'style' should be one of %s"
-msgstr "'bibtype' не имеет ни одного из"
+msgstr "'style' должен быть одним из %s"
 
 msgid "' has to specify the field(s):"
 msgstr "' должна определять пол(я):"
@@ -514,9 +516,8 @@ msgstr "не найден"
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
 
-#, fuzzy
 msgid "Making packages.html  ..."
-msgstr "Делаю packages.html"
+msgstr "Делаю packages.html ..."
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() нельзя использовать неинтерактивно"
@@ -630,7 +631,6 @@ msgstr "Неверная матрица 'instPkgs'"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "нет установленных пакетов для (неправильного?) 'lib.loc=%s'"
 
-#, fuzzy
 msgid "metadata of '%s' is corrupt"
 msgstr "метаданные пакета '%s' повреждены"
 
@@ -967,9 +967,8 @@ msgstr "события не записаны"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' должен быть логическим или текстовым вектором"
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr "не могу создать временную папку '%s'"
+msgstr "не могу создать каталог %s"
 
 msgid "invalid octal digit"
 msgstr "неправильное восьмеричное число"
@@ -983,9 +982,8 @@ msgstr "незавершенный блок в файле"
 msgid "checksum error for entry '%s'"
 msgstr "ошибка контрольной суммы для записи '%s'"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr "не удалось создать '%s'"
+msgstr "не удалось скопировать %s в %s"
 
 msgid "unsupported entry type"
 msgstr "неподдерживаемый тип записи"
@@ -1051,27 +1049,28 @@ msgstr "попытка установить '%s' пропущена"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' должен быть одной текстовой строкой"
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
+msgstr ""
+"'files' должен быть текстовым вектором, определяющим один или несколько "
+"путей к файлам"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
+"не могу найти программу для открытия 'mailto:' URI: возвращаюсь к 'method="
+"\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "Использую браузер для открытия mailto: URI"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "'address' должен быть указан"
 
-#, fuzzy
 msgid "'subject' is missing"
 msgstr "пропущен 'subject'"
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr "'port' должен быть целым длиной 1"
+msgstr "'ccaddress' должен быть длиной 1"
 
 msgid "no download method found"
 msgstr "не найдено метода скачивания"
@@ -1098,19 +1097,20 @@ msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "ОШИБКА: невозможно заблокировать каталог"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"для модификации\n"
+"Попробуйте удалить"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "не могу создать временную папку '%s'"
+msgstr "ОШИБКА: не могу создать каталог для блокировок"
 
 msgid "restored '%s'"
-msgstr ""
+msgstr "восстановлен '%s'"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "не могу перенести временную установку из '%s' в '%s'"
@@ -1125,7 +1125,7 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' -- Windows-специфичный"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "метод 'mailx' только для Unix"
 
 msgid "zipfile '%s' not found"
 msgstr "zip-файл '%s' не найден"
@@ -1160,12 +1160,11 @@ msgstr[0] "объект '%s' не найден"
 msgstr[1] "объекты '%s' не найдены"
 msgstr[2] "объекты '%s' не найдены"
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
-msgstr[0] "зависимость '%s' недоступна"
-msgstr[1] "пакеты %s недоступны"
-msgstr[2] "пакеты %s недоступны"
+msgstr[0] "пакет '%s' недоступен (для %s)"
+msgstr[1] "пакеты %s недоступны (для %s)"
+msgstr[2] "пакеты %s недоступны (для %s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
