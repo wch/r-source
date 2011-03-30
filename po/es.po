@@ -5,11 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:49+0100\n"
-"PO-Revision-Date: 2010-04-13 13:35+0100\n"
-"Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
+"PO-Revision-Date: 2011-03-30 16:08+0100\n"
+"Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf."
+"de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -467,7 +468,7 @@ msgstr "string de caracteres esperado como tercer argumento"
 #: src/gnuwin32/sys-win32.c:254 src/unix/sys-unix.c:313
 #, c-format
 msgid "running command '%s' had status %d"
-msgstr ""
+msgstr "comando ejecutado '%s' tiene estatus %d"
 
 #: src/gnuwin32/system.c:121 src/unix/sys-unix.c:415
 msgid "reached session elapsed time limit"
@@ -819,7 +820,7 @@ msgstr ""
 
 #: src/main/agrep.c:84 src/main/grep.c:173 src/main/grep.c:800
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
-msgstr ""
+msgstr "cadena de caracteres marcada como \"bytes\", usando useBytes = TRUE"
 
 #: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2315
 msgid "regular expression is invalid in this locale"
@@ -877,7 +878,7 @@ msgstr "el modo '%s' no es soportado en call_R"
 #: src/main/apply.c:212
 #, c-format
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
-msgstr ""
+msgstr "dimnames(<value>) no es ni NULL ni un list de longitud %d"
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -1050,12 +1051,12 @@ msgstr "primer argumento no válido: debe ser un arreglo"
 
 #: src/main/array.c:1074 src/main/array.c:1077
 msgid "'a' does not have named dimnames"
-msgstr ""
+msgstr "'a' no tiene un nombre en dimnames"
 
 #: src/main/array.c:1084
 #, c-format
 msgid "perm[%d] does not match a dimension name"
-msgstr ""
+msgstr "perm[%d] no tiene un nombre en dimension"
 
 #: src/main/array.c:1091
 msgid "'perm' is of wrong length"
@@ -1429,7 +1430,7 @@ msgstr "'...' usado en un contexto incorrecto"
 #: src/main/builtin.c:922
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
-msgstr ""
+msgstr "duplicado de interuptores por defecto: '%s' y '%s'"
 
 #: src/main/builtin.c:955
 msgid "'EXPR' is missing"
@@ -1450,6 +1451,8 @@ msgstr "%s' requiere un vector de caracteres"
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
 msgstr ""
+"número de caracteres no es computable para el elemento %d en el \"bytes\" "
+"codificación"
 
 #: src/main/character.c:160 src/main/character.c:188 src/main/character.c:636
 #: src/main/character.c:732
@@ -1461,6 +1464,7 @@ msgstr "string multibyte %d inválida"
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
 msgstr ""
+"el ancho no es computable para el elemento %d en el \"bytes\" codificación"
 
 #: src/main/character.c:252
 msgid "extracting substrings from a non-character object"
@@ -2234,7 +2238,7 @@ msgstr "solo formato ascii puede ser escrito en conexiones de modo texto"
 
 #: src/main/connections.c:3776
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
-msgstr ""
+msgstr "sólo 2^31-1 bytes se pueden escribir en una sola llamada readBin ()"
 
 #: src/main/connections.c:3825 src/main/connections.c:3978
 #: src/main/connections.c:4251 src/main/connections.c:4291
@@ -2361,6 +2365,8 @@ msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr ""
+"no se puede crear una conexión gzcon de una escritura textConnection, tal "
+"vez el use rawConnection"
 
 #: src/main/connections.c:5115 src/main/connections.c:5119
 #: src/main/connections.c:5126 src/main/connections.c:5140
@@ -3671,10 +3677,11 @@ msgstr "función defectuosa"
 #: src/main/eval.c:4291
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr ""
+"EXPR numéricos son necesarios para el switch() sin alternativas con nombre"
 
 #: src/main/eval.c:4294
 msgid "bad character switch offsets"
-msgstr ""
+msgstr "mal carácter en el interruptor offsets"
 
 #: src/main/eval.c:4296
 #, fuzzy
@@ -3683,7 +3690,7 @@ msgstr "nombre de archivo inválido"
 
 #: src/main/eval.c:4310
 msgid "bad numeric switch offsets"
-msgstr ""
+msgstr "mal numérico en el interruptor offsets"
 
 #: src/main/eval.c:4381
 msgid "cannot find index for threaded code address"
@@ -3735,7 +3742,7 @@ msgstr "no hay valores de contorno"
 
 #: src/main/eval.c:4667
 msgid "bad constant count"
-msgstr ""
+msgstr "mal contador de constante"
 
 #: src/main/eval.c:4703
 msgid "profile timer in use"
@@ -4108,6 +4115,8 @@ msgstr "expresión regular '%s' inválida"
 #: src/main/grep.c:1240
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
+"patrón coincide con una cadena vacía infinitamente, devolviendo primer "
+"patrón único "
 
 #: src/main/grep.c:1535
 #, fuzzy
@@ -4140,7 +4149,7 @@ msgstr "string de entrada demasiado larga"
 #: src/main/grep.c:2345
 #, c-format
 msgid "pcre_fullinfo returned '%d' "
-msgstr ""
+msgstr "pcre_fullinfo retornado '%d' "
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -5309,7 +5318,7 @@ msgstr "esta plataforma no soporta symlinks"
 
 #: src/main/platform.c:735
 msgid "'from' and 'to' are of different lengths"
-msgstr ""
+msgstr "'from' y 'to' son de longitudes diferentes"
 
 #: src/main/platform.c:746 src/main/platform.c:756
 #, fuzzy
@@ -5408,7 +5417,7 @@ msgstr "problema al ejecutar el editor %s"
 #: src/main/platform.c:2149
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr ""
+msgstr "problema al copiar %ls  a %ls: %s"
 
 #: src/main/platform.c:2265
 #, fuzzy, c-format
@@ -5423,7 +5432,7 @@ msgstr "problema al ejecutar el editor %s"
 #: src/main/platform.c:2295
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr ""
+msgstr "problema al copiar %s a %s: %s"
 
 #: src/main/platform.c:2417
 #, fuzzy
@@ -6728,7 +6737,7 @@ msgstr "largo de datos no es múltiplo de la variable de separación"
 
 #: src/main/split.c:56
 msgid "factor has bad level"
-msgstr ""
+msgstr "factor con mal nivel"
 
 #: src/main/sprintf.c:93
 #, c-format
@@ -6901,6 +6910,7 @@ msgstr ""
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
+"[[<- definido para objectos de tipo \"S4\" solo para subclases de entorno"
 
 #: src/main/subassign.c:1505
 msgid "wrong args for environment subassignment"
@@ -7092,7 +7102,7 @@ msgstr ""
 
 #: src/main/sysutils.c:167
 msgid "encoding of a filename cannot be 'bytes'"
-msgstr ""
+msgstr "codificación de un nombre de archivo no puede ser 'bytes'"
 
 #: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
 #: src/main/sysutils.c:867
@@ -7129,7 +7139,7 @@ msgstr "'tempdir' no especificado"
 
 #: src/main/sysutils.c:256
 msgid "no 'fileext'"
-msgstr ""
+msgstr "no hay 'fileext'"
 
 #: src/main/sysutils.c:348 src/main/sysutils.c:351 src/main/sysutils.c:442
 #: src/main/sysutils.c:444 src/main/sysutils.c:480
@@ -7174,7 +7184,7 @@ msgstr "csduplicated no llamada dentro de una STRSXP"
 
 #: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
 msgid "translating strings with \"bytes\" encoding is not allowed"
-msgstr ""
+msgstr "no se permite traducción de cadenas con \"bytes\" de codificación"
 
 #: src/main/sysutils.c:961
 #, fuzzy, c-format
@@ -8375,7 +8385,7 @@ msgstr "error interno en el código unz"
 #: src/unix/sys-unix.c:308
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr ""
+msgstr "comando ejecuta '%s' tiene estatus %d y mensaje de error '% s' "
 
 #: src/unix/sys-unix.c:394
 msgid "Sys.info() is not implemented on this system"
