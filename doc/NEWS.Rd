@@ -34,6 +34,9 @@
       exactly aligned, since ordinary text has descenders below the
       baseline and plotmath places them on the baseline).  (Related to
       \PR{14537}.)
+
+      \item \code{sunflowerplot()} now has a formula interface.
+      (Wish of \PR{14541}.)
     }
   }
 

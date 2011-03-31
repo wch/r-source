@@ -577,7 +577,7 @@ function(src_dir, out_dir, packages)
 
 ### * .install_package_vignettes
 
-## called from src/library/Makefile and src/gnuwin32/Makefile
+## called from src/library/Makefile[.win]
 ## this is only used when building R, to build the 'grid' and 'utils' vignettes.
 .install_package_vignettes <-
 function(dir, outDir, keep.source = FALSE)

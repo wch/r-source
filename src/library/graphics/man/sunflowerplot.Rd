@@ -1,23 +1,30 @@
 % File src/library/graphics/man/sunflowerplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sunflowerplot}
 \alias{sunflowerplot}
+\alias{sunflowerplot.default}
+\alias{sunflowerplot.formula}
 \title{Produce a Sunflower Scatter Plot}
 \description{
   Multiple points are plotted as \sQuote{sunflowers} with multiple leaves
-  (\sQuote{petals}) such that overplotting is visualized instead of accidental and
-  invisible.
+  (\sQuote{petals}) such that overplotting is visualized instead of
+  accidental and invisible.
 }
 \usage{
-sunflowerplot(x, y = NULL, number, log = "", digits = 6,
+sunflowerplot(x, \dots)
+
+\method{sunflowerplot}{default}(x, y = NULL, number, log = "", digits = 6,
               xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
               add = FALSE, rotate = FALSE,
               pch = 16, cex = 0.8, cex.fact = 1.5,
               col = par("col"), bg = NA, size = 1/8, seg.col = 2,
               seg.lwd = 1.5, \dots)
+
+\method{sunflowerplot}{formula}(formula, data, xlab = NULL, ylab = NULL \dots,
+             subset, na.action = NULL)
 }
 \arguments{
   \item{x}{numeric vector of \code{x}-coordinates of length \code{n},
@@ -57,18 +64,28 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     \code{col = "gold"} reminds of real sunflowers.}
   \item{seg.lwd}{numeric; the line width for the leaves' segments.}
   \item{\dots}{further arguments to \code{\link{plot}} [if
-    \code{add=FALSE}].}
+    \code{add = FALSE}], or to be passed to or from another method.}
+  \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
+  \item{data}{a data.frame (or list) from which the variables in
+    \code{formula} should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used in the fitting process.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is to ignore case
+    with missing values.}
 }
 \details{
-  For \code{number[i]==1}, a (slightly enlarged) usual plotting symbol
-  (\code{pch}) is drawn.
-  For \code{number[i] > 1}, a small plotting symbol is drawn and
-  \code{number[i]} equi-angular \sQuote{rays} emanate from it.
+  This is a generic function with default and formula methods.
+  
+  For \code{number[i] == 1}, a (slightly enlarged) usual plotting symbol
+  (\code{pch}) is drawn.  For \code{number[i] > 1}, a small plotting
+  symbol is drawn and \code{number[i]} equi-angular \sQuote{rays}
+  emanate from it.
 
-  If \code{rotate=TRUE} and \code{number[i] >= 2}, a random direction
+  If \code{rotate = TRUE} and \code{number[i] >= 2}, a random direction
   is chosen (instead of the y-axis) for the first ray.  The goal is to
-  \code{\link{jitter}} the orientations of the sunflowers in order to prevent
-  artefactual visual impressions.
+  \code{\link{jitter}} the orientations of the sunflowers in order to
+  prevent artefactual visual impressions.
 }
 \section{Side Effects}{
   A scatter plot is drawn with \sQuote{sunflowers} as symbols.
@@ -107,6 +124,10 @@ require(grDevices)
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:
 sunflowerplot(iris[, 3:4], cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
+## or
+sunflowerplot(Petal.Width ~ Petal.Length, data=iris,
+              cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
+
 
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
               main = "Sunflower Plot of Rounded N(0,1)")

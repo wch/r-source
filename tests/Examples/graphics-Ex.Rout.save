@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-03-13 r54760)
+R version 2.14.0 Under development (unstable) (2011-03-31 r55218)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2738,7 +2738,7 @@ $`11.33`
 > 
 > ### Name: sunflowerplot
 > ### Title: Produce a Sunflower Scatter Plot
-> ### Aliases: sunflowerplot
+> ### Aliases: sunflowerplot sunflowerplot.default sunflowerplot.formula
 > ### Keywords: hplot smooth nonparametric
 > 
 > ### ** Examples
@@ -2750,6 +2750,10 @@ $`11.33`
 > sunflowerplot(iris[, 3:4])
 > ## Imitating  Chambers et al., p.109, closely:
 > sunflowerplot(iris[, 3:4], cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
+> ## or
+> sunflowerplot(Petal.Width ~ Petal.Length, data=iris,
++               cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
+> 
 > 
 > sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
 +               main = "Sunflower Plot of Rounded N(0,1)")

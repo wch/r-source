@@ -14,7 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-sunflowerplot <-
+sunflowerplot <- function(x, ...) UseMethod("sunflowerplot")
+
+sunflowerplot.default <-
     function(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
              add = FALSE, rotate = FALSE,
@@ -79,4 +81,27 @@ sunflowerplot <-
                  col=seg.col, lwd = seg.lwd)
     }
     invisible(list(x=x, y=y, number=number))
+}
+
+sunflowerplot.formula <-
+    function(x, data = NULL, xlab = NULL, ylab = NULL, ...,
+             subset, na.action = NULL)
+{
+    if(missing(x) || (length(x) != 3L))
+	stop("formula missing or incorrect")
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+	m$data <- as.data.frame(data)
+    m$... <- NULL
+    m$formula <- m$x
+    m$x <- NULL
+    m$na.action <- na.action # force use of default for this method
+    require(stats, quietly = TRUE)
+    m[[1L]] <- as.name("model.frame")
+    mf <- eval(m, parent.frame())
+    if(NCOL(mf) != 2L)
+        stop("'formula' should specify exactly two variables")
+    if(is.null(xlab)) xlab <- names(mf)[2L]
+    if(is.null(ylab)) ylab <- names(mf)[1L]
+    sunflowerplot(mf[[2L]], mf[[1L]], xlab = xlab, ylab = ylab, ...)
 }
