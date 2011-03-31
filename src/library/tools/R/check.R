@@ -1198,8 +1198,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")
-                printLog(Log,
-                         "  'qpdf' made some significant size reductions:\n",
+                printLog(Log, "  ", sQuote("pdf"),
+                         " made some significant size reductions:\n",
                          paste("  ", res, collapse = "\n"),
                          "\n",
                          "  consider running tools::compactPDF() on these files\n")
