@@ -681,7 +681,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if(length(msg)) {
                 if(!any) warnLog()
                 any <- TRUE
-                printLog(Log, "Problems with news in inst/NEWS.Rd:\n")
+                printLog(Log, "Problems with news in 'inst/NEWS.Rd':\n")
                 printLog(Log,
                          paste("  ",
                                unlist(strsplit(msg, "\n", fixed = TRUE)),
@@ -718,7 +718,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             any <- TRUE
             wrapLog("Found the following CITATION file(s) in a non-standard place:\n")
             printLog(Log, .format_lines_with_indent(files), "\n")
-            wrapLog("Most likely inst/CITATION should be used instead.\n")
+            wrapLog("Most likely 'inst/CITATION' should be used instead.\n")
         }
 
         if(!any) resultLog(Log, "OK")
@@ -1190,7 +1190,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     recursive = TRUE, full.names = TRUE)
         pdfs <- pdfs %w/o% "inst/doc/Rplots.pdf"
         if (length(pdfs)) {
-            checkingLog(Log, "sizes of PDF files under inst/doc")
+            checkingLog(Log, "sizes of PDF files under 'inst/doc'")
             td <- tempfile('pdf')
             dir.create(td)
             file.copy(pdfs, td)
@@ -1652,7 +1652,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 if(!any) warnLog()
                 any <- TRUE
                 printLog(Log,
-                         paste("  Unused files in inst/doc which are pointless or misleading",
+                         paste("  Unused files in 'inst/doc' which are pointless or misleading",
                                "  as they will be re-created from the vignettes:", "",
                                sep = "\n"))
                 printLog(Log,
@@ -2218,7 +2218,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             resultLog(Log, desc["Type"])
             if (desc["Type"] != "Package") {
                 printLog(Log,
-                         "Only Type = Package extensions can be checked.\n")
+                         "Only 'Type = Package' extensions can be checked.\n")
                 do_exit(0L)
             }
         }

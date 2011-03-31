@@ -27,12 +27,14 @@ newLog <- function(filename = "")
 closeLog <- function(Log) if (Log$con > 2) close(Log$con)
 
 printLog <- function(Log, ...) {
-    cat(..., sep = "")
-    if (Log$con > 0L) cat(..., file = Log$con, sep = "")
+    quotes <- function(x) sub("'([^']*)'", sQuote("\\1"), x)
+    args <- lapply(list(...), quotes)
+    do.call(cat, c(args, sep = ""))
+    if (Log$con > 0L) do.call(cat, c(args, sep = "", file=Log$con))
 }
 
 ## unused
-setStars <- function(Log, stars) {Log$stars <- stars; Log}
+## setStars <- function(Log, stars) {Log$stars <- stars; Log}
 
 checkingLog <- function(Log, ...)
     printLog(Log, Log$stars, " checking ", ..., " ...")
@@ -41,13 +43,8 @@ creatingLog <- function(Log, text)
     printLog(Log, Log$stars," creating ", text, " ...")
 
 messageLog <- function(Log, ...)
-{
-    text <- paste(..., sep="")
-##     cat(Log$stars, " ",
-##         gsub("\n", paste("\n", Log$stars, " ", sep = ""), text, fixed = TRUE),
-##         sep = "\n", file = Log$con)
     printLog(Log, Log$stars, " ", ..., "\n")
-}
+
 resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
 
 errorLog <- function(Log, ...)
@@ -236,7 +233,7 @@ get_exclude_patterns <- function()
         res <- try(.check_package_description("DESCRIPTION"))
         if (inherits(res, "try-error")) {
             resultLog(Log, "ERROR")
-            messageLog(Log, "running .check_package_description failed")
+            messageLog(Log, "running '.check_package_description' failed")
         } else {
             if (any(sapply(res, length))) {
                 resultLog(Log, "ERROR")
@@ -397,14 +394,14 @@ get_exclude_patterns <- function()
                 Sys.setenv(R_PACKAGE_NAME = pkgname)
                 Sys.setenv(R_PACKAGE_DIR = pkgdir)
                 Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
-                messageLog(Log, "running cleanup.win")
+                messageLog(Log, "running 'cleanup.win'")
                 Ssystem("sh", "./cleanup.win")
             }
         } else if (.file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
             Sys.setenv(R_PACKAGE_DIR = pkgdir)
             Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
-            messageLog(Log, "running cleanup")
+            messageLog(Log, "running 'cleanup'")
             Ssystem("./cleanup")
         }
     }
