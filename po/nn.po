@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:49+0100\n"
+"POT-Creation-Date: 2011-03-31 05:23+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -170,8 +170,8 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/envir.c:1878 src/main/envir.c:2095 src/main/envir.c:2216
 #: src/main/envir.c:2475 src/main/envir.c:2733 src/main/envir.c:2747
 #: src/main/envir.c:2754 src/main/envir.c:2770 src/main/envir.c:3333
-#: src/main/errors.c:937 src/main/eval.c:281 src/main/eval.c:2057
-#: src/main/eval.c:2086 src/main/eval.c:2090 src/main/grep.c:758
+#: src/main/errors.c:937 src/main/eval.c:281 src/main/eval.c:2039
+#: src/main/eval.c:2068 src/main/eval.c:2072 src/main/grep.c:758
 #: src/main/grep.c:763 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1041 src/main/grep.c:1485 src/main/grep.c:1489
 #: src/main/grep.c:1494 src/main/grep.c:2271 src/main/grep.c:2276
@@ -573,7 +573,7 @@ msgid ""
 msgstr ""
 "klarte ikkje laga «reader thread». Du må frigjera nokre systemressursar."
 
-#: src/include/Errormsg.h:25 src/main/eval.c:3349 src/main/subscript.c:312
+#: src/include/Errormsg.h:25 src/main/eval.c:3331 src/main/subscript.c:312
 #: src/main/subscript.c:353 src/main/subscript.c:457 src/main/subscript.c:554
 msgid "subscript out of bounds"
 msgstr "indeksen ligg utanfor grensene"
@@ -1277,7 +1277,7 @@ msgstr "gjenteke formelt argument: «use.names»"
 msgid "argument not a list"
 msgstr "argumentet er ikkje ei liste"
 
-#: src/main/bind.c:1027 src/main/eval.c:2426 src/main/eval.c:2435
+#: src/main/bind.c:1027 src/main/eval.c:2408 src/main/eval.c:2417
 #: src/main/objects.c:310 src/main/objects.c:345 src/main/objects.c:720
 #: src/main/objects.c:737 src/main/objects.c:744
 #, c-format
@@ -1326,7 +1326,7 @@ msgstr "den oppgjevne vektorstorleiken er for stor"
 #: src/main/envir.c:1832 src/main/envir.c:2505 src/main/envir.c:2565
 #: src/main/envir.c:2888 src/main/envir.c:2917 src/main/envir.c:2938
 #: src/main/envir.c:2961 src/main/envir.c:2996 src/main/envir.c:3017
-#: src/main/envir.c:3323 src/main/envir.c:3328 src/main/eval.c:4444
+#: src/main/envir.c:3323 src/main/envir.c:3328 src/main/eval.c:4426
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2355
 msgid "use of NULL environment is defunct"
@@ -1407,8 +1407,8 @@ msgid "missing value for 'length'"
 msgstr "manglar verdi for «lengd»"
 
 #: src/main/builtin.c:901 src/main/eval.c:417 src/main/eval.c:534
-#: src/main/eval.c:1845 src/main/eval.c:1911 src/main/eval.c:1971
-#: src/main/eval.c:2306 src/main/eval.c:3840 src/main/eval.c:3949
+#: src/main/eval.c:1827 src/main/eval.c:1893 src/main/eval.c:1953
+#: src/main/eval.c:2288 src/main/eval.c:3822 src/main/eval.c:3931
 msgid "'...' used in an incorrect context"
 msgstr "«...» brukt i feil samanheng"
 
@@ -1421,7 +1421,7 @@ msgstr "duplikat standardverdi i «switch»: «%s» og «%s»"
 msgid "'EXPR' is missing"
 msgstr "«EXPR» manglar"
 
-#: src/main/builtin.c:959 src/main/eval.c:4287
+#: src/main/builtin.c:959 src/main/eval.c:4269
 msgid "EXPR must be a length 1 vector"
 msgstr "«EXPR» må vera ein vektor av lengd 1"
 
@@ -1574,7 +1574,7 @@ msgstr "prøvde å gjera om ein ikkje-faktor"
 msgid "list argument expected"
 msgstr "venta listeargument"
 
-#: src/main/coerce.c:1452 src/main/eval.c:4441 src/main/eval.c:4448
+#: src/main/coerce.c:1452 src/main/eval.c:4423 src/main/eval.c:4430
 msgid "invalid environment"
 msgstr "ugyldig omgjevnad"
 
@@ -2562,7 +2562,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "«opts» må vera eit lite, ikkje-negativt tal"
 
 #: src/main/deparse.c:374 src/main/envir.c:1668 src/main/envir.c:1750
-#: src/main/eval.c:423 src/main/eval.c:1055 src/main/eval.c:3128
+#: src/main/eval.c:423 src/main/eval.c:1048 src/main/eval.c:3110
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2373
 #, c-format
 msgid "object '%s' not found"
@@ -3033,7 +3033,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d er brukt i feil samanheng: ingen «...» å sjå i"
 
 #: src/main/envir.c:1302 src/main/envir.c:1746 src/main/eval.c:427
-#: src/main/eval.c:3132
+#: src/main/eval.c:3114
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "argumentet «%s» manglar, og har ingen standardverdi"
@@ -3430,11 +3430,11 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "for djup evaluering: uendeleg rekursjon / options(expressions=)?"
 
-#: src/main/eval.c:429 src/main/eval.c:3133
+#: src/main/eval.c:429 src/main/eval.c:3115
 msgid "argument is missing, with no default"
 msgstr "argumentet manglar (og har ikkje nokon standardverdi)"
 
-#: src/main/eval.c:530 src/main/eval.c:3788
+#: src/main/eval.c:530 src/main/eval.c:3770
 msgid "attempt to apply non-function"
 msgstr "prøvde å køyra ikkje-funksjon"
 
@@ -3443,280 +3443,280 @@ msgstr "prøvde å køyra ikkje-funksjon"
 msgid "%s at %s#%d: "
 msgstr "%s på %s#%d: "
 
-#: src/main/eval.c:982
+#: src/main/eval.c:975
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "fann ikkje symbolet «%s» i omgjevnaden til den generiske funksjonen"
 
-#: src/main/eval.c:1000
+#: src/main/eval.c:993
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "symbolet «%s» finst ikkje i omgjevnaden til metoden"
 
-#: src/main/eval.c:1110
+#: src/main/eval.c:1103
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "vilkåret har lengd større 1 enn (berre første elementet vert brukt)"
 
-#: src/main/eval.c:1127
+#: src/main/eval.c:1120
 msgid "missing value where TRUE/FALSE needed"
 msgstr "manglar verdi der TRUE/FALSE (sann/usann) trengst"
 
-#: src/main/eval.c:1128
+#: src/main/eval.c:1121
 msgid "argument is not interpretable as logical"
 msgstr "argumentet kan ikkje tolkast som ein logisk verdi"
 
-#: src/main/eval.c:1129
+#: src/main/eval.c:1122
 msgid "argument is of length zero"
 msgstr "argumentet har lengd null"
 
-#: src/main/eval.c:1203
+#: src/main/eval.c:1196
 msgid "non-symbol loop variable"
 msgstr "lykkje-variabel som ikkje er eit symbol"
 
-#: src/main/eval.c:1307 src/main/eval.c:3594
+#: src/main/eval.c:1289 src/main/eval.c:3576
 msgid "invalid for() loop sequence"
 msgstr "ugyldig for()-lykkje"
 
-#: src/main/eval.c:1458
+#: src/main/eval.c:1440
 msgid "multi-argument returns are not permitted"
 msgstr "fleire returverdiar er ikkje mogleg"
 
-#: src/main/eval.c:1507
+#: src/main/eval.c:1489
 msgid "invalid (NULL) left side of assignment"
 msgstr "ugyldig venstreside (NULL) i tildeling"
 
-#: src/main/eval.c:1529
+#: src/main/eval.c:1511
 msgid "target of assignment expands to non-language object"
 msgstr "målet i tildelinga vert utvida til eit ikkje-språksobjekt"
 
-#: src/main/eval.c:1565
+#: src/main/eval.c:1547
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "for langt namn i «%s»"
 
-#: src/main/eval.c:1625
+#: src/main/eval.c:1607
 msgid "cannot do complex assignments in base namespace"
 msgstr "kan ikkje utføra komplekse tildelingar namnerommet «base»"
 
-#: src/main/eval.c:1627
+#: src/main/eval.c:1609
 msgid "cannot do complex assignments in base environment"
 msgstr "kan ikkje utføra komplekse tildelingar omgjevnaden «base»"
 
-#: src/main/eval.c:1664 src/main/eval.c:1691
+#: src/main/eval.c:1646 src/main/eval.c:1673
 msgid "invalid function in complex assignment"
 msgstr "ugyldig funksjon i kompleks tildeling"
 
-#: src/main/eval.c:1769
+#: src/main/eval.c:1751
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "ugyldig (do_set) venstreside i tildeling"
 
-#: src/main/eval.c:1784
+#: src/main/eval.c:1766
 msgid "invalid assignment left-hand side"
 msgstr "ugyldig venstreside i tildeling"
 
-#: src/main/eval.c:1849
+#: src/main/eval.c:1831
 #, c-format
 msgid "argument %d is empty"
 msgstr "argumentet %d er tomt"
 
-#: src/main/eval.c:1852
+#: src/main/eval.c:1834
 #, c-format
 msgid "'%s' is missing"
 msgstr "«%s» manglar"
 
-#: src/main/eval.c:2002
+#: src/main/eval.c:1984
 msgid "invalid formal argument list for \"function\""
 msgstr "ugyldig formell argumentliste til «function»"
 
-#: src/main/eval.c:2083
+#: src/main/eval.c:2065
 msgid "numeric 'envir' arg not of length one"
 msgstr "numerisk «envir»-argument ikkje av lengd 1"
 
-#: src/main/eval.c:2105 src/main/eval.c:2124
+#: src/main/eval.c:2087 src/main/eval.c:2106
 msgid "restarts not supported in 'eval'"
 msgstr "omstartar er ikkje støtta i «eval»"
 
-#: src/main/eval.c:2193 src/main/eval.c:2206
+#: src/main/eval.c:2175 src/main/eval.c:2188
 msgid "'Recall' called from outside a closure"
 msgstr "«Recall» kalla utanfrå ei omslutting"
 
-#: src/main/eval.c:2299
+#: src/main/eval.c:2281
 msgid "value in '...' is not a promise"
 msgstr "verdien i «...» er ikkje eit «promise»"
 
-#: src/main/eval.c:2488 src/main/objects.c:711
+#: src/main/eval.c:2470 src/main/objects.c:711
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "kallnamn for langt i «%s»"
 
-#: src/main/eval.c:2509
+#: src/main/eval.c:2491
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "generisk namn for langt i «%s»"
 
-#: src/main/eval.c:2572
+#: src/main/eval.c:2554
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Ikkje-kompatible metodar («%s», «%s») for «%s»"
 
-#: src/main/eval.c:2636
+#: src/main/eval.c:2618
 msgid "dispatch error in group dispatch"
 msgstr "avsendingsfeil i gruppeavsending"
 
-#: src/main/eval.c:2888
+#: src/main/eval.c:2870
 #, fuzzy, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "«fn» er ikkje ein funksjon"
 
-#: src/main/eval.c:3053
+#: src/main/eval.c:3035
 msgid "node stack overflow"
 msgstr "overflytsfeil i nodestakk"
 
-#: src/main/eval.c:3059
+#: src/main/eval.c:3041
 msgid "integer stack overflow"
 msgstr "overflytsfeil i heiltalsstakk"
 
-#: src/main/eval.c:3113
+#: src/main/eval.c:3095
 msgid "Bad opcode"
 msgstr "Ugyldig opcode"
 
-#: src/main/eval.c:3351
+#: src/main/eval.c:3333
 msgid "not a vector object"
 msgstr "ikkje eit vektorobjekt"
 
-#: src/main/eval.c:3359 src/main/eval.c:3381 src/main/eval.c:3405
-#: src/main/eval.c:3429
+#: src/main/eval.c:3341 src/main/eval.c:3363 src/main/eval.c:3387
+#: src/main/eval.c:3411
 msgid "can only handle simple real vectors"
 msgstr "kan berre handtera enkle reelle vektorar"
 
-#: src/main/eval.c:3368 src/main/eval.c:3415
+#: src/main/eval.c:3350 src/main/eval.c:3397
 msgid "not a simple vector"
 msgstr "ikkje ein enkel vektor"
 
-#: src/main/eval.c:3385 src/main/eval.c:3433 src/main/subassign.c:982
+#: src/main/eval.c:3367 src/main/eval.c:3415 src/main/subassign.c:982
 #: src/main/subset.c:821
 msgid "incorrect number of subscripts"
 msgstr "feil tal på indeksar"
 
-#: src/main/eval.c:3396 src/main/eval.c:3447
+#: src/main/eval.c:3378 src/main/eval.c:3429
 msgid "not a simple matrix"
 msgstr "ikkje ei enkel matrise"
 
-#: src/main/eval.c:3458
+#: src/main/eval.c:3440
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "ugyldig %s-type i «x %s y»"
 
-#: src/main/eval.c:3524
+#: src/main/eval.c:3506
 msgid "bytecode version mismatch; using eval"
 msgstr "feil bytekode-versjon (brukar eval)"
 
-#: src/main/eval.c:3529
+#: src/main/eval.c:3511
 msgid "bytecode version is too old"
 msgstr "bytekode-versjonen er for gammal"
 
-#: src/main/eval.c:3530
+#: src/main/eval.c:3512
 msgid "bytecode version is too new"
 msgstr "bytekode-versjonen er for ny"
 
-#: src/main/eval.c:3535
+#: src/main/eval.c:3517
 msgid "byte code version mismatch"
 msgstr "feil i bytekode-versjon"
 
-#: src/main/eval.c:3645
+#: src/main/eval.c:3627
 msgid "invalid sequence argument in for loop"
 msgstr "ugyldig følgjeargument i for-lykkje"
 
-#: src/main/eval.c:3771 src/main/eval.c:3892
+#: src/main/eval.c:3753 src/main/eval.c:3874
 msgid "not a BUILTIN function"
 msgstr "ikkje ein BUIILTIN-funksjon"
 
-#: src/main/eval.c:3877 src/main/eval.c:4221 src/main/eval.c:4262
+#: src/main/eval.c:3859 src/main/eval.c:4203 src/main/eval.c:4244
 msgid "bad function"
 msgstr "ugyldig funksjon"
 
-#: src/main/eval.c:4291
+#: src/main/eval.c:4273
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr ""
 
-#: src/main/eval.c:4294
+#: src/main/eval.c:4276
 msgid "bad character switch offsets"
 msgstr ""
 
-#: src/main/eval.c:4296
+#: src/main/eval.c:4278
 #, fuzzy
 msgid "bad switch names"
 msgstr "ugyldig filnamn"
 
-#: src/main/eval.c:4310
+#: src/main/eval.c:4292
 msgid "bad numeric switch offsets"
 msgstr ""
 
-#: src/main/eval.c:4381
+#: src/main/eval.c:4363
 msgid "cannot find index for threaded code address"
 msgstr "finn ikkje indeks for tråda kodeadresse"
 
-#: src/main/eval.c:4461
+#: src/main/eval.c:4443
 msgid "invalid symbol"
 msgstr "ugyldig symbol"
 
-#: src/main/eval.c:4505
+#: src/main/eval.c:4487
 msgid "argument is not a byte code object"
 msgstr "argumentet er ikkje eit bytekode-objekt"
 
-#: src/main/eval.c:4526
+#: src/main/eval.c:4508
 msgid "bad file name"
 msgstr "ugyldig filnamn"
 
-#: src/main/eval.c:4530 src/main/eval.c:4551
+#: src/main/eval.c:4512 src/main/eval.c:4533
 msgid "unable to open 'file'"
 msgstr "klarte ikkje opna «file»"
 
-#: src/main/eval.c:4545 src/main/saveload.c:1930
+#: src/main/eval.c:4527 src/main/saveload.c:1930
 msgid "'file' must be non-empty string"
 msgstr "«file» må vera ein ikkje-tom teiknstreng"
 
-#: src/main/eval.c:4547 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:4529 src/main/saveload.c:1932 src/main/saveload.c:2232
 #: src/main/serialize.c:1813
 msgid "'ascii' must be logical"
 msgstr "«ascii» må vera ein logisk verdi"
 
-#: src/main/eval.c:4576 src/main/eval.c:4583
+#: src/main/eval.c:4558 src/main/eval.c:4565
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: bufferen er for liten"
 
-#: src/main/eval.c:4616 src/main/eval.c:4665
+#: src/main/eval.c:4598 src/main/eval.c:4647
 #, fuzzy
 msgid "constant buffer must be a generic vector"
 msgstr "«code» må vera ein generisk vektor"
 
-#: src/main/eval.c:4635
+#: src/main/eval.c:4617
 #, fuzzy
 msgid "constBuf must be a generic vector"
 msgstr "«code» må vera ein generisk vektor"
 
-#: src/main/eval.c:4639
+#: src/main/eval.c:4621
 #, fuzzy
 msgid "bad constCount value"
 msgstr "ingen konturverdiar"
 
-#: src/main/eval.c:4667
+#: src/main/eval.c:4649
 msgid "bad constant count"
 msgstr ""
 
-#: src/main/eval.c:4703
+#: src/main/eval.c:4685
 msgid "profile timer in use"
 msgstr "profiltidtakar i bruk"
 
-#: src/main/eval.c:4705
+#: src/main/eval.c:4687
 msgid "already byte code profiling"
 msgstr "profilerer alt bytekode"
 
-#: src/main/eval.c:4723
+#: src/main/eval.c:4705
 msgid "setting profile timer failed"
 msgstr "klarte ikkje velja profiltidtakar"
 
-#: src/main/eval.c:4740
+#: src/main/eval.c:4722
 msgid "not byte code profiling"
 msgstr "profilerer ikkje bytekode"
 
