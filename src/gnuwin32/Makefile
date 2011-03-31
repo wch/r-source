@@ -279,7 +279,7 @@ distclean: clean
 	$(RM) ../../SVN-REVISION.bak
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(MAKE) -C cran clean
-	$(RM) -r .vignettes # it gets left behind if there is an error
+	$(RM) -r ../library/.vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
 	$(RM) MkRules Rpwd.exe # do this last of all
 
@@ -311,13 +311,8 @@ pdfdocs manuals:
 
 R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --slave
 
-## FIXME: move to src/library/Makefile.win
 vignettes:
-	@for pkg in grid utils; do \
-	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(R_EXE) > /dev/null; \
-	done
-	@rm -rf .vignettes
+	@$(MK) -C ../library -f Makefile.win vignettes
 
 
 ## ===================== Maintainer targets ========================
