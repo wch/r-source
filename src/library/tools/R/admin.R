@@ -512,7 +512,7 @@ function(dir, outDir, encoding = "")
         cat("*** tangling vignette sources ...\n")
         for(srcfile in vignetteIndex$File) {
             enc <- getVignetteEncoding(srcfile, TRUE)
-            if(enc %in% c("", "non-ASCII", "unknown")) enc <- encoding
+            if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
             cat("  ", sQuote(basename(srcfile)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
            tryCatch(utils::Stangle(srcfile, quiet = TRUE, encoding = enc),
