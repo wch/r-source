@@ -335,7 +335,7 @@
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             if (nzchar(lockdir))
                 system(paste("mv", shQuote(instdir),
-                             shQUote(file.path(lockdir, pkg))))
+                             shQuote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         res <- system(paste("cp -r .", shQuote(instdir),

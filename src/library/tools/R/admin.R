@@ -599,11 +599,11 @@ function(dir, outDir, keep.source = FALSE)
     upToDate <- file_test("-nt", vignettePDFs, vigns$docs)
     if(all(upToDate)) return(invisible())
 
-    ## For the time being, the primary use of this function is to
-    ## build and install vignettes in base packages.
-    ## Hence, we build in a subdir of the current directory rather than
-    ## a temp dir:
-    ## this allows inspection of problems and automatic cleanup via Make.
+    ## The primary use of this function is to build and install
+    ## vignettes in base packages.
+    ## Hence, we build in a subdir of the current directory rather
+    ## than a temp dir: this allows inspection of problems and
+    ## automatic cleanup via Make.
     cwd <- getwd()
     if (is.null(cwd))
         stop("current working directory cannot be ascertained")

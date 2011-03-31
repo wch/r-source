@@ -1701,7 +1701,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if( (is.na(def_enc))) def_enc <- ""
             for(v in vigns$docs) {
                 enc <- getVignetteEncoding(v, TRUE)
-                if(enc %in% c("", "non-ASCII", "unknown")) enc <- def_enc
+                if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
                 cat("  ", sQuote(basename(v)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")
