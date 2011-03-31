@@ -1596,7 +1596,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     run_vignettes <- function(desc)
     {
         vigns <- pkgVignettes(dir = pkgdir)
-        if (is.null(vigns)) return()
+        if (is.null(vigns) || !length(vigns$docs)) return()
         vf <- vigns$docs
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
