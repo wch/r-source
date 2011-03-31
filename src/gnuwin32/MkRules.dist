@@ -45,7 +45,7 @@ M_ARCH =
 AS_ARCH =
 # and for windres (-F pe-i386 or pe-x86-64)
 RC_ARCH =
-# and for dlltool (-m i386 vs i386:x86-64)
+# and for dlltool ("-m i386 --as-flags --32" vs "-m i386:x86-64 --as-flags --64")
 DT_ARCH =
 
 # 32- or 64-bit Windows?
