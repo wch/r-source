@@ -612,27 +612,20 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
     return val;
 }
 
-static SEXP R_compileExpr(SEXP expr, SEXP vars, SEXP rho)
+static SEXP R_compileExpr(SEXP expr, SEXP rho)
 {
     SEXP packsym, funsym, quotesym;
-    SEXP qexpr, call, fcall, envarg, val;
+    SEXP qexpr, call, fcall, val;
 
     packsym = install("compiler");
     funsym = install("compile");
     quotesym = install("quote");
 
-    if (vars == R_NilValue)
-	/*** just using R_NilValue is probably OK too */
-	PROTECT(vars = allocVector(STRSXP, 0));
-    else
-	PROTECT(vars);
-
     PROTECT(fcall = lang3(R_DoubleColonSymbol, packsym, funsym));
     PROTECT(qexpr = lang2(quotesym, expr));
-    PROTECT(envarg = list2(vars, rho));
-    PROTECT(call = lang3(fcall, qexpr, envarg));
+    PROTECT(call = lang3(fcall, qexpr, rho));
     val = eval(call, R_GlobalEnv);
-    UNPROTECT(5);
+    UNPROTECT(3);
     return val;
 }
 
@@ -644,7 +637,7 @@ static SEXP R_compileAndExecute(SEXP call, SEXP rho)
     R_jit_enabled = 0;
     PROTECT(call);
     PROTECT(rho);
-    PROTECT(code = R_compileExpr(call, R_NilValue, rho));
+    PROTECT(code = R_compileExpr(call, rho));
     R_jit_enabled = old_enabled;
 
     val = bcEval(code, rho);
@@ -1204,18 +1197,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef BYTECODE
     if (R_jit_enabled > 2) {
-	int old_enabled = R_jit_enabled;
-	SEXP code, vars;
-
-	R_jit_enabled = 0;
-	PROTECT(call);
-	PROTECT(rho);
-	PROTECT(vars = ScalarString(PRINTNAME(sym)));
-	PROTECT(code = R_compileExpr(call, vars, rho));
-	R_jit_enabled = old_enabled;
-
-	bcEval(code, rho);
-	UNPROTECT(4);
+	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
 #endif
