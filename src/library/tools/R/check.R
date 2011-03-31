@@ -1198,7 +1198,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             res <- format(res, diff = 1e5)
             if(length(res)) {
                 resultLog(Log, "NOTE")
-                printLog(Log, "  ", sQuote("pdf"),
+                printLog(Log, "  ", sQuote("qpdf"),
                          " made some significant size reductions:\n",
                          paste("  ", res, collapse = "\n"),
                          "\n",
