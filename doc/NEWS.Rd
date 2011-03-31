@@ -423,7 +423,9 @@
       to supply a zero-length \code{from}: it now simply does nothing.
       
       \item \code{rstandard.glm} gains a \code{type} argument for optional 
-      standardized Pearson residuals
+      standardized Pearson residuals.
+
+      \item A start on a Turkish translation, thanks to Murat Alkan.
     }
   }
   
