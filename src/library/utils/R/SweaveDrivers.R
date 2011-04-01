@@ -145,6 +145,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 chunkout <- file(paste(chunkprefix, "tex", sep = "."), "w")
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
+                if(!grepl("^[[:alnum:]-_]+$", chunkout))
+                    warning("file name ", sQuote(chunkout), " is not portable",
+                            call. = FALSE, domain = NA)
             }
         } else chunkout <- object$output
 
@@ -220,6 +223,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         srcrefs <- attr(chunkexps, "srcref")
 
         if (!options$persistent.graphics && length(devs)) {
+            if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+                warning("file name ", sQuote(chunkprefix), " is not portable",
+                        call. = FALSE, domain = NA)
             devs[[1L]](name = chunkprefix,
                        width = options$width, height = options$height,
                        options)
@@ -345,6 +351,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         if (length(devs)) {
             if(!options$persistent.graphics)
                 grDevices::dev.off()        # close first one
+            else if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+                warning("file name ", sQuote(chunkprefix), " is not portable",
+                        call. = FALSE, domain = NA)
             for (dev in devs1) {
                 dev(name = chunkprefix,
                     width = options$width, height = options$height,
@@ -608,6 +617,9 @@ RtangleRuncode <-  function(object, chunk, options)
     chunkprefix <- RweaveChunkPrefix(options)
 
     if (options$split) {
+        if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+            warning("file name ", sQuote(chunkprefix), " is not portable",
+                    call. = FALSE, domain = NA)
         outfile <- paste(chunkprefix, options$engine, sep = ".")
         if (!object$quiet) cat(options$chunknr, ":", outfile,"\n")
         ## [x][[1L]] avoids partial matching of x

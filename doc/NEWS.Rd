@@ -74,6 +74,11 @@
       keeps a graphics device open across chunks and plots each figure
       chunk on it (the previous behaviour).  This is needed only very
       rarely.
+
+      \item Warnings are issued when non-portable filenames are found
+      for graphics file and chunks (if \code{split=TRUE}).  Portable
+      names are regarded as alphanumeric plus hyphen and underscore
+      (periods cause problems with recognizing file extensions).
     }
   }
 
