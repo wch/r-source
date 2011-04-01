@@ -3,7 +3,7 @@ R  ICON  R.ico
 #include <windows.h>
 #include "../../include/Rversion.h"
 
-#ifndef WIN64
+#ifndef WN64
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rcmd.exe.manifest"
 #endif
 

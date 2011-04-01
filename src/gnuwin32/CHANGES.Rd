@@ -15,9 +15,9 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item There is be beginnings of support for \sQuote{multilib}
-      toolchains which use options \option{--m32} or \option{--m64} to
-      select the architecture.
+      \item There is  support for \sQuote{multilib} toolchains which use
+      options \option{--m32} or \option{--m64} to select the
+      architecture; set the appropriate macros in \file{MkRules.local}.
     }
   }
 }

@@ -87,6 +87,7 @@ rcico.o: Rcmd.exe.manifest
 rgico.o: Rgui32.manifest
 rtico.o: Rterm32.manifest
 else
+RESFLAGS = -DWN64
 rtico.o: Rterm64.manifest
 rgico.o: Rgui64.manifest
 endif
