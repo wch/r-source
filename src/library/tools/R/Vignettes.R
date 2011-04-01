@@ -277,19 +277,25 @@ getVignetteEncoding <-  function(file, ...)
 
 .getVignetteEncoding <- function(lines, convert = FALSE)
 {
-    ## Look for input enc lines in inputenc or inputenx
+    ## Look for input enc lines using inputenc or inputenx
     ## Note, multiple languages are excluded.
 
-    poss <- grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
-                 lines, useBytes = TRUE, value = TRUE)
+    poss <-
+        grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
+             lines, useBytes = TRUE)
+    ## Check it is in the preamble
+    start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
+                  lines, useBytes = TRUE)
+    if(length(start)) poss <- poss[poss < start[1L]]
     if(!length(poss)) {
         asc <- iconv(lines, "latin1", "ASCII")
         ind <- is.na(asc) | asc != lines
         if(any(ind)) return("non-ASCII")
         return("") # or "ASCII"
     }
-    poss <- poss[1L]
-    res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1", poss)
+    poss <- lines[poss[1L]]
+    res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
+                poss) # This line should be ASCII.
     if (convert) {
         ## see Rd2latex.R.
         ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
