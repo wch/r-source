@@ -156,7 +156,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         } else chunkout <- object$output
 
         srcfile <- srcfilecopy(object$filename, chunk)
-        SweaveHooks(options, run = TRUE)
 
         ## Note that we edit the error message below, so change both
         ## if you change this line:
@@ -234,6 +233,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                        width = options$width, height = options$height,
                        options)
             devs1 <- devs[-1]
+            SweaveHooks(options, run = TRUE)
         }
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
