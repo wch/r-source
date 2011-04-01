@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0 \n"
+"Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:44\n"
-"PO-Revision-Date: 2010-09-29 07:56+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"PO-Revision-Date: 2011-03-28 11:02+0900\n"
+"Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language: \n"
-"MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=UTF-8 \n"
-"Content-Transfer-Encoding: 8bit \n"
-"Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.1.0\n"
 
 msgid "'%s' is defunct."
 msgstr " '%s' は廃止されました。 "
@@ -83,7 +83,7 @@ msgid "malformed version string"
 msgstr " 正しい書式のバージョン文字列ではありません "
 
 msgid "target is %s, current is %s"
-msgstr ""
+msgstr " 引数 target は %s、引数 current は %s です "
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "
@@ -207,9 +207,8 @@ msgstr " 有効な再スタート指定ではありません "
 msgid "argument 'where' of length 0"
 msgstr " 長さ 0 の引数 'where' です "
 
-#, fuzzy
 msgid "argument 'object' must deparse to a single character string"
-msgstr " 'pattern' は空でない文字列でなければなりません "
+msgstr " 引数 'object'' は空でない単一の文字列でなければなりません "
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr ""
@@ -656,15 +655,15 @@ msgstr " 不正な因子水準です。NA が発生しました "
 msgid "'%s' is not meaningful for ordered factors"
 msgstr " '%s' は順序因子に対しては無意味です "
 
-#, fuzzy
 msgid "'%s' not defined for ordered factors"
-msgstr " '%s' は順序因子に対しては無意味です "
+msgstr " '%s' は順序因子に対しては定義されません"
 
-#, fuzzy
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
-msgstr " '%s' は順序因子に対しては無意味です "
+msgstr ""
+" もし全ての引数が同じ水準となっている場合、'%s' は順序因子に対してのみ意味を"
+"成します"
 
 msgid "no files to copy to"
 msgstr " そこへコピーすべきファイルがありません "
@@ -674,6 +673,7 @@ msgstr " コピー先ファイルよりも多くのコピー元ファイルが�
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
+" 'to' が単一のディレクトリになっていないため 'recursive' は無視されます"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr " 同じファイルにコピーすることはできません "
@@ -684,16 +684,14 @@ msgstr " リンクすべきファイルがありません "
 msgid "no files/directory to link to"
 msgstr " リンクすべきファイルもしくはディレクトリがありません "
 
-#, fuzzy
 msgid "no files to link to"
-msgstr " リンクすべきファイルがありません "
+msgstr " リンクするためのファイルがありません "
 
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "
 
-#, fuzzy
 msgid "no file found"
-msgstr " 見つかりません "
+msgstr " ファイルが見つかりません "
 
 msgid "'vec' contains NAs"
 msgstr " 'vec' は NA 値を含んでいます "
@@ -896,9 +894,8 @@ msgstr " 今 dyn.unload(\"%s\") 中です ... "
 msgid "use of 'save' is deprecated"
 msgstr " '%s' の使用は廃止予定です "
 
-#, fuzzy
 msgid "save != FALSE is defunct"
-msgstr " '%s' は廃止されました。 "
+msgstr " 'save != FALSE' は廃止されました。 "
 
 msgid "Loading required package: %s"
 msgstr " 要求されたパッケージ %s をロード中です "
@@ -1306,12 +1303,11 @@ msgstr " 'scale' の長さは 'x' の列数に等しくなければなりませ�
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr " 'nmax' か 'n' を指定して下さい。しかし両方はだめです "
 
-#, fuzzy
 msgid "argument 'length.out' must be of length 1"
-msgstr " 'length.out' は長さ 1 でなければなりません "
+msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 
 msgid "first element used of 'length.out' argument"
-msgstr ""
+msgstr " 最初の要素は 引数 'length.out' として使われます"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
@@ -1329,7 +1325,7 @@ msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr ""
+msgstr " 'file' がファイル名でない限り、'compress' は無視されます"
 
 msgid "'connection' must be a connection"
 msgstr " 'connection' はコネクションでなければなりません "
@@ -1481,7 +1477,7 @@ msgid "all arguments must have the same length"
 msgstr " 全ての引数は同じ長さでなければなりません "
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr " 2^31 個の要素を超えるテーブルを作成しようとしています"
 
 msgid "'object' must inherit from class \"table\""
 msgstr " 'object' はクラス \"table\" を継承しなければなりません "

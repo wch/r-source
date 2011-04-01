@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0 \n"
+"Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-30 20:23\n"
-"PO-Revision-Date: 2011-01-18 13:55+0000\n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"PO-Revision-Date: 2011-03-25 12:48+0900\n"
+"Last-Translator: Triad sou <triadsou@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language: \n"
-"MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=UTF-8 \n"
-"Content-Transfer-Encoding: 8bit \n"
-"Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.1.0\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -178,9 +178,8 @@ msgstr " 以下の bibtype の bibentry ' "
 msgid "' has to correctly specify the field(s):"
 msgstr " ' は欄を正確に指定しなければなりません： "
 
-#, fuzzy
 msgid "'style' should be one of %s"
-msgstr " 'bibtype' は以下のどれかである必要があります "
+msgstr " 'style' は%sのどれかである必要があります "
 
 msgid "' has to specify the field(s):"
 msgstr " ' は欄を指定しなければなりません： "
@@ -518,7 +517,6 @@ msgstr " 見付かりません "
 msgid "cannot update HTML package index"
 msgstr " HTML パッケージ索引を更新出来ません "
 
-#, fuzzy
 msgid "Making packages.html  ..."
 msgstr " packages.htmlの作成 "
 
@@ -636,9 +634,8 @@ msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
 " (不正な？) 'lib.loc=%s' に対するインストール済のパッケージはありません "
 
-#, fuzzy
 msgid "metadata of '%s' is corrupt"
-msgstr " パッケージ '%s' のメタデータは壊れています "
+msgstr " '%s' のメタデータは壊れています "
 
 msgid "'priority' must be character or NULL"
 msgstr " 'priority' は文字か NULL で無ければなりません "
@@ -988,9 +985,8 @@ msgstr " 如何なるイベントも記録されませんでした "
 msgid "'compressed' must be logical or character"
 msgstr " 'compress'は論理値か文字でなければなりません "
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
+msgstr "ディレクトリ '%s' を作ることが出来ません "
 
 msgid "invalid octal digit"
 msgstr " 不正な８進数の数字です "
@@ -1004,9 +1000,8 @@ msgstr "ファイルに不完全なブロック"
 msgid "checksum error for entry '%s'"
 msgstr "エントリー'%s'に対するチェックサムエラー"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr " '%s' を生成できませんでした "
+msgstr "%s を %s へコピーするのに失敗しました"
 
 msgid "unsupported entry type"
 msgstr "サポートされないエントリー型 "
@@ -1072,28 +1067,27 @@ msgstr " '%s' への変更の試みは無視されました "
 msgid "'unzip' must be a single character string"
 msgstr " 'unzip' は単一の文字列でなければなりません "
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr ""
-" 'list' は R オブジェクトの名前を与える文字ベクトルでなければなりません "
+" 'files' は１つ以上のファイルパスを指定する文字ベクトルでなければなりません "
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
+"'mailto:'のURIを開くためのプログラムが見つかりません。'method=\"none\"'として"
+"再実行します"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "メール送信のためのURIを開くためにブラウザを使用"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "'address'を指定しなければなりません"
 
-#, fuzzy
 msgid "'subject' is missing"
 msgstr " 'subject' が欠けています "
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr " 'port' は長さ 1 の整数でなければなりません "
+msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 
 msgid "no download method found"
 msgstr " ダウンロードの方法が見付かりません "
@@ -1120,19 +1114,20 @@ msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr " パッケージ '%s' は無事に開封され、MD5 サムもチェックされました "
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "ディレクトリのロックに失敗しました。"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+" 変更中 \n"
+" 除去を試みています "
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
+msgstr "排他的ディレクトリ '%s' を作ることが出来ません "
 
 msgid "restored '%s'"
-msgstr ""
+msgstr "'%s'を復帰させました"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした "
@@ -1147,7 +1142,7 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr " 'memory.limit()' は Windows 固有の関数です "
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr " 'mailx' メソッドは Unix でのみ利用可能です "
 
 msgid "zipfile '%s' not found"
 msgstr " zip ファイル '%s' が見付かりません "
@@ -1178,7 +1173,6 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] " オブジェクト '%s' が見付かりません "
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
 msgstr[0] " パッケージ %s が利用できません "

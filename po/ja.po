@@ -4,18 +4,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0 \n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-04-01 09:20+0100\n"
-"PO-Revision-Date: 2010-09-30 07:32+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
-"Language-Team: R-core <R-core@R-project.org> \n"
+"PO-Revision-Date: 2011-03-28 15:56+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
+"Language-Team: R-core <R-core@R-project.org>\n"
 "Language: \n"
-"MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=UTF-8 \n"
-"Content-Transfer-Encoding: 8bit \n"
-"Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
@@ -811,6 +811,8 @@ msgstr " 引数 '%s' は 1を超える長さなので, 最初の要素だけが�
 #: src/main/agrep.c:84 src/main/grep.c:173 src/main/grep.c:800
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 msgstr ""
+" \"bytes\" コードの文字列が見つかりました、useBytes = TRUE を使用してくださ"
+"い "
 
 #: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2215
 msgid "regular expression is invalid in this locale"
@@ -866,7 +868,7 @@ msgstr " '%s' という型はサポートされていません "
 #: src/main/apply.c:212
 #, c-format
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
-msgstr ""
+msgstr " dimnames(<value>) は NULL でも長さ %d のリストでもありません "
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -948,9 +950,8 @@ msgstr ""
 " 'log' 関数に %d 個の引数が渡されましたが，1つまたは2つでなくてはなりません "
 
 #: src/main/array.c:79
-#, fuzzy
 msgid "'data' must be of a vector type"
-msgstr " 'path' は文字ベクトルでなくてはなりません "
+msgstr " 'data' はベクトル型でなくてはなりません "
 
 #: src/main/array.c:93 src/main/array.c:101
 msgid "non-numeric matrix extent"
@@ -1417,7 +1418,7 @@ msgstr " '...' が不適切な文脈で使われました "
 #: src/main/builtin.c:922
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
-msgstr ""
+msgstr "重複する switch 既定値: '%s' と '%s'"
 
 #: src/main/builtin.c:955
 msgid "'EXPR' is missing"
@@ -1436,7 +1437,7 @@ msgstr " '%s'は文字ベクトルを要求します "
 #, c-format
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
-msgstr ""
+msgstr "\"bytes\"でエンコードされた要素 %d の文字数が計算できません"
 
 #: src/main/character.c:160 src/main/character.c:188 src/main/character.c:636
 #: src/main/character.c:732
@@ -1447,7 +1448,7 @@ msgstr " %d は不正なマルチバイト文字です "
 #: src/main/character.c:176
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
-msgstr ""
+msgstr "\"bytes\"でエンコードされた要素 %d の幅が計算できません"
 
 #: src/main/character.c:252
 msgid "extracting substrings from a non-character object"
@@ -1978,12 +1979,11 @@ msgid "initializing bzip2 compression for file '%s' failed"
 msgstr "ファイル '%s' に対する bzip2 圧縮の初期化に失敗しました "
 
 #: src/main/connections.c:1436
-#, fuzzy
 msgid "allocation of overflow buffer for bzfile failed"
-msgstr " ファイル接続の割り当てに失敗しました "
+msgstr " bzfileのためのオーバーフローバッファの割り当ては失敗しました"
 
 #: src/main/connections.c:1443
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr " ファイル '%s' は bzip2 で圧縮されていないようです "
@@ -2758,7 +2758,7 @@ msgstr " 引数の数が多すぎます "
 #: src/main/dotcode.c:786 src/main/dotcode.c:829 src/main/dotcode.c:1657
 #, fuzzy, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
-msgstr " 引数の個数(%d)が不正です。%d 個が %s に対しては必要です "
+msgstr " 引数の数(%d)が不正です。%s に対しては %d 個の引数が必要です "
 
 #: src/main/dotcode.c:1486 src/main/dotcode.c:2289
 msgid "too many arguments, sorry"
@@ -2818,14 +2818,12 @@ msgid "zip path is too long"
 msgstr " zipファイルのパスが長すぎます "
 
 #: src/main/dounzip.c:270
-#, fuzzy
 msgid "'exdir' is too long"
-msgstr " 'destination' が長すぎます "
+msgstr " 'exdir' が長すぎます "
 
 #: src/main/dounzip.c:273
-#, fuzzy
 msgid "'exdir' does not exist"
-msgstr " メニューがありません "
+msgstr " 'exdir' がありません "
 
 #: src/main/dounzip.c:297
 msgid "requested file not found in the zip file"
@@ -3074,9 +3072,8 @@ msgid "first argument must be a named list"
 msgstr " 最初の引数は名前付きリストでなくてはなりません "
 
 #: src/main/envir.c:1554
-#, fuzzy
 msgid "names(x) must be a character vector of the same length as x"
-msgstr " 'hostname' は長さ1の文字列ベクトルでなくてはなりません "
+msgstr " names(x) はxと同じ長さの文字列ベクトルでなくてはなりません "
 
 #: src/main/envir.c:1584
 msgid "cannot remove variables from base namespace"
@@ -3581,9 +3578,9 @@ msgid "dispatch error in group dispatch"
 msgstr "グループディスパッチにディスパッチエラーがあります "
 
 #: src/main/eval.c:2870
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a %s function"
-msgstr " 'fn' が関数ではありません "
+msgstr " \"%s\" は %s 関数ではありません "
 
 #: src/main/eval.c:3035
 msgid "node stack overflow"
@@ -3620,9 +3617,9 @@ msgid "not a simple matrix"
 msgstr " 単一の行列ではありません "
 
 #: src/main/eval.c:3440
-#, fuzzy, c-format
+#, c-format
 msgid "invalid %s type in 'x %s y'"
-msgstr " 'x %s y' の 'x' の型が不正です "
+msgstr " 'x %s y' の %s の型が不正です "
 
 #: src/main/eval.c:3506
 msgid "bytecode version mismatch; using eval"
@@ -3654,20 +3651,20 @@ msgstr " 不正な関数です "
 
 #: src/main/eval.c:4273
 msgid "numeric EXPR required for switch() without named alternatives"
-msgstr ""
+msgstr "名前付きの代替値が無い switch() 関数には数値の EXPR が必要です"
 
 #: src/main/eval.c:4276
 msgid "bad character switch offsets"
-msgstr ""
+msgstr "不正なな文字スィッチオフセットです"
 
 #: src/main/eval.c:4278
 #, fuzzy
 msgid "bad switch names"
-msgstr " 不正なファイル名です "
+msgstr " 不正なスィッチ名です "
 
 #: src/main/eval.c:4292
 msgid "bad numeric switch offsets"
-msgstr ""
+msgstr "不正な数値スィッチオフセットです"
 
 #: src/main/eval.c:4363
 msgid "cannot find index for threaded code address"
@@ -3705,23 +3702,20 @@ msgid "R_CompiledFileName: buffer too small"
 msgstr " R_CompiledFileName: バッファが小さすぎます "
 
 #: src/main/eval.c:4598 src/main/eval.c:4647
-#, fuzzy
 msgid "constant buffer must be a generic vector"
-msgstr " コードはジェネリックなベクトルでなければなりません "
+msgstr " 定数値バッファーは総称的なベクトルでなければなりません"
 
 #: src/main/eval.c:4617
-#, fuzzy
 msgid "constBuf must be a generic vector"
-msgstr " コードはジェネリックなベクトルでなければなりません "
+msgstr " constBuf は総称的なベクトルでなければなりません "
 
 #: src/main/eval.c:4621
-#, fuzzy
 msgid "bad constCount value"
-msgstr " 等高線値がありません "
+msgstr " 不正な constCount 値です "
 
 #: src/main/eval.c:4649
 msgid "bad constant count"
-msgstr ""
+msgstr " 不正な定数値カウントです"
 
 #: src/main/eval.c:4685
 msgid "profile timer in use"
@@ -3778,7 +3772,7 @@ msgstr " プロンプトが不正です "
 
 #: src/main/gevents.c:123
 msgid "recursive use of getGraphicsEvent not supported"
-msgstr " げｔGrapshics の再帰的使用はサポートされていません "
+msgstr " getGrapshicsEvent の再帰的使用はサポートされていません "
 
 #: src/main/gevents.c:133
 msgid "no graphics event handlers set"
@@ -4013,14 +4007,14 @@ msgid "Metric information not available for this device"
 msgstr "このデバイスに対してメトリック情報は利用できません "
 
 #: src/main/grep.c:89
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression '%s', reason '%s'"
-msgstr " '%s' の正規表現が不正です "
+msgstr "\"%s\" は不正な正則表現です, 理由は '%s'"
 
 #: src/main/grep.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "invalid regular expression, reason '%s'"
-msgstr " '%s' の正規表現が不正です "
+msgstr "不正な正則表現です, 理由は '%s'"
 
 #: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
 #: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
@@ -4084,6 +4078,8 @@ msgstr " '%s' の正規表現が不正です "
 #: src/main/grep.c:1240
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
+" パターンは空の文字列に何回でもマッチします、最初にマッチしたものだけを返しま"
+"す"
 
 #: src/main/grep.c:1535
 msgid "'pattern' is invalid UTF-8"
@@ -4381,14 +4377,14 @@ msgid "unprotect_ptr: pointer not found"
 msgstr " unprotect_ptr：ポインターがありません "
 
 #: src/main/memory.c:2772
-#, fuzzy, c-format
+#, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
-msgstr " Calloc がメモリー (%d of %d) を割りあてられませんでした "
+msgstr " Calloc がメモリー (%2$u バイトの %1$.0f) を割りあてられませんでした "
 
 #: src/main/memory.c:2783
-#, fuzzy, c-format
+#, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
-msgstr " Realloc がメモリーを再確保できません (サイズは %d)  "
+msgstr " Realloc がメモリーを再確保できません (%.0f バイト)  "
 
 #: src/main/memory.c:3002
 msgid "not safe to return vector pointer"
@@ -5242,33 +5238,30 @@ msgid "symlinks are not supported on this platform"
 msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
 
 #: src/main/platform.c:675
-#, fuzzy, c-format
+#, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
-msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
+msgstr " '%ls' を '%ls' にリンクできません, 理由は '%s' です "
 
 #: src/main/platform.c:695
-#, fuzzy, c-format
+#, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
-msgstr " '%s'に対するシンボリックリンク'%s'を作成できません, 理由は '%s' です "
+msgstr " '%s' を '%s' にリンクできません, 理由は '%s' です "
 
 #: src/main/platform.c:704
-#, fuzzy
 msgid "(hard) links are not supported on this platform"
-msgstr " このプラットフォームではシンボリックリンクはサポートされていません "
+msgstr " このプラットフォームでは（ハード）リンクはサポートされていません "
 
 #: src/main/platform.c:735
 msgid "'from' and 'to' are of different lengths"
-msgstr ""
+msgstr "'from' と 'to' は異なった長さです"
 
 #: src/main/platform.c:746 src/main/platform.c:756
-#, fuzzy
 msgid "expanded 'from' name too long"
-msgstr " 展開されたソース名が長すぎます "
+msgstr " 展開された 'from' 名が長すぎます "
 
 #: src/main/platform.c:750 src/main/platform.c:760
-#, fuzzy
 msgid "expanded 'to' name too long"
-msgstr " 展開されたソース名が長すぎます "
+msgstr " 展開された　'to' 名が長すぎます "
 
 #: src/main/platform.c:764
 #, c-format
@@ -5340,39 +5333,39 @@ msgid "'%ls' already exists"
 msgstr " '%ls' はすでに存在します "
 
 #: src/main/platform.c:2091
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create dir '%ls', reason '%s'"
-msgstr "ディレクトリ '%s' を作れません, 理由は'%s'です "
+msgstr "ディレクトリ '%ls' を作れません, 理由は '%s' です "
 
 #: src/main/platform.c:2121
-#, fuzzy, c-format
+#, c-format
 msgid "problem creating directory %ls: %s"
-msgstr " エディタ %s の実行に関し問題がおきました "
+msgstr "ディレクトリ %ls の作成に問題があります: %s"
 
 #: src/main/platform.c:2136
-#, fuzzy, c-format
+#, c-format
 msgid "problem reading dir %ls: %s"
-msgstr " エディタ %s の実行に関し問題がおきました "
+msgstr "ディレクトリ %ls の作成に問題があります: %s"
 
 #: src/main/platform.c:2149
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr ""
+msgstr " %ls の %ls へのコピーに問題があります: %s"
 
 #: src/main/platform.c:2265
-#, fuzzy, c-format
+#, c-format
 msgid "problem creating directory %s: %s"
-msgstr " エディタ %s の実行に関し問題がおきました "
+msgstr " ディレクトリ %s の作成に問題があります: %s"
 
 #: src/main/platform.c:2279
-#, fuzzy, c-format
+#, c-format
 msgid "problem reading directory %s: %s"
-msgstr " エディタ %s の実行に関し問題がおきました "
+msgstr " ディレクトリ %s の作成に問題があります: %s"
 
 #: src/main/platform.c:2295
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr ""
+msgstr " %s の %s へのコピーに問題があります: %s"
 
 #: src/main/platform.c:2417
 msgid "'mode' must be of length at least one"
@@ -6002,7 +5995,6 @@ msgid "cannot save namespace in version 1 workspaces"
 msgstr " バージョン 1 の作業スペースには namespace を保存できません "
 
 #: src/main/saveload.c:913
-#, fuzzy
 msgid ""
 "cannot save environment with locked/active bindings in version 1 workspaces"
 msgstr ""
@@ -6172,9 +6164,8 @@ msgid "connection not open for reading"
 msgstr " コネクションは読み込みのために開かれていません "
 
 #: src/main/saveload.c:2345
-#, fuzzy
 msgid "can only load() from a binary connection"
-msgstr " バイナリコネクションからのみ入力できます "
+msgstr " バイナリコネクションからのみ load() できます "
 
 #: src/main/saveload.c:2356
 msgid "no input is available"
@@ -6300,9 +6291,9 @@ msgid "attempt to replicate non-vector"
 msgstr " ベクトルでないものを複製しようとしました "
 
 #: src/main/seq.c:383 src/main/seq.c:390 src/main/seq.c:519 src/main/seq.c:696
-#, fuzzy, c-format
+#, c-format
 msgid "first element used of '%s' argument"
-msgstr " 'url' 引数の最初の要素だけが使われました "
+msgstr " '%s' 引数の最初の要素だけが使われました "
 
 #: src/main/seq.c:517
 msgid "'length.out' must be a non-negative number"
@@ -6466,9 +6457,8 @@ msgid "bad version value"
 msgstr " 不適切なバージョン値です "
 
 #: src/main/serialize.c:1848
-#, fuzzy
 msgid "binary-mode connection required for ascii=FALSE"
-msgstr " 二項演算には二つの引数が必要です "
+msgstr " ascii=FALSE に大してはバイナリコネクションが必要です"
 
 #: src/main/serialize.c:2006 src/main/serialize.c:2033
 #: src/main/serialize.c:2094
@@ -6799,6 +6789,8 @@ msgstr " 結果は、ゼロ長であり、言語オブジェクトではあり�
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
+" タイプ \"S4\" のオブジェクトに対する定義 [[<- は環境のサブクラスに対してだけ"
+"です"
 
 #: src/main/subassign.c:1505
 msgid "wrong args for environment subassignment"
@@ -6983,13 +6975,13 @@ msgstr " '%s' のファイル変更時刻を確定できません "
 
 #: src/main/sysutils.c:167
 msgid "encoding of a filename cannot be 'bytes'"
-msgstr ""
+msgstr "ファイル名のエンコーディングは 'bytes' は許されません"
 
 #: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
 #: src/main/sysutils.c:867
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
-msgstr " '%s'から'%s'へのサポートされていない変換です "
+msgstr " '%s' からのサポートされていない変換がコードページ %d にあります"
 
 #: src/main/sysutils.c:179
 msgid "file name conversion problem -- name too long?"
@@ -7048,9 +7040,10 @@ msgid "'x' must be a character vector"
 msgstr " 'x' は文字列ベクトルでなくてはなりません "
 
 #: src/main/sysutils.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion from '%s' to '%s' in codepage %d"
-msgstr " '%s'から'%s'へのサポートされていない変換です "
+msgstr ""
+" '%s' から '%s' へのサポートされていない変換がコードページ %d 中にあります "
 
 #: src/main/sysutils.c:681 src/main/sysutils.c:744 src/main/sysutils.c:843
 #: src/main/sysutils.c:857 src/main/sysutils.c:932
@@ -7060,12 +7053,12 @@ msgstr " '%s'はCHARSXP上で呼び出されなければなりません "
 
 #: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
 msgid "translating strings with \"bytes\" encoding is not allowed"
-msgstr ""
+msgstr " エンコーディングが \"bytes\" の文字列の翻訳は許されません"
 
 #: src/main/sysutils.c:961
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
-msgstr " '%s'から'%s'へのサポートされていない変換です "
+msgstr " '%s' へのサポートされていない変換がコードページ %d にあります "
 
 #: src/main/sysutils.c:1374
 msgid "cannot mkdir R_TempDir"
@@ -7089,9 +7082,8 @@ msgid "cannot find unused tempfile name"
 msgstr " 未使用の一時ファイル名を探すことができません "
 
 #: src/main/sysutils.c:1448
-#, fuzzy
 msgid "allocation failed in R_tmpnam2"
-msgstr " R_tmpnam においてメモリ割り当てが失敗しました "
+msgstr " R_tmpnam2 においてメモリ割り当てが失敗しました "
 
 #: src/main/sysutils.c:1474
 msgid "proc.time() is not implemented on this system"
@@ -7123,14 +7115,12 @@ msgid "any_duplicated3(., <0-length incomp>)"
 msgstr " any_duplicated3(., <0-length incomp>) "
 
 #: src/main/unique.c:538
-#, fuzzy
 msgid "'fromLast' must be length 1"
-msgstr " '%s' は長さ1でなければなりません "
+msgstr " 'fromLast' は長さ1でなければなりません "
 
 #: src/main/unique.c:541
-#, fuzzy
 msgid "'fromLast' must be TRUE or FALSE"
-msgstr " 'resize' は TRUE か FALSE でなければなりません "
+msgstr " 'fromLast' は TRUE か FALSE でなければなりません "
 
 #: src/main/unique.c:550
 #, c-format
@@ -8281,12 +8271,11 @@ msgstr " X11 モジュールをロードできません "
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
 
-#, fuzzy
-#~ msgid "constand buffer must be a generic vector"
-#~ msgstr " コードはジェネリックなベクトルでなければなりません "
-
 #~ msgid "invalid '%s' arguemnt"
 #~ msgstr " '%s' 引数が不正です "
+
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr " 定数値バッファーは総称的なベクトルでなければなりません "
 
 #~ msgid "invalid 'tempdir' in R_tmpnam"
 #~ msgstr " R_tmpnam において 'tempdir' が不正です "
