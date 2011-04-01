@@ -697,6 +697,8 @@ function(pkgdir, outfile, title, batch = FALSE,
         q("no", status = 1L, runLast = FALSE)
     }
 
+    ## Windows does not allow .../man/, say, for a directory
+    if(WINDOWS) files[1L] <- sub("[\\/]$", "", files[1L])
     if(dir.exists(files[1L])) {
         if(file.exists(file.path(files[1L], "DESCRIPTION"))) {
             cat("Hmm ... looks like a package\n")
