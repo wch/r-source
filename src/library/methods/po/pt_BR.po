@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:45+0100\n"
-"PO-Revision-Date: 2010-11-15 19:06+0200\n"
+"PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
-"Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -141,12 +141,13 @@ msgstr ""
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
 #: methods_list_dispatch.c:953
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-"erro na avaliação do argumento '%s' na seleção do método para a função '%s'"
+"erro na avaliação do argumento '%s' na seleção do método para a função '%s': "
+"'%s'"
 
 #: methods_list_dispatch.c:618
 #, c-format
@@ -179,9 +180,9 @@ msgstr ""
 "correspondente, mas nenhum argumento '...' foi encontrado"
 
 #: methods_list_dispatch.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "erro na avaliação de um próximo método 'primitive'"
+msgstr "erro na avaliação de um próximo método 'primitive': %s"
 
 #: methods_list_dispatch.c:765
 #, c-format

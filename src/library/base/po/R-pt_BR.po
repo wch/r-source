@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:44\n"
-"PO-Revision-Date: 2011-01-02 18:10+0200\n"
+"PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
-"Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -211,9 +211,8 @@ msgstr "especificação de reinício inválida"
 msgid "argument 'where' of length 0"
 msgstr "argumento 'where' com comprimento 0"
 
-#, fuzzy
 msgid "argument 'object' must deparse to a single character string"
-msgstr "'pattern' deve ser uma string de caracteres não vazia"
+msgstr ""
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"
@@ -583,7 +582,7 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "determinante atualmente não definido para matrizes complexas"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr "'nrow' ou 'ncol' não pode ser especificado quando 'x' é uma matriz "
+msgstr "'nrow' ou 'ncol' não pode ser especificado quando 'x' é uma matriz"
 
 msgid "'x' is an array, but not 1D."
 msgstr "'x' é um array, mas não unidimensional."
@@ -663,15 +662,13 @@ msgstr "nível de fator inválido, NA gerado"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' não faz sentido para fatores ordenados"
 
-#, fuzzy
 msgid "'%s' not defined for ordered factors"
-msgstr "'%s' não faz sentido para fatores ordenados"
+msgstr "'%s' não definido para fatores ordenados"
 
-#, fuzzy
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
-msgstr "'%s' não faz sentido para fatores ordenados"
+msgstr ""
 
 msgid "no files to copy to"
 msgstr "nenhum arquivo para onde copiar"
@@ -691,9 +688,8 @@ msgstr "nenhum arquivo para onde fazer a vinculação"
 msgid "no files/directory to link to"
 msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
 
-#, fuzzy
 msgid "no files to link to"
-msgstr "nenhum arquivo para onde fazer a vinculação"
+msgstr "nenhum arquivo para vincular"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve ter comprimento 1"
@@ -1300,9 +1296,8 @@ msgstr "comprimento de 'scale' deve ser igual ao número de colunas de 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "especifique 'nmax' ou 'n', mas não ambos."
 
-#, fuzzy
 msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out' deve ter comprimento 1"
+msgstr "argumento 'length.out' deve ter comprimento 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr ""
@@ -1472,7 +1467,7 @@ msgid "all arguments must have the same length"
 msgstr "todos os argumentos devem ter o mesmo comprimento"
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr "tentativa de criar uma tabela com mais de 2^31 elementos"
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'object' deve herdar da classe \"table\""
@@ -1532,7 +1527,7 @@ msgid "unary '%s' not defined for \"numeric_version\" objects"
 msgstr "'%s' unário não definido para objetos \"numeric_version\""
 
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "'%s' não definido para objetos \"numeric_version\" "
+msgstr "'%s' não definido para objetos \"numeric_version\""
 
 msgid "not defined for numeric_version objects"
 msgstr "não definido para objetosnumeric_version"
@@ -1548,7 +1543,7 @@ msgid ""
 "Windows only"
 msgstr ""
 "argumentos 'show.output.on.console', 'minimized' e 'invisible' são válidos "
-"somente para Windows "
+"somente para Windows"
 
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' deve ser TRUE ou FALSE"
@@ -1643,7 +1638,7 @@ msgstr[1] "pacotes %s não estão carregados"
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "não há nenhum pacote chamado"
-msgstr[1] "não há pacotes chamados "
+msgstr[1] "não há pacotes chamados"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
@@ -1678,15 +1673,12 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ msgid "no files to copy from"
 #~ msgstr "nenhum arquivo de onde copiar"
 
-#~ msgid "got invalid index for importing"
-#~ msgstr "índice inválido obtido para importação"
+#~ msgid "'recursive' will be ignored"
+#~ msgstr "argumento 'recursive' será ignorado"
 
 #~ msgid "cyclic name space dependencies are not supported"
 #~ msgstr ""
 #~ "dependências cíclicas entre espaços de nomes não estão implementadas"
-
-#~ msgid "'recursive' will be ignored"
-#~ msgstr "argumento 'recursive' será ignorado"
 
 #~ msgid "imperative name space directives are disabled"
 #~ msgstr "diretivas imperativas de espaço de nomes estão desabilitadas"
@@ -1697,6 +1689,9 @@ msgstr[1] "Mensagens de aviso:\n"
 
 #~ msgid "can only export from a name space"
 #~ msgstr "somente é possível exportar a partir de um espaço de nomes"
+
+#~ msgid "got invalid index for importing"
+#~ msgstr "índice inválido obtido para importação"
 
 #~ msgid "'fromLast' must be TRUE or FALSE"
 #~ msgstr "'fromLast' deve ser TRUE ou FALSE"
