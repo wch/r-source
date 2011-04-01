@@ -5,17 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0 \n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:50+0100\n"
-"PO-Revision-Date: 2010-09-30 08:19+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"PO-Revision-Date: 2011-03-25 14:54+0900\n"
+"Last-Translator: Triad sou <triadsou@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language: \n"
-"MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=utf-8 \n"
-"Content-Transfer-Encoding: 8bit \n"
-"X-Generator: Pootle 1.1.0 \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: class_support.c:32
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
@@ -137,12 +137,13 @@ msgstr ""
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
 #: methods_list_dispatch.c:953
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-" 引数 '%s' をみつけられませんでした(関数 '%s' に対するメソッドの選択時) "
+" 引数 '%s' の評価中にエラーが起きました (関数 '%s' に対するメソッドの選択"
+"時): %s "
 
 #: methods_list_dispatch.c:618
 #, c-format
@@ -174,9 +175,9 @@ msgstr ""
 "る '...' 引数がありません "
 
 #: methods_list_dispatch.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr " 'primitive' な次のメソッドの評価中にエラー "
+msgstr " 'primitive' なメソッド '%s' の評価中にエラーが起きました "
 
 #: methods_list_dispatch.c:765
 #, c-format

@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0 \n"
+"Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2010-09-29 21:37+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
+"PO-Revision-Date: 2011-03-25 14:21+0900\n"
+"Last-Translator: Triad sou <triadsou@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language: \n"
-"MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=utf-8 \n"
-"Content-Transfer-Encoding: 8bit \n"
-"Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 1.1.0 \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.1.0\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr " 引数 'package' は 長さ 1 でなければならない "
@@ -124,11 +124,8 @@ msgstr ""
 " ドキュメンテーションオブジェクト'%s' 中の\\alias がオブジェクト内の \\usage "
 "に存在しません: "
 
-#, fuzzy
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr ""
-" ドキュメントオブジェクト '%s' 中の \\usage 中に存在しないドキュメントを持つ"
-"引数： "
+msgstr " ドキュメントオブジェクト '%s' 中の \\usage 中の代入： "
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr ""
@@ -492,7 +489,7 @@ msgstr ""
 " 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
 
 msgid "current working directory cannot be ascertained"
-msgstr ""
+msgstr "現在の作業ディレクトリを確認することができません。"
 
 msgid "no inputs"
 msgstr " 入力がありません "
@@ -605,9 +602,8 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
-#, fuzzy
 msgid "loading failed"
-msgstr " '%s' のテストに失敗しました "
+msgstr " '%s' のロードに失敗しました "
 
 msgid "Changes require specified 'style'"
 msgstr " 指定された 'style' の変更が必要です "
@@ -709,16 +705,14 @@ msgstr " ファイル '%s' 中のインデックス情報を読み取ること�
 msgid "ERROR:"
 msgstr "エラー: "
 
-#, fuzzy
 msgid "error reading file '%s'"
-msgstr " ファイル '%s' 中に構文解析エラー: "
+msgstr " ファイル '%s' の読み込みにエラーが発生"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "バンドルされているようですが、現在は用いられていません "
 
-#, fuzzy
 msgid "running 'zip' failed"
-msgstr " make の実行に失敗しました "
+msgstr "'zip' の実行に失敗しました "
 
 msgid "packaged installation of"
 msgstr " 以下のパッケージ化されたインストール "
@@ -821,6 +815,8 @@ msgstr " ソースは環境またはリストでなければなりません "
 
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 msgstr ""
+" 'compress'　に対して不正な値が入力されています。FALSE, TRUE, 2, 3を入力すべ"
+"きです"
 
 msgid "this cannot be used for package 'base'"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
@@ -928,9 +924,8 @@ msgstr "オープンできません "
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
-#, fuzzy
 msgid "Testing examples for package"
-msgstr "パッケージに対する例を集めています "
+msgstr "パッケージに対する例をテストしています"
 
 msgid "comparing"
 msgstr " 比較中"
@@ -945,7 +940,7 @@ msgid "OK"
 msgstr "OK "
 
 msgid "results differ from reference results"
-msgstr ""
+msgstr "結果が参照結果と異なります"
 
 msgid "no examples found"
 msgstr " 例がが見つかりません "
@@ -1018,9 +1013,8 @@ msgstr " regexp 回帰テストの実行中"
 msgid "running tests to possibly trigger segfaults"
 msgstr " 可能性のある trigger segfaults のテストを実行中"
 
-#, fuzzy
 msgid "'x' must be a single character string"
-msgstr " 引数 'txt' は文字列でなければなりません "
+msgstr " 引数 'txt' は１つの文字でなければなりません "
 
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
@@ -1075,15 +1069,15 @@ msgstr " '%s' を構文解析中 "
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
-msgstr[0] ""
+msgstr[0] " 注意: %d 個の Latin-1 コードの文字が見つかりました "
 
 msgid "Note: found %d marked UTF-8 string"
 msgid_plural "Note: found %d marked UTF-8 strings"
-msgstr[0] ""
+msgstr[0] " 注意: %d 個の UTF-8 コードの文字が見つかりました "
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] ""
+msgstr[0] " 注意: %d 個の bytes コードの文字が見つかりました "
 
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
@@ -1106,6 +1100,17 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "use of '--auto-zip' is defunct"
+#~ msgstr "'--auto-zip'の使用は廃止になりました"
+
+#~ msgid "use of '--use-zip-data' is defunct"
+#~ msgstr "'--use-zip-data' の使用は廃止になりました"
+
+#~ msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+#~ msgstr ""
+#~ "'--no-docs' の使用は推奨されません。代わりに '--install-args' を使用してく"
+#~ "ださい"
 
 #~ msgid "** Options"
 #~ msgstr " ** オプション"
