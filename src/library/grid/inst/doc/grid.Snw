@@ -62,7 +62,7 @@ including controlling its appearance (colour, line type, line width, ...).
 \section{Creating and Controlling Graphics Regions and Coordinate Systems}
 
 In \grid{} there can be any number of graphics regions.  A graphics
-region is referred to as a {\it viewport} and is created using the
+region is referred to as a \emph{viewport} and is created using the
 \code{viewport()} function.  A viewport can be positioned anywhere on
 a graphics device (page, window, ...), it can be rotated, and it can
 be clipped to.  The following code describes a viewport which is
@@ -92,7 +92,7 @@ grid.show.viewport(viewport(x = 0.5, y = 0.5, width = 0.5, height = 0.25,
 \end{figure}
 
 The object returned by the \code{viewport()} function is only a
-{\it description}
+\emph{description}
 of a graphics region.
 A graphics region is only created on a graphics device when a
 viewport is
@@ -170,7 +170,7 @@ height), and this viewport is pushed twice. The first time it
 gets pushed the parent is the root of the viewport tree (which is the
 entire device) so it is quarter of the size of the page.
 The second time the viewport is pushed,
-it is quarter of the size of {\it its parent viewport}.
+it is quarter of the size of \emph{its parent viewport}.
 Figure \ref{figure:vpstack} shows the output of these
 commands.
 
@@ -248,7 +248,7 @@ terms of multiples of the height of a line of text
  (dependent on both the current \code{fontsize} and
 the current \code{lineheight}).} \\
 \code{"snpc"} & \parbox[t]{3in}{Square Normalised Parent Coordinates.
-Locations and size are expressed as a proportion of the {\it smaller}
+Locations and size are expressed as a proportion of the \emph{smaller}
 of the
 width and height of the current viewport.} \\
 \code{"strwidth"} & \parbox[t]{3in}{Locations and sizes are
@@ -356,7 +356,7 @@ popViewport(2)
 \subsection{Layouts}
 
 \grid{} provides an alternative method for positioning viewports
-within each other based on {\it layouts}\footnote{The primary reference
+within each other based on \emph{layouts}\footnote{The primary reference
 for layouts is \cite{murrell:1999}.  Layouts in \grid{} represent
 an extension of the idea to allow a greater range of units for
 specifying row heights and column widths. \grid{} also differs in the

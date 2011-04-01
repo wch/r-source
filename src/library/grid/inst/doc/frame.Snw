@@ -27,8 +27,8 @@ options(width=60)
 @
 Grid contains a lot of support for locating, sizing, and
 arranging graphical components on a device and with respect to
-each other.  However, most of this support relies on {\it either} the  parent
-object dictating both location and size (layouts) {\it or}
+each other.  However, most of this support relies on \emph{either} the  parent
+object dictating both location and size (layouts) \emph{or}
 the child dictating both
 location and size.
 
@@ -39,7 +39,7 @@ child dictate the size.
 This is the situation for GUI-builders (software which forms
 arrangements of GUI components or widgets).  The approach taken
 by (many ?) GUI-builders is to allow the user to create a parent
-{\it frame} and then {\it pack} widgets into this frame.  The
+\emph{frame} and then \emph{pack} widgets into this frame.  The
 frame locates and arranges the children with the help of hints such as
 ``place this widget at the bottom of the frame'', and the children
 dictate what size they would like to be.
@@ -376,7 +376,7 @@ legend has been accommodated.
 for these functions, but these are really only useful to see the
 changes in the frame as each packing operation takes place.
 
-\item This frame-and-packing stuff is easier to use, {\it but}
+\item This frame-and-packing stuff is easier to use, \emph{but}
 (in almost all cases) it is less efficient than specifying the
 arrangement by hand.  There is consequently a penalty to pay in
 terms of memory (inconsequential I think) and in terms of speed

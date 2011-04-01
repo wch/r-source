@@ -16,7 +16,7 @@
                                    {\setlength{\leftmargin}{1in}
                                     \setlength{\rightmargin}{1in}
                                     \setlength{\itemindent}{0in}}
-                       \item {\sc Aside:} {\it #1}
+                       \item {\sc Aside:} \emph{#1}
                        \end{list}}
 
 \title{Writing \grid{} Code}
@@ -84,7 +84,7 @@ plot.
 The purpose of the commands is simply to produce
 graphics output;  in particular, we are not concerned with any
 values returned by the plotting functions.  I will call this
-{\it procedural graphics}.
+\emph{procedural graphics}.
 
 In order to draw a simple scatterplot, we can  issue a series
 of commands which draw the various components of the plot.
@@ -306,7 +306,7 @@ these sorts of issues become important, it becomes necessary to
 create a \grid{} graphical object (a \grob{}) to represent the plot.
 
 The first step is to write a function which will create a \grob{}
--- a {\it constructor} function.  In most cases, this will involve
+-- a \emph{constructor} function.  In most cases, this will involve
 creating a special sort of \grob{} called a \gTree{};  this is just
 a \grob{} that can have other \grob{}s as children.  Here's an example
 for creating an \code{splot} \grob{}.  I have put bits of the
@@ -401,7 +401,7 @@ of the scatterplot (see later examples).
 the children are drawn.  The difference between this argument and the
 \code{vp} argument common to all \grob{}s is that the \code{vp} is pushed before
 drawing the children and then popped after, whereas the \code{childrenvp}
-gets pushed {\it and} then a call to \code{upViewport()} is made
+gets pushed \emph{and} then a call to \code{upViewport()} is made
 before the children are drawn.  This allows the children to simply
 specify the viewport they should be drawn in by way of a \code{vpPath}
 in their \code{vp} argument.  In this way, viewports remain available
@@ -558,7 +558,7 @@ grid.draw(smg)
 
 @
 
-But of more interest, because this is a \grob{}, is the {\it programmatic}
+But of more interest, because this is a \grob{}, is the \emph{programmatic}
 interface.  With a \grob{} (as opposed to a function) it is possible
 to modify the description of what is being drawn via an API (as opposed
 to having to edit the original code).  In  the following, we
