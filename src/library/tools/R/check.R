@@ -1625,8 +1625,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,
                          "Package vignette(s) without corresponding PDF:\n")
                 printLog(Log,
-                         paste(c(paste("  ", basename(bad_vignettes)), "", ""),
-                               collapse = "\n"))
+                         paste(c(paste("  ",
+                                       sQuote(basename(bad_vignettes))),
+                                 "", ""), collapse = "\n"))
             }
             encs <- vapply(vf, getVignetteEncoding, "")
             bad_vignettes <- vf[encs == "non-ASCII"]
@@ -1636,8 +1637,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log,
                          "  Non-ASCII package vignette(s) without specified encoding:\n")
                 printLog(Log,
-                         paste(c(paste("  ", basename(bad_vignettes)), "", ""),
-                               collapse = "\n"))
+                         paste(c(paste("  ",
+                                       sQuote(basename(bad_vignettes))),
+                                 "", ""), collapse = "\n"))
             }
         }
 
@@ -1691,7 +1693,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             for (v in vigns$docs) {
                 enc <- getVignetteEncoding(v, TRUE)
                 if (enc %in% c("", "non-ASCII", "unknown")) next
-                lines <- readLines(v)
+                lines <- readLines(v, warn = FALSE) # some miss final NA
                 ## currently Windows does not support this.
                 lines2 <- iconv(lines, enc, "UTF-7") # an actual conversion
                 if(any(is.na(lines2))) bad_vignettes <- c(bad_vignettes, v)
@@ -1701,7 +1703,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     printLog(Log,
                              "  Package vignette(s) which are not in their specified encoding:\n")
                     printLog(Log,
-                             paste(c(paste("  ", basename(bad_vignettes)),
+                             paste(c(paste("  ",
+                                           sQuote(basename(bad_vignettes))),
                                      "", ""), collapse = "\n"))
                 }
             }
