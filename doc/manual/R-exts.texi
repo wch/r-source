@@ -1752,7 +1752,8 @@ If there is an error in executing the @R{} code in vignette
 check directory.  The vignettes are re-made in a copy of the package
 sources in the @file{vign_test} subdirectory of the check directory, so
 for further information on errors look in directory
-@file{@var{pkgname}/vign_test/inst/doc}.
+@file{@var{pkgname}/vign_test/inst/doc}.  (It is only retained if there
+are errors.)
 
 @item
 The PDF version of the package's manual is created (to check that the
@@ -2075,7 +2076,11 @@ chunk.  The @R{} output will also be in the current locale, and should
 be covered by the @samp{inputenc} declaration.  One thing people often
 forget is that the @R{} output may not be ASCII even for ASCII @R{}
 sources, for many possible reasons.  One common one is the use of
-`fancy' quotes: see the @R{} help on @code{sQuote}.
+`fancy' quotes: see the @R{} help on @code{sQuote}: note carefully that
+it is not portable to declare UTF-8 or CP1252 to cover such quotes, as
+their encoding will depend on the locale used to run @code{Sweave()}:
+this can be circumvented by setting
+@code{options(useFancyQuotes="UTF-8")} in the vignette.
 
 The final issue is the encoding of figures -- this applies only to PDF
 figures and not PNG etc.  The PDF figures will contain declarations for
