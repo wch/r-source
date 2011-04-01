@@ -45,9 +45,6 @@
     paste0 <- function(...) paste(..., sep="")
 
     MAKE <- Sys.getenv("MAKE")
-    TAR <- Sys.getenv("TAR", 'tar') # used by default on Unix only
-    GZIP <- Sys.getenv("R_GZIPCMD") # used on Unix only
-    if (!nzchar(GZIP)) GZIP <- "gzip"
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
@@ -278,8 +275,10 @@
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
+            TAR <- Sys.getenv("TAR", 'tar')
             system(paste(TAR, "-chf", filepath,
                          paste(curPkg, collapse = " ")))
+            GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
             system(paste(GZIP, "-9f", filepath))
             if (grepl("darwin", R.version$os)) {
                 filename <- paste0(filename, ".gz")
@@ -338,6 +337,7 @@
                              shQuote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
+        TAR <- Sys.getenv("TAR", 'tar')
         res <- system(paste("cp -r .", shQuote(instdir),
                             "|| (", TAR, "cd - .| (cd", shQuote(instdir), "&&", TAR, "-xf -))"
                             ))
