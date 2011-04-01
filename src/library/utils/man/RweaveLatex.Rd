@@ -149,7 +149,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       filenames of figures and output have a common prefix.}
     
     \item{prefix.string:}{a character string, default is the name of the
-      source file (without extension).}
+      source file (without extension).  Note that this is used as part
+      of filenames, so needs to be portable.}
     
     \item{include:}{logical (\code{TRUE}), indicating whether input
       statements for text output (if \code{split = TRUE}) and
@@ -160,7 +161,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
       chunk produces graphical output.  Note that only one figure per
-      code chunk can be processed this way.}
+      code chunk can be processed this way.  The labels for figure
+      chunks are used as part of the file names, so should preferably be
+      alphanumeric.}
     
     \item{eps:}{logical (\code{FALSE}), indicating whether EPS figures
       should be generated.  Ignored if \code{fig = FALSE}.}
