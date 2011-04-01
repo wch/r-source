@@ -1613,7 +1613,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE
         ## Do PDFs exist for all package vignettes?
-        ## A base source package (grid) may not have PDFs to avoid
+        ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
             pdfs <- file.path(pkgdir, "inst", "doc",
@@ -1684,6 +1684,29 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          "  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
+        if (!WINDOWS) {
+            ## If the vignettes declare an encoding, are they actually in it?
+            ## (We don't check the .tex, though)
+            bad_vignettes <- character()
+            for (v in vigns$docs) {
+                enc <- getVignetteEncoding(v, TRUE)
+                if (enc %in% c("", "non-ASCII", "unknown")) next
+                lines <- readLines(v)
+                ## currently Windows does not support this.
+                lines2 <- iconv(lines, enc, "UTF-7") # an actual conversion
+                if(any(is.na(lines2))) bad_vignettes <- c(bad_vignettes, v)
+                if(length(bad_vignettes)) {
+                    if(!any) warnLog()
+                    any <- TRUE
+                    printLog(Log,
+                             "  Package vignette(s) which are not in their specified encoding:\n")
+                    printLog(Log,
+                             paste(c(paste("  ", basename(bad_vignettes)),
+                                     "", ""), collapse = "\n"))
+                }
+            }
+        }
+
         if (!any) resultLog(Log, "OK")
 
         if (do_install && do_vignettes) {

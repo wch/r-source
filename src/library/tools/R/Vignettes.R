@@ -303,7 +303,7 @@ getVignetteEncoding <-  function(file, ...)
                "utf8" =, "utf8x" = "UTF-8",
                "latin1" = "latin1",
                "latin2" = "latin2",
-               "latin9" = "LATIN-9", # only form known to GNU libiconv
+               "latin9" = "latin-9", # only form known to GNU libiconv
                "arabic" = "ISO-8859-6",
                "cyrillic" = "ISO-8859-5",
                "greek" = "ISO-8859-7",
