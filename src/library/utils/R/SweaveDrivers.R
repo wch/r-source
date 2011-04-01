@@ -23,6 +23,10 @@ RweaveLatex <- function()
          checkopts = RweaveLatexOptions)
 }
 
+## We definitely do not want '.' in here, to avoid misidentification
+## of file extensions.
+.SweaveValidFilenameRegexp <- "^[[:alnum:]#+-_]+$"
+
 RweaveLatexSetup <-
     function(file, syntax, output = NULL, quiet = FALSE, debug = FALSE,
              stylepath, ...)
@@ -145,7 +149,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 chunkout <- file(paste(chunkprefix, "tex", sep = "."), "w")
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
-                if(!grepl("^[[:alnum:]-_]+$", chunkout))
+                if(!grepl(.SweaveValidFilenameRegexp, chunkout))
                     warning("file name ", sQuote(chunkout), " is not portable",
                             call. = FALSE, domain = NA)
             }
@@ -223,7 +227,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         srcrefs <- attr(chunkexps, "srcref")
 
         if (!options$persistent.graphics && length(devs)) {
-            if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+            if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
                 warning("file name ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
             devs[[1L]](name = chunkprefix,
@@ -351,7 +355,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         if (length(devs)) {
             if(!options$persistent.graphics)
                 grDevices::dev.off()        # close first one
-            else if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+            else if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
                 warning("file name ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
             for (dev in devs1) {
@@ -617,7 +621,7 @@ RtangleRuncode <-  function(object, chunk, options)
     chunkprefix <- RweaveChunkPrefix(options)
 
     if (options$split) {
-        if(!grepl("^[[:alnum:]-_]+$", chunkprefix))
+        if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
             warning("file name ", sQuote(chunkprefix), " is not portable",
                     call. = FALSE, domain = NA)
         outfile <- paste(chunkprefix, options$engine, sep = ".")

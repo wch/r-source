@@ -76,9 +76,9 @@
       rarely.
 
       \item Warnings are issued when non-portable filenames are found
-      for graphics file and chunks (if \code{split=TRUE}).  Portable
-      names are regarded as alphanumeric plus hyphen and underscore
-      (periods cause problems with recognizing file extensions).
+      for graphics files and chunks (if \code{split=TRUE}).  Portable
+      names are regarded as alphanumeric plus hyphen, underscore, plus
+      and hash (periods cause problems with recognizing file extensions).
     }
   }
 
