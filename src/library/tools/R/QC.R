@@ -4203,7 +4203,7 @@ function(x, ...)
               c(gettext("'::' or ':::' imports not declared from:"),
                 .pretty_format(sort(xx)))
           } else {
-              gettextf("'::' or ':::' import not declared from: %s", xx)
+              gettextf("'::' or ':::' import not declared from: %s", sQuote(xx))
           }
       },
       if(length(xx <- x$others)) {
@@ -4212,7 +4212,7 @@ function(x, ...)
                 .pretty_format(sort(x$others)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
-                       xx)
+                       sQuote(xx))
           }
       },
       if(nzchar(x$methods_message)) {
