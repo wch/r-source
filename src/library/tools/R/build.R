@@ -27,10 +27,15 @@ newLog <- function(filename = "")
 closeLog <- function(Log) if (Log$con > 2) close(Log$con)
 
 printLog <- function(Log, ...) {
-    quotes <- function(x) sub("'([^']*)'", sQuote("\\1"), x)
+    quotes <- function(x) gsub("'([^']*)'", sQuote("\\1"), x)
     args <- lapply(list(...), quotes)
     do.call(cat, c(args, sep = ""))
     if (Log$con > 0L) do.call(cat, c(args, sep = "", file=Log$con))
+}
+
+printLog0 <- function(Log, ...) {
+    cat(..., sep = "")
+    if (Log$con > 0L) cat(..., file = Log$con, sep = "")
 }
 
 ## unused

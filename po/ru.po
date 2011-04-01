@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-31 05:23+0100\n"
+"POT-Creation-Date: 2011-04-01 09:32+0100\n"
 "PO-Revision-Date: 2011-03-30 01:56+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -195,13 +195,13 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/platform.c:1265 src/main/platform.c:1268 src/main/platform.c:1421
 #: src/main/platform.c:1424 src/main/platform.c:1460 src/main/platform.c:1463
 #: src/main/platform.c:1546 src/main/platform.c:1562 src/main/platform.c:1603
-#: src/main/platform.c:1605 src/main/platform.c:1665 src/main/platform.c:1756
-#: src/main/platform.c:2016 src/main/platform.c:2059 src/main/platform.c:2186
-#: src/main/platform.c:2189 src/main/platform.c:2192 src/main/platform.c:2195
-#: src/main/platform.c:2198 src/main/platform.c:2331 src/main/platform.c:2334
-#: src/main/platform.c:2337 src/main/platform.c:2340 src/main/platform.c:2343
-#: src/main/platform.c:2412 src/main/platform.c:2420 src/main/platform.c:2456
-#: src/main/platform.c:2506 src/main/plot.c:3104 src/main/plot.c:4241
+#: src/main/platform.c:1605 src/main/platform.c:1670 src/main/platform.c:1761
+#: src/main/platform.c:2021 src/main/platform.c:2064 src/main/platform.c:2191
+#: src/main/platform.c:2194 src/main/platform.c:2197 src/main/platform.c:2200
+#: src/main/platform.c:2203 src/main/platform.c:2336 src/main/platform.c:2339
+#: src/main/platform.c:2342 src/main/platform.c:2345 src/main/platform.c:2348
+#: src/main/platform.c:2417 src/main/platform.c:2425 src/main/platform.c:2461
+#: src/main/platform.c:2511 src/main/plot.c:3104 src/main/plot.c:4241
 #: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2431
 #: src/main/plot3d.c:2435 src/main/plot3d.c:2440 src/main/plot3d.c:2444
 #: src/main/plot3d.c:2448 src/main/plot3d.c:2452 src/main/print.c:231
@@ -5285,84 +5285,88 @@ msgstr "ошибка чтения в '%s'"
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1671
+#: src/main/platform.c:1649
+msgid "LC_MESSAGES exists on Windows but is not operational"
+msgstr ""
+
+#: src/main/platform.c:1676
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "ОС сообщает, что запрос установки локали в \"%s\" не может быть выполнен"
 
-#: src/main/platform.c:1971
+#: src/main/platform.c:1976
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:1977
+#: src/main/platform.c:1982
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:1984
+#: src/main/platform.c:1989
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:1993
+#: src/main/platform.c:1998
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:2042
+#: src/main/platform.c:2047
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:2045
+#: src/main/platform.c:2050
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "не могу создать директорию '%s' по причине '%s'"
 
-#: src/main/platform.c:2088
+#: src/main/platform.c:2093
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' уже существует"
 
-#: src/main/platform.c:2091
+#: src/main/platform.c:2096
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "не могу создать каталог '%ls' по причине '%s'"
 
-#: src/main/platform.c:2121
+#: src/main/platform.c:2126
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "проблема с созданием каталога %ls: %s "
 
-#: src/main/platform.c:2136
+#: src/main/platform.c:2141
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "проблема с чтением каталога %ls: %s"
 
-#: src/main/platform.c:2149
+#: src/main/platform.c:2154
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "проблема с копированием %ls в %ls: %s"
 
-#: src/main/platform.c:2265
+#: src/main/platform.c:2270
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "проблема с созданием каталога %s: %s"
 
-#: src/main/platform.c:2279
+#: src/main/platform.c:2284
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "проблема с чтением каталога %s: %s"
 
-#: src/main/platform.c:2295
+#: src/main/platform.c:2300
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "проблема с копированием %s в %s: %s"
 
-#: src/main/platform.c:2417
+#: src/main/platform.c:2422
 msgid "'mode' must be of length at least one"
 msgstr "длина 'mode' должна быть не меньше единицы"
 
-#: src/main/platform.c:2484
+#: src/main/platform.c:2489
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 

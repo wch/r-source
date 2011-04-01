@@ -193,8 +193,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
-                        packageStartupMessage(gettextf("\nAttaching package: '%s'\n",
-                                                       package),
+                        packageStartupMessage(gettextf("\nAttaching package: %s\n",
+                                                       sQuote(package)),
                                               domain = NA)
                     }
 

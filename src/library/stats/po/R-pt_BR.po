@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2011-01-02 18:06+0200\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
+"PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +17,7 @@ msgid "models are not all fitted to the same number of observations"
 msgstr ""
 
 msgid "empty model supplied"
-msgstr "modelo vazio fornecido"
+msgstr "modelo fornecido é vazio"
 
 msgid "'acf' must be of length two or more"
 msgstr "'acf' deve ter comprimento dois ou mais"
@@ -42,7 +42,7 @@ msgstr ""
 "sazonais"
 
 msgid "time series has no or less than 2 periods"
-msgstr "série temporal não tem período, ou tem menos de 2 "
+msgstr "série temporal não tem período, ou tem menos de 2"
 
 msgid "the series is entirely NA"
 msgstr "a série é completamente NA"
@@ -77,1282 +77,1315 @@ msgstr "'which' especifiou alguns não-fatores que serão descartados"
 msgid "'lag.max' must be at least 0"
 msgstr "'lag.max' deve ser pelo menos 0"
 
-#, fuzzy
 msgid "'lag.max' must be at least 1"
-msgstr "'lag.max' deve ser pelo menos 0"
+msgstr "'lag.max' deve ser ao menos 1"
 
 msgid "NAs in 'x'"
-msgstr ""
+msgstr "NAs em 'x'"
 
 msgid "x$lag must have at least 1 column"
-msgstr ""
+msgstr "x$lag deve ter ao menos 1 coluna"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
-msgstr ""
+msgstr "ci.type=\"ma\" somente pode ser usado se o primeiro atraso for 0"
 
 msgid "univariate time series only"
-msgstr ""
+msgstr "Somente séries temporais uinivariadas"
 
 msgid "no terms in scope"
-msgstr ""
+msgstr "Nenhum termo no escopo"
 
 msgid "no terms in scope for adding to object"
-msgstr ""
+msgstr "Nenhum termo na fórmula para adicionar ao objeto"
 
 msgid "number of rows in use has changed: remove missing values?"
-msgstr ""
+msgstr "Número de linhas em uso mudou: remover valores ausentes?"
 
 msgid "attempting model selection on an essentially perfect fit is nonsense"
 msgstr ""
+"tentar selecionar um modelo sobre um ajuste essencialmente perfeito não faz "
+"sentido"
 
 msgid "using the %d/%d rows from a combined fit"
-msgstr ""
+msgstr "usando a %d/%d linhas de um ajuste combinado"
 
 msgid "F test assumes quasi%s family"
-msgstr ""
+msgstr "O teste F assume a família quasi%s"
 
 msgid "no 'add1' method implemented for \"mlm\" models"
-msgstr ""
+msgstr "Nenhum método  'add1' implementado para modelos  \"mlm\""
 
 msgid "scope is not a subset of term labels"
-msgstr ""
+msgstr "A fórmula de destino não é um subconjunto dos termos rotulados"
 
 msgid "no 'drop1' method for \"mlm\" models"
-msgstr ""
+msgstr "nenhum método  'drop1' para modelos \"mlm\""
 
 msgid "F test assumes 'quasi%s' family"
-msgstr ""
+msgstr "O teste F assume a família quasi%s"
 
 msgid "lower scope has term(s) %s not included in model"
-msgstr ""
+msgstr "A fórmula inferior tem termo(s) %s não incluídos no modelo"
 
 msgid "upper scope does not include model term(s) %s"
-msgstr ""
+msgstr "a fórmula superior não inclui o(s)  termo(s)  %s do modelo"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
-msgstr ""
+msgstr "AIC não é definido para este modelo, então o 'step' não pode continuar"
 
 msgid "'A' must be an array or table"
-msgstr ""
+msgstr "'A' deve ser um array ou tabela"
 
-msgid ""
-"length of FUN, %d,\n"
-" does not match the length of the margins, %d"
+msgid "length of FUN, %d,\n does not match the length of the margins, %d"
 msgstr ""
+"comprimento de FUN, %d,\n"
+" não corresponde aos comprimentos das margens, %d"
 
 msgid "no rows to aggregate"
-msgstr ""
+msgstr "nenhumas linhas para agregar"
 
 msgid "'by' must be a list"
-msgstr ""
+msgstr "'by' deve ser uma lista"
 
 msgid "arguments must have same length"
-msgstr ""
+msgstr "argumentos devem ter o mesmo comprimento"
 
 msgid "'formula' missing or incorrect"
-msgstr ""
+msgstr "'formula' com termos faltando ou incorreta"
 
 msgid "'formula' must have both left and right hand sides"
-msgstr ""
+msgstr "'formula' deve ter os lados tanto esquerdo quanto direito"
 
 msgid "cannot change frequency from %g to %g"
-msgstr ""
+msgstr "não é possível mudar a frequência de %g para %g"
 
 msgid "'x' must be coefficient matrix/data frame"
-msgstr ""
+msgstr "'x' deve ser coeficiente matriz/quadro de dados"
 
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
-msgstr ""
+msgstr "opção \"show.coef.Pvalues\" é inválida: assumindo TRUE"
 
 msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
-msgstr ""
+msgstr "'P.values' é TRUE, mas 'has.Pvalue' não é"
 
 msgid "wrong k / cs.ind"
-msgstr ""
+msgstr "k / cs.ind errado"
 
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
-msgstr ""
+msgstr "opção \"show.signif.stars\" é inválida: assumindo TRUE"
 
 msgid "'anova' object must have colnames"
-msgstr ""
+msgstr "objeto 'anova' deve ter colnames"
 
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr ""
+msgstr "'conf.level' deve ser um único número entre 0 e 1"
 
 msgid "not enough 'x' observations"
-msgstr ""
+msgstr "número de observações 'x' insuficiente"
 
 msgid "not enough 'y' observations"
-msgstr ""
+msgstr "número de observações 'y' insuficiente"
 
 msgid "samples differ in location: cannot compute confidence set, returning NA"
 msgstr ""
+"amostras diferem na localização: não é possível computar intervalo de "
+"confiança, retornando NA"
 
 msgid "cannot compute confidence set, returning NA"
-msgstr ""
+msgstr "não é possível computar intervalo de confiança, retornando NA"
 
 msgid "cannot compute asymptotic confidence set or estimator"
-msgstr ""
+msgstr "não é possível computar intervalo de confiança assintótico ou estimador"
+"não é possível computar intervalo de confiança assintótico ou estimador"
 
 msgid "cannot compute estimate, returning NA"
-msgstr ""
+msgstr "não é possível computar estimativa, retornando NA"
 
 msgid "cannot compute exact p-value with ties"
-msgstr ""
+msgstr "não é possível computar o valor de p exato com o de desempate"
 
 msgid "cannot compute exact confidence intervals with ties"
-msgstr ""
+msgstr "impossível computar os intervalos de confiança exatos com empate"
 
 msgid "grouping factor must have exactly 2 levels"
-msgstr ""
+msgstr "fator de agrupamento deve ter exatamente 2 níveis"
 
 msgid "weights are not supported in a multistratum aov() fit"
-msgstr ""
+msgstr "pesos não são permitidos em um ajuste aov() multi-estrato"
 
 msgid "Error() model is singular"
-msgstr ""
+msgstr "modelo Error() é singular"
 
 msgid "the 'split' argument must be a list"
-msgstr ""
+msgstr "o argumento  'split' deve ser uma lista"
 
 msgid "unknown name(s) in the 'split' list"
-msgstr ""
+msgstr "nome(s) desconhecidos na lista 'split'"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr ""
+msgstr "'coef' deve definir um contraste, i.e., somatório deve ser  0"
 
 msgid "'coef' must have same length as 'contrast.obj'"
-msgstr ""
+msgstr "'coef' deve ter o mesmo comprimento de 'contrast.obj'"
 
 msgid "each element of '%s' must be logical"
-msgstr ""
+msgstr "cada elemento de '%s' deve ser lógico"
 
 msgid "the contrast defined is empty (has no TRUE elements)"
-msgstr ""
+msgstr "o contraste definido está vazio (não tem elementos TRUE )"
 
 msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
-msgstr ""
+msgstr "colunas de 'contrast.obj' devem definir um contraste (somatório zero)"
 
 msgid "no degrees of freedom for residuals"
-msgstr ""
+msgstr "nenhum grau de liberdade para os resíduos"
 
 msgid "'object' does not include an error 'qr' component"
-msgstr ""
+msgstr "'object' não inclui um componente de erro 'qr'"
 
 msgid "Refitting model to allow projection"
-msgstr ""
+msgstr "Reajustando o modelo para permitir projeção"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
-msgstr ""
+msgstr "colunas de 'contrast.obj' devem definir um contraste (somatório zero)"
 
 msgid "collapsing to unique 'x' values"
-msgstr ""
+msgstr "colapsando para valores de 'x' únicos"
 
 msgid "invalid interpolation method"
-msgstr ""
+msgstr "método de interpolação inválido"
 
 msgid "need at least two non-NA values to interpolate"
-msgstr ""
+msgstr "são precisos ao menos dois valores não-NA para interpolar"
 
 msgid "zero non-NA points"
-msgstr ""
+msgstr "zero pontos não-NA"
 
 msgid "'approx' requires n >= 1"
-msgstr ""
+msgstr "'approx' necessita de n >= 1"
 
 msgid "'vec' contains NAs"
-msgstr ""
+msgstr "'vec' contém NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
-msgstr ""
+msgstr "'vec' deve ser ordenado de forma crescente"
 
 msgid "'order.max' must be >= 1"
-msgstr ""
+msgstr "'order.max' deve ser >= 1"
 
 msgid "'order.max' must be < 'n.used'"
-msgstr ""
+msgstr "'order.max' deve ser < 'n.used'"
 
-#, fuzzy
 msgid "'n.ahead' must be at least 1"
-msgstr "'lag.max' deve ser pelo menos 0"
+msgstr "'lag.max' deve ser ao menos 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
-msgstr ""
+msgstr "número de séries em 'object' e 'newdata' não correspondem"
 
 msgid "'se.fit' not yet implemented for multivariate models"
-msgstr ""
+msgstr "'se.fit' ainda não implementado para modelos multivariados"
 
 msgid "Burg's algorithm only implemented for univariate series"
-msgstr ""
+msgstr "algoritmo de Burg só é implementado em séries univariadas"
 
-#, fuzzy
 msgid "MLE only implemented for univariate series"
-msgstr "implementado somente para séries temporais univariadas"
+msgstr "MLE implementado somente para séries univariadas"
 
 msgid "'order.max' must be >= 0"
-msgstr ""
+msgstr "'order.max' deve ser  >= 0"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
-msgstr ""
+msgstr "'order' deve ser um vetor numérico não-negativo de comprimento 3"
 
 msgid "'seasonal' must be a list with component 'order'"
-msgstr ""
+msgstr "'seasonal' deve ser uma lista com o componente 'order'"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr ""
+"'seasonal$order' deve ser um vetor numérico não-negativo de comprimento 3"
 
 msgid "lengths of 'x' and 'xreg' do not match"
-msgstr ""
+msgstr "comprimentos de 'x' e 'xreg' não correspondem"
 
 msgid "wrong length for 'fixed'"
-msgstr ""
+msgstr "comprimento errado para 'fixed'"
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
+msgstr "Alguns parâmetros AR foram fixados: definindo transform.pars = FALSE"
 
 msgid "too few non-missing observations"
-msgstr ""
+msgstr "muito poucas observações não-faltantes"
 
 msgid "'init' is of the wrong length"
-msgstr ""
+msgstr "'init' é de comprimento errado"
 
 msgid "non-stationary AR part"
-msgstr ""
+msgstr "Parte AR não-estacionária"
 
 msgid "non-stationary seasonal AR part"
-msgstr ""
+msgstr "Parte AR sazonal não-estacionária"
 
 msgid "non-stationary AR part from CSS"
-msgstr ""
+msgstr "Parte AR não-estacionária de CSS"
 
 msgid "non-stationary seasonal AR part from CSS"
-msgstr ""
+msgstr "`Parte AR sazonal não-estacionária de CSS"
 
 msgid "'xreg' and 'newxreg' have different numbers of columns"
-msgstr ""
+msgstr "'xreg' e 'newxreg' têm número de colunas diferentes"
 
 msgid "MA part of model is not invertible"
-msgstr ""
+msgstr "Parte MA do modelo não é inversível"
 
 msgid "seasonal MA part of model is not invertible"
-msgstr ""
+msgstr "Parte MA sazonal do modelo não é inversível"
 
 msgid "converting non-invertible initial MA values"
-msgstr ""
+msgstr "convertendo valores MA iniciais não-inversíveis"
 
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
+msgstr "Alguns parâmetros ARMA foram fixados : definindo transform.pars = FALSE"
+"Alguns parâmetros ARMA foram fixados : definindo transform.pars = FALSE"
 
 msgid "'xreg' is collinear"
-msgstr ""
+msgstr "'xreg' é colinear"
 
 msgid "NAs present: setting 'delta' to -1"
-msgstr ""
+msgstr "NAs presentes: definindo 'delta' para -1"
 
 msgid "transformed ARMA parameters were fixed"
-msgstr ""
+msgstr "parâmetros ARMA transformados foram fixados"
 
 msgid "need at least 2 data points"
-msgstr ""
+msgstr "são necessários ao menos 2 pontos"
 
 msgid "invalid 'x'"
-msgstr ""
+msgstr "'x' inválido"
 
 msgid "sample is too sparse to find TD"
-msgstr ""
+msgstr "amostra é pequena de mais para encontrar TD"
 
 msgid "sample is too sparse to find alph2"
-msgstr ""
+msgstr "amostra é pequena de mais para encontrar alph2"
 
 msgid "no solution in the specified range of bandwidths"
-msgstr ""
+msgstr "nenhuma solução no intervalo especificado de larguras de banda"
 
 msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
-msgstr ""
+msgstr "aumento bw.SJ() intervalo de busca (%d) para [%.4g,%.4g]"
 
 msgid "minimum occurred at one end of the range"
-msgstr ""
+msgstr "mínimo ocorreu em uma das extremidades do intervalo"
 
 msgid "'x' must be a list with at least 2 elements"
-msgstr ""
+msgstr "'x' deve ser uma lista com ao menos 2elementos"
 
 msgid "'x' and 'g' must have the same length"
-msgstr ""
+msgstr "'x' e 'g' devem ter o mesmo comprimento"
 
 msgid "all observations are in the same group"
-msgstr ""
+msgstr "todas as observações estão no mesmo grupo"
 
 msgid "there must be at least 2 observations in each group"
-msgstr ""
+msgstr "deve haver ao menos duas observações em cada grupo"
 
 msgid "'x' must be nonnegative and integer"
-msgstr ""
+msgstr "'x' deve ser inteiro e não negativo"
 
 msgid "'n' must be a positive integer >= 'x'"
-msgstr ""
+msgstr "'n' deve ser um inteiro positivo >= 'x'"
 
 msgid "incorrect length of 'x'"
-msgstr ""
+msgstr "comprimento incorreto de 'x '"
 
 msgid "'p' must be a single number between 0 and 1"
-msgstr ""
+msgstr "'p' deve ser um único número entre 0 e 1"
 
 msgid "length of choices must be 2"
-msgstr ""
+msgstr "comprimento de opções deve ser de 2"
 
 msgid "object '%s' has no scores"
-msgstr ""
+msgstr "objeto '%s' não tem nenhum score"
 
 msgid "'scale' is outside [0, 1]"
-msgstr ""
+msgstr "'scale' está fora de [0, 1]"
 
 msgid "biplots are not defined for complex PCA"
-msgstr ""
+msgstr "Biplots não são definidos para PCAs complexos"
 
 msgid "unequal number of rows in 'cancor'"
-msgstr ""
+msgstr "número desigual de linhas em 'cancor'"
 
 msgid "dimension 0 in 'x' or 'y'"
-msgstr ""
+msgstr "dimensão 0 em 'x' ou 'y'"
 
 msgid "'x' has rank 0"
-msgstr ""
+msgstr "'x' tem posição 0"
 
 msgid "'y' has rank 0"
-msgstr ""
+msgstr "'y' tem posição 0"
 
 msgid "'x' and 'y' must have the same length"
-msgstr ""
+msgstr "'x' e 'y' devem ter o mesmo comprimento"
 
 msgid "'x' and 'y' must have at least 2 levels"
-msgstr ""
+msgstr "'x' e 'y' devem ter ao menos 2 níveis"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "todas as entradas de 'x' devem ser não negativas e finitas"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "ao menos uma entrada de 'x' devem ser positiva"
 
 msgid "cannot compute simulated p-value with zero marginals"
-msgstr ""
+msgstr "impossível calcular valor de p simulado com marginais zero"
 
 msgid "'x' must at least have 2 elements"
-msgstr ""
+msgstr "'x' deve ter ao menos 2 elementos"
 
 msgid "'x' and 'p' must have the same number of elements"
-msgstr ""
+msgstr "'x' e 'y' devem ter o mesmo número de elementos"
 
 msgid "probabilities must be non-negative."
-msgstr ""
+msgstr "probabilidades devem ser não-negativas."
 
 msgid "probabilities must sum to 1."
-msgstr ""
+msgstr "probabilidades devem somar 1."
 
 msgid "Chi-squared approximation may be incorrect"
-msgstr ""
+msgstr "Aproximação do qui-quadrado pode estar incorreta"
 
 msgid "NA values not allowed in 'd'"
-msgstr ""
+msgstr "valores NA não permitidos em 'd'"
 
 msgid "distances must be result of 'dist' or a square matrix"
-msgstr ""
+msgstr "distâncias deve ser resultado de \"dist\", ou de uma matriz quadrada"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
-msgstr ""
+msgstr "'k' deve estar em {1, 2, ..  n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
-msgstr ""
+msgstr "somente %d do primeiro %d autovalor são > 0"
 
 msgid "initial value is not in the interior of the feasible region"
-msgstr ""
+msgstr "valor inicial não está na região viável"
 
 msgid "Barrier algorithm ran out of iterations and did not converge"
 msgstr ""
+"algoritmo de barreira atingiu o número máximo de iterações sem convergir"
 
 msgid "Objective function increased at outer iteration %d"
-msgstr ""
+msgstr "Função objetiva aumentou na iteração externa %d"
 
 msgid "Objective function decreased at outer iteration %d"
-msgstr ""
+msgstr "Função objetiva diminui na iteração externa %d "
 
 msgid "contrasts not defined for %d degrees of freedom"
-msgstr ""
+msgstr "contrastes não definidos para %d graus de liberdade"
 
-msgid ""
-"orthogonal polynomials cannot be represented accurately enough for %d "
-"degrees of freedom"
+msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
 msgstr ""
+"polinômios ortogonais não podem ser representados com precisão suficiente "
+"para  %d graus de liberdade"
 
 msgid "'scores' argument is of the wrong length"
-msgstr ""
+msgstr "argumento 'score' é de comprimento errado"
 
 msgid "'scores' must all be different numbers"
-msgstr ""
+msgstr "'scores' devem ser todos números diferentes"
 
-#, fuzzy
 msgid "'degree' must be at least 1"
-msgstr "'lag.max' deve ser pelo menos 0"
+msgstr "'degree' deve ser ao menos 1"
 
 msgid "missing values are not allowed in 'poly'"
-msgstr ""
+msgstr "valores faltantes não são permitidos em 'poly'"
 
 msgid "'degree' must be less than number of unique points"
-msgstr ""
+msgstr "'grau' deve ser menor do que o número de pontos únicos"
 
 msgid "must supply one or more vectors"
-msgstr ""
+msgstr "deve fornecer um ou mais vetores"
 
 msgid "arguments must have the same length"
-msgstr ""
+msgstr "argumentos devem ter o mesmo comprimento"
 
 msgid "contrasts apply only to factors"
-msgstr ""
+msgstr "contrastes aplicam-se apenas a fatores"
 
 msgid "contrasts can be applied only to factors with 2 or more levels"
-msgstr ""
+msgstr "contrastes podem ser aplicados apenas a fatores com 2 ou mais níveis"
 
 msgid "wrong number of contrast matrix rows"
-msgstr ""
+msgstr "número errado de linhas na matriz de contraste"
 
 msgid "singular contrast matrix"
-msgstr ""
+msgstr "matriz de contraste singular"
 
 msgid "numeric contrasts or contrast name expected"
-msgstr ""
+msgstr "contrastes numérico ou contraste de nome são esperados"
 
 msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
 msgstr ""
+"contr*(.., sparse=TRUE) necessita de que o pacote \"Matrix\" esteja "
+"corretamente instalado"
 
 msgid "not enough degrees of freedom to define contrasts"
-msgstr ""
+msgstr "graus de liberdade insuficientes para definir contrastes"
 
 msgid "baseline group number out of range"
-msgstr ""
-
-msgid "invalid 'use' argument"
-msgstr ""
-
-msgid "supply both 'x' and 'y' or a matrix-like 'x'"
-msgstr ""
+msgstr "número fora do intervalo de referência do grupo"
 
 #, fuzzy
+msgid "invalid 'use' argument"
+msgstr "argumento 'method' inválido"
+
+msgid "supply both 'x' and 'y' or a matrix-like 'x'"
+msgstr "forneça conjuntamente 'x' e 'y' ou algo semelhante a uma matriz 'x'"
+
 msgid "'y' must be numeric"
-msgstr "'x' deve ser numérico"
+msgstr "'y' deve ser numérico"
 
 msgid "'x' is empty"
-msgstr ""
+msgstr "'x' está vazio"
 
 msgid "both 'x' and 'y' must be non-empty"
-msgstr ""
+msgstr "'x' e 'y' devem ser não-vazios"
 
 msgid "cannot handle 'pairwise.complete.obs'"
-msgstr ""
+msgstr "impossível gerenciar 'pairwise.complete.obs'"
 
 msgid "'V' is not a square numeric matrix"
-msgstr ""
+msgstr "'V' não é uma matriz quadrada numérica"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
-msgstr ""
+msgstr "diag(.) tem entradas 0 ou NA; resultados não-finitos são duvidosos"
 
 msgid "'x' must be a numeric vector"
-msgstr ""
+msgstr "'X' deve ser um vetor numérico"
 
 msgid "'y' must be a numeric vector"
-msgstr ""
+msgstr "'y' deve ser um vetor numérico"
 
 msgid "not enough finite observations"
-msgstr ""
+msgstr "observações finitas insuficientes"
 
 msgid "Cannot compute exact p-value with ties"
-msgstr ""
+msgstr "Impossível calcular o valor exato de p com empates"
 
 msgid "Cannot compute exact p-values with ties"
-msgstr ""
+msgstr "Impossível calcular o valor exato de p, com empates"
 
 msgid "'formula' missing or invalid"
-msgstr ""
+msgstr "'formula' faltando ou inválida"
 
 msgid "invalid formula"
-msgstr ""
+msgstr "fórmula inválida"
 
 msgid "'x' must be a matrix or a data frame"
-msgstr ""
+msgstr "'x' deve ser uma matriz ou um quadro de dados"
 
 msgid "'x' must contain finite values only"
-msgstr ""
+msgstr "'x' deve conter apenas valores finitos"
 
 msgid "length of 'wt' must equal the number of rows in 'x'"
-msgstr ""
+msgstr "comprimento de 'wt' deve ser igual ao número de linhas em 'x'"
 
 msgid "weights must be non-negative and not all zero"
-msgstr ""
+msgstr "pesos devem ser não-negativos e nem todos zero"
 
 msgid "length of 'center' must equal the number of columns in 'x'"
-msgstr ""
+msgstr "comprimento do 'center' deve ser igual ao número de colunas em 'x'"
 
 msgid "invalid 'tree' (merge component)"
-msgstr ""
+msgstr "'tree' inválido (mesclar componente)"
 
 msgid "either 'k' or 'h' must be specified"
-msgstr ""
+msgstr "ou 'k' ou 'h' deve ser especificado"
 
-msgid ""
-"the 'height' component of 'tree' is not sorted\n"
-"(increasingly); consider applying as.hclust() first"
+msgid "the 'height' component of 'tree' is not sorted\n(increasingly); consider applying as.hclust() first"
 msgstr ""
+"componente 'height' de 'tree ', não está classificada\n"
+" (em ordem crescente); considere usar as.hclust() primeiro"
 
 msgid "elements of 'k' must be between 1 and %d"
-msgstr ""
+msgstr "elementos de 'k' deve estar entre 1 e %d"
 
 msgid "'merge' and 'height' do not fit!"
-msgstr ""
+msgstr "'merge' e 'height' não se encaixam!"
 
 msgid "dendrogram node with non-positive #{branches}"
-msgstr ""
+msgstr "nó do dendrograma com #{ramos} não-positivos"
 
 msgid "midcache() of non-binary dendrograms only partly implemented"
 msgstr ""
+"midcache() de dendrogramas não-binários apenas parcialmente implementado"
 
 msgid "non-leaf subtree of length 0"
-msgstr ""
+msgstr "subárvore de comprimento 0 não é uma folha"
 
 msgid "'order.dendrogram' requires a dendrogram"
-msgstr ""
+msgstr "'order.dendrogram' requer um dendrograma"
 
 msgid "we require a dendrogram"
-msgstr ""
+msgstr "nós requeremos um dendrograma"
 
 msgid "invalid (length 0) node in dendrogram"
-msgstr ""
+msgstr "nó (comprimento 0) inválido no dendrograma"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
-msgstr ""
+msgstr "um nó do dendrograma que não é uma folha tem uma série de ramos <1"
 
 msgid "'height' must be at least %g, the maximal height of its components"
-msgstr ""
+msgstr "'height' deve ser ao menos %g, a altura máxima dos seus componentes"
 
 msgid "'X' is not a dendrogram"
-msgstr ""
+msgstr "'X' não é um dendrograma"
 
 msgid "'x' must be a numeric matrix"
-msgstr ""
+msgstr "'x' deve ser uma matriz numérica"
 
 msgid "'x' must have at least 2 rows and 2 columns"
-msgstr ""
+msgstr "'x' deve ter ao menos 2 linhas e 2 colunas"
 
 msgid "'margins' must be a numeric vector of length 2"
-msgstr ""
+msgstr "'margins'  deve ser um vetor numérico de comprimento 2"
 
 msgid "row dendrogram ordering gave index of wrong length"
-msgstr ""
+msgstr "linha de ordenação do dendrograma forneceu índice de comprimento errado"
+"linha de ordenação do dendrograma forneceu índice de comprimento errado"
 
 msgid "Colv = \"Rowv\" but nrow(x) != ncol(x)"
-msgstr ""
+msgstr "Colv = \"Rowv\" mas nrow(x) != ncol(x)"
 
 msgid "column dendrogram ordering gave index of wrong length"
 msgstr ""
+"coluna de ordenação do dendrograma forneceu índice de comprimento errado"
 
 msgid "'ColSideColors' must be a character vector of length ncol(x)"
 msgstr ""
+"'ColSideColors'  deve ser um vector de caracteres de comprimento ncol(x)"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr ""
+msgstr "'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow(x)"
+"'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow(x)"
 
 msgid "non-matched further arguments are disregarded"
-msgstr ""
+msgstr "outros argumentos não-pareados são ignorados"
 
 msgid "argument 'x' must be numeric"
-msgstr ""
+msgstr "argumento 'x ' deve ser numérico"
 
 msgid "'x' contains missing values"
-msgstr ""
+msgstr "'x' contém valores ausentes"
 
 msgid "'x' and 'weights' have unequal length"
-msgstr ""
+msgstr "'x' e 'weights'  têm comprimento desigual"
 
 msgid "'weights' must all be finite"
-msgstr ""
+msgstr "todos 'weights' devem ser finitos"
 
 msgid "'weights' must not be negative"
-msgstr ""
+msgstr "'weights' não devem ser negativos"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr "sum(weights) != 1 não terá densidade real"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr ""
+"são precisos ao menos 2 pontos para selecionar uma largura de banda "
+"automaticamente"
 
 msgid "unknown bandwidth rule"
-msgstr ""
+msgstr "norma de largura de banda desconhecida"
 
 msgid "non-finite 'bw'"
-msgstr ""
+msgstr "'bw' infinito"
 
 msgid "'bw' is not positive."
-msgstr ""
+msgstr "'bw' não é positivo."
 
 msgid "non-finite 'from'"
-msgstr ""
+msgstr "'from' infinito"
 
 msgid "non-finite 'to'"
-msgstr ""
+msgstr "'to' infinito"
 
 msgid "invalid formula in deriv"
-msgstr ""
+msgstr "fórmula inválida em deriv"
 
 msgid "'x' is not a vector"
-msgstr ""
+msgstr "'x' não é um vetor"
 
 msgid "bad value for 'lag' or 'differences'"
-msgstr ""
+msgstr "valor ruim para o 'lag'  ou 'differences'"
 
 msgid "'xi' has not the right length"
-msgstr ""
+msgstr "'xi' não tem o comprimento certo"
 
 msgid "incorrect dimensions for 'xi'"
-msgstr ""
+msgstr "dimensões incorretas para 'xi'"
 
 msgid "'x' is not a vector or matrix"
-msgstr ""
+msgstr "'x' não é um vetor ou matriz"
 
 msgid "invalid distance method"
-msgstr ""
+msgstr "método de distância inválido"
 
 msgid "ambiguous distance method"
-msgstr ""
+msgstr "método de distância ambígua"
 
 msgid "non-square matrix"
-msgstr ""
+msgstr "matriz não é quadrada"
 
 msgid "x[] and prob[] must be equal length vectors."
-msgstr ""
+msgstr "x[] e prob[] devem ser vetores de comprimento igual."
 
 msgid "probabilities cannot be negative nor all 0."
-msgstr ""
+msgstr "probabilidades não podem ser negativas, nem todas 0."
 
 msgid "'x' must be non-negative"
-msgstr ""
+msgstr "'x' deve ser não-negativo"
 
 msgid "size != sum(x), i.e. one is wrong"
-msgstr ""
+msgstr "size != sum(x), i.e. um deles está errado"
 
 msgid "'prob' and 'mu' both specified"
-msgstr ""
+msgstr "especifique 'prob' e 'mu'"
 
 msgid "some terms will have NAs due to the limits of the method"
-msgstr ""
+msgstr "alguns termos terão NAs devido aos limites do método"
 
 msgid "'x' must have 1 or more non-missing values"
-msgstr ""
+msgstr "'x' deve ter um ou mais valores  ausentes"
 
 msgid "wrong embedding dimension"
-msgstr ""
+msgstr "dimensão de incorporação errada"
 
 msgid "'covmat' is not a valid covariance list"
-msgstr ""
+msgstr "'covmat' não é uma lista de covariância válida"
 
 msgid "neither 'x' nor 'covmat' supplied"
-msgstr ""
+msgstr "não foram fornecidos nem 'x' nem 'covmat'"
 
 msgid "response not allowed in formula"
-msgstr ""
+msgstr "resposta não permitida na fórmula"
 
 msgid "factor analysis applies only to numerical variables"
-msgstr ""
+msgstr "análise fatorial só se aplica à variáveis numéricas"
 
 msgid "'covmat' is of unknown type"
-msgstr ""
+msgstr "'covmat' é de tipo desconhecido"
 
 msgid "requested scores without an 'x' matrix"
-msgstr ""
+msgstr "scores requeridos sem uma matriz 'x'"
 
 msgid "factor analysis requires at least three variables"
-msgstr ""
+msgstr "análise fatorial exige ao menos três variáveis"
 
 msgid "%d factors is too many for %d variables"
-msgstr ""
+msgstr "existem %d fatores, isto é demais para as %d variáveis"
 
 msgid "'start' must have %d rows"
-msgstr ""
+msgstr "'start' deve ter %d linhas"
 
 msgid "no starting values supplied"
-msgstr ""
+msgstr "nenhum valor de início fornecido"
 
 msgid "unable to optimize from these starting value(s)"
-msgstr ""
+msgstr "incapaz de otimizar a partir deste(s) valor(es) inicial(s)"
 
 msgid "invalid argument 'lambda'"
-msgstr ""
+msgstr "'lambda' é um argumento inválido"
 
+# Use "vínculo" ou "elo" para "link"?
 msgid "link not recognised"
-msgstr ""
+msgstr "link não reconhecido"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família Poisson; links disponíveis "
+"são %s"
 
 msgid "negative values not allowed for the Poisson family"
-msgstr ""
+msgstr "valores negativos não são permitidos para a família Poisson"
 
 msgid "ignoring prior weights"
-msgstr ""
+msgstr "ignorando pesos anteriores"
 
-msgid ""
-"link \"%s\" not available for quasipoisson family; available links are %s"
+msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família quasipoisson; links "
+"disponíveis são %s"
 
 msgid "negative values not allowed for the quasiPoisson family"
-msgstr ""
+msgstr "valores negativos não são permitidos para a família quasipoisson"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família gaussian; links disponíveis "
+"são %s"
 
 msgid "cannot find valid starting values: please specify some"
-msgstr ""
+msgstr "não é possível encontrar valores iniciais válidos: especifique alguns"
 
+# "elo" ou "vínculo" deve ser usado em vez de "link"?
 msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família binomial; links disponíveis "
+"são %s"
 
 msgid "y values must be 0 <= y <= 1"
-msgstr ""
+msgstr "valores y devem ser 0 <= y <= 1"
 
 msgid "non-integer #successes in a binomial glm!"
-msgstr ""
+msgstr "#sucessos não-inteiro em um glm binomial!"
 
 msgid "non-integer counts in a binomial glm!"
-msgstr ""
+msgstr "contagens não-inteiras em um glm binomial!"
 
 msgid "for the binomial family, y must be a vector of 0 and 1's"
-msgstr ""
+msgstr "para a família binomial, y deve ser um vetor de 0 e 1's"
 
-msgid ""
-"or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
+msgid "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
+"ou uma matriz de 2 colunas onde col 1 é o no. dos sucessos e col 2 é o no. "
+"das falhas"
 
 msgid "cannot simulate from non-integer prior.weights"
-msgstr ""
+msgstr "não é possível simular a partir de prior.weights não-inteiros"
 
-msgid ""
-"link \"%s\" not available for quasibinomial family; available links are %s"
+msgid "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família quasibinomial; links "
+"disponíveis são %s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
-msgstr ""
+msgstr "para a família quasibinomial, y deve ser um vetor de 0 e 1's"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família gamma; links disponíveis são "
+"%s"
 
 msgid "non-positive values not allowed for the gamma family"
-msgstr ""
+msgstr "valores não-positivos não são permitidos para a famíla gamma"
 
 msgid "using weights as shape parameters"
-msgstr ""
+msgstr "usando pesos como parâmetros shape"
 
-msgid ""
-"link \"%s\" not available for inverse.gaussian family; available links are %s"
+msgid "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
+"link \"%s\" não está disponível para a família inverse.gaussian; links "
+"disponíveis são %s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
-msgstr ""
+msgstr "somente valores positivos permitidos para a família inverse.gaussian"
 
 msgid "Need CRAN package 'SuppDists' for 'inverse.gaussian' family"
-msgstr ""
+msgstr "É preciso o pacote CRAN 'SuppDists' para a família 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
-msgstr ""
+msgstr "usando pesos como variâncias inversas"
 
-msgid ""
-"'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", "
-"\"mu^2\", \"mu^3\" and \"constant\""
+msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
 msgstr ""
+"'variance' \"%s\" está inválida: valores possíveis são \"mu(1-mu)\", \"mu\", "
+"\"mu^2\", \"mu^3\" e \"constant\""
 
 msgid "length mismatch in convolution"
-msgstr ""
+msgstr "comprimento não corresponde em convolução"
 
 msgid "missing values in 'filter'"
-msgstr ""
+msgstr "valores faltando em 'filter'"
 
 msgid "'filter' is longer than time series"
-msgstr ""
+msgstr "'filter' está mais comprido do que série temporal"
 
 msgid "argument 'sides' must be 1 or 2"
-msgstr ""
+msgstr "argumento 'sides' deve ser 1 ou 2"
 
 msgid "length of 'init' must equal length of 'filter'"
-msgstr ""
+msgstr "comprimento de 'init' deve igualar o comprimento de 'filter'"
 
 msgid "'init'; must have 1 or %d cols"
-msgstr ""
+msgstr "'init'; deve ter 1 ou %d cols"
 
 msgid "'x' must have at least 2 rows and columns"
-msgstr ""
+msgstr "'x' deve ter pelo menos 2 linhas e colunas"
 
 msgid "'x' has entries too large to be integer"
-msgstr ""
+msgstr "'x' tem entradas grandes demais para serem números inteiros"
 
 msgid "'x' has been rounded to integer:"
-msgstr ""
+msgstr "'x' tem sido arredondado para um número inteiro:"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
-msgstr ""
+msgstr "se 'x' não for uma matriz, 'y' deve ser fornecido"
 
 msgid "'mult' must be integer >= 2, typically = 30"
-msgstr ""
+msgstr "'mult' deve ser um número inteiro >= 2, tipicamente = 30"
 
 msgid "alternative must be \"two.sided\", \"less\" or \"greater\""
-msgstr ""
+msgstr "alternative deve ser \"two.sided\", \"less\" ou \"greater\""
 
 msgid "'or' must be a single number between 0 and Inf"
-msgstr ""
+msgstr "'or' deve ser um número único entre 0 e Inf"
 
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "precisa de 2 ou mais valores marginais de linha não-zeros"
 
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "precisa de 2 ou mais valores marginais de coluna não-zeros"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid' é ignorado para uma tabela 2 x 2"
 
 msgid "all groups must contain data"
-msgstr ""
+msgstr "todos os grupos devem conter dados"
 
 msgid "all group levels must be finite"
-msgstr ""
+msgstr "todos os níveis dos grupos devem ser finitos"
 
 msgid "not enough observations"
-msgstr ""
+msgstr "número insuficiente de observações"
 
 msgid "NA's are not allowed in groups or blocks"
-msgstr ""
+msgstr "NA's não são permitidos em grupos ou blocos"
 
 msgid "y, groups and blocks must have the same length"
-msgstr ""
+msgstr "y, grupos e blocos devem ter o mesmo comprimento"
 
 msgid "not an unreplicated complete block design"
-msgstr ""
+msgstr "não é um desenho de bloco completo sem replicação"
 
 msgid "formula missing"
-msgstr ""
+msgstr "fórmula está faltando"
 
 msgid "incorrect specification for 'formula'"
-msgstr ""
+msgstr "especificação incorreta para 'formula'"
 
 msgid "nothing to tabulate"
-msgstr ""
+msgstr "nada para tabular"
 
 msgid "incorrect specification for 'row.vars'"
-msgstr ""
+msgstr "especificação incorreta para 'row.vars'"
 
 msgid "incorrect specification for 'col.vars'"
-msgstr ""
+msgstr "especificação incorreta para 'col.vars'"
 
 msgid "interactions are not allowed"
-msgstr ""
+msgstr "interações não são permitidas"
 
 msgid "'formula' has '.' in both left and right hand side"
-msgstr ""
+msgstr "'formula' tem '.' tanto no lado direito quanto no esquerdo"
 
 msgid "incorrect variable names in rhs of formula"
-msgstr ""
+msgstr "nomes de variáveis incorretos no lado direito da fórmula"
 
 msgid "incorrect variable names in lhs of formula"
-msgstr ""
+msgstr "nomes de variáveis incorretos no lado esquerdo da fórmula"
 
 msgid "cannot use dots in formula with given data"
-msgstr ""
+msgstr "não é possível usar pontos em fórmula com os dados fornecidos"
 
 msgid "'x' must be an \"ftable\" object"
-msgstr ""
+msgstr "'x' deve ser um objeto \"ftable\""
 
 msgid "'file' must be a character string or connection"
-msgstr ""
+msgstr "'file' deve ser uma cadeia de caracteres ou uma conexão"
 
 msgid "'row.var.names' missing"
-msgstr ""
+msgstr "faltando 'row.var.names'"
 
 msgid "'col.vars' missing or incorrect"
-msgstr ""
+msgstr "'col.vars' faltando ou incorreto"
 
 msgid "'family' not recognized"
-msgstr ""
+msgstr "'family' não reconhecida"
 
 msgid "invalid 'method' argument"
-msgstr ""
+msgstr "argumento 'method' inválido"
 
 msgid "'weights' must be a numeric vector"
-msgstr ""
+msgstr "'weights' deve ser um vetor numérico"
 
 msgid "negative weights not allowed"
-msgstr ""
+msgstr "pesos negativos não são permitidos"
 
 msgid "number of offsets is %d should equal %d (number of observations)"
-msgstr ""
+msgstr "número de offsets é %d e deve igualar %d (número de observações)"
 
 msgid "value of 'epsilon' must be > 0"
-msgstr ""
+msgstr "valor de 'epsilon' deve ser > 0"
 
 msgid "maximum number of iterations must be > 0"
-msgstr ""
+msgstr "número máximo de iterações deve ser > 0"
 
 msgid "'family' argument seems not to be a valid family object"
-msgstr ""
+msgstr "argumento 'family' não parece ser um objeto de família válido"
 
 msgid "invalid linear predictor values in empty model"
-msgstr ""
+msgstr "valores de previsão linear inválidos no modelo vazio"
 
 msgid "invalid fitted means in empty model"
-msgstr ""
+msgstr "médias ajustadas inválidas no modelo vazio"
 
-msgid ""
-"length of 'start' should equal %d and correspond to initial coefs for %s"
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
+"comprimento de 'start' deve igualar %d e corresponder aos coeficientes "
+"iniciais para %s"
 
 msgid "NAs in V(mu)"
-msgstr ""
+msgstr "NAs em V(mu)"
 
 msgid "0s in V(mu)"
-msgstr ""
+msgstr "0s em V(mu)"
 
 msgid "NAs in d(mu)/d(eta)"
-msgstr ""
+msgstr "NAs em d(mu)/d(eta)"
 
 msgid "no observations informative at iteration"
-msgstr ""
+msgstr "observações não são informativas na iteração"
 
 msgid "non-finite coefficients at iteration %d"
-msgstr ""
+msgstr "coeficientes não-finitos na iteração %d"
 
 msgid "X matrix has rank %d, but only %d observations"
-msgstr ""
+msgstr "matriz X tem posto %d, mas somente %d observações"
 
-msgid ""
-"no valid set of coefficients has been found: please supply starting values"
+msgid "no valid set of coefficients has been found: please supply starting values"
 msgstr ""
+"nenhum jogo válido de coeficientes tem sido encontrado: por favor, fornece "
+"valores iniciais"
 
 msgid "step size truncated due to divergence"
-msgstr ""
+msgstr "tamanho do passo truncado devido a divergência"
 
 msgid "inner loop 1; cannot correct step size"
-msgstr ""
+msgstr "loop interno 1; não é possível corrigir o tamanho do passo"
 
 msgid "step size truncated: out of bounds"
-msgstr ""
+msgstr "tamanho do passo truncado: fora do limite"
 
 msgid "inner loop 2; cannot correct step size"
-msgstr ""
+msgstr "loop interno 2; não é possível corrigir o tamanho do passo"
 
 msgid "glm.fit: algorithm did not converge"
-msgstr ""
+msgstr "glm.fit: algoritmo não convergiu"
 
 msgid "glm.fit: algorithm stopped at boundary value"
-msgstr ""
+msgstr "glm.fit: algoritmo parou no valor do limite"
 
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr ""
+msgstr "glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu"
 
 msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr ""
+msgstr "glm.fit: taxas ajustadas numericamente 0 ocorreu"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr ""
+msgstr "os seguintes argumentos para 'anova.glm' são inválidos e largou:"
 
 msgid ","
-msgstr ""
+msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
-msgstr ""
+msgstr "usando o teste F com uma família %s está inadequado"
 
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
+msgstr "usando o teste F com uma dispersão fixa não é apropriado"
 
 msgid "models with response"
-msgstr ""
+msgstr "modelos com resposta"
 
 msgid "removed because response differs from model 1"
-msgstr ""
+msgstr "removido porque resposta difere do modelo 1"
 
 msgid "models were not all fitted to the same size of dataset"
-msgstr ""
+msgstr "nem todos os modelos foram ajustados ao mesmo tamanho do jogo de dados"
 
 msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
+msgstr "usando o teste F com a família '%s' está inadequado"
 
 msgid "observations with zero weight not used for calculating dispersion"
-msgstr ""
+msgstr "observações com peso zero não foram usadas para calcular dispersão"
 
 msgid "invalid clustering method"
-msgstr ""
+msgstr "método de agrupamento inválido"
 
 msgid "ambiguous clustering method"
-msgstr ""
+msgstr "método de agrupamento ambíguo"
 
 msgid "invalid dissimilarities"
-msgstr ""
+msgstr "dissimilaridades inválidas"
 
 msgid "must have n >= 2 objects to cluster"
-msgstr ""
+msgstr "deve ter n >= 2 objetos para agrupar"
 
 msgid "invalid length of members"
-msgstr ""
+msgstr "comprimento inválido dos membros"
 
 msgid "invalid dendrogram"
-msgstr ""
+msgstr "dendrograma inválida"
 
 msgid "'merge' component in dendrogram must be integer"
-msgstr ""
+msgstr "componente 'merge' em dendrograma deve ser inteiro"
 
 msgid "argument 'x' cannot be coerced to class \"hclust\""
-msgstr ""
+msgstr "argumento 'x' não pode ser forçado para classe \"hclust\""
 
 msgid "Consider providing an as.hclust.%s() method"
-msgstr ""
+msgstr "Considere fornecendo um método as.hclust.%s()"
 
 msgid "need dendrograms where all leaves have labels"
-msgstr ""
+msgstr "precisa se de dendrogramas onde todas as folhas têm rótulos"
 
 msgid "'k' and 'h' must be a scalar"
-msgstr ""
+msgstr "'k' e 'h' devem ser um escalar"
 
 msgid "specify exactly one of 'k' and 'h'"
-msgstr ""
+msgstr "especifica exatamente um de 'k' e 'h'"
 
 msgid "k must be between 2 and %d"
-msgstr ""
+msgstr "k deve ser entre 2 e %d"
 
 msgid "specify exactly one of 'which' and 'x'"
-msgstr ""
+msgstr "especifica exatamente um de 'which' e 'x'"
 
 msgid "all elements of 'which' must be between 1 and %d"
-msgstr ""
+msgstr "todos os elementos de 'which' devem estar entre 1 e %d"
 
 msgid "invalid parameter values"
-msgstr ""
+msgstr "valores de parâmetros são inválidos"
 
 msgid "a limit is missing"
-msgstr ""
+msgstr "está faltando um limite"
 
 msgid "missing values not allowed"
-msgstr ""
+msgstr "valores que faltam não são permitidos"
 
 msgid "'r' is less than 1"
-msgstr ""
+msgstr "'r' é menor que 1"
 
 msgid "'m' is less than 1"
-msgstr ""
+msgstr "'m' é menor que 1"
 
 msgid "'r' is less than 0"
-msgstr ""
+msgstr "'r' é menor que 0"
 
 msgid "'m' must be numeric with non-negative integers"
-msgstr ""
+msgstr "'m' deve ser numérico com números inteiros não-negativos"
 
 msgid "unknown named kernel"
-msgstr ""
+msgstr "kernel nomeado desconhecido"
 
 msgid "'coef' must be a vector"
-msgstr ""
+msgstr "'coef' deve ser um vetor"
 
 msgid "'coef' does not have the correct length"
-msgstr ""
+msgstr "'coef' não tem o comprimento correto"
 
 msgid "coefficients do not add to 1"
-msgstr ""
+msgstr "coeficientes não somam a 1"
 
 msgid "'k' is not a kernel"
-msgstr ""
+msgstr "'k' não é um kernel"
 
 msgid "'x' is shorter than kernel 'k'"
-msgstr ""
+msgstr "'x' é mais curto que kernel 'k'"
 
 msgid "'kernapply' is not available for object 'x'"
-msgstr ""
+msgstr "'kernapply' não está disponível para objeto 'x'"
 
 msgid "'x' is not a kernel"
-msgstr ""
+msgstr "'x' não é um kernel"
 
 msgid "empty cluster: try a better set of initial centers"
-msgstr ""
+msgstr "agrupamento vazio: experimente um jogo melhor de centros iniciais"
 
 msgid "did not converge in %d iterations"
-msgstr ""
+msgstr "não convergiu em %d iterações"
 
 msgid "number of cluster centres must lie between 1 and nrow(x)"
-msgstr ""
+msgstr "número de centros de agrupamento deve estar entre 1 e nrow(x)"
 
 msgid "did not converge in"
-msgstr ""
+msgstr "não convergiu em"
 
 msgid "iterations"
-msgstr ""
+msgstr "iterações"
 
 msgid "'centers' must be a number or a matrix"
-msgstr ""
+msgstr "'centers' deve ser um número ou uma matriz"
 
 msgid "more cluster centers than distinct data points."
-msgstr ""
+msgstr "mais centros de agrupamento que pontos de dados distintos"
 
 msgid "initial centers are not distinct"
-msgstr ""
+msgstr "centros iniciais não são distintos"
 
 msgid "more cluster centers than data points"
-msgstr ""
+msgstr "mais centros de agrupamento que pontos de dados"
 
 msgid "'iter.max' must be positive"
-msgstr ""
+msgstr "'iter.max' deve ser positivo"
 
 msgid "must have same number of columns in 'x' and 'centers'"
-msgstr ""
+msgstr "deve ter o mesmo número de colunas em 'x' e 'centers'"
 
 msgid "not enough 'x' data"
-msgstr ""
+msgstr "insuficientes dados 'x'"
 
 msgid "not enough 'y' data"
-msgstr ""
+msgstr "insuficientes dados 'y'"
 
 msgid "cannot compute correct p-values with ties"
-msgstr ""
+msgstr "com emparelhamento, não é possível computar valores-p corretos"
 
 msgid "'y' must be numeric or a string naming a valid function"
-msgstr ""
+msgstr "'y' deve ser numérico ou uma cadeia nomeando uma função válida"
 
-msgid ""
-"numeric y must be supplied.\n"
-"For density estimation use density()"
+msgid "numeric y must be supplied.\nFor density estimation use density()"
 msgstr ""
+"y numérico deve ser fornecido.\n"
+"Para estimar a densidade use density()"
 
 msgid "'k' is not an integer"
-msgstr ""
+msgstr "'k' não é inteiro"
 
 msgid "method = '%s' is not supported. Using 'qr'"
-msgstr ""
+msgstr "method = '%s' não é apoiado. Usando 'qr'"
 
 msgid "number of offsets is %d, should equal %d (number of observations)"
-msgstr ""
+msgstr "número de offsets é %d, deve igualar %d (número de observações)"
 
-#, fuzzy
 msgid "'x' must be a matrix"
-msgstr "'x' deve ser numérico"
+msgstr "'x' deve ser uma matriz"
 
 msgid "0 (non-NA) cases"
-msgstr ""
+msgstr "0 (não-NA) casos"
 
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "dimensões incompatíveis"
 
 msgid "extra arguments"
-msgstr ""
+msgstr "argumentos adicionais"
 
 msgid "are just disregarded."
-msgstr ""
+msgstr "são apenas ignorados"
 
 msgid "singular fit encountered"
-msgstr ""
+msgstr "ajuste singular encontrado"
 
 msgid "missing or negative weights not allowed"
-msgstr ""
+msgstr "pesos faltando ou negativos não são permitidos"
 
 msgid "invalid 'lm' object:  no 'terms' component"
-msgstr ""
+msgstr "objeto 'lm' inválido:  sem componente 'terms'"
 
 msgid "calling summary.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "chamando summary.lm(<fake-lm-object>) ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
+"graus de liberdade dos resíduos em objeto sugerem que este não é um ajuste "
+"\"lm\""
 
-msgid ""
-"lm object does not have a proper 'qr' component.\n"
-" Rank zero or should not have used lm(.., qr=FALSE)."
+msgid "lm object does not have a proper 'qr' component.\n Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
+"objeto lm não tem um componente 'qr' apropriado.\n"
+" Posto zero ou não devia ter usado lm(.., qr=FALSE)."
 
 msgid "family '"
-msgstr ""
+msgstr "família '"
 
 msgid "' not implemented"
-msgstr ""
+msgstr "' não implementado"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "chamando anova.lm(<fake-lm-object>) ..."
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
-msgstr ""
+msgstr "testes-F ANOVA sobre um ajuste essencialmente perfeito, são incertos"
 
 msgid "removed because response differs from"
-msgstr ""
+msgstr "removidos porque resposta difere de"
 
 msgid "model 1"
-msgstr ""
+msgstr "modelo 1"
 
 msgid "calling predict.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "chamando predict.lm(<fake-lm-object>) ..."
 
 msgid "prediction from a rank-deficient fit may be misleading"
-msgstr ""
+msgstr "uma predição a partir de um ajuste rank-deficient pode ser enganoso"
 
 msgid "Predictions on current data refer to _future_ responses"
-msgstr ""
+msgstr "Predições sobre dados atuais referem a respostas _futuras_"
 
-msgid ""
-"Assuming prediction variance inversely proportional to weights used for "
-"fitting"
+msgid "Assuming prediction variance inversely proportional to weights used for fitting"
 msgstr ""
+"Assumindo variância da predição inversamente proporcional aos pesos usados "
+"para o ajuste"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
 msgstr ""
+"Assumindo variância da predição constante mesmo quando o ajuste do modelo é "
+"ponderado"
 
 msgid "'weights' as formula should be one-sided"
-msgstr ""
+msgstr "'weights' como fórmula deve ser unilateral"
 
 msgid "'object' has no 'effects' component"
-msgstr ""
+msgstr "'object' não tem componente 'effects'"
 
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
-msgstr ""
+msgstr "o argumento 'se.fit' ainda não foi implementado para objetos \"mlm\""
 
 msgid "non-NA residual length does not match cases used in fitting"
-msgstr ""
+msgstr "comprimento residual não-NA não corresponde aos casos usados no ajuste"
 
 msgid "too few cases, n < k"
-msgstr ""
+msgstr "demasiado poucos casos, n < k"
 
 msgid "predictors must all be numeric"
-msgstr ""
+msgstr "prognosticadores devem ser todos numéricos"
 
 msgid "'degree' must be 0, 1 or 2"
-msgstr ""
+msgstr "'degree' deve ser 0, 1 ou 2"
 
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
-msgstr ""
+msgstr "tanto 'span' quanto 'enp.target' especificados: 'span' será usado"
 
 msgid "invalid 'control' argument"
-msgstr ""
+msgstr "argumento 'control' inválido"
 
 msgid "only 1-4 predictors are allowed"
-msgstr ""
+msgstr "somente 1-4 prognosticadores são permitidos"
 
 msgid "invalid 'y'"
-msgstr ""
+msgstr "'y' inválido"
 
-msgid ""
-"specified the square of a factor predictor to be dropped when degree = 1"
+msgid "specified the square of a factor predictor to be dropped when degree = 1"
 msgstr ""
+"especificado o quadrado de um fator prognosticador a ser largado quando "
+"degree = 1"
 
-msgid ""
-"specified the square of a predictor to be dropped with only one numeric "
-"predictor"
+msgid "specified the square of a predictor to be dropped with only one numeric predictor"
 msgstr ""
+"especificado o quadrado de um prognosticador a ser largado com apenas um "
+"único prognosticador numérico"
 
 msgid "specified parametric for all predictors"
-msgstr ""
+msgstr "especificado paramétrico para todos os prognosticadores"
 
 msgid "first argument must be a \"loess\" object"
-msgstr ""
+msgstr "primeiro argumento deve ser um objeto \"loess\""
 
 msgid "no models to compare"
-msgstr ""
+msgstr "nenhum modelo para comparar"
 
 msgid "extra arguments discarded"
-msgstr ""
+msgstr "argumentos extras descartados"
 
 msgid "no \"nobs\" attribute is available"
 msgstr ""
@@ -1361,316 +1394,326 @@ msgid "no 'nobs' method is available"
 msgstr ""
 
 msgid "'start' and 'table' must be same length"
-msgstr ""
+msgstr "'start' e 'table' devem ter o mesmo comprimento"
 
 msgid "this should not happen"
-msgstr ""
+msgstr "isso não deve acontecer"
 
 msgid "algorithm did not converge"
-msgstr ""
+msgstr "algoritmo não convergiu"
 
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr "especificação incorreta de 'table' ou 'start'"
 
 msgid "%d missing values deleted"
-msgstr ""
+msgstr "%d valores em falta excluídos"
 
 msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr ""
+msgstr "matriz 'X' tem %d respostas, 'Y' tem %d respostas"
 
 msgid "%d responses, but only %d variables"
-msgstr ""
+msgstr "%d respostas, mas apenas %d variáveis"
 
 msgid "number of weights = %d should equal %d (number of responses)"
-msgstr ""
+msgstr "número de pesos = %d deve igualar %d (número de respostas)"
 
 msgid "'X' matrix was collinear"
-msgstr ""
+msgstr "matriz 'X' foi colinear"
 
 msgid "missing observations deleted"
-msgstr ""
+msgstr "observações em falta excluídas"
 
 msgid "observations with 0 weight not used in calculating standard deviation"
 msgstr ""
+"observações com ponderação 0 não foram usadas no cálculo do desvio padrão"
 
 msgid "observations with 0 weights not used"
-msgstr ""
+msgstr "observações com ponderação 0 não foram usadas"
 
 msgid "'low' and 'high' cannot be both TRUE"
-msgstr ""
+msgstr "'low' e 'high' ambos não podem ser TRUE"
 
 msgid "need multiple response"
-msgstr ""
+msgstr "é precisa uma resposta múltipla"
 
 msgid "object must be of class \"manova\" or \"maov\""
-msgstr ""
+msgstr "objeto deve ser da classe \"manova\" ou \"maov\""
 
 msgid "need multiple responses"
-msgstr ""
+msgstr "são precisas respostas múltiplas"
 
 msgid "residuals have rank %d < %d"
-msgstr ""
+msgstr "resíduos têm postos %d < %d"
 
 msgid "NAs are not allowed"
-msgstr ""
+msgstr "NAs não são permitidos"
 
 msgid "each dimension in table must be >= 2"
-msgstr ""
+msgstr "cada dimensão na tabela deve ser >= 2"
 
 msgid "'x' must be a 3-dimensional array"
-msgstr ""
+msgstr "'x' deve ser um array 3-dimensional"
 
 msgid "if 'x' is not an array, 'y' must be given"
-msgstr ""
+msgstr "se 'x' não é um array, 'y' deve ser fornecido"
 
 msgid "if 'x' is not an array, 'z' must be given"
-msgstr ""
+msgstr "se 'x' não é um array, 'z' deve ser fornecido"
 
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr ""
+msgstr "'x', 'y', e 'z' devem ter o mesmo comprimento"
 
 msgid "sample size in each stratum must be > 1"
-msgstr ""
+msgstr "tamanho da amostra em cada estrato deve ser > 1"
 
 msgid "'x' must be square with at least two rows and columns"
-msgstr ""
+msgstr "'x' deve ser quadrado com pelo menos duas linhas e colunas"
 
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
-msgstr ""
+msgstr "'x' e 'y' devem ter o mesmo número de níveis (mínimo de 2)"
 
 msgid "need numeric data"
-msgstr ""
+msgstr "são precisos dados numéricos"
 
 msgid "medpolish() did not converge in %d iterations"
-msgstr ""
+msgstr "medpolish() não convergiu em %d iterações"
 
 msgid "'mlm' objects with weights are not supported"
-msgstr ""
+msgstr "objetos 'mlm' com ponderação não são apoiados"
 
 msgid "X does not define a subspace of M"
-msgstr ""
+msgstr "X não define um subespaço de M"
 
 msgid "residuals have rank"
-msgstr ""
+msgstr "resíduos tem posição"
 
 msgid "<"
-msgstr ""
+msgstr "<"
 
 msgid "'model.tables' is not implemented for multiple responses"
-msgstr ""
+msgstr "'model.tables' não é implementado para respostas múltiplas"
 
 msgid "type '%s' is not implemented yet"
-msgstr ""
+msgstr "tipo '%s' ainda não é implementado"
 
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "este ajuste não herda de \"lm\""
 
 msgid "'cterms' argument must match terms in model object"
-msgstr ""
+msgstr "argumento 'cterms' deve corresponder aos termos em objeto modelo"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
-msgstr ""
+msgstr "Desenho é desequilibrado - use se.contrast() para erros padrão"
 
 msgid "design is unbalanced so cannot proceed"
-msgstr ""
+msgstr "Desenho é desequilibrado então não é possível prosseguir"
 
-msgid ""
-"Standard error information not returned as design is unbalanced. \n"
-"Standard errors can be obtained through 'se.contrast'."
+msgid "Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through 'se.contrast'."
 msgstr ""
+"Informações sobre erros padrão não foram retornadas já que desenho é "
+"desequilibrado. \n"
+"Erros padrão podem ser obtidos através de 'se.contrast'."
 
 msgid "SEs for type '%s' are not yet implemented"
-msgstr ""
+msgstr "Erros Padrão para tipo '%s' ainda não foram implementados"
 
 msgid "na.action must be a function"
-msgstr ""
+msgstr "na.action deve ser uma função"
 
 msgid "non-factors ignored:"
-msgstr ""
+msgstr "não-fatores ignorados:"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
 msgstr ""
+"eff.aovlist: contrastes não-ortogonais deviam retornar uma resposta incorreta"
 
 msgid "cannot create a formula from a zero-column data frame"
 msgstr ""
+"não é possível criar uma fórmula a partir de um quadro de dados sem colunas"
 
 msgid "no terms component nor attribute"
 msgstr ""
 
 msgid "'termlabels' must be a character vector of length at least one"
 msgstr ""
+"'termlabels' deve ser um vetor de caracteres com um comprimento de pelo "
+"menos um"
 
 msgid "'termobj' must be a object of class \"terms\""
-msgstr ""
+msgstr "'termobj' deve ser um objeto da classe \"terms\""
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr ""
+msgstr "variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi fornecido"
+"variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi fornecido"
 
 msgid "variables %s were specified with different types from the fit"
-msgstr ""
+msgstr "variáveis %s foram especificadas com tipos diferentes do ajuste"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
-msgstr ""
+msgstr "'data' deve ser um data.frame, não uma matriz nem um array"
 
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr ""
+"'newdata' teve %d linhas mas variável/variáveis encontrada/s tem/têm %d "
+"linhas"
 
 msgid "character variable '%s' changed to a factor"
-msgstr ""
+msgstr "variável de caracter '%s' trocado para um fator"
 
 msgid "variable '%s' is not a factor"
-msgstr ""
+msgstr "variável '%s' não é um fator"
 
 msgid "factor '%s' has new level(s) %s"
-msgstr ""
+msgstr "fator '%s' tem novo(s) nível(níveis) %s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' deve ser numérico"
+msgstr "'offset' deve ser numérico"
 
 msgid "model frame and formula mismatch in model.matrix()"
-msgstr ""
+msgstr "quadro do modelo e fórmula não correspondem em model.matrix()"
 
 msgid "variable '%s' converted to a factor"
-msgstr ""
+msgstr "variável '%s' convertido para um fator"
 
 msgid "invalid 'contrasts.arg' argument"
-msgstr ""
+msgstr "argumento 'contrasts.arg' inválido"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
-msgstr ""
+msgstr "variável '%s' está ausente, seu contraste será ignorado"
 
 msgid "using type=\"numeric\" with a factor response will be ignored"
-msgstr ""
+msgstr "usando type=\"numeric\" com um fator resposta será ignorada"
 
 msgid "invalid response type"
-msgstr ""
+msgstr "tipo de resposta inválida"
 
 msgid "invalid 'data' argument"
-msgstr ""
+msgstr "argumento 'data' inválido"
 
 msgid "all times contain an NA"
-msgstr ""
+msgstr "todos os tempos contem um NA"
 
 msgid "missing values in object"
-msgstr ""
+msgstr "valores em falta em objeto"
 
 msgid "invalid argument 'omit'"
-msgstr ""
+msgstr "argumento 'omit' inválido"
 
 msgid "'print.level' must be in {0,1,2}"
-msgstr ""
+msgstr "'print.level' deve ser em {0,1,2}"
 
 msgid "'interval' must be a vector of length 2"
-msgstr ""
+msgstr "'interval' deve ser um vetor de comprimento 2"
 
 msgid "lower < upper  is not fulfilled"
-msgstr ""
+msgstr "lower < upper  não está cumprido"
 
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr "f.lower = f(lower) é NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr "f.upper = f(upper) é NA"
 
 msgid "f() values at end points not of opposite sign"
-msgstr ""
+msgstr "valores f() nas extremidades não têm sinais opostos"
 
 msgid "_NOT_ converged in"
-msgstr ""
+msgstr "_NÃO_ convergido em"
 
 msgid "control argument must be a named list"
-msgstr ""
+msgstr "argumento controle deve ser uma lista nomeada"
 
 msgid "unrecognized control element(s) named `"
-msgstr ""
+msgstr "elemento(s) controle não reconhecido(s) chamado(s) `"
 
 msgid "' ignored"
-msgstr ""
+msgstr "' ignorado"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "Argumento `hessian' lógico não é permitido.  Veja documentação."
 
 msgid "'params' has wrong length"
-msgstr ""
+msgstr "'params' tem comprimento errado"
 
 msgid "'varying' must be in seq_along(pars)"
-msgstr ""
+msgstr "argumento inválido para 'getProfile'"
 
 msgid "'varying' has wrong length"
-msgstr ""
+msgstr "'varying' tem comprimento errado"
 
 msgid "'varying' must be logical, integer or character"
-msgstr ""
+msgstr "'varying' deve ser lógico, inteiro ou caracter"
 
 msgid "invalid argument to 'getProfile'"
-msgstr ""
+msgstr "argumento inválido para 'getProfile'"
 
 msgid "cannot recognize parameter name"
-msgstr ""
+msgstr "não é possível reconhecer o nome do parâmetro"
 
 msgid "levels truncated to positive values only"
-msgstr ""
+msgstr "níveis truncados somente para valores positivos"
 
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
+"setVarying : comprimento de 'vary'  deve corresponder ao comprimento de "
+"parâmetros"
 
 msgid "singular gradient matrix at initial parameter estimates"
-msgstr ""
+msgstr "matriz gradiente singular com estimativas de parâmetros iniciais"
 
 msgid "'data' must be a list or an environment"
-msgstr ""
+msgstr "'data' deve ser uma lista ou um ambiente"
 
 msgid "No starting values specified"
-msgstr ""
+msgstr "Nenhum valor inicial fornecido"
 
 msgid "No starting values specified for some parameters."
-msgstr ""
+msgstr "Sem valores iniciais especificados para alguns parâmetros."
 
 msgid "Intializing"
-msgstr ""
+msgstr "Inicializando"
 
 msgid "to '1.'."
-msgstr ""
+msgstr "para '1.'."
 
 msgid "Consider specifying 'start' or using a selfStart model"
-msgstr ""
+msgstr "Considere especificando 'start' ou usando um modelo selfStart"
 
 msgid "parameters without starting value in 'data':"
-msgstr ""
+msgstr "parâmetros sem valor inicial em 'data':"
 
 msgid "fitting parameters"
-msgstr ""
+msgstr "ajustando parâmetros"
 
 msgid "without any variables"
-msgstr ""
+msgstr "sem nenhum variável"
 
 msgid "no parameters to fit"
-msgstr ""
+msgstr "sem parâmetros para ajustar"
 
 msgid "argument 'subset' will be ignored"
-msgstr ""
+msgstr "argumento 'subset' será ignorado"
 
 msgid "argument 'na.action' will be ignored"
-msgstr ""
+msgstr "argumento 'na.action' será ignorado"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
-msgstr ""
+msgstr "Limites superior ou inferior ignorados a não ser algoritmo = \"port\""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
-msgstr ""
+msgstr "não é possível calcular REML log-verossimilhança para objetos \"nls\""
 
 msgid "anova is only defined for sequences of \"nls\" objects"
-msgstr ""
+msgstr "anova é definido apenas para seqüências de objetos \"nls\""
 
 msgid "'anova' is only defined for sequences of \"nls\" objects"
-msgstr ""
+msgstr "'anova' é definido apenas para seqüências de objetos \"nls\""
 
 msgid "formula '%s' must be of the form '~expr'"
-msgstr ""
+msgstr "fórmula '%s' deve ser da forma '~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
-msgstr ""
+msgstr "'%s' não pode ser do modo '%s'"
 
 msgid "a two-sided formula is required"
 msgstr ""
@@ -1690,8 +1733,7 @@ msgstr ""
 msgid "'trace != 0' needs 'REPORT >= 1'"
 msgstr ""
 
-msgid ""
-"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
+msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
@@ -1703,8 +1745,9 @@ msgstr ""
 msgid "'x' must have 2 columns"
 msgstr ""
 
+#, fuzzy
 msgid "'x' and 'n' must have the same length"
-msgstr ""
+msgstr "'x' e 'g' devem ter o mesmo comprimento"
 
 msgid "too few groups"
 msgstr ""
@@ -1730,14 +1773,17 @@ msgstr ""
 msgid "'x' and 'T' have incompatible length"
 msgstr ""
 
+#, fuzzy
 msgid "'x' must be finite, nonnegative, and integer"
-msgstr ""
+msgstr "'x' deve ser inteiro e não negativo"
 
+#, fuzzy
 msgid "'T' must be nonnegative"
-msgstr ""
+msgstr "'x' deve ser não-negativo"
 
+#, fuzzy
 msgid "not enough data"
-msgstr ""
+msgstr "insuficientes dados 'x'"
 
 msgid "The case k > 2 is unimplemented"
 msgstr ""
@@ -1745,8 +1791,7 @@ msgstr ""
 msgid "'r' must be a single positive number"
 msgstr ""
 
-msgid ""
-"exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
+msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
 msgid "'sig.level' must be numeric in [0, 1]"
@@ -1758,9 +1803,7 @@ msgstr ""
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
-msgid ""
-"exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
-"level' must be NULL"
+msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
 msgid "number of groups must be at least 2"
@@ -1791,11 +1834,9 @@ msgid "no scores are available: refit with 'retx=TRUE'"
 msgstr ""
 
 msgid "'newdata' must be a matrix or data frame"
-msgstr ""
+msgstr "'newdata' deve ser uma matriz ou um quadro de dados"
 
-msgid ""
-"'newdata' does not have named columns matching one or more of the original "
-"columns"
+msgid "'newdata' does not have named columns matching one or more of the original columns"
 msgstr ""
 
 msgid "'newdata' does not have the correct number of columns"
@@ -1825,8 +1866,9 @@ msgstr ""
 msgid "'proj' is not implemented for \"mlm\" fits"
 msgstr ""
 
+#, fuzzy
 msgid "'proj' is not implemented for multiple responses"
-msgstr ""
+msgstr "'model.tables' não é implementado para respostas múltiplas"
 
 msgid "table 'x' should have 2 entries"
 msgstr ""
@@ -1849,17 +1891,21 @@ msgstr ""
 msgid "y is empty or has only NAs"
 msgstr ""
 
+#, fuzzy
 msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr ""
+msgstr "NA's não são permitidos em grupos ou blocos"
 
+#, fuzzy
 msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr ""
+msgstr "y, grupos e blocos devem ter o mesmo comprimento"
 
+#, fuzzy
 msgid "'formula' missing"
-msgstr ""
+msgstr "fórmula está faltando"
 
+#, fuzzy
 msgid "factors are not allowed"
-msgstr ""
+msgstr "interações não são permitidas"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr ""
@@ -1867,14 +1913,17 @@ msgstr ""
 msgid "'probs' outside [0,1]"
 msgstr ""
 
+#, fuzzy
 msgid "invalid argument 'n'"
-msgstr ""
+msgstr "argumento 'omit' inválido"
 
+#, fuzzy
 msgid "invalid argument 'r'"
-msgstr ""
+msgstr "argumento 'omit' inválido"
 
+#, fuzzy
 msgid "invalid argument 'c'"
-msgstr ""
+msgstr "argumento 'omit' inválido"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
@@ -1918,9 +1967,7 @@ msgstr ""
 msgid "length of v.names does not evenly divide length of varying"
 msgstr ""
 
-msgid ""
-"length of varying must be the product of length of v.names and length of "
-"times"
+msgid "length of varying must be the product of length of v.names and length of times"
 msgstr ""
 
 msgid "'k' must be positive"
@@ -1962,8 +2009,9 @@ msgstr ""
 msgid "invalid 'control.spar'"
 msgstr ""
 
+#, fuzzy
 msgid "lengths of 'x' and 'w' must match"
-msgstr ""
+msgstr "comprimentos de 'x' e 'xreg' não correspondem"
 
 msgid "all weights should be non-negative"
 msgstr ""
@@ -1983,13 +2031,12 @@ msgstr ""
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
 msgstr ""
 
-#, fuzzy
 msgid "'nknots' must be numeric (in {1,..,n})"
-msgstr "'x' deve ser numérico"
+msgstr ""
 
 #, fuzzy
 msgid "'nknots' must be at least 1"
-msgstr "'lag.max' deve ser pelo menos 0"
+msgstr "'lag.max' deve ser ao menos 1"
 
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
@@ -2015,8 +2062,9 @@ msgstr ""
 msgid "not a valid \"smooth.spline\" object"
 msgstr ""
 
+#, fuzzy
 msgid "'y' must be numeric vector"
-msgstr ""
+msgstr "'y' deve ser um vetor numérico"
 
 msgid "number of observations in 'x' and 'y' must match."
 msgstr ""
@@ -2025,7 +2073,7 @@ msgid "number of weights must match number of observations."
 msgstr ""
 
 msgid "'span' must be between 0 and 1."
-msgstr ""
+msgstr "'span' deve estar entre 0  e 1"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr ""
@@ -2037,10 +2085,11 @@ msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr ""
 
 msgid "'p' must be between 0 and 0.5"
-msgstr ""
+msgstr "'p' deve estar entre 0 e 0.5"
 
+#, fuzzy
 msgid "length of 'p' must be 1 or equal the number of columns of 'x'"
-msgstr ""
+msgstr "comprimento do 'center' deve ser igual ao número de colunas em 'x'"
 
 msgid "'x' must be a time series or an ar() fit"
 msgstr ""
@@ -2054,17 +2103,18 @@ msgstr ""
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 
+#, fuzzy
 msgid "'spline' requires n >= 1"
-msgstr ""
+msgstr "'approx' necessita de n >= 1"
 
 msgid "spline: first and last y values differ - using y[1L] for both"
 msgstr ""
 
 msgid "'deriv' must be between 0 and 3"
-msgstr ""
+msgstr "'deriv' deve estar entre 0 e 3"
 
 msgid "'deriv' must be between 0 and 2"
-msgstr ""
+msgstr "'deriv' deve estar entre 0 e 2"
 
 msgid "'x' must be *strictly* increasing (non - NA)"
 msgstr ""
@@ -2106,10 +2156,10 @@ msgid "'cutpoints' must be unique, but are ="
 msgstr ""
 
 msgid "'x' must be between -1 and 1"
-msgstr ""
+msgstr "'x' deve estar entre -1 e 1"
 
 msgid "'x' must be between %s and %s"
-msgstr ""
+msgstr "'x' deve estra entre %s e %s"
 
 msgid "number of 'cutpoints' must be one less than number of symbols"
 msgstr ""
@@ -2210,9 +2260,7 @@ msgstr ""
 msgid "too many replacement values supplied"
 msgstr ""
 
-msgid ""
-"number of values supplied is not a sub-multiple of the number of values to "
-"be replaced"
+msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
 msgstr ""
 
 msgid "only replacement of elements is allowed"
@@ -2251,11 +2299,12 @@ msgstr ""
 msgid "'ratio' must be a single positive number"
 msgstr ""
 
+#, fuzzy
 msgid "'x' and 'w' must have the same length"
-msgstr ""
+msgstr "'x' e 'g' devem ter o mesmo comprimento"
 
 msgid "not enough (finite) 'x' observations"
-msgstr ""
+msgstr "sem observações (finitas) de 'x' suficientes"
 
 msgid "Requested conf.level not achievable"
 msgstr ""
@@ -2264,13 +2313,14 @@ msgid "cannot compute confidence interval when all observations are tied"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with ties"
-msgstr ""
+msgstr "impossível computar os intervalos de confiança exatos com empate"
 
+#, fuzzy
 msgid "cannot compute exact p-value with zeroes"
-msgstr ""
+msgstr "não é possível computar o valor de p exato com o de desempate"
 
 msgid "cannot compute exact confidence interval with zeroes"
-msgstr ""
+msgstr "impossível computar os intervalos de confiança exatos com zeros"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr ""
@@ -2280,6 +2330,8 @@ msgstr ""
 
 msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
 msgstr ""
+"xtabs(*, sparse=TRUE) necessita de que o pacote \"Matrix\" esteja "
+"corretamente instalado"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
@@ -2342,3 +2394,6 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "no terms component"
+#~ msgstr "nenhum componente de termos"

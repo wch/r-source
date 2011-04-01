@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:49\n"
+"POT-Creation-Date: 2011-04-01 09:32\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -794,7 +794,8 @@ msgstr "许可证"
 msgid "License for package '%s' not accepted"
 msgstr "程辑包'％s'的许可证没有被接受"
 
-msgid "Attaching package: '%s'"
+#, fuzzy
+msgid "Attaching package: %s"
 msgstr "载入程辑包：'%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:49\n"
+"POT-Creation-Date: 2011-04-01 09:32\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -810,7 +810,8 @@ msgstr "Lizenz"
 msgid "License for package '%s' not accepted"
 msgstr "Lizenz für Paket '%s' nicht akzeptiert"
 
-msgid "Attaching package: '%s'"
+#, fuzzy
+msgid "Attaching package: %s"
 msgstr "Attache Paket: '%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."

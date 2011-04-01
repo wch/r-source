@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:49\n"
-"PO-Revision-Date: 2011-01-02 18:10+0200\n"
+"POT-Creation-Date: 2011-04-01 09:32\n"
+"PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
-"Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -211,9 +211,8 @@ msgstr "especificação de reinício inválida"
 msgid "argument 'where' of length 0"
 msgstr "argumento 'where' com comprimento 0"
 
-#, fuzzy
 msgid "argument 'object' must deparse to a single character string"
-msgstr "'pattern' deve ser uma string de caracteres não vazia"
+msgstr ""
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' deve ser um dentre 'start', 'current' ou 'end'"
@@ -583,7 +582,7 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "determinante atualmente não definido para matrizes complexas"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr "'nrow' ou 'ncol' não pode ser especificado quando 'x' é uma matriz "
+msgstr "'nrow' ou 'ncol' não pode ser especificado quando 'x' é uma matriz"
 
 msgid "'x' is an array, but not 1D."
 msgstr "'x' é um array, mas não unidimensional."
@@ -663,15 +662,13 @@ msgstr "nível de fator inválido, NA gerado"
 msgid "'%s' is not meaningful for ordered factors"
 msgstr "'%s' não faz sentido para fatores ordenados"
 
-#, fuzzy
 msgid "'%s' not defined for ordered factors"
-msgstr "'%s' não faz sentido para fatores ordenados"
+msgstr "'%s' não definido para fatores ordenados"
 
-#, fuzzy
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
-msgstr "'%s' não faz sentido para fatores ordenados"
+msgstr ""
 
 msgid "no files to copy to"
 msgstr "nenhum arquivo para onde copiar"
@@ -691,9 +688,8 @@ msgstr "nenhum arquivo para onde fazer a vinculação"
 msgid "no files/directory to link to"
 msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
 
-#, fuzzy
 msgid "no files to link to"
-msgstr "nenhum arquivo para onde fazer a vinculação"
+msgstr "nenhum arquivo para vincular"
 
 msgid "'package' must be of length 1"
 msgstr "'package' deve ter comprimento 1"
@@ -815,7 +811,8 @@ msgstr "Licença"
 msgid "License for package '%s' not accepted"
 msgstr "Licença para o pacote '%s' não foi aceita"
 
-msgid "Attaching package: '%s'"
+#, fuzzy
+msgid "Attaching package: %s"
 msgstr "Anexando pacote: '%s'"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
@@ -1294,9 +1291,8 @@ msgstr "comprimento de 'scale' deve ser igual ao número de colunas de 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "especifique 'nmax' ou 'n', mas não ambos."
 
-#, fuzzy
 msgid "argument 'length.out' must be of length 1"
-msgstr "'length.out' deve ter comprimento 1"
+msgstr "argumento 'length.out' deve ter comprimento 1"
 
 msgid "first element used of 'length.out' argument"
 msgstr ""
@@ -1466,7 +1462,7 @@ msgid "all arguments must have the same length"
 msgstr "todos os argumentos devem ter o mesmo comprimento"
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr "tentativa de criar uma tabela com mais de 2^31 elementos"
 
 msgid "'object' must inherit from class \"table\""
 msgstr "'object' deve herdar da classe \"table\""
@@ -1526,7 +1522,7 @@ msgid "unary '%s' not defined for \"numeric_version\" objects"
 msgstr "'%s' unário não definido para objetos \"numeric_version\""
 
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr "'%s' não definido para objetos \"numeric_version\" "
+msgstr "'%s' não definido para objetos \"numeric_version\""
 
 msgid "not defined for numeric_version objects"
 msgstr "não definido para objetosnumeric_version"
@@ -1542,7 +1538,7 @@ msgid ""
 "Windows only"
 msgstr ""
 "argumentos 'show.output.on.console', 'minimized' e 'invisible' são válidos "
-"somente para Windows "
+"somente para Windows"
 
 msgid "'intern' must be TRUE or FALSE"
 msgstr "'intern' deve ser TRUE ou FALSE"
@@ -1637,7 +1633,7 @@ msgstr[1] "pacotes %s não estão carregados"
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "não há nenhum pacote chamado"
-msgstr[1] "não há pacotes chamados "
+msgstr[1] "não há pacotes chamados"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
@@ -1677,244 +1673,3 @@ msgstr[1] "Mensagens de aviso:\n"
 
 #~ msgid "save != FALSE is defunct"
 #~ msgstr "save != FALSE foi extinto"
-
-#~ msgid "got invalid index for importing"
-#~ msgstr "índice inválido obtido para importação"
-
-#~ msgid "cyclic name space dependencies are not supported"
-#~ msgstr ""
-#~ "dependências cíclicas entre espaços de nomes não estão implementadas"
-
-#~ msgid "'recursive' will be ignored"
-#~ msgstr "argumento 'recursive' será ignorado"
-
-#~ msgid "imperative name space directives are disabled"
-#~ msgstr "diretivas imperativas de espaço de nomes estão desabilitadas"
-
-#~ msgid "all objects in base name space are currently exported."
-#~ msgstr ""
-#~ "todos os objetos no espaço de nomes base estão atualmente exportados"
-
-#~ msgid "can only export from a name space"
-#~ msgstr "somente é possível exportar a partir de um espaço de nomes"
-
-#~ msgid "'fromLast' must be TRUE or FALSE"
-#~ msgstr "'fromLast' deve ser TRUE ou FALSE"
-
-#~ msgid "shared library '%s' not found"
-#~ msgstr "biblioteca compartilhada '%s' não encontrada"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' claims to be built under R version %s but is missing some "
-#~ "help files and needs to be re-installed"
-#~ msgstr ""
-#~ "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
-
-#, fuzzy
-#~ msgid "invalid digits"
-#~ msgstr "'digits' inválido"
-
-#, fuzzy
-#~ msgid "'x' must be of length 1"
-#~ msgstr "'to' deve ter comprimento 1"
-
-#~ msgid "argument to 'which' is not logical"
-#~ msgstr "argumento para 'which' não é lógico"
-
-#, fuzzy
-#~ msgid "is not on the search path"
-#~ msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
-
-#~ msgid "in useDynLib("
-#~ msgstr "em useDynLib("
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
-#~ msgstr "método S3 '%s' foi declarado no NAMESPACE mas não encontrado"
-
-#~ msgid "invalid name"
-#~ msgstr "nome inválido"
-
-#~ msgid "is required by"
-#~ msgstr "é exigido por"
-
-#~ msgid "(still attached)"
-#~ msgstr "(ainda anexado)"
-
-#, fuzzy
-#~ msgid "name space '%s' is still used by: %s"
-#~ msgstr "espaço de nomes '%s' ainda em uso por:"
-
-#~ msgid "See the Note in ?library"
-#~ msgstr "Veja a observação em ?library"
-
-#, fuzzy
-#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
-#~ msgstr ""
-#~ "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
-
-#~ msgid "%s failed in 'attachNamespace'"
-#~ msgstr "%s falhou em 'attachNamespace'"
-
-#~ msgid "%s failed in 'loadNamespace' for '%s'"
-#~ msgstr "%s falhou em 'loadNamespace' para '%s'"
-
-#~ msgid "name space '%s' is loaded"
-#~ msgstr "espaço de nomes '%s' não carregado"
-
-#~ msgid "%s failed in unloadNamespace(%s)"
-#~ msgstr "%s falhou em unloadNamespace(%s)"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help will not work "
-#~ "correctly\n"
-#~ "Please re-install it"
-#~ msgstr ""
-#~ "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
-
-#, fuzzy
-#~ msgid "extra arguments ignored:"
-#~ msgstr "argumento 'drop' será ignorado"
-
-#~ msgid "numeric or complex values required in 'eigen'"
-#~ msgstr "valores numéricos ou complexos exigidos em 'eigen'"
-
-#~ msgid "argument to 'svd' must be numeric"
-#~ msgstr "argumento para 'svd' deve ser numérico"
-
-#~ msgid "package '%s' has been merged into '%s'"
-#~ msgstr "pacote '%s' foi incluído em '%s'"
-
-#~ msgid "package 'lqs' has been moved back to package 'MASS'"
-#~ msgstr "pacote 'lqs' foi movido de volta para o pacote 'MASS'"
-
-#~ msgid "package 'MASS' has now been loaded"
-#~ msgstr "pacote 'MASS' foi carregado"
-
-#~ msgid "package 'MASS' seems to be missing from this R installation"
-#~ msgstr "pacote 'MASS' parece não estar disponível nessa instalação do R"
-
-#~ msgid "there is no package called '%s', version %s"
-#~ msgstr "não há nenhum pacote chamado '%s', versão %s"
-
-#~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
-#~ msgstr "'%s' não é um pacote válido -- instalado antes do R 2.0.0?"
-
-#~ msgid "non-numeric data type in frame"
-#~ msgstr "tipo de dados não numérico no frame"
-
-#~ msgid "class information lost from one or more columns"
-#~ msgstr "informação de classe perdida de uma ou mais colunas"
-
-#~ msgid "not defined for POSIXt objects"
-#~ msgstr "não definido para objetos POSIXt"
-
-#~ msgid "not defined for \"POSIXct\" objects"
-#~ msgstr "não definido para objetos \"POSIXct\""
-
-#~ msgid "not defined for \"POSIXlt\" objects"
-#~ msgstr "não definido para objetos \"POSIXlt\""
-
-#, fuzzy
-#~ msgid "'data' must exist"
-#~ msgstr "'subset' deve ser lógico"
-
-#, fuzzy
-#~ msgid "names do not match previous names:"
-#~ msgstr "nomes não pareiam com os nomes anteriores:"
-
-#~ msgid "argument must be character"
-#~ msgstr "argumento deve ser caracter"
-
-#~ msgid "'all' can not be used with other deparse options"
-#~ msgstr "'all' não pode ser usado junto com outras opções de deparse"
-
-#~ msgid "no rows to match"
-#~ msgstr "nenhuma linha para parear"
-
-#~ msgid "'form' must be a two-sided formula"
-#~ msgstr "'form' deve ser uma fórmula com dois lados"
-
-#~ msgid "no lines available in input"
-#~ msgstr "nenhuma linha disponível na entrada"
-
-#~ msgid "empty beginning of file"
-#~ msgstr "começo de arquivo vazio"
-
-#~ msgid "header and 'col.names' are of different lengths"
-#~ msgstr "'header' e 'col.names' têm comprimentos diferentes"
-
-#~ msgid "more columns than column names"
-#~ msgstr "mais colunas que nomes de colunas"
-
-#~ msgid "first five rows are empty: giving up"
-#~ msgstr "cinco primeiras linhas vazias: desistindo"
-
-#~ msgid "not all columns named in 'colClasses' exist"
-#~ msgstr "nem todas as colunas com nome em 'colClasses' existem"
-
-#~ msgid "invalid numeric 'as.is' expression"
-#~ msgstr "expressão numérica 'as.is' inválida"
-
-#~ msgid "not all columns named in 'as.is' exist"
-#~ msgstr "nem todas as colunas nomeadas em 'as.is' existem"
-
-#~ msgid "'as.is' has the wrong length %d  != cols = %d"
-#~ msgstr "'as.is' tem o comprimento errado %d != cols = %d"
-
-#~ msgid "invalid 'row.names' specification"
-#~ msgstr "especificação de 'row.names' inválida"
-
-#~ msgid "invalid numbers in 'quote'"
-#~ msgstr "números inválidos em 'quote'"
-
-#~ msgid "col.names = NA makes no sense when row.names = FALSE"
-#~ msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
-
-#~ msgid "invalid 'col.names' specification"
-#~ msgstr "especificação de 'col.names' inválida"
-
-#~ msgid "appending column names to file"
-#~ msgstr "acrescentando nomes de coluna no arquivo"
-
-#~ msgid "attempt to change '%s' ignored"
-#~ msgstr "tentativa de mudar '%s' ignorada"
-
-#, fuzzy
-#~ msgid "rows are empty: giving up"
-#~ msgstr "cinco primeiras linhas vazias: desistindo"
-
-#~ msgid "invalid argument 'n'"
-#~ msgstr "argumento 'n' inválido"
-
-#~ msgid "invalid argument 'r'"
-#~ msgstr "argumento 'r' inválido"
-
-#~ msgid "invalid argument 'c'"
-#~ msgstr "argumento 'c' inválido"
-
-#~ msgid "arguments 'r' and 'c' must have the same sums"
-#~ msgstr "argumentos 'r' e 'c' devem ter a mesma soma"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "nenhum dos pacotes foi encontrado"
-
-#~ msgid "no input is available"
-#~ msgstr "nenhuma entrada disponível"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "a entrada não começa com um número mágico compatível com carregamento a "
-#~ "partir de uma conexão"
-
-#~ msgid "calling wrong method"
-#~ msgstr "chamada do método errado"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char: fazendo coerção de 'x' para 'character' "

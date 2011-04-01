@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-31 05:23+0100\n"
+"POT-Creation-Date: 2011-04-01 09:32+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -188,13 +188,13 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/platform.c:1265 src/main/platform.c:1268 src/main/platform.c:1421
 #: src/main/platform.c:1424 src/main/platform.c:1460 src/main/platform.c:1463
 #: src/main/platform.c:1546 src/main/platform.c:1562 src/main/platform.c:1603
-#: src/main/platform.c:1605 src/main/platform.c:1665 src/main/platform.c:1756
-#: src/main/platform.c:2016 src/main/platform.c:2059 src/main/platform.c:2186
-#: src/main/platform.c:2189 src/main/platform.c:2192 src/main/platform.c:2195
-#: src/main/platform.c:2198 src/main/platform.c:2331 src/main/platform.c:2334
-#: src/main/platform.c:2337 src/main/platform.c:2340 src/main/platform.c:2343
-#: src/main/platform.c:2412 src/main/platform.c:2420 src/main/platform.c:2456
-#: src/main/platform.c:2506 src/main/plot.c:3104 src/main/plot.c:4241
+#: src/main/platform.c:1605 src/main/platform.c:1670 src/main/platform.c:1761
+#: src/main/platform.c:2021 src/main/platform.c:2064 src/main/platform.c:2191
+#: src/main/platform.c:2194 src/main/platform.c:2197 src/main/platform.c:2200
+#: src/main/platform.c:2203 src/main/platform.c:2336 src/main/platform.c:2339
+#: src/main/platform.c:2342 src/main/platform.c:2345 src/main/platform.c:2348
+#: src/main/platform.c:2417 src/main/platform.c:2425 src/main/platform.c:2461
+#: src/main/platform.c:2511 src/main/plot.c:3104 src/main/plot.c:4241
 #: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2431
 #: src/main/plot3d.c:2435 src/main/plot3d.c:2440 src/main/plot3d.c:2444
 #: src/main/plot3d.c:2448 src/main/plot3d.c:2452 src/main/print.c:231
@@ -5214,83 +5214,87 @@ msgstr "读取'%s'时出了错"
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "设定'LC_NUMERIC'后有可能会使R运转出现问题"
 
-#: src/main/platform.c:1671
+#: src/main/platform.c:1649
+msgid "LC_MESSAGES exists on Windows but is not operational"
+msgstr ""
+
+#: src/main/platform.c:1676
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "操作系统报告说无法执行将本地化设成\"%s\"的请求"
 
-#: src/main/platform.c:1971
+#: src/main/platform.c:1976
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为一的字符矢量"
 
-#: src/main/platform.c:1977
+#: src/main/platform.c:1982
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:1984
+#: src/main/platform.c:1989
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname回覆了错误的格式"
 
-#: src/main/platform.c:1993
+#: src/main/platform.c:1998
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:2042
+#: src/main/platform.c:2047
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"
 
-#: src/main/platform.c:2045
+#: src/main/platform.c:2050
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$s'文件目录"
 
-#: src/main/platform.c:2088
+#: src/main/platform.c:2093
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls'已存在"
 
-#: src/main/platform.c:2091
+#: src/main/platform.c:2096
 #, fuzzy, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$s'文件目录"
 
-#: src/main/platform.c:2121
+#: src/main/platform.c:2126
 #, fuzzy, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "启动编辑器%s时出了问题"
 
-#: src/main/platform.c:2136
+#: src/main/platform.c:2141
 #, fuzzy, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "启动编辑器%s时出了问题"
 
-#: src/main/platform.c:2149
+#: src/main/platform.c:2154
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2265
+#: src/main/platform.c:2270
 #, fuzzy, c-format
 msgid "problem creating directory %s: %s"
 msgstr "启动编辑器%s时出了问题"
 
-#: src/main/platform.c:2279
+#: src/main/platform.c:2284
 #, fuzzy, c-format
 msgid "problem reading directory %s: %s"
 msgstr "启动编辑器%s时出了问题"
 
-#: src/main/platform.c:2295
+#: src/main/platform.c:2300
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2417
+#: src/main/platform.c:2422
 msgid "'mode' must be of length at least one"
 msgstr "'mode'的长度至少需要是一"
 
-#: src/main/platform.c:2484
+#: src/main/platform.c:2489
 msgid "insufficient OS support on this platform"
 msgstr "本平台操作系统支持不够"
 

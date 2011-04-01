@@ -4,13 +4,13 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:49+0100\n"
-"PO-Revision-Date: 2011-01-02 18:09+0200\n"
+"PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: pt_BR\n"
+"Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,52 +70,57 @@ msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
 msgstr ""
+"caractere inválido (%04x) enviado para 'PostScriptCIDMetricInfo' em um "
+"locale de um único byte"
 
 #: devPS.c:909
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
+"caractere inválido enviado para 'PostScriptCIDMetricInfo' em um locale de um "
+"único byte"
 
 #: devPS.c:1014
 msgid "failed to allocate CID font info"
-msgstr ""
+msgstr "falha ao alocar informação de fonte CID"
 
 #: devPS.c:1029
 msgid "failed to allocate Type 1 font info"
-msgstr ""
+msgstr "falha ao alocar informação de fonte Tipo 1"
 
 #: devPS.c:1049
 msgid "failed to allocate encoding info"
-msgstr ""
+msgstr "falha ao alocar informação de codificação"
 
 #: devPS.c:1067
 msgid "failed to allocate CID font family"
-msgstr ""
+msgstr "falha ao alocar família de fonte CID"
 
 #: devPS.c:1080
 msgid "failed to allocate Type 1 font family"
-msgstr ""
+msgstr "falha ao alocar família de fonte Tipo 1"
 
 #: devPS.c:1119 devPS.c:1130
 msgid "failed to allocate font list"
-msgstr ""
+msgstr "falha ao alocar lista de fonte"
 
 #: devPS.c:1181
 msgid "failed to allocated encoding list"
-msgstr ""
+msgstr "falha ao alocar lista de codificação"
 
 #: devPS.c:1329
+#, fuzzy
 msgid "truncated string which was too long for copy"
-msgstr ""
+msgstr "string truncada que era muito longa para cópia"
 
 #: devPS.c:1369
 #, c-format
 msgid "failed to load encoding file '%s'"
-msgstr ""
+msgstr "falha ao carregar arquivo de codificação '%s'"
 
 #: devPS.c:1462 devPS.c:1495
 msgid "Invalid font name or more than one font name"
-msgstr ""
+msgstr "nome de fonte inválido ou mais de um nome de fonte"
 
 #: devPS.c:1615 devPS.c:1649
 msgid "font family not found in PostScript font database"
@@ -184,9 +189,9 @@ msgid "encoding path is too long in %s()"
 msgstr ""
 
 #: devPS.c:3139 devPS.c:4772
-#, c-format
+#, fuzzy, c-format
 msgid "failed to load encoding file in %s()"
-msgstr ""
+msgstr "falha ao carregar arquivo de codificação '%s'"
 
 #: devPS.c:3184 devPS.c:3247 devPS.c:5929 devPS.c:5984 devPS.c:7494
 msgid "Invalid font type"
@@ -375,12 +380,14 @@ msgid "Failed to initialise additional PDF fonts"
 msgstr ""
 
 #: devPS.c:6020
+#, fuzzy
 msgid "failed to allocate rasters"
-msgstr ""
+msgstr "falha ao alocar lista de fonte"
 
 #: devPS.c:6027
+#, fuzzy
 msgid "failed to allocate masks"
-msgstr ""
+msgstr "falha ao alocar lista de fonte"
 
 #: devPS.c:6090
 #, c-format
@@ -404,8 +411,9 @@ msgid "unknown 'colormodel', using 'rgb'"
 msgstr ""
 
 #: devPS.c:6531
+#, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr ""
+msgstr "falha ao carregar arquivo de codificação '%s'"
 
 #: devPS.c:6798
 msgid "Corrupt encodings in PDF device"
@@ -452,9 +460,9 @@ msgid "invalid value of '%s'"
 msgstr ""
 
 #: devPS.c:8113 devPS.c:8180 devPS.c:8275 devPicTeX.c:800 devWindows.c:3704
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start %s() device"
-msgstr "não é possível iniciar dispositivo NULL"
+msgstr "não é possível iniciar dispositivo %s()"
 
 #: devPS.c:8262
 #, c-format

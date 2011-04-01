@@ -5439,7 +5439,7 @@ function(x)
 .pretty_format <-
 function(x)
 {
-    strwrap(paste(x, collapse = " "),
+    strwrap(paste(sQuote(x), collapse = " "),
             indent = 2L, exdent = 2L)
 }
 
