@@ -1641,11 +1641,16 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cat = LC_TIME;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
-#if defined LC_MESSAGES && !defined Win32
-/* this seems to exist in MinGW, but it does not work in Windows */
+#if defined LC_MESSAGES
     case 7:
 	cat = LC_MESSAGES;
+#ifdef Win32
+/* this seems to exist in MinGW, but it does not work in Windows */
+	warning(_("LC_MESSAGES exists on Windows but is not operational"));
+	p = NULL;
+#else
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+#endif
 	break;
 #endif
 #ifdef LC_PAPER
