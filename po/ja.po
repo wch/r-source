@@ -4,18 +4,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.5.0\n"
+"Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-04-01 09:32+0100\n"
-"PO-Revision-Date: 2011-03-28 15:56+0900\n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
-"Language-Team: R-core <R-core@R-project.org>\n"
+"PO-Revision-Date: 2011-03-28 15:56+0900 \n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"Language-Team: R-core <R-core@R-project.org> \n"
 "Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 1.1.0\n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
@@ -783,7 +783,7 @@ msgstr " テーブルエントリは外部ポインタでなければなりま�
 #: src/main/Rstrptime.h:499 src/main/Rstrptime.h:962
 #, c-format
 msgid "use of %s for input is not supported"
-msgstr "入力に %s を使用することはサポートされていません "
+msgstr " 入力に %s を使用することはサポートされていません "
 
 #: src/main/Rstrptime.h:1216
 msgid "input string is too long"
@@ -848,8 +848,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
-"値の長さは %d でなければなりません, \n"
-"しかし、FUN(X[[%d]]) の結果の長さが %d です "
+" 値の長さは %d でなければなりません, \n"
+" しかし、FUN(X[[%d]]) の結果の長さが %d です "
 
 #: src/main/apply.c:162
 #, c-format
@@ -857,8 +857,8 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
-"値の型は '%s' でなければなりません, \n"
-"しかし、FUN(X[[%d]]) の結果の型が '%s' です "
+" 値の型は '%s' でなければなりません, \n"
+" しかし、FUN(X[[%d]]) の結果の型が '%s' です "
 
 #: src/main/apply.c:181
 #, c-format
@@ -941,7 +941,7 @@ msgstr " 二番目の長さ 0 の引数が不正です "
 
 #: src/main/arithmetic.c:1567
 msgid "invalid argument 'base' of length 0"
-msgstr "長さ 0 の 'base ' 引数です "
+msgstr " 長さ 0 の 'base ' 引数です "
 
 #: src/main/arithmetic.c:1575
 #, c-format
@@ -978,7 +978,7 @@ msgstr " 'ncol' の値が不正です（負の値です） "
 msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of rows [%d]"
 msgstr ""
-"データ長 [%d] が行数  [%d] を整数で割った、もしくは掛けた値ではありません  "
+" データ長 [%d] が行数  [%d] を整数で割った、もしくは掛けた値ではありません  "
 
 #: src/main/array.c:119
 #, c-format
@@ -986,7 +986,7 @@ msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of columns "
 "[%d]"
 msgstr ""
-"データ長 [%d] が列数  [%d] を整数で割った、もしくは掛けた値ではありません  "
+" データ長 [%d] が列数  [%d] を整数で割った、もしくは掛けた値ではありません  "
 
 #: src/main/array.c:122
 msgid "data length exceeds size of matrix"
@@ -994,7 +994,7 @@ msgstr " データの長さが行列の大きさを超えています "
 
 #: src/main/array.c:127
 msgid "too many elements specified"
-msgstr "指定された要素数が多すぎます "
+msgstr " 指定された要素数が多すぎます "
 
 #: src/main/array.c:191
 msgid "negative extents to matrix"
@@ -1165,7 +1165,7 @@ msgstr " 二番目の引数が不正です "
 
 #: src/main/attrib.c:1032
 msgid "length-0 dimension vector is invalid"
-msgstr "長さ 0 の次元のベクトルは無効です "
+msgstr " 長さ 0 の次元のベクトルは無効です "
 
 #: src/main/attrib.c:1037
 msgid "the dims contain missing values"
@@ -1182,7 +1182,7 @@ msgstr " dims [product %d] はオブジェクト  [%d] の長さに整合しま�
 
 #: src/main/attrib.c:1109
 msgid "duplicated levels will not be allowed in factors anymore"
-msgstr "因子では重複する水準はもはや許されません "
+msgstr " 因子では重複する水準はもはや許されません "
 
 #: src/main/attrib.c:1139
 msgid "attributes must be a list or NULL"
@@ -1403,7 +1403,7 @@ msgstr " 引数が不正です "
 #: src/main/builtin.c:874 src/main/builtin.c:878 src/main/character.c:353
 #: src/main/coerce.c:2596
 msgid "invalid value"
-msgstr "値が不正です "
+msgstr " 値が不正です "
 
 #: src/main/builtin.c:877
 msgid "missing value for 'length'"
@@ -1418,7 +1418,7 @@ msgstr " '...' が不適切な文脈で使われました "
 #: src/main/builtin.c:922
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
-msgstr "重複する switch 既定値: '%s' と '%s'"
+msgstr " 重複する switch 既定値: '%s' と '%s' "
 
 #: src/main/builtin.c:955
 msgid "'EXPR' is missing"
@@ -1437,7 +1437,7 @@ msgstr " '%s'は文字ベクトルを要求します "
 #, c-format
 msgid ""
 "number of characters is not computable for element %d in \"bytes\" encoding"
-msgstr "\"bytes\"でエンコードされた要素 %d の文字数が計算できません"
+msgstr " \"bytes\"でエンコードされた要素 %d の文字数が計算できません "
 
 #: src/main/character.c:160 src/main/character.c:188 src/main/character.c:636
 #: src/main/character.c:732
@@ -1448,7 +1448,7 @@ msgstr " %d は不正なマルチバイト文字です "
 #: src/main/character.c:176
 #, c-format
 msgid "width is not computable for element %d in \"bytes\" encoding"
-msgstr "\"bytes\"でエンコードされた要素 %d の幅が計算できません"
+msgstr " \"bytes\"でエンコードされた要素 %d の幅が計算できません "
 
 #: src/main/character.c:252
 msgid "extracting substrings from a non-character object"
@@ -1476,7 +1476,7 @@ msgstr " 名前が文字列ではありません "
 
 #: src/main/character.c:678 src/main/grep.c:152
 msgid "non-character argument"
-msgstr "文字列でない引数です "
+msgstr " 文字列でない引数です "
 
 #: src/main/character.c:787
 #, c-format
@@ -1563,7 +1563,7 @@ msgstr "  (symbol)オブジェクトは '%s' に変換できません "
 
 #: src/main/coerce.c:1084 src/main/coerce.c:1396
 msgid "no method for coercing this S4 class to a vector"
-msgstr "このS4クラスをベクトルに強制変換する方法はありません "
+msgstr " このS4クラスをベクトルに強制変換する方法はありません "
 
 #: src/main/coerce.c:1143
 msgid "environments cannot be coerced to other types"
@@ -1695,7 +1695,7 @@ msgstr " 'value' は NULL でない文字列でなければなりません "
 
 #: src/main/coerce.c:2600
 msgid "invalid to change the storage mode of a factor"
-msgstr "因子保管モードを変更するのは不正です "
+msgstr " 因子保管モードを変更するのは不正です "
 
 #: src/main/colors.c:69
 #, c-format
@@ -1901,7 +1901,7 @@ msgstr " fifo ’%s’ を開くことができません "
 #: src/main/connections.c:2328 src/main/connections.c:4987
 #: src/main/connections.c:5051
 msgid "too large a block specified"
-msgstr "指定されたブロックが大きすぎます "
+msgstr " 指定されたブロックが大きすぎます "
 
 #: src/main/connections.c:943 src/main/connections.c:947
 #: src/main/connections.c:953 src/main/connections.c:969
@@ -1947,7 +1947,7 @@ msgstr " pipe() コマンド ’%s' を開くことができません : %s "
 #: src/main/connections.c:1218 src/main/connections.c:1548
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
-msgstr "圧縮されたファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " 圧縮されたファイル '%s' を開くことができません, 理由は '%s' です "
 
 #: src/main/connections.c:1261
 msgid "whence = \"end\" is not implemented for gzfile connections"
@@ -1976,11 +1976,11 @@ msgstr " ファイル '%s' は bzip2 で圧縮されていないようです "
 #: src/main/connections.c:1381
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
-msgstr "ファイル '%s' に対する bzip2 圧縮の初期化に失敗しました "
+msgstr " ファイル '%s' に対する bzip2 圧縮の初期化に失敗しました "
 
 #: src/main/connections.c:1436
 msgid "allocation of overflow buffer for bzfile failed"
-msgstr " bzfileのためのオーバーフローバッファの割り当ては失敗しました"
+msgstr " bzfileのためのオーバーフローバッファの割り当ては失敗しました "
 
 #: src/main/connections.c:1443
 #, c-format
@@ -2058,7 +2058,7 @@ msgstr " ターミナル接続の割り当てに失敗しました "
 
 #: src/main/connections.c:2305
 msgid "attempting to add too many elements to raw vector"
-msgstr "ベクトルに追加しようとした要素が多すぎます "
+msgstr " ベクトルに追加しようとした要素が多すぎます "
 
 #: src/main/connections.c:2356
 msgid "attempt to seek outside the range of the raw connection"
@@ -2366,7 +2366,7 @@ msgstr " ソケットコネクションではありません "
 
 #: src/main/connections.c:5537
 msgid "unknown compression, assuming none"
-msgstr "　未知の圧縮法です、何も仮定しません "
+msgstr " 　未知の圧縮法です、何も仮定しません "
 
 #: src/main/context.c:125
 msgid ""
@@ -2489,7 +2489,7 @@ msgstr " 'read.dcf' のためのメモリを割り当てられませんでした
 #: src/main/dcf.c:113
 #, c-format
 msgid "Found continuation line starting '%s ...' at begin of record."
-msgstr "レコードの先頭で'%s ...'で始まっている継続行が見つかりました "
+msgstr " レコードの先頭で'%s ...'で始まっている継続行が見つかりました "
 
 #: src/main/dcf.c:197
 #, c-format
@@ -2756,9 +2756,9 @@ msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
 #: src/main/dotcode.c:786 src/main/dotcode.c:829 src/main/dotcode.c:1657
-#, fuzzy, c-format
+#, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
-msgstr " 引数の数(%d)が不正です。%s に対しては %d 個の引数が必要です "
+msgstr " 引数の数(%1$d)が不正です。%3$s に対しては %2$d 個の引数が必要です "
 
 #: src/main/dotcode.c:1486 src/main/dotcode.c:2289
 msgid "too many arguments, sorry"
@@ -3195,7 +3195,7 @@ msgstr " シンボルは既に regular binding を持っています "
 #: src/main/envir.c:2969 src/main/envir.c:2985
 msgid "cannot change active binding if binding is locked"
 msgstr ""
-"バインディングがロックされているならば、アクティブなバインディングを変更する"
+" バインディングがロックされているならば、アクティブなバインディングを変更する"
 "ことはできません "
 
 #: src/main/envir.c:3073
@@ -3242,12 +3242,12 @@ msgstr " エクスポートされたシンボル \"%s\" が値を持っていま
 #: src/main/envir.c:3541
 #, c-format
 msgid "unknown encoding: %d"
-msgstr "未知のエンコーディングです: '%d' "
+msgstr " 未知のエンコーディングです: '%d' "
 
 #: src/main/envir.c:3558
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr "文字列の中にnulが埋め込まれています: '%s' "
+msgstr " 文字列の中にnulが埋め込まれています: '%s' "
 
 #: src/main/errors.c:147 src/main/errors.c:184
 msgid "interrupts suspended; signal ignored"
@@ -3430,7 +3430,7 @@ msgid ""
 "promise already under evaluation: recursive default argument reference or "
 "earlier problems?"
 msgstr ""
-"プロミスは既に評価されています：再帰的な引数既定値の参照か以前の問題？ "
+" プロミスは既に評価されています：再帰的な引数既定値の参照か以前の問題？ "
 
 #: src/main/eval.c:321
 msgid "restarting interrupted promise evaluation"
@@ -3575,7 +3575,7 @@ msgstr " メソッド (\"%s\", \"%s\") は \"%s\" に対しては矛盾してい
 
 #: src/main/eval.c:2618
 msgid "dispatch error in group dispatch"
-msgstr "グループディスパッチにディスパッチエラーがあります "
+msgstr " グループディスパッチにディスパッチエラーがあります "
 
 #: src/main/eval.c:2870
 #, c-format
@@ -3651,11 +3651,11 @@ msgstr " 不正な関数です "
 
 #: src/main/eval.c:4273
 msgid "numeric EXPR required for switch() without named alternatives"
-msgstr "名前付きの代替値が無い switch() 関数には数値の EXPR が必要です"
+msgstr " 名前付きの代替値が無い switch() 関数には数値の EXPR が必要です "
 
 #: src/main/eval.c:4276
 msgid "bad character switch offsets"
-msgstr "不正なな文字スィッチオフセットです"
+msgstr " 不正なな文字スィッチオフセットです "
 
 #: src/main/eval.c:4278
 #, fuzzy
@@ -3664,7 +3664,7 @@ msgstr " 不正なスィッチ名です "
 
 #: src/main/eval.c:4292
 msgid "bad numeric switch offsets"
-msgstr "不正な数値スィッチオフセットです"
+msgstr " 不正な数値スィッチオフセットです "
 
 #: src/main/eval.c:4363
 msgid "cannot find index for threaded code address"
@@ -3703,7 +3703,7 @@ msgstr " R_CompiledFileName: バッファが小さすぎます "
 
 #: src/main/eval.c:4598 src/main/eval.c:4647
 msgid "constant buffer must be a generic vector"
-msgstr " 定数値バッファーは総称的なベクトルでなければなりません"
+msgstr " 定数値バッファーは総称的なベクトルでなければなりません "
 
 #: src/main/eval.c:4617
 msgid "constBuf must be a generic vector"
@@ -3715,7 +3715,7 @@ msgstr " 不正な constCount 値です "
 
 #: src/main/eval.c:4649
 msgid "bad constant count"
-msgstr " 不正な定数値カウントです"
+msgstr " 不正な定数値カウントです "
 
 #: src/main/eval.c:4685
 msgid "profile timer in use"
@@ -3760,7 +3760,7 @@ msgstr " このデバイスでは '%s' イベントはサポートされてい�
 
 #: src/main/gevents.c:65
 msgid "internal error"
-msgstr " 内部エラー"
+msgstr " 内部エラー "
 
 #: src/main/gevents.c:71
 msgid "this graphics device does not support event handling"
@@ -3802,23 +3802,23 @@ msgstr " tag の型が正しくありません  (%d行) "
 
 #: src/main/gram.y:1500
 msgid "contextstack overflow"
-msgstr "コンテクストスタックが溢れました "
+msgstr " コンテクストスタックが溢れました "
 
 #: src/main/gram.y:1736
 msgid "input"
-msgstr "入力 "
+msgstr " 入力 "
 
 #: src/main/gram.y:1737
 msgid "end of input"
-msgstr "入力の終り "
+msgstr " 入力の終り "
 
 #: src/main/gram.y:1738
 msgid "string constant"
-msgstr "文字列定数 "
+msgstr " 文字列定数 "
 
 #: src/main/gram.y:1739
 msgid "numeric constant"
-msgstr "数値定数"
+msgstr " 数値定数 "
 
 #: src/main/gram.y:1740
 msgid "symbol"
@@ -3865,7 +3865,7 @@ msgstr " 整数リテラル %sL は不要な小数点を含んでいます "
 #: src/main/gram.y:1986
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr "文字列が長すぎるためメモリ確保ができません  (%d行) "
+msgstr " 文字列が長すぎるためメモリ確保ができません  (%d行) "
 
 #: src/main/gram.y:2141
 #, c-format
@@ -3919,19 +3919,19 @@ msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
-" このロケールにはないUnicodeエスケープを含む %d 行の文字列は\n"
+" このロケールにはないUnicodeエスケープを含む %d 行の文字列は \n"
 " 長すぎます(最大1000文字です)  "
 
 #: src/main/gram.y:2404
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
-msgstr "ソースコードにおいて関数が過度にネストしています  (%d行) "
+msgstr " ソースコードにおいて関数が過度にネストしています  (%d行) "
 
 #: src/main/gram.y:2837 src/main/gram.y:2844 src/main/gram.y:2850
 #: src/main/gram.y:2857
 #, c-format
 msgid "contextstack overflow at line %d"
-msgstr "コンテクストスタックが溢れました  (%d行) "
+msgstr " コンテクストスタックが溢れました  (%d行) "
 
 #: src/main/graphics.c:287
 #, c-format
@@ -4004,17 +4004,17 @@ msgstr " GBox の引数が不正です "
 
 #: src/main/graphics.c:3360
 msgid "Metric information not available for this device"
-msgstr "このデバイスに対してメトリック情報は利用できません "
+msgstr " このデバイスに対してメトリック情報は利用できません "
 
 #: src/main/grep.c:89
 #, c-format
 msgid "invalid regular expression '%s', reason '%s'"
-msgstr "\"%s\" は不正な正則表現です, 理由は '%s'"
+msgstr " \"%s\" は不正な正則表現です, 理由は '%s' "
 
 #: src/main/grep.c:91
 #, c-format
 msgid "invalid regular expression, reason '%s'"
-msgstr "不正な正則表現です, 理由は '%s'"
+msgstr " 不正な正則表現です, 理由は '%s' "
 
 #: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
 #: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
@@ -4047,7 +4047,7 @@ msgid ""
 "\t'%s'\n"
 "\tat '%s'\n"
 msgstr ""
-"PCREパターンのコンパイルエラー\n"
+"PCREパターンのコンパイルエラー \n"
 " \t'%s' \n"
 " \tat '%s' \n"
 
@@ -4063,7 +4063,7 @@ msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
-"PCREパターンの学習エラー\n"
+"PCREパターンの学習エラー \n"
 " \t'%s' \n"
 
 #: src/main/grep.c:823 src/main/grep.c:2311
@@ -4079,7 +4079,7 @@ msgstr " '%s' の正規表現が不正です "
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
 " パターンは空の文字列に何回でもマッチします、最初にマッチしたものだけを返しま"
-"す"
+"す "
 
 #: src/main/grep.c:1535
 msgid "'pattern' is invalid UTF-8"
@@ -4286,7 +4286,7 @@ msgstr " 引数 %d が複数の仮引数に一致します "
 #: src/main/match.c:266
 #, c-format
 msgid "partial argument match of '%s' to '%s'"
-msgstr " '%s' の '%s'　への部分的な引数のマッチング"
+msgstr " '%s' の '%s'　への部分的な引数のマッチング "
 
 #: src/main/match.c:377
 #, c-format
@@ -4790,7 +4790,7 @@ msgstr " 'R_get_primname' がプリミティブでないものに対して呼び
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr ""
-"クラス \"%s\" のオブジェクトは適正な S3 オブジェクトに対応していません "
+" クラス \"%s\" のオブジェクトは適正な S3 オブジェクトに対応していません "
 
 #: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
 msgid "non-finite value supplied by optim"
@@ -5036,9 +5036,9 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 " 最大ステップ幅を５回連続して超過しました。 \n"
-"関数は下に非有界であるか、 \n"
-"ある方向で上から漸近的に有限値に近づいているか、 \n"
-"または stepmx が小さすぎるか、です \n"
+" 関数は下に非有界であるか、 \n"
+" ある方向で上から漸近的に有限値に近づいているか、 \n"
+" または stepmx が小さすぎるか、です \n"
 
 #: src/main/optimize.c:671
 msgid "hessian supplied is of the wrong length or mode, so ignored"
@@ -5050,7 +5050,7 @@ msgstr " 提供された勾配は不正な長さかモードであったので�
 
 #: src/main/options.c:115 src/main/options.c:163
 msgid "corrupted options list"
-msgstr "オプションリストが間違っています "
+msgstr " オプションリストが間違っています "
 
 #: src/main/options.c:125
 msgid "invalid printing width, used 80"
@@ -5258,7 +5258,7 @@ msgstr " このプラットフォームでは（ハード）リンクはサポ�
 
 #: src/main/platform.c:735
 msgid "'from' and 'to' are of different lengths"
-msgstr "'from' と 'to' は異なった長さです"
+msgstr " 'from' と 'to' は異なった長さです "
 
 #: src/main/platform.c:746 src/main/platform.c:756
 msgid "expanded 'from' name too long"
@@ -5334,7 +5334,7 @@ msgstr " '%s' はすでに存在します "
 #: src/main/platform.c:2050
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
-msgstr "ディレクトリ '%s' を作れません, 理由は'%s'です "
+msgstr " ディレクトリ '%s' を作れません, 理由は'%s'です "
 
 #: src/main/platform.c:2093
 #, c-format
@@ -5344,37 +5344,37 @@ msgstr " '%ls' はすでに存在します "
 #: src/main/platform.c:2096
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
-msgstr "ディレクトリ '%ls' を作れません, 理由は '%s' です "
+msgstr " ディレクトリ '%ls' を作れません, 理由は '%s' です "
 
 #: src/main/platform.c:2126
 #, c-format
 msgid "problem creating directory %ls: %s"
-msgstr "ディレクトリ %ls の作成に問題があります: %s"
+msgstr " ディレクトリ %ls の作成に問題があります: %s "
 
 #: src/main/platform.c:2141
 #, c-format
 msgid "problem reading dir %ls: %s"
-msgstr "ディレクトリ %ls の作成に問題があります: %s"
+msgstr " ディレクトリ %ls の作成に問題があります: %s "
 
 #: src/main/platform.c:2154
 #, c-format
 msgid "problem copying %ls to %ls: %s"
-msgstr " %ls の %ls へのコピーに問題があります: %s"
+msgstr " %ls の %ls へのコピーに問題があります: %s "
 
 #: src/main/platform.c:2270
 #, c-format
 msgid "problem creating directory %s: %s"
-msgstr " ディレクトリ %s の作成に問題があります: %s"
+msgstr " ディレクトリ %s の作成に問題があります: %s "
 
 #: src/main/platform.c:2284
 #, c-format
 msgid "problem reading directory %s: %s"
-msgstr " ディレクトリ %s の作成に問題があります: %s"
+msgstr " ディレクトリ %s の作成に問題があります: %s "
 
 #: src/main/platform.c:2300
 #, c-format
 msgid "problem copying %s to %s: %s"
-msgstr " %s の %s へのコピーに問題があります: %s"
+msgstr " %s の %s へのコピーに問題があります: %s "
 
 #: src/main/platform.c:2422
 msgid "'mode' must be of length at least one"
@@ -5505,7 +5505,7 @@ msgstr " 四番目の引数が不正です "
 
 #: src/main/plot.c:1757
 msgid "cannot mix zero-length and non-zero-length coordinates"
-msgstr "長さ0と非0の座標は一緒に使えません "
+msgstr " 長さ0と非0の座標は一緒に使えません "
 
 #: src/main/plot.c:1946
 msgid "unable to allocate memory (in GPath)"
@@ -6004,6 +6004,7 @@ msgid "cannot save namespace in version 1 workspaces"
 msgstr " バージョン 1 の作業スペースには namespace を保存できません "
 
 #: src/main/saveload.c:913
+#, fuzzy
 msgid ""
 "cannot save environment with locked/active bindings in version 1 workspaces"
 msgstr ""
@@ -6467,7 +6468,7 @@ msgstr " 不適切なバージョン値です "
 
 #: src/main/serialize.c:1848
 msgid "binary-mode connection required for ascii=FALSE"
-msgstr " ascii=FALSE に大してはバイナリコネクションが必要です"
+msgstr " ascii=FALSE に大してはバイナリコネクションが必要です "
 
 #: src/main/serialize.c:2006 src/main/serialize.c:2033
 #: src/main/serialize.c:2094
@@ -6691,7 +6692,7 @@ msgstr " `*' 変換指定に対する引数は数値でなければなりませ�
 
 #: src/main/sprintf.c:255
 msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "’%*' によって構築された 'fmt' の長さが最大長 %d を超えました "
+msgstr " ’%*' によって構築された 'fmt' の長さが最大長 %d を超えました "
 
 #: src/main/sprintf.c:264
 msgid "coercion has changed vector length to 0"
@@ -6795,11 +6796,12 @@ msgid "result is zero-length and so cannot be a language object"
 msgstr " 結果は、ゼロ長であり、言語オブジェクトではありません "
 
 #: src/main/subassign.c:1499
+#, fuzzy
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
 " タイプ \"S4\" のオブジェクトに対する定義 [[<- は環境のサブクラスに対してだけ"
-"です"
+"です "
 
 #: src/main/subassign.c:1505
 msgid "wrong args for environment subassignment"
@@ -6959,7 +6961,7 @@ msgstr " 'which'へ渡す引数が論理型ではありません "
 
 #: src/main/summary.c:909
 msgid "no input has determined the number of cases"
-msgstr "ケースの数を決定する入力がありません "
+msgstr " ケースの数を決定する入力がありません "
 
 #: src/main/summary.c:1012
 msgid "not all arguments have the same length"
@@ -6984,13 +6986,13 @@ msgstr " '%s' のファイル変更時刻を確定できません "
 
 #: src/main/sysutils.c:167
 msgid "encoding of a filename cannot be 'bytes'"
-msgstr "ファイル名のエンコーディングは 'bytes' は許されません"
+msgstr " ファイル名のエンコーディングは 'bytes' は許されません "
 
 #: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
 #: src/main/sysutils.c:867
 #, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
-msgstr " '%s' からのサポートされていない変換がコードページ %d にあります"
+msgstr " '%s' からのサポートされていない変換がコードページ %d にあります "
 
 #: src/main/sysutils.c:179
 msgid "file name conversion problem -- name too long?"
@@ -7062,7 +7064,7 @@ msgstr " '%s'はCHARSXP上で呼び出されなければなりません "
 
 #: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
 msgid "translating strings with \"bytes\" encoding is not allowed"
-msgstr " エンコーディングが \"bytes\" の文字列の翻訳は許されません"
+msgstr " エンコーディングが \"bytes\" の文字列の翻訳は許されません "
 
 #: src/main/sysutils.c:961
 #, c-format
@@ -7091,8 +7093,9 @@ msgid "cannot find unused tempfile name"
 msgstr " 未使用の一時ファイル名を探すことができません "
 
 #: src/main/sysutils.c:1448
+#, fuzzy
 msgid "allocation failed in R_tmpnam2"
-msgstr " R_tmpnam2 においてメモリ割り当てが失敗しました "
+msgstr " R_tmpnam においてメモリ割り当てが失敗しました "
 
 #: src/main/sysutils.c:1474
 msgid "proc.time() is not implemented on this system"
@@ -7311,7 +7314,7 @@ msgid ""
 msgstr ""
 "Rは多くの貢献者による共同プロジェクトです。 \n"
 "詳しくは'contributors()'と入力してください。 \n"
-"また、RやRのパッケージを出版物で引用する際の形式については\n"
+"また、RやRのパッケージを出版物で引用する際の形式については \n"
 "'citation()'と入力してください。 \n"
 "\n"
 
@@ -7383,7 +7386,7 @@ msgstr "URL '%s' を開くことができません, 理由は '%s' です "
 #: src/modules/internet/internet.c:473
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
-msgstr "目標ファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " 目標ファイル '%s' を開くことができません, 理由は '%s' です "
 
 #: src/modules/internet/internet.c:376 src/modules/internet/internet.c:478
 #, c-format
@@ -7737,7 +7740,7 @@ msgid ""
 "  reverting to monochrome"
 msgstr ""
 " X11 はカラーキューブを取得できませんでした。 \n"
-"モノクロに戻ります "
+" モノクロに戻ります "
 
 #: src/modules/X11/devX11.c:423
 msgid ""
@@ -7888,7 +7891,7 @@ msgstr " ファイル '%s' を開けませんでした "
 #: src/modules/X11/devX11.c:1974
 #, c-format
 msgid "%s not available for this device"
-msgstr "このデバイスに対して%sは利用できません "
+msgstr " このデバイスに対して%sは利用できません "
 
 #: src/modules/X11/devX11.c:2056
 msgid "Unable to create XImage"
@@ -7957,7 +7960,7 @@ msgstr " X11ディスプレイに接続できません "
 #: src/modules/X11/devX11.c:3460
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
-msgstr "クリップボードの内容を読み込めません(エラーコード %d) "
+msgstr " クリップボードの内容を読み込めません(エラーコード %d) "
 
 #: src/modules/X11/devX11.c:3494
 msgid "cannot allocate memory for X11Routines structure"
@@ -8280,3 +8283,172 @@ msgstr " X11 モジュールをロードできません "
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
 
+#~ msgid "invalid '%s' arguemnt"
+#~ msgstr " '%s' 引数が不正です "
+
+#~ msgid "constand buffer must be a generic vector"
+#~ msgstr " 定数値バッファーは総称的なベクトルでなければなりません "
+
+#~ msgid "invalid 'tempdir' in R_tmpnam"
+#~ msgstr " R_tmpnam において 'tempdir' が不正です "
+
+#~ msgid "this platform does not support 'split=TRUE'"
+#~ msgstr " このプラットフォームは'split=TRUE'をサポートしません "
+
+#~ msgid "error: system commands are not supported in this version of R.\n"
+#~ msgstr ""
+#~ " エラー：システムコマンドはこのバージョンの R ではサポートされていませ"
+#~ "ん \n"
+
+#~ msgid "'source' must be a single string"
+#~ msgstr " 'source' は１つの文字列でなければなりません "
+
+#~ msgid "'destination' must be a single string"
+#~ msgstr " 'destination' は単一の文字列でなければなりません "
+
+#~ msgid "missing values are not allowed"
+#~ msgstr " 欠損値は認められていません "
+
+#~ msgid "expanded destination name too long"
+#~ msgstr " 展開された destination 名が長すぎます "
+
+#~ msgid "not a SPECIAL function"
+#~ msgstr " SPECIAL 関数ではありません "
+
+#~ msgid "append mode may not do what you expect"
+#~ msgstr " 追加モードはあなたが期待するようには動作しないかもしれません "
+
+#~ msgid "'destination' does not exist"
+#~ msgstr " 'destination' が存在しません "
+
+#~ msgid "'%s' must be an environment"
+#~ msgstr " '%s' は環境でなくてはなりません "
+
+#~ msgid "invalid '%s' argument: must be NULL or environment"
+#~ msgstr " 不正な '%s' 引数です：NULL か環境でなくてはなりません "
+
+#~ msgid "missing value where logical needed"
+#~ msgstr " 論理値が必要なところが欠損値です "
+
+#~ msgid "argument of if(*) is not interpretable as logical"
+#~ msgstr " if 文の条件部分が論理値として解釈できません "
+
+#~ msgid "file.access() is not implemented on this system"
+#~ msgstr " このシステムには file.access 関数は実装されていません "
+
+#~ msgid "names(x) must be valid character(length(x))."
+#~ msgstr " names(x) は長さ length(x) の文字ベクトルでなければなりません "
+
+#~ msgid "Insufficient memory (expandcmd)"
+#~ msgstr " メモリが不足しています(expandcmd) "
+
+#~ msgid "A \" is missing (expandcmd)"
+#~ msgstr " 引用符（\"）がありません (expandcmd) "
+
+#~ msgid " not found"
+#~ msgstr " 見つかりません "
+
+#~ msgid "Impossible to run "
+#~ msgstr " 実行できません "
+
+#~ msgid "Impossible to redirect input"
+#~ msgstr " 入力をリダイレクトすることができません "
+
+#~ msgid "Impossible to create pipe"
+#~ msgstr " パイプを作ることができません "
+
+#~ msgid "Impossible to create thread/pipe"
+#~ msgstr " スレッド／パイプを作ることができません "
+
+#~ msgid "pipe connections are not available on this system"
+#~ msgstr " このシステムではパイプコネクションは利用できません "
+
+#~ msgid "'intern=TRUE' is not implemented on this platform"
+#~ msgstr " このプラットフォームでは 'intern=TRUE' は実装されていません "
+
+#~ msgid "'onMouseDown' not supported"
+#~ msgstr " 'onMouseDown' はサポートされていません "
+
+#~ msgid "invalid 'onMouseDown' callback"
+#~ msgstr " 'onMouseDown' のコールバックが不正です "
+
+#~ msgid "'onMouseMove' not supported"
+#~ msgstr " 'onMouseMove' はサポートされていません "
+
+#~ msgid "invalid 'onMouseMove' callback"
+#~ msgstr " 'onMouseMove' のコールバックが不正です "
+
+#~ msgid "'onMouseUp' not supported"
+#~ msgstr " 'onMouseUp' はサポートされていません "
+
+#~ msgid "invalid 'onMouseUp' callback"
+#~ msgstr " 'onMouseUp' のコールバックが不正です "
+
+#~ msgid "'onKeybd' not supported"
+#~ msgstr " 'onKeybd' はサポートされていません "
+
+#~ msgid "invalid 'onKeybd' callback"
+#~ msgstr " 'onKeybd' のコールバックが不正です "
+
+#~ msgid "directory/folder path name too long"
+#~ msgstr " ディレクトリまたはフォルダのパス名が長すぎます "
+
+#~ msgid "list.files: '%s' is not a readable directory"
+#~ msgstr " list.files: '%s' は読めないディレクトリです "
+
+#~ msgid "%d arguments passed to 'atan' which requires 1"
+#~ msgstr ""
+#~ " 'atan' 関数に %d 個の引数が渡されましたが，1つでなくてはなりません "
+
+#~ msgid "invalid parameter in 'switch()'"
+#~ msgstr " 'switch' 関数のパラメータが不正です "
+
+#~ msgid "truncating string with embedded nul: '%s'"
+#~ msgstr " 文字列をnullを入れて切り詰めました: '%s' "
+
+#~ msgid "\\u used without hex digits"
+#~ msgstr " 8進文字なしに \\u が使われています "
+
+#~ msgid "\\U used without hex digits"
+#~ msgstr " 8進文字なしに\\Uが使われています "
+
+#~ msgid "unrecognized escape removed from \"%s\""
+#~ msgid_plural "unrecognized escapes removed from \"%s\""
+#~ msgstr[0] " \"%s\" から認識されないエスケープを取り除きました "
+
+#~ msgid "duplicate '%s' argument"
+#~ msgstr " 重複する　'%s' 引数です "
+
+#~ msgid "corrupt internals!"
+#~ msgstr " 内部関数が壊れています! "
+
+#~ msgid "arguments after the first two are ignored"
+#~ msgstr " 三つ目からの引数は無視されます "
+
+#~ msgid ""
+#~ "element %d is empty;\n"
+#~ "   the part of the args list of a builtin being evaluated was:\n"
+#~ "   %s"
+#~ msgstr ""
+#~ " 要素 %d は空です； \n"
+#~ " 組込みの引数リストの評価されていた部分は： \n"
+#~ " %s "
+
+#~ msgid ""
+#~ "element %d is empty;\n"
+#~ "   the part of the args list of '%s' being evaluated was:\n"
+#~ "   %s"
+#~ msgstr ""
+#~ " 要素 %d は空です； \n"
+#~ " '%s' の引数リストの評価されていた部分は： \n"
+#~ " %s "
+
+#~ msgid "'...' not allowed in return"
+#~ msgstr " '...' は返り値として許されません "
+
+#~ msgid "empty expression in return value"
+#~ msgstr " 戻り値中の式が空です "
+
+#, fuzzy
+#~ msgid "%s not yet implemented for this device"
+#~ msgstr " このシステムでは gc.time 関数は実装されていません "

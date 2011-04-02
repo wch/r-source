@@ -8455,4 +8455,3 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 indisponible"
-

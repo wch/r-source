@@ -32,4 +32,4 @@ msgstr " 不正な引数の型です "
 
 #: text.c:222 text.c:241
 msgid "out of memory"
-msgstr "メモリが足りません "
+msgstr " メモリが足りません "

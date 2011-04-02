@@ -8259,4 +8259,3 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
-
