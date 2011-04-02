@@ -579,25 +579,33 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = R_NilValue);
 #endif
     } else {
-	int mark;
+	int mark, toRaw;
 	const char *from, *to;
 	Rboolean isLatin1 = FALSE, isUTF8 = FALSE;
 
 	if(TYPEOF(x) != STRSXP)
 	    error(_("'x' must be a character vector"));
-	if(!isString(CADR(args)) || length(CADR(args)) != 1)
+	args = CDR(args);
+	if(!isString(CAR(args)) || length(CAR(args)) != 1)
 	    error(_("invalid '%s' argument"), "from");
-	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
+	from = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
+	args = CDR(args);
+	if(!isString(CAR(args)) || length(CAR(args)) != 1)
 	    error(_("invalid '%s' argument"), "to");
-	if(!isString(CADDDR(args)) || length(CADDDR(args)) != 1)
+	to = CHAR(STRING_ELT(CAR(args), 0));
+	args = CDR(args);
+	if(!isString(CAR(args)) || length(CAR(args)) != 1)
 	    error(_("invalid '%s' argument"), "sub");
-	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
-	else sub = translateChar(STRING_ELT(CADDDR(args), 0));
-	mark = asLogical(CAD4R(args));
+	if(STRING_ELT(CAR(args), 0) == NA_STRING) sub = NULL;
+	else sub = translateChar(STRING_ELT(CAR(args), 0));
+	args = CDR(args);
+	mark = asLogical(CAR(args));
 	if(mark == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "mark");	
-	from = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
-	to = CHAR(STRING_ELT(CADDR(args), 0));
+	args = CDR(args);
+	toRaw = asLogical(CAR(args));
+	if(toRaw == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "toRaw");	
 	/* some iconv's allow "UTF8", but libiconv does not */
 	if(streql(from, "UTF8") || streql(from, "utf8") ) from = "UTF-8";
 	if(streql(to, "UTF8") || streql(from, "utf8") ) to = "UTF-8";
@@ -615,12 +623,20 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    error(_("unsupported conversion from '%s' to '%s'"), from, to);
 #endif
-	PROTECT(ans = duplicate(x));
+	if(toRaw) {
+	    PROTECT(ans = allocVector(VECSXP, LENGTH(x)));
+	    DUPLICATE_ATTRIB(ans, x);
+	} else  PROTECT(ans = duplicate(x)); /* FIXME */
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
 	    si = STRING_ELT(x, i);
+	    if (si == NA_STRING) {
+		SET_STRING_ELT(ans, i, NA_STRING);
+		continue;
+	    }
 	top_of_loop:
-	    inbuf = CHAR(si); inb = LENGTH(si);
+	    inbuf = CHAR(si); 
+	    inb = LENGTH(si);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */
 	    Riconv (obj, NULL, NULL, &outbuf, &outb);
@@ -656,17 +672,25 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		goto next_char;
 	    }
 
-	    if(res != -1 && inb == 0) {
-		cetype_t ienc = CE_NATIVE;
-
-		nout = cbuff.bufsize - 1 - outb;
-		if(mark) {
-		    if(isLatin1) ienc = CE_LATIN1;
-		    else if(isUTF8) ienc = CE_UTF8;
-		}
-		SET_STRING_ELT(ans, i, mkCharLenCE(cbuff.data, nout, ienc));
+	    if(toRaw) {
+		if(res != -1 && inb == 0) {
+		    nout = cbuff.bufsize - 1 - outb;
+		    SEXP el = allocVector(RAWSXP, nout);
+		    memcpy(RAW(el), cbuff.data, nout);
+		    SET_VECTOR_ELT(ans, i, el);
+		} /* otherwise is already NULL */
+	    } else {
+		if(res != -1 && inb == 0) {
+		    cetype_t ienc = CE_NATIVE;
+		    
+		    nout = cbuff.bufsize - 1 - outb;
+		    if(mark) {
+			if(isLatin1) ienc = CE_LATIN1;
+			else if(isUTF8) ienc = CE_UTF8;
+		    }
+		    SET_STRING_ELT(ans, i, mkCharLenCE(cbuff.data, nout, ienc));
+		} else SET_STRING_ELT(ans, i, NA_STRING);
 	    }
-	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
 	Riconv_close(obj);
 	R_FreeStringBuffer(&cbuff);

@@ -40,6 +40,10 @@
 
       \item New wrapper function \code{showNonASCIIfile()} in package
       \pkg{tools}.
+
+      \item \code{iconv} no longer translates \code{NA} strings as
+      \code{"NA"}.  It has a new argment \code{toRaw} to handle (once
+      again) encodings such as \code{UCS-2} with embedded nuls.
     }
   }
 
@@ -79,7 +83,7 @@
       rarely.
 
       \item Warnings are issued when non-portable filenames are found
-      for graphics files and chunks (if \code{split=TRUE}).  Portable
+      for graphics files (and chunks if \code{split=TRUE}).  Portable
       names are regarded as alphanumeric plus hyphen, underscore, plus
       and hash (periods cause problems with recognizing file extensions).
     }
