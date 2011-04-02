@@ -14,36 +14,34 @@ endif
 DLLFLAGS+= -static-libgcc
 LINKFLAGS+= -static-libgcc
 
+## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
 WIN = 32
 BINPREF =
-## SYMPAT = 's/^.* [BCDRT] _/ /p' or 32-bit and older 64-bit toolchains
-## SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit >= May 2010
+# SYMPAT = 's/^.* [BCDRT] _/ /p' or 32-bit and older 64-bit toolchains
+# SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit >= May 2010
 SYMPAT = @SYMPAT@
-
 IMPDIR = bin
-
+# flags for multilib builds, for compilers, dlltool and windres
+M_ARCH =
+DT_ARCH =
+RC_ARCH =
+# Used by packages tcltk and tkrplot
+TCL_HOME = $(R_HOME)/Tcl
 LOCAL_SOFT =
+
 ifneq ($(strip $(LOCAL_SOFT)),)
 LOCAL_CPPFLAGS = -I"$(LOCAL_SOFT)/include"
 LOCAL_LIBS = -L"$(LOCAL_SOFT)/lib"
 endif
 
-## Not used except for DLLTOOLFLAGS: needs way to select arch
-AS = $(BINPREF)as
-DLLTOOL = $(BINPREF)dlltool $(DT_ARCH)
-## some versions have trouble with paths, so we always need this
-DLLTOOLFLAGS = --as $(AS) -k
+DLLTOOL = $(BINPREF)dlltool
+DLLTOOLFLAGS =--as $(BINPREF)as $(DT_ARCH) -k
 NM = $(BINPREF)nm
 RESCOMP = $(BINPREF)windres $(RC_ARCH)
 ## MAIN_LD needs to be set by the package
 LINKER = $(MAIN_LD)
 ## as a default
 DLL = $(CC)
-
-# flags for multilib builds, for compilers, dlltool and windres
-M_ARCH =
-DT_ARCH =
-RC_ARCH =
 
 ## Things defined in Renviron on Unix
 SED = sed
@@ -56,9 +54,8 @@ MKDIR = mkdir
 RM = rm -f
 SORT = sort
 
+## For use in packages
 GRAPHAPP_LIB = -lRgraphapp
-## Used by packages tcltk and tkrplot
-TCL_HOME = $(R_HOME)/Tcl
 TCL_VERSION = 85
 ZLIB_LIBS = -lRzlib
 
@@ -96,9 +93,10 @@ FPICFLAGS =
 FOUNDATION_CPPFLAGS =
 FOUNDATION_LIBS =
 JAR =
-JAVA = 
+JAVA =
 JAVAC = 
-#JAVA_HOME = 
+JAVAH =
+# JAVA_HOME = 
 # JAVA_LD_LIBRARY_PATH = 
 JAVA_LIBS = -L"$(JAVA_HOME)/bin/client" -ljvm -ljvm-w32
 JAVA_CPPFLAGS = -I"$(JAVA_HOME)/../include" -I"$(JAVA_HOME)/../include/win32"

@@ -28,7 +28,6 @@ IMPDIR=$(BINDIR)
 endif
 
 AR=$(BINPREF)ar
-AS=$(BINPREF)as
 # AWK=gawk
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
@@ -36,10 +35,10 @@ CP=cp
 # as set by make
 CPP=$(CC) -E
 DLL=$(CC)
-DLLTOOL=$(BINPREF)dlltool $(DT_ARCH)
+DLLTOOL=$(BINPREF)dlltool
 ## some versions have trouble with paths, so we always need this
 ## even for native builds
-DLLTOOLFLAGS=--as $(AS) -k
+DLLTOOLFLAGS=--as $(BINPREF)as $(DT_ARCH) -k
 ECHO=echo
 F77=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
 FLIBS=-lgfortran
