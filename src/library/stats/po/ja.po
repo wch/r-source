@@ -27,7 +27,7 @@ msgstr " qansari() 中で確率が [0,1] の範囲外です "
 
 #: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
-msgstr " approx()：不正な f 値"
+msgstr " approx()：不正な f 値 "
 
 #: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
@@ -47,11 +47,11 @@ msgstr " arima0 では 100 個のパラメータまでしか変換出来ませ�
 
 #: arima.c:838
 msgid "maximum supported lag is 350"
-msgstr "サポートされているラグの最大値は350です "
+msgstr " サポートされているラグの最大値は350です "
 
 #: distance.c:155
 msgid "treating non-finite values as NA"
-msgstr "有限でない値をNAとして取り扱います "
+msgstr " 有限でない値をNAとして取り扱います "
 
 #: distance.c:227
 msgid "distance(): invalid p"

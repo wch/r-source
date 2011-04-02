@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:44\n"
-"PO-Revision-Date: 2011-03-28 11:02+0900\n"
-"Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp>\n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"PO-Revision-Date: 2011-03-28 11:02+0900 \n"
+"Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 1.1.0\n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid "'%s' is defunct."
 msgstr " '%s' は廃止されました。 "
@@ -113,11 +113,11 @@ msgid "file '%s' not found"
 msgstr " ファイル '%s' が見付かりません "
 
 msgid "invalid 'name' argument"
-msgstr "無効な 'name' 引数です "
+msgstr " 無効な 'name' 引数です "
 
 msgid "package %s is required by %s, which may no longer work correctly"
 msgstr ""
-"パッケージ '%s' が%sに要求されていますが、もはや正しく機能しないかもしれませ"
+" パッケージ '%s' が%sに要求されていますが、もはや正しく機能しないかもしれませ"
 "ん "
 
 msgid "package %s is required by %s so will not be detached"
@@ -136,7 +136,7 @@ msgid "name space cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません "
 
 msgid "converted to character string"
-msgstr "文字列に変換されました "
+msgstr " 文字列に変換されました "
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr " 正規表現パターン '[' を '\\\\[' で置き換えました "
@@ -310,7 +310,7 @@ msgid "named arguments other than 'exact' are discouraged"
 msgstr " 'exact'以外での名前付き引数は推奨されません "
 
 msgid "named arguments are discouraged"
-msgstr "名前付き引数は推奨されません "
+msgstr " 名前付き引数は推奨されません "
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr " 右辺は論理値行列によって添字操作するには間違った長さです "
@@ -329,7 +329,7 @@ msgid "non-existent rows not allowed"
 msgstr " 存在しない行は許されません "
 
 msgid "column name \"\" cannot match any column"
-msgstr "列の名前\"\"はどの列にもマッチしません "
+msgstr " 列の名前\"\"はどの列にもマッチしません "
 
 msgid "new columns would leave holes after existing columns"
 msgstr " 新しい列は既存の列に穴を開けるかも知れません "
@@ -383,7 +383,7 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr " 無効なリストの引数です。全ての変数は同じ長さを持つべきです "
 
 msgid "data frame with 0 columns and %d rows"
-msgstr " 0列%d行のデータフレーム"
+msgstr " 0列%d行のデータフレーム "
 
 msgid "<0 rows> (or 0-length row.names)"
 msgstr " <0 行> (または長さ0のrow.names) "
@@ -525,7 +525,7 @@ msgstr " 無効なユニット指定です "
 
 msgid "unary '%s' not defined for \"difftime\" objects"
 msgstr ""
-"単項演算 '%s' は \"difftime\" オブジェクトに対しては定義されていません "
+" 単項演算 '%s' は \"difftime\" オブジェクトに対しては定義されていません "
 
 msgid "'%s' not defined for \"difftime\" objects"
 msgstr " '%s' は \"difftime\" オブジェクトに対しては定義されていません "
@@ -553,8 +553,8 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
-"無効なDCF形式です。正規の行にはタグが必要です。不正な行は次の場所で始まってい"
-"ます:%s "
+" 無効なDCF形式です。正規の行にはタグが必要です。不正な行は次の場所で始まって"
+"います:%s "
 
 msgid ""
 "Invalid DCF format.\n"
@@ -562,8 +562,8 @@ msgid ""
 "Offending lines start with:\n"
 "%s"
 msgstr ""
-"無効なDCF形式です。 \n"
-"連続する行はレコードで開始できません。 \n"
+" 無効なDCF形式です。 \n"
+" 連続する行はレコードで開始できません。 \n"
 " 不正な行は次の場所で始まっています: \n"
 " %s "
 
@@ -656,14 +656,14 @@ msgid "'%s' is not meaningful for ordered factors"
 msgstr " '%s' は順序因子に対しては無意味です "
 
 msgid "'%s' not defined for ordered factors"
-msgstr " '%s' は順序因子に対しては定義されません"
+msgstr " '%s' は順序因子に対しては定義されません "
 
 msgid ""
 "'%s' is only meaningful for ordered factors if all arguments have the same "
 "level sets"
 msgstr ""
 " もし全ての引数が同じ水準となっている場合、'%s' は順序因子に対してのみ意味を"
-"成します"
+"成します "
 
 msgid "no files to copy to"
 msgstr " そこへコピーすべきファイルがありません "
@@ -673,7 +673,7 @@ msgstr " コピー先ファイルよりも多くのコピー元ファイルが�
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
-" 'to' が単一のディレクトリになっていないため 'recursive' は無視されます"
+" 'to' が単一のディレクトリになっていないため 'recursive' は無視されます "
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr " 同じファイルにコピーすることはできません "
@@ -700,7 +700,7 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
 
 msgid "using the first element of 'value' of type expression"
-msgstr "タイプ表現 'value' の最初の要素だけを使います "
+msgstr " タイプ表現 'value' の最初の要素だけを使います "
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
@@ -775,7 +775,7 @@ msgstr " パッケージ '%s' は正しくインストールされませんで�
 
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
-"パッケージ '%s' は R 2.10.0 以前に造らました。新しくインストールして下さい "
+" パッケージ '%s' は R 2.10.0 以前に造らました。新しくインストールして下さい "
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
@@ -792,23 +792,23 @@ msgstr " パッケージ '%s' は 'arch=%s' に対してインストールされ
 msgid ""
 "package '%s' has a license that you need to accept in an interactive session"
 msgstr ""
-"パッケージ '%s' は対話的セッションで受け入れる必要のあるライセンスです "
+" パッケージ '%s' は対話的セッションで受け入れる必要のあるライセンスです "
 
 msgid "Package '%s' has a license that you need to accept after viewing"
-msgstr "パッケージ '%s' は閲覧後に受け入れる必要のあるライセンスです "
+msgstr " パッケージ '%s' は閲覧後に受け入れる必要のあるライセンスです "
 
 msgid ""
 "Package '%s' has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
-"パッケージ '%s' は受け入れる必要のあるライセンスです:Descriptionファイルによ"
+" パッケージ '%s' は受け入れる必要のあるライセンスです:Descriptionファイルによ"
 "れば、以下の通りです。 "
 
 msgid "License"
-msgstr "ライセンス"
+msgstr " ライセンス "
 
 msgid "License for package '%s' not accepted"
-msgstr "パッケージ '%s' のライセンスは受け入れられていません "
+msgstr " パッケージ '%s' のライセンスは受け入れられていません "
 
 msgid "Attaching package: '%s'"
 msgstr " 次のパッケージを付け加えます: '%s' "
@@ -955,7 +955,7 @@ msgid ""
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
 " ファイル '%s' はマジックナンバー '%s' を持ちます \n"
-"　　二度を越えるセーブバージョンの使用は廃止予定です "
+" 　　二度を越えるセーブバージョンの使用は廃止予定です "
 
 msgid "bad 'file' argument"
 msgstr " 誤った 'file' 引数です "
@@ -982,7 +982,7 @@ msgid "[Previously saved workspace restored]"
 msgstr " [以前にセーブされたワークスペースを復帰します] "
 
 msgid "Attempting to load the environment '%s'"
-msgstr "環境 '%s' をロードしようとしています "
+msgstr " 環境 '%s' をロードしようとしています "
 
 msgid "not found: using .GlobalEnv instead"
 msgstr " 見付かりません： .GlobalEnv を代わりに使います "
@@ -1121,7 +1121,7 @@ msgstr ""
 
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
-"パッケージ '%s' 中のクラス %s をエクスポートするように指定されていますが定義"
+" パッケージ '%s' 中のクラス %s をエクスポートするように指定されていますが定義"
 "されていません "
 
 msgid "in '%s' methods for export not found: %s"
@@ -1135,7 +1135,7 @@ msgstr " \"%s\" に対する metadata オブジェクトを見付けることが
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
-"パッケージ %s 中のメソッド %s をエクスポートするように指定されていますが、定"
+" パッケージ %s 中のメソッド %s をエクスポートするように指定されていますが、定"
 "義されていません "
 
 msgid "not found"
@@ -1158,7 +1158,7 @@ msgid "duplicate import names"
 msgstr " 重複したインポート名です "
 
 msgid "replacing local value with import %s when loading %s"
-msgstr "ローカル変数をインポート %s で置き換えています（%sのロード中） "
+msgstr " ローカル変数をインポート %s で置き換えています（%sのロード中） "
 
 msgid "cannot import into a sealed name space"
 msgstr " 封印された名前空間にはインポートできません "
@@ -1307,7 +1307,7 @@ msgid "argument 'length.out' must be of length 1"
 msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 
 msgid "first element used of 'length.out' argument"
-msgstr " 最初の要素は 引数 'length.out' として使われます"
+msgstr " 最初の要素は 引数 'length.out' として使われます "
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "
@@ -1325,7 +1325,7 @@ msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr " 'file' がファイル名でない限り、'compress' は無視されます"
+msgstr " 'file' がファイル名でない限り、'compress' は無視されます "
 
 msgid "'connection' must be a connection"
 msgstr " 'connection' はコネクションでなければなりません "
@@ -1408,7 +1408,7 @@ msgid "unable to find a plausible encoding"
 msgstr " もっともらしいエンコーディングを見つけられません "
 
 msgid "encoding = \"%s\" chosen"
-msgstr "エンコーディング %s が選択されました "
+msgstr " エンコーディング %s が選択されました "
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr " 'chdir = TRUE' は URL に対しては意味がありません "
@@ -1477,7 +1477,7 @@ msgid "all arguments must have the same length"
 msgstr " 全ての引数は同じ長さでなければなりません "
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr " 2^31 個の要素を超えるテーブルを作成しようとしています"
+msgstr " 2^31 個の要素を超えるテーブルを作成しようとしています "
 
 msgid "'object' must inherit from class \"table\""
 msgstr " 'object' はクラス \"table\" を継承しなければなりません "
@@ -1534,7 +1534,7 @@ msgid "invalid value"
 msgstr " 無効な値です "
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "単項の'%s'はnumeric_version オブジェクトに対しては定義されていません "
+msgstr " 単項の'%s'はnumeric_version オブジェクトに対しては定義されていません "
 
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr " '%s'はnumeric_version オブジェクトに対しては定義されていません "
@@ -1598,13 +1598,13 @@ msgid "'%s' execution failed with error code %d"
 msgstr " '%s' の実行は失敗しました(エラーコード %d) "
 
 msgid "-l option without value"
-msgstr " 値がない -l  オプション"
+msgstr " 値がない -l  オプション "
 
 msgid "ERROR: no packages specified"
 msgstr " エラー：いかなるパッケージも指定されていません "
 
 msgid "Removing from library"
-msgstr "ライブラリーから取り除いています "
+msgstr " ライブラリーから取り除いています "
 
 msgid "ERROR: cannot cd to directory"
 msgstr " エラー：ディレクトリーに変更できません "
@@ -1619,7 +1619,7 @@ msgid "F used instead of FALSE"
 msgstr " FALSE の代わりに F が使われました "
 
 msgid "items"
-msgstr " 項目"
+msgstr " 項目 "
 
 msgid "have been removed from the search path"
 msgstr " 検索パスから抹消されています "
@@ -1636,15 +1636,15 @@ msgstr[0] " 逆構文解析オプション %s は認識できません "
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
-msgstr[0] "ライブラリ %s はパッケージを含んでいません "
+msgstr[0] " ライブラリ %s はパッケージを含んでいません "
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
-msgstr[0] "パッケージ %s はロードされません "
+msgstr[0] " パッケージ %s はロードされません "
 
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "呼び出されたパッケージがありません "
+msgstr[0] " 呼び出されたパッケージがありません "
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
@@ -1652,12 +1652,12 @@ msgstr[0] " %s を見付けることができません "
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
-msgstr[0] "クラス '%s' は 'namespace:%s' によってエクスポートされていません "
+msgstr[0] " クラス '%s' は 'namespace:%s' によってエクスポートされていません "
 
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] ""
-"オブジェクト '%s' は 'namespace:%s' によってエクスポートされていません "
+" オブジェクト '%s' は 'namespace:%s' によってエクスポートされていません "
 
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
@@ -1676,7 +1676,7 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr " コピーすべきファイルがありません "
 
 #~ msgid "got invalid index for importing"
-#~ msgstr "インポートに対する不正なインデックスです "
+#~ msgstr " インポートに対する不正なインデックスです "
 
 #~ msgid "cyclic name space dependencies are not supported"
 #~ msgstr " サイクリックな名前空間の従属性はサポートされていません "
@@ -1706,7 +1706,7 @@ msgstr[0] " 警告メッセージ： \n"
 #~ "package '%s' claims to be built under R version %s but is missing some "
 #~ "help files and needs to be re-installed"
 #~ msgstr ""
-#~ "パッケージ '%s' はバージョン %s の R の下で造らている必要があります。欠け"
+#~ " パッケージ '%s' はバージョン %s の R の下で造らている必要があります。欠け"
 #~ "ているヘルプファイルがあります。新しくインストールしてください "
 
 #~ msgid "invalid digits"
@@ -1734,7 +1734,7 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr " 検索パス上にありません "
 
 #~ msgid "'"
-#~ msgstr "’ "
+#~ msgstr " ’ "
 
 #~ msgid "in useDynLib("
 #~ msgstr " useDynLib( "
@@ -1852,25 +1852,25 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr " 'form' は左右の項を持つモデル式でなければなりません "
 
 #~ msgid "no lines available in input"
-#~ msgstr "入力に利用可能な行がありません "
+#~ msgstr " 入力に利用可能な行がありません "
 
 #~ msgid "empty beginning of file"
-#~ msgstr "ファイルの開始部分が空です "
+#~ msgstr " ファイルの開始部分が空です "
 
 #~ msgid "header and 'col.names' are of different lengths"
-#~ msgstr "ヘッダーと 'col.names' が異なった長さです "
+#~ msgstr " ヘッダーと 'col.names' が異なった長さです "
 
 #~ msgid "more columns than column names"
-#~ msgstr "列名よりも多くの列があります "
+#~ msgstr " 列名よりも多くの列があります "
 
 #~ msgid "first five rows are empty: giving up"
-#~ msgstr "最初の 5 行が空です。お手上げです "
+#~ msgstr " 最初の 5 行が空です。お手上げです "
 
 #~ msgid "not all columns named in 'colClasses' exist"
 #~ msgstr " 'colClasses' に名前があげられた列の中に存在しないものがあります "
 
 #~ msgid "invalid numeric 'as.is' expression"
-#~ msgstr "無効な数値 'as.is' 表現式 "
+#~ msgstr " 無効な数値 'as.is' 表現式 "
 
 #~ msgid "not all columns named in 'as.is' exist"
 #~ msgstr " 'as.is' に名前があげられた列の中に存在しないものがあります "
@@ -1879,7 +1879,7 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr " 'as.is' は間違った長さ %d != cols = %d を持ちます "
 
 #~ msgid "invalid 'row.names' specification"
-#~ msgstr "無効な 'row.names' の指定です "
+#~ msgstr " 無効な 'row.names' の指定です "
 
 #~ msgid "adding class \"ts\": this is deprecated"
 #~ msgstr " \"ts\"クラスを追加：これはお薦めできません "
@@ -1894,29 +1894,29 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr " row.names = FALSE の時 col.names = NA は意味をなしません "
 
 #~ msgid "invalid 'col.names' specification"
-#~ msgstr "無効な 'col.names' 指定です "
+#~ msgstr " 無効な 'col.names' 指定です "
 
 #~ msgid "appending column names to file"
-#~ msgstr "ファイルへの列名を加えます "
+#~ msgstr " ファイルへの列名を加えます "
 
 #~ msgid "attempt to change '%s' ignored"
 #~ msgstr " '%s' を変更しようとしましたが無視されます "
 
 #~ msgid "no rows to match"
-#~ msgstr "マッチすべき行がありません "
+#~ msgstr " マッチすべき行がありません "
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"
-#~ msgstr "最初の 5 行が空です。お手上げです "
+#~ msgstr " 最初の 5 行が空です。お手上げです "
 
 #~ msgid "invalid argument 'n'"
-#~ msgstr "無効な引数 'n' です "
+#~ msgstr " 無効な引数 'n' です "
 
 #~ msgid "invalid argument 'r'"
-#~ msgstr "無効な引数 'r' です "
+#~ msgstr " 無効な引数 'r' です "
 
 #~ msgid "invalid argument 'c'"
-#~ msgstr "無効な引数 'c' です "
+#~ msgstr " 無効な引数 'c' です "
 
 #~ msgid "arguments 'r' and 'c' must have the same sums"
 #~ msgstr " 引数 'r' と 'c' は同じ総和を持たなければなりません "

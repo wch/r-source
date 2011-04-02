@@ -1,17 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-22 15:33\n"
-"PO-Revision-Date: 2011-03-25 14:21+0900\n"
-"Last-Translator: Triad sou <triadsou@gmail.com>\n"
-"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"PO-Revision-Date: 2011-03-25 14:21+0900 \n"
+"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 1.1.0\n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=utf-8 \n"
+"Content-Transfer-Encoding: 8bit \n"
+"Plural-Forms: nplurals=1; plural=0; \n"
+"X-Generator: Pootle 1.1.0 \n"
 
 msgid "argument 'package' must be of length 1"
 msgstr " 引数 'package' は 長さ 1 でなければならない "
@@ -179,7 +179,7 @@ msgstr " %s 中に T/F が見つかりました "
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
-"パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
+" パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
 
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
@@ -343,7 +343,7 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr ""
-"パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないので xrefs"
+" パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないので xrefs"
 "をチェックできません "
 
 msgid "Obsolete package(s) %s in Rd xrefs"
@@ -417,10 +417,10 @@ msgid ")"
 msgstr " ) "
 
 msgid "in NAMESPACE."
-msgstr "名前空間の中に。 "
+msgstr " 名前空間の中に。 "
 
 msgid "Generics without methods in"
-msgstr "メソッドを伴わない Generics があります "
+msgstr " メソッドを伴わない Generics があります "
 
 msgid ":"
 msgstr " ： "
@@ -470,7 +470,7 @@ msgid "Converting Rd files to LaTeX ..."
 msgstr "RdファイルをLaTeXに変換しています "
 
 msgid "-t option without value"
-msgstr " 値のない -t オプション"
+msgstr " 値のない -t オプション "
 
 msgid "-o option without value"
 msgstr " 値のない -o オプションです "
@@ -482,14 +482,14 @@ msgid "exactly one Rd file must be specified"
 msgstr " 正確に1つのRdファイルは指定されなければなりません "
 
 msgid "no 'type' specified"
-msgstr "指定された 'type' ではありません "
+msgstr " 指定された 'type' ではありません "
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr ""
 " 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
 
 msgid "current working directory cannot be ascertained"
-msgstr "現在の作業ディレクトリを確認することができません。"
+msgstr " 現在の作業ディレクトリを確認することができません。 "
 
 msgid "no inputs"
 msgstr " 入力がありません "
@@ -535,7 +535,7 @@ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 msgstr " 警告：'Depends' 項目は多重依存性を持ちます "
 
 msgid "only the first will be used in R < 2.7.0"
-msgstr "最初のものだけが使われます "
+msgstr " 最初のものだけが使われます "
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
@@ -596,11 +596,11 @@ msgstr " 警告：'DESCRIPTION' 中に混乱した 'Depends' 欄 "
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr ""
-"エラー：この R はバージョン %s です。パッケージ '%s' は R %s %s を必要としま"
+" エラー：この R はバージョン %s です。パッケージ '%s' は R %s %s を必要としま"
 "す "
 
 msgid "ERROR: this R is version %s, required is R %s %s"
-msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
+msgstr " エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
 msgid "loading failed"
 msgstr " '%s' のロードに失敗しました "
@@ -615,18 +615,18 @@ msgid "--binary is deprecated"
 msgstr ""
 
 msgid "use of '--auto-zip' is defunct"
-msgstr "'--auto-zip'の使用は廃止になりました"
+msgstr " '--auto-zip'の使用は廃止になりました "
 
 msgid "use of '--use-zip-data' is defunct"
-msgstr "'--use-zip-data' の使用は廃止になりました"
+msgstr " '--use-zip-data' の使用は廃止になりました "
 
 msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
 msgstr ""
-"'--no-docs' の使用は推奨されません。代わりに '--install-args' を使用してくだ"
-"さい"
+" '--no-docs' の使用は推奨されません。代わりに '--install-args' を使用してくだ"
+"さい "
 
 msgid "** Options"
-msgstr " ** オプション"
+msgstr " ** オプション "
 
 msgid "are only for '--binary'  and will be ignored"
 msgstr " 　は '--binary' 専用ですから無視されます "
@@ -635,7 +635,7 @@ msgid "Error: cannot rename directory to"
 msgstr " エラー：ディレクトリの名前を以下に変更できません "
 
 msgid "-l option without value"
-msgstr " 値のない -l オプション"
+msgstr " 値のない -l オプション "
 
 msgid "configuration files are not supported as from R 2.12.0"
 msgstr " コンフィギュレーションファイルは R 2.12.0 からはサポートされません "
@@ -645,7 +645,7 @@ msgstr ""
 " ただ一つの使用可能なサブアーキテクチャで '--multiarch' が指定されました "
 
 msgid "Error: no packages were specified"
-msgstr "エラー：パッケージが指定されていません "
+msgstr " エラー：パッケージが指定されていません "
 
 msgid "package dir"
 msgstr " パッケージ dir "
@@ -657,10 +657,10 @@ msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
 
 msgid "No results found"
-msgstr "いかなる結果も見つかりません "
+msgstr " いかなる結果も見つかりません "
 
 msgid "No help found for topic %s in any package."
-msgstr "トピック %s に対するヘルプはどんなパッケージにも見つかりません。 "
+msgstr " トピック %s に対するヘルプはどんなパッケージにも見つかりません。 "
 
 msgid "Help on topic '%s' was found in the following packages:"
 msgstr " '%s' に関するヘルプが以下のパッケージに見つかりました: "
@@ -681,7 +681,7 @@ msgid "No docs found for package %s"
 msgstr " package %s にドキュメントは見つけられませんでした "
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr "ヘルプファイル%s, %s, パッケージの%s以下のファイルだけが閲覧できます "
+msgstr " ヘルプファイル%s, %s, パッケージの%s以下のファイルだけが閲覧できます "
 
 msgid "NEWS"
 msgstr "NEWS "
@@ -693,7 +693,7 @@ msgid "doc/"
 msgstr " doc/ "
 
 msgid "unsupported URL %s"
-msgstr "未サポートのURL %s "
+msgstr " 未サポートのURL %s "
 
 msgid "URL %s was not found"
 msgstr "URL '%s' は見つかりませんでした "
@@ -702,13 +702,13 @@ msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr " httpdサーバはR_DISABLE_HTTPDにより無効にしました "
 
 msgid "server already running"
-msgstr "サーバは既に稼働中です "
+msgstr " サーバは既に稼働中です "
 
 msgid "server could not be started on an earlier attempt"
-msgstr "サーバーは以前の試みで開始できませんでした "
+msgstr " サーバーは以前の試みで開始できませんでした "
 
 msgid "no running server to stop"
-msgstr "停止する実行中のサーバーがありません "
+msgstr " 停止する実行中のサーバーがありません "
 
 msgid "starting httpd help server ..."
 msgstr " httpdヘルプサーバーを起動... "
@@ -723,22 +723,22 @@ msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
 msgid "ERROR:"
-msgstr "エラー: "
+msgstr " エラー: "
 
 msgid "error reading file '%s'"
-msgstr " ファイル '%s' の読み込みにエラーが発生"
+msgstr " ファイル '%s' の読み込みにエラーが発生 "
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr "バンドルされているようですが、現在は用いられていません "
+msgstr " バンドルされているようですが、現在は用いられていません "
 
 msgid "running 'zip' failed"
-msgstr "'zip' の実行に失敗しました "
+msgstr " 'zip' の実行に失敗しました "
 
 msgid "packaged installation of"
 msgstr " 以下のパッケージ化されたインストール "
 
 msgid "as"
-msgstr "として"
+msgstr " として "
 
 #, fuzzy
 msgid ""
@@ -749,10 +749,10 @@ msgstr ""
 "Adminstration Manual' "
 
 msgid "installing to"
-msgstr "にインストールしています "
+msgstr " にインストールしています "
 
 msgid "generating debug symbols (dSYM)"
-msgstr " デバッグシンボル (dSYM) を生成中"
+msgstr " デバッグシンボル (dSYM) を生成中 "
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -762,10 +762,10 @@ msgstr ""
 "ルする必要があります "
 
 msgid "running src/Makefile.win ..."
-msgstr " src/Makefile.win を実行中"
+msgstr " src/Makefile.win を実行中 "
 
 msgid "no source files found"
-msgstr "ソースファイルが見つかりません "
+msgstr " ソースファイルが見つかりません "
 
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
@@ -787,7 +787,7 @@ msgid "invalid package"
 msgstr " 不正なパッケージです "
 
 msgid "ERROR: no packages specified"
-msgstr "パッケージが特定できません "
+msgstr " パッケージが特定できません "
 
 msgid "ERROR: cannot cd to directory"
 msgstr " エラー：ディレクトリの変更が出来ません "
@@ -836,7 +836,7 @@ msgstr " ソースは環境またはリストでなければなりません "
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 msgstr ""
 " 'compress'　に対して不正な値が入力されています。FALSE, TRUE, 2, 3を入力すべ"
-"きです"
+"きです "
 
 msgid "this cannot be used for package 'base'"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
@@ -851,16 +851,17 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
-"チャンク/行を処理できません: \n"
+" チャンク/行を処理できません: \n"
 " %s "
 
 msgid "No news found in given file using old-style R-like format."
-msgstr " 旧来のR風の書式を使ったニュースは与えられたファイル中にはありません．"
+msgstr ""
+" 旧来のR風の書式を使ったニュースは与えられたファイル中にはありません． "
 
 msgid "No news found in given file using package default format."
 msgstr ""
 "  ペッケージの既定の書式を使ったニュースは与えられたファイル中にはありませ"
-"ん．"
+"ん． "
 
 msgid "Could not extract news from the following text chunks:"
 msgstr " 以下のテキストの集まりからニュースを取り出せませんでした： "
@@ -869,7 +870,7 @@ msgid ""
 "Chunk %s:\n"
 "%s"
 msgstr ""
-"集まり %s: \n"
+" 集まり %s: \n"
 " %s "
 
 msgid "Cannot extract version info from the following section titles:"
@@ -894,13 +895,13 @@ msgid "not found."
 msgstr " が見つかりません "
 
 msgid "Internal error:  NULL tag"
-msgstr " 内部エラー： NULL タグ"
+msgstr " 内部エラー： NULL タグ "
 
 msgid "internal error"
-msgstr " 内部エラー"
+msgstr " 内部エラー "
 
 msgid "Inconsistent arg count for"
-msgstr " 以下に対する不整合な引数の数"
+msgstr " 以下に対する不整合な引数の数 "
 
 msgid "Entry for"
 msgstr " 以下に対する項目　 "
@@ -912,7 +913,7 @@ msgid "already defined to be"
 msgstr " は既に以下のように定義されています "
 
 msgid "found encoding"
-msgstr " 見つけられたエンコーディング"
+msgstr " 見つけられたエンコーディング "
 
 msgid "argument 'pkg' must be of length 1"
 msgstr " 引数 'pkg' は長さ1でなければなりません "
@@ -936,19 +937,19 @@ msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "
 
 msgid "file"
-msgstr "ファイル"
+msgstr " ファイル "
 
 msgid "cannot be opened"
-msgstr "オープンできません "
+msgstr " オープンできません "
 
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
 msgid "Testing examples for package"
-msgstr "パッケージに対する例をテストしています"
+msgstr " パッケージに対する例をテストしています "
 
 msgid "comparing"
-msgstr " 比較中"
+msgstr " 比較中 "
 
 msgid "to"
 msgstr " へ "
@@ -960,22 +961,22 @@ msgid "OK"
 msgstr "OK "
 
 msgid "results differ from reference results"
-msgstr "結果が参照結果と異なります"
+msgstr " 結果が参照結果と異なります "
 
 msgid "no examples found"
 msgstr " 例がが見つかりません "
 
 msgid "Running specific tests for package"
-msgstr "指定されたテストをパッケージに対して実行中"
+msgstr " 指定されたテストをパッケージに対して実行中 "
 
 msgid "Running"
-msgstr " 実行中"
+msgstr " 実行中 "
 
 msgid "Running vignettes for package"
-msgstr "パッケージのビニエットを実行中"
+msgstr " パッケージのビニエットを実行中 "
 
 msgid "Comparing"
-msgstr " 比較中"
+msgstr " 比較中 "
 
 msgid "creation of"
 msgstr " 以下の作成 "
@@ -984,54 +985,54 @@ msgid "failed"
 msgstr " 失敗 "
 
 msgid "no parsed files found"
-msgstr "パースファイルが見つかりません "
+msgstr " パースファイルが見つかりません "
 
 msgid "creating"
-msgstr " 作成中"
+msgstr " 作成中 "
 
 msgid "running code in"
-msgstr " 以下の中にあるコードを実行中"
+msgstr " 以下の中にあるコードを実行中 "
 
 msgid "FAILED"
 msgstr " 失敗 "
 
 msgid "running strict specific tests"
-msgstr "厳格な指定テストを実行中"
+msgstr " 厳格な指定テストを実行中 "
 
 msgid "running sloppy specific tests"
-msgstr "いい加減(sloppy)な指定テストを実行中"
+msgstr " いい加減(sloppy)な指定テストを実行中 "
 
 msgid "running regression tests"
-msgstr "回帰テストを実行中"
+msgstr " 回帰テストを実行中 "
 
 msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
 msgstr " 'reg-plot.ps'  と 'reg-plot.ps.save' を比較中... "
 
 msgid "running tests of plotting Latin-1"
-msgstr " Latin-1 のプロットテストを実行中"
+msgstr " Latin-1 のプロットテストを実行中 "
 
 msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
 msgstr ""
-"もし Latin もしくは UTF-8 ロケールを使用していなければ、失敗かある種の差異が"
+" もし Latin もしくは UTF-8 ロケールを使用していなければ、失敗かある種の差異が"
 "予想されます "
 
 msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
 msgstr " 'reg-plot-latin1.ps'  と 'reg-plot-latin1.ps.save' を比較中... "
 
 msgid "running tests of consistency of as/is.*"
-msgstr " as/is.* の一貫性テストの実行中"
+msgstr " as/is.* の一貫性テストの実行中 "
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "
 
 msgid "running tests of primitives"
-msgstr "プリミティブのテストの実行中"
+msgstr " プリミティブのテストの実行中 "
 
 msgid "running regexp regression tests"
-msgstr " regexp 回帰テストの実行中"
+msgstr " regexp 回帰テストの実行中 "
 
 msgid "running tests to possibly trigger segfaults"
-msgstr " 可能性のある trigger segfaults のテストを実行中"
+msgstr " 可能性のある trigger segfaults のテストを実行中 "
 
 msgid "'x' must be a single character string"
 msgstr " 引数 'txt' は１つの文字でなければなりません "
@@ -1064,13 +1065,13 @@ msgid "cannot coerce"
 msgstr " 強制変換できません "
 
 msgid "to logical"
-msgstr " 論理値へ"
+msgstr " 論理値へ "
 
 msgid "File 'DESCRIPTION' is missing."
-msgstr "ファイル'DESCRIPTION'が見当たりません。 "
+msgstr " ファイル'DESCRIPTION'が見当たりません。 "
 
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
-msgstr "ファイル'DESCRIPTION'と'DESCRIPTION.in'が見当たりません。 "
+msgstr " ファイル'DESCRIPTION'と'DESCRIPTION.in'が見当たりません。 "
 
 msgid "invalid package layout"
 msgstr " 不正なパッケージ構成です "
@@ -1144,7 +1145,7 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgstr " HTMLパッケージのインデックスを生成することが出来ません "
 
 #~ msgid "Running examples in package"
-#~ msgstr "パッケージ中の例を実行中"
+#~ msgstr " パッケージ中の例を実行中 "
 
 #~ msgid "making DLL ..."
 #~ msgstr "DLLの作成中... "
@@ -1154,7 +1155,7 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr ""
-#~ "ヘルプドキュメント %s (パッケージ %s 内)の場所を見つけることができません "
+#~ " ヘルプドキュメント %s (パッケージ %s 内)の場所を見つけることができません "
 
 #~ msgid "Suspect link(s) in documentation object '%s':"
 #~ msgstr " ドキュメントオブジェクト '%s' 中に疑わしいリンクが見つかりました: "
@@ -1169,12 +1170,12 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ "のバージョンでは,  HTML (PDF ではなく) ヘルプ中でのみ有効です。 "
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr "パッケージ '%s' には 'DESCRIPTION.in' がありません "
+#~ msgstr " パッケージ '%s' には 'DESCRIPTION.in' がありません "
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr ""
-#~ "エラー：この R はバージョン %s です。パッケージバンドル '%s' は R %s %s を"
-#~ "必要とします "
+#~ " エラー：この R はバージョン %s です。パッケージバンドル '%s' は R %s %s "
+#~ "を必要とします "
 
 #~ msgid "Bundle package:"
 #~ msgstr " バンドルパッケージ： "
@@ -1252,10 +1253,10 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
 
 #~ msgid "there are no help pages in this package"
-#~ msgstr "このパッケージにはヘルプ頁がありません "
+#~ msgstr " このパッケージにはヘルプ頁がありません "
 
 #~ msgid "skipping repeated alias(es)"
-#~ msgstr "重複したエイリアスをスキップ中"
+#~ msgstr " 重複したエイリアスをスキップ中 "
 
 #~ msgid "in file"
 #~ msgstr " 以下のファイル中 "
@@ -1311,11 +1312,11 @@ msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより
 #~ msgstr " ドキュメンテーション・オブジェクト '%s' 中の構文エラー： "
 
 #~ msgid "should not get here"
-#~ msgstr "ここに到達すべきではありません "
+#~ msgstr " ここに到達すべきではありません "
 
 #, fuzzy
 #~ msgid "there is a 'man' dir but no help pages in this package"
-#~ msgstr "このパッケージにはヘルプ頁がありません "
+#~ msgstr " このパッケージにはヘルプ頁がありません "
 
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr " 以下のファイル中に重複した \\encoding 行 "
