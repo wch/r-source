@@ -4,20 +4,21 @@
 # This file is distributed under the same license as the R package.
 #
 # Murat Alkan <muratalk@gmail.com>, 2010, 2011.
+# Özlem Alpu <ozlem.alpu@gmail.com>, 2010, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-04-02 19:14+0100\n"
-"PO-Revision-Date: 2011-03-23 \n"
+"PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/appl/binning.c:73
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
@@ -648,7 +649,8 @@ msgstr "'user_unif_nseed' verilmezse okunamaz"
 
 #: src/main/RNG.c:253
 msgid "seed length must be in 0...625; ignored"
-msgstr "kaynak uzunluğu 0...625 arasında olmalıdır; görmezden gelindi"
+msgstr ""
+"başlangıç değeri uzunluğu 0...625 arasında olmalıdır; görmezden gelindi"
 
 #: src/main/RNG.c:261
 #, c-format
@@ -662,7 +664,7 @@ msgstr ".Random.seed varsayılı değer atanmayan eksik bir argüman"
 #: src/main/RNG.c:311
 #, c-format
 msgid ".Random.seed is not an integer vector but of type '%s'"
-msgstr ""
+msgstr ".Random.seed '%s' tipinde ancak bir tamsayı vektörü değil"
 
 #: src/main/RNG.c:317
 msgid ".Random.seed[1] is not a valid integer"
@@ -670,7 +672,7 @@ msgstr ".Random.seed[1] geçerli bir tamsayı değil"
 
 #: src/main/RNG.c:321
 msgid ".Random.seed[0] is not a valid Normal type"
-msgstr ".Random.seed[0] geçerli bir Normal tipi değil"
+msgstr ".Random.seed[0] geçerli bir Normal yazım değil"
 
 #: src/main/RNG.c:332
 msgid ".Random.seed[1] = 5 but no user-supplied generator"
@@ -942,9 +944,8 @@ msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "1 veya 2 argüman gerektiren 'log'a %d argüman verildi"
 
 #: src/main/array.c:79
-#, fuzzy
 msgid "'data' must be of a vector type"
-msgstr "'path' bir karakter vektörü olmalıdır"
+msgstr "'data' bir vektörü tipinde olmalıdır"
 
 #: src/main/array.c:93 src/main/array.c:101
 msgid "non-numeric matrix extent"
@@ -1439,7 +1440,7 @@ msgstr ""
 
 #: src/main/character.c:252
 msgid "extracting substrings from a non-character object"
-msgstr "karakter olmayan bir nesneden altmetinler açılıyor"
+msgstr "karakter olmayan bir nesneden altdizeler açılıyor"
 
 #: src/main/character.c:257 src/main/character.c:350
 msgid "invalid substring argument(s)"
@@ -1650,7 +1651,7 @@ msgstr ""
 
 #: src/main/coerce.c:2504
 msgid "invalid replacement object to be a class string"
-msgstr "sınıf metni olması için geçersiz yerine koyma"
+msgstr "sınıf dizesi olması için geçersiz yerine koyma işlemi"
 
 #: src/main/coerce.c:2525
 #, c-format
@@ -2639,11 +2640,11 @@ msgid "%s symbol name \"%s\" not in load table"
 msgstr "%s sembol ismi \"%s\" yükleme tablosunda değil"
 
 #: src/main/dotcode.c:307
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
-msgstr "açık istek "
+msgstr ""
 
 #: src/main/dotcode.c:333
 #, c-format
@@ -3030,7 +3031,7 @@ msgstr "varsayılanı olmayan \"%s\" argümanı yok"
 #: src/main/envir.c:1307
 #, c-format
 msgid "could not find function \"%s\""
-msgstr "\"%s\" fonksiyonyu bulunamadı"
+msgstr "\"%s\" fonksiyonu bulunamadı"
 
 #: src/main/envir.c:1330
 msgid "cannot assign values in the empty environment"
@@ -3224,7 +3225,7 @@ msgstr "bilinmeyen kodlama: %d"
 #: src/main/envir.c:3558
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr "'%s' dizesi nda gömülü nul"
+msgstr "'%s' dizesi gömülü nul"
 
 #: src/main/errors.c:147 src/main/errors.c:184
 msgid "interrupts suspended; signal ignored"
@@ -3265,8 +3266,7 @@ msgstr "Kayıp uyarı mesajları\n"
 #: src/main/errors.c:419
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] "Kayıp uyarı mesajları\n"
-msgstr[1] "Kayıp uyarı mesajları\n"
+msgstr[0] "Uyarı mesajları:\n"
 
 #: src/main/errors.c:474
 #, c-format
@@ -3285,7 +3285,7 @@ msgstr "wrapup sırasında hata: "
 
 #: src/main/errors.c:551
 msgid "Error in "
-msgstr "Sırasında hata "
+msgstr "Hata oluştu: "
 
 #: src/main/errors.c:577 src/main/errors.c:582
 #, c-format
@@ -3793,7 +3793,7 @@ msgstr "giriş sonu"
 
 #: src/main/gram.y:1738
 msgid "string constant"
-msgstr "karaktersel sabit"
+msgstr "dize sabiti"
 
 #: src/main/gram.y:1739
 msgid "numeric constant"
@@ -3814,7 +3814,7 @@ msgstr "satır sonu"
 #: src/main/gram.y:1756 src/main/gram.y:1762
 #, c-format
 msgid "unexpected %s"
-msgstr "beklenmeyen %s"
+msgstr "beklenmeyen durum, %s"
 
 #: src/main/gram.y:1772
 #, c-format
@@ -3844,7 +3844,7 @@ msgstr "tamsayı %sL gereksiz ondalık nokta içeriyor"
 #: src/main/gram.y:1986
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr "%d dizesi nda, uzun dize için önbellek ayrılamadı"
+msgstr "%d dizesinde, uzun dize için önbellek ayrılamadı"
 
 #: src/main/gram.y:2141
 #, c-format
@@ -3891,11 +3891,14 @@ msgstr "geçersiz  \\U{xxxxxxxx} dizilimi (satır %d)"
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
-"'\\%c', \"%s\" ile başlayan karakter dizesi nda tanımlanamayan bir çıkış"
+"'\\%c' bir tanımlanamayan kaçış karakteri (\"%s\" ile başlayan karakter "
+"dizesinde)"
 
 #: src/main/gram.y:2301
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
-msgstr "Unicode ile sekizli/onaltılı çıkışları karıştırmaya izin verilmiyor"
+msgstr ""
+"Unicode ile sekizli/onaltılı kaçış karakterlerini karıştırmaya izin "
+"verilmiyor"
 
 #: src/main/gram.y:2305
 #, c-format
@@ -3903,7 +3906,7 @@ msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
-"bu yerelde bulunmayan Unicode çıkışları içeren %d dizesi \n"
+"bu yerelde bulunmayan Unicode kaçışları içeren %d dizesi \n"
 "çok uzun (maks 10000 karakter)"
 
 #: src/main/gram.y:2404
@@ -5244,14 +5247,12 @@ msgid "'from' and 'to' are of different lengths"
 msgstr ""
 
 #: src/main/platform.c:746 src/main/platform.c:756
-#, fuzzy
 msgid "expanded 'from' name too long"
-msgstr "genişletilen kaynak ismi çok uzun"
+msgstr "genişletilen 'from' ismi çok uzun"
 
 #: src/main/platform.c:750 src/main/platform.c:760
-#, fuzzy
 msgid "expanded 'to' name too long"
-msgstr "genişletilen kaynak ismi çok uzun"
+msgstr "genişletilen 'to'  ismi çok uzun"
 
 #: src/main/platform.c:764
 #, c-format
@@ -5430,7 +5431,7 @@ msgstr "Logaritmik eksen pozitif limitlere sahip olmalıdır"
 
 #: src/main/plot.c:648
 msgid "invalid type for axis labels"
-msgstr "eksen etiketleri için geçersiz tip"
+msgstr "eksen etiketleri için geçersiz yazım"
 
 #: src/main/plot.c:923
 #, c-format
@@ -5576,7 +5577,7 @@ msgstr "identify() içinde geçersiz nokta sayısı"
 
 #: src/main/plot.c:3315
 msgid "incorrect argument type"
-msgstr "hatalı argüman tipi"
+msgstr "hatalı argüman yazımı"
 
 #: src/main/plot.c:3327
 msgid "different argument lengths"
@@ -5854,10 +5855,10 @@ msgid "too few column labels"
 msgstr "çok az sütun etiketi"
 
 #: src/main/printarray.c:519
-#, fuzzy, c-format
+#, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
-msgstr[0] "çok az sütun etiketi"
+msgstr[0] ""
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -6160,11 +6161,10 @@ msgid "no input is available"
 msgstr "giriş mevcut değil"
 
 #: src/main/saveload.c:2366
-#, fuzzy
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
-msgstr "girdi bir bağlant"
+msgstr "girdi bir bağlant  "
 
 #: src/main/scan.c:464
 #, c-format
@@ -6897,9 +6897,8 @@ msgid "this S4 class is not subsettable"
 msgstr "bu S4 sınıfı alt küme yapılamaz"
 
 #: src/main/subset.c:833
-#, fuzzy
 msgid "wrong arguments for subsetting an environment"
-msgstr "bir çevrebirimi "
+msgstr "bir çevrebirimi altkümelemek için yanlış argüman"
 
 #: src/main/summary.c:26
 #, c-format
@@ -7117,7 +7116,7 @@ msgstr "'match' vektör argüman gerektirir"
 #: src/main/unique.c:825 src/main/unique.c:955
 #, fuzzy
 msgid "argument is not of mode character"
-msgstr "argüman mod karakterinin değil"
+msgstr "argüman mod karakterinin değil "
 
 #: src/main/unique.c:1062
 msgid "... used in a situation where it doesn't exist"
@@ -7175,16 +7174,16 @@ msgid "invalid tag in name extraction"
 msgstr "isim açılışında geçersiz etiket"
 
 #: src/main/util.c:423
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
-msgstr[0] "isim açılışında geçersiz etiket"
+msgstr[0] ""
 
 #: src/main/util.c:429
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
-msgstr[0] "isim açılışında geçersiz etiket"
+msgstr[0] ""
 
 #: src/main/util.c:444
 #, c-format
@@ -8256,3 +8255,54 @@ msgstr "X11 modülü yüklenemiyor"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 mevcut değil"
+
+#~ msgid "append mode may not do what you expect"
+#~ msgstr "\"append\" modu beklediğiniz yerine getirmeyebilir"
+
+#~ msgid "this platform does not support 'split=TRUE'"
+#~ msgstr "bu platform 'split=TRUE' desteklemiyor"
+
+#~ msgid "'destination' does not exist"
+#~ msgstr "'destination' bulunmuyor"
+
+#~ msgid "names(x) must be valid character(length(x))."
+#~ msgstr "names(x) geçerli bir character(length(x)) olmalıdır."
+
+#~ msgid "'%s' must be an environment"
+#~ msgstr "'%s' bir ortam olmalıdır"
+
+#~ msgid "invalid '%s' argument: must be NULL or environment"
+#~ msgstr "geçersiz '%s' argümanı: NULL veya ortam olmalıdır"
+
+#~ msgid "invalid '%s' arguemnt"
+#~ msgstr "geçersiz '%s' argümanı"
+
+#~ msgid "missing value where logical needed"
+#~ msgstr "mantıksal değer gereken yerde eksik değer"
+
+#~ msgid "argument of if(*) is not interpretable as logical"
+#~ msgstr "if(*)'in argümanı mantıksal olarak yorumlanamıyor"
+
+#~ msgid "not a SPECIAL function"
+#~ msgstr "bir SPECIAL fonksiyon değil"
+
+#~ msgid "error: system commands are not supported in this version of R.\n"
+#~ msgstr "hata: sistem komutları R'nin sürümünde desteklenmiyor.\n"
+
+#~ msgid "'source' must be a single string"
+#~ msgstr "'source' tek bir dize olmalı"
+
+#~ msgid "'destination' must be a single string"
+#~ msgstr "'destination' tek bir dize olmalı"
+
+#~ msgid "missing values are not allowed"
+#~ msgstr "eksik değerlere izin verilmiyor"
+
+#~ msgid "expanded destination name too long"
+#~ msgstr "genişletilen hedef ismi çok uzun"
+
+#~ msgid "file.access() is not implemented on this system"
+#~ msgstr "file.access() bu sistemde tanımlanmamış"
+
+#~ msgid "invalid 'tempdir' in R_tmpnam"
+#~ msgstr "R_tmpnam içinde geçersiz 'tempdir'"

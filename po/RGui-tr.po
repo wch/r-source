@@ -1,14 +1,16 @@
 # Turkish translations for R package.
+# R paketi için Türkçe çeviriler.
 # Copyright (C) 2010 The R Foundation
 # This file is distributed under the same license as the R package.
 #
 # Murat Alkan <muratalk@gmail.com>, 2010, 2011.
+# Özlem Alpu <ozlem.alpu@gmail.com>, 2010, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.12.0\n"
+"Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:42+0100\n"
-"PO-Revision-Date: 2011-03-23 23:36+0200\n"
+"POT-Creation-Date: 2011-03-29 21:49+0100\n"
+"PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
 "Language: tr\n"
@@ -16,6 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: console.c:1157 console.c:1199
 msgid "Not enough memory"
@@ -212,7 +215,7 @@ msgstr "geçersiz argüman"
 
 #: dataentry.c:269
 msgid "invalid type for value"
-msgstr "değişken için geçersiz tip"
+msgstr "değişken için geçersiz yazım"
 
 #: dataentry.c:280
 msgid "Data Editor"
@@ -232,7 +235,7 @@ msgstr "verigirişi: iç bellek hatası"
 
 #: dataentry.c:756 dataentry.c:769
 msgid "internal type error in dataentry"
-msgstr "verigirişinde içsel hata"
+msgstr "veri girişinde iç yazım hatası"
 
 #: dataentry.c:851
 msgid "dataentry: parse error on string"
@@ -437,7 +440,7 @@ msgstr "Bu işlem, seçili komutları konsola kopyalayacak ve değerlendirecek.\
 #: editor.c:607
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
-msgstr "Seçim yoksa, bu işlllem sadece geçerli satırı çalıştıracak ve\n"
+msgstr "Seçim yoksa, bu işlem sadece geçerli satırı çalıştıracak ve\n"
 
 #: editor.c:608
 msgid "the cursor by one line.\n"
@@ -478,7 +481,7 @@ msgstr "Betiği kaydet"
 
 #: editor.c:701 pager.c:451 ../library/grDevices/src/devWindows.c:1540
 msgid "Return focus to Console"
-msgstr "Odaklamayı geri Konsola al"
+msgstr "Konsola dön"
 
 #: editor.c:704
 msgid "Print script"
@@ -632,7 +635,7 @@ msgid ""
 "Proceed?"
 msgstr ""
 "Sayfalayıcı açıksa sayfalayıcı tipini değiştirme\n"
-"Devam etmek istiyormusunuz?"
+"Devam et?"
 
 #: preferences.c:410
 msgid "Select directory for file 'Rconsole'"
@@ -703,7 +706,7 @@ msgstr ""
 
 #: rui.c:647
 msgid "Apropos"
-msgstr "Apropos"
+msgstr "Nesne Bul (Apropos)"
 
 #: rui.c:870
 msgid "Can only drag-and-drop .R, .RData and .rda files"
@@ -779,7 +782,7 @@ msgstr "Yardımda ara..."
 
 #: rui.c:1014
 msgid "Apropos..."
-msgstr "Apropos..."
+msgstr "Nesne Bul (Apropos)..."
 
 #: rui.c:1016
 msgid "R Project home page"
@@ -1052,7 +1055,7 @@ msgstr "Kaydedilecek değişken adı"
 
 #: ../library/grDevices/src/devWindows.c:1528
 msgid "Copy to the clipboard as a metafile"
-msgstr "Panoyu bir metafile olarak kopyala"
+msgstr "Panoya bir metadosya olarak kopyala"
 
 #: ../library/grDevices/src/devWindows.c:1546
 #: ../library/grDevices/src/devWindows.c:1557
@@ -1113,7 +1116,7 @@ msgstr "Geçmiş"
 
 #: ../library/grDevices/src/devWindows.c:1597
 msgid "Recording"
-msgstr "Kaydediliyor"
+msgstr "Kayıt"
 
 #: ../library/grDevices/src/devWindows.c:1600
 msgid "Add\tINS"
