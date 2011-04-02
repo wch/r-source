@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:45+0100\n"
-"PO-Revision-Date: 2010-10-01 20:59+0100\n"
+"PO-Revision-Date: 2011-03-27 22:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -146,13 +146,13 @@ msgstr ""
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
 #: methods_list_dispatch.c:953
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-"erreur lors de l'évaluation de l'argument '%s' lors de la sélection d'une "
-"méthode pour la fonction '%s'"
+"erreur d'évaluation de l'argument '%s' lors de la sélection d'une méthode "
+"pour la fonction '%s' : %s"
 
 #: methods_list_dispatch.c:618
 #, c-format
@@ -186,9 +186,10 @@ msgstr ""
 "correspondant, mais aucun '...' n'est trouvé dans l'argument en question"
 
 #: methods_list_dispatch.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "erreur lors de l'évaluation d'une 'primitive' comme méthode suivante"
+msgstr ""
+"erreur lors de l'évaluation d'une 'primitive' comme méthode suivante : %s"
 
 #: methods_list_dispatch.c:765
 #, c-format
