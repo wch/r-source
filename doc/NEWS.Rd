@@ -545,10 +545,15 @@
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
       
-      \item \code{rstandard.glm} gains a \code{type} argument for optional 
-      standardized Pearson residuals.
+      \item \code{rstandard.glm} gains a \code{type} argument which can
+      be used to request standardized Pearson residuals.
 
       \item A start on a Turkish translation, thanks to Murat Alkan.
+
+      \item \code{.libPaths()} calls \code{normalizePath(winslash = "/")}
+      on the paths: this helps (usually) present them in a
+      user-friendly form and should detect duplicate paths accessed via
+      different symbolic links.
     }
   }
   
