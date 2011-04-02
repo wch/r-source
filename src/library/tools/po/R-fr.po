@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2010-10-03 18:49-0400\n"
-"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
+"PO-Revision-Date: 2011-03-29 19:49+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -130,11 +130,8 @@ msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
 "Objets dans \\usage sans \\alias dans la documentation de l'objet '%s' :"
 
-#, fuzzy
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr ""
-"Arguments documentés non repris dans \\usage pour la documentation de "
-"l'objet '%s' :"
+msgstr "Affectations dans \\usage pour la documentation de l'objet '%s' :"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr ""
@@ -494,7 +491,7 @@ msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr "'type' doit être 'txt', 'html', 'latex' ou 'example'"
 
 msgid "current working directory cannot be ascertained"
-msgstr ""
+msgstr "le répertoire de travail actuel ne peut être déterminé"
 
 msgid "no inputs"
 msgstr "pas d'entrées"
@@ -609,9 +606,8 @@ msgstr "ERREUR : cette version de R est %s, le package '%s' nécessite R %s %s "
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
-#, fuzzy
 msgid "loading failed"
-msgstr "le test '%s' a échoué"
+msgstr "le chargement a échoué"
 
 msgid "Changes require specified 'style'"
 msgstr "Les modifications nécessite le 'style' spécifié"
@@ -716,16 +712,14 @@ msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 msgid "ERROR:"
 msgstr "ERREUR :"
 
-#, fuzzy
 msgid "error reading file '%s'"
-msgstr "erreur d'analyse de code dans le fichier '%s' :"
+msgstr "erreur de lecture dans le fichier '%s'"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "ceci semble être un bundle -- ils ne sont plus supportés"
 
-#, fuzzy
 msgid "running 'zip' failed"
-msgstr "l'exécution de 'make' a échoué"
+msgstr "l'exécution de 'zip' a échoué"
 
 msgid "packaged installation of"
 msgstr "installation packagée de"
@@ -733,7 +727,6 @@ msgstr "installation packagée de"
 msgid "as"
 msgstr "comme"
 
-#, fuzzy
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
@@ -825,7 +818,7 @@ msgid "source must be an environment or a list"
 msgstr "source doit être un environnement ou une liste"
 
 msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr ""
+msgstr "valeur incorrecte pour 'compress' : utilisez FALSE, TRUE, 2 ou 3"
 
 msgid "this cannot be used for package 'base'"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
@@ -936,9 +929,8 @@ msgstr "ne peut être ouvert"
 msgid "testing '%s' failed"
 msgstr "le test '%s' a échoué"
 
-#, fuzzy
 msgid "Testing examples for package"
-msgstr "Récupération des exemples du package"
+msgstr "Vérification des exemples du package"
 
 msgid "comparing"
 msgstr "comparaison"
@@ -953,7 +945,7 @@ msgid "OK"
 msgstr "OK"
 
 msgid "results differ from reference results"
-msgstr ""
+msgstr "les résultats ne sont pas identiques aux résultats de référence"
 
 msgid "no examples found"
 msgstr "aucun exemple n'est trouvé"
@@ -1028,9 +1020,8 @@ msgstr "exécution des tests de régression regexp"
 msgid "running tests to possibly trigger segfaults"
 msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
 
-#, fuzzy
 msgid "'x' must be a single character string"
-msgstr "'file' doit être une chaîne de caractères ou une connexion"
+msgstr "'x' doit être une chaîne de caractères unique"
 
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
@@ -1085,18 +1076,18 @@ msgstr "analyse de '%s'"
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Note : %d chaîne de caractères marquée Latin-1 trouvée"
+msgstr[1] "Note : %d chaînes de caractères marquées Latin-1 trouvées"
 
 msgid "Note: found %d marked UTF-8 string"
 msgid_plural "Note: found %d marked UTF-8 strings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Note : %d chaîne de caractères marquée UTF-8 trouvée"
+msgstr[1] "Note : %d chaînes de caractères marquées UTF-8 trouvées"
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Note : %d chaîne de caractères marquée comme \"bytes\" trouvée"
+msgstr[1] "Note : %d chaînes de caractères marquées comme \"bytes\" trouvées"
 
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
@@ -1131,6 +1122,20 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "--binary is deprecated"
+#~ msgstr "--binary est obsolète "
+
+#~ msgid "use of '--auto-zip' is defunct"
+#~ msgstr "l'utilisation de '--auto-zip' n'est plus disponible"
+
+#~ msgid "use of '--use-zip-data' is defunct"
+#~ msgstr "l'utilisation de '--auto-zip-data' n'est plus disponible"
+
+#~ msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+#~ msgstr ""
+#~ "l'utilisation de '--no-docs' n'est plus disponible : utilisez '--install-"
+#~ "args' à la place"
 
 #~ msgid "** Options"
 #~ msgstr "** Les options"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:51\n"
-"PO-Revision-Date: 2011-01-18 13:55+0000\n"
+"PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -192,9 +192,8 @@ msgstr "An entrée de bibliographie of type (bibtype) '"
 msgid "' has to correctly specify the field(s):"
 msgstr "' doit spécifier le(s) champ(s) de manière correcte :"
 
-#, fuzzy
 msgid "'style' should be one of %s"
-msgstr "'bibtype' doit être l'un de"
+msgstr "'style' doit être l'un de %s"
 
 msgid "' has to specify the field(s):"
 msgstr "' doit spécifier le(s) champ(s) :"
@@ -538,9 +537,8 @@ msgstr "introuvable"
 msgid "cannot update HTML package index"
 msgstr "impossible de mettre à jour l'index HTML des packages"
 
-#, fuzzy
 msgid "Making packages.html  ..."
-msgstr "Création de packages.html"
+msgstr "Création de packages.html ..."
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() ne peut être utilisé en mode non interactif"
@@ -656,9 +654,8 @@ msgstr "matrice 'instPkgs' incorrecte"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "aucun package installé pour 'lib.loc=%s' (incorrect ?)"
 
-#, fuzzy
 msgid "metadata of '%s' is corrupt"
-msgstr "les métadonnées du package '%s' sont incorrectes"
+msgstr "les métadonnées de '%s' sont incorrectes"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority' doit être de type caractère ou NULL"
@@ -1005,9 +1002,8 @@ msgid "'compressed' must be logical or character"
 msgstr ""
 "'compressed' devrait être un vecteur de type caractère ou booléen (logical)"
 
-#, fuzzy
 msgid "failed to create directory %s"
-msgstr "impossible de créer le répertoire temporaire '%s'"
+msgstr "impossible de créer le répertoire %s"
 
 msgid "invalid octal digit"
 msgstr "nombre octal incorrect"
@@ -1021,9 +1017,8 @@ msgstr "bloc incomplet dans le fichier"
 msgid "checksum error for entry '%s'"
 msgstr "erreur checksum pour l'entrée '%s'"
 
-#, fuzzy
 msgid "failed to copy %s to %s"
-msgstr "la création de '%s' a échoué"
+msgstr "la copie de %s vers %s a échoué"
 
 msgid "unsupported entry type"
 msgstr "type d'entrée non supporté"
@@ -1089,27 +1084,28 @@ msgstr "une tentative de modification de '%s' a échoué"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' doit être une seule chaîne de caractères"
 
-#, fuzzy
 msgid "'files' must a character vector specifying one or more filepaths"
-msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
+msgstr ""
+"'files' devrait être un vecteur de type caractère fournissant un ou "
+"plusieurs chemins de fichiers"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
+"impossible de trouver le programme à ouvrir dans les URIs 'mailto:' : retour "
+"vers 'method = \"none\""
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "Utilisation du browser Web pour ouvrir une URI mailto:"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "il faut fournir 'address'"
 
-#, fuzzy
 msgid "'subject' is missing"
-msgstr "'subject' manquant"
+msgstr "'subject' est manquant"
 
-#, fuzzy
 msgid "'ccaddress' must be of length 1"
-msgstr "'port' doit être de type entier et de longueur 1"
+msgstr "'ccaddress' doit être de longueur 1"
 
 msgid "no download method found"
 msgstr "impossible de trouver une méthode de téléchargement"
@@ -1138,19 +1134,20 @@ msgstr ""
 "succés"
 
 msgid "ERROR: failed to lock directory"
-msgstr ""
+msgstr "ERREUR : impossible de verrouiller le répertoire"
 
 msgid ""
 "for modifying\n"
 "Try removing"
 msgstr ""
+"pour modification\n"
+"Essayez d'éliminer"
 
-#, fuzzy
 msgid "ERROR: failed to create lock directory"
-msgstr "impossible de créer le répertoire temporaire '%s'"
+msgstr "ERREUR : impossible de créer le répertoire verrouillé"
 
 msgid "restored '%s'"
-msgstr ""
+msgstr "'%s' restauré"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
@@ -1165,7 +1162,7 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' est spécifique à Windows"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "la méthode 'mailx' n'est valable que sous Unix"
 
 msgid "zipfile '%s' not found"
 msgstr "fichier zip '%s' introuvable"
@@ -1198,11 +1195,10 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "objet '%s' introuvable"
 msgstr[1] "objets '%s' introuvables"
 
-#, fuzzy
 msgid "package %s is not available (for %s)"
 msgid_plural "packages %s are not available (for %s)"
-msgstr[0] "le package '%s' n'est pas disponible"
-msgstr[1] "les packages '%s' ne sont pas disponibles"
+msgstr[0] "le package %s n'est pas disponible (pour %s)"
+msgstr[1] "les packages '%s' ne sont pas disponibles (pour %s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

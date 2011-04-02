@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2010-10-01 20:58+0100\n"
+"PO-Revision-Date: 2011-03-27 22:25+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -151,11 +151,10 @@ msgstr "options incorrectes dans '%s'"
 msgid "NOT changing"
 msgstr "NE change(nt) PAS"
 
-#, fuzzy
 msgid "argument 'append' is for back-compatibility and will be ignored"
 msgstr ""
-"l'argument 'append' est là pour raison de compatibilité descendante mais "
-"sera ignoré"
+"l'argument 'append' est présent pour raison de compatibilité descendante "
+"mais sera ignoré"
 
 msgid "unknown family '%s'"
 msgstr "famille inconnue '%s'"
@@ -235,15 +234,13 @@ msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Une matrice de pixels doit avoir exactement 3 ou 4 plans"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
-msgstr ""
+msgstr "'drop' est toujours implicitement faux (FALSE) dans '[.raster'"
 
-#, fuzzy
 msgid "invalid raster subsetting"
-msgstr "premier argument incorrect"
+msgstr "indiçage d'image en mode point incorrect"
 
-#, fuzzy
 msgid "invalid raster subassignment"
-msgstr "premier argument incorrect"
+msgstr "sous-assignement d'image en mode point incorrect"
 
 msgid "Operator not meaningful for raster objects"
 msgstr "Opérateur incohérent pour des objets de type 'raster'"
@@ -394,6 +391,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
+#~ msgid "The 'gamma' argument is deprecated and has no effect"
+#~ msgstr "L'argument 'gamma' est obsolète et n'a aucun effet"
 
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "valeur incorrecte pour 'antialias'"

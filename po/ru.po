@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:32+0100\n"
+"POT-Creation-Date: 2011-04-02 19:14+0100\n"
 "PO-Revision-Date: 2011-03-30 01:56+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -220,23 +220,24 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/seq.c:381
 #: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
-#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
-#: src/main/sysutils.c:591 src/main/sysutils.c:593 src/main/sysutils.c:598
-#: src/main/sysutils.c:1585 src/main/sysutils.c:1589 src/main/unique.c:821
-#: src/main/unique.c:1100 src/main/unique.c:1160 src/main/unique.c:1167
-#: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1758
-#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
-#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
-#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
-#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:666
-#: src/modules/lapack/Lapack.c:762 src/modules/lapack/Lapack.c:819
-#: src/modules/lapack/Lapack.c:1077 src/modules/X11/devX11.c:2914
-#: src/modules/X11/devX11.c:2917 src/modules/X11/devX11.c:2920
-#: src/modules/X11/devX11.c:2945 src/modules/X11/devX11.c:3316
-#: src/modules/X11/devX11.c:3321 src/modules/X11/devX11.c:3325
-#: src/modules/X11/devX11.c:3329 src/modules/X11/devX11.c:3333
-#: src/modules/X11/devX11.c:3344 src/modules/X11/devX11.c:3348
-#: src/unix/sys-std.c:1203 src/unix/sys-std.c:1226
+#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:590
+#: src/main/sysutils.c:594 src/main/sysutils.c:598 src/main/sysutils.c:604
+#: src/main/sysutils.c:608 src/main/sysutils.c:1609 src/main/sysutils.c:1613
+#: src/main/unique.c:821 src/main/unique.c:1100 src/main/unique.c:1160
+#: src/main/unique.c:1167 src/main/util.c:574 src/main/util.c:577
+#: src/main/util.c:1758 src/modules/internet/internet.c:283
+#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
+#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:666 src/modules/lapack/Lapack.c:762
+#: src/modules/lapack/Lapack.c:819 src/modules/lapack/Lapack.c:1077
+#: src/modules/X11/devX11.c:2914 src/modules/X11/devX11.c:2917
+#: src/modules/X11/devX11.c:2920 src/modules/X11/devX11.c:2945
+#: src/modules/X11/devX11.c:3316 src/modules/X11/devX11.c:3321
+#: src/modules/X11/devX11.c:3325 src/modules/X11/devX11.c:3329
+#: src/modules/X11/devX11.c:3333 src/modules/X11/devX11.c:3344
+#: src/modules/X11/devX11.c:3348 src/unix/sys-std.c:1203
+#: src/unix/sys-std.c:1226
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
@@ -1810,9 +1811,9 @@ msgstr "неправильное соединение"
 msgid "closing unused connection %d (%s)\n"
 msgstr "закрываю неиспользованное соединение %d (%s)\n"
 
-#: src/main/connections.c:236 src/main/sysutils.c:616 src/main/sysutils.c:761
-#: src/main/sysutils.c:776 src/main/sysutils.c:870 src/main/sysutils.c:941
-#: src/main/sysutils.c:951 src/main/sysutils.c:964 src/main/sysutils.c:1253
+#: src/main/connections.c:236 src/main/sysutils.c:624 src/main/sysutils.c:785
+#: src/main/sysutils.c:800 src/main/sysutils.c:894 src/main/sysutils.c:965
+#: src/main/sysutils.c:975 src/main/sysutils.c:988 src/main/sysutils.c:1277
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "неподдерживаемая конвертация из '%s' в '%s'"
@@ -5271,12 +5272,12 @@ msgstr "не могу определить домашнюю папку R"
 msgid "file name too long"
 msgstr "имя файла слишком длинное"
 
-#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1604
-#: src/main/sysutils.c:1618
+#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1628
+#: src/main/sysutils.c:1642
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/platform.c:1471 src/main/sysutils.c:1614
+#: src/main/platform.c:1471 src/main/sysutils.c:1638
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
@@ -6967,8 +6968,8 @@ msgstr "не могу определить время изменения фай�
 msgid "encoding of a filename cannot be 'bytes'"
 msgstr "кодировка для имени файла не может быть 'bytes'"
 
-#: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
-#: src/main/sysutils.c:867
+#: src/main/sysutils.c:170 src/main/sysutils.c:782 src/main/sysutils.c:797
+#: src/main/sysutils.c:891
 #, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
 msgstr "неподдерживаемая конвертация из '%s' в кодовой странице '%d'"
@@ -7027,63 +7028,63 @@ msgstr "'Sys.unsetenv' в этой системе недоступен"
 msgid "'x' must be a character vector"
 msgstr "'x' должен быть текстовым вектором"
 
-#: src/main/sysutils.c:613
+#: src/main/sysutils.c:621
 #, c-format
 msgid "unsupported conversion from '%s' to '%s' in codepage %d"
 msgstr "неподдерживаемая конвертация из '%s' в '%s' в кодовой странице %d"
 
-#: src/main/sysutils.c:681 src/main/sysutils.c:744 src/main/sysutils.c:843
-#: src/main/sysutils.c:857 src/main/sysutils.c:932
+#: src/main/sysutils.c:705 src/main/sysutils.c:768 src/main/sysutils.c:867
+#: src/main/sysutils.c:881 src/main/sysutils.c:956
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "'%s' должен быть вызван на CHARSXP"
 
-#: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
+#: src/main/sysutils.c:771 src/main/sysutils.c:886 src/main/sysutils.c:959
 msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr "перевод строк с кодировкой \"bytes\" запрещено"
 
-#: src/main/sysutils.c:961
+#: src/main/sysutils.c:985
 #, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "неподдерживаемая конвертация в '%s' из кодовой страницы %d"
 
-#: src/main/sysutils.c:1374
+#: src/main/sysutils.c:1398
 msgid "cannot mkdir R_TempDir"
 msgstr "не могу создать каталог 'R_TempDir'"
 
-#: src/main/sysutils.c:1378 src/main/sysutils.c:1385 src/main/sysutils.c:1388
+#: src/main/sysutils.c:1402 src/main/sysutils.c:1409 src/main/sysutils.c:1412
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "не могу установить R_SESSION_TMPDIR"
 
-#: src/main/sysutils.c:1397
+#: src/main/sysutils.c:1421
 msgid "cannot allocate R_TempDir"
 msgstr "не могу разместить 'R_TempDir'"
 
-#: src/main/sysutils.c:1430
+#: src/main/sysutils.c:1454
 msgid "temporary name too long"
 msgstr "временное имя слишком длинное"
 
-#: src/main/sysutils.c:1445
+#: src/main/sysutils.c:1469
 msgid "cannot find unused tempfile name"
 msgstr "не могу найти неиспользованное имя временного файла"
 
-#: src/main/sysutils.c:1448
+#: src/main/sysutils.c:1472
 msgid "allocation failed in R_tmpnam2"
 msgstr "размещение в R_tmpnam2 не удалось"
 
-#: src/main/sysutils.c:1474
+#: src/main/sysutils.c:1498
 msgid "proc.time() is not implemented on this system"
 msgstr "'proc.time()' в этой системе не реализован"
 
-#: src/main/sysutils.c:1526
+#: src/main/sysutils.c:1550
 msgid "setTimelimit() is not implemented on this system"
 msgstr "setTimelimit() не реализован для этой системы"
 
-#: src/main/sysutils.c:1554
+#: src/main/sysutils.c:1578
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr "setSessionTimelimit() не реализован для этой системы"
 
-#: src/main/sysutils.c:1592
+#: src/main/sysutils.c:1616
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmarke = TRUE' не поддерживается на этой платформе"
 

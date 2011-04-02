@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-03-29 21:49+0100\n"
-"PO-Revision-Date: 2010-10-01 20:58+0100\n"
+"PO-Revision-Date: 2011-03-27 22:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -419,7 +419,7 @@ msgstr "'colormodel' inconnu, utilisation de 'rgb'"
 #: devPS.c:6531
 #, fuzzy
 msgid "Failed to load sRGB colorspace file"
-msgstr "Echec de chargement du fichier d'encodage"
+msgstr "Echec de chargement de l'espace de couleur sRGB"
 
 #: devPS.c:6798
 msgid "Corrupt encodings in PDF device"
