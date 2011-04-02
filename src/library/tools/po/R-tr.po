@@ -1,0 +1,1060 @@
+# Turkish translations for R package
+# R paketi için Türkçe çeviriler.
+# Copyright (C) 2010 The R Foundation
+# This file is distributed under the same license as the R package.
+#
+# Murat Alkan <muratalk@gmail.com>, 2010, 2011.
+# Özlem Alpu <ozlem.alpu@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.13.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2011-03-22 15:33\n"
+"PO-Revision-Date: 2011-04-02 \n"
+"Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
+"Language-Team: Turkish <muratalk@gmail.com>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "argument 'package' must be of length 1"
+msgstr ""
+
+msgid "you must specify 'package' or 'dir'"
+msgstr ""
+
+msgid "directory '%s' does not exist"
+msgstr ""
+
+msgid "neither code nor data objects found"
+msgstr ""
+
+msgid "Undocumented code objects:"
+msgstr ""
+
+msgid "Undocumented data sets:"
+msgstr ""
+
+msgid "Undocumented S4 classes:"
+msgstr ""
+
+msgid "Undocumented S4 methods:"
+msgstr ""
+
+msgid "Prototyped non-primitives:"
+msgstr ""
+
+msgid "Undocumented %s:"
+msgstr ""
+
+msgid "directory '%s' does not contain R code"
+msgstr ""
+
+msgid "directory '%s' does not contain Rd objects"
+msgstr ""
+
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+
+msgid "Data sets with usage in documentation object '%s' but not in code:"
+msgstr ""
+
+msgid "Argument names in code not in docs:"
+msgstr ""
+
+msgid "Argument names in docs not in code:"
+msgstr ""
+
+msgid "Mismatches in argument names (first 3):"
+msgstr ""
+
+msgid "Mismatches in argument names:"
+msgstr ""
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr ""
+
+msgid "Mismatches in argument default values:"
+msgstr ""
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Code: %s"
+msgstr ""
+
+msgid "Docs: %s"
+msgstr ""
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Slots for class '%s'"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Variables in data frame '%s'"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "docs"
+msgstr ""
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr ""
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr ""
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr ""
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr ""
+
+msgid "Assignments in \\usage in documentation object '%s':"
+msgstr ""
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr ""
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr ""
+
+msgid "unable to create"
+msgstr ""
+
+msgid "unable to write code files"
+msgstr ""
+
+msgid "you must specify 'package', 'dir' or 'file'"
+msgstr ""
+
+msgid "file '%s' does not exist"
+msgstr ""
+
+msgid ""
+"parse error in file '%s':\n"
+"%s"
+msgstr ""
+
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr ""
+
+msgid "declared S3 method '%s' not found"
+msgstr ""
+
+msgid "cannot check R code installed as image"
+msgstr ""
+
+msgid "parse error in file '%s':"
+msgstr ""
+
+msgid "parse error in examples from file '%s':"
+msgstr ""
+
+msgid "File '%s':"
+msgstr ""
+
+msgid "found T/F in %s"
+msgstr ""
+
+msgid "package name '%s' seems invalid; using directory name '%s' instead"
+msgstr ""
+
+msgid "Packages required but not available:"
+msgstr ""
+
+msgid "Package required but not available: %s"
+msgstr ""
+
+msgid "Packages required and available but unsuitable versions:"
+msgstr ""
+
+msgid "Package required and available but unsuitable version: %s"
+msgstr ""
+
+msgid "Former standard packages required but now defunct:"
+msgstr ""
+
+msgid "Packages suggested but not available for checking:"
+msgstr ""
+
+msgid "Package suggested but not available for checking: %s"
+msgstr ""
+
+msgid "Packages which this enhances but not available for checking:"
+msgstr ""
+
+msgid "Package which this enhances but not available for checking: %s"
+msgstr ""
+
+msgid "Vignette dependencies not required:"
+msgstr ""
+
+msgid "Vignette dependencies not required: %s"
+msgstr ""
+
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+
+msgid "Namespace dependencies not required:"
+msgstr ""
+
+msgid "Namespace dependency not required: %s"
+msgstr ""
+
+msgid "Malformed package name"
+msgstr ""
+
+msgid "Invalid package name."
+msgstr ""
+
+msgid "This is the name of a base package."
+msgstr ""
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr ""
+
+msgid "Unknown encoding"
+msgstr ""
+
+msgid "Fields with non-ASCII tags:"
+msgstr ""
+
+msgid "All field tags must be ASCII."
+msgstr ""
+
+msgid "Fields with non-ASCII values:"
+msgstr ""
+
+msgid "These fields must have ASCII values."
+msgstr ""
+
+msgid "Required fields missing:"
+msgstr ""
+
+msgid "Malformed package version."
+msgstr ""
+
+msgid "Malformed maintainer field."
+msgstr ""
+
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
+msgstr ""
+
+msgid "Offending entries:"
+msgstr ""
+
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+
+msgid "Entries with infeasible comparison operator:"
+msgstr ""
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr ""
+
+msgid "Entries with infeasible version number:"
+msgstr ""
+
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+
+msgid "Package name and namespace differ."
+msgstr ""
+
+msgid "Invalid Priority field."
+msgstr ""
+
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "Encoding '%s' is not portable"
+msgstr ""
+
+msgid "Unknown encoding with non-ASCII data"
+msgstr ""
+
+msgid "Non-standard license specification:"
+msgstr ""
+
+msgid "Standardizable: %s"
+msgstr ""
+
+msgid "Standardized license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
+msgstr ""
+
+msgid "Non-portable flags in variable '%s':"
+msgstr ""
+
+msgid "package must be loaded"
+msgstr ""
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
+"checked"
+msgstr ""
+
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Missing link(s) in documentation object '%s':"
+msgstr ""
+
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+
+msgid "found %s"
+msgstr ""
+
+msgid "package 'methods' is used but not declared"
+msgstr ""
+
+msgid "'::' or ':::' imports not declared from:"
+msgstr ""
+
+msgid "'::' or ':::' import not declared from: %s"
+msgstr ""
+
+msgid "'library' or 'require' calls not declared from:"
+msgstr ""
+
+msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "Rd files with duplicated name '%s':"
+msgstr ""
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr ""
+
+msgid "Argument items with no description in Rd object '%s':"
+msgstr ""
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
+msgid "Generics g in env ="
+msgstr ""
+
+msgid "where hasMethods(g, env) errors:"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "May need something like"
+msgstr ""
+
+msgid "importFrom("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "in NAMESPACE."
+msgstr ""
+
+msgid "Generics without methods in"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "argument 'file' must be a character string or connection"
+msgstr ""
+
+msgid "missing/empty \\name field in '%s'"
+msgstr ""
+
+msgid "Rd files must have a non-empty \\name."
+msgstr ""
+
+msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
+msgstr ""
+
+msgid "missing/empty \\title field in '%s'"
+msgstr ""
+
+msgid "Rd files must have a non-empty \\title."
+msgstr ""
+
+msgid "argument 'outFile' must be a character string or connection"
+msgstr ""
+
+msgid "you must specify 'dir' or 'files'"
+msgstr ""
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr ""
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr ""
+
+msgid "No help on %s found in RdDB %s"
+msgstr ""
+
+msgid "Converting Rd files to LaTeX ..."
+msgstr ""
+
+msgid "-t option without value"
+msgstr ""
+
+msgid "-o option without value"
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr ""
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+msgid "no 'type' specified"
+msgstr ""
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr ""
+
+msgid "current working directory cannot be ascertained"
+msgstr ""
+
+msgid "no inputs"
+msgstr ""
+
+msgid "Error in running tools::texi2dvi"
+msgstr ""
+
+msgid "more than one \\examples section, using the first"
+msgstr ""
+
+msgid "invalid value for '%s' : %s"
+msgstr ""
+
+msgid "unable to create temp directory"
+msgstr ""
+
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+
+msgid "running 'make' failed"
+msgstr ""
+
+msgid "argument 'vignette' must be of length 1"
+msgstr ""
+
+msgid "file '%s' not found"
+msgstr ""
+
+msgid "Invalid DESCRIPTION file"
+msgstr ""
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr ""
+
+msgid "cannot open directory '%s'"
+msgstr ""
+
+msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
+msgstr ""
+
+msgid "only the first will be used in R < 2.7.0"
+msgstr ""
+
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
+
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr ""
+
+msgid "duplicated files in '%s' field:"
+msgstr ""
+
+msgid "files in '%s' field missing from '%s':"
+msgstr ""
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr ""
+
+msgid "unable to create '%s'"
+msgstr ""
+
+msgid "unable to re-encode '%s' line(s) %s"
+msgstr ""
+
+msgid "unable to copy INDEX to '%s'"
+msgstr ""
+
+msgid ""
+"running Stangle on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+
+msgid "cannot create directory '%s'"
+msgstr ""
+
+msgid "processing '"
+msgstr ""
+
+msgid "'"
+msgstr ""
+
+msgid ""
+"running Sweave on vignette '%s' failed with message:\n"
+"%s"
+msgstr ""
+
+msgid "file '%s' was not created"
+msgstr ""
+
+msgid "cannot copy '%s' to '%s'"
+msgstr ""
+
+msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+msgstr ""
+
+msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
+msgstr ""
+
+msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
+
+msgid "loading failed"
+msgstr ""
+
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "--binary is deprecated"
+msgstr ""
+
+msgid "use of '--auto-zip' is defunct"
+msgstr ""
+
+msgid "use of '--use-zip-data' is defunct"
+msgstr ""
+
+msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
+msgstr ""
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+msgid "Error: cannot rename directory to"
+msgstr ""
+
+msgid "-l option without value"
+msgstr ""
+
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr ""
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
+msgid "Error: no packages were specified"
+msgstr ""
+
+msgid "package dir"
+msgstr ""
+
+msgid "does not exist"
+msgstr ""
+
+msgid "No files in this directory"
+msgstr ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "No help found for topic %s in any package."
+msgstr ""
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr ""
+
+msgid "No package index found for package %s"
+msgstr ""
+
+msgid "No package named %s could be found"
+msgstr ""
+
+msgid "No help found for package %s"
+msgstr ""
+
+msgid "Link %s in package %s could not be located"
+msgstr ""
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+msgstr ""
+
+msgid "NEWS"
+msgstr ""
+
+msgid "DESCRIPTION"
+msgstr ""
+
+msgid "doc/"
+msgstr ""
+
+msgid "unsupported URL %s"
+msgstr ""
+
+msgid "URL %s was not found"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started on an earlier attempt"
+msgstr ""
+
+msgid "no running server to stop"
+msgstr ""
+
+msgid "starting httpd help server ..."
+msgstr "httpd yardım sunucusu başlatılıyor ..."
+
+msgid "done"
+msgstr "tamamlandı"
+
+msgid "failed to start the httpd server"
+msgstr ""
+
+msgid "cannot read index information in file '%s'"
+msgstr ""
+
+msgid "ERROR:"
+msgstr ""
+
+msgid "error reading file '%s'"
+msgstr ""
+
+msgid "this seems to be a bundle -- and they are defunct"
+msgstr ""
+
+msgid "running 'zip' failed"
+msgstr ""
+
+msgid "packaged installation of"
+msgstr ""
+
+msgid "as"
+msgstr ""
+
+msgid ""
+"'cleanup' exists but is not executable -- see the 'R Installation and "
+"Administration Manual'"
+msgstr ""
+
+msgid "installing to"
+msgstr ""
+
+msgid "generating debug symbols (dSYM)"
+msgstr ""
+
+msgid ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+msgstr ""
+
+msgid "running src/Makefile.win ..."
+msgstr ""
+
+msgid "no source files found"
+msgstr ""
+
+msgid "empty 'data' directory"
+msgstr ""
+
+msgid "--merge-multiarch is Windows-only"
+msgstr ""
+
+msgid "cannot create temporary directory"
+msgstr ""
+
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr ""
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
+
+msgid "invalid package"
+msgstr ""
+
+msgid "ERROR: no packages specified"
+msgstr ""
+
+msgid "ERROR: cannot cd to directory"
+msgstr ""
+
+msgid "ERROR: no permission to install to directory"
+msgstr ""
+
+msgid "ERROR: failed to lock directory"
+msgstr ""
+
+msgid ""
+"for modifying\n"
+"Try removing"
+msgstr ""
+
+msgid "ERROR: failed to create lock directory"
+msgstr ""
+
+msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
+msgstr ""
+
+msgid "there is no package called '%s'"
+msgstr ""
+
+msgid "name space must not be loaded."
+msgstr ""
+
+msgid "package seems to be using lazy loading for data already"
+msgstr ""
+
+msgid "source list must have names for all elements"
+msgstr ""
+
+msgid "source must be an environment or a list"
+msgstr ""
+
+msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+msgstr ""
+
+msgid "this cannot be used for package 'base'"
+msgstr ""
+
+msgid "package contains no R code"
+msgstr ""
+
+msgid "package seems to be using lazy loading already"
+msgstr ""
+
+msgid ""
+"Cannot process chunk/lines:\n"
+"%s"
+msgstr ""
+
+msgid "No news found in given file using old-style R-like format."
+msgstr ""
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+msgid "Malformed NEWS.Rd file."
+msgstr ""
+
+msgid "Processing packages:"
+msgstr ""
+
+msgid "Internal error, no tag"
+msgstr ""
+
+msgid "Argument for"
+msgstr ""
+
+msgid "not found."
+msgstr ""
+
+msgid "Internal error:  NULL tag"
+msgstr ""
+
+msgid "internal error"
+msgstr ""
+
+msgid "Inconsistent arg count for"
+msgstr ""
+
+msgid "Entry for"
+msgstr ""
+
+msgid "="
+msgstr ""
+
+msgid "already defined to be"
+msgstr ""
+
+msgid "found encoding"
+msgstr ""
+
+msgid "argument 'pkg' must be of length 1"
+msgstr ""
+
+msgid "package '%s' was not found"
+msgstr ""
+
+msgid "bad operand"
+msgstr ""
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr ""
+
+msgid "argument '%s' must be a character string or connection"
+msgstr ""
+
+msgid "'file' must be a character string or connection"
+msgstr ""
+
+msgid "unimplemented encoding"
+msgstr ""
+
+msgid "file"
+msgstr ""
+
+msgid "cannot be opened"
+msgstr ""
+
+msgid "testing '%s' failed"
+msgstr ""
+
+msgid "Testing examples for package"
+msgstr ""
+
+msgid "comparing"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "..."
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "results differ from reference results"
+msgstr ""
+
+msgid "no examples found"
+msgstr ""
+
+msgid "Running specific tests for package"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Running vignettes for package"
+msgstr ""
+
+msgid "Comparing"
+msgstr ""
+
+msgid "creation of"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "no parsed files found"
+msgstr ""
+
+msgid "creating"
+msgstr ""
+
+msgid "running code in"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+msgid "running strict specific tests"
+msgstr ""
+
+msgid "running sloppy specific tests"
+msgstr ""
+
+msgid "running regression tests"
+msgstr ""
+
+msgid "comparing 'reg-plot.ps' to 'reg-plot.ps.save' ..."
+msgstr ""
+
+msgid "running tests of plotting Latin-1"
+msgstr ""
+
+msgid "expect failure or some differences if not in a Latin or UTF-8 locale"
+msgstr ""
+
+msgid "comparing 'reg-plot-latin1.ps' to 'reg-plot-latin1.ps.save' ..."
+msgstr ""
+
+msgid "running tests of consistency of as/is.*"
+msgstr ""
+
+msgid "running tests of random deviate generation -- fails occasionally"
+msgstr ""
+
+msgid "running tests of primitives"
+msgstr ""
+
+msgid "running regexp regression tests"
+msgstr ""
+
+msgid "running tests to possibly trigger segfaults"
+msgstr ""
+
+msgid "'x' must be a single character string"
+msgstr ""
+
+msgid "test '%s' is not available"
+msgstr ""
+
+msgid "argument 'x' must be a character vector"
+msgstr ""
+
+msgid "argument 'delim' must specify two characters"
+msgstr ""
+
+msgid "only Rd syntax is currently supported"
+msgstr ""
+
+msgid "Running 'texi2dvi' on '%s' failed."
+msgstr ""
+
+msgid "running 'texi2dvi' on '%s' failed"
+msgstr ""
+
+msgid "unable to run '%s' on '%s'"
+msgstr ""
+
+msgid "unable to run %s on '%s'"
+msgstr ""
+
+msgid "cannot coerce"
+msgstr ""
+
+msgid "to logical"
+msgstr ""
+
+msgid "File 'DESCRIPTION' is missing."
+msgstr ""
+
+msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
+msgstr ""
+
+msgid "invalid package layout"
+msgstr ""
+
+msgid "file '%s' is not in valid DCF format"
+msgstr ""
+
+msgid "cannot source package code"
+msgstr ""
+
+msgid "Call sequence:"
+msgstr ""
+
+msgid "parsing '%s'"
+msgstr ""
+
+msgid "Note: found %d marked Latin-1 string"
+msgid_plural "Note: found %d marked Latin-1 strings"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Note: found %d marked UTF-8 string"
+msgid_plural "Note: found %d marked UTF-8 strings"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Note: found %d string marked as \"bytes\""
+msgid_plural "Note: found %d strings marked as \"bytes\""
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found .Internal call in the following function:"
+msgid_plural "Found .Internal calls in the following functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] ""
+msgstr[1] ""
