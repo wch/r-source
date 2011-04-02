@@ -532,6 +532,11 @@
       create a temporary filename with a specified extension.
       (Suggestion and initial implementation by Dirk Eddelbuettel.)
 
+      There are improvements in the way \code{Sweave()} and
+      \code{Stangle()} handle non-ASCII vignette sources, especially in
+      a UTF-8 locale: see \sQuote{Writing R Extensions} which now has a
+      subsection on this topic.
+
       \item \code{factanal()} now returns the rotation matrix if a
       rotation such as \code{"promax"} is used, and hence factor
       correlations are displayed.  (Wish of \PR{12754}.)

@@ -2124,9 +2124,8 @@ diagnostic messaging (``warnings'') when compiling, such as e.g.@:
 Collection.  If @R{} was not configured accordingly, one can achieve
 this @emph{via} personal @file{Makevars} files.
 @ifset UseExternalXrefs
-@xref{Customizing package compilation,
-Customizing package compilation, R-admin,
-R Installation and Administration},
+@xref{Customizing package compilation, , Customizing package compilation,
+ R-admin,  R Installation and Administration},
 @end ifset
 
 Note that it is particularly important to use @option{-Wall -pedantic}
@@ -3317,8 +3316,7 @@ in the @file{po} subdirectory of the package with a name that is either
 messages respectively to language with code @samp{@var{ll}}.
 
 @ifset UseExternalXrefs
-@xref{Localization of messages, Localization of messages,
-Customizing package compilation, R-admin,
+@xref{Localization of messages, , Localization of messages, R-admin,
 R Installation and Administration}, for details of language codes.
 @end ifset
 @ifclear UseExternalXrefs
@@ -6841,9 +6839,8 @@ It is also possible to set such variables in personal @file{Makevars}
 files, which are read after the local @file{Makevars} and the system
 makefiles or in a site-wide @file{Makevars.site} file.
 @ifset UseExternalXrefs
-@xref{Customizing package compilation,
-Customizing package compilation, R-admin,
-R Installation and Administration},
+@xref{Customizing package compilation, , Customizing package compilation,
+R-admin, R Installation and Administration},
 @end ifset
 
 
