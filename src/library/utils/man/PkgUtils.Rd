@@ -42,6 +42,10 @@
   \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing \R Extensions}.
   Many of the checks in \command{R CMD check} can be turned off or on by
   environment variables: see Chapter 6 of the \sQuote{R Internals} manual.
+  
+  Both use the external \command{tar} program given by the \env{TAR}
+  environment variable (which is set when \R was configured on a
+  Unix-alike).
 }
 #ifdef windows
 \note{

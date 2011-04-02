@@ -37,6 +37,9 @@
 
       \item \code{sunflowerplot()} now has a formula interface.
       (Wish of \PR{14541}.)
+
+      \item New wrapper function \code{showNonASCIIfile()} in package
+      \pkg{tools}.
     }
   }
 

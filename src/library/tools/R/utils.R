@@ -156,7 +156,7 @@ function(x)
     ## All that is needed here is an 8-bit encoding that includes ASCII.
     ## The only one we guarantee to exist is 'latin1'.
     ## The default sub=NA is faster, but on some platforms
-    ## some characters just lose their accents, so two tests.
+    ## some characters used just to lose their accents, so two tests.
     asc <- iconv(x, "latin1", "ASCII")
     ind <- is.na(asc) | asc != x
     if(any(ind))
@@ -165,6 +165,10 @@ function(x)
             sep="\n")
     invisible(x[ind])
 }
+
+showNonASCIIfile <-
+function(file)
+    showNonASCII(readLines(file, warn = FALSE))
 
 ### * Text utilities.
 
