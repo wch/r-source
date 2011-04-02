@@ -566,6 +566,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *sub;
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    Rboolean isRawlist = FALSE;
 
     checkArity(op, args);
     if(isNull(x)) {  /* list locales */
@@ -583,8 +584,6 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	const char *from, *to;
 	Rboolean isLatin1 = FALSE, isUTF8 = FALSE;
 
-	if(TYPEOF(x) != STRSXP)
-	    error(_("'x' must be a character vector"));
 	args = CDR(args);
 	if(!isString(CAR(args)) || length(CAR(args)) != 1)
 	    error(_("invalid '%s' argument"), "from");
@@ -623,19 +622,41 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    error(_("unsupported conversion from '%s' to '%s'"), from, to);
 #endif
-	if(toRaw) {
-	    PROTECT(ans = allocVector(VECSXP, LENGTH(x)));
-	    DUPLICATE_ATTRIB(ans, x);
-	} else  PROTECT(ans = duplicate(x)); /* FIXME */
+	isRawlist = (TYPEOF(x) == VECSXP);
+	if(isRawlist) {
+	    if(toRaw)
+		PROTECT(ans = duplicate(x));
+	    else {
+		PROTECT(ans = allocVector(STRSXP, LENGTH(x)));
+		DUPLICATE_ATTRIB(ans, x);
+	    }
+	} else {   
+	    if(TYPEOF(x) != STRSXP)
+		error(_("'x' must be a character vector"));
+	    if(toRaw) {
+		PROTECT(ans = allocVector(VECSXP, LENGTH(x)));
+		DUPLICATE_ATTRIB(ans, x);
+	    } else 
+		PROTECT(ans = duplicate(x));
+	}
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
-	    si = STRING_ELT(x, i);
-	    if (si == NA_STRING) {
-		SET_STRING_ELT(ans, i, NA_STRING);
-		continue;
+	    if (isRawlist) {
+		si = VECTOR_ELT(x, i);
+		if (TYPEOF(si) == NILSXP) {
+		    if (!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
+		    continue;
+		} else if (TYPEOF(si) != RAWSXP)
+		    error(_("'x' must be a list of NULL or raw vectors"));
+	    } else {
+		si = STRING_ELT(x, i);
+		if (si == NA_STRING) {
+		    if(!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
+		    continue;
+		}
 	    }
 	top_of_loop:
-	    inbuf = CHAR(si); 
+	    inbuf = isRawlist ? (const char *) RAW(si) : CHAR(si); 
 	    inb = LENGTH(si);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */

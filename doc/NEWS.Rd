@@ -42,8 +42,12 @@
       \pkg{tools}.
 
       \item \code{iconv} no longer translates \code{NA} strings as
-      \code{"NA"}.  It has a new argment \code{toRaw} to handle (once
-      again) encodings such as \code{UCS-2} with embedded nuls.
+      \code{"NA"}.  It has a new argment \code{toRaw} to handle (as
+      before the \code{CHARSXP} cache) encodings such as \code{UTF-16}
+      with embedded nuls.
+
+      It will also accept as input the type of list generated with
+      \code{toRaw = TRUE}.
     }
   }
 

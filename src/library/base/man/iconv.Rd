@@ -20,7 +20,8 @@ iconvlist()
 
 \arguments{
   \item{x}{A character vector, or an object to be converted to a character
-    vector by \code{\link{as.character}}.}
+    vector by \code{\link{as.character}}, or a list with \code{NULL} and
+    \code{raw} elements as returned by \code{iconv(toRaw = TRUE)}.}
   \item{from}{A character string describing the current encoding.}
   \item{to}{A character string describing the target encoding.}
   \item{sub}{character string.  If not \code{NA} it is used to replace
@@ -134,7 +135,8 @@ x
 try(iconv(x, "latin1", "ASCII//TRANSLIT"))  # platform-dependent
 iconv(x, "latin1", "ASCII", sub="byte")
 ## and for Windows' 'Unicode'
-str(iconv(x, "latin1", "UTF-16LE", toRaw = TRUE))
+str(xx <- iconv(x, "latin1", "UTF-16LE", toRaw = TRUE))
+iconv(xx, "UTF-16LE", "UTF-8")
 }
 \keyword{ character }
 \keyword{ utilities }
