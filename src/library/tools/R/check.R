@@ -1686,27 +1686,26 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          "  Found 'Rscript' in 'inst/doc/Makefile': should be '\"$(R_HOME)/bin/Rscript\"'\n")
             }
         }
-        if (!WINDOWS) {
-            ## If the vignettes declare an encoding, are they actually in it?
-            ## (We don't check the .tex, though)
-            bad_vignettes <- character()
-            for (v in vigns$docs) {
-                enc <- getVignetteEncoding(v, TRUE)
-                if (enc %in% c("", "non-ASCII", "unknown")) next
-                lines <- readLines(v, warn = FALSE) # some miss final NA
-                ## currently Windows does not support this.
-                lines2 <- iconv(lines, enc, "UTF-7") # an actual conversion
-                if(any(is.na(lines2))) bad_vignettes <- c(bad_vignettes, v)
-                if(length(bad_vignettes)) {
-                    if(!any) warnLog()
-                    any <- TRUE
-                    printLog(Log,
-                             "  Package vignette(s) which are not in their specified encoding:\n")
-                    printLog(Log,
-                             paste(c(paste("  ",
-                                           sQuote(basename(bad_vignettes))),
-                                     "", ""), collapse = "\n"))
-                }
+
+        ## If the vignettes declare an encoding, are they actually in it?
+        ## (We don't check the .tex, though)
+        bad_vignettes <- character()
+        for (v in vigns$docs) {
+            enc <- getVignetteEncoding(v, TRUE)
+            if (enc %in% c("", "non-ASCII", "unknown")) next
+            lines <- readLines(v, warn = FALSE) # some miss final NA
+            lines2 <- iconv(lines, enc, "UTF-16LE", toRaw = TRUE)
+            if(any(vapply(lines2, is.null, TRUE)))
+                bad_vignettes <- c(bad_vignettes, v)
+            if(length(bad_vignettes)) {
+                if(!any) warnLog()
+                any <- TRUE
+                printLog(Log,
+                         "  Package vignette(s) which are not in their specified encoding:\n")
+                printLog(Log,
+                         paste(c(paste("  ",
+                                       sQuote(basename(bad_vignettes))),
+                                 "", ""), collapse = "\n"))
             }
         }
 
