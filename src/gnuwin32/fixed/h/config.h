@@ -331,9 +331,7 @@
 /* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gettimeofday' function. */
-#ifndef WIN64
 #define HAVE_GETTIMEOFDAY 1
-#endif
 
 /* Define to 1 if you have the `getuid' function. */
 /* #undef HAVE_GETUID */
