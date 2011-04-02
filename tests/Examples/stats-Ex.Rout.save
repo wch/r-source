@@ -6596,7 +6596,7 @@ v3 0.5128866 0.4124441 1.0000000 0.8770750 0.5128866 0.4320310
 v4 0.4320310 0.4084281 0.8770750 1.0000000 0.4320310 0.4323259
 v5 0.4664948 0.4363925 0.5128866 0.4320310 1.0000000 0.9473451
 v6 0.4086076 0.4326113 0.4320310 0.4323259 0.9473451 1.0000000
-> factanal(m1, factors=3) # varimax is the default
+> factanal(m1, factors = 3) # varimax is the default
 
 Call:
 factanal(x = m1, factors = 3)
@@ -6656,96 +6656,6 @@ v6 0.4047824  0.49580764  0.3209708  0.2866938 -0.2682391 -0.57719858
 16  0.4224366  2.0453079  1.2864761
 17  1.4713902  1.2947716  0.5451562
 18  1.8822320  0.3086244  1.9547752
-> 
-> ## a realistic example from Bartholomew (1987, pp. 61-65)
-> utils::example(ability.cov)
-
-ablty.> require(stats)
-
-ablty.> (ability.FA <- factanal(factors = 1, covmat=ability.cov))
-
-Call:
-factanal(factors = 1, covmat = ability.cov)
-
-Uniquenesses:
-general picture  blocks    maze reading   vocab 
-  0.535   0.853   0.748   0.910   0.232   0.280 
-
-Loadings:
-        Factor1
-general 0.682  
-picture 0.384  
-blocks  0.502  
-maze    0.300  
-reading 0.877  
-vocab   0.849  
-
-               Factor1
-SS loadings      2.443
-Proportion Var   0.407
-
-Test of the hypothesis that 1 factor is sufficient.
-The chi square statistic is 75.18 on 9 degrees of freedom.
-The p-value is 1.46e-12 
-
-ablty.> update(ability.FA, factors=2)
-
-Call:
-factanal(factors = 2, covmat = ability.cov)
-
-Uniquenesses:
-general picture  blocks    maze reading   vocab 
-  0.455   0.589   0.218   0.769   0.052   0.334 
-
-Loadings:
-        Factor1 Factor2
-general 0.499   0.543  
-picture 0.156   0.622  
-blocks  0.206   0.860  
-maze    0.109   0.468  
-reading 0.956   0.182  
-vocab   0.785   0.225  
-
-               Factor1 Factor2
-SS loadings      1.858   1.724
-Proportion Var   0.310   0.287
-Cumulative Var   0.310   0.597
-
-Test of the hypothesis that 2 factors are sufficient.
-The chi square statistic is 6.11 on 4 degrees of freedom.
-The p-value is 0.191 
-
-ablty.> update(ability.FA, factors=2, rotation="promax")
-
-Call:
-factanal(factors = 2, covmat = ability.cov, rotation = "promax")
-
-Uniquenesses:
-general picture  blocks    maze reading   vocab 
-  0.455   0.589   0.218   0.769   0.052   0.334 
-
-Loadings:
-        Factor1 Factor2
-general  0.364   0.470 
-picture          0.671 
-blocks           0.932 
-maze             0.508 
-reading  1.023         
-vocab    0.811         
-
-               Factor1 Factor2
-SS loadings      1.853   1.807
-Proportion Var   0.309   0.301
-Cumulative Var   0.309   0.610
-
-Factor Correlations:
-        Factor1 Factor2
-Factor1   1.000   0.557
-Factor2   0.557   1.000
-
-Test of the hypothesis that 2 factors are sufficient.
-The chi square statistic is 6.11 on 4 degrees of freedom.
-The p-value is 0.191 
 > 
 > 
 > 

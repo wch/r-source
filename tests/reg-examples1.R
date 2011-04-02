@@ -35,6 +35,7 @@ example(sessionInfo)
 
 ## datasets
 example(JohnsonJohnson)
+example(ability.cov)
 
 ## grDevices
 if(.Platform$OS.type == "windows") {

@@ -39,10 +39,12 @@
   Clocking \eqn{g}: relating intelligence and measures of timed
   performance. \emph{Intelligence}, \bold{7}, 353--368.
 }
-\examples{
+\examples{\donttest{
 require(stats)
 (ability.FA <- factanal(factors = 1, covmat=ability.cov))
-update(ability.FA, factors=2)
-update(ability.FA, factors=2, rotation="promax")
-}
+update(ability.FA, factors = 2)
+## The signs of factors and hence the signs of correlations are
+## arbitrary with promax rotation.
+update(ability.FA, factors = 2, rotation = "promax")
+}}
 \keyword{datasets}
