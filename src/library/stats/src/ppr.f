@@ -38,6 +38,7 @@ C
 C                        ^^^ really (ndb) of  smart(.)
       integer i,j,l, lm
       double precision sw,s
+      double precision asr2(m)
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
@@ -87,7 +88,8 @@ c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
       call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,bt,g,dp,edf)
       if(lf.le.0) go to 9999
-      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
+      asr2(1)=asr
+      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,g,dp,edf)
 C REPEAT
  371  continue
       do 381 l=1,lm
@@ -129,7 +131,8 @@ c back to integer:
  621     t(j,l)=t(j,lm)
 591   continue
       lm=lm-1
-      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
+      asr2(1)=asr
+      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,g,dp,edf)
       goto 371
 C END REPEAT
  9999 continue
@@ -146,7 +149,7 @@ c Args
       double precision dp(*)
 c Var
       integer i,j,l, iflsv
-      double precision asrold
+      double precision asrold, asr2(lm)
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
@@ -163,8 +166,9 @@ c Common Vars
          lm=lm+1
          asrold=asr
          call newb(lm,q,ww,b)
+c does 'edf' mean 'edf(1)' or 'edf(l)'?
          call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
-     &        f(1,lm),t(1,lm),asr,sc,g,dp,edf)
+     &        f(1,lm),t(1,lm),asr,sc,g,dp,edf(1))
          do 10 j=1,n
             do 10 i=1,q
  10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
@@ -173,7 +177,8 @@ c Common Vars
             if(lm.eq.m) return
             iflsv=ifl
             ifl=0
-            call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,
+            asr2(1)=asr
+            call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,
      &           g,dp, edf)
             ifl=iflsv
          endif
@@ -983,7 +988,7 @@ c Args
       double precision x(n),y(n),w(n), smo(n),sc(n,7)
       double precision span, alpha, edf
 c Var
-      double precision sy,sw, a,h,f, scale,vsmlsq,resmin
+      double precision sy,sw, a,h(n),f, scale,vsmlsq,resmin
       integer i,j, jper
 
       double precision  spans(3),          big,sml,eps
@@ -1028,9 +1033,9 @@ C     change by
          call smooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
          return
  60      do 70 i=1,3
-            call smooth(n,x,y,w,spans(i),jper,vsmlsq,
+            call smooth (n,x,y,w,spans(i),jper,vsmlsq,
      &           sc(1,2*i-1),sc(1,7))
-            call smooth(n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
+            call smooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
      &           sc(1,2*i),h)
  70      continue
          do 90 j=1,n
