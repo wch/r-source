@@ -1,6 +1,6 @@
 
-R version 2.13.0 Under development (unstable) (2010-12-31 r53893)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.14.0 Under development (unstable) (2011-04-02 r55261)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
@@ -682,8 +682,8 @@ NULL
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showNonASCII
-> ### Title: Highlight non-ASCII characters
-> ### Aliases: showNonASCII
+> ### Title: Pick Out Non-ASCII Characters
+> ### Aliases: showNonASCII showNonASCIIfile
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -698,7 +698,7 @@ NULL
 > f <- tempfile()
 > cat(out, file = f, sep = "\n")
 > 
-> showNonASCII(readLines(f))
+> showNonASCIIfile(f)
 1: fa<e7>ile test of showNonASCII():
 4:    This has an <fc>mlaut in it.
 > unlink(f)
