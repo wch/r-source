@@ -244,7 +244,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 showto <- srcref[8L]
 
                 dce <- trySrcLines(srcfile, lastshown+1L, showto, ce)
-                leading <- showfrom - max(lastshown, 1L)
+                leading <- showfrom - lastshown
 
                 lastshown <- showto
                 srcline <- srcref[3L]
