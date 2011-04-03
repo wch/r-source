@@ -32,7 +32,7 @@ C
 
       integer m,mu,p,q,n
       double precision w(n),x(p,n),y(*),ww(q), yb(q), ys
-      double precision a(p,m),b(q,m),f(n,m),t(n,m), asr
+      double precision a(p,m),b(q,m),f(n,m),t(n,m), asr(15),asr1
       double precision r(q,n),sc(n,15),bt(q),g(p,3)
       double precision dp(*), flm,edf(m)
 C                        ^^^ really (ndb) of  smart(.)
@@ -85,7 +85,7 @@ c     ys is the overall standard deviation -- quit if zero
 
 c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
-      call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,bt,g,dp,edf)
+      call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr(1),sc,bt,g,dp,edf)
       if(lf.le.0) go to 9999
       call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
 C REPEAT
@@ -113,12 +113,13 @@ C REPEAT
       if(lm.le.mu) goto 9999
 c back to integer:
       l=sc(lm,1)
-      asr=0d0
+      asr1=0d0
       do 561 j=1,n
         do 561 i=1,q
           r(i,j)=r(i,j)+b(i,l)*f(j,l)
-561     asr=asr+w(j)*ww(i)*r(i,j)**2
-      asr=asr/sw
+561     asr1=asr1+w(j)*ww(i)*r(i,j)**2
+      asr1=asr1/sw
+      asr(1)=asr1
       if(l .ge. lm) goto 591
       do 601 i=1,p
  601     a(i,l)=a(i,lm)
@@ -142,7 +143,7 @@ C END REPEAT
 c Args
       integer              m,p,q,n,            lm
       double precision w(n),sw, x(p,n),r(q,n),ww(q),a(p,m),b(q,m),
-     &     f(n,m), t(n,m), asr, sc(n,15), bt(q), g(p,3), edf(m)
+     &     f(n,m), t(n,m), asr(15), sc(n,15), bt(q), g(p,3), edf(m)
       double precision dp(*)
 c Var
       integer i,j,l, iflsv
@@ -156,15 +157,16 @@ c Common Vars
       integer              maxit,mitone,                  mitcj
       common /pprz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
-      asr=big
+      asr(1)=big
       lm=0
       do 100 l=1,m
          call rchkusr()
          lm=lm+1
-         asrold=asr
+         asrold=asr(1)
          call newb(lm,q,ww,b)
+c does 'edf' mean 'edf(1)' or 'edf(l)'?
          call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
-     &        f(1,lm),t(1,lm),asr,sc,g,dp,edf)
+     &        f(1,lm),t(1,lm),asr(1),sc,g,dp,edf(1))
          do 10 j=1,n
             do 10 i=1,q
  10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
@@ -177,7 +179,7 @@ c Common Vars
      &           g,dp, edf)
             ifl=iflsv
          endif
-         if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
+         if(asr(1).le.0d0.or.(asrold-asr(1))/asrold.lt.conv) return
 100   continue
       return
       end
@@ -620,6 +622,8 @@ c
 11571 continue
       goto 11481
 11561 continue
+c sanity check needed for PR#13517
+      if(br.gt.n) call rexit('br is too large')
       do 11581 j=bc,ec
       d(j)=(sc(br,2)-sc(bl,2))/(sc(br,1)-sc(bl,1))
 11581 continue
@@ -983,7 +987,7 @@ c Args
       double precision x(n),y(n),w(n), smo(n),sc(n,7)
       double precision span, alpha, edf
 c Var
-      double precision sy,sw, a,h,f, scale,vsmlsq,resmin
+      double precision sy,sw, a,h(n),f, scale,vsmlsq,resmin
       integer i,j, jper
 
       double precision  spans(3),          big,sml,eps
@@ -1028,9 +1032,9 @@ C     change by
          call smooth (n,x,y,w,span,jper,vsmlsq,smo,sc)
          return
  60      do 70 i=1,3
-            call smooth(n,x,y,w,spans(i),jper,vsmlsq,
+            call smooth (n,x,y,w,spans(i),jper,vsmlsq,
      &           sc(1,2*i-1),sc(1,7))
-            call smooth(n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
+            call smooth (n,x,sc(1,7),w,spans(2),-jper,vsmlsq,
      &           sc(1,2*i),h)
  70      continue
          do 90 j=1,n
