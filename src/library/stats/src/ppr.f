@@ -38,7 +38,7 @@ C
 C                        ^^^ really (ndb) of  smart(.)
       integer i,j,l, lm
       double precision sw,s
-      double precision asr2(m)
+      double precision asr2(15)
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
@@ -149,7 +149,7 @@ c Args
       double precision dp(*)
 c Var
       integer i,j,l, iflsv
-      double precision asrold, asr2(lm)
+      double precision asrold, asr2(15)
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
