@@ -85,7 +85,7 @@ c     ys is the overall standard deviation -- quit if zero
 
 c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
-      call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,bt,g,dp,edf)
+      call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr(1),sc,bt,g,dp,edf)
       if(lf.le.0) go to 9999
       call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
 C REPEAT
@@ -622,6 +622,8 @@ c
 11571 continue
       goto 11481
 11561 continue
+c sanity check needed for PR#13517
+      if(br.gt.n) call rexit('br is too large')
       do 11581 j=bc,ec
       d(j)=(sc(br,2)-sc(bl,2))/(sc(br,1)-sc(bl,1))
 11581 continue
