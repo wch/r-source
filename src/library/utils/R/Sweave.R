@@ -534,7 +534,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
                 !is.null(srcref <- srcrefs[[nce]])) {
-                srcfile <- attr(srcref, "srcfile")
                 showfrom <- srcref[7L]
                 showto <- srcref[8L]
 
