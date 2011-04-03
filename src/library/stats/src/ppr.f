@@ -32,13 +32,12 @@ C
 
       integer m,mu,p,q,n
       double precision w(n),x(p,n),y(*),ww(q), yb(q), ys
-      double precision a(p,m),b(q,m),f(n,m),t(n,m), asr
+      double precision a(p,m),b(q,m),f(n,m),t(n,m), asr(15),asr1
       double precision r(q,n),sc(n,15),bt(q),g(p,3)
       double precision dp(*), flm,edf(m)
 C                        ^^^ really (ndb) of  smart(.)
       integer i,j,l, lm
       double precision sw,s
-      double precision asr2(15)
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
@@ -88,8 +87,7 @@ c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
       call subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,bt,g,dp,edf)
       if(lf.le.0) go to 9999
-      asr2(1)=asr
-      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,g,dp,edf)
+      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
 C REPEAT
  371  continue
       do 381 l=1,lm
@@ -115,12 +113,13 @@ C REPEAT
       if(lm.le.mu) goto 9999
 c back to integer:
       l=sc(lm,1)
-      asr=0d0
+      asr1=0d0
       do 561 j=1,n
         do 561 i=1,q
           r(i,j)=r(i,j)+b(i,l)*f(j,l)
-561     asr=asr+w(j)*ww(i)*r(i,j)**2
-      asr=asr/sw
+561     asr1=asr1+w(j)*ww(i)*r(i,j)**2
+      asr1=asr1/sw
+      asr(1)=asr1
       if(l .ge. lm) goto 591
       do 601 i=1,p
  601     a(i,l)=a(i,lm)
@@ -131,8 +130,7 @@ c back to integer:
  621     t(j,l)=t(j,lm)
 591   continue
       lm=lm-1
-      asr2(1)=asr
-      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,g,dp,edf)
+      call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
       goto 371
 C END REPEAT
  9999 continue
@@ -145,11 +143,11 @@ C END REPEAT
 c Args
       integer              m,p,q,n,            lm
       double precision w(n),sw, x(p,n),r(q,n),ww(q),a(p,m),b(q,m),
-     &     f(n,m), t(n,m), asr, sc(n,15), bt(q), g(p,3), edf(m)
+     &     f(n,m), t(n,m), asr(15), sc(n,15), bt(q), g(p,3), edf(m)
       double precision dp(*)
 c Var
       integer i,j,l, iflsv
-      double precision asrold, asr2(15)
+      double precision asrold
 c Common Vars
       double precision         span,alpha,big
       integer           ifl,lf
@@ -159,16 +157,16 @@ c Common Vars
       integer              maxit,mitone,                  mitcj
       common /pprz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
-      asr=big
+      asr(1)=big
       lm=0
       do 100 l=1,m
          call rchkusr()
          lm=lm+1
-         asrold=asr
+         asrold=asr(1)
          call newb(lm,q,ww,b)
 c does 'edf' mean 'edf(1)' or 'edf(l)'?
          call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
-     &        f(1,lm),t(1,lm),asr,sc,g,dp,edf(1))
+     &        f(1,lm),t(1,lm),asr(1),sc,g,dp,edf(1))
          do 10 j=1,n
             do 10 i=1,q
  10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
@@ -177,12 +175,11 @@ c does 'edf' mean 'edf(1)' or 'edf(l)'?
             if(lm.eq.m) return
             iflsv=ifl
             ifl=0
-            asr2(1)=asr
-            call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr2,sc,bt,
+            call fulfit(lm,1,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,
      &           g,dp, edf)
             ifl=iflsv
          endif
-         if(asr.le.0d0.or.(asrold-asr)/asrold.lt.conv) return
+         if(asr(1).le.0d0.or.(asrold-asr(1))/asrold.lt.conv) return
 100   continue
       return
       end
