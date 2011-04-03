@@ -519,9 +519,8 @@ If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
 used as the encoding of the @file{DESCRIPTION} file itself and of the
 @file{R} and @file{NAMESPACE} files, and as the default encoding of
-@file{.Rd} files and (as from @R{} 2.14.0) for the encoding of the
-vignettes.  The examples are assumed to be in this encoding when running
-@command{R CMD check}, and it is used for the encoding of the
+@file{.Rd} files.  The examples are assumed to be in this encoding when
+running @command{R CMD check}, and it is used for the encoding of the
 @code{CITATION} file.  Only encoding names @code{latin1}, @code{latin2}
 and @code{UTF-8} are known to be portable.  (Do not specify an encoding
 unless one is actually needed: doing so makes the package @emph{less}
@@ -1951,8 +1950,8 @@ sources under @file{vignettes}.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create PDF
-versions of the vignettes for distribution with the package sources in
-@file{inst/doc}.  By including the PDF version in the package sources it
+versions of the vignettes in @file{inst/doc} for distribution with the
+package sources.  By including the PDF version in the package sources it
 is not necessary that the vignettes can be run and compiled at install
 time, i.e., the package author can use private @R{} packages, screen
 snapshots and @LaTeX{} extensions which are only available on his
@@ -2045,17 +2044,20 @@ output and figures, @LaTeX{} include files and bibliographic references.
 Any of which may contain non-ASCII characters, the handling of encodings
 can become very complicated.
 
-The vignette source file should be written in ASCII or in the encoding
-the package declared in its @file{DESCRIPTION} file.  When
-@code{Sweave()} or @code{Stangle()} is called on the vignette source, it
-will be converted@footnote{provided the encoding is known: currently if
-it is not that of a current MBCS locale, it is guessed to be Latin-1.} to
-the encoding of the current @R{} session.  This applies even to comments
+The vignette source file should be written in ASCII or contain a
+declaration of the encoding (see below).  This applies even to comments
+within the source file, since @code{Sweave()} processes comments to look
+for options and metadata lines.  When @code{Sweave()} or
+@code{Stangle()} is called on the vignette source, it will be
+converted@footnote{provided the encoding is known: currently if it is
+not that of a current MBCS locale, it is guessed to be Latin-1.} to the
+encoding of the current @R{} session.  This applies even to comments
 within the source file, since @code{Sweave()} processes comments to look
 for options and metadata lines.
 
 @code{Stangle()} will produce an @R{} code file in the current locale's
-encoding: what that is recorded in a comment at the top of the file.
+encoding: for a non-ASCII vignette what that is recorded in a comment at
+the top of the file.
 
 @code{Sweave()} will produce a @file{.tex} file in the current locale's
 encoding.  That needs to be declared to @LaTeX{} via a line like
