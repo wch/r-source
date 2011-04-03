@@ -69,7 +69,7 @@ MIKTEX = TRUE
 
 ## ====== configuration macros for building installer ===========
 
-# location where Inno Setup 5.3.x was installed. Spaces allowed.
+# location where Inno Setup 5.[34].x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno
 
 # optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.

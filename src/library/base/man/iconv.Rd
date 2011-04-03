@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -41,7 +41,7 @@ iconvlist()
   information is on the man page for \code{iconv(5)} or elsewhere in the
   man pages (but beware that the system command \code{iconv} may not
   support the same set of encodings as the C functions \R calls).
-  Unfortunately, the names are rarely common across platforms.
+  Unfortunately, the names are rarely valid across all platforms.
 
   Elements of \code{x} which cannot be converted (perhaps because they
   are invalid or because they cannot be represented in the target
@@ -66,18 +66,18 @@ iconvlist()
 
   There are three main implementations of \code{iconv} in use.
   \samp{glibc} (as used on Linux) contains one.  Several platforms
-  supply GNU \samp{libiconv}, including Mac OS X and Cygwin.  On Windows
-  we use a version of Yukihiro Nakadaira's \samp{win_iconv}, which is
-  based on Windows' codepages (but \samp{libiconv} can be used by
-  swapping a DLL).  All three have \code{iconvlist}, ignore case in
-  encoding names and support \samp{//TRANSLIT} (but with different
-  results, and for \samp{win_iconv} currently a \sQuote{best fit}
-  strategy is used except for \code{to = "ASCII"}).
+  supply GNU \samp{libiconv}, including Mac OS X, FreeBSD and Cygwin.
+  On Windows we use a version of Yukihiro Nakadaira's \samp{win_iconv},
+  which is based on Windows' codepages.  All three have
+  \code{iconvlist}, ignore case in encoding names and support
+  \samp{//TRANSLIT} (but with different results, and for
+  \samp{win_iconv} currently a \sQuote{best fit} strategy is used except
+  for \code{to = "ASCII"}).
 
   Most commercial Unixes contain an implemetation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
   the \dQuote{R Installation and Administration Manual} recommends
-  installing \samp{libiconv} on Solaris and AIX, for example.
+  installing GNU \samp{libiconv} on Solaris and AIX, for example.
 
   There are other implementations, e.g. NetBSD uses one from the Citrus
   project (which does not support \samp{//TRANSLIT}) and there is an
@@ -93,6 +93,9 @@ iconvlist()
   declared encoding if \code{from} is \code{"latin1"} or \code{"UTF-8"},
   or if \code{from = ""} and the current locale's encoding is detected
   as Latin-1 or UTF-8.
+
+  For \code{iconvlist()}, a character vector (typically of a few hundred
+  elements).
 }
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 

@@ -1968,9 +1968,9 @@ By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format in @file{inst/doc} (but not in sub-directories).  If no
 @file{Makefile} is found in directory @file{inst/doc}, then
 @code{tools::texi2dvi(pdf = TRUE)} is run on all processed vignettes.
-Whenever a @file{Makefile} is found, @code{R CMD build} will try to run
-@command{make} after the @code{Sweave} runs.  The first target in the
-@file{Makefile} should take care of both creation of PDF files and
+Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
+run @command{make} after the @code{Sweave} runs.  The first target in
+the @file{Makefile} should take care of both creation of PDF files and
 cleaning up afterwards (including after @code{Sweave}), i.e., delete all
 files that shall not appear in the final package archive.  Note that if
 the @code{make} step runs @R{} it needs to be careful to respect the
