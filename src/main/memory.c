@@ -2205,7 +2205,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     R_len_t i;
     R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
     R_size_t actual_size = 0;
 #endif
     if (length < 0 )
