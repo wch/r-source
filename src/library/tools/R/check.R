@@ -1648,8 +1648,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             file.copy(vignette_dir, td, recursive = TRUE)
             od <- setwd(file.path(td, "doc"))
             unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
-            for(v in vf) tryCatch(utils::Stangle(v, quiet = TRUE),
-                                  error = function(e) {})
+            for(v in vf)
+                tryCatch(suppressMessages(utils::Stangle(v, quiet = TRUE)),
+                         error = function(e) {})
             new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
             setwd(od)
             dups <- sources[sources %in% new_sources]
