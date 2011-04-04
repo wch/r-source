@@ -778,17 +778,17 @@ or calling Sweave like
 ensures the default syntax even after loading \texttt{R2HTML}.
 
 
-% \subsection{Why does Sweave delete all comments from the R code? Why
-%   does it mess up line breaks for continuation lines?}
+\subsection{Why does Sweave delete all comments from the R code? Why
+  does it mess up line breaks for continuation lines?}
 
-% Sweave runs all code through the R parser. The ``input lines'' you see
-% are the result from running the code through \texttt{parse()} and
-% \texttt{deparse()}, which by default discards all comments and
-% reformats line breaks. If you want to keep the code as it is in the
-% source file, use
-% \begin{verbatim}
-%   \SweaveOpts{keep.source=TRUE}
-% \end{verbatim}
+Sweave runs all code through the R parser. The ``input lines'' you see
+are the result from running the code through \texttt{parse()} and
+\texttt{deparse()}, which by default discards all comments and
+reformats line breaks. If you want to keep the code as it is in the
+source file, use
+\begin{verbatim}
+  \SweaveOpts{keep.source=TRUE}
+\end{verbatim}
 
 
 
