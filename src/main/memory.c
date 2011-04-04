@@ -155,7 +155,9 @@ static R_INLINE SEXP CHK(SEXP x)
    and for FREESXP nodes they record the old type as well. */
 static SEXPTYPE bad_sexp_type_seen = 0;
 static SEXP bad_sexp_type_sexp = NULL;
+#ifdef PROTECTCHECK
 static SEXPTYPE bad_sexp_type_old_type = 0;
+#endif
 static int bad_sexp_type_line = 0;
 
 static R_INLINE void register_bad_sexp_type(SEXP s, int line)
@@ -2532,8 +2534,10 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    /* first_bad_sexp_type_old_type is only used if PROTECTCHECK */
-    SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type = 0;
+    SEXPTYPE first_bad_sexp_type = 0;
+#ifdef PROTECTCHECK
+    SEXPTYPE first_bad_sexp_type_old_type = 0;
+#endif
     SEXP first_bad_sexp_type_sexp = NULL;
     int first_bad_sexp_type_line = 0;
 
@@ -2552,7 +2556,9 @@ static void R_gc_internal(R_size_t size_needed)
 
     if (bad_sexp_type_seen != 0 && first_bad_sexp_type == 0) {
 	first_bad_sexp_type = bad_sexp_type_seen;
+#ifdef PROTECTCHECK
 	first_bad_sexp_type_old_type = bad_sexp_type_old_type;
+#endif
 	first_bad_sexp_type_sexp = bad_sexp_type_sexp;
 	first_bad_sexp_type_line = bad_sexp_type_line;
     }
