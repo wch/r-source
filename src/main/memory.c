@@ -155,7 +155,9 @@ static R_INLINE SEXP CHK(SEXP x)
    and for FREESXP nodes they record the old type as well. */
 static SEXPTYPE bad_sexp_type_seen = 0;
 static SEXP bad_sexp_type_sexp = NULL;
+#ifdef PROTECTCHECK
 static SEXPTYPE bad_sexp_type_old_type = 0;
+#endif
 static int bad_sexp_type_line = 0;
 
 static R_INLINE void register_bad_sexp_type(SEXP s, int line)
@@ -2201,10 +2203,11 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
     R_len_t i;
-    /* actual_size is only used if VALGRIND_LEVEL > 1 */
-    R_size_t size = 0, actual_size = 0, alloc_size, old_R_VSize;
+    R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
-
+#if VALGRIND_LEVEL > 1
+    R_size_t actual_size = 0;
+#endif
     if (length < 0 )
 	errorcall(R_GlobalContext->call,
 		  _("negative length vectors are not allowed"));
@@ -2214,59 +2217,71 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	return R_NilValue;
     case RAWSXP:
 	size = BYTE2VEC(length);
+#if VALGRIND_LEVEL > 1
 	actual_size=length;
+#endif
 	break;
     case CHARSXP:
 	error("use of allocVector(CHARSXP ...) is defunct\n");
     case intCHARSXP:
 	size = BYTE2VEC(length + 1);
+#if VALGRIND_LEVEL > 1
 	actual_size = length + 1;
+#endif
 	break;
     case LGLSXP:
     case INTSXP:
 	if (length <= 0)
-	    actual_size = size = 0;
+	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(int))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = INT2VEC(length);
+#if VALGRIND_LEVEL > 1
 	    actual_size = length*sizeof(int);
+#endif
 	}
 	break;
     case REALSXP:
 	if (length <= 0)
-	    actual_size = size = 0;
+	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(double))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = FLOAT2VEC(length);
+#if VALGRIND_LEVEL > 1
 	    actual_size = length * sizeof(double);
+#endif
 	}
 	break;
     case CPLXSXP:
 	if (length <= 0)
-	    actual_size = size = 0;
+	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(Rcomplex))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = COMPLEX2VEC(length);
+#if VALGRIND_LEVEL > 1
 	    actual_size = length * sizeof(Rcomplex);
+#endif
 	}
 	break;
     case STRSXP:
     case EXPRSXP:
     case VECSXP:
 	if (length <= 0)
-	    actual_size = size = 0;
+	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(SEXP))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = PTR2VEC(length);
+#if VALGRIND_LEVEL > 1
 	    actual_size = length * sizeof(SEXP);
+#endif
 	}
 	break;
     case LANGSXP:
@@ -2519,8 +2534,10 @@ static void R_gc_internal(R_size_t size_needed)
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     Rboolean first = TRUE;
-    /* first_bad_sexp_type_old_type is only used if PROTECTCHECK */
-    SEXPTYPE first_bad_sexp_type = 0, first_bad_sexp_type_old_type = 0;
+    SEXPTYPE first_bad_sexp_type = 0;
+#ifdef PROTECTCHECK
+    SEXPTYPE first_bad_sexp_type_old_type = 0;
+#endif
     SEXP first_bad_sexp_type_sexp = NULL;
     int first_bad_sexp_type_line = 0;
 
@@ -2539,7 +2556,9 @@ static void R_gc_internal(R_size_t size_needed)
 
     if (bad_sexp_type_seen != 0 && first_bad_sexp_type == 0) {
 	first_bad_sexp_type = bad_sexp_type_seen;
+#ifdef PROTECTCHECK
 	first_bad_sexp_type_old_type = bad_sexp_type_old_type;
+#endif
 	first_bad_sexp_type_sexp = bad_sexp_type_sexp;
 	first_bad_sexp_type_line = bad_sexp_type_line;
     }
