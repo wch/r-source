@@ -6,9 +6,6 @@
 \begin{document}
 <<preliminaries, echo=FALSE, results=hide>>=
 options(width=70, useFancyQuotes = FALSE, prompt="R> ", continue="+  ")
-Sys.setenv(LANGUAGE = "en")
-if(.Platform$OS.type != "windows")
-  Sys.setlocale("LC_MESSAGES","C")
 @
 \subsection*{Introduction}
 

@@ -31,9 +31,47 @@ SweaveTeX <- function(file, ...) {
     readLines(texF)
 }
 
+p0 <- function(...) paste(..., sep="")
+latexEnv <- function(lines, name) {
+    stopifnot(is.character(lines), is.character(name),
+	      length(lines) >= 2, length(name) == 1)
+    beg <- p0("\\begin{",name,"}")
+    end <- p0("\\end{",name,"}")
+    i <- grep(beg, lines, fixed=TRUE)
+    j <- grep(end, lines, fixed=TRUE)
+    if((n <- length(i)) != length(j))
+	stop(sprintf("different number of %s / %s", beg,end))
+    if(any(j-1 < i+1))
+	stop(sprintf("positionally mismatched %s / %s", beg,end))
+    lapply(mapply(seq, i+1,j-1, SIMPLIFY=FALSE),
+	   function(ind) lines[ind])
+}
+
+## now, Sweave() and check  *.Rnw  examples :
+
+### ------------------------------------ 1 ----------------------------------
 t1 <- SweaveTeX("swv-keepSrc-1.Rnw")
-## now  look at that -- it has an *extra*  continuation ("+ ") line:
-writeLines(t1[grep("require", t1) + -1:1])
+if(FALSE)## look at it
+writeLines(t1)
+
+inp <- latexEnv(t1, "Sinput")
+out <- latexEnv(t1, "Soutput")
+## This may have to be updated when the *.Rnw changes:
+stopifnot(length(inp) == 5,
+	  grepl("#", inp[[2]]), length(inp[[3]]) == 1,
+	  length(out) == 1,
+	  any(grepl("\\includegraphics", t1)))
+
+### ------------------------------------ 2 ----------------------------------
+## Sweave() comments with  keep.source=TRUE
+t2 <- SweaveTeX("keepsource.Rnw")
+comml <- grep("##", t2, value=TRUE)
+stopifnot(length(comml) == 2,
+	  grepl("initial comment line", comml[1]),
+	  grepl("last comment", comml[2]))
+## the first was lost in 2.12.0;  the last in most/all previous versions of R
+
+
 
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
