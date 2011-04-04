@@ -53,6 +53,8 @@
 
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
+      \item Option \code{keep.source = TRUE} is now the default.
+      
       \item User-defined numeric (with names starting \code{n_}) and
       character (starting \code{ch_}) options are now allowed in
       \code{Sweave()}: as before all other unknown options are taken to

@@ -112,7 +112,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{echo:}{logical (\code{TRUE}). Include \R code in the output
       file?}
 
-    \item{keep.source:}{logical (\code{FALSE}).  When echoing, if
+    \item{keep.source:}{logical (\code{TRUE}).  When echoing, if
       \code{keep.source == TRUE} the original source is copied to the
       file.  Otherwise, deparsed source is echoed.}
     

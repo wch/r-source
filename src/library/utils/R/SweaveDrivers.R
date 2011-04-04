@@ -62,7 +62,7 @@ RweaveLatexSetup <-
                     engine = "R", print = FALSE, eval = TRUE, fig = FALSE,
                     pdf = TRUE, eps = FALSE, png = FALSE, jpeg = FALSE,
                     width = 6, height = 6, resolution = 300, term = TRUE,
-                    echo = TRUE, keep.source = FALSE, results = "verbatim",
+                    echo = TRUE, keep.source = TRUE, results = "verbatim",
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
