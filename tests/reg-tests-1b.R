@@ -1600,4 +1600,10 @@ stopifnot(abs(ur$root) < 0.001)
 ## failed badly in R < 2.13.0, as -Inf was replaced by +1e308
 
 
+## as.matrix.dist
+x <- matrix(,0,0)
+d <- dist(x)
+as.matrix(d)
+## Threw an error < 2.13.0
+
 proc.time()

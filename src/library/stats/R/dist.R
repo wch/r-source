@@ -31,8 +31,8 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE, p=2)
     N <- nrow(x <- as.matrix(x))
     d <- .C("R_distance",
 	    x = as.double(x),
-	    nr= N,
-	    nc= ncol(x),
+	    nr = N,
+	    nc=  ncol(x),
 	    d = double(N*(N - 1)/2),
 	    diag  = as.integer(FALSE),
 	    method= as.integer(method),
@@ -59,7 +59,7 @@ as.matrix.dist <- function(x, ...)
     df <- df + t(df)
     labels <- attr(x, "Labels")
     dimnames(df) <-
-	if(is.null(labels)) list(1L:size,1L:size) else list(labels,labels)
+	if(is.null(labels)) list(seq_len(size), seq_len(size)) else list(labels,labels)
     df
 }
 
