@@ -2217,7 +2217,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	return R_NilValue;
     case RAWSXP:
 	size = BYTE2VEC(length);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	actual_size=length;
 #endif
 	break;
@@ -2225,7 +2225,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	error("use of allocVector(CHARSXP ...) is defunct\n");
     case intCHARSXP:
 	size = BYTE2VEC(length + 1);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	actual_size = length + 1;
 #endif
 	break;
@@ -2238,7 +2238,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = INT2VEC(length);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	    actual_size = length*sizeof(int);
 #endif
 	}
@@ -2251,7 +2251,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = FLOAT2VEC(length);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(double);
 #endif
 	}
@@ -2264,7 +2264,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = COMPLEX2VEC(length);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(Rcomplex);
 #endif
 	}
@@ -2279,7 +2279,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = PTR2VEC(length);
-#if VALGRIND_LEVEL > 1
+#if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(SEXP);
 #endif
 	}
