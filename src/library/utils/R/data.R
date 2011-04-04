@@ -111,7 +111,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                     ## found it, so copy objects from database
                     found <- TRUE
                     if(verbose)
-                        message(sprintf("name=%s:\t found in Rdata.rdb", name),
+                        message(sprintf("name=%s:\t found in Rdata.rds", name),
                                 domain=NA)
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
@@ -120,7 +120,10 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                     lazyLoad(file.path(p, "Rdata"), envir = envir,
                              filter = function(x) x %in% objs)
                     break
-                }
+		} else if(verbose)
+		    message(sprintf("name=%s:\t NOT found in names() of Rdata.rds, i.e.,\n\t%s\n",
+				    name, paste(names(rds), collapse=",")),
+				domain=NA)
             }
             ## check for zipped data dir
             if(file_test("-f", file.path(p, "Rdata.zip"))) {
