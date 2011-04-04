@@ -949,6 +949,9 @@
 
       \item \code{rowsum()} could silently over/underflow on integer
       inputs (reported by Bill Dunlap).
+
+      \item \code{as.matrix()} did not handle \code{"dist"} objects with
+      zero rows.
     }
   }
 }
