@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -34,18 +34,18 @@
   from Rd sources.  It will make use of the environment variables
 #ifdef unix
   \env{R_PAPERSIZE} (set by \command{R CMD}, with a default set when \R
-  was installed) and \env{xdvi} (the DVI previewer, default
-  \command{xdvi}),
+  was installed: values for \env{R_PAPERSIZE} are \code{a4},
+  \code{letter}, \code{legal} and \code{executive}), \env{xdvi} (the
+  DVI previewer, default \command{xdvi})
 #endif
 #ifdef windows
   \env{R_PAPERSIZE} (default \code{a4}, also \code{legal} and
-  \code{executive}) and \env{xdvi} (the DVI previewer, default
-  \command{open} (use file associations)),
+  \code{executive}), \env{xdvi} (the DVI previewer, default
+  \command{open} (use file associations))
 #endif
-  and \env{R_PDFVIEWER} (the PDF previewer).  (Valid values for
-  \env{R_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
-  \code{executive}.)  \command{Rd2pdf} is shorthand for \command{Rd2dvi
-  --pdf}.
+  and \env{R_PDFVIEWER} (the PDF previewer).
+
+  \command{Rd2pdf} is shorthand for \command{Rd2dvi --pdf}.
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on utility
   \code{\var{foo}}.

@@ -121,7 +121,7 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
 # define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 # define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
-# define ENC_KNOWN(x) ((x)->sxpinfo.gp & (BYTES_MASK | LATIN1_MASK | UTF8_MASK))
+# define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
 # define SET_CACHED(x) (((x)->sxpinfo.gp) |= CACHED_MASK)
 # define IS_CACHED(x) (((x)->sxpinfo.gp) & CACHED_MASK)
 #else
