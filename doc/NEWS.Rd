@@ -48,6 +48,9 @@
 
       It will also accept as input the type of list generated with
       \code{toRaw = TRUE}.
+
+      \item Garbage-collecting an input text connection no longer gives
+      a warning (it \sQuote{connects} to nothing outside \R).
     }
   }
 

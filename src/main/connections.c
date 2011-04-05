@@ -207,10 +207,12 @@ static void conFinalizer(SEXP ptr)
 	    break;
 	}
     if(i >= NCONNECTIONS) return;
-    /* printf("closing unused connection %d (%s)\n", ncon,
-       getConnection(ncon)->description); */
-    warning(_("closing unused connection %d (%s)\n"), ncon,
-	    getConnection(ncon)->description);
+    {
+	Rconnection this = getConnection(ncon);
+	if(strcmp(this->class, "textConnection"))
+	    warning(_("closing unused connection %d (%s)\n"),
+		    ncon, this->description);
+    }
 
     con_destroy(ncon);
     R_ClearExternalPtr(ptr); /* not really needed */
