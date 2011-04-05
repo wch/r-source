@@ -578,9 +578,9 @@ Rtangle <-  function()
 }
 
 
-RtangleSetup <- function(file, syntax,
-                         output = NULL, annotate = TRUE, split = FALSE,
-                         prefix = TRUE, quiet = FALSE, ...)
+RtangleSetup <-
+    function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
+             prefix = TRUE, quiet = FALSE, show.line.nos = TRUE, ...)
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
@@ -606,7 +606,8 @@ RtangleSetup <- function(file, syntax,
 
     options <- list(split = split, prefix = prefix,
                     prefix.string = prefix.string,
-                    engine = "R", eval = TRUE)
+                    engine = "R", eval = TRUE,
+                    show.line.nos = show.line.nos)
 
     list(output = output, annotate = annotate, options = options,
          chunkout = list(), quiet = quiet, syntax = syntax)
@@ -649,6 +650,8 @@ RtangleRuncode <-  function(object, chunk, options)
         cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",
             file = chunkout, sep = "")
 
+    if (!options$show.line.nos)
+        chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
     if (!options$eval) chunk <- paste("##", chunk)
     cat(chunk,"\n", file = chunkout, sep = "\n")
     if (is.null(options$label) && options$split) close(chunkout)
