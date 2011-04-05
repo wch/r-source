@@ -24,7 +24,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            comment.char = "#",
            allowEscapes = FALSE, flush = FALSE,
            stringsAsFactors = default.stringsAsFactors(),
-           fileEncoding = "", encoding = "unknown")
+           fileEncoding = "", encoding = "unknown", text)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, comment.char="", \dots)
@@ -190,6 +190,12 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     their native encoding (if one of those two).  See \sQuote{Value}.
   }
 
+  \item{text}{character string: if \code{file} is not supplied and this is, 
+    then data are read from the value of \code{text} via a text connection.
+    Notice that a literal string can be used to include (small) data sets 
+    within R code. 
+  }
+
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
 
@@ -328,7 +334,17 @@ ncol <- max(count.fields(tf, sep = ","))
 read.csv(tf, fill = TRUE, header = FALSE,
          col.names = paste("V", seq_len(ncol), sep = ""))
 unlink(tf)
+
+## "Inline" data set, using text=
+## Notice that leading and trailing empty lines are auto-trimmed
+
+read.table(header=TRUE, text="
+a b
+1 2
+3 4
+")
 }
+
 
 \keyword{file}
 \keyword{connection}

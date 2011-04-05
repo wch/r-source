@@ -42,7 +42,7 @@
       \pkg{tools}.
 
       \item \code{iconv} no longer translates \code{NA} strings as
-      \code{"NA"}.  It has a new argment \code{toRaw} to handle (as
+      \code{"NA"}.  It has a new argument \code{toRaw} to handle (as
       before the \code{CHARSXP} cache) encodings such as \code{UTF-16}
       with embedded nuls.
 
@@ -51,6 +51,9 @@
 
       \item Garbage-collecting an input text connection no longer gives
       a warning (it \sQuote{connects} to nothing outside \R).
+      
+      \item \code{read.table} gains a \code{text} argument, to allow 
+      reading data from a (possibly literal) character string. 
     }
   }
 
