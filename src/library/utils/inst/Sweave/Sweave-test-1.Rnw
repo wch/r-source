@@ -11,8 +11,7 @@
 
 \maketitle
 
-A simple example that will run in any S engine: The integers from 1 to
-10 are
+A simple example: he integers from 1 to 10 are
 <<print=TRUE>>=
 1:10
 <<results=hide>>=
@@ -38,14 +37,12 @@ Note that we can easily integrate some numbers into standard text: The
 third element of vector \texttt{x} is \Sexpr{x[3]}, the
 $p$-value of the test is \Sexpr{format.pval(t1$p.value)}. % $
 
-Now we look at a summary of the famous iris data set, and we want to
-see the commands in the code chunks:
+Now we look at a summary of the famous \texttt{iris} data set, and we
+want to see the commands in the code chunks:
 
 \SweaveOpts{echo=true}
 
-% the following code is R-specific, as data(iris) will not run in Splus. 
-% Hence, we mark it as R code. 
-<<engine=R>>=
+<<>>=
 data(iris)
 summary(iris)
 @ %def
@@ -57,7 +54,7 @@ summary(iris)
 library(graphics)
 pairs(iris)
 @
-    \caption{Pairs plot of the iris data.}
+     \caption{Pairs plot of the iris data.}
   \end{center}
 \end{figure}
 
@@ -69,13 +66,6 @@ boxplot(Sepal.Length~Species, data=iris)
     \caption{Boxplot of sepal length grouped by species.}
   \end{center}
 \end{figure}
-
-
-% R is not S-PLUS, hence this chunk will be ignored:
-<<engine=S4>>=
-function.that.comes.only.with.Splus(x)
 @
 
 \end{document}
-
-
