@@ -102,7 +102,7 @@ A minimal Sweave file is shown in Figure~\ref{fig:ex1.Rnw}, which
 contains two code chunks embedded in a simple \LaTeX{}
 document. Running
 <<>>=
-rnwfile <- system.file("Sweave", "example-1.Rnw", package="utils")
+rnwfile <- system.file("Sweave", "example-1.Rnw", package = "utils")
 Sweave(rnwfile)
 @
 translates this into the \LaTeX{} document shown in
@@ -110,7 +110,7 @@ Figures~\ref{fig:ex1.tex} and~\ref{fig:ex1.pdf}. The latter can also
 be created directly from within R using
 <<>>=
 library("tools")
-texi2dvi("example-1.tex", pdf=TRUE)
+texi2dvi("example-1.tex", pdf = TRUE)
 @
 
 The first difference between \texttt{example-1.Rnw} and
@@ -491,7 +491,7 @@ By default the driver gets the prompts used for input lines
 and continuation lines from R's \texttt{options()} settings. To set new
 prompts use something like
 \begin{verbatim}
-options(prompt="MyR> ", continue="...")
+options(prompt = "MyR> ", continue = "...")
 \end{verbatim}
 see \texttt{help(options)} for details. Similarly the text width is
 controlled by option \texttt{"width"}.
@@ -620,7 +620,7 @@ R CMD Sweave file.Rnw
 
    \subsection{Empty figure chunks give \LaTeX{} errors.}
 
-   When a code chunk with \texttt{fig=true} does not call any plotting
+   When a code chunk with \texttt{fig=TRUE} does not call any plotting
    functions invalid EPS and PDF files are created. Sweave cannot know
    if the code in a figure chunk actually plotted something or not, so
    it will try to include the graphics, which is bound to fail.
@@ -679,11 +679,11 @@ R CMD Sweave file.Rnw
 \begin{verbatim}
  <<results=tex,echo=FALSE>>=
  for(i in 1:4){
-    file <- paste("myfile", i, ".eps", sep="")
-    postscript(file=file, paper="special", width=6, height=6)
+    file <- paste("myfile", i, ".eps", sep = "")
+    postscript(file = file, paper = "special", width = 6, height = 6)
     plot(rnorm(100)+i)
     dev.off()
-    cat("\\includegraphics{", file, "}\n\n", sep="")
+    cat("\\includegraphics{", file, "}\n\n", sep = "")
  }
  @
 \end{verbatim}
@@ -700,7 +700,7 @@ R CMD Sweave file.Rnw
 
   The effect of
 \begin{verbatim}
-  options(SweaveHooks=list(fig=function() par(bg="red", fg="blue")))
+  options(SweaveHooks = list(fig = function() par(bg = "red", fg = "blue")))
 \end{verbatim}
   should be easy to spot. Do not forget to remove the hook at the end
   of the Sweave file unless you want to use it as a global option for
@@ -742,7 +742,7 @@ R CMD Sweave file.Rnw
 
    Sweave respects the usual way of specifying the desired line length
    in R, namely \texttt{options(width)}. E.g., after
-   \texttt{options(width=40)} lines will be formatted to have at most 40
+   \texttt{options(width = 40)} lines will be formatted to have at most 40
    characters (if possible).
 
 
@@ -769,11 +769,11 @@ R CMD Sweave file.Rnw
    syntax, and after that its syntax is on the search list before the
    default syntax.
 \begin{verbatim}
-  options(SweaveSyntax="SweaveSyntaxNoweb")
+  options(SweaveSyntax = "SweaveSyntaxNoweb")
 \end{verbatim}
 or calling Sweave like
 \begin{verbatim}
-  Sweave(..., syntax="SweaveSyntaxNoweb")
+  Sweave(..., syntax = "SweaveSyntaxNoweb")
 \end{verbatim}
 ensures the default syntax even after loading \texttt{R2HTML}.
 

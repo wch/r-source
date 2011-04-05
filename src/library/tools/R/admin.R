@@ -580,7 +580,7 @@ function(src_dir, out_dir, packages)
 ## called from src/library/Makefile[.win]
 ## this is only used when building R, to build the 'grid' and 'utils' vignettes.
 .install_package_vignettes <-
-function(dir, outDir, keep.source = FALSE)
+function(dir, outDir, keep.source = TRUE)
 {
     dir <- file_path_as_absolute(dir)
     vigns <- pkgVignettes(dir = dir)
