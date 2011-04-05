@@ -355,18 +355,18 @@ work with a version of @R{} from Subversion.  (You may need
 @acronym{GNU} @command{make} to allow this, and you will need no spaces
 in the path to the build directory.)
 
-For those obtaining @R{} @emph{via} Subversion, one additional step is
-necessary:
-@cindex Vignettes
-@cindex Subversion
+@c For those obtaining @R{} @emph{via} Subversion, one additional step is
+@c necessary:
+@c @cindex Vignettes
+@c @cindex Subversion
 
-@example
-make vignettes
-@end example
+@c @example
+@c make vignettes
+@c @end example
 
-@noindent
-which makes the @pkg{grid} vignettes (which are contained in the
-tarballs): it make take several minutes.
+@c @noindent
+@c which makes the @pkg{grid} vignettes (which are contained in the
+@c tarballs): it make take several minutes.
 
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or

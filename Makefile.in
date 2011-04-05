@@ -67,6 +67,9 @@ R: Makefile svnonly
 docs: R FORCE
 	-@(cd doc && $(MAKE) $@)
 	-@(cd src/library && $(MAKE) $@)
+	-@if test -f "non-tarball"; then \
+	   (cd src/library && $(MAKE) vignettes); \
+	fi
 FORCE:
 
 stamp-recommended: R docs

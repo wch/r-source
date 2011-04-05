@@ -134,6 +134,14 @@
     }
   }
 
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Building the vignettes is now part of running  \command{make}
+      from an SVN checkout: a separate \command{make vignettes} is no
+      longer required.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
