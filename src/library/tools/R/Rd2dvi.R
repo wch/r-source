@@ -410,8 +410,13 @@ function(pkgdir, outfile, title, batch = FALSE,
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
     if (index) writeLines("\\usepackage{makeidx}", out)
+    inputenc <- Sys.getenv("RD2DVI_INPUTENC", "inputenc")
     ## this needs to be canonical, e.g. 'utf8'
-    setEncoding <- paste("\\usepackage[", latex_canonical_encoding(outputEncoding), "]{inputenc} % @SET ENCODING@", sep="")
+    ## trailer is for detection if we want to edit it later.
+    setEncoding <-
+        paste("\\usepackage[",
+              latex_canonical_encoding(outputEncoding), "]{",
+              inputenc, "} % @SET ENCODING@", sep="")
     writeLines(c(setEncoding,
                  if (index) "\\makeindex{}",
                  "\\begin{document}"), out)
@@ -486,11 +491,11 @@ function(pkgdir, outfile, title, batch = FALSE,
 
 	if (!cyrillic) {
 	    lines[lines == setEncoding] <-
-		paste("\\usepackage[", encs, "]{inputenc}", sep = "")
+		paste("\\usepackage[", encs, "]{", inputenc, "}", sep = "")
 	} else {
 	    lines[lines == setEncoding] <-
 		paste(
-"\\usepackage[", encs, "]{inputenc}
+"\\usepackage[", encs, "]{", inputenc, "}
 \\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}", sep = "")
 	}
 	writeLines(lines, outfile)

@@ -807,7 +807,7 @@ An illustration of lexical scoping.
 > ### ** Examples
 > 
 > ## This may not be installed
-> gridEx <- system.file("doc", "grid.Snw", package = "grid")
+> gridEx <- system.file("doc", "grid.Rnw", package = "grid")
 > vignetteDepends(gridEx)
 $Depends
 [1] "lattice"

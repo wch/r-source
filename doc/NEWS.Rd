@@ -108,6 +108,12 @@
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
+      
+      \item \command{R CMD Rd2dvi} allows the use of LaTeX package
+      \samp{inputenx} rather than \samp{inputenc}: the value of the
+      environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
+      \samp{inputenx} is an optional install which provides greater
+      coverage of the UTF-8 encoding.)
     }
   }
 
