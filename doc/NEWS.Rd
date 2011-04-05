@@ -82,7 +82,10 @@
 
       \item \command{R CMD Sweave} now supports a \option{--driver}
       option to select the Sweave driver: the default is equivalent to
-      \option{--driver=RweaveLatex}.  Also a \option{--encoding} option.
+      \option{--driver=RweaveLatex}.
+
+      \item \command{R CMD Sweave} and \command{R CMD Stangle} support
+      \option{--encoding} and \option{--options} arguments.
 
       \item The \code{RweaveLatex()} driver now normally only runs each
       figure chunk once for each device (and hence by default once for a
@@ -95,8 +98,6 @@
       for graphics files (and chunks if \code{split=TRUE}).  Portable
       names are regarded as alphanumeric plus hyphen, underscore, plus
       and hash (periods cause problems with recognizing file extensions).
-      
-      \item \command{R CMD Sweave} gains a \option{--options} argument.
     }
   }
 

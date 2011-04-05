@@ -425,9 +425,14 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     do_exit()
 }
 
-.Stangle <- function(arg)
+.Stangle <- function(args = NULL)
 {
     options(warn = 1)
+    if (is.null(args)) {
+        args <- commandArgs(TRUE)
+        args <- paste(args, collapse=" ")
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
+    }
 
     Usage <- function() {
         cat("Usage: R CMD Stangle file",
@@ -437,6 +442,8 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
             "Options:",
             "  -h, --help     print this help message and exit",
             "  -v, --version  print version info and exit",
+            "  --encoding=enc  assume encoding 'enc' for file",
+            "  --options=      comma-separated list of Stangle options",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -444,19 +451,48 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     do_exit <- function(status = 0L)
         q("no", status = status, runLast = FALSE)
 
-    if (length(arg) != 1L) { Usage(); do_exit(1L) }
-    if (arg %in% c("-h", "--help")) { Usage(); do_exit() }
-    if (arg %in% c("-v", "--version")) {
-        cat("Stangle front-end: ",
-            R.version[["major"]], ".",  R.version[["minor"]],
-            " (r", R.version[["svn rev"]], ")\n", sep = "")
-        cat("",
-            "Copyright (C) 2006-2010 The R Core Development Team.",
-            "This is free software; see the GNU General Public License version 2",
-            "or later for copying conditions.  There is NO warranty.",
-            sep = "\n")
-        do_exit()
+    if (!length(args)) {
+        Usage()
+        do_exit(1L)
     }
-    Stangle(arg)
+
+    file <- character()
+    encoding <- options <- ""
+    while(length(args)) {
+        a <- args[1L]
+        if (a %in% c("-h", "--help")) {
+            Usage()
+            do_exit()
+        }
+        else if (a %in% c("-v", "--version")) {
+            cat("Stangle front-end: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
+            cat("",
+                "Copyright (C) 2006-2011 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep = "\n")
+            do_exit()
+        } else if (substr(a, 1, 11) == "--encoding=") {
+            encoding <- substr(a, 12, 1000)
+        } else if (substr(a, 1, 10) == "--options=") {
+            options <- substr(a, 11, 1000)
+        } else if (substr(a, 1, 1) == "-") {
+            message("Warning: unknown option ", sQuote(a))
+        } else file <- c(file, a)
+        args <- args[-1L]
+    }
+    if(length(file) != 1L) {
+        Usage()
+        do_exit(1L)
+    }
+    args <- list(file)
+    args <- c(args, encoding = encoding)
+    if(nzchar(options)) {
+        opts <- eval(parse(text = paste("list(", options, ")")))
+        args <- c(args, opts)
+    }
+    do.call(Stangle, args)
     do_exit()
 }

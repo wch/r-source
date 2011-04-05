@@ -461,9 +461,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	PROCESS_CMD("nextArg");
     } else if (!strcmp(argv[cmdarg], "Stangle")) {
 	snprintf(cmd, CMD_LEN,
-		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Stangle('%s')\"",
-		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
-	return(system(cmd));
+		 "%s/%s/Rterm.exe --vanilla --slave -e utils:::.Stangle() --args ",
+		 getRHOME(3), BINDIR);
+	PROCESS_CMD("nextArg");
     } else {
 	/* not one of those handled internally */
 	p = argv[cmdarg];
