@@ -369,6 +369,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
             "  -v, --version   print version info and exit",
             "  --driver=name   use named Sweave driver",
             "  --encoding=enc  assume encoding 'enc' for file",
+            "  --options=      comma-separated list of Sweave options",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -380,8 +381,8 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
         Usage()
         do_exit(1L)
     }
-    driver <- ""
-    encoding <- ""
+    file <- character()
+    driver <- encoding <- options <- ""
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -402,13 +403,25 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
             driver <- substr(a, 10, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             encoding <- substr(a, 12, 1000)
+        } else if (substr(a, 1, 10) == "--options=") {
+            options <- substr(a, 11, 1000)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
-        } else arg <- a
+        } else file <- c(file, a)
        args <- args[-1L]
     }
-    if(nzchar(driver)) Sweave(arg, driver, encoding = encoding)
-    else Sweave(arg, encoding = encoding)
+    if(length(file) != 1L) {
+        Usage()
+        do_exit(1L)
+    }
+    args <- list(file)
+    if(nzchar(driver)) args <- c(args, driver)
+    args <- c(args, encoding = encoding)
+    if(nzchar(options)) {
+        opts <- eval(parse(text = paste("list(", options, ")")))
+        args <- c(args, opts)
+    }
+    do.call(Sweave, args)
     do_exit()
 }
 

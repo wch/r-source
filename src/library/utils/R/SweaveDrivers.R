@@ -136,7 +136,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 }
             }
             if (!is.null(options$label))
-                cat(" (label=", options$label, ")", sep = "")
+                cat(" (label = ", options$label, ")", sep = "")
             cat("\n")
         }
 

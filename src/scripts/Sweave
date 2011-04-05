@@ -6,17 +6,8 @@ R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-save --no-restore --slave'}
 
 args=
 while test -n "${1}"; do
-  case ${1} in
-    --no-vanilla)
-	  vanilla_install=false ;;
-    --use-vanilla)
-	  vanilla_install=true ;;
-
-  *)
   ## quote each argument here, unquote in R code.
   args="${args}nextArg${1}"
-  ;;
-  esac
   shift
 done
 

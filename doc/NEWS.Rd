@@ -92,6 +92,8 @@
       for graphics files (and chunks if \code{split=TRUE}).  Portable
       names are regarded as alphanumeric plus hyphen, underscore, plus
       and hash (periods cause problems with recognizing file extensions).
+      
+      \item \command{R CMD Sweave} gains a \option{--options} argument.
     }
   }
 
