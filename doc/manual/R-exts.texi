@@ -162,10 +162,10 @@ section on @ref{Package name spaces}.
 @cindex cleanup file
 
 The optional files @file{configure} and @file{cleanup} are (Bourne
-shell) script files which are executed before and (provided that option
-@option{--clean} was given) after installation on Unix-alikes, see
-@ref{Configure and cleanup}.  The analogues on Windows are
-@file{configure.win} and @file{cleanup.win}
+shell) script files which are, respectively, executed before and
+(provided that option @option{--clean} was given) after installation on
+Unix-alikes, see @ref{Configure and cleanup}.  The analogues on Windows
+are @file{configure.win} and @file{cleanup.win}
 
 @cindex LICENSE file
 @cindex LICENCE file
@@ -511,7 +511,9 @@ package, specify @samp{LazyLoad: yes}.
 The @samp{ZipData} field controls whether the automatic Windows build
 will zip up the data directory or no: set this to @samp{no} if your
 package will not work with a zipped data directory.  (Setting to any
-other value is deprecated, and is unused as from @R{} 2.13.0.)
+other value is deprecated, and it is unused as from @R{} 2.13.0: but it
+might still be needed if the package can be installed under earlier
+versions of @R{}.)
 
 The @samp{BuildVignettes} field can be set to a false value to stop
 @command{R CMD build} from attempting to rebuild the vignettes, as well
@@ -690,8 +692,7 @@ platforms} with associated extensions @file{.c}, @file{.cc} or
 @file{.mm} or @file{.M}, respectively.  We recommend using @file{.h} for
 headers, also for C++@footnote{Using @file{.hpp}, although somewhat
 popular, is not guaranteed to be portable.} or Fortran 9x include files.
-(Use of extension @file{.C} for C++ is now defunct.)
-
+(Use of extension @file{.C} for C++ is no longer supported.)
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package, and we do not support using both C++ and
@@ -738,8 +739,7 @@ space. (Note that it is not possible to generate this index file
 automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory (except on Unix-alikes, hidden files with
-names starting with @samp{.}).  Subdirectories of @file{inst} should not
+to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html}, @file{latex}, @file{R-ex} and @file{Meta}).  The copying of
@@ -911,8 +911,8 @@ of it:
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
 
-Note that most of this section is Unix-alike-specific: see the comments
-later on about the Windows port of @R{}.
+Note that most of this section is specfic to Unix-alikes: see the
+comments later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
 installation you can include an executable (Bourne shell) script
@@ -930,7 +930,7 @@ Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
 option @option{--clean} was given, and by @code{R CMD build} when
 preparing the package for building from its source.  It can be used to
-clean up the package source tree.  In particular, it should remove all
+clean up the package source tree: in particular, it should remove all
 files created by @command{configure}.
 
 As an example consider we want to use functionality provided by a (C or
@@ -1043,14 +1043,13 @@ to configure it manually, or provide a @file{configure.win} script to be
 used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
-@file{configure.win} is run the environment variables
-@env{R_HOME}@footnote{formerly also @env{RHOME}, but this was removed in
-@R{} 2.12.0.} (which uses @code{/} as the file separator) and
-@env{R_ARCH} will be set.  Use @env{R_ARCH} to decide if this is a
-64-bit build (its value there is @samp{/x64}) and to install DLLs to the
-correct place (@code{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
-@env{R_ARCH_BIN} to find the correct place under the @file{bin}
-directory, e.g.@: @code{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
+@file{configure.win} is run the environment variables @env{R_HOME}
+(which uses @code{/} as the file separator) and @env{R_ARCH} will be
+set.  Use @env{R_ARCH} to decide if this is a 64-bit build (its value
+there is @samp{/x64}) and to install DLLs to the correct place
+(@code{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use @env{R_ARCH_BIN} to find the
+correct place under the @file{bin} directory, e.g.@:
+@code{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
@@ -1219,8 +1218,8 @@ OBJECTS = 4dfp/endianio.o 4dfp/Getifh.o R4dfp-object.o
 
 
 Note that @file{Makevars} should not normally contain targets, as it is
-included before the default makefile and @command{make} is called with
-target @code{all} which is defined in the default makefile.  If you
+included before the default makefile and @command{make} will call the
+first target, intended to be @code{all} in the default makefile.  If you
 really need to circumvent that, use a suitable (phony) target @code{all}
 before any actual targets in @file{Makevars.[win]}: for example package
 @pkg{fastICA} has
@@ -1590,13 +1589,13 @@ environment variables when using these utilities.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD check} and @code{R CMD build} require you to have installed
-the Windows toolset (see the ``R Installation and Administration''
-manual) and have it in your path.  You may need to set @env{TMPDIR} to
-point to a suitable writable directory with a path not containing spaces
--- use forward slashes for the separators.  Also, the directory needs to
-be on a case-honouring file system (some network-mounted file systems
-are not).
+@code{R CMD build} requires you to have installed the Windows toolset
+(see the ``R Installation and Administration'' manual) and have it in
+your path, and @code{R CMD check} will make use of it if present.  You
+may need to set @env{TMPDIR} to point to a suitable writable directory
+with a path not containing spaces -- use forward slashes for the
+separators.  Also, the directory needs to be on a case-honouring file
+system (some network-mounted file systems are not).
 @end quotation
 
 
@@ -1610,8 +1609,11 @@ Using @code{R CMD check}, the @R{} package checker, one can test whether
 more directories, or gzipped package @command{tar}
 archives@footnote{This may require @acronym{GNU} @command{tar}: the
 command used can be set with environment variable @env{TAR}.}  with
-extension @file{.tar.gz} or @file{.tgz}.  This runs a series of checks,
-including
+extension @file{.tar.gz} or @file{.tgz}.  (Some platforms may allow
+other forms of compression and extensions @file{.tar.bz2} and
+@file{.tar.xz}.)
+
+This runs a series of checks, including
 
 @enumerate
 @item
@@ -1628,7 +1630,8 @@ The files and directories are checked for sufficient permissions
 
 @item
 The files are checked for binary executables, using a suitable version
-of @command{file} if available.  (There may be rare false positives.)
+of @command{file} if available@footnote{A suitable @command{file.exe} is
+part of the Windows toolset.}.  (There may be rare false positives.)
 
 @item
 The @file{DESCRIPTION} file is checked for completeness, and some of its
@@ -1747,7 +1750,7 @@ possible.
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
 executed, and the vignettes re-made from their sources as a check of
-completeness of the sources (unless there is a @samp{BuildVignettes}
+completeness of the sources (unless there is a @samp{Vignettes}
 field in the package's @file{DESCRIPTION} file with a false value).
 
 If there is an error in executing the @R{} code in vignette
@@ -1900,10 +1903,10 @@ longer done.
 
 @command{R CMD build} requires a suitable @command{tar} program that can
 produce a compressed tarball: almost certainly one will have been found
-when @R{} was configured on a Unix-alike (and @code{Rtools} contains
-one), but if there are problems, set the environment variable @env{TAR}
-to the path to a suitable program or to @code{"internal"} if none is
-available.
+when @R{} was configured on a Unix-alike (and the Windows toolset
+contains one), but if there are problems, set the environment variable
+@env{TAR} to the path to a suitable program or to @code{"internal"} if
+none is available.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
@@ -2114,9 +2117,9 @@ their encoding, but the Sweave option @code{pdf.encoding} may need to be
 set appropriately: see the help for the @code{pdf()} graphics device.
 
 As a real example of the complexities, consider the @pkg{fortunes}
-package version @samp{1.4-0}.  That package does not have a declared
-encoding, and its vignette is ASCII.  However, the data it displays are
-read from a UTF-8 CSV file, and will be assumed to be in the current
+package version @samp{1.4-0}.  That package did not have a declared
+encoding, and its vignette was in ASCII.  However, the data it displays
+are read from a UTF-8 CSV file and will be assumed to be in the current
 encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
 @code{read.table} been told the data were UTF-8, @file{fortunes.tex}
 would have been in the locale's encoding.
@@ -2227,10 +2230,10 @@ and suitable options might be
 @end example
 
 @noindent
-(see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
-for more and consider all the options for image downsampling) as well as
-numerous commercial and shareware Windows programs.  Note that these do
-not all try the same size-reduction strategies, and Acrobat and
+; see @uref{http://pages.cs.wisc.edu/@/~ghost/@/doc/@/cvs/@/Ps2pdf.htm}
+for more such and consider all the options for image downsampling) as
+well as numerous commercial and shareware Windows programs.  Note that
+these do not all try the same size-reduction strategies, and Acrobat and
 @command{ps2pdf} can be much better at reducing the size of embedded
 images than some of the others.
 
@@ -2970,7 +2973,7 @@ defined in the released package (maybe by adding it to
 @code{PKG_CPPFLAGS}).
 
 This applies not only to your own code but to any external software you
-compile it or link to.
+compile in or link to.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
