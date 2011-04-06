@@ -35,20 +35,20 @@ final document containing
 \end{itemize}
 This allows to re-generate a report if the input data change and
 documents the code to reproduce the analysis in the same file that
-also contains the report. The R code of the complete analysis is
-embedded into a \LaTeX{} document\footnote{\url{http://www.ctan.org}}
-using the \texttt{noweb} syntax \citep{flm:Ramsey:1998} which is
-usually used for literate programming \cite{fla:Knuth:1984}.  Hence,
-the full power of \LaTeX{} (for high-quality typesetting) and R (for
-data analysis) can be used simultaneously. See
-\cite{e1071-papers:Leisch:2002} and references therein for more
-general thoughts on dynamic report generation and pointers to other
-systems.
+contains the report. The R code of the complete analysis is embedded
+into a \LaTeX{} document\footnote{\url{http://www.ctan.org}} using the
+\texttt{noweb} syntax \citep{flm:Ramsey:1998} which is usually used
+for literate programming \cite{fla:Knuth:1984}.  Hence, the full power
+of \LaTeX{} (for high-quality typesetting) and R (for data analysis)
+can be used simultaneously. See \cite{e1071-papers:Leisch:2002} and
+references therein for more general thoughts on dynamic report
+generation and pointers to other systems.
 
 Sweave uses a modular concept using different drivers for the actual
 translations. Obviously different drivers are needed for different
 text markup languages (\LaTeX{}, HTML, \ldots). Several packages on
-CRAN provide support for other word processing systems.
+CRAN provide support for other word processing systems (see
+Appendix~A).
 
 
 \section{Noweb files}
@@ -57,10 +57,9 @@ CRAN provide support for other word processing systems.
 \texttt{noweb} \citep{flm:Ramsey:1998} is a simple
 literate-programming tool which allows to combine program source code
 and the corresponding documentation into a single file. Different
-programs allow to extract documentation and/or source code. A
-\texttt{noweb} file is a simple text file which consists of a sequence
-of code and documentation segments, these segments are called
-\emph{chunks}:
+programs extract documentation and source code. A \texttt{noweb} file
+is a simple text file which consists of a sequence of code and
+documentation segments, called \emph{chunks}:
 \begin{description}
 \item[Documentation chunks] start with a line that has an at sign
   (\verb|@|) as first character, followed by a space or newline
@@ -88,11 +87,11 @@ support this features, hence they are not described here.
 
 \subsection{A simple example}
 
-Sweave source files are regular \texttt{noweb} files with some additional
+Sweave source files are \texttt{noweb} files with some additional
 syntax that allows some additional control over the final
-output. Traditional \texttt{noweb} files have the extension \texttt{.nw},
-which is also fine for Sweave files (and fully supported by the
-software). Additionally, Sweave currently recognizes files with
+output. Traditional \texttt{noweb} files have the extension
+\texttt{.nw}, which is also fine for Sweave files (and fully supported
+by the software). Additionally, Sweave currently recognizes files with
 extensions \texttt{.rnw}, \texttt{.Rnw}, \texttt{.snw} and
 \texttt{.Snw} to directly indicate a \texttt{noweb} file with Sweave
 extensions. We will use \texttt{.Rnw} throughout this document.
@@ -138,15 +137,14 @@ The second code chunk shows one of the Sweave extension to the
 \texttt{noweb} syntax: Code chunk names can be used to pass options to
 Sweave which control the final output.
 \begin{itemize}
- \item The chunk is marked as a figure chunk (\texttt{fig=TRUE}) such
-that Sweave creates a PDF file corresponding to the plot
-created by the commands in the chunk. Furthermore, a
-\verb|\includegraphics{example-1-002}| statement is inserted into the
-\LaTeX{} file (details on the choice of file names for figures follow
-later in this manual).
- \item Option \texttt{echo=FALSE} indicates that the R
-  input should not be included in the final document (no \texttt{Sinput}
-  environment).
+\item The chunk is marked as a figure chunk (\texttt{fig=TRUE}) such
+  that Sweave creates (by default) a PDF file of the plot created by
+  the commands in the chunk. Furthermore, a
+  \verb|\includegraphics{example-1-002}| statement is inserted into
+  the \LaTeX{} file (details on the choice of file names for figures
+  follow later in this manual).
+\item Option \texttt{echo=FALSE} indicates that the R input should not
+  be included in the final document (no \texttt{Sinput} environment).
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -194,7 +192,7 @@ In the \texttt{.Rnw} file options can be specified either
   \verb|\SweaveOpts| statement in the preamble of the document sets
   defaults for all code chunks.
 \end{enumerate}
-Further, options can be specified (as a comma-separated list of
+Further, global options can be specified (as a comma-separated list of
 \texttt{key=value} items) in the environment variable
 \verb|SWEAVE_OPTIONS|.
 
@@ -237,6 +235,22 @@ names).
 Note that \texttt{split=TRUE} should \textbf{not} be used in package
 vignettes.
 
+The help pages for \texttt{RweaveLatex} and \texttt{Rtangle} list the
+options supported by the default Sweave and Stangle drivers.
+
+Now for the promised details on the file names corresponding to
+figures.  These are of the form \texttt{prefix-label.ext}.
+\texttt{prefix} can be set by the option \texttt{prefix.string},
+otherwise is the basename of the output file (which unless specified
+otherwise is the basename of the input file).  \texttt{label} is the
+label of the code chunk if it has one, otherwise the number of the
+code chunk in the range \texttt{001} to \texttt{999}.  \texttt{ext} is
+the appropriate extension for the type of graphics, e.g.{}
+\texttt{pdf}, \texttt{eps}, \ldots{}.  So for the
+\texttt{example-1.Rnw} file, the PDF version of the boxplot is
+\texttt{example-1-002.pdf}, since it is the second code chunk in the
+document.
+
 \subsection{Using multiple input files}
 
 \LaTeX{} files can include others via \verb|\input{}| commands.  These
@@ -245,25 +259,24 @@ included by \LaTeX{} and are not processed by Sweave.  The equivalent
 if you want the included files to be processed is the
 \verb|\SweaveInput{}| command.
 
-Included files should use the same syntax and encoding as the main
-file.
+Included files should use the same Sweave syntax (see below) and
+encoding as the main file.
 
 
 \subsection{Using scalars in text}
 
-There is limited support for using the values of R objects in
-text chunks. Any occurrence of \verb|\Sexpr{|\texttt{\textit{expr}}\verb|}|
-is replaced by the
-string resulting from coercing the value of the expression \texttt{expr}
-to a character vector; only the first element of this vector is
-used. E.g., \verb|\Sexpr{sqrt(9)}| will be replaced
+There is limited support for using the values of R objects in text
+chunks. Any occurrence of \verb|\Sexpr{|\texttt{\textit{expr}}\verb|}|
+is replaced by the string resulting from coercing the value of the
+expression \texttt{expr} to a character vector; only the first element
+of this vector is used. E.g., \verb|\Sexpr{sqrt(9)}| will be replaced
 by the string \texttt{'3'} (without any quotes).
 
 The expression is evaluated in the same environment as the code
 chunks, hence one can access all objects defined in the code chunks
-which have appeared before the expression and were not ignored. The
-expression may contain any valid R code, only curly brackets are not
-allowed. (This is not really a limitation because more complicated
+which have appeared before the expression and were evaluated. The
+expression may contain any valid R code, only braces (\verb|{ }|) are
+not allowed. (This is not really a limitation because more complicated
 computations can be easily done in a hidden code chunk and the result
 then be used inside a \verb|\Sexpr|.)
 
@@ -300,7 +313,7 @@ which is equivalent to defining the last code chunk as
 \end{quote}
 
 The chunk reference operator \verb|<<>>| takes only the name of the
-chunk as argument, without any additional Sweave options.
+chunk as its argument: no additional Sweave options are allowed.
 
 \subsection{Syntax definition}
 
@@ -382,9 +395,10 @@ encoding to be changed by
 \begin{quote}
   \verb|\inputencoding{something}|
 \end{quote}
-statements: these may not work well in Sweave processing.  It is all
-too easy for BiBTeX to pick up UTF-8-encoded references for a Latin-1
-document, or \emph{vice versa}.
+statements: these may not work well in Sweave processing.
+
+It is all too easy for BiBTeX to pick up UTF-8-encoded references for
+a Latin-1 document, or \emph{vice versa}.
 
 R output is again to a large extent under the user's control.  If a
 Latin-1 Sweave document is processed by R running a Latin-1 locale or
@@ -431,7 +445,7 @@ with standard \texttt{latex} or \texttt{pdflatex}), see
 <<eval=FALSE>>=
 help("RweaveLatex")
 @
-for details.
+for details, including the supported options.
 
 \subsubsection{Writing to separate files}
 
@@ -445,7 +459,7 @@ applies to figures.  You do need to ensure that the file names
 generated are valid and not so long that there are not regarded as the
 same by your OS (some file systems only recognize 13 characters).
 
-\subsubsection{\LaTeX{} style file and figure sizes}
+\subsubsection{\LaTeX{} style file}
 
 The driver automatically inserts a \verb|\usepackage{Sweave.sty}|
 command as last line before the \verb|\begin{document}| statement of
@@ -462,22 +476,25 @@ command as last line before the \verb|\begin{document}| statement of
 in the preamble of your latex file, this will prevent automatic
 insertion of the line.
 
-\verb|Sweave.sty| also sets the default \emph{\LaTeX{}} figure width
-(which is independent of the size of the generated EPS or PDF files).
-The current default is
+
+\subsubsection{Figure sizes}
+
+\verb|Sweave.sty| sets the default \emph{\LaTeX{}} figure width (which
+is independent of the size of the generated EPS or PDF files).  The
+current default is
 \begin{verbatim}
 \setkeys{Gin}{width=0.8\textwidth}
 \end{verbatim}
-if you want to use another width for the figures that are automatically
-generated and included by Sweave, simply add a line similar to the
-one above \emph{after} \verb|\begin{document}|. If you want no default
-width for figures insert a \verb|\usepackage[nogin]{Sweave}| in
-the header of your file.
-Note that a new graphics device is opened for each figure chunk
-(option \texttt{fig=TRUE}), hence all graphical parameters of the
-\texttt{par()} command must be set in each single figure chunk and are
-forgotten after the respective chunk (because the device is closed
-when leaving the chunk).
+if you want to use another width for the figures that are
+automatically generated and included by Sweave, simply add a line
+similar to the one above \emph{after} \verb|\begin{document}|. If you
+want no default width for figures insert a
+\verb|\usepackage[nogin]{Sweave}| in the header of your file.  Note
+that a new graphics device is opened for each figure chunk (one with
+option \texttt{fig=TRUE}), hence all graphical parameters of the
+\texttt{par()} command must be set in each single figure chunk and
+are forgotten after the respective chunk (because the device is
+closed when leaving the chunk).
 
 Attention: One thing that gets easily confused are the width/height
 parameters of the R graphics devices and the corresponding arguments
@@ -487,7 +504,7 @@ devices, and hence affect the default size of the produced EPS and PDF
 files. They do not affect the size of figures in the document, by
 default they will always be 80\% of the current text width. Use
 \verb|\setkeys{Gin}| to modify figure sizes or use explicit
-\verb|\includegraphics| commands in combination with Sweave option
+\verb|\includegraphics| commands in combination with the Sweave option
 \texttt{include=FALSE}.
 
 \subsubsection{Prompts and text width}
@@ -498,18 +515,18 @@ prompts use something like
 \begin{verbatim}
 options(prompt = "MyR> ", continue = "...")
 \end{verbatim}
-see \texttt{help(options)} for details. Similarly the text width is
-controlled by option \texttt{"width"}.
+see \texttt{help(options)} for details. Similarly the output text
+width is controlled by option \texttt{"width"}.
 
 \subsection{The \texttt{Rtangle} driver}
 
 This driver can be used to extract R code chunks from a \texttt{.Rnw}
 file. Code chunks can either be written to one large file or separate
-files (one for each label). The options \texttt{split},
+files (one for each code chunk). The options \texttt{split},
 \texttt{prefix}, and \texttt{prefix.string} have the same defaults and
 interpretation as for the \texttt{RweaveLatex} driver. Use the
-standard \texttt{noweb} command line tool \texttt{notangle} if chunks other
-than R code should be extracted. See
+standard \texttt{noweb} command line tool \texttt{notangle} if chunks
+other than R code should be extracted. See
 <<eval=FALSE>>=
 help("Rtangle")
 @
@@ -592,9 +609,9 @@ encoding used for the text to be processed.
 
   \subsection{Can I run Sweave directly from a shell?}
 
-   E.g., for writing makefiles it can be useful to run Sweave directly
-   from a shell rather than manually start R and then run Sweave. This
-   can easily be done using
+  E.g., for writing makefiles it can be useful to run Sweave directly
+  from a shell rather than manually starting R and then running
+  Sweave. This can easily be done using
 \begin{verbatim}
 R CMD Sweave file.Rnw
 \end{verbatim}
@@ -606,13 +623,13 @@ R CMD Sweave file.Rnw
   \subsection{Why does \LaTeX{} not find my EPS and PDF graphic files when
      the file name contains a dot?}
 
-   Sweave uses the standard \LaTeX{} package \texttt{graphicx} to handle
-   graphic files, which automatically uses EPS files for standard
-   \LaTeX{} and PDF files for PDF\LaTeX{}, if the name of the input file
-   has no extension, i.e., contains no dots. Hence, you may run into
-   trouble with graphics handling if the name of your Sweave file
-   contains extra dots: \file{foo.Rnw} is OK, while \file{foo.bar.Rnw}
-   is not.
+   Sweave uses the standard \LaTeX{} package \texttt{graphicx} to
+   handle graphic files, which automatically chooses the type of file,
+   provided the basename given in the \verb|\includegraphics{}|
+   statement has no extension.  Hence, you may run into trouble with
+   graphics handling if the basename of your Sweave file contains
+   dots: \file{foo.Rnw} is OK, while \file{foo.bar.Rnw} is not.
+
 
   % \subsection{Why does Sweave by default create both EPS and PDF
   %    graphic files?}
@@ -678,17 +695,17 @@ R CMD Sweave file.Rnw
 \end{verbatim}
    This will currently \textbf{not} work, because Sweave allows
    \textbf{only one graph} per figure chunk. The simple reason is that
-   Sweave opens a postscript device before executing the code and
+   Sweave opens a \texttt{pdf} device before executing the code and
    closes it afterwards. If you need to plot in a loop, you have to
    program it along the lines of
 \begin{verbatim}
  <<results=tex,echo=FALSE>>=
  for(i in 1:4){
-    file <- paste("myfile", i, ".eps", sep = "")
-    postscript(file = file, paper = "special", width = 6, height = 6)
+    fnfile <- paste("myfile", i, ".pdf", sep = "")
+    pdf(file = fn, width = 6, height = 6)
     plot(rnorm(100)+i)
     dev.off()
-    cat("\\includegraphics{", file, "}\n\n", sep = "")
+    cat("\\includegraphics{", fn, "}\n\n", sep = "")
  }
  @
 \end{verbatim}
