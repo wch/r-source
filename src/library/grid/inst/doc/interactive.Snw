@@ -18,37 +18,32 @@
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(grid)
-ps.options(pointsize=12)
-options(width=60)
-
+ps.options(pointsize = 12)
+options(width = 60)
 @
 First of all, we create an x-axis and draw it on the device.
 It is very important that we specify a \code{name} for the object
 so that we can refer to it later.
 
 <<fig1, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
-grid.xaxis(at=1:4/5, vp=viewport(w=.5, h=0.01), name="gxa")
-
+grid.xaxis(at = 1:4/5, vp = viewport(w = .5, h = 0.01), name = "gxa")
 @
 \begin{center}
 {
 \includegraphics[width=3in, height=1in]{interactive-fig1}
 }
 \end{center}
-
 @
 
 Now we edit the axis, changing the colour of the entire axis to red.
 Notice that we refer to the x-axis by its name.
 
 <<edit1, term=FALSE>>=
-grid.edit("gxa", gp=gpar(col="red"))
-
+grid.edit("gxa", gp = gpar(col = "red"))
 <<fig2, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
-gxa <- xaxisGrob(at=1:4/5, vp=viewport(w=.5, h=.01))
-gxa <- editGrob(gxa, gp=gpar(col="red"))
+gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
+gxa <- editGrob(gxa, gp = gpar(col = "red"))
 grid.draw(gxa)
-
 @
 \begin{center}
 {
@@ -67,18 +62,16 @@ writing code that will be reused).
 grid.edit(gPath("gxa", "labels"), gp=gpar(col="green"))
 
 <<fig3, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
-gxa <- xaxisGrob(at=1:4/5, vp=viewport(w=.5, h=.01))
-gxa <- editGrob(gxa, gp=gpar(col="red"))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="green"))
+gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
+gxa <- editGrob(gxa, gp = gpar(col = "red"))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "green"))
 grid.draw(gxa)
-
 @
 \begin{center}
 {
 \includegraphics[width=3in, height=1in]{interactive-fig3}
 }
 \end{center}
-
 @
 
 It is also possible to change the number of tick marks.
@@ -89,44 +82,38 @@ colour specification of the old labels was specific to the old labels
 and was discarded when the old labels were discarded.
 
 <<edit3, term=FALSE>>=
-grid.edit("gxa", at=c(0.0, 0.5, 1.0))
-
+grid.edit("gxa", at = c(0.0, 0.5, 1.0))
 <<fig4, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
-gxa <- xaxisGrob(at=1:4/5, vp=viewport(w=.5, h=.01))
-gxa <- editGrob(gxa, gp=gpar(col="red"))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="green"))
-gxa <- editGrob(gxa, at=c(0.0, 0.5, 1.0))
+gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
+gxa <- editGrob(gxa, gp = gpar(col = "red"))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "green"))
+gxa <- editGrob(gxa, at = c(0.0, 0.5, 1.0))
 grid.draw(gxa)
-
 @
 \begin{center}
 {
 \includegraphics[width=3in, height=1in]{interactive-fig4}
 }
 \end{center}
-
 @
 
 Finally, we change the labels back to black and rotate them all $30\deg$.
 
 <<edit4, term=FALSE>>=
-grid.edit("gxa::labels", gp=gpar(col="black"), rot=30)
-
+grid.edit("gxa::labels", gp = gpar(col = "black"), rot = 30)
 <<fig5, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
-gxa <- xaxisGrob(at=1:4/5, vp=viewport(w=.5, h=.01))
-gxa <- editGrob(gxa, gp=gpar(col="red"))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="green"))
-gxa <- editGrob(gxa, at=c(0.0, 0.5, 1.0))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="black"), rot=30)
+gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
+gxa <- editGrob(gxa, gp = gpar(col = "red"))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "green"))
+gxa <- editGrob(gxa, at = c(0.0, 0.5, 1.0))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "black"), rot = 30)
 grid.draw(gxa)
-
 @
 \begin{center}
 {
 \includegraphics[width=3in, height=1in]{interactive-fig5}
 }
 \end{center}
-
 @
 
 The above examples describe how to perform editing on a grid object
@@ -135,22 +122,12 @@ entirely ``off-screen'', by just working with the grid object.
 The off-screen equivalent in this case would look like:
 
 <<results=hide>>=
-gxa <- xaxisGrob(at=1:4/5, vp=viewport(w=.5, h=.01))
-gxa <- editGrob(gxa, gp=gpar(col="red"))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="green"))
-gxa <- editGrob(gxa, at=c(0.0, 0.5, 1.0))
-gxa <- editGrob(gxa, gPath="labels", gp=gpar(col="black"), rot=30)
+gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
+gxa <- editGrob(gxa, gp = gpar(col = "red"))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "green"))
+gxa <- editGrob(gxa, at = c(0.0, 0.5, 1.0))
+gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "black"), rot = 30)
 grid.draw(gxa)
-
-@
-% Start a new page
-% Not echoed, not evaluated
-% ONLY here for checkVignettes so that all output doesn't
-% end up on one enormous page
-
-<<eval=FALSE, echo=FALSE>>=
-grid.newpage()
-
 @
 \end{document}
 

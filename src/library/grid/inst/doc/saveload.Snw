@@ -18,9 +18,8 @@
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(grid)
-ps.options(pointsize=12)
-options(width=60)
-
+ps.options(pointsize = 12)
+options(width = 60)
 @
 This is a general discussion concerning how you might go about
 creating (and reusing) persistent representations of \grid{}
@@ -44,21 +43,18 @@ Incompatibilities between versions should be handled gracefully by
 
 \subsection*{\grid{} \code{grob}s}
 
-The next most flexible
-way of creating a persistent version
-of \grid{} graphics is to \code{save()} a \grid{} \code{grob} ...
+The next most flexible way of creating a persistent version of \grid{}
+graphics is to \code{save()} a \grid{} \code{grob} \ldots
 
 <<>>=
 gt <- textGrob("hi")
-save(gt, file="mygridplot")
-
+save(gt, file = "mygridplot")
 @
-The representation is reloadable so you can reproduce an image ...
+The representation is reloadable so you can reproduce an image \ldots{}
 
 <<results=hide>>=
 load("mygridplot")
 grid.draw(gt)
-
 @
 And the representation is editable;  there is an API for interacting
 with \grid{} \code{grobs}, including adding new elements, removing
@@ -75,7 +71,7 @@ without seeing the code they used to produce it.
 \subsection*{Device output}
 
 A third way of creating a persistent version of \grid{} graphics is to
-``save'' it to a persistent device format (e.g., PostScript, PDF, ...).
+``save'' it to a persistent device format (e.g., PostScript, PDF, \ldots).
 
 It is possible to edit these representations, but hardly convenient.
 In particular, none of the coordinate systems used in the
@@ -89,41 +85,26 @@ but it cannot be reloaded into \R{}.
 This final option is \emph{not} recommended, but it is possible to do
 so its downsides need to be explained.
 
-What you can do is
-``save'' an \R{} display list using, for example, ...
+What you can do is ``save'' an \R{} display list using, for example, \ldots
 
 <<>>=
 grid.grill()
 temp <- recordPlot()
-save(temp, file="mygridplot")
-
+save(temp, file = "mygridplot")
 @
 This representation is not editable\footnote{Well, there's nothing stopping
 you editing it, but you should take out life insurance first.}, but it can be
 reloaded
-and rerun to reproduce the output ...
+and rerun to reproduce the output \ldots
 
 <<>>=
 load("mygridplot")
 temp
-
 @
-The representation is persistent across \R{} sessions,
-but the saved information involves non-public interfaces and structures
-which may change between \R{} versions.  You also
-have
-to make sure that \grid{} has been reloaded.  Differences between
-\grid{} and/or \R{}
-versions may lead to segmentation faults.
-
-% Start a new page
-% Not echoed, not evaluated
-% ONLY here for checkVignettes so that all output doesn't
-% end up on one enormous page
-
-<<eval=FALSE, echo=FALSE>>=
-grid.newpage()
-
-@
+The representation is persistent across \R{} sessions, but the saved
+information involves non-public interfaces and structures which may
+change between \R{} versions.  You also have to make sure that \grid{}
+has been reloaded.  Differences between \grid{} and/or \R{} versions
+may lead to segmentation faults.
 \end{document}
 

@@ -25,9 +25,8 @@ library(grDevices)
 library(graphics) # for plot()
 library(stats) # for runif()
 library(grid)
-ps.options(pointsize=12)
-options(width=60)
-
+ps.options(pointsize = 12)
+options(width = 60)
 @
 A display list is a record of drawing operations.  It is used
 to redraw graphics output when a graphics window is resized,
@@ -59,14 +58,14 @@ any example which uses the legend function.  Try running
 tall and thin or quite wide and fat);  the legend will start
 to look pretty sick.
 
-{\bf NOTE:} that this is a problem with the graphics engine
-display list -- it is not specific to \grid{}.  In fact, much
-of \grid{}'s behaviour is protected from this problem because
-things like \grid{} units are ``declarative'' and will be reevaluated
-on each redraw.  However, there are situations where \grid{} output
-can be afflicted, in particular, whenever the \code{convertUnit()}
-function (or one of its variants) is used (the help file
-for \code{convertUnit()} gives an example).
+{\bf NOTE:} that this is a problem with the graphics engine display
+list -- it is not specific to \grid{}.  In fact, much of \grid{}'s
+behaviour is protected from this problem because things like \grid{}
+units are ``declarative'' and will be re-evaluated on each redraw.
+However, there are situations where \grid{} output can be afflicted,
+in particular, whenever the \code{convertUnit()} function (or one of
+its variants) is used (the help file for \code{convertUnit()} gives an
+example).
 
 A situation where this problem becomes very relevant for
 \grid{} output is when the \gridBase{} package is used.
@@ -84,23 +83,21 @@ base output.  The following code provides a simple example:
 
 <<guts1, eval=FALSE>>=
 plot(1:10)
-par(new=TRUE)
-grid.rect(width=0.5, height=0.5, gp=gpar(lwd=3), name="gr")
+par(new = TRUE)
+grid.rect(width = 0.5, height = 0.5, gp = gpar(lwd = 3), name = "gr")
 
 <<ex1, echo=FALSE, fig=TRUE, width=4, height=3, include=FALSE>>=
 <<guts1>>
-grid.rect(width=0.99, height=0.99, gp=gpar(lty="dashed"))
-
+grid.rect(width = 0.99, height = 0.99, gp = gpar(lty = "dashed"))
 @
 \includegraphics[width=4in, height=3in]{displaylist-ex1}
 
 <<ex2, echo=FALSE, fig=TRUE, width=4, height=3, include=FALSE>>=
-grid.rect(width=0.5, height=0.5, gp=gpar(col="red", lwd=3))
-grid.rect(width=0.99, height=0.99, gp=gpar(lty="dashed"))
+grid.rect(width = 0.5, height = 0.5, gp = gpar(col = "red", lwd = 3))
+grid.rect(width = 0.99, height = 0.99, gp = gpar(lty = "dashed"))
 
 <<eval=FALSE>>=
-grid.edit("gr", gp=gpar(col="red", lwd=3))
-
+grid.edit("gr", gp = gpar(col = "red", lwd = 3))
 @
 \includegraphics[width=4in, height=3in]{displaylist-ex2}
 
@@ -131,9 +128,9 @@ NPC coordinates -- when the device is resized, the NPC coordinates
 will no longer correspond to 1''.
 
 <<results=hide>>=
-grid.rect(width=convertWidth(unit(1, "inches"), "npc"))
-
+grid.rect(width = convertWidth(unit(1, "inches"), "npc"))
 @
+
 The next piece of code demonstrates that, if we
 place the calculations within a \code{drawDetails} method, then
 the output remains consistent across device resizes and
@@ -141,12 +138,10 @@ copies.
 
 <<results=hide>>=
 drawDetails.myrect <- function(x, recording) {
-  gr <- rectGrob(width=convertWidth(unit(1, "inches"), "npc"))
-  grid.draw(gr)
+    gr <- rectGrob(width = convertWidth(unit(1, "inches"), "npc"))
+    grid.draw(gr)
 }
-grid.draw(grob(cl="myrect"))
-
-
+grid.draw(grob(cl = "myrect"))
 @
 The next example shows
 that a \code{drawDetails()} method can also be used
@@ -163,27 +158,26 @@ whether the \pkg{gridBase} package is installed so that the code
 will still ``run'' on systems without \pkg{gridBase}.}.
 
 <<results=hide>>=
-if ("gridBase" %in% .packages(all.available=TRUE)) {
+if ("gridBase" %in% .packages(all.available = TRUE)) {
 library(gridBase)
 
 x <- c(0.88, 1.00, 0.67, 0.34)
 y <- c(0.87, 0.43, 0.04, 0.94)
-z <- matrix(runif(4*2), ncol=2)
+z <- matrix(runif(4*2), ncol = 2)
 
 maxpiesize <- unit(1, "inches")
 totals <- apply(z, 1, sum)
 sizemult <- totals/max(totals)
 
-gs <- segmentsGrob(x0=unit(c(rep(0, 4), x),
-                        rep(c("npc", "native"), each=4)),
-                x1=unit(c(x, x), rep("native", 8)),
-                y0=unit(c(y, rep(0, 4)),
-                        rep(c("native", "npc"), each=4)),
-                y1=unit(c(y, y), rep("native", 8)),
-                gp=gpar(lty="dashed", col="grey"))
-gr <- rectGrob(gp=gpar(col="grey", fill="white", lty="dashed"))
+gs <- segmentsGrob(x0 = unit(c(rep(0, 4), x),
+                             rep(c("npc", "native"), each = 4)),
+                   x1 = unit(c(x, x), rep("native", 8)),
+                   y0 = unit(c(y, rep(0, 4)),
+                             rep(c("native", "npc"), each = 4)),
+                   y1 = unit(c(y, y), rep("native", 8)),
+                   gp = gpar(lty = "dashed", col = "grey"))
+gr <- rectGrob(gp = gpar(col = "grey", fill = "white", lty = "dashed"))
 }
-
 @
 What is important is that I place the calls to the \gridBase{} functions
 within the  \code{drawDetails} method so that they are performed
@@ -192,24 +186,23 @@ functions are in here too so that they are called for every redraw.
 
 <<results=hide>>=
 drawDetails.pieplot <- function(x, recording) {
-  plot(x$x, x$y, xlim=c(-0.2, 1.2), ylim=c(-0.2, 1.2), type="n")
-  vps <- baseViewports()
-  pushViewport(vps$inner, vps$figure, vps$plot, recording=FALSE)
-  grid.draw(x$gs, recording=FALSE)
-  for (i in 1:4) {
-    pushViewport(viewport(x=unit(x$x[i], "native"),
-                           y=unit(x$y[i], "native"),
-                           width=x$sizemult[i]*x$maxpiesize,
-                           height=x$sizemult[i]*x$maxpiesize),
-                 recording=FALSE)
-    grid.draw(x$gr, recording=FALSE)
-    par(plt=gridPLT(), new=TRUE)
-    pie(x$z[i,], radius=1, labels=rep("", 2))
-    popViewport(recording=FALSE)
-  }
-  popViewport(3, recording=FALSE)
+    plot(x$x, x$y, xlim = c(-0.2, 1.2), ylim = c(-0.2, 1.2), type = "n")
+    vps <- baseViewports()
+    pushViewport(vps$inner, vps$figure, vps$plot, recording = FALSE)
+    grid.draw(x$gs, recording = FALSE)
+    for (i in 1:4) {
+        pushViewport(viewport(x = unit(x$x[i], "native"),
+                              y = unit(x$y[i], "native"),
+                              width = x$sizemult[i]*x$maxpiesize,
+                              height = x$sizemult[i]*x$maxpiesize),
+                     recording = FALSE)
+        grid.draw(x$gr, recording = FALSE)
+        par(plt = gridPLT(), new = TRUE)
+        pie(x$z[i, ], radius = 1, labels = rep("", 2))
+        popViewport(recording = FALSE)
+    }
+    popViewport(3, recording = FALSE)
 }
-
 @
 The ``pieplot'' is created by assembling the component grobs
 into a collective grob of the appropriate class; the \code{drawDetails}
@@ -220,11 +213,10 @@ method takes care of actually producing the output.
 
 <<results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 if ("gridBase" %in% .packages()) {
-grid.draw(grob(x=x, y=y, z=z,
-               maxpiesize=maxpiesize, sizemult=sizemult,
-               gs=gs, gr=gr, cl="pieplot"))
+grid.draw(grob(x = x, y = y, z = z,
+               maxpiesize = maxpiesize, sizemult = sizemult,
+               gs = gs, gr = gr, cl = "pieplot"))
 }
-
 @
 
 The output from this example can be resized safely;  \grid{} handles
@@ -244,25 +236,14 @@ resized without the legend going crazy.
 
 <<results=hide, fig=TRUE, include=FALSE>>=
 drawDetails.mylegend <- function(x, recording) {
-   x <- 0:64/64
-   y <- sin(3*pi*x)
-   plot(x, y, type="l", col="blue", main = "points with bg & legend(*, pt.bg)")
-   points(x, y, pch=21, bg="white")
-   legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
+    x <- 0:64/64
+    y <- sin(3*pi*x)
+    plot(x, y, type = "l", col = "blue",
+         main = "points with bg & legend(*, pt.bg)")
+    points(x, y, pch = 21, bg = "white")
+    legend(.4,1, "sin(c x)", pch = 21, pt.bg = "white", lty = 1, col = "blue")
 }
-grid.draw(grob(cl="mylegend"))
-
-
-@
-
-% Start a new page
-% Not echoed, not evaluated
-% ONLY here for checkVignettes so that all output doesn't
-% end up on one enormous page
-
-<<eval=FALSE, echo=FALSE>>=
-grid.newpage()
-
+grid.draw(grob(cl = "mylegend"))
 @
 \end{document}
 
