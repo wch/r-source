@@ -1,6 +1,6 @@
 % File src/library/base/man/zpackages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{zpackages}
@@ -25,8 +25,12 @@
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
   
-  For a package to be regarded as being available it must have valid
-  metadata (and hence be an installed package).
+  For a package to be regarded as being \sQuote{available} it must have valid
+  metadata (and hence be an installed package).  However, this will
+  report a package as available if the metadata does not match the
+  directory name: use \code{\link{find.package}} to confirm that the
+  metadata match or \code{\link{installed.packages}} for a much slower
+  but more comprehensive check of \sQuote{available} packages.
 }
 \value{
   A character vector of package base names, invisible unless
@@ -38,7 +42,8 @@
   \code{.packages}.
 }
 \seealso{
-  \code{\link{library}}, \code{\link{.libPaths}}.
+  \code{\link{library}}, \code{\link{.libPaths}},
+  \code{\link{installed.packages}}.
 }
 \examples{
 (.packages())               # maybe just "base"
