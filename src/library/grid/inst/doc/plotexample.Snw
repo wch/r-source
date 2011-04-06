@@ -41,32 +41,28 @@ relatively complicated\footnote{Although there are exceptions;  some
 functions, such as \code{grid.show.viewport}, are purely for producing
 illustrative diagrams and remain simple and procedural.}.
 
-One design aim of \grid{} is to allow users to create simple
-graphics simply and not to force them to use  complicated concepts or
-write complicated code
- unless they actually need to.  Along similar lines, it is
-intended that people should be able to prototype even complex graphics
-very simply and then refine the implementation into a more
+One design aim of \grid{} is to allow users to create simple graphics
+simply and not to force them to use complicated concepts or write
+complicated code unless they actually need to.  Along similar lines,
+it is intended that people should be able to prototype even complex
+graphics very simply and then refine the implementation into a more
 sophisticated form if necessary.
 
-With the predefined graphics
-functions being fully-developed and complicated implementations,
- there is a lack of examples of simple, prototype code.
-Furthermore, given that the aim is to allow a range of ways to produce the same
-graphical output, there is a need for examples which demonstrate the
-various stages, from simple to complex,
+With the predefined graphics functions being fully-developed and
+complicated implementations, there is a lack of examples of simple,
+prototype code.  Furthermore, given that the aim is to allow a range
+of ways to produce the same graphical output, there is a need for
+examples which demonstrate the various stages, from simple to complex,
 that a piece of \grid{} code can go through.
 
-This document describes the
-construction of a scatterplot object, like that shown below,
-going from the simplest, prototype
-implementation to the most complex and sophisticated.
-It demonstrates that if you
-only want simple graphics output then you can do it pretty
-simply and quickly.  It also demonstrates how to write functions
-that allow your graphics to be used by other people.  Finally, it
-demonstrates how to make your graphics fully interactive (or at least
-as interactive as Grid will let you make it).
+This document describes the construction of a scatterplot object, like
+that shown below, going from the simplest, prototype implementation to
+the most complex and sophisticated.  It demonstrates that if you only
+want simple graphics output then you can do it pretty simply and
+quickly.  It also demonstrates how to write functions that allow your
+graphics to be used by other people.  Finally, it demonstrates how to
+make your graphics fully interactive (or at least as interactive as
+Grid will let you make it).
 
 @
 This document should be read {\em after} the \grid{} Users'
@@ -105,14 +101,12 @@ data.vp <- viewport(x = unit(5, "lines"),
                     width = unit(1, "npc") - unit(7, "lines"),
                     height = unit(1, "npc") - unit(7, "lines"),
                     just = c("left", "bottom"),
-                    xscale = range(x) + c(-.05, .05)*diff(range(x)),
-                    yscale = range(y) + c(-.05, .05)*diff(range(y)))
+                    xscale = range(x) + c(-0.05, 0.05)*diff(range(x)),
+                    yscale = range(y) + c(-0.05, 0.05)*diff(range(y)))
 @
 \noindent
-Now we create the data region and
-draw the components of the plot relative to it:
-points, axes, labels, and a
-title.
+Now we create the data region and draw the components of the plot
+relative to it: points, axes, labels, and a title.
 
 <<procplot>>=
 pushViewport(data.vp)
@@ -152,15 +146,15 @@ popViewport()
 
 When more complex arrangements of viewports are involved, there may be
 a bewildering array of viewports created, which may make it difficult
-for other users to revisit a particular region of a plot.  A \code{lattice}
-plot is a good example.
-In such cases, it will be more cooperative to use \code{upViewport()}
-rather than \code{popViewport()} and leave the viewports that were
-created during the drawing of the plot.  Other users can then use
-\code{vpPath}s to navigate to the desired region.  For example, here
-is a slight modification of the original series of commands, where
-the original data viewport is given a name and
-\code{upViewport()} is used at the end.
+for other users to revisit a particular region of a plot.  A
+\code{lattice} plot is a good example.  In such cases, it will be more
+cooperative to use \code{upViewport()} rather than
+\code{popViewport()} and leave the viewports that were created during
+the drawing of the plot.  Other users can then use \code{vpPath}s to
+navigate to the desired region.  For example, here is a slight
+modification of the original series of commands, where the original
+data viewport is given a name and \code{upViewport()} is used at the
+end.
 
 <<results=hide>>=
 data.vp <- viewport(name = "dataregion",
@@ -169,8 +163,8 @@ data.vp <- viewport(name = "dataregion",
                     width = unit(1, "npc") - unit(7, "lines"),
                     height = unit(1, "npc") - unit(7, "lines"),
                     just = c("left", "bottom"),
-                    xscale = range(x) + c(-.05, .05)*diff(range(x)),
-                    yscale = range(y) + c(-.05, .05)*diff(range(y)))
+                    xscale = range(x) + c(-0.05, 0.05)*diff(range(x)),
+                    yscale = range(y) + c(-0.05, 0.05)*diff(range(y)))
 pushViewport(data.vp)
 grid.points(x, y)
 grid.rect()
@@ -186,8 +180,8 @@ grid.text("A Simple Plot",
 upViewport()
 @
 
-The date is now added
-using \code{downViewport()} to get to the data region.
+The date is now added using \code{downViewport()} to get to the data
+region.
 
 <<results=hide>>=
 downViewport("dataregion")
@@ -282,14 +276,13 @@ to satisfy most uses.
 
 However, there are some things that cannot be done (or at least would
 be extremely hard to do) with such a function.  The output produced by
-the function cannot be addressed as a coherent whole.  It is
-not possible, for example, to
-to change the \code{x}
-and \code{y} data used in the plot and have the points and axes update
-automatically.  There is no scatterplot object to save;  the individual
-components exist, but they are not bound together as a whole.  If/when
-these sorts of issues become important, it becomes necessary to
-create a \grid{} graphical object (a \grob{}) to represent the plot.
+the function cannot be addressed as a coherent whole.  It is not
+possible, for example, to to change the \code{x} and \code{y} data
+used in the plot and have the points and axes update automatically.
+There is no scatterplot object to save; the individual components
+exist, but they are not bound together as a whole.  If/when these
+sorts of issues become important, it becomes necessary to create a
+\grid{} graphical object (a \grob{}) to represent the plot.
 
 The first step is to write a function which will create a \grob{}
 -- a \emph{constructor} function.  In most cases, this will involve
@@ -342,13 +335,10 @@ There are four important additions to the argument list compared
 to the original \code{splot()} function:
 \begin{enumerate}
 \item The \code{name} argument allows a string identifier to be
-associated with the scatterplot object we create.  This is
-important for being able to specify the scatterplot when we try to edit
-it after drawing it and/or when it is part of a larger \grob{}
-(see later examples).
-\item The \code{draw} argument
- makes it possible to use the function in a procedural
-manner as before:
+  associated with the scatterplot object we create.  This is important
+  for being able to specify the scatterplot when we try to edit it
+  after drawing it and/or when it is part of a larger \grob{} (see
+  later examples).
 
 \item The \code{draw} argument makes it possible to use the function
   in a procedural manner as before:
@@ -363,24 +353,23 @@ grid.text(date(), x = unit(1, "npc"), y = 0,
 upViewport(0)
 @
 \item The \code{gp} argument allows the user to supply \code{gpar()}
-settings for the scatterplot as a whole.
-\item The \code{vp} argument allows the user to supply a viewport
-for the \code{splot} \grob{} to be drawn in.  This is especially
-useful for specifying a \code{vpPath} when the \code{splot} is
-used as a component of another \grob{} (see scatterplot matrix
-example
-below).
+  settings for the scatterplot as a whole.
+
+\item The \code{vp} argument allows the user to supply a viewport for
+  the \code{splot} \grob{} to be drawn in.  This is especially useful
+  for specifying a \code{vpPath} when the \code{splot} is used as a
+  component of another \grob{} (see scatterplot matrix example below).
 \end{enumerate}
 
 The important parts of the \gTree{}  definition are:
 \begin{enumerate}
-\item The \code{children} argument provides a list of \grob{}s which are
-part of the scatterplot.  When the scatterplot is drawn, all children
-will be drawn.  Notice that instead of the procedural \code{grid.*()} functions
-we use \code{*Grob()} functions which just produce \grob{}s and do not
-perform any drawing.  Also notice that I have given each of the
-children a name;  this will make it possible to access the components
-of the scatterplot (see later examples).
+\item The \code{children} argument provides a list of \grob{}s which
+  are part of the scatterplot.  When the scatterplot is drawn, all
+  children will be drawn.  Notice that instead of the procedural
+  \code{grid.*()} functions we use \code{*Grob()} functions which just
+  produce \grob{}s and do not perform any drawing.  Also notice that I
+  have given each of the children a name; this will make it possible
+  to access the components of the scatterplot (see later examples).
 \item The \code{childrenvp} argument provides a viewport (or
   \code{vpStack}, \code{vpList}, or \code{vpTree}) which will be
   pushed before the children are drawn.  The difference between this
@@ -404,10 +393,9 @@ of the scatterplot (see later examples).
 
 @
 
-Now that we have a \grob{}, there are some more interesting things that
-we can do with it.
-First of all, the \code{splot} \grob{} provides a container for the
-\grob{}s which make up the scatterplot.
+Now that we have a \grob{}, there are some more interesting things
+that we can do with it.  First of all, the \code{splot} \grob{}
+provides a container for the \grob{}s which make up the scatterplot.
 If we modify the \code{splot} \grob{}, it affects all of the children.
 
 <<results=hide>>=

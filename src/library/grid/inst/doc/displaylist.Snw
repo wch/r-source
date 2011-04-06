@@ -143,24 +143,19 @@ drawDetails.myrect <- function(x, recording) {
 }
 grid.draw(grob(cl = "myrect"))
 @
-The next example shows
-that a \code{drawDetails()} method can also be used
-to save base graphics output on the \grid{} display list.
-This  example
-uses
-\gridBase{} to combine base and \grid{} graphics output.
-Here I replicate the last example from the ``gridBase'' vignette --
-a set of base pie charts within \grid{} viewports within a base plot.
+
+The next example shows that a \code{drawDetails()} method can also be
+used to save base graphics output on the \grid{} display list.  This
+example uses \gridBase{} to combine base and \grid{} graphics output.
+Here I replicate the last example from the \gridBase{} vignette -- a
+set of base pie charts within \grid{} viewports within a base plot.
 In this case, I can produce all of the grobs required in the normal
 manner -- their locations and sizes are not based on special
 calculations\footnote{The example is wrapped inside a check for
-whether the \pkg{gridBase} package is installed so that the code
-will still ``run'' on systems without \pkg{gridBase}.}.
+  whether the \pkg{gridBase} package is installed so that the code
+  will still ``run'' on systems without \pkg{gridBase}.}.
 
 <<results=hide>>=
-if ("gridBase" %in% .packages(all.available = TRUE)) {
-library(gridBase)
-
 x <- c(0.88, 1.00, 0.67, 0.34)
 y <- c(0.87, 0.43, 0.04, 0.94)
 z <- matrix(runif(4*2), ncol = 2)
@@ -177,7 +172,6 @@ gs <- segmentsGrob(x0 = unit(c(rep(0, 4), x),
                    y1 = unit(c(y, y), rep("native", 8)),
                    gp = gpar(lty = "dashed", col = "grey"))
 gr <- rectGrob(gp = gpar(col = "grey", fill = "white", lty = "dashed"))
-}
 @
 What is important is that I place the calls to the \gridBase{} functions
 within the  \code{drawDetails} method so that they are performed
@@ -212,24 +206,22 @@ method takes care of actually producing the output.
 % (to avoid par setting contamination between code segments)
 
 <<results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
-if ("gridBase" %in% .packages()) {
+if (suppressWarnings(require("gridBase", quietly = TRUE))) {
 grid.draw(grob(x = x, y = y, z = z,
                maxpiesize = maxpiesize, sizemult = sizemult,
                gs = gs, gr = gr, cl = "pieplot"))
 }
 @
 
-The output from this example can be resized safely;  \grid{} handles
-all of the redrawing,
- and performs all of the actions within the
-\code{drawDetails} method for each redraw,
-including redrawing the base graphics output!
+The output from this example can be resized safely; \grid{} handles
+all of the redrawing, and performs all of the actions within the
+\code{drawDetails} method for each redraw, including redrawing the
+base graphics output!
 
-As a final example, we will harness the \grid{} display list
-purely to achieve consistency in base graphics output.
-The following reproduces the last example from the
-\code{legend()} help page, but produces output which can be
-resized without the legend going crazy.
+As a final example, we will harness the \grid{} display list purely to
+achieve consistency in base graphics output.  The following reproduces
+the last example from the \code{legend()} help page, but produces
+output which can be resized without the legend going crazy.
 
 % produce figure, but don't include
 % (to avoid par setting contamination between code segments)
