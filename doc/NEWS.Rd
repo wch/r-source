@@ -12,6 +12,10 @@
       this changes slightly the vertical positioning of text (including axis
       annotations).   This is mainly for consistency with other devices
       such as \code{quartz()} and \code{pdf()}.  (Wish of \PR{14538}.)
+      
+      There is a new graphics parameter \code{"ylbias"} which
+      allows the y-line bias of the graphics device to be tweaked,
+      including to reproduce output from earlier versions of \R.
     }
   }
 
@@ -59,9 +63,6 @@
       \item \code{optim(*, method= .)} now allows \code{method="Brent"}
       as interface to \code{optimize()}, for cases such as \code{mle()}
       where \code{optim()} is used internally.
-      
-      \item There is a new graphics parameter \code{"ylbias"} which
-      allows the y-line bias of the graphics device to be tweaked. 
     }
   }
 

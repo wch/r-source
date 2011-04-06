@@ -567,7 +567,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ylbias}}{A positive real value used in the positioning
       of text in the margins by \code{\link{axis}} and
       \code{\link{mtext}}.  The default is in principle device-specific,
-      but \code{0.2} for all of \R's own devices.}
+      but currently \code{0.2} for all of \R's own devices.  Set this to
+      \code{0.2} for compatibility with \R < 2.14.0 on \code{x11} and
+      \code{windows()} devices.}
     \item{\code{ylog}}{A logical value; see \code{xlog} above.}
   }
 }
