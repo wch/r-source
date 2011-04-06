@@ -364,7 +364,7 @@ its own escapes.  There is a wide range of input encodings which are
 supported, at least partially, and the more recent \LaTeX{} package
 \texttt{inputenx} supports more.  Other encodings commonly encountered
 in Sweave documents are \texttt{latin9}, \texttt{utf8} (but that only
-covers a subset of UTF-8, large with \texttt{inputenx} than
+covers a subset of UTF-8, larger with \texttt{inputenx} than
 \texttt{inputenc}) and \texttt{ansinew} (the CP1252 codepage on
 Windows).
 

@@ -52,8 +52,9 @@
       \item Garbage-collecting an input text connection no longer gives
       a warning (it \sQuote{connects} to nothing outside \R).
       
-      \item \code{read.table} and \code{scan} have gained a \code{text} argument, to allow 
-      reading data from a (possibly literal) character string. 
+      \item \code{read.table()} and \code{scan()} have gained a
+      \code{text} argument, to allow reading data from a (possibly
+      literal) character string.
     }
   }
 
@@ -88,7 +89,7 @@
       \option{--driver=RweaveLatex}.
 
       \item \command{R CMD Sweave} and \command{R CMD Stangle} support
-      \option{--encoding} and \option{--options} arguments.
+      \option{--encoding} and \option{--options} options.
 
       \item The \code{RweaveLatex()} driver now normally only runs each
       figure chunk once for each device (and hence by default once for a
@@ -100,7 +101,13 @@
       \item Warnings are issued when non-portable filenames are found
       for graphics files (and chunks if \code{split=TRUE}).  Portable
       names are regarded as alphanumeric plus hyphen, underscore, plus
-      and hash (periods cause problems with recognizing file extensions).
+      and hash (periods cause problems with recognizing file
+      extensions).
+
+      \item The \code{Rtangle()} driver has a new option
+      \code{show.line.nos} which is by default false; if true it
+      annotates code chunks with a comment giving the line number of the
+      first line in the sources (the behaviour of \R >= 2.12.0).
     }
   }
 

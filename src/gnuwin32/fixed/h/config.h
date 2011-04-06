@@ -484,6 +484,8 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mempcpy' function. */
+/* NB: the 'trunk' MinGW-w64 does have this, and it needs to be defined
+   to use that toolchain */
 /* #undef HAVE_MEMPCPY */
 
 /* Define to 1 if you have the `mkdtemp' function. */
