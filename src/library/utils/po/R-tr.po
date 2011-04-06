@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:51\n"
+"POT-Creation-Date: 2011-04-06 16:46\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -23,7 +23,7 @@ msgid ""
 "   a documentation file"
 msgstr ""
 
-msgid "no documentation for '%s' found in package '%s'"
+msgid "no documentation for %s found in package %s"
 msgstr ""
 
 msgid "document not found"
@@ -35,22 +35,22 @@ msgstr ""
 msgid "The results page should open in your browser shortly"
 msgstr ""
 
-msgid "reference to unknown chunk '%s'"
+msgid "reference to unknown chunk %s"
 msgstr ""
 
-msgid "no Sweave file with name '%s' found"
+msgid "no Sweave file with name %s found"
 msgstr ""
 
-msgid "%d Sweave files for basename '%s' found:"
+msgid "%d Sweave files for basename %s found:"
 msgstr ""
 
 msgid "more than one syntax specification found, using the first one"
 msgstr ""
 
-msgid "object '%s' does not have class \"SweaveSyntax\""
+msgid "object %s does not have class \"SweaveSyntax\""
 msgstr ""
 
-msgid "recursive Sweave input '%s' in stack"
+msgid "recursive Sweave input %s in stack"
 msgstr ""
 
 msgid "target syntax not of class \"SweaveSyntax\""
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Warning: unknown option"
 msgstr ""
 
-msgid "path to '%s' contains spaces,"
+msgid "path to %s contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
@@ -76,7 +76,7 @@ msgstr ""
 msgid "\\SweaveInput is not compatible with concordances."
 msgstr ""
 
-msgid "invalid value for '%s' : %s"
+msgid "invalid value for %s : %s"
 msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
@@ -184,16 +184,16 @@ msgstr ""
 msgid "method is just applicable to 'bibentry' objects"
 msgstr ""
 
-msgid "package '%s' not found"
+msgid "package %s not found"
 msgstr ""
 
 msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 
-msgid "no date field in DESCRIPTION file of package '%s'"
+msgid "no date field in DESCRIPTION file of package %s"
 msgstr ""
 
-msgid "could not determine year for '%s' from package DESCRIPTION file"
+msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 
 msgid "Enhanced author specification provides no authors."
@@ -220,13 +220,13 @@ msgstr ""
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr ""
 
-msgid "data index for package '%s' is invalid and will be ignored"
+msgid "data index for package %s is invalid and will be ignored"
 msgstr ""
 
-msgid "file 'filelist' is missing for directory '%s'"
+msgid "file 'filelist' is missing for directory %s"
 msgstr ""
 
-msgid "data set '%s' not found"
+msgid "data set %s not found"
 msgstr ""
 
 msgid "kind '%s' not yet implemented"
@@ -277,12 +277,12 @@ msgstr ""
 msgid "No suitable frames for recover()"
 msgstr ""
 
-msgid "No demo found for topic '%s'"
+msgid "No demo found for topic %s"
 msgstr ""
 
 msgid ""
-"Demo for topic '%s' found more than once,\n"
-"using the one found in '%s'"
+"Demo for topic %' found more than once,\n"
+"using the one found in %s"
 msgstr ""
 
 msgid "invalid 'data' argument"
@@ -315,10 +315,10 @@ msgstr ""
 msgid "cannot edit NULL row names"
 msgstr ""
 
-msgid "no help found for '%s'"
+msgid "no help found for %s"
 msgstr ""
 
-msgid "'%s' has a help file but no examples"
+msgid "%s has a help file but no examples"
 msgstr ""
 
 msgid "test '%s' is not available"
@@ -345,14 +345,17 @@ msgstr ""
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 
-msgid "No documentation for '%s' in specified packages and libraries:"
+msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
 
-msgid "you could try '??%s'"
+msgid "you could try %s"
+msgstr ""
+
+msgid "??"
 msgstr ""
 
 msgid ""
-"Help for topic '%s' is not in any loaded package but can be found in the "
+"Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
 
@@ -362,7 +365,7 @@ msgstr "Paket"
 msgid "Library"
 msgstr "Kütüphane"
 
-msgid "Help on topic '%s' was found in the following packages:"
+msgid "Help on topic %s was found in the following packages:"
 msgstr ""
 
 msgid "Choose one"
@@ -374,10 +377,10 @@ msgstr ""
 msgid "HTML help is unavailable"
 msgstr "HTML yardım mevcut değil"
 
-msgid "R Help on '%s'"
+msgid "R Help on %s"
 msgstr ""
 
-msgid "invalid '%s' argument"
+msgid "invalid %s argument"
 msgstr ""
 
 msgid ""
@@ -385,7 +388,7 @@ msgid ""
 "accessed"
 msgstr ""
 
-msgid "argument '%s' must be a single character string"
+msgid "argument %s must be a single character string"
 msgstr ""
 
 msgid "incorrect field specification"
@@ -409,10 +412,11 @@ msgstr ""
 msgid "."
 msgstr ""
 
-msgid "could not find package '%s'"
-msgstr ""
+#, fuzzy
+msgid "could not find package %s"
+msgstr "paketler yüklenemedi"
 
-msgid "package '%s' has empty hsearch data - strangely"
+msgid "package %s has empty hsearch data - strangely"
 msgstr ""
 
 msgid "no hsearch.rds meta data for package"
@@ -433,7 +437,7 @@ msgstr ""
 msgid "... database rebuilt"
 msgstr ""
 
-msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
@@ -605,7 +609,7 @@ msgstr ""
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
 
-msgid "metadata of '%s' is corrupt"
+msgid "metadata of %s is corrupt"
 msgstr ""
 
 msgid "'priority' must be character or NULL"
@@ -622,13 +626,13 @@ msgstr ""
 msgid "'destdir' is not a directory"
 msgstr ""
 
-msgid "no package '%s' at the repositories"
+msgid "no package %s at the repositories"
 msgstr ""
 
-msgid "package '%s' does not exist on the local repository"
+msgid "package %s does not exist on the local repository"
 msgstr ""
 
-msgid "download of package '%s' failed"
+msgid "download of package %s failed"
 msgstr ""
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
@@ -649,7 +653,7 @@ msgstr ""
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Lütfen bu oturumda kullanılacak depoları seçin ---"
 
-msgid "'%s' must be supplied"
+msgid "%s must be supplied"
 msgstr ""
 
 msgid "every package depends on at least one other"
@@ -676,7 +680,7 @@ msgstr ""
 
 msgid ""
 "Would you like to create a personal library\n"
-"'%s'\n"
+"%s\n"
 "to install packages into?"
 msgstr ""
 
@@ -703,10 +707,10 @@ msgid ""
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
 
-msgid "installation of package '%s' had non-zero exit status"
+msgid "installation of package %s had non-zero exit status"
 msgstr ""
 
-msgid "unable to create temporary directory '%s'"
+msgid "unable to create temporary directory %s"
 msgstr ""
 
 msgid ""
@@ -734,31 +738,30 @@ msgstr ""
 msgid "cannot determine a usable name"
 msgstr ""
 
-msgid "Created file named '%s'."
+msgid "Created file named %s."
 msgstr ""
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr ""
 
-msgid ""
-"no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
 
 msgid ""
-"the object of class \"%s\" in the function call '%s' could not be used as a "
+"the object of class \"%s\" in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
 
-msgid "no methods for '%s' and no documentation for it as a function"
+msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 
-msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr ""
 
-msgid "no method defined for function '%s' and signature '%s'"
+msgid "no method defined for function %s and signature %s"
 msgstr ""
 
-msgid "no documentation for function '%s' and signature '%s'"
+msgid "no documentation for function %s and signature %s"
 msgstr ""
 
 msgid "No DIF data on clipboard"
@@ -950,14 +953,14 @@ msgid "linked path is too long"
 msgstr ""
 
 msgid ""
-"vignette '%s' found more than once,\n"
-"using the one found in '%s'"
+"vignette %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 
-msgid "vignette '%s' *not* found"
+msgid "vignette %s not found"
 msgstr ""
 
-msgid "vignette '%s' has no PDF"
+msgid "vignette %s has no PDF"
 msgstr ""
 
 msgid "select.list() cannot be used non-interactively"
@@ -1022,13 +1025,13 @@ msgstr ""
 msgid "download had nonzero exit status"
 msgstr ""
 
-msgid "running '%s' failed"
+msgid "running %s failed"
 msgstr ""
 
-msgid "'%s' produced no output file: sent to printer?"
+msgid "%s produced no output file: sent to printer?"
 msgstr ""
 
-msgid "creation of '%s' failed"
+msgid "creation of %s failed"
 msgstr ""
 
 msgid "Saving help page to"
@@ -1037,7 +1040,7 @@ msgstr ""
 msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
 msgid "ERROR: failed to lock directory"
@@ -1051,10 +1054,10 @@ msgstr ""
 msgid "ERROR: failed to create lock directory"
 msgstr ""
 
-msgid "restored '%s'"
+msgid "restored %s"
 msgstr ""
 
-msgid "unable to move temporary installation '%s' to '%s'"
+msgid "unable to move temporary installation %s to %s"
 msgstr ""
 
 msgid "cannot remove prior installation of package"
@@ -1069,16 +1072,22 @@ msgstr ""
 msgid "method 'mailx' is Unix-only"
 msgstr ""
 
-msgid "zipfile '%s' not found"
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
 msgstr ""
 
-msgid "failed to create '%s'"
+msgid "zipfile %s not found"
 msgstr ""
 
-msgid "there is no 'libs' directory in package '%s'"
+#, fuzzy
+msgid "failed to create %s"
+msgstr "oluşturulamadı"
+
+msgid "there is no 'libs' directory in package %s"
 msgstr ""
 
-msgid "cannot remove prior installation of package '%s'"
+msgid "cannot remove prior installation of package %s"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"
@@ -1115,12 +1124,12 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "'lib' element '%s' is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "package '%s' is in use and will not be installed"
-msgid_plural "packages '%s' are in use and will not be installed"
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""

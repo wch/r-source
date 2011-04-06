@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:51\n"
+"POT-Creation-Date: 2011-04-06 16:46\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -20,7 +20,8 @@ msgstr ""
 " RShowDoc() はドキュメントファイルを指定する文字列引数 \n"
 " といっしょに使うべきです "
 
-msgid "no documentation for '%s' found in package '%s'"
+#, fuzzy
+msgid "no documentation for %s found in package %s"
 msgstr " '%s' に対するドキュメントがパッケージ      '%s' 中に見当たりません "
 
 msgid "document not found"
@@ -32,22 +33,27 @@ msgstr " 検索問い合わせが以下に発行されました  "
 msgid "The results page should open in your browser shortly"
 msgstr " 結果ページはまもなくブラウザーで開かれるでしょう "
 
-msgid "reference to unknown chunk '%s'"
+#, fuzzy
+msgid "reference to unknown chunk %s"
 msgstr " 未知のチャンク '%s' の参照  "
 
-msgid "no Sweave file with name '%s' found"
+#, fuzzy
+msgid "no Sweave file with name %s found"
 msgstr " 名前が '%s' の Sweave ファイルはありません "
 
-msgid "%d Sweave files for basename '%s' found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found:"
 msgstr " %d 個の Sweve ファイルが基本名 '%s' に対して見付かりました: "
 
 msgid "more than one syntax specification found, using the first one"
 msgstr " 複数の構文指定が見付かりました。最初のものを使います "
 
-msgid "object '%s' does not have class \"SweaveSyntax\""
+#, fuzzy
+msgid "object %s does not have class \"SweaveSyntax\""
 msgstr " オブジェクト '%s' はクラス \"SweaveSyntax\" を持ちません "
 
-msgid "recursive Sweave input '%s' in stack"
+#, fuzzy
+msgid "recursive Sweave input %s in stack"
 msgstr " スタック中に再帰的な Sweave 入力 '%s'  "
 
 msgid "target syntax not of class \"SweaveSyntax\""
@@ -66,7 +72,8 @@ msgstr ""
 msgid "Warning: unknown option"
 msgstr ""
 
-msgid "path to '%s' contains spaces,"
+#, fuzzy
+msgid "path to %s contains spaces,"
 msgstr " '%s' へのパスは空白を含みます、 "
 
 msgid "this may cause problems when running LaTeX"
@@ -75,7 +82,8 @@ msgstr " これは LaTeX を実行するとき問題を引き起こすかも知�
 msgid "\\SweaveInput is not compatible with concordances."
 msgstr ""
 
-msgid "invalid value for '%s' : %s"
+#, fuzzy
+msgid "invalid value for %s : %s"
 msgstr " '%s' に対する不正な値: %s "
 
 msgid "elements of 'what' after the first will be ignored"
@@ -190,17 +198,20 @@ msgstr " ' は欄を指定しなければなりません： "
 msgid "method is just applicable to 'bibentry' objects"
 msgstr " メソッドは 'bibentry' オブジェクトだけに適用可能です "
 
-msgid "package '%s' not found"
+#, fuzzy
+msgid "package %s not found"
 msgstr " パッケージ '%s' が見付かりません "
 
 msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 " インストールが不完全です、base パッケージに CITATION ファイルがありません "
 
-msgid "no date field in DESCRIPTION file of package '%s'"
+#, fuzzy
+msgid "no date field in DESCRIPTION file of package %s"
 msgstr " パッケージ '%s' の DESCRIPTION ファイル中に日付け欄がありません "
 
-msgid "could not determine year for '%s' from package DESCRIPTION file"
+#, fuzzy
+msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr ""
 " パッケージの DESCRIPTION ファイルから '%s' に対する年度を決定できませんでし"
 "た "
@@ -231,13 +242,16 @@ msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr ""
 " データセットはパッケージ 'stats' からパッケージ 'datasets' に移されました "
 
-msgid "data index for package '%s' is invalid and will be ignored"
+#, fuzzy
+msgid "data index for package %s is invalid and will be ignored"
 msgstr " パッケージ '%s' に対するデータ索引は不正で、無視されます "
 
-msgid "file 'filelist' is missing for directory '%s'"
+#, fuzzy
+msgid "file 'filelist' is missing for directory %s"
 msgstr " ディレクトリ '%s' に対するファイル 'filelist' がありません "
 
-msgid "data set '%s' not found"
+#, fuzzy
+msgid "data set %s not found"
 msgstr " データセット '%s' がありません "
 
 msgid "kind '%s' not yet implemented"
@@ -290,12 +304,14 @@ msgstr ""
 msgid "No suitable frames for recover()"
 msgstr " recover() に対する適当なフレームがありません "
 
-msgid "No demo found for topic '%s'"
+#, fuzzy
+msgid "No demo found for topic %s"
 msgstr " トピック '%s' に対するデモはありません "
 
+#, fuzzy
 msgid ""
-"Demo for topic '%s' found more than once,\n"
-"using the one found in '%s'"
+"Demo for topic %' found more than once,\n"
+"using the one found in %s"
 msgstr ""
 " トピッピク '%s' に対するデモが複数ありました． \n"
 " '%s' 中のものを使います "
@@ -330,10 +346,12 @@ msgstr " 'name'のクラスは破棄されます "
 msgid "cannot edit NULL row names"
 msgstr " NULLの行の名前は編集できません "
 
-msgid "no help found for '%s'"
+#, fuzzy
+msgid "no help found for %s"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
 
-msgid "'%s' has a help file but no examples"
+#, fuzzy
+msgid "%s has a help file but no examples"
 msgstr " '%s' にはヘルプファイルはありますが、実行例はありません "
 
 msgid "test '%s' is not available"
@@ -361,16 +379,22 @@ msgstr ""
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr " 'topic'は名前、長さ１の文字列、または予約語でなければなりません "
 
-msgid "No documentation for '%s' in specified packages and libraries:"
+#, fuzzy
+msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
 " 指定されたパッケージやライブラリ中には '%s' に対するドキュメントはありませ"
 "ん "
 
-msgid "you could try '??%s'"
+#, fuzzy
+msgid "you could try %s"
 msgstr " '??%s' を使うべきだったかも知れません "
 
+msgid "??"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"Help for topic '%s' is not in any loaded package but can be found in the "
+"Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
 " トピック '%s' に対するヘルプはロード済みのパッケージ中にはありませんが以下の"
@@ -382,7 +406,8 @@ msgstr " パッケージ "
 msgid "Library"
 msgstr " ライブラリ "
 
-msgid "Help on topic '%s' was found in the following packages:"
+#, fuzzy
+msgid "Help on topic %s was found in the following packages:"
 msgstr " トピック '%s' に対するヘルプが以下のパッケージ中にありました： "
 
 msgid "Choose one"
@@ -394,10 +419,12 @@ msgstr " 最初にマッチしたものを使っています ... "
 msgid "HTML help is unavailable"
 msgstr "HTMLヘルプは利用できません "
 
-msgid "R Help on '%s'"
+#, fuzzy
+msgid "R Help on %s"
 msgstr " '%s' に対する R ヘルプ "
 
-msgid "invalid '%s' argument"
+#, fuzzy
+msgid "invalid %s argument"
 msgstr " 不正な '%s' 引数 "
 
 msgid ""
@@ -407,7 +434,8 @@ msgstr ""
 " パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないためヘルプ"
 "ファイルにアクセスできません "
 
-msgid "argument '%s' must be a single character string"
+#, fuzzy
+msgid "argument %s must be a single character string"
 msgstr " 引数 '%s' は単一の文字列でなければなりません "
 
 msgid "incorrect field specification"
@@ -431,10 +459,12 @@ msgstr " パッケージ {readRDS() sequentially}: "
 msgid "."
 msgstr " . "
 
-msgid "could not find package '%s'"
+#, fuzzy
+msgid "could not find package %s"
 msgstr " パッケージ '%s' を見付けることが出来ませんでした "
 
-msgid "package '%s' has empty hsearch data - strangely"
+#, fuzzy
+msgid "package %s has empty hsearch data - strangely"
 msgstr " パッケージ '%s' は空の hsearch データを持っています - 奇妙ですが "
 
 msgid "no hsearch.rds meta data for package"
@@ -455,7 +485,8 @@ msgstr " データベースを保存しています ... "
 msgid "... database rebuilt"
 msgstr " ...データベースの再構築 "
 
-msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
+#, fuzzy
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 " パッケージ '%s' の情報がデータベース中にありません:  'rebuild = TRUE'が必要"
 "かもしれません "
@@ -637,7 +668,8 @@ msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
 " (不正な？) 'lib.loc=%s' に対するインストール済のパッケージはありません "
 
-msgid "metadata of '%s' is corrupt"
+#, fuzzy
+msgid "metadata of %s is corrupt"
 msgstr " '%s' のメタデータは壊れています "
 
 msgid "'priority' must be character or NULL"
@@ -656,13 +688,16 @@ msgstr ""
 msgid "'destdir' is not a directory"
 msgstr " 'destdir' はディレクトリではありません "
 
-msgid "no package '%s' at the repositories"
+#, fuzzy
+msgid "no package %s at the repositories"
 msgstr " このリポジトリーには '%s' というパッケージはありません "
 
-msgid "package '%s' does not exist on the local repository"
+#, fuzzy
+msgid "package %s does not exist on the local repository"
 msgstr " このローカルなリポジトリーには '%s' というパッケージはありません "
 
-msgid "download of package '%s' failed"
+#, fuzzy
+msgid "download of package %s failed"
 msgstr " パッケージ '%s' のダウンロードに失敗しました "
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
@@ -684,7 +719,8 @@ msgstr " リポジトリーの設定は対話的にしかできません "
 msgid "--- Please select repositories for use in this session ---"
 msgstr " --- このセッションで使うリポジトリーを選んでください --- "
 
-msgid "'%s' must be supplied"
+#, fuzzy
+msgid "%s must be supplied"
 msgstr " '%s' を与えてください "
 
 msgid "every package depends on at least one other"
@@ -713,9 +749,10 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
 
+#, fuzzy
 msgid ""
 "Would you like to create a personal library\n"
-"'%s'\n"
+"%s\n"
 "to install packages into?"
 msgstr ""
 " パッケージをインストールするために個人的なライブラリ \n"
@@ -753,10 +790,12 @@ msgstr ""
 "れていません \n"
 " もし RPM からインストールされたのなら R-devel RPM が必要でしょう "
 
-msgid "installation of package '%s' had non-zero exit status"
+#, fuzzy
+msgid "installation of package %s had non-zero exit status"
 msgstr " パッケージ '%s' のインストールは、ゼロでない終了値をもちました "
 
-msgid "unable to create temporary directory '%s'"
+#, fuzzy
+msgid "unable to create temporary directory %s"
 msgstr " 一時的ディレクトリ '%s' を作ることが出来ません "
 
 msgid ""
@@ -789,39 +828,45 @@ msgstr " 'pb'はクラス\"txtProgressBar\"からではありません "
 msgid "cannot determine a usable name"
 msgstr " 利用可能な名前を決定することができません "
 
-msgid "Created file named '%s'."
+#, fuzzy
+msgid "Created file named %s."
 msgstr " 名前 '%s' のファイルを作成しました "
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr " ファイルを編集してきとうなディレクトリに移動してください "
 
-msgid ""
-"no documentation of type '%s' and topic '%s' (or error in processing help)"
+#, fuzzy
+msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
 " タイプ '%s' でトピック '%s' のドキュメントはありません(もしかするとヘルプの"
 "処理エラー) "
 
+#, fuzzy
 msgid ""
-"the object of class \"%s\" in the function call '%s' could not be used as a "
+"the object of class \"%s\" in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
 " クラス \"%s\" のオブジェクトで関数呼び出し '%s' 中のものはドキュメントのト"
 "ピックとしては使え無いかも知れません "
 
-msgid "no methods for '%s' and no documentation for it as a function"
+#, fuzzy
+msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 " '%s' に対するメソッドはありませんし、その関数としてのドキュメントもありませ"
 "ん "
 
-msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+#, fuzzy
+msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr " 引数 '%s' (%s) に対する表現式を評価試行中にエラー "
 
-msgid "no method defined for function '%s' and signature '%s'"
+#, fuzzy
+msgid "no method defined for function %s and signature %s"
 msgstr ""
 " 関数 '%s' でシグネチャが '%s' であるものに対して定義されたメソッドはありませ"
 "ん "
 
-msgid "no documentation for function '%s' and signature '%s'"
+#, fuzzy
+msgid "no documentation for function %s and signature %s"
 msgstr ""
 " 関数 '%s' でシグネチャが '%s' であるものに対するドキュメントはありません "
 
@@ -1022,17 +1067,20 @@ msgstr " ファイルパスが長すぎます "
 msgid "linked path is too long"
 msgstr " linked pathが長すぎます "
 
+#, fuzzy
 msgid ""
-"vignette '%s' found more than once,\n"
-"using the one found in '%s'"
+"vignette %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 " ビニエット '%d' が複数見付かりました, \n"
 " '%s' で見つかるものを使います "
 
-msgid "vignette '%s' *not* found"
+#, fuzzy
+msgid "vignette %s not found"
 msgstr " ビニエット '%s' が見付かりません "
 
-msgid "vignette '%s' has no PDF"
+#, fuzzy
+msgid "vignette %s has no PDF"
 msgstr " ビニエット '%s' は PDF ファイルを持ちません "
 
 msgid "select.list() cannot be used non-interactively"
@@ -1102,13 +1150,16 @@ msgstr " ダウンロードの方法が見付かりません "
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 
-msgid "running '%s' failed"
+#, fuzzy
+msgid "running %s failed"
 msgstr " '%s'の実行に失敗しました "
 
-msgid "'%s' produced no output file: sent to printer?"
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
 msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
 
-msgid "creation of '%s' failed"
+#, fuzzy
+msgid "creation of %s failed"
 msgstr " '%s'の作成に失敗しました "
 
 msgid "Saving help page to"
@@ -1117,7 +1168,8 @@ msgstr " ヘルプページを保存中: "
 msgid "'tar' returned non-zero exit code %d"
 msgstr " 'tar' がゼロでない終了コード %d を返しました "
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr " パッケージ '%s' は無事に開封され、MD5 サムもチェックされました "
 
 msgid "ERROR: failed to lock directory"
@@ -1133,10 +1185,12 @@ msgstr ""
 msgid "ERROR: failed to create lock directory"
 msgstr " 排他的ディレクトリ '%s' を作ることが出来ません "
 
-msgid "restored '%s'"
+#, fuzzy
+msgid "restored %s"
 msgstr " '%s'を復帰させました "
 
-msgid "unable to move temporary installation '%s' to '%s'"
+#, fuzzy
+msgid "unable to move temporary installation %s to %s"
 msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした "
 
 msgid "cannot remove prior installation of package"
@@ -1151,16 +1205,26 @@ msgstr " 'memory.limit()' は Windows 固有の関数です "
 msgid "method 'mailx' is Unix-only"
 msgstr " 'mailx' メソッドは Unix でのみ利用可能です "
 
-msgid "zipfile '%s' not found"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
+msgstr " もし何も起きなければ、自分で '%s' を開いてください "
+
+#, fuzzy
+msgid "zipfile %s not found"
 msgstr " zip ファイル '%s' が見付かりません "
 
-msgid "failed to create '%s'"
+#, fuzzy
+msgid "failed to create %s"
 msgstr " '%s' を生成できませんでした "
 
-msgid "there is no 'libs' directory in package '%s'"
+#, fuzzy
+msgid "there is no 'libs' directory in package %s"
 msgstr " いかなる 'libs' ディレクトリもパッケージ '%s' 中にはありません "
 
-msgid "cannot remove prior installation of package '%s'"
+#, fuzzy
+msgid "cannot remove prior installation of package %s"
 msgstr " パッケージ '%s' の前のインストールを取り除くことが出来ませんでした "
 
 msgid "winDialog() cannot be used non-interactively"
@@ -1192,12 +1256,14 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象(dependency)　%s もインストールします "
 
-msgid "'lib' element '%s' is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
+#, fuzzy
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリではありません "
 
-msgid "package '%s' is in use and will not be installed"
-msgid_plural "packages '%s' are in use and will not be installed"
+#, fuzzy
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
 
 #~ msgid "You can now run LaTeX on '%s'"

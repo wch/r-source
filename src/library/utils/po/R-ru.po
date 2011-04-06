@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:51\n"
+"POT-Creation-Date: 2011-04-06 16:46\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -30,7 +30,8 @@ msgstr ""
 "указывающим на\n"
 "   файл документации"
 
-msgid "no documentation for '%s' found in package '%s'"
+#, fuzzy
+msgid "no documentation for %s found in package %s"
 msgstr "для функции '%s' из пакета '%s' нет документации"
 
 msgid "document not found"
@@ -42,22 +43,27 @@ msgstr "Поисковый запрос должен быть послан в"
 msgid "The results page should open in your browser shortly"
 msgstr "Страница с результатами должна скоро открыться в браузере"
 
-msgid "reference to unknown chunk '%s'"
+#, fuzzy
+msgid "reference to unknown chunk %s"
 msgstr "ссылка на неизвестный фрагмент '%s'"
 
-msgid "no Sweave file with name '%s' found"
+#, fuzzy
+msgid "no Sweave file with name %s found"
 msgstr "Sweave-файл с именем '%s' не найден"
 
-msgid "%d Sweave files for basename '%s' found:"
+#, fuzzy
+msgid "%d Sweave files for basename %s found:"
 msgstr "%d Sweave-файлов с базовым именем '%s' найдено:"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "найдено более одного указания на синтаксис, использую первое"
 
-msgid "object '%s' does not have class \"SweaveSyntax\""
+#, fuzzy
+msgid "object %s does not have class \"SweaveSyntax\""
 msgstr "у объекта '%s' нет класса \"SweaveSyntax\""
 
-msgid "recursive Sweave input '%s' in stack"
+#, fuzzy
+msgid "recursive Sweave input %s in stack"
 msgstr "рекурсивный Sweave-ввод '%s' в стек"
 
 msgid "target syntax not of class \"SweaveSyntax\""
@@ -76,7 +82,8 @@ msgstr ""
 msgid "Warning: unknown option"
 msgstr ""
 
-msgid "path to '%s' contains spaces,"
+#, fuzzy
+msgid "path to %s contains spaces,"
 msgstr "путь у '%s' содержит пробелов,"
 
 msgid "this may cause problems when running LaTeX"
@@ -85,7 +92,8 @@ msgstr "это может привести к проблемам с LaTeX"
 msgid "\\SweaveInput is not compatible with concordances."
 msgstr ""
 
-msgid "invalid value for '%s' : %s"
+#, fuzzy
+msgid "invalid value for %s : %s"
 msgstr "неправильное значение '%s': %s"
 
 msgid "elements of 'what' after the first will be ignored"
@@ -197,16 +205,19 @@ msgstr "' должна определять пол(я):"
 msgid "method is just applicable to 'bibentry' objects"
 msgstr "метод подходит только для объектов 'bibentry'"
 
-msgid "package '%s' not found"
+#, fuzzy
+msgid "package %s not found"
 msgstr "пакет '%s' не найден"
 
 msgid "broken installation, no CITATION file in the base package."
 msgstr "нерабочая установка, в пакете base нет файла CITATION."
 
-msgid "no date field in DESCRIPTION file of package '%s'"
+#, fuzzy
+msgid "no date field in DESCRIPTION file of package %s"
 msgstr "в файле DESCRIPTION пакета '%s' нет поля date"
 
-msgid "could not determine year for '%s' from package DESCRIPTION file"
+#, fuzzy
+msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "не могу определить год для '%s' из файла DESCRIPTION пакета"
 
 msgid "Enhanced author specification provides no authors."
@@ -233,13 +244,16 @@ msgstr "файлы данных перемещены из пакета 'base' в пакет 'datasets'"
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr "файлы данных перемещены из пакета 'stats' в пакет 'datasets'"
 
-msgid "data index for package '%s' is invalid and will be ignored"
+#, fuzzy
+msgid "data index for package %s is invalid and will be ignored"
 msgstr "индекс данных пакета '%s' неправильный и будет пропущен"
 
-msgid "file 'filelist' is missing for directory '%s'"
+#, fuzzy
+msgid "file 'filelist' is missing for directory %s"
 msgstr "файл 'filelist' в папке '%s' пропущен"
 
-msgid "data set '%s' not found"
+#, fuzzy
+msgid "data set %s not found"
 msgstr "данные '%s' не найдены"
 
 msgid "kind '%s' not yet implemented"
@@ -292,12 +306,14 @@ msgstr ""
 msgid "No suitable frames for recover()"
 msgstr "Нет подходящих кадров для recover()"
 
-msgid "No demo found for topic '%s'"
+#, fuzzy
+msgid "No demo found for topic %s"
 msgstr "Для темы '%s' не найден демо"
 
+#, fuzzy
 msgid ""
-"Demo for topic '%s' found more than once,\n"
-"using the one found in '%s'"
+"Demo for topic %' found more than once,\n"
+"using the one found in %s"
 msgstr ""
 "Для темы '%s' найдено более одного демо,\n"
 "использую тот, который найден в '%s'"
@@ -332,10 +348,12 @@ msgstr "класс(ы) у \"name' будут пропущены"
 msgid "cannot edit NULL row names"
 msgstr "не могу редактировать NULL-имена строк"
 
-msgid "no help found for '%s'"
+#, fuzzy
+msgid "no help found for %s"
 msgstr "в '%s' не найдено помощи"
 
-msgid "'%s' has a help file but no examples"
+#, fuzzy
+msgid "%s has a help file but no examples"
 msgstr "у '%s' есть файл помощи, но нет примеров"
 
 msgid "test '%s' is not available"
@@ -365,14 +383,20 @@ msgstr ""
 "'topic' должен быть именем, текстовой строкой единичной длины или "
 "зарезервированным словом"
 
-msgid "No documentation for '%s' in specified packages and libraries:"
+#, fuzzy
+msgid "No documentation for %s in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
 
-msgid "you could try '??%s'"
+#, fuzzy
+msgid "you could try %s"
 msgstr "можете попробовать '??%s'"
 
+msgid "??"
+msgstr ""
+
+#, fuzzy
 msgid ""
-"Help for topic '%s' is not in any loaded package but can be found in the "
+"Help for topic %s is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
 "Справки по '%s' нет в загруженных пакетах, но она может быть найдена в "
@@ -384,7 +408,8 @@ msgstr "Пакет"
 msgid "Library"
 msgstr "Библиотека"
 
-msgid "Help on topic '%s' was found in the following packages:"
+#, fuzzy
+msgid "Help on topic %s was found in the following packages:"
 msgstr "Справка по '%s' найдена в следующих пакетах:"
 
 msgid "Choose one"
@@ -396,10 +421,12 @@ msgstr "Использую первое совпадение..."
 msgid "HTML help is unavailable"
 msgstr "Помощь HTML недоступна"
 
-msgid "R Help on '%s'"
+#, fuzzy
+msgid "R Help on %s"
 msgstr "Помощь R по '%s'"
 
-msgid "invalid '%s' argument"
+#, fuzzy
+msgid "invalid %s argument"
 msgstr "неправильный аргумент '%s'"
 
 msgid ""
@@ -409,7 +436,8 @@ msgstr ""
 "пакет %s существует, но не установлен под R >= 2.10.0, поэтому помощь "
 "недоступна"
 
-msgid "argument '%s' must be a single character string"
+#, fuzzy
+msgid "argument %s must be a single character string"
 msgstr "аргумент '%s' должен быть одной текстовой строкой"
 
 msgid "incorrect field specification"
@@ -433,10 +461,12 @@ msgstr "Пакеты {readRDS() последовательно}:"
 msgid "."
 msgstr "."
 
-msgid "could not find package '%s'"
+#, fuzzy
+msgid "could not find package %s"
 msgstr "не могу найти пакет '%s'"
 
-msgid "package '%s' has empty hsearch data - strangely"
+#, fuzzy
+msgid "package %s has empty hsearch data - strangely"
 msgstr "пакет '%s' странным образом имеет пустые данные hsearch"
 
 msgid "no hsearch.rds meta data for package"
@@ -457,7 +487,8 @@ msgstr "Сохраняю базу данных..."
 msgid "... database rebuilt"
 msgstr "... база данных перестроена"
 
-msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
+#, fuzzy
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr "в базе данных нет информации о пакете '%s': надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
@@ -634,7 +665,8 @@ msgstr "Неверная матрица 'instPkgs'"
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "нет установленных пакетов для (неправильного?) 'lib.loc=%s'"
 
-msgid "metadata of '%s' is corrupt"
+#, fuzzy
+msgid "metadata of %s is corrupt"
 msgstr "метаданные пакета '%s' повреждены"
 
 msgid "'priority' must be character or NULL"
@@ -653,13 +685,16 @@ msgstr ""
 msgid "'destdir' is not a directory"
 msgstr "'destdir' не является папкой"
 
-msgid "no package '%s' at the repositories"
+#, fuzzy
+msgid "no package %s at the repositories"
 msgstr "в хранилище нет пакета '%s'"
 
-msgid "package '%s' does not exist on the local repository"
+#, fuzzy
+msgid "package %s does not exist on the local repository"
 msgstr "в локальном хранилище нет пакета '%s'"
 
-msgid "download of package '%s' failed"
+#, fuzzy
+msgid "download of package %s failed"
 msgstr "скачивание пакета '%s' не удалось"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
@@ -681,7 +716,8 @@ msgstr "не могу установить хранилища неинтерактивно"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
 
-msgid "'%s' must be supplied"
+#, fuzzy
+msgid "%s must be supplied"
 msgstr "надо указать '%s'"
 
 msgid "every package depends on at least one other"
@@ -710,9 +746,10 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' не для записи"
 
+#, fuzzy
 msgid ""
 "Would you like to create a personal library\n"
-"'%s'\n"
+"%s\n"
 "to install packages into?"
 msgstr ""
 "Не хотите ли Вы создать персональную библиотеку\n"
@@ -744,10 +781,12 @@ msgstr ""
 "Эта версия R не подготовлена для инсталляции пакетов из исходников\n"
 "Если она была поставлена из RPM, Вам, возможно, потребуется R-devel RPM"
 
-msgid "installation of package '%s' had non-zero exit status"
+#, fuzzy
+msgid "installation of package %s had non-zero exit status"
 msgstr "установка пакета '%s' имеет ненулевой статус выхода"
 
-msgid "unable to create temporary directory '%s'"
+#, fuzzy
+msgid "unable to create temporary directory %s"
 msgstr "не могу создать временную папку '%s'"
 
 msgid ""
@@ -780,34 +819,40 @@ msgstr "'pb' не из класса \"txtProgressBar\""
 msgid "cannot determine a usable name"
 msgstr "не могу определить имя, которое можно использовать"
 
-msgid "Created file named '%s'."
+#, fuzzy
+msgid "Created file named %s."
 msgstr "Создан файл по имени '%s'."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Редактируется файл и перемещается в положенную папку."
 
-msgid ""
-"no documentation of type '%s' and topic '%s' (or error in processing help)"
+#, fuzzy
+msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
 "нет документации на тип '%s' и разделу '%s' (или ошибка в обработке помощи)"
 
+#, fuzzy
 msgid ""
-"the object of class \"%s\" in the function call '%s' could not be used as a "
+"the object of class \"%s\" in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
 "объект класса \"%s\" в вызове функции '%s' нельзя использовать как раздел "
 "документации"
 
-msgid "no methods for '%s' and no documentation for it as a function"
+#, fuzzy
+msgid "no methods for %s and no documentation for it as a function"
 msgstr "для '%s' нет методов и нет документации как по функции"
 
-msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+#, fuzzy
+msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "ошибка при попытке выполнить выражение для аргумента '%s' (%s)"
 
-msgid "no method defined for function '%s' and signature '%s'"
+#, fuzzy
+msgid "no method defined for function %s and signature %s"
 msgstr "для функции '%s' и подписи '%s' не определено метода"
 
-msgid "no documentation for function '%s' and signature '%s'"
+#, fuzzy
+msgid "no documentation for function %s and signature %s"
 msgstr "для функции '%s' и подписи '%s' нет документации"
 
 msgid "No DIF data on clipboard"
@@ -1004,17 +1049,20 @@ msgstr "путь к файлу слишком длинный"
 msgid "linked path is too long"
 msgstr "путь ссылки слишком длинный"
 
+#, fuzzy
 msgid ""
-"vignette '%s' found more than once,\n"
-"using the one found in '%s'"
+"vignette %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 "миниатюра '%s' найдена больше одного раза,\n"
 "использую ту, которая найдена в '%s'"
 
-msgid "vignette '%s' *not* found"
+#, fuzzy
+msgid "vignette %s not found"
 msgstr "миниатюра '%s' *не* найдена"
 
-msgid "vignette '%s' has no PDF"
+#, fuzzy
+msgid "vignette %s has no PDF"
 msgstr "у миниатюры '%s' нет PDF"
 
 msgid "select.list() cannot be used non-interactively"
@@ -1085,13 +1133,16 @@ msgstr "не найдено метода скачивания"
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
 
-msgid "running '%s' failed"
+#, fuzzy
+msgid "running %s failed"
 msgstr "запуск '%s' не удался"
 
-msgid "'%s' produced no output file: sent to printer?"
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
 msgstr "'%s' не дал выходного файла: послать на принтер?"
 
-msgid "creation of '%s' failed"
+#, fuzzy
+msgid "creation of %s failed"
 msgstr "создание '%s' не удалось"
 
 msgid "Saving help page to"
@@ -1100,7 +1151,8 @@ msgstr "Сохраняю страницу помощи в"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' вернул ненулевой код выхода %d"
 
-msgid "package '%s' successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
 
 msgid "ERROR: failed to lock directory"
@@ -1116,10 +1168,12 @@ msgstr ""
 msgid "ERROR: failed to create lock directory"
 msgstr "ОШИБКА: не могу создать каталог для блокировок"
 
-msgid "restored '%s'"
+#, fuzzy
+msgid "restored %s"
 msgstr "восстановлен '%s'"
 
-msgid "unable to move temporary installation '%s' to '%s'"
+#, fuzzy
+msgid "unable to move temporary installation %s to %s"
 msgstr "не могу перенести временную установку из '%s' в '%s'"
 
 msgid "cannot remove prior installation of package"
@@ -1134,16 +1188,28 @@ msgstr "'memory.limit()' -- Windows-специфичный"
 msgid "method 'mailx' is Unix-only"
 msgstr "метод 'mailx' только для Unix"
 
-msgid "zipfile '%s' not found"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"%s yourself"
+msgstr ""
+"Если ничего не произойдет, надо открыть\n"
+"'%s' самостоятельно"
+
+#, fuzzy
+msgid "zipfile %s not found"
 msgstr "zip-файл '%s' не найден"
 
-msgid "failed to create '%s'"
+#, fuzzy
+msgid "failed to create %s"
 msgstr "не удалось создать '%s'"
 
-msgid "there is no 'libs' directory in package '%s'"
+#, fuzzy
+msgid "there is no 'libs' directory in package %s"
 msgstr "нет папки 'libs' в пакете '%s'"
 
-msgid "cannot remove prior installation of package '%s'"
+#, fuzzy
+msgid "cannot remove prior installation of package %s"
 msgstr "не могу удалить прежнюю установку пакета '%s'"
 
 msgid "winDialog() cannot be used non-interactively"
@@ -1185,14 +1251,16 @@ msgstr[0] "устанавливаю также зависимость"
 msgstr[1] "устанавливаю также зависимости"
 msgstr[2] "устанавливаю также зависимости"
 
-msgid "'lib' element '%s' is not a writable directory"
-msgid_plural "'lib' elements '%s' are not writable directories"
+#, fuzzy
+msgid "'lib' element %s is not a writable directory"
+msgid_plural "'lib' elements %s are not writable directories"
 msgstr[0] "'lib' элемент '%s' -- папка не для записи"
 msgstr[1] "'lib' элементы '%s' -- папки не для записи"
 msgstr[2] "'lib' элементы '%s' -- папки не для записи"
 
-msgid "package '%s' is in use and will not be installed"
-msgid_plural "packages '%s' are in use and will not be installed"
+#, fuzzy
+msgid "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
