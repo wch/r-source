@@ -30,8 +30,9 @@ load <-
             if(grepl("RD[ABX][12]\r", magic))
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the pre-R-1.4.0 code
-            warning(gettextf("file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
-                             basename(file), gsub("[\n\r]*", "", magic)),
+            warning(gettextf("file %s has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
+                             sQuote(basename(file)),
+                             gsub("[\n\r]*", "", magic)),
                     domain = NA, call. = FALSE)
             return(.Internal(load(file, envir)))
         }
@@ -165,7 +166,7 @@ sys.save.image <- function(name)
 findPackageEnv <- function(info)
 {
     if(info %in% search()) return(as.environment(info))
-    message(gettextf("Attempting to load the environment '%s'", info),
+    message(gettextf("Attempting to load the environment %s", sQuote(info)),
             domain = NA)
     pkg <- substr(info, 9L, 1000L)
     if(require(pkg, character.only=TRUE, quietly = TRUE))

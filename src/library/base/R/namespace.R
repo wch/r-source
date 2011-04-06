@@ -213,8 +213,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                environmentIsLocked(ns)
             ns <- asNamespace(ns, base.OK = FALSE)
             if (namespaceIsSealed(ns))
-                stop(gettextf("namespace '%s' is already sealed in loadNamespace",
-                              getNamespaceName(ns)),
+                stop(gettextf("namespace %s is already sealed in loadNamespace",
+                              sQuote(getNamespaceName(ns))),
                      call. = FALSE, domain = NA)
             lockEnvironment(ns, TRUE)
             lockEnvironment(parent.env(ns), TRUE)
@@ -294,7 +294,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## find package and check it has a name space
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0L)
-            stop(gettextf("there is no package called '%s'", package),
+            stop(gettextf("there is no package called %s", sQuote(package)),
                  domain = NA)
         bindTranslations(package, pkgpath)
         package.lib <- dirname(pkgpath)
@@ -303,8 +303,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             hasNoNamespaceError <-
                 function (package, package.lib, call = NULL) {
                 class <- c("hasNoNamespaceError", "error", "condition")
-                msg <- gettextf("package '%s' does not have a name space",
-                                package)
+                msg <- gettextf("package %s does not have a name space",
+                                sQuote(package))
                 structure(list(message = msg, package = package,
                                package.lib = package.lib, call = call),
                           class = class)
@@ -327,13 +327,14 @@ loadNamespace <- function (package, lib.loc = NULL,
             pkgInfo <- readRDS(pkgInfoFP)
             version <- pkgInfo$DESCRIPTION["Version"]
             if(is.null(built <- pkgInfo$Built))
-                stop(gettextf("package '%s' has not been installed properly\n",
-                              basename(pkgpath)),
+                stop(gettextf("package %s has not been installed properly\n",
+                              sQuote(basename(pkgpath))),
                      call. = FALSE, domain = NA)
             R_version_built_under <- as.numeric_version(built$R)
             if(R_version_built_under < "2.10.0")
-                stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
-                              basename(pkgpath)), call. = FALSE, domain = NA)
+                stop(gettextf("package %s was built before R 2.10.0: please re-install it",
+                             sQuote(basename(pkgpath))),
+                     call. = FALSE, domain = NA)
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
@@ -380,10 +381,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (file.exists(codeFile)) {
             res <- try(sys.source(codeFile, env, keep.source = keep.source))
             if(inherits(res, "try-error"))
-                stop(gettextf("unable to load R code in package '%s'", package),
-                     call. = FALSE, domain = NA)
-        } else warning(gettextf("package '%s' contains no R code", package),
-                       domain = NA)
+                stop(gettextf("unable to load R code in package %s",
+                              sQuote(package)), call. = FALSE, domain = NA)
+        } else warning(gettextf("package %s contains no R code",
+                                sQuote(package)), domain = NA)
 
         ## partial loading stops at this point
         ## -- used in preparing for lazy-loading
@@ -476,8 +477,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                              exports[!is.na(match(exports, allGenerics))]))
                 missingMethods <- !(expMethods %in% allGenerics)
                 if(any(missingMethods))
-                    stop(gettextf("in '%s' methods for export not found: %s",
-                                  package,
+                    stop(gettextf("in %s methods for export not found: %s",
+                                  sQuote(package),
                                   paste(expMethods[missingMethods],
                                         collapse = ", ")),
                          domain = NA)
@@ -924,7 +925,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 	    parse(con)
         } else parse(nsFile)
     else if (mustExist)
-        stop(gettextf("package '%s' has no NAMESPACE file", package),
+        stop(gettextf("package %s has no NAMESPACE file", sQuote(package)),
              domain = NA)
     else directives <- NULL
     exports <- character()

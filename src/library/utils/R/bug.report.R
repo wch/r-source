@@ -52,7 +52,8 @@ bug.report <- function(subject = "", address,
 
     DESC <- packageDescription(package, lib.loc)
     if (!inherits(DESC, "packageDescription"))
-        stop("Package '", package, "' DESCRIPTION not found.")
+        stop(gettextf("Package %s: DESCRIPTION not found",
+                      sQuote(package)), domain = NA)
     info <- paste(c("Package", " Version", " Maintainer", " Built"),
                   ": ",
                   c(DESC$Package, DESC$Version, DESC$Maintainer, DESC$Built),
