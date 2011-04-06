@@ -37,12 +37,12 @@
 
 par <- function (..., no.readonly = FALSE)
 {
+    .Pars.readonly <- c("cin","cra","csi","cxy","din")
     single <- FALSE
     args <- list(...)
     if (!length(args))
-	args <- as.list(if (no.readonly)
-                        .Pars[-match(.Call("Rg_readonlypars", PACKAGE="base"), .Pars)]
-        else .Pars)
+	args <- as.list(if (no.readonly) .Pars[-match(.Pars.readonly, .Pars)]
+                        else .Pars)
     else {
 	if (all(unlist(lapply(args, is.character))))
 	    args <- as.list(unlist(args))

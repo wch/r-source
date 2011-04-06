@@ -1168,20 +1168,6 @@ SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
-SEXP attribute_hidden Rg_readonlypars(void)
-{
-    SEXP result;
-
-    PROTECT(result = allocVector(STRSXP, 5));
-    SET_STRING_ELT(result, 0, mkChar("cin"));
-    SET_STRING_ELT(result, 1, mkChar("cra"));
-    SET_STRING_ELT(result, 2, mkChar("csi"));
-    SET_STRING_ELT(result, 3, mkChar("cxy"));
-    SET_STRING_ELT(result, 4, mkChar("din"));
-    UNPROTECT(1);
-    return result;
-}
-
 /*
  *  Layout was written by Paul Murrell during 1997-1998 as a partial
  *  implementation of ideas in his PhD thesis.	The orginal was

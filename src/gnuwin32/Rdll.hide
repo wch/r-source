@@ -395,7 +395,6 @@
  Rf_yynerrs
  Rf_yyparse
  Rg_contourDef
- Rg_readonlypars
  RgetMDIsize
  RguiCommonHelp
  RguiPackageMenu
