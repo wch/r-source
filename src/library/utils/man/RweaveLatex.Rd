@@ -38,7 +38,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   Sweave source file (possibly in a comment), it is inserted by the
   \code{RweaveLatex} driver.  If \code{stylepath = TRUE}, a hard-coded
   path to the file \file{Sweave.sty} in the \R installation is set in
-  place of \code{Sweave}.  The hard-coded path makes the TeX file less
+  place of \code{Sweave}.  The hard-coded path makes the LaTeX file less
   portable, but avoids the problem of installing the current version of
   \file{Sweave.sty} to some place in your TeX input path.  However, TeX
   may not be able to process the hard-coded path if it contains spaces
@@ -91,9 +91,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   when setting \R output.  Either set
   \code{\link{options}(useFancyQuotes = FALSE)} or arrange that LaTeX is
   aware of the encoding used (by a \samp{\\usepackage[utf8]\{inputenc\}}
-  declaration: Windows users will need to replace \samp{utf8} by
-  \samp{cp1252} or similar) and ensure that typewriter fonts containing
-  directional quotes are used.
+  declaration: Windows users of \code{Sweave} from \command{Rgui.exe}
+  will need to replace \samp{utf8} by \samp{cp1252} or similar) and
+  ensure that typewriter fonts containing directional quotes are used.
   
   Some LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
   in the list of known extensions.  To enable them, add something like
@@ -117,14 +117,15 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       file.  Otherwise, deparsed source is echoed.}
     
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
-      is not evaluated, and hence no text or graphical output produced.}
+      is not evaluated, and hence no text nor graphical output
+      produced.}
     
     \item{results:}{character string (\code{"verbatim"}).  If
       \code{"verbatim"}, the output of \R commands is included in the
-      verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the output is
-      taken to be already proper latex markup and included as is.  If
-      \code{"hide"} then all output is completely suppressed (but the code
-      executed during the weave).}
+      verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the
+      output is taken to be already proper LaTeX markup and included as
+      is.  If \code{"hide"} then all output is completely suppressed
+      (but the code executed during the weave).}
 
     \item{print:}{logical (\code{FALSE}).  If \code{TRUE}, each
       expression in the code chunk is wrapped into a \code{print()}
@@ -143,7 +144,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{strip.white:}{character string (\code{"true"}).  If
       \code{"true"}, blank lines at the beginning and end of output are
       removed.  If \code{"all"}, then all blank lines are removed from
-      the output.  If \code{"false"} then blank lines are retained.}
+      the output.  If \code{"false"} then blank lines are retained.
+
+      A \sQuote{blank line} is one that is empty or includes only
+      whitespace (spaces and tabs).
+
+      Note that blank lines in a code chunk will usually produce a
+      prompt string rather than a blank line on output.
+    }
     
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
       filenames of figures and output have a common prefix.}
@@ -186,10 +194,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 	Graphics Devices}.  Ignored if \code{fig = FALSE}.  Only
       available in \R >= 2.13.0.}
     
-    \item{width:}{numeric (6), width of figures in inches. See
+    \item{width:}{numeric (6), width of figures in inches.  See
       \sQuote{Details}.}
     
-    \item{height:}{numeric (6), height of figures in inches. See
+    \item{height:}{numeric (6), height of figures in inches.  See
       \sQuote{Details}.}
     
     \item{resolution:}{numeric (300), resolution in pixels per inch:
@@ -197,7 +205,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       high value, appropriate for high-quality plots.}
     
     \item{expand:}{logical (\code{TRUE}).  Expand references to other
-      chunks so that only R code appears in the output file.  If
+      chunks so that only \R code appears in the output file.  If
       \code{FALSE}, the chunk reference (e.g. \code{<<chunkname>>}) will
       appear.  The \code{expand = FALSE} option requires
       \code{keep.source = TRUE} or it will have no effect.}
@@ -222,7 +230,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   which should open a graphics device.  The chunk's code is then
   evaluated and \code{\link{dev.off}} is called.  Normally a function of
   the name given will have been defined earlier in the Sweave document, e.g.
-\preformatted{<<hide=TRUE>>=
+\preformatted{<<results=hide>>=
 my.Swd <- function(name, width, height, ...)
   grdevices::png(filename = paste(name, "png", sep = "."),
                  width = width, height = height, res = 100, units = "in",
