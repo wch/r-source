@@ -16,7 +16,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
      comment.char = "", allowEscapes = FALSE,
-     fileEncoding = "", encoding = "unknown")
+     fileEncoding = "", encoding = "unknown", text)
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -161,6 +161,11 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     character strings as known to be in Latin-1 or UTF-8: it is not used
     to re-encode the input (see \code{fileEncoding}.  See also \sQuote{Details}.
   }
+
+  \item{text}{character string: if \code{file} is not supplied and this is, 
+    then data are read from the value of \code{text} via a text connection.
+  }
+
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -286,6 +291,10 @@ scan("ex.data", skip = 1, nlines=1) # only 1 line after the skipped one
 scan("ex.data", what = list("","","")) # flush is F -> read "7"
 scan("ex.data", what = list("","",""), flush = TRUE)
 unlink("ex.data") # tidy up
+
+## "inline" usage
+scan(text="1 2 3")
+
 }
 \keyword{file}
 \keyword{connection}

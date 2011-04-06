@@ -52,7 +52,7 @@
       \item Garbage-collecting an input text connection no longer gives
       a warning (it \sQuote{connects} to nothing outside \R).
       
-      \item \code{read.table} gains a \code{text} argument, to allow 
+      \item \code{read.table} and \code{scan} have gained a \code{text} argument, to allow 
       reading data from a (possibly literal) character string. 
     }
   }
