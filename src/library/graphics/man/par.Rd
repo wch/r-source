@@ -136,7 +136,8 @@ par(\dots, no.readonly = FALSE)
     \item \code{"oma"}, \code{"omd"}, \code{"omi"},
     \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"},
     \item \code{"usr"},
-    \item \code{"xlog"}, \code{"ylog"}
+    \item \code{"xlog"}, \code{"ylog"},
+    \item \code{"ylbias"}
   }
   The remaining parameters can also be set as arguments (often via
   \code{\dots}) to high-level plot functions such as
@@ -563,6 +564,10 @@ par(\dots, no.readonly = FALSE)
       for the y-axis.  See \code{xaxs} above.}
     \item{\code{yaxt}}{A character which specifies the y axis type.
       Specifying \code{"n"} suppresses plotting.}
+    \item{\code{ylbias}}{A positive real value used in the positioning
+      of text in the margins by \code{\link{axis}} and
+      \code{\link{mtext}}.  The default is in principle device-specific,
+      but \code{0.2} for all of \R's own devices.}
     \item{\code{ylog}}{A logical value; see \code{xlog} above.}
   }
 }

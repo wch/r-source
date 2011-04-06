@@ -75,6 +75,7 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
 
+## One of the grid vignettes requires lattice
 svn-vignettes: stamp-recommended
 	-@if test -f "non-tarball"; then \
 	   (cd src/library && $(MAKE) vignettes); \

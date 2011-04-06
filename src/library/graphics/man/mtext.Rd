@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mtext.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mtext}
@@ -76,6 +76,9 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   Note that if the text is to be plotted perpendicular to the axis,
   \code{adj} determines the justification of the string \emph{and} the
   position along the axis unless \code{at} is specified.
+  
+  Graphics parameter \code{"ylbias"} (see \code{\link{par}}) determines
+  how the text baseline is placed relative to the nominal line.
 }
 \section{Side Effects}{The given text is written onto the current plot.}
 \references{

@@ -29,10 +29,10 @@
 	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
 	   "smo", "srt", "tck", "tcl", "usr",
 	   "xaxp", "xaxs", "xaxt",  "xpd",
-	   "yaxp", "yaxs", "yaxt"
+	   "yaxp", "yaxs", "yaxt", "ylbias"
 	   )
 # Replaced with function to evaluate readonly pars because "gamma"
-# is readonly on a per-device basis
+# was at one time readonly on a per-device basis
 # .Pars.readonly <- c("cin","cra","csi","cxy","din")
 
 par <- function (..., no.readonly = FALSE)
