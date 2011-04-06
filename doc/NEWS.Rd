@@ -12,7 +12,7 @@
       this changes slightly the vertical positioning of text (including axis
       annotations).   This is mainly for consistency with other devices
       such as \code{quartz()} and \code{pdf()}.  (Wish of \PR{14538}.)
-      
+
       There is a new graphics parameter \code{"ylbias"} which
       allows the y-line bias of the graphics device to be tweaked,
       including to reproduce output from earlier versions of \R.
@@ -174,6 +174,8 @@
       levels in increasing order of mean standardized residual.   It
       ordered the factor labels correctly, but could plot the wrong
       group of residuals against the label.  (\PR{14545})
+
+      \item \code{nobs(mle(*, nobs = .))} now works.
     }
   }
 }

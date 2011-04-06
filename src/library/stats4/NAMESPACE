@@ -7,6 +7,6 @@ importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile, update, vcov
 ## S4
 exportClasses(mle, profile.mle, summary.mle)
 ## All methods for imported generics:
-exportMethods(coef, confint, logLik, plot, profile, summary, show, update, vcov)
+exportMethods(coef, confint, logLik, nobs, plot, profile, summary, show, update, vcov)
 ## implicit generics do not have any methods here
-export(AIC, BIC, nobs)
+export(AIC, BIC)
