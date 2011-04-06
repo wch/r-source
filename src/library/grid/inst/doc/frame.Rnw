@@ -16,7 +16,6 @@
 \begin{document}
 \maketitle
 
-\SweaveOpts{persistent.graphics=TRUE}
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(stats) # for runif
