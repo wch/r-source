@@ -51,17 +51,21 @@
 
       \item Garbage-collecting an input text connection no longer gives
       a warning (it \sQuote{connects} to nothing outside \R).
-      
+
       \item \code{read.table()} and \code{scan()} have gained a
       \code{text} argument, to allow reading data from a (possibly
       literal) character string.
+
+      \item \code{optim(*, method= .)} now allows \code{method="Brent"}
+      as interface to \code{optimize()}, for cases as \code{mle()}
+      where \code{optim()} is used internally.
     }
   }
 
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
       \item Option \code{keep.source = TRUE} is now the default.
-      
+
       \item User-defined numeric (with names starting \code{n_}) and
       character (starting \code{ch_}) options are now allowed in
       \code{Sweave()}: as before all other unknown options are taken to
@@ -120,7 +124,7 @@
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
-      
+
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
@@ -587,7 +591,7 @@
 
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
-      
+
       \item \code{rstandard.glm} gains a \code{type} argument which can
       be used to request standardized Pearson residuals.
 
@@ -599,7 +603,7 @@
       different symbolic links.
     }
   }
-  
+
   \subsection{SWEAVE CHANGES}{
     \itemize{
       \item \code{Sweave()} has options to produce PNG and JPEG figures,
@@ -622,7 +626,7 @@
       Maindonald and others.)
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Because they use a C99 interface which a C++ compiler is not

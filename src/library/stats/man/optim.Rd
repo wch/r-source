@@ -1,6 +1,6 @@
 % File src/library/stats/man/optim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{optim}
@@ -15,7 +15,7 @@
 }
 \usage{
 optim(par, fn, gr = NULL, \dots,
-      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
       lower = -Inf, upper = Inf,
       control = list(), hessian = FALSE)
 }
@@ -33,7 +33,8 @@ optim(par, fn, gr = NULL, \dots,
    kernel is used.}
  \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
  \item{method}{The method to be used. See \sQuote{Details}.}
- \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
+ \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"}
+   method, or bounds in which to \emph{search} for method \code{"Brent"}.}
  \item{control}{A list of control parameters. See \sQuote{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
@@ -87,6 +88,12 @@ optim(par, fn, gr = NULL, \dots,
   \code{"SANN"} method depends critically on the settings of the control
   parameters. It is not a general-purpose method but can be very useful
   in getting to a good value on a very rough surface.
+
+  Method \code{"Brent"} is for one-dimensional problems only, and defers
+  to \code{\link{optimize}()}.  It can be useful in cases where
+  \code{optim()} is used inside other functions where only \code{method}
+  can be specified, such as in \code{\link[stats4]{mle}} (package
+  \pkg{stats4}).
 
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
@@ -194,8 +201,10 @@ optim(par, fn, gr = NULL, \dots,
 }
 \note{
   \code{optim} will work with one-dimensional \code{par}s, but the
-  default method does not work well (and will warn).  Use
-  \code{\link{optimize}} instead.
+  default method does not work well (and will warn).  Method
+  \code{"Brent"} uses \code{\link{optimize}}, returning an
+  \dQuote{optim--like} object.  Often, you would rather use
+   \code{\link{optimize}} directly.
 }
 \source{
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and

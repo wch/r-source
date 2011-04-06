@@ -1,7 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-26 r54603)
+R version 2.14.0 Under development (unstable) (2011-04-06 r55313)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -40,6 +41,14 @@ Type 'q()' to quit R.
 > od <- options(digits = 5)
 > x <- 0:10
 > y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+> 
+> ## Easy one-dimensional MLE:
+> nLL <- function(lambda) -sum(stats::dpois(y, lambda, log=TRUE))
+> fit0 <- mle(nLL, start = list(lambda = 5))
+> ## For 1D, this is preferable:
+> fit1 <- mle(nLL, start = list(lambda = 5),
++             method="Brent", lower= 1, upper=20)
+> 
 > ## This needs a constrained parameter space: most methods will accept NA
 > ll <- function(ymax = 15, xhalf = 6)
 +     if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
@@ -103,7 +112,7 @@ xhalf  1.6616  6.4792
 > 
 > ## use bounded optimization
 > ## the lower bounds are really > 0, but we use >=0 to stress-test profiling
-> (fit1 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
+> (fit2 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
 
 Call:
 mle(minuslogl = ll, method = "L-BFGS-B", lower = c(0, 0))
@@ -111,21 +120,21 @@ mle(minuslogl = ll, method = "L-BFGS-B", lower = c(0, 0))
 Coefficients:
    ymax   xhalf 
 24.9994  3.0558 
-> plot(profile(fit1), absVal=FALSE)
+> plot(profile(fit2), absVal=FALSE)
 > 
 > ## a better parametrization:
-> ll2 <- function(lymax = log(15), lxhalf = log(6))
+> ll3 <- function(lymax = log(15), lxhalf = log(6))
 +     -sum(stats::dpois(y, lambda=exp(lymax)/(1+x/exp(lxhalf)), log=TRUE))
-> (fit2 <- mle(ll2))
+> (fit3 <- mle(ll3))
 
 Call:
-mle(minuslogl = ll2)
+mle(minuslogl = ll3)
 
 Coefficients:
  lymax lxhalf 
 3.2189 1.1170 
-> plot(profile(fit2), absVal = FALSE)
-> exp(confint(fit2))
+> plot(profile(fit3), absVal = FALSE)
+> exp(confint(fit3))
 Profiling...
          2.5 %  97.5 %
 lymax  17.8815 34.6186
@@ -169,7 +178,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.945 0.014 1.966 0 0 
+Time elapsed:  1.034 0.026 1.089 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -44,6 +44,14 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
 od <- options(digits = 5)
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+
+## Easy one-dimensional MLE:
+nLL <- function(lambda) -sum(stats::dpois(y, lambda, log=TRUE))
+fit0 <- mle(nLL, start = list(lambda = 5))
+## For 1D, this is preferable:
+fit1 <- mle(nLL, start = list(lambda = 5),
+            method="Brent", lower= 1, upper=20)
+
 ## This needs a constrained parameter space: most methods will accept NA
 ll <- function(ymax = 15, xhalf = 6)
     if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
@@ -65,15 +73,15 @@ confint(fit)
 
 ## use bounded optimization
 ## the lower bounds are really > 0, but we use >=0 to stress-test profiling
-(fit1 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
-plot(profile(fit1), absVal=FALSE)
+(fit2 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
+plot(profile(fit2), absVal=FALSE)
 
 ## a better parametrization:
-ll2 <- function(lymax = log(15), lxhalf = log(6))
+ll3 <- function(lymax = log(15), lxhalf = log(6))
     -sum(stats::dpois(y, lambda=exp(lymax)/(1+x/exp(lxhalf)), log=TRUE))
-(fit2 <- mle(ll2))
-plot(profile(fit2), absVal = FALSE)
-exp(confint(fit2))
+(fit3 <- mle(ll3))
+plot(profile(fit3), absVal = FALSE)
+exp(confint(fit3))
 
 options(od)
 }
