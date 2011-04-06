@@ -17,9 +17,11 @@
 vignette <-
     function(topic, package = NULL, lib.loc = NULL, all = TRUE)
 {
-    if(is.null(package))
+    if (is.null(package)) {
         package <- .packages(all.available = all, lib.loc)
-    paths <- find.package(package, lib.loc)
+        ## allow for misnamed dirs
+        paths <- find.package(package, lib.loc, quiet = TRUE)
+    } else paths <- find.package(package, lib.loc)
 
     ## Find the directories with a 'doc' subdirectory *possibly*
     ## containing vignettes.
