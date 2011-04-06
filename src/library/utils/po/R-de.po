@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 16:46\n"
+"POT-Creation-Date: 2011-04-06 17:16\n"
 "PO-Revision-Date: 2011-03-24 11:19+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -128,10 +128,8 @@ msgstr "Keine Vignetten gefunden durch"
 msgid "call"
 msgstr "Aufruf"
 
-msgid "Package '"
-msgstr "Paket '"
-
-msgid "' DESCRIPTION not found."
+#, fuzzy
+msgid "Package %s: DESCRIPTION not found"
 msgstr "DESCRIPTION nicht gefunden"
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -1250,6 +1248,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "Package '"
+#~ msgstr "Paket '"
 
 #~ msgid "You can now run LaTeX on '%s'"
 #~ msgstr "Sie können nun LaTeX auf '%s' ausführen"

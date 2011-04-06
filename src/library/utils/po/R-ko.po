@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 16:46\n"
+"POT-Creation-Date: 2011-04-06 17:16\n"
 "PO-Revision-Date: 2011-01-18 13:55+0000\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -126,11 +126,8 @@ msgid "call"
 msgstr ""
 
 #, fuzzy
-msgid "Package '"
-msgstr "패키지"
-
-msgid "' DESCRIPTION not found."
-msgstr ""
+msgid "Package %s: DESCRIPTION not found"
+msgstr "'%s' 패키지가 검색되지 않습니다"
 
 #, fuzzy
 msgid "'file' must be NULL, a character string or a connection"
@@ -1299,6 +1296,10 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#, fuzzy
+#~ msgid "Package '"
+#~ msgstr "패키지"
 
 #~ msgid "You can now run LaTeX on '%s'"
 #~ msgstr "현재 '%s'에서 LaTeX를 실행할수 있습니다"

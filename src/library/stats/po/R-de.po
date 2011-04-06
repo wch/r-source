@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-24 10:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1737,7 +1737,8 @@ msgstr "eine zweiseitige Formel ist nötig"
 msgid "not enough groups"
 msgstr "nicht genügend Gruppen"
 
-msgid "bounds can only be used with method L-BFGS-B"
+#, fuzzy
+msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "Grenzen können nur mit der Methode L-BFGS-B benutzt werden"
 
 msgid "unknown names in control:"
@@ -1755,10 +1756,17 @@ msgstr ""
 "Methode L-BFGS-B benutzt 'factr' (and 'pgtol') anstelle von 'reltol' und "
 "'abstol'"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
+#, fuzzy
+msgid "one-diml optimization by Nelder-Mead is unreliable:"
 msgstr ""
 "eindimensionale Optimierung mit Nelder-Mead ist unzuverlässig: nutze "
 "'optimize'"
+
+msgid "use \"Brent\" or optimize() directly"
+msgstr ""
+
+msgid "\"Brent\" is only available for one-dimensional minimization"
+msgstr ""
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "Poolen der SD passt nicht mit paarweisen Tests zusammen"

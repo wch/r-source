@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:32\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -741,40 +741,40 @@ msgstr ""
 msgid "'object' must be a list"
 msgstr ""
 
-msgid "package '%s' has not been installed properly"
+msgid "package %s has not been installed properly"
 msgstr ""
 
-msgid "package '%s' was built before R 2.10.0: please re-install it"
+msgid "package %s was built before R 2.10.0: please re-install it"
 msgstr ""
 
-msgid "This is R %s, package '%s' needs %s %s"
+msgid "This is R %s, package %s needs %s %s"
 msgstr ""
 
-msgid "package '%s' was built under R version %s"
+msgid "package %s was built under R version %s"
 msgstr ""
 
-msgid "package '%s' was built for %s"
+msgid "package %s was built for %s"
 msgstr ""
 
-msgid "package '%s' is not installed for 'arch=%s'"
-msgstr ""
-
-msgid ""
-"package '%s' has a license that you need to accept in an interactive session"
-msgstr ""
-
-msgid "Package '%s' has a license that you need to accept after viewing"
+msgid "package %s is not installed for 'arch=%s'"
 msgstr ""
 
 msgid ""
-"Package '%s' has a license that you need to accept:\n"
+"package %s has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package %s has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 
 msgid "License"
 msgstr ""
 
-msgid "License for package '%s' not accepted"
+msgid "License for package %s not accepted"
 msgstr ""
 
 #, fuzzy
@@ -787,37 +787,38 @@ msgstr ""
 msgid "invalid package name"
 msgstr "geçersiz paket ismi"
 
-msgid "there is no package called '%s'"
-msgstr ""
+#, fuzzy
+msgid "there is no package called %s"
+msgstr "Zorunlu paket yükleniyor: %s"
 
 msgid "no library trees found in 'lib.loc'"
 msgstr ""
 
-msgid "'%s' is not a valid installed package"
+msgid "%s is not a valid installed package"
 msgstr ""
 
-msgid "'%s' not found on search path, using pos = 2"
+msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "package/namespace load failed for '%s'"
+msgid "package/namespace load failed for %s"
 msgstr ""
 
-msgid "unable to load R code in package '%s'"
+msgid "unable to load R code in package %s"
 msgstr ""
 
-msgid "package '%s' contains no R code"
+msgid "package %s contains no R code"
 msgstr ""
 
-msgid ".First.lib failed for '%s'"
+msgid ".First.lib failed for %s"
 msgstr ""
 
-msgid "package '%s' already present in search()"
+msgid "package %s already present in search()"
 msgstr ""
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
-msgid "%sPackages in library '%s':"
+msgid "%sPackages in library %s:"
 msgstr ""
 
 msgid "no packages found"
@@ -826,13 +827,13 @@ msgstr ""
 msgid "R packages available"
 msgstr ""
 
-msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgid "DLL %s not found: maybe not installed for this architecture?"
 msgstr ""
 
-msgid "shared object '%s' not found"
+msgid "shared object %s not found"
 msgstr ""
 
-msgid "DLL '%s' already loaded"
+msgid "DLL %s already loaded"
 msgstr ""
 
 msgid "shared object '%s' already loaded"
@@ -847,13 +848,17 @@ msgstr ""
 msgid "no shared object was specified"
 msgstr ""
 
-msgid "DLL '%s' was not loaded"
+msgid "DLL %s was not loaded"
 msgstr ""
 
-msgid "shared object '%s' was not loaded"
+msgid "shared object %s was not loaded"
 msgstr ""
 
-msgid "DLL '%s' not found"
+#, fuzzy
+msgid "DLL %s not found"
+msgstr "bulunamadı"
+
+msgid "shared object '%s' not found"
 msgstr ""
 
 msgid "now dyn.unload(\"%s\") ..."
@@ -866,13 +871,12 @@ msgid "none of the packages are loaded"
 msgstr ""
 
 msgid ""
-"package '%s' found more than once,\n"
-"using the one found in '%s'"
+"package %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 
 msgid ""
-"Further information is available in the following vignettes in directory "
-"'%s':"
+"Further information is available in the following vignettes in directory %s:"
 msgstr ""
 
 msgid "doc"
@@ -884,29 +888,31 @@ msgstr ""
 msgid "Index:"
 msgstr ""
 
-msgid "Information on package '%s'"
+#, fuzzy
+msgid "Information on package %s"
+msgstr "Zorunlu paket yükleniyor: %s"
+
+#, fuzzy
+msgid "Documentation for package %s"
+msgstr "Zorunlu paket yükleniyor: %s"
+
+msgid "package %s required by %s could not be found"
 msgstr ""
 
-msgid "Documentation for package '%s'"
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr ""
 
-msgid "package '%s' required by '%s' could not be found"
+msgid "package %s could not be loaded"
 msgstr ""
 
-msgid "package '%s' %s was found, but %s %s is required by '%s'"
-msgstr ""
-
-msgid "package '%s' could not be loaded"
-msgstr ""
-
-msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr ""
 
 msgid ""
-"file '%s' has magic number '%s'\n"
+"file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
 
@@ -934,7 +940,7 @@ msgstr ""
 msgid "[Previously saved workspace restored]"
 msgstr "[Kaydedilen çalışma alanı geri yüklendi]"
 
-msgid "Attempting to load the environment '%s'"
+msgid "Attempting to load the environment %s"
 msgstr ""
 
 msgid "not found: using .GlobalEnv instead"
@@ -1038,7 +1044,7 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
-msgid "namespace '%s' is already sealed in loadNamespace"
+msgid "namespace %s is already sealed in loadNamespace"
 msgstr ""
 
 msgid "failed to assign RegisteredNativeSymbol for"
@@ -1059,7 +1065,7 @@ msgstr "isim alanı"
 msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
 
-msgid "package '%s' does not have a name space"
+msgid "package %s does not have a name space"
 msgstr ""
 
 msgid ""
@@ -1070,7 +1076,7 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
 
-msgid "in '%s' methods for export not found: %s"
+msgid "in %s methods for export not found: %s"
 msgstr ""
 
 msgid "multiple methods tables found for %s"
@@ -1124,7 +1130,7 @@ msgstr ""
 msgid "undefined exports:"
 msgstr ""
 
-msgid "package '%s' has no NAMESPACE file"
+msgid "package %s has no NAMESPACE file"
 msgstr ""
 
 msgid "empty name in directive '%s' in NAMESPACE file"

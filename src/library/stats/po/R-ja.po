@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-28 15:10+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1725,7 +1725,8 @@ msgstr " 両側モデル式が必要です "
 msgid "not enough groups"
 msgstr " 十分なグループがありません "
 
-msgid "bounds can only be used with method L-BFGS-B"
+#, fuzzy
+msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr " bounds は L-BFGS-B 法でしか使用することができません "
 
 msgid "unknown names in control:"
@@ -1743,10 +1744,17 @@ msgstr ""
 " L-BFGS-B 法は、'reltol' そして 'abstol' の代わりに 'factr'(と 'pgtol')を使用"
 "します "
 
-msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
+#, fuzzy
+msgid "one-diml optimization by Nelder-Mead is unreliable:"
 msgstr ""
 " Nelder-Mead 法による一次元最適化は信頼できません: optimize を使用してくださ"
 "い "
+
+msgid "use \"Brent\" or optimize() directly"
+msgstr ""
+
+msgid "\"Brent\" is only available for one-dimensional minimization"
+msgstr ""
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "SDのプールは対応ありの検定では使えません "

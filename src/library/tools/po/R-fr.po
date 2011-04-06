@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -577,11 +577,9 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
-msgid "processing '"
+#, fuzzy
+msgid "processing"
 msgstr "analyse de '"
-
-msgid "'"
-msgstr "'"
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -1122,6 +1120,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "'"
+#~ msgstr "'"
 
 #~ msgid "--binary is deprecated"
 #~ msgstr "--binary est obsolète "

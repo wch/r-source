@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 16:46\n"
+"POT-Creation-Date: 2011-04-06 17:16\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -134,10 +134,8 @@ msgstr "Не найдено миниатюр в"
 msgid "call"
 msgstr "вызов"
 
-msgid "Package '"
-msgstr "Пакет '"
-
-msgid "' DESCRIPTION not found."
+#, fuzzy
+msgid "Package %s: DESCRIPTION not found"
 msgstr "' DESCRIPTION не найдено."
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -1264,6 +1262,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Package '"
+#~ msgstr "Пакет '"
 
 #~ msgid "You can now run LaTeX on '%s'"
 #~ msgstr "Теперь можно запустить LaTeX на '%s'"

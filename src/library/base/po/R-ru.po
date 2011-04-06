@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:32\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -765,35 +765,44 @@ msgstr "треугольная матрица должна быть квадратной"
 msgid "'object' must be a list"
 msgstr "'object' должен быть списком"
 
-msgid "package '%s' has not been installed properly"
+#, fuzzy
+msgid "package %s has not been installed properly"
 msgstr "пакет '%s' как следует не установлен"
 
-msgid "package '%s' was built before R 2.10.0: please re-install it"
+#, fuzzy
+msgid "package %s was built before R 2.10.0: please re-install it"
 msgstr ""
 "пакет '%s' был собран до R 2.10.0: пожалуйста, инсталлируйте его заново"
 
-msgid "This is R %s, package '%s' needs %s %s"
+#, fuzzy
+msgid "This is R %s, package %s needs %s %s"
 msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
 
-msgid "package '%s' was built under R version %s"
+#, fuzzy
+msgid "package %s was built under R version %s"
 msgstr "пакет '%s' был собран под R версии %s"
 
-msgid "package '%s' was built for %s"
+#, fuzzy
+msgid "package %s was built for %s"
 msgstr "пакет '%s' был собран для %s"
 
-msgid "package '%s' is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch=%s'"
 msgstr "пакет '%s' не установлен для 'arch=%s'"
 
+#, fuzzy
 msgid ""
-"package '%s' has a license that you need to accept in an interactive session"
+"package %s has a license that you need to accept in an interactive session"
 msgstr ""
 "у пакета '%s' есть лицензия, которую Вам нужно принять в инерактивной сессии"
 
-msgid "Package '%s' has a license that you need to accept after viewing"
+#, fuzzy
+msgid "Package %s has a license that you need to accept after viewing"
 msgstr "Пакет '%s' имеет лицензию, которую Вам нужно принять после просмотра"
 
+#, fuzzy
 msgid ""
-"Package '%s' has a license that you need to accept:\n"
+"Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 "Пакет '%s' имеет лицензию, которую надо принять::\n"
@@ -802,7 +811,8 @@ msgstr ""
 msgid "License"
 msgstr "Лицензия"
 
-msgid "License for package '%s' not accepted"
+#, fuzzy
+msgid "License for package %s not accepted"
 msgstr "Лицензия для пакета '%s' не принята"
 
 #, fuzzy
@@ -815,37 +825,46 @@ msgstr "'verbose' и 'quietly' -- оба true; значит, будем verbose..."
 msgid "invalid package name"
 msgstr "неправильное имя пакета"
 
-msgid "there is no package called '%s'"
+#, fuzzy
+msgid "there is no package called %s"
 msgstr "нет пакета под названием '%s'"
 
 msgid "no library trees found in 'lib.loc'"
 msgstr "деревья библиотеки не найдены в 'lib.loc'"
 
-msgid "'%s' is not a valid installed package"
+#, fuzzy
+msgid "%s is not a valid installed package"
 msgstr "'%s' не является правильным установленным пакетом"
 
-msgid "'%s' not found on search path, using pos = 2"
+#, fuzzy
+msgid "%s not found on search path, using pos = 2"
 msgstr "'%s' не найден в пути поиска, использую pos = 2"
 
-msgid "package/namespace load failed for '%s'"
+#, fuzzy
+msgid "package/namespace load failed for %s"
 msgstr "не удалась загрузка пакета/пространства имен для '%s'"
 
-msgid "unable to load R code in package '%s'"
+#, fuzzy
+msgid "unable to load R code in package %s"
 msgstr "не могу загрузить код R пакета '%s'"
 
-msgid "package '%s' contains no R code"
+#, fuzzy
+msgid "package %s contains no R code"
 msgstr "пакет '%s' не содержит кода R"
 
-msgid ".First.lib failed for '%s'"
+#, fuzzy
+msgid ".First.lib failed for %s"
 msgstr ".First.lib не загрузилась для '%s'"
 
-msgid "package '%s' already present in search()"
+#, fuzzy
+msgid "package %s already present in search()"
 msgstr "пакет '%s' уже есть в search()"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr "У 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
 
-msgid "%sPackages in library '%s':"
+#, fuzzy
+msgid "%sPackages in library %s:"
 msgstr "%sПакеты в библиотеке '%s':"
 
 msgid "no packages found"
@@ -854,13 +873,16 @@ msgstr "пакеты не найдены"
 msgid "R packages available"
 msgstr "доступные R-пакеты"
 
-msgid "DLL '%s' not found: maybe not installed for this architecture?"
+#, fuzzy
+msgid "DLL %s not found: maybe not installed for this architecture?"
 msgstr "DLL '%s' не найден: может, не установлен в этой архитектуре?"
 
-msgid "shared object '%s' not found"
+#, fuzzy
+msgid "shared object %s not found"
 msgstr "разделяемый объект '%s' не найден"
 
-msgid "DLL '%s' already loaded"
+#, fuzzy
+msgid "DLL %s already loaded"
 msgstr "DLL '%s' уже загружена"
 
 msgid "shared object '%s' already loaded"
@@ -875,14 +897,20 @@ msgstr "не определена DLL"
 msgid "no shared object was specified"
 msgstr "разделяемый объект не указан"
 
-msgid "DLL '%s' was not loaded"
+#, fuzzy
+msgid "DLL %s was not loaded"
 msgstr "DLL '%s' не загружен"
 
-msgid "shared object '%s' was not loaded"
+#, fuzzy
+msgid "shared object %s was not loaded"
 msgstr "разделяемый объект '%s' не загружен"
 
-msgid "DLL '%s' not found"
+#, fuzzy
+msgid "DLL %s not found"
 msgstr "DLL '%s' не найден"
+
+msgid "shared object '%s' not found"
+msgstr "разделяемый объект '%s' не найден"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "сейчас dyn.unload(\"%s\") ..."
@@ -893,16 +921,17 @@ msgstr "Загрузка требуемого пакета: %s"
 msgid "none of the packages are loaded"
 msgstr "ни один из пакетов не загружен"
 
+#, fuzzy
 msgid ""
-"package '%s' found more than once,\n"
-"using the one found in '%s'"
+"package %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 "пакет '%s' найден более чем однажды,\n"
 "использую тот, который найден в '%s'"
 
+#, fuzzy
 msgid ""
-"Further information is available in the following vignettes in directory "
-"'%s':"
+"Further information is available in the following vignettes in directory %s:"
 msgstr "Дальнейшая информация доступна в следующих миниатюрах из папки '%s':"
 
 msgid "doc"
@@ -914,29 +943,36 @@ msgstr "Определение:"
 msgid "Index:"
 msgstr "Индекс:"
 
-msgid "Information on package '%s'"
+#, fuzzy
+msgid "Information on package %s"
 msgstr "Информация по пакету '%s'"
 
-msgid "Documentation for package '%s'"
+#, fuzzy
+msgid "Documentation for package %s"
 msgstr "Документация для пакета '%s'"
 
-msgid "package '%s' required by '%s' could not be found"
+#, fuzzy
+msgid "package %s required by %s could not be found"
 msgstr "пакет '%s', требуемый для '%s', не найден"
 
-msgid "package '%s' %s was found, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr "пакет '%s' %s найден, но %s %s требуется для '%s'"
 
-msgid "package '%s' could not be loaded"
+#, fuzzy
+msgid "package %s could not be loaded"
 msgstr "пакет '%s' нельзя загрузить"
 
-msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "пакет '%s' %s загружен, но %s %s требуется для '%s'"
 
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ввод поврежден, LF заменен на CR"
 
+#, fuzzy
 msgid ""
-"file '%s' has magic number '%s'\n"
+"file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
 "файл '%s' имеет магическое число '%s'\n"
@@ -966,7 +1002,8 @@ msgstr "изображение нельзя переименовать; оставлено в"
 msgid "[Previously saved workspace restored]"
 msgstr "[Загружено ранее сохраненное рабочее пространство]"
 
-msgid "Attempting to load the environment '%s'"
+#, fuzzy
+msgid "Attempting to load the environment %s"
 msgstr "Пытаюсь загрузить окружение '%s'"
 
 msgid "not found: using .GlobalEnv instead"
@@ -1074,7 +1111,8 @@ msgstr "пространство имен уже присоединено"
 msgid "%s not found"
 msgstr "%s не найден"
 
-msgid "namespace '%s' is already sealed in loadNamespace"
+#, fuzzy
+msgid "namespace %s is already sealed in loadNamespace"
 msgstr "пространство имен '%s' уже включено в loadNamespace"
 
 msgid "failed to assign RegisteredNativeSymbol for"
@@ -1095,7 +1133,8 @@ msgstr "пространство имен"
 msgid "failed to assign NativeSymbolInfo for"
 msgstr "не удалось присвоить NativeSymbolInfo для"
 
-msgid "package '%s' does not have a name space"
+#, fuzzy
+msgid "package %s does not have a name space"
 msgstr "пакет '%s' не имеет пространства имен"
 
 msgid ""
@@ -1108,7 +1147,8 @@ msgstr ""
 msgid "in package %s classes %s were specified for export but not defined"
 msgstr "в пакете '%s' классы %s указаны для экспорта, но не определены"
 
-msgid "in '%s' methods for export not found: %s"
+#, fuzzy
+msgid "in %s methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
 msgid "multiple methods tables found for %s"
@@ -1163,7 +1203,8 @@ msgstr "не могу добавить к экспорту из включенного пространства имен"
 msgid "undefined exports:"
 msgstr "неопределенные экспорты:"
 
-msgid "package '%s' has no NAMESPACE file"
+#, fuzzy
+msgid "package %s has no NAMESPACE file"
 msgstr "у пакета '%s' нет файла NAMESPACE"
 
 msgid "empty name in directive '%s' in NAMESPACE file"

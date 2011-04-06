@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 16:46\n"
+"POT-Creation-Date: 2011-04-06 17:16\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -117,11 +117,9 @@ msgstr ""
 msgid "call"
 msgstr ""
 
-msgid "Package '"
-msgstr ""
-
-msgid "' DESCRIPTION not found."
-msgstr ""
+#, fuzzy
+msgid "Package %s: DESCRIPTION not found"
+msgstr "documento não encontrado"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr ""

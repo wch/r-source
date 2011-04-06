@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:32\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -769,36 +769,45 @@ msgstr "Dreiecks-Matrix sollte quadratisch sein"
 msgid "'object' must be a list"
 msgstr "'object' muss eine Liste sein"
 
-msgid "package '%s' has not been installed properly"
+#, fuzzy
+msgid "package %s has not been installed properly"
 msgstr "Paket '%s' wurde nicht ordentlich installiert"
 
-msgid "package '%s' was built before R 2.10.0: please re-install it"
+#, fuzzy
+msgid "package %s was built before R 2.10.0: please re-install it"
 msgstr "Paket '%s' wurde vor R 2.10.0 gebaut: bitte Paket neu installieren"
 
-msgid "This is R %s, package '%s' needs %s %s"
+#, fuzzy
+msgid "This is R %s, package %s needs %s %s"
 msgstr "Dies ist R %s, Paket '%s' benötigt %s %s"
 
-msgid "package '%s' was built under R version %s"
+#, fuzzy
+msgid "package %s was built under R version %s"
 msgstr "Paket '%s' wurde unter R Version %s gebaut"
 
-msgid "package '%s' was built for %s"
+#, fuzzy
+msgid "package %s was built for %s"
 msgstr "Paket '%s' wurde gebaut für %s"
 
-msgid "package '%s' is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch=%s'"
 msgstr "Paket '%s' wurde nicht für 'arch=%s' installiert"
 
+#, fuzzy
 msgid ""
-"package '%s' has a license that you need to accept in an interactive session"
+"package %s has a license that you need to accept in an interactive session"
 msgstr ""
 "Paket '%s' unterliegt einer Lizenz, die in einer interaktiven Sitzung "
 "akzeptiert werden muss"
 
-msgid "Package '%s' has a license that you need to accept after viewing"
+#, fuzzy
+msgid "Package %s has a license that you need to accept after viewing"
 msgstr ""
 "Paket '%s' unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
 
+#, fuzzy
 msgid ""
-"Package '%s' has a license that you need to accept:\n"
+"Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 "Paket '%s' unterliegt einer Lizenz, die akzeptiert werden muss:\n"
@@ -807,7 +816,8 @@ msgstr ""
 msgid "License"
 msgstr "Lizenz"
 
-msgid "License for package '%s' not accepted"
+#, fuzzy
+msgid "License for package %s not accepted"
 msgstr "Lizenz für Paket '%s' nicht akzeptiert"
 
 #, fuzzy
@@ -822,37 +832,46 @@ msgstr ""
 msgid "invalid package name"
 msgstr "ungültiger Paketname"
 
-msgid "there is no package called '%s'"
+#, fuzzy
+msgid "there is no package called %s"
 msgstr "es gibt kein Paket '%s'"
 
 msgid "no library trees found in 'lib.loc'"
 msgstr "keine Bibliotheken in 'lib.loc' gefunden"
 
-msgid "'%s' is not a valid installed package"
+#, fuzzy
+msgid "%s is not a valid installed package"
 msgstr "'%s' ist keine gültiges installiertes Paket"
 
-msgid "'%s' not found on search path, using pos = 2"
+#, fuzzy
+msgid "%s not found on search path, using pos = 2"
 msgstr "'%s' nicht im Suchpfad gefunden, nutze pos = 2"
 
-msgid "package/namespace load failed for '%s'"
+#, fuzzy
+msgid "package/namespace load failed for %s"
 msgstr "Laden von Paket/Namensraum für '%s' fehlgeschlagen"
 
-msgid "unable to load R code in package '%s'"
+#, fuzzy
+msgid "unable to load R code in package %s"
 msgstr "kann R Kode in Paket '%s' nicht laden"
 
-msgid "package '%s' contains no R code"
+#, fuzzy
+msgid "package %s contains no R code"
 msgstr "Paket '%s' enthält keinen R Kode"
 
-msgid ".First.lib failed for '%s'"
+#, fuzzy
+msgid ".First.lib failed for %s"
 msgstr ".First.lib fehlgeschlagen für '%s'"
 
-msgid "package '%s' already present in search()"
+#, fuzzy
+msgid "package %s already present in search()"
 msgstr "Paket '%s' bereits in search()"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION' hat 'Encoding' Feld und Re-Kodieren ist nicht möglich"
 
-msgid "%sPackages in library '%s':"
+#, fuzzy
+msgid "%sPackages in library %s:"
 msgstr "%s Pakete in Library '%s':"
 
 msgid "no packages found"
@@ -861,14 +880,17 @@ msgstr "keine Pakete gefunden"
 msgid "R packages available"
 msgstr "R Pakete vorhanden"
 
-msgid "DLL '%s' not found: maybe not installed for this architecture?"
+#, fuzzy
+msgid "DLL %s not found: maybe not installed for this architecture?"
 msgstr ""
 "DLL '%s' nicht gefunden: vielleicht für diese Architektur nicht installiert?"
 
-msgid "shared object '%s' not found"
+#, fuzzy
+msgid "shared object %s not found"
 msgstr "shared object %s nicht gefunden"
 
-msgid "DLL '%s' already loaded"
+#, fuzzy
+msgid "DLL %s already loaded"
 msgstr "DLL '%s' bereits geladen"
 
 msgid "shared object '%s' already loaded"
@@ -883,14 +905,20 @@ msgstr "keine DLL angegeben"
 msgid "no shared object was specified"
 msgstr "keine shared object angegeben"
 
-msgid "DLL '%s' was not loaded"
+#, fuzzy
+msgid "DLL %s was not loaded"
 msgstr "DLL '%s' nicht geladen"
 
-msgid "shared object '%s' was not loaded"
+#, fuzzy
+msgid "shared object %s was not loaded"
 msgstr "shared object '%s' nicht geladen"
 
-msgid "DLL '%s' not found"
+#, fuzzy
+msgid "DLL %s not found"
 msgstr "DLL '%s' nicht gefunden"
+
+msgid "shared object '%s' not found"
+msgstr "shared object %s nicht gefunden"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "nun dyn.unload(\"%s\") ..."
@@ -901,16 +929,17 @@ msgstr "Lade nötiges Paket: %s"
 msgid "none of the packages are loaded"
 msgstr "keines der Pakete ist geladen"
 
+#, fuzzy
 msgid ""
-"package '%s' found more than once,\n"
-"using the one found in '%s'"
+"package %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 "Paket '%s' mehr als ein Mal gefunden,\n"
 "nutze das aus '%s'"
 
+#, fuzzy
 msgid ""
-"Further information is available in the following vignettes in directory "
-"'%s':"
+"Further information is available in the following vignettes in directory %s:"
 msgstr ""
 "Weitere Information ist erhältlich in den folgenden Vignetten im Verzeichnis "
 "'%s':"
@@ -924,29 +953,36 @@ msgstr "Description:"
 msgid "Index:"
 msgstr "Index:"
 
-msgid "Information on package '%s'"
+#, fuzzy
+msgid "Information on package %s"
 msgstr "Information für Paket '%s'"
 
-msgid "Documentation for package '%s'"
+#, fuzzy
+msgid "Documentation for package %s"
 msgstr "Dokumentation für Paket '%s'"
 
-msgid "package '%s' required by '%s' could not be found"
+#, fuzzy
+msgid "package %s required by %s could not be found"
 msgstr "Paket '%s' benötigt von '%s' nicht gefunden"
 
-msgid "package '%s' %s was found, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr "Paket '%s' %s gefunden, aber %s %s wird von '%s' benötigt"
 
-msgid "package '%s' could not be loaded"
+#, fuzzy
+msgid "package %s could not be loaded"
 msgstr "Paket '%s' konnte nicht geladen werden"
 
-msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr "Paket '%s' %s ist geladen, aber %s %s wird von '%s' benötigt"
 
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "Eingabe wurde korrumpiert, LF wurde ersetzt durch CR"
 
+#, fuzzy
 msgid ""
-"file '%s' has magic number '%s'\n"
+"file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
 "Datei '%s' hat die Magic Number '%s'\n"
@@ -976,7 +1012,8 @@ msgstr "Bild konnte nicht umbenannt werden und ist geblieben in"
 msgid "[Previously saved workspace restored]"
 msgstr "[Vorher gesicherter Workspace wiederhergestellt]"
 
-msgid "Attempting to load the environment '%s'"
+#, fuzzy
+msgid "Attempting to load the environment %s"
 msgstr "Versuch die Umgebung '%s' zu laden"
 
 msgid "not found: using .GlobalEnv instead"
@@ -1085,7 +1122,8 @@ msgstr "Namensraum ist bereits angehängt"
 msgid "%s not found"
 msgstr "%s nicht gefunden"
 
-msgid "namespace '%s' is already sealed in loadNamespace"
+#, fuzzy
+msgid "namespace %s is already sealed in loadNamespace"
 msgstr "Namensraum '%s' ist bereits in loadNamespace versiegelt"
 
 msgid "failed to assign RegisteredNativeSymbol for"
@@ -1106,7 +1144,8 @@ msgstr "Namensraum"
 msgid "failed to assign NativeSymbolInfo for"
 msgstr "Zuweisung von nativeSymbolInfo gescheitert für"
 
-msgid "package '%s' does not have a name space"
+#, fuzzy
+msgid "package %s does not have a name space"
 msgstr "Paket '%s' hat keinen Namensraum"
 
 msgid ""
@@ -1120,7 +1159,8 @@ msgid "in package %s classes %s were specified for export but not defined"
 msgstr ""
 "in Paket %s sind Klassen %s für den Export vorgesehen, aber nicht definiert"
 
-msgid "in '%s' methods for export not found: %s"
+#, fuzzy
+msgid "in %s methods for export not found: %s"
 msgstr "in '%s' sind Methoden nicht für den Export definiert: %s"
 
 msgid "multiple methods tables found for %s"
@@ -1179,7 +1219,8 @@ msgstr "kann keine Exporte von versiegeltem Namensraum hinzufügen"
 msgid "undefined exports:"
 msgstr "nicht definierte Exporte :"
 
-msgid "package '%s' has no NAMESPACE file"
+#, fuzzy
+msgid "package %s has no NAMESPACE file"
 msgstr "Paket '%s' hat keine NAMESPACE Datei"
 
 msgid "empty name in directive '%s' in NAMESPACE file"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -553,11 +553,8 @@ msgid "cannot create directory '%s'"
 msgstr "impossibile creare directory '%s'"
 
 #, fuzzy
-msgid "processing '"
+msgid "processing"
 msgstr "analizzo '%s'"
-
-msgid "'"
-msgstr ""
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"

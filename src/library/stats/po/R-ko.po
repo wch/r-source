@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1802,7 +1802,8 @@ msgstr ""
 msgid "not enough groups"
 msgstr "충분하지 않는 group입니다"
 
-msgid "bounds can only be used with method L-BFGS-B"
+#, fuzzy
+msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "bounds는 L-BFGS-B method이라고 하는것만 사용할 수가 없습니다"
 
 #, fuzzy
@@ -1821,10 +1822,17 @@ msgstr ""
 "L-BFGS-B method는 'reltol' 그리고 'abstol'대신에 \n"
 "'factr' (와 'pgtol')를 사용합니다"
 
-msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
+#, fuzzy
+msgid "one-diml optimization by Nelder-Mead is unreliable:"
 msgstr ""
 "Nelder-Mead method에 의한 1 차원 최적화는 인정 할수가 없습니다: optimize를 사"
 "용해 주십시오"
+
+msgid "use \"Brent\" or optimize() directly"
+msgstr ""
+
+msgid "\"Brent\" is only available for one-dimensional minimization"
+msgstr ""
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr ""

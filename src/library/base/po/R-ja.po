@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:32\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -770,35 +770,44 @@ msgstr " 三角行列は正方行列であるべきです "
 msgid "'object' must be a list"
 msgstr " 'object' はリストでなければなりません "
 
-msgid "package '%s' has not been installed properly"
+#, fuzzy
+msgid "package %s has not been installed properly"
 msgstr " パッケージ '%s' は正しくインストールされませんでした "
 
-msgid "package '%s' was built before R 2.10.0: please re-install it"
+#, fuzzy
+msgid "package %s was built before R 2.10.0: please re-install it"
 msgstr ""
 " パッケージ '%s' は R 2.10.0 以前に造らました。新しくインストールして下さい "
 
-msgid "This is R %s, package '%s' needs %s %s"
+#, fuzzy
+msgid "This is R %s, package %s needs %s %s"
 msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
 
-msgid "package '%s' was built under R version %s"
+#, fuzzy
+msgid "package %s was built under R version %s"
 msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
 
-msgid "package '%s' was built for %s"
+#, fuzzy
+msgid "package %s was built for %s"
 msgstr " パッケージ '%s' は %s に対して造られました "
 
-msgid "package '%s' is not installed for 'arch=%s'"
+#, fuzzy
+msgid "package %s is not installed for 'arch=%s'"
 msgstr " パッケージ '%s' は 'arch=%s' に対してインストールされていません "
 
+#, fuzzy
 msgid ""
-"package '%s' has a license that you need to accept in an interactive session"
+"package %s has a license that you need to accept in an interactive session"
 msgstr ""
 " パッケージ '%s' は対話的セッションで受け入れる必要のあるライセンスです "
 
-msgid "Package '%s' has a license that you need to accept after viewing"
+#, fuzzy
+msgid "Package %s has a license that you need to accept after viewing"
 msgstr " パッケージ '%s' は閲覧後に受け入れる必要のあるライセンスです "
 
+#, fuzzy
 msgid ""
-"Package '%s' has a license that you need to accept:\n"
+"Package %s has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
 " パッケージ '%s' は受け入れる必要のあるライセンスです:Descriptionファイルによ"
@@ -807,7 +816,8 @@ msgstr ""
 msgid "License"
 msgstr " ライセンス "
 
-msgid "License for package '%s' not accepted"
+#, fuzzy
+msgid "License for package %s not accepted"
 msgstr " パッケージ '%s' のライセンスは受け入れられていません "
 
 #, fuzzy
@@ -820,37 +830,46 @@ msgstr " 'verbose' と 'quietly' が両方真です； verbose とします .. "
 msgid "invalid package name"
 msgstr " 不当なパッケージ名です "
 
-msgid "there is no package called '%s'"
+#, fuzzy
+msgid "there is no package called %s"
 msgstr " '%s' という名前のパッケージはありません "
 
 msgid "no library trees found in 'lib.loc'"
 msgstr " 'lib.loc' 中に如何なるライブラリー木も見つかりません "
 
-msgid "'%s' is not a valid installed package"
+#, fuzzy
+msgid "%s is not a valid installed package"
 msgstr " '%s' は有効なインストール済みパッケージではありません "
 
-msgid "'%s' not found on search path, using pos = 2"
+#, fuzzy
+msgid "%s not found on search path, using pos = 2"
 msgstr " '%s' は検索パス上には見つかりませんでした。pos = 2 を使用します "
 
-msgid "package/namespace load failed for '%s'"
+#, fuzzy
+msgid "package/namespace load failed for %s"
 msgstr " '%s' に対するパッケージもしくは名前空間のロードが失敗しました "
 
-msgid "unable to load R code in package '%s'"
+#, fuzzy
+msgid "unable to load R code in package %s"
 msgstr " パッケージ '%s' 中の R コードをロードできません "
 
-msgid "package '%s' contains no R code"
+#, fuzzy
+msgid "package %s contains no R code"
 msgstr " パッケージ '%s' は R コードを含んでいません "
 
-msgid ".First.lib failed for '%s'"
+#, fuzzy
+msgid ".First.lib failed for %s"
 msgstr " .First.lib は '%s' に対して失敗しました "
 
-msgid "package '%s' already present in search()"
+#, fuzzy
+msgid "package %s already present in search()"
 msgstr " パッケージ '%s' は既に search() 中に存在します "
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr " 'DESCRIPTION' は 'Encoding' ファイルを持ち、再符号化は出来ません "
 
-msgid "%sPackages in library '%s':"
+#, fuzzy
+msgid "%sPackages in library %s:"
 msgstr " %s ライブラリ （パッケージ '%s' 中): "
 
 msgid "no packages found"
@@ -859,13 +878,16 @@ msgstr " いかなるパッケージも見付かりませんでした "
 msgid "R packages available"
 msgstr " 利用可能な R パッケージ "
 
-msgid "DLL '%s' not found: maybe not installed for this architecture?"
+#, fuzzy
+msgid "DLL %s not found: maybe not installed for this architecture?"
 msgstr "DLL '%s' が見つかりません；　おそらくインストールされていないのでは？ "
 
-msgid "shared object '%s' not found"
+#, fuzzy
+msgid "shared object %s not found"
 msgstr " 共有オブジェクト `%s` を見付けることができません "
 
-msgid "DLL '%s' already loaded"
+#, fuzzy
+msgid "DLL %s already loaded"
 msgstr "DLL '%s' は既にロードされています "
 
 msgid "shared object '%s' already loaded"
@@ -880,14 +902,20 @@ msgstr "DLLが何も指定されませんでした "
 msgid "no shared object was specified"
 msgstr " 共用ライブラリが何も指定されませんでした "
 
-msgid "DLL '%s' was not loaded"
+#, fuzzy
+msgid "DLL %s was not loaded"
 msgstr "DLL '%s' はロードされませんでした "
 
-msgid "shared object '%s' was not loaded"
+#, fuzzy
+msgid "shared object %s was not loaded"
 msgstr " 共用ライブラリ '%s' はロードされませんでした "
 
-msgid "DLL '%s' not found"
+#, fuzzy
+msgid "DLL %s not found"
 msgstr "DLL '%s' が見付かりません "
+
+msgid "shared object '%s' not found"
+msgstr " 共有オブジェクト `%s` を見付けることができません "
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr " 今 dyn.unload(\"%s\") 中です ... "
@@ -898,16 +926,17 @@ msgstr " 要求されたパッケージ %s をロード中です "
 msgid "none of the packages are loaded"
 msgstr " どのパッケージもロードされません "
 
+#, fuzzy
 msgid ""
-"package '%s' found more than once,\n"
-"using the one found in '%s'"
+"package %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 " パッケージ '%s' が複数見つかりました。 \n"
 " '%s' 中に見つかったものを使います "
 
+#, fuzzy
 msgid ""
-"Further information is available in the following vignettes in directory "
-"'%s':"
+"Further information is available in the following vignettes in directory %s:"
 msgstr ""
 " これ以上の情報はディレクトリ '%s' にある以下のビニエット中にあります： "
 
@@ -920,24 +949,30 @@ msgstr " 記述： "
 msgid "Index:"
 msgstr " 索引： "
 
-msgid "Information on package '%s'"
+#, fuzzy
+msgid "Information on package %s"
 msgstr " パッケージ '%s' の情報 "
 
-msgid "Documentation for package '%s'"
+#, fuzzy
+msgid "Documentation for package %s"
 msgstr " パッケージ '%s' のためのドキュメント "
 
-msgid "package '%s' required by '%s' could not be found"
+#, fuzzy
+msgid "package %s required by %s could not be found"
 msgstr ""
 " パッケージ '%s' が '%s' によって要求されましたが、見つけられませんでした "
 
-msgid "package '%s' %s was found, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr ""
 " パッケージ '%s' %s はありましたが、%s %s が '%s' によって要求されています "
 
-msgid "package '%s' could not be loaded"
+#, fuzzy
+msgid "package %s could not be loaded"
 msgstr " パッケージ '%s' をロードできませんでした "
 
-msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+#, fuzzy
+msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 " パッケージ '%s' %s はロードされましたが、%s %s が '%s' によって要求されてい"
 "ます "
@@ -945,8 +980,9 @@ msgstr ""
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr " 入力は混乱しています。LF が CR で置き換えられています "
 
+#, fuzzy
 msgid ""
-"file '%s' has magic number '%s'\n"
+"file %s has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
 " ファイル '%s' はマジックナンバー '%s' を持ちます \n"
@@ -976,7 +1012,8 @@ msgstr " イメージは改名できませんので、以下に残されます�
 msgid "[Previously saved workspace restored]"
 msgstr " [以前にセーブされたワークスペースを復帰します] "
 
-msgid "Attempting to load the environment '%s'"
+#, fuzzy
+msgid "Attempting to load the environment %s"
 msgstr " 環境 '%s' をロードしようとしています "
 
 msgid "not found: using .GlobalEnv instead"
@@ -1083,7 +1120,8 @@ msgstr " 名前空間は既に付加されています "
 msgid "%s not found"
 msgstr " %s を見付けることができません "
 
-msgid "namespace '%s' is already sealed in loadNamespace"
+#, fuzzy
+msgid "namespace %s is already sealed in loadNamespace"
 msgstr " 名前空間 '%s' は既に loadNamespace 中に封印(seal)されています "
 
 msgid "failed to assign RegisteredNativeSymbol for"
@@ -1104,7 +1142,8 @@ msgstr " 名前空間に定義されているからです "
 msgid "failed to assign NativeSymbolInfo for"
 msgstr " 以下に対する NativeSymbolInfo を代入できません "
 
-msgid "package '%s' does not have a name space"
+#, fuzzy
+msgid "package %s does not have a name space"
 msgstr " パッケージ '%s' は名前空間を持っていません "
 
 msgid ""
@@ -1119,7 +1158,8 @@ msgstr ""
 " パッケージ '%s' 中のクラス %s をエクスポートするように指定されていますが定義"
 "されていません "
 
-msgid "in '%s' methods for export not found: %s"
+#, fuzzy
+msgid "in %s methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートのためのメソッドは見付かりません： %s "
 
 msgid "multiple methods tables found for %s"
@@ -1180,7 +1220,8 @@ msgstr " 封印された名前空間のエクスポートへ加えることが�
 msgid "undefined exports:"
 msgstr " 未定義のエクスポートです： "
 
-msgid "package '%s' has no NAMESPACE file"
+#, fuzzy
+msgid "package %s has no NAMESPACE file"
 msgstr " パッケージ '%s' は NAMESPACE ファイルを持っていません "
 
 msgid "empty name in directive '%s' in NAMESPACE file"

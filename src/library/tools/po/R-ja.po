@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-04-06 17:15\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -572,11 +572,9 @@ msgstr ""
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を生成することが出来ません "
 
-msgid "processing '"
+#, fuzzy
+msgid "processing"
 msgstr " 以下を処理中 ' "
-
-msgid "'"
-msgstr " , "
 
 msgid ""
 "running Sweave on vignette '%s' failed with message:\n"
@@ -1101,6 +1099,9 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "'"
+#~ msgstr " , "
 
 #~ msgid "use of '--auto-zip' is defunct"
 #~ msgstr " '--auto-zip'の使用は廃止になりました "
