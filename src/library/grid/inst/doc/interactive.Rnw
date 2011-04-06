@@ -15,7 +15,6 @@
 \begin{document}
 \maketitle
 
-\SweaveOpts{persistent.graphics=TRUE}
 <<echo=FALSE, results=hide>>=
 library(grDevices)
 library(grid)
@@ -39,7 +38,7 @@ grid.xaxis(at = 1:4/5, vp = viewport(w = .5, h = 0.01), name = "gxa")
 Now we edit the axis, changing the colour of the entire axis to red.
 Notice that we refer to the x-axis by its name.
 
-<<edit1, term=FALSE>>=
+<<edit1, eval=FALSE>>=
 grid.edit("gxa", gp = gpar(col = "red"))
 <<fig2, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
 gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
@@ -81,7 +80,7 @@ the colour of the axis by default.  In other words, the
 colour specification of the old labels was specific to the old labels
 and was discarded when the old labels were discarded.
 
-<<edit3, term=FALSE>>=
+<<edit3, eval=FALSE>>=
 grid.edit("gxa", at = c(0.0, 0.5, 1.0))
 <<fig4, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
 gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
@@ -99,7 +98,7 @@ grid.draw(gxa)
 
 Finally, we change the labels back to black and rotate them all $30\deg$.
 
-<<edit4, term=FALSE>>=
+<<edit4, eval=FALSE>>=
 grid.edit("gxa::labels", gp = gpar(col = "black"), rot = 30)
 <<fig5, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
 gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
