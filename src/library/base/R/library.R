@@ -845,7 +845,7 @@ find.package <-
                 stop(ngettext(length(bad),
                               "there is no package called",
                               "there are no packages called"), " ",
-                     paste(shQuote(bad), collapse = ", "), domain = NA)
+                     paste(sQuote(bad), collapse = ", "), domain = NA)
 
             }
         }
