@@ -77,8 +77,8 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
             file.show(path)
             return(invisible(path))
         }
-        stop(gettextf("no documentation for '%s' found in package '%s'",
-                      what, package), domain = NA)
+        stop(gettextf("no documentation for %s found in package %s",
+                      sQuote(what), sQuote(package)), domain = NA)
     }
     if(what == "FAQ") what <- "R-FAQ"
     if(what == "NEWS") {

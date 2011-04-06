@@ -24,7 +24,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                 system(paste(unzip, "-oq", zipname, "-d", dest),
                        show.output.on.console = FALSE, invisible = TRUE)
             } else unzip(zipname, exdir = dest)
-        } else stop(gettextf("zipfile '%s' not found", zipname), domain = NA)
+        } else stop(gettextf("zipfile %s not found",
+                             sQuote(zipname)), domain = NA)
     }
 
     ## Create a temporary directory and unpack the zip to it
@@ -33,8 +34,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     lib <- normalizePath(lib, mustWork = TRUE)
     tmpDir <- tempfile(, lib)
     if (!dir.create(tmpDir))
-        stop(gettextf("unable to create temporary directory '%s'",
-                      normalizePath(tmpDir, mustWork = FALSE)),
+        stop(gettextf("unable to create temporary directory %s",
+                      sQuote(normalizePath(tmpDir, mustWork = FALSE))),
              domain = NA, call. = FALSE)
     cDir <- getwd()
     ## need to ensure we are not in tmpDir when unlinking is attempted
@@ -44,8 +45,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     setwd(tmpDir)
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
     if(!is.na(res) && res) {
-        cat(gettextf("package '%s' successfully unpacked and MD5 sums checked\n",
-                     pkgname))
+        cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",
+                     sQuote(pkgname)))
         flush.console()
     }
 
@@ -62,12 +63,12 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                                   "LC_MESSAGES")
                 if(!file.exists(path))
                     if(!dir.create(path, FALSE, TRUE))
-                        warning(gettextf("failed to create '%s'", path),
+                        warning(gettextf("failed to create %s", sQuote(path)),
                                 domain = NA)
                 res <- file.copy(mos, path, overwrite = TRUE)
                 if(any(!res))
-                    warning(gettextf("failed to create '%s'",
-                                     paste(mos[!res], collapse=",")),
+                    warning(gettextf("failed to create %s",
+                                     paste(sQuote(mos[!res]), collapse=",")),
                             domain = NA)
             }
         }
@@ -83,12 +84,12 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                                       lang, "LC_MESSAGES")
                     if(!file.exists(path))
                         if(!dir.create(path, FALSE, TRUE))
-                            warning(gettextf("failed to create '%s'", path),
-                                    domain = NA)
+                            warning(gettextf("failed to create %s",
+                                             sQuote(path)), domain = NA)
                     res <- file.copy(mos, path, overwrite = TRUE)
                     if(any(!res))
-                        warning(gettextf("failed to create '%s'",
-                                         paste(mos[!res], collapse=",")),
+                        warning(gettextf("failed to create %s",
+                                         paste(sQuote(mos[!res]), collapse=",")),
                                 domain = NA)
                 }
             }
@@ -116,7 +117,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
         	    	try(unlink(instPath, recursive = TRUE))
         	    	savedcopy <- file.path(lockdir, pkgname)
         	    	file.copy(savedcopy, lib, recursive = TRUE)
-        	    	warning(gettextf("restored '%s'", pkgname),
+        	    	warning(gettextf("restored %s", sQuote(pkgname)),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
         	    }
         	}, add=TRUE)
@@ -127,8 +128,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
 
         if(libs_only) {
             if (!file_test("-d", file.path(instPath, "libs")))
-                warning(gettextf("there is no 'libs' directory in package '%s'",
-                                 pkgname),
+                warning(gettextf("there is no 'libs' directory in package %s",
+                                 sQuote(pkgname)),
                         domain = NA, call. = FALSE, immediate. = TRUE)
             ## copy over the subdirs of 'libs', removing if already there
             for(sub in c("i386", "x64"))
@@ -139,9 +140,9 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                                      file.path(instPath, "libs"),
                                      recursive = TRUE)
                     if(any(!ret)) {
-                        warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                         normalizePath(file.path(tmpDir, pkgname, "libs", sub), mustWork = FALSE),
-                                         normalizePath(file.path(instPath, "libs")), mustWork = FALSE ),
+                        warning(gettextf("unable to move temporary installation %s to %s",
+                                         sQuote(normalizePath(file.path(tmpDir, pkgname, "libs", sub), mustWork = FALSE)),
+                                         sQuote(normalizePath(file.path(instPath, "libs")), mustWork = FALSE)),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
                         restorePrevious <- TRUE # Might not be used
                     }
@@ -168,15 +169,15 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                 ## Move the new package to the install lib
                 ret <- file.rename(file.path(tmpDir, pkgname), instPath)
                 if(!ret) {
-                    warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                     normalizePath(file.path(tmpDir, pkgname), mustWork = FALSE),
-                                     normalizePath(instPath, mustWork = FALSE)),
+                    warning(gettextf("unable to move temporary installation %s to %s",
+                                     sQuote(normalizePath(file.path(tmpDir, pkgname), mustWork = FALSE)),
+                                     sQuote(normalizePath(instPath, mustWork = FALSE))),
                             domain = NA, call. = FALSE, immediate. = TRUE)
                     restorePrevious <- TRUE # Might not be used
                 }
             } else {
-                warning(gettextf("cannot remove prior installation of package '%s'",
-                                 pkgname),
+                warning(gettextf("cannot remove prior installation of package %s",
+                                 sQuote(pkgname)),
                         domain = NA, call. = FALSE, immediate. = TRUE)
                 restorePrevious <- TRUE # Might not be used
             }
@@ -211,9 +212,9 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     inuse <- pkgnames %in% inuse
     if(any(inuse)) {
         warning(sprintf(ngettext(sum(inuse),
-                "package '%s' is in use and will not be installed",
-                "packages '%s' are in use and will not be installed"),
-                        paste(pkgnames[inuse], collapse=", ")),
+                "package %s is in use and will not be installed",
+                "packages %s are in use and will not be installed"),
+                        paste(sQuote(pkgnames[inuse]), collapse=", ")),
                 call. = FALSE, domain = NA, immediate. = TRUE)
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
@@ -229,8 +230,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("unable to create temporary directory '%s'",
-                          normalizePath(tmpd, mustWork = FALSE)),
+            stop(gettextf("unable to create temporary directory %s",
+                          sQuote(normalizePath(tmpd, mustWork = FALSE))),
                  domain = NA)
     }
 
@@ -286,6 +287,5 @@ zip.unpack <- function(zipname, dest)
             system(paste(unzip, "-oq", zipname, "-d", dest),
                    show.output.on.console = FALSE, invisible = TRUE)
         } else unzip(zipname, exdir = dest)
-    } else stop(gettextf("zipfile '%s' not found", zipname),
-                domain = NA)
+    } else stop(gettextf("zipfile %s not found", sQuote(zipname)), domain = NA)
 }

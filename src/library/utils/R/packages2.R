@@ -202,9 +202,9 @@ install.packages <-
     ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
-                              "'lib' element '%s' is not a writable directory",
-                              "'lib' elements '%s' are not writable directories"),
-                     paste(lib[!ok], collapse=", ")), domain = NA)
+                              "'lib' element %s is not a writable directory",
+                              "'lib' elements %s are not writable directories"),
+                     paste(sQuote(lib[!ok]), collapse=", ")), domain = NA)
     if(length(lib) == 1L && .Platform$OS.type == "windows") {
         ## file.access is unreliable on Windows, especially >= Vista.
         ## the only known reliable way is to try it
@@ -223,9 +223,9 @@ install.packages <-
         userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
                                    .Platform$path.sep))[1L]
         if(interactive() && !file.exists(userdir)) {
-            msg <- gettext("Would you like to create a personal library\n'%s'\nto install packages into?")
+            msg <- gettext("Would you like to create a personal library\n%s\nto install packages into?")
             if(.Platform$OS.type == "windows") {
-                ans <- winDialog("yesno", sprintf(msg, userdir))
+                ans <- winDialog("yesno", sprintf(msg, sQuote(userdir)))
                 if(ans != "YES") stop("unable to install packages")
             } else {
                 ans <- readline(paste(sprintf(msg, userdir), " (y/n) "))
@@ -330,8 +330,9 @@ install.packages <-
                          shQuote(update[i, 1L]))
             if(system(cmd) > 0L)
                 warning(gettextf(
-                 "installation of package '%s' had non-zero exit status",
-                                update[i, 1L]), domain = NA)
+                 "installation of package %s had non-zero exit status",
+                                sQuote(update[i, 1L])),
+                        domain = NA)
         }
         return(invisible())
     }
@@ -341,7 +342,8 @@ install.packages <-
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("unable to create temporary directory '%s'", tmpd),
+            stop(gettextf("unable to create temporary directory %s",
+                          sQuote(tmpd)),
                  domain = NA)
     }
 
@@ -376,7 +378,8 @@ install.packages <-
             cmd0 <- paste(cmd0, "--pkglock")
             tmpd <- file.path(tempdir(), "make_packages")
             if (!file.exists(tmpd) && !dir.create(tmpd))
-                stop(gettextf("unable to create temporary directory '%s'", tmpd),
+                stop(gettextf("unable to create temporary directory %s",
+                              sQuote(tmpd)),
                      domain = NA)
             mfile <- file.path(tmpd, "Makefile")
             conn <- file(mfile, "wt")
@@ -426,8 +429,8 @@ install.packages <-
                              update[i, 3L])
                 status <- system(cmd)
                 if(status > 0L)
-                    warning(gettextf("installation of package '%s' had non-zero exit status",
-                                     update[i, 1L]), domain = NA)
+                    warning(gettextf("installation of package %s had non-zero exit status",
+                                     sQuote(update[i, 1L])), domain = NA)
             }
         }
         if(!is.null(tmpd) && is.null(destdir))

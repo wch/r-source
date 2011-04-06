@@ -30,7 +30,7 @@ function(topic, package = NULL, lib.loc = NULL,
     ## will only return at most one path
     file <- index.search(topic, pkgpaths, TRUE)
     if(!length(file)) {
-	warning(gettextf("no help found for '%s'", topic), domain = NA)
+	warning(gettextf("no help found for %s", sQuote(topic)), domain = NA)
 	return(invisible())
     }
     packagePath <- dirname(dirname(file))
@@ -40,7 +40,7 @@ function(topic, package = NULL, lib.loc = NULL,
     tools::Rd2ex(.getHelpFile(file), tf)
     if (!file.exists(tf)) {
 	if(give.lines) return(character(0))
-        warning(gettextf("'%s' has a help file but no examples", topic),
+        warning(gettextf("%s has a help file but no examples", sQuote(topic)),
                 domain = NA)
         return(invisible())
     }

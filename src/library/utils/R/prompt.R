@@ -162,7 +162,7 @@ function(object, filename = NULL, name = NULL,
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
 
-    message(gettextf("Created file named '%s'.", filename),
+    message(gettextf("Created file named %s.", sQuote(filename)),
             "\n",
             gettext("Edit the file and move it to the appropriate directory."),
             domain = NA)
@@ -306,7 +306,7 @@ function(object, filename = NULL, name = NULL)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
 
-    message(gettextf("Created file named '%s'.", filename),
+    message(gettextf("Created file named %s.", sQuote(filename)),
             "\n",
             gettext("Edit the file and move it to the appropriate directory."),
             domain = NA)
@@ -410,7 +410,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
 
-    message(gettextf("Created file named '%s'.", filename),
+    message(gettextf("Created file named %s.", sQuote(filename)),
             "\n",
             gettext("Edit the file and move it to the appropriate directory."),
             domain = NA)

@@ -80,7 +80,9 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                 if(is.matrix(entries) && ncol(entries) == 2L)
                     db <- rbind(db, cbind(packageName, dirname(path), entries))
                 else
-                    warning(gettextf("data index for package '%s' is invalid and will be ignored", packageName), domain=NA, call.=FALSE)
+                    warning(gettextf("data index for package %s is invalid and will be ignored",
+                                     sQuote(packageName)),
+                            domain=NA, call.=FALSE)
             }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
@@ -134,7 +136,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                 if(file_test("-f", fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
-                    warning(gettextf("file 'filelist' is missing for directory '%s'", p), domain = NA)
+                    warning(gettextf("file 'filelist' is missing for directory %s", sQuote(p)), domain = NA)
                     next
                 }
             } else {
@@ -205,7 +207,8 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         }
 
         if(!found)
-            warning(gettextf("data set '%s' not found", name), domain = NA)
+            warning(gettextf("data set %s not found", sQuote(name)),
+                    domain = NA)
     }
     invisible(names)
 }

@@ -41,7 +41,7 @@ help.search <-
 
     if (is.logical(verbose)) verbose <- 2*as.integer(verbose)
     .wrong_args <- function(args)
-	gettextf("argument '%s' must be a single character string", args)
+	gettextf("argument %s must be a single character string", sQuote(args))
 
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1L))
@@ -205,7 +205,8 @@ help.search <-
 	    else find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0L) {
                 if(is.null(package)) next
-		else stop(gettextf("could not find package '%s'", p), domain = NA)
+		else stop(gettextf("could not find package %s", sQuote(p)),
+                          domain = NA)
             }
 	    ## Hsearch 'Meta/hsearch.rds' indices were introduced in
 	    ## R 1.8.0.	 If they are missing, we really cannot use
@@ -221,8 +222,8 @@ help.search <-
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
 		} else if(verbose >= 2L) {
-		    message(gettextf("package '%s' has empty hsearch data - strangely", p),
-                            domain = NA)
+		    message(gettextf("package %s has empty hsearch data - strangely",
+                                     sQuote(p)), domain = NA)
                     flush.console()
                 }
 	    }
@@ -363,8 +364,9 @@ help.search <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
         ## This should not happen for R >= 2.4.0
 	if(any(pos_in_hsearch_db) == 0L)
-	    stop(gettextf("no information in the database for package '%s': need 'rebuild = TRUE'?",
-			  package[pos_in_hsearch_db == 0][1L]), domain = NA)
+	    stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
+			  sQuote(package[pos_in_hsearch_db == 0][1L])),
+                 domain = NA)
 	db <-
 	    lapply(db,
 		   function(x) {

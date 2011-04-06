@@ -91,10 +91,10 @@ function(x, ...)
     }
     paths <- as.character(x)
     if(!length(paths)) {
-        writeLines(c(gettextf("No documentation for '%s' in specified packages and libraries:",
-                              topic),
-                     gettextf("you could try '??%s'",
-                              topic)))
+        writeLines(c(gettextf("No documentation for %s in specified packages and libraries:",
+                              sQuote(topic)),
+                     gettextf("you could try %s",
+                              sQuote(paste("??", topic, sep = "")))))
         return(invisible(x))
     }
 
@@ -103,8 +103,8 @@ function(x, ...)
 
     if(attr(x, "tried_all_packages")) {
         paths <- unique(dirname(dirname(paths)))
-        msg <- gettextf("Help for topic '%s' is not in any loaded package but can be found in the following packages:",
-                        topic)
+        msg <- gettextf("Help for topic %s is not in any loaded package but can be found in the following packages:",
+                        sQuote(topic))
         if (type == "html" && tools:::httpdPort > 0L) {
             path <- file.path(tempdir(), ".R/doc/html")
             dir.create(path, recursive = TRUE, showWarnings = FALSE)
@@ -145,8 +145,8 @@ function(x, ...)
 	    }
             file <- paths[1L]
             p <- paths
-            msg <- gettextf("Help on topic '%s' was found in the following packages:",
-                            topic)
+            msg <- gettextf("Help on topic %s was found in the following packages:",
+                            sQuote(topic))
             paths <- dirname(dirname(paths))
             txt <- formatDL(c("Package", basename(paths)),
                             c("Library", dirname(paths)),
@@ -196,7 +196,7 @@ function(x, ...)
             pkgname <- basename(dirname(dirname(file)))
             temp <- tools::Rd2txt(.getHelpFile(file), out = tempfile("Rtxt"),
                                   package = pkgname)
-            file.show(temp, title = gettextf("R Help on '%s'", topic),
+            file.show(temp, title = gettextf("R Help on %s", sQuote(topic)),
                       delete.file = TRUE)
         }
         else if(type %in% c("ps", "postscript", "pdf")) {
@@ -246,7 +246,7 @@ function(x, ...)
     path <- dirname(file)
     dirpath <- dirname(path)
     if(!file.exists(dirpath))
-        stop(gettextf("invalid '%s' argument", "file"), domain = NA)
+        stop(gettextf("invalid %s argument", sQuote("file")), domain = NA)
     pkgname <- basename(dirpath)
     RdDB <- file.path(path, pkgname)
     if(!file.exists(paste(RdDB, "rdx", sep=".")))

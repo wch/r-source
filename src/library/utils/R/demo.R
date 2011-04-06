@@ -72,11 +72,11 @@ function(topic, package = NULL, lib.loc = NULL,
 	    available <- c(available, file.path(p, files))
     }
     if(length(available) == 0L)
-	stop(gettextf("No demo found for topic '%s'", topic), domain = NA)
+	stop(gettextf("No demo found for topic %s", sQuote(topic)), domain = NA)
     if(length(available) > 1L) {
 	available <- available[1L]
-	warning(gettextf("Demo for topic '%s' found more than once,\nusing the one found in '%s'",
-                topic, dirname(available[1L])), domain = NA)
+	warning(gettextf("Demo for topic %' found more than once,\nusing the one found in %s",
+                sQuote(topic), sQuote(dirname(available[1L]))), domain = NA)
     }
 
     if(ask == "default")

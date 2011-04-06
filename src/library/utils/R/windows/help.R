@@ -26,14 +26,14 @@ offline_help_helper <- function(texfile, type = "postscript")
         dvips <- getOption("dvipscmd", default = "dvips")
         res <- system(paste(dvips, dfile))
         if(res)
-            stop(gettextf("running '%s' failed", dvips), domain = NA)
+            stop(gettextf("running %s failed", sQuote(dvips)), domain = NA)
         if(!file.exists(ofile)) {
-            message(gettextf("'%s' produced no output file: sent to printer?",
-                             dvips), domain = NA)
+            message(gettextf("%s produced no output file: sent to printer?",
+                             sQuote(dvips)), domain = NA)
             return(invisible())
         }
     } else if(!file.exists(ofile))
-        stop(gettextf("creation of '%s' failed", ofile), domain = NA)
+        stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)
     if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
     message("Saving help page to ", sQuote(basename(ofile)))
     invisible()

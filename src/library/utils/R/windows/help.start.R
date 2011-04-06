@@ -27,7 +27,8 @@ help.start <-
                     call. = FALSE)
     } else remote
     url <- paste(home, "/doc/html/index.html", sep = "")
-    cat(gettextf("If nothing happens, you should open\n'%s' yourself\n", url))
+    cat(gettextf("If nothing happens, you should open\n%s yourself\n",
+                 sQuote(url)))
     browseURL(url, browser = browser)
     invisible()
 }

@@ -48,7 +48,8 @@ vignette <-
                 if(sum(ok)>1){
                     ## <FIXME>
                     ## Should really offer a menu to select from.
-                    warning(gettextf("vignette '%s' found more than once,\nusing the one found in '%s'", topic, dirname(pdf[idx])),
+                    warning(gettextf("vignette %s found more than once,\nusing the one found in %s",
+                                     sQuote(topic), sQuote(dirname(pdf[idx]))),
                             call. = FALSE, domain = NA)
                     ## </FIXME>
                 }
@@ -63,7 +64,7 @@ vignette <-
             return(z)
         }
         else
-            warning(gettextf("vignette '%s' *not* found", topic),
+            warning(gettextf("vignette %s not found", sQuote(topic)),
                     call. = FALSE, domain = NA)
     }
 
@@ -131,7 +132,7 @@ print.vignette <- function(x, ...){
         else system2(pdfviewer, shQuote(x$pdf), wait = FALSE)
         ## </FIXME>
     } else {
-        warning(gettextf("vignette '%s' has no PDF", x$topic),
+        warning(gettextf("vignette %s has no PDF", sQuote(x$topic)),
                 call. = FALSE, domain = NA)
     }
     invisible(x)
