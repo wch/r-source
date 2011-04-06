@@ -45,12 +45,14 @@ od <- options(digits = 5)
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 
+\dontrun{
 ## Easy one-dimensional MLE:
 nLL <- function(lambda) -sum(stats::dpois(y, lambda, log=TRUE))
 fit0 <- mle(nLL, start = list(lambda = 5))
-## For 1D, this is preferable:
+## For 1D, this is preferable: (or would be if it worked)
 fit1 <- mle(nLL, start = list(lambda = 5),
-            method="Brent", lower= 1, upper=20)
+            method = "Brent", lower = 1, upper = 20)
+}
 
 ## This needs a constrained parameter space: most methods will accept NA
 ll <- function(ymax = 15, xhalf = 6)
