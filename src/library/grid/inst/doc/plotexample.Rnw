@@ -101,8 +101,8 @@ data.vp <- viewport(x = unit(5, "lines"),
                     width = unit(1, "npc") - unit(7, "lines"),
                     height = unit(1, "npc") - unit(7, "lines"),
                     just = c("left", "bottom"),
-                    xscale = range(x) + c(-.05, .05)*diff(range(x)),
-                    yscale = range(y) + c(-.05, .05)*diff(range(y)))
+                    xscale = range(x) + c(-0.05, 0.05)*diff(range(x)),
+                    yscale = range(y) + c(-0.05, 0.05)*diff(range(y)))
 @
 \noindent
 Now we create the data region and draw the components of the plot
@@ -163,8 +163,8 @@ data.vp <- viewport(name = "dataregion",
                     width = unit(1, "npc") - unit(7, "lines"),
                     height = unit(1, "npc") - unit(7, "lines"),
                     just = c("left", "bottom"),
-                    xscale = range(x) + c(-.05, .05)*diff(range(x)),
-                    yscale = range(y) + c(-.05, .05)*diff(range(y)))
+                    xscale = range(x) + c(-0.05, 0.05)*diff(range(x)),
+                    yscale = range(y) + c(-0.05, 0.05)*diff(range(y)))
 pushViewport(data.vp)
 grid.points(x, y)
 grid.rect()

@@ -32,14 +32,15 @@ ps.options(pointsize = 12)
 options(width = 60)
 @
 \grid{} is a low-level graphics system which provides a great deal
-of control and flexibility in the appearance and arrangement of graphical
-output.  \grid{} does not provide high-level functions which create complete
-plots.  What it does provide is a basis for developing such high-level
-functions (e.g., the \lattice{} package), the facilities for
-customising and manipulating \lattice{} output, the ability to produce
-high-level plots or non-statistical images from scratch, and the ability to
-add sophisticated annotations to the output from base graphics functions
-(see the \pkg{gridBase} package).
+of control and flexibility in the appearance and arrangement of
+graphical output.  \grid{} does not provide high-level functions which
+create complete plots.  What it does provide is a basis for developing
+such high-level functions (e.g., the \lattice{} and \pkg{ggplot2}
+packages), the facilities for customising and manipulating \lattice{}
+output, the ability to produce high-level plots or non-statistical
+images from scratch, and the ability to add sophisticated annotations
+to the output from base graphics functions (see the \pkg{gridBase}
+package).
 
 This document provides an introduction to the fundamental concepts
 underlying the \grid{} package:  {\bf viewports}, {\bf units}, and
@@ -88,30 +89,26 @@ grid.show.viewport(viewport(x = 0.5, y = 0.5, width = 0.5, height = 0.25,
 \end{figure}
 
 The object returned by the \code{viewport()} function is only a
-\emph{description}
-of a graphics region.
-A graphics region is only created on a graphics device when a
-viewport is
-``pushed'' onto that device.  This is
-achieved using the \code{pushViewport()} function.
-Each device has only one ``current viewport'' (by default this is
-the entire device), but it maintains a ``tree'' of viewports that
+\emph{description} of a graphics region.  A graphics region is only
+created on a graphics device when a viewport is ``pushed'' onto that
+device.  This is achieved using the \code{pushViewport()} function.
+Each device has only one ``current viewport'' (by default this is the
+entire device surface), but it maintains a ``tree'' of viewports that
 have been pushed.  The current viewport is a node on the viewport
-tree.  The \code{pushViewport()} function adds a viewport as a leaf of the
-tree -- the previous ``current viewport'' becomes the parent of this leaf
-and the new leaf becomes the current viewport.
-The \code{popViewport()} function prunes the current viewport
-(and all its children) from the tree -- the parent
-of the pruned leaf becomes the current viewport.  The
-function \code{upViewport()} acts like \code{popViewport()} in terms
-of setting the current viewport, but does
-not prune the previous ``current viewport''.  The \code{downViewport()}
-function navigates down the tree to a viewport which has been specified
-by name (it adds no new viewports to the tree).
-This means that there
-is always only one graphics region to draw into, but it is possible
-to return to a previous graphics region through the appropriate set of
-push/pop/up/down operations.
+tree.  The \code{pushViewport()} function adds a viewport as a leaf of
+the tree -- the previous ``current viewport'' becomes the parent of
+this leaf and the new leaf becomes the current viewport.  The
+\code{popViewport()} function prunes the current viewport (and all its
+children) from the tree -- the parent of the pruned leaf becomes the
+current viewport.  The function \code{upViewport()} acts like
+\code{popViewport()} in terms of setting the current viewport, but
+does not prune the previous ``current viewport''.  The
+\code{downViewport()} function navigates down the tree to a viewport
+which has been specified by name (it adds no new viewports to the
+tree).  This means that there is always only one graphics region
+selected to draw into, but it is possible to return to a previous
+graphics region through the appropriate set of push/pop/up/down
+operations.
 
 As an example, the following code creates a graphics
 region in the top-left corner of the page using \code{pushViewport()}.
@@ -188,18 +185,17 @@ stack twice.}
 \end{figure}
 @
 
-Each viewport has a number of coordinate systems available.
-The full set is described in Table \ref{table:coords}, but there are
-four main types:  absolute coordinates (e.g., ``inches'', ``cm'')
-allow locations and sizes in terms of physical coordinates -- there
-is no dependence on the size of the page;  normalised coordinates
-(e.g., ``npc'') allow locations and sizes as a proportion of the
-page size (or the current viewport);
-relative coordinates (i.e., ``native'')
-allow locations and sizes relative to a user-defined set of
-x- and y-ranges; referential coordinates (e.g., ``strwidth'') where
-locations and sizes are based on the size of some other graphical
-object.
+Each viewport has a number of coordinate systems available.  The full
+set is described in Table \ref{table:coords}, but there are four main
+types: absolute coordinates (e.g., \code{"inches"}, \code{"cm"}) allow
+locations and sizes in terms of physical coordinates -- there is no
+dependence on the size of the page; normalised coordinates (e.g.,
+\code{"npc"}) allow locations and sizes as a proportion of the page
+size (or the current viewport); relative coordinates (i.e.,
+\code{"native"}) allow locations and sizes relative to a user-defined
+set of x- and y-ranges; referential coordinates (e.g.,
+\code{"strwidth"}) where locations and sizes are based on the size of
+some other graphical object.
 
 It is possible to specify the coordinate system
 for relative coordinates, but all other coordinate systems
@@ -294,17 +290,16 @@ unit-versions of common functions (e.g., \code{unit.c},
 \code{unit.rep}, and \code{unit.length}; \code{unit.pmin}, and
 \code{unit.pmax})).
 
-\grid{} functions that have arguments specifying locations and
-sizes typically assume a default coordinate system is being used.
-Most often this default is ``npc''.  In other words, if a raw
-numeric value, \code{x}, is specified this is implicitly taken to mean
-\code{unit(x, "npc")}.
-The \code{viewport()} function is one that assumes ``npc'' coordinates,
-so
-in all of the viewport examples to this point, we have only used
-``npc'' coordinates to position viewports within the page or within
-each other.  It is also possible to position viewports using any
-of the coordinate systems described in Table \ref{table:coords}.
+\grid{} functions that have arguments specifying locations and sizes
+typically assume a default coordinate system is being used.  Most
+often this default is \code{"npc"}.  In other words, if a raw numeric
+value, \code{x}, is specified this is implicitly taken to mean
+\code{unit(x, "npc")}.  The \code{viewport()} function is one that
+assumes \code{"npc"} coordinates, so in all of the viewport examples
+to this point, we have only used \code{"npc"} coordinates to position
+viewports within the page or within each other.  It is also possible
+to position viewports using any of the coordinate systems described in
+Table \ref{table:coords}.
 
 As an example, the following code makes use of \code{"npc"},
 \code{"native"}, \code{"inches"}, and \code{"strwidth"}
@@ -338,7 +333,7 @@ popViewport(2)
         A viewport positioned using a variety of coordinate systems.}
 \end{figure}
 
-
+\clearpage
 \subsection{Layouts}
 
 \grid{} provides an alternative method for positioning viewports
@@ -365,7 +360,7 @@ pushViewport(viewport(layout.pos.col = 2:3, layout.pos.row = 3))
 grid.rect(gp = gpar(lwd = 3))
 popViewport(2)
 @
-\begin{figure}[p]
+\begin{figure}[tbp]
 \begin{center}
 {
 \includegraphics[width=3.5in, height=3.5in]{grid-vplayout}
@@ -375,14 +370,14 @@ popViewport(2)
         A viewport positioned using a layout.}
 \end{figure}
 
-Layouts introduce a special sort of unit called ``null''.
-These can be used in layouts to specify relative column-widths
-or row-heights.  In the following, slightly more complex, example,
-the layout specifies something similar to a standard plot
-arrangement;  there are bottom and left margins 3 lines of text wide,
-top and right margins 1cm wide, and two rows and columns within these
-margins where the bottom row is twice the height of the top row (see
-Figure \ref{figure:vplayoutcomplex}).
+Layouts introduce a special sort of unit called \code{"null"}.  These
+can be used in layouts to specify relative column-widths or
+row-heights.  In the following, slightly more complex, example, the
+layout specifies something similar to a standard plot arrangement;
+there are bottom and left margins 3 lines of text wide, top and right
+margins 1cm wide, and two rows and columns within these margins where
+the bottom row is twice the height of the top row (see Figure
+\ref{figure:vplayoutcomplex}).
 
 <<layoutcomplex, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 grid.show.layout(grid.layout(4, 4, widths = unit(c(3, 1, 1, 1),
@@ -390,7 +385,7 @@ grid.show.layout(grid.layout(4, 4, widths = unit(c(3, 1, 1, 1),
                              heights = c(1, 1, 2, 3),
                              c("cm", "null", "null", "lines")))
 @
-\begin{figure}[p]
+\begin{figure}[tbp]
 \begin{center}
 {
 \includegraphics[width=3.5in, height=3.5in]{grid-layoutcomplex}
@@ -400,6 +395,7 @@ grid.show.layout(grid.layout(4, 4, widths = unit(c(3, 1, 1, 1),
         A more complex layout.}
 \end{figure}
 
+\clearpage
 \section{Producing Graphics Output}
 
 \grid{} provides a standard set of graphical primitives: lines,
@@ -485,7 +481,7 @@ grid.text(paste("This text and the outer rectangle",
           y = 0.25)
 popViewport()
 @
-\begin{figure}[p]
+\begin{figure}[tbp]
 \begin{center}
 {
 \includegraphics[width=3.5in, height=3.5in]{grid-gpar}
@@ -495,7 +491,8 @@ popViewport()
         The effect of different graphical parameter settings.}
 \end{figure}
 
-\section*{Examples}
+\clearpage
+\section{Examples}
 
 The remaining sections provide some code examples of the use
 of \grid{}.
@@ -633,7 +630,7 @@ popViewport(3)
 \end{figure}
 
 
-\section*{\grid{} and \lattice{}}
+\section{\grid{} and \lattice{}}
 
 The \lattice{} package is built on top of \grid{} and provides a
 quite sophisticated example of writing high-level plotting functions
@@ -735,7 +732,7 @@ popViewport(2)
 <<trellisdata>>
 <<trellisgridplot>>
 @
-\begin{figure}[p]
+\begin{figure}[tbp]
 \begin{center}
 {
 \includegraphics[width=3.5in, height=3.5in]{grid-trellisgrid}
