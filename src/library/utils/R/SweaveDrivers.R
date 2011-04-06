@@ -117,7 +117,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (!is.null(grd <- options$grdevice))
                 devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
         }
-        devs1 <- devs
         if (!object$quiet) {
             cat(formatC(options$chunknr, width = 2), ":")
             if (options$echo) cat(" echo")
