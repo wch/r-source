@@ -53,7 +53,7 @@ RweaveLatexSetup <-
         if (.Platform$OS.type == "windows")
             styfile <- chartr("\\", "/", styfile)
         if (length(grep(" ", styfile)))
-            warning(gettextf("path to '%s' contains spaces,\n", styfile),
+            warning(gettextf("path to %s contains spaces,\n", sQuote(styfile)),
                     gettext("this may cause problems when running LaTeX"),
                     domain = NA)
     } else styfile <- "Sweave"
@@ -454,7 +454,7 @@ RweaveLatexFinish <- function(object, error = FALSE)
     inputname <- object$filename
     if (!object$quiet && !error)
         cat("\n",
-            sprintf("You can now run (pdf)latex on '%s'", outputname),
+            sprintf("You can now run (pdf)latex on %s", sQuote(outputname)),
             "\n", sep = "")
     close(object$output)
     if (length(object$chunkout))
@@ -506,7 +506,7 @@ RweaveLatexOptions <- function(options)
             if (!is.logical(options[[opt]]))
                 options[[opt]] <- c2l(options[[opt]])
             if (is.na(options[[opt]]))
-                stop(gettextf("invalid value for '%s' : %s", opt, oldval),
+                stop(gettextf("invalid value for %s : %s", sQuote(opt), oldval),
                      domain = NA)
         }
     }

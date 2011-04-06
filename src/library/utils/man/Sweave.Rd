@@ -128,7 +128,7 @@ Sweave(testfile)
 ## if MiKTeX is available.
 #endif
 
-## create an S source file from the code chunks
+## create an R source file from the code chunks
 Stangle(testfile)
 ## which can be sourced, e.g.
 source("Sweave-test-1.R")

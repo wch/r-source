@@ -126,8 +126,8 @@ Sweave <- function(file, driver = RweaveLatex(),
             if (mode == "code" && length(grep(syntax$coderef, line))) {
                 chunkref <- sub(syntax$coderef, "\\1", line)
                 if (!(chunkref %in% names(namedchunks)))
-                    warning(gettextf("reference to unknown chunk '%s'",
-                                     chunkref), domain = NA)
+                    warning(gettextf("reference to unknown chunk %s",
+                                     sQuote(chunkref)), domain = NA)
                 line <- c(namedchunks[[chunkref]],
                           paste("#line ", linenum+1L, ' "', file, '"', sep=""))
             }
@@ -161,11 +161,11 @@ SweaveReadFile <- function(file, syntax, encoding = "")
                         pattern = paste(bf, syntax$extension, sep = ""))
 
         if (length(f) == 0L)
-            stop(gettextf("no Sweave file with name '%s' found", file[1L]),
-                 domain = NA)
+            stop(gettextf("no Sweave file with name %s found",
+                          sQuote(file[1L])), domain = NA)
         else if (length(f) > 1L)
-            stop(paste(gettextf("%d Sweave files for basename '%s' found:",
-                                length(f), file),
+            stop(paste(gettextf("%d Sweave files for basename %s found:",
+                                length(f), sQuote(file[1L])),
                        paste("\n         ", f, collapse="")),
                  domain = NA)
     }
@@ -198,8 +198,8 @@ SweaveReadFile <- function(file, syntax, encoding = "")
         sname <- sub(syntax$syntaxname, "\\1", text[pos[1L]])
         syntax <- get(sname, mode = "list")
         if (class(syntax) != "SweaveSyntax")
-            stop(gettextf("object '%s' does not have class \"SweaveSyntax\"",
-                          sname), domain = NA)
+            stop(gettextf("object %s does not have class \"SweaveSyntax\"",
+                          sQuote(sname)), domain = NA)
         text <- text[-pos]
     }
 
@@ -208,7 +208,8 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             pos <- pos[1L]
             ifile <- file.path(df, sub(syntax$input, "\\1", text[pos]))
             if (any(ifile == file)) {
-                stop(paste(gettextf("recursive Sweave input '%s' in stack", ifile),
+                stop(paste(gettextf("recursive Sweave input %s in stack",
+                                    sQuote(ifile)),
                            paste("\n         ", seq_len(file), ": ",
                                  rev(file), collapse="")),
                  domain = NA)
