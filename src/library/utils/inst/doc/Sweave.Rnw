@@ -62,15 +62,14 @@ programs allow to extract documentation and/or source code. A
 of code and documentation segments, these segments are called
 \emph{chunks}:
 \begin{description}
- \item[Documentation chunks] start with a
-  line that has an at sign (\verb|@|) as first character, followed by a space
-  or newline character. The rest of this line is a comment and ignored.
-  Typically documentation chunks will contain text in a
-  markup language like \LaTeX{}.
+\item[Documentation chunks] start with a line that has an at sign
+  (\verb|@|) as first character, followed by a space or newline
+  character. The rest of this line is a comment and ignored.
+  Typically documentation chunks will contain text in a markup
+  language like \LaTeX{}.
 
- \item[Code chunks] start with \verb|<<name>>=| at the
-  beginning of a line; again the rest of the line is a comment and
-  ignored.
+\item[Code chunks] start with \verb|<<options>>=| at the beginning of
+  a line; again the rest of the line is a comment and ignored.
 \end{description}
 The default for the first chunk is documentation.
 
@@ -109,8 +108,7 @@ translates this into the \LaTeX{} document shown in
 Figures~\ref{fig:ex1.tex} and~\ref{fig:ex1.pdf}. The latter can also
 be created directly from within R using
 <<>>=
-library("tools")
-texi2dvi("example-1.tex", pdf = TRUE)
+tools::texi2dvi("example-1.tex", pdf = TRUE)
 @
 
 The first difference between \texttt{example-1.Rnw} and
@@ -156,7 +154,7 @@ later in this manual).
   \begin{minipage}{0.9\textwidth}
     \lstinputlisting{example-1.tex}
   \end{minipage}
-  \caption{The output of \texttt{Sweave("example-1.Rnw")} is the file
+  \caption{Running \texttt{Sweave("example-1.Rnw")} produces the file
     \texttt{example-1.tex}.}
   \label{fig:ex1.tex}
 \end{figure}
@@ -166,7 +164,7 @@ later in this manual).
   \fbox{\begin{minipage}{0.8\textwidth}
     \includegraphics[width=\textwidth]{example-1}
   \end{minipage}}
-  \caption{The final document is created by running \texttt{latex} on
+  \caption{The final document is created by running \texttt{pdflatex} on
   \texttt{example-1.tex}.}
   \label{fig:ex1.pdf}
 \end{figure}
@@ -198,7 +196,8 @@ In the \texttt{.Rnw} file options can be specified either
 \end{enumerate}
 Further, options can be specified (as a comma-separated list of
 \texttt{key=value} items) in the environment variable
-\verb|SWEAVE_OPTION|.
+\verb|SWEAVE_OPTIONS|, and via the \verb|--options=| flag of
+\verb|R CMD Sweave|.
 
 Which options are supported depends on the driver in use. All drivers
 should at least support the following options (all options appear
@@ -365,8 +364,9 @@ its own escapes.  There is a wide range of input encodings which are
 supported, at least partially, and the more recent \LaTeX{} package
 \texttt{inputenx} supports more.  Other encodings commonly encountered
 in Sweave documents are \texttt{latin9}, \texttt{utf8} (but that only
-covers a small subset of UTF-8) and \texttt{ansinew} (the CP1252
-codepage on Windows).
+covers a subset of UTF-8, large with \texttt{inputenx} than
+\texttt{inputenc}) and \texttt{ansinew} (the CP1252 codepage on
+Windows).
 
 The previous paragraph covered the documentation sections, but what of
 the code sections where \LaTeX{} escapes cannot be used?  The first
@@ -393,6 +393,12 @@ a UTF-8 document is processed in a UTF-8 locale, the only problems
 which are likely to arise are from handling data in another encoding,
 but it may be necessary to declare the document's encoding to cover
 the R output which is generated even if the document is itself ASCII.
+One common problem is the quotes produced by \verb|\sQuote()| and
+\verb|\dQuote()|: these will be in UTF-8 when R is run in a UTF-8
+locale, and will be in CP1252 when Sweave is run from \verb|Rgui.exe|
+on Windows.  Two possible solutions are to suppress fancy quotes by
+\verb|options(useFancyQuotes=FALSE)| or to force UTF-8 by
+\verb|options(useFancyQuotes="UTF-8")|.
 
 The encoding of figures is not usually an issue as they are either
 bitmaps or include encoding information: it may be necessary to use

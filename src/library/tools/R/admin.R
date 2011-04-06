@@ -615,7 +615,7 @@ function(dir, outDir, keep.source = TRUE)
 
     for(srcfile in vigns$docs[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
-        message("processing '", basename(srcfile), "'")
+        message("processing ", sQuote(basename(srcfile)))
         texfile <- paste(base, ".tex", sep = "")
         tryCatch(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
                                quiet = TRUE, keep.source = keep.source,

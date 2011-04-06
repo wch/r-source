@@ -580,7 +580,7 @@ Rtangle <-  function()
 
 RtangleSetup <-
     function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
-             prefix = TRUE, quiet = FALSE, show.line.nos = TRUE, ...)
+             prefix = TRUE, quiet = FALSE, show.line.nos = FALSE, ...)
 {
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))

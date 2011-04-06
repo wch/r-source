@@ -14,7 +14,7 @@
 Rtangle()
 RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
              split = FALSE, prefix = TRUE, quiet = FALSE,
-             show.line.nos = TRUE, ...)
+             show.line.nos = FALSE, ...)
 }
 \arguments{
   \item{file}{Path to Sweave source file.}
