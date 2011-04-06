@@ -91,12 +91,10 @@
       \item \command{R CMD Sweave} and \command{R CMD Stangle} support
       \option{--encoding} and \option{--options} options.
 
-      \item The \code{RweaveLatex()} driver now normally only runs each
-      figure chunk once for each device (and hence by default once for a
-      PDF figure).  The new options \code{persistent.graphics=TRUE}
-      keeps a graphics device open across chunks and plots each figure
-      chunk on it (the previous behaviour).  This is needed only very
-      rarely.
+      \item The \code{RweaveLatex()} driver now runs each figure chunk
+      once for each device (and hence by default once for a PDF figure).
+      Vignettes which need a persistent graphics device will need to
+      open one for themselves.
 
       \item Warnings are issued when non-portable filenames are found
       for graphics files (and chunks if \code{split=TRUE}).  Portable

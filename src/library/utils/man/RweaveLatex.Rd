@@ -214,10 +214,6 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       file to link the input line numbers to the output line numbers.
       This is an experimental feature; see the source code for the
       output format, which is subject to change in future releases.}
-    
-    \item{persistent.graphics:}{logical (\code{FALSE}).
-      In some rare circumstances a vignette needs a graphics device kept
-      open between chunks: set this option sot \code{TRUE} to have this.}
   }
 
   In addition, users can specify further options, either in the header

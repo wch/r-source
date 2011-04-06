@@ -66,8 +66,7 @@ RweaveLatexSetup <-
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
-                    concordance = FALSE, expand = TRUE,
-                    persistent.graphics = FALSE)
+                    concordance = FALSE, expand = TRUE)
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -225,14 +224,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         srcrefs <- attr(chunkexps, "srcref")
 
-        if (!options$persistent.graphics && length(devs)) {
+        if (length(devs)) {
             if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
                 warning("file name ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
             devs[[1L]](name = chunkprefix,
                        width = options$width, height = options$height,
                        options)
-            devs1 <- devs[-1]
             SweaveHooks(options, run = TRUE)
         }
         for (nce in seq_along(chunkexps)) {
@@ -352,12 +350,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         if (length(devs)) {
-            if(!options$persistent.graphics)
-                grDevices::dev.off()        # close first one
-            else if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
-                warning("file name ", sQuote(chunkprefix), " is not portable",
-                        call. = FALSE, domain = NA)
-            for (dev in devs1) {
+            grDevices::dev.off()        # close first one
+            for (dev in devs[-1L]) {
                 dev(name = chunkprefix,
                     width = options$width, height = options$height,
                     options)
