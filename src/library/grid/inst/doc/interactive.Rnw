@@ -83,7 +83,7 @@ and was discarded when the old labels were discarded.
 
 <<edit3, term=FALSE>>=
 grid.edit("gxa", at = c(0.0, 0.5, 1.0))
-<<fig4, echo = FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
+<<fig4, echo=FALSE, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
 gxa <- xaxisGrob(at = 1:4/5, vp = viewport(w = .5, h = .01))
 gxa <- editGrob(gxa, gp = gpar(col = "red"))
 gxa <- editGrob(gxa, gPath = "labels", gp = gpar(col = "green"))

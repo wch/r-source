@@ -126,7 +126,7 @@ return to the first graphics region and
 does some more drawing there (see Figure \ref{figure:viewports}).
 
 <<pushviewports, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
-grid.rect(gp  =gpar(lty = "dashed"))
+grid.rect(gp = gpar(lty = "dashed"))
 vp1 <- viewport(x = 0, y = 0.5, w = 0.5, h = 0.5,
                 just = c("left", "bottom"), name = "vp1")
 vp2 <- viewport(x = 0.5, y = 0, w = 0.5, h = 0.5,

@@ -20,8 +20,8 @@ ps.options(pointsize = 12)
 options(width = 60)
 @
 
-It is possible to include non-finite values, {\tt NA}, {\tt NaN}, {\tt
-  Inf}, and {\tt -Inf}, in specifications of locations and sizes in
+It is possible to include non-finite values, \texttt{NA}, \texttt{NaN}, {\tt
+  Inf}, and \texttt{-Inf}, in specifications of locations and sizes in
 \grid{} functions.  This document describes how \grid{} responds to
 non-finite values in different cases.
 
@@ -44,7 +44,7 @@ For all of these primitives, non-finite values for locations or
 sizes result in the corresponding primitive not being drawn.
 The following image provides a simple demonstration.  Each primitive
 is drawn at seven x-locations, with the fourth location made non-finite
- (as indicated by a grey {\tt "NA"}).
+ (as indicated by a grey \texttt{"NA"}).
 
 <<prim1, echo=FALSE, fig=TRUE, results=hide, width=4, height=2, include=FALSE>>=
 pushViewport(viewport(layout = grid.layout(1, 2,
@@ -79,8 +79,8 @@ new location are both not non-finite.
 \textbf{polygon} {~} \\
 A non-finite value breaks the polygon into two separate polygons.
 NOTE that this break happens within the current polygon as specified
-by the {\tt id} argument.  All polygons with the same {\tt id}
-receive the same {\tt gp} settings.
+by the \texttt{id} argument.  All polygons with the same \texttt{id}
+receive the same \texttt{gp} settings.
 
 \textbf{arrows} {~} \\
 An arrow head is only drawn if the first or last line segment is

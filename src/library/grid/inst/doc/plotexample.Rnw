@@ -528,7 +528,6 @@ grid.remove("cell12")
 grid.add("splom", textGrob(date(), name = "date",
                            gp = gpar(fontface = "italic"),
                            vp = "cellgrid::cell12"))
-
 <<fig=TRUE, echo=FALSE, results=hide>>=
 <<splomgrob>>
 smg <- removeGrob(smg, "cell12")
