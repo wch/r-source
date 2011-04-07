@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-06 r55313)
+R version 2.14.0 Under development (unstable) (2011-04-06 r55347)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -44,15 +44,16 @@ Type 'q()' to quit R.
 > 
 > ## Easy one-dimensional MLE:
 > nLL <- function(lambda) -sum(stats::dpois(y, lambda, log=TRUE))
-> fit0 <- mle(nLL, start = list(lambda = 5))
-> ## For 1D, this is preferable:
-> fit1 <- mle(nLL, start = list(lambda = 5),
-+             method="Brent", lower= 1, upper=20)
+> fit0 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y))
+> # For 1D, this is preferable:
+> fit1 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y),
++             method = "Brent", lower = 1, upper = 20)
+> stopifnot(nobs(fit0) == length(y))
 > 
 > ## This needs a constrained parameter space: most methods will accept NA
 > ll <- function(ymax = 15, xhalf = 6)
 +     if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
-> (fit <- mle(ll, nobs=length(y)))
+> (fit <- mle(ll, nobs = length(y)))
 
 Call:
 mle(minuslogl = ll, nobs = length(y))
@@ -60,7 +61,7 @@ mle(minuslogl = ll, nobs = length(y))
 Coefficients:
    ymax   xhalf 
 24.9931  3.0571 
-> mle(ll, fixed=list(xhalf=6))
+> mle(ll, fixed = list(xhalf = 6))
 
 Call:
 mle(minuslogl = ll, fixed = list(xhalf = 6))
@@ -69,8 +70,8 @@ Coefficients:
   ymax  xhalf 
 19.288  6.000 
 > ## alternative using bounds on optimization
-> ll2 <- function(ymax=15, xhalf=6)
-+     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+> ll2 <- function(ymax = 15, xhalf = 6)
++     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log = TRUE))
 > mle(ll2, method = "L-BFGS-B", lower = rep(0, 2))
 
 Call:
