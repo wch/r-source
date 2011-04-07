@@ -23,7 +23,7 @@ sunflowerplot(x, \dots)
               col = par("col"), bg = NA, size = 1/8, seg.col = 2,
               seg.lwd = 1.5, \dots)
 
-\method{sunflowerplot}{formula}(formula, data, xlab = NULL, ylab = NULL \dots,
+\method{sunflowerplot}{formula}(formula, data, xlab = NULL, ylab = NULL, \dots,
              subset, na.action = NULL)
 }
 \arguments{

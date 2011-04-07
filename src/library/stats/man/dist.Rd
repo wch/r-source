@@ -87,11 +87,11 @@ as.dist(m, diag = FALSE, upper = FALSE)
   involving the rows within which they occur.
   Further, when \code{Inf} values are involved, all pairs of values are
   excluded when their contribution to the distance gave \code{NaN} or
-  \code{NA}.\cr
+  \code{NA}.
   If some columns are excluded in calculating a Euclidean, Manhattan,
-  Canberra or Minkowski distance, the sum is scaled up proportionally
-  to the number of columns used.  If all pairs are excluded when calculating a
-  particular distance, the value is \code{NA}.
+  Canberra or Minkowski distance, the sum is scaled up proportionally to
+  the number of columns used.  If all pairs are excluded when
+  calculating a particular distance, the value is \code{NA}.
 
   The \code{"dist"} method of \code{as.matrix()} and \code{as.dist()}
   can be used for conversion between objects of class \code{"dist"}
