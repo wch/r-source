@@ -32,7 +32,7 @@ optim <- function(par, fn, gr = NULL, ...,
     ## Defaults :
     con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, npar),
 		ndeps = rep.int(1e-3, npar),
-		maxit = 100L, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
+		maxit = 100L, abstol = -Inf, reltol = sqrt(.Machine$double.eps),
 		alpha = 1.0, beta = 0.5, gamma = 2.0,
 		REPORT = 10,
 		type = 1,
@@ -54,30 +54,33 @@ optim <- function(par, fn, gr = NULL, ...,
     if (method == "L-BFGS-B" &&
 	any(!is.na(match(c("reltol","abstol"), namc))))
 	warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
-    if(npar == 1) {
-	if(method == "Nelder-Mead")
-	    warning("one-diml optimization by Nelder-Mead is unreliable:\n",
-		    "use \"Brent\" or optimize() directly")
-    } else if(method == "Brent")
-	stop("\"Brent\" is only available for one-dimensional minimization")
-    lower <- as.double(rep(lower, , npar))
-    upper <- as.double(rep(upper, , npar))
+    if(npar == 1 && method == "Nelder-Mead")
+        warning("one-diml optimization by Nelder-Mead is unreliable:\n",
+                "use \"Brent\" or optimize() directly")
+    if(npar > 1 && method == "Brent")
+	stop('method = "Brent" is only available for one-dimensional optimization')
+    lower <- as.double(rep(lower, length.out = npar))
+    upper <- as.double(rep(upper, length.out = npar))
     if(method == "Brent") { ## 1-D
-	res <- optimize(fn1, lower=lower, upper=upper, tol=con$reltol)
+        if(any(!is.finite(c(upper, lower))))
+           stop("'lower' and 'upper' must be finite values")
+	res <- optimize(function(par) fn(par,...)/con$fnscale,
+                        lower = lower, upper = upper, tol = con$reltol)
 	names(res)[names(res) == c("minimum", "objective")] <- c("par", "value")
-	res <- c(res, list(counts=c(NA,NA), convergence=0, "message"=NULL))
+        res$value <- res$value * con$fnscale
+	res <- c(res, list(counts = c(NA, NA), convergence = 0L, message= NULL))
     } else {
 	res <- .Internal(optim(par, fn1, gr1, method, con, lower, upper))
 	names(res) <- c("par", "value", "counts", "convergence", "message")
-	nm <- names(par)
-	if(!is.null(nm)) names(res$par) <- nm
-	names(res$counts) <- c("function", "gradient")
-	if (hessian) {
-	    hess <- .Internal(optimhess(res$par, fn1, gr1, con))
-	    hess <- 0.5*(hess + t(hess))
-	    if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
-	    res$hessian <- hess
-	}
+    }
+    names(res$counts) <- c("function", "gradient")
+    nm <- names(par)
+    if(!is.null(nm)) names(res$par) <- nm
+    if (hessian) {
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
+        hess <- 0.5*(hess + t(hess))
+        if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
+        res$hessian <- hess
     }
     res
 }

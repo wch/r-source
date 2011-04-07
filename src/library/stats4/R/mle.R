@@ -57,14 +57,11 @@ mle <- function(minuslogl, start = formals(minuslogl), method = "BFGS",
         l[n] <- fixed
         do.call("minuslogl", l)
     }
-    do.hess <- (method != "Brent")
     oout <- if (length(start))
-        optim(start, f, method = method, hessian = do.hess, ...)
+        optim(start, f, method = method, hessian = TRUE, ...)
     else list(par = numeric(), value = f(start))
     coef <- oout$par
-    vcov <- if((p <- length(coef))) {
-        if(do.hess) solve(oout$hessian) else matrix(NA, p,p)
-    } else matrix(numeric(), 0L, 0L)
+    vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(), 0L, 0L)
     min <- oout$value
     fullcoef[nm] <- coef
     new("mle", call = call, coef = coef, fullcoef = unlist(fullcoef),
