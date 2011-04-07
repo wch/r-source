@@ -3577,7 +3577,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	if (TYPEOF(val) != CHARSXP) break; /* sanity check */
 #endif
-	if (need_enc == ENC_KNOWN(val) &&
+	if (need_enc == (ENC_KNOWN(val) | IS_BYTES(val)) &&
 	    LENGTH(val) == len &&  /* quick pretest */
 	    memcmp(CHAR(val), name, len) == 0) {
 	    cval = val;
