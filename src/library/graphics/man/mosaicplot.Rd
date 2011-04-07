@@ -143,7 +143,7 @@ mosaicplot(x, \dots)
   The strucplot framework: Visualizing multi-way contingency tables with vcd.
   \emph{Report 22}, Department of Statistics and Mathematics, 
   \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
-  \url{http://epub.wu-wien.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
+  \url{http://epub.wu.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 
   The home page of Michael Friendly
   (\url{http://www.math.yorku.ca/SCS/friendly.html}) provides

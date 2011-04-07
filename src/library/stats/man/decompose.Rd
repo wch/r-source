@@ -58,7 +58,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   \emph{Griffin}, 410--414.
 }
 \author{
-  David Meyer \email{David.Meyer@wu-wien.ac.at}
+  David Meyer \email{David.Meyer@wu.ac.at}
 }
 \seealso{\code{\link{stl}}}
 
