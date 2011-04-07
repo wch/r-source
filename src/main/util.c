@@ -1674,8 +1674,8 @@ typedef enum {
       UCOL_ATTRIBUTE_COUNT
 } UColAttribute;
 
-/* UCharIterator struct has to be defined sice we use its instances as
-   local variables, but we don't acutally use any of its members. */
+/* UCharIterator struct has to be defined since we use its instances as
+   local variables, but we don't actually use any of its members. */
 typedef struct UCharIterator {
   const void *context;
   int32_t length, start, index, limit, reservedField;
