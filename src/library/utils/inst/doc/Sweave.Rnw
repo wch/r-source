@@ -55,31 +55,34 @@ Appendix~A).
 \label{sec:noweb}
 
 \texttt{noweb} \citep{flm:Ramsey:1998} is a simple
-literate-programming tool which allows to combine program source code
-and the corresponding documentation into a single file. Different
-programs extract documentation and source code. A \texttt{noweb} file
-is a simple text file which consists of a sequence of code and
-documentation segments, called \emph{chunks}:
+literate-programming tool which allows combining program source code
+and the corresponding documentation into a single file.  A
+\texttt{noweb} file is a simple text file which consists of a sequence
+of code and documentation segments, called \emph{chunks}:
 \begin{description}
 \item[Documentation chunks] start with a line that has an at sign
   (\verb|@|) as first character, followed by a space or newline
   character. The rest of this line is a comment and ignored.
   Typically documentation chunks will contain text in a markup
-  language like \LaTeX{}.
+  language like \LaTeX{}.  The chunk continues until a new code or
+  documentation chunk is started: note that Sweave does not interpret
+  the contents of documentation chunks, and so will identify chunk
+  indicators even inside \LaTeX{} verbatim environments.
 
 \item[Code chunks] start with \verb|<<options>>=| at the beginning of
   a line; again the rest of the line is a comment and ignored.
 \end{description}
 The default for the first chunk is documentation.
 
-In the simplest usage of \texttt{noweb}, the (optional) names of code chunks
-give the name of source code files, and the tool \texttt{notangle} can
-be used to extract the code chunk from the \texttt{noweb} file. Multiple code
-chunks can have the same name, the corresponding code chunks are the
-concatenated when the source code is extracted. \texttt{noweb} has some
-additional mechanisms to cross-reference code chunks (the
-\verb|[[...]]| operator, etc.), Sweave does currently not use or
-support this features, hence they are not described here.
+In the simplest usage of \texttt{noweb}, the options (if present) of
+the code chunks give the names of source code files, and the tool
+\texttt{notangle} can be used to extract the code chunks from the
+\texttt{noweb} file. Multiple code chunks can have the same name, the
+corresponding code chunks are the concatenated when the source code is
+extracted. \texttt{noweb} has some additional mechanisms to
+cross-reference code chunks (the \verb|[[...]]| operator, etc.),
+Sweave does currently not use nor support these features, so they are
+not described here.
 
 
 \section{Sweave files}
@@ -285,7 +288,7 @@ then be used inside a \verb|\Sexpr|.)
 
 Named code chunks can be reused in other code chunks following later
 in the document. Consider the simple example
-\begin{quote}
+\begin{quote}% NB: this is indented to avoid interpretation by Sweave.
 \begin{verbatim}
  <<a>>=
  x <- 10
@@ -315,6 +318,7 @@ which is equivalent to defining the last code chunk as
 
 The chunk reference operator \verb|<<>>| takes only the name of the
 chunk as its argument: no additional Sweave options are allowed.
+It has to occur at the beginning of a line.
 
 \subsection{Syntax definition}
 
