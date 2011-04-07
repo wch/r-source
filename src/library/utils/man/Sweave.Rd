@@ -11,10 +11,11 @@
 \encoding{UTF-8}
 \title{Automatic Generation of Reports}
 \description{
-  \code{Sweave} provides a flexible framework for mixing text and S code
-  for automatic report generation.  The basic idea is to replace the S
+  \code{Sweave} provides a flexible framework for mixing text and R/S code
+  for automatic report generation.  The basic idea is to replace the
   code with its output, such that the final document only contains the
-  text and the output of the statistical analysis. 
+  text and the output of the statistical analysis: however, the source
+  code can also be included.
 }
 \usage{
 Sweave(file, driver = RweaveLatex(),
@@ -24,7 +25,10 @@ Stangle(file, driver = Rtangle(),
         syntax = getOption("SweaveSyntax"), ...)
 }
 \arguments{
-  \item{file}{Name of Sweave source file.}
+  \item{file}{Path to Sweave source file.  Note that this can be
+    supplied without the extension, but the function will only proceed
+    if there is exactly one Sweave file in the directory whose
+    basename matches \code{file}.} 
   \item{driver}{The actual workhorse, see \sQuote{Details}.}
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.  See section \sQuote{Syntax Definition}.}
