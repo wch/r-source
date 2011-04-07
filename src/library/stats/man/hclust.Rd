@@ -79,7 +79,8 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     of singletons, and positive entries indicate agglomerations
     of non-singletons.}
 
-  \item{height}{a set of \eqn{n-1} non-decreasing real values.
+  \item{height}{a set of \eqn{n-1} real values (non-decreasing for
+    ultrametric trees).
     The clustering \emph{height}: that is, the value of
     the criterion associated with the clustering
     \code{method} for the particular agglomeration.}
