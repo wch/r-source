@@ -16,7 +16,8 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
              split = FALSE, quiet = FALSE, ...)
 }
 \arguments{
-  \item{file}{Path to Sweave source file.}
+  \item{file}{Name of Sweave source file.  See the description of the
+    corresponding argument of \code{\link{Sweave}}.}
   \item{syntax}{An object of class \code{SweaveSyntax}.}
   \item{output}{Name of output file used unless \code{split = TRUE}:
     see \sQuote{Details}.}

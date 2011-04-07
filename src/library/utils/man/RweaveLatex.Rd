@@ -18,7 +18,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
                  debug = FALSE, stylepath, \dots)
 }
 \arguments{
-  \item{file}{Name or path of source file.}
+  \item{file}{Name of Sweave source file.  See the description of the
+    corresponding argument of \code{\link{Sweave}}.}
   \item{syntax}{An object of class \code{SweaveSyntax}.}
   \item{output}{Name of output file.  The default is to remove extension
     \file{.nw}, \file{.Rnw} or \file{.Snw} and to add
