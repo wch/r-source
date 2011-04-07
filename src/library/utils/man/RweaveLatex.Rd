@@ -109,6 +109,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \code{RweaveLatex} supports the following options for code chunks (the
   values in parentheses show the default values):
   \describe{    
+    \item{engine:}{character string (\code{"R"}).  Only chunks with
+      \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
+    
     \item{echo:}{logical (\code{TRUE}). Include \R code in the output
       file?}
 
@@ -203,12 +206,6 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{resolution:}{numeric (300), resolution in pixels per inch:
       used for PNG and JPEG graphics.  Note that the default is a fairly
       high value, appropriate for high-quality plots.}
-    
-    \item{expand:}{logical (\code{TRUE}).  Expand references to other
-      chunks so that only \R code appears in the output file.  If
-      \code{FALSE}, the chunk reference (e.g. \code{<<chunkname>>}) will
-      appear.  The \code{expand = FALSE} option requires
-      \code{keep.source = TRUE} or it will have no effect.}
     
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
       file to link the input line numbers to the output line numbers.
