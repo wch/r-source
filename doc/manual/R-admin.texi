@@ -2712,7 +2712,7 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of the @code{X11}, @code{jpeg()}, @code{png()} and
+The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()} and
 @code{tiff()} graphics devices uses the @code{cairo} and (optionally)
 @code{Pango} libraries.  Cairo version 1.2.0 or later is required.
 Pango needs to be at least version 1.10, and 1.12 is the earliest
@@ -2775,9 +2775,6 @@ Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
 or @code{icu4c}.  It will be used by default where available (including
 on Mac OS X >= 10.4): should a very old or broken version of ICU be
 found this can be suppressed by @option{--without-ICU}.
-
-@c The Perl scripts left are
-@c tools: help2man.pl install-info.pl
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
