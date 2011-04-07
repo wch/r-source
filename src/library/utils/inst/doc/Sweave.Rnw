@@ -24,22 +24,22 @@
 \section{Introduction}
 \label{sec:intro}
 
-Sweave provides a flexible framework for mixing text and R code for
+Sweave provides a flexible framework for mixing text and \R{} code for
 automatic document generation. A single source file contains both
-documentation text and R code, which are then \emph{woven} into a
+documentation text and \R{} code, which are then \emph{woven} into a
 final document containing
 \begin{itemize}
  \item the documentation text together with
- \item the R code and/or
+ \item the \R{} code and/or
  \item the output of the code (text, graphs)
 \end{itemize}
 This allows to re-generate a report if the input data change and
 documents the code to reproduce the analysis in the same file that
-contains the report. The R code of the complete analysis is embedded
+contains the report. The \R{} code of the complete analysis is embedded
 into a \LaTeX{} document\footnote{\url{http://www.ctan.org}} using the
 \texttt{noweb} syntax \citep{flm:Ramsey:1998} which is usually used
 for literate programming \cite{fla:Knuth:1984}.  Hence, the full power
-of \LaTeX{} (for high-quality typesetting) and R (for data analysis)
+of \LaTeX{} (for high-quality typesetting) and \R{} (for data analysis)
 can be used simultaneously. See \cite{e1071-papers:Leisch:2002} and
 references therein for more general thoughts on dynamic report
 generation and pointers to other systems.
@@ -105,7 +105,7 @@ Sweave(rnwfile)
 @
 translates this into the \LaTeX{} document shown in
 Figures~\ref{fig:ex1.tex} and~\ref{fig:ex1.pdf}. The latter can also
-be created directly from within R using
+be created directly from within \R{} using
 <<>>=
 tools::texi2dvi("example-1.tex", pdf = TRUE)
 @
@@ -113,7 +113,7 @@ tools::texi2dvi("example-1.tex", pdf = TRUE)
 The first difference between \texttt{example-1.Rnw} and
 \texttt{example-1.tex} is that the \LaTeX{} style file
 \texttt{Sweave.sty} is automatically loaded, which provides
-environments for typesetting R input and output (the \LaTeX{}
+environments for typesetting \R{} input and output (the \LaTeX{}
 environments \texttt{Sinput} and \texttt{Soutput}). Otherwise, the
 documentation chunks are copied without any modification from
 \texttt{example-1.Rnw} to \texttt{example-1.tex}.
@@ -129,7 +129,7 @@ documentation chunks are copied without any modification from
 
 The real work of Sweave is done on the code chunks: The first code
 chunk has no name, hence the default behavior of Sweave is used, which
-transfers both the R commands and their respective output to the \LaTeX{}
+transfers both the \R{} commands and their respective output to the \LaTeX{}
 file, embedded in \texttt{Sinput} and \texttt{Soutput} environments,
 respectively.
 
@@ -143,7 +143,7 @@ Sweave which control the final output.
   \verb|\includegraphics{example-1-002}| statement is inserted into
   the \LaTeX{} file (details on the choice of file names for figures
   follow later in this manual).
-\item Option \texttt{echo=FALSE} indicates that the R input should not
+\item Option \texttt{echo=FALSE} indicates that the \R{} input should not
   be included in the final document (no \texttt{Sinput} environment).
 \end{itemize}
 
@@ -266,7 +266,7 @@ encoding as the main file.
 
 \subsection{Using scalars in text}
 
-There is limited support for using the values of R objects in text
+There is limited support for using the values of \R{} objects in text
 chunks. Any occurrence of \verb|\Sexpr{|\texttt{\textit{expr}}\verb|}|
 is replaced by the string resulting from coercing the value of the
 expression \texttt{expr} to a character vector; only the first element
@@ -276,7 +276,7 @@ by the string \texttt{'3'} (without any quotes).
 The expression is evaluated in the same environment as the code
 chunks, hence one can access all objects defined in the code chunks
 which have appeared before the expression and were evaluated. The
-expression may contain any valid R code, only braces (\verb|{ }|) are
+expression may contain any valid \R{} code, only braces (\verb|{ }|) are
 not allowed. (This is not really a limitation because more complicated
 computations can be easily done in a hidden code chunk and the result
 then be used inside a \verb|\Sexpr|.)
@@ -384,11 +384,11 @@ Windows).
 The previous paragraph covered the documentation sections, but what of
 the code sections where \LaTeX{} escapes cannot be used?  The first
 piece of advice is to use only ASCII code sections as anything else
-will reduce the portability of your document.  But R code can be
+will reduce the portability of your document.  But \R{} code can be
 included if in the input encoding declared in the preamble.
 
 The next complication is inclusions: the final vignette may well
-include R output, \LaTeX{} or other Sweave files \emph{via}
+include \R{} output, \LaTeX{} or other Sweave files \emph{via}
 \verb|\input{}| and \verb|\SweaveInput{}| lines, a bibliography and
 figures. It is the user's responsibility that the text inclusions are
 covered by the declared input encoding.  \LaTeX{} allows the input
@@ -402,13 +402,13 @@ It is all too easy for BiBTeX to pick up UTF-8-encoded references for
 a Latin-1 document, or \emph{vice versa}.
 
 R output is again to a large extent under the user's control.  If a
-Latin-1 Sweave document is processed by R running a Latin-1 locale or
+Latin-1 Sweave document is processed by \R{} running a Latin-1 locale or
 a UTF-8 document is processed in a UTF-8 locale, the only problems
 which are likely to arise are from handling data in another encoding,
 but it may be necessary to declare the document's encoding to cover
-the R output which is generated even if the document is itself ASCII.
+the \R{} output which is generated even if the document is itself ASCII.
 One common problem is the quotes produced by \verb|\sQuote()| and
-\verb|\dQuote()|: these will be in UTF-8 when R is run in a UTF-8
+\verb|\dQuote()|: these will be in UTF-8 when \R{} is run in a UTF-8
 locale, and will be in CP1252 when Sweave is run from \verb|Rgui.exe|
 on Windows.  Two possible solutions are to suppress fancy quotes by
 \verb|options(useFancyQuotes=FALSE)| or to force UTF-8 by
@@ -420,16 +420,16 @@ the \texttt{pdf.encoding} Sweave option to set the \texttt{pdf()}
 device up appropriately.
 
 Handling non-ASCII vignettes is a work in progress: they do not work
-well before R 2.13.0.
+well before \R{} 2.13.0.
 
 
 \section{Tangling and weaving}
 
-The user front-ends of the Sweave system are the two R functions
+The user front-ends of the Sweave system are the two \R{} functions
 \texttt{Stangle()} and \texttt{Sweave()}, both are contained in
 package \texttt{utils}.  \texttt{Stangle} can be used to extract only
 the code chunks from an \texttt{.Rnw} file and write to one or several
-files.  \texttt{Sweave()} runs the code chunks through R and replaces
+files.  \texttt{Sweave()} runs the code chunks through \R{} and replaces
 them with the respective input and/or output.  \texttt{Stangle} is
 actually just a wrapper function for \texttt{Sweave}, which uses a
 tangling instead of a weaving driver by default. See
@@ -441,7 +441,7 @@ for more details and arguments of the functions.
 \subsection{The \texttt{RweaveLatex} driver}
 
 This driver transforms \texttt{.Rnw} files with \LaTeX{} documentation
-chunks and R code chunks to proper \LaTeX{} files (for typesetting both
+chunks and \R{} code chunks to proper \LaTeX{} files (for typesetting both
 with standard \texttt{latex} or \texttt{pdflatex}), see
 <<eval=FALSE>>=
 help("RweaveLatex")
@@ -498,9 +498,9 @@ are forgotten after the respective chunk (because the device is
 closed when leaving the chunk).
 
 Attention: One thing that gets easily confused are the width/height
-parameters of the R graphics devices and the corresponding arguments
+parameters of the \R{} graphics devices and the corresponding arguments
 to the \LaTeX{} \verb|\includegraphics| command. The Sweave options
-\texttt{width} and \texttt{height} are passed to the R graphics
+\texttt{width} and \texttt{height} are passed to the \R{} graphics
 devices, and hence affect the default size of the produced EPS and PDF
 files. They do not affect the size of figures in the document, by
 default they will always be 80\% of the current text width. Use
@@ -519,15 +519,38 @@ options(prompt = "MyR> ", continue = "...")
 see \texttt{help(options)} for details. Similarly the output text
 width is controlled by option \texttt{"width"}.
 
+
+\subsubsection{Graphics devices}
+
+The default graphics device for \texttt{fig=TRUE} chunks is
+\texttt{pdf()}: the standard options \texttt{pdf}, \texttt{eps},
+\texttt{png} and \texttt{jpg} (the latter two available only in \R{} >=
+2.13.0) allow one or more of these to be selected for a particular
+chunk or (via \verb|\SweaveOpts|) for the whole document.  It can be
+convenient to select PNG for a particular chunk by something like
+\verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE|: \texttt{pdflatex} should
+automatically include the PNG file.
+
+In addition, \R{} >= 2.13.0 allows you to define your own graphics
+devices and select one of them by the option \texttt{grdevice=my.Swd}
+where the device function (here \texttt{my.Swd}) is defined in a hidden
+code chunk. For example, we could make use of the \texttt{cairo\_pdf}
+device by
+\begin{verbatim}
+my.Swd <- function(name, width, height, ...)
+  grdevices::cairo_pdf(filename = paste(name, "pdf", sep = "."),
+                       width = width, height = height)
+\end{verbatim}
+
 \subsection{The \texttt{Rtangle} driver}
 
-This driver can be used to extract R code chunks from a \texttt{.Rnw}
+This driver can be used to extract \R{} code chunks from a \texttt{.Rnw}
 file. Code chunks can either be written to one large file or separate
 files (one for each code chunk). The options \texttt{split},
 \texttt{prefix}, and \texttt{prefix.string} have the same defaults and
 interpretation as for the \texttt{RweaveLatex} driver. Use the
 standard \texttt{noweb} command line tool \texttt{notangle} if chunks
-other than R code should be extracted. See
+other than \R{} code should be extracted. See
 <<eval=FALSE>>=
 help("Rtangle")
 @
@@ -539,11 +562,11 @@ order, an order which is often not the alphabetical order of the
 files.
 
 
-\section{Adding Drivers}
+\section{Adding Sweave Drivers}
 
 Adding drivers is relatively simple by modelling them on\footnote{but
   if you copy, \textbf{do} be careful not to infringe R-core's
-  copyright: the copyright notices in the R sources \textbf{must} also
+  copyright: the copyright notices in the \R{} sources \textbf{must} also
   be copied.} the existing \texttt{RweaveLatex} and \texttt{Rtangle}
 drivers.
 
@@ -584,21 +607,6 @@ encoding used for the text to be processed.
 \section{Frequently Asked Questions}
 \label{sec:faq}
 
-
-% \subsection{Where can I find the manual and other information on
-%    Sweave?}
-
-%   The newest version of the Sweave manual can always be found at the
-%   Sweave homepage
-%   \begin{quote}
-%     \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
-%   \end{quote}
-%   where you also find several example files, and the lisp and shell
-%   code snippets of the FAQ. In addition, the homepage has several
-%   papers on Sweave like the CompStat paper and the 2-part miniseries
-%   from R News (Issues 2/3 and 2/3).
-
-
   \subsection{How can I get Emacs to automatically recognize files
     in Sweave format?}
 
@@ -611,7 +619,7 @@ encoding used for the text to be processed.
   \subsection{Can I run Sweave directly from a shell?}
 
   E.g., for writing makefiles it can be useful to run Sweave directly
-  from a shell rather than manually starting R and then running
+  from a shell rather than manually starting \R{} and then running
   Sweave. This can easily be done using
 \begin{verbatim}
 R CMD Sweave file.Rnw
@@ -630,16 +638,6 @@ R CMD Sweave file.Rnw
    statement has no extension.  Hence, you may run into trouble with
    graphics handling if the basename of your Sweave file contains
    dots: \file{foo.Rnw} is OK, while \file{foo.bar.Rnw} is not.
-
-
-  % \subsection{Why does Sweave by default create both EPS and PDF
-  %    graphic files?}
-
-  %  The \LaTeX{} package \texttt{graphicx} needs EPS files for plain
-  %  \LaTeX{}, but PDF files for PDF\LaTeX{} (the latter can also handle
-  %  PNG and JPEG files). Sweave automatically creates graphics in EPS
-  %  and PDF format, such that the user can freely run \texttt{latex} or
-  %  \texttt{pdflatex} on the final document as needed.
 
    \subsection{Empty figure chunks give \LaTeX{} errors.}
 
@@ -729,29 +727,10 @@ R CMD Sweave file.Rnw
   of the Sweave file unless you want to use it as a global option for
   all Sweave files.
 
-  % \subsection{Running \texttt{latex} fails on Windows}
-
-  %  If you can create the \file{.tex} file by running
-  %  \texttt{Sweave()} in R, but cannot convert the \file{.tex} file
-  %  to \file{.dvi} or \file{.pdf}, this is most likely caused by a
-  %  space in the path of your R installation.  If the path of your R
-  %  installation contains any blank characters (like the default
-  %  \verb|"c:\Program Files\..."| in English versions of Windows), this
-  %  may cause problems, because programs like \texttt{tex} or
-  %  \texttt{latex} cannot handle blanks in paths properly.
-
-  %  Two possible solutions:
-  %  \begin{enumerate}
-  %   \item Install R in a path not containing any blanks.
-  %   \item Copy the file \file{Sweave.sty} to a directory in your tex
-  %    path or the directory containing the Sweave file and put a
-  %    \verb|\usepackage{Sweave}| into the preamble of your Sweave file.
-  %  \end{enumerate}
-
   \subsection{How can I change the formatting of R input and output
      chunks?}
 
-   Sweave uses the \texttt{fancyvrb} package for formatting all R code
+   Sweave uses the \texttt{fancyvrb} package for formatting all \R{} code
    and text output. \texttt{fancyvrb} is a very powerful and flexible
    package that allows fine control for layouting text in verbatim
    environments. If you want to change the default layout, simply read
@@ -799,19 +778,6 @@ or calling Sweave like
   Sweave(..., syntax = "SweaveSyntaxNoweb")
 \end{verbatim}
 ensures the default syntax even after loading \texttt{R2HTML}.
-
-
-% \subsection{Why does Sweave delete all comments from the R code? Why
-%   does it mess up line breaks for continuation lines?}
-
-% Sweave runs all code through the R parser. The ``input lines'' you see
-% are the result from running the code through \texttt{parse()} and
-% \texttt{deparse()}, which by default discards all comments and
-% reformats line breaks. If you want to keep the code as it is in the
-% source file, use
-% \begin{verbatim}
-%   \SweaveOpts{keep.source=TRUE}
-% \end{verbatim}
 
 
 
