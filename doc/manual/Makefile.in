@@ -37,7 +37,9 @@ MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
-TEXI2DVI = @TEXI2DVI@ --texinfo="@set UseExternalXrefs "
+## some broken versions of texi2dvi need C collation.
+TEXI2DVI0 = @TEXI2DVI@
+TEXI2DVI = LC_COLLATE=C @TEXI2DVI@ --texinfo="@set UseExternalXrefs "
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
@@ -80,7 +82,7 @@ docs: html
 	  $(ECHO) "ERROR: 'tex' needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@if test -z "$(TEXI2DVI)"; then \
+	@if test -z "$(TEXI2DVI0)"; then \
 	  $(ECHO) "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -107,7 +109,7 @@ docs: html
 	  $(ECHO) "ERROR: 'pdftex' needed but missing on your system."; \
 	  exit 1; \
 	fi
-	@if test -z "$(TEXI2DVI)"; then \
+	@if test -z "$(TEXI2DVI0)"; then \
 	  $(ECHO) "ERROR: 'texi2dvi' needed but missing on your system."; \
 	  exit 1; \
 	fi
