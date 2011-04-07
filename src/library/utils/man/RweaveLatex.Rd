@@ -109,6 +109,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \code{RweaveLatex} supports the following options for code chunks (the
   values in parentheses show the default values):
   \describe{    
+    \item{engine:}{character string (\code{"R"}).  Only chunks with
+      \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
+    
     \item{echo:}{logical (\code{TRUE}). Include \R code in the output
       file?}
 
@@ -154,7 +157,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     }
     
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
-      filenames of figures and output have a common prefix.}
+      filenames of figures and output all have the common prefix given
+      by the \code{prefix.string} option: otherwise only unlabelled
+      chunks use the prefix.}
     
     \item{prefix.string:}{a character string, default is the name of the
       source file (without extension).  Note that this is used as part
@@ -203,12 +208,6 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{resolution:}{numeric (300), resolution in pixels per inch:
       used for PNG and JPEG graphics.  Note that the default is a fairly
       high value, appropriate for high-quality plots.}
-    
-    \item{expand:}{logical (\code{TRUE}).  Expand references to other
-      chunks so that only \R code appears in the output file.  If
-      \code{FALSE}, the chunk reference (e.g. \code{<<chunkname>>}) will
-      appear.  The \code{expand = FALSE} option has no effect with
-      \code{keep.source = FALSE}.}
     
     \item{concordance:}{logical (\code{FALSE}).  Write a concordance
       file to link the input line numbers to the output line numbers.

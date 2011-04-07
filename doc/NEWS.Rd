@@ -114,6 +114,11 @@
       \code{show.line.nos} which is by default false; if true it
       annotates code chunks with a comment giving the line number of the
       first line in the sources (the behaviour of \R >= 2.12.0).
+
+      \item \code{Rtangle()} allows \code{output = "stdout"} or
+      \code{output = "stderr"} to select the output or message
+      connection.  This is convenient for scripting using something like
+\preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw}
     }
   }
 

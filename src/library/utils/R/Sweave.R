@@ -20,8 +20,6 @@
 ### a) User-defined options are unclear: all options not already specified
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
-### c) If there is only one graphics option (as is usual), we don't need to
-### run the code in the figure chunks twice.
 
 ### Encodings (currently, different from 2.13.x)
 ###
@@ -30,7 +28,7 @@
 ### then passed as an attribute of 'file' to the driver's setup
 ### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
 ### re-encodes the output back to 'encoding': the Rtangle driver
-### leaves it in the encoding of the current locale it records what
+### leaves it in the encoding of the current locale and records what
 ### that is in a comment.
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
@@ -39,7 +37,7 @@
 ### should work OK provided the package encoding is Latin-1: it is
 ### UTF-8 then LaTeX needs to be told what to do.  It also assumes
 ### that R output is in the current locale: a package with a different
-### encoding from the current one might have data in the package
+### encoding from the current one might have data in that package's
 ### encoding.
 
 
@@ -78,7 +76,7 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     syntax <- attr(text, "syntax") # this is from the file commands.
 
-    if (!is.na(envopts<- Sys.getenv("SWEAVE_OPTIONS", NA)))
+    if (!is.na(envopts <- Sys.getenv("SWEAVE_OPTIONS", NA)))
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
@@ -93,7 +91,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     namedchunks <- list()
     for (linenum in seq_along(text)) {
     	line <- text[linenum]
-        if (length(grep(syntax$doc, line))) {
+        if (length(grep(syntax$doc, line))) { # start new documentation chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
             } else {
@@ -104,7 +102,7 @@ Sweave <- function(file, driver = RweaveLatex(),
                 mode <- "doc"
             }
             chunk <- NULL
-        } else if (length(grep(syntax$code, line))) {
+        } else if (length(grep(syntax$code, line))) { # start new code chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
             } else {
@@ -118,31 +116,39 @@ Sweave <- function(file, driver = RweaveLatex(),
             chunkopts <- SweaveParseOptions(chunkopts,
                                             drobj$options,
                                             driver$checkopts)
-            chunk <- paste("#line ", linenum+1L, ' "', file, '"', sep="")
+            ## these #line directives are used for error messages when parsing
+            chunk <- paste("#line ", linenum+1L, ' "',
+                           basename(file), '"', sep="")
             attr(chunk, "srclines") <- linenum
-            chunknr <- chunknr+1L
+            chunknr <- chunknr + 1L  # this is really 'code chunk number'
             chunkopts$chunknr <- chunknr
-        } else {
+        } else {  # continuation of current chunk
             if (mode == "code" && length(grep(syntax$coderef, line))) {
                 chunkref <- sub(syntax$coderef, "\\1", line)
-                if (!(chunkref %in% names(namedchunks)))
+                if (!(chunkref %in% names(namedchunks))) {
+                    ## omit unknown references
                     warning(gettextf("reference to unknown chunk %s",
                                      sQuote(chunkref)), domain = NA)
-                line <- c(namedchunks[[chunkref]],
-                          paste("#line ", linenum+1L, ' "', file, '"', sep=""))
+                } else {
+                    ## these #line directives are used for error messages
+                    ## when parsing
+                    line <- c(namedchunks[[chunkref]],
+                              paste("#line ", linenum+1L, ' "',
+                                    basename(file), '"', sep=""))
+                }
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
 	}
     }
-    if (!is.null(chunk)) {
+    if (!is.null(chunk)) { # write out final chunk
 	drobj <-
 	    if (mode == "doc") driver$writedoc(drobj, chunk)
 	    else driver$runcode(drobj, chunk, chunkopts)
     }
 
-    on.exit()
+    on.exit() # clear action to finish with error = TRUE
     driver$finish(drobj)
 }
 
@@ -269,8 +275,6 @@ SweaveSyntaxLatex$trans$coderef <- "\\\\Scoderef{\\1}"
 SweaveSyntaxLatex$trans$syntaxname <- "\\\\SweaveSyntax{SweaveSyntaxLatex}"
 SweaveSyntaxLatex$trans$extension <- ".Stex"
 
-###**********************************************************
-
 SweaveGetSyntax <- function(file)
 {
     synt <- apropos("SweaveSyntax", mode = "list")
@@ -310,7 +314,7 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 
 ###**********************************************************
 
-SweaveParseOptions <- function(text, defaults=list(), check=NULL)
+SweaveParseOptions <- function(text, defaults = list(), check = NULL)
 {
     x <- sub("^[[:space:]]*(.*)", "\\1", text)
     x <- sub("(.*[^[:space:]])[[:space:]]*$", "\\1", x)
@@ -327,16 +331,18 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
 
     options <- defaults
     for (k in seq_along(x)) options[[ x[[k]][1L] ]] <- x[[k]][2L]
+
+    ## This is undocumented
     if (!is.null(options[["label"]]) && !is.null(options[["engine"]]))
         options[["label"]] <-
             sub(paste("\\.", options[["engine"]], "$", sep=""),
                 "", options[["label"]])
-    if (!is.null(check)) options <- check(options)
-    options
+
+    if (!is.null(check)) check(options) else options
 }
 
 ## really part of the RweaveLatex and Rtangle drivers
-SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
+SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 {
     if (is.null(SweaveHooks <- getOption("SweaveHooks"))) return(NULL)
 
@@ -363,13 +369,13 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     Usage <- function() {
         cat("Usage: R CMD Sweave [options] file",
             "",
-            "A simple front-end for Sweave",
+            "A front-end for Sweave",
             "",
             "Options:",
             "  -h, --help      print this help message and exit",
             "  -v, --version   print version info and exit",
             "  --driver=name   use named Sweave driver",
-            "  --encoding=enc  assume encoding 'enc' for file",
+            "  --encoding=enc  default encoding 'enc' for file",
             "  --options=      comma-separated list of Sweave options",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
@@ -438,7 +444,7 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     Usage <- function() {
         cat("Usage: R CMD Stangle file",
             "",
-            "A simple front-end for Stangle",
+            "A front-end for Stangle",
             "",
             "Options:",
             "  -h, --help     print this help message and exit",

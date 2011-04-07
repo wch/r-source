@@ -320,6 +320,8 @@ The chunk reference operator \verb|<<>>| takes only the name of the
 chunk as its argument: no additional Sweave options are allowed.
 It has to occur at the beginning of a line.
 
+References to unknown chunk names are omitted, with a warning.
+
 \subsection{Syntax definition}
 
 So far we have only talked about Sweave files using \texttt{noweb} syntax

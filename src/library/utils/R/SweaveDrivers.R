@@ -66,7 +66,7 @@ RweaveLatexSetup <-
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
-                    concordance = FALSE, expand = TRUE)
+                    concordance = FALSE)
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -573,8 +573,9 @@ Rtangle <-  function()
 
 RtangleSetup <-
     function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
-             prefix = TRUE, quiet = FALSE, show.line.nos = FALSE, ...)
+             quiet = FALSE, ...)
 {
+    dots <- list(...)
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
@@ -583,9 +584,14 @@ RtangleSetup <-
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
 
     if (!split) {
-        if (!quiet) cat("Writing to file", output, "\n")
-        ## We could at some future point try to write the file in 'encoding'.
-        output <- file(output, open = "w")
+        if (identical(output, "stdout")) output <- stdout()
+        else if (identical(output, "stderr")) output <- stderr()
+        else {
+            if (!quiet) cat("Writing to file", output, "\n")
+            ## We could at some future point try to write the file in
+            ## 'encoding'.
+            output <- file(output, open = "w")
+        }
         lines <- c(sprintf("R code from vignette source '%s'", file),
                    if(attr(file, "encoding") != "ASCII")
                    sprintf("Encoding: %s", localeToCharset()[1L])
@@ -597,10 +603,11 @@ RtangleSetup <-
         output <- NULL
     }
 
-    options <- list(split = split, prefix = prefix,
+    options <- list(split = split, prefix = TRUE,
                     prefix.string = prefix.string,
                     engine = "R", eval = TRUE,
-                    show.line.nos = show.line.nos)
+                    show.line.nos = FALSE)
+    options[names(dots)] <- dots
 
     list(output = output, annotate = annotate, options = options,
          chunkout = list(), quiet = quiet, syntax = syntax)
@@ -630,10 +637,17 @@ RtangleRuncode <-  function(object, chunk, options)
         chunkout <- object$output
 
     if (object$annotate) {
+        lnos <- grep("^#line ", chunk, value = TRUE)
+        if(length(lnos)) {
+            lno <- sub("^#line ([[:digit:]]+).*","\\1", lnos[1L])
+            fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
+        }
         cat("###################################################\n",
-            "### chunk number ", options$chunknr,
-            ": ", options$label,
-            ifelse(options$eval, "", " eval=FALSE"), "\n",
+            "### code chunk number ", options$chunknr,
+            ": ",
+            if(!is.null(options$label)) options$label
+            else paste(fn, lno, sep = ":"),
+            ifelse(options$eval, "", " (eval = FALSE)"), "\n",
             "###################################################\n",
             file = chunkout, sep = "")
     }
@@ -646,7 +660,7 @@ RtangleRuncode <-  function(object, chunk, options)
     if (!options$show.line.nos)
         chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
     if (!options$eval) chunk <- paste("##", chunk)
-    cat(chunk,"\n", file = chunkout, sep = "\n")
+    cat(chunk, "\n", file = chunkout, sep = "\n")
     if (is.null(options$label) && options$split) close(chunkout)
     object
 }
@@ -666,7 +680,9 @@ RtangleWritedoc <- function(object, chunk)
 
 RtangleFinish <- function(object, error = FALSE)
 {
-    if (!is.null(object$output)) close(object$output)
+    ## might be stdout() or stderr()
+    if (!is.null(object$output) && object$output >= 3)
+        close(object$output)
 
     if (length(object$chunkout))
         for (con in object$chunkout) close(con)
