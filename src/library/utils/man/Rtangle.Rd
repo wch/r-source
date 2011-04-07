@@ -30,7 +30,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
   \item{show.line.nos}{logical: should the output be annotated with the
-    line numner of the first code line of the chunk?}
+    line number of the first code line of the chunk?}
   \item{\dots}{Additional arguments ignored by this driver.}
 }
 \details{
