@@ -17,7 +17,7 @@ mosaicplot(x, \dots)
            sub = NULL, xlab = NULL, ylab = NULL,
            sort = NULL, off = NULL, dir = NULL,
            color = NULL, shade = FALSE, margin = NULL,
-           cex.axis = 0.66, las = par("las"),
+           cex.axis = 0.66, las = par("las"), border = NULL,
            type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
@@ -62,6 +62,7 @@ mosaicplot(x, \dots)
   \item{cex.axis}{The magnification to be used for axis annotation,
     as a multiple of \code{par("cex")}.}
   \item{las}{numeric; the style of axis labels, see \code{\link{par}}.}
+  \item{border}{colour of borders of cells: see \code{\link{polygon}}.}
   \item{type}{a character string indicating the type of residual to be
     represented.  Must be one of \code{"pearson"} (giving components of
     Pearson's \eqn{\chi^2}{chi-squared}), \code{"deviance"} (giving

@@ -37,7 +37,7 @@ mosaicplot.default <-
 function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
          ylab = NULL, sort = NULL, off = NULL, dir = NULL,
          color = NULL, shade = FALSE, margin = NULL,
-         cex.axis = 0.66, las = par("las"),
+         cex.axis = 0.66, las = par("las"), border = NULL,
          type = c("pearson", "deviance", "FT"), ...)
 {
     mosaic.cell <- function(X, x1, y1, x2, y2, srt.x, srt.y,
@@ -51,109 +51,113 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if (dir[1L] == "v") {            # split here on the X-axis.
             xdim <- maxdim[1L]
             XP <- rep.int(0, xdim)
-            for (i in 1L:xdim) {
-                XP[i] <- sum(X[X[,1]==i,p]) / sum(X[,p])
-            }
+            for (i in seq_len(xdim))
+                XP[i] <- sum(X[X[, 1L] == i,p]) / sum(X[,p])
             if(any(is.na(XP))) stop("missing values in contingency table")
             white <- off[1L] * (x2 - x1) / max(1, xdim-1)
             x.l <- x1
             x.r <- x1 + (1 - off[1L]) * XP[1L] * (x2 - x1)
-            if (xdim > 1) {
+            if (xdim > 1L)
                 for (i in 2:xdim) {
-                    x.l <- c(x.l, x.r[i-1] + white)
-                    x.r <- c(x.r, x.r[i-1] + white +
+                    x.l <- c(x.l, x.r[i-1L] + white)
+                    x.r <- c(x.r, x.r[i-1L] + white +
                              (1 - off[1L]) * XP[i] * (x2 - x1))
                 }
-            }
-            if (lablevx > 0) {
+            if (lablevx > 0L) {
                 this.lab <-
                     if (is.null(label[[1L]][1L])) {
                         paste(rep.int(as.character(currlev),
                                       length(currlev)),
-                              as.character(1L:xdim), sep=".")
+                              as.character(seq_len(xdim)), sep = ".")
                     } else label[[1L]]
-                text(x= x.l + (x.r - x.l) / 2,
-                     y= 965 + 22 * (lablevx - 1),
-                     srt=srt.x, adj=adj.x, cex=cex.axis, this.lab)
+                text(x = x.l + (x.r - x.l) / 2,
+                     y = 1000 - 35*cex.axis/0.66 +
+                         22*cex.axis/0.65 * (lablevx - 1),
+                     srt = srt.x, adj = adj.x, cex = cex.axis, this.lab,
+                     xpd = NA)
             }
-            if (p > 2) {                # recursive call.
-                for (i in 1L:xdim) {
+            if (p > 2L) {                # recursive call.
+                for (i in seq_len(xdim)) {
                     if (XP[i] > 0) {
-                        Recall(X[X[,1]==i, 2:(p+2) , drop=FALSE],
+                        Recall(X[X[, 1L] == i, 2L:(p+2L) , drop = FALSE],
                                x.l[i], y1, x.r[i], y2,
                                srt.x, srt.y, adj.x, adj.y,
                                off[-1L], dir[-1L], color,
-                               lablevx-1, (i==1)*lablevy,
+                               lablevx-1, (i == 1L)*lablevy,
                                maxdim[-1L], currlev+1, label[2:p])
                     } else {
-                        segments(rep.int(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
-                                 rep.int(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
+                        segments(rep.int(x.l[i], 3L), y1+(y2-y1)*c(0,2,4)/5,
+                                 rep.int(x.l[i], 3L), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             } else { # ncol(X) <= 1 : final split polygon and segments.
-                for (i in 1L:xdim) {
+                for (i in seq_len(xdim)) {
                     if (XP[i] > 0) {
+                        ## FIXME: why not call rect()
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
                                 c(y1, y1, y2, y2),
-                                lty = if(extended) X[i, p+1] else 1,
-                                col = color[if(extended) X[i, p+2] else i])
+                                lty = if(extended) X[i, p+1L] else 1L,
+                                col = color[if(extended) X[i, p+2L] else i],
+                                border = border)
                     } else {
-                        segments(rep.int(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
-                                 rep.int(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
+                        segments(rep.int(x.l[i], 3L), y1+(y2-y1)*c(0,2,4)/5,
+                                 rep.int(x.l[i], 3L), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             }
         } else {                        # split here on the Y-axis.
             ydim <- maxdim[1L]
             YP <- rep.int(0, ydim)
-            for (j in 1L:ydim) {
-                YP[j] <- sum(X[X[,1]==j,p]) / sum(X[,p])
+            for (j in seq_len(ydim)) {
+                YP[j] <- sum(X[X[, 1L] == j,p]) / sum(X[,p])
             }
             white <- off[1L] * (y2 - y1) / (max(1, ydim - 1))
             y.b <- y2 - (1 - off[1L]) * YP[1L] * (y2 - y1)
             y.t <- y2
-            if (ydim > 1) {
+            if (ydim > 1L) {
                 for (j in 2:ydim) {
                     y.b <- c(y.b, y.b[j-1] - white -
                              (1 - off[1L]) * YP[j] * (y2 - y1))
                     y.t <- c(y.t, y.b[j-1] - white)
                 }
             }
-            if (lablevy > 0) {
+            if (lablevy > 0L) {
                 this.lab <-
                     if (is.null(label[[1L]][1L])) {
                         paste(rep.int(as.character(currlev),
                                       length(currlev)),
-                              as.character(1L:ydim), sep=".")
+                              as.character(seq_len(ydim)), sep=".")
                     } else label[[1L]]
-                text(x= 35 - 20 * (lablevy - 1),
-                     y= y.b + (y.t - y.b) / 2,
-                     srt=srt.y, adj=adj.y, cex=cex.axis, this.lab)
+                text(x = 35*cex.axis/0.66 - 20*cex.axis/0.66 * (lablevy - 1),
+                     y = y.b + (y.t - y.b) / 2,
+                     srt = srt.y, adj = adj.y, cex = cex.axis, this.lab,
+                     xpd = NA)
             }
-            if (p > 2) {                # recursive call.
-                for (j in 1L:ydim) {
+            if (p > 2L) {                # recursive call.
+                for (j in seq_len(ydim)) {
                     if (YP[j] > 0) {
-                        Recall(X[X[,1]==j, 2:(p+2) , drop=FALSE],
+                        Recall(X[X[, 1L] == j, 2:(p+2) , drop=FALSE],
                                x1, y.b[j], x2, y.t[j],
                                srt.x, srt.y, adj.x, adj.y,
                                off[-1L], dir[-1L], color,
-                               (j==1)*lablevx, lablevy-1,
+                               (j == 1L)*lablevx, lablevy-1,
                                maxdim[-1L], currlev+1, label[2:p])
                     } else {
-                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j],3),
-                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j],3))
+                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j], 3L),
+                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j], 3L))
                     }
                 }
             } else { # ncol(X) <= 1L: final split polygon and segments.
-                for (j in 1L:ydim) {
+                for (j in seq_len(ydim)) {
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
                                 lty = if(extended) X[j, p+1] else 1,
-                                col = color[if(extended) X[j, p+2] else j])
+                                col = color[if(extended) X[j, p+2] else j],
+                                border = border)
                     } else {
-                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j],3),
-                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j],3))
+                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j], 3L),
+                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j], 3L))
                     }
                 }
             }
@@ -172,7 +176,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     else if(is.data.frame(x))
         x <- data.matrix(x)
     dimd <- length(dx <- dim(x))
-    if(dimd == 0 || any(dx == 0))
+    if(dimd == 0L || any(dx == 0L))
         stop("'x' must not have 0 dimensionality")
     if(length(list(...)))
         warning(gettextf("extra argument(s) %s will be disregarded",
@@ -180,11 +184,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                 domain = NA)
     ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1L:dx[1L]
-    if(dimd > 1) {
+    if(dimd > 1L) {
         Ind <- rep.int(Ind, prod(dx[2:dimd]))
         for (i in 2:dimd) {
             Ind <- cbind(Ind,
-                         c(matrix(1L:dx[i], byrow=TRUE,
+                         c(matrix(1L:dx[i], byrow = TRUE,
                                   nrow = prod(dx[1L:(i-1)]),
                                   ncol = prod(dx[i:dimd]))))
         }
@@ -225,7 +229,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             switch(type,
                    pearson = (x - E) / sqrt(E),
                    deviance = {
-                       tmp <- 2 * (x * log(ifelse(x==0, 1, x/E)) - (x-E))
+                       tmp <- 2 * (x * log(ifelse(x == 0, 1, x/E)) - (x-E))
                        tmp <- sqrt(pmax(tmp, 0))
                        ifelse(x > E, tmp, -tmp)
                    },
@@ -259,7 +263,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if(length(sort) != dimd)
             stop("length of 'sort' does not conform to 'dim(x)'")
         ## Sort columns.
-        Ind[,1L:dimd] <- Ind[,sort]
+        Ind[, seq_len(dimd)] <- Ind[, sort]
         off <- off[sort]
         dir <- dir[sort]
         label <- label[sort]
@@ -300,8 +304,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(!extended) {
         opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
         on.exit(par(opar))
-    }
-    else {
+    } else {
         ## This code is extremely ugly, and certainly can be improved.
         ## In the case of extended displays, we also need to provide a
         ## legend for the shading and outline patterns.  The code works
@@ -338,8 +341,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         for(i in 1 : (2 * len)) {
             polygon(c(x.l, x.r, x.r, x.l),
                     c(y.b[i], y.b[i], y.t[i], y.t[i]),
-                    col = color[i],
-                    lty = ltype[i])
+                    col = color[i], lty = ltype[i], border = border)
         }
         brks <- round(breaks, 2)
         y.m <- y.b + 1000 * 0.4 * bh
@@ -349,24 +351,24 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                      brks[3 : (2 * len)],
                      sep = ":"),
                paste(">", brks[2 * len], sep = "")),
-             srt = 90, cex = cex.axis)
+             srt = 90, cex = cex.axis, xpd = NA)
     }
 
     if (!is.null(main) || !is.null(xlab) || !is.null(ylab) || !is.null(sub))
         title(main, sub = sub, xlab = xlab, ylab = ylab)
     adj.x <- adj.y <- 0.5
-    x1 <- 50; y1 <- 5; x2 <- 950; y2 <- 950
-    maxlen.xlabel <- maxlen.ylabel <- 35
+    x1 <- 30 + 20*cex.axis/0.66; y1 <- 5; x2 <- 950; y2 <- 1000-x1
+    maxlen.xlabel <- maxlen.ylabel <- 35*cex.axis/0.66
     ## Calculations required for 'las' related string rotation
     ## and adjustment
-    if(srt.x == 90){
+    if(srt.x == 90) {
         maxlen.xlabel <-
             max(strwidth(label[[dimd + 1L - match("v", rev(dir))]],
                 cex = cex.axis))
         adj.x <- 1
         y2 <- y2 - maxlen.xlabel
     }
-    if(srt.y == 0){
+    if(srt.y == 0) {
         maxlen.ylabel <-
             max(strwidth(label[[match("h", dir)]],
                 cex = cex.axis))
@@ -398,8 +400,7 @@ function(formula, data = NULL, ...,
             data <- margin.table(data,
                                  match(varnames, names(dimnames(data))))
         mosaicplot(data, main = main, ...)
-    }
-    else {
+    } else {
         if(is.matrix(edata))
             m$data <- as.data.frame(data)
         m$main <- m$... <- NULL
@@ -409,5 +410,3 @@ function(formula, data = NULL, ...,
         mosaicplot(table(mf), main = main, ...)
     }
 }
-
-

@@ -45,10 +45,9 @@
       \item New wrapper function \code{showNonASCIIfile()} in package
       \pkg{tools}.
 
-      \item \code{iconv} no longer translates \code{NA} strings as
-      \code{"NA"}.  It has a new argument \code{toRaw} to handle (as
-      before the \code{CHARSXP} cache) encodings such as \code{UTF-16}
-      with embedded nuls.
+      \item \code{iconv} has a new argument \code{toRaw} to handle (as
+      before the \code{CHARSXP} cache was introduced) encodings such as
+      \code{UTF-16} with embedded nuls.
 
       It will also accept as input the type of list generated with
       \code{toRaw = TRUE}.
@@ -63,6 +62,9 @@
       \item \code{optim(*, method= .)} now allows \code{method="Brent"}
       as interface to \code{optimize()}, for cases such as \code{mle()}
       where \code{optim()} is used internally.
+
+      \item \code{mosaicplot()} gains a \code{border} argument.
+      (Wish of \PR{14550}.)
     }
   }
 
@@ -171,12 +173,34 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item Building the vignettes is now part of running  \command{make}
-      from an SVN checkout: a separate \command{make vignettes} is no
-      longer required.
+      \item Dummy.
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{nobs(mle(*, nobs = .))} now works.
+    }
+  }
+}
+
+\section{CHANGES IN R VERSION 2.13.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{iconv} no longer translates \code{NA} strings as
+      \code{"NA"}.
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Building the vignettes is now part of running \command{make}
+      from an SVN checkout: a separate \command{make vignettes} is no
+      longer required.
+
+      These vignette PDF are now made with \code{keep.source = TRUE} and
+      hence will be laid out differently.
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
@@ -184,7 +208,9 @@
       ordered the factor labels correctly, but could plot the wrong
       group of residuals against the label.  (\PR{14545})
 
-      \item \code{nobs(mle(*, nobs = .))} now works.
+      \item \code{mosaicplot()} could clip the factor labels, and could
+      overlap them with the cells if a non-default value of
+      \code{cex.axis} was used.  (Related to \PR{14550}.)
     }
   }
 }
