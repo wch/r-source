@@ -523,7 +523,8 @@ RweaveLatexOptions <- function(options)
     if (!is.null(options$results)) {
         res <- as.character(options$results)
         if(tolower(res) != res) # documented as lower-case
-            warning("value of 'results' option should be lowercase")
+            warning("value of 'results' option should be lowercase",
+                    call. = FALSE)
         options$results <- tolower(res)
     }
     options$results <- match.arg(options$results, c("verbatim", "tex", "hide"))
@@ -531,7 +532,8 @@ RweaveLatexOptions <- function(options)
     if (!is.null(options$strip.white)) {
         res <- as.character(options$strip.white)
         if(tolower(res) != res)
-            warning("value of 'results' option should be lowercase")
+            warning("value of 'results' option should be lowercase",
+                    call. = FALSE)
         options$strip.white <- tolower(res)
     }
     options$strip.white <-

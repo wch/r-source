@@ -243,7 +243,7 @@ The help pages for \texttt{RweaveLatex} and \texttt{Rtangle} list the
 options supported by the default Sweave and Stangle drivers.
 
 Now for the promised details on the file names corresponding to
-figures.  These are of the form \texttt{prefix-label.ext}.
+figures.  These are of the form \texttt{prefix-label.ext}.  Here
 \texttt{prefix} can be set by the option \texttt{prefix.string},
 otherwise is the basename of the output file (which unless specified
 otherwise is the basename of the input file).  \texttt{label} is the
@@ -253,7 +253,11 @@ the appropriate extension for the type of graphics, e.g.{}
 \texttt{pdf}, \texttt{eps}, \ldots{}.  So for the
 \texttt{example-1.Rnw} file, the PDF version of the boxplot is
 \texttt{example-1-002.pdf}, since it is the second code chunk in the
-document.
+document.  Note that if \texttt{prefix.string} is used it can specify
+a directory as part of the prefix, so that for example if
+\verb|\SweaveOpts{prefix.string=figures/fig}|, the auto-generated
+figures will be placed in sub-directory \verb|figures|: the Sweave
+document should arrage to create this before use.
 
 \subsection{Using multiple input files}
 
