@@ -108,7 +108,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
 \section{Supported Options}{
   \code{RweaveLatex} supports the following options for code chunks (the
-  values in parentheses show the default values):
+  values in parentheses show the default values).  Character string
+  values should be quoted when passed from \code{\link{Sweave}} through
+  \code{\dots} but not when use in the header of a code chunk.
   \describe{    
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
@@ -217,9 +219,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   }
 
   In addition, users can specify further options, either in the header
-  of an individual code section or in a \samp{\\SweaveOpts()} line in
+  of an individual code section or in a \samp{\\SweaveOpts\{\}} line in
   the document. Prior to \R 2.14.0 unknown options were taken as
-  logicaL: now their type is set at first use.
+  logical: now their type is set at first use.
 }
 
 \section{Custom Graphics Devices}{
