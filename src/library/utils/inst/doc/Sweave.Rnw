@@ -176,11 +176,11 @@ Sweave which control the final output.
 Options control how code chunks and their output (text, figures) are
 transferred from the \texttt{.Rnw} file to the \texttt{.tex} file. All
 options have the form \texttt{key=value}, where \texttt{value} can be
-a number, string or logical value. Several options can be specified at
+a number, string or logical value.  Several options can be specified at
 once (separated by commas), all options must take a value (which must
 not contain a comma or equal sign). Logical options can take the
-values \texttt{true}, \texttt{false}, \texttt{t}, \texttt{f} and the
-respective uppercase versions.
+values \texttt{TRUE}, \texttt{FALSE}, \texttt{T}, \texttt{F} as well
+as lower-case and capitalized versions of the first two.
 
 In the \texttt{.Rnw} file options can be specified either
 \begin{enumerate}

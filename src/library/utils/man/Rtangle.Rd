@@ -46,14 +46,14 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
 ###################################################
 
 ###################################################
-### code chunk number 18: grid.Rnw:648
+### code chunk number 18: grid.Rnw:647-648
 ###################################################
 
 ###################################################
 ### code chunk number 19: trellisdata (eval = FALSE)
 ###################################################
 }
-using either the chunk label or the file name and initial line number.
+using either the chunk label or the file name and line numbers.
   
   Note that this driver does not simple extract the code chunks verbatim
   because code chunks can re-use earlier chunks.

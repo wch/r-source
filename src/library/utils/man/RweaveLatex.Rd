@@ -218,9 +218,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   In addition, users can specify further options, either in the header
   of an individual code section or in a \samp{\\SweaveOpts()} line in
-  the document.  Note that (for historical reasons) unrecognized options
-  are taken to be logical unless their names start with \code{n_}
-  (numeric) or \code{ch_} (character).
+  the document. Prior to \R 2.14.0 unknown options were taken as
+  logicaL: now their type is set at first use.
 }
 
 \section{Custom Graphics Devices}{

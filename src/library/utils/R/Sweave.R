@@ -17,8 +17,6 @@
 ### The drivers are now in SweaveDrivers.R
 
 ### FIXMEs
-### a) User-defined options are unclear: all options not already specified
-### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
 
 ### Encodings (currently, different from 2.13.x)
@@ -43,10 +41,10 @@
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input
-### lines it corresponds to Each code chunk will have attached srcrefs
-### that duplicate the srclines.  We don't need srclines for code, but
-### we do need it for text, and it's easiest to just keep it for
-### everything.
+### lines it corresponds to.  Each code chunk will have attached
+### srcrefs that duplicate the srclines.  We don't need srclines for
+### code, but we do need it for doc chunks, and it's easiest to just
+### keep it for everything.
 
 
 
@@ -128,7 +126,9 @@ Sweave <- function(file, driver = RweaveLatex(),
                 if (!(chunkref %in% names(namedchunks))) {
                     ## omit unknown references
                     warning(gettextf("reference to unknown chunk %s",
-                                     sQuote(chunkref)), domain = NA)
+                                     sQuote(chunkref)),
+                            call. = TRUE,domain = NA)
+                    next
                 } else {
                     ## these #line directives are used for error messages
                     ## when parsing
@@ -314,6 +314,13 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 
 ###**********************************************************
 
+## parses an option string, from
+## - the header of a code chunk
+## - an \SweaveOpts{} statement (strangely, left to the drivers)
+## - the value of environment variable SWEAVE_OPTIONS
+##
+## The format is name=value pairs with whitespace being discarded
+## (and could have been done all at once).
 SweaveParseOptions <- function(text, defaults = list(), check = NULL)
 {
     x <- sub("^[[:space:]]*(.*)", "\\1", text)

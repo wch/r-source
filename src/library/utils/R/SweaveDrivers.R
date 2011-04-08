@@ -61,12 +61,15 @@ RweaveLatexSetup <-
     options <- list(prefix = TRUE, prefix.string = prefix.string,
                     engine = "R", print = FALSE, eval = TRUE, fig = FALSE,
                     pdf = TRUE, eps = FALSE, png = FALSE, jpeg = FALSE,
-                    width = 6, height = 6, resolution = 300, term = TRUE,
-                    echo = TRUE, keep.source = TRUE, results = "verbatim",
+                    grdevice = "", width = 6, height = 6, resolution = 300,
+                    term = TRUE, echo = TRUE, keep.source = TRUE,
+                    results = "verbatim",
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
+                    expand = TRUE, # unused by us, for 'highlight'
                     concordance = FALSE)
+    options$.defaults <- options
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -114,7 +117,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (options$eps) devs <- c(devs, list(eps.Swd))
             if (options$png) devs <- c(devs, list(png.Swd))
             if (options$jpeg) devs <- c(devs, list(jpeg.Swd))
-            if (!is.null(grd <- options$grdevice))
+            if (nzchar(grd <- options$grdevice))
                 devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
         }
         if (!object$quiet) {
@@ -417,12 +420,15 @@ RweaveLatexWritedoc <- function(object, chunk)
     }
 
     ## Process \SweaveOpts{} or similar
+    ## Since they are only supposed to affect code chunks, it is OK
+    ## to process all such in a doc chunk at once.
     while(length(pos <- grep(object$syntax$docopt, chunk)))
     {
         opts <- sub(paste(".*", object$syntax$docopt, ".*", sep = ""),
                     "\\1", chunk[pos[1L]])
         object$options <- SweaveParseOptions(opts, object$options,
                                              RweaveLatexOptions)
+
         if (isTRUE(object$options$concordance)
             && !object$haveconcordance) {
             if (isTRUE(object$hasSweaveInput))
@@ -478,36 +484,41 @@ RweaveLatexFinish <- function(object, error = FALSE)
     invisible(outputname)
 }
 
-## This is the check function for both RweaveLatex and Rtangle drivers.
+## This is the check function for both RweaveLatex and Rtangle drivers
 RweaveLatexOptions <- function(options)
 {
-    ## ATTENTION: Changes in this function have to be reflected in the
-    ## defaults in the initialization in RweaveLatexSetup
+    defaults <- options[[".defaults"]]
 
     ## convert a character string to logical
+    ## not sure allowing 't' and 'f' is a good idea.
     c2l <- function(x)
-        if (is.null(x)) FALSE else as.logical(toupper(as.character(x)))
+        if (is.null(x)) FALSE else suppressWarnings(as.logical(toupper(x)))
 
     ## numeric
     NUMOPTS <- c("width", "height", "resolution")
 
-    ## character (or at least, leave alone on first pass)
+    ## character: largely for safety, but 'label' matters as there
+    ## is no default (and someone uses "F")
     CHAROPTS <- c("results", "prefix.string", "engine", "label",
-                  "strip.white", "pdf.version", "pdf.encoding",
-                  "grdevice")
+                  "strip.white", "pdf.version", "pdf.encoding", "grdevice")
+
 
     for (opt in names(options)) {
-        if (grepl("^ch_", opt) || opt %in% CHAROPTS) {}
-        else if (grepl("^n_", opt) || opt %in% NUMOPTS)
-            options[[opt]] <- as.numeric(options[[opt]])
-        else {
-            oldval <- options[[opt]]
-            if (!is.logical(options[[opt]]))
-                options[[opt]] <- c2l(options[[opt]])
-            if (is.na(options[[opt]]))
-                stop(gettextf("invalid value for %s : %s", sQuote(opt), oldval),
-                     domain = NA)
-        }
+        if(opt == ".defaults") next
+        oldval <- options[[opt]]
+        defval <- defaults[[opt]]
+        if(opt %in% CHAROPTS || is.character(defval)) {
+        } else if(is.logical(defval))
+            options[[opt]] <- c2l(oldval)
+        else if(opt %in% NUMOPTS || is.numeric(defval))
+            options[[opt]] <- as.numeric(oldval)
+        else if(!is.na(newval <- c2l(oldval)))
+            options[[opt]] <- newval
+        else if(!is.na(newval <- suppressWarnings(as.numeric(oldval))))
+            options[[opt]] <- newval
+        if (is.na(options[[opt]]))
+            stop(gettextf("invalid value for %s : %s", sQuote(opt), oldval),
+                 domain = NA)
     }
 
     if (!is.null(options$results))
@@ -607,7 +618,11 @@ RtangleSetup <-
                     prefix.string = prefix.string,
                     engine = "R", eval = TRUE,
                     show.line.nos = FALSE)
+    options$.defaults <- options
     options[names(dots)] <- dots
+
+    ## to be on the safe side: see if defaults pass the check
+    options <- RweaveLatexOptions(options)
 
     list(output = output, annotate = annotate, options = options,
          chunkout = list(), quiet = quiet, syntax = syntax)
@@ -639,7 +654,9 @@ RtangleRuncode <-  function(object, chunk, options)
     if (object$annotate) {
         lnos <- grep("^#line ", chunk, value = TRUE)
         if(length(lnos)) {
-            lno <- sub("^#line ([[:digit:]]+).*","\\1", lnos[1L])
+            srclines <- attr(chunk, "srclines")
+            ## this currently includes the chunk header
+            lno <- if (length(srclines)) paste(min(srclines), max(srclines), sep="-") else srclines
             fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
         }
         cat("###################################################\n",
@@ -652,6 +669,8 @@ RtangleRuncode <-  function(object, chunk, options)
             file = chunkout, sep = "")
     }
 
+    ## The next returns a character vector of the logical options
+    ## which are true and have hooks set.
     hooks <- SweaveHooks(options, run = FALSE)
     for (k in hooks)
         cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",

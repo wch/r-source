@@ -70,10 +70,9 @@
     \itemize{
       \item Option \code{keep.source = TRUE} is now the default.
 
-      \item User-defined numeric (with names starting \code{n_}) and
-      character (starting \code{ch_}) options are now allowed in
-      \code{Sweave()}: as before all other unknown options are taken to
-      be logical.
+      \item The way the type of user-defined options is determined has
+      changed.  Previously they were all regarded as logical: now the
+      type is determined by the value given at first use.
 
       \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
       argument to specify the encoding of the vignette sources if the
