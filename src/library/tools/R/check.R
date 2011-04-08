@@ -2105,6 +2105,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 lines <- grep("Warning: incomplete final line found by readLines",
                               lines, invert = TRUE, value = TRUE)
 
+                ## Ignore Stangle warnings for now
+                lines <- grep("Warning: value of .* option should be lowercase",
+                              lines, invert = TRUE, value = TRUE)
 
                 ## Package writers cannot really do anything about
                 ## non ISO C code in *system* headers.  Also,
