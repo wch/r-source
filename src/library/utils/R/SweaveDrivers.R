@@ -532,7 +532,7 @@ RweaveLatexOptions <- function(options)
     if (!is.null(options$strip.white)) {
         res <- as.character(options$strip.white)
         if(tolower(res) != res)
-            warning("value of 'results' option should be lowercase",
+            warning("value of 'strip.white' option should be lowercase",
                     call. = FALSE)
         options$strip.white <- tolower(res)
     }
