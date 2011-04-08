@@ -108,7 +108,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
 \section{Supported Options}{
   \code{RweaveLatex} supports the following options for code chunks (the
-  values in parentheses show the default values):
+  values in parentheses show the default values).  Character string
+  values should be quoted when passed from \code{\link{Sweave}} through
+  \code{\dots} but not when use in the header of a code chunk.
   \describe{    
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
@@ -158,7 +160,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     }
     
     \item{prefix:}{logical (\code{TRUE}).  If \code{TRUE} generated
-      filenames of figures and output have a common prefix.}
+      filenames of figures and output all have the common prefix given
+      by the \code{prefix.string} option: otherwise only unlabelled
+      chunks use the prefix.}
     
     \item{prefix.string:}{a character string, default is the name of the
       source file (without extension).  Note that this is used as part
@@ -215,7 +219,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   }
 
   In addition, users can specify further options, either in the header
-  of an individual code section or in a \samp{\\SweaveOpts()} line in
+  of an individual code section or in a \samp{\\SweaveOpts\{\}} line in
   the document.  Note that (for historical reasons) unrecognized options
   are taken to be logical.
 }
