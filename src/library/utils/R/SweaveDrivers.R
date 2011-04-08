@@ -490,9 +490,8 @@ RweaveLatexOptions <- function(options)
     defaults <- options[[".defaults"]]
 
     ## convert a character string to logical
-    ## not sure allowing 't' and 'f' is a good idea.
     c2l <- function(x)
-        if (is.null(x)) FALSE else suppressWarnings(as.logical(toupper(x)))
+        if (is.null(x)) FALSE else suppressWarnings(as.logical(x))
 
     ## numeric
     NUMOPTS <- c("width", "height", "resolution")
@@ -521,12 +520,20 @@ RweaveLatexOptions <- function(options)
                  domain = NA)
     }
 
-    if (!is.null(options$results))
-        options$results <- tolower(as.character(options$results))
+    if (!is.null(options$results)) {
+        res <- as.character(options$results)
+        if(tolower(res) != res) # documented as lower-case
+            warning("value of 'results' option should be lowercase")
+        options$results <- tolower(res)
+    }
     options$results <- match.arg(options$results, c("verbatim", "tex", "hide"))
 
-    if (!is.null(options$strip.white))
-        options$strip.white <- tolower(as.character(options$strip.white))
+    if (!is.null(options$strip.white)) {
+        res <- as.character(options$strip.white)
+        if(tolower(res) != res)
+            warning("value of 'results' option should be lowercase")
+        options$strip.white <- tolower(res)
+    }
     options$strip.white <-
         match.arg(options$strip.white, c("true", "false", "all"))
     options

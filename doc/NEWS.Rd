@@ -74,6 +74,11 @@
       changed.  Previously they were all regarded as logical: now the
       type is determined by the value given at first use.
 
+      \item The allowed values of logical options are now precisely
+      those allowed for character inputs to \code{as.logical()}: this
+      means that \samp{t} and \samp{f} are no longer allowed (although
+      \code{T} and \code{F} still are).
+
       \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
       argument to specify the encoding of the vignette sources if the
       latter do not contain a \samp{\\usepackage[]{inputenc}} statement
