@@ -2247,9 +2247,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (PRIMVAL(op) == 0) { /* regexpr */
 	SEXP matchlen;
 	PROTECT(ans = allocVector(INTSXP, n));
-	matchlen = allocVector(INTSXP, n); /* protected by next line */
+	/* Protect in case install("match.length") allocates */
+	PROTECT(matchlen = allocVector(INTSXP, n));
 	setAttrib(ans, install("match.length"), matchlen);
-
+	UNPROTECT(1);
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
 	    if (STRING_ELT(text, i) == NA_STRING) {
