@@ -179,8 +179,8 @@ options have the form \texttt{key=value}, where \texttt{value} can be
 a number, string or logical value. Several options can be specified at
 once (separated by commas), all options must take a value (which must
 not contain a comma or equal sign). Logical options can take the
-values \texttt{true}, \texttt{false}, \texttt{t}, \texttt{f} and the
-respective uppercase versions.
+values \texttt{TRUE}, \texttt{FALSE}, \texttt{T}, \texttt{F} as well
+as lower-case and capitalized versions of the first two.
 
 In the \texttt{.Rnw} file options can be specified either
 \begin{enumerate}
@@ -242,7 +242,7 @@ The help pages for \texttt{RweaveLatex} and \texttt{Rtangle} list the
 options supported by the default Sweave and Stangle drivers.
 
 Now for the promised details on the file names corresponding to
-figures.  These are of the form \texttt{prefix-label.ext}.
+figures.  These are of the form \texttt{prefix-label.ext}.  Here
 \texttt{prefix} can be set by the option \texttt{prefix.string},
 otherwise is the basename of the output file (which unless specified
 otherwise is the basename of the input file).  \texttt{label} is the
@@ -252,7 +252,11 @@ the appropriate extension for the type of graphics, e.g.{}
 \texttt{pdf}, \texttt{eps}, \ldots{}.  So for the
 \texttt{example-1.Rnw} file, the PDF version of the boxplot is
 \texttt{example-1-002.pdf}, since it is the second code chunk in the
-document.
+document.  Note that if \texttt{prefix.string} is used it can specify
+a directory as part of the prefix, so that for example if
+\verb|\SweaveOpts{prefix.string=figures/fig}|, the auto-generated
+figures will be placed in sub-directory \verb|figures|: the Sweave
+document should arrage to create this before use.
 
 \subsection{Using multiple input files}
 
@@ -318,6 +322,8 @@ which is equivalent to defining the last code chunk as
 The chunk reference operator \verb|<<>>| takes only the name of the
 chunk as its argument: no additional Sweave options are allowed.
 It has to occur at the beginning of a line.
+
+References to unknown chunk names are omitted, with a warning.
 
 \subsection{Syntax definition}
 
@@ -794,7 +800,7 @@ source file, use
 \begin{verbatim}
   \SweaveOpts{keep.source=TRUE}
 \end{verbatim}
-
+This will become the default in \R{} 2.14.0.
 \end{document}
 
 %%% Local Variables:
