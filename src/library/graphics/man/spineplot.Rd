@@ -23,7 +23,7 @@ spineplot(x, \dots)
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots)
 
-\method{spineplot}{formula}(formula, data = list(),
+\method{spineplot}{formula}(formula, data = NULL,
           breaks = NULL, tol.ylab = 0.05, off = NULL,
           ylevels = NULL, col = NULL,
           main = "", xlab = NULL, ylab = NULL,

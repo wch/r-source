@@ -84,17 +84,15 @@ sunflowerplot.default <-
 }
 
 sunflowerplot.formula <-
-    function(x, data = NULL, xlab = NULL, ylab = NULL, ...,
+    function(formula, data = NULL, xlab = NULL, ylab = NULL, ...,
              subset, na.action = NULL)
 {
-    if(missing(x) || (length(x) != 3L))
+    if(missing(formula) || (length(formula) != 3L))
 	stop("formula missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
     m$... <- NULL
-    m$formula <- m$x
-    m$x <- NULL
     m$na.action <- na.action # force use of default for this method
     require(stats, quietly = TRUE)
     m[[1L]] <- as.name("model.frame")

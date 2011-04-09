@@ -88,20 +88,20 @@ mosaicplot(x, \dots)
   (\code{mosaicplot.formula}).
 
   Extended mosaic displays visualize standardized residuals of a
-  loglinear model for the table by color and outline of the
-  mosaic's tiles.  (Standardized residuals are often referred to a
-  standard normal distribution.)  Negative residuals are drawn in shaded
-  of red and with broken outlines; positive ones are drawn in blue with
-  solid outlines.
+  loglinear model for the table by color and outline of the mosaic's
+  tiles.  (Standardized residuals are often referred to a standard
+  normal distribution.)  Cells representing negative residuals are drawn
+  in shaded of red and with broken borders; positive ones are drawn in
+  blue with solid borders.
 
   For the formula method, if \code{data} is an object inheriting from
-  classes \code{"table"} or \code{"ftable"}, or an array with more than
-  2 dimensions, it is taken as a contingency table, and hence all
-  entries should be nonnegative.  In this case, the left-hand side of
-  \code{formula} should be empty, and the variables on the right-hand
+  class \code{"table"} or class \code{"ftable"} or an array with more
+  than 2 dimensions, it is taken as a contingency table, and hence all
+  entries should be non-negative.  In this case the left-hand side of
+  \code{formula} should be empty and the variables on the right-hand
   side should be taken from the names of the dimnames attribute of the
   contingency table.  A marginal table of these variables is computed,
-  and a mosaic of this table is produced.
+  and a mosaic plot of that table is produced.
 
   Otherwise, \code{data} should be a data frame or matrix, list or
   environment containing the variables to be cross-tabulated.  In this
