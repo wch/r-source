@@ -65,6 +65,12 @@
 
       \item \code{mosaicplot()} gains a \code{border} argument.
       (Wish of \PR{14550}.)
+
+      \item \code{smooth.spline()} gains a \code{tol} argument which
+      controls how different \code{x} value need to be to regarded as
+      distinct.  The default has been changed to be more reliable for
+      inputs whose range is small compared to their maximum absolute
+      value.  (Wish of \PR{14452}.)
     }
   }
 

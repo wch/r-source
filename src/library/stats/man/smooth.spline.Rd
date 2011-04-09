@@ -14,7 +14,7 @@
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
               cv = FALSE, all.knots = FALSE, nknots = NULL,
               keep.data = TRUE, df.offset = 0, penalty = 1,
-              control.spar = list())
+              control.spar = list(), tol = 1e-6 * IQR(x))
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -47,6 +47,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
+ 
  \item{control.spar}{optional list with named components controlling the
    root finding when the smoothing parameter \code{spar} is computed,
    i.e., missing or \code{NULL}, see below.
@@ -68,14 +69,17 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    }
    Note that \code{spar} is only searched for in the interval
    \eqn{[low, high]}.
- }
+   }
+   
+   \item{tol}{A tolerance for same-ness of the \code{x} values.  The
+     values are binned into bin of size \code{tol} and values which
+     fall into the same bin are regarded as the same.}
 }
 \details{
   The \code{x} vector should contain at least four distinct values.
-  \emph{Distinct} here means \sQuote{distinct after rounding to 6 significant
-  digits}, i.e., \code{x} will be transformed to
-  \code{unique(sort(signif(x, 6)))}, and \code{y} and \code{w} are
-  pooled accordingly.
+  \sQuote{Distinct} here is controlled by \code{tol}: values which are
+  regarded as the same are replaced by the first of their values and the
+  corresponding \code{y} and \code{w} are pooled accordingly.
 
   The computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is

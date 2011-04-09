@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-02 r55251)
+R version 2.14.0 Under development (unstable) (2011-04-09 r55390)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3654,7 +3654,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > x <- matrix(rnorm(30), ncol=3)
 > hc <- hclust(dist(x), method="complete")
 > 
-> if(require(cluster, quietly=TRUE)) {# is a recommended package
+> if(require("cluster", quietly=TRUE)) {# is a recommended package
 +   ag <- agnes(x, method="complete")
 +   hcag <- as.hclust(ag)
 +   ## The dendrograms order slightly differently:

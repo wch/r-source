@@ -1596,4 +1596,11 @@ d <- dist(x)
 as.matrix(d)
 ## Threw an error < 2.13.0
 
-proc.time()
+## smooth.spline with data with a very small range.  (PR#14552)
+dt <- seq(as.POSIXct("2011-01-01"), as.POSIXct("2011-01-01 10:00:00"), by="min")
+x <- as.double(dt)
+y <- sin(seq_along(x) * 3 * pi/180)
+s <- smooth.spline(x, y)
+stopifnot(length(s$x) == length(x))
+## Chose 5 distinct values of x in 2.13.0
+
