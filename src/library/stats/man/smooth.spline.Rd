@@ -18,9 +18,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
-  list or a two-column matrix specifying x and y. }
- \item{y}{responses. If \code{y} is missing, the responses are assumed
-   to be specified by \code{x}.}
+   list or a two-column matrix specifying x and y. }
+ \item{y}{responses. If \code{y} is missing or \code{NULL}, the responses
+   are assumed to be specified by \code{x}, with \code{x} the index
+   vector.}
  \item{w}{optional vector of weights of the same length as \code{x};
    defaults to all 1.}
  \item{df}{the desired equivalent number of degrees of freedom (trace of
@@ -76,6 +77,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
      fall into the same bin are regarded as the same.}
 }
 \details{
+  Neither \code{x} nor \code{y} are allowed to containing missing or
+  infinite values.
+  
   The \code{x} vector should contain at least four distinct values.
   \sQuote{Distinct} here is controlled by \code{tol}: values which are
   regarded as the same are replaced by the first of their values and the

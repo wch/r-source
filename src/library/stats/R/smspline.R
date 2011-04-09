@@ -49,6 +49,8 @@ smooth.spline <-
     xy <- xy.coords(x, y)
     y <- xy$y
     x <- xy$x
+    if(!all(is.finite(c(x, y))))
+        stop("missing or infinite values in inputs are not allowed")
     n <- length(x)
     w <-
 	if(is.null(w)) rep(1, n)
