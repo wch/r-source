@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:16\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -95,6 +95,12 @@ msgstr ""
 #, fuzzy
 msgid "invalid value for %s : %s"
 msgstr "неправильное значение '%s': %s"
+
+msgid "value of 'results' option should be lowercase"
+msgstr ""
+
+msgid "value of 'strip.white' option should be lowercase"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "элементы 'what' после первого будут пропущены"
@@ -310,7 +316,7 @@ msgstr "Для темы '%s' не найден демо"
 
 #, fuzzy
 msgid ""
-"Demo for topic %' found more than once,\n"
+"Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
 "Для темы '%s' найдено более одного демо,\n"

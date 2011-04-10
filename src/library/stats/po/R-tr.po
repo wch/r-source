@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -597,9 +597,7 @@ msgstr ""
 msgid "either 'k' or 'h' must be specified"
 msgstr "'k' veya 'h' seçilmeli"
 
-msgid ""
-"the 'height' component of 'tree' is not sorted\n"
-"(increasingly); consider applying as.hclust() first"
+msgid "the 'height' component of 'tree' is not sorted (increasingly)"
 msgstr ""
 
 msgid "elements of 'k' must be between 1 and %d"
@@ -1718,8 +1716,12 @@ msgstr ""
 msgid "use \"Brent\" or optimize() directly"
 msgstr ""
 
-msgid "\"Brent\" is only available for one-dimensional minimization"
+msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
+
+#, fuzzy
+msgid "'lower' and 'upper' must be finite values"
+msgstr "'k' ve 'h' skalar olmalı"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr ""
@@ -1986,6 +1988,10 @@ msgstr ""
 
 msgid "invalid 'control.spar'"
 msgstr "geçersiz 'control.spar'"
+
+#, fuzzy
+msgid "missing or infinite values in inputs are not allowed"
+msgstr "eksik veya negatif sıklıklara izin verilmiyor"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "'x' ve 'w' uzunlukları eşleşmeli"

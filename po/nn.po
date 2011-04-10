@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-04-02 19:14+0100\n"
+"POT-Creation-Date: 2011-04-10 07:45+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -124,38 +124,38 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/character.c:133 src/main/character.c:194 src/main/character.c:1019
 #: src/main/character.c:1023 src/main/character.c:1254
 #: src/main/character.c:1258 src/main/character.c:1315
-#: src/main/character.c:1318 src/main/connections.c:986
-#: src/main/connections.c:992 src/main/connections.c:995
-#: src/main/connections.c:999 src/main/connections.c:1138
-#: src/main/connections.c:1154 src/main/connections.c:1159
-#: src/main/connections.c:1753 src/main/connections.c:1759
-#: src/main/connections.c:1763 src/main/connections.c:1767
-#: src/main/connections.c:1772 src/main/connections.c:2420
-#: src/main/connections.c:2425 src/main/connections.c:2428
-#: src/main/connections.c:2431 src/main/connections.c:2797
-#: src/main/connections.c:2802 src/main/connections.c:2808
-#: src/main/connections.c:2811 src/main/connections.c:2815
-#: src/main/connections.c:2830 src/main/connections.c:2881
-#: src/main/connections.c:2886 src/main/connections.c:2890
-#: src/main/connections.c:2894 src/main/connections.c:2898
-#: src/main/connections.c:2904 src/main/connections.c:2950
-#: src/main/connections.c:2956 src/main/connections.c:2960
-#: src/main/connections.c:3011 src/main/connections.c:3014
-#: src/main/connections.c:3280 src/main/connections.c:3283
-#: src/main/connections.c:3286 src/main/connections.c:3384
-#: src/main/connections.c:3390 src/main/connections.c:3393
-#: src/main/connections.c:3543 src/main/connections.c:3546
-#: src/main/connections.c:3550 src/main/connections.c:3553
-#: src/main/connections.c:3660 src/main/connections.c:3763
-#: src/main/connections.c:3766 src/main/connections.c:4102
-#: src/main/connections.c:4127 src/main/connections.c:4160
-#: src/main/connections.c:4174 src/main/connections.c:4182
-#: src/main/connections.c:4208 src/main/connections.c:4349
-#: src/main/connections.c:4353 src/main/connections.c:4479
-#: src/main/connections.c:4481 src/main/connections.c:4483
-#: src/main/connections.c:4511 src/main/connections.c:4641
-#: src/main/connections.c:4667 src/main/connections.c:4671
-#: src/main/connections.c:4675 src/main/connections.c:4679
+#: src/main/character.c:1318 src/main/connections.c:988
+#: src/main/connections.c:994 src/main/connections.c:997
+#: src/main/connections.c:1001 src/main/connections.c:1140
+#: src/main/connections.c:1156 src/main/connections.c:1161
+#: src/main/connections.c:1755 src/main/connections.c:1761
+#: src/main/connections.c:1765 src/main/connections.c:1769
+#: src/main/connections.c:1774 src/main/connections.c:2422
+#: src/main/connections.c:2427 src/main/connections.c:2430
+#: src/main/connections.c:2433 src/main/connections.c:2799
+#: src/main/connections.c:2804 src/main/connections.c:2810
+#: src/main/connections.c:2813 src/main/connections.c:2817
+#: src/main/connections.c:2832 src/main/connections.c:2883
+#: src/main/connections.c:2888 src/main/connections.c:2892
+#: src/main/connections.c:2896 src/main/connections.c:2900
+#: src/main/connections.c:2906 src/main/connections.c:2952
+#: src/main/connections.c:2958 src/main/connections.c:2962
+#: src/main/connections.c:3013 src/main/connections.c:3016
+#: src/main/connections.c:3282 src/main/connections.c:3285
+#: src/main/connections.c:3288 src/main/connections.c:3386
+#: src/main/connections.c:3392 src/main/connections.c:3395
+#: src/main/connections.c:3545 src/main/connections.c:3548
+#: src/main/connections.c:3552 src/main/connections.c:3555
+#: src/main/connections.c:3662 src/main/connections.c:3765
+#: src/main/connections.c:3768 src/main/connections.c:4104
+#: src/main/connections.c:4129 src/main/connections.c:4162
+#: src/main/connections.c:4176 src/main/connections.c:4184
+#: src/main/connections.c:4210 src/main/connections.c:4351
+#: src/main/connections.c:4355 src/main/connections.c:4481
+#: src/main/connections.c:4483 src/main/connections.c:4485
+#: src/main/connections.c:4513 src/main/connections.c:4643
+#: src/main/connections.c:4669 src/main/connections.c:4673
+#: src/main/connections.c:4677 src/main/connections.c:4681
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
 #: src/main/datetime.c:660 src/main/datetime.c:740 src/main/datetime.c:742
 #: src/main/datetime.c:746 src/main/datetime.c:903 src/main/datetime.c:905
@@ -174,8 +174,8 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/eval.c:2068 src/main/eval.c:2072 src/main/grep.c:758
 #: src/main/grep.c:763 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1041 src/main/grep.c:1485 src/main/grep.c:1489
-#: src/main/grep.c:1494 src/main/grep.c:2271 src/main/grep.c:2276
-#: src/main/memory.c:3319 src/main/model.c:1610 src/main/model.c:1618
+#: src/main/grep.c:1494 src/main/grep.c:2273 src/main/grep.c:2278
+#: src/main/memory.c:3338 src/main/model.c:1610 src/main/model.c:1618
 #: src/main/optim.c:225 src/main/paste.c:87 src/main/paste.c:368
 #: src/main/paste.c:375 src/main/paste.c:382 src/main/paste.c:387
 #: src/main/paste.c:392 src/main/paste.c:397 src/main/paste.c:400
@@ -214,9 +214,9 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/scan.c:1725 src/main/scan.c:1726 src/main/scan.c:1727
 #: src/main/scan.c:1728 src/main/scan.c:1729 src/main/seq.c:381
 #: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
-#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:590
-#: src/main/sysutils.c:594 src/main/sysutils.c:598 src/main/sysutils.c:604
-#: src/main/sysutils.c:608 src/main/sysutils.c:1609 src/main/sysutils.c:1613
+#: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
+#: src/main/sysutils.c:593 src/main/sysutils.c:597 src/main/sysutils.c:603
+#: src/main/sysutils.c:607 src/main/sysutils.c:1630 src/main/sysutils.c:1634
 #: src/main/unique.c:821 src/main/unique.c:1100 src/main/unique.c:1160
 #: src/main/unique.c:1167 src/main/util.c:574 src/main/util.c:577
 #: src/main/util.c:1758 src/modules/internet/internet.c:283
@@ -284,7 +284,7 @@ msgstr "ugyldig tidsstempel"
 #: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1858
 #: src/gnuwin32/extra.c:2039 src/gnuwin32/extra.c:2042
 #: src/gnuwin32/extra.c:2045 src/main/character.c:578 src/main/colors.c:358
-#: src/main/connections.c:3288 src/main/context.c:643 src/main/context.c:662
+#: src/main/connections.c:3290 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:592 src/main/datetime.c:662 src/main/datetime.c:907
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
@@ -331,11 +331,11 @@ msgstr "Vel éin"
 msgid "argument must be a character vector or a raw vector"
 msgstr "argumentet må vera ein teiknvektor eller ein råvektor"
 
-#: src/gnuwin32/extra.c:1096 src/main/connections.c:1931
+#: src/gnuwin32/extra.c:1096 src/main/connections.c:1933
 msgid "Unable to open the clipboard"
 msgstr "Klarte ikkje opna utklippstavla"
 
-#: src/gnuwin32/extra.c:1101 src/main/connections.c:1935
+#: src/gnuwin32/extra.c:1101 src/main/connections.c:1937
 msgid "Unable to write to the clipboard"
 msgstr "Klarte ikkje skriva til utklippstavla"
 
@@ -444,9 +444,9 @@ msgid "truncate not enabled for this connection"
 msgstr "«truncate» er ikkje slått på for dette sambandet"
 
 #: src/gnuwin32/run.c:714 src/gnuwin32/run.c:718 src/gnuwin32/run.c:731
-#: src/gnuwin32/run.c:759 src/main/connections.c:1093
-#: src/main/connections.c:1097 src/main/connections.c:1103
-#: src/main/connections.c:1117
+#: src/gnuwin32/run.c:759 src/main/connections.c:1095
+#: src/main/connections.c:1099 src/main/connections.c:1105
+#: src/main/connections.c:1119
 msgid "allocation of pipe connection failed"
 msgstr "klarte ikkje reservera røyrsamband"
 
@@ -499,8 +499,8 @@ msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<FEIL: Feil ved omkoding frå teiknkodinga «%s»>\n"
 
 #: src/gnuwin32/system.c:546 src/gnuwin32/system.c:1025
-#: src/gnuwin32/system.c:1037 src/main/connections.c:579
-#: src/main/connections.c:584 src/main/dounzip.c:124 src/main/saveload.c:1949
+#: src/gnuwin32/system.c:1037 src/main/connections.c:581
+#: src/main/connections.c:586 src/main/dounzip.c:124 src/main/saveload.c:1949
 #: src/main/serialize.c:2202 src/main/serialize.c:2207
 #: src/main/serialize.c:2288 src/main/serialize.c:2333 src/unix/system.c:312
 #: src/unix/system.c:323
@@ -801,7 +801,7 @@ msgstr "ugyldig multibyte-formateringstekst"
 
 #: src/main/agrep.c:69 src/main/character.c:1021 src/main/character.c:1025
 #: src/main/grep.c:760 src/main/grep.c:1487 src/main/grep.c:1491
-#: src/main/grep.c:2273
+#: src/main/grep.c:2275
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
@@ -811,7 +811,7 @@ msgstr ""
 msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
 msgstr ""
 
-#: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2315
+#: src/main/agrep.c:107 src/main/grep.c:827 src/main/grep.c:2317
 msgid "regular expression is invalid in this locale"
 msgstr "det regulære uttrykket er ugyldig i dette lokalet"
 
@@ -822,7 +822,7 @@ msgstr "regcomp-feil: «%s»"
 
 #: src/main/agrep.c:149 src/main/grep.c:221 src/main/grep.c:308
 #: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2404 src/main/grep.c:2472
+#: src/main/grep.c:2408 src/main/grep.c:2476
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "innteksten «%d» er ugyldig i dette lokalet"
@@ -1321,7 +1321,7 @@ msgstr "den oppgjevne vektorstorleiken er for stor"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:282
 #: src/main/builtin.c:317 src/main/builtin.c:356 src/main/builtin.c:366
-#: src/main/coerce.c:1448 src/main/connections.c:2806 src/main/engine.c:2847
+#: src/main/coerce.c:1448 src/main/connections.c:2808 src/main/engine.c:2847
 #: src/main/envir.c:923 src/main/envir.c:976 src/main/envir.c:1066
 #: src/main/envir.c:1523 src/main/envir.c:1643 src/main/envir.c:1711
 #: src/main/envir.c:1832 src/main/envir.c:2505 src/main/envir.c:2565
@@ -1357,11 +1357,11 @@ msgstr "kan ikkje definera forelderen til den tomme omgjevnaden"
 msgid "'parent' is not an environment"
 msgstr "«parent» er ikkje ein omgjevnad"
 
-#: src/main/builtin.c:511 src/main/connections.c:3409
-#: src/main/connections.c:3757 src/main/connections.c:3791
-#: src/main/connections.c:4166 src/main/connections.c:4231
-#: src/main/connections.c:4437 src/main/connections.c:4441
-#: src/main/connections.c:4802 src/main/deparse.c:323 src/main/deparse.c:409
+#: src/main/builtin.c:511 src/main/connections.c:3411
+#: src/main/connections.c:3759 src/main/connections.c:3793
+#: src/main/connections.c:4168 src/main/connections.c:4233
+#: src/main/connections.c:4439 src/main/connections.c:4443
+#: src/main/connections.c:4804 src/main/deparse.c:323 src/main/deparse.c:409
 #: src/main/scan.c:1705 src/main/serialize.c:1670
 msgid "cannot write to this connection"
 msgstr "klarte ikkje skriva til sambandet"
@@ -1812,119 +1812,119 @@ msgstr "fann ikkje samband"
 msgid "invalid connection"
 msgstr "ugyldig samband"
 
-#: src/main/connections.c:212
+#: src/main/connections.c:213
 #, c-format
 msgid "closing unused connection %d (%s)\n"
 msgstr "lukka ubrukt samband (%d) (%s)\n"
 
-#: src/main/connections.c:236 src/main/sysutils.c:624 src/main/sysutils.c:785
-#: src/main/sysutils.c:800 src/main/sysutils.c:894 src/main/sysutils.c:965
-#: src/main/sysutils.c:975 src/main/sysutils.c:988 src/main/sysutils.c:1277
+#: src/main/connections.c:238 src/main/sysutils.c:623 src/main/sysutils.c:806
+#: src/main/sysutils.c:821 src/main/sysutils.c:915 src/main/sysutils.c:986
+#: src/main/sysutils.c:996 src/main/sysutils.c:1009 src/main/sysutils.c:1298
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "ikkje-støtta omgjering frå «%s» til «%s»"
 
-#: src/main/connections.c:288 src/main/connections.c:304
-#: src/main/connections.c:443 src/main/connections.c:449
-#: src/main/connections.c:455 src/main/connections.c:466
-#: src/main/connections.c:473
+#: src/main/connections.c:290 src/main/connections.c:306
+#: src/main/connections.c:445 src/main/connections.c:451
+#: src/main/connections.c:457 src/main/connections.c:468
+#: src/main/connections.c:475
 #, c-format
 msgid "%s not enabled for this connection"
 msgstr "%s er ikkje slått på for dette sambandet"
 
-#: src/main/connections.c:334 src/main/connections.c:351
-#: src/main/connections.c:2664
+#: src/main/connections.c:336 src/main/connections.c:353
+#: src/main/connections.c:2666
 msgid "printing of extremely long output is truncated"
 msgstr "vising av veldig lang tekst vart trunkert"
 
-#: src/main/connections.c:373
+#: src/main/connections.c:375
 msgid "invalid char string in output conversion"
 msgstr "ugyldig teiknstreng i uttekstomgjering"
 
-#: src/main/connections.c:426
+#: src/main/connections.c:428
 #, c-format
 msgid "invalid input found on input connection '%s'"
 msgstr "fann ugyldig inndata på sambandet «%s»"
 
-#: src/main/connections.c:687
+#: src/main/connections.c:689
 msgid "connection is not open for reading"
 msgstr "samband ikkje ope for lesing"
 
-#: src/main/connections.c:692
+#: src/main/connections.c:694
 msgid "connection is not open for writing"
 msgstr "samband ikkje ope for skriving"
 
-#: src/main/connections.c:732 src/main/connections.c:1986
+#: src/main/connections.c:734 src/main/connections.c:1988
 msgid "can only truncate connections open for writing"
 msgstr "kan berre trunkera samband som er opne for skriving"
 
-#: src/main/connections.c:737
+#: src/main/connections.c:739
 msgid "file truncation failed"
 msgstr "feil ved filtrunkering"
 
-#: src/main/connections.c:739
+#: src/main/connections.c:741
 msgid "file truncation unavailable on this platform"
 msgstr "filtrunkering er ikkje tilgjengeleg på denne plattforma"
 
-#: src/main/connections.c:785 src/main/connections.c:789
-#: src/main/connections.c:795 src/main/connections.c:812
+#: src/main/connections.c:787 src/main/connections.c:791
+#: src/main/connections.c:797 src/main/connections.c:814
 msgid "allocation of file connection failed"
 msgstr "feil ved reservering av filsamband"
 
-#: src/main/connections.c:862
+#: src/main/connections.c:864
 #, c-format
 msgid "cannot create fifo '%s', reason '%s'"
 msgstr "klarte ikkje laga fifo-en «%s», av grunnen «%s»"
 
-#: src/main/connections.c:868
+#: src/main/connections.c:870
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "«%s» finst, men er ikkje ein fifo"
 
-#: src/main/connections.c:881
+#: src/main/connections.c:883
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "fifo-en «%s» er ikkje klar"
 
-#: src/main/connections.c:882
+#: src/main/connections.c:884
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "klarte ikkje opna fifo-en «%s»"
 
-#: src/main/connections.c:923 src/main/connections.c:934
-#: src/main/connections.c:1289 src/main/connections.c:1299
-#: src/main/connections.c:1417 src/main/connections.c:1478
-#: src/main/connections.c:2003 src/main/connections.c:2019
-#: src/main/connections.c:2328 src/main/connections.c:4987
-#: src/main/connections.c:5051
+#: src/main/connections.c:925 src/main/connections.c:936
+#: src/main/connections.c:1291 src/main/connections.c:1301
+#: src/main/connections.c:1419 src/main/connections.c:1480
+#: src/main/connections.c:2005 src/main/connections.c:2021
+#: src/main/connections.c:2330 src/main/connections.c:4989
+#: src/main/connections.c:5053
 msgid "too large a block specified"
 msgstr "for stor blokk oppgjeven"
 
-#: src/main/connections.c:943 src/main/connections.c:947
-#: src/main/connections.c:953 src/main/connections.c:969
+#: src/main/connections.c:945 src/main/connections.c:949
+#: src/main/connections.c:955 src/main/connections.c:971
 msgid "allocation of fifo connection failed"
 msgstr "feil ved reservering av fifo-samband"
 
-#: src/main/connections.c:988 src/main/connections.c:1140
-#: src/main/connections.c:1755 src/main/connections.c:2952
-#: src/main/connections.c:4643
+#: src/main/connections.c:990 src/main/connections.c:1142
+#: src/main/connections.c:1757 src/main/connections.c:2954
+#: src/main/connections.c:4645
 msgid "only first element of 'description' argument used"
 msgstr "berre det første elementet i «description»-argumentet vert brukt"
 
-#: src/main/connections.c:1005
+#: src/main/connections.c:1007
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "fifo(\"\") støttar berre «open = \"w+\"» og «open = \"w+b\"» (brukar "
 "sistnemnde)"
 
-#: src/main/connections.c:1018 src/main/connections.c:1176
-#: src/main/connections.c:1820 src/main/connections.c:2917
-#: src/main/connections.c:2971 src/main/connections.c:3021
-#: src/main/connections.c:3296 src/main/connections.c:3401
-#: src/main/connections.c:3561 src/main/connections.c:3784
-#: src/main/connections.c:4111 src/main/connections.c:4224
-#: src/main/connections.c:4433 src/main/connections.c:4777 src/main/dcf.c:57
+#: src/main/connections.c:1020 src/main/connections.c:1178
+#: src/main/connections.c:1822 src/main/connections.c:2919
+#: src/main/connections.c:2973 src/main/connections.c:3023
+#: src/main/connections.c:3298 src/main/connections.c:3403
+#: src/main/connections.c:3563 src/main/connections.c:3786
+#: src/main/connections.c:4113 src/main/connections.c:4226
+#: src/main/connections.c:4435 src/main/connections.c:4779 src/main/dcf.c:57
 #: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2255
 #: src/main/saveload.c:2335 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
@@ -1932,411 +1932,411 @@ msgstr ""
 msgid "cannot open the connection"
 msgstr "klarte ikkje opna sambandet"
 
-#: src/main/connections.c:1035
+#: src/main/connections.c:1037
 msgid "fifo connections are not available on this system"
 msgstr "fifo-samband er ikkje tilgjengelege på dette systemet"
 
-#: src/main/connections.c:1067
+#: src/main/connections.c:1069
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
 msgstr "klarte ikkje opna pipe()-kommandoen «%s»: %s"
 
-#: src/main/connections.c:1218 src/main/connections.c:1548
+#: src/main/connections.c:1220 src/main/connections.c:1550
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
 msgstr "klarte ikkje opna den komprimerte fila «%s», truleg av grunnen «%s»"
 
-#: src/main/connections.c:1261
+#: src/main/connections.c:1263
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "«whence = \"end\"» er ikkje implementert for gzfile-samband"
 
-#: src/main/connections.c:1267
+#: src/main/connections.c:1269
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "søking i eit gzfile-samband gav ein intern feil"
 
-#: src/main/connections.c:1308 src/main/connections.c:1312
-#: src/main/connections.c:1318 src/main/connections.c:1335
+#: src/main/connections.c:1310 src/main/connections.c:1314
+#: src/main/connections.c:1320 src/main/connections.c:1337
 msgid "allocation of gzfile connection failed"
 msgstr "feil ved reservering av gzfile-samband"
 
-#: src/main/connections.c:1363
+#: src/main/connections.c:1365
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
 msgstr "klarte ikkje opna bzip2-komprimert fil «%s», truleg av grunnen «%s»"
 
-#: src/main/connections.c:1372
+#: src/main/connections.c:1374
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "fila «%s» ser ikkje ut til å vera komprimert med bzip2"
 
-#: src/main/connections.c:1381
+#: src/main/connections.c:1383
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr "klarte ikkje starta bzip2-komprimering av fila «%s»"
 
-#: src/main/connections.c:1436
+#: src/main/connections.c:1438
 #, fuzzy
 msgid "allocation of overflow buffer for bzfile failed"
 msgstr "feil ved reservering av filsamband"
 
-#: src/main/connections.c:1443
+#: src/main/connections.c:1445
 #, fuzzy, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr "fila «%s» ser ikkje ut til å vera komprimert med bzip2"
 
-#: src/main/connections.c:1489 src/main/connections.c:1493
-#: src/main/connections.c:1499 src/main/connections.c:1516
+#: src/main/connections.c:1491 src/main/connections.c:1495
+#: src/main/connections.c:1501 src/main/connections.c:1518
 msgid "allocation of bzfile connection failed"
 msgstr "feil ved reservering av bzfile-samband"
 
-#: src/main/connections.c:1561 src/main/connections.c:5592
+#: src/main/connections.c:1563 src/main/connections.c:5594
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "klarte ikkje starta lzma-dekodaren (feil %d)"
 
-#: src/main/connections.c:1577
+#: src/main/connections.c:1579
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
 msgstr "klarte ikkje starta lzma-kodaren (feil %d)"
 
-#: src/main/connections.c:1705 src/main/connections.c:1709
-#: src/main/connections.c:1715 src/main/connections.c:1733
+#: src/main/connections.c:1707 src/main/connections.c:1711
+#: src/main/connections.c:1717 src/main/connections.c:1735
 msgid "allocation of xzfile connection failed"
 msgstr "feil ved reservering av xzfile-samband"
 
-#: src/main/connections.c:1792
+#: src/main/connections.c:1794
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 "dette er ei %s-komprimert fil, som denne byggversjonen av R ikkje støttar"
 
-#: src/main/connections.c:1887 src/modules/X11/devX11.c:3469
+#: src/main/connections.c:1889 src/modules/X11/devX11.c:3469
 msgid "memory allocation to copy clipboard failed"
 msgstr "feil ved minnereservering til kopiering til utklippstavla"
 
-#: src/main/connections.c:1892 src/modules/X11/devX11.c:3448
+#: src/main/connections.c:1894 src/modules/X11/devX11.c:3448
 #: src/modules/X11/devX11.c:3453
 msgid "clipboard cannot be opened or contains no text"
 msgstr "utklippstavla kan ikkje opnast, eller inneheld ikkje noko tekst"
 
-#: src/main/connections.c:1903
+#: src/main/connections.c:1905
 msgid "memory allocation to open clipboard failed"
 msgstr "feil ved minnereservering til ope utklippstavle"
 
-#: src/main/connections.c:1975
+#: src/main/connections.c:1977
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "prøvde å søkja utanfor området til utklippstavla"
 
-#: src/main/connections.c:2017
+#: src/main/connections.c:2019
 msgid "clipboard connection is open for reading only"
 msgstr "utklippstavlesambandet er berre ope for lesing"
 
-#: src/main/connections.c:2037
+#: src/main/connections.c:2039
 msgid "clipboard buffer is full and output lost"
 msgstr "utklippstavlebufferen er full, og utdata gjekk tapt"
 
-#: src/main/connections.c:2058
+#: src/main/connections.c:2060
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "«mode» for utklippstavla må vera «r» eller «w»"
 
-#: src/main/connections.c:2061
+#: src/main/connections.c:2063
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "«mode» for utklippstavla må vera «r» på Unix"
 
-#: src/main/connections.c:2064 src/main/connections.c:2070
-#: src/main/connections.c:2076 src/main/connections.c:2093
+#: src/main/connections.c:2066 src/main/connections.c:2072
+#: src/main/connections.c:2078 src/main/connections.c:2095
 msgid "allocation of clipboard connection failed"
 msgstr "feil ved reservering av utklippstavlesamband"
 
-#: src/main/connections.c:2162 src/main/connections.c:2166
-#: src/main/connections.c:2172
+#: src/main/connections.c:2164 src/main/connections.c:2168
+#: src/main/connections.c:2174
 msgid "allocation of terminal connection failed"
 msgstr "feil ved reservering av terminalsamband"
 
-#: src/main/connections.c:2305
+#: src/main/connections.c:2307
 msgid "attempting to add too many elements to raw vector"
 msgstr "prøvde å leggja for mange element til ein råvektor"
 
-#: src/main/connections.c:2356
+#: src/main/connections.c:2358
 msgid "attempt to seek outside the range of the raw connection"
 msgstr "prøvde å søkja utanfor området til råsambandet"
 
-#: src/main/connections.c:2367 src/main/connections.c:2371
-#: src/main/connections.c:2377 src/main/connections.c:2403
+#: src/main/connections.c:2369 src/main/connections.c:2373
+#: src/main/connections.c:2379 src/main/connections.c:2405
 msgid "allocation of raw connection failed"
 msgstr "feil ved reservering av råsamband"
 
-#: src/main/connections.c:2457
+#: src/main/connections.c:2459
 msgid "'con' is not a rawConnection"
 msgstr "«con» er ikkje eit rawConnection-samband"
 
-#: src/main/connections.c:2460
+#: src/main/connections.c:2462
 msgid "'con' is not an output rawConnection"
 msgstr "«con» er ikkje ein ut-«rawConnection»"
 
-#: src/main/connections.c:2496
+#: src/main/connections.c:2498
 msgid "cannot allocate memory for text connection"
 msgstr "klarte ikkje reservera minne til tekstsamband"
 
-#: src/main/connections.c:2544
+#: src/main/connections.c:2546
 msgid "seek is not relevant for text connection"
 msgstr "«seek» er ikkje relevant for tekstsamband"
 
-#: src/main/connections.c:2552 src/main/connections.c:2556
-#: src/main/connections.c:2562 src/main/connections.c:2575
-#: src/main/connections.c:2752 src/main/connections.c:2756
-#: src/main/connections.c:2762 src/main/connections.c:2775
-#: src/main/connections.c:2781
+#: src/main/connections.c:2554 src/main/connections.c:2558
+#: src/main/connections.c:2564 src/main/connections.c:2577
+#: src/main/connections.c:2754 src/main/connections.c:2758
+#: src/main/connections.c:2764 src/main/connections.c:2777
+#: src/main/connections.c:2783
 msgid "allocation of text connection failed"
 msgstr "feil ved reservering av tekstsamband"
 
-#: src/main/connections.c:2729
+#: src/main/connections.c:2731
 msgid "text connection: appending to a non-existent char vector"
 msgstr "tekstsamband: legg til på ein teiknvektor som ikkje finst"
 
-#: src/main/connections.c:2833
+#: src/main/connections.c:2835
 msgid "unsupported mode"
 msgstr "ikkje-støtta modus"
 
-#: src/main/connections.c:2856
+#: src/main/connections.c:2858
 msgid "'con' is not a textConnection"
 msgstr "«con» er ikkje ein «textConnection»"
 
-#: src/main/connections.c:2859
+#: src/main/connections.c:2861
 msgid "'con' is not an output textConnection"
 msgstr "«con» er ikkje ein ut-«textConnection»"
 
-#: src/main/connections.c:2932
+#: src/main/connections.c:2934
 msgid "sockets are not available on this system"
 msgstr "soklar er ikkje tilgjengelege på dette systemet"
 
-#: src/main/connections.c:3001 src/main/connections.c:3050
-#: src/main/connections.c:3061 src/main/connections.c:3108
-#: src/main/connections.c:3129 src/main/connections.c:3152
-#: src/main/connections.c:3164 src/main/connections.c:3276
-#: src/main/connections.c:3386 src/main/connections.c:5090
+#: src/main/connections.c:3003 src/main/connections.c:3052
+#: src/main/connections.c:3063 src/main/connections.c:3110
+#: src/main/connections.c:3131 src/main/connections.c:3154
+#: src/main/connections.c:3166 src/main/connections.c:3278
+#: src/main/connections.c:3388 src/main/connections.c:5092
 msgid "'con' is not a connection"
 msgstr "«con» er ikkje eit samband"
 
-#: src/main/connections.c:3004
+#: src/main/connections.c:3006
 msgid "cannot open standard connections"
 msgstr "klarte ikkje opna standardsamband"
 
-#: src/main/connections.c:3006
+#: src/main/connections.c:3008
 msgid "connection is already open"
 msgstr "sambandet er alt ope"
 
-#: src/main/connections.c:3039
+#: src/main/connections.c:3041
 msgid "unknown 'rw' value"
 msgstr "ukjend «rw»-verdi"
 
-#: src/main/connections.c:3110
+#: src/main/connections.c:3112
 msgid "cannot close standard connections"
 msgstr "klarte ikkje lukka standardsambanda"
 
-#: src/main/connections.c:3113
+#: src/main/connections.c:3115
 msgid "cannot close output sink connection"
 msgstr "klarte ikkje lukka utsink-samband"
 
-#: src/main/connections.c:3115
+#: src/main/connections.c:3117
 msgid "cannot close messages sink connection"
 msgstr "klarte ikkje lukka meldingssink-samband"
 
-#: src/main/connections.c:3131 src/main/connections.c:4801
+#: src/main/connections.c:3133 src/main/connections.c:4803
 #: src/main/serialize.c:1660 src/main/serialize.c:1668
 msgid "connection is not open"
 msgstr "sambandet er ikkje ope"
 
-#: src/main/connections.c:3224 src/main/connections.c:3236
+#: src/main/connections.c:3226 src/main/connections.c:3238
 msgid "Line longer than buffer size"
 msgstr "Linja er lengre enn bufferstorleiken"
 
-#: src/main/connections.c:3303 src/main/connections.c:3305
-#: src/main/connections.c:3569 src/main/connections.c:4095
-#: src/main/connections.c:4119 src/main/dcf.c:64 src/main/scan.c:907
+#: src/main/connections.c:3305 src/main/connections.c:3307
+#: src/main/connections.c:3571 src/main/connections.c:4097
+#: src/main/connections.c:4121 src/main/dcf.c:64 src/main/scan.c:907
 #: src/main/scan.c:911 src/main/scan.c:1018 src/main/scan.c:1022
 #: src/main/serialize.c:1662 src/main/source.c:267
 msgid "cannot read from this connection"
 msgstr "klarte ikkje lesa frå dette sambandet"
 
-#: src/main/connections.c:3317 src/main/connections.c:3336
+#: src/main/connections.c:3319 src/main/connections.c:3338
 msgid "cannot allocate buffer in readLines"
 msgstr "klarte ikkje reservera buffer i readLines"
 
-#: src/main/connections.c:3358
+#: src/main/connections.c:3360
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr "fann ufullstendig sluttlinje på «%s»"
 
-#: src/main/connections.c:3364
+#: src/main/connections.c:3366
 msgid "too few lines read in readLines"
 msgstr "for få linjer å lesa i readLines"
 
-#: src/main/connections.c:3467
+#: src/main/connections.c:3469
 msgid "incomplete string at end of file has been discarded"
 msgstr "forkasta ufullstendig streng på slutten av fila"
 
-#: src/main/connections.c:3473
+#: src/main/connections.c:3475
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "fann ingen nullterminator: bryt strengen etter 10 000 byte"
 
-#: src/main/connections.c:3537
+#: src/main/connections.c:3539
 msgid "can only read from a binary connection"
 msgstr "kan berre lesa frå eit binærsamband"
 
-#: src/main/connections.c:3586 src/main/connections.c:3865
+#: src/main/connections.c:3588 src/main/connections.c:3867
 msgid "size changing is not supported for complex vectors"
 msgstr "endring av storleik er ikkje støtta for komplekse vektorar"
 
-#: src/main/connections.c:3611 src/main/connections.c:3629
-#: src/main/connections.c:3655 src/main/connections.c:3699
-#: src/main/connections.c:3719 src/main/connections.c:3846
-#: src/main/connections.c:3859 src/main/connections.c:3918
-#: src/main/connections.c:3950
+#: src/main/connections.c:3613 src/main/connections.c:3631
+#: src/main/connections.c:3657 src/main/connections.c:3701
+#: src/main/connections.c:3721 src/main/connections.c:3848
+#: src/main/connections.c:3861 src/main/connections.c:3920
+#: src/main/connections.c:3952
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "storleiken %d er ukjend på denne maskina"
 
-#: src/main/connections.c:3640
+#: src/main/connections.c:3642
 msgid "raw is always of size 1"
 msgstr "raw er alltid av storleik 1"
 
-#: src/main/connections.c:3749
+#: src/main/connections.c:3751
 msgid "'x' is not an atomic vector type"
 msgstr "«x» er ikkje ein atomsk vektortype"
 
-#: src/main/connections.c:3755
+#: src/main/connections.c:3757
 msgid "can only write to a binary connection"
 msgstr "kan berre skriva til binærsamband"
 
-#: src/main/connections.c:3774
+#: src/main/connections.c:3776
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "berre 2³¹ − 1 byte kan skrivast til ein råvektor"
 
-#: src/main/connections.c:3776
+#: src/main/connections.c:3778
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
 msgstr "berre 2³¹ − 1 byte kan skrivast i eit einskild «readBin()»-kall"
 
-#: src/main/connections.c:3825 src/main/connections.c:3978
-#: src/main/connections.c:4251 src/main/connections.c:4291
+#: src/main/connections.c:3827 src/main/connections.c:3980
+#: src/main/connections.c:4253 src/main/connections.c:4293
 msgid "problem writing to connection"
 msgstr "feil ved skriving til samband"
 
-#: src/main/connections.c:3870
+#: src/main/connections.c:3872
 msgid "size changing is not supported for raw vectors"
 msgstr "endring av storleik er ikkje støtta for råvektorar"
 
-#: src/main/connections.c:4013 src/main/connections.c:4017
-#: src/main/connections.c:4056
+#: src/main/connections.c:4015 src/main/connections.c:4019
+#: src/main/connections.c:4058
 msgid "invalid UTF-8 input in readChar()"
 msgstr "ugyldig UTF-8-data i readChar()"
 
-#: src/main/connections.c:4122
+#: src/main/connections.c:4124
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "kan berre lesa i byte i eit ikkje-UTF-8-basert MBCS-lokale"
 
-#: src/main/connections.c:4191
+#: src/main/connections.c:4193
 msgid "'object' is too short"
 msgstr "«object» er for kort"
 
-#: src/main/connections.c:4240
+#: src/main/connections.c:4242
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: ba om fleire byte enn det er i strengen (nullverdiar vert lagde "
 "til på slutten)"
 
-#: src/main/connections.c:4265
+#: src/main/connections.c:4267
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: ba om fleire teikn enn det er i strengen (nullverdiar vert lagde "
 "til på slutten)"
 
-#: src/main/connections.c:4325 src/main/connections.c:4328
-#: src/main/connections.c:4366 src/main/connections.c:4371
+#: src/main/connections.c:4327 src/main/connections.c:4330
+#: src/main/connections.c:4368 src/main/connections.c:4373
 msgid "could not allocate space for pushBack"
 msgstr "klarte ikkje reservera plass til pushBack"
 
-#: src/main/connections.c:4355
+#: src/main/connections.c:4357
 msgid "can only push back on open readable connections"
 msgstr "kan berre gjera «push back» på opne leselege samband"
 
-#: src/main/connections.c:4357
+#: src/main/connections.c:4359
 msgid "can only push back on text-mode connections"
 msgstr "kan berre gjera «push back» på tekstmodus-samband"
 
-#: src/main/connections.c:4418 src/main/connections.c:4488
+#: src/main/connections.c:4420 src/main/connections.c:4490
 msgid "sink stack is full"
 msgstr "sink-stakken er full"
 
-#: src/main/connections.c:4421
+#: src/main/connections.c:4423
 msgid "cannot switch output to stdin"
 msgstr "klarte ikkje byta utdata til stdin"
 
-#: src/main/connections.c:4448
+#: src/main/connections.c:4450
 msgid "no sink to remove"
 msgstr "ingen sink å fjerna"
 
-#: src/main/connections.c:4570
+#: src/main/connections.c:4572
 #, c-format
 msgid "there is no connection %d"
 msgstr "sambandet %d finst ikkje"
 
-#: src/main/connections.c:4705
+#: src/main/connections.c:4707
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") støttar berre «open = \"w+\"» og «open = \"w+b\"» (brukar "
 "førstnemnde)"
 
-#: src/main/connections.c:4759 src/modules/internet/internet.c:113
+#: src/main/connections.c:4761 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:568
 msgid "unsupported URL scheme"
 msgstr "ikkje-støtta URL-skjema"
 
-#: src/main/connections.c:4854
+#: src/main/connections.c:4856
 msgid "file stream does not have gzip magic number"
 msgstr "filstraumen har ikkje det magiske talet til gzip"
 
-#: src/main/connections.c:4865
+#: src/main/connections.c:4867
 msgid "file stream does not have valid gzip header"
 msgstr "filstraumen har ikkje eit gyldig gzip-hovud"
 
-#: src/main/connections.c:4930
+#: src/main/connections.c:4932
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "feil ved tømming av gzon-samband"
 
-#: src/main/connections.c:5033
+#: src/main/connections.c:5035
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "CRC-feil %x %x\n"
 
-#: src/main/connections.c:5060
+#: src/main/connections.c:5062
 msgid "write error on 'gzcon' connection"
 msgstr "feil ved skriving til gzcon-samband"
 
-#: src/main/connections.c:5094
+#: src/main/connections.c:5096
 msgid "'level' must be one of 0 ... 9"
 msgstr "«level» må vera éin av 0, 1, ..., 9"
 
-#: src/main/connections.c:5097
+#: src/main/connections.c:5099
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "«allowNonCompression» må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/connections.c:5100
+#: src/main/connections.c:5102
 msgid "this is already a gzcon connection"
 msgstr "dette er alt eit gzcon-samband"
 
-#: src/main/connections.c:5106
+#: src/main/connections.c:5108
 msgid "can only use read- or write- binary connections"
 msgstr "kan berre bruka lese- eller skrive-binærsamband"
 
-#: src/main/connections.c:5109
+#: src/main/connections.c:5111
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bruk av tekstmodus-«file»-samband vil kanskje ikkje fungera skikkeleg"
 
-#: src/main/connections.c:5112
+#: src/main/connections.c:5114
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2344,24 +2344,24 @@ msgstr ""
 "kan ikkje oppretta eit gzcon-samband frå ein skrivar «textConnection» (du "
 "kan prøva å bruka «rawConnection»)"
 
-#: src/main/connections.c:5115 src/main/connections.c:5119
-#: src/main/connections.c:5126 src/main/connections.c:5140
+#: src/main/connections.c:5117 src/main/connections.c:5121
+#: src/main/connections.c:5128 src/main/connections.c:5142
 msgid "allocation of 'gzcon' connection failed"
 msgstr "feil ved reservering av gzcon-samband"
 
-#: src/main/connections.c:5300
+#: src/main/connections.c:5302
 msgid "not a list of sockets"
 msgstr "ikkje ei liste over soklar"
 
-#: src/main/connections.c:5305
+#: src/main/connections.c:5307
 msgid "bad write indicators"
 msgstr "ugyldig skriveindikatorar"
 
-#: src/main/connections.c:5316
+#: src/main/connections.c:5318
 msgid "not a socket connection"
 msgstr "ikkje eit sokkelsamband"
 
-#: src/main/connections.c:5537
+#: src/main/connections.c:5539
 msgid "unknown compression, assuming none"
 msgstr "ukjend komprimering – antek ukomprimerte data"
 
@@ -4007,13 +4007,13 @@ msgstr "ugyldig regulært uttrykk: %s"
 
 #: src/main/grep.c:148 src/main/grep.c:751 src/main/grep.c:753
 #: src/main/grep.c:1023 src/main/grep.c:1031 src/main/grep.c:1478
-#: src/main/grep.c:1480 src/main/grep.c:2263 src/main/grep.c:2265
+#: src/main/grep.c:1480 src/main/grep.c:2265 src/main/grep.c:2267
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr "argumentet «%s» vert ikkje brukt"
 
 #: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
-#: src/main/grep.c:871 src/main/grep.c:2397
+#: src/main/grep.c:871 src/main/grep.c:2401
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "innteksten «%d» er ugyldig UTF-8"
@@ -4029,7 +4029,7 @@ msgid "'split' string %d is invalid in this locale"
 msgstr "«split»-teksten «%d» er ugyldig i dette lokalet"
 
 #: src/main/grep.c:388 src/main/grep.c:840 src/main/grep.c:1560
-#: src/main/grep.c:2328
+#: src/main/grep.c:2330
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -4046,7 +4046,7 @@ msgid "invalid split pattern '%s'"
 msgstr "ugyldig oppdelingsmønster: %s"
 
 #: src/main/grep.c:394 src/main/grep.c:846 src/main/grep.c:1567
-#: src/main/grep.c:2335
+#: src/main/grep.c:2337
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
@@ -4055,11 +4055,11 @@ msgstr ""
 "studiefeil i PCRE-mønster\n"
 "\t«%s»\n"
 
-#: src/main/grep.c:823 src/main/grep.c:2311
+#: src/main/grep.c:823 src/main/grep.c:2313
 msgid "regular expression is invalid UTF-8"
 msgstr "det regulære uttrykket er ugyldig UTF-8"
 
-#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2330
+#: src/main/grep.c:842 src/main/grep.c:1562 src/main/grep.c:2332
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "ugyldig regulært uttrykk: %s"
@@ -4093,7 +4093,7 @@ msgstr "mønster av lengd 0"
 msgid "result string is too long"
 msgstr "resultatteksten er for lang"
 
-#: src/main/grep.c:2345
+#: src/main/grep.c:2347
 #, c-format
 msgid "pcre_fullinfo returned '%d' "
 msgstr ""
@@ -4109,9 +4109,9 @@ msgstr "kan ikkje bruka Internett-rutinar i modul"
 msgid "internet routines cannot be loaded"
 msgstr "kan ikkje lasta Internett-rutinar"
 
-#: src/main/internet.c:117 src/main/memory.c:3048 src/main/memory.c:3057
-#: src/main/memory.c:3068 src/main/memory.c:3081 src/main/memory.c:3097
-#: src/main/memory.c:3114
+#: src/main/internet.c:117 src/main/memory.c:3067 src/main/memory.c:3076
+#: src/main/memory.c:3087 src/main/memory.c:3100 src/main/memory.c:3116
+#: src/main/memory.c:3133
 msgid "bad value"
 msgstr "ugyldig verdi"
 
@@ -4282,113 +4282,113 @@ msgstr "delvis argumentsamsvar av «%s» til «%s»"
 msgid "unused argument(s) %s"
 msgstr "ubrukt(e) argument %s"
 
-#: src/main/memory.c:1126
+#: src/main/memory.c:1128
 msgid "can only weakly reference/finalize reference objects"
 msgstr "kan berre svakt referera/finalisera referanseobjekt"
 
-#: src/main/memory.c:1160
+#: src/main/memory.c:1162
 msgid "finalizer must be a function or NULL"
 msgstr "finalisatoren må vera ein funksjon eller NULL"
 
-#: src/main/memory.c:1211 src/main/memory.c:1219 src/main/memory.c:1230
+#: src/main/memory.c:1213 src/main/memory.c:1221 src/main/memory.c:1232
 msgid "not a weak reference"
 msgstr "ikkje ein svak referanse"
 
-#: src/main/memory.c:1346
+#: src/main/memory.c:1348
 msgid "first argument must be environment or external pointer"
 msgstr "det første argumentet må vera ein omgjevnad eller ein ekstern peikar"
 
-#: src/main/memory.c:1348
+#: src/main/memory.c:1350
 msgid "second argument must be a function"
 msgstr "det andre argumentet må vera ein funksjon"
 
-#: src/main/memory.c:1352
+#: src/main/memory.c:1354
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "det tredje argumentet må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/memory.c:1840
+#: src/main/memory.c:1842
 msgid "vector memory exhausted (limit reached?)"
 msgstr "ikkje nok vektorminne (nådde grensa?)"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1848
 msgid "cons memory exhausted (limit reached?)"
 msgstr "ikkje nok konstantminne (nådde grensa?)"
 
-#: src/main/memory.c:1851
+#: src/main/memory.c:1853
 msgid "memory exhausted (limit reached?)"
 msgstr "ikkje nok minne (nådde grensa?)"
 
-#: src/main/memory.c:1977 src/main/memory.c:1983
+#: src/main/memory.c:1979 src/main/memory.c:1985
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "klarte ikkje reservera minneblokk av storleik %0.1f Gb"
 
-#: src/main/memory.c:2210
+#: src/main/memory.c:2213
 msgid "negative length vectors are not allowed"
 msgstr "kan ikkje ha vektorar av negativ lengd"
 
-#: src/main/memory.c:2232 src/main/memory.c:2243 src/main/memory.c:2254
-#: src/main/memory.c:2267
+#: src/main/memory.c:2239 src/main/memory.c:2252 src/main/memory.c:2265
+#: src/main/memory.c:2280
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kan ikkje reservera vektor av lengd %d"
 
-#: src/main/memory.c:2280
+#: src/main/memory.c:2295
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "ugyldig type/lengd (%s/%d) ved vektorreservering"
 
-#: src/main/memory.c:2349
+#: src/main/memory.c:2364
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Gb"
 
-#: src/main/memory.c:2353
+#: src/main/memory.c:2368
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Mb"
 
-#: src/main/memory.c:2357
+#: src/main/memory.c:2372
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Kb"
 
-#: src/main/memory.c:2484
+#: src/main/memory.c:2499
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() er ikkje implementert på dette systemet"
 
-#: src/main/memory.c:2686
+#: src/main/memory.c:2705
 msgid "protect(): protection stack overflow"
 msgstr "protect(): vern av stakkoverflyt"
 
-#: src/main/memory.c:2702
+#: src/main/memory.c:2721
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2716
+#: src/main/memory.c:2735
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: fann ikkje peikar"
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2791
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc klarte ikkje reservera (%u av %u) minne"
 
-#: src/main/memory.c:2783
+#: src/main/memory.c:2802
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc klarte ikkje endra storleik (%u) på reservert minne"
 
-#: src/main/memory.c:3002
+#: src/main/memory.c:3021
 msgid "not safe to return vector pointer"
 msgstr "ikkje trygt å returnera vektorpeikar"
 
-#: src/main/memory.c:3240
+#: src/main/memory.c:3259
 msgid "memory profiling is not available on this system"
 msgstr "minneprofilering er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/memory.c:3305
+#: src/main/memory.c:3324
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
@@ -5085,74 +5085,74 @@ msgstr "ugyldig verdi for «%s»"
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "«par.ask.default» er bytt ut med «device.ask.default»"
 
-#: src/main/par.c:156
+#: src/main/par.c:157
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "ugyldig verdi oppgjeven for den grafiske parameteren «%s»"
 
-#: src/main/par.c:163
+#: src/main/par.c:164
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "den grafiske parameteren «%s» har feil lengd"
 
-#: src/main/par.c:257 src/main/par.c:687
+#: src/main/par.c:259 src/main/par.c:693
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "den grafiske parameteren «%s» kan ikkje definerast"
 
-#: src/main/par.c:325 src/main/par.c:715
+#: src/main/par.c:327 src/main/par.c:721
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "den grafiske parameteren «family» har ei makslengd på 200 byte"
 
-#: src/main/par.c:454
+#: src/main/par.c:456
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "parameteren «mfg» har feil lengd"
 
-#: src/main/par.c:462
+#: src/main/par.c:464
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "parameteren «i» i «mfg» ligg utanfor gyldig verdiområde"
 
-#: src/main/par.c:464
+#: src/main/par.c:466
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "parameteren «j» i «mfg» ligg utanfor gyldig verdiområde"
 
-#: src/main/par.c:469
+#: src/main/par.c:471
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nr» i «mfg» er feil, og vert ikkje brukt"
 
-#: src/main/par.c:471
+#: src/main/par.c:473
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nc» i «mfg» er feil, og vert ikkje brukt"
 
-#: src/main/par.c:497
+#: src/main/par.c:499
 msgid "calling par(new=TRUE) with no plot"
 msgstr "kallar par(new=TRUE) utan noko plott"
 
-#: src/main/par.c:679 src/main/par.c:1092
+#: src/main/par.c:685 src/main/par.c:1102
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "den grafiske parameteren «%s» er utdatert"
 
-#: src/main/par.c:683 src/main/par.c:1096
+#: src/main/par.c:689 src/main/par.c:1106
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "«%s» er ikkje ein grafisk parameter"
 
-#: src/main/par.c:1149
+#: src/main/par.c:1159
 msgid "invalid argument passed to par()"
 msgstr "ugyldig argument sendt til par()"
 
-#: src/main/par.c:1208
+#: src/main/par.c:1204
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "for mange rader i oppsett (grense: %d)"
 
-#: src/main/par.c:1214
+#: src/main/par.c:1210
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "for mange kolonnar i oppsett (grense: %d)"
 
-#: src/main/par.c:1216
+#: src/main/par.c:1212
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "for mange celler i oppsett (grense: %d)"
@@ -5274,12 +5274,12 @@ msgstr "klarte ikkje fastsetja heimeadressa til R"
 msgid "file name too long"
 msgstr "filnamnet er for langt"
 
-#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1628
-#: src/main/sysutils.c:1642
+#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1649
+#: src/main/sysutils.c:1663
 msgid "internal out-of-memory condition"
 msgstr "intern «ikkje nok minne»-feil"
 
-#: src/main/platform.c:1471 src/main/sysutils.c:1638
+#: src/main/platform.c:1471 src/main/sysutils.c:1659
 #, c-format
 msgid "read error on '%s'"
 msgstr "lesefeil på «%s»"
@@ -6965,8 +6965,8 @@ msgstr "klarte ikkje fastsetja siste endringstidspunkt til «%s»"
 msgid "encoding of a filename cannot be 'bytes'"
 msgstr ""
 
-#: src/main/sysutils.c:170 src/main/sysutils.c:782 src/main/sysutils.c:797
-#: src/main/sysutils.c:891
+#: src/main/sysutils.c:170 src/main/sysutils.c:803 src/main/sysutils.c:818
+#: src/main/sysutils.c:912
 #, fuzzy, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
 msgstr "ikkje-støtta omgjering frå «%s» til «%s»"
@@ -7021,69 +7021,74 @@ msgstr "dette systemet kan ikkje avdefinera omgjevnadsvariablar: set til \"\""
 msgid "'Sys.unsetenv' is not available on this system"
 msgstr "«Sys.unsetenv» er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/sysutils.c:587
-msgid "'x' must be a character vector"
-msgstr "«x» må vera ein teiknvektor"
-
-#: src/main/sysutils.c:621
+#: src/main/sysutils.c:620
 #, fuzzy, c-format
 msgid "unsupported conversion from '%s' to '%s' in codepage %d"
 msgstr "ikkje-støtta omgjering frå «%s» til «%s»"
 
-#: src/main/sysutils.c:705 src/main/sysutils.c:768 src/main/sysutils.c:867
-#: src/main/sysutils.c:881 src/main/sysutils.c:956
+#: src/main/sysutils.c:635
+msgid "'x' must be a character vector"
+msgstr "«x» må vera ein teiknvektor"
+
+#: src/main/sysutils.c:650
+#, fuzzy
+msgid "'x' must be a list of NULL or raw vectors"
+msgstr "«x» må vera ein teiknvektor"
+
+#: src/main/sysutils.c:726 src/main/sysutils.c:789 src/main/sysutils.c:888
+#: src/main/sysutils.c:902 src/main/sysutils.c:977
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "«%s» må kallast på ein CHARSXP"
 
-#: src/main/sysutils.c:771 src/main/sysutils.c:886 src/main/sysutils.c:959
+#: src/main/sysutils.c:792 src/main/sysutils.c:907 src/main/sysutils.c:980
 msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr ""
 
-#: src/main/sysutils.c:985
+#: src/main/sysutils.c:1006
 #, fuzzy, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "ikkje-støtta omgjering frå «%s» til «%s»"
 
-#: src/main/sysutils.c:1398
+#: src/main/sysutils.c:1419
 msgid "cannot mkdir R_TempDir"
 msgstr "klarte ikkje køyra «mkdir R_TempDir»"
 
-#: src/main/sysutils.c:1402 src/main/sysutils.c:1409 src/main/sysutils.c:1412
+#: src/main/sysutils.c:1423 src/main/sysutils.c:1430 src/main/sysutils.c:1433
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "klarte ikkje definera R_SESSION_TMPDIR"
 
-#: src/main/sysutils.c:1421
+#: src/main/sysutils.c:1442
 msgid "cannot allocate R_TempDir"
 msgstr "klarte ikkje reservera R_TempDir"
 
-#: src/main/sysutils.c:1454
+#: src/main/sysutils.c:1475
 #, fuzzy
 msgid "temporary name too long"
 msgstr "filnamnet er for langt"
 
-#: src/main/sysutils.c:1469
+#: src/main/sysutils.c:1490
 msgid "cannot find unused tempfile name"
 msgstr "finn ikkje ubrukt «tempfile»-namn"
 
-#: src/main/sysutils.c:1472
+#: src/main/sysutils.c:1493
 #, fuzzy
 msgid "allocation failed in R_tmpnam2"
 msgstr "reserveringsfeil i «R_tmpnam»"
 
-#: src/main/sysutils.c:1498
+#: src/main/sysutils.c:1519
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() er ikkje implementert på dette systemet"
 
-#: src/main/sysutils.c:1550
+#: src/main/sysutils.c:1571
 msgid "setTimelimit() is not implemented on this system"
 msgstr "setTimelimit() er ikkje implementert på dette systemet"
 
-#: src/main/sysutils.c:1578
+#: src/main/sysutils.c:1599
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr "setSessionTimelimit() er ikkje implementert på dette systemet"
 
-#: src/main/sysutils.c:1616
+#: src/main/sysutils.c:1637
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "«dirmark = TRUE» er ikkje støtta på denne plattforma"
 

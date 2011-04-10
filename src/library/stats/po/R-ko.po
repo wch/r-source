@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -619,9 +619,8 @@ msgstr "무효인 'tree'(merge 성분)입니다"
 msgid "either 'k' or 'h' must be specified"
 msgstr "'k' 이거나 'h'가 지정되지 않으면 안됩니다"
 
-msgid ""
-"the 'height' component of 'tree' is not sorted\n"
-"(increasingly); consider applying as.hclust() first"
+#, fuzzy
+msgid "the 'height' component of 'tree' is not sorted (increasingly)"
 msgstr ""
 "'tree'의 'height'요소는 승순에 sort되어 있지 않습니다.\n"
 "최초로 as.hclust()를 적용하는 것을 고려해 주십시오"
@@ -1831,8 +1830,12 @@ msgstr ""
 msgid "use \"Brent\" or optimize() directly"
 msgstr ""
 
-msgid "\"Brent\" is only available for one-dimensional minimization"
+msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
+
+#, fuzzy
+msgid "'lower' and 'upper' must be finite values"
+msgstr "'k' 그리고 'h'는 scalar가 아니면 되지 않습니다"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr ""
@@ -2124,6 +2127,10 @@ msgstr "잘못한 단점규칙입니다"
 
 msgid "invalid 'control.spar'"
 msgstr "무효인 'control.spar'입니다"
+
+#, fuzzy
+msgid "missing or infinite values in inputs are not allowed"
+msgstr "결손 또는 negative의 중량감은 허용되지 않습니다"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "'x'와 'w'의 길이는 일치하지 않으면 되지 않습니다"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -597,9 +597,8 @@ msgstr "'tree'不对(将组件合并)"
 msgid "either 'k' or 'h' must be specified"
 msgstr "'k'和'h'中必需设定一个"
 
-msgid ""
-"the 'height' component of 'tree' is not sorted\n"
-"(increasingly); consider applying as.hclust() first"
+#, fuzzy
+msgid "the 'height' component of 'tree' is not sorted (increasingly)"
 msgstr ""
 "'tree'里的'height'组件没有排序\n"
 "由小到大；应该先用as.hclust()"
@@ -1713,8 +1712,12 @@ msgstr "用Nelder-Mead方法来算一维优化不很可靠，用optimize"
 msgid "use \"Brent\" or optimize() directly"
 msgstr ""
 
-msgid "\"Brent\" is only available for one-dimensional minimization"
+msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
+
+#, fuzzy
+msgid "'lower' and 'upper' must be finite values"
+msgstr "'k'和'h'必需都是纯量"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "成双检验与合并SD不兼容"
@@ -1983,6 +1986,10 @@ msgstr "尺尾不对"
 
 msgid "invalid 'control.spar'"
 msgstr "'control.spar'不对"
+
+#, fuzzy
+msgid "missing or infinite values in inputs are not allowed"
+msgstr "权数不允许是遺漏值或负值"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "'x'和'w'的长度必需相等"

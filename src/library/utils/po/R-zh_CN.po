@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:16\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -87,6 +87,12 @@ msgstr ""
 #, fuzzy
 msgid "invalid value for %s : %s"
 msgstr "'%s'的值不对: %s"
+
+msgid "value of 'results' option should be lowercase"
+msgstr ""
+
+msgid "value of 'strip.white' option should be lowercase"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用'what'值里的第一个元素"
@@ -301,7 +307,7 @@ msgstr "没有与題目'%s'有关的演示"
 
 #, fuzzy
 msgid ""
-"Demo for topic %' found more than once,\n"
+"Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
 "有多个与題目'%s'有关的演示，\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2011-03-29 20:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -624,9 +624,8 @@ msgstr "'tree' incorrect (composante merge)"
 msgid "either 'k' or 'h' must be specified"
 msgstr "'k' ou 'h' doivent être spécifiés"
 
-msgid ""
-"the 'height' component of 'tree' is not sorted\n"
-"(increasingly); consider applying as.hclust() first"
+#, fuzzy
+msgid "the 'height' component of 'tree' is not sorted (increasingly)"
 msgstr ""
 "la composante 'height' de 'tree' n'est pas triée\n"
 "(par ordre croissant) ; envisagez d'utiliser d'abord as.hclust()"
@@ -1825,8 +1824,12 @@ msgstr ""
 msgid "use \"Brent\" or optimize() directly"
 msgstr ""
 
-msgid "\"Brent\" is only available for one-dimensional minimization"
+msgid "method = \"Brent\" is only available for one-dimensional optimization"
 msgstr ""
+
+#, fuzzy
+msgid "'lower' and 'upper' must be finite values"
+msgstr "'k' et 'h' doivent être des scalaires"
 
 msgid "Pooling of SD is incompatible with paired tests"
 msgstr "Le regroupement des SD est incompatible avec les tests appariés"
@@ -2110,6 +2113,10 @@ msgstr "règle de fin incorrecte"
 
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' incorrect"
+
+#, fuzzy
+msgid "missing or infinite values in inputs are not allowed"
+msgstr "les poids manquants ou négatifs ne sont pas autorisés"
 
 msgid "lengths of 'x' and 'w' must match"
 msgstr "les longueurs de 'x' et de 'w' doivent correspondre"

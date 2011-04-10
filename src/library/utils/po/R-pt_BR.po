@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:16\n"
+"POT-Creation-Date: 2011-04-10 07:45\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -81,6 +81,12 @@ msgid "\\SweaveInput is not compatible with concordances."
 msgstr ""
 
 msgid "invalid value for %s : %s"
+msgstr ""
+
+msgid "value of 'results' option should be lowercase"
+msgstr ""
+
+msgid "value of 'strip.white' option should be lowercase"
 msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
@@ -285,7 +291,7 @@ msgid "No demo found for topic %s"
 msgstr ""
 
 msgid ""
-"Demo for topic %' found more than once,\n"
+"Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
 
