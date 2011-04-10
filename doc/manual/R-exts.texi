@@ -504,8 +504,13 @@ the field's value to @samp{yes} or @samp{true} for lazy-loading and
 also accepted.)  If the package you are writing uses the @pkg{methods}
 package, specify @samp{LazyLoad: yes}.
 
+The @samp{KeepSource} field controls if the package code is sourced
+using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
+exceptionally for a package designed to always be used with
+@code{keep.source = TRUE}.
+
 The @samp{ZipData} field controls whether the automatic Windows build
-will zip up the data directory or no: set this to @samp{no} if your
+will zip up the data directory or not: set this to @samp{no} if your
 package will not work with a zipped data directory.  (Setting to any
 other value is deprecated, and it is unused as from @R{} 2.13.0: but it
 might still be needed if the package can be installed under earlier

@@ -156,7 +156,7 @@
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
-    \itemize{
+   \itemize{
       \item \code{require()} no longer has a \code{save} argument.
 
       \item The \code{gamma} argument to \code{hsv()},
@@ -198,6 +198,20 @@
       \code{"NA"}.
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Package \file{DESCRIPTION} file field \samp{KeepSource}
+      forces the package to be installed/loaded with \code{keep.source =
+	TRUE} (or \code{FALSE}).   This applies at package installation
+      time for packages using lazy-loading.  (Suggestion of Greg Snow.)
+
+      There are corresponding options \option{--with-keep.source} and
+      \option{--without-keep.source} for \command{R CMD INSTALL} for
+      packages using lazy-loading.
+    }
+  }
+
   \subsection{INSTALLATION}{
     \itemize{
       \item Building the vignettes is now part of running \command{make}
@@ -208,6 +222,7 @@
       hence will be laid out differently.
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor

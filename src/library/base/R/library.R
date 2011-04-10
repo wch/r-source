@@ -284,6 +284,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             }
             .getRequiredPackages2(pkgInfo, quietly = quietly)
             deps <- unique(names(pkgInfo$Depends))
+
+            ## Check is package specified keep.source
+            value <- pkgInfo$DESCRIPTION["KeepSource"]
+            if (!is.na(value))
+                keep.source <- switch(value,
+                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                    keep.source)
+
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
