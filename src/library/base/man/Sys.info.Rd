@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Copyright      2008 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -26,6 +26,7 @@ Sys.info()
   \item{user}{The name of the real user ID, or \code{"unknown"} if it
     cannot be ascertained.}
 #ifdef unix
+  
   The first five fields come from the \code{uname(2)} system call.  The
   login name comes from \code{getlogin(2)}, and the user name from
   \code{getpwuid(getuid())}

@@ -6,13 +6,17 @@ Development Core Team.
 
 See the file COPYING for the exact conditions under which you may
 redistribute it.  R as a whole is distributed under GPL version 2:
-most source files contain a copyright statement allow use of that file
-under GPL version 2 or later: the main exceptions are packages 'rpart'
-(GPL-2 only), 'MASS', 'class', 'nnet' and 'spatial' (GPL-2 or GPL-3).
+most source files contain a copyright statement allowing use of that
+file under GPL version 2 or later: the main exceptions are the
+currently included versions of packages 'rpart' (GPL-2 only), 'MASS',
+'class', 'nnet' and 'spatial' (GPL-2 or GPL-3).
 
 The status of files used only in the Windows port is in file
 src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
 Windows distributions.
+
+Note that all the code *is* copyright and may only be reproduced if
+the copyright notice (that in the file or this notice) is preserved.
 
 	---------------------------------------------------
 
