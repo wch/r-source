@@ -142,10 +142,27 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Package \file{DESCRIPTION} file field \samp{KeepSource}
+      forces the package to be installed/loaded with \code{keep.source =
+	TRUE} (or \code{FALSE}).   This applies at package installation
+      time for packages using lazy-loading.  (Suggestion of Greg Snow.)
+
+      There are corresponding options \option{--with-keep.source} and
+      \option{--without-keep.source} for \command{R CMD INSTALL} for
+      packages using lazy-loading.
+    }
+  }
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now gives an error if the \R code in a
       vignette fails to run, unless this is caused by a missing package.
+
+      It now unpacks tarballs in the same way as \command{R CMD
+      INSTALL}, including making use of the environment variable
+      \env{R_INSTALL_TAR} to override the default behaviour.
 
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
@@ -199,26 +216,13 @@
     }
   }
 
-  \subsection{PACKAGE INSTALLATION}{
-    \itemize{
-      \item Package \file{DESCRIPTION} file field \samp{KeepSource}
-      forces the package to be installed/loaded with \code{keep.source =
-	TRUE} (or \code{FALSE}).   This applies at package installation
-      time for packages using lazy-loading.  (Suggestion of Greg Snow.)
-
-      There are corresponding options \option{--with-keep.source} and
-      \option{--without-keep.source} for \command{R CMD INSTALL} for
-      packages using lazy-loading.
-    }
-  }
-
   \subsection{INSTALLATION}{
     \itemize{
       \item Building the vignettes is now part of running \command{make}
       from an SVN checkout: a separate \command{make vignettes} is no
       longer required.
 
-      These vignette PDF are now made with \code{keep.source = TRUE} and
+      These vignette PDFs are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
     }
   }

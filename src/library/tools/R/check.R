@@ -2778,7 +2778,13 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 errorLog(Log, sprintf("cannot create %s", sQuote(dir)))
                 do_exit(1L)
             }
-            untar(pkg, exdir = dir)
+            ## force the use of internal untar unless over-ridden
+            ## so e.g. .tar.xz works everywhere
+            if (untar(pkg, exdir = dir,
+                      tar =  Sys.getenv("R_INSTALL_TAR", "internal"))) {
+                errorLog(Log, sprintf("cannot unpack %s", sQuote(pkg)))
+                do_exit(1L)
+            }
             ## this assumes foo_x.y.tar.gz unpacks to foo, but we are about
             ## to test that.
             pkg <- file.path(dir, pkgname0)
