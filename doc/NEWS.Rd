@@ -8,10 +8,11 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The \code{yLineBias} of the \code{X11()} and
-      \code{windows()} families of devices has been changed from 0.1 to 0.2:
-      this changes slightly the vertical positioning of text (including axis
-      annotations).   This is mainly for consistency with other devices
-      such as \code{quartz()} and \code{pdf()}.  (Wish of \PR{14538}.)
+      \code{windows()} families of devices has been changed from 0.1 to
+      0.2: this changes slightly the vertical positioning of text in the
+      margins (including axis annotations).  This is mainly for
+      consistency with other devices such as \code{quartz()} and
+      \code{pdf()}.  (Wish of \PR{14538}.)
 
       There is a new graphics parameter \code{"ylbias"} which
       allows the y-line bias of the graphics device to be tweaked,
@@ -46,22 +47,22 @@
       \pkg{tools}.
 
       \item \code{iconv} has a new argument \code{toRaw} to handle (as
-      before the \code{CHARSXP} cache was introduced) encodings such as
-      \code{UTF-16} with embedded nuls.
+      was possible before the \code{CHARSXP} cache was introduced)
+      encodings such as \code{UTF-16} with embedded nuls.
 
       It will also accept as input the type of list generated with
       \code{toRaw = TRUE}.
 
       \item Garbage-collecting an input text connection no longer gives
-      a warning (it \sQuote{connects} to nothing outside \R).
+      a warning (since it \sQuote{connects} to nothing outside \R).
 
       \item \code{read.table()} and \code{scan()} have gained a
       \code{text} argument, to allow reading data from a (possibly
       literal) character string.
 
       \item \code{optim(*, method= .)} now allows \code{method="Brent"}
-      as interface to \code{optimize()}, for cases such as \code{mle()}
-      where \code{optim()} is used internally.
+      as an interface to \code{optimize()}, for use in cases such as
+      \code{mle()} where \code{optim()} is used internally.
 
       \item \code{mosaicplot()} gains a \code{border} argument.
       (Wish of \PR{14550}.)
@@ -193,7 +194,7 @@
 \section{CHANGES IN R VERSION 2.13.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{iconv} no longer translates \code{NA} strings as
+      \item \code{iconv()} no longer translates \code{NA} strings as
       \code{"NA"}.
     }
   }
