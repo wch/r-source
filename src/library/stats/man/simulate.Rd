@@ -1,6 +1,6 @@
 % File src/library/stats/man/simulate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{simulate}
@@ -10,7 +10,7 @@
   corresponding to a fitted model object.
 }
 \usage{
-simulate(object, nsim, seed, \dots)
+simulate(object, nsim = 1, seed = NULL, \dots)
 }
 \alias{simulate}
 \arguments{
@@ -35,10 +35,10 @@ simulate(object, nsim, seed, \dots)
   %% for large-scale simulation, already for stats:::simulate.lm (in ../R/lm.R )
 
   For the \code{"lm"} method, the result is a data frame with an
-  attribute \code{"seed"} containing the \code{seed} argument if not
-  \code{NULL} with \code{"kind"} attributes the value of
-  \code{as.list(\link{RNGkind}())}, otherwise (the default) the value of
-  \code{\link{.Random.seed}} before the simulation was started.
+  attribute \code{"seed"}.  If argument \code{seed} is \code{NULL}, the
+  attribute is the value of \code{\link{.Random.seed}} before the
+  simulation was started; otherwise it is the value of the argument with
+  a \code{"kind"} attribute with value \code{as.list(\link{RNGkind}())}.
 }
 \details{
   This is a generic function.  Consult the individual modeling functions
@@ -89,14 +89,14 @@ simulate(object, nsim, seed, \dots)
 }
 \examples{
 x <- 1:5
-mod1 <- lm(c(1:3,7,6) ~ x)
+mod1 <- lm(c(1:3, 7, 6) ~ x)
 S1 <- simulate(mod1, nsim = 4)
 ## repeat the simulation:
 .Random.seed <- attr(S1, "seed")
 identical(S1, simulate(mod1, nsim = 4))
 
 S2 <- simulate(mod1, nsim = 200, seed = 101)
-rowMeans(S2) # should be about
+rowMeans(S2) # should be about the same as
 fitted(mod1)
 
 ## repeat identically:
@@ -110,7 +110,7 @@ do.call(RNGkind, attr(sseed, "kind"))
 identical(S2, simulate(mod1, nsim = 200, seed = sseed))
 
 ## Binomial GLM examples
-yb1 <- matrix(c(4,4,5,7,8,6,6,5,3,2), ncol = 2)
+yb1 <- matrix(c(4, 4, 5, 7, 8, 6, 6, 5, 3, 2), ncol = 2)
 modb1 <- glm(yb1 ~ x, family = binomial)
 S3 <- simulate(modb1, nsim = 4)
 # each column of S3 is a two-column matrix.
