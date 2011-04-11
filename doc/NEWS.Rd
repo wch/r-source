@@ -213,6 +213,10 @@
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
       \code{"NA"}.
+      
+      \item \code{persp(box = TRUE)} now warns if the surface extends
+      outside the box (since occlusion for the box and axes is computed
+      assuming the box is a bounding box). (\PR{202}.)
     }
   }
 
