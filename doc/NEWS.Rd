@@ -241,6 +241,9 @@
       \item \code{mosaicplot()} could clip the factor labels, and could
       overlap them with the cells if a non-default value of
       \code{cex.axis} was used.  (Related to \PR{14550}.)
+      
+      \item \code{sort.int()} would strip the class of an object, but
+      leave its object bit set.  (Reported by Bill Dunlap.)      
     }
   }
 }

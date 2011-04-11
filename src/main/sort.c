@@ -316,6 +316,7 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
        so as from 2.3.0 we always duplicate. */
     PROTECT(ans = duplicate(CAR(args)));
     SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */
+    SET_OBJECT(ans, 0);		  /* we may have just stripped off the class */
     sortVector(ans, decreasing);
     UNPROTECT(1);
     return(ans);
@@ -575,6 +576,7 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     SETCAR(args, duplicate(CAR(args)));
     SET_ATTRIB(CAR(args), R_NilValue);  /* remove all attributes */
+    SET_OBJECT(CAR(args), 0);           /* and the object bit    */
     Psort0(CAR(args), 0, n - 1, l, k);
     return CAR(args);
 }
