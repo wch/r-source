@@ -1,6 +1,6 @@
 % File src/library/graphics/man/persp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{persp}
@@ -8,8 +8,8 @@
 \alias{persp.default}
 \title{Perspective Plots}
 \description{
-  This function draws perspective plots of surfaces over the
-  x--y plane. \code{persp} is a generic function.
+  This function draws perspective plots of a surface over the
+  x--y plane.  \code{persp} is a generic function.
 }
 \usage{
 persp(x, \dots)
@@ -35,8 +35,8 @@ persp(x, \dots)
   \item{z}{a matrix containing the values to be plotted (\code{NA}s are
     allowed).  Note that \code{x} can be used instead of \code{z} for
     convenience.}
-  \item{xlim, ylim, zlim}{x-, y-  and z-limits.  The plot is produced
-    so that the rectangular volume defined by these limits is visible.}
+  \item{xlim, ylim, zlim}{x-, y-  and z-limits.  These should be chosen
+    to cover the range of values of the surface: see \sQuote{Details}.}
   \item{xlab, ylab, zlab}{titles for the axes.  N.B. These must be
     character strings; expressions are not accepted.  Numbers will be
     coerced to character strings.}
@@ -90,16 +90,17 @@ persp(x, \dots)
 }
 \value{
   \code{persp()} returns the \emph{viewing transformation matrix}, say
-  \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
-  \eqn{(x,y,z)} into the 2D plane using homogeneous 4D coordinates
-  \eqn{(x,y,z,t)}.
-  It can be used to superimpose additional graphical elements on the 3D
-  plot, by \code{\link{lines}()} or \code{\link{points}()},
-  using the simple function \code{\link{trans3d}()}.
+  \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D
+  coordinates \eqn{(x,y,z)} into the 2D plane using homogeneous 4D
+  coordinates \eqn{(x,y,z,t)}.  It can be used to superimpose
+  additional graphical elements on the 3D plot, by
+  \code{\link{lines}()} or \code{\link{points}()}, using the
+  function \code{\link{trans3d}()}. 
 }
 \details{
-  The plots are produced by first transforming the
-  coordinates to the interval [0,1].  The surface is then viewed
+  The plots are produced by first transforming the (x,y,z)
+  coordinates to the interval [0,1] using the limits supplied or
+  computed from the range of the data.  The surface is then viewed
   by looking at the origin from a direction defined by \code{theta}
   and \code{phi}.  If \code{theta} and \code{phi} are both zero
   the viewing direction is directly down the negative y axis.
@@ -120,8 +121,13 @@ persp(x, \dots)
   The sizes and fonts of the axis labels and the annotations for
   \code{ticktype="detailed"} are controlled by graphics parameters
   \code{"cex.lab"}/\code{"font.lab"} and
-  \code{"cex.axis"}/\code{"font.axis"} respectively.  (This changed in
-  \R 2.5.0.)
+  \code{"cex.axis"}/\code{"font.axis"} respectively.
+
+  The bounding box is drawn with edges of faces facing away from the
+  viewer (and hence at the back of the box) with solid lines and other
+  edges dashed and on top of the surface.  This (and the plotting of the
+  axes) assumes that the axis limits are chosen so that the surface
+  is within the box.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
