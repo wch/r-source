@@ -105,9 +105,9 @@
       installs, or (on Windows) to \code{TRUE} so that binary installs
       implement locking.
 
-      \item \code{sort(partial=p)} for large \code{p} now tries shell
-      sort if quicksort is not appropriate and so works for non-numeric
-      atomic vectors.
+      \item \code{sort(partial = p)} for large \code{p} now tries
+      Shellsort if quicksort is not appropriate and so works for
+      non-numeric atomic vectors.
 
       \item \code{sapply()} gets a new option \code{simplify = "array"}
       which returns a \dQuote{higher rank} array instead of just a matrix
