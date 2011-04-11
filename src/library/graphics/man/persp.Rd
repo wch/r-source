@@ -8,8 +8,8 @@
 \alias{persp.default}
 \title{Perspective Plots}
 \description{
-  This function draws perspective plots of surfaces over the
-  x--y plane. \code{persp} is a generic function.
+  This function draws perspective plots of a surface over the
+  x--y plane.  \code{persp} is a generic function.
 }
 \usage{
 persp(x, \dots)
@@ -92,7 +92,7 @@ persp(x, \dots)
   \code{persp()} returns the \emph{viewing transformation matrix}, say
   \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D
   coordinates \eqn{(x,y,z)} into the 2D plane using homogeneous 4D
-  coordinates \eqn{(x,y,z,t)}. It can be used to superimpose
+  coordinates \eqn{(x,y,z,t)}.  It can be used to superimpose
   additional graphical elements on the 3D plot, by
   \code{\link{lines}()} or \code{\link{points}()}, using the
   function \code{\link{trans3d}()}. 
