@@ -1,6 +1,6 @@
 % File src/library/stats/man/simulate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{simulate}
@@ -35,10 +35,10 @@ simulate(object, nsim, seed, \dots)
   %% for large-scale simulation, already for stats:::simulate.lm (in ../R/lm.R )
 
   For the \code{"lm"} method, the result is a data frame with an
-  attribute \code{"seed"} containing the \code{seed} argument if not
-  \code{NULL} with \code{"kind"} attributes the value of
-  \code{as.list(\link{RNGkind}())}, otherwise (the default) the value of
-  \code{\link{.Random.seed}} before the simulation was started.
+  attribute \code{"seed"}.  If argument \code{seed} is \code{NULL}, the
+  attribute is the value of \code{\link{.Random.seed}} before the
+  simulation was started; otherwise it is the value of the argument with
+  a \code{"kind"} attribute with value \code{as.list(\link{RNGkind}())}.
 }
 \details{
   This is a generic function.  Consult the individual modeling functions
