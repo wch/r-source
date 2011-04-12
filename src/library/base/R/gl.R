@@ -15,6 +15,17 @@
 #  http://www.r-project.org/Licenses/
 
 ## gl function of GLIM
+
 gl <- function (n, k, length = n*k, labels=1:n, ordered=FALSE)
-    factor(rep(rep.int(1:n, rep.int(k,n)), length.out=length),
-	   levels=1:n, labels=labels, ordered=ordered)
+  {
+    ## We avoid calling factor(), for efficiency.
+    
+    ## Must set levels before class.
+    ## That way, `levels<-` will pick up an invalid
+    ## labels specification.
+   
+    f <- rep(rep.int(1:n, rep.int(k,n)), length.out=length)
+    levels(f) <- as.character(labels)
+    class(f) <- c(if (ordered) "ordered", "factor")
+    f
+  }
