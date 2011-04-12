@@ -537,7 +537,8 @@ static void popReadline(void)
 
 static void readline_handler(char *line)
 {
-    int l, buflen = rl_top->readline_len;
+    int l;
+    R_size_t buflen = rl_top->readline_len;
 
     popReadline();
 

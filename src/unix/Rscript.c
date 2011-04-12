@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 	usage();
 	exit(1);
     }
-    av = (char **) malloc((argc+4)*sizeof(char *));
+    av = (char **) malloc((size_t) (argc+4)*sizeof(char *));
     if(!av) {
 	fprintf(stderr, "malloc failure\n");
 	exit(1);
