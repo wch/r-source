@@ -1286,9 +1286,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* we checked the type above, but be sure */
 		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
-	    if (OP == 1) {
-		if (cnt > 0) sum /= cnt; else sum = NA_REAL;
-	    }
+	    if (OP == 1) sum /= cnt;
 	    REAL(ans)[j] = sum;
 	}
     }
@@ -1324,7 +1322,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    for (ra = rans, i = 0; i < n; i++) *ra++ /= p;
 		else {
 		    for (ra = rans, c = Cnt, i = 0; i < n; i++, c++)
-			if (*c > 0) *ra++ /= *c; else *ra++ = NA_REAL;
+			*ra++ /= *c;
 		    Free(Cnt);
 		}
 	    }
@@ -1352,9 +1350,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* we checked the type above, but be sure */
 		UNIMPLEMENTED_TYPEt("do_colsum", type);
 	    }
-	    if (OP == 3) {
-		if (cnt > 0) sum /= cnt; else sum = NA_REAL;
-	    }
+	    if (OP == 3) sum /= cnt; /* gives NaN for cnt = 0 */
 	    REAL(ans)[i] = sum;
 	}
     }

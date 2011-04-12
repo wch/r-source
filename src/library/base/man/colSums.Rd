@@ -1,6 +1,6 @@
 % File src/library/base/man/colSums.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{colSums}
@@ -52,7 +52,7 @@ rowMeans(x, na.rm = FALSE, dims = 1)
 
   If there are no values in a range to be summed over (after removing
   missing values with \code{na.rm = TRUE}), that
-  component of the output is set to \code{0} (\code{*Sums}) or \code{NA}
+  component of the output is set to \code{0} (\code{*Sums}) or \code{NaN}
   (\code{*Means}), consistent with \code{\link{sum}} and
   \code{\link{mean}}.
 }
