@@ -1064,7 +1064,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* check the permutation */
 
-    int *pp = (int *) R_alloc(n, sizeof(int));
+    int *pp = (int *) R_alloc((size_t) n, sizeof(int));
     perm = CADR(args);
     if (length(perm) == 0) {
 	for (i = 0; i < n; i++) pp[i] = n-1-i;
@@ -1091,7 +1091,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else error(_("'perm' is of wrong length"));
     }
 
-    int *iip = (int *) R_alloc(n, sizeof(int));
+    int *iip = (int *) R_alloc((size_t) n, sizeof(int));
     for (i = 0; i < n; iip[i++] = 0);
     for (i = 0; i < n; i++)
 	if (pp[i] >= 0 && pp[i] < n) iip[pp[i]]++;
@@ -1101,7 +1101,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* create the stride object and permute */
 
-    int *stride = (int *) R_alloc(n, sizeof(int));
+    int *stride = (int *) R_alloc((size_t) n, sizeof(int));
     for (iip[0] = 1, i = 1; i<n; i++) iip[i] = iip[i-1] * isa[i-1];
     for (i = 0; i < n; i++) stride[i] = iip[pp[i]];
 

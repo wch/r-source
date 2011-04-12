@@ -92,7 +92,7 @@ static char *findterm(char *s)
 {
     char *p, *q, *r2, *ss=s;
     static char ans[BUF_SIZE];
-    int nans;
+    size_t nans;
 
     if(!strlen(s)) return "";
     ans[0] = '\0';
@@ -104,9 +104,9 @@ static char *findterm(char *s)
 	if(!q) break;
 	/* copy over leading part */
 	nans = strlen(ans);
-	strncat(ans, s, p-s); ans[nans + p - s] = '\0';
+	strncat(ans, s, (size_t) (p - s)); ans[nans + p - s] = '\0';
 	char r[q - p + 2];
-	strncpy(r, p, q - p + 1);
+	strncpy(r, p, (size_t) (q - p + 1));
 	r[q - p + 1] = '\0';
 	r2 = subterm(r);
 	if(strlen(ans) + strlen(r2) < BUF_SIZE) strcat(ans, r2); else return ss;
