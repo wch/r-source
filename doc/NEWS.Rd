@@ -231,6 +231,15 @@
     }
   }
 
+  \subsection{LICENCE}{
+    \itemize{
+      \item No parts of \R are now licensed solely under GPL-3.  The
+      licences for packages \pkg{rpart} and \pkg{survival} have been
+      changed, which means that the licence terms for \R as distributed
+      are GPL-2 | GPL-3.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor

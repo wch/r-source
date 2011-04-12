@@ -16,11 +16,11 @@
 
 licence <- license <- function() {
     cat("\nThis software is distributed under the terms of the GNU General\n")
-    cat("Public License Version 2, June 1991.  The terms of this license\n")
-    cat("are in a file called COPYING which you should have received with\n")
+    cat("Public License, either Version 2, June 1991 or Version 3, June 2007.\n")
+    cat("The terms of version 2 of the license are in a file called COPYING\nwhich you should have received with\n")
     cat("this software and which can be displayed by RShowDoc(\"COPYING\").\n")
     cat("\n")
-    cat("If you have not received a copy of this file, you can obtain one\n")
+    cat("Copies of both versions 2 and 3 of the license can be found\n")
     cat("at http://www.R-project.org/Licenses/.\n")
     cat("\n")
     cat("A small number of files (the API header files listed in\n")
