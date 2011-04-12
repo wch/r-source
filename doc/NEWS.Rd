@@ -204,6 +204,9 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{nobs(mle(*, nobs = .))} now works.
+
+      \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
+      methods for the selected column (spotted by Bill Dunlap).
     }
   }
 }

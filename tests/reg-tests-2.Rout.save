@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-03-29 r55143)
+R version 2.14.0 Under development (unstable) (2011-04-12 r55412)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6721,4 +6721,21 @@ a   NA
    z
 a NA
 > ## overflow in R < 2.13.0.
+> 
+> 
+> ## method dispatch in [[.data.frame:
+> ## https://stat.ethz.ch/pipermail/r-devel/2011-April/060409.html
+> d <- data.frame(num = 1:4,
++           fac = factor(letters[11:14], levels = letters[1:15]),
++           date = as.Date("2011-04-01") + (0:3),
++           lt = as.POSIXlt("2011-04-01") + (0:3)*1e5,
++           pv = package_version(c("1.2-3", "4.5", "6.7", "8.9-10")))
+> for (i in 1:5) print(d[[1, i]])
+[1] 1
+[1] k
+Levels: a b c d e f g h i j k l m n o
+[1] "2011-04-01"
+[1] "2011-04-01 BST"
+[1] '1.2.3'
+> ## did not dispatch in R < 2.14.0
 > 

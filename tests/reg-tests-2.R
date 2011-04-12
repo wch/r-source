@@ -2558,3 +2558,14 @@ x <- 2e9L
 rowsum(c(x, x), c("a", "a"))
 rowsum(data.frame(z = c(x, x)), c("a", "a"))
 ## overflow in R < 2.13.0.
+
+
+## method dispatch in [[.data.frame:
+## https://stat.ethz.ch/pipermail/r-devel/2011-April/060409.html
+d <- data.frame(num = 1:4,
+          fac = factor(letters[11:14], levels = letters[1:15]),
+          date = as.Date("2011-04-01") + (0:3),
+          lt = as.POSIXlt("2011-04-01") + (0:3)*1e5,
+          pv = package_version(c("1.2-3", "4.5", "6.7", "8.9-10")))
+for (i in 1:5) print(d[[1, i]])
+## did not dispatch in R < 2.14.0
