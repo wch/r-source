@@ -67,7 +67,7 @@ double bessel_i(double x, double alpha, double expo)
     if (!bi) MATHLIB_ERROR("%s", _("bessel_i allocation error"));
 #else
     vmax = vmaxget();
-    bi = (double *) R_alloc(nb, sizeof(double));
+    bi = (double *) R_alloc((size_t) nb, sizeof(double));
 #endif
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */

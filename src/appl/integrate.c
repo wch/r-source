@@ -90,8 +90,8 @@ SEXP call_dqags(SEXP args)
     epsrel = asReal(CAR(args)); args = CDR(args);
     limit = asInteger(CAR(args)); args = CDR(args);
     lenw = 4 * limit;
-    iwork = (int *) R_alloc(limit, sizeof(int));
-    work = (double *) R_alloc(lenw, sizeof(double));
+    iwork = (int *) R_alloc((size_t) limit, sizeof(int));
+    work = (double *) R_alloc((size_t) lenw, sizeof(double));
 
     Rdqags(Rintfn, (void*)&is,
 	   &lower, &upper, &epsabs, &epsrel, &result,
@@ -132,8 +132,8 @@ SEXP call_dqagi(SEXP args)
     epsrel = asReal(CAR(args)); args = CDR(args);
     limit = asInteger(CAR(args)); args = CDR(args);
     lenw = 4 * limit;
-    iwork = (int *) R_alloc(limit, sizeof(int));
-    work = (double *) R_alloc(lenw, sizeof(double));
+    iwork = (int *) R_alloc((size_t) limit, sizeof(int));
+    work = (double *) R_alloc((size_t) lenw, sizeof(double));
 
     Rdqagi(Rintfn, (void*)&is, &bound,&inf,&epsabs,&epsrel,&result,
 	   &abserr,&neval,&ier,&limit,&lenw,&last,iwork,work);

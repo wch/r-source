@@ -228,7 +228,7 @@ static void lltslv(int nr, int n, double *a, double *x, double *b)
 
   int job = 0, info;
 
-  if( x != b) Memcpy(x, b, n);
+  if( x != b) Memcpy(x, b, (size_t) n);
   F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
   job = 10;
   F77_CALL(dtrsl)(a, &nr, &n, x, &job, &info);
