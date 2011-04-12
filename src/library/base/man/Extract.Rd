@@ -29,6 +29,7 @@ x$name
 
 x[i] <- value
 x[i, j, \dots] <- value
+x[[i]] <- value
 x$i <- value
 }
 \arguments{
@@ -180,8 +181,9 @@ x$i <- value
   equivalent to \code{alist[[i1]]\dots[[ip]]} providing all but the
   final indexing results in a list.
 
-  When either \code{[[} or \code{$} is used for replacement, a value of
-  \code{NULL} deletes the corresponding item of the list.
+  Note that in all three kinds of replacement, a value of \code{NULL}
+  deletes the corresponding item of the list.  To set entries to
+  \code{NULL}, you need \code{x[i] <- list(NULL)}.
 
   When \code{$<-} is applied to a \code{NULL} \code{x}, it first coerces
   \code{x} to \code{list()}.  This is what also happens with \code{[[<-}
