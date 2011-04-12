@@ -56,7 +56,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
         zz <- z[!is.na(z)]
         if(any(x < xlim[1]) || any(x > xlim[2]) ||
            any(y < ylim[1]) || any(y > ylim[2]) ||
-           any(z < zlim[1]) || any(z > zlim[2]))
+           any(zz < zlim[1]) || any(zz > zlim[2]))
             warning("surface extends beyond the box")
     }
     ticktype <- pmatch(ticktype, c("simple", "detailed"))
