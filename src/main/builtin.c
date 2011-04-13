@@ -399,7 +399,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 static const char *trChar(SEXP x)
 {
-    int n = strlen(CHAR(x));
+    size_t n = strlen(CHAR(x));
     cetype_t ienc = getCharCE(x);
 
     if (ienc == CE_BYTES) {
@@ -753,7 +753,7 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (mode == CPLXSXP)
 	memset(COMPLEX(s), 0, len*sizeof(Rcomplex));
     else if (mode == RAWSXP)
-	memset(RAW(s), 0, len);
+	memset(RAW(s), 0, (size_t) len);
     /* other cases: list/expression have "NULL", ok */
     return s;
 }

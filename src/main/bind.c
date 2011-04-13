@@ -520,7 +520,8 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno)
     }
     else if (*CHAR(base)) {
 	const char *sb = translateChar(base);
-	cbuf = R_AllocStringBuffer(strlen(sb) + IndexWidth(seqno), &cbuff);
+	cbuf = R_AllocStringBuffer(strlen(sb) + (size_t) IndexWidth(seqno),
+				   &cbuff);
 	sprintf(cbuf, "%s%d", sb, seqno);
 	ans = mkCharCE(cbuf, CE_UTF8);
     }
