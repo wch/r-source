@@ -222,6 +222,9 @@
       \item \code{persp(box = TRUE)} now warns if the surface extends
       outside the box (since occlusion for the box and axes is computed
       assuming the box is a bounding box). (\PR{202}.)
+      
+      \item \code{RShowDoc()} can now display the licences shipped with
+      \R, e.g. \code{RShowDoc("GPL-3")}.
     }
   }
 
