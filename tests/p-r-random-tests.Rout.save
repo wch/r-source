@@ -1,7 +1,8 @@
 
-R version 2.10.0 Under development (unstable) (2009-05-10 r48517)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.13.0 Patched (2011-04-13 r55430)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -278,6 +279,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.797 0.046 2.857 0 0 
+Time elapsed:  4.649 0.299 5.422 0 0 
 > 
 > 

@@ -1,7 +1,8 @@
 
-R version 2.8.0 Under development (unstable) (2008-05-09 r45656)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.13.0 Patched (2011-04-13 r55430)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -169,4 +170,10 @@ Warning in x(x) : NaNs produced
 > plot(x,    xaxt="n")# not ok in 2.6.2, nor 2.7.0
 > plot(x, i, yaxt="n")# ok in 2.6.2  and 2.7.0
 > plot(i, x, xaxt="n")# ok in 2.6.2 and not in 2.7.0
+> 
+> ## table methods should be bypassed:
+> dotchart(table(infert$education))
+Warning in dotchart(table(infert$education)) :
+  'x' is neither a vector nor a matrix: using as.numeric(x)
+> ## failed in 2.12.[12]
 > 
