@@ -79,7 +79,7 @@ smooth.spline <-
 	tmp <- matrix(unlist(tapply1(seq_len(n), ox,
 				     function(i, y, w)
 				     c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
-				     y = y, w = w)),
+				     y = y, w = w), use.names = FALSE),
 		      ncol = 3, byrow = TRUE)
     }
     wbar <- tmp[, 1L]
