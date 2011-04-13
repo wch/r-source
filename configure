@@ -30227,7 +30227,13 @@ else
 int main () {
     UErrorCode  status = U_ZERO_ERROR;
     UCollator *collator;
+    UCharIterator aIter;
+
     collator = ucol_open(NULL, &status);
+    if (U_FAILURE(status))  exit(1);
+    /* check if ICU is complete enough */
+    uiter_setUTF8(&aIter, "abc", 3);
+    int result = ucol_strcollIter(collator, &aIter, &aIter, &status);
     if (U_FAILURE(status))  exit(1);
     exit(0);
 }
@@ -35380,11 +35386,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35383: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35389: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35387: \$? = $ac_status" >&5
+   echo "$as_me:35393: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35479,11 +35485,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35482: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35488: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35486: \$? = $ac_status" >&5
+   echo "$as_me:35492: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35531,11 +35537,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35534: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35540: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35538: \$? = $ac_status" >&5
+   echo "$as_me:35544: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
