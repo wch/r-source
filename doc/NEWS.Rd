@@ -72,6 +72,8 @@
       distinct.  The default has been changed to be more reliable for
       inputs whose range is small compared to their maximum absolute
       value.  (Wish of \PR{14452}.)
+
+      \item \code{gl()} runs faster by avoiding calling \code{factor()}.
     }
   }
 
@@ -204,11 +206,6 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{nobs(mle(*, nobs = .))} now works.
-
-      \item \code{gl()} runs faster by avoiding to call \code{factor()}.
-
-      \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
-      methods for the selected column (spotted by Bill Dunlap).
     }
   }
 }
@@ -261,6 +258,9 @@
       
       \item \code{sort.int()} would strip the class of an object, but
       leave its object bit set.  (Reported by Bill Dunlap.)      
+
+      \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
+      methods for the selected column (spotted by Bill Dunlap).
     }
   }
 }
