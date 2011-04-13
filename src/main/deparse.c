@@ -409,7 +409,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!con->canwrite) error(_("cannot write to this connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
-		int extra = 6;
+		unsigned int extra = 6;
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		s = translateChar(STRING_ELT(names, i));
@@ -1197,7 +1197,7 @@ static void writeline(LocalParseData *d)
 
 static void print2buff(const char *strng, LocalParseData *d)
 {
-    int tlen, bufflen;
+    size_t tlen, bufflen;
 
     if (d->startline) {
 	d->startline = FALSE;
