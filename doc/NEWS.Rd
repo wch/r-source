@@ -52,6 +52,9 @@
 
       \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
       methods for the selected column (spotted by Bill Dunlap).
+      
+      \item \code{sort.int()} would strip the class of an object, but
+      leave its object bit set.  (Reported by Bill Dunlap.)      
     }
   }
 }
