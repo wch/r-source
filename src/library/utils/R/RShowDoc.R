@@ -102,6 +102,10 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
         path <- file.path(R.home(), what)
         file.show(path)
         return(invisible(path))
+    } else if(what %in% dir(file.path(R.home("share"), "licenses"))) {
+        path <- file.path(R.home("share"), "licenses", what)
+        file.show(path)
+        return(invisible(path))
     } else if(what %in% c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
                           "R-ints", "R-lang")) {
         if(type == "pdf") {

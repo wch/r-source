@@ -127,7 +127,7 @@ persp(x, \dots)
   viewer (and hence at the back of the box) with solid lines and other
   edges dashed and on top of the surface.  This (and the plotting of the
   axes) assumes that the axis limits are chosen so that the surface
-  is within the box.
+  is within the box, and the function will warn if this is not the case.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

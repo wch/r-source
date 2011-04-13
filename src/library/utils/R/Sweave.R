@@ -72,7 +72,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     namedchunks <- list()
     for (linenum in seq_along(text)) {
     	line <- text[linenum]
-        if (length(grep(syntax$doc, line))) {
+        if (length(grep(syntax$doc, line))) { # start new documentation chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
             } else {
@@ -83,7 +83,7 @@ Sweave <- function(file, driver = RweaveLatex(),
                 mode <- "doc"
             }
             chunk <- NULL
-        } else if (length(grep(syntax$code, line))) {
+        } else if (length(grep(syntax$code, line))) { # start new code chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
             } else {
@@ -97,31 +97,41 @@ Sweave <- function(file, driver = RweaveLatex(),
             chunkopts <- SweaveParseOptions(chunkopts,
                                             drobj$options,
                                             driver$checkopts)
-            chunk <- paste("#line ", linenum+1L, ' "', file, '"', sep="")
+            ## these #line directives are used for error messages when parsing
+            chunk <- paste("#line ", linenum+1L, ' "',
+                           basename(file), '"', sep="")
             attr(chunk, "srclines") <- linenum
-            chunknr <- chunknr+1L
+            chunknr <- chunknr + 1L  # this is really 'code chunk number'
             chunkopts$chunknr <- chunknr
-        } else {
+        } else {  # continuation of current chunk
             if (mode == "code" && length(grep(syntax$coderef, line))) {
                 chunkref <- sub(syntax$coderef, "\\1", line)
-                if (!(chunkref %in% names(namedchunks)))
-                    warning(gettextf("reference to unknown chunk '%s'",
-                                     chunkref), domain = NA)
-                line <- c(namedchunks[[chunkref]],
-                          paste("#line ", linenum+1L, ' "', file, '"', sep=""))
+                if (!(chunkref %in% names(namedchunks))) {
+                    ## omit unknown references
+                    warning(gettextf("reference to unknown chunk %s",
+                                     sQuote(chunkref)),
+                            call. = TRUE,domain = NA)
+                    next
+                } else {
+                    ## these #line directives are used for error messages
+                    ## when parsing
+                    line <- c(namedchunks[[chunkref]],
+                              paste("#line ", linenum+1L, ' "',
+                                    basename(file), '"', sep=""))
+                }
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
 	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
 	}
     }
-    if (!is.null(chunk)) {
+    if (!is.null(chunk)) { # write out final chunk
 	drobj <-
 	    if (mode == "doc") driver$writedoc(drobj, chunk)
 	    else driver$runcode(drobj, chunk, chunkopts)
     }
 
-    on.exit()
+    on.exit() # clear action to finish with error = TRUE
     driver$finish(drobj)
 }
 
@@ -290,7 +300,14 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 
 ###**********************************************************
 
-SweaveParseOptions <- function(text, defaults=list(), check=NULL)
+## parses an option string, from
+## - the header of a code chunk
+## - an \SweaveOpts{} statement (strangely, left to the drivers)
+## - the value of environment variable SWEAVE_OPTIONS
+##
+## The format is name=value pairs with whitespace being discarded
+## (and could have been done all at once).
+SweaveParseOptions <- function(text, defaults = list(), check = NULL)
 {
     x <- sub("^[[:space:]]*(.*)", "\\1", text)
     x <- sub("(.*[^[:space:]])[[:space:]]*$", "\\1", x)
@@ -307,12 +324,14 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
 
     options <- defaults
     for (k in seq_along(x)) options[[ x[[k]][1L] ]] <- x[[k]][2L]
+
+    ## This is undocumented
     if (!is.null(options[["label"]]) && !is.null(options[["engine"]]))
         options[["label"]] <-
             sub(paste("\\.", options[["engine"]], "$", sep=""),
                 "", options[["label"]])
-    if (!is.null(check)) options <- check(options)
-    options
+
+    if (!is.null(check)) check(options) else options
 }
 
 ## really part of the RweaveLatex and Rtangle drivers
@@ -811,12 +830,22 @@ RweaveLatexOptions <- function(options)
             options[[opt]] <- as.numeric(options[[opt]])
     }
 
-    if (!is.null(options$results))
-        options$results <- tolower(as.character(options$results))
+    if (!is.null(options$results)) {
+        res <- as.character(options$results)
+        if(tolower(res) != res) # documented as lower-case
+            warning("value of 'results' option should be lowercase",
+                    call. = FALSE)
+        options$results <- tolower(res)
+    }
     options$results <- match.arg(options$results, c("verbatim", "tex", "hide"))
 
-    if (!is.null(options$strip.white))
-        options$strip.white <- tolower(as.character(options$strip.white))
+    if (!is.null(options$strip.white)) {
+        res <- as.character(options$strip.white)
+        if(tolower(res) != res)
+            warning("value of 'strip.white' option should be lowercase",
+                    call. = FALSE)
+        options$strip.white <- tolower(res)
+    }
     options$strip.white <-
         match.arg(options$strip.white, c("true", "false", "all"))
     options

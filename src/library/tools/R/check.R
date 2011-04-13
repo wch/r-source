@@ -1614,7 +1614,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "package vignettes in ", sQuote("inst/doc"))
         any <- FALSE
         ## Do PDFs exist for all package vignettes?
-        ## A base source package (grid) may not have PDFs to avoid
+        ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
             pdfs <- sub("\\.[[:alpha:]]+$", ".pdf", vf)
@@ -2067,6 +2067,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 lines <- grep("Warning: incomplete final line found by readLines",
                               lines, invert = TRUE, value = TRUE)
 
+                ## Ignore Stangle warnings for now
+                lines <- grep("Warning: value of .* option should be lowercase",
+                              lines, invert = TRUE, value = TRUE)
 
                 ## Package writers cannot really do anything about
                 ## non ISO C code in *system* headers.  Also,

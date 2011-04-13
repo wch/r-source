@@ -619,6 +619,10 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
 	    si = STRING_ELT(x, i);
+	    if (si == NA_STRING) {
+		SET_STRING_ELT(ans, i, NA_STRING);
+		continue;
+	    }
 	top_of_loop:
 	    inbuf = CHAR(si); inb = LENGTH(si);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;

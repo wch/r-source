@@ -19,10 +19,10 @@ n.knots <- function(n) {
     ## Number of inner knots
     if(n < 50L) n
     else trunc({
-        a1 <- log( 50, 2)
-        a2 <- log(100, 2)
-        a3 <- log(140, 2)
-        a4 <- log(200, 2)
+        a1 <- log2( 50)
+        a2 <- log2(100)
+        a3 <- log2(140)
+        a4 <- log2(200)
         if	(n < 200L) 2^(a1+(a2-a1)*(n-50)/150)
         else if (n < 800L) 2^(a2+(a3-a2)*(n-200)/600)
         else if (n < 3200L)2^(a3+(a4-a3)*(n-800)/2400)
@@ -48,6 +48,8 @@ smooth.spline <-
     xy <- xy.coords(x, y)
     y <- xy$y
     x <- xy$x
+    if(!all(is.finite(c(x, y))))
+        stop("missing or infinite values in inputs are not allowed")
     n <- length(x)
     w <-
 	if(is.null(w)) rep(1, n)

@@ -18,9 +18,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
-  list or a two-column matrix specifying x and y. }
- \item{y}{responses. If \code{y} is missing, the responses are assumed
-   to be specified by \code{x}.}
+   list or a two-column matrix specifying x and y. }
+ \item{y}{responses. If \code{y} is missing or \code{NULL}, the responses
+   are assumed to be specified by \code{x}, with \code{x} the index
+   vector.}
  \item{w}{optional vector of weights of the same length as \code{x};
    defaults to all 1.}
  \item{df}{the desired equivalent number of degrees of freedom (trace of
@@ -47,6 +48,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
+ 
  \item{control.spar}{optional list with named components controlling the
    root finding when the smoothing parameter \code{spar} is computed,
    i.e., missing or \code{NULL}, see below.
@@ -71,9 +73,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
  }
 }
 \details{
+  Neither \code{x} nor \code{y} are allowed to containing missing or
+  infinite values.
+  
   The \code{x} vector should contain at least four distinct values.
-  \emph{Distinct} here means \sQuote{distinct after rounding to 6 significant
-  digits}, i.e., \code{x} will be transformed to
+  \sQuote{Distinct} here means \sQuote{distinct after rounding to 6
+  significant digits}, i.e., \code{x} will be transformed to
   \code{unique(sort(signif(x, 6)))}, and \code{y} and \code{w} are
   pooled accordingly.
 

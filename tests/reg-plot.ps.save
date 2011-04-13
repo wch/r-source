@@ -3049,11 +3049,11 @@ bp
 /Font1 findfont 12 s
 435.34 65.52 (Admit) .5 0 t
 59.76 304.84 (Gender) .5 90 t
-77.04 91.44 793.65 518.24 cl
+18.00 18.00 823.89 577.28 cl
 /Font1 findfont 8 s
 0 setgray
-224.84 509.87 (Admitted) .5 0 t
-579.92 510.65 (Rejected) .5 0 t
+224.84 510.01 (Admitted) .5 0 t
+579.92 510.79 (Rejected) .5 0 t
 89.89 372.86 (Male) .5 90 t
 89.89 137.47 (F) 90 ta
 -0.240 (emale) tb gr
@@ -3063,7 +3063,9 @@ bp
 304.11 500.41 (D) .5 0 t
 324.78 500.41 (E) .5 0 t
 335.63 500.41 (F) .5 0 t
+77.04 91.44 793.65 518.24 cl
 /bg { 0.7451 setgray } def
+0 setgray
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -3141,12 +3143,23 @@ np
 0 115.32 l
 -8.74 0 l
 cp p3
+18.00 18.00 823.89 577.28 cl
+/Font1 findfont 8 s
+0 setgray
 435.61 500.41 (A) .5 0 t
 498.48 500.41 (B) .5 0 t
 549.77 500.41 (C) .5 0 t
 608.78 500.41 (D) .5 0 t
 660.60 500.41 (E) .5 0 t
 720.15 500.41 (F) .5 0 t
+77.04 91.44 793.65 518.24 cl
+/bg { 0.7451 setgray } def
+0 setgray
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
 np
  402.05 301.10 m
 67.12 0 l
@@ -3238,11 +3251,11 @@ bp
 /Font1 findfont 12 s
 435.34 65.52 (x label) .5 0 t
 59.76 304.84 (YY) .5 90 t
-77.04 91.44 793.65 518.24 cl
+18.00 18.00 823.89 577.28 cl
 /Font1 findfont 8 s
 0 setgray
-224.84 509.87 (Admitted) .5 0 t
-579.92 510.65 (Rejected) .5 0 t
+224.84 510.01 (Admitted) .5 0 t
+579.92 510.79 (Rejected) .5 0 t
 89.89 372.86 (Male) .5 90 t
 89.89 137.47 (F) 90 ta
 -0.240 (emale) tb gr
@@ -3252,7 +3265,9 @@ bp
 304.11 500.41 (D) .5 0 t
 324.78 500.41 (E) .5 0 t
 335.63 500.41 (F) .5 0 t
+77.04 91.44 793.65 518.24 cl
 /bg { 0.7451 setgray } def
+0 setgray
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -3330,12 +3345,23 @@ np
 0 115.32 l
 -8.74 0 l
 cp p3
+18.00 18.00 823.89 577.28 cl
+/Font1 findfont 8 s
+0 setgray
 435.61 500.41 (A) .5 0 t
 498.48 500.41 (B) .5 0 t
 549.77 500.41 (C) .5 0 t
 608.78 500.41 (D) .5 0 t
 660.60 500.41 (E) .5 0 t
 720.15 500.41 (F) .5 0 t
+77.04 91.44 793.65 518.24 cl
+/bg { 0.7451 setgray } def
+0 setgray
+0.75 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
 np
  402.05 301.10 m
 67.12 0 l

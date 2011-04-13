@@ -4,6 +4,55 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{iconv()} no longer translates \code{NA} strings as
+      \code{"NA"}.
+      
+      \item \code{persp(box = TRUE)} now warns if the surface extends
+      outside the box (since occlusion for the box and axes is computed
+      assuming the box is a bounding box). (\PR{202}.)
+      
+      \item \code{RShowDoc()} can now display the licences shipped with
+      \R, e.g. \code{RShowDoc("GPL-3")}.
+    }
+  }
+
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Building the vignettes is now part of running \command{make}
+      from an SVN checkout: a separate \command{make vignettes} is no
+      longer required.
+
+      These vignette PDFs are now made with \code{keep.source = TRUE} and
+      hence will be laid out differently.
+    }
+  }
+
+  \subsection{LICENCE}{
+    \itemize{
+      \item No parts of \R are now licensed solely under GPL-2.  The
+      licences for packages \pkg{rpart} and \pkg{survival} have been
+      changed, which means that the licence terms for \R as distributed
+      are GPL-2 | GPL-3.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{plot.lm(which = 5)} was intended to order factor
+      levels in increasing order of mean standardized residual.   It
+      ordered the factor labels correctly, but could plot the wrong
+      group of residuals against the label.  (\PR{14545})
+
+      \item \code{mosaicplot()} could clip the factor labels, and could
+      overlap them with the cells if a non-default value of
+      \code{cex.axis} was used.  (Related to \PR{14550}.)
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -421,7 +470,7 @@
 
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
-      
+
       \item \code{rstandard.glm} gains a \code{type} argument which can
       be used to request standardized Pearson residuals.
 
@@ -433,7 +482,7 @@
       different symbolic links.
     }
   }
-  
+
   \subsection{SWEAVE CHANGES}{
     \itemize{
       \item \code{Sweave()} has options to produce PNG and JPEG figures,
@@ -456,7 +505,7 @@
       Maindonald and others.)
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Because they use a C99 interface which a C++ compiler is not

@@ -3729,7 +3729,13 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 int main () {
     UErrorCode  status = U_ZERO_ERROR;
     UCollator *collator;
+    UCharIterator aIter;
+
     collator = ucol_open(NULL, &status);
+    if (U_FAILURE(status))  exit(1);
+    /* check if ICU is complete enough */
+    uiter_setUTF8(&aIter, "abc", 3);
+    int result = ucol_strcollIter(collator, &aIter, &aIter, &status);
     if (U_FAILURE(status))  exit(1);
     exit(0);
 }

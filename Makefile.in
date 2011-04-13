@@ -20,7 +20,7 @@ DISTFILES = $(INSTFILES) \
 SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
 SUBDIRS_WITH_NO_BUILD = @USE_NLS_FALSE@ po
 
-all: Makefile Makeconf R docs recommended
+all: Makefile Makeconf R docs recommended svn-vignettes
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -74,6 +74,12 @@ stamp-recommended: R docs
 
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
+
+## One of the grid vignettes requires lattice
+svn-vignettes: stamp-recommended
+	-@if test -f "non-tarball"; then \
+	   (cd src/library && $(MAKE) vignettes); \
+	fi
 
 install install-strip: installdirs svnonly
 	@for d in $(SUBDIRS); do \

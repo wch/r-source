@@ -208,17 +208,16 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                 ## #{levels} for each of the factors:
                 nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
                 ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
-                facval <- ((dm-1) %*% ff)
-                ## now reorder to the same order as the residuals
-                facval[ord] <- facval
+                facval <- (dm-1) %*% ff
                 xx <- facval # for use in do.plot section.
 
                 plot(facval, rsp, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
+                grp_means <- sapply(split(yh ,mf[, 1L]), mean)
                 axis(1, at = ff[1L]*(1L:nlev[1L] - 1/2) - 1/2,
-                     labels= x$xlevels[[1L]][order(sapply(split(yh,mf[,1]), mean))])
+                     labels = x$xlevels[[1L]][order(grp_means)])
                 mtext(paste(facvars[1L],":"), side = 1, line = 0.25, adj=-.05)
                 abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
                 panel(facval, rsp, ...)

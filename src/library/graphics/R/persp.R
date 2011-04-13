@@ -52,6 +52,13 @@ function (x = seq(0, 1, length.out = nrow(z)),
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
         stop("increasing 'x' and 'y' values expected")
+    if (box) {
+        zz <- z[!is.na(z)]
+        if(any(x < xlim[1]) || any(x > xlim[2]) ||
+           any(y < ylim[1]) || any(y > ylim[2]) ||
+           any(zz < zlim[1]) || any(zz > zlim[2]))
+            warning("surface extends beyond the box")
+    }
     ticktype <- pmatch(ticktype, c("simple", "detailed"))
     r <- .Internal(persp(x, y, z, xlim, ylim, zlim, theta, phi, r, d,
                          scale, expand, col, border, ltheta, lphi, shade,

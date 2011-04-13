@@ -10,7 +10,7 @@
   corresponding to a fitted model object.
 }
 \usage{
-simulate(object, nsim, seed, \dots)
+simulate(object, nsim = 1, seed = NULL, \dots)
 }
 \alias{simulate}
 \arguments{
@@ -89,14 +89,14 @@ simulate(object, nsim, seed, \dots)
 }
 \examples{
 x <- 1:5
-mod1 <- lm(c(1:3,7,6) ~ x)
+mod1 <- lm(c(1:3, 7, 6) ~ x)
 S1 <- simulate(mod1, nsim = 4)
 ## repeat the simulation:
 .Random.seed <- attr(S1, "seed")
 identical(S1, simulate(mod1, nsim = 4))
 
 S2 <- simulate(mod1, nsim = 200, seed = 101)
-rowMeans(S2) # should be about
+rowMeans(S2) # should be about the same as
 fitted(mod1)
 
 ## repeat identically:
@@ -110,7 +110,7 @@ do.call(RNGkind, attr(sseed, "kind"))
 identical(S2, simulate(mod1, nsim = 200, seed = sseed))
 
 ## Binomial GLM examples
-yb1 <- matrix(c(4,4,5,7,8,6,6,5,3,2), ncol = 2)
+yb1 <- matrix(c(4, 4, 5, 7, 8, 6, 6, 5, 3, 2), ncol = 2)
 modb1 <- glm(yb1 ~ x, family = binomial)
 S3 <- simulate(modb1, nsim = 4)
 # each column of S3 is a two-column matrix.

@@ -2008,14 +2008,18 @@ static int LimitCheck(double *lim, double *c, double *s)
     return 1;
 }
 
-/* PerspBox: The following code carries out a visibility test */
-/* on the surfaces of the xlim/ylim/zlim box around the plot. */
-/* If front = 0, only the faces with their inside toward the */
-/* eyepoint are drawn.  If front = 1, only the faces with */
-/* their outside toward the eye are drawn.  This lets us carry */
-/* out hidden line removal by drawing any faces which will be */
-/* obscured before the surface, and those which will not be */
-/* obscured after the surface. */
+/* PerspBox: The following code carries out a visibility test
+   on the surfaces of the xlim/ylim/zlim box around the plot.
+   If front = 0, only the faces with their inside toward the
+   eyepoint are drawn.  If front = 1, only the faces with
+   their outside toward the eye are drawn.  This lets us carry
+   out hidden line removal by drawing any faces which will be
+   obscured before the surface, and those which will not be
+   obscured after the surface. 
+
+   Unfortunately as PR#202 showed, this is simplistic as the surface
+   can go outside the box.
+*/
 
 /* The vertices of the box */
 static short int Vertex[8][3] = {
@@ -2049,19 +2053,17 @@ static short int Edge[6][4] = {
     { 9, 6,10, 1},
 };
 
-/* Which edges have been drawn previously */
-static char EdgeDone[12];
 
-static void PerspBox(int front, double *x, double *y, double *z, pGEDevDesc dd)
+static void PerspBox(int front, double *x, double *y, double *z, 
+		     char *EdgeDone, pGEDevDesc dd)
 {
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
     int f, i, p0, p1, p2, p3, nearby;
     int ltysave = gpptr(dd)->lty;
-    if (front)
-	gpptr(dd)->lty = LTY_DOTTED;
-    else
-	gpptr(dd)->lty = LTY_SOLID;
+    
+    gpptr(dd)->lty = front ? LTY_DOTTED : LTY_SOLID;
+
     for (f = 0; f < 6; f++) {
 	p0 = Face[f][0];
 	p1 = Face[f][1];
@@ -2420,9 +2422,10 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     double ltheta, lphi;
     double expand, xc = 0.0, yc = 0.0, zc = 0.0, xs = 0.0, ys = 0.0, zs = 0.0;
     int i, j, scale, ncol, dobox, doaxes, nTicks, tickType;
+    char EdgeDone[12]; /* Which edges have been drawn previously */
     pGEDevDesc dd;
 
-    if (length(args) < 24)
+    if (length(args) < 24)  /* 24 plus any inline par()s */
 	error(_("too few parameters"));
     gcall = call;
     originalArgs = args;
@@ -2560,27 +2563,27 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PerspWindow(REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
-    /* Compute facet order. */
+    /* Compute facet order:
+       We order the facets by depth and then draw them back to front.
+       This is the "painters" algorithm. */
 
     PROTECT(depth = allocVector(REALSXP, (nrows(z) - 1)*(ncols(z) - 1)));
     PROTECT(indx = allocVector(INTSXP, (nrows(z) - 1)*(ncols(z) - 1)));
     DepthOrder(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z),
 	       REAL(depth), INTEGER(indx));
 
-    /* Now we order the facets by depth and then draw them back to front.
-     * This is the "painters" algorithm. */
-
     GMode(1, dd);
 
     if (dobox) {
-	PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+	/* Draw (solid) faces which face away from the viewer */
+	PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), EdgeDone, dd);
 	if (doaxes) {
 	    SEXP xl = STRING_ELT(xlab, 0), yl = STRING_ELT(ylab, 0),
 		zl = STRING_ELT(zlab, 0);
 	    PerspAxes(REAL(xlim), REAL(ylim), REAL(zlim),
-		      (xl == NA_STRING)? "" : CHAR(xl), getCharCE(xl),
-		      (yl == NA_STRING)? "" : CHAR(yl), getCharCE(yl),
-		      (zl == NA_STRING)? "" : CHAR(zl), getCharCE(zl),
+		      (xl == NA_STRING) ? "" : CHAR(xl), getCharCE(xl),
+		      (yl == NA_STRING) ? "" : CHAR(yl), getCharCE(yl),
+		      (zl == NA_STRING) ? "" : CHAR(zl), getCharCE(zl),
 		      nTicks, tickType, dd);
 	}
     }
@@ -2589,8 +2592,10 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	       1/xs, 1/ys, expand/zs,
 	       INTEGER(col), ncol, INTEGER(border)[0]);
 
+    /* Draw (dotted) not-already-plotted edges of faces which face
+       towards from the viewer */
     if (dobox)
-	PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+	PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), EdgeDone, dd);
     GMode(0, dd);
 
     GRestorePars(dd);

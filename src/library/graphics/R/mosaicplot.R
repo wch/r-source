@@ -72,9 +72,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                       length(currlev)),
                               as.character(1L:xdim), sep=".")
                     } else label[[1L]]
-                text(x= x.l + (x.r - x.l) / 2,
-                     y= 965 + 22 * (lablevx - 1),
-                     srt=srt.x, adj=adj.x, cex=cex.axis, this.lab)
+                text(x = x.l + (x.r - x.l) / 2,
+                     y = 1000 - 35*cex.axis/0.66 +
+                         22*cex.axis/0.65 * (lablevx - 1),
+                     srt = srt.x, adj = adj.x, cex = cex.axis, this.lab,
+                     xpd = NA)
             }
             if (p > 2) {                # recursive call.
                 for (i in 1L:xdim) {
@@ -126,9 +128,10 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                       length(currlev)),
                               as.character(1L:ydim), sep=".")
                     } else label[[1L]]
-                text(x= 35 - 20 * (lablevy - 1),
-                     y= y.b + (y.t - y.b) / 2,
-                     srt=srt.y, adj=adj.y, cex=cex.axis, this.lab)
+                text(x = 35*cex.axis/0.66 - 20*cex.axis/0.66 * (lablevy - 1),
+                     y = y.b + (y.t - y.b) / 2,
+                     srt = srt.y, adj = adj.y, cex = cex.axis, this.lab,
+                     xpd = NA)
             }
             if (p > 2) {                # recursive call.
                 for (j in 1L:ydim) {
@@ -349,14 +352,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                      brks[3 : (2 * len)],
                      sep = ":"),
                paste(">", brks[2 * len], sep = "")),
-             srt = 90, cex = cex.axis)
+             srt = 90, cex = cex.axis, xpd = NA)
     }
 
     if (!is.null(main) || !is.null(xlab) || !is.null(ylab) || !is.null(sub))
         title(main, sub = sub, xlab = xlab, ylab = ylab)
     adj.x <- adj.y <- 0.5
-    x1 <- 50; y1 <- 5; x2 <- 950; y2 <- 950
-    maxlen.xlabel <- maxlen.ylabel <- 35
+    x1 <- 30 + 20*cex.axis/0.66; y1 <- 5; x2 <- 950; y2 <- 1000-x1
+    maxlen.xlabel <- maxlen.ylabel <- 35*cex.axis/0.66
     ## Calculations required for 'las' related string rotation
     ## and adjustment
     if(srt.x == 90){
@@ -409,5 +412,3 @@ function(formula, data = NULL, ...,
         mosaicplot(table(mf), main = main, ...)
     }
 }
-
-

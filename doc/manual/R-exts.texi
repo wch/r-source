@@ -509,7 +509,7 @@ also accepted.)  If the package you are writing uses the @pkg{methods}
 package, specify @samp{LazyLoad: yes}.
 
 The @samp{ZipData} field controls whether the automatic Windows build
-will zip up the data directory or no: set this to @samp{no} if your
+will zip up the data directory or not: set this to @samp{no} if your
 package will not work with a zipped data directory.  (Setting to any
 other value is deprecated, and it is unused as from @R{} 2.13.0: but it
 might still be needed if the package can be installed under earlier
@@ -911,7 +911,7 @@ of it:
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
 
-Note that most of this section is specfic to Unix-alikes: see the
+Note that most of this section is specific to Unix-alikes: see the
 comments later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
@@ -4872,8 +4872,10 @@ widely.  However, this does not mean that all characters in UTF-8 will
 be recognized, and the coverage of non-Latin characters@footnote{@R{}
 2.9.0 added support for UTF-8 Cyrillic characters in @LaTeX{}, but on
 some OSes this will need Cyrillic support added to @LaTeX{}, so
-environment variable @env{_R_CYRILLIC_TEX_} needs to be set to a
-non-empty value to enable this.} is low.
+environment variable @env{_R_CYRILLIC_TEX_} may need to be set to a
+non-empty value to enable this.} is fairly low.  Using @LaTeX{}
+@code{inputenx} (see @code{?Rd2dvi} in @R{}) will give greater coverage
+of UTF-8.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
