@@ -49,6 +49,9 @@
       \item \code{mosaicplot()} could clip the factor labels, and could
       overlap them with the cells if a non-default value of
       \code{cex.axis} was used.  (Related to \PR{14550}.)
+
+      \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
+      methods for the selected column (spotted by Bill Dunlap).
     }
   }
 }
