@@ -85,7 +85,7 @@ Rdfiles:
 PDFLATEX = @PDFLATEX@
 vignettes:
 	@if test -z "$(PDFLATEX)"; then \
-	  $(ECHO) "'pdflatex' needed to make vignettes but missing on your system."; \
+	  $(ECHO) "'pdflatex' is needed to make vignettes but is missing on your system."; \
 	else \
 	  for pkg in grid utils; do \
 	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
