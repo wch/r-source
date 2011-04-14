@@ -8,8 +8,8 @@ See the file COPYING for the exact conditions under which you may
 redistribute it.  R as a whole is distributed under GPL version 2 or
 3: most source files contain a copyright statement allowing use of
 that file under GPL version 2 or later: the main exceptions are the
-included versions of packages 'MASS', 'class', 'nnet', 'rpart' (3.1-50
-or latter) and 'spatial' (GPL-2 or GPL-3).
+included versions of packages 'MASS', 'class', 'nnet', 'rpart' and
+'spatial' (GPL-2 or GPL-3).
 
 The status of files used only in the Windows port is in file
 src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
@@ -20,9 +20,10 @@ the copyright notice (that in the file or this notice) is preserved.
 
 	---------------------------------------------------
 
-Some of the public header files are distributed under the more
-permissive terms of the file COPYING.LIB.  This applies only to the
-files
+Some (but not all) of the public header files are distributed under
+the more permissive terms of version 2.1 or later of the LGPL: see
+files R_HOME/share/licenses/LGPL-2.1 and R_HOME/share/licenses/LGPL-3.
+This applies only to the header files
 
 src/include/R.h
 src/include/Rdefines.h
@@ -31,6 +32,9 @@ src/include/Rinternals.h
 src/include/Rmath.h
 src/include/S.h
 src/include/R_ext/*.h
+
+Note that it does not apply to the header files such as Rembedded.h
+and Rinterface.h used for third-party front ends.
 
 From the announcement of the change (2001-Feb-05)
 
@@ -53,7 +57,6 @@ From the announcement of the change (2001-Feb-05)
 
 As from R 2.3.0 import libraries are no longer used under Windows, and
 as from R 2.4.0 fewer export files are used under AIX.
-
 
 Some contributed files are also covered by the Library General Public License.
 These include (see also below)
