@@ -25,10 +25,10 @@ load(file, envir = parent.frame())
   to \code{\link{url}}).
   
   A not-open connection will be opened in mode \code{"rb"} and closed
-  after use.  Any connection other than a \code{\link{gzfile}}
-  connection will be wrapped in \code{\link{gzcon}} to allow compressed
-  saves to be handled: note that this leaves the connection in an
-  altered state (in particular, binary-only).
+  after use.  Any connection other than a \code{\link{gzfile}} or
+  \code{\link{gzcon}} connection will be wrapped in \code{\link{gzcon}}
+  to allow compressed saves to be handled: note that this leaves the
+  connection in an altered state (in particular, binary-only).
   
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a
@@ -47,8 +47,8 @@ load(file, envir = parent.frame())
 \section{Warning}{
   Saved \R objects are binary files, even those saved with
   \code{ascii = TRUE}, so ensure that they are transferred without
-  conversion of end of line markers.  \code{load} tries to detect this
-  case and give an informative error message.
+  conversion of end of line markers.  \code{load} tries to detect such a
+  converion and gives an informative error message.
 }
 #ifdef windows
 \note{
