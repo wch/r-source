@@ -427,7 +427,9 @@
       versions of the \sQuote{internal} functions \code{.saveRDS()} and
       \code{.readRDS()} made available for general use.  The dot-name
       versions remain available as several package authors have made use
-      of them, despite the documentation.
+      of them, despite the documentation.  \code{readRDS()} no longer
+      wraps non-file connections in a call to \code{gzcon()}, for
+      efficiency (see its documentation).
 
       \code{saveRDS()} supports \code{compress = "xz"}.
 
