@@ -56,10 +56,13 @@ readRDS(file, refhook = NULL)
   
   Compression is handled by the connection opened when \code{file} is a
   file name, so is only possible when \code{file} is a connection if
-  handled by the connection.  If a connection is supplied it will be
-  opened (in binary mode) for the duration of the function if not
-  already open: if it is already open it must be in binary mode for
-  \code{saveRDS(ascii=FALSE)}.
+  handled by the connection.  So e.g. \code{\link{url}} connections will
+  needed to be wrapped in a call to \code{\link{gzcon}}.
+  
+  If a connection is supplied it will be opened (in binary mode) for the
+  duration of the function if not already open: if it is already open it
+  must be in binary mode for \code{saveRDS(ascii = FALSE)} (the
+  default).
 }
 
 \note{
@@ -67,7 +70,8 @@ readRDS(file, refhook = NULL)
   \code{.saveRDS()} and marked as \sQuote{internal}.  Otherwise their
   interface has been stable since \R 1.7.0, except that support for
   support for types of compression was added in \R 2.10.0 (previously
-  only \code{"gzip"} was available).
+  only \code{"gzip"} was available), and \code{readRDS} called
+  \code{gzcon} internally in prior to \R 2.13.0.
 
   The internal-only \code{.readRDS} if given an un-opened connection
   would wrap it in \code{\link{gzcon}} and \code{\link{close}} it after
