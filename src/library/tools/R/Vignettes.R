@@ -320,7 +320,7 @@ function(lines, tag)
 {
     meta_RE <- paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
                      "\\{([^}]*)\\}", sep = "")
-    meta <- grep(meta_RE, lines, value = TRUE)
+    meta <- grep(meta_RE, lines, value = TRUE, useBytes = TRUE)
     .strip_whitespace(gsub(meta_RE, "\\1", meta))
 }
 
