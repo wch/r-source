@@ -40,7 +40,7 @@ path.package(package, quiet = FALSE)
   \file{DESCRIPTION} file containing a valid \code{version} field, but
   it need not be installed.
 
-  \code{.path.package} returns the paths from which the named packages
+  \code{path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not loaded, and given an error if none are.
