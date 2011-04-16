@@ -10,6 +10,9 @@
       \item The \code{yLineBias} of the \code{windows()} family of
       devices has been changed from 0.1 to 0.2: this changes slightly
       the vertical positioning of text (including axis annotations).
+
+      \item \command{R CMD build} once again attempts to preserve file
+      permissions on Windows.
     }
   }
 

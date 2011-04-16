@@ -764,9 +764,7 @@ get_exclude_patterns <- function()
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
-        ## on Windows we will not be able to delete read-only files in .svn
-        if (!file.copy(pkgname, Tdir, recursive = TRUE,
-                       copy.mode = !WINDOWS)) {
+        if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
             errorLog(Log, "copying to build directory failed")
             do_exit(1L)
         }
@@ -814,7 +812,7 @@ get_exclude_patterns <- function()
         exclude <- exclude | grepl("^\\._", bases)
 	## Windows DLL resource file
         exclude <- exclude | (bases == paste("src/", pkgname, "_res.rc", sep=""))
-        unlink(allfiles[exclude], recursive = TRUE)
+        unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
         setwd(owd)
 
         ## Fix up man, R, demo inst/doc directories
