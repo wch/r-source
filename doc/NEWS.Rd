@@ -74,6 +74,9 @@
       value.  (Wish of \PR{14452}.)
 
       \item \code{gl()} runs faster by avoiding calling \code{factor()}.
+      
+      \item The \code{print()} method for \code{object.size()} accepts
+      \samp{B} as well as \samp{b} as an abbreviation for \sQuote{bytes}.
     }
   }
 

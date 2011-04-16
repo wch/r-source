@@ -1,6 +1,6 @@
 % File src/library/utils/man/object.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{object.size}
@@ -13,14 +13,16 @@
 \usage{
 object.size(x)
 
-\method{print}{object_size}(x, quote = FALSE,
-      units = c("b", "auto", "Kb", "Mb", "Gb"), \dots)
+\method{print}{object_size}(x, quote = FALSE, units = "b", \dots)
 }
 \arguments{
   \item{x}{An \R object.}
   \item{quote}{logical, indicating whether or not the result should be
     printed with surrounding quotes.}
-  \item{units}{The units to be used in printing the size.}
+  \item{units}{The units to be used in printing the size.  Other allowed
+    values are \code{"Kb"}, \code{"Mb"}, \code{"Gb"} and \code{"auto"}
+    (see \sQuote{Details}).
+    As from \R 2.14.0, \code{"KB"} etc are also accepted.}
   \item{\dots}{Arguments to be passed to or from other methods.}
 }
 \details{
@@ -41,6 +43,10 @@ object.size(x)
   Object sizes are larger on 64-bit builds than 32-bit ones, but will
   very likely be the same on different platforms with the same word
   length and pointer size.
+
+  \code{units = "auto"} in the \code{print} method chooses the largest
+  units in which the result is one or more (before rounding).  Values in
+  kilobytes, megabytes or gigabytes are rounded to the nearest \code{0.1}.
 }
 \value{
   An object of class \code{"object_size"} with a length-one double value,
