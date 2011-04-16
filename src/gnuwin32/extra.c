@@ -122,12 +122,15 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 void internal_shellexec(const char * file)
 {
     const char *home;
+    char home2[10000], *p;
     uintptr_t ret;
 
     home = getenv("R_HOME");
     if (home == NULL)
 	error(_("R_HOME not set"));
-    ret = (uintptr_t) ShellExecute(NULL, "open", file, NULL, home, SW_SHOW);
+    strncpy(home2, home, 10000);
+    for(p = home2; *p; p++) if(*p == '/') *p = '\\';
+    ret = (uintptr_t) ShellExecute(NULL, "open", file, NULL, home2, SW_SHOW);
     if(ret <= 32) { /* an error condition */
 	if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
 	   || ret == SE_ERR_FNF || ret == SE_ERR_PNF)
