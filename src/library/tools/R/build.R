@@ -764,7 +764,9 @@ get_exclude_patterns <- function()
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
-        if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
+        ## on Windows we will not be able to delete read-only files in .svn
+        if (!file.copy(pkgname, Tdir, recursive = TRUE,
+                       copy.mode = !WINDOWS)) {
             errorLog(Log, "copying to build directory failed")
             do_exit(1L)
         }
