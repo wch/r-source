@@ -36,7 +36,8 @@ load <-
             return(.Internal(load(file, envir)))
         }
     } else if (inherits(file, "connection")) {
-        con <- if(inherits(file, "gzfile")) file else gzcon(file)
+        con <- if(inherits(file, "gzfile") || inherits(file, "gzcon")) file
+               else gzcon(file)
     } else stop("bad 'file' argument")
 
     .Internal(loadFromConn2(con, envir))

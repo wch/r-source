@@ -2087,13 +2087,13 @@ read as signed (the default) or unsigned integers.
 The remaining two arguments are used to write or read data for
 interchange with another program or another platform.  By default binary
 data is transferred directly from memory to the connection or @emph{vice
-versa}.  This will not suffice if the file is to be transferred to a
+versa}.  This will not suffice if the data are to be transferred to a
 machine with a different architecture, but between almost all @R{}
 platforms the only change needed is that of byte-order.  Common PCs
 (@cputype{ix86}-based and @cputype{x86_64}-based machines), Compaq Alpha
 and Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series,
-IBM R6000, Apple Macintosh, SGI and most others are @emph{big-endian}.
-(Network byte-order (as used by XDR, eXternal Data Representation) is
+IBM R6000, SGI and most others are @emph{big-endian}.  (Network
+byte-order (as used by XDR, eXternal Data Representation) is
 big-endian.)  To transfer to or from other programs we may need to do
 more, for example to read 16-bit integers or write single-precision real
 numbers.  This can be done using the @code{size} argument, which
@@ -2133,7 +2133,7 @@ constants @code{NA_REAL}, @code{R_PosInf} and @code{R_NegInf}, and
 include the header @file{Rmath.h} which defines the macros @code{ISNAN}
 and @code{R_FINITE}.
 
-If that is not possible, on all common platforms IEC 60559 (aka IEEE
+If that is not possible, on all current platforms IEC 60559 (aka IEEE
 754) arithmetic is used, so standard C facilities can be used to test
 for or set @code{Inf}, @code{-Inf} and @code{NaN} values.  On such
 platforms @code{NA} is represented by the @code{NaN} value with low-word
@@ -2262,9 +2262,9 @@ The first piece of advice is to avoid doing so if possible!  If you have
 access to Excel, export the data you want from Excel in tab-delimited or
 comma-separated form, and use @code{read.delim} or @code{read.csv} to
 import it into R.  (You may need to use @code{read.delim2} or
-@code{read.csv2} in a continental European locale that uses comma as the
-decimal point.)  Exporting a DIF file and reading it using
-@code{read.DIF} is another possibility.
+@code{read.csv2} in a locale that uses comma as the decimal point.)
+Exporting a DIF file and reading it using @code{read.DIF} is another
+possibility.
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
