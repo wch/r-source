@@ -17,18 +17,21 @@ shell.exec(file)
   Windows file associations.
 }
 \details{
-  It is likely that \code{file} needs to be a complete path, e.g.
-  \file{"c:/R/results.html"} or \file{"c:\\R\\results.html"} as most
-  applications interpret files relative to \emph{their} working
-  directory.
+  The path in \code{file} is interpreted relative to the current working
+  directory.  
+  
+  \R versions 2.13.0 and earlier interpreted \code{file} relative to 
+  the \R home directory, so a complete path was usually needed.  
+  
+  Encoded \samp{file://} URLs should be in the Windows standard form, e.g.
+  \code{"file:///c:/path/to/file.txt"}.
 
-  Encoded \samp{file://} URLs are not usually accepted.
 }
 \value{
   No value, but informative error messages will be given if the
   operation fails.
 }
-\author{B. D. Ripley}
+\author{B. D. Ripley and Duncan Murdoch}
 
 \seealso{\code{\link{system}}, \code{\link{shell}}}
 
@@ -36,7 +39,7 @@ shell.exec(file)
 ## the space should not be encoded here
 shell.exec("C:\\\\Program Files\\\\BreezeSys\\\\BreezeBrowser\\\\Breezebrowser.htm")
 shell.exec("C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
-shell.exec("file://C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
+shell.exec("file:///C:/Program Files/BreezeSys/BreezeBrowser/Breezebrowser.htm")
 }}
 
 \keyword{utilities}
