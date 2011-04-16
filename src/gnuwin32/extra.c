@@ -118,7 +118,7 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     return mkString(ver);
 }
 
-/* also used in rui.c */
+/* used in rui.c */
 void internal_shellexec(const char * file)
 {
     const char *home;
@@ -144,14 +144,23 @@ void internal_shellexec(const char * file)
     }
 }
 
-static void internal_shellexecW(const wchar_t * file)
+/* used by shell.exec() with rhome=FALSE.  2.13.0 and earlier were
+   like rhome=TRUE, but without fixing the path */
+static void internal_shellexecW(const wchar_t * file, Rboolean rhome)
 {
     const wchar_t *home;
+    wchar_t home2[10000], *p;
     uintptr_t ret;
-
-    home = _wgetenv(L"R_HOME");
-    if (home == NULL)
-	error(_("R_HOME not set"));
+    
+    if (rhome) {
+    	home = _wgetenv(L"R_HOME");
+    	if (home == NULL)
+	    error(_("R_HOME not set"));
+    	wcsncpy(home2, home, 10000);
+    	for(p = home2; *p; p++) if(*p == L'/') *p = L'\\';
+	home = home2;
+    } else home = NULL;
+    
     ret = (uintptr_t) ShellExecuteW(NULL, L"open", file, NULL, home, SW_SHOW);
     if(ret <= 32) { /* an error condition */
 	if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
@@ -174,7 +183,7 @@ SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
     file = CAR(args);
     if (!isString(file) || length(file) != 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    internal_shellexecW(filenameToWchar(STRING_ELT(file, 0), FALSE));
+    internal_shellexecW(filenameToWchar(STRING_ELT(file, 0), FALSE), FALSE);
     return R_NilValue;
 }
 

@@ -11,6 +11,9 @@
       permissions on Windows, because Windows (unlike POSIX-complant
       OSes) stops read-only files being deleted in version-control
       directories.
+      
+      \item \code{shell.exec()} now interprets files relative to the current
+      working directory.
     }
   }
   
