@@ -5,6 +5,15 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \command{R CMD build} no longer attempts to preserve file
+      permissions on Windows, because Windows (unlike POSIX-complant
+      OSes) stops read-only files being deleted in version-control
+      directories.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item Launching the PDF manuals from the Rgui menus did not work
@@ -80,8 +89,8 @@
       Support for \samp{jpeg-6b} has been removed.
 
       \item The sources now work with \samp{libpng-1.5.1}, 
-      \samp{ jpegsrc.v8c} (which are used in the CRAN builds) and
-      \samp{tiff-4.0.0beta6} (CRAN builds use 3.9.1). It is possible
+      \samp{jpegsrc.v8c} (which are used in the CRAN builds) and
+      \samp{tiff-4.0.0beta6} (CRAN builds use 3.9.1).  It is possible
       that they no longer work with older versions than 
       \samp{libpng-1.4.5}. 
     } 
