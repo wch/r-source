@@ -4,6 +4,15 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Launching the PDF manuals from the Rgui menus did not work
+      on some versions of Windows.
+    }
+  }
+}
+  
 \section{CHANGES IN R VERSION 2.13.0}{
   \subsection{WINDOWS VERSION}{
     \itemize{
