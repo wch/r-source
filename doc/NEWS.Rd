@@ -197,6 +197,9 @@
       \item \command{R CMD build --binary} is formally defunct:
       \command{R CMD INSTALL --build} has long been the preferred
       alternative.
+
+      \item \code{.readRDS()} and \code{.saveRDS()} are now deprecated
+      in favour of \code{readRDS()} and \code{saveRDS()}.
     }
   }
 

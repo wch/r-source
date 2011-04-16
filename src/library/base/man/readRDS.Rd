@@ -45,7 +45,7 @@ readRDS(file, refhook = NULL)
   Functions \code{\link{serialize}} and \code{\link{unserialize}}
   provide a slightly lower-level interface to serialization: objects
   serialized to a connection by \code{serialize} can be read back by
-  \code{.readRDS} and conversely.
+  \code{readRDS} and conversely.
   
   All of these interfaces use the same serialization format, which has
   been used since \R 1.4.0 (but extended from time to time as new
