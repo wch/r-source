@@ -54,7 +54,7 @@ Sys.umask(mode = NA)
   One of the idiosyncrasies of Windows is that directory creation may
   report success but create a directory with a different name, for
   example \code{dir.create("G.S.")} creates \file{"G.S"}.  This is
-  undocumented, and precisely what the circumstances are is unknown (and
+  undocumented, and what are the precise circumstances is unknown (and
   might depend on the version of Windows).  Also avoid directory names
   with a trailing space.
   %% http://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx
@@ -132,10 +132,9 @@ Sys.umask(mode = NA)
 }
 
 \examples{\dontrun{
-## Fix up maximal permissions in a file tree, respecting umask
-umask <- Sys.umask(NA)
-Sys.chmod(list.dirs('.'), "777" & !umask)
+## Fix up maximal allowed permissions in a file tree
+Sys.chmod(list.dirs('.'), "777")
 f <- list.files('.', all.files = TRUE, full.names = TRUE, recursive =TRUE)
-Sys.chmod(f, (file.info(f)$mode | "664") & !umask)
+Sys.chmod(f, (file.info(f)$mode | "664"))
 }}
 \keyword{file}
