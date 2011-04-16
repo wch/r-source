@@ -1253,7 +1253,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 extern int winAccessW(const wchar_t *path, int mode);
 #endif
 
-/* require 'access' as from 2.12.0 */
+/* we require 'access' as from 2.12.0 */
 SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
@@ -1296,11 +1296,13 @@ static int R_rmdir(const wchar_t *dir)
     return _wrmdir(tmp);
 }
 
-static int R_unlink(wchar_t *name, int recursive)
+static int R_unlink(wchar_t *name, int recursive, int force)
 {
     if (wcscmp(name, L".") == 0 || wcscmp(name, L"..") == 0) return 0;
     //printf("R_unlink(%ls)\n", name);
     if (!R_WFileExists(name)) return 0;
+    if (force) _wchmod(name, _S_IWRITE)
+
     if (recursive) {
 	_WDIR *dir;
 	struct _wdirent *de;
@@ -1325,9 +1327,11 @@ static int R_unlink(wchar_t *name, int recursive)
 		    _wstati64(p, &sb);
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
 			/* printf("is a directory\n"); */
-			ans += R_unlink(p, recursive);
-		    } else
+			ans += R_unlink(p, recursive, force);
+		    } else {
+			if (force) _wchmod(p, _S_IWRITE)
 			ans += (_wunlink(p) == 0) ? 0 : 1;
+		    }
 		}
 		_wclosedir(dir);
 	    } else { /* we were unable to read a dir */
@@ -1353,7 +1357,7 @@ void R_CleanTempDir(void)
     }
 }
 #else
-static int R_unlink(const char *name, int recursive)
+static int R_unlink(const char *name, int recursive, int force)
 {
     struct stat sb;
     int res, res2;
@@ -1363,6 +1367,7 @@ static int R_unlink(const char *name, int recursive)
        symbolic links 
        if (!R_FileExists(name)) return 0; */
     res  = stat(name, &sb);
+    if (!res && force) chmod(name, sb.st_mode | S_IWUSR);
 
     if (!res && recursive) {
 	DIR *dir;
@@ -1383,9 +1388,12 @@ static int R_unlink(const char *name, int recursive)
 				 de->d_name);
 		    stat(p, &sb);
 		    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
-			ans += R_unlink(p, recursive);
-		    } else
+			if (force) chmod(p, sb.st_mode | S_IWUSR | S_IXUSR);
+			ans += R_unlink(p, recursive, force);
+		    } else {
+			if (force) chmod(p, sb.st_mode | S_IWUSR);
 			ans += (unlink(p) == 0) ? 0 : 1;
+		    }
 		}
 		closedir(dir);
 	    } else { /* we were unable to read a dir */
@@ -1409,7 +1417,7 @@ static int R_unlink(const char *name, int recursive)
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, j, nfiles, res, failures = 0, recursive;
+    int i, j, nfiles, res, failures = 0, recursive, force;
     const wchar_t *names;
     wglob_t globbuf;
 
@@ -1422,6 +1430,9 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	recursive = asLogical(CADR(args));
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
+	force = asLogical(CADDR(args));
+	if (force == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "force");
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		names = filenameToWchar(STRING_ELT(fn, i), TRUE);
@@ -1430,7 +1441,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (res == GLOB_NOSPACE)
 		    error(_("internal out-of-memory condition"));
 		for (j = 0; j < globbuf.gl_pathc; j++)
-		    failures += R_unlink(globbuf.gl_pathv[j], recursive);
+		    failures += R_unlink(globbuf.gl_pathv[j], recursive, force);
 		dos_wglobfree(&globbuf);
 	    } else failures++;
 	}
@@ -1445,7 +1456,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn;
-    int i, nfiles, failures = 0, recursive;
+    int i, nfiles, failures = 0, recursive, force;
     const char *names;
 #if defined(HAVE_GLOB)
     int j, res;
@@ -1461,6 +1472,9 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	recursive = asLogical(CADR(args));
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
+	force = asLogical(CADDR(args));
+	if (force == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "force");
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		names = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
@@ -1475,11 +1489,11 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("internal out-of-memory condition"));
 # endif
 		for (j = 0; j < globbuf.gl_pathc; j++)
-		    failures += R_unlink(globbuf.gl_pathv[j], recursive);
+		    failures += R_unlink(globbuf.gl_pathv[j], recursive, force);
 		globfree(&globbuf);
 	    } else failures++;
 #else /* HAVE_GLOB */
-	        failures += R_unlink(names, recursive);
+	        failures += R_unlink(names, recursive, force);
 	    } else failures++;
 #endif
 	}

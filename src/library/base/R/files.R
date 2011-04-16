@@ -201,8 +201,8 @@ path.expand <- function(path)
 Sys.glob <- function(paths, dirmark = FALSE)
     .Internal(Sys.glob(path.expand(paths), dirmark))
 
-unlink <- function(x, recursive = FALSE)
-    .Internal(unlink(as.character(x), recursive))
+unlink <- function(x, recursive = FALSE, force = FALSE)
+    .Internal(unlink(as.character(x), recursive, force))
 
 Sys.chmod <- function(paths, mode = "0777", use_umask= TRUE)
     .Internal(Sys.chmod(paths, as.octmode(mode), use_umask))

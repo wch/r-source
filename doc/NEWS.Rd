@@ -77,6 +77,9 @@
       
       \item The \code{print()} method for \code{object.size()} accepts
       \samp{B} as well as \samp{b} as an abbreviation for \sQuote{bytes}.
+      
+      \item \code{unlink()} gains a \code{force} argument to work like
+      \code{rm -f} and if possible override restrictive permissions.
     }
   }
 
