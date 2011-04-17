@@ -633,11 +633,6 @@ for(nu in df.set) {
     pqq <- pt(-qq, df = nu, log=TRUE)
     stopifnot(is.finite(pqq))
 }
-## more extreme case
-x <- (256:512)/1024
-P <- pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE)
-stopifnot(is.finite(P), P < -600,
-	  -1 < (D3P <- diff(P, diff = 3)), D3P < 0, diff(D3P) < 0)
 ##
 All.eq(pt(2^-30, df=10),
        0.50000000036238542)# = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
