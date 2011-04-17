@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-13 r55430)
+R version 2.13.0 Patched (2011-04-16 r55479)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -3684,7 +3684,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3a3c1b8>
+<environment: 0x1023b1748>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -3887,34 +3887,38 @@ probability of success
 > 
 > require(graphics)
 > 
->  ## the standard version
+> ## the standard version
 > qbirthday()
 [1] 22
->  ## same 4-digit PIN number
-> qbirthday(classes=10^4)
+> 
+> ## same 4-digit PIN number
+> qbirthday(classes = 10^4)
 [1] 118
->  ## 0.9 probability of three coincident birthdays
-> qbirthday(coincident=3, prob=0.9)
+> 
+> ## 0.9 probability of three coincident birthdays
+> qbirthday(coincident = 3, prob = 0.9)
 [1] 123
+> 
 > ## Chance of 4 coincident birthdays in 150 people
-> pbirthday(150,coincident=4)
+> pbirthday(150, coincident = 4)
 [1] 0.351437
+> 
 > ## 100 coincident birthdays in 1000 people: *very* rare:
-> pbirthday(1000, coincident=100)
+> pbirthday(1000, coincident = 100)
 [1] 2.395639e-112
 > 
 > ## Accuracy compared to exact calculation
-> x1<-  sapply(10:100, pbirthday)
-> x2<- 1-sapply(10:100, function(n)prod((365:(365-n+1))/rep(365,n)))
-> par(mfrow=c(2,2))
-> plot(x1, x2, xlab="approximate", ylab="exact")
-> abline(0,1)
-> plot(x1, x1-x2, xlab="approximate", ylab="error")
-> abline(h=0)
-> plot(x1, x2, log="xy", xlab="approximate", ylab="exact")
-> abline(0,1)
-> plot(1-x1, 1-x2, log="xy", xlab="approximate", ylab="exact")
-> abline(0,1)
+> x1 <-  sapply(10:100, pbirthday)
+> x2 <- 1-sapply(10:100, function(n) prod((365:(365-n+1))/rep(365,n)))
+> par(mfrow = c(2,2))
+> plot(x1, x2, xlab = "approximate", ylab = "exact")
+> abline(0, 1)
+> plot(x1, x1-x2, xlab = "approximate", ylab = "error")
+> abline(h = 0)
+> plot(x1, x2, log = "xy", xlab = "approximate", ylab = "exact")
+> abline(0, 1)
+> plot(1-x1, 1-x2, log = "xy", xlab = "approximate", ylab = "exact")
+> abline(0, 1)
 > 
 > 
 > 
