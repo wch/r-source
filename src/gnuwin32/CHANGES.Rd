@@ -10,6 +10,8 @@
       \item The \code{yLineBias} of the \code{windows()} family of
       devices has been changed from 0.1 to 0.2: this changes slightly
       the vertical positioning of text (including axis annotations).
+      This can be overridden by setting the new \code{"ylbias"} graphical
+      parameter.
 
       \item \command{R CMD build} once again attempts to preserve file
       permissions on Windows.
@@ -18,9 +20,12 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item There is  support for \sQuote{multilib} toolchains which use
+      \item There is support for \sQuote{multilib} toolchains which use
       options \option{--m32} or \option{--m64} to select the
       architecture; set the appropriate macros in \file{MkRules.local}.
+
+      It is the intention to move to such a toolchain when they become
+      mature enough.
     }
   }
 }
@@ -33,8 +38,8 @@
       OSes) stops read-only files being deleted in version-control
       directories.
       
-      \item \code{shell.exec()} now interprets files relative to the current
-      working directory.
+      \item \code{shell.exec()} now interprets files relative to the
+      current working directory (rather than \samp{R_HOME}).
     }
   }
   
