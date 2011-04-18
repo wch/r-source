@@ -2105,8 +2105,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 lines <- grep("Warning: incomplete final line found by readLines",
                               lines, invert = TRUE, value = TRUE)
 
-                ## Ignore Stangle warnings by default for now
-                check_Stangle <- Sys.getenv("_R_CHECK_STANGLE_WARNINGS_", "FALSE")
+                check_Stangle <- Sys.getenv("_R_CHECK_STANGLE_WARNINGS_", "TRUE")
                 if (!config_val_to_logical(check_Stangle))
                 lines <- grep("Warning: value of .* option should be lowercase",
                               lines, invert = TRUE, value = TRUE)
