@@ -53,8 +53,9 @@
       It will also accept as input the type of list generated with
       \code{toRaw = TRUE}.
 
-      \item Garbage-collecting an input text connection no longer gives
-      a warning (since it \sQuote{connects} to nothing outside \R).
+      \item Garbage-collecting an unused input text connection no longer
+      gives a warning (since it \sQuote{connects} to nothing outside
+      \R).
 
       \item \code{read.table()} and \code{scan()} have gained a
       \code{text} argument, to allow reading data from a (possibly
@@ -79,10 +80,10 @@
       \samp{B} as well as \samp{b} as an abbreviation for \sQuote{bytes}.
       
       \item \code{unlink()} gains a \code{force} argument to work like
-      \code{rm -f} and if possible override restrictive permissions.
+      \command{rm -f} and if possible override restrictive permissions.
       
-      \item \code{pbirthday()} now uses exact calculations for
-      \code{coincident = 2}.
+      \item \code{pbirthday()} and \code{qbirthday()} now use exact
+      calculations for \code{coincident = 2}.
     }
   }
 
@@ -112,8 +113,8 @@
 
       \item The preferred location for vignette sources is now the
       directory \file{vignettes} and not \file{inst/doc}: \command{R CMD
-	build} will now re-build vignettes in \file{vignettes} and copy
-      the \file{.Rnw} (etc) files and the corresponding PDFs to
+      build} will now re-build vignettes in directory \file{vignettes}
+      and copy the \file{.Rnw} (etc) files and the corresponding PDFs to
       \file{inst/doc}.
 
       \item \command{R CMD Sweave} now supports a \option{--driver}

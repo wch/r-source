@@ -723,19 +723,17 @@ R CMD Sweave file.Rnw
  \subsection{How can I set default \texttt{par()} settings for figure
     chunks?}
 
-  Because each EPS and PDF file opens a new device, using \texttt{par()}
-  has only an effect if it is used inside a figure chunk. If you want
-  to use the same settings for a series of figures, it is easier to
-  use a hook function than repeating the same \texttt{par()} statement
-  in each figure chunk.
+  Because Sweave opens a new device for each graphics file in each
+  figure chunk, using \texttt{par()} has only an effect if it is used
+  inside a figure chunk. If you want to use the same settings for a
+  series of figures, it is easier to use a hook function than
+  repeating the same \texttt{par()} statement in each figure chunk.
 
   The effect of
 \begin{verbatim}
   options(SweaveHooks = list(fig = function() par(bg = "red", fg = "blue")))
 \end{verbatim}
-  should be easy to spot. Do not forget to remove the hook at the end
-  of the Sweave file unless you want to use it as a global option for
-  all Sweave files.
+  should be easy to spot.
 
   \subsection{How can I change the formatting of R input and output
      chunks?}
@@ -760,8 +758,8 @@ R CMD Sweave file.Rnw
 
   \subsection{Can I use Sweave for Word files?}
 
-  Not directly, but SWord provides similar functionality for Microsoft
-  Word on Windows platforms.
+  Not directly, but package \texttt{SWord} provides similar
+  functionality for Microsoft Word on Windows platforms.
 
   \subsection{Can I use Sweave for OpenOffice files?}
 
@@ -779,7 +777,7 @@ R CMD Sweave file.Rnw
    Package \texttt{R2HTML} registers an Sweave driver for HTML files
    using the same file extensions as the default \texttt{noweb}
    syntax, and after that its syntax is on the search list before the
-   default syntax.
+   default syntax.  Using
 \begin{verbatim}
   options(SweaveSyntax = "SweaveSyntaxNoweb")
 \end{verbatim}
@@ -787,7 +785,7 @@ or calling Sweave like
 \begin{verbatim}
   Sweave(..., syntax = "SweaveSyntaxNoweb")
 \end{verbatim}
-ensures the default syntax even after loading \texttt{R2HTML}.
+ensures the default syntax even after loading package \texttt{R2HTML}.
 
 
 
