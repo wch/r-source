@@ -565,10 +565,11 @@ Rtangle <-  function()
 }
 
 
-RtangleSetup <- function(file, syntax,
-                         output = NULL, annotate = TRUE, split = FALSE,
-                         prefix = TRUE, quiet = FALSE)
+RtangleSetup <-
+    function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
+             quiet = FALSE, ...)
 {
+    dots <- list(...)
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
@@ -591,9 +592,10 @@ RtangleSetup <- function(file, syntax,
         output <- NULL
     }
 
-    options <- list(split = split, prefix = prefix,
+    options <- list(split = split, prefix = TRUE,
                     prefix.string = prefix.string,
                     engine = "R", eval = TRUE)
+    options[names(dots)] <- dots
 
     list(output = output, annotate = annotate, options = options,
          chunkout = list(), quiet = quiet, syntax = syntax)

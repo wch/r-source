@@ -13,7 +13,7 @@
 \usage{
 Rtangle()
 RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
-             split = FALSE, prefix = TRUE, quiet = FALSE)
+             split = FALSE, quiet = FALSE, ...)
 }
 \arguments{
   \item{file}{Name of Sweave source file.  See the description of the
@@ -25,9 +25,9 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
     lines specifying the names and numbers of the code chunks.  If
     \code{FALSE} the decorating comments are omitted.}
   \item{split}{Split output into a file for each code chunk?}
-  \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
-    basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
+  \item{\dots}{Additional named arguments setting defaults for further
+    options.}
 }
 \details{
   Unless \code{split = TRUE}, the default name of the output file is
@@ -41,6 +41,30 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   Note that this driver does not simple extract the code chunks verbatim
   because code chunks can re-use earlier chunks.
 }
+\section{Supported Options}{
+  \code{Rtangle} supports the following options for code chunks (the
+  values in parentheses show the default values):
+  \describe{
+    \item{engine:}{character string (\code{"R"}).  Only chunks with
+      \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
+    
+    \item{keep.source:}{logical (\code{FALSE}).  If \code{keep.source ==
+      TRUE} the original source is copied to the file.  Otherwise,
+      deparsed source is output.}
+    
+    \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
+      is copied across but commented out.}
+    
+    \item{prefix}{Used if \code{split = TRUE}.  See \code{prefix.string}.}
+    
+    \item{prefix.string:}{a character string, default is the name of the
+      source file (without extension).  Used if \code{split = TRUE} as
+      the prefix for the filename if the chunk has no label, or if it
+      has a label and \code{prefix = TRUE}.  Note that this is used as
+      part of filenames, so needs to be portable.}
+  }
+}
+
 \author{Friedrich Leisch and R-core.}
 \seealso{
   \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
