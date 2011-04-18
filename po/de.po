@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2011-04-01 09:20+0100\n"
-"PO-Revision-Date: 2011-03-23 09:35+0100\n"
+"PO-Revision-Date: 2011-04-18 10:17+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -449,7 +449,7 @@ msgstr "Einrichtung einer pipe Verbindung fehlgeschlagen"
 
 #: src/gnuwin32/run.c:773
 msgid "'names' is not a character string"
-msgstr "'names'  ist keine Zeichenkette"
+msgstr "'names' ist keine Zeichenkette"
 
 #: src/gnuwin32/sys-win32.c:183
 msgid "character string expected as first argument"
@@ -608,7 +608,7 @@ msgstr "Warnung: %s: zu groß und wird ignoriert\n"
 
 #: src/main/CommandLineArgs.c:237
 msgid "WARNING: no value given for '--max-ppsize'\n"
-msgstr "Warnung: kein Wert for '--max-ppsize' angegeben\n"
+msgstr "Warnung: kein Wert für '--max-ppsize' angegeben\n"
 
 #: src/main/CommandLineArgs.c:242
 msgid "WARNING: '--max-ppsize' value is negative: ignored\n"
@@ -656,7 +656,7 @@ msgstr ".Random.seed fehlt und es gibt keinen Standard"
 #: src/main/RNG.c:311
 #, c-format
 msgid ".Random.seed is not an integer vector but of type '%s'"
-msgstr ".Random.seed ist kein Integer-Vektor sondern vom Tyo '%s'"
+msgstr ".Random.seed ist kein Integer-Vektor sondern vom Typ '%s'"
 
 #: src/main/RNG.c:317
 msgid ".Random.seed[1] is not a valid integer"
@@ -697,7 +697,7 @@ msgstr "angegebener Startwert ist keine gültige ganze Zahl"
 
 #: src/main/Rdynload.c:250
 msgid "R_RegisterRoutines called with invalid DllInfo object."
-msgstr "R_RegisterRoutines mit ungültigem DllInfo Object."
+msgstr "R_RegisterRoutines mit ungültigem DllInfo Objekt."
 
 #: src/main/Rdynload.c:533
 msgid "Maximal number of DLLs reached..."
@@ -766,7 +766,7 @@ msgstr "keine dyn.load Unterstützung in dieser R Version"
 #: src/main/Rdynload.c:1378
 #, c-format
 msgid "function '%s' not provided by package '%s'"
-msgstr "Die Funnktion '%s' wird nicht von Paket '%s' bereitgestellt"
+msgstr "Die Funktion '%s' wird nicht von Paket '%s' bereitgestellt"
 
 #: src/main/Rdynload.c:1380
 msgid "table entry must be an external pointer"
@@ -829,7 +829,7 @@ msgstr "ungültige Länge"
 
 #: src/main/apply.c:98
 msgid "FUN.VALUE must be a vector"
-msgstr "FUN.VALUE  muss Vektor sein"
+msgstr "FUN.VALUE muss Vektor sein"
 
 #: src/main/apply.c:100
 msgid "invalid USE.NAMES value"
@@ -932,16 +932,16 @@ msgstr ""
 
 #: src/main/arithmetic.c:1497
 msgid "invalid second argument of length 0"
-msgstr "unültiges zweites Argument der Länge 0"
+msgstr "ungültiges zweites Argument der Länge 0"
 
 #: src/main/arithmetic.c:1567
 msgid "invalid argument 'base' of length 0"
-msgstr "unültiges Argument 'base' mit Länge 0"
+msgstr "ungültiges Argument 'base' mit Länge 0"
 
 #: src/main/arithmetic.c:1575
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
-msgstr "%d arguments an 'log' üergeben, das 1 oder 2 braucht"
+msgstr "%d Argumente an 'log' übergeben, das 1 oder 2 braucht"
 
 #: src/main/array.c:79
 msgid "'data' must be of a vector type"
@@ -949,7 +949,7 @@ msgstr "'data' muss vom Typ vector sein"
 
 #: src/main/array.c:93 src/main/array.c:101
 msgid "non-numeric matrix extent"
-msgstr "nicht numerische Matrix-Erweiterung"
+msgstr "nicht numerische Matrix-Ausdehnung"
 
 #: src/main/array.c:96
 msgid "invalid 'nrow' value (too large or NA)"
@@ -992,7 +992,7 @@ msgstr "zu viele Elemente angegeben"
 
 #: src/main/array.c:191
 msgid "negative extents to matrix"
-msgstr "negative Erweiterung zu matrix"
+msgstr "negative Matrix-Ausdehnung"
 
 #: src/main/array.c:193
 msgid "allocMatrix: too many elements specified"
@@ -1000,7 +1000,7 @@ msgstr "allocMatrix: zu viele Elemente angegeben"
 
 #: src/main/array.c:220
 msgid "negative extents to 3D array"
-msgstr "negative Erweiterung zu einem 3D Array"
+msgstr "negative Ausdehnung für einen 3D Array"
 
 #: src/main/array.c:222
 msgid "alloc3Darray: too many elements specified"
@@ -1032,7 +1032,7 @@ msgstr "ungültiges erstes Argument, muss ein Array sein"
 
 #: src/main/array.c:1074 src/main/array.c:1077
 msgid "'a' does not have named dimnames"
-msgstr "'a' hat keine bennanten Dimensionen"
+msgstr "'a' hat keine benannten Dimensionen"
 
 #: src/main/array.c:1084
 #, c-format
@@ -1863,7 +1863,7 @@ msgstr "Abschneiden der Datei fehlgeschlagen"
 
 #: src/main/connections.c:739
 msgid "file truncation unavailable on this platform"
-msgstr "Abschneiden einer Datei auf dieser Platform nicht verfügbar"
+msgstr "Abschneiden einer Datei auf dieser Plattform nicht verfügbar"
 
 #: src/main/connections.c:785 src/main/connections.c:789
 #: src/main/connections.c:795 src/main/connections.c:812
@@ -1914,7 +1914,7 @@ msgstr "nur das erste Element von 'description' benutzt"
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
-"fifo(\"\") unterstützt nur  open = \"w+\" und open = \"w+b\": Ersteres wird "
+"fifo(\"\") unterstützt nur open = \"w+\" und open = \"w+b\": Ersteres wird "
 "verwendet"
 
 #: src/main/connections.c:1018 src/main/connections.c:1176
@@ -2176,7 +2176,7 @@ msgstr "zu wenig Zeilen gelesen in readLines"
 
 #: src/main/connections.c:3467
 msgid "incomplete string at end of file has been discarded"
-msgstr "unvollstädige Zeichenkette am Ende der Datei wurde verworfen"
+msgstr "unvollständige Zeichenkette am Ende der Datei wurde verworfen"
 
 #: src/main/connections.c:3473
 msgid "null terminator not found: breaking string at 10000 bytes"
@@ -2538,7 +2538,7 @@ msgstr "zu wenig Argumente"
 
 #: src/main/deparse.c:157
 msgid "invalid 'cutoff' for deparse, using default"
-msgstr "ungülter 'cutoff' in deparse, nutze Standard"
+msgstr "ungültiger 'cutoff' in deparse, nutze Standard"
 
 #: src/main/deparse.c:236
 msgid "deparse of an S4 object will not be source()able"
@@ -2664,7 +2664,7 @@ msgid ""
 "is of the wrong type (%d != %d)"
 msgstr ""
 "expliziter Wunsch Argumente im Aufruf von '%s' nicht zu duplizieren, aber "
-"Argument %d  ist von falschem Typ (%d != %d)"
+"Argument %d ist von falschem Typ (%d != %d)"
 
 #: src/main/dotcode.c:333
 #, c-format
@@ -2706,7 +2706,7 @@ msgstr "Listen müssen in .C dubliziert werden"
 #: src/main/dotcode.c:440 src/main/dotcode.c:452
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
-msgstr "ungültiger Modus zur Übergabe nach Fortran (ard %d)"
+msgstr "ungültiger Modus zur Übergabe nach Fortran (Arg. %d)"
 
 #: src/main/dotcode.c:537
 #, c-format
@@ -4313,7 +4313,7 @@ msgstr "zweites Argument muss eine Funktion sein"
 
 #: src/main/memory.c:1352
 msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr "drittes Argument  muss 'TRUE' oder 'FALSE' sein"
+msgstr "drittes Argument muss 'TRUE' oder 'FALSE' sein"
 
 #: src/main/memory.c:1840
 msgid "vector memory exhausted (limit reached?)"
@@ -4382,7 +4382,7 @@ msgstr "unprotect_ptr: Zeiger nicht gefunden"
 #: src/main/memory.c:2772
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
-msgstr "Calloc konnte keinen  Speicher (%.0f von %u Bytes) zuteilen"
+msgstr "Calloc konnte keinen Speicher (%.0f von %u Bytes) zuteilen"
 
 #: src/main/memory.c:2783
 #, c-format
@@ -4778,7 +4778,7 @@ msgstr "Makro NEW auf C Level mit NULL Klassendefinitionszeiger aufgerufen"
 #: src/main/objects.c:1471
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
-msgstr "Versuch  ein Objekt aus einer virtuelle Klasse (\"%s\") zu erzeugen"
+msgstr "Versuch, ein Objekt aus einer virtuelle Klasse (\"%s\") zu erzeugen"
 
 #: src/main/objects.c:1516
 msgid "'R_get_primname' called on a non-primitive"
@@ -5244,7 +5244,7 @@ msgstr "kann '%s' nicht auf '%s' symlinken. Grund '%s'"
 
 #: src/main/platform.c:625
 msgid "symlinks are not supported on this platform"
-msgstr "symbolische Links auf dieser Platform nicht unterstützt"
+msgstr "symbolische Links auf dieser Plattform nicht unterstützt"
 
 #: src/main/platform.c:675
 #, c-format
@@ -5258,7 +5258,7 @@ msgstr "kann '%s' nicht auf '%s' linken, Grund '%s'"
 
 #: src/main/platform.c:704
 msgid "(hard) links are not supported on this platform"
-msgstr "(Hard-)Links werden auf dieser Platform nicht unterstützt"
+msgstr "(Hard-)Links werden auf dieser Plattform nicht unterstützt"
 
 #: src/main/platform.c:735
 msgid "'from' and 'to' are of different lengths"
@@ -5325,7 +5325,7 @@ msgstr "unbekanntes Format von gethostbyname zurückgegeben"
 
 #: src/main/platform.c:1993
 msgid "nsl() is not supported on this platform"
-msgstr "nsl() wird auf dieser Platform nicht unterstützt"
+msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
 
 #: src/main/platform.c:2042
 #, c-format
@@ -5383,7 +5383,7 @@ msgstr "'mode' muss Länge >= 1 haben"
 
 #: src/main/platform.c:2484
 msgid "insufficient OS support on this platform"
-msgstr "ungenügende OS Unterstützung auf dieser Platform"
+msgstr "ungenügende OS Unterstützung auf dieser Plattform"
 
 #: src/main/plot.c:109
 msgid "only NA allowed in logical plotting symbol"
@@ -6027,7 +6027,7 @@ msgstr "NewWriteVec mit Nicht-Vektor Typ aufgerufen"
 
 #: src/main/saveload.c:1078
 msgid "cannot save byte code objects in version 1 workspaces"
-msgstr "kann Bytecodeobjekte nicht in Version 1 workspace  sichern"
+msgstr "kann Bytecodeobjekte nicht in Version 1 workspace sichern"
 
 #: src/main/saveload.c:1080
 #, c-format
@@ -6174,7 +6174,7 @@ msgstr "Verbindung nicht zum Lesen geöffnet"
 
 #: src/main/saveload.c:2345
 msgid "can only load() from a binary connection"
-msgstr "load() funktioniert  nur aus binärer Verbindung"
+msgstr "load() funktioniert nur aus binärer Verbindung"
 
 #: src/main/saveload.c:2356
 msgid "no input is available"
@@ -6333,7 +6333,7 @@ msgstr "'by' muss endlich sein"
 
 #: src/main/seq.c:694
 msgid "argument must be coercible to non-negative integer"
-msgstr "Argument muss sich in eine  nicht-negative ganze Zahl umwandeln lassen"
+msgstr "Argument muss sich in eine nicht-negative ganze Zahl umwandeln lassen"
 
 #: src/main/serialize.c:224 src/main/serialize.c:254 src/main/serialize.c:277
 msgid "unknown or inappropriate output format"
@@ -6713,7 +6713,7 @@ msgstr "benutze Format %d oder %i für boolesche Objekte"
 #: src/main/sprintf.c:352
 #, c-format
 msgid "use format %d, %i, %o, %x or %X for integer objects"
-msgstr "benutze Format %d, %i, , %o,  %x oder %X für integer Objekte"
+msgstr "benutze Format %d, %i, %o, %x oder %X für integer Objekte"
 
 #: src/main/sprintf.c:366
 #, c-format
@@ -6958,7 +6958,7 @@ msgstr "kein nicht-fehlendes Argument für max; gebe -Inf zurück"
 
 #: src/main/summary.c:800
 msgid "argument to 'which' is not logical"
-msgstr "Argument zu 'which' ist nicht  boolesch"
+msgstr "Argument zu 'which' ist nicht boolesch"
 
 #: src/main/summary.c:909
 msgid "no input has determined the number of cases"
@@ -7108,7 +7108,7 @@ msgstr "setSessionTimelimit() ist auf diesem System nicht implementiert"
 
 #: src/main/sysutils.c:1592
 msgid "'dirmark = TRUE' is not supported on this platform"
-msgstr "'dirmark = TRUE' wird auf dieser Platform nicht unterstützt"
+msgstr "'dirmark = TRUE' wird auf dieser Plattform nicht unterstützt"
 
 #: src/main/unique.c:302
 #, c-format
@@ -7621,7 +7621,7 @@ msgstr "Fehlercode %d von Lapackroutine 'zgecon()'"
 #: src/modules/lapack/Lapack.c:740 src/modules/lapack/Lapack.c:796
 #: src/modules/lapack/Lapack.c:857
 msgid "Fortran complex functions are not available on this platform"
-msgstr "komplexe Fortran Funktionen auf dieser Platform nicht verfügbar"
+msgstr "komplexe Fortran Funktionen auf dieser Plattform nicht verfügbar"
 
 #: src/modules/lapack/Lapack.c:510
 #, c-format
@@ -7930,7 +7930,7 @@ msgstr "kann Datei '%s' nicht öffnen"
 
 #: src/modules/X11/devX11.c:2952
 msgid "savePlot() is not supported on this build"
-msgstr "savePlot() wird auf dieser Platform nicht unterstützt"
+msgstr "savePlot() wird auf dieser Plattform nicht unterstützt"
 
 #: src/modules/X11/devX11.c:2989 src/modules/X11/devX11.c:3151
 msgid "unimplemented cairo-based device"
@@ -7943,7 +7943,7 @@ msgstr "kann Device '%s' nicht starten"
 
 #: src/modules/X11/devX11.c:3373
 msgid "cairo-based devices are not supported on this build"
-msgstr "cairo-basierte Devices sind auf dieser Platform nicht unterstützt"
+msgstr "cairo-basierte Devices sind auf dieser Plattform nicht unterstützt"
 
 #: src/modules/X11/devX11.c:3412
 msgid "unable to contact X11 display"
@@ -8035,7 +8035,7 @@ msgstr "Wert außerhalb des Bereichs in '%s'\n"
 #: src/nmath/nmath.h:138
 #, c-format
 msgid "convergence failed in '%s'\n"
-msgstr "Keine Konvergenz in  '%s'\n"
+msgstr "Keine Konvergenz in '%s'\n"
 
 #: src/nmath/nmath.h:141
 #, c-format
@@ -8081,7 +8081,7 @@ msgstr "Allokationsfehler %d in wilcox"
 msgid ""
 "Explicit local dynamic loading not supported on this platform. Using default."
 msgstr ""
-"Explizites lokales dynamisches Laden auf dieser Platform nicht unterstützt. "
+"Explizites lokales dynamisches Laden auf dieser Plattform nicht unterstützt. "
 "Nutze Standard."
 
 #: src/unix/dynload.c:144
@@ -8089,7 +8089,7 @@ msgid ""
 "Explicit global dynamic loading not supported on this platform. Using "
 "default."
 msgstr ""
-"Explizites globales dynamisches Laden auf dieser Platform nicht unterstützt. "
+"Explizites globales dynamisches Laden auf dieser Plattform nicht unterstützt. "
 "Nutze Standard."
 
 #: src/unix/dynload.c:145
@@ -8097,14 +8097,14 @@ msgid ""
 "Explicit non-lazy dynamic loading not supported on this platform. Using "
 "default."
 msgstr ""
-"Explizites non-lazy dynamisches Laden auf dieser Platform nicht unterstützt. "
+"Explizites non-lazy dynamisches Laden auf dieser Plattform nicht unterstützt. "
 "Nutze Standard."
 
 #: src/unix/dynload.c:146
 msgid ""
 "Explicit lazy dynamic loading not supported on this platform. Using default."
 msgstr ""
-"Explizites lazy dynamisches Laden auf dieser Platform nicht unterstützt. "
+"Explizites lazy dynamisches Laden auf dieser Plattform nicht unterstützt. "
 "Nutze Standard."
 
 #: src/unix/dynload.c:240
@@ -8167,8 +8167,8 @@ msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
 msgstr ""
-"Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. Ein "
-"bug.report() bitte!"
+"Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. Bitte "
+"melden Sie's via bug.report()"
 
 #: src/unix/sys-std.c:1068 src/unix/sys-std.c:1235
 #, c-format
@@ -8210,7 +8210,7 @@ msgstr "erwarte nicht-leeres Charakter-Argument"
 
 #: src/unix/sys-unix.c:268
 msgid "'intern' must be logical and not NA"
-msgstr "'intern' muss ein logischer Wert und kein NA"
+msgstr "'intern' muss ein logischer Wert und kein NA sein"
 
 #: src/unix/sys-unix.c:280
 #, c-format
@@ -8220,7 +8220,7 @@ msgstr "kann nicht popen '%s'. Grund vermutlich '%s'"
 #: src/unix/sys-unix.c:285
 #, c-format
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
-msgstr "Zeile %d eventuel abgeschnitten beim Aufruf von system(, intern = TRUE"
+msgstr "Zeile %d eventuell abgeschnitten beim Aufruf von system(, intern = TRUE"
 
 #: src/unix/sys-unix.c:302
 #, c-format
