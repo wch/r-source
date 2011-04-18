@@ -31,6 +31,18 @@
 \details{
   Each of the six subjects were given an intravenous injection of
   indometacin.
+
+  Note that the data frame inherits from S3 class
+  \code{"\link[nlme]{groupedData}"} from package \pkg{nlme}.
+  When that package's namespace is loaded, there are print and plot
+  methods defined which differ from the default \code{data.frame} ones.
+% NOTA BENE: These are the grouped data  objects within 'datasets' :
+% ChickWeight
+% DNase
+% Indometh
+% Loblolly
+% Orange
+% Theoph
 }
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976)
