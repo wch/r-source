@@ -547,7 +547,7 @@ code chunk. For example, we could make use of the \texttt{cairo\_pdf}
 device by
 \begin{verbatim}
 my.Swd <- function(name, width, height, ...)
-  grdevices::cairo_pdf(filename = paste(name, "pdf", sep = "."),
+  grDevices::cairo_pdf(filename = paste(name, "pdf", sep = "."),
                        width = width, height = height)
 \end{verbatim}
 

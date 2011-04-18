@@ -234,7 +234,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   the name given will have been defined earlier in the Sweave document, e.g.
 \preformatted{<<results=hide>>=
 my.Swd <- function(name, width, height, ...)
-  grdevices::png(filename = paste(name, "png", sep = "."),
+  grDevices::png(filename = paste(name, "png", sep = "."),
                  width = width, height = height, res = 100, units = "in",
                  type = "quartz", bg = "transparent")
 @
