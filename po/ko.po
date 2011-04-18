@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:20+0100\n"
+"POT-Creation-Date: 2011-04-18 10:27+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -59,62 +59,62 @@ msgstr "DLL이(가) FPU의 상태어를 %x에서 %x으로 변경하도록 했습
 msgid "cannot get working directory"
 msgstr "작업 디렉토리를 얻을수 없습니다"
 
-#: src/gnuwin32/extra.c:65 src/gnuwin32/extra.c:594
+#: src/gnuwin32/extra.c:65 src/gnuwin32/extra.c:606
 #, fuzzy
 msgid "unsupported version of Windows"
 msgstr "서포트되어 있지 않은 변환입니다"
 
-#: src/gnuwin32/extra.c:129 src/gnuwin32/extra.c:151 src/gnuwin32/extra.c:185
+#: src/gnuwin32/extra.c:130 src/gnuwin32/extra.c:158 src/gnuwin32/extra.c:197
 msgid "R_HOME not set"
 msgstr "R_HOME가 설정되어있지 않습니다"
 
-#: src/gnuwin32/extra.c:134
+#: src/gnuwin32/extra.c:137
 #, fuzzy, c-format
 msgid "'%s' not found"
 msgstr "검색되지 않습니다"
 
-#: src/gnuwin32/extra.c:136
+#: src/gnuwin32/extra.c:139
 #, fuzzy, c-format
 msgid "file association for '%s' not available or invalid"
 msgstr "이 시스템에서는 파일 갱신 시각을 얻을수가 없습니다"
 
-#: src/gnuwin32/extra.c:139
+#: src/gnuwin32/extra.c:142
 #, c-format
 msgid "access to '%s' denied"
 msgstr "'%s' 에 대한 접근이 거부되었습니다"
 
-#: src/gnuwin32/extra.c:140
+#: src/gnuwin32/extra.c:143
 #, c-format
 msgid "problem in displaying '%s'"
 msgstr "'%s' 를 표시하는데 문제가 생겼습니다"
 
-#: src/gnuwin32/extra.c:156
+#: src/gnuwin32/extra.c:168
 #, fuzzy, c-format
 msgid "'%ls' not found"
 msgstr "검색되지 않습니다"
 
-#: src/gnuwin32/extra.c:158
+#: src/gnuwin32/extra.c:170
 #, fuzzy, c-format
 msgid "file association for '%ls' not available or invalid"
 msgstr "이 시스템에서는 파일 갱신 시각을 얻을수가 없습니다"
 
-#: src/gnuwin32/extra.c:161
+#: src/gnuwin32/extra.c:173
 #, c-format
 msgid "access to '%ls' denied"
 msgstr "'%ls' 접근이 거부되었습니다"
 
-#: src/gnuwin32/extra.c:162
+#: src/gnuwin32/extra.c:174
 #, c-format
 msgid "problem in displaying '%ls'"
 msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 
-#: src/gnuwin32/extra.c:173 src/gnuwin32/extra.c:204 src/gnuwin32/extra.c:229
-#: src/gnuwin32/extra.c:232 src/gnuwin32/extra.c:278 src/gnuwin32/extra.c:315
-#: src/gnuwin32/extra.c:326 src/gnuwin32/extra.c:350 src/gnuwin32/extra.c:358
-#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:573
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:842 src/gnuwin32/extra.c:845
-#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1642
-#: src/gnuwin32/extra.c:1667 src/main/agrep.c:67 src/main/agrep.c:70
+#: src/gnuwin32/extra.c:185 src/gnuwin32/extra.c:216 src/gnuwin32/extra.c:241
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:290 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:338 src/gnuwin32/extra.c:362 src/gnuwin32/extra.c:370
+#: src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:545 src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:770 src/gnuwin32/extra.c:854 src/gnuwin32/extra.c:857
+#: src/gnuwin32/extra.c:862 src/gnuwin32/extra.c:1654
+#: src/gnuwin32/extra.c:1679 src/main/agrep.c:67 src/main/agrep.c:70
 #: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
 #: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
 #: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
@@ -175,7 +175,7 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/grep.c:763 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1041 src/main/grep.c:1485 src/main/grep.c:1489
 #: src/main/grep.c:1494 src/main/grep.c:2171 src/main/grep.c:2176
-#: src/main/memory.c:3319 src/main/model.c:1610 src/main/model.c:1618
+#: src/main/memory.c:3338 src/main/model.c:1610 src/main/model.c:1618
 #: src/main/optim.c:225 src/main/paste.c:87 src/main/paste.c:368
 #: src/main/paste.c:375 src/main/paste.c:382 src/main/paste.c:387
 #: src/main/paste.c:392 src/main/paste.c:397 src/main/paste.c:400
@@ -196,9 +196,9 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/platform.c:2337 src/main/platform.c:2340 src/main/platform.c:2343
 #: src/main/platform.c:2412 src/main/platform.c:2420 src/main/platform.c:2456
 #: src/main/platform.c:2506 src/main/plot.c:3104 src/main/plot.c:4241
-#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2431
-#: src/main/plot3d.c:2435 src/main/plot3d.c:2440 src/main/plot3d.c:2444
-#: src/main/plot3d.c:2448 src/main/plot3d.c:2452 src/main/print.c:231
+#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2434
+#: src/main/plot3d.c:2438 src/main/plot3d.c:2443 src/main/plot3d.c:2447
+#: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:231
 #: src/main/print.c:237 src/main/print.c:259 src/main/print.c:265
 #: src/main/print.c:271 src/main/random.c:468 src/main/random.c:472
 #: src/main/random.c:476 src/main/saveload.c:1938 src/main/saveload.c:1941
@@ -216,7 +216,7 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
 #: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
 #: src/main/sysutils.c:591 src/main/sysutils.c:593 src/main/sysutils.c:598
-#: src/main/sysutils.c:1585 src/main/sysutils.c:1589 src/main/unique.c:821
+#: src/main/sysutils.c:1589 src/main/sysutils.c:1593 src/main/unique.c:821
 #: src/main/unique.c:1100 src/main/unique.c:1160 src/main/unique.c:1167
 #: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1758
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -235,55 +235,55 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 msgid "invalid '%s' argument"
 msgstr "'%s'인수가 부적절합니다"
 
-#: src/gnuwin32/extra.c:216
+#: src/gnuwin32/extra.c:228
 msgid "unknown type"
 msgstr "알수 없는 데이타 유형입니다"
 
-#: src/gnuwin32/extra.c:250 src/gnuwin32/extra.c:274 src/gnuwin32/extra.c:312
-#: src/gnuwin32/extra.c:347
+#: src/gnuwin32/extra.c:262 src/gnuwin32/extra.c:286 src/gnuwin32/extra.c:324
+#: src/gnuwin32/extra.c:359
 msgid "Menu functions can only be used in the GUI"
 msgstr "Menu 함수는 GUI에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:282
+#: src/gnuwin32/extra.c:294
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "%s (%s)에 대한 항목을 검색할수가 없습니다"
 
-#: src/gnuwin32/extra.c:320
+#: src/gnuwin32/extra.c:332
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "메뉴(%s)를 추가할수가 없습니다"
 
-#: src/gnuwin32/extra.c:332
+#: src/gnuwin32/extra.c:344
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "메뉴 항목(%s)을 추가 할수 없습니다"
 
-#: src/gnuwin32/extra.c:355
+#: src/gnuwin32/extra.c:367
 msgid "menu does not exist"
 msgstr "메뉴는 존재하지 않습니다"
 
-#: src/gnuwin32/extra.c:362
+#: src/gnuwin32/extra.c:374
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "메뉴 항목(%s)을 삭제할수 없습니다"
 
-#: src/gnuwin32/extra.c:522
+#: src/gnuwin32/extra.c:534
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory'은 Rgui 또는 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:539
+#: src/gnuwin32/extra.c:551
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory'은 Rgui과 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1257
+#: src/gnuwin32/extra.c:564 src/unix/sys-std.c:1257
 #, fuzzy
 msgid "invalid timestamp"
 msgstr "태그가 부적절합니다"
 
-#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1858
-#: src/gnuwin32/extra.c:2039 src/gnuwin32/extra.c:2042
-#: src/gnuwin32/extra.c:2045 src/main/character.c:578 src/main/colors.c:358
+#: src/gnuwin32/extra.c:687 src/gnuwin32/extra.c:1870
+#: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
+#: src/gnuwin32/extra.c:2057 src/main/character.c:578 src/main/colors.c:358
 #: src/main/connections.c:3288 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:592 src/main/datetime.c:662 src/main/datetime.c:907
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
@@ -293,9 +293,9 @@ msgstr "태그가 부적절합니다"
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
-#: src/main/plot3d.c:1381 src/main/plot3d.c:2509 src/main/plot3d.c:2513
-#: src/main/plot3d.c:2515 src/main/seq.c:167 src/main/seq.c:265
-#: src/main/seq.c:268 src/main/sort.c:869 src/main/sort.c:968
+#: src/main/plot3d.c:1381 src/main/plot3d.c:2512 src/main/plot3d.c:2516
+#: src/main/plot3d.c:2518 src/main/seq.c:167 src/main/seq.c:265
+#: src/main/seq.c:268 src/main/sort.c:871 src/main/sort.c:970
 #: src/main/source.c:215 src/main/summary.c:1028 src/main/sysutils.c:248
 #: src/main/util.c:955 src/main/util.c:960 src/main/util.c:967
 #: src/main/util.c:970 src/modules/X11/devX11.c:2821
@@ -307,118 +307,118 @@ msgstr "태그가 부적절합니다"
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 부적절합니다"
 
-#: src/gnuwin32/extra.c:717 src/gnuwin32/extra.c:730
+#: src/gnuwin32/extra.c:729 src/gnuwin32/extra.c:742
 msgid "incorrect argument"
 msgstr "올바르지 않은 인수입니다"
 
-#: src/gnuwin32/extra.c:721
+#: src/gnuwin32/extra.c:733
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "잘못되었습니다!: machine address공간의 상한은 4Gb 입니다"
 
-#: src/gnuwin32/extra.c:725
+#: src/gnuwin32/extra.c:737
 #, fuzzy
 msgid "cannot decrease memory limit: ignored"
 msgstr "메모리 한계를 줄일수가 없습니다"
 
-#: src/gnuwin32/extra.c:872
+#: src/gnuwin32/extra.c:884
 #, fuzzy
 msgid "Select one or more"
 msgstr "선택:"
 
-#: src/gnuwin32/extra.c:872
+#: src/gnuwin32/extra.c:884
 #, fuzzy
 msgid "Select one"
 msgstr "선택:"
 
-#: src/gnuwin32/extra.c:1059
+#: src/gnuwin32/extra.c:1071
 #, fuzzy
 msgid "argument must be a character vector or a raw vector"
 msgstr "인수는 길이 1의 문자 벡터이어야만 합니다"
 
-#: src/gnuwin32/extra.c:1096 src/main/connections.c:1931
+#: src/gnuwin32/extra.c:1108 src/main/connections.c:1931
 msgid "Unable to open the clipboard"
 msgstr "clipboard를 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:1101 src/main/connections.c:1935
+#: src/gnuwin32/extra.c:1113 src/main/connections.c:1935
 msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:1125 src/gnuwin32/extra.c:1226 src/main/util.c:885
+#: src/gnuwin32/extra.c:1137 src/gnuwin32/extra.c:1238 src/main/util.c:885
 msgid "'path' must be a character vector"
 msgstr "'path'는 문자 벡터가 아니면 안됩니다"
 
-#: src/gnuwin32/extra.c:1286 src/gnuwin32/extra.c:1359
+#: src/gnuwin32/extra.c:1298 src/gnuwin32/extra.c:1371
 msgid "'default' must be a character string"
 msgstr "'default'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1288 src/gnuwin32/extra.c:1361
+#: src/gnuwin32/extra.c:1300 src/gnuwin32/extra.c:1373
 msgid "'default' is overlong"
 msgstr "'default'가 너무 큽니다"
 
-#: src/gnuwin32/extra.c:1292 src/gnuwin32/extra.c:1365
+#: src/gnuwin32/extra.c:1304 src/gnuwin32/extra.c:1377
 msgid "'caption' must be a character string"
 msgstr "'caption'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1294
+#: src/gnuwin32/extra.c:1306
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 논리값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1296
+#: src/gnuwin32/extra.c:1308
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'는 정수값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1447
+#: src/gnuwin32/extra.c:1459
 msgid "'title' must be a character string"
 msgstr "'title\"는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1464
+#: src/gnuwin32/extra.c:1476
 #, fuzzy
 msgid "'text' must be a character string"
 msgstr "'title\"는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1494
+#: src/gnuwin32/extra.c:1506
 #, fuzzy, c-format
 msgid "'%s' must be length 1"
 msgstr "'which'는 길이 1 이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1608
+#: src/gnuwin32/extra.c:1620
 #, fuzzy, c-format
 msgid "'%s' must be a list"
 msgstr "'dimnames'는 리스트가 아니면 안됩니다"
 
-#: src/gnuwin32/extra.c:1612
+#: src/gnuwin32/extra.c:1624
 #, fuzzy, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'는 유효한 호출이 아닙니다"
 
-#: src/gnuwin32/extra.c:1644 src/gnuwin32/extra.c:1646
-#: src/gnuwin32/extra.c:1669 src/gnuwin32/extra.c:1671
-#: src/gnuwin32/extra.c:1718 src/main/gevents.c:59 src/main/gevents.c:96
+#: src/gnuwin32/extra.c:1656 src/gnuwin32/extra.c:1658
+#: src/gnuwin32/extra.c:1681 src/gnuwin32/extra.c:1683
+#: src/gnuwin32/extra.c:1730 src/main/gevents.c:59 src/main/gevents.c:96
 msgid "invalid device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:1647
+#: src/gnuwin32/extra.c:1659
 msgid "requires SDI mode"
 msgstr "SDI 모드가 요구됩니다"
 
-#: src/gnuwin32/extra.c:1712 src/main/gevents.c:56 src/main/gevents.c:93
+#: src/gnuwin32/extra.c:1724 src/main/gevents.c:56 src/main/gevents.c:93
 msgid "invalid graphical device number"
 msgstr "graphical 디바이스 번호가 부적절합니다"
 
-#: src/gnuwin32/extra.c:1722
+#: src/gnuwin32/extra.c:1734
 msgid "bad device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:2057
+#: src/gnuwin32/extra.c:2069
 #, fuzzy, c-format
 msgid "Registry key '%ls' not found"
 msgstr "오브젝트 '%s'가 없습니다"
 
-#: src/gnuwin32/extra.c:2121 src/gnuwin32/extra.c:2129
+#: src/gnuwin32/extra.c:2133 src/gnuwin32/extra.c:2141
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs에의 입력이 부적절합니다"
 
-#: src/gnuwin32/extra.c:2151 src/main/platform.c:1240
+#: src/gnuwin32/extra.c:2163 src/main/platform.c:1240
 msgid "file choice cancelled"
 msgstr "R 파일 선택이 취소 되었습니다"
 
@@ -830,7 +830,7 @@ msgstr "read error입니다"
 
 #: src/main/agrep.c:149 src/main/grep.c:221 src/main/grep.c:308
 #: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2271 src/main/grep.c:2337
+#: src/main/grep.c:2272 src/main/grep.c:2338
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
@@ -1393,7 +1393,7 @@ msgid "cannot write to this connection"
 msgstr "이 연결에는 써낼수가 없습니다"
 
 #: src/main/builtin.c:516 src/main/builtin.c:546 src/main/platform.c:358
-#: src/main/platform.c:361 src/main/plot3d.c:2523 src/main/plot3d.c:2527
+#: src/main/platform.c:361 src/main/plot3d.c:2526 src/main/plot3d.c:2530
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "'%s'의 지정이 부적절합니다"
@@ -1855,9 +1855,9 @@ msgstr "부적절한 연결입니다"
 msgid "closing unused connection %d (%s)\n"
 msgstr ""
 
-#: src/main/connections.c:236 src/main/sysutils.c:616 src/main/sysutils.c:761
-#: src/main/sysutils.c:776 src/main/sysutils.c:870 src/main/sysutils.c:941
-#: src/main/sysutils.c:951 src/main/sysutils.c:964 src/main/sysutils.c:1253
+#: src/main/connections.c:236 src/main/sysutils.c:616 src/main/sysutils.c:765
+#: src/main/sysutils.c:780 src/main/sysutils.c:874 src/main/sysutils.c:945
+#: src/main/sysutils.c:955 src/main/sysutils.c:968 src/main/sysutils.c:1257
 #, fuzzy, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "서포트되어 있지 않은 변환입니다"
@@ -4114,7 +4114,7 @@ msgid "argument '%s' will be ignored"
 msgstr "세번째로부터 인수는 무시됩니다"
 
 #: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
-#: src/main/grep.c:871 src/main/grep.c:2264
+#: src/main/grep.c:871 src/main/grep.c:2265
 #, fuzzy, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
@@ -4204,9 +4204,9 @@ msgstr "모듈에서 internet routinef를 액세스할수가 없습니다"
 msgid "internet routines cannot be loaded"
 msgstr "인터넷 루틴을 로드할수가 없습니다"
 
-#: src/main/internet.c:117 src/main/memory.c:3048 src/main/memory.c:3057
-#: src/main/memory.c:3068 src/main/memory.c:3081 src/main/memory.c:3097
-#: src/main/memory.c:3114
+#: src/main/internet.c:117 src/main/memory.c:3067 src/main/memory.c:3076
+#: src/main/memory.c:3087 src/main/memory.c:3100 src/main/memory.c:3116
+#: src/main/memory.c:3133
 msgid "bad value"
 msgstr "부적절한 값입니다"
 
@@ -4384,116 +4384,116 @@ msgstr ""
 msgid "unused argument(s) %s"
 msgstr "사용되지 않는 인수 (%s...)"
 
-#: src/main/memory.c:1126
+#: src/main/memory.c:1128
 msgid "can only weakly reference/finalize reference objects"
 msgstr "참조 오브젝트는 이상해서 참조/완결 할수가 없습니다"
 
-#: src/main/memory.c:1160
+#: src/main/memory.c:1162
 msgid "finalizer must be a function or NULL"
 msgstr "finalizer는 함수 또는 NULL가 나오지 않으면 안됩니다"
 
-#: src/main/memory.c:1211 src/main/memory.c:1219 src/main/memory.c:1230
+#: src/main/memory.c:1213 src/main/memory.c:1221 src/main/memory.c:1232
 msgid "not a weak reference"
 msgstr "약한 (week) 참조가 아닙니다"
 
-#: src/main/memory.c:1346
+#: src/main/memory.c:1348
 msgid "first argument must be environment or external pointer"
 msgstr "최초의 인수는 환경 또는 외부 포인터가 아니면 안됩니다"
 
-#: src/main/memory.c:1348
+#: src/main/memory.c:1350
 msgid "second argument must be a function"
 msgstr "두번째의 인수는 함수이어야만 합니다"
 
-#: src/main/memory.c:1352
+#: src/main/memory.c:1354
 #, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 
-#: src/main/memory.c:1840
+#: src/main/memory.c:1842
 msgid "vector memory exhausted (limit reached?)"
 msgstr "벡터의 메모리를 전부 소모했습니다(상한에 이르렀습니까?)"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1848
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons 메모리가 전부 소모했습니다(한계가 이르렀을지도?)"
 
-#: src/main/memory.c:1851
+#: src/main/memory.c:1853
 #, fuzzy
 msgid "memory exhausted (limit reached?)"
 msgstr "cons 메모리가 전부 소모했습니다(한계가 이르렀을지도?)"
 
-#: src/main/memory.c:1977 src/main/memory.c:1983
+#: src/main/memory.c:1979 src/main/memory.c:1985
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "size %.0f의 메모리 블록을 할당할수가 없습니다"
 
-#: src/main/memory.c:2210
+#: src/main/memory.c:2213
 msgid "negative length vectors are not allowed"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/memory.c:2232 src/main/memory.c:2243 src/main/memory.c:2254
-#: src/main/memory.c:2267
+#: src/main/memory.c:2239 src/main/memory.c:2252 src/main/memory.c:2265
+#: src/main/memory.c:2280
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "길이 %d의 벡터를 할당한 수가 없습니다"
 
-#: src/main/memory.c:2280
+#: src/main/memory.c:2295
 #, fuzzy, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "벡터 할당에 두고, 유형 또는 길이(%d/%d)가 부적절합니다"
 
-#: src/main/memory.c:2349
+#: src/main/memory.c:2364
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2353
+#: src/main/memory.c:2368
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2357
+#: src/main/memory.c:2372
 #, fuzzy, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "사이즈 %lu Kb의 벡터를 할당할수가 없습니다"
 
-#: src/main/memory.c:2484
+#: src/main/memory.c:2499
 msgid "gc.time() is not implemented on this system"
 msgstr "이 시스템에서는 gc.time()함수는 실제 적용되지 않습니다"
 
-#: src/main/memory.c:2686
+#: src/main/memory.c:2705
 msgid "protect(): protection stack overflow"
 msgstr "protect():  protection 스택이 오버플로우입니다"
 
-#: src/main/memory.c:2702
+#: src/main/memory.c:2721
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr ""
 
-#: src/main/memory.c:2716
+#: src/main/memory.c:2735
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: pointer가 없습니다"
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2791
 #, fuzzy, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc가 메모리(%d of %d)를 할당할수가 없었습니다"
 
-#: src/main/memory.c:2783
+#: src/main/memory.c:2802
 #, fuzzy, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc가 메모리를 재확보할수 없습니다 (size는 %d)"
 
-#: src/main/memory.c:3002
+#: src/main/memory.c:3021
 msgid "not safe to return vector pointer"
 msgstr "벡터 pointer를 돌려주는 것은 안전하지는 않습니다"
 
-#: src/main/memory.c:3240
+#: src/main/memory.c:3259
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "R profiling는 이 시스템에서 사용할 수가 없습니다"
 
-#: src/main/memory.c:3305
+#: src/main/memory.c:3324
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: profile 파일,파일 '%s'를 열수가 없습니다"
@@ -5389,12 +5389,12 @@ msgstr "R의 home location을 결정할수가 없습니다"
 msgid "file name too long"
 msgstr "파일명이 너무 깁니다"
 
-#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1604
-#: src/main/sysutils.c:1618
+#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1608
+#: src/main/sysutils.c:1622
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1471 src/main/sysutils.c:1614
+#: src/main/platform.c:1471 src/main/sysutils.c:1618
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "read error입니다"
@@ -5851,39 +5851,39 @@ msgstr "x / y의 값 또는 한계값이 부적절합니다"
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "등고선 레벨이 부적절합니다:  협의단조증가가 아니면 안됩니다"
 
-#: src/main/plot3d.c:2395 src/main/plot3d.c:2408
+#: src/main/plot3d.c:2397 src/main/plot3d.c:2410
 msgid "Axis orientation not calculated"
 msgstr "축방향은 계산되지 않았습니다"
 
-#: src/main/plot3d.c:2426
+#: src/main/plot3d.c:2429
 msgid "too few parameters"
 msgstr "파라미터가 너무 작습니다"
 
-#: src/main/plot3d.c:2458
+#: src/main/plot3d.c:2461
 msgid "invalid 'x' limits"
 msgstr "'x'의 한계값이 부적절합니다"
 
-#: src/main/plot3d.c:2460
+#: src/main/plot3d.c:2463
 msgid "invalid 'y' limits"
 msgstr "'y'의 한계값이 부적절합니다"
 
-#: src/main/plot3d.c:2462
+#: src/main/plot3d.c:2465
 msgid "invalid 'z' limits"
 msgstr "'z'의 한계값이 부적절합니다"
 
-#: src/main/plot3d.c:2483
+#: src/main/plot3d.c:2486
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab'는 길이 1의 문자열 벡터가 아니면 안됩니다"
 
-#: src/main/plot3d.c:2485
+#: src/main/plot3d.c:2488
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab'는 길이 1의 문자열 벡터가 아니면 안됩니다"
 
-#: src/main/plot3d.c:2487
+#: src/main/plot3d.c:2490
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab'는 길이 1의 문자열 벡터가 아니면 안됩니다"
 
-#: src/main/plot3d.c:2507
+#: src/main/plot3d.c:2510
 msgid "invalid viewing parameters"
 msgstr "부적절한 viewing 파라미터입니다"
 
@@ -6646,46 +6646,46 @@ msgstr "부적절한 변수명입니다"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "늘어놓고 바꿀수 있는 검사를 하는것은 atomic벡터뿐입니다"
 
-#: src/main/sort.c:309 src/main/sort.c:873 src/main/sort.c:971
+#: src/main/sort.c:309 src/main/sort.c:875 src/main/sort.c:973
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'decreasing'는  TRUE 또는 FALSE가 나오지 않으면 되지 않습니다"
 
-#: src/main/sort.c:312 src/main/sort.c:563
+#: src/main/sort.c:312 src/main/sort.c:564
 msgid "only atomic vectors can be sorted"
 msgstr "늘어놓고 바꾸고 할수 있는것은 atomic벡터뿐입니다"
 
-#: src/main/sort.c:314 src/main/sort.c:565 src/main/sort.c:918
+#: src/main/sort.c:314 src/main/sort.c:566 src/main/sort.c:920
 msgid "raw vectors cannot be sorted"
 msgstr "raw형태 오브젝트의 벡터는 소트할수가 없습니다"
 
-#: src/main/sort.c:572
+#: src/main/sort.c:573
 msgid "NA index"
 msgstr "첨자가 NA입니다"
 
-#: src/main/sort.c:574
+#: src/main/sort.c:575
 #, c-format
 msgid "index %d outside bounds"
 msgstr "첨자 %d 범위외입니다"
 
-#: src/main/sort.c:882
+#: src/main/sort.c:884
 #, c-format
 msgid "argument %d is not a vector"
 msgstr "인수 %d는 벡터가 아닙니다"
 
-#: src/main/sort.c:884
+#: src/main/sort.c:886
 msgid "argument lengths differ"
 msgstr "인수의 길이는 다릅니다"
 
-#: src/main/sort.c:924
+#: src/main/sort.c:926
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr ""
 "rank() 함수의  ties.method가 부적절합니다 (이러한 것은 발생하지 않을것입니다)"
 
-#: src/main/sort.c:978
+#: src/main/sort.c:980
 msgid "negative value in 'x'"
 msgstr "'x'에서 부의 값이 있습니다"
 
-#: src/main/sort.c:989
+#: src/main/sort.c:991
 msgid "too large a range of values in 'x'"
 msgstr "'x'에서 값 범위가 너무 큽니다"
 
@@ -7116,8 +7116,8 @@ msgstr "'%s'의 파일변경 시각을 확정할수가 없습니다"
 msgid "encoding of a filename cannot be 'bytes'"
 msgstr ""
 
-#: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
-#: src/main/sysutils.c:867
+#: src/main/sysutils.c:170 src/main/sysutils.c:762 src/main/sysutils.c:777
+#: src/main/sysutils.c:871
 #, fuzzy, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
 msgstr "서포트되어 있지 않은 변환입니다"
@@ -7186,62 +7186,62 @@ msgstr "'x'의 문자 벡터가 아니면 안됩니다"
 msgid "unsupported conversion from '%s' to '%s' in codepage %d"
 msgstr "서포트되어 있지 않은 변환입니다"
 
-#: src/main/sysutils.c:681 src/main/sysutils.c:744 src/main/sysutils.c:843
-#: src/main/sysutils.c:857 src/main/sysutils.c:932
+#: src/main/sysutils.c:685 src/main/sysutils.c:748 src/main/sysutils.c:847
+#: src/main/sysutils.c:861 src/main/sysutils.c:936
 #, fuzzy, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "csduplicated는 STRSXP에 대해서 호출되어 있지 않습니다"
 
-#: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
+#: src/main/sysutils.c:751 src/main/sysutils.c:866 src/main/sysutils.c:939
 msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr ""
 
-#: src/main/sysutils.c:961
+#: src/main/sysutils.c:965
 #, fuzzy, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "서포트되어 있지 않은 변환입니다"
 
-#: src/main/sysutils.c:1374
+#: src/main/sysutils.c:1378
 msgid "cannot mkdir R_TempDir"
 msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
 
-#: src/main/sysutils.c:1378 src/main/sysutils.c:1385 src/main/sysutils.c:1388
+#: src/main/sysutils.c:1382 src/main/sysutils.c:1389 src/main/sysutils.c:1392
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr ""
 
-#: src/main/sysutils.c:1397
+#: src/main/sysutils.c:1401
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir를 할당할 수가 없습니다"
 
-#: src/main/sysutils.c:1430
+#: src/main/sysutils.c:1434
 #, fuzzy
 msgid "temporary name too long"
 msgstr "파일명이 너무 깁니다"
 
-#: src/main/sysutils.c:1445
+#: src/main/sysutils.c:1449
 msgid "cannot find unused tempfile name"
 msgstr "사용하지 않는 tempfile 이름을 검색할수가 없습니다"
 
-#: src/main/sysutils.c:1448
+#: src/main/sysutils.c:1452
 #, fuzzy
 msgid "allocation failed in R_tmpnam2"
 msgstr "GVText로 할당에 실패했습니다"
 
-#: src/main/sysutils.c:1474
+#: src/main/sysutils.c:1478
 msgid "proc.time() is not implemented on this system"
 msgstr "이 시스템에서는 proc.time()함수가 실제 적용되지 않습니다"
 
-#: src/main/sysutils.c:1526
+#: src/main/sysutils.c:1530
 #, fuzzy
 msgid "setTimelimit() is not implemented on this system"
 msgstr "이 시스템에서는 gc.time()함수는 실제 적용되지 않습니다"
 
-#: src/main/sysutils.c:1554
+#: src/main/sysutils.c:1558
 #, fuzzy
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr "이 시스템에서는 gc.time()함수는 실제 적용되지 않습니다"
 
-#: src/main/sysutils.c:1592
+#: src/main/sysutils.c:1596
 #, fuzzy
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE'는 이 platform에서는 서포트되어있지 않습니다"

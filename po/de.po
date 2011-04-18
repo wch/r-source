@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-04-01 09:20+0100\n"
+"POT-Creation-Date: 2011-04-18 10:27+0100\n"
 "PO-Revision-Date: 2011-04-18 10:17+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -58,61 +58,61 @@ msgstr "DLL versuchte das FPU-Kontrollwort von %x nach %x zu ändern"
 msgid "cannot get working directory"
 msgstr "kann das Arbeitsverzeichnis nicht ermitteln"
 
-#: src/gnuwin32/extra.c:65 src/gnuwin32/extra.c:594
+#: src/gnuwin32/extra.c:65 src/gnuwin32/extra.c:606
 msgid "unsupported version of Windows"
 msgstr "nicht unterstützte Windows-Version"
 
-#: src/gnuwin32/extra.c:129 src/gnuwin32/extra.c:151 src/gnuwin32/extra.c:185
+#: src/gnuwin32/extra.c:130 src/gnuwin32/extra.c:158 src/gnuwin32/extra.c:197
 msgid "R_HOME not set"
 msgstr "R_HOME ist nicht gesetzt"
 
-#: src/gnuwin32/extra.c:134
+#: src/gnuwin32/extra.c:137
 #, c-format
 msgid "'%s' not found"
 msgstr "'%s' nicht gefunden"
 
-#: src/gnuwin32/extra.c:136
+#: src/gnuwin32/extra.c:139
 #, c-format
 msgid "file association for '%s' not available or invalid"
 msgstr "Dateiverknüpfung für '%s' nicht verfügbar oder ungültig"
 
-#: src/gnuwin32/extra.c:139
+#: src/gnuwin32/extra.c:142
 #, c-format
 msgid "access to '%s' denied"
 msgstr "Zugriff auf '%s' verweigert"
 
-#: src/gnuwin32/extra.c:140
+#: src/gnuwin32/extra.c:143
 #, c-format
 msgid "problem in displaying '%s'"
 msgstr "Problem bei der Anzeige von '%s'"
 
-#: src/gnuwin32/extra.c:156
+#: src/gnuwin32/extra.c:168
 #, c-format
 msgid "'%ls' not found"
 msgstr "'%ls' nicht gefunden"
 
-#: src/gnuwin32/extra.c:158
+#: src/gnuwin32/extra.c:170
 #, c-format
 msgid "file association for '%ls' not available or invalid"
 msgstr "Dateiverknüpfung für '%ls' nicht verfügbar oder ungültig"
 
-#: src/gnuwin32/extra.c:161
+#: src/gnuwin32/extra.c:173
 #, c-format
 msgid "access to '%ls' denied"
 msgstr "Zugriff auf '%ls' verweigert"
 
-#: src/gnuwin32/extra.c:162
+#: src/gnuwin32/extra.c:174
 #, c-format
 msgid "problem in displaying '%ls'"
 msgstr "Problem bei der Anzeige von '%ls'"
 
-#: src/gnuwin32/extra.c:173 src/gnuwin32/extra.c:204 src/gnuwin32/extra.c:229
-#: src/gnuwin32/extra.c:232 src/gnuwin32/extra.c:278 src/gnuwin32/extra.c:315
-#: src/gnuwin32/extra.c:326 src/gnuwin32/extra.c:350 src/gnuwin32/extra.c:358
-#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:573
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:842 src/gnuwin32/extra.c:845
-#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1642
-#: src/gnuwin32/extra.c:1667 src/main/agrep.c:67 src/main/agrep.c:70
+#: src/gnuwin32/extra.c:185 src/gnuwin32/extra.c:216 src/gnuwin32/extra.c:241
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:290 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:338 src/gnuwin32/extra.c:362 src/gnuwin32/extra.c:370
+#: src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:545 src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:770 src/gnuwin32/extra.c:854 src/gnuwin32/extra.c:857
+#: src/gnuwin32/extra.c:862 src/gnuwin32/extra.c:1654
+#: src/gnuwin32/extra.c:1679 src/main/agrep.c:67 src/main/agrep.c:70
 #: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
 #: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
 #: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
@@ -173,7 +173,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/grep.c:763 src/main/grep.c:1037 src/main/grep.c:1039
 #: src/main/grep.c:1041 src/main/grep.c:1485 src/main/grep.c:1489
 #: src/main/grep.c:1494 src/main/grep.c:2171 src/main/grep.c:2176
-#: src/main/memory.c:3319 src/main/model.c:1610 src/main/model.c:1618
+#: src/main/memory.c:3338 src/main/model.c:1610 src/main/model.c:1618
 #: src/main/optim.c:225 src/main/paste.c:87 src/main/paste.c:368
 #: src/main/paste.c:375 src/main/paste.c:382 src/main/paste.c:387
 #: src/main/paste.c:392 src/main/paste.c:397 src/main/paste.c:400
@@ -194,9 +194,9 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/platform.c:2337 src/main/platform.c:2340 src/main/platform.c:2343
 #: src/main/platform.c:2412 src/main/platform.c:2420 src/main/platform.c:2456
 #: src/main/platform.c:2506 src/main/plot.c:3104 src/main/plot.c:4241
-#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2431
-#: src/main/plot3d.c:2435 src/main/plot3d.c:2440 src/main/plot3d.c:2444
-#: src/main/plot3d.c:2448 src/main/plot3d.c:2452 src/main/print.c:231
+#: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2434
+#: src/main/plot3d.c:2438 src/main/plot3d.c:2443 src/main/plot3d.c:2447
+#: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:231
 #: src/main/print.c:237 src/main/print.c:259 src/main/print.c:265
 #: src/main/print.c:271 src/main/random.c:468 src/main/random.c:472
 #: src/main/random.c:476 src/main/saveload.c:1938 src/main/saveload.c:1941
@@ -214,7 +214,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/seq.c:388 src/main/seq.c:408 src/main/seq.c:412 src/main/seq.c:418
 #: src/main/seq.c:426 src/main/sort.c:161 src/main/sysutils.c:589
 #: src/main/sysutils.c:591 src/main/sysutils.c:593 src/main/sysutils.c:598
-#: src/main/sysutils.c:1585 src/main/sysutils.c:1589 src/main/unique.c:821
+#: src/main/sysutils.c:1589 src/main/sysutils.c:1593 src/main/unique.c:821
 #: src/main/unique.c:1100 src/main/unique.c:1160 src/main/unique.c:1167
 #: src/main/util.c:574 src/main/util.c:577 src/main/util.c:1758
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -233,54 +233,54 @@ msgstr "Problem bei der Anzeige von '%ls'"
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
 
-#: src/gnuwin32/extra.c:216
+#: src/gnuwin32/extra.c:228
 msgid "unknown type"
 msgstr "unbekannter Typ"
 
-#: src/gnuwin32/extra.c:250 src/gnuwin32/extra.c:274 src/gnuwin32/extra.c:312
-#: src/gnuwin32/extra.c:347
+#: src/gnuwin32/extra.c:262 src/gnuwin32/extra.c:286 src/gnuwin32/extra.c:324
+#: src/gnuwin32/extra.c:359
 msgid "Menu functions can only be used in the GUI"
 msgstr "Menüfunktionen können nur im GUI genutzt werden"
 
-#: src/gnuwin32/extra.c:282
+#: src/gnuwin32/extra.c:294
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "kann keine Elemente für %s (%s) erhalten"
 
-#: src/gnuwin32/extra.c:320
+#: src/gnuwin32/extra.c:332
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "kann Menü (%s) nicht hinzufügen"
 
-#: src/gnuwin32/extra.c:332
+#: src/gnuwin32/extra.c:344
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "kann Menüpunkt (%s) nicht hinzufügen"
 
-#: src/gnuwin32/extra.c:355
+#: src/gnuwin32/extra.c:367
 msgid "menu does not exist"
 msgstr "Menü existiert nicht"
 
-#: src/gnuwin32/extra.c:362
+#: src/gnuwin32/extra.c:374
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "kann Menüpunkt (%s) nicht entfernen"
 
-#: src/gnuwin32/extra.c:522
+#: src/gnuwin32/extra.c:534
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' kann nur im Rgui und im Rterm benutzt werden"
 
-#: src/gnuwin32/extra.c:539
+#: src/gnuwin32/extra.c:551
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' kann nur im Rgui und im Rterm benutzt werden"
 
-#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1257
+#: src/gnuwin32/extra.c:564 src/unix/sys-std.c:1257
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
-#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1858
-#: src/gnuwin32/extra.c:2039 src/gnuwin32/extra.c:2042
-#: src/gnuwin32/extra.c:2045 src/main/character.c:578 src/main/colors.c:358
+#: src/gnuwin32/extra.c:687 src/gnuwin32/extra.c:1870
+#: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
+#: src/gnuwin32/extra.c:2057 src/main/character.c:578 src/main/colors.c:358
 #: src/main/connections.c:3288 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:592 src/main/datetime.c:662 src/main/datetime.c:907
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
@@ -290,9 +290,9 @@ msgstr "ungültiger Zeitstempel"
 #: src/main/plot.c:276 src/main/plot.c:470 src/main/plot.c:475
 #: src/main/plot.c:2278 src/main/plot.c:2285 src/main/plot.c:3317
 #: src/main/plot.c:3319 src/main/plot.c:3321 src/main/plot.c:3479
-#: src/main/plot3d.c:1381 src/main/plot3d.c:2509 src/main/plot3d.c:2513
-#: src/main/plot3d.c:2515 src/main/seq.c:167 src/main/seq.c:265
-#: src/main/seq.c:268 src/main/sort.c:869 src/main/sort.c:968
+#: src/main/plot3d.c:1381 src/main/plot3d.c:2512 src/main/plot3d.c:2516
+#: src/main/plot3d.c:2518 src/main/seq.c:167 src/main/seq.c:265
+#: src/main/seq.c:268 src/main/sort.c:871 src/main/sort.c:970
 #: src/main/source.c:215 src/main/summary.c:1028 src/main/sysutils.c:248
 #: src/main/util.c:955 src/main/util.c:960 src/main/util.c:967
 #: src/main/util.c:970 src/modules/X11/devX11.c:2821
@@ -304,113 +304,113 @@ msgstr "ungültiger Zeitstempel"
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
 
-#: src/gnuwin32/extra.c:717 src/gnuwin32/extra.c:730
+#: src/gnuwin32/extra.c:729 src/gnuwin32/extra.c:742
 msgid "incorrect argument"
 msgstr "falsches Argument"
 
-#: src/gnuwin32/extra.c:721
+#: src/gnuwin32/extra.c:733
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "Stell Dich nicht dumm!: Deine Kiste kann nur 4Gb adressieren"
 
-#: src/gnuwin32/extra.c:725
+#: src/gnuwin32/extra.c:737
 msgid "cannot decrease memory limit: ignored"
 msgstr "kann Speicherobergrenze nicht reduzieren: wird ignoriert"
 
-#: src/gnuwin32/extra.c:872
+#: src/gnuwin32/extra.c:884
 msgid "Select one or more"
 msgstr "Wähle eine oder mehrere"
 
-#: src/gnuwin32/extra.c:872
+#: src/gnuwin32/extra.c:884
 msgid "Select one"
 msgstr "Wähle eine"
 
-#: src/gnuwin32/extra.c:1059
+#: src/gnuwin32/extra.c:1071
 msgid "argument must be a character vector or a raw vector"
 msgstr "Argument muss ein Charakter-Vektor oder ein raw Vektor sein"
 
-#: src/gnuwin32/extra.c:1096 src/main/connections.c:1931
+#: src/gnuwin32/extra.c:1108 src/main/connections.c:1931
 msgid "Unable to open the clipboard"
 msgstr "kann die Zwischenablage nicht öffnen"
 
-#: src/gnuwin32/extra.c:1101 src/main/connections.c:1935
+#: src/gnuwin32/extra.c:1113 src/main/connections.c:1935
 msgid "Unable to write to the clipboard"
 msgstr "kann nicht in die Zwischenablage schreiben"
 
-#: src/gnuwin32/extra.c:1125 src/gnuwin32/extra.c:1226 src/main/util.c:885
+#: src/gnuwin32/extra.c:1137 src/gnuwin32/extra.c:1238 src/main/util.c:885
 msgid "'path' must be a character vector"
 msgstr "'path' muss eine Charaktervektor sein"
 
-#: src/gnuwin32/extra.c:1286 src/gnuwin32/extra.c:1359
+#: src/gnuwin32/extra.c:1298 src/gnuwin32/extra.c:1371
 msgid "'default' must be a character string"
 msgstr "'default' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1288 src/gnuwin32/extra.c:1361
+#: src/gnuwin32/extra.c:1300 src/gnuwin32/extra.c:1373
 msgid "'default' is overlong"
 msgstr "'default' ist zu lang"
 
-#: src/gnuwin32/extra.c:1292 src/gnuwin32/extra.c:1365
+#: src/gnuwin32/extra.c:1304 src/gnuwin32/extra.c:1377
 msgid "'caption' must be a character string"
 msgstr "'caption' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1294
+#: src/gnuwin32/extra.c:1306
 msgid "'multi' must be a logical value"
 msgstr "'multi' muss ein boolescher Wert sein"
 
-#: src/gnuwin32/extra.c:1296
+#: src/gnuwin32/extra.c:1308
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' muss ein ganzzahliger Wert sein"
 
-#: src/gnuwin32/extra.c:1447
+#: src/gnuwin32/extra.c:1459
 msgid "'title' must be a character string"
 msgstr "'title' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1464
+#: src/gnuwin32/extra.c:1476
 msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
-#: src/gnuwin32/extra.c:1494
+#: src/gnuwin32/extra.c:1506
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' muss Länge 1 haben"
 
-#: src/gnuwin32/extra.c:1608
+#: src/gnuwin32/extra.c:1620
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' muss eine Liste sein"
 
-#: src/gnuwin32/extra.c:1612
+#: src/gnuwin32/extra.c:1624
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' Element %d ist kein Fenster handle"
 
-#: src/gnuwin32/extra.c:1644 src/gnuwin32/extra.c:1646
-#: src/gnuwin32/extra.c:1669 src/gnuwin32/extra.c:1671
-#: src/gnuwin32/extra.c:1718 src/main/gevents.c:59 src/main/gevents.c:96
+#: src/gnuwin32/extra.c:1656 src/gnuwin32/extra.c:1658
+#: src/gnuwin32/extra.c:1681 src/gnuwin32/extra.c:1683
+#: src/gnuwin32/extra.c:1730 src/main/gevents.c:59 src/main/gevents.c:96
 msgid "invalid device"
 msgstr "ungültiges Device"
 
-#: src/gnuwin32/extra.c:1647
+#: src/gnuwin32/extra.c:1659
 msgid "requires SDI mode"
 msgstr "verlangt SDI Modus"
 
-#: src/gnuwin32/extra.c:1712 src/main/gevents.c:56 src/main/gevents.c:93
+#: src/gnuwin32/extra.c:1724 src/main/gevents.c:56 src/main/gevents.c:93
 msgid "invalid graphical device number"
 msgstr "ungültige Grafikdevicenummer"
 
-#: src/gnuwin32/extra.c:1722
+#: src/gnuwin32/extra.c:1734
 msgid "bad device"
 msgstr "unbrauchbares Device"
 
-#: src/gnuwin32/extra.c:2057
+#: src/gnuwin32/extra.c:2069
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Registry-Schlüssel '%ls' nicht gefunden"
 
-#: src/gnuwin32/extra.c:2121 src/gnuwin32/extra.c:2129
+#: src/gnuwin32/extra.c:2133 src/gnuwin32/extra.c:2141
 msgid "invalid input in Rmbstowcs"
 msgstr "ungültige Eingabe in Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2151 src/main/platform.c:1240
+#: src/gnuwin32/extra.c:2163 src/main/platform.c:1240
 msgid "file choice cancelled"
 msgstr "Dateiauswahl abgebrochen"
 
@@ -818,7 +818,7 @@ msgstr "Fehler bei regcomp: '%s'"
 
 #: src/main/agrep.c:149 src/main/grep.c:221 src/main/grep.c:308
 #: src/main/grep.c:416 src/main/grep.c:571 src/main/grep.c:877
-#: src/main/grep.c:2271 src/main/grep.c:2337
+#: src/main/grep.c:2272 src/main/grep.c:2338
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "Eingabezeichenkette %d ungültig in dieser locale"
@@ -1360,7 +1360,7 @@ msgid "cannot write to this connection"
 msgstr "kann auf diese Verbindung nicht schreiben"
 
 #: src/main/builtin.c:516 src/main/builtin.c:546 src/main/platform.c:358
-#: src/main/platform.c:361 src/main/plot3d.c:2523 src/main/plot3d.c:2527
+#: src/main/platform.c:361 src/main/plot3d.c:2526 src/main/plot3d.c:2530
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
@@ -1815,9 +1815,9 @@ msgstr "ungültige Verbindung"
 msgid "closing unused connection %d (%s)\n"
 msgstr "ungenutzte Verbindung %d (%s) geschlossen\n"
 
-#: src/main/connections.c:236 src/main/sysutils.c:616 src/main/sysutils.c:761
-#: src/main/sysutils.c:776 src/main/sysutils.c:870 src/main/sysutils.c:941
-#: src/main/sysutils.c:951 src/main/sysutils.c:964 src/main/sysutils.c:1253
+#: src/main/connections.c:236 src/main/sysutils.c:616 src/main/sysutils.c:765
+#: src/main/sysutils.c:780 src/main/sysutils.c:874 src/main/sysutils.c:945
+#: src/main/sysutils.c:955 src/main/sysutils.c:968 src/main/sysutils.c:1257
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "nicht unterstützte Umwandlung von '%s' nach '%s'"
@@ -4024,7 +4024,7 @@ msgid "argument '%s' will be ignored"
 msgstr "Argument '%s' wird ignoriert"
 
 #: src/main/grep.c:214 src/main/grep.c:301 src/main/grep.c:409
-#: src/main/grep.c:871 src/main/grep.c:2264
+#: src/main/grep.c:871 src/main/grep.c:2265
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "Eingabezeichenkette %d ist unkorrektes UTF-8"
@@ -4117,9 +4117,9 @@ msgstr "Internetroutinen können nicht im Modul angesprochen werden"
 msgid "internet routines cannot be loaded"
 msgstr "Internet Routinen können nicht geladen werden"
 
-#: src/main/internet.c:117 src/main/memory.c:3048 src/main/memory.c:3057
-#: src/main/memory.c:3068 src/main/memory.c:3081 src/main/memory.c:3097
-#: src/main/memory.c:3114
+#: src/main/internet.c:117 src/main/memory.c:3067 src/main/memory.c:3076
+#: src/main/memory.c:3087 src/main/memory.c:3100 src/main/memory.c:3116
+#: src/main/memory.c:3133
 msgid "bad value"
 msgstr "unbrauchbarer Wert"
 
@@ -4291,113 +4291,113 @@ msgstr "partielle Übereinstimmung des Argumentes '%s' mit '%s'"
 msgid "unused argument(s) %s"
 msgstr "unbenutzte(s) Argument(e) %s"
 
-#: src/main/memory.c:1126
+#: src/main/memory.c:1128
 msgid "can only weakly reference/finalize reference objects"
 msgstr "kann referenzierte Objekte nur schwach referenzieren/finalisieren"
 
-#: src/main/memory.c:1160
+#: src/main/memory.c:1162
 msgid "finalizer must be a function or NULL"
 msgstr "Finalisierer muss entweder Funktion sein oder NULL"
 
-#: src/main/memory.c:1211 src/main/memory.c:1219 src/main/memory.c:1230
+#: src/main/memory.c:1213 src/main/memory.c:1221 src/main/memory.c:1232
 msgid "not a weak reference"
 msgstr "keine schwache Referenz"
 
-#: src/main/memory.c:1346
+#: src/main/memory.c:1348
 msgid "first argument must be environment or external pointer"
 msgstr "erstes Argument muss entweder Umgebung oder externer Zeiger sein"
 
-#: src/main/memory.c:1348
+#: src/main/memory.c:1350
 msgid "second argument must be a function"
 msgstr "zweites Argument muss eine Funktion sein"
 
-#: src/main/memory.c:1352
+#: src/main/memory.c:1354
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "drittes Argument muss 'TRUE' oder 'FALSE' sein"
 
-#: src/main/memory.c:1840
+#: src/main/memory.c:1842
 msgid "vector memory exhausted (limit reached?)"
 msgstr "Vektorspeicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1848
 msgid "cons memory exhausted (limit reached?)"
 msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1851
+#: src/main/memory.c:1853
 msgid "memory exhausted (limit reached?)"
 msgstr "Speicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1977 src/main/memory.c:1983
+#: src/main/memory.c:1979 src/main/memory.c:1985
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "kann Speicherblock der Größe %0.1f GB nicht zuteilen"
 
-#: src/main/memory.c:2210
+#: src/main/memory.c:2213
 msgid "negative length vectors are not allowed"
 msgstr "Vektoren negativer Länge sind nicht erlaubt"
 
-#: src/main/memory.c:2232 src/main/memory.c:2243 src/main/memory.c:2254
-#: src/main/memory.c:2267
+#: src/main/memory.c:2239 src/main/memory.c:2252 src/main/memory.c:2265
+#: src/main/memory.c:2280
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kann Vektor der Länge %d nicht allozieren"
 
-#: src/main/memory.c:2280
+#: src/main/memory.c:2295
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "ungültiger Typ/Länge (%s/%d) bei der Vektorallokation"
 
-#: src/main/memory.c:2349
+#: src/main/memory.c:2364
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "kann Vektor der Größe %0.1f GB nicht allozieren"
 
-#: src/main/memory.c:2353
+#: src/main/memory.c:2368
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "kann Vektor der Größe %0.1f MB nicht allozieren"
 
-#: src/main/memory.c:2357
+#: src/main/memory.c:2372
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kann Vektor der Größe %0.1f KB nicht allozieren"
 
-#: src/main/memory.c:2484
+#: src/main/memory.c:2499
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() ist auf diesem System nicht implementiert"
 
-#: src/main/memory.c:2686
+#: src/main/memory.c:2705
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protection stack Überlauf"
 
-#: src/main/memory.c:2702
+#: src/main/memory.c:2721
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): nur %d geschützte Elemente"
 
-#: src/main/memory.c:2716
+#: src/main/memory.c:2735
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: Zeiger nicht gefunden"
 
-#: src/main/memory.c:2772
+#: src/main/memory.c:2791
 #, c-format
 msgid "Calloc could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc konnte keinen Speicher (%.0f von %u Bytes) zuteilen"
 
-#: src/main/memory.c:2783
+#: src/main/memory.c:2802
 #, c-format
 msgid "Realloc could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc konnte keinen Speicher re-allozieren (%.0f Bytes)"
 
-#: src/main/memory.c:3002
+#: src/main/memory.c:3021
 msgid "not safe to return vector pointer"
 msgstr "Vektorzeigerrückgabe ist unsicher"
 
-#: src/main/memory.c:3240
+#: src/main/memory.c:3259
 msgid "memory profiling is not available on this system"
 msgstr "Speicherprofiling ist auf diesem System nicht verfügbar"
 
-#: src/main/memory.c:3305
+#: src/main/memory.c:3324
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: kann die Ausgabedatei '%s' nicht öffnen"
@@ -5289,12 +5289,12 @@ msgstr "kann R Home nicht finden"
 msgid "file name too long"
 msgstr "Dateiname zu lang"
 
-#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1604
-#: src/main/sysutils.c:1618
+#: src/main/platform.c:1431 src/main/platform.c:1475 src/main/sysutils.c:1608
+#: src/main/sysutils.c:1622
 msgid "internal out-of-memory condition"
 msgstr "interner out-of-memory Vorfall"
 
-#: src/main/platform.c:1471 src/main/sysutils.c:1614
+#: src/main/platform.c:1471 src/main/sysutils.c:1618
 #, c-format
 msgid "read error on '%s'"
 msgstr "Lesefehler auf '%s'"
@@ -5746,39 +5746,39 @@ msgstr "ungültige x / y Werte oder Grenzen"
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "ungültige Konturwerte: müssen streng monoton ansteigen"
 
-#: src/main/plot3d.c:2395 src/main/plot3d.c:2408
+#: src/main/plot3d.c:2397 src/main/plot3d.c:2410
 msgid "Axis orientation not calculated"
 msgstr "Achsenorientierung nicht berechnet"
 
-#: src/main/plot3d.c:2426
+#: src/main/plot3d.c:2429
 msgid "too few parameters"
 msgstr "zu wenig Parameter "
 
-#: src/main/plot3d.c:2458
+#: src/main/plot3d.c:2461
 msgid "invalid 'x' limits"
 msgstr "ungültige Grenzen für 'x'"
 
-#: src/main/plot3d.c:2460
+#: src/main/plot3d.c:2463
 msgid "invalid 'y' limits"
 msgstr "ungültige Grenzen für 'y'"
 
-#: src/main/plot3d.c:2462
+#: src/main/plot3d.c:2465
 msgid "invalid 'z' limits"
 msgstr "ungültige Grenzen für 'z'"
 
-#: src/main/plot3d.c:2483
+#: src/main/plot3d.c:2486
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2485
+#: src/main/plot3d.c:2488
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2487
+#: src/main/plot3d.c:2490
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2507
+#: src/main/plot3d.c:2510
 msgid "invalid viewing parameters"
 msgstr "ungültige Parameter für Ansicht"
 
@@ -6519,45 +6519,45 @@ msgstr "unbrauchbarer Variablenname"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "nur atomare Vektoren können auf Sortiertheit getestet werden"
 
-#: src/main/sort.c:309 src/main/sort.c:873 src/main/sort.c:971
+#: src/main/sort.c:309 src/main/sort.c:875 src/main/sort.c:973
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'decreasing' muss TRUE oder FALSE sein"
 
-#: src/main/sort.c:312 src/main/sort.c:563
+#: src/main/sort.c:312 src/main/sort.c:564
 msgid "only atomic vectors can be sorted"
 msgstr "nur atomare Vektoren können sortiert werden"
 
-#: src/main/sort.c:314 src/main/sort.c:565 src/main/sort.c:918
+#: src/main/sort.c:314 src/main/sort.c:566 src/main/sort.c:920
 msgid "raw vectors cannot be sorted"
 msgstr "raw vectors können nicht sortiert werden"
 
-#: src/main/sort.c:572
+#: src/main/sort.c:573
 msgid "NA index"
 msgstr "NA Index"
 
-#: src/main/sort.c:574
+#: src/main/sort.c:575
 #, c-format
 msgid "index %d outside bounds"
 msgstr "Index %d ist außerhalb der Grenzen"
 
-#: src/main/sort.c:882
+#: src/main/sort.c:884
 #, c-format
 msgid "argument %d is not a vector"
 msgstr "Argument %d ist kein Vektor"
 
-#: src/main/sort.c:884
+#: src/main/sort.c:886
 msgid "argument lengths differ"
 msgstr "Länge der Argumente unterschiedlich"
 
-#: src/main/sort.c:924
+#: src/main/sort.c:926
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "ungültige ties.method für rank() [sollte nie vorkommen]"
 
-#: src/main/sort.c:978
+#: src/main/sort.c:980
 msgid "negative value in 'x'"
 msgstr "negativer Wert in 'x'"
 
-#: src/main/sort.c:989
+#: src/main/sort.c:991
 msgid "too large a range of values in 'x'"
 msgstr "zu großer Wertebereich in 'x'"
 
@@ -6989,8 +6989,8 @@ msgstr "kann Zeit der letzten Dateiänderung von '%s' nicht feststellen"
 msgid "encoding of a filename cannot be 'bytes'"
 msgstr "ein Dateiname kann nicht mit 'bytes' kodiert werden"
 
-#: src/main/sysutils.c:170 src/main/sysutils.c:758 src/main/sysutils.c:773
-#: src/main/sysutils.c:867
+#: src/main/sysutils.c:170 src/main/sysutils.c:762 src/main/sysutils.c:777
+#: src/main/sysutils.c:871
 #, c-format
 msgid "unsupported conversion from '%s' in codepage %d"
 msgstr "nicht unterstützte Umwandlung von '%s' in codepage %d"
@@ -7054,59 +7054,59 @@ msgstr "'x' muss ein Charaktervektor sein"
 msgid "unsupported conversion from '%s' to '%s' in codepage %d"
 msgstr "nicht unterstützte Umwandlung von '%s' nach '%s' in codepage %d"
 
-#: src/main/sysutils.c:681 src/main/sysutils.c:744 src/main/sysutils.c:843
-#: src/main/sysutils.c:857 src/main/sysutils.c:932
+#: src/main/sysutils.c:685 src/main/sysutils.c:748 src/main/sysutils.c:847
+#: src/main/sysutils.c:861 src/main/sysutils.c:936
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "'%s' muss für CHARSXP aufgerufen werden"
 
-#: src/main/sysutils.c:747 src/main/sysutils.c:862 src/main/sysutils.c:935
+#: src/main/sysutils.c:751 src/main/sysutils.c:866 src/main/sysutils.c:939
 msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr "Übersetzung von Zeichenketten mit \"bytes\"-Kodierung nicht erlaubt"
 
-#: src/main/sysutils.c:961
+#: src/main/sysutils.c:965
 #, c-format
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "nicht unterstützte Umwandlung von '%s' aus codepage %d"
 
-#: src/main/sysutils.c:1374
+#: src/main/sysutils.c:1378
 msgid "cannot mkdir R_TempDir"
 msgstr "mkdir R_TempDir geht nicht"
 
-#: src/main/sysutils.c:1378 src/main/sysutils.c:1385 src/main/sysutils.c:1388
+#: src/main/sysutils.c:1382 src/main/sysutils.c:1389 src/main/sysutils.c:1392
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "kann R_SESSION_TMPDIR nicht setzen"
 
-#: src/main/sysutils.c:1397
+#: src/main/sysutils.c:1401
 msgid "cannot allocate R_TempDir"
 msgstr "kann R_TempDir nicht allozieren"
 
-#: src/main/sysutils.c:1430
+#: src/main/sysutils.c:1434
 #, fuzzy
 msgid "temporary name too long"
 msgstr "Dateiname zu lang"
 
-#: src/main/sysutils.c:1445
+#: src/main/sysutils.c:1449
 msgid "cannot find unused tempfile name"
 msgstr "kann keinen ungenutzten temporären Dateinamen finden"
 
-#: src/main/sysutils.c:1448
+#: src/main/sysutils.c:1452
 msgid "allocation failed in R_tmpnam2"
 msgstr "Allokationsfehler in R_tmpnam2"
 
-#: src/main/sysutils.c:1474
+#: src/main/sysutils.c:1478
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1526
+#: src/main/sysutils.c:1530
 msgid "setTimelimit() is not implemented on this system"
 msgstr "setTimelimit() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1554
+#: src/main/sysutils.c:1558
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr "setSessionTimelimit() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1592
+#: src/main/sysutils.c:1596
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmark = TRUE' wird auf dieser Plattform nicht unterstützt"
 
@@ -8089,16 +8089,16 @@ msgid ""
 "Explicit global dynamic loading not supported on this platform. Using "
 "default."
 msgstr ""
-"Explizites globales dynamisches Laden auf dieser Plattform nicht unterstützt. "
-"Nutze Standard."
+"Explizites globales dynamisches Laden auf dieser Plattform nicht "
+"unterstützt. Nutze Standard."
 
 #: src/unix/dynload.c:145
 msgid ""
 "Explicit non-lazy dynamic loading not supported on this platform. Using "
 "default."
 msgstr ""
-"Explizites non-lazy dynamisches Laden auf dieser Plattform nicht unterstützt. "
-"Nutze Standard."
+"Explizites non-lazy dynamisches Laden auf dieser Plattform nicht "
+"unterstützt. Nutze Standard."
 
 #: src/unix/dynload.c:146
 msgid ""
@@ -8167,8 +8167,8 @@ msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
 msgstr ""
-"Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. Bitte "
-"melden Sie's via bug.report()"
+"Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. "
+"Bitte melden Sie's via bug.report()"
 
 #: src/unix/sys-std.c:1068 src/unix/sys-std.c:1235
 #, c-format
@@ -8220,7 +8220,8 @@ msgstr "kann nicht popen '%s'. Grund vermutlich '%s'"
 #: src/unix/sys-unix.c:285
 #, c-format
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
-msgstr "Zeile %d eventuell abgeschnitten beim Aufruf von system(, intern = TRUE"
+msgstr ""
+"Zeile %d eventuell abgeschnitten beim Aufruf von system(, intern = TRUE"
 
 #: src/unix/sys-unix.c:302
 #, c-format
