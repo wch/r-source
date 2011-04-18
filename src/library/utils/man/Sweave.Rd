@@ -31,7 +31,8 @@ Stangle(file, driver = Rtangle(),
     basename matches \code{file}.} 
   \item{driver}{The actual workhorse, see \sQuote{Details}.}
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
-    a character string with its name.  See section \sQuote{Syntax Definition}.}
+    a character string with its name.
+    See the section \sQuote{Syntax Definition}.}
   \item{\dots}{Further arguments passed to the driver's setup function:
     see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
     \code{\link{Rtangle}}.}
@@ -131,7 +132,7 @@ Sweave(testfile)
 ## if MiKTeX is available.
 #endif
 
-## create an S source file from the code chunks
+## create an R source file from the code chunks
 Stangle(testfile)
 ## which can be sourced, e.g.
 source("Sweave-test-1.R")

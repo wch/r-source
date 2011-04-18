@@ -22,9 +22,8 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \item{output}{Name of output file used unless \code{split = TRUE}:
     see \sQuote{Details}.}
   \item{annotate}{By default, code chunks are separated by comment
-    lines specifying the names and numbers of the code chunks. If
-    \code{FALSE}, only the code chunks without any decorating comments
-    are extracted.}
+    lines specifying the names and numbers of the code chunks.  If
+    \code{FALSE} the decorating comments are omitted.}
   \item{split}{Split output into a file for each code chunk?}
   \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
@@ -39,7 +38,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
   
-  Note that this does not simple extract the code chunks verbatim
+  Note that this driver does not simple extract the code chunks verbatim
   because code chunks can re-use earlier chunks.
 }
 \author{Friedrich Leisch and R-core.}
