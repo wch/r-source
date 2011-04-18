@@ -8,10 +8,10 @@
 \alias{pbirthday}
 \title{Probability of coincidences}
 \description{
-  Computes approximate answers to a generalised \emph{birthday paradox}
-  problem. \code{pbirthday} computes the probability of a coincidence
-  and \code{qbirthday} computes the number of observations needed to
-  have a specified probability of coincidence.
+  Computes answers to a generalised \emph{birthday paradox} problem.
+  \code{pbirthday} computes the probability of a coincidence and
+  \code{qbirthday} computes the smallest number of observations needed
+  to have at least a specified probability of coincidence.
 }
 \usage{
 qbirthday(prob = 0.5, classes = 365, coincident = 2)
@@ -25,7 +25,6 @@ pbirthday(n, classes = 365, coincident = 2)
 }
 \value{
   \item{qbirthday}{
-
     Minimum number of people needed for a probability of at least
     \code{prob} that \code{k} or more of them have the same one out of
     \code{classes} equiprobable labels.
@@ -40,7 +39,9 @@ pbirthday(n, classes = 365, coincident = 2)
  other than 0.5, numbers of coincident events other than 2, and numbers
  of classes other than 365.
 
- The formula used is approximate for \code{coincident > 2}.
+ The formula used is approximate for \code{coincident > 2}.  The
+ approximation is very good for moderate values of \code{prob} but less
+ good for very small probabilities.
 }
 \note{
   Prior to \R 2.14.0 the approximate formula was used even for
