@@ -1,6 +1,6 @@
 % File src/library/stats/man/birthday.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{birthday}
@@ -9,9 +9,9 @@
 \title{Probability of coincidences}
 \description{
   Computes approximate answers to a generalised \emph{birthday paradox}
-  problem. \code{pbirthday} computes the probability of a coincidence
-  and \code{qbirthday} computes the number of observations needed to
-  have a specified probability of coincidence.
+  problem.  \code{pbirthday} computes the probability of a coincidence
+  and \code{qbirthday} computes the smallest number of observations
+  needed to have at least a specified probability of coincidence.
 }
 \usage{
 qbirthday(prob = 0.5, classes = 365, coincident = 2)
@@ -25,22 +25,26 @@ pbirthday(n, classes = 365, coincident = 2)
 }
 \value{
   \item{qbirthday}{
-    Number of people needed for a probability \code{prob} that \code{k} of
-    them have the same one out of \code{classes} equiprobable labels.
+    Minimum number of people needed for a probability of at least
+    \code{prob} that \code{k} or more of them have the same one out of
+    \code{classes} equiprobable labels.
   }
 
   \item{pbirthday}{Probability of the specified coincidence.}
 }
 \details{
  The birthday paradox is that a very small number of people, 23,
- suffices to have  a 50-50 chance that two of them have the same
+ suffices to have a 50--50 chance that two or more of them have the same
  birthday.  This function generalises the calculation to probabilities
  other than 0.5, numbers of coincident events other than 2, and numbers
  of classes other than 365.
 
- This formula is approximate, as the example below shows.  For
- \code{coincident = 2} the exact computation is straightforward and may be
- preferable.
+ This formula is approximate.  For \code{coincident = 2} the exact
+ computation is straightforward (see the examples) and may be
+ preferable.  The approximation appears to be based on a mis-reading of
+ Diaconis and Mosteller (1989), and will be improved in future versions
+ of \R.  (It returns 22 rather than 23 for the standard problem, and is
+ usually an underestimate.) 
 }
 \references{
   Diaconis, P. and Mosteller F. (1989)
@@ -56,19 +60,19 @@ qbirthday()
 ## same 4-digit PIN number
 qbirthday(classes = 10^4)
 
-## 0.9 probability of three coincident birthdays
+## 0.9 probability of three or more coincident birthdays
 qbirthday(coincident = 3, prob = 0.9)
 
-## Chance of 4 coincident birthdays in 150 people
+## Chance of 4 or more coincident birthdays in 150 people
 pbirthday(150, coincident = 4)
 
-## 100 coincident birthdays in 1000 people: *very* rare:
+## 100 or more coincident birthdays in 1000 people: very rare
 pbirthday(1000, coincident = 100)
 
 ## Accuracy compared to exact calculation
 x1 <-  sapply(10:100, pbirthday)
 x2 <- 1-sapply(10:100, function(n) prod((365:(365-n+1))/rep(365,n)))
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 plot(x1, x2, xlab = "approximate", ylab = "exact")
 abline(0, 1)
 plot(x1, x1-x2, xlab = "approximate", ylab = "error")

@@ -38,20 +38,7 @@ pbirthday <- function(n, classes = 365, coincident = 2)
     if (k < 2) return(1)
     if (k > n) return(0)
     if (n > c*(k-1)) return(1)
-    eps <- 1e-14
-    if (qbirthday(1-eps, c, k) <= n)
-	return(1-eps)
-    f1 <- function(p) qbirthday(p,c,k) - n
-    upper <- min(1, exp(k * log(n) - (k-1) * log(c)), na.rm = TRUE)
-    nmin <- uniroot(f1, lower = 0, upper = upper, tol = eps)
-    if(nmin$root == 0 && f1(.Machine$double.xmin) < 0) {
-	## try again -- on log scale --
-	f2 <- function(ln.p) qbirthday(exp(ln.p), c, k) - n
-	nmin <- uniroot(f2, lower= floor(log(.Machine$double.xmin)),
-			upper = -2, tol = eps)
-	exp(nmin$root)
-    }
-    else
-	nmin$root
+    ## invert the approximation used in qbirthday, using log scale
+    lxx <- k*log(n) - (k-1)*log(c) - lgamma(k+1)
+    -expm1(-exp(lxx))
 }
-

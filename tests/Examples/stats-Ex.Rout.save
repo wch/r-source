@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-16 r55479)
+R version 2.13.0 Patched (2011-04-17 r55484)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
@@ -3895,22 +3895,22 @@ probability of success
 > qbirthday(classes = 10^4)
 [1] 118
 > 
-> ## 0.9 probability of three coincident birthdays
+> ## 0.9 probability of three or more coincident birthdays
 > qbirthday(coincident = 3, prob = 0.9)
 [1] 123
 > 
-> ## Chance of 4 coincident birthdays in 150 people
+> ## Chance of 4 or more coincident birthdays in 150 people
 > pbirthday(150, coincident = 4)
-[1] 0.351437
+[1] 0.3519489
 > 
-> ## 100 coincident birthdays in 1000 people: *very* rare:
+> ## 100 or more coincident birthdays in 1000 people: very rare
 > pbirthday(1000, coincident = 100)
-[1] 2.395639e-112
+[1] 2.306762e-112
 > 
 > ## Accuracy compared to exact calculation
 > x1 <-  sapply(10:100, pbirthday)
 > x2 <- 1-sapply(10:100, function(n) prod((365:(365-n+1))/rep(365,n)))
-> par(mfrow = c(2,2))
+> par(mfrow = c(2, 2))
 > plot(x1, x2, xlab = "approximate", ylab = "exact")
 > abline(0, 1)
 > plot(x1, x1-x2, xlab = "approximate", ylab = "error")
