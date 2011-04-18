@@ -23,11 +23,11 @@ options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
 
 SweaveTeX <- function(file, ...) {
     if(!file.exists(file))
-        stop("File",file, "does not exist in", getwd())
+        stop("File", file, "does not exist in", getwd())
     texF <- sub("\\.[RSrs]nw$", ".tex", file)
     Sweave(file, ...)
     if(!file.exists(texF))
-        stop("File",texF, "does not exist in", getwd())
+        stop("File", texF, "does not exist in", getwd())
     readLines(texF)
 }
 
@@ -71,7 +71,9 @@ stopifnot(length(comml) == 2,
 	  grepl("last comment", comml[2]))
 ## the first was lost in 2.12.0;  the last in most/all previous versions of R
 
-
+### ------------------------------------ 3 ----------------------------------
+## custom graphics devices
+Sweave("customgraphics.Rnw")
 
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

@@ -234,13 +234,16 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   the name given will have been defined earlier in the Sweave document, e.g.
 \preformatted{<<results=hide>>=
 my.Swd <- function(name, width, height, ...)
-  grdevices::png(filename = paste(name, "png", sep = "."),
+  grDevices::png(filename = paste(name, "png", sep = "."),
                  width = width, height = height, res = 100, units = "in",
                  type = "quartz", bg = "transparent")
 @
 }
   Currently only one custom device can be used for each chunk, but
   different devices can be used for different chunks.
+
+  A replacement for \code{\link{dev.off}} can be provided as a function
+  with suffix \code{.off}, e.g. \code{my.Swd.off()}.
 }
 
 \section{Hook Functions}{

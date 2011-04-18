@@ -143,7 +143,10 @@
       \item \code{Rtangle()} allows \code{output = "stdout"} or
       \code{output = "stderr"} to select the output or message
       connection.  This is convenient for scripting using something like
-\preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw}
+\preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R}
+
+      \item Custom graphics devices can have a custom function
+      \code{foo.off()} to shut them down.
     }
   }
 

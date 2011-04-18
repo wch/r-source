@@ -1,5 +1,5 @@
 \documentclass{article}
-\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,strip.white=TRUE,keep.source=TRUE}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,strip.white=true,keep.source=TRUE}
 
 \usepackage{Sweave}
 
