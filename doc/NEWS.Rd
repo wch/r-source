@@ -80,6 +80,9 @@
       
       \item \code{unlink()} gains a \code{force} argument to work like
       \code{rm -f} and if possible override restrictive permissions.
+      
+      \item \code{pbirthday()} now uses exact calculations for
+      \code{coincident = 2}.
     }
   }
 
@@ -215,6 +218,13 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{nobs(mle(*, nobs = .))} now works.
+
+      \item \code{pbirthday()} and \code{qbirthday()} did not implement
+      the algorithm exactly as given in their reference and so were
+      unnecessarily inaccurate.
+
+      The description of the problem was inaccurate: the probability is
+      a tail probablity (\sQuote{2 or more people share a birthday})
     }
   }
 }

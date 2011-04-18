@@ -22,13 +22,19 @@ qbirthday <- function(prob = 0.5, classes = 365, coincident = 2)
     p <- prob
     if (p <= 0) return(1)
     if (p >= 1) return(c*(k-1)+1)
-    if ((k-1)*log(c) > 8 ||  1 - p < 1e-7) {
-        lnN <- ((k-1)*log(c) + lgamma(k+1) + log(-log1p(-p)))/k
-        N <- exp(lnN)
-    } else {
-        N <- (c^(k-1) * gamma(k+1) * log(1/(1-p)))^(1/k)
+    ## We need smallest n with pbirthday(n, c, k) >= prob
+    ## This is a crude inversion of Diaconis & Mosteller expression (7.5),
+    ## usually an underestimate.
+    N <- exp(((k-1)*log(c) + lgamma(k+1) + log(-log1p(-p)))/k)
+    N <- ceiling(N)
+    if(pbirthday(N, c, k) < prob) {
+        N <- N+1
+        while(pbirthday(N, c, k) < prob) N <- N+1
+    } else if (pbirthday(N-1, c, k) >= prob) {
+        N <- N-1
+        while(pbirthday(N-1, c, k) >= prob) N <- N-1
     }
-    round(N)
+    N
 }
 
 pbirthday <- function(n, classes = 365, coincident = 2)
@@ -36,22 +42,12 @@ pbirthday <- function(n, classes = 365, coincident = 2)
     k <- coincident
     c <- classes
     if (k < 2) return(1)
+    if (k == 2) return( 1 - prod((c:(c-n+1))/rep(c, n)) )
     if (k > n) return(0)
     if (n > c*(k-1)) return(1)
-    eps <- 1e-14
-    if (qbirthday(1-eps, c, k) <= n)
-	return(1-eps)
-    f1 <- function(p) qbirthday(p,c,k) - n
-    upper <- min(1, exp(k * log(n) - (k-1) * log(c)), na.rm = TRUE)
-    nmin <- uniroot(f1, lower = 0, upper = upper, tol = eps)
-    if(nmin$root == 0 && f1(.Machine$double.xmin) < 0) {
-	## try again -- on log scale --
-	f2 <- function(ln.p) qbirthday(exp(ln.p), c, k) - n
-	nmin <- uniroot(f2, lower= floor(log(.Machine$double.xmin)),
-			upper = -2, tol = eps)
-	exp(nmin$root)
-    }
-    else
-	nmin$root
+    ## use Diaconis & Mosteller expression (7.5) on log scale
+    LHS <- n * exp(-n/(c*k))/(1 - n/(c*(k+1)))^(1/k)
+    lxx <- k*log(LHS) - (k-1)*log(c) - lgamma(k+1)
+    -expm1(-exp(lxx))
 }
 
