@@ -26,7 +26,7 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
     command.}
   \item{gs_cmd}{Character string giving the path to the GhostScript
     executable, if that is to be used.  On Windows this is the path to
-    \file{gswin32c.exe}.}
+    \file{gswin32c.exe} or \file{gswin64c.exe}.}
   \item{gs_quality}{A character string indicating the quality required:
     the options are respectively 300, 150 and 72dpi.}
   \item{gs_extras}{An optional character vector of further options to be
