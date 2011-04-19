@@ -1,6 +1,6 @@
 % File src/library/base/man/base-deprecated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
@@ -23,7 +23,8 @@ Sys.putenv(\dots)
   The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
   Functions in packages other than the base package are listed in
-  \code{help("pkg-deprecated")}.
+  \code{help("pkg-deprecated")}, where \samp{pkg} is replaced by the
+  name of the package.
 
   \code{Sys.putenv} is a deprecated synonym for
   \code{\link{Sys.setenv}}.
