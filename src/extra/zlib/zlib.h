@@ -1576,8 +1576,15 @@ ZEXTERN int ZEXPORT inflateBackInit_ OF((z_streamp strm, int windowBits,
 #  define gzseek gzseek64
 #  define gztell gztell64
 #  define gzoffset gzoffset64
+#  undef adler32_combine
+#  undef crc32_combine
+# ifdef Z_PREFIX
+#  define adler32_combine Rz_adler32_combine64
+#  define crc32_combine Rz_crc32_combine64
+# else
 #  define adler32_combine adler32_combine64
 #  define crc32_combine crc32_combine64
+# endif
 #  ifdef _LARGEFILE64_SOURCE
      ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
      ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
