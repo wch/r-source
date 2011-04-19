@@ -114,7 +114,8 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP d, s, x, stype;
     int i, len, allowNA;
-    size_t ntype, nc;
+    size_t ntype;
+    int nc;
     const char *type;
     const char *xi;
     wchar_t *wc;
