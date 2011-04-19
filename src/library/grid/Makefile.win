@@ -12,21 +12,15 @@ include $(top_builddir)/Makeconf
 pkg = grid
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+INSTDIRS = doc
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc instfiles mkpo
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
+	@$(MAKE) -f Makefile.win mkR mkdesc instdirs mkpo
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazy
-
-instfiles:
-	@if test -d $(srcdir)/inst/doc; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc; \
-	  for f in $(srcdir)/inst/doc/*; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/doc; \
-	  done; \
-	fi
 
 
 include $(top_srcdir)/share/make/basepkg.mk

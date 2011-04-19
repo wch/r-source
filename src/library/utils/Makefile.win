@@ -17,6 +17,7 @@ INSTDIRS = Sweave doc misc
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo instdirs
 	@$(MAKE) -f Makefile.win mklazy
 
