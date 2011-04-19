@@ -16,6 +16,9 @@
       
       \item \code{RShowDoc()} can now display the licences shipped with
       \R, e.g. \code{RShowDoc("GPL-3")}.
+
+      \item New wrapper function \code{showNonASCIIfile()} in package
+      \pkg{tools}.
     }
   }
 
