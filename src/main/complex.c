@@ -132,16 +132,19 @@ static R_INLINE double complex R_cpow_n(double complex X, int k)
     }
 }
 
+#if defined(Win32) && !defined(W64)
+# undef HAVE_CPOW
+#endif
 /* reason for this:
   1) glibc gets (0+0i)^y = Inf+NaNi for y < 0
      [FIXME: But is that not actually correct?: 1/(0+0i) == Inf+NaNi]
 
-  2)   X^n  (e.g. for n = +/- 2, 3) is unnecessarily inaccurate in glibc;
-       cut-off 65536 : guided from empirical speed measurements
+  2) X^n  (e.g. for n = +/- 2, 3) is unnecessarily inaccurate in glibc;
+     cut-off 65536 : guided from empirical speed measurements
 
-  3) On Windows the system cpow is explicitly linked against the 
-     (slow) MinGW pow, and gets (0+0i)^Y as 0+0i for all Y.
- */
+  3) On 32-bit Windows the system cpow is explicitly linked against
+     the (slow) MSVCRT pow, and gets (0+0i)^Y as 0+0i for all Y.
+*/
 
 static double complex mycpow (double complex X, double complex Y)
 {
@@ -152,7 +155,7 @@ static double complex mycpow (double complex X, double complex Y)
     } else if (yi == 0.0 && yr == (k = (int) yr) && abs(k) <= 65536) {
 	Z = R_cpow_n(X, k);
     } else
-#if defined(HAVE_CPOW) && !defined(Win32)
+#ifdef HAVE_CPOW
 	Z = cpow(X, Y);
 #else
     {
