@@ -1,8 +1,8 @@
 
-R version 2.13.0 Patched (2011-04-17 r55484)
+R version 2.13.0 Patched (2011-04-19 r55507)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3684,7 +3684,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x1023b1748>
+<environment: 0x39253b0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -6734,7 +6734,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x6a19a30>
+<environment: 0x5d72950>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7136,7 +7136,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x5d62170>
+<environment: 0x7fefba8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11512,22 +11512,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x62fd928>
+<environment: 0x6439f00>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x62fd928>
+<environment: 0x6439f00>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x62fd928>
+<environment: 0x6439f00>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x62fd928>
+<environment: 0x6439f00>
 
 $name
 [1] "identity"
@@ -11538,12 +11538,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x62f2410>
+<environment: 0x642c2d8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x62f2410>
+<environment: 0x642c2d8>
 
 > 
 > 
@@ -15200,7 +15200,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x37431d0>
+<environment: 0x7d58ba0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17420,7 +17420,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.321 0.327 15.965 0 0 
+Time elapsed:  12.696 0.36 14.802 0 0 
 > grDevices::dev.off()
 null device 
           1 

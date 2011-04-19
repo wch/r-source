@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-18 r55489)
+R version 2.13.0 Patched (2011-04-19 r55507)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1309,7 +1309,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x14077c0>
+<environment: 0x2ce3190>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -2886,7 +2886,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x179b428>
+<environment: 0x3072a08>
 
 Signatures:
         object    
@@ -3238,7 +3238,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.479 0.056 6.537 0 0 
+Time elapsed:  5.917 0.04 6.004 0 0 
 > grDevices::dev.off()
 null device 
           1 

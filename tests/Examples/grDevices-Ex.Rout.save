@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-12 r54356)
+R version 2.13.0 Patched (2011-04-19 r55507)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3397,7 +3397,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.025 0.076 2.126 0 0 
+Time elapsed:  1.986 0.048 2.177 0 0 
 > grDevices::dev.off()
 null device 
           1 

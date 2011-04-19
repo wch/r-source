@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-12-31 r53893)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 Patched (2011-04-19 r55507)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d39c00>
+<environment: 0x1f24548>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d39c00>
+<environment: 0x1f24548>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d39c00>
+<environment: 0x1f24548>
 
 $showURLs
 [1] FALSE
@@ -231,7 +231,7 @@ $underline_titles
 +     volume=26,
 +     pages="211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs), .init=TRUE)
-<environment: 0171378c>
+<environment: 0x1881940>
 > print(refs, .bibstyle="unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
@@ -682,8 +682,8 @@ NULL
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: showNonASCII
-> ### Title: Highlight non-ASCII characters
-> ### Aliases: showNonASCII
+> ### Title: Pick Out Non-ASCII Characters
+> ### Aliases: showNonASCII showNonASCIIfile
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -698,7 +698,7 @@ NULL
 > f <- tempfile()
 > cat(out, file = f, sep = "\n")
 > 
-> showNonASCII(readLines(f))
+> showNonASCIIfile(f)
 1: fa<e7>ile test of showNonASCII():
 4:    This has an <fc>mlaut in it.
 > unlink(f)
@@ -870,7 +870,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.481 0.024 0.507 0 0 
+Time elapsed:  0.273 0.01 0.284 0 0 
 > grDevices::dev.off()
 null device 
           1 
