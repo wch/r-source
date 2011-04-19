@@ -1,5 +1,5 @@
 /* zconf.h -- configuration of the zlib compression library
- * Copyright (C) 1995-2005 Jean-loup Gailly.
+ * Copyright (C) 1995-2010 Jean-loup Gailly.
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
@@ -19,6 +19,8 @@
 /*
  * If you *really* need a unique prefix for all types and library functions,
  * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
+ * Even better than compiling with -DZ_PREFIX would be to use configure to set
+ * this permanently in zconf.h using "./configure --zprefix".
  */
 #ifdef Z_PREFIX
 #  define deflateInit_          Rz_deflateInit_
@@ -57,7 +59,9 @@
 #  define out_func              Rz_out_func
 
 # define adler32_combine       	Rz_adler32_combine
+# define adler32_combine64      Rz_adler32_combine64
 # define crc32_combine		Rz_crc32_combine
+# define crc32_combine64	Rz_crc32_combine64
 # define deflateSetHeader      	Rz_deflateSetHeader
 # define deflateTune		Rz_deflateTune
 # define inflateBackInit_      	Rz_inflateBackInit_
@@ -65,6 +69,9 @@
 # define inflateGetHeader      	Rz_inflateGetHeader
 # define inflatePrime		Rz_inflatePrime
 # define inflate_table		Rz_inflate_table
+# define inflateMark		Rz_inflateMark
+# define inflateReset2		Rz_inflateReset2
+# define inflateUndermine	Rz_inflateUndermine
 # define _tr_align		Rz__tr_align
 # define _tr_flush_block       	Rz__tr_flush_block
 # define _tr_init		Rz__tr_init
@@ -306,21 +313,48 @@ typedef uLong FAR uLongf;
    typedef Byte       *voidp;
 #endif
 
-#ifdef HAVE_UNISTD_H /* HAVE_UNISTD_H -- this line is updated by ./configure */
-#  include <sys/types.h> /* for off_t */
-#  include <unistd.h>    /* for SEEK_* and off_t */
-#  ifdef VMS
-#    include <unixio.h>   /* for off_t */
-#  endif
-#  define z_off_t off_t
+#ifdef HAVE_UNISTD_H    /* may be set to #if 1 by ./configure */
+#  define Z_HAVE_UNISTD_H
 #endif
+
+#ifdef STDC
+#  include <sys/types.h>    /* for off_t */
+#endif
+
+/* a little trick to accommodate both "#define _LARGEFILE64_SOURCE" and
+ * "#define _LARGEFILE64_SOURCE 1" as requesting 64-bit operations, (even
+ * though the former does not conform to the LFS document), but considering
+ * both "#undef _LARGEFILE64_SOURCE" and "#define _LARGEFILE64_SOURCE 0" as
+ * equivalently requesting no 64-bit operations
+ */
+#if -_LARGEFILE64_SOURCE - -1 == 1
+#  undef _LARGEFILE64_SOURCE
+#endif
+
+#if defined(Z_HAVE_UNISTD_H) || defined(_LARGEFILE64_SOURCE)
+#  include <unistd.h>       /* for SEEK_* and off_t */
+#  ifdef VMS
+#    include <unixio.h>     /* for off_t */
+#  endif
+#  ifndef z_off_t
+#    define z_off_t off_t
+#  endif
+#endif
+
 #ifndef SEEK_SET
 #  define SEEK_SET        0       /* Seek from beginning of file.  */
 #  define SEEK_CUR        1       /* Seek from current position.  */
 #  define SEEK_END        2       /* Set file pointer to EOF plus "offset" */
 #endif
+
 #ifndef z_off_t
 #  define z_off_t long
+#endif
+
+#if defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0
+#  define z_off64_t off64_t
+#else
+#  define z_off64_t z_off_t
 #endif
 
 #if defined(__OS400__)
@@ -329,26 +363,23 @@ typedef uLong FAR uLongf;
 
 #if defined(__MVS__)
 #  define NO_vsnprintf
-#  ifdef FAR
-#    undef FAR
-#  endif
 #endif
 
 /* MVS linker does not support external names larger than 8 bytes */
 #if defined(__MVS__)
-#   pragma map(deflateInit_,"DEIN")
-#   pragma map(deflateInit2_,"DEIN2")
-#   pragma map(deflateEnd,"DEEND")
-#   pragma map(deflateBound,"DEBND")
-#   pragma map(inflateInit_,"ININ")
-#   pragma map(inflateInit2_,"ININ2")
-#   pragma map(inflateEnd,"INEND")
-#   pragma map(inflateSync,"INSY")
-#   pragma map(inflateSetDictionary,"INSEDI")
-#   pragma map(compressBound,"CMBND")
-#   pragma map(inflate_table,"INTABL")
-#   pragma map(inflate_fast,"INFA")
-#   pragma map(inflate_copyright,"INCOPY")
+  #pragma map(deflateInit_,"DEIN")
+  #pragma map(deflateInit2_,"DEIN2")
+  #pragma map(deflateEnd,"DEEND")
+  #pragma map(deflateBound,"DEBND")
+  #pragma map(inflateInit_,"ININ")
+  #pragma map(inflateInit2_,"ININ2")
+  #pragma map(inflateEnd,"INEND")
+  #pragma map(inflateSync,"INSY")
+  #pragma map(inflateSetDictionary,"INSEDI")
+  #pragma map(compressBound,"CMBND")
+  #pragma map(inflate_table,"INTABL")
+  #pragma map(inflate_fast,"INFA")
+  #pragma map(inflate_copyright,"INCOPY")
 #endif
 
 #endif /* ZCONF_H */
