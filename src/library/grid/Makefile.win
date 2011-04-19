@@ -17,7 +17,6 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc instfiles mkpo
-	@rm -f $(top_builddir)/library/$(pkg)/doc/grid.bib
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazy
 

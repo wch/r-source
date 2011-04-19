@@ -470,7 +470,9 @@ function(dir, outDir)
 function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
-    vignetteDir <- file.path(dir, "inst", "doc")
+    vignetteDir <- file.path(dir, "vignettes")
+    if(!file_test("-d", vignetteDir))
+        vignetteDir <- file.path(dir, "inst", "doc")
     ## Create a vignette index only if the vignette dir exists.
     if(!file_test("-d", vignetteDir)) return(invisible())
 
@@ -496,6 +498,11 @@ function(dir, outDir, encoding = "")
         return(invisible())
     }
 
+    if (basename(vignetteDir) == "vignettes") {
+        ## copy vignette sources over.
+        vigns <- list_files_with_type(vignetteDir, "vignette")
+        file.copy(vigns, outVignetteDir)
+    }
     vignetteIndex <- .build_vignette_index(outVignetteDir)
     if(NROW(vignetteIndex) > 0L) {
         cwd <- getwd()
@@ -566,12 +573,10 @@ function(src_dir, out_dir, packages)
     ## indices.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
-    ## These days this is mostly installing the metadata
 
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
-        .install_package_indices(file.path(src_dir, p),
-                                         file.path(out_dir, p))
-    utils::make.packages.html(.Library, verbose=FALSE)
+        .install_package_indices(file.path(src_dir, p), file.path(out_dir, p))
+    utils::make.packages.html(.Library, verbose = FALSE)
     invisible()
 }
 

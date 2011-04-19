@@ -26,7 +26,6 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkpo instdirs iconvlist
-	@rm -f $(top_builddir)/library/$(pkg)/doc/Sweave.bib
 	@$(MAKE) mklazy
 
 iconvlist: $(top_builddir)/library/$(pkg)/iconvlist

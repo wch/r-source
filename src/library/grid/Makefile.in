@@ -23,7 +23,6 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc instfiles mkpo
-	@rm -f $(top_builddir)/library/$(pkg)/doc/grid.bib
 	@$(MAKE) mksrc
 	@$(MAKE) mklazy
 

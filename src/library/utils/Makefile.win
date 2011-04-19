@@ -18,7 +18,6 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo instdirs
-	@rm -f $(top_builddir)/library/$(pkg)/doc/Sweave.bib
 	@$(MAKE) -f Makefile.win mklazy
 
 
