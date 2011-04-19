@@ -42,6 +42,15 @@
     }
   }
   
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item The internal functions \code{.readRDS()} and
+      \code{.saveRDS()} are now deprecated in favour of the public
+      functions \code{readRDS()} and \code{saveRDS()} introduced in \R
+      2.13.0.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor

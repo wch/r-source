@@ -196,7 +196,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{.path.package} are internal-only versions (and the only versions
   available prior to \R 2.13.0) of \code{\link{.readRDS}},
   \code{\link{.saveRDS}}, \code{\link{.find.package}} and
-  \code{\link{.path.package}}.
+  \code{\link{.path.package}}.  \code{.readRDS} and \code{.saveRDS} were
+  deprecated in \R 2.14.0.
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
