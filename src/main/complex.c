@@ -591,7 +591,8 @@ static Rboolean cmath1(double complex (*f)(double complex),
 	    y[i].r = NA_REAL; y[i].i = NA_REAL;
 	} else {
 	    SET_C99_COMPLEX(y, i, f(toC99(x + i)));
-	    if (ISNAN(y[i].r) || ISNAN(y[i].i)) naflag = TRUE;
+	    if ( (ISNAN(y[i].r) || ISNAN(y[i].i)) &&
+		!(ISNAN(x[i].r) || ISNAN(x[i].i)) ) naflag = TRUE;
 	}
     }
     return naflag;
@@ -713,7 +714,9 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	    y[i].r = NA_REAL; y[i].i = NA_REAL;
 	} else {
 	    f(&y[i], &ai, &bi);
-	    if (ISNAN(y[i].r) || ISNAN(y[i].i)) naflag = TRUE;
+	    if ( (ISNAN(y[i].r) || ISNAN(y[i].i)) &&
+		 !(ISNAN(ai.r) || ISNAN(ai.i) || ISNAN(bi.r) || ISNAN(bi.i)) )
+		naflag = TRUE;
 	}
     }
     if (naflag)

@@ -77,6 +77,9 @@
 
       The description of the problem was inaccurate: the probability is
       a tail probablity (\sQuote{2 \emph{or more} people share a birthday})
+      
+      \item Complex arithmetic sometimes warned incorrectly about
+      producing NAs when there were NaNs in the input.
     }
   }
 }
