@@ -195,6 +195,8 @@ distdir: $(DISTFILES) vignettes
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
+	@mkdir -p $(distdir)/src/library/grid/inst/doc \
+	  $(distdir)/src/library/utils/inst/doc
 	@cp library/grid/doc/*.pdf $(distdir)/src/library/grid/inst/doc
 	@cp library/utils/doc/*.pdf $(distdir)/src/library/utils/inst/doc
 	@(cd $(distdir); tools/link-recommended)

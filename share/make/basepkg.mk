@@ -174,7 +174,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in R data demo exec inst man noweb src po tests; do \
+	@for d in R data demo exec inst man noweb src po tests vignettes; do \
 	  if test -d $(srcdir)/$${d}; then \
 	    ((cd $(srcdir); \
 	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
