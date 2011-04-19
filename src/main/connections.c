@@ -496,17 +496,18 @@ void init_con(Rconnection new, const char *description, int enc,
 
 /* ------------------- file connections --------------------- */
 
-#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
-#define f_seek fseeko
-#define f_tell ftello
-#else
 #ifdef Win32
-#define f_seek fseeko64
-#define f_tell ftello64
+# define f_seek fseeko64
+# define f_tell ftello64
+# define OFF_T off64_t
+#elif defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
+# define f_seek fseeko
+# define f_tell ftello
+# define OFF_T off_t
 #else
-#define f_seek fseek
-#define f_tell ftell
-#endif
+# define f_seek fseek
+# define f_tell ftell
+# define OFF_T long
 #endif
 
 #ifdef Win32
@@ -515,15 +516,7 @@ size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
 typedef struct fileconn {
     FILE *fp;
-#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
-    off_t rpos, wpos;
-#else
-#ifdef Win32
-    off64_t rpos, wpos;
-#else
-    long rpos, wpos;
-#endif
-#endif
+    OFF_T rpos, wpos;
     Rboolean last_was_write;
     Rboolean raw;
 #ifdef Win32
@@ -657,15 +650,7 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
 {
     Rfileconn this = con->private;
     FILE *fp = this->fp;
-#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
-    off_t pos;
-#else
-#ifdef Win32
-    off64_t pos;
-#else
-    long pos;
-#endif
-#endif
+    OFF_T pos;
     int whence = SEEK_SET;
 
     /* make sure both positions are set */
@@ -705,22 +690,21 @@ static void file_truncate(Rconnection con)
 #ifdef HAVE_FTRUNCATE
     FILE *fp = this->fp;
     int fd = fileno(fp);
-#ifdef HAVE_OFF_T
-    off_t size = lseek(fd, 0, SEEK_CUR);
-#else
-#ifdef Win32
-    __int64 size = lseek64(fd, 0, SEEK_CUR);
-#else
-    int size = lseek(fd, 0, SEEK_CUR);
-#endif
-#endif
+# ifdef W64
+    off64_t size = lseek64(fd, 0, SEEK_CUR);
+# else
+    OFF_T size = lseek(fd, 0, SEEK_CUR);
+# endif
 #endif
 
     if(!con->isopen || !con->canwrite)
 	error(_("can only truncate connections open for writing"));
 
     if(!this->last_was_write) this->rpos = f_tell(this->fp);
-#ifdef HAVE_FTRUNCATE
+#ifdef W64
+    if(ftruncate64(fd, size))
+	error(_("file truncation failed"));
+#elif defined(HAVE_FTRUNCATE)
     if(ftruncate(fd, size))
 	error(_("file truncation failed"));
 #else

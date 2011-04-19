@@ -73,9 +73,7 @@ typedef struct gz_stream {
     Byte     *inbuf;  /* input buffer */
     Byte     *outbuf; /* output buffer */
     uLong    crc;     /* crc32 of uncompressed data */
-    char     *msg;    /* error message */
-    char     *path;   /* path name for debugging only */
-    int      transparent; /* 1 if input file is not a .gz file */
+    int      transparent; /* 1 if input file is not compressed */
     char     mode;    /* 'w' or 'r' */
     Rz_off_t  start;  /* start of compressed data in file (header skipped) */
     Rz_off_t  in;     /* bytes into deflate or inflate */
@@ -115,8 +113,6 @@ static int destroy (gz_stream *s)
 
     if (!s) return Z_STREAM_ERROR;
 
-    TRYFREE(s->msg);
-
     if (s->stream.state != NULL) {
         if (s->mode == 'w') err = deflateEnd(&(s->stream));
         else if (s->mode == 'r') err = inflateEnd(&(s->stream));
@@ -131,7 +127,6 @@ static int destroy (gz_stream *s)
 
     TRYFREE(s->inbuf);
     TRYFREE(s->outbuf);
-    TRYFREE(s->path);
     TRYFREE(s);
     return err;
 }
@@ -244,13 +239,7 @@ static gzFile R_gzopen (const char *path, const char *mode)
     s->in = 0;
     s->out = 0;
     s->crc = crc32(0L, Z_NULL, 0);
-    s->msg = NULL;
     s->transparent = 0;
-
-    s->path = (char*) malloc(strlen(path)+1);
-    if (s->path == NULL) return destroy(s), (gzFile) Z_NULL;
-    strcpy(s->path, path); /* do this early for debugging */
-
     s->mode = '\0';
     do {
         if (*p == 'r') s->mode = 'r';
@@ -352,8 +341,8 @@ static uLong getLong (gz_stream *s)
 */
 static int R_gzread (gzFile file, voidp buf, unsigned len)
 {
-    gz_stream *s = (gz_stream*)file;
-    Bytef *start = (Bytef*)buf; /* starting point for crc computation */
+    gz_stream *s = (gz_stream*) file;
+    Bytef *start = (Bytef*) buf; /* starting point for crc computation */
     Byte  *next_out; /* == stream.next_out but not forced far (for MSDOS) */
 
     if (s == NULL || s->mode != 'r') return Z_STREAM_ERROR;
@@ -538,12 +527,12 @@ static int int_gzrewind (gzFile file)
 }
 
 /* ===========================================================================
-      Sets the starting position for the next gzread or gzwrite on the given
+   Sets the starting position for the next gzread or gzwrite on the given
    compressed file. The offset represents a number of bytes in the
-      gzseek returns the resulting offset location as measured in bytes from
+   gzseek returns the resulting offset location as measured in bytes from
    the beginning of the uncompressed stream, or -1 in case of error.
-      SEEK_END is not implemented, returns error.
-      In this version of the library, gzseek can be extremely slow.
+   SEEK_END is not implemented, returns error.
+   In this version of the library, gzseek can be extremely slow.
 */
 static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
 {
@@ -571,6 +560,7 @@ static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
         }
         return s->in;
     }
+
     /* Rest of function is for reading only */
 
     /* compute absolute position */
@@ -578,7 +568,6 @@ static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
     if (offset < 0) return -1L;
 
     if (s->transparent) {
-        /* map to fseek */
         s->stream.avail_in = 0;
         s->stream.next_in = s->inbuf;
         if (f_seek(s->file, offset, SEEK_SET) < 0) return -1L;
