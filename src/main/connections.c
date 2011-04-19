@@ -690,7 +690,8 @@ static void file_truncate(Rconnection con)
 #ifdef HAVE_FTRUNCATE
     FILE *fp = this->fp;
     int fd = fileno(fp);
-# ifdef W64
+/* ftruncate64 is in Mingw-64 trunk, but not in current toolkit */
+# ifdef W64_to_come
     off64_t size = lseek64(fd, 0, SEEK_CUR);
 # else
     OFF_T size = lseek(fd, 0, SEEK_CUR);
@@ -701,12 +702,10 @@ static void file_truncate(Rconnection con)
 	error(_("can only truncate connections open for writing"));
 
     if(!this->last_was_write) this->rpos = f_tell(this->fp);
-#ifdef W64
-    if(ftruncate64(fd, size))
-	error(_("file truncation failed"));
+#ifdef W64_to_come
+    if(ftruncate64(fd, size)) error(_("file truncation failed"));
 #elif defined(HAVE_FTRUNCATE)
-    if(ftruncate(fd, size))
-	error(_("file truncation failed"));
+    if(ftruncate(fd, size)) error(_("file truncation failed"));
 #else
     error(_("file truncation unavailable on this platform"));
 #endif
