@@ -43,9 +43,6 @@
       \item \code{sunflowerplot()} now has a formula interface.
       (Wish of \PR{14541}.)
 
-      \item New wrapper function \code{showNonASCIIfile()} in package
-      \pkg{tools}.
-
       \item \code{iconv} has a new argument \code{toRaw} to handle (as
       was possible before the \code{CHARSXP} cache was introduced)
       encodings such as \code{UTF-16} with embedded nuls.
@@ -84,6 +81,11 @@
       
       \item \code{pbirthday()} and \code{qbirthday()} now use exact
       calculations for \code{coincident = 2}.
+
+      \item \R no longer overrules the platform's \code{cpow} C
+      function, so \code{(0+0i)^y} negative \code{y} is the same as
+      \code{(1/(0+0i))^-y}, \code{Inf+NaNi} (instead of being forced to
+      be \code{Inf+0i}).
     }
   }
 
@@ -207,9 +209,6 @@
       \item \command{R CMD build --binary} is formally defunct:
       \command{R CMD INSTALL --build} has long been the preferred
       alternative.
-
-      \item \code{.readRDS()} and \code{.saveRDS()} are now deprecated
-      in favour of \code{readRDS()} and \code{saveRDS()}.
     }
   }
 
@@ -221,8 +220,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{nobs(mle(*, nobs = .))} now works.
-
       \item \code{pbirthday()} and \code{qbirthday()} did not implement
       the algorithm exactly as given in their reference and so were
       unnecessarily inaccurate.
@@ -242,6 +239,12 @@
       
       \item \code{RShowDoc()} can now display the licences shipped with
       \R, e.g. \code{RShowDoc("GPL-3")}.
+
+      \item New wrapper function \code{showNonASCIIfile()} in package
+      \pkg{tools}.
+
+      \item \code{nobs()} now has a \code{"mle"} method in package
+      \pkg{stats4}.
     }
   }
 
@@ -265,6 +268,15 @@
     }
   }
   
+  \subsection{DEPRECATED AND DEFUNCT}{
+   \itemize{
+      \item The internal functions \code{.readRDS()} and
+      \code{.saveRDS()} are now deprecated in favour of the public
+      functions \code{readRDS()} and \code{saveRDS()} introduced in \R
+      2.13.0.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
