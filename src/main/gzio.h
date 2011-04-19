@@ -45,11 +45,11 @@
 
 /* R ADDITION */
 #if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
-# define z_off_t off_t
+# define Rz_off_t off_t
 #elif defined(Win32)
-# define z_off_t off64_t
+# define Rz_off_t off64_t
 #else
-# define z_off_t long
+# define Rz_off_t long
 #endif
 
 
@@ -80,9 +80,9 @@ typedef struct gz_stream {
     char     *path;   /* path name for debugging only */
     int      transparent; /* 1 if input file is not a .gz file */
     char     mode;    /* 'w' or 'r' */
-    z_off_t  start;   /* start of compressed data in file (header skipped) */
-    z_off_t  in;      /* bytes into deflate or inflate */
-    z_off_t  out;     /* bytes out of deflate or inflate */
+    Rz_off_t  start;   /* start of compressed data in file (header skipped) */
+    Rz_off_t  in;      /* bytes into deflate or inflate */
+    Rz_off_t  out;     /* bytes out of deflate or inflate */
 } gz_stream;
 
 /* ===========================================================================
@@ -551,7 +551,7 @@ static int int_gzrewind (gzFile file)
       SEEK_END is not implemented, returns error.
       In this version of the library, gzseek can be extremely slow.
 */
-static z_off_t R_gzseek (gzFile file, z_off_t offset, int whence)
+static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
 {
     gz_stream *s = (gz_stream*)file;
 
