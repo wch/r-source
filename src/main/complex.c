@@ -132,7 +132,7 @@ static R_INLINE double complex R_cpow_n(double complex X, int k)
     }
 }
 
-#if defined(Win32) && !defined(W64)
+#if defined(Win32)
 # undef HAVE_CPOW
 #endif
 /* reason for this:
