@@ -19,6 +19,9 @@
 
       \item New wrapper function \code{showNonASCIIfile()} in package
       \pkg{tools}.
+
+      \item \code{nobs()} now has a \code{"mle"} method in package
+      \pkg{stats4}.
     }
   }
 

@@ -308,6 +308,10 @@ function (object, parm, level = 0.95, ...)
     confint(profile(object), alpha = (1 - level)/4, parm, level, ...)
 })
 
+setGeneric("nobs")
+setMethod("nobs", "mle", function (object, ...)
+    if("nobs" %in% slotNames(object)) object@nobs else NA_integer_)
+
 setGeneric("logLik")
 setMethod("logLik", "mle",
 function (object, ...)
