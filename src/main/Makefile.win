@@ -57,6 +57,7 @@ platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'
 
 agrep-CPPFLAGS=-I../extra
 builtin-CPPFLAGS=-I../gnuwin32
+complex-CPPFLAGS=$(DEFS_W64)
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
 connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
