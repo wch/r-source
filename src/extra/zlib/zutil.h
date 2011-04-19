@@ -13,6 +13,10 @@
 #ifndef ZUTIL_H
 #define ZUTIL_H
 
+#ifdef WIN32
+# define NO_VIZ
+#endif
+
 #if ((__GNUC__-0) * 10 + __GNUC_MINOR__-0 >= 33) && !defined(NO_VIZ)
 #  define ZLIB_INTERNAL __attribute__((visibility ("hidden")))
 #else
