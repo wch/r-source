@@ -2747,9 +2747,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 
 If you have them installed (including the appropriate headers and of
 suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
-specified by @option{--with-system-zlib} (version 1.2.3 or later, but
-beware that bugs have been found with 1.2.4 and 1.2.5, and these should
-not be used on 32-bit Linux systems with LFS),
+specified by @option{--with-system-zlib} (version 1.2.3 or later),
 @option{--with-system-bzlib} or @option{--with-system-pcre}: otherwise
 versions in the @R{} sources will be compiled in.  As the latter suffice
 and are tested with @R{} you should not need to change this.

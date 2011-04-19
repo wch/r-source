@@ -19,25 +19,6 @@ EXPORTS
  deflateSetHeader
  deflateTune
  get_crc_table   
- gzclearerr
- gzclose
- gzdirect
- gzdopen
- gzeof
- gzerror
- gzflush
- gzgetc
- gzgets
- gzopen
- gzputc
- gzputs
- gzread
- gzrewind
- gzseek
- gzsetparams
- gztell
- gzungetc
- gzwrite
  inflate
  inflateBack
  inflateBackEnd
