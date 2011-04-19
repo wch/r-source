@@ -630,7 +630,7 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("unimplemented complex function"));
     }
     if (naflag)
-	warningcall(call, "NAs produced in function \"%s\"", PRIMNAME(op));
+	warningcall(call, "NaNs produced in function \"%s\"", PRIMNAME(op));
     DUPLICATE_ATTRIB(y, x);
     UNPROTECT(2);
     return y;
@@ -720,7 +720,7 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (naflag)
-	warningcall(call, "NAs produced in function \"%s\"", PRIMNAME(op));
+	warningcall(call, "NaNs produced in function \"%s\"", PRIMNAME(op));
     if(n == na) {
 	DUPLICATE_ATTRIB(sy, sa);
     } else if(n == nb) {
