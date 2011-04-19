@@ -25,6 +25,7 @@ INSTDIRS = Sweave doc misc
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) mkR mkdesc mkpo instdirs iconvlist
 	@$(MAKE) mklazy
 
