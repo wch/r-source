@@ -239,6 +239,12 @@
       \item \code{pbirthday()} and \code{qbirthday()} did not implement
       the algorithm exactly as given in their reference and so were
       unnecessarily inaccurate.
+
+      \item \code{fisher.test()} had a buglet: If arguments were
+      factors with unused levels, levels were dropped and you'd get an
+      error saying that there should be at least two levels,
+      inconsistently with pre-tabulated data (Reported by Michael Fay).
+
     }
   }
 }
