@@ -1239,7 +1239,7 @@ static double gzfile_seek(Rconnection con, double where, int origin, int rw)
     if (ISNA(where)) return (double) pos;
 
     switch(origin) {
-    case 2: whence = SEEK_CUR;
+    case 2: whence = SEEK_CUR; break;
     case 3: error(_("whence = \"end\" is not implemented for gzfile connections"));
     default: whence = SEEK_SET;
     }

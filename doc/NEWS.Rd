@@ -303,6 +303,9 @@
       
       \item Complex arithmetic sometimes warned incorrectly about
       producing NAs when there were NaNs in the input.
+
+      \item \code{seek(origin = "current")} incorrectly reported it was
+      not implemented for a \code{gzfile()} connection.
     }
   }
 }
