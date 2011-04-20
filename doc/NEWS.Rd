@@ -86,6 +86,11 @@
       function, so \code{(0+0i)^y} negative \code{y} is the same as
       \code{(1/(0+0i))^-y}, \code{Inf+NaNi} (instead of being forced to
       be \code{Inf+0i}).
+      
+      \item \code{unzip()} and \code{unz()} connection have been updated
+      with support for more recent Zip64 features (including large file
+      sizes and \command{bzip2} compression, but not yet UTF-8 file
+      names).
     }
   }
 

@@ -41,12 +41,13 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 \note{
   This is a minimal implementation, principally designed for Windows'
   users to be able to unpack Windows binary packages without external
-  software.  It does not (for example) support Unicode filenames and
-  large files as introduced in \command{zip 3.0}: for that use
-  \code{unzip = "unzip"} with \command{unzip 6.00} or later.
+  software.  It does not (for example) support Unicode filenames as
+  introduced in \command{zip 3.0}: for that use \code{unzip = "unzip"}
+  with \command{unzip 6.00} or later.  (As from \R 2.14.0 it does have
+  support for files of more than 4GB and \command{bzip2} compression.)
 
   If \code{unzip} specifies a program, the format of the dates listed
-  with \code{list=TRUE} is unknown (on Windows it can even depend on
+  with \code{list = TRUE} is unknown (on Windows it can even depend on
   the current locale) and the return values could be \code{NA} or
   expressed in the wrong timezone or misinterpreted (the latter being
   far less likely as from \command{unzip 6.00}).
@@ -54,9 +55,8 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 
 \value{
   If \code{list = TRUE}, a data frame with columns \code{Name}
-  (character) \code{Length} (the size of the uncompressed file, usually
-  integer, conceivably numeric with an external \code{unzip}) and
-  \code{Date} (of class \code{"\link{POSIXct}"}).
+  (character) \code{Length} (the size of the uncompressed file, numeric)
+  and \code{Date} (of class \code{"\link{POSIXct}"}).
 
   Otherwise for the \code{"internal"} method, a character vector of the
   filepaths extracted to, invisibly.
