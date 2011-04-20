@@ -214,6 +214,9 @@
       \item \command{R CMD build --binary} is formally defunct:
       \command{R CMD INSTALL --build} has long been the preferred
       alternative.
+
+      \item \command{zip.file.extract()} is now defunct: use
+      \code{unzip()} or \code{unz()} instead.
     }
   }
 
