@@ -75,11 +75,11 @@ strptime(x, format, tz = "")
   implemented conversion specifications include
   \describe{
     \item{\code{\%a}}{Abbreviated weekday name in the current
-      locale. (Also matches full name on input.)}
+      locale.  (Also matches full name on input.)}
     \item{\code{\%A}}{Full weekday name in the current locale.  (Also
       matches abbreviated name on input.)}
     \item{\code{\%b}}{Abbreviated month name in the current
-      locale. (Also matches full name on input.)}
+      locale.  (Also matches full name on input.)}
     \item{\code{\%B}}{Full month name in the current locale.  (Also
       matches abbreviated name on input.)}
     \item{\code{\%c}}{Date and time.   Locale-specific on output,

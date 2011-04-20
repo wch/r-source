@@ -40,7 +40,7 @@ as.qr(x)
   \item{y, b}{a vector or matrix of right-hand sides of equations.}
   \item{a}{a QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
   \item{k}{effective rank.}
-  \item{LAPACK}{logical. For real \code{x}, if true use LAPACK
+  \item{LAPACK}{logical.  For real \code{x}, if true use LAPACK
     otherwise use LINPACK.}
   \item{\dots}{further arguments passed to or from other methods}
 }

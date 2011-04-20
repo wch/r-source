@@ -16,7 +16,7 @@ apply(X, MARGIN, FUN, \dots)
 \arguments{
   \item{X}{an array, including a matrix.}
   \item{MARGIN}{a vector giving the subscripts which the function will
-    be applied over. E.g., for a matrix \code{1} indicates rows,
+    be applied over.  E.g., for a matrix \code{1} indicates rows,
     \code{2} indicates columns, \code{c(1, 2)} indicates rows and
     columns. Where \code{X} has named dimnames, it can be a character
     vector selecting dimension names.}

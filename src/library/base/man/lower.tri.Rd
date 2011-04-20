@@ -17,7 +17,7 @@ upper.tri(x, diag = FALSE)
 }
 \arguments{
   \item{x}{a matrix.}
-  \item{diag}{logical. Should the diagonal be included?}
+  \item{diag}{logical.  Should the diagonal be included?}
 }
 \seealso{
   \code{\link{diag}},

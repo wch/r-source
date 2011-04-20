@@ -19,8 +19,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
     than one will be used, with a warning.}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{where to do the assignment.  By default, assigns into the
-    current environment.  See the details for other possibilities.}
-  \item{envir}{the \code{\link{environment}} to use. See the details section.}
+    current environment.  See \sQuote{Details} for other possibilities.}
+  \item{envir}{the \code{\link{environment}} to use.  See \sQuote{Details}.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
   \item{immediate}{an ignored compatibility feature.}

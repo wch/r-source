@@ -8,8 +8,8 @@
 \usage{is.single(x)}
 \alias{is.single}
 \description{
-\code{is.single} reports an error. There are no single precision
-values in R.
+  \code{is.single} reports an error.  There are no single precision
+  values in R.
 }
 \arguments{
   \item{x}{object to be tested.}

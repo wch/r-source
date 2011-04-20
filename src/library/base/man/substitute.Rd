@@ -43,9 +43,9 @@ enquote(cl)
 
   Substitution takes place by examining each component of the parse tree
   as follows: If it is not a bound symbol in \code{env}, it is
-  unchanged. If it is a promise object, i.e., a formal argument to a
+  unchanged.  If it is a promise object, i.e., a formal argument to a
   function or explicitly created using \code{\link{delayedAssign}()},
-  the expression slot of the promise replaces the symbol. If it is an
+  the expression slot of the promise replaces the symbol.  If it is an
   ordinary variable, its value is substituted, unless \code{env} is
   \code{\link{.GlobalEnv}} in which case the symbol is left unchanged.
 
@@ -59,11 +59,11 @@ enquote(cl)
   appropriate base mode.
 }
 \note{
-  Substitute works on a purely lexical basis. There is no guarantee
+  Substitute works on a purely lexical basis.  There is no guarantee
   that the resulting expression makes any sense.
 
   Substituting and quoting often causes confusion when the argument is
-  \code{expression(\dots)}. The result is a call to the
+  \code{expression(\dots)}.  The result is a call to the
   \code{\link{expression}} constructor function and needs to be evaluated
   with \code{\link{eval}} to give the actual expression object.
 }

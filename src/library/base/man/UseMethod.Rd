@@ -106,7 +106,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   are handled specially: they either replace existing arguments of the
   same name or are appended to the argument list.  They are passed on as
   the promise that was supplied as an argument to the current
-  environment. (S does this differently!)  If they have been evaluated
+  environment.  (S does this differently!)  If they have been evaluated
   in the current (or a previous environment) they remain evaluated.
   (This is a complex area, and subject to change: see the draft
   \sQuote{R Language Definition}.)
@@ -114,7 +114,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   The search for methods for \code{NextMethod} is slightly different
   from that for \code{UseMethod}.   Finding no \code{fun.default} is not
   necessarily an error, as the search continues to the generic
-  itself. This is to pick up an \link{internal generic} like \code{[}
+  itself.  This is to pick up an \link{internal generic} like \code{[}
   which has no separate default method, and succeeds only if the generic
   is a \link{primitive} function or a wrapper for a
   \code{\link{.Internal}} function of the same name.  (When a primitive

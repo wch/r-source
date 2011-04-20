@@ -80,7 +80,7 @@ is.na(x) <- value
   Wadsworth & Brooks/Cole.
 
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
+  \emph{Programming with Data.  A Guide to the S Language}.
   Springer.
 }
 \seealso{

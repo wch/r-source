@@ -37,7 +37,7 @@ exists(x, where = -1, envir = , frame, mode = "any",
   specify an environment, but is primarily there for back compatibility.
 
   This function looks to see if the name \code{x} has a value bound to
-  it in the specified environment. If \code{inherits} is \code{TRUE} and
+  it in the specified environment.  If \code{inherits} is \code{TRUE} and
   a value is not found for \code{x} in the specified environment, the
   enclosing frames of the environment are searched until the name \code{x}
   is encountered.  See \code{\link{environment}} and the \sQuote{R

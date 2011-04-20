@@ -29,7 +29,7 @@ capabilities(what = NULL)
 }
 #endif
 \value{
-  A named logical vector. Current components are
+  A named logical vector.  Current components are
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
     \item{tiff}{Is the \code{\link{tiff}} function operational?}

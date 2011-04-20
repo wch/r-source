@@ -100,7 +100,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{name}{name of image file to save or load.}
   \item{x}{an object with a \code{"row.names"} attribute, typically a
     data frame.}
-  \item{type}{integer. Currently \code{type = 0} returns the internal
+  \item{type}{integer.  Currently \code{type = 0} returns the internal
     \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
     the number of rows implied by the attribute, and \code{type = 1} the
     latter with a negative sign for \sQuote{automatic} row names.}

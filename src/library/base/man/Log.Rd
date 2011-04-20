@@ -97,7 +97,7 @@ expm1(x)
   (for \code{log}, \code{log10} and \code{exp}.)
 
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
+  \emph{Programming with Data.  A Guide to the S Language}.
   Springer. (for \code{logb}.)
 }
 \seealso{

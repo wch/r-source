@@ -53,7 +53,7 @@ tracingState(on = NULL)
     editing the body of the function.  If so, supply the \code{edit}
     argument either as \code{TRUE}, or as the name of the editor you
     want to use.  Then \code{trace()} will call \code{\link{edit}} and
-    use the version of the function after you edit it. See the details
+    use the version of the function after you edit it.  See the details
     section for additional information.
     }
   \item{where}{where to look for the function to be
@@ -146,7 +146,7 @@ tracingState(on = NULL)
 
   When the \code{edit} argument is used repeatedly with no call to
   \code{untrace} on the same function or method in between, the
-  previously edited version is retained. If you want to throw away
+  previously edited version is retained.  If you want to throw away
   all the previous tracing and then edit, call \code{untrace} before the next
   call to \code{trace}.  Editing may be combined with automatic
   tracing; just supply the other arguments such as \code{tracer}, and

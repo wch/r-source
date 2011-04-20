@@ -73,7 +73,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
   All \R platforms use the XDR (bigendian) representation of C ints and
   doubles in binary save-d files, and these are portable across all \R
-  platforms. (ASCII saves used to be useful for moving data between
+  platforms.  (ASCII saves used to be useful for moving data between
   platforms but are now mainly of historical interest.  They can be more
   compact than binary saves where compression is not used, but are
   almost always slower to both read and write: binary saves compress

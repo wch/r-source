@@ -35,7 +35,7 @@ truncate(con, \dots)
   \code{seek} with \code{where = NA} returns the current byte offset
   of a connection (from the beginning), and with a non-missing \code{where}
   argument the connection is re-positioned (if possible) to the
-  specified position. \code{isSeekable} returns whether the connection
+  specified position.  \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only (possibly
   gz-compressed) file connections do.
 

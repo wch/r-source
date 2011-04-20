@@ -11,7 +11,7 @@ socketSelect(socklist, write = FALSE, timeout = NULL)
 }
 \arguments{
   \item{socklist}{list of open socket connections}
-  \item{write}{logical. If \code{TRUE} wait for corresponding socket to
+  \item{write}{logical.  If \code{TRUE} wait for corresponding socket to
                become available for writing; otherwise wait for it to become
                available for reading.}
   \item{timeout}{numeric or \code{NULL}. Time in seconds to wait for a

@@ -32,7 +32,7 @@ rank(x, na.last = TRUE,
   If all components are different (and no \code{NA}s), the ranks are
   well defined, with values in \code{seq_len(x)}.  With some values equal
   (called \sQuote{ties}), the argument \code{ties.method} determines the
-  result at the corresponding indices. The \code{"first"} method results
+  result at the corresponding indices.  The \code{"first"} method results
   in a permutation with increasing values at each index set of ties.
   The \code{"random"} method puts these in random order whereas the
   default, \code{"average"}, replaces them by their mean, and

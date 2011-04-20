@@ -51,7 +51,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
     object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{perl}{logical. Should perl-compatible regexps be used?
+  \item{perl}{logical.  Should perl-compatible regexps be used?
     Has priority over \code{extended}.}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})
     indices of the matches determined by \code{grep} is returned, and if
@@ -184,7 +184,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
 \source{
   The C code for POSIX-style regular expression matching has changed
-  over the years. As from \R 2.10.0 the TRE library of Ville Laurikari
+  over the years.  As from \R 2.10.0 the TRE library of Ville Laurikari
   (\url{http://laurikari.net/tre/}) is used.  From 2005 to \R 2.9.2,
   code based on \code{glibc} was used (and before that, code from GNU
   \command{grep}).  The POSIX standard does give some room for

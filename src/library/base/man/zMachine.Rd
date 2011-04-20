@@ -44,7 +44,7 @@
     normally \code{2}.}
   \item{double.digits}{the number of base digits in the floating-point
     significand: normally \code{53}.}
-  \item{double.rounding}{the rounding action, one of. \cr
+  \item{double.rounding}{the rounding action, one of\cr
     0 if floating-point addition chops; \cr
     1 if floating-point addition rounds, but not in the IEEE style; \cr
     2 if floating-point addition rounds in the IEEE style; \cr

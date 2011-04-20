@@ -20,7 +20,7 @@ asS4(object, flag = TRUE, complete = TRUE)
 asS3(object, flag = TRUE, complete = TRUE)
 }
 \arguments{
-  \item{object}{ Any R object. }
+  \item{object}{Any R object.}
 
   \item{flag, complete}{Optional arguments to indicate direction of
       conversion and whether conversion to S3 is completed.  Not
@@ -33,7 +33,7 @@ asS3(object, flag = TRUE, complete = TRUE)
 
   \code{asS4} and \code{asS3} will turn this flag on or off, 
   and \code{asS3} will set the class from the objects \code{.S3Class}
-  slot if one exists. Note that \code{asS3} will \emph{not}  turn
+  slot if one exists.  Note that \code{asS3} will \emph{not}  turn
   the object into an S3 object
   unless there is a valid conversion; that is, an object of type other
   than \code{"S4"} for which the S4 object is an extension, unless

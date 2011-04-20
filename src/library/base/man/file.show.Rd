@@ -15,13 +15,13 @@ file.show(\dots, header = rep("", nfiles),
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
-    files to be displayed. Paths with have \link{tilde expansion}.}
+    files to be displayed.  Paths with have \link{tilde expansion}.}
   \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
     displayed.  Defaults to empty strings.}
   \item{title}{an overall title for the display.  If a single separate
     window is used for the display, \code{title} will be used as the window
-    title. If multiple windows are used, their titles should combine the title
+    title.  If multiple windows are used, their titles should combine the title
     and the file-specific header.}
   \item{delete.file}{should the files be deleted after display?  Used
     for temporary files.}

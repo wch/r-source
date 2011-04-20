@@ -43,7 +43,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
 
   Note that splitting into single characters can be done \emph{via}
   \code{split = character(0)} or \code{split = ""}; the two are
-  equivalent. The definition of \sQuote{character} here depends on the
+  equivalent.  The definition of \sQuote{character} here depends on the
   locale: in a single-byte locale it is a byte, and in a multi-byte
   locale it is the unit represented by a \sQuote{wide character} (almost
   always a Unicode point).

@@ -74,7 +74,7 @@ local(expr, envir = new.env())
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{eval} only.)
+  Wadsworth & Brooks/Cole.  (\code{eval} only.)
 }
 \seealso{
   \code{\link{expression}}, \code{\link{quote}}, \code{\link{sys.frame}},
@@ -147,7 +147,7 @@ gg <- local({
 gg(10)
 sapply(1:5, gg)
 
-# Nesting locals. a is private storage accessible to k
+# Nesting locals: a is private storage accessible to k
 gg <- local({
     k <- local({
         a <- 1

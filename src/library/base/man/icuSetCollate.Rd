@@ -42,8 +42,8 @@ icuSetCollate(...)
       affect collation is from right to left, whereas in most other locales
       it is from left to right.  Possible values \code{"on"}, \code{"off"}
       and \code{"default"}.}
-    \item{\code{normalization}:}{Should strings be normalized? Possible values
-      \code{"on"} and \code{"off"} (default). This affects the
+    \item{\code{normalization}:}{Should strings be normalized?  Possible values
+      are \code{"on"} and \code{"off"} (default).  This affects the
       collation of composite characters.}
     \item{\code{case_level}:}{An additional level between secondary and
       tertiary, used to distinguish large and small Japanese Kana

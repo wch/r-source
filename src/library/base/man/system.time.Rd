@@ -27,7 +27,7 @@ unix.time(expr, gcFirst = TRUE)
   compatibility with S.
 
   Timings of evaluations of the same expression can vary considerably
-  depending on whether the evaluation triggers a garbage collection. When
+  depending on whether the evaluation triggers a garbage collection.  When
   \code{gcFirst} is \code{TRUE} a garbage collection (\code{\link{gc}})
   will be performed immediately before the evaluation of \code{expr}.
   This will usually produce more consistent timings.

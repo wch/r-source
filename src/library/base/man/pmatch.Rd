@@ -27,7 +27,7 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
   The behaviour differs by the value of \code{duplicates.ok}. Consider
   first the case if this is true.  First exact matches are considered,
   and the positions of the first exact matches are recorded. Then unique
-  partial matches are considered, and if found recorded. (A partial
+  partial matches are considered, and if found recorded.  (A partial
   match occurs if the whole of the element of \code{x} matches the
   beginning of the element of \code{table}.)  Finally,
   all remaining elements of \code{x} are regarded as unmatched.

@@ -20,8 +20,8 @@
   \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}}, or
   \code{\link{.External}}). Additionally, it returns the address of the
   symbol and this can be passed to other C routines which can
-  invoke. Specifically, this provides a way to explicitly share symbols
-  between different dynamically loaded package libraries. Also, it
+  invoke.  Specifically, this provides a way to explicitly share symbols
+  between different dynamically loaded package libraries.  Also, it
   provides a way to query where symbols were resolved, and aids
   diagnosing strange behavior associated with dynamic resolution.
 
@@ -82,7 +82,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
     information is available for the symbol, then this is
     an object of class \code{RegisteredNativeSymbol} and is a reference
     to an internal data type that has access to the routine pointer and
-    registration information. This too can be used in calls to
+    registration information.  This too can be used in calls to
     \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}} and
     \code{\link{.External}}.
   }

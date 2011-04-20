@@ -19,8 +19,8 @@ rm    (\dots, list = character(), pos = -1,
     character strings (quoted).}
   \item{list}{a character vector naming objects to be removed.}
   \item{pos}{where to do the removal.  By default, uses the
-    current environment.  See the details for other possibilities.}
-  \item{envir}{the \code{\link{environment}} to use. See the details section.}
+    current environment.  See \sQuote{details} for other possibilities.}
+  \item{envir}{the \code{\link{environment}} to use.  See \sQuote{details}.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
 }

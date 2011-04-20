@@ -28,7 +28,7 @@ levels(x) <- value
 }
 \details{
   Both the extractor and replacement forms are generic and new methods
-  can be written for them. The most important method for the replacement
+  can be written for them.  The most important method for the replacement
   function is that for \code{\link{factor}}s.
   
   For the factor replacement method, a \code{NA} in \code{value}

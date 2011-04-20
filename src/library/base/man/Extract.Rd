@@ -191,7 +191,7 @@ x$i <- value
 }
 \section{Environments}{
   Both \code{$} and \code{[[} can be applied to environments.  Only
-  character indices are allowed and no partial matching is done. The
+  character indices are allowed and no partial matching is done.  The
   semantics of these operations are those of \code{get(i, env=x,
     inherits=FALSE)}.  If no match is found then \code{NULL} is
   returned.  The replacement versions, \code{$<-} and \code{[[<-}, can

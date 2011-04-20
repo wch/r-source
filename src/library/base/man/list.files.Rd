@@ -26,7 +26,7 @@ list.dirs(path = ".", full.names = TRUE)
     values will be ignored.}
   \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
-  \item{all.files}{a logical value. If \code{FALSE}, only the
+  \item{all.files}{a logical value.  If \code{FALSE}, only the
     names of visible files are returned.  If \code{TRUE},
     all file names will be returned.}
   \item{full.names}{a logical value.  If \code{TRUE}, the directory
@@ -43,7 +43,7 @@ list.dirs(path = ".", full.names = TRUE)
 }
 \value{
   A character vector containing the names of the files in the
-  specified directories, or \code{""} if there were no files. If a
+  specified directories, or \code{""} if there were no files.  If a
   path does not exist or is not a directory or is unreadable it
   is skipped, with a warning.
 

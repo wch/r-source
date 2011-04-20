@@ -21,7 +21,7 @@ rowMeans(x, na.rm = FALSE, dims = 1)
 \arguments{
   \item{x}{an array of two or more dimensions, containing numeric,
     complex, integer or logical values, or a numeric data frame.}
-  \item{na.rm}{logical. Should missing values (including \code{NaN})
+  \item{na.rm}{logical.  Should missing values (including \code{NaN})
     be omitted from the calculations?}
   \item{dims}{integer: Which dimensions are regarded as \sQuote{rows} or
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is

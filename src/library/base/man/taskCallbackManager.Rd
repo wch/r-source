@@ -61,12 +61,12 @@ taskCallbackManager(handlers = list(), registered = FALSE,
     with the C-level dispatch mechanism and which invokes each of the
     R-level callbacks within this manager's control.}
   \item{suspend}{a function to set the suspend state
-    of the manager. If it is suspended, none of the callbacks will be
-    invoked when a task is completed. One sets the state by specifying
+    of the manager.  If it is suspended, none of the callbacks will be
+    invoked when a task is completed.  One sets the state by specifying
     a logical value for the \code{status} argument.
   }
   \item{register}{a function to register the \code{evaluate}
-    function with the internal C-level dispatch mechanism. This is
+    function with the internal C-level dispatch mechanism.  This is
     done automatically by the \code{add} function, but can be called
     manually.}
   \item{callbacks}{returns the list of callbacks being maintained by this
