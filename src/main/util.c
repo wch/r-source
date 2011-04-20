@@ -232,7 +232,7 @@ SEXPTYPE str2type(const char *s)
     int i;
     for (i = 0; TypeTable[i].str; i++) {
 	if (!strcmp(s, TypeTable[i].str))
-	    return TypeTable[i].type;
+	    return (SEXPTYPE) TypeTable[i].type;
     }
     /* SEXPTYPE is an unsigned int, so the compiler warns us w/o the cast. */
     return (SEXPTYPE) -1;
@@ -329,7 +329,7 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
     i_buf = (char *)in;
     i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
-    o_len = nout * sizeof(ucs2_t);
+    o_len = ((size_t) nout) * sizeof(ucs2_t);
     status = Riconv(cd, &i_buf, (size_t *)&i_len, &o_buf, (size_t *)&o_len);
 
     Riconv_close(cd);
@@ -356,10 +356,10 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
 Rboolean isBlankString(const char *s)
 {
     if(mbcslocale) {
-	wchar_t wc; int used; mbstate_t mb_st;
+	wchar_t wc; size_t used; mbstate_t mb_st;
 	mbs_init(&mb_st);
 	while( (used = Mbrtowc(&wc, s, MB_CUR_MAX, &mb_st)) ) {
-	    if(!iswspace(wc)) return FALSE;
+	    if(!iswspace((wint_t) wc)) return FALSE;
 	    s += used;
 	}
     } else
@@ -422,13 +422,13 @@ void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
 	if (PRIMINTERNAL(op))
 	    error(ngettext("%d argument passed to .Internal(%s) which requires %d",
 		     "%d arguments passed to .Internal(%s) which requires %d",
-		     length(args)),
+			   (unsigned long) length(args)),
 		  length(args), PRIMNAME(op), PRIMARITY(op));
 	else
 	    errorcall(call,
 		      ngettext("%d argument passed to '%s' which requires %d",
 			       "%d arguments passed to '%s' which requires %d",
-			       length(args)),
+			       (unsigned long) length(args)),
 		      length(args), PRIMNAME(op), PRIMARITY(op));
     }
 }
@@ -437,7 +437,7 @@ void attribute_hidden Rf_check1arg(SEXP arg, SEXP call, const char *formal)
 {
     SEXP tag = TAG(arg);
     const char *supplied;
-    int ns;
+    size_t ns;
     if (tag == R_NilValue) return;
     supplied = CHAR(PRINTNAME(tag)); ns = strlen(supplied);
     if (ns > strlen(formal) || strncmp(supplied, formal, ns))
@@ -581,8 +581,8 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'all.y' must be TRUE or FALSE"));
 
     /* 0. sort the indices */
-    ix = (int *) R_alloc(nx, sizeof(int));
-    iy = (int *) R_alloc(ny, sizeof(int));
+    ix = (int *) R_alloc((size_t) nx, sizeof(int));
+    iy = (int *) R_alloc((size_t) ny, sizeof(int));
     for(i = 0; i < nx; i++) ix[i] = i+1;
     for(i = 0; i < ny; i++) iy[i] = i+1;
     isort_with_index(INTEGER(xi), ix, nx);
@@ -1095,47 +1095,48 @@ utf8toucs(wchar_t *wc, const char *s)
 	*w = (wchar_t) byte;
 	return 1;
     } else if (byte < 0xE0) {
-	if(strlen(s) < 2) return -2;
+	if(strlen(s) < 2) return (size_t)-2;
 	if ((s[1] & 0xC0) == 0x80) {
 	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
 	    return 2;
-	} else return -1;
+	} else return (size_t)-1;
     } else if (byte < 0xF0) {
-	if(strlen(s) < 3) return -2;
+	if(strlen(s) < 3) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
 	    *w = (wchar_t) (((byte & 0x0F) << 12)
-		    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
-	    byte = *w;
+			    | (unsigned int) ((s[1] & 0x3F) << 6)
+			    | (s[2] & 0x3F));
+	    byte = (unsigned int) *w;
 	    /* Surrogates range */
-	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1;
-	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return (size_t)-1;
+	    if(byte == 0xFFFE || byte == 0xFFFF) return (size_t)-1;
 	    return 3;
-	} else return -1;
+	} else return (size_t)-1;
     }
-    if(sizeof(wchar_t) < 4) return -2;
+    if(sizeof(wchar_t) < 4) return (size_t)-2;
     /* So now handle 4,5.6 byte sequences with no testing */
     if (byte < 0xf8) {
-	if(strlen(s) < 4) return -2;
+	if(strlen(s) < 4) return (size_t)-2;
 	*w = (wchar_t) (((byte & 0x0F) << 18)
-			| ((s[1] & 0x3F) << 12)
-			| ((s[2] & 0x3F) << 6)
+			| (unsigned int) ((s[1] & 0x3F) << 12)
+			| (unsigned int) ((s[2] & 0x3F) << 6)
 			| (s[3] & 0x3F));
 	return 4;
     } else if (byte < 0xFC) {
-	if(strlen(s) < 5) return -2;
+	if(strlen(s) < 5) return (size_t)-2;
 	*w = (wchar_t) (((byte & 0x0F) << 24)
-			| ((s[1] & 0x3F) << 12)
-			| ((s[2] & 0x3F) << 12)
-			| ((s[3] & 0x3F) << 6)
+			| (unsigned int) ((s[1] & 0x3F) << 12)
+			| (unsigned int) ((s[2] & 0x3F) << 12)
+			| (unsigned int) ((s[3] & 0x3F) << 6)
 			| (s[4] & 0x3F));
 	return 5;
     } else {
-	if(strlen(s) < 6) return -2;
+	if(strlen(s) < 6) return (size_t)-2;
 	*w = (wchar_t) (((byte & 0x0F) << 30)
-			| ((s[1] & 0x3F) << 24)
-			| ((s[2] & 0x3F) << 18)
-			| ((s[3] & 0x3F) << 12)
-			| ((s[4] & 0x3F) << 6)
+			| (unsigned int) ((s[1] & 0x3F) << 24)
+			| (unsigned int) ((s[2] & 0x3F) << 18)
+			| (unsigned int) ((s[3] & 0x3F) << 12)
+			| (unsigned int) ((s[4] & 0x3F) << 6)
 			| (s[5] & 0x3F));
 	return 6;
     }
@@ -1144,14 +1145,14 @@ utf8toucs(wchar_t *wc, const char *s)
 size_t
 utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
-    int m, res = 0;
+    ssize_t m, res = 0;
     const char *t;
     wchar_t *p;
     wchar_t local;
 
     if(wc)
 	for(p = wc, t = s; ; p++, t += m) {
-	    m  = utf8toucs(p, t);
+	    m  = (ssize_t) utf8toucs(p, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
 	    if (m == 0) break;
 	    res ++;
@@ -1159,22 +1160,22 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	}
     else
 	for(t = s; ; res++, t += m) {
-	    m  = utf8toucs(&local, t);
+	    m  = (ssize_t) utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
 	    if (m == 0) break;
 	}
-    return res;
+    return (size_t) res;
 }
 
 /* based on pcre.c */
-static const int utf8_table1[] =
+static const unsigned int utf8_table1[] =
   { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
-static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+static const unsigned int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
 
 static size_t Rwcrtomb(char *s, const wchar_t wc)
 {
-    register int i, j;
-    unsigned int cvalue = wc;
+    register size_t i, j;
+    unsigned int cvalue = (unsigned int) wc;
     char buf[10], *b;
 
     b = s ? s : buf;
@@ -1183,22 +1184,22 @@ static size_t Rwcrtomb(char *s, const wchar_t wc)
 	if (cvalue <= utf8_table1[i]) break;
     b += i;
     for (j = i; j > 0; j--) {
-	*b-- = 0x80 | (cvalue & 0x3f);
+	*b-- = (char) (0x80 | (cvalue & 0x3f));
 	cvalue >>= 6;
     }
-    *b = utf8_table2[i] | cvalue;
+    *b = (char) (utf8_table2[i] | cvalue);
     return i + 1;
 }
 
 /* attribute_hidden? */
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 {
-    int m, res=0;
+    ssize_t m, res=0;
     char *t;
     const wchar_t *p;
     if(s) {
 	for(p = wc, t = s; ; p++) {
-	    m  = Rwcrtomb(t, *p);
+	    m  = (ssize_t) Rwcrtomb(t, *p);
 	    if(m <= 0) break;
 	    res += m;
 	    if(res >= n) break;
@@ -1206,12 +1207,12 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 	}
     } else {
 	for(p = wc; ; p++) {
-	    m  = Rwcrtomb(NULL, *p);
+	    m  = (ssize_t) Rwcrtomb(NULL, *p);
 	    if(m <= 0) break;
 	    res += m;
 	}
     }
-    return res;
+    return (size_t) res;
 }
 
 
@@ -1260,7 +1261,7 @@ extern int _pcre_valid_utf8(const char *string, int length);
 
 Rboolean utf8Valid(const char *str)
 {
-    return  (_pcre_valid_utf8(str, strlen(str)) < 0);
+    return  (_pcre_valid_utf8(str, (int) strlen(str)) < 0);
 }
 
 
