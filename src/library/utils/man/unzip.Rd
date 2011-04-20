@@ -69,8 +69,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 }
 
 \seealso{
-  \code{\link{unz}} and \code{\link{zip.file.extract}} to read a single
-  component from a zip file.
+  \code{\link{unz}} to read a single component from a zip file.
 
   \code{\link{zip}}.
 }
