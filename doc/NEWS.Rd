@@ -214,7 +214,12 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item Dummy.
+      \item Configure option \option{--with-system-zlib} now only makes
+      use of the basic interface of \code{zlib} and not the
+      C function \samp{gzseek} which has shown erroneous behaviour in
+      \code{zlib} 1.2.4 and 1.2.5.
+
+      The \code{zlib} in the R sources is now version 1.2.5.
     }
   }
 
