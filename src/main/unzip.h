@@ -66,83 +66,21 @@ typedef uint64_t ZPOS64_T;
 #define ZLIB_FILEFUNC_MODE_EXISTING (4)
 #define ZLIB_FILEFUNC_MODE_CREATE   (8)
 
-typedef voidpf (*open_file_func) OF((voidpf opaque, const char* filename, int mode));
-typedef uLong  (*read_file_func) OF((voidpf opaque, voidpf stream, void* buf, uLong size));
-typedef uLong  (*write_file_func) OF((voidpf opaque, voidpf stream, const void* buf, uLong size));
-typedef long   (*tell_file_func) OF((voidpf opaque, voidpf stream));
-typedef long   (*seek_file_func) OF((voidpf opaque, voidpf stream, uLong offset, int origin));
-typedef int    (*close_file_func) OF((voidpf opaque, voidpf stream));
-typedef int    (*testerror_file_func) OF((voidpf opaque, voidpf stream));
-
-/* here is the "old" 32 bits structure structure */
-typedef struct zlib_filefunc_def_s
-{
-    open_file_func      zopen_file;
-    read_file_func      zread_file;
-    write_file_func     zwrite_file;
-    tell_file_func      ztell_file;
-    seek_file_func      zseek_file;
-    close_file_func     zclose_file;
-    testerror_file_func zerror_file;
-    voidpf              opaque;
-} zlib_filefunc_def;
-
-typedef ZPOS64_T (*tell64_file_func)    OF((voidpf opaque, voidpf stream));
-typedef long     (*seek64_file_func)    OF((voidpf opaque, voidpf stream, ZPOS64_T offset, int origin));
-typedef voidpf   (*open64_file_func)    OF((voidpf opaque, const void* filename, int mode));
-
-typedef struct zlib_filefunc64_def_s
-{
-    open64_file_func    zopen64_file;
-    read_file_func      zread_file;
-    write_file_func     zwrite_file;
-    tell64_file_func    ztell64_file;
-    seek64_file_func    zseek64_file;
-    close_file_func     zclose_file;
-    testerror_file_func zerror_file;
-    voidpf              opaque;
-} zlib_filefunc64_def;
-
-static void fill_fopen64_filefunc OF((zlib_filefunc64_def* pzlib_filefunc_def));
-
-/* now internal definition, only for zip.c and unzip.h */
-typedef struct zlib_filefunc64_32_def_s
-{
-    zlib_filefunc64_def zfile_func64;
-    open_file_func      zopen32_file;
-    tell_file_func      ztell32_file;
-    seek_file_func      zseek32_file;
-} zlib_filefunc64_32_def;
-
-#define ZREAD64(filefunc,filestream,buf,size)     ((*((filefunc).zfile_func64.zread_file))   ((filefunc).zfile_func64.opaque,filestream,buf,size))
-#define ZWRITE64(filefunc,filestream,buf,size)    ((*((filefunc).zfile_func64.zwrite_file))  ((filefunc).zfile_func64.opaque,filestream,buf,size))
-#define ZCLOSE64(filefunc,filestream)             ((*((filefunc).zfile_func64.zclose_file))  ((filefunc).zfile_func64.opaque,filestream))
-#define ZERROR64(filefunc,filestream)             ((*((filefunc).zfile_func64.zerror_file))  ((filefunc).zfile_func64.opaque,filestream))
-
-static voidpf call_zopen64 OF((const zlib_filefunc64_32_def* pfilefunc,const void*filename,int mode));
-static long    call_zseek64 OF((const zlib_filefunc64_32_def* pfilefunc,voidpf filestream, ZPOS64_T offset, int origin));
-static ZPOS64_T call_ztell64 OF((const zlib_filefunc64_32_def* pfilefunc,voidpf filestream));
-
-#define ZOPEN64(filefunc,filename,mode)         (call_zopen64((&(filefunc)),(filename),(mode)))
-#define ZTELL64(filefunc,filestream)            (call_ztell64((&(filefunc)),(filestream)))
-#define ZSEEK64(filefunc,filestream,pos,mode)   (call_zseek64((&(filefunc)),(filestream),(pos),(mode)))
-
+static voidpf fopen_func(const void* filename, int mode);
+static ZPOS64_T ftell_func(voidpf stream);
+static int fseek_func(voidpf stream, ZPOS64_T offset, int origin);
+static size_t fread_func(voidpf stream, void* buf, size_t size);
+static int fclose_func(voidpf stream);
+static int ferror_func(voidpf stream);
 /* end of merge */
+
 #ifdef HAVE_BZIP2
 #include "bzlib.h"
 #endif
 
 #define Z_BZIP2ED 12
 
-#if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
-/* like the STRICT of WIN32, we define a pointer that cannot be converted
-    from (void*) without cast */
-typedef struct TagunzFile__ { int unused; } unzFile__;
-typedef unzFile__ *unzFile;
-#else
 typedef voidp unzFile;
-#endif
-
 
 #define UNZ_OK                          (0)
 #define UNZ_END_OF_LIST_OF_FILE         (-100)
