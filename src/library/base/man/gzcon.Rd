@@ -56,7 +56,7 @@ dat[1:4, ]
 }
 
 ## gzfile and gzcon can inter-work.
-## Of course here one would used gzfile, but file() can be replaced by
+## Of course here one would use gzfile, but file() can be replaced by
 ## any other connection generator.
 zz <- gzfile("ex.gz", "w")
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
