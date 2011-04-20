@@ -433,7 +433,7 @@ static int gz_flush (gzFile file, int flush)
     return  s->z_err == Z_STREAM_END ? Z_OK : s->z_err;
 }
 
-
+/* return value 0 for success, 1 for failure */
 static int int_gzrewind (gzFile file)
 {
     gz_stream *s = (gz_stream*) file;
@@ -457,16 +457,17 @@ static Rz_off_t R_gztell (gzFile file)
     if (s->mode == 'w') return s->in; else return s->out;
 }
 
-static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
+/* NB: return value is in line with fseeko, not gzseek */
+static int R_gzseek (gzFile file, Rz_off_t offset, int whence)
 {
     gz_stream *s = (gz_stream*) file;
 
     if (s == NULL || whence == SEEK_END ||
-        s->z_err == Z_ERRNO || s->z_err == Z_DATA_ERROR) return -1L;
+        s->z_err == Z_ERRNO || s->z_err == Z_DATA_ERROR) return -1;
 
     if (s->mode == 'w') {
         if (whence == SEEK_SET) offset -= s->in;
-        if (offset < 0) return -1L;
+        if (offset < 0) return -1;
 
         /* At this point, offset is the number of zero bytes to write. */
 	memset(s->buffer, 0, Z_BUFSIZE);
@@ -474,39 +475,39 @@ static Rz_off_t R_gzseek (gzFile file, Rz_off_t offset, int whence)
             uInt size = Z_BUFSIZE;
             if (offset < Z_BUFSIZE) size = (uInt) offset;
             size = R_gzwrite(file, s->buffer, size);
-            if (size == 0) return -1L;
+            if (size == 0) return -1;
             offset -= size;
         }
-        return s->in;
+        return 0;
     }
 
     /* Rest of function is for reading only */
 
     /* compute absolute position */
     if (whence == SEEK_CUR) offset += s->out;
-    if (offset < 0) return -1L;
+    if (offset < 0) return -1;
 
     if (s->transparent) {
         s->stream.avail_in = 0;
         s->stream.next_in = s->buffer;
-        if (f_seek(s->file, offset, SEEK_SET) < 0) return -1L;
+        if (f_seek(s->file, offset, SEEK_SET) < 0) return -1;
         s->in = s->out = offset;
-        return offset;
+        return 0;
     }
 
     /* For a negative seek, rewind and use positive seek */
     if (offset >= s->out) offset -= s->out;
-    else if (int_gzrewind(file) < 0) return -1L;
+    else if (int_gzrewind(file) < 0) return -1;
 
     /* offset is now the number of bytes to skip. */
     while (offset > 0)  {
         int size = Z_BUFSIZE;
         if (offset < Z_BUFSIZE) size = (int) offset;
         size = R_gzread(file, s->buffer, (uInt) size);
-        if (size <= 0) return -1L;
+        if (size <= 0) return -1;
         offset -= size;
     }
-    return s->out;
+    return 0;
 }
 
 static int R_gzclose (gzFile file)

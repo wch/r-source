@@ -1170,13 +1170,15 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- [bgx]zipped file connections --------------------- */
 
 #include "gzio.h"
+
+/* needs to be declared before con_close1 */
 typedef struct gzconn {
     Rconnection con;
     int cp; /* compression level */
     z_stream s;
     int z_err, z_eof;
     uLong crc;
-    Byte *inbuf, *outbuf;
+    Byte buffer[Z_BUFSIZE];
     int nsaved;
     char saved[2];
     Rboolean allow;
@@ -4781,6 +4783,8 @@ size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
 
 /* ------------------- (de)compression functions  --------------------- */
 
+/* Code for gzcon connections is modelled on gzio.c from zlib 1.2.3 */
+
 #define get_byte() (icon->read(&ccc, 1, 1, icon), ccc)
 
 static Rboolean gzcon_open(Rconnection con)
@@ -4800,7 +4804,6 @@ static Rboolean gzcon_open(Rconnection con)
     priv->s.next_in = Z_NULL;
     priv->s.next_out = Z_NULL;
     priv->s.avail_in = priv->s.avail_out = 0;
-    priv->inbuf = priv->outbuf = Z_NULL;
     priv->z_err = Z_OK;
     priv->z_eof = 0;
     priv->crc = crc32(0L, Z_NULL, 0);
@@ -4830,8 +4833,8 @@ static Rboolean gzcon_open(Rconnection con)
 	}
 	icon->read(dummy, 1, 6, icon);
 	if ((flags & EXTRA_FIELD) != 0) { /* skip the extra field */
-	    len  =  (uInt)get_byte();
-	    len += ((uInt)get_byte())<<8;
+	    len  =  (uInt) get_byte();
+	    len += ((uInt) get_byte()) << 8;
 	    /* len is garbage if EOF but the loop below will quit anyway */
 	    while (len-- != 0 && get_byte() != EOF) ;
 	}
@@ -4842,20 +4845,20 @@ static Rboolean gzcon_open(Rconnection con)
 	    while ((c = get_byte()) != 0 && c != EOF) ;
 	}
 	if ((flags & HEAD_CRC) != 0) {  /* skip the header crc */
-	    for (len = 0; len < 2; len++) (void)get_byte();
+	    for (len = 0; len < 2; len++) (void) get_byte();
 	}
-	priv->s.next_in  = priv->inbuf = (Byte*)malloc(Z_BUFSIZE);
+	priv->s.next_in  = priv->buffer;
 	inflateInit2(&(priv->s), -MAX_WBITS);
     } else {
 	/* write a header */
 	char head[11];
 	sprintf(head, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
 		Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/,
-		0 /*OS_CODE*/);
+		OS_CODE);
 	icon->write(head, 1, 10, icon);
 	deflateInit2(&(priv->s), priv->cp, Z_DEFLATED, -MAX_WBITS,
 		     8, Z_DEFAULT_STRATEGY);
-	priv->s.next_out = priv->outbuf = (Byte*)malloc(Z_BUFSIZE);
+	priv->s.next_out = priv->buffer;
 	priv->s.avail_out = Z_BUFSIZE;
     }
 
@@ -4888,11 +4891,11 @@ static void gzcon_close(Rconnection con)
 	    len = Z_BUFSIZE - priv->s.avail_out;
 
 	    if (len != 0) {
-		if (icon->write(priv->outbuf, 1, len, icon) != len) {
+		if (icon->write(priv->buffer, 1, len, icon) != len) {
 		    priv->z_err = Z_ERRNO;
 		    error(_("writing error whilst flushing 'gzcon' connection"));
 		}
-		priv->s.next_out = priv->outbuf;
+		priv->s.next_out = priv->buffer;
 		priv->s.avail_out = Z_BUFSIZE;
 	    }
 	    if (done) break;
@@ -4908,10 +4911,9 @@ static void gzcon_close(Rconnection con)
 	deflateEnd(&(priv->s));
 	/* NB: these must be little-endian */
 	putLong(icon, priv->crc);
-	putLong(icon, (uLong)(priv->s.total_in & 0xffffffff));
+	putLong(icon, (uLong) (priv->s.total_in & 0xffffffff));
     } else inflateEnd(&(priv->s));
-    if(priv->inbuf) {free(priv->inbuf); priv->inbuf = Z_NULL;}
-    if(priv->outbuf) {free(priv->outbuf); priv->outbuf = Z_NULL;}
+
     if(icon->isopen) icon->close(icon);
     con->isopen = FALSE;
 }
@@ -4922,12 +4924,12 @@ static int gzcon_byte(Rgzconn priv)
 
     if (priv->z_eof) return EOF;
     if (priv->s.avail_in == 0) {
-	priv->s.avail_in = icon->read(priv->inbuf, 1, Z_BUFSIZE, icon);
+	priv->s.avail_in = icon->read(priv->buffer, 1, Z_BUFSIZE, icon);
 	if (priv->s.avail_in == 0) {
 	    priv->z_eof = 1;
 	    return EOF;
 	}
-	priv->s.next_in = priv->inbuf;
+	priv->s.next_in = priv->buffer;
     }
     priv->s.avail_in--;
     return *(priv->s.next_in)++;
@@ -4939,7 +4941,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 {
     Rgzconn priv = con->private;
     Rconnection icon = priv->con;
-    Bytef *start = (Bytef*)ptr;
+    Bytef *start = (Bytef*) ptr;
     uLong crc;
     int n;
 
@@ -4956,12 +4958,12 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    for(i = 0; i < priv->nsaved; i++)
 		((char *)ptr)[i] = priv->saved[i];
 	    priv->nsaved = 0;
-	    return (nsaved + icon->read((char *)ptr+nsaved, 1, len - nsaved,
+	    return (nsaved + icon->read((char *) ptr+nsaved, 1, len - nsaved,
 					icon))/size;
 	}
 	if (len == 1) { /* size must be one */
 	    if (nsaved > 0) {
-		((char *)ptr)[0] = priv->saved[0];
+		((char *) ptr)[0] = priv->saved[0];
 		priv->saved[0] = priv->saved[1];
 		priv->nsaved--;
 		return 1;
@@ -4970,14 +4972,14 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	}
     }
 
-    priv->s.next_out = (Bytef*)ptr;
+    priv->s.next_out = (Bytef*) ptr;
     priv->s.avail_out = size*nitems;
 
     while (priv->s.avail_out != 0) {
 	if (priv->s.avail_in == 0 && !priv->z_eof) {
-	    priv->s.avail_in = icon->read(priv->inbuf, 1, Z_BUFSIZE, icon);
+	    priv->s.avail_in = icon->read(priv->buffer, 1, Z_BUFSIZE, icon);
 	    if (priv->s.avail_in == 0) priv->z_eof = 1;
-	    priv->s.next_in = priv->inbuf;
+	    priv->s.next_in = priv->buffer;
 	}
 	priv->z_err = inflate(&(priv->s), Z_NO_FLUSH);
 
@@ -4989,7 +4991,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    crc = 0;
 	    for (n = 0; n < 4; n++) {
 		crc >>= 8;
-		crc += ((uLong)gzcon_byte(priv) << 24);
+		crc += ((uLong) gzcon_byte(priv) << 24);
 	    }
 	    if (crc != priv->crc) {
 		priv->z_err = Z_DATA_ERROR;
@@ -5012,13 +5014,13 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
-    priv->s.next_in = (Bytef*)ptr;
+    priv->s.next_in = (Bytef*) ptr;
     priv->s.avail_in = size*nitems;
 
     while (priv->s.avail_in != 0) {
 	if (priv->s.avail_out == 0) {
-	    priv->s.next_out = priv->outbuf;
-	    if (icon->write(priv->outbuf, 1, Z_BUFSIZE, icon) != Z_BUFSIZE) {
+	    priv->s.next_out = priv->buffer;
+	    if (icon->write(priv->buffer, 1, Z_BUFSIZE, icon) != Z_BUFSIZE) {
 		priv->z_err = Z_ERRNO;
 		warning(_("write error on 'gzcon' connection"));
 		break;
@@ -5028,7 +5030,7 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 	priv->z_err = deflate(&(priv->s), Z_NO_FLUSH);
 	if (priv->z_err != Z_OK) break;
     }
-    priv->crc = crc32(priv->crc, (const Bytef *)ptr, size*nitems);
+    priv->crc = crc32(priv->crc, (const Bytef *) ptr, size*nitems);
     return (size_t)(size*nitems - priv->s.avail_in)/size;
 }
 
@@ -5040,12 +5042,12 @@ static int gzcon_fgetc(Rconnection con)
 }
 
 
-/* gzcon(con, level) */
+/* gzcon(con, level, allowNonCompressed) */
 SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, class;
     int icon, level, allow;
-    Rconnection incon=NULL, new=NULL;
+    Rconnection incon = NULL, new = NULL;
     char *m, *mode = NULL /* -Wall */,  description[1000];
 
     checkArity(op, args);
@@ -5107,14 +5109,12 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->nsaved = -1;
     ((Rgzconn)(new->private))->allow = allow;
 
-    /* as there might not be an R-level reference to the wrapped
-       connection */
+    /* as there might not be an R-level reference to the wrapped connection */
     R_PreserveObject(incon->ex_ptr);
 
     Connections[icon] = new;
     strncpy(new->encname, incon->encname, 100);
     if(incon->isopen) new->open(new);
-    /* show we do encoding here */
 
     PROTECT(ans = ScalarInteger(icon));
     PROTECT(class = allocVector(STRSXP, 2));
