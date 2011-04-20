@@ -304,20 +304,20 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
           {
               .expr1 <- B - A
               .expr2 <- xmid - input
-              .expr4 <- exp(.expr2/scal)
+              .expr4 <- exp(.e2 <- .expr2/scal)
               .expr5 <- 1 + .expr4
-              .expr8 <- 1/.expr5
-              .expr13 <- .expr5^2
               .value <- A + .expr1/.expr5
               .actualArgs <- as.list(match.call()[c("A", "B", "xmid", "scal")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
+		  .expr8 <- 1/.expr5
+		  .expr13 <- .expr5^2
                   .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("A", "B", "xmid", "scal")))
                   .grad[, "A"] <- 1 - .expr8
                   .grad[, "B"] <- .expr8
-                  .grad[, "xmid"] <-  - (.expr1 * (.expr4 * (1/ scal))/.expr13)
-                  .grad[, "scal"] <- .expr1 * (.expr4 * (.expr2/scal^2))/.expr13
+		  .grad[, "xmid"] <- - (xm <- .expr1 * .expr4 / scal / .expr13)
+		  .grad[, "scal"] <- xm * .e2
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -352,17 +352,17 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               function(input, Asym, xmid, scal)
           {
               .expr1 <- xmid - input
-              .expr3 <- exp(.expr1/scal)
+              .expr3 <- exp(.e2 <- .expr1/scal)
               .expr4 <- 1 + .expr3
-              .expr10 <- .expr4^2
               .value <- Asym/.expr4
               .actualArgs <- as.list(match.call()[c("Asym", "xmid", "scal")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
+		  .expr10 <- .expr4^2
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "xmid", "scal")))
                   .grad[, "Asym"] <- 1/.expr4
-                  .grad[, "xmid"] <-  - (Asym * (.expr3 * (1/scal))/.expr10)
-                  .grad[, "scal"] <- Asym * (.expr3 * (.expr1/scal^2))/.expr10
+		  .grad[, "xmid"] <- - (xm <- Asym * .expr3/scal/.expr10)
+		  .grad[, "scal"] <- xm * .e2
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -474,8 +474,8 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
           {
               .expr1 <- exp(lrc)
               .expr3 <- x^pwr
-              .expr5 <- exp(-.expr1 * .expr3)
-              .value <- Asym - Drop * .expr5
+	      .expr5 <- exp(- (ee <- .expr1 * .expr3))
+	      .value <- Asym - (De <- Drop * .expr5)
               .actualArgs <- as.list(match.call()[c("Asym", "Drop", "lrc", "pwr")])
               if(all(unlist(lapply(.actualArgs, is.name))))
               {
@@ -483,8 +483,8 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
                                  list(NULL, c("Asym", "Drop", "lrc", "pwr")))
                   .grad[, "Asym"] <- 1
                   .grad[, "Drop"] <- -.expr5
-                  .grad[, "lrc"] <- Drop * (.expr5 * (.expr1 * .expr3))
-                  .grad[, "pwr"] <- Drop * (.expr5 * (.expr1 * (.expr3 * log(x))))
+		  .grad[, "lrc"] <- lrc <- De * ee
+		  .grad[, "pwr"] <- lrc * log(x)
                   dimnames(.grad) <- list(NULL, .actualArgs)
                   attr(.value, "gradient") <- .grad
               }
@@ -506,14 +506,9 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               val <- coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
                                data = xy,
                                algorithm = "plinear",
-                               start = c(lrc = pars[[1L]], pwr = pars[[2L]])))[
-                                                         c(3,4,1,2)]
+			       start = c(lrc = pars[[1L]], pwr = pars[[2L]]))
+			  )[c(3,4,1,2)]
               names(val) <- mCall[c("Asym", "Drop", "lrc", "pwr")]
               val
           },
               c("Asym", "Drop", "lrc", "pwr"))
-
-
-### Local variables:
-### mode: S
-### End:
