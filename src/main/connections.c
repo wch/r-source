@@ -1228,22 +1228,24 @@ static int gzfile_fgetc_internal(Rconnection con)
     return R_gzread(fp, &c, 1) == 1 ? c : R_EOF;
 }
 
+/* This can only seek forwards when writing (when it writes nul bytes).
+   When reading, it either seeks forwards of rewinds and reads again */
 static double gzfile_seek(Rconnection con, double where, int origin, int rw)
 {
     gzFile  fp = ((Rgzfileconn)(con->private))->fp;
-    z_off_t pos = R_gzseek(fp, 0L, SEEK_CUR);
+    Rz_off_t pos = R_gztell(fp);
     int res, whence = SEEK_SET;
+
+    if (ISNA(where)) return (double) pos;
 
     switch(origin) {
     case 2: whence = SEEK_CUR;
     case 3: error(_("whence = \"end\" is not implemented for gzfile connections"));
     default: whence = SEEK_SET;
     }
-    if(where >= 0) {
-	res = R_gzseek(fp, (z_off_t) where, whence);
-	if(res == -1)
-	    warning(_("seek on a gzfile connection returned an internal error"));
-    }
+    res = R_gzseek(fp, (z_off_t) where, whence);
+    if(res == -1)
+	warning(_("seek on a gzfile connection returned an internal error"));
     return (double) pos;
 }
 

@@ -37,9 +37,7 @@ truncate(con, \dots)
   argument the connection is re-positioned (if possible) to the
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only (possibly
-  gz-compressed) file connections do.  \code{gzfile} connections do not
-  support \code{origin = "end"}; the file position they use is that
-  of the uncompressed file.
+  gz-compressed) file connections do.
 
   \code{where} is stored as a real but should represent an integer:
   non-integer values are likely to be truncated.  Note that the possible
@@ -61,7 +59,13 @@ truncate(con, \dots)
   the append modes.  (The reported write position for a file opened in
   an append mode will typically be unreliable until the file has been
   written to.)
-
+  
+  \code{gzfile} connections support \code{seek} with a number of
+  limitations, using the file position of the uncompressed file.
+  They do not support \code{origin = "end"}.  When writing, seeking is
+  only possible forwards: when reading seeking backwards is supported by
+  rewinding the file and re-reading from its start.
+  
   If \code{seek} is called with a non-\code{NA} value of \code{where},
   any pushback on a text-mode connection is discarded.
 
