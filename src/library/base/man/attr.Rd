@@ -39,7 +39,7 @@ attr(x, which) <- value
   \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
   \code{\link{names}}, \code{\link{row.names}} and
   \code{\link{tsp}}) are treated specially and have restrictions on
-  the values which can be set. (Note that this is not true of
+  the values which can be set.  (Note that this is not true of
   \code{\link{levels}} which should be set for factors via the
   \code{levels} replacement function.)
 

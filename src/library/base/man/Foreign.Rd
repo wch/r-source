@@ -148,11 +148,11 @@
   generic pointers, \code{void *}. Lists are passed as C arrays of
   \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
   Note that you cannot assign values to the elements of the list within
-  the C routine. Assigning values to elements of the array corresponding
+  the C routine.  Assigning values to elements of the array corresponding
   to the list bypasses R's memory management/garbage collection and will
   cause problems.  Essentially, the array corresponding to the list is
-  read-only. If you need to return S objects created within the C
-  routine,  use the \code{.Call} interface.
+  read-only.  If you need to return S objects created within the C
+  routine, use the \code{.Call} interface.
 
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
@@ -230,7 +230,7 @@
   Wadsworth & Brooks/Cole. (\code{.C} and \code{.Fortran}.)
 
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
+  \emph{Programming with Data.  A Guide to the S Language}.
   Springer. (\code{.Call}.)
 }
 \seealso{\code{\link{dyn.load}}.}

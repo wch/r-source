@@ -35,7 +35,7 @@ rep.int(x, times)
         times to repeat each element if of length \code{length(x)}, or to
         repeat the whole vector if of length 1.  Negative or \code{NA}
 	values are an error.}
-      \item{\code{length.out}}{non-negative integer. The desired length of the
+      \item{\code{length.out}}{non-negative integer.  The desired length of the
         output vector.  Other inputs will be coerced to an integer
 	vector and the first element taken.  Ignored if \code{NA} or invalid.}
       \item{\code{each}}{non-negative integer.  Each element of \code{x}

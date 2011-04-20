@@ -74,7 +74,7 @@
 
   Next, if a function \code{.First} is found on the search path,
   it is executed as \code{.First()}.  Finally, function
-  \code{.First.sys()} in the \pkg{base} package is run. This calls
+  \code{.First.sys()} in the \pkg{base} package is run.  This calls
   \code{\link{require}} to attach the default packages specified by
   \code{\link{options}("defaultPackages")}.  If the \pkg{methods}
   package is included, this will have been attached earlier (by function

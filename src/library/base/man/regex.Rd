@@ -41,7 +41,7 @@
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller
-  expressions. The whole expression matches zero or more characters
+  expressions.  The whole expression matches zero or more characters
   (read \sQuote{character} as \sQuote{byte} if \code{useBytes = TRUE}).
 
   The fundamental building blocks are the regular expressions that match
@@ -274,7 +274,7 @@
   matches only at end of a subject. and \samp{\\G} matches at first
   matching position in a subject (which is subtly different from Perl's
   end of the previous match).  \samp{\\C} matches a single
-  byte. including a newline, but its use is warned against.  In UTF-8
+  byte, including a newline, but its use is warned against.  In UTF-8
   mode, \samp{\\R} matches any Unicode newline character (not just CR),
   and \samp{\\X} matches any number of Unicode characters that form an
   extended Unicode sequence.

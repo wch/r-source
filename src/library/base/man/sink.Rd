@@ -17,7 +17,7 @@ sink.number(type = c("output", "message"))
 \arguments{
   \item{file}{a writable \link{connection} or a character string naming the
     file to write to, or \code{NULL} to stop sink-ing.}
-  \item{append}{logical. If \code{TRUE}, output will be appended to
+  \item{append}{logical.  If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
   \item{type}{character.  Either the output stream or the messages
@@ -90,7 +90,7 @@ sink.number(type = c("output", "message"))
   Wadsworth & Brooks/Cole.
 
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
+  \emph{Programming with Data.  A Guide to the S Language}.
   Springer.
 }
 \seealso{\code{\link{capture.output}}}

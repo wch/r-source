@@ -25,7 +25,7 @@
   For \code{(}, the result of evaluating the argument.  This has
   visibility set, so will auto-print if used at top-level.
 
-  For \code{\{}, the result of the last expression evaluated. This has
+  For \code{\{}, the result of the last expression evaluated.  This has
   the visibility of the last evaluation.
 }
 \references{

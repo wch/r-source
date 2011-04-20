@@ -31,7 +31,7 @@ writeBin(object, con, size = NA_integer_,
   \item{size}{integer.  The number of bytes per element in the byte
     stream.  The default, \code{NA_integer_}, uses the natural size.
     Size changing is not supported for raw and complex vectors.}
-  \item{signed}{logical. Only used for integers of sizes 1 and 2,
+  \item{signed}{logical.  Only used for integers of sizes 1 and 2,
     when it determines if the quantity on file
     should be regarded as a signed or unsigned integer.}
   \item{endian}{The endian-ness (\code{"big"} or \code{"little"} of the

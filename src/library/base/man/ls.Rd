@@ -23,7 +23,7 @@ objects(name, pos= -1, envir = as.environment(pos),
     environment as a position in the search list.  Mostly there for
     back compatibility.}
   \item{envir}{an alternative argument to \code{name} for specifying the
-    environment. Mostly there for back compatibility.}
+    environment.  Mostly there for back compatibility.}
   \item{all.names}{a logical value.  If \code{TRUE}, all
     object names are returned.  If \code{FALSE}, names which begin with a
     \samp{.} are omitted.}

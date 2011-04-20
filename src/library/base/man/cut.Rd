@@ -20,7 +20,7 @@ cut(x, \dots)
     single number (greater than or equal to 2) giving the number of
     intervals into which \code{x} is to be cut.}
   \item{labels}{labels for the levels of the resulting category.  By default,
-    labels are constructed using \code{"(a,b]"} interval notation. If
+    labels are constructed using \code{"(a,b]"} interval notation.  If
     \code{labels = FALSE}, simple integer codes are returned instead of
     a factor.}
   \item{include.lowest}{logical, indicating if an \sQuote{x[i]} equal to
@@ -28,7 +28,7 @@ cut(x, \dots)
     value should be included.}
   \item{right}{logical, indicating if the intervals should be closed on
     the right (and open on the left) or vice versa.}
-  \item{dig.lab}{integer which is used when labels are not given. It
+  \item{dig.lab}{integer which is used when labels are not given.  It
     determines the number of digits used in formatting the break numbers.}
   \item{ordered_result}{logical: should the result be an ordered factor?}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -48,7 +48,7 @@ cut(x, \dots)
   the single value.)
   
   If a \code{labels} parameter is specified, its values are used
-  to name the factor levels. If none is specified, the factor
+  to name the factor levels.  If none is specified, the factor
   level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
   etc. for \code{right = TRUE} and as \code{"[b1, b2)"}, \ldots if
   \code{right = FALSE}.

@@ -15,7 +15,7 @@ writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
 \arguments{
   \item{text}{A character vector}
   \item{con}{A \link{connection} object or a character string.}
-  \item{sep}{character. A string to be written to the connection after
+  \item{sep}{character.  A string to be written to the connection after
     each line of text.}
   \item{useBytes}{logical.  See \sQuote{Details}.}
 }

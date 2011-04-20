@@ -79,7 +79,7 @@ write.dcf(x, file = "", append = FALSE,
   encountered is returned.  Malformed lines lead to an error.
   
   For \code{read.dcf(all = TRUE)} a data frame is returned, again with
-  one row per record and one column per field. The columns are lists of
+  one row per record and one column per field.  The columns are lists of
   character vectors for fields with multiple occurrences, and character
   vectors otherwise.
 

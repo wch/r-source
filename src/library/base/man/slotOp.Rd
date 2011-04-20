@@ -24,8 +24,8 @@ object@name
 
   It is checked that \code{object} is an S4 object (see
   \code{\link{isS4}}), and it is an error to attempt to use \code{@} on
-  any other object. (There is an exception for name \code{.Data} for
-  internal useonly.)
+  any other object.  (There is an exception for name \code{.Data} for
+  internal use only.)
 
   If \code{name} is not a slot name, an error is thrown. 
 }

@@ -50,7 +50,7 @@ gettextf(fmt, \dots, domain = NULL)
     \item{\code{d, i, o, x, X}}{Integer value, \code{o} being octal,
       \code{x} and \code{X} being hexadecimal (using the same case for
       \code{a-f} as the code).  Numeric variables with exactly integer
-      values will be coerced to integer. Formats \code{d} and \code{i}
+      values will be coerced to integer.  Formats \code{d} and \code{i}
       can also be used for logical variables, which will be converted to
       \code{0}, \code{1} or \code{NA}.
     }

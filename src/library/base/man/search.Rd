@@ -28,11 +28,11 @@ searchpaths()
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{search}.)
+  Wadsworth & Brooks/Cole.  (\code{search}.)
 
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
-  Springer. (\code{searchPaths}.)
+  \emph{Programming with Data.  A Guide to the S Language}.
+  Springer.  (\code{searchPaths}.)
 }
 \seealso{
   \code{\link{.packages}} to list just the packages on search path.

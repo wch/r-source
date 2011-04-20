@@ -22,7 +22,7 @@ scale(x, center = TRUE, scale = TRUE)
     equal to the number of columns of \code{x}.}
 }
 \value{
-  For \code{scale.default}, the centered, scaled matrix. The numeric
+  For \code{scale.default}, the centered, scaled matrix.  The numeric
   centering and scalings used (if any) are returned as attributes
   \code{"scaled:center"} and \code{"scaled:scale"}
 }

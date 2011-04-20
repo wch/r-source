@@ -18,7 +18,7 @@ transform(`_data`, \dots)
 \description{
   \code{transform} is a generic function, which---at least
   currently---only does anything useful with
-  data frames. \code{transform.default} converts its first argument to
+  data frames.  \code{transform.default} converts its first argument to
   a data frame if possible and calls \code{transform.data.frame}. 
 }
 \details{

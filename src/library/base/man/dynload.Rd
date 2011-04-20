@@ -23,7 +23,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 }
 \arguments{
   \item{x}{a character string giving the pathname to a DLL, also known
-    as a dynamic shared object. (See \sQuote{Details} for what these
+    as a dynamic shared object.  (See \sQuote{Details} for what these
     terms mean.)}
   \item{local}{a logical value controlling whether the symbols in the
     DLL are stored in their own local table and not shared
@@ -37,7 +37,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
     relocated) immediately the library is loaded or deferred until they
     are used.  This control is useful for developers testing whether a
     library is complete and has all the necessary symbols, and for users
-    to ignore missing symbols. Whether this has any effect is system-dependent.
+    to ignore missing symbols.  Whether this has any effect is system-dependent.
 #ifdef windows
     It is ignored on Windows.
 #endif
@@ -78,7 +78,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   The additional arguments to \code{dyn.load} mirror the different
   aspects of the mode argument to the \code{dlopen()} routine on POSIX
-  systems. They are available so that users can exercise greater control
+  systems.  They are available so that users can exercise greater control
   over the loading process for an individual library.  In general, the
   default values are appropriate and you should override them only if
   there is good reason and you understand the implications.
@@ -162,7 +162,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   The creation of DLLs and the runtime linking of them into executing
   programs is very platform dependent.  In recent years there has been
   some simplification in the process because the C subroutine call
-  \code{dlopen} has become the POSIX standard for doing this. Under
+  \code{dlopen} has become the POSIX standard for doing this.  Under
   Unix-alikes \code{dyn.load} uses the \code{dlopen} mechanism and
   should work on all platforms which support it.  On Windows it uses the
   standard mechanism (\code{LoadLibrary}) for loading DLLs.

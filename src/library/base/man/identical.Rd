@@ -19,7 +19,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
   \item{num.eq}{logical indicating if (\code{\link{double}} and
     \code{\link{complex}} non-\code{\link{NA}}) numbers should be
     compared using \code{\link{==}} (\sQuote{equal}), or by bitwise
-    comparison. The latter (non-default) differentiates between
+    comparison.  The latter (non-default) differentiates between
     \code{-0} and \code{+0}.}
   \item{single.NA}{logical indicating if there is conceptually just one numeric
     \code{\link{NA}} and one \code{\link{NaN}};  \code{single.NA = FALSE}
@@ -82,7 +82,7 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
 
 \references{
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language}.
+  \emph{Programming with Data.  A Guide to the S Language}.
   Springer.
 }
 \seealso{

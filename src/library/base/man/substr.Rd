@@ -17,8 +17,8 @@ substring(text, first, last = 1000000L) <- value
 }
 \arguments{
   \item{x, text}{a character vector.}
-  \item{start, first}{integer. The first element to be replaced.}
-  \item{stop, last}{integer. The last element to be replaced.}
+  \item{start, first}{integer.  The first element to be replaced.}
+  \item{stop, last}{integer.  The last element to be replaced.}
   \item{value}{a character vector, recycled if necessary.}
 }
 \description{
@@ -78,7 +78,7 @@ substring(text, first, last = 1000000L) <- value
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (\code{substring}.)
+  Wadsworth & Brooks/Cole.  (\code{substring}.)
 }
 \seealso{
  \code{\link{strsplit}}, \code{\link{paste}}, \code{\link{nchar}}.

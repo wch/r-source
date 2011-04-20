@@ -63,7 +63,7 @@ oldClass(x) <- value
   \code{inherits} indicates whether its first argument inherits from any
   of the classes specified in the \code{what} argument.  If \code{which}
   is \code{TRUE} then an integer vector of the same length as
-  \code{what} is returned. Each element indicates the position in the
+  \code{what} is returned.  Each element indicates the position in the
   \code{class(x)} matched by the element of \code{what}; zero indicates
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
   returned by \code{inherits} if any of the names in \code{what} match

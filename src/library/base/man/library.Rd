@@ -135,7 +135,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
 
   \code{.Last.lib} is called when a package is detached.  Beware
   that it might be called if \code{.First.lib} has failed, so it
-  should be written defensively. (It is called within \code{\link{try}},
+  should be written defensively.  (It is called within \code{\link{try}},
   so errors will not stop the package being detached.)
 }
 \value{

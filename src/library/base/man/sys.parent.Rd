@@ -38,7 +38,7 @@ parent.frame(n = 1)
 \arguments{
   \item{which}{the frame number if non-negative, the number of frames
     to go back if negative.}
-  \item{n}{the number of generations to go back. (See the
+  \item{n}{the number of generations to go back.  (See the
     \sQuote{Details} section.)}
 }
 \details{
@@ -103,7 +103,7 @@ parent.frame(n = 1)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (not \code{parent.frame}.)
+  Wadsworth & Brooks/Cole.  (Not \code{parent.frame}.)
 }
 \seealso{
   \code{\link{eval}} for a usage of \code{sys.frame} and \code{parent.frame}.

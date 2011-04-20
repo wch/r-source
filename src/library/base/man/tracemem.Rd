@@ -26,7 +26,7 @@ retracemem(x, previous = NULL)
 \details{
   This functionality is optional, determined at compilation, because it
   makes R run a little more slowly even when no objects are being
-  traced. \code{tracemem} and \code{untracemem} give errors when R is not
+  traced.  \code{tracemem} and \code{untracemem} give errors when R is not
   compiled with memory profiling; \code{retracemem} does not (so it can be
   left in code during development).
 #ifdef Windows

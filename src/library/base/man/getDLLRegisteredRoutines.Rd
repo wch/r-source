@@ -41,7 +41,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
     DLLs having the same name but corresponding to files in different
     directories.
   }
-  \item{addNames}{a logical value. If this is \code{TRUE}, the elements
+  \item{addNames}{a logical value.  If this is \code{TRUE}, the elements
     of the returned lists are named using the names of the routines (as
     seen by R via registration or raw name).  If \code{FALSE},
     these names are not computed and assigned to the lists.  As a
@@ -51,7 +51,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
 }
 \details{
   This takes the registration information after it has been registered
-  and processed by the R internals. In other words, it uses the extended
+  and processed by the R internals.  In other words, it uses the extended
   information
 }
 \value{
@@ -70,7 +70,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   \item{dll}{an object of class \code{DLLInfo} describing the DLL.
     This is same for all elements returned.}
   \item{numParameters}{the number of arguments the native routine is to
-    be called with. In the future, we will provide information about
+    be called with.  In the future, we will provide information about
     the types of the parameters also.
   }
 }

@@ -100,7 +100,7 @@ addNA(x, ifany=FALSE)
   Ordered factors differ from factors only in their class, but methods
   and the model-fitting functions treat the two classes quite differently.
 
-  The encoding of the vector happens as follows. First all the values
+  The encoding of the vector happens as follows.  First all the values
   in \code{exclude} are removed from \code{levels}. If \code{x[i]} equals
   \code{levels[j]}, then the \code{i}-th element of the result is
   \code{j}.  If no match is found for \code{x[i]} in \code{levels},

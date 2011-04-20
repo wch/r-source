@@ -20,7 +20,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
-  \item{EISPACK}{logical. Should EISPACK be used (for compatibility with
+  \item{EISPACK}{logical.  Should EISPACK be used (for compatibility with
     \R < 1.7.0)?}
 }
 \description{
@@ -39,7 +39,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 
   \code{eigen} is preferred to \code{eigen(EISPACK = TRUE)}
   for new projects, but its eigenvectors may differ in sign and
-  (in the asymmetric case) in normalization. (They may also differ
+  (in the asymmetric case) in normalization.  (They may also differ
   between methods and between platforms.)
 
   Computing the eigenvectors is the slow part for large matrices.
@@ -86,7 +86,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Springer-Verlag Lecture Notes in Computer Science \bold{6}.
 
   Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  \emph{LAPACK Users' Guide}.  Third Edition.  SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 

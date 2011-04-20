@@ -41,7 +41,7 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
 \value{
   An object inheriting from class \code{"connection"}.  This is the same
   connection \emph{number} as supplied, but with a modified internal
-  structure. It has binary mode.
+  structure.  It has binary mode.
 }
 \seealso{\code{\link{gzfile}}}
 \examples{

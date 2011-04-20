@@ -36,7 +36,7 @@
     \code{labels = FALSE}, simple integer codes are returned instead
     of a factor.
   }
-  \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
+  \item{start.on.monday}{logical.  If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
   \item{right, \dots}{arguments to be passed to or from other methods.}
 }

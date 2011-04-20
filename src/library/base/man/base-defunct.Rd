@@ -171,7 +171,7 @@ manglePackageName(pkgName, pkgVersion)
   \code{.Alias} provided an unreliable way to create duplicate
   references to the same object.  There is no direct replacement.  Where
   multiple references to a single object are required for semantic
-  reasons consider using environments or external pointers. There are
+  reasons consider using environments or external pointers.  There are
   some notes on \url{http://developer.r-project.org}.
 
   \code{.Dyn.libs} and \code{.lib.loc} were internal variables used for

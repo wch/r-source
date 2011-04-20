@@ -21,9 +21,9 @@ solve(a, b, \dots)
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{a}.  If \code{LINPACK} is \code{TRUE} the default
     is \code{1e-7}, otherwise it is \code{.Machine$double.eps}. Future
-    versions of R may use a tighter tolerance. Not presently used with
+    versions of R may use a tighter tolerance.  Not currently used with
     complex matrices \code{a}.}
-  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+  \item{LINPACK}{logical.  Should LINPACK be used (for compatibility with
     \R < 1.7.0)?  Otherwise LAPACK is used.}
   \item{\dots}{further arguments passed to or from other methods}
 }

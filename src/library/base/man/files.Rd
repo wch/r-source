@@ -32,8 +32,8 @@ file.link(from, to)
     alternatively be the path to a single existing directory.}
   \item{overwrite}{logical; should existing destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
-  \item{recursive}{logical. If \code{to} is a directory, should
-    directories in \code{from} be copied (and their contents).}
+  \item{recursive}{logical.  If \code{to} is a directory, should
+    directories in \code{from} be copied (and their contents)?}
   \item{copy.mode}{logical:  should file permission bits be copied where
     possible?  This applies to both files and directories.}
 }

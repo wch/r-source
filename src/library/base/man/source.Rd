@@ -62,7 +62,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   need to include explicit \code{print} calls for things you want to be
   printed (and remember that this includes plotting by \pkg{lattice},
   FAQ Q7.22).  Since the complete file is parsed before any of it is
-  run, syntax errors result in none of the code being run. If an error
+  run, syntax errors result in none of the code being run.  If an error
   occurs in running a syntactically correct script, anything assigned
   into the workspace by code that has been run will be kept (just as
   from the command line), but diagnostic information such as

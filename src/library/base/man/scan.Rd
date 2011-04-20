@@ -94,7 +94,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{nlines}{if positive, the maximum number of lines of data to be read.}
 
   \item{na.strings}{character vector.  Elements of this vector are to be
-    interpreted as missing (\code{\link{NA}}) values. Blank fields are
+    interpreted as missing (\code{\link{NA}}) values.  Blank fields are
     also considered to be missing values in logical, integer, numeric
     and complex fields.}
 
@@ -127,7 +127,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored, except when counting \code{skip} and \code{nlines}.}
 
-  \item{multi.line}{logical. Only used if \code{what} is a list.  If
+  \item{multi.line}{logical.  Only used if \code{what} is a list.  If
     \code{FALSE}, all of a record must appear on one line (but more than
     one record can appear on a single line).  Note that using \code{fill = TRUE}
     implies that a record will be terminated at the end of a line.}

@@ -19,7 +19,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be between \code{0} and \code{p = ncol(x)}.}
-  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+  \item{LINPACK}{logical.  Should LINPACK be used (for compatibility with
     \R < 1.7.0)?  In this case \code{nu} must be \code{0},
     \code{nrow(x)} or \code{ncol(x)}.}
 }

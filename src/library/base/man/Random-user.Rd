@@ -13,7 +13,7 @@
 }
 \details{
   A user-specified uniform RNG is called from entry points in
-  dynamically-loaded compiled code. The user must supply the entry point
+  dynamically-loaded compiled code.  The user must supply the entry point
   \code{user_unif_rand}, which takes no arguments and returns a
   \emph{pointer to} a double. The example below will show the general
   pattern.
@@ -21,7 +21,7 @@
   Optionally, the user can supply the entry point \code{user_unif_init},
   which is called with an \code{unsigned int} argument when
   \code{\link{RNGkind}} (or \code{set.seed}) is called, and is intended
-  to be used to initialize the user's RNG code. The argument is intended
+  to be used to initialize the user's RNG code.  The argument is intended
   to be used to set the \sQuote{seeds}; it is the \code{seed} argument to
   \code{set.seed} or an essentially random seed if \code{\link{RNGkind}}
   is called.

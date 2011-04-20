@@ -10,7 +10,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 \alias{expand.grid}
 \arguments{
-  \item{\dots}{vectors, factors or a list containing these. }
+  \item{\dots}{vectors, factors or a list containing these.}
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
     attribute (see below) should be computed and returned.}
   \item{stringsAsFactors}{logical specifying if character vectors are

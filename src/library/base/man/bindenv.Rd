@@ -39,12 +39,12 @@ bindingIsActive(sym, env)
   which must be a normal environment (not base).  (Locking the base
   environment and name space may be supported later.)  Locking the
   environment prevents adding or removing variable bindings from the
-  environment. Changing the value of a variable is still possible unless
+  environment.  Changing the value of a variable is still possible unless
   the binding has been locked.  The name space environments of packages
   with name spaces are locked when loaded.
 
   \code{lockBinding} locks individual bindings in the specified
-  environment.  The value of a locked binding cannot be changed. Locked
+  environment.  The value of a locked binding cannot be changed.  Locked
   bindings may be removed from an environment unless the environment is
   locked.
 

@@ -155,7 +155,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 }
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
-  \emph{The C Programming Language.}  Second edition. Prentice Hall.
+  \emph{The C Programming Language.}  Second edition.  Prentice Hall.
 }
 \seealso{
   \code{\link{format}}.

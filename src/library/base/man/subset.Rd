@@ -55,7 +55,7 @@ subset(x, \dots)
   different from that for indexing.
 
   Factors may have empty levels after subsetting; unused levels are
-  not automatically removed. See \code{\link{droplevels}} for a way to
+  not automatically removed.  See \code{\link{droplevels}} for a way to
   drop all unused levels from a data frame.
 
 }

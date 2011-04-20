@@ -72,7 +72,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   coercion, preserving names but no other attributes).
 }
 \author{
-  Original version by David Meyer. Current version by Brian Ripley.
+  Original version by David Meyer.  Current version by Brian Ripley.
 }
 \seealso{
   \code{\link{grep}}

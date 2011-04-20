@@ -30,7 +30,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \item{norm}{character string, specifying the matrix norm with respect
     to which the condition number is to be computed, see also
     \code{\link{norm}}.  For \code{rcond}, the default is \code{"O"},
-    meaning the \bold{O}ne- or 1-norm. The (currently only) other
+    meaning the \bold{O}ne- or 1-norm.  The (currently only) other
     possible value is \code{"I"} for the infinity norm.}
   \item{method}{character string, specifying the method to be used;
     \code{"qr"} is default for back-compatibility, mainly.}

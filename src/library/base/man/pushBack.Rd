@@ -18,7 +18,7 @@ pushBackLength(connection)
 \arguments{
   \item{data}{a character vector.}
   \item{connection}{A \link{connection}.}
-  \item{newLine}{logical. If true, a newline is appended to each string
+  \item{newLine}{logical.  If true, a newline is appended to each string
     pushed back.}
 }
 \details{

@@ -13,7 +13,7 @@
   \code{.C}/\code{.Call}/\code{.Fortran}/\code{.External} call which has
   no \code{PACKAGE} argument. If the call has been made from a function
   within a name space, then we can find the DLL associated with that
-  name space. The purpose of this is to avoid having to use the
+  name space.  The purpose of this is to avoid having to use the
   \code{PACKAGE} argument in these native calls and so better support
   versions of packages.
 

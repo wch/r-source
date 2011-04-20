@@ -28,7 +28,7 @@ removeTaskCallback(id)
 }
 \arguments{
   \item{f}{the function that is to be invoked each time a top-level task
-    is successfully completed. This is called with 5 or 4 arguments
+    is successfully completed.  This is called with 5 or 4 arguments
     depending on whether \code{data} is specified or not, respectively.
     The return value should be a logical value indicating whether to
     keep the callback in the list of active callbacks or discard it.}
@@ -60,7 +60,7 @@ removeTaskCallback(id)
 }
 \details{
 Top-level tasks are individual expressions
-rather than entire lines of input. Thus an input
+rather than entire lines of input.  Thus an input
 line of the form \code{expression1 ; expression2}
 will give rise to 2 top-level tasks.
   
@@ -68,7 +68,7 @@ A top-level task callback is called with the expression for the
 top-level task, the result of the top-level task, a logical value
 indicating whether it was successfully completed or not (always TRUE
 at present), and a logical value indicating whether the result was
-printed or not. If the \code{data} argument was specified in the call
+printed or not.  If the \code{data} argument was specified in the call
 to \code{addTaskCallback}, that value is given as the fifth argument.
 
 The callback function should return a logical value.

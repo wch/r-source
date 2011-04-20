@@ -120,8 +120,10 @@ as.POSIXlt(x, tz = "", \dots)
 \seealso{
   \link{DateTimeClasses} for details of the classes;
   \code{\link{strptime}} for conversion to and from character
-  representations. \code{\link{Sys.timezone}} for details of the
-  (system-specific) naming of time zones.
+  representations.
+  
+  \code{\link{Sys.timezone}} for details of the (system-specific) naming
+  of time zones.
   
   \link{locales} for locale-specific aspects.  
 }

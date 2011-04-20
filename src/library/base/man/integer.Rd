@@ -36,7 +36,7 @@ is.integer(x)
   Each element of the vector is equal to \code{0}.
 
   \code{as.integer} attempts to coerce its argument to be of integer
-  type. The answer will be \code{NA} unless the coercion succeeds.  Real
+  type.  The answer will be \code{NA} unless the coercion succeeds.  Real
   values larger in modulus than the largest integer are coerced to
   \code{NA} (unlike S which gives the most extreme integer of the same
   sign).  Non-integral numeric values are truncated towards zero (i.e.,

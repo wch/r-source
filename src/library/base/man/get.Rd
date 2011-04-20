@@ -44,7 +44,7 @@ mget(x, envir, mode = "any",
   specify an environment, but is primarily there for back compatibility.
 
   This function looks to see if the name \code{x} has a value bound to
-  it in the specified environment. If \code{inherits} is \code{TRUE} and
+  it in the specified environment.  If \code{inherits} is \code{TRUE} and
   a value is not found for \code{x} in the specified environment, the
   enclosing frames of the environment are searched until the name \code{x}
   is encountered.  See \code{\link{environment}} and the \sQuote{R
@@ -63,7 +63,7 @@ mget(x, envir, mode = "any",
   environment.
 
   For \code{mget} multiple values are returned in a named
-  \code{list}.  This is true even if only one value is requested. The
+  \code{list}.   This is true even if only one value is requested. The
   value in \code{mode} and \code{ifnotfound} can be either the same length
   as the number of requested items or of length 1.  The argument
   \code{ifnotfound} must be a list containing either the value to use if

@@ -37,7 +37,7 @@
   Note that the code in \code{.onLoad} and \code{.onUnload} is run
   without the package being on the search path, but (unless circumvented)
   lexical scope will make objects in the namespace and its imports
-  visible. (Do not use the double colon operator in \code{.onLoad} as
+  visible.  (Do not use the double colon operator in \code{.onLoad} as
   exports have not been processed at the point it is run.)
 
   When the package is attached (via \code{\link{library}}), the hook

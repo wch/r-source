@@ -32,7 +32,7 @@ lazyLoadDBexec(filebase, fun, filter)
 
   The objects are not themselves loaded into \code{envir}: rather
   promises are created that will load the object from the database on
-  first access. (See \code{\link{delayedAssign}}.)
+  first access.  (See \code{\link{delayedAssign}}.)
 
   The function \code{lazyLoadDBexec} contains the core implementation
   and is also used by the mechanism for loading processed help file

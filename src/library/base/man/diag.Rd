@@ -60,7 +60,7 @@ diag(x) <- value
 }
 \note{
   Using \code{diag(x)} can have unexpected effects if \code{x} is a
-  vector that could be of length one. Use \code{diag(x, nrow =
+  vector that could be of length one.  Use \code{diag(x, nrow =
     length(x))} for consistent behaviour.
 }
 \references{

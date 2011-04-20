@@ -23,7 +23,7 @@ casefold(x, upper = FALSE)
   \item{x}{a character vector, or an object that can be coerced to
     character by \code{\link{as.character}}.}
   \item{old}{a character string specifying the characters to be
-    translated. If a character vector of length 2 or more is supplied,
+    translated.  If a character vector of length 2 or more is supplied,
     the first element is used with a warning.}
   \item{new}{a character string specifying the translations. If a
     character vector of length 2 or more is supplied, the first element

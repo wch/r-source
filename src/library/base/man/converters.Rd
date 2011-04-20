@@ -28,9 +28,10 @@ setCConverterStatus(id, status)
 removeCConverter(id)
 }
 \arguments{
-\item{id}{either a number or a string identifying the element of interest in the converter
-   list. A string is matched against the description strings for each element to identify
-   the element. Integers are specified starting at 1 (rather than 0).}
+\item{id}{either a number or a string identifying the element of
+  interest in the converter list.  A string is matched against the
+  description strings for each element to identify the element.
+  Integers are specified starting at 1 (rather than 0).}
 
 \item{status}{a logical value specifying whether the element is to be considered
    active (\code{TRUE}) or not (\code{FALSE}).}
@@ -60,7 +61,7 @@ removeCConverter(id)
   the description string of each element of the converter list.
 
   \code{getCConverterStatus} returns a logical vector with a value for
-  each element in the converter list. Each value indicates whether that
+  each element in the converter list.  Each value indicates whether that
   converter is active (\code{TRUE}) or inactive (\code{FALSE}).
   The names of the elements are the description strings returned
   by \code{getCConverterDescriptions}.

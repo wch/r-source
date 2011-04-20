@@ -14,7 +14,7 @@ make.names(names, unique = FALSE, allow_ = TRUE)
 }
 \arguments{
  \item{names}{character vector to be coerced to syntactically valid
-   names. This is coerced to character if necessary.}
+   names.  This is coerced to character if necessary.}
  \item{unique}{logical; if \code{TRUE}, the resulting elements are
      unique.  This may be desired for, e.g., column names.}
  \item{allow_}{logical.  For compatibility with \R prior to 1.9.0.}
