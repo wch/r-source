@@ -1254,7 +1254,8 @@ static double gzfile_seek(Rconnection con, double where, int origin, int rw)
 
 static int gzfile_fflush(Rconnection con)
 {
-    return 0;
+    gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    return gz_flush(fp, Z_SYNC_FLUSH);
 }
 
 static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
