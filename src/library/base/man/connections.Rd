@@ -182,7 +182,8 @@ isIncomplete(con)
   connections of various types, but these are usually larger than 125.
 
   \code{flush} flushes the output stream of a connection open for
-  write/append (where implemented).
+  write/append (where implemented, currently for file and clipboard
+  connections, \code{\link{stdout}} and \code{\link{stderr}}).
 
   If for a \code{file} or \code{fifo} connection the description is
   \code{""}, the file/fifo is immediately opened (in \code{"w+"} mode
