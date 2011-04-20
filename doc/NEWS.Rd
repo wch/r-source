@@ -91,6 +91,9 @@
       with support for more recent Zip64 features (including large file
       sizes and \command{bzip2} compression, but not yet UTF-8 file
       names).
+
+      \code{unzip()} has a new option to restore file times from those
+      recorded (in an unknown timezone) in the zip file.
     }
   }
 

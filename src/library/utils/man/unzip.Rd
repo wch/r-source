@@ -13,7 +13,7 @@
 }
 \usage{
 unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
-       junkpaths = FALSE, exdir = ".", unzip = "internal")
+      junkpaths = FALSE, exdir = ".", unzip = "internal", setTimes = FALSE)
 }
 \arguments{
   \item{zipfile}{The pathname of the zip file: tilde expansion (see
@@ -34,23 +34,33 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
 
-  \item{unzip}{The method to be used. An alternative is to use
-  \code{getOption("unzip"}), which on a Unix-alike may be set to the
-  path to a \command{unzip} program.}
+  \item{unzip}{The method to be used.  An alternative is to use
+    \code{getOption("unzip"}), which on a Unix-alike may be set to the
+    path to a \command{unzip} program.}
+
+  \item{setTimes}{logical.  For the internal method only, should the
+    file time be set based on the times in the zip file?  (NB: this
+    applies to files, not to directories.}
 }
 \note{
-  This is a minimal implementation, principally designed for Windows'
-  users to be able to unpack Windows binary packages without external
-  software.  It does not (for example) support Unicode filenames as
-  introduced in \command{zip 3.0}: for that use \code{unzip = "unzip"}
-  with \command{unzip 6.00} or later.  (As from \R 2.14.0 it does have
-  support for files of more than 4GB and \command{bzip2} compression.)
+  The default internal method is a minimal implementation, principally
+  designed for Windows' users to be able to unpack Windows binary
+  packages without external software.  It does not (for example) support
+  Unicode filenames as introduced in \command{zip 3.0}: for that use
+  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  (As from
+  \R 2.14.0 it does have support for files of more than 4GB and
+  \command{bzip2} compression.)
 
   If \code{unzip} specifies a program, the format of the dates listed
   with \code{list = TRUE} is unknown (on Windows it can even depend on
   the current locale) and the return values could be \code{NA} or
   expressed in the wrong timezone or misinterpreted (the latter being
   far less likely as from \command{unzip 6.00}).
+
+  File times in zip files are stored in the style of MS-DOS, as local times
+  to an accuracy of 2 seconds.  This is not very useful when
+  transferring zip files between machines (even across continents), so
+  we chose not to restore them by default.
 }
 
 \value{
