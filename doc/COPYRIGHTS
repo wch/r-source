@@ -299,6 +299,11 @@ src/extra/zlib/README, *.c, *.h
   Taken from zlib-1.2.3 (C) 1995-2005 Jean-loup Gailly and Mark Adler
   See src/extra/zlib/README for the licence.
 
+src/main/connections.c
+
+  Contains code derived from the zlib 1.2.3 distribution
+  (C) 1995-2005 Jean-loup Gailly and Mark Adler
+
 
 src/main/dounzip.c, unzip.h
 

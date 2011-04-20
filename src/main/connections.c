@@ -4808,6 +4808,8 @@ size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
 
 /* ------------------- (de)compression functions  --------------------- */
 
+/* Code for gzcon connections is modelled on gzio.c from zlib 1.2.3 */
+
 static int gz_magic[2] = {0x1f, 0x8b}; /* gzip magic header */
 
 /* gzip flag byte */
