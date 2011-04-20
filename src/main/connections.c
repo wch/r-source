@@ -671,10 +671,11 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
     switch(origin) {
     case 2: whence = SEEK_CUR; break;
     case 3: whence = SEEK_END;
-#ifdef Win32
-	    /* work around a bug in MinGW runtime 3.8 fseeko64, PR#7896 */
-	    if(con->canwrite) fflush(fp);
-#endif
+//#ifdef Win32
+	    /* work around a bug in MinGW runtime 3.8 fseeko64, PR#7896
+	       seems no longer to be needed */
+//	    if(con->canwrite) fflush(fp);
+//#endif
 	    break;
     default: whence = SEEK_SET;
     }
