@@ -99,7 +99,7 @@ isIncomplete(con)
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{con}{a connection.}
-  \item{type}{character. Currently ignored.}
+  \item{type}{character.  Currently ignored.}
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
   \item{\dots}{arguments passed to or from other methods.}
@@ -182,9 +182,8 @@ isIncomplete(con)
   connections of various types, but these are usually larger than 125.
 
   \code{flush} flushes the output stream of a connection open for
-  write/append (where implemented: currently for \code{file},
-  \code{gzfile} and clipboard connections, \code{\link{stdout}} and
-  \code{\link{stderr}}).
+  write/append (where implemented, currently for file and clipboard
+  connections, \code{\link{stdout}} and \code{\link{stderr}}).
 
   If for a \code{file} or \code{fifo} connection the description is
   \code{""}, the file/fifo is immediately opened (in \code{"w+"} mode
@@ -564,7 +563,7 @@ if(capabilities("fifo")) {
 # read listing of current directory
 readLines(pipe("ls -1"))
 
-# remove trailing commas. Suppose
+# remove trailing commas.  Suppose
 \dontshow{
 writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 "357, 497, 493, 550, 549, 467, 575, 578, 342,",
