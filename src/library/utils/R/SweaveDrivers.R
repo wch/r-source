@@ -64,7 +64,7 @@ RweaveLatexSetup <-
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
-                    concordance = FALSE, expand = TRUE)
+                    concordance = FALSE, expand = TRUE, figs.only = FALSE)
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -167,7 +167,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         } else chunkout <- object$output
 
         srcfile <- srcfilecopy(object$filename, chunk)
-        SweaveHooks(options, run = TRUE)
 
         ## Note that we edit the error message below, so change both
         ## if you change this line:
@@ -236,6 +235,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         leading <- 1L    # How many lines get the user prompt
 
         srcrefs <- attr(chunkexps, "srcref")
+
+        if (options$figs.only && length(devs))
+            devs[[1L]](name = chunkprefix,
+                       width = options$width, height = options$height,
+                       options)
+        SweaveHooks(options, run = TRUE)
 
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
@@ -354,7 +359,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         if (length(devs)) {
+            if (options$figs.only) devoffs[[1L]]()
             for (i in seq_along(devs)) {
+                if (options$figs.only && i == 1) next
                 devs[[i]](name = chunkprefix, width = options$width,
                           height = options$height, options)
                 err <- tryCatch({

@@ -810,15 +810,19 @@ This will become the default in \R{} 2.14.0.
 Or variations on this, as in
 \url{https://stat.ethz.ch/pipermail/r-help/2011-April/275198.html}.
 
-Currently Sweave runs every code chunk once.  For figure chunks it
-then runs the chunk once more for each graphics device selected, so by
-default figure chunks are run twice, once like any other chunk and
-once to produce the PDF figure.
+Currently Sweave runs every code chunk once (unless option
+\texttt{eval=FALSE}).  For figure chunks it then runs the chunk once
+more for each graphics device selected, so by default figure chunks
+are run twice, once like any other chunk and once to produce the PDF
+figure.
 
 This can cause problems if figure chunks produce output or have side
-effects, so use figure chunks purely to produce the figure.
+effects, so it is good practice to use figure chunks purely to produce
+the figure.
 
-This will change in \R{} 2.14.0.
+Option \verb|figs.only = TRUE| changes this behaviour, so
+figure chunks are only run for the selected graphics device(s).  This
+will become the default in \R{} 2.14.0.
 
 \end{document}
 

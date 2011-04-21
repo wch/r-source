@@ -22,20 +22,30 @@
 
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
-
-      \item Sweave custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.      
     }
   }
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item Building the vignettes is now part of running \command{make}
-      from an SVN checkout: a separate \command{make vignettes} is no
-      longer required.
+      \item Building the vignette PDFs in packages \pkg{grid} and
+      \pkg{utils} is now part of running \command{make} from an SVN
+      checkout on a Unix-alike: a separate \command{make vignettes} is
+      no longer required.
 
-      These vignette PDFs are now made with \code{keep.source = TRUE} and
+      These vignettes are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
+    }
+  }
+  
+  \subsection{SWEAVE & VIGNETTES}{
+    \itemize{
+      \item There is a new Sweave option \code{figs.only = TRUE} to run
+      each figure chunk only for each selected graphics device, and not
+      first using the default graphics device.   This will become the
+      default in \R 2.14.0.
+
+      \item Sweave custom graphics devices can have a custom function
+      \code{foo.off()} to shut them down.      
     }
   }
 
