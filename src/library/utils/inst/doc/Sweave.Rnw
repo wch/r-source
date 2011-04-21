@@ -176,7 +176,7 @@ Sweave which control the final output.
 Options control how code chunks and their output (text, figures) are
 transferred from the \texttt{.Rnw} file to the \texttt{.tex} file. All
 options have the form \texttt{key=value}, where \texttt{value} can be
-a number, string or logical value. Several options can be specified at
+a number, string or logical value.  Several options can be specified at
 once (separated by commas), all options must take a value (which must
 not contain a comma or equal sign). Logical options can take the
 values \texttt{TRUE}, \texttt{FALSE}, \texttt{T}, \texttt{F} as well
@@ -533,23 +533,28 @@ width is controlled by option \texttt{"width"}.
 
 The default graphics device for \texttt{fig=TRUE} chunks is
 \texttt{pdf()}: the standard options \texttt{pdf}, \texttt{eps},
-\texttt{png} and \texttt{jpg} (the latter two available only in \R{} >=
-2.13.0) allow one or more of these to be selected for a particular
-chunk or (via \verb|\SweaveOpts|) for the whole document.  It can be
-convenient to select PNG for a particular chunk by something like
-\verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE|: \texttt{pdflatex} should
-automatically include the PNG file.
+\texttt{png} and \texttt{jpg}\footnote{the latter two available only
+  from \R{} 2.13.0.} allow one or more of these to be selected for a
+particular chunk or (via \verb|\SweaveOpts|) for the whole document.
+It can be convenient to select PNG for a particular figure chunk by
+something like \verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE>>|:
+\texttt{pdflatex} should automatically include the PNG file for that
+chunk.
 
-In addition, \R{} >= 2.13.0 allows you to define your own graphics
-devices and select one of them by the option \texttt{grdevice=my.Swd}
-where the device function (here \texttt{my.Swd}) is defined in a hidden
-code chunk. For example, we could make use of the \texttt{cairo\_pdf}
-device by
+You can define your own graphics devices\footnote{in \R{} 2.13.0 and
+  later.} and select one of them by the option
+\texttt{grdevice=my.Swd} where the device function (here
+\texttt{my.Swd}) is defined in a hidden code chunk. For example, we
+could make use of the \texttt{cairo\_pdf} device by
 \begin{verbatim}
 my.Swd <- function(name, width, height, ...)
   grDevices::cairo_pdf(filename = paste(name, "pdf", sep = "."),
                        width = width, height = height)
 \end{verbatim}
+Specialized custom graphics devices may need a customized way to shut
+them down in place of \verb|graphics.off()|: this can be
+supplied\footnote{from \R{} 2.13.1} \emph{via} a companion function
+\verb|my.Swd.off|, which is called with no arguments.
 
 \subsection{The \texttt{Rtangle} driver}
 
@@ -799,6 +804,22 @@ source file, use
   \verb|\SweaveOpts{keep.source=TRUE}|
 \end{quote}
 This will become the default in \R{} 2.14.0.
+
+\subsection{`Sweave executes figure chunks twice'}
+
+Or variations on this, as in
+\url{https://stat.ethz.ch/pipermail/r-help/2011-April/275198.html}.
+
+Currently Sweave runs every code chunk once.  For figure chunks it
+then runs the chunk once more for each graphics device selected, so by
+default figure chunks are run twice, once like any other chunk and
+once to produce the PDF figure.
+
+This can cause problems if figure chunks produce output or have side
+effects, so use figure chunks purely to produce the figure.
+
+This will change in \R{} 2.14.0.
+
 \end{document}
 
 %%% Local Variables:

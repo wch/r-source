@@ -124,7 +124,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 devs <- c(devs, list(jpeg.Swd))
                 devoffs <- c(devoffs, list(grDevices::dev.off))
             }
-            if (nzchar(grd <- options$grdevice)) {
+            if (!is.null(grd <- options$grdevice)) {
                 devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
                 grdo <- paste(grd, "off", sep = ".")
                 devoffs <- c(devoffs,
