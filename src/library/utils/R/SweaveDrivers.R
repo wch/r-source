@@ -35,11 +35,9 @@ RweaveLatexSetup <-
 
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
-    ## Did we re-encode the input?  In which case we need to do
-    ## something about the output.
-    output <- if (identical(attr(file, "encoding"), "latin1")) {
-        file(output, open = "w+", encoding = "latin1")
-    } else file(output, open = "w+")
+    encoding <- attr(file, "encoding")
+    if (encoding == "ASCII") encoding <- ""
+    output <- file(output, open = "w", encoding = encoding)
 
     if (missing(stylepath)) {
         p <- Sys.getenv("SWEAVE_STYLEPATH_DEFAULT")
@@ -601,19 +599,24 @@ RtangleSetup <-
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
         output <- paste(prefix.string, "R", sep = ".")
-        lines <- c(sprintf("R code from vignette source '%s'", file))
-        lines <- c(paste("###", lines), "")
-        writeLines(lines, output)
     } else
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
 
     if (!split) {
-        if (!quiet) cat("Writing to file", output, "\n")
-        ## Did we re-encode the input?  In which case we need to do
-        ## something about the output.
-        output <- if (identical(attr(file, "encoding"), "latin1")) {
-            file(output, open = "w", encoding = "latin1")
-        } else file(output, open = "w")
+        if (identical(output, "stdout")) output <- stdout()
+        else if (identical(output, "stderr")) output <- stderr()
+        else {
+            if (!quiet) cat("Writing to file", output, "\n")
+            ## We could at some future point try to write the file in
+            ## 'encoding'.
+            output <- file(output, open = "w")
+        }
+        lines <- c(sprintf("R code from vignette source '%s'", file),
+                   if(attr(file, "encoding") != "ASCII")
+                   sprintf("Encoding: %s", localeToCharset()[1L])
+                   )
+        lines <- c(paste("###", lines), "")
+        writeLines(lines, output)
     } else {
         if (!quiet) cat("Writing chunks to files ...\n")
         output <- NULL
@@ -685,7 +688,9 @@ RtangleWritedoc <- function(object, chunk)
 
 RtangleFinish <- function(object, error = FALSE)
 {
-    if (!is.null(object$output)) close(object$output)
+    ## might be stdout() or stderr()
+    if (!is.null(object$output) && object$output >= 3)
+        close(object$output)
 
     if (length(object$chunkout))
         for (con in object$chunkout) close(con)

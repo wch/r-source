@@ -39,6 +39,11 @@
   
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
+      \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
+      argument to specify the encoding of the vignette sources if the
+      latter do not contain a \samp{\\usepackage[]{inputenc}} statement
+      specifying a single input encoding.
+
       \item There is a new Sweave option \code{figs.only = TRUE} to run
       each figure chunk only for each selected graphics device, and not
       first using the default graphics device.   This will become the
@@ -46,6 +51,12 @@
 
       \item Sweave custom graphics devices can have a custom function
       \code{foo.off()} to shut them down.      
+
+      \item Package installation tangles the vignette sources: this step
+      now converts the vignette sources from the vignette/package
+      encoding to the current encoding, and records the encoding (if not
+      ASCII) in a comment line at the top of the installed \file{.R}
+      file.
     }
   }
 

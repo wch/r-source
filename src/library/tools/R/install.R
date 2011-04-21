@@ -45,9 +45,6 @@
     paste0 <- function(...) paste(..., sep="")
 
     MAKE <- Sys.getenv("MAKE")
-    TAR <- Sys.getenv("TAR", 'tar') # used by default on Unix only
-    GZIP <- Sys.getenv("R_GZIPCMD") # used on Unix only
-    if (!nzchar(GZIP)) GZIP <- "gzip"
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
@@ -101,6 +98,7 @@
             "			without using a lock directory",
             "      --lock		use a per-library lock directory (default)",
             "      --pkglock		use a per-package lock directory",
+            "      			(default for a single package)",
             "      --build    	build binaries of the installed package(s)",
             "      --install-tests	install package-specific tests (if any)",
             "      --no-R, --no-libs, --no-data, --no-help, --no-demo, --no-exec,",
@@ -278,8 +276,10 @@
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
+            TAR <- Sys.getenv("TAR", 'tar')
             system(paste(TAR, "-chf", filepath,
                          paste(curPkg, collapse = " ")))
+            GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
             system(paste(GZIP, "-9f", filepath))
             if (grepl("darwin", R.version$os)) {
                 filename <- paste0(filename, ".gz")
@@ -338,6 +338,7 @@
                              shQuote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
+        TAR <- Sys.getenv("TAR", 'tar')
         res <- system(paste("cp -r .", shQuote(instdir),
                             "|| (", TAR, "cd - .| (cd", shQuote(instdir), "&&", TAR, "-xf -))"
                             ))
@@ -967,7 +968,9 @@
 	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {
 	    starsmsg(stars, "building package indices ...")
-	    res <- try(.install_package_indices(".", instdir))
+            enc <- desc["Encoding"]
+            if (is.na(enc)) enc <- ""
+	    res <- try(.install_package_indices(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
 	}

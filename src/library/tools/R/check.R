@@ -257,7 +257,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     "on all R platforms.\n",
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
-                    "in manual 'Writing R Extensions'.\n")
+                    "in the 'Writing R Extensions' manual.\n")
             do_exit(1L)
         }
 
@@ -274,7 +274,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     "to be usable on all R platforms.\n",
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
-                    "in manual 'Writing R Extensions'.\n")
+                    "in the 'Writing R Extensions' manual.\n")
             do_exit(1L)
         }
 
@@ -288,7 +288,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             printLog(Log, .format_lines_with_indent(non_ASCII_files), "\n")
             wrapLog("These are not fully portable file names.\n",
                     "See section 'Package structure'",
-                    "in manual 'Writing R Extensions'.\n")
+                    "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
 
         allfiles
@@ -579,7 +579,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 printLog(Log, paste(c(out, ""), collapse="\n"))
                 wrapLog("Please remove or rename the files.\n",
                         "See section 'Package subdirectories'",
-                        "in manual 'Writing R Extensions'.\n")
+                        "in the 'Writing R Extensions' manual.\n")
             }
         }
 
@@ -908,7 +908,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     {
         msg_writing_Rd <-
             c("See the chapter 'Writing R documentation files'",
-              "in manual 'Writing R Extensions'.\n")
+              "in the 'Writing R Extensions' manual.\n")
 
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
@@ -1595,10 +1595,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
     run_vignettes <- function(desc)
     {
-        vignette_dir <- file.path(pkgdir, "inst", "doc")
-        if (!dir.exists(vignette_dir) ||
-            !length(vf <- list_files_with_type(vignette_dir, "vignette")))
-            return()
+        vigns <- pkgVignettes(dir = pkgdir)
+        if (is.null(vigns) || !length(vigns$docs)) return()
+        vf <- vigns$docs
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
@@ -1617,11 +1616,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## A base source package need not have PDFs to avoid
         ## frequently-changing binary files in the SVN archive.
         if (!is_base_pkg) {
-            pdfs <- sub("\\.[[:alpha:]]+$", ".pdf", vf)
+            pdfs <- file.path(pkgdir, "inst", "doc",
+                              sub("\\.[[:alpha:]]+$", ".pdf", basename(vf)))
             bad_vignettes <- vf[!file.exists(pdfs)]
             if(length(bad_vignettes)) {
                 any <- TRUE
-                warnLog("Package vignette(s) without corresponding PDF:")
+                warnLog()
+                printLog(Log,
+                         "Package vignette(s) without corresponding PDF:\n")
                 printLog(Log,
                          paste(c(paste("  ", basename(bad_vignettes)), "", ""),
                                collapse = "\n"))
@@ -1641,18 +1643,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         ## Do any of the .R files which will be generated
         ## exist in inst/doc?  If so the latter will be ignored,
-        sources <- basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), c("r", "s", "R", "S")))
+        sources <-
+            basename(list_files_with_exts(file.path(pkgdir, "inst/doc"), "R"))
         if (length(sources)) {
-            td <- tempfile()
-            dir.create(td)
-            file.copy(vignette_dir, td, recursive = TRUE)
-            od <- setwd(file.path(td, "doc"))
-            unlink(list_files_with_exts(".", c("r", "s", "R", "S")))
-            for(v in vf)
-                tryCatch(suppressMessages(utils::Stangle(v, quiet = TRUE)),
-                         error = function(e) {})
-            new_sources <- basename(list_files_with_exts(".", c("r", "s", "R", "S")))
-            setwd(od)
+            new_sources <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vf))
             dups <- sources[sources %in% new_sources]
             if(length(dups)) {
                 if(!any) warnLog()
@@ -1667,14 +1661,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
         ## avoid case-insensitive matching
-        if ("makefile" %in% dir(vignette_dir)) {
+        if ("makefile" %in% dir(vigns$dir)) {
             if(!any) warnLog()
             any <- TRUE
             printLog(Log,
                      "  Found 'inst/doc/makefile': should be 'Makefile' and will be ignored\n")
         }
-        if ("Makefile" %in% dir(vignette_dir)) {
-            lines <- readLines(file.path(vignette_dir, "Makefile"), warn = FALSE)
+        if ("Makefile" %in% dir(vigns$dir)) {
+            lines <- readLines(file.path(vigns$dir, "Makefile"), warn = FALSE)
             ## remove comment lines
             lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
             if(any(grepl("[^/]R +CMD", lines))) {
@@ -1702,13 +1696,19 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             vigns <- pkgVignettes(dir = pkgdir)
             problems <- list()
             res <- character()
+            def_enc <- desc["Encoding"]
+            if( (is.na(def_enc))) def_enc <- ""
             for(v in vigns$docs) {
+                enc <- getVignetteEncoding(v, TRUE)
+                if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
                 Rcmd <- paste("options(warn=1)\ntools:::.run_one_vignette('",
-                              basename(v), "', '", vignette_dir, "'", ")",
-                              sep = "")
+                              basename(v), "', '", vigns$dir, "'",
+                              if (nzchar(enc))
+                              paste(", encoding = '", enc, "'", sep = ""),
+                              ")", sep = "")
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
-                # cat("\n===============", basename(v), "==============\n"); writeLines(out)
+
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     res <- c(res,
@@ -1933,7 +1933,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             printLog(Log, .format_lines_with_indent(execs), "\n")
             wrapLog("Source packages should not contain undeclared executable files.\n",
                     "See section 'Package structure'",
-                    "in manual 'Writing R Extensions'.\n")
+                    "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
         setwd(owd)
     }
@@ -2069,6 +2069,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
                 ## Ignore Stangle warnings for now
                 lines <- grep("Warning: value of .* option should be lowercase",
+                              lines, invert = TRUE, value = TRUE)
+                lines <- grep("Warning: .* is not valid in the current locale: assuming Latin-1",
                               lines, invert = TRUE, value = TRUE)
 
                 ## Package writers cannot really do anything about
@@ -2216,7 +2218,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             resultLog(Log, desc["Type"])
             if (desc["Type"] != "Package") {
                 printLog(Log,
-                         "Only Type = Package extensions can be checked.\n")
+                         "Only 'Type = Package' extensions can be checked.\n")
                 do_exit(0L)
             }
         }

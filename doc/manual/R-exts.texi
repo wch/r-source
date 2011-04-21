@@ -1931,26 +1931,28 @@ and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
 or underscore.
 
 A special case are PDF documents with sources in Sweave format, which we
-call @emph{package vignettes}.  These are normally given the file
-extension @file{.Rnw} or @file{.Rtex}, but for historical reasons
-extensions@footnote{and to avoid problems with case-insensitive file
-systems, lower-case versions of all these extensions.} @file{.Snw} and
-@file{.Stex} are also recognized as vignettes.  Sweave allows the
-integration of @LaTeX{} documents: see the @code{Sweave} help page in
-@R{} for details on the document format.  Package vignettes found in
-directory @file{inst/doc} are tested by @code{R CMD check} by executing
-all @R{} code chunks they contain (except those with option
-@code{eval=FALSE}).  The @R{} working directory for all vignette tests
-in @code{R CMD check} is a @emph{copy} of the @file{doc} subdirectory.
-Make sure all files needed by the vignette (data sets, @dots{}) are
-accessible by either placing them in the @file{inst/doc} hierarchy of
-the source package or by using calls to @code{system.file()}.  All other
-files needed to re-make the vignette PDFs (such as LaTeX style files,
-BiBTeX input files and files for any figures not created by running the
-code in the vignette) must in the sources (usually under
-@file{inst/doc}, but a file @file{.Rinstignore} can be used to exclude
-them from the installed package).  References to parallel source
-directories such as
+call @emph{package vignettes}.  
+
+Vignette sources are normally given the file extension @file{.Rnw} or
+@file{.Rtex}, but for historical reasons extensions@footnote{and to
+avoid problems with case-insensitive file systems, lower-case versions
+of all these extensions.} @file{.Snw} and @file{.Stex} are also
+recognized as vignettes.  Sweave allows the integration of @LaTeX{}
+documents: see the @code{Sweave} help page in @R{} and the @code{Sweave}
+vignette in package @pkg{utils} for details on the document format.
+Package vignettes found in directory @file{inst/doc} are tested by
+@code{R CMD check} by executing all @R{} code chunks they contain
+(except those with option @code{eval=FALSE}).  The @R{} working
+directory for all vignette tests in @code{R CMD check} is a @emph{copy}
+of the @file{doc} subdirectory.  Make sure all files needed to run the
+vignette (data sets, @dots{}) are accessible by either placing them in
+the @file{inst/doc} hierarchy of the source package or by using calls to
+@code{system.file()}.  All other files needed to re-make the vignette
+PDFs (such as LaTeX style files, BiBTeX input files and files for any
+figures not created by running the code in the vignette) must in the
+sources (usually under @file{inst/doc}, but a file @file{.Rinstignore}
+can be used to exclude them from the installed package).  References to
+parallel source directories such as
 @example
 \graphicspath@{@{../../manual/@}@}
 @end example
@@ -2056,12 +2058,15 @@ can become very complicated.
 The vignette source file should be written in ASCII or contain a
 declaration of the encoding (see below).  This applies even to comments
 within the source file, since @code{Sweave()} processes comments to look
-for options and metadata lines.  It is @strong{not} assumed that the
-vignette sources are in the packages' encoding (and there are packages
-for which the vignettes have different encodings).
+for options and metadata lines.  When @code{Sweave()} or
+@code{Stangle()} is called on the vignette source, it will be
+converted@footnote{provided the encoding is known: currently if it is
+not that of a current MBCS locale, it is guessed to be Latin-1.} to the
+encoding of the current @R{} session.
 
-@code{Stangle()} will produce an @R{} code file: this is almost always
-ASCII.
+@code{Stangle()} will produce an @R{} code file in the current locale's
+encoding: for a non-ASCII vignette what that is recorded in a comment at
+the top of the file.
 
 @code{Sweave()} will produce a @file{.tex} file in the current locale's
 encoding.  That needs to be declared to @LaTeX{} via a line like
@@ -2076,29 +2081,6 @@ may only be re-createable on the author's own machine. @command{R CMD
 check} will report on any non-ASCII vignettes it finds which do not have
 such a declaration.  (It is also possible to use the more recent
 @samp{inputenx} @LaTeX{} package.)
-
-For @R{} 2.13.0 (at least), how non-ASCII vignettes are handled depends
-on the locale of the @R{} session.
-
-@itemize @bullet
-@item
-In an 8-bit locale the documents and @R{} output are handled
-byte-by-byte.  This may lead to invalid results if the vignette was
-intended to be in UTF-8 and the @R{} output is in the 8-bit locale.
-
-@item
-In a UTF-8 locale the vignette is translated as if in Latin-1, and the
-output file translated back to Latin-1.  It does not actually need to be
-in Latin-1 provided all the bytes used@footnote{and on some platforms
-this will work even with bytes outside Latin-1} in the vignette exist in
-Latin-1: think of this as a way of temporarily escaping 8-bit
-characters.
-
-@item
-In any other multi-byte locale @code{Sweave()} and @code{Stangle()}
-throw an error.
-
-@end itemize
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
 chunk.  The @R{} output will also be in the current locale, and should

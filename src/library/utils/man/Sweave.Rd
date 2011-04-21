@@ -19,10 +19,10 @@
 }
 \usage{
 Sweave(file, driver = RweaveLatex(),
-       syntax = getOption("SweaveSyntax"), ...)
+       syntax = getOption("SweaveSyntax"), encoding = "", ...)
 
 Stangle(file, driver = Rtangle(),
-        syntax = getOption("SweaveSyntax"), ...)
+        syntax = getOption("SweaveSyntax"), encoding = "", ...)
 }
 \arguments{
   \item{file}{Path to Sweave source file.  Note that this can be
@@ -33,6 +33,7 @@ Stangle(file, driver = Rtangle(),
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.
     See the section \sQuote{Syntax Definition}.}
+  \item{encoding}{The default encoding to assume for \code{file}.}
   \item{\dots}{Further arguments passed to the driver's setup function:
     see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
     \code{\link{Rtangle}}.}
@@ -65,10 +66,9 @@ Stangle(file, driver = Rtangle(),
   
   Non-ASCII source files should contain a line of the form
 \preformatted{\usepackage[foo]{inputenc}}
-  Currently the input file is assumed to be in the current locale's
-  encoding, unless it is not valid in a UTF-8 locale when it is
-  re-encoded from Latin-1 for processing, and the output re-encoded back
-  to Latin-1.
+  but if none is supplied the value of the \code{encoding} argument is
+  used (and if that is empty, the encoding of the current locale, or if
+  that is invalid, Latin-1).
 }
 
 \section{Syntax Definition}{

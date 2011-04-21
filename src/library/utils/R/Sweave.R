@@ -20,32 +20,43 @@
 ### a) User-defined options are unclear: all options not already specified
 ### are required to be logical
 ### b) It would be nice to allow multiple 'grdevice' options
-### c) If there is only one graphics option (as is usual), we don't need to
-### run the code in the figure chunks twice.
 
-### Encodings (in 2.13.x: it varies by version)
-### Everything is passed through byte-by-byte except in a UTF-8 locale.
-### In UTF-8, reading a non-UTF-8 Sweave file triggers conversion to
-### UTF-8 as if from Latin-1, and conversion back on output.
-### For Stangle think of the conversion as escaping.
-### For Sweave it is that and a bit more: any R output which was
-### included will have been generated in UTF-8 and hence is converted
-### to Latin-1.  Normally (but not always) that is what you want.
+### Encodings (currently, different from 2.13.0)
+###
+### SweaveReadFile figures out an encoding, uses it (not currently for
+### \SweaveInclude files) and returns it as an attribute.  This is
+### then passed as an attribute of 'file' to the driver's setup
+### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
+### re-encodes the output back to 'encoding': the Rtangle driver
+### leaves it in the encoding of the current locale and records what
+### that is in a comment.
+###
+### SweaveReadFile first looks for a call to one of the LaTeX packages
+### inputen[cx] and deduces the vignette encoding from that, falling
+### back to the package encoding, then Latin-1 (with a warning).  This
+### should work OK provided the package encoding is Latin-1: it is
+### UTF-8 then LaTeX needs to be told what to do.  It also assumes
+### that R output is in the current locale: a package with a different
+### encoding from the current one might have data in that package's
+### encoding.
 
 ### Correspondence between input and output is maintained in two
 ### places: Each chunk has a srclines attribute, recording the input
-### lines it corresponds to Each code chunk will have attached srcrefs
-### that duplicate the srclines.  We don't need srclines for code, but
-### we do need it for text, and it's easiest to just keep it for
-### everything.
+### lines it corresponds to.  Each code chunk will have attached
+### srcrefs that duplicate the srclines.  We don't need srclines for
+### code, but we do need it for doc chunks, and it's easiest to just
+### keep it for everything.
+
 
 
 Stangle <- function(file, driver = Rtangle(),
-                    syntax = getOption("SweaveSyntax"), ...)
-    Sweave(file = file, driver = driver, ...)
+                    syntax = getOption("SweaveSyntax"),
+                    encoding = "", ...)
+    Sweave(file = file, driver = driver, encoding = encoding, ...)
 
 Sweave <- function(file, driver = RweaveLatex(),
-                   syntax = getOption("SweaveSyntax"), ...)
+                   syntax = getOption("SweaveSyntax"),
+                   encoding = "", ...)
 {
     if (is.character(driver)) driver <- get(driver, mode = "function")()
     else if (is.function(driver)) driver <- driver()
@@ -55,19 +66,19 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     if (.Platform$OS.type == "windows") file <- chartr("\\", "/", file)
 
-    text <- SweaveReadFile(file, syntax)
-    attr(file, "encoding") <- attr(text, "encoding")
+    text <- SweaveReadFile(file, syntax, encoding = encoding)
+    attr(file, "encoding") <- encoding <- attr(text, "encoding")
 
     ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
     on.exit(driver$finish(drobj, error = TRUE))
 
+    syntax <- attr(text, "syntax") # this is from the file commands.
+
     if (!is.na(envopts <- Sys.getenv("SWEAVE_OPTIONS", NA)))
         drobj$options <-
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
-    syntax <- attr(text, "syntax") # this is from the file commands.
-    file <- attr(text, "file")  # why?
     drobj$filename <- file
     drobj$hasSweaveInput <- attr(text, "hasSweaveInput")
 
@@ -142,7 +153,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     driver$finish(drobj)
 }
 
-SweaveReadFile <- function(file, syntax)
+SweaveReadFile <- function(file, syntax, encoding = "")
 {
     ## file can be a vector to keep track of recursive calls to
     ## SweaveReadFile.  In this case only the first element is
@@ -169,24 +180,21 @@ SweaveReadFile <- function(file, syntax)
     ## An incomplete last line is not a real problem.
     text <- readLines(f[1L], warn = FALSE)
 
-    ## <FIXME>
-    ## This needs to be more refined eventually ...
-    l10n <- l10n_info()
-    if (l10n$MBCS && any(is.na(nchar(text, "c", TRUE)))) {
-        ## give up unless UTF-8
-        if (!l10n[["UTF-8"]])
-            stop("Vignette ", sQuote(basename(f[1L])),
-                 " is not valid in the current locale", domain = NA)
-        message("Vignette ", sQuote(basename(f[1L])),
-                " is not valid in the current locale: assuming Latin-1",
-                domain = NA)
-        ## Ouch, invalid in the current locale.
-        ## Try re-encoding from Latin-1:
-        ## this will probably work except perhaps for some CP1252 files
-        text <- iconv(text, "latin1", "")
-        attr(text, "encoding") <- "latin1"
+    ## now sort out an encoding, if needed.
+    enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
+    if (enc == "non-ASCII") {
+        enc <- if (nzchar(encoding)) {
+            encoding
+        } else {
+            warning(sQuote(basename(file)),
+                    " is not valid in the current locale: assuming Latin-1",
+                    domain = NA, call. = FALSE)
+            "latin1"
+        }
     }
-    ## </FIXME>
+    if (nzchar(enc)) {
+        text <- iconv(text, enc, "")
+    } else enc <- "ASCII"
 
     pos <- grep(syntax$syntaxname, text)
 
@@ -212,7 +220,7 @@ SweaveReadFile <- function(file, syntax)
                                  rev(file), collapse="")),
                  domain = NA)
             }
-            itext <- SweaveReadFile(c(ifile, file), syntax)
+            itext <- SweaveReadFile(c(ifile, file), syntax, encoding = encoding)
 
 	    text <-
 		if (pos == 1L) c(itext, text[-pos])
@@ -225,6 +233,7 @@ SweaveReadFile <- function(file, syntax)
 
     attr(text, "syntax") <- syntax
     attr(text, "file") <- f[1L]
+    attr(text, "encoding") <- enc
     text
 }
 
