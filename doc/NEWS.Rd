@@ -22,6 +22,9 @@
 
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
+
+      \item Sweave custom graphics devices can have a custom function
+      \code{foo.off()} to shut them down.      
     }
   }
 

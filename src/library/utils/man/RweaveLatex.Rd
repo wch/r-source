@@ -241,6 +241,9 @@ my.Swd <- function(name, width, height, ...)
 }
   Currently only one custom device can be used for each chunk, but
   different devices can be used for different chunks.
+
+  A replacement for \code{\link{dev.off}} can be provided as a function
+  with suffix \code{.off}, e.g. \code{my.Swd.off()}.
 }
 
 \section{Hook Functions}{

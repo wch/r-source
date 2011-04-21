@@ -106,6 +106,33 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         if (!(options$engine %in% c("R", "S"))) return(object)
 
+        devs <- devoffs <- list()
+        if (options$fig && options$eval) {
+            if (options$pdf) {
+                devs <- c(devs, list(pdf.Swd))
+                devoffs <- c(devoffs, list(grDevices::dev.off))
+            }
+            if (options$eps) {
+                devs <- c(devs, list(eps.Swd))
+                devoffs <- c(devoffs, list(grDevices::dev.off))
+            }
+            if (options$png) {
+                devs <- c(devs, list(png.Swd))
+                devoffs <- c(devoffs, list(grDevices::dev.off))
+            }
+            if (options$jpeg) {
+                devs <- c(devs, list(jpeg.Swd))
+                devoffs <- c(devoffs, list(grDevices::dev.off))
+            }
+            if (nzchar(grd <- options$grdevice)) {
+                devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
+                grdo <- paste(grd, "off", sep = ".")
+                devoffs <- c(devoffs,
+                             if (exists(grdo, envir = .GlobalEnv))
+                                 list(get(grdo, envir = .GlobalEnv))
+                             else list(grDevices::dev.off))
+            }
+        }
         if (!object$quiet) {
             cat(formatC(options$chunknr, width = 2), ":")
             if (options$echo) cat(" echo")
@@ -326,25 +353,18 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             thisline <- thisline + 1L
         }
 
-        if (options$fig && options$eval) {
-            devs <- list()
-            if (options$pdf) devs <- c(devs, list(pdf.Swd))
-            if (options$eps) devs <- c(devs, list(eps.Swd))
-            if (options$png) devs <- c(devs, list(png.Swd))
-            if (options$jpeg) devs <- c(devs, list(jpeg.Swd))
-            if (!is.null(grd <- options$grdevice))
-                devs <- c(devs, list(get(grd, envir = .GlobalEnv)))
-            for (dev in devs) {
-                dev(name = chunkprefix, width = options$width,
-                    height = options$height, options)
+        if (length(devs)) {
+            for (i in seq_along(devs)) {
+                devs[[i]](name = chunkprefix, width = options$width,
+                          height = options$height, options)
                 err <- tryCatch({
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
                 }, error = function(e) {
-                    grDevices::dev.off()
+                    devoffs[[i]]()
                     stop(conditionMessage(e), call. = FALSE, domain = NA)
                 })
-                grDevices::dev.off()
+                devoffs[[i]]()
             }
 
             if (options$include) {
