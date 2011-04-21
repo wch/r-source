@@ -1221,6 +1221,7 @@ int yychar;
 
 /* The semantic value of the lookahead symbol.  */
 YYSTYPE yylval;
+yylval.num = 0; /* -Wall */
 
 /* Number of syntax errors so far.  */
 int yynerrs;
