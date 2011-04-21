@@ -379,7 +379,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
                 }, error = function(e) {
-                    devoffs[[i]]
+                    devoffs[[i]]()
                     stop(conditionMessage(e), call. = FALSE, domain = NA)
                 })
                 devoffs[[i]]()

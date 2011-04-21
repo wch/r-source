@@ -154,9 +154,6 @@
       \code{output = "stderr"} to select the output or message
       connection.  This is convenient for scripting using something like
 \preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R}
-
-      \item Custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.
     }
   }
 
@@ -267,6 +264,9 @@
 
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
+
+      \item Sweave custom graphics devices can have a custom function
+      \code{foo.off()} to shut them down.      
     }
   }
 
