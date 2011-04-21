@@ -266,7 +266,11 @@
       \pkg{stats4}.
 
       \item Sweave custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.      
+      \code{foo.off()} to shut them down.
+
+      \item \code{trace()} now deals correctly with reference classes
+      and corresponding reference methods (e.g., \code{$trace()})%$
+      have been added.
     }
   }
 

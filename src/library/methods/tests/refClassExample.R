@@ -40,3 +40,12 @@ xEdited[[1,3]] <- xMat[[1,3]]
 stopifnot(identical(xx$data, xEdited))
 xx$undo()
 stopifnot(identical(xx$data, xMat))
+
+## the tracing method
+xx$trace(edit, quote(value <- 0))
+xx$edit(2,2, -1) # traced should assign 0
+stopifnot(identical(xx$data, xEdited))
+xx$untrace(edit)
+xx$edit(1, 3, -1) # now it should use -1
+xEdited[[1,3]] <- -1
+stopifnot(identical(xx$data, xEdited))

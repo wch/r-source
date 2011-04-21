@@ -11,6 +11,7 @@
 \alias{refClass-class}
 \alias{refObject-class}
 \alias{refMethodDef-class}
+\alias{refMethodDefWithTrace-class}
 \alias{SuperClassMethod-class}
 \alias{show,refMethodDef-method}
 \alias{show,refClassRepresentation-method}
@@ -331,6 +332,18 @@ method carries out its own computations, then invokes \code{$initFields()}% $
 to perform standard initialization, as shown in the
 \code{matrixViewer} class in the example below.
 }
+
+\item{\code{$trace(what, ...)}, \code{$untrace(what)} }{ 
+Apply the tracing and debugging facilities of the \code{\link{trace}}
+function to the reference method \code{what}.
+
+All the arguments of the \code{\link{trace}}
+function can be supplied, except for \code{signature}, which is not
+meaningful.
+
+The reference method can be invoked on either an object or the
+generator for the class.  See the section on Debugging below for details.
+}
 } % end describe
 
 Objects also inherit two reserved fields:
@@ -443,6 +456,21 @@ locked (on the other hand, the accessor function can be defined to
 generate an error if called with an argument).
 }
 
+\item{\code{$trace(what, ..., classMethod = FALSE)}}{ %$}{
+Establish a traced version of method \code{what} for objects generated
+from this class.  The generator object tracing works like the
+\code{$trace()}%$
+method for objects from the class, with two differences.
+Since it changes the method definition in the class object itself,
+tracing applies to all objects, not just the one on which the trace
+method is invoked.
+
+Second, the optional argument \code{classMethod = TRUE} allows tracing
+on the methods of the generator object itself, such as \code{$new()}.%$
+By default, \code{what} is interpreted as the name of a method in the
+class for which this object is the generator.
+}
+
 \item{\code{$accessors(...)}}{ %$}{
 A number of
 systems using the OOP programming paradigm recommend or enforce
@@ -539,12 +567,34 @@ is available as well.
 reference class.
 
 }
-\section{NOTE:}{
-The software described here remains under development.  The current implementation (\R
-version 2.12.0) is preliminary and subject to change.
-Developers of inter-system interface software for which the reference
-class model is appropriate are particularly encouraged to experiment
-with \R reference classes.
+\section{Debugging}{
+The standard \R{} debugging and tracing facilities can be applied to
+reference methods.
+Reference methods can be passed to \code{\link{debug}} and its
+relatives from an object to debug further method invocations on that
+object; for example, \code{debug(xx$edit)}. %$
+
+Somewhat more flexible use is available for a reference method version
+of the \code{\link{trace}} function.
+A corresponding \code{$trace()} %$
+reference method is available for
+either an object or for the reference class generator
+(\code{xx$trace()} or \code{mEditor$trace()} in the example below).
+Using \code{$trace()} on an object sets up a tracing
+version for future invocations of the specified method for that
+object.
+Using \code{$trace()} on the generator for the class sets up a
+tracing version for all future objects from that class (and for all
+existing objects that have not yet invoked the traced method, because
+reference methods are cached lazily in the object when first invoked).
+
+In either case, all the arguments to the standard  \code{\link{trace}}
+function are available, except for \code{signature=} which is
+meaningless since reference methods can not be S4 generic functions.
+This includes the typical style \code{trace(what, browser)} for
+interactive debugging and  \code{trace(what, edit = TRUE)} to edit the
+reference method interactively.
+
 }
 \author{
 John Chambers
@@ -637,6 +687,12 @@ mv$methods( initialize =
   finalize = function() {
     dev.off(viewerDevice)
   })
+
+## debugging an object: call browser() in method $edit()
+xx$trace(edit, browser)
+
+## debugging all objects from class mEditor in method $undo()
+mEditor$trace(undo, browser)
 }
 \dontshow{
 removeClass("matrixEditor")
