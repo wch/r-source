@@ -39,7 +39,7 @@
 .TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at =
                               numeric(), print = TRUE, signature =
                               NULL, where = .GlobalEnv, edit = FALSE,
-                              from = NULL, untrace = FALSE) {
+                              from = NULL, untrace = FALSE, classMethod = FALSE) {
     if(is.function(where)) {
         ## start from the function's environment:  important for
         ## tracing from a namespace
@@ -54,7 +54,39 @@
     whereF <- NULL
     pname <- character()
     def <- NULL
-    if(is.function(what)) {
+    tracingWhere <- "in package"
+    refCase <- isS4(where) && (is(where, "envRefClass") ||
+                       is(where, "refClassRepresentation"))
+    if(refCase) {
+        ## some error checking
+        if(!is.null(signature))
+            stop("Argument signature= is not meaningful for tracing reference methods")
+        .where <- where # to avoid substituting where in the eval() below
+        ## A reference class object or its class or its generator
+        if(is(.where, "refObjectGenerator") && !classMethod)
+            .where <- .where$def # should now be the refClassRepresentation
+        if(is(.where, "refClassRepresentation")) {
+            pname <- .where@className
+            .where <- .where@refMethods
+            tracingWhere <- "for class"
+        }
+        else {
+            tracingWhere <- "for object from class"
+            pname <- class(.where)
+        }
+        ## interpret as tracing .where$what
+        def <- eval(substitute(.dollarForEnvRefClass(.where, what)))
+        if(!is(def, "refMethodDef")) {
+            thisName <- substitute(what)
+            stop(gettextf(
+             "\"%s\" is not a method for reference class \"%s\"",
+             as.character(if(is.symbol(thisName)) thisName else what),
+             class(where)), domain = NA)
+        }
+        what <- def@name
+        whereF <- .where
+    }
+    else if(is.function(what)) {
         def <- what
         if(is(def, "genericFunction")) {
             what <- def@generic
@@ -239,17 +271,18 @@
             !is.na(match(pname, loadedNamespaces())) &&
             identical(whereF, getNamespace(pname))
             if(length(pname)==0)  # but not possible from getPackagename ?
-                "\""
+                ""
             else {
                 if(nameSpaceCase)
-                    paste("\" in environment <namespace:",  pname, ">", sep="")
+                    paste(" in environment <namespace:",  pname, ">", sep="")
                 else
-                    paste("\" in package \"",  pname, "\"", sep="")
+                    paste(" ", tracingWhere, " \"",  pname, "\"", sep="")
             }
         }
-        else paste("\" as seen from package \"", fromPackage, "\"", sep="")
-        object <- if(is.null(signature)) " function \"" else " specified method for function \""
-        .message(action, object, what, location)
+        else paste(" as seen from package \"", fromPackage, "\"", sep="")
+        object <- if(refCase) "reference method" else if(is.null(signature)) "function" else "specified method for function"
+        object <- paste(" ", object, " \"", what, "\" ", sep="")
+        .message(action, object, location)
         if(nameSpaceCase && !untrace && exists(what, envir = .GlobalEnv)) {
             untcall<- paste("untrace(\"", what, "\", where = getNamespace(\"",
                             pname, "\"))", sep="")

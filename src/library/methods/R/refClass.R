@@ -36,7 +36,7 @@ self from reference class thisClass.'
             value <- installClassMethod(value, self, field, selfEnv, thisClass)
         }
         else
-            stop(gettextf("Field \"%s\" is not a valid field or method name for reference class \"%s\"",
+            stop(gettextf("\"%s\" is not a valid field or method name for reference class \"%s\"",
                           field, thisClass@className),
                  domain = NA)
     }
@@ -209,9 +209,12 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
     if(exists(what, envir = selfEnv, inherits = FALSE))
         ## either a field or previously cached method
         get(what, envir = selfEnv)
-    else
+    else if(is(x, "envRefClass"))
         ## infer (usually) the method, cache it and return it
         envRefInferField(x, what, getClass(class(x)), selfEnv)
+    else # don't know the reference class(e.g., x is the refMethods env.)
+        stop(gettextf("\"%s\" is not a valid field or method name for this class",
+               what), domain = NA)
 }
 
 .dollarGetsForEnvRefClass <- function(x, name, value) {
@@ -320,6 +323,22 @@ that class itself, but then you could just overrwite the object).
                  stop(gettextf("\"%s\" is not a field in this class", name),
                       domain = NA)
              assign(name, value, envir = .self)
+         },
+         trace = function(..., classMethod = FALSE) {
+             ' Insert trace debugging for the specified method.  The arguments are
+ the same as for the trace() function in package "base".  The first argument
+ should be the name of the method to be traced, quoted or not.
+
+ The additional argument classMethod= can be supplied as TRUE (by name only)
+ in order to trace a method in a generator object (e.g., "new") rather than
+ in the objects generated from that class.
+'
+             .TraceWithMethods(..., where = .self, classMethod = classMethod)
+         },
+         untrace = function(..., classMethod = FALSE) {
+             ' Untrace the method given as the first argument.
+'
+             .TraceWithMethods(..., untrace = TRUE,  where = .self, classMethod = classMethod)
          }
          )
 
@@ -371,6 +390,8 @@ makeEnvRefMethods <- function() {
                             refClassName = "character",
                             superClassMethod = "SuperClassMethod"),
              contains = "function", where = envir)
+    ## and make a traceable version of the class
+    .makeTraceClass(.traceClassName("refMethodDef"), "refMethodDef", FALSE)
     setIs("refMethodDef", "SuperClassMethod", where = envir)
     setClass("envRefClass", contains = c("environment","refClass"), where =envir)
     ## bootstrap envRefClass as a refClass

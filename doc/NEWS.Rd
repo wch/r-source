@@ -22,6 +22,10 @@
 
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
+
+      \item \code{trace()} now deals correctly with reference classes
+      and corresponding reference methods (e.g., \code{$trace()})%$
+      have been added.
     }
   }
 
