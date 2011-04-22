@@ -110,9 +110,12 @@
       \item \code{sort.int()} would strip the class of an object, but
       leave its object bit set.  (Reported by Bill Dunlap.)      
       
-      \item \code{pbirthday()} now solves the approximate formula
-      analytically rather than using \code{uniroot()} on a discontinuous
-      function.
+      \item \code{pbirthday()} and \code{qbirthday()} did not implement
+      the algorithm exactly as given in their reference and so were
+      unnecessarily inaccurate.
+
+      \code{pbirthday()} now solves the approximate formula analytically
+      rather than using \code{uniroot()} on a discontinuous function.
 
       The description of the problem was inaccurate: the probability is
       a tail probablity (\sQuote{2 \emph{or more} people share a birthday})

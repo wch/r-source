@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-19 r55507)
+R version 2.13.0 Patched (2011-04-22 r55587)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3889,23 +3889,23 @@ probability of success
 > 
 > ## the standard version
 > qbirthday()
-[1] 22
+[1] 23
 > 
 > ## same 4-digit PIN number
 > qbirthday(classes = 10^4)
-[1] 118
+[1] 119
 > 
 > ## 0.9 probability of three or more coincident birthdays
 > qbirthday(coincident = 3, prob = 0.9)
-[1] 123
+[1] 135
 > 
 > ## Chance of 4 or more coincident birthdays in 150 people
 > pbirthday(150, coincident = 4)
-[1] 0.3519489
+[1] 0.2690146
 > 
 > ## 100 or more coincident birthdays in 1000 people: very rare
 > pbirthday(1000, coincident = 100)
-[1] 2.306762e-112
+[1] 1.531434e-113
 > 
 > ## Accuracy compared to exact calculation
 > x1 <-  sapply(10:100, pbirthday)

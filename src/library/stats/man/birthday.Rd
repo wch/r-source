@@ -41,10 +41,8 @@ pbirthday(n, classes = 365, coincident = 2)
 
  This formula is approximate.  For \code{coincident = 2} the exact
  computation is straightforward (see the examples) and may be
- preferable.  The approximation appears to be based on a mis-reading of
- Diaconis and Mosteller (1989), and will be improved in future versions
- of \R.  (It returns 22 rather than 23 for the standard problem, and is
- usually an underestimate.) 
+ preferable.  The approximation based on Diaconis and Mosteller (1989),
+ and was a mis-reading prior to \R 2.13.1.
 }
 \references{
   Diaconis, P. and Mosteller F. (1989)
