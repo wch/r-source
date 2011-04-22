@@ -32515,7 +32515,7 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char inflateInit2 ();
+char inflateInit2_ ();
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -32527,7 +32527,7 @@ char inflateInit2 ();
 int
 main ()
 {
-return inflateInit2 ();
+return inflateInit2_ ();
   ;
   return 0;
 }

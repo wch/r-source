@@ -2899,7 +2899,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## We check that both are installed, and that the header >= 1.2.3
 AC_DEFUN([R_ZLIB],
 [if test "x${use_system_zlib}" = xyes; then
-  AC_CHECK_LIB(z, inflateInit2, [have_zlib=yes], [have_zlib=no])
+  AC_CHECK_LIB(z, inflateInit2_, [have_zlib=yes], [have_zlib=no])
   if test "${have_zlib}" = yes; then
     AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
   fi
