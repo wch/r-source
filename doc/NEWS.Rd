@@ -23,7 +23,7 @@
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
 
-      \item \code{trace()} now deals correctly with reference classes
+      \item \code{trace()} now deals correctly with S4 reference classes
       and corresponding reference methods (e.g., \code{$trace()})%$
       have been added.
     }
@@ -33,8 +33,8 @@
     \itemize{
       \item Building the vignette PDFs in packages \pkg{grid} and
       \pkg{utils} is now part of running \command{make} from an SVN
-      checkout on a Unix-alike: a separate \command{make vignettes} is
-      no longer required.
+      checkout on a Unix-alike: a separate \command{make vignettes} step
+      is no longer required.
 
       These vignettes are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
