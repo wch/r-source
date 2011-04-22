@@ -23,6 +23,10 @@ RweaveLatex <- function()
          checkopts = RweaveLatexOptions)
 }
 
+## We definitely do not want '.' in here, to avoid misidentification
+## of file extensions.
+.SweaveValidFilenameRegexp <- "^[[:alnum:]#+-_]+$"
+
 RweaveLatexSetup <-
     function(file, syntax, output = NULL, quiet = FALSE, debug = FALSE,
              stylepath, ...)
@@ -161,6 +165,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 chunkout <- file(paste(chunkprefix, "tex", sep = "."), "w")
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
+                if(!grepl(.SweaveValidFilenameRegexp, chunkout))
+                    warning("file name ", sQuote(chunkout), " is not portable",
+                            call. = FALSE, domain = NA)
             }
         } else chunkout <- object$output
 
@@ -234,10 +241,15 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         srcrefs <- attr(chunkexps, "srcref")
 
-        if (options$figs.only && length(devs))
-            devs[[1L]](name = chunkprefix,
-                       width = options$width, height = options$height,
-                       options)
+        if (length(devs)) {
+            if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
+                warning("file name ", sQuote(chunkprefix), " is not portable",
+                        call. = FALSE, domain = NA)
+            if (options$figs.only)
+                devs[[1L]](name = chunkprefix,
+                           width = options$width, height = options$height,
+                           options)
+        }
         SweaveHooks(options, run = TRUE)
 
         for (nce in seq_along(chunkexps)) {
@@ -624,7 +636,8 @@ RtangleSetup <-
 
     options <- list(split = split, prefix = TRUE,
                     prefix.string = prefix.string,
-                    engine = "R", eval = TRUE)
+                    engine = "R", eval = TRUE,
+                    show.line.nos = FALSE)
     options[names(dots)] <- dots
 
     list(output = output, annotate = annotate, options = options,
@@ -639,6 +652,9 @@ RtangleRuncode <-  function(object, chunk, options)
     chunkprefix <- RweaveChunkPrefix(options)
 
     if (options$split) {
+        if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
+            warning("file name ", sQuote(chunkprefix), " is not portable",
+                    call. = FALSE, domain = NA)
         outfile <- paste(chunkprefix, options$engine, sep = ".")
         if (!object$quiet) cat(options$chunknr, ":", outfile,"\n")
         ## [x][[1L]] avoids partial matching of x
@@ -652,10 +668,19 @@ RtangleRuncode <-  function(object, chunk, options)
         chunkout <- object$output
 
     if (object$annotate) {
+        lnos <- grep("^#line ", chunk, value = TRUE)
+        if(length(lnos)) {
+            srclines <- attr(chunk, "srclines")
+            ## this currently includes the chunk header
+            lno <- if (length(srclines)) paste(min(srclines), max(srclines), sep="-") else srclines
+            fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
+        }
         cat("###################################################\n",
-            "### chunk number ", options$chunknr,
-            ": ", options$label,
-            ifelse(options$eval, "", " eval=FALSE"), "\n",
+            "### code chunk number ", options$chunknr,
+            ": ",
+            if(!is.null(options$label)) options$label
+            else paste(fn, lno, sep = ":"),
+            ifelse(options$eval, "", " (eval = FALSE)"), "\n",
             "###################################################\n",
             file = chunkout, sep = "")
     }
@@ -667,6 +692,8 @@ RtangleRuncode <-  function(object, chunk, options)
         cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",
             file = chunkout, sep = "")
 
+    if (!options$show.line.nos)
+        chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
     if (!options$eval) chunk <- paste("##", chunk)
     cat(chunk, "\n", file = chunkout, sep = "\n")
     if (is.null(options$label) && options$split) close(chunkout)

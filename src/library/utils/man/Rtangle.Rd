@@ -37,6 +37,21 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   If splitting is selected (including by the options in the file), each
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
+
+  The annotation is of one of the forms%
+\preformatted{###################################################
+### code chunk number 3: viewport
+###################################################
+
+###################################################
+### code chunk number 18: grid.Rnw:647-648
+###################################################
+
+###################################################
+### code chunk number 19: trellisdata (eval = FALSE)
+###################################################
+}
+using either the chunk label or the file name and line numbers.
   
   Note that this driver does not simple extract the code chunks verbatim
   because code chunks can re-use earlier chunks.
@@ -62,6 +77,10 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
       the prefix for the filename if the chunk has no label, or if it
       has a label and \code{prefix = TRUE}.  Note that this is used as
       part of filenames, so needs to be portable.}
+    
+    \item{show.line.nos}{logical (\code{FALSE}).  Should the output be
+      annotated with comments showing the line number of the first code line
+      of the chunk?} 
   }
 }
 
