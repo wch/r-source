@@ -19,7 +19,7 @@
 ### FIXMEs
 ### b) It would be nice to allow multiple 'grdevice' options
 
-### Encodings (currently, different from 2.13.x)
+### Encodings (currently, different from 2.13.0)
 ###
 ### SweaveReadFile figures out an encoding, uses it (not currently for
 ### \SweaveInclude files) and returns it as an attribute.  This is

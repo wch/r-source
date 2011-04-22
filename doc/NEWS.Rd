@@ -110,17 +110,6 @@
       means that \samp{t} and \samp{f} are no longer allowed (although
       \code{T} and \code{F} still are).
 
-      \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
-      argument to specify the encoding of the vignette sources if the
-      latter do not contain a \samp{\\usepackage[]{inputenc}} statement
-      specifying a single input encoding.
-
-      \item Package installation tangles the vignette sources: this step
-      now converts the vignette sources from the vignette/package
-      encoding to the current encoding, and records the encoding (if not
-      ASCII) in a comment line at the top of the installed \file{.R}
-      file.
-
       \item The preferred location for vignette sources is now the
       directory \file{vignettes} and not \file{inst/doc}: \command{R CMD
       build} will now re-build vignettes in directory \file{vignettes}
@@ -137,7 +126,8 @@
       \item The \code{RweaveLatex()} driver now runs each figure chunk
       once for each device (and hence by default once for a PDF figure).
       Vignettes which need a persistent graphics device will need to
-      open one for themselves.
+      open one for themselves.  (This is equivalent to the option
+      \code{figs.only = TRUE} introduced in 2.13.1.)
 
       \item Warnings are issued when non-portable filenames are found
       for graphics files (and chunks if \code{split=TRUE}).  Portable
@@ -227,7 +217,9 @@
       C function \samp{gzseek} which has shown erroneous behaviour in
       \code{zlib} 1.2.4 and 1.2.5.
 
-      The \code{zlib} in the R sources is now version 1.2.5.
+      \item The \code{zlib} in the R sources is now version 1.2.5.
+      (This is safe even on 32-bit Linux systems because only the basic
+      interface is used.)
     }
   }
 
@@ -265,10 +257,7 @@
       \item \code{nobs()} now has a \code{"mle"} method in package
       \pkg{stats4}.
 
-      \item Sweave custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.
-
-      \item \code{trace()} now deals correctly with reference classes
+      \item \code{trace()} now deals correctly with S4 reference classes
       and corresponding reference methods (e.g., \code{$trace()})%$
       have been added.
     }
@@ -276,12 +265,36 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item Building the vignettes is now part of running \command{make}
-      from an SVN checkout: a separate \command{make vignettes} is no
-      longer required.
+      \item Building the vignette PDFs in packages \pkg{grid} and
+      \pkg{utils} is now part of running \command{make} from an SVN
+      checkout on a Unix-alike: a separate \command{make vignettes} is
+      no longer required.
 
-      These vignette PDFs are now made with \code{keep.source = TRUE} and
+      These vignettes are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
+    }
+  }
+  
+  \subsection{SWEAVE & VIGNETTES}{
+    \itemize{
+      \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
+      argument to specify the encoding of the vignette sources if the
+      latter do not contain a \samp{\\usepackage[]{inputenc}} statement
+      specifying a single input encoding.
+
+      \item There is a new Sweave option \code{figs.only = TRUE} to run
+      each figure chunk only for each selected graphics device, and not
+      first using the default graphics device.   This will become the
+      default in \R 2.14.0.
+
+      \item Sweave custom graphics devices can have a custom function
+      \code{foo.off()} to shut them down.      
+
+      \item Package installation tangles the vignette sources: this step
+      now converts the vignette sources from the vignette/package
+      encoding to the current encoding, and records the encoding (if not
+      ASCII) in a comment line at the top of the installed \file{.R}
+      file.
     }
   }
 
