@@ -521,14 +521,11 @@ function(dir, outDir, encoding = "")
                                    srcfile, conditionMessage(e)),
                           domain = NA, call. = FALSE))
         }
-        ## remove any zero-length files
-        Rfiles <- Sys.glob("*.R")
-        sizes <- file.info(Rfiles)$size
-        unlink(Rfiles[sizes == 0])
-        ## or simply sub("\\.[RrSs](nw|tex)$", ".R",
-        ##               basename(vignetteIndex$File))
-        Rfiles <-
-            sub("$", ".R", basename(file_path_sans_ext(vignetteIndex$File)))
+        ## remove any files with no R code (they will have header comments).
+        for(f in Sys.glob("*.R"))
+            if(all(grepl("(^###|^[[:space:]]*$)",
+                         readLines(f, warn = FALSE)))) unlink(f)
+        Rfiles <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vignetteIndex$File))
         vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
         setwd(cwd)
     }
