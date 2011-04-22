@@ -99,7 +99,8 @@
 
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
-      \item Option \code{keep.source = TRUE} is now the default.
+      \item Options \code{keep.source = TRUE, figs.only = FALSE}
+      are now the default.
 
       \item The way the type of user-defined options is determined has
       changed.  Previously they were all regarded as logical: now the
@@ -122,23 +123,6 @@
 
       \item \command{R CMD Sweave} and \command{R CMD Stangle} support
       \option{--encoding} and \option{--options} options.
-
-      \item The \code{RweaveLatex()} driver now runs each figure chunk
-      once for each device (and hence by default once for a PDF figure).
-      Vignettes which need a persistent graphics device will need to
-      open one for themselves.  (This is equivalent to the option
-      \code{figs.only = TRUE} introduced in 2.13.1.)
-
-      \item Warnings are issued when non-portable filenames are found
-      for graphics files (and chunks if \code{split=TRUE}).  Portable
-      names are regarded as alphanumeric plus hyphen, underscore, plus
-      and hash (periods cause problems with recognizing file
-      extensions).
-
-      \item The \code{Rtangle()} driver has a new option
-      \code{show.line.nos} which is by default false; if true it
-      annotates code chunks with a comment giving the line number of the
-      first line in the sources (the behaviour of \R >= 2.12.0).
 
       \item \code{Rtangle()} allows \code{output = "stdout"} or
       \code{output = "stderr"} to select the output or message
@@ -225,15 +209,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{pbirthday()} and \code{qbirthday()} did not implement
-      the algorithm exactly as given in their reference and so were
-      unnecessarily inaccurate.
-
       \item \code{fisher.test()} had a buglet: If arguments were
       factors with unused levels, levels were dropped and you'd get an
       error saying that there should be at least two levels,
       inconsistently with pre-tabulated data (Reported by Michael Fay).
-
     }
   }
 }
@@ -267,8 +246,8 @@
     \itemize{
       \item Building the vignette PDFs in packages \pkg{grid} and
       \pkg{utils} is now part of running \command{make} from an SVN
-      checkout on a Unix-alike: a separate \command{make vignettes} is
-      no longer required.
+      checkout on a Unix-alike: a separate \command{make vignettes} step
+      is no longer required.
 
       These vignettes are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
@@ -289,6 +268,17 @@
 
       \item Sweave custom graphics devices can have a custom function
       \code{foo.off()} to shut them down.      
+
+      \item Warnings are issued when non-portable filenames are found
+      for graphics files (and chunks if \code{split=TRUE}).  Portable
+      names are regarded as alphanumeric plus hyphen, underscore, plus
+      and hash (periods cause problems with recognizing file
+      extensions).
+
+      \item The \code{Rtangle()} driver has a new option
+      \code{show.line.nos} which is by default false; if true it
+      annotates code chunks with a comment giving the line number of the
+      first line in the sources (the behaviour of \R >= 2.12.0).
 
       \item Package installation tangles the vignette sources: this step
       now converts the vignette sources from the vignette/package
@@ -333,9 +323,12 @@
       \item \code{sort.int()} would strip the class of an object, but
       leave its object bit set.  (Reported by Bill Dunlap.)      
       
-      \item \code{pbirthday()} now solves the approximate formula
-      analytically rather than using \code{uniroot()} on a discontinuous
-      function.
+      \item \code{pbirthday()} and \code{qbirthday()} did not implement
+      the algorithm exactly as given in their reference and so were
+      unnecessarily inaccurate.
+
+      \code{pbirthday()} now solves the approximate formula analytically
+      rather than using \code{uniroot()} on a discontinuous function.
 
       The description of the problem was inaccurate: the probability is
       a tail probablity (\sQuote{2 \emph{or more} people share a birthday})

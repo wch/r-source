@@ -216,6 +216,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       file to link the input line numbers to the output line numbers.
       This is an experimental feature; see the source code for the
       output format, which is subject to change in future releases.}
+    
+    \item{figs.only:}{logical (\code{FALSE}).
+      By default each figure chunk is run once, then re-run for each
+      selected type of graphics.  That will open a default graphics
+      device for the first figure chunk and use that device for the first
+      evaluation of all subsequent chunks.  If this option is true, the
+      figure chunk is run only for each selected type of graphics, for
+      which a new graphics device is opened and then closed.}
   }
 
   In addition, users can specify further options, either in the header

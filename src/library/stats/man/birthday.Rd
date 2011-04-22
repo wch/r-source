@@ -45,8 +45,7 @@ pbirthday(n, classes = 365, coincident = 2)
 }
 \note{
   Prior to \R 2.14.0 the approximate formula was used even for
-  \code{coincident = 2}, and the implementation contained a further
-  approximation so was less accurate than this version.
+  \code{coincident = 2}.
 }
 \references{
   Diaconis, P. and Mosteller F. (1989)

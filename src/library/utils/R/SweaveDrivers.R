@@ -68,7 +68,7 @@ RweaveLatexSetup <-
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
                     expand = TRUE, # unused by us, for 'highlight'
-                    concordance = FALSE)
+                    concordance = FALSE, figs.only = TRUE)
     options$.defaults <- options
     options[names(dots)] <- dots
 
@@ -175,7 +175,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         } else chunkout <- object$output
 
         srcfile <- srcfilecopy(object$filename, chunk)
-        SweaveHooks(options, run = TRUE)
 
         ## Note that we edit the error message below, so change both
         ## if you change this line:
@@ -249,11 +248,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
                 warning("file name ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
-            devs[[1L]](name = chunkprefix,
-                       width = options$width, height = options$height,
-                       options)
-            SweaveHooks(options, run = TRUE)
+            if (options$figs.only)
+                devs[[1L]](name = chunkprefix,
+                           width = options$width, height = options$height,
+                           options)
         }
+        SweaveHooks(options, run = TRUE)
+
         for (nce in seq_along(chunkexps)) {
             ce <- chunkexps[[nce]]
             if (options$keep.source && nce <= length(srcrefs) &&
@@ -371,11 +372,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         if (length(devs)) {
-            devoffs[[1L]]()        # close first one
-            for (i in seq_along(devs)[-1L]) {
-                devs[[i]](name = chunkprefix,
-                          width = options$width, height = options$height,
-                          options)
+            if (options$figs.only) devoffs[[1L]]()
+            for (i in seq_along(devs)) {
+                if (options$figs.only && i == 1) next
+                devs[[i]](name = chunkprefix, width = options$width,
+                          height = options$height, options)
                 err <- tryCatch({
                     SweaveHooks(options, run = TRUE)
                     eval(chunkexps, envir = .GlobalEnv)
