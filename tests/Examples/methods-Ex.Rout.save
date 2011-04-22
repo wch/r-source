@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-19 r55507)
+R version 2.13.0 Patched (2011-04-22 r55587)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1813,8 +1813,8 @@ A shell of class documentation has been written to the connection
 > ###   activeBindingFunction-class defaultBindingFunction-class
 > ###   uninitializedField-class refClassRepresentation-class
 > ###   refObjectGenerator-class refClass-class refObject-class
-> ###   refMethodDef-class SuperClassMethod-class show,refMethodDef-method
-> ###   show,refClassRepresentation-method
+> ###   refMethodDef-class refMethodDefWithTrace-class SuperClassMethod-class
+> ###   show,refMethodDef-method show,refClassRepresentation-method
 > ### Keywords: programming classes
 > 
 > ### ** Examples
@@ -1915,6 +1915,12 @@ Undoes the last edit() operation
 > ##D   finalize = function() {
 > ##D     dev.off(viewerDevice)
 > ##D   })
+> ##D 
+> ##D ## debugging an object: call browser() in method $edit()
+> ##D xx$trace(edit, browser)
+> ##D 
+> ##D ## debugging all objects from class mEditor in method $undo()
+> ##D mEditor$trace(undo, browser)
 > ## End(Not run)
 > ## Don't show: 
 > removeClass("matrixEditor")
