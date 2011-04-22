@@ -6492,16 +6492,17 @@ packages, R-FAQ, R FAQ}, for a complete list.
 @section Contributed packages and @acronym{CRAN}
 @cindex CRAN
 
-There are hundreds of contributed packages for @R{}, written by many
+There are thousands of contributed packages for @R{}, written by many
 different authors.  Some of these packages implement specialized
 statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@uref{http://CRAN.R-project.org/} and its mirrors), and other
-repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
-The @emph{R FAQ} contains a list that was current at the time of
-release, but the collection of available packages changes frequently.
+(@uref{http://CRAN.R-project.org/} and its mirrors) and other
+repositories such as Bioconductor (@uref{http://www.bioconductor.org/})
+and Omegahat (@uref{http://www.omegahat.org/}).  The @emph{R FAQ}
+contains a list of CRAN packages current at the time of release, but the
+collection of available packages changes very frequently.
 
 @node Namespaces,  , Contributed packages and CRAN, Packages
 @section Namespaces
@@ -7054,7 +7055,8 @@ Currently, the following tools are available.
 
 @table @code
 @item BATCH
-Run @R{} in batch mode.
+Run @R{} in batch mode.  Runs @command{R --restore --save} with possibly
+further options (see @code{?BATCH}).
 @item COMPILE
 (UNIX only) Compile C, C++, Fortran @dots{} files for use with @R{}.
 @item SHLIB
@@ -7113,7 +7115,13 @@ In addition, you can use@footnote{as from @R{} 2.13.0.}  options
 @option{--no-site-file} and @option{--vanilla} between @command{R} and
 @command{CMD}: these affect any @R{} processes run by the tools.  (Here
 @option{--vanilla} is equivalent to @option{--no-environ --no-site-file
---no-init-file}.)
+--no-init-file}.)  However, note that @command{R CMD} does not of itself
+use any @R{} startup files (in particular, neither user nor site
+@file{Renviron} files), and all of the @R{} processes run by these tools
+(except @command{BATCH}) use @option{--no-restore}.  Most use
+@option{--vanilla} and so invoke no @R{} startup files: the current
+exceptions are @command{INSTALL}, @command{REMOVE}, @command{Sweave} and
+@command{SHLIB} (which uses @option{--no-site-file --no-init-file}).
 
 @example
 R CMD @var{cmd} @var{args}
