@@ -620,14 +620,13 @@
                         ## These are packages which have arch-independent
                         ## code in configure.win
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "RBGL",
-                                            "RNetCDF","RODBC",
-                                            "RSiena", "Rcpp", "Runuran",
-                                            "cairoDevice", "foreign",
-                                            "fastICA", "glmnet", "gstat",
-                                            "mvabund", "png", "proj4",
-                                            "randtoolbox", "rngWELL",
-                                            "tcltk2"))
+                                            "PearsonDS", "RBGL", "RGtk2",
+                                            "RNetCDF", "RODBC", "Rcpp",
+                                            "Runuran", "cairoDevice",
+                                            "foreign", "fastICA", "glmnet",
+                                            "gstat", "igraph", "png", "proj4",
+                                            "randtoolbox", "rgdal", "rngWELL",
+                                            "rphast", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                         if(one_only && !force_biarch)
                             warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
