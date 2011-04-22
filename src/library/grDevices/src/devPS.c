@@ -6520,21 +6520,18 @@ static void PDF_Encodings(PDFDesc *pd)
 /* Read HexDecode version of sRGB profile from icc/srgb
  * http://code.google.com/p/ghostscript/source/browse/trunk/gs/iccprofiles/srgb.icc
  */
+#define BUFSIZE2 10000
 static void PDFwritesRGBcolorspace(PDFDesc *pd) 
 {
-    char buf[BUFSIZE], line[50];
+    char buf[BUFSIZE2];
     FILE *fp;
 
-    snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%sicc%ssrgb",
+    snprintf(buf, BUFSIZE2, "%s%slibrary%sgrDevices%sicc%ssrgb",
              R_Home, FILESEP, FILESEP, FILESEP, FILESEP);
-    if (!(fp = R_fopen(R_ExpandFileName(buf), "r")))
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "rb")))
         error(_("Failed to load sRGB colorspace file"));
-    while (!feof(fp)) {
-        char *p;
-	p = fgets(line, 50, fp); /* avoid compiler warning on Fedora */
-	if(!p) error("fgets read error in PDFwritesRGBcolorspace");
-        fprintf(pd->pdffp, "%s", line);
-    }
+    size_t res = fread(buf, 1, BUFSIZE2, fp);
+    res = fwrite(buf, 1, res, pd->pdffp);
     fclose(fp);
 }
 
@@ -6754,15 +6751,11 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* sRGB colorspace */
     pd->pos[5] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\n");
-    fprintf(pd->pdffp,
-            "endobj\n");
+    fprintf(pd->pdffp, "5 0 obj\n[/ICCBased 6 0 R]\nendobj\n");
     pd->pos[6] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp,
-            "6 0 obj\n<< /N 3 /Alternate /DeviceRGB /Length 9433 /Filter /ASCIIHexDecode >>\nstream\n");
+    fprintf(pd->pdffp, "6 0 obj\n");
     PDFwritesRGBcolorspace(pd);    
-    fprintf(pd->pdffp,
-            " >\nendstream\nendobj\n");
+    fprintf(pd->pdffp, "endobj\n");
     
     /*
      * Write out objects representing the encodings

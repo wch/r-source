@@ -1,3 +1,5 @@
+<< /N 3 /Alternate /DeviceRGB /Length 9433 /Filter /ASCIIHexDecode >>
+stream
 00 00 0c 48 4c 69 6e 6f 02 10 00 00 6d 6e 74 72
 52 47 42 20 58 59 5a 20 07 ce 00 02 00 09 00 06
 00 31 00 00 61 63 73 70 4d 53 46 54 00 00 00 00
@@ -194,4 +196,5 @@ ec 86 ed 11 ed 9c ee 28 ee b4 ef 40 ef cc f0 58
 f0 e5 f1 72 f1 ff f2 8c f3 19 f3 a7 f4 34 f4 c2
 f5 50 f5 de f6 6d f6 fb f7 8a f8 19 f8 a8 f9 38
 f9 c7 fa 57 fa e7 fb 77 fc 07 fc 98 fd 29 fd ba
-fe 4b fe dc ff 6d ff ff
+fe 4b fe dc ff 6d ff ff >
+endstream
