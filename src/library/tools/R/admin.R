@@ -528,11 +528,13 @@ function(dir, outDir, encoding = "")
                                    srcfile, conditionMessage(e)),
                           domain = NA, call. = FALSE))
         }
-        ## remove any files with no R code (they will have header comments).
-        for(f in Sys.glob("*.R"))
-            if(all(grepl("(^###|^[[:space:]]*$)",
-                         readLines(f, warn = FALSE)))) unlink(f)
         Rfiles <- sub("\\.[RrSs](nw|tex)$", ".R", basename(vignetteIndex$File))
+        ## remove any files with no R code (they will have header comments).
+        ## if not correctly declared they might not be in the current encoding
+        for(f in Rfiles)
+            if(all(grepl("(^###|^[[:space:]]*$)",
+                         readLines(f, warn = FALSE)), useBytes = TRUE))
+                unlink(f)
         vignetteIndex$R <- ifelse(file.exists(Rfiles), Rfiles, "")
         setwd(cwd)
     }
