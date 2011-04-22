@@ -29,7 +29,7 @@ Report bugs to <deepayan.sarkar@r-project.org>."
 
 
 
-## FIXME: Rd anc C files may be simpler to deal with on Windows if we
+## FIXME: Rd and C files may be simpler to deal with on Windows if we
 ## use R to locate the files, and then call system("etags ...") to tag
 ## them.
 

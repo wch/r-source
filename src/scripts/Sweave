@@ -2,6 +2,6 @@
 
 R_EXE="${R_HOME}/bin/R"
 
-R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-save --no-restore --slave'}
+R_SWEAVE_OPTIONS=${R_SWEAVE_OPTIONS:='--no-restore --slave'}
 
 echo "utils:::.Sweave(\"$1\")" | "${R_EXE}" $R_SWEAVE_OPTIONS
