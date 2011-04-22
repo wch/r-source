@@ -141,12 +141,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   graphics objects at the level of the driver interface.
 
   The \code{version} argument declares the version of PDF that gets
-  produced.  The version must be at least 1.4 for semi-transparent
-  output to be understood, and at least 1.3 if CID fonts are to be used:
+  produced.  Currently the minimum allowed value is 1.3.  The version
+  must be at least 1.4 for semi-transparent output to be understood, and
   if these features are used the version number will be increased (with
-  a warning).  Specifying a low version number is useful if you want to
-  produce PDF output that can be viewed on older or non-Adobe PDF
-  viewers.  (PDF 1.4 requires Acrobat 5 or later.)
+  a warning).  (PDF 1.4 requires Acrobat 5 or later dating from 2001;
+  it is very unlikely not to be supported in a current viewer.)
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with

@@ -94,6 +94,12 @@
 
       \code{unzip()} has a new option to restore file times from those
       recorded (in an unknown timezone) in the zip file.
+
+      \item The \code{pdf()} device makes use of Flate compression:
+      currently used for the ICC profile and raster images and masks.
+
+      The minimum allowed version is now 1.3: versions 1.7 and the
+      upcoming 2.0 are recognized.
     }
   }
 

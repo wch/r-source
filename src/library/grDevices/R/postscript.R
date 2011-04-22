@@ -352,7 +352,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     }
     # Extract version
     version <- old$version
-    versions <- c("1.1", "1.2", "1.3", "1.4", "1.5", "1.6")
+    versions <- c("1.3", "1.4", "1.5", "1.6", "1.7", "2.0")
     if (version %in% versions)
         version <- as.integer(strsplit(version, "[.]")[[1L]])
     else
