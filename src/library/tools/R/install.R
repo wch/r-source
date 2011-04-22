@@ -171,7 +171,11 @@
                     ## FIXME: this does not preserve dates
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     unlink(lp, recursive = TRUE)
-                } else system(paste("mv", shQuote(lp), shQuote(pkgdir)))
+                } else {
+                    ## some shells require that they be run in a known dir
+                    setwd(startdir)
+                    system(paste("mv", shQuote(lp), shQuote(pkgdir)))
+                }
             }
         }
 
