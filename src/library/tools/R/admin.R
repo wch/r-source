@@ -915,7 +915,8 @@ compactPDF <-
                       gs_extras,
                       p), FALSE, FALSE)
         else
-            system2(qpdf, c("--stream-data=compress", p, tf), FALSE, FALSE)
+            system2(qpdf, c("--stream-data=compress", 
+			    "--object-streams=generate", p, tf), FALSE, FALSE)
         if(!res && file.exists(tf)) {
             old <- file.info(p)$size; new <-  file.info(tf)$size
             if(new/old < 0.9 && new < old - 1e4) {

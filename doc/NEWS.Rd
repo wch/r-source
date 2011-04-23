@@ -26,6 +26,13 @@
       \item \code{trace()} now deals correctly with S4 reference classes
       and corresponding reference methods (e.g., \code{$trace()})%$
       have been added.
+
+      \item \command{xz} has been updated to 5.0.2 (very minor bugfix
+      release).
+
+      \item \code{tools::compactPDF()} gets more compression (usually a
+      little, sometimes a lot) by using the compressed object streams of
+      PDF 1.5.
     }
   }
 
