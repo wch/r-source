@@ -8,7 +8,7 @@ include $(R_HOME)/src/gnuwin32/MkRules
 
 INSTFILES = \
   datasets-Ex.Rout.save grDevices-Ex.Rout.save graphics-Ex.Rout.save \
-  grid-Ex.Rout.save methods-Ex.Rout.save splines-Ex.Rout.save \
+  grid-Ex.Rout.save splines-Ex.Rout.save \
   stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
 
 ECHO = echo
