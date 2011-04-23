@@ -220,6 +220,9 @@ install-strip: installdirs
 	@if test -n "$(STRIP_LIBS)"; then \
 	  if test -f $(libR_la); then $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
 	fi
+@WANT_R_STATIC_TRUE@	@$(MAKE) install-strip-static
+install-strip-static: installdirs
+	@$(MAKE) install-static
 	@if test -n "$(STRIP_STATIC_LIBS)"; then \
 	  if test -f libR.a; then $(STRIP_STATIC_LIBS) "$(DESTDIR)$(Rexeclibdir)/libR.a"; fi; \
 	fi
