@@ -81,9 +81,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Default \code{FALSE}.}
   \item{maxRasters}{integer.  The maximum number of raster images that
-    can be stored in this PDF document. }
+    can be stored in this PDF document. Default \code{64}.}
   \item{compress}{logical.  Should PDF streams be generated with Flate
-    compression?}
+    compression?  Default \code{FALSE} (currently).}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -132,17 +132,18 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   code is shared between the drivers.  The native PDF encoding is given
   in file \file{PDFDoc.enc}.
 
-  The PDF produced is fairly simple, with each page being represented
-  as a single stream.  The \R graphics model does not distinguish
-  graphics objects at the level of the driver interface.
+  The PDF produced is fairly simple, with each page being represented as
+  a single stream (possibly compressed and with references to raster
+  images).  The \R graphics model does not distinguish graphics objects
+  at the level of the driver interface.
 
   The \code{version} argument declares the version of PDF that gets
   produced.  The version must be at least 1.2 when compression is used,
   1.4 for semi-transparent output to be understood, and at least 1.3 if
-  CID fonts are to be used: if these features are used the version
-  number will be increased (with a warning).  (PDF 1.4 requires Acrobat
-  5 or later dating from 2001; it is very unlikely not to be supported
-  in a current viewer.)
+  CID fonts are to be used: if any of these features are used the
+  version number will be increased (with a warning).  (PDF 1.4 was first
+  supported by Acrobat 5 in 2001; it is very unlikely not to be
+  supported in a current viewer.)
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
@@ -168,7 +169,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   onto coloured paper, though.
 
   If you are planning to use a large number of raster images in your
-  output, you may need to specify a larger value for \code{maxRasters}.
+  output, you may need to specify a larger value for argument
+  \code{maxRasters}.
 }
 \section{Color models}{
   The default color model is sRGB, and model \code{"gray"} maps sRGB
@@ -249,6 +251,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{\link{Devices}},
   \code{\link{postscript}}.
 #ifdef unix
+  
   \code{\link{cairo_pdf}} and (on Mac OS X only) \code{\link{quartz}}
   for other devices that can produce PDF.
 #endif
