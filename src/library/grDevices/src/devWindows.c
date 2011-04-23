@@ -397,7 +397,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
     const char **afmpaths = NULL;
-    Rboolean useCompression = TRUE;
+    Rboolean useCompression = FALSE;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -421,23 +421,15 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
     /* and then try to get it from .PDF.Options */
     if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
-	int i, done;
-	for (i = 0, done = 0; (done < 3) && (i < length(s)) ; i++) {
-	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
+	for (int i = 0; i < length(s) ; i++) {
+	    if(!strcmp("family", CHAR(STRING_ELT(names, i))))
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
-		done++;
-	    }
-	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
+	    if(!strcmp("bg", CHAR(STRING_ELT(names, i))))
 		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done++;
-	    }
-	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
+	    if(!strcmp("fg", CHAR(STRING_ELT(names, i))))
 		strncpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done++;
-	    }
-	    if(!strcmp("compress", CHAR(STRING_ELT(names, i)))) {
+	    if(!strcmp("compress", CHAR(STRING_ELT(names, i))))
 		useCompression = LOGICAL(VECTOR_ELT(s, i))[0] != 0;
-		done++;
 	}
     }
     if (PDFDeviceDriver(ndd, fn, "special", family, afmpaths, encoding,
@@ -448,10 +440,10 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4,
-			"rgb", TRUE, TRUE, xd->fillOddEven, 64, useCompression))
+			"rgb", TRUE, TRUE, xd->fillOddEven, 64,
+			useCompression))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
-
 
 
 			/* Pixel Dimensions (Inches) */
