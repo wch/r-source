@@ -18,11 +18,11 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, useKerning, fillOddEven, maxRasters)
+    useDingbats, useKerning, fillOddEven, maxRasters, compress)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
-    For use with \code{onefile=FALSE} give a C integer format such
+    For use with \code{onefile = FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
   }
@@ -82,6 +82,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{\link{polygon}} for details.  Default \code{FALSE}.}
   \item{maxRasters}{integer.  The maximum number of raster images that
     can be stored in this PDF document. }
+  \item{compress}{logical.  Should PDF streams be generated with Flate
+    compression?}
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -130,22 +132,17 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   code is shared between the drivers.  The native PDF encoding is given
   in file \file{PDFDoc.enc}.
 
-  \code{pdf} writes uncompressed PDF.  It is primarily intended for
-  producing PDF graphics for inclusion in other documents, and
-  PDF-includers such as \code{pdftex} are usually able to handle
-  compression: there are a large number of PDF compression utilities
-  such as \samp{pdftk}.
-
   The PDF produced is fairly simple, with each page being represented
   as a single stream.  The \R graphics model does not distinguish
   graphics objects at the level of the driver interface.
 
   The \code{version} argument declares the version of PDF that gets
-  produced.  Currently the minimum allowed value is 1.3.  The version
-  must be at least 1.4 for semi-transparent output to be understood, and
-  if these features are used the version number will be increased (with
-  a warning).  (PDF 1.4 requires Acrobat 5 or later dating from 2001;
-  it is very unlikely not to be supported in a current viewer.)
+  produced.  The version must be at least 1.2 when compression is used,
+  1.4 for semi-transparent output to be understood, and at least 1.3 if
+  CID fonts are to be used: if these features are used the version
+  number will be increased (with a warning).  (PDF 1.4 requires Acrobat
+  5 or later dating from 2001; it is very unlikely not to be supported
+  in a current viewer.)
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
