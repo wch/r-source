@@ -328,34 +328,41 @@ cut.Date <-
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)
 		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
+            start$isdst <- -1L
 	    incr <- 7L
 	}
 	if(valid == 3L) {		# months
 	    start$mday <- 1L
+            start$isdst <- -1L
 	    end <- as.POSIXlt(max(x, na.rm = TRUE))
 	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
 	    end <- as.POSIXlt(end + (31 * step * 86400))
 	    end$mday <- 1L
+            end$isdst <- -1L
 	    breaks <- as.Date(seq(start, end, breaks))
 	} else if(valid == 4L) {	# years
 	    start$mon <- 0L
 	    start$mday <- 1L
+            start$isdst <- -1L
 	    end <- as.POSIXlt(max(x, na.rm = TRUE))
 	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
 	    end <- as.POSIXlt(end + (366 * step * 86400))
 	    end$mon <- 0L
 	    end$mday <- 1L
+            end$isdst <- -1L
 	    breaks <- as.Date(seq(start, end, breaks))
 	} else if(valid == 5L) {	# quarters
 	    qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
 	    start$mon <- qtr[start$mon + 1L]
 	    start$mday <- 1L
+            start$isdst <- -1L
 	    maxx <- max(x, na.rm = TRUE)
 	    end <- as.POSIXlt(maxx)
 	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
 	    end <- as.POSIXlt(end + (93 * step * 86400))
 	    end$mon <- qtr[end$mon + 1L]
 	    end$mday <- 1L
+            end$isdst <- -1L
 	    breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
 	    ## 93 days ahead could give an empty level, so
 	    lb <- length(breaks)
