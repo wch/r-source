@@ -141,12 +141,21 @@ static R_INLINE double complex R_cpow_n(double complex X, int k)
 
   2) On Mingw (but not Mingw-w64) the system cpow is explicitly linked
      against the (slow) MSVCRT pow, and gets (0+0i)^Y as 0+0i for all Y.
+
+  3) PPC Mac OS X crashes on powers of 0+0i (at least under Rosetta).
 */
 
 static double complex mycpow (double complex X, double complex Y)
 {
-    double complex Z, yr = creal(Y), yi = cimag(Y); int k;
-    if (yi == 0.0 && yr == (k = (int) yr) && abs(k) <= 65536)
+    double complex Z;
+    double yr = creal(Y), yi = cimag(Y); 
+    int k;
+    if (X == 0.0) {
+	if (yi == 0.0) {
+	    if (yr >= 0.0) Z = R_pow(0.0, yr); 
+	    else Z = R_pow(0.0, yr) + R_NaN*I;
+	} else Z = R_NaN + R_NaN*I;
+    } else if (yi == 0.0 && yr == (k = (int) yr) && abs(k) <= 65536)
 	Z = R_cpow_n(X, k);
     else
 #ifdef HAVE_CPOW
@@ -167,10 +176,10 @@ static double complex mycpow (double complex X, double complex Y)
 	    rho = exp(r * yr - i * yi);
 	}
 #ifdef __GNUC__
-	__real__ Z = rho * cos (theta);
-	__imag__ Z = rho * sin (theta);
+	__real__ Z = rho * cos(theta);
+	__imag__ Z = rho * sin(theta);
 #else
-	Z = rho * cos (theta) + (rho * sin (theta)) * I;
+	Z = rho * cos(theta) + (rho * sin(theta)) * I;
 #endif
     }
 #endif
