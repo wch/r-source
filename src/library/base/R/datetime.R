@@ -377,7 +377,7 @@ as.list.POSIXct <- function(x, ...)
     y <- lapply(seq_along(x), function(i) x[i])
     names(y) <- nms
     y
-}    
+}
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
@@ -778,6 +778,7 @@ cut.POSIXt <-
             step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
             end <- as.POSIXlt(end + (31 * step * 86400))
             end$mday <- 1L
+            end$isdst <- -1L
             breaks <- seq(start, end, breaks)
         } else if(valid == 7L) {        # years
             start$mon <- 0L
@@ -787,6 +788,7 @@ cut.POSIXt <-
             end <- as.POSIXlt(end + (366 * step* 86400))
             end$mon <- 0L
             end$mday <- 1L
+            end$isdst <- -1L
             breaks <- seq(start, end, breaks)
         } else if(valid == 9L) {        # quarters
             qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
@@ -798,6 +800,7 @@ cut.POSIXt <-
             end <- as.POSIXlt(end + (93 * step * 86400))
             end$mon <- qtr[end$mon + 1L]
             end$mday <- 1L
+            end$isdst <- -1L
             breaks <- seq(start, end, paste(step * 3, "months"))
             ## 93 days ahead could give an empty level, so
             lb <- length(breaks)
