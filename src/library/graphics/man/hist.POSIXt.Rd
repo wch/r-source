@@ -46,6 +46,8 @@
   \item{format}{for the x-axis labels. See \code{\link{strptime}}.}
 }
 \details{
+  Note that unlike the default method, \code{breaks} is a required argument.
+
   Using \code{breaks = "quarters"} will create intervals of 3 calendar
   months, with the intervals beginning on January 1, April 1,
   July 1 or October 1, based upon \code{min(x)} as appropriate.
