@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-10     The R Development Core Team
+ *  Copyright (C) 2004-11     The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -353,25 +353,25 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
     s = findVar(install(".PostScript.Options"), xd->psenv);
     if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
-	int i,done;
-	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
+	int i, done;
+	for (i = 0, done = 0; (done<  4) && (i < length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 	    }
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
 		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 		if(strcmp("paper", "default") == 0)
 		    strncpy(paper, "special", 255);
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 	    }
 	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 	    }
 	}
     }
@@ -397,6 +397,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
     const char **afmpaths = NULL;
+    Rboolean useCompression = TRUE;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -412,28 +413,31 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 
     /* Set default values... */
     init_PS_PDF();
-    s = findVar(install(".PostScript.Options"), xd->psenv);
+    s = findVar(install(".PDF.Options"), xd->psenv);
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
     strncpy(bg, "transparent", 256);
     strncpy(fg, "black", 256);
-    /* and then try to get it from .PostScript.Options */
+    /* and then try to get it from .PDF.Options */
     if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
-	int i,done;
-	for (i=0, done=0; (done<3) && (i<length(s)) ; i++) {
+	int i, done;
+	for (i = 0, done = 0; (done < 3) && (i < length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
-		done += 1;
+		done++;
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 	    }
 	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
+		done++;
 	    }
+	    if(!strcmp("compress", CHAR(STRING_ELT(names, i)))) {
+		useCompression = LOGICAL(VECTOR_ELT(s, i))[0] != 0;
+		done++;
 	}
     }
     if (PDFDeviceDriver(ndd, fn, "special", family, afmpaths, encoding,
@@ -444,7 +448,7 @@ static void SaveAsPDF(pDevDesc dd, const char *fn)
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, 0, "R Graphics Output", R_NilValue, 1, 4,
-			"rgb", TRUE, TRUE, xd->fillOddEven, 64, FALSE))
+			"rgb", TRUE, TRUE, xd->fillOddEven, 64, useCompression))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 

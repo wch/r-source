@@ -14,9 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## An environment not exported from namespace:graphics used to
-## pass .PostScript.Options to the windows() device for use in its menus.
-## and also to hide the variable.
+## An environment not exported from namespace:graphics used to pass
+## .PostScript.Options and .PDF.options to the windows() device for
+## use in its menus, and also to hide the variables.
 .PSenv <- new.env()
 
 check.options <-
