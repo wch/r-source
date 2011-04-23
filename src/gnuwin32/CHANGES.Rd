@@ -8,12 +8,17 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \command{R CMD build} no longer attempts to preserve file
-      permissions on Windows, because Windows (unlike POSIX-complant
+      permissions on Windows, because Windows (unlike POSIX-compliant
       OSes) stops read-only files being deleted in version-control
       directories.
       
       \item \code{shell.exec()} now interprets files relative to the current
-      working directory.
+      working directory (rather than \samp{R_HOME}).
+
+      \item Saving to PDF from the menu of a \code{windows()} device
+      used defaults for \code{family}, \code{fg} and \code{bg} from
+      \code{ps.options()} rather than \code{pdf.options()} (but
+      the factory-fresh defaults were the same).
     }
   }
   
