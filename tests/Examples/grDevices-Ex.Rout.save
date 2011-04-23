@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-02-12 r54356)
+R version 2.14.0 Under development (unstable) (2011-04-23 r55608)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -2193,7 +2193,7 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 > 
 > pdf.options(bg = "pink")
 > utils::str(pdf.options())
-List of 18
+List of 19
  $ width      : num 7
  $ height     : num 7
  $ onefile    : logi TRUE
@@ -2212,6 +2212,7 @@ List of 18
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
  $ maxRasters : num 64
+ $ compress   : logi FALSE
 > pdf.options(reset = TRUE) # back to factory-fresh
 > 
 > 
