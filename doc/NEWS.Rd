@@ -81,9 +81,6 @@
       
       \item \code{pbirthday()} and \code{qbirthday()} now use exact
       calculations for \code{coincident = 2}.
-
-      \item \code{(0+0i)^y} negative \code{y} is the same as
-      \code{(1/(0+0i))^-y}, \code{Inf+NaNi}, on all platforms
       
       \item \code{unzip()} and \code{unz()} connection have been updated
       with support for more recent Zip64 features (including large file
