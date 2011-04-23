@@ -45,6 +45,9 @@
 
       These vignettes are now made with \code{keep.source = TRUE} and
       hence will be laid out differently.
+
+      \item \command{make install-strip} failed under some configuration
+      options.
     }
   }
   
