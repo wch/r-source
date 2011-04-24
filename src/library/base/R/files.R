@@ -120,9 +120,11 @@ file.copy <- function(from, to,
         stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { # care: file.create could fail but file.append work.
     	okay[okay] <- file.create(to[okay])
-    	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
-        if(copy.mode)
-            Sys.chmod(to[okay], file.info(from[okay])$mode, TRUE)
+    	if(any(okay)) {
+            okay[okay] <- file.append(to[okay], from[okay])
+            if(copy.mode)
+                Sys.chmod(to[okay], file.info(from[okay])$mode, TRUE)
+        }
     }
     okay
 }
