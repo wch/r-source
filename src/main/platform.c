@@ -853,7 +853,11 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     for (i = 0; i < n; i++) {
 #ifdef Win32
-	const wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
+	wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
+	/* 'Sharpie and fellow ignorami use trailing / on Windows,
+	   where it is not valid */
+	wchar_t *p = wfn + (wcslen(wfn) - 1);
+	if (*p == L'/' || *p == L'\\') *p = 0;
 #else
 	const char *efn = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
 #endif

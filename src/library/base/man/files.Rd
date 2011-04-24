@@ -124,6 +124,9 @@ file.link(from, to)
 
   Most of these functions accept UTF-8 filepaths not valid in the
   current locale.
+
+  User error in supplying invalid file names (and note that \file{foo/}
+  \emph{is} invalid on Windows) has undefined consequences.
 }
 #endif
 
