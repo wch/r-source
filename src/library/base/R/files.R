@@ -103,7 +103,7 @@ file.copy <- function(from, to,
     if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
-    if (nt == 1 && file.exists(to) && file.info(to)$isdir) {
+    if (nt == 1 && isTRUE(file.info(to)$isdir)) {
         ## on Windows we need \ for the compiled code (e.g. mkdir).
         if(.Platform$OS.type == "windows") {
             from <- gsub("/", "\\", from, fixed = TRUE)
