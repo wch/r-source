@@ -17,7 +17,7 @@ ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS) $(CPICFLA
 
 SOURCES = adler32.c compress.c crc32.c deflate.c infback.c \
   inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c
-HEADERS = crc32.h deflate.h gzguts.h inffast.h inffixed.h inflate.h inftrees.h \
+HEADERS = crc32.h deflate.h inffast.h inffixed.h inflate.h inftrees.h \
   trees.h zconf.h zlib.h zutil.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
@@ -26,7 +26,6 @@ OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = R_changes README Makefile.in Makefile.win Rzlib.def \
-  gzclose.c gzlib.c gzread.c gzwrite.c \
   $(SOURCES) $(HEADERS)
 noinst_LIBRARIES = @BUILD_ZLIB_TRUE@ libz.a
 libz_a_SOURCES = $(SOURCES)
