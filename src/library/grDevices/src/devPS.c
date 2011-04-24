@@ -552,8 +552,14 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 #endif
 
     if (!(fp = R_gzopen(R_ExpandFileName(buf), "rb"))) {
-	warning(_("afm file '%s' could not be opened"), R_ExpandFileName(buf));
-	return 0;
+	/* try uncompressed version */
+	snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%safm%s%s",
+		 R_Home, FILESEP, FILESEP, FILESEP, FILESEP, fontpath);
+	if (!(fp = R_gzopen(R_ExpandFileName(buf), "rb"))) {
+	    warning(_("afm file '%s' could not be opened"), 
+		    R_ExpandFileName(buf));
+	    return 0;
+	}
     }
 
     metrics->KernPairs = NULL;
