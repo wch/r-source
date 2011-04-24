@@ -53,6 +53,10 @@
       used defaults for \code{family}, \code{fg} and \code{bg} from
       \code{ps.options()} rather than \code{pdf.options()} (but
       the factory-fresh defaults were the same).
+
+      \item \code{file.info()} now accepts \sQuote{file} names with
+      trailing directory separators:  those are not valid on Windows but
+      \R has some ignorant users.% Charlie Sharpsteen, Yihui Xie
     }
   }
   
