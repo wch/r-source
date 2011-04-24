@@ -7082,7 +7082,7 @@ static void PDF_NewPage(const pGEcontext gc,
     fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Page\n/Parent 3 0 R\n/Contents %d 0 R\n/Resources 4 0 R\n>>\nendobj\n",
 	    pd->nobjs, pd->nobjs+1);
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\r\n",
+    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\n",
 	    pd->nobjs, pd->nobjs + 1);
     pd->startstream = (int) ftell(pd->pdffp);
     /*
