@@ -54,12 +54,14 @@ mbcsToSbcs(const char *in, char *out, const char *encoding, int enc);
 extern int errno;
 #endif
 
-#ifdef Win32
-# define USE_GZIO
-#endif
+#include "zlib.h"
+
+#define USE_GZIO
 
 #ifdef USE_GZIO
-#include <zlib.h>
+extern gzFile R_gzopen (const char *path, const char *mode);
+extern char *R_gzgets(gzFile file, char *buf, int len);
+extern int R_gzclose (gzFile file);
 #endif
 
 #define INVALID_COL 0xff0a0b0c
@@ -562,7 +564,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 #endif
 
 #ifdef USE_GZIO
-    if (!(fp = gzopen(R_ExpandFileName(buf), "rb"))) {
+    if (!(fp = R_gzopen(R_ExpandFileName(buf), "rb"))) {
 #else
     if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) {
 #endif
@@ -583,7 +585,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
 #ifdef USE_GZIO
-    while (gzgets(fp, buf, BUFSIZE)) {
+    while (R_gzgets(fp, buf, BUFSIZE)) {
 #else
     while (fgets(buf, BUFSIZE, fp)) {
 #endif
@@ -693,7 +695,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
     }
     metrics->nKP = i;
 #ifdef USE_GZIO
-    gzclose(fp);
+    R_gzclose(fp);
 #else
     fclose(fp);
 #endif
@@ -716,7 +718,7 @@ PostScriptLoadFontMetrics(const char * const fontpath,
     return 1;
 pserror:
 #ifdef USE_GZIO
-    gzclose(fp);
+    R_gzclose(fp);
 #else
     fclose(fp);
 #endif
@@ -5615,7 +5617,6 @@ static int* initMaskArray(int numRasters) {
     return masks;
 }
 
-#include "zlib.h"
 static void writeRasterXObject(rasterImage raster, int n,
 			       int mask, int maskObj, PDFDesc *pd)
 {

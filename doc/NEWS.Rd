@@ -202,7 +202,11 @@
 
       \item The \code{zlib} in the R sources is now version 1.2.5.
       (This is safe even on 32-bit Linux systems because only the basic
-      interface is used.)
+      interface is used currently.)
+      
+      \item The \file{.afm} files in package \pkg{grDevices} are now
+      installed as compressed files (as long done on Windows), saving ca
+      2MB on the installed size.
     }
   }
 

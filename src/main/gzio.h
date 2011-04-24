@@ -181,7 +181,7 @@ static void check_header(gz_stream *s)
     s->z_err = s->z_eof ? Z_DATA_ERROR : Z_OK;
 }
 
-static gzFile R_gzopen (const char *path, const char *mode)
+gzFile R_gzopen (const char *path, const char *mode)
 {
     int err;
     int level = Z_DEFAULT_COMPRESSION; /* compression level */
@@ -364,6 +364,18 @@ static int R_gzread (gzFile file, voidp buf, unsigned len)
     return (int)(len - s->stream.avail_out);
 }
 
+/* for devPS.c */
+char *R_gzgets(gzFile file, char *buf, int len)
+{
+    char *b = buf;
+    if (buf == Z_NULL || len <= 0) return Z_NULL;
+
+    while (--len > 0 && R_gzread(file, buf, 1) == 1 && *buf++ != '\n') ;
+    *buf = '\0';
+    return b == buf && len > 0 ? Z_NULL : b;
+}
+
+
 static int R_gzwrite (gzFile file, voidpc buf, unsigned len)
 {
     gz_stream *s = (gz_stream*) file;
@@ -510,7 +522,7 @@ static int R_gzseek (gzFile file, Rz_off_t offset, int whence)
     return 0;
 }
 
-static int R_gzclose (gzFile file)
+int R_gzclose (gzFile file)
 {
     gz_stream *s = (gz_stream*) file;
     if (s == NULL) return Z_STREAM_ERROR;
