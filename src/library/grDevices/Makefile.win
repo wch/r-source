@@ -21,6 +21,7 @@ all:
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo instdirs
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazy
+	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm
 
 
 include $(top_srcdir)/share/make/basepkg.mk

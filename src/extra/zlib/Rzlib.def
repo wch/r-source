@@ -1,11 +1,13 @@
 EXPORTS
  adler32
  adler32_combine
+ adler32_combine64
  compress
  compress2
  compressBound
  crc32
  crc32_combine
+ crc32_combine64
  deflate
  deflateBound
  deflateCopy
@@ -19,25 +21,6 @@ EXPORTS
  deflateSetHeader
  deflateTune
  get_crc_table   
- gzclearerr
- gzclose
- gzdirect
- gzdopen
- gzeof
- gzerror
- gzflush
- gzgetc
- gzgets
- gzopen
- gzputc
- gzputs
- gzread
- gzrewind
- gzseek
- gzsetparams
- gztell
- gzungetc
- gzwrite
  inflate
  inflateBack
  inflateBackEnd
@@ -47,8 +30,10 @@ EXPORTS
  inflateGetHeader
  inflateInit2_
  inflateInit_
+ inflateMark
  inflatePrime
  inflateReset
+ inflateReset2
  inflateSetDictionary
  inflateSync
  uncompress

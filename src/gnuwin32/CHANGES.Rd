@@ -28,6 +28,14 @@
       mature enough.
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \file{Rzlib.dll} (used in packages \emph{via}
+      \samp{$(ZLIB_LIBS)}) does not include the buggy gzio
+      interface from zlib 1.2.5.
+    }
+  }
 }
   
 \section{CHANGES IN R VERSION 2.13.0 patched}{
