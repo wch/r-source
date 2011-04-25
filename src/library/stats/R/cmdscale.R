@@ -27,10 +27,10 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     } else {
         rn <- attr(d, "Labels")
 	x <- matrix(0, n, n)
-        if(add) d0 <- x
+        if (add) d0 <- x
 	x[row(x) > col(x)] <- d^2
 	x <- x + t(x)
-        if(add) {
+        if (add) {
             d0[row(x) > col(x)] <- d
             d <- d0 + t(d0)
         }
