@@ -336,7 +336,6 @@ void gcopy(drawing d, drawing d2, rect r)
     BitBlt(dc, r.x, r.y, r.width, r.height, sdc, r.x, r.y, SRCCOPY);
 }
 
-/* FIXME: could allow per-pixel alpha */
 void gcopyalpha(drawing d, drawing d2, rect r, int alpha) 
 {
     if(alpha <= 0) return;
@@ -351,6 +350,23 @@ void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
 		   sdc, r.x, r.y, r.width, r.height,
 		   bl);
     }
+}
+
+bitmap imagetobitmap32(image img);
+
+void gcopyalpha2(drawing d, image src, rect r) 
+{
+    HDC dc = GETHDC(d), sdc;
+    BLENDFUNCTION bl;
+    bitmap bm = imagetobitmap32(src);
+    sdc = GETHDC(bm);
+    bl.BlendOp = AC_SRC_OVER;
+    bl.BlendFlags = 0;
+    bl.SourceConstantAlpha = 255;
+    bl.AlphaFormat = AC_SRC_ALPHA;
+    AlphaBlend(dc, r.x, r.y, r.width, r.height,
+	       sdc, 0, 0, r.width, r.height, bl);
+    del(bm);
 }
 
 void gdrawellipse(drawing d, int width, rgb border, rect r, int fast,

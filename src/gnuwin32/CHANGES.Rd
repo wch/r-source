@@ -15,6 +15,9 @@
 
       \item \command{R CMD build} once again attempts to preserve file
       permissions on Windows.
+
+      \item The \code{windows()} family of devices now supports()
+      per-pixel alpha for raster images.
     }
   }
 

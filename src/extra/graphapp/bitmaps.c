@@ -252,6 +252,57 @@ bitmap imagetobitmap(image img)
     return obj;
 }
 
+bitmap imagetobitmap32(image img)
+{
+    if (! img) return NULL;
+
+    int width = getwidth(img), height = getheight(img);
+    rgb *pixel32 = (rgb *) getpixels(img);
+
+    /* create DIB info in memory */
+    unsigned size = sizeof(BITMAPINFOHEADER) + 4;
+    size = size + 4 * width * height;
+
+    byte *block = array(size, byte);
+    BITMAPINFO *bmi = (BITMAPINFO *) block;	
+
+    /* assign header info */
+    bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bmi->bmiHeader.biWidth = width;
+    bmi->bmiHeader.biHeight = height;
+    bmi->bmiHeader.biPlanes = 1;
+    bmi->bmiHeader.biBitCount = 32;
+    bmi->bmiHeader.biCompression = BI_RGB;
+    bmi->bmiHeader.biClrUsed = 0;
+
+    /* assign the bitmap data itself */
+    rgb *data4 = (rgb *) (& bmi->bmiColors[0]);
+
+    for (int y = 0; y < height; y++) {
+	unsigned i = ((height - y - 1) * width);
+	memcpy(&data4[i], &pixel32[y*width], 4*width);
+    }
+
+    /* create the bitmap from the DIB data */
+    HDC screendc = GetDC(0);
+    HBITMAP hb = CreateDIBitmap(screendc, &bmi->bmiHeader, CBM_INIT,
+				data4, bmi, DIB_RGB_COLORS);
+    ReleaseDC(0, screendc);
+    discard(block);
+
+    /* create the bitmap */
+    bitmap obj = new_object(BitmapObject, hb, get_bitmap_base());
+    if (! obj) {
+	DeleteObject(hb);
+	return NULL;
+    }
+    obj->rect = rect(0, 0, width, height);
+    obj->depth = 32;
+    obj->die = private_delbitmap;
+
+    return obj;
+}
+
 #ifdef UNUSED
 /*
  *  The loadicon function returns a HBITMAP of an ICON from resources.
