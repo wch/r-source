@@ -287,6 +287,13 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
+    
+    if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
+    	subset <- oldPkgs
+    	oldPkgs <- NULL
+    } else 
+    	subset <- NULL
+    
     if(is.null(oldPkgs)) {
         ## since 'available' is supplied, 'contriburl' and 'method' are unused
 	oldPkgs <- old.packages(lib.loc = lib.loc,
@@ -294,9 +301,14 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 				available = available, checkBuilt = checkBuilt)
 	if(is.null(oldPkgs))
 	    return(invisible())
+    } else if (!(is.matrix(oldPkgs) && is.character(oldPkgs)))
+	stop("invalid 'oldPkgs'; must be a character vector or a result from old.packages()")
+	
+    if(!is.null(subset)) {
+    	oldPkgs <- oldPkgs[ rownames(oldPkgs) %in% subset, ,drop=FALSE]
+    	if (nrow(oldPkgs) == 0)
+    	    return(invisible())
     }
-    else if(!(is.matrix(oldPkgs) && is.character(oldPkgs)))
-	stop("invalid 'oldPkgs'; must be a result from old.packages()")
 
     update <- if(is.character(ask) && ask == "graphics") {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"

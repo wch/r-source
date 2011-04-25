@@ -93,6 +93,10 @@
       \item The \code{pdf()} device makes use of Flate compression: this
       controlled by the new logical argument \code{compress}, and is
       enabled by default.
+      
+      \item \code{update.packages()} now accepts a character vector of
+      package names for the \code{oldPkgs} argument.  (Suggestion of
+      Tal Galili.)
     }
   }
 
