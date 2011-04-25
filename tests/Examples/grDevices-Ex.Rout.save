@@ -2211,8 +2211,8 @@ List of 19
  $ useDingbats: logi TRUE
  $ useKerning : logi TRUE
  $ fillOddEven: logi FALSE
- $ maxRasters : num 64
- $ compress   : logi FALSE
+ $ maxRasters : int 64
+ $ compress   : logi TRUE
 > pdf.options(reset = TRUE) # back to factory-fresh
 > 
 > 

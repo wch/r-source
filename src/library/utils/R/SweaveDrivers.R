@@ -67,6 +67,7 @@ RweaveLatexSetup <-
                     split = FALSE, strip.white = "true", include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
+                    pdf.compress = grDevices::pdf.options()$compress,
                     expand = TRUE, # unused by us, for 'highlight'
                     concordance = FALSE, figs.only = TRUE)
     options$.defaults <- options
@@ -95,7 +96,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             grDevices::pdf(file = paste(chunkprefix, "pdf", sep = "."),
                            width = width, height = height,
                            version = options$pdf.version,
-                           encoding = options$pdf.encoding)
+                           encoding = options$pdf.encoding,
+                           compress = options$pdf.compress)
         eps.Swd <- function(name, width, height, ...)
             grDevices::postscript(file = paste(name, "eps", sep = "."),
                                   width = width, height = height,

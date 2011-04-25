@@ -91,8 +91,8 @@
       recorded (in an unknown timezone) in the zip file.
 
       \item The \code{pdf()} device makes use of Flate compression: this
-      is not yet the default, controlled by the new logical argument
-      \code{compress}.
+      controlled by the new logical argument \code{compress}, and is
+      enabled by default.
     }
   }
 
@@ -127,6 +127,9 @@
       \code{output = "stderr"} to select the output or message
       connection.  This is convenient for scripting using something like
 \preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R}
+
+      \item There is a new option \code{pdf.compress} controlling
+      whether PDF figures are generated using Flate compression.
     }
   }
 

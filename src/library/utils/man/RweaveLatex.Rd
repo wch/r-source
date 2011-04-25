@@ -187,8 +187,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures
       should be generated.  Ignored if \code{fig = FALSE}.}
     
-    \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
-      the version and encoding.  Defaults taken from \code{pdf.options()}.}
+    \item{pdf.version, pdf.encoding, pdf.compress:}{passed to
+      \code{\link{pdf}} to set the version, encoding and compression (or
+      not).  Defaults taken from \code{pdf.options()}.}
     
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.  Only
