@@ -140,17 +140,16 @@ int has_transparent_pixels(image img)
 /*
  *  Create a bitmap version of an image.
  */
+// See also http://msdn.microsoft.com/en-us/library/dd183353%28v=VS.85%29.aspx
 bitmap imagetobitmap(image img)
 {
     unsigned row_bytes;
     unsigned size;
 
-    if (! img)
-	return NULL;
+    if (!img) return NULL;
 
     /* remember some facts about the image */
     int width = getwidth(img), height = getheight(img);
-//    depth = (getdepth(img) == 8) ? 8 : 24;
     int depth = getdepth(img);
     rgb *palette = getpalette(img);
     int palsize = getpalettesize(img);
@@ -158,15 +157,12 @@ bitmap imagetobitmap(image img)
     rgb *pixel32 = (rgb *) pixel8;
 
     /* create DIB info in memory */
-    size = sizeof(BITMAPINFOHEADER) + 4;
-    if (depth == 8) {
-	row_bytes = ((width + 3) / 4) * 4;
-	size += (sizeof(RGBQUAD) * palsize);
-    } else if (depth == 24) {
-	row_bytes = (((width * 3) + 3) / 4) * 4;
-    } else {
-	row_bytes = width;
-    }
+    size = sizeof(BITMAPINFOHEADER) + 4; /* Why + 4 ? */
+    size += (sizeof(RGBQUAD) * palsize);
+    /* rows need to be whole (4-byte) words */
+    if (depth == 8) row_bytes = ((width + 3) / 4) * 4;
+    else if (depth == 24) row_bytes = (((width * 3) + 3) / 4) * 4;
+    else row_bytes = 4 * width;
     size += (row_bytes * height);
 
     /* create the block, align on LONG boundary
@@ -180,7 +176,7 @@ bitmap imagetobitmap(image img)
     /* assign header info */
     bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     bmi->bmiHeader.biWidth = width;
-    bmi->bmiHeader.biHeight = height;
+    bmi->bmiHeader.biHeight = -height;  // use negative value to flip
     bmi->bmiHeader.biPlanes = 1;
     bmi->bmiHeader.biBitCount = depth;
     bmi->bmiHeader.biCompression = BI_RGB;
@@ -197,35 +193,33 @@ bitmap imagetobitmap(image img)
     }
 
     /* assign the bitmap data itself */
-    byte *data = (byte *) (& bmi->bmiColors[palsize]);
+    byte *data = (byte *) (&bmi->bmiColors[palsize]);
 
     if (depth == 8)
 	for (unsigned y = 0; y < height; y++) {
+	    // memcpy(data + y * row_bytes, pixel8 + y * width, width);
 	    for (unsigned x = 0; x < width; x++) {
-		int i = ((height - y - 1) * row_bytes) + x;
-		data[i] = pixel8[y * width + x];
+		int i = y * row_bytes + x;
+		data[y * row_bytes + x] = pixel8[y * width + x];
 	    }
 	}
     else if (depth == 24)
 	for (unsigned y = 0; y < height; y++) {
 	    for (unsigned x = 0; x < width; x++) {
 		rgb colour = pixel32[y * width + x];
-		int i = ((height - y - 1) * row_bytes) + (x * 3);
-		data[i] = getblue(colour);
+		int i = y * row_bytes + 3*x;
+		data[i]   = getblue(colour);
 		data[i+1] = getgreen(colour);
 		data[i+2] = getred(colour);
 	    }
 	}
-    else
-	for (unsigned y = 0; y < height; y++) {
-	    unsigned i = (height - y - 1) * width;
-	    memcpy(data+4*i, &pixel32[y*width], 4*width);
-	}
+    else memcpy(data, pixel32, 4*height*width);
 
-    /* create the bitmap from the DIB data */
+    /* Create the bitmap from the DIB data.
+       Could also use CreateDIBsection */
 
     HDC screendc = GetDC(0);
-    HBITMAP hb = CreateDIBitmap(screendc, & bmi->bmiHeader, CBM_INIT,
+    HBITMAP hb = CreateDIBitmap(screendc, &bmi->bmiHeader, CBM_INIT,
 				data, bmi, DIB_RGB_COLORS);
     ReleaseDC(0, screendc);
 
@@ -234,64 +228,12 @@ bitmap imagetobitmap(image img)
 
     /* create the bitmap */
     bitmap obj = new_object(BitmapObject, hb, get_bitmap_base());
-    if (! obj) {
+    if (!obj) {
 	DeleteObject(hb);
 	return NULL;
     }
     obj->rect = rect(0, 0, width, height);
     obj->depth = depth;
-    obj->die = private_delbitmap;
-
-    return obj;
-}
-
-// See also http://msdn.microsoft.com/en-us/library/dd183353%28v=VS.85%29.aspx
-bitmap imagetobitmap32(image img)
-{
-    if (! img) return NULL;
-
-    int width = getwidth(img), height = getheight(img);
-    rgb *pixel32 = (rgb *) getpixels(img);
-
-    /* create DIB info in memory */
-    unsigned size = sizeof(BITMAPINFOHEADER) + 4;
-    size += 4 * width * height;
-
-    byte *block = array(size, byte);
-    BITMAPINFO *bmi = (BITMAPINFO *) block;	
-
-    /* assign header info */
-    bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    bmi->bmiHeader.biWidth = width;
-    bmi->bmiHeader.biHeight = height;
-    bmi->bmiHeader.biPlanes = 1;
-    bmi->bmiHeader.biBitCount = 32;
-    bmi->bmiHeader.biCompression = BI_RGB; // format is 0xaarrggbb
-    bmi->bmiHeader.biClrUsed = 0;
-
-    /* assign the bitmap data itself */
-    rgb *data4 = (rgb *) (& bmi->bmiColors[0]);
-
-    for (int y = 0; y < height; y++) {
-	unsigned i = (height - y - 1) * width;
-	memcpy(&data4[i], &pixel32[y*width], 4*width);
-    }
-
-    /* create the bitmap from the DIB data */
-    HDC screendc = GetDC(0);
-    HBITMAP hb = CreateDIBitmap(screendc, &bmi->bmiHeader, CBM_INIT,
-				data4, bmi, DIB_RGB_COLORS);
-    ReleaseDC(0, screendc);
-    discard(block);
-
-    /* create the bitmap */
-    bitmap obj = new_object(BitmapObject, hb, get_bitmap_base());
-    if (! obj) {
-	DeleteObject(hb);
-	return NULL;
-    }
-    obj->rect = rect(0, 0, width, height);
-    obj->depth = 32;
     obj->die = private_delbitmap;
 
     return obj;

@@ -350,8 +350,6 @@ void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
     }
 }
 
-bitmap imagetobitmap32(image img);
-
 void gcopyalpha2(drawing d, image src, rect r) 
 {
     BLENDFUNCTION bl;
@@ -359,7 +357,7 @@ void gcopyalpha2(drawing d, image src, rect r)
     bl.BlendFlags = 0;
     bl.SourceConstantAlpha = 255; /* per-pixel alpha only */
     bl.AlphaFormat = AC_SRC_ALPHA;
-    bitmap bm = imagetobitmap32(src);
+    bitmap bm = imagetobitmap(src);
     AlphaBlend(GETHDC(d), r.x, r.y, r.width, r.height,
 	       GETHDC(bm), 0, 0, r.width, r.height, bl);
     del(bm);
