@@ -340,15 +340,13 @@ void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
 {
     if(alpha <= 0) return;
     {
-	HDC dc = GETHDC(d), sdc = GETHDC(d2);
 	BLENDFUNCTION bl;
 	bl.BlendOp = AC_SRC_OVER;
 	bl.BlendFlags = 0;
 	bl.SourceConstantAlpha = alpha;
 	bl.AlphaFormat = 0;
-        AlphaBlend(dc, r.x, r.y, r.width, r.height,
-		   sdc, r.x, r.y, r.width, r.height,
-		   bl);
+        AlphaBlend(GETHDC(d), r.x, r.y, r.width, r.height,
+		   GETHDC(d2), r.x, r.y, r.width, r.height, bl);
     }
 }
 
@@ -356,16 +354,14 @@ bitmap imagetobitmap32(image img);
 
 void gcopyalpha2(drawing d, image src, rect r) 
 {
-    HDC dc = GETHDC(d), sdc;
     BLENDFUNCTION bl;
-    bitmap bm = imagetobitmap32(src);
-    sdc = GETHDC(bm);
     bl.BlendOp = AC_SRC_OVER;
     bl.BlendFlags = 0;
-    bl.SourceConstantAlpha = 255;
+    bl.SourceConstantAlpha = 255; /* per-pixel alpha only */
     bl.AlphaFormat = AC_SRC_ALPHA;
-    AlphaBlend(dc, r.x, r.y, r.width, r.height,
-	       sdc, 0, 0, r.width, r.height, bl);
+    bitmap bm = imagetobitmap32(src);
+    AlphaBlend(GETHDC(d), r.x, r.y, r.width, r.height,
+	       GETHDC(bm), 0, 0, r.width, r.height, bl);
     del(bm);
 }
 

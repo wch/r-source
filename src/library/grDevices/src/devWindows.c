@@ -2708,7 +2708,13 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
     /* Create image object */
     img = newimage(w, h, 32);
 
-    /* Set the image pixels from the raster */
+    /* Set the image pixels from the raster.
+       Windows uses 0xaarrggbb.
+       AlphaBlend requires pre-multiplied alpha, that is it uses
+       (src + (1-alpha)*dest) for each pixel colour.
+       We could re-order the lines here (top to bottom) to avoid a copy
+       in imagetobitmap.
+     */
     imageData = (byte *) R_alloc(4*w*h, sizeof(byte));
     for (int i = 0; i < w*h; i++) {
         byte alpha = R_ALPHA(raster[i]);
