@@ -34,16 +34,22 @@ compactPDF(paths, qpdf = Sys.getenv("R_QPDF", "qpdf"),
 }
 \details{
   This by default makes use of \command{qpdf}, available from
-  \url{http://qpdf.sourceforge.net/}, including a Windows binary.  If
-  \code{gs_cmd} is non-empty, GhostScript is used.
+  \url{http://qpdf.sourceforge.net/} (including as a Windows binary) and
+  included with the CRAN Mac OS X distribution of \R.  If \code{gs_cmd}
+  is non-empty, GhostScript will used instead.
 
   \command{qpdf} or \command{gs_cmd} is run on all PDF files found, and
-  those which are reduced by at least 10\% and 10Kb are replaced.
+  those which are reduced in size by at least 10\% and 10Kb are
+  replaced.
   
-  The main approach of \command{qpdf} is to (losslessly) compress PDF
-  streams.  Ghostscript does that and more (including downsampling
-  images) and consequently is much slower and may lose quality (but can
-  also produce much smaller PDF files).
+  The strategy of our use of \command{qpdf} is to (losslessly) compress
+  PDF streams and objects.  Ghostscript does that and more (including
+  downsampling images) and consequently is much slower and may lose
+  quality (but can also produce much smaller PDF files).
+  
+  Where PDF files are changed they will become PDF version 1.5 files:
+  these were first supported by Acrobat Reader 6 in 2003, so this is
+  very unlikely to cause difficulties.
 }
 
 \value{
