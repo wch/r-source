@@ -2231,13 +2231,15 @@ running Ghostscript.
 
 Most of the large PDFs we have encountered have been large because of
 the inclusion of figures, for example complex figures from @R{} (where
-@file{.png} versions may be more appropriate) and screendumps.  However,
-some have been unnecessarily large due to @command{pdftex} settings.  The
-modern default is to use both PDF compression and PDF object compression
-(which needs the PDF 1.5 specification from 2003): this is the default
-in most @TeX{} distributions by not MiKTeX.  It can be overridden by
-code in the preamble of an Sweave or @LaTeX{} file: see how this is done
-in @R{} reference manual at
+@file{.png} versions may be more appropriate, and compression was not
+used prior to @R{} 2.14.0, so it may help to re-generate them) and
+screendumps.  However, some have been unnecessarily large due to
+@command{pdftex} settings.  The modern default is to use both PDF
+compression and PDF object compression (which needs the PDF 1.5
+specification from 2003): this is the default in most @TeX{}
+distributions by not MiKTeX.  It can be overridden by code in the
+preamble of an Sweave or @LaTeX{} file: see how this is done for the
+@R{} reference manual at
 @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 @end enumerate
 
@@ -2262,7 +2264,7 @@ maintainers will run these tests before putting a submission online.
 Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
 @acronym{CRAN} check systems use reasonably recent versions of the
 Debian TexLive distribution
-(@uref{http://packages.debian.org/@/de/@/sid/@/texlive}); for the Windows
+(@uref{http://packages.debian.org/@/en/@/sid/@/texlive}); for the Windows
 @acronym{CRAN} server, a reasonably recent version of MikTeX (including
 all packages available directly for MikTeX) is employed: the Mac OS X
 builders use a current full version of MacTeX.  Developers wanting to
@@ -2286,7 +2288,7 @@ There are many examples, e.g.@: package @pkg{rgdal}.
 
 @item
 To negotiate with Brian Ripley to host the package on @acronym{CRAN}
-extras, as was done for package @pkg{BRugs}.
+extras, as was done for package @pkg{BRugs} versions 0.5-x.
 @end enumerate
 
 @noindent
