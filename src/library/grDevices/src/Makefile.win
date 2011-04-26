@@ -33,11 +33,16 @@ devWindows-CPPFLAGS=-I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
 
 PKG_LIBS=-lRgraphapp -lRzlib
 
-all: makeMakedeps shlib
+all: makeMakedeps shlib cairoDLL
 
 shlib: $(SHLIB)
 	@mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
 	@cp $(SHLIB) $(top_builddir)/library/$(pkg)/libs$(R_ARCH)
+
+cairoDLL:
+ifneq "$(GTK2_HOME)" ""
+	@make -C cairo -f Makefile.win
+endif
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/winshlib.mk
