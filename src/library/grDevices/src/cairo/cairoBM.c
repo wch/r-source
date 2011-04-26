@@ -58,41 +58,48 @@ static void cbm_Size(double *left, double *right,
 
 #include "cairoX11.c"
 
-#if 0
-extern int R_SaveAsPng(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, unsigned int transparent, int res);
+/* copied from devWindows.c */
+#include <windows.h>
+typedef int (*R_SaveAsBitmap)(/* variable set of args */);
+static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
 
-extern int R_SaveAsJpeg(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, int quality, FILE *outfile, int res);
+static int RbitmapAlreadyLoaded = 0;
+static HINSTANCE hRbitmapDll;
 
-extern int R_SaveAsTIFF(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, const char *outfile, int res,
-			int compression);
+static int Load_Rbitmap_Dll()
+{
+    if (!RbitmapAlreadyLoaded) {
+	char szFullPath[PATH_MAX];
+	strcpy(szFullPath, R_HomeDir());
+	strcat(szFullPath, "\\library\\grDevices\\libs\\");
+	strcat(szFullPath, R_ARCH);
+	strcat(szFullPath, "\\Rbitmap.dll");
+	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) &&
+	    ((R_SaveAsPng=
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsPng"))
+	     != NULL) &&
+	    ((R_SaveAsBmp=
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsBmp"))
+	     != NULL) &&
+	    ((R_SaveAsJpeg=
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsJpeg"))
+	     != NULL) &&
+	    ((R_SaveAsTIFF=
+	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsTIFF"))
+	     != NULL)
+	    ) {
+	    RbitmapAlreadyLoaded = 1;
+	} else {
+	    if (hRbitmapDll != NULL) FreeLibrary(hRbitmapDll);
+	    RbitmapAlreadyLoaded= -1;
+	    char buf[1000];
+	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
+	    R_ShowMessage(buf);
+	}
+    }
+    return (RbitmapAlreadyLoaded > 0);
+}
 
-extern int R_SaveAsBmp(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, int res);
-#else
-static int R_SaveAsPng(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, unsigned int transparent, int res);
-
-static int R_SaveAsJpeg(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, int quality, FILE *outfile, int res);
-
-static int R_SaveAsTIFF(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, const char *outfile, int res,
-			int compression);
-
-static int R_SaveAsBmp(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, int res);
-#endif
 
 static int stride;
 
@@ -120,11 +127,15 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
     cairo_status_t res;
     if (xd->type == PNG || xd->type == JPEG ||
-	xd->type == TIFF || xd->type == BMP)
+	xd->type == TIFF || xd->type == BMP) {
+	if (!Load_Rbitmap_Dll()) {
+	    warning("Unable to load Rbitmap.dll");
+	    return FALSE;
+	}
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 					    (double)xd->windowWidth,
 					    (double)xd->windowHeight);
-    else if(xd->type == SVG || xd->type == PDF || xd->type == PS) {
+    } else if(xd->type == SVG || xd->type == PDF || xd->type == PS) {
 	/* leave creation to BM_Newpage */
 	return TRUE;
     } else
@@ -462,7 +473,7 @@ SEXP Cairo(SEXP args)
     type = asInteger(CAR(args));
     if(type == NA_INTEGER || type <= 0)
 	error(_("invalid '%s' argument"), "type");
-    printf("winCairo(%s) device\n", devtable[type].name);
+//    printf("winCairo(%s) device\n", devtable[type].name);
     args = CDR(args);
     width = asInteger(CAR(args));
     if(width == NA_INTEGER || width <= 0)
@@ -509,37 +520,6 @@ SEXP Cairo(SEXP args)
 
     return R_NilValue;
 }
-
-static int R_SaveAsPng(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, unsigned int transparent, int res)
-{
-    return 0;
-}
-
-static int R_SaveAsJpeg(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, int quality, FILE *outfile, int res)
-{
-    return 0;
-}
-
-static int R_SaveAsTIFF(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, const char *outfile, int res,
-			int compression)
-{
-    return 0;
-}
-
-static int R_SaveAsBmp(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, int res)
-{
-    return 0;
-}
-
-
 
 #else
 static SEXP Cairo(SEXP args)

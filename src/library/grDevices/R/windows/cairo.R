@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## The bitmap devices are undocumented and may never be released in this form
 cairo_png <-
     function(filename = "Rplot%03d.png",
              width = 480, height = 480, units = "px",
@@ -52,7 +53,7 @@ cairo_jpeg <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(winCairo, filename, 3L, width, height, pointsize, bg,
-                        res, match(d$antialias, antialiases), quality))
+                        res, antialias, quality))
 }
 
 cairo_tiff <-
@@ -75,7 +76,7 @@ cairo_tiff <-
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     invisible(.External(winCairo, filename, 8L, width, height, pointsize, bg,
-                        res, match(d$antialias, antialiases), comp))
+                        res, antialias, comp))
 }
 
 cairo_bmp <-
@@ -95,7 +96,7 @@ cairo_bmp <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(winCairo, filename, 9L, width, height, pointsize, bg,
-                        res, match(d$antialias, antialiases), 100L))
+                        res, antialias, 100L))
 }
 
 svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",

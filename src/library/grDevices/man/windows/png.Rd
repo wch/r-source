@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -15,18 +15,18 @@
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
-    restoreConsole = TRUE)
+    restoreConsole = TRUE, type = c("windows", "cairo"))
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
      units = "px", pointsize = 12, quality = 75, bg = "white",
-     res = NA, restoreConsole = TRUE)
+     res = NA, restoreConsole = TRUE, type = c("windows", "cairo"))
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
-    restoreConsole = TRUE)
+    restoreConsole = TRUE, type = c("windows", "cairo"))
 tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
      units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
      bg = "white", res = NA,
-     restoreConsole = TRUE)
+     restoreConsole = TRUE, type = c("windows", "cairo"))
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.  The
@@ -55,6 +55,7 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
     text and line widths.}
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.}
+  \item{type}{Should be plotting be done using Windows GDI or cairographics?}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
@@ -109,10 +110,10 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
 }
 
 \note{
-  These devices effectively plot on a hidden screen and then copy the
-  image to the required format.  This means that they have the same
-  colour handling as the actual screen device, and work best if that is
-  set to a 24-bit or 32-bit colour mode.
+  These Windows versions of these devices effectively plot on a hidden
+  screen and then copy the image to the required format.  This means
+  that they have the same colour handling as the actual screen device,
+  and work best if that is set to a 24-bit or 32-bit colour mode.
 }
 
 \seealso{

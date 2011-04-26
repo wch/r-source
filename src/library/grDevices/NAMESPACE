@@ -67,7 +67,6 @@ if(tools:::.OStype() == "windows") {
     export(bringToTop, msgWindow, win.graph, win.metafile, win.print,
            windows, windows.options, windowsFont, windowsFonts)
     export(cairo_pdf, cairo_ps, svg)
-#    export(cairo_png, cairo_jpeg, cairo_tiff, cairo_bmp)
 
     S3method("[", SavedPlots)
     S3method(print, SavedPlots)

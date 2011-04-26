@@ -125,9 +125,10 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                         TRUE))
 }
 
-png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
-                units = "px",
-                pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
+png <- function(filename = "Rplot%03d.png",
+                width = 480, height = 480, units = "px", pointsize = 12,
+                bg = "white", res = NA, restoreConsole = TRUE,
+                type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -138,6 +139,12 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
+    type <- match.arg(type)
+    if(type == "cairo") {
+        antialiases <- c("default", "none", "gray", "subpixel")
+        invisible(.External(winCairo, filename, 2L, width, height, pointsize,
+                            bg, res, 1L, 100L))
+    } else
     invisible(.External(Cdevga, paste("png:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
@@ -145,9 +152,10 @@ png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                         restoreConsole, "", FALSE, TRUE))
 }
 
-bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
-                units = "px",
-                pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
+bmp <- function(filename = "Rplot%03d.bmp",
+                width = 480, height = 480, units = "px", pointsize = 12,
+                bg = "white", res = NA, restoreConsole = TRUE,
+                type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -158,6 +166,12 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
+    type <- match.arg(type)
+    if(type == "cairo") {
+        antialiases <- c("default", "none", "gray", "subpixel")
+        invisible(.External(winCairo, filename, 9L, width, height, pointsize,
+                            bg, res, 1L, 100L))
+    } else
     invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
@@ -165,10 +179,10 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                         restoreConsole, "", FALSE, TRUE))
 }
 
-jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
-                 units = "px",
-                 pointsize = 12, quality=75, bg = "white", res = NA,
-                 restoreConsole = TRUE)
+jpeg <- function(filename = "Rplot%03d.jpg",
+                 width = 480, height = 480, units = "px", pointsize = 12,
+                 quality = 75, bg = "white", res = NA, restoreConsole = TRUE,
+                 type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -179,6 +193,12 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
     width <-
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
+    type <- match.arg(type)
+    if(type == "cairo") {
+        antialiases <- c("default", "none", "gray", "subpixel")
+        invisible(.External(winCairo, filename, 3L, width, height, pointsize,
+                            bg, res, 1L, quality))
+    } else
     invisible(.External(Cdevga, paste("jpeg:", quality, ":",filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
@@ -186,11 +206,12 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                         restoreConsole, "", FALSE, TRUE))
 }
 
-tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
-                 units = "px", pointsize = 12,
+tiff <- function(filename = "Rplot%03d.tif",
+                 width = 480, height = 480, units = "px", pointsize = 12,
                  compression = c("none", "rle", "lzw", "jpeg", "zip"),
                  bg = "white", res = NA,
-                 restoreConsole = TRUE)
+                 restoreConsole = TRUE,
+                 type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -203,6 +224,12 @@ tiff <- function(filename = "Rplot%03d.tif", width = 480, height = 480,
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
+    type <- match.arg(type)
+    if(type == "cairo") {
+        antialiases <- c("default", "none", "gray", "subpixel")
+        invisible(.External(winCairo, filename, 8L, width, height, pointsize,
+                            bg, res, 1L, comp))
+    } else
     invisible(.External(Cdevga, paste("tiff:", comp, ":", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
