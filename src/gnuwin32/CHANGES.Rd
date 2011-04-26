@@ -18,6 +18,15 @@
 
       \item The \code{windows()} family of devices now supports()
       per-pixel alpha for raster images.
+
+      \item There is support for cairographics-based devices using the
+      same code as on Unix-alikes.  Currently \code{svg()},
+      \code{cairo_pdf()} and \code{cairo_ps()} are implemented, but they
+      are not compiled in by default.
+
+      [Experimental.  To make use of them,
+      \code{cd src/library/grDevices/cairo} and read the
+      instructions in \file{Makefile.win}.]
     }
   }
 

@@ -62,5 +62,6 @@ PDFDeviceDriver(pDevDesc, const char *, const char *, const char *,
 #ifdef WIN32
 SEXP devga(SEXP);
 SEXP savePlot(SEXP);
+SEXP winCairo(SEXP);
 #endif
 

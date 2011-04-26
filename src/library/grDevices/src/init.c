@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-10   The R Development Core Team.
+ *  Copyright (C) 2004-11   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -93,6 +93,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
 #ifdef WIN32
     EXTDEF(devga, 17),
     EXTDEF(savePlot, 3),
+    EXTDEF(winCairo, 9),
 #else
     EXTDEF(Quartz, 12),
 #endif

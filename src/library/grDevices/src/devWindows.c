@@ -3673,3 +3673,45 @@ static void GA_eventHelper(pDevDesc dd, int code)
 
     return;
 }
+
+
+static R_SaveAsBitmap R_winCairo;
+static int RcairoAlreadyLoaded = 0;
+static HINSTANCE hRcairoDll;
+
+static int Load_Rcairo_Dll()
+{
+    if (!RcairoAlreadyLoaded) {
+	char szFullPath[PATH_MAX];
+	strcpy(szFullPath, R_HomeDir());
+	strcat(szFullPath, "\\library\\grDevices\\libs\\");
+	strcat(szFullPath, R_ARCH);
+	strcat(szFullPath, "\\winCairo.dll");
+	if (((hRcairoDll = LoadLibrary(szFullPath)) != NULL) &&
+	    ((R_winCairo =
+	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "Cairo"))
+	     != NULL)) {
+	    RcairoAlreadyLoaded = 1;
+	} else {
+	    if (hRcairoDll != NULL) FreeLibrary(hRcairoDll);
+	    RcairoAlreadyLoaded = -1;
+	    char buf[1000];
+	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
+	    R_ShowMessage(buf);
+	}
+    }
+    return (RcairoAlreadyLoaded > 0);
+}
+
+/*
+   cairo(filename, type, width, height, pointsize, bg, res, antialias, quality)
+*/
+SEXP winCairo(SEXP args)
+{
+    if (!Load_Rcairo_Dll()) {
+	warning(_("Unable to load winCairo.dll"));
+    } else {
+	(R_winCairo)(args);
+    }
+    return R_NilValue;
+}

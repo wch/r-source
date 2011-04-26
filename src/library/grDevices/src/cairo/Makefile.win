@@ -1,0 +1,43 @@
+#-*- Makefile -*-
+#
+# ${R_HOME}/src/library/grDevices/src/cairo/Makefile.win
+
+## Experimental.  Set the following two macros appropriately
+R_ARCH = /i386
+GTK2_HOME = /R/W32/GTK-2.22
+## then run 'make -f Makefile.win'.
+## Once winCairo.dll is installed the cairographics-based devices
+## become available.
+
+srcdir = .
+top_srcdir = ../../../../..
+
+top_builddir = ../../../../..
+R_HOME = $(top_builddir)
+
+PKG_CPPFLAGS=-I$(R_HOME)/src/include -I. -DHAVE_CONFIG_H \
+  -I$(R_HOME)/src/modules/X11
+PKG_CPPFLAGS+= -I"$(GTK2_HOME)/include/cairo" \
+  -I"$(GTK2_HOME)/include/pango-1.0" \
+  -I"$(GTK2_HOME)/include/glib-2.0" \
+  -I"$(GTK2_HOME)/lib/glib-2.0/include" \
+  -I"$(GTK2_HOME)/include"
+
+PKG_LIBS=-L"$(GTK2_HOME)/lib" -lpangocairo-1.0 -lpango-1.0 -lcairo \
+  -lglib-2.0 -lgobject-2.0
+
+all: winCairo.dll
+	@cp winCairo.dll $(R_HOME)/library/grDevices/libs$(R_ARCH)
+
+winCairo.dll: cairoBM.o
+
+cairoBM.o: $(R_HOME)/src/modules/X11/cairoX11.c cairoBM.h
+
+include $(R_HOME)/etc${R_ARCH}/Makeconf
+include $(top_srcdir)/share/make/winshlib.mk
+
+mostlyclean distclean: clean
+clean:
+	@-rm -f *.o winCairo.dll
+	@-rm -f $(R_HOME)/library/grDevices/libs$(R_ARCH)/winCairo.dll
+

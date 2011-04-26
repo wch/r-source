@@ -5,7 +5,7 @@
 if(tools:::.OStype() == "windows") {
     useDynLib(grDevices, R_chull,
               PicTeX, PostScript, XFig, PDF,
-              Cdevga=devga, CsavePlot=savePlot,
+              Cdevga=devga, CsavePlot=savePlot, winCairo,
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 } else {
     useDynLib(grDevices, R_chull,
@@ -66,6 +66,8 @@ S3method(pretty, POSIXt)
 if(tools:::.OStype() == "windows") {
     export(bringToTop, msgWindow, win.graph, win.metafile, win.print,
            windows, windows.options, windowsFont, windowsFonts)
+    export(cairo_pdf, cairo_ps, svg)
+#    export(cairo_png, cairo_jpeg, cairo_tiff, cairo_bmp)
 
     S3method("[", SavedPlots)
     S3method(print, SavedPlots)

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
@@ -41,7 +41,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;
-    defaults to \code{"default"}, see \code{\link{X11}}.}
+    defaults to \code{"default"}.}
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
@@ -65,9 +65,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{file} (or set \code{onefile=TRUE}) the file will contain the
   last page plotted.
 
-  %http://lwn.net/Articles/256590/
-  The \code{cairo_ps} output is not yet encapsulated (that is coming in
-  cairo 1.6).
+%  %http://lwn.net/Articles/256590/
+%  The \code{cairo_ps} output is not yet encapsulated (that is coming in
+%  cairo 1.6).
 
   There is full support of transparency, but using this is one of the
   things liable to trigger bitmap output (and will always do so for
@@ -84,6 +84,16 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{\link{postscript}}
 
   \code{\link{capabilities}} to see if cairo is supported.
+}
+
+\section{Anti-aliasing}{
+  Anti-aliasing is applies to both graphics and fonts.  It is generally
+  preferable for lines and text, but can lead to undesirable effects for
+  fills, e.g. for \code{\link{image}} plots, and so is never used for
+  fills.
+
+  \code{antialias = "default"} is in principle platform-dependent, but
+  seems most often equivalent to \code{antialias = "gray"}.
 }
 
 \section{Conventions}{

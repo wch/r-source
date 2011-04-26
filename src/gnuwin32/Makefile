@@ -295,6 +295,7 @@ cleanwin: MkRules fixfiles
 	$(MAKE) -C getline clean
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C bitmap clean
+	$(MAKE) -C ../library/grDevices/src/cairo -f Makefile.win clean
 	-$(MAKE) -C installer clean
 
 
