@@ -647,7 +647,6 @@ get_exclude_patterns <- function()
     }
 
     force <- FALSE
-    keep_empty <- FALSE
     vignettes <- TRUE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
@@ -667,6 +666,9 @@ get_exclude_patterns <- function()
                                          "FALSE"))
     resave_data <-
         Sys.getenv("_R_BUILD_RESAVE_DATA_", "gzip")
+
+    keep_empty <-
+        config_val_to_logical(Sys.getenv("_R_BUILD_KEEP_EMPTY_DIRS_", "FALSE"))
 
     if (is.null(args)) {
         args <- commandArgs(TRUE)

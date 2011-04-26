@@ -1868,7 +1868,8 @@ the package.)
 
 One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, if
-they are intentional use the option @option{--keep-empty-dirs}.
+they are intentional use the option @option{--keep-empty-dirs} (or set
+the environment variable @env{_R_BUILD_KEEP_EMPTY_DIRS_} to @samp{TRUE}).
 
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
@@ -2218,7 +2219,8 @@ these do not all try the same size-reduction strategies, and Acrobat and
 images than some of the others.
 
 Since @command{qpdf} is fairly readily available (e.g.@: it has binaries
-for Windows and packages in Debian/Ubuntu), there is an option
+for Windows and packages in Debian/Ubuntu, and is installed as part of
+the @acronym{CRAN} Mac OS X distribution of @R{}), there is an option
 @option{--compact-vignettes} to @command{R CMD build} to run
 @command{qpdf} over PDF files under @file{inst/doc} and replace them if
 at least 10Kb and 10% is saved.  The full path to the @command{qpdf}
@@ -2226,6 +2228,17 @@ command can be supplied as environment variable @env{R_QPDF} (and is on
 the CRAN binary of @R{} for Mac OS X).  This is done @emph{via} the
 function @code{tools::compactPDF} which has other options including
 running Ghostscript.
+
+Most of the large PDFs we have encountered have been large because of
+the inclusion of figures, for example complex figures from @R{} (where
+@file{.png} versions may be more appropriate) and screendumps.  However,
+some have been unnecessarily large due to @command{pdftex} settings.  The
+modern default is to use both PDF compression and PDF object compression
+(which needs the PDF 1.5 specification from 2003): this is the default
+in most @TeX{} distributions by not MiKTeX.  It can be overridden by
+code in the preamble of an Sweave or @LaTeX{} file: see how this is done
+in @R{} reference manual at
+@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 @end enumerate
 
 @noindent

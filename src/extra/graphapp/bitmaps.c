@@ -252,6 +252,7 @@ bitmap imagetobitmap(image img)
     return obj;
 }
 
+// See also http://msdn.microsoft.com/en-us/library/dd183353%28v=VS.85%29.aspx
 bitmap imagetobitmap32(image img)
 {
     if (! img) return NULL;
@@ -272,7 +273,7 @@ bitmap imagetobitmap32(image img)
     bmi->bmiHeader.biHeight = height;
     bmi->bmiHeader.biPlanes = 1;
     bmi->bmiHeader.biBitCount = 32;
-    bmi->bmiHeader.biCompression = BI_RGB;
+    bmi->bmiHeader.biCompression = BI_RGB; // format is 0xaarrggbb
     bmi->bmiHeader.biClrUsed = 0;
 
     /* assign the bitmap data itself */

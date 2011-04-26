@@ -4841,8 +4841,8 @@ when building external software.
 @section Useful additional programs
 
 The process of making the installer will make use of @code{qpdf} to
-compact some of the package vignettes, if available.  MinGW binaries of
-@code{qpdf} are available from
+compact some of the package vignettes, if it is available.  MinGW
+binaries of @code{qpdf} are available from
 @uref{http://sourceforge.net/@/projects/@/qpdf/@/files/}.  Set the path
 to the @code{qpdf} installation in file @file{MkRules.local}.
 
