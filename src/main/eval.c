@@ -3472,6 +3472,34 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	}
 }
 
+static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
+{
+    if (rho == R_BaseEnv || rho == R_BaseNamespace)
+	return R_NilValue;
+    else {
+	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
+	if (loc != NULL && ! (loc->sxpinfo.gp & SPECIAL_BINDING_MASK))
+	    return loc;
+	else
+	    return R_NilValue;
+    }
+}
+    
+static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
+    /* This depends on the current implementation of bindings */
+    if (loc != R_NilValue &&
+	! (loc->sxpinfo.gp & SPECIAL_BINDING_MASK) &&
+	CAR(loc) != R_UnboundValue) {
+	if (CAR(loc) != value)
+	    SETCAR(loc, value);
+	return TRUE;
+    }
+    else
+	return FALSE;
+}
+
+#define BINDING_SYMBOL(loc) TAG(loc)
+
 static SEXP bcEval(SEXP body, SEXP rho)
 {
   SEXP value, constants;
@@ -3564,7 +3592,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	}
 
 	defineVar(symbol, R_NilValue, rho);
-	BCNPUSH((SEXP) R_findVarLocInFrame(rho, symbol));
+	BCNPUSH(GET_BINDING_CELL(symbol, rho));
 
 	value = allocVector(INTSXP, 2);
 	INTEGER(value)[0] = -1;
@@ -3598,35 +3626,43 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  case INTSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    INTEGER(value)[0] = INTEGER(seq)[i];
+	    SET_NAMED(value, 1);
 	    break;
 	  case REALSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    REAL(value)[0] = REAL(seq)[i];
+	    SET_NAMED(value, 1);
 	    break;
 	  case CPLXSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    COMPLEX(value)[0] = COMPLEX(seq)[i];
+	    SET_NAMED(value, 1);
 	    break;
 	  case STRSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    SET_STRING_ELT(value, 0, STRING_ELT(seq, i));
+	    SET_NAMED(value, 1);
 	    break;
 	  case RAWSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    RAW(value)[0] = RAW(seq)[i];
+	    SET_NAMED(value, 1);
 	    break;
 	  case EXPRSXP:
 	  case VECSXP:
 	    value = VECTOR_ELT(seq, i);
+	    SET_NAMED(value, 2);
 	    break;
 	  case LISTSXP:
 	    value = CAR(seq);
 	    R_BCNodeStackTop[-4] = CDR(seq);
+	    SET_NAMED(value, 2);
 	    break;
 	  default:
 	    error(_("invalid sequence argument in for loop"));
 	  }
-	  R_SetVarLocValue((R_varloc_t) cell, value);
+	  if (! SET_BINDING_VALUE(cell, value))
+	      defineVar(BINDING_SYMBOL(cell), value, rho);
 	  BC_CHECK_SIGINT();
 	  pc = codebase + label;
 	}
