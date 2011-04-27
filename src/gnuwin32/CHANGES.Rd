@@ -16,9 +16,6 @@
       \item \command{R CMD build} once again attempts to preserve file
       permissions on Windows.
 
-      \item The \code{windows()} family of devices now supports()
-      per-pixel alpha for raster images.
-
       \item There is support for cairographics-based devices using the
       same code as on Unix-alikes.  This can be selected by the new
       \code{type} argument of the bitmap devices \code{bmp()},
@@ -71,7 +68,11 @@
       the factory-fresh defaults were the same).
 
       \item \code{file.info()} now accepts \sQuote{file} names with
-      trailing directory separators.
+      trailing directory separators, even though such names are invalid
+      on Windows.
+
+      \item The \code{windows()} family of devices now supports()
+      per-pixel alpha for raster images.
     }
   }
   

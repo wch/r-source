@@ -36,8 +36,12 @@ bytecode-base:
 
 
 rpackages:
-	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN) GTK2_HOME=$(GTK2_HOME)
+	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
+
+## must come after bitmapdll
+cairodevices:
+	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all WIN=$(WIN) GTK2_HOME=$(GTK2_HOME)
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
 MkRules: MkRules.local MkRules.rules
@@ -312,6 +316,7 @@ pdfdocs manuals:
 
 R_EXE = ../../$(BINDIR)/Rterm.exe --vanilla --slave
 
+## must come after recommended
 vignettes:
 	@$(MK) -C ../library -f Makefile.win vignettes
 
@@ -367,6 +372,7 @@ endif
 distribution:
 	@$(MK) all
 	@$(MK) bitmapdll
+	@$(MK) cairodevices
 	@$(MK) recommended
 	@$(MK) vignettes
 	@$(MK) manuals
