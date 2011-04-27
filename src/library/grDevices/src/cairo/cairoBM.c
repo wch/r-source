@@ -430,7 +430,7 @@ const static struct {
 /*
    cairo(filename, type, width, height, pointsize, bg, res, antialias, quality)
 */
-SEXP Cairo(SEXP args)
+SEXP in_Cairo(SEXP args)
 {
     pGEDevDesc gdd;
     SEXP sc;
@@ -494,7 +494,7 @@ SEXP Cairo(SEXP args)
 }
 
 #else
-static SEXP Cairo(SEXP args)
+static SEXP in_Cairo(SEXP args)
 {
     error(_("cairo-based devices are not supported on this build"));
     return R_NilValue;

@@ -5,11 +5,11 @@
 if(tools:::.OStype() == "windows") {
     useDynLib(grDevices, R_chull,
               PicTeX, PostScript, XFig, PDF,
-              Cdevga=devga, CsavePlot=savePlot, winCairo,
+              Cdevga=devga, CsavePlot=savePlot, devCairo,
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 } else {
     useDynLib(grDevices, R_chull,
-              PicTeX, PostScript, XFig, PDF, CQuartz = Quartz,
+              PicTeX, PostScript, XFig, PDF, CQuartz = Quartz, devCairo,
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 }
 

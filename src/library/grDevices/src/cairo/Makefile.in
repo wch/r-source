@@ -32,6 +32,7 @@ Makefile: $(srcdir)/Makefile.in \
 
 R: Makefile
 	@$(MAKE) $(cairo_la)
+	cp $(cairo_la) $(R_HOME)/library/grDevices/libs$(R_ARCH)
 
 $(cairo_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(cairo_la_LIBADD)
