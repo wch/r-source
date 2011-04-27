@@ -2,12 +2,6 @@
 #
 # ${R_HOME}/src/library/grDevices/src/cairo/Makefile.win
 
-## Experimental.  Set the following environment variable appropriately
-# GTK2_HOME = /R/W32/GTK-2.22
-## and build R.
-## Once winCairo.dll is installed the cairographics-based devices
-## become available: they do need the Gtk+ bin directory in the path.
-
 srcdir = .
 top_srcdir = ../../../../..
 

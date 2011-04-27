@@ -20,17 +20,17 @@
       per-pixel alpha for raster images.
 
       \item There is support for cairographics-based devices using the
-      same code as on Unix-alikes. This can be selected by the
-      \code{type} option to the bitmap devices \code{bmp()},
-      \code{jpeg()}, \code{png()} and \code{tiff()}. New devices
+      same code as on Unix-alikes.  This can be selected by the new
+      \code{type} argument of the bitmap devices \code{bmp()},
+      \code{jpeg()}, \code{png()} and \code{tiff()}.  New devices
       \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are available.
 
 
       [Experimental and not compiled in by default (and not all devices
-      work correctly).
+      yet work correctly).
 
-      To make use of them, \code{cd src/library/grDevices/cairo} and
-      read the instructions in \file{Makefile.win}.]
+      To experiment with them, follow the instructions in the
+      \sQuote{R Installation and Administration Manual}.]
     }
   }
 

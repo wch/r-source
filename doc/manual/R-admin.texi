@@ -970,6 +970,7 @@ configuration files in the @file{etc} directory.
 * Getting the source files::    
 * Building the core files::     
 * Building the bitmap files::   
+* Building the cairo devices files::  
 * Checking the build::          
 * Building the manuals::        
 * Building the Inno Setup installer::  
@@ -1147,7 +1148,7 @@ ample memory, and is not 100% reliable.
 
 @end itemize
 
-@node Building the bitmap files, Checking the build, Building the core files, Building from source
+@node Building the bitmap files, Building the cairo devices files, Building the core files, Building from source
 @subsection Building the bitmap files
 @cindex Rbitmap.dll
 
@@ -1160,7 +1161,29 @@ Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
 @file{Rbitmap.dll} and install it under
 @file{@var{R_HOME}/library/grDevices/libs}.
 
-@node Checking the build, Building the manuals, Building the bitmap files, Building from source
+@node Building the cairo devices files, Checking the build, Building the bitmap files, Building from source
+@subsection Building the cairo devices
+@cindex winCairo.dll
+
+The devices based on cairographics (@code{svg}, @code{cairo_pdf},
+@code{cairo_ps} and the @code{type = "cairo"} versions of @code{png},
+@code{jpeg}, @code{tiff} and @code{bmp}) are implemented in a separate
+DLL @file{winCairo.dll} which is loaded when one of these devices is
+first used.  It is not built by default.
+
+To enable the building of these devices you need to install Gtk+ for the
+appropriate architecture from
+@uref{http://www.gtk.org/download-windows.html} or
+@uref{http://www.gtk.org/download-windows-64bit.html} (we tested 2.22.1,
+but versions from 2.16 on should suffice), and set the path to the root
+of the directory tree where you unpacked the distribution as macro
+@samp{GTK2_HOME} in @file{MkRules.local}.  To actually use them you need
+the distribution's @file{bin} directory in your path.
+
+The @code{jpeg}, @code{tiff} and @code{bmp} devices also need
+@file{Rbitmap.dll} to have been built.
+
+@node Checking the build, Building the manuals, Building the cairo devices files, Building from source
 @subsection Checking the build
 
 You can test a build by running

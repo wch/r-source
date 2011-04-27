@@ -36,7 +36,7 @@ bytecode-base:
 
 
 rpackages:
-	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
+	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN) GTK2_HOME=$(GTK2_HOME)
 	@$(MK) -C ../library -f Makefile.win docs
 
 ifeq ($(wildcard MkRules?local),MkRules.local)

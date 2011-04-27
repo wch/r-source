@@ -19,7 +19,7 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo instdirs
-	@$(MAKE) -f Makefile.win mksrc-win2
+	@$(MAKE) -C src -f Makefile.win GTK2_HOME=$(GTK2_HOME)
 	@$(MAKE) -f Makefile.win mklazy
 	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm
 

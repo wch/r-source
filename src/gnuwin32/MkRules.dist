@@ -70,6 +70,9 @@ ICU_PATH=/sources/icu
 # PNGDIR = libpng
 # TIFFDIR = libtiff
 
+# For the cairographics devices
+GTK2_HOME =
+
 # set this to YES to build static HTML help
 BUILD_HTML = NO
 
