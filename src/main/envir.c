@@ -356,7 +356,10 @@ static SEXP DeleteItem(SEXP symbol, SEXP lst)
 {
     if (lst != R_NilValue) {
 	SETCDR(lst, DeleteItem(symbol, CDR(lst)));
-	if (TAG(lst) == symbol) lst = CDR(lst);
+	if (TAG(lst) == symbol) {
+	    SETCAR(lst, R_UnboundValue); /* in case binging is cached */
+	    lst = CDR(lst);
+	}
     }
     return lst;
 }
@@ -743,6 +746,7 @@ static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
     }
     else if (TAG(list) == thing) {
 	*found = 1;
+	SETCAR(list, R_UnboundValue); /* in case binging is cached */
 	return CDR(list);
     }
     else {
@@ -751,6 +755,7 @@ static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
 	while (next != R_NilValue) {
 	    if (TAG(next) == thing) {
 		*found = 1;
+		SETCAR(next, R_UnboundValue); /* in case binging is cached */
 		SETCDR(last, CDR(next));
 		return list;
 	    }
@@ -821,6 +826,11 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
     SEXP frame, c;
 
     if (rho == R_BaseEnv || rho == R_BaseNamespace) {
+	error("'findVarLocInFrame' cannot be used on the base environment");
+	/* the code below doesn't really make sense as it returns the
+	   value, not the binding.  We _could_ return the symbol as
+	   the binding object in that case, but it isn't clear that
+	   would be useful. LT */
 	c = SYMBOL_BINDING_VALUE(symbol);
 	return (c == R_UnboundValue) ? R_NilValue : c;
     }
@@ -835,6 +845,10 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 	/* Better to use exists() here if we don't actually need the value! */
 	val = table->get(CHAR(PRINTNAME(symbol)), canCache, table);
 	if(val != R_UnboundValue) {
+	    /* The result should probably be identified as being from
+	       a suer database, or maybe use an active binding
+	       mechanism to allow setting a new value to get back to
+	       the data base. */
 	    tmp = allocSExp(LISTSXP);
 	    SETCAR(tmp, val);
 	    SET_TAG(tmp, symbol);
