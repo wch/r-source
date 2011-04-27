@@ -39,9 +39,12 @@ rpackages:
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
 
+
 ## must come after bitmapdll
 cairodevices:
+ifneq "$(GTK2_HOME)" ""
 	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all WIN=$(WIN) GTK2_HOME=$(GTK2_HOME)
+endif
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
 MkRules: MkRules.local MkRules.rules
