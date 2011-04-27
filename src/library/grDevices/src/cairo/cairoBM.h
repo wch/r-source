@@ -40,23 +40,21 @@ typedef enum {
 
 #include <stdio.h>
 
-#ifdef HAVE_WORKING_CAIRO
-# ifdef HAVE_PANGOCAIRO
+#ifdef HAVE_PANGOCAIRO
 #  include <pango/pango.h>
 #  include <pango/pangocairo.h>
-# else
+#else
 #  include <cairo.h>
-# endif
-# ifdef HAVE_CAIRO_SVG
+#endif
+#ifdef HAVE_CAIRO_SVG
 #  include <cairo-svg.h>
 # endif
-# ifdef HAVE_CAIRO_PDF
+#ifdef HAVE_CAIRO_PDF
 #  include <cairo-pdf.h>
 # endif
-# ifdef HAVE_CAIRO_PS
+#ifdef HAVE_CAIRO_PS
 #  include <cairo-ps.h>
 # endif
-#endif
 
 typedef struct {
     /* Graphics Parameters */
@@ -93,12 +91,10 @@ typedef struct {
     char title[101];
     Rboolean onefile;
 
-#ifdef HAVE_WORKING_CAIRO
     Rboolean useCairo, buffered;
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
-#endif
 
     double fontscale;
 } X11Desc;
