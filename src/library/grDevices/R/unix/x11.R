@@ -122,8 +122,8 @@ png <- function(filename = "Rplot%03d.png",
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        .Internal(cairo(filename, 2L, width, height, pointsize, bg,
-			res, antialias, 100L))
+        invisible(.External(devCairo, filename, 2L, width, height, pointsize,
+                            bg, res, antialias, 100L))
     else
         .Internal(X11(paste("png::", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -159,8 +159,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        .Internal(cairo(filename, 3L, width, height, pointsize, bg,
-			res, match(d$antialias, antialiases), quality))
+        invisible(.External(devCairo, filename, 3L, width, height, pointsize,
+                            bg, res, match(d$antialias, antialiases), quality))
     else
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -197,8 +197,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        .Internal(cairo(filename, 8L, width, height, pointsize, bg,
-			res, match(d$antialias, antialiases), comp))
+        invisible(.External(devCairo, filename, 8L, width, height, pointsize,
+                            bg, res, match(d$antialias, antialiases), comp))
     else
         .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -228,12 +228,13 @@ bmp <- function(filename = "Rplot%03d.bmp",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "bmp", path.expand(filename), width, height,
+        invisible(.External(CQuartz, "bmp", path.expand(filename),
+                            width, height,
                             pointsize, "Helvetica", TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
-        .Internal(cairo(filename, 9L, width, height, pointsize, bg,
-			res, match(d$antialias, antialiases), 100L))
+        invisible(.External(devCairo, filename, 9L, width, height, pointsize,
+                            bg, res, match(d$antialias, antialiases), 100L))
     else
         .Internal(X11(paste("bmp::", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -250,8 +251,8 @@ svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
     new <- list()
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    .Internal(cairo(filename, 4L, 72*width, 72*height, pointsize, bg,
-                    NA_integer_, antialias, onefile))
+    invisible(.External(devCairo, filename, 4L, 72*width, 72*height, pointsize,
+                        bg, NA_integer_, antialias, onefile))
 }
 
 cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
@@ -262,8 +263,10 @@ cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    .Internal(cairo(filename, 6L, 72*width, 72*height, pointsize, bg,
-                    NA_integer_, antialias, onefile))
+#    .Internal(cairo(filename, 6L, 72*width, 72*height, pointsize, bg,
+#                    NA_integer_, antialias, onefile))
+    invisible(.External(devCairo, filename, 6L, 72*width, 72*height,
+                        pointsize, bg, NA_integer_, antialias, onefile))
 }
 
 cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
@@ -274,8 +277,8 @@ cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
-    .Internal(cairo(filename, 7L, 72*width, 72*height, pointsize, bg,
-                    NA_integer_, antialias, onefile))
+    invisible(.External(devCairo, filename, 7L, 72*width, 72*height,
+                        pointsize, bg, NA_integer_, antialias, onefile))
 }
 
 ####################

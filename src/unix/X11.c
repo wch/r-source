@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2008 The R Development Core Team
+ *  Copyright (C) 1999-2011 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,17 +71,6 @@ SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_X11_Init();
     if(initialized > 0)
 	return (*ptr->X11)(call, op, args, rho);
-    else {
-	error(_("X11 module cannot be loaded"));
-	return R_NilValue;
-    }
-}
-
-SEXP attribute_hidden do_cairo(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    R_X11_Init();
-    if(initialized > 0)
-	return (*ptr->cairo)(call, op, args, rho);
     else {
 	error(_("X11 module cannot be loaded"));
 	return R_NilValue;

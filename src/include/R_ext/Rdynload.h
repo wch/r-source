@@ -108,6 +108,7 @@ DL_FUNC R_FindSymbol(char const *, char const *,
                        R_RegisteredNativeSymbol *symbol);
 
 int R_moduleCdynload(const char *module, int local, int now);
+int R_cairoCdynload(int local, int now);
 
 
 /* Experimental interface for exporting and importing functions from

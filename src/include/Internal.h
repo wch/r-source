@@ -31,7 +31,6 @@
 /* Device drivers here (for ease of access) */
 
 SEXP do_X11(SEXP, SEXP, SEXP, SEXP);
-SEXP do_cairo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveplot(SEXP, SEXP, SEXP, SEXP);
 
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)

@@ -23,6 +23,8 @@
 
 #include <Defn.h>
 
+
+#if 0
 typedef int (*R_SaveAsBitmap)(/* variable set of args */);
 static R_SaveAsBitmap R_devCairo;
 
@@ -35,6 +37,7 @@ static int Load_Rcairo_Dll(void)
 
     if (initialized) return initialized;
     initialized = -1;
+    
 #ifdef R_ARCH
     snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s/%s%s", 
 	     p, R_ARCH, module, SHLIB_EXT);
@@ -50,10 +53,34 @@ static int Load_Rcairo_Dll(void)
     }
     return initialized;
 }
+#endif
+
+#include <R_ext/Rdynload.h>
+int R_cairoCdynload(int local, int now);
+
+typedef SEXP (*R_cairo)(SEXP args);
+
+static R_cairo R_devCairo;
+
+static int Load_Rcairo_Dll(void)
+{
+    static int initialized = 0;
+ 
+    if (initialized) return initialized;
+    initialized = -1;
+
+    int res = R_cairoCdynload(1, 1);
+    if(!res) return initialized;
+    R_devCairo = (R_cairo) R_FindSymbol("in_Cairo", "cairo", NULL);
+    if (!R_devCairo) error("failed to load cairo DLL");
+    initialized = 1;
+    return initialized;
+}
+
 
 SEXP devCairo(SEXP args)
 {
-    if (Load_Rcairo_Dll() < 0) warning(_("Unable to load devCairo"));
+    if (Load_Rcairo_Dll() < 0) warning("failed to load cairo DLL");
     else (R_devCairo)(args);
     return R_NilValue;
 }

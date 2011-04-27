@@ -32,7 +32,7 @@ PKG_LIBS = $(AQUA_LIBS) $(R_ZLIBS)
 
 all: Makefile Makedeps
 	@$(MAKE) Makedeps
-	@$(MAKE) shlib
+	@$(MAKE) shlib @BUILD_DEVCAIRO_TRUE@ cairodevice
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -47,6 +47,9 @@ shlib: $(SHLIB)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)
 
+cairodevice:
+	@(cd cairo && $(MAKE))
+
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
 
@@ -54,8 +57,10 @@ mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *$(SHLIB_EXT)
+	@(cd cairo && $(MAKE) clean)
 distclean: clean
 	@-rm -f Makefile
+	@(cd cairo && $(MAKE) distclean)
 maintainer-clean: distclean
 
 ## Automagically generated dependencies:

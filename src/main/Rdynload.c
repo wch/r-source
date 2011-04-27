@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2010 The R Development Core Team
+ *  Copyright (C) 1997-2011 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -928,6 +928,26 @@ int R_moduleCdynload(const char *module, int local, int now)
 #else
     snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", p, FILESEP, FILESEP,
 	     module, SHLIB_EXT);
+#endif
+    res = AddDLL(dllpath, local, now, "");
+    if(!res)
+	warning(_("unable to load shared object '%s':\n  %s"),
+		dllpath, DLLerror);
+    return res != NULL ? 1 : 0;
+}
+
+int R_cairoCdynload(int local, int now)
+{
+    char dllpath[PATH_MAX], *p = getenv("R_HOME"), *module = "cairo";
+    DllInfo *res;
+
+    if(!p) return 0;
+#ifdef R_ARCH
+    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s/%s%s", 
+	     p, R_ARCH, module, SHLIB_EXT);
+#else
+    snprintf(dllpath, PATH_MAX, "%s/library/grDevices/libs/%s%s", 
+	     p, module, SHLIB_EXT);
 #endif
     res = AddDLL(dllpath, local, now, "");
     if(!res)

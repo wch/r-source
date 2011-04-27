@@ -41,7 +41,7 @@ cairoBM.o: $(top_srcdir)/src/modules/X11/cairoX11.c cairoBM.h
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs $(cairo_la)
+	@-rm -rf .libs _libs *.o $(cairo_la)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

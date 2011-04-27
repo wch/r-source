@@ -214,6 +214,10 @@
       \item The \file{.afm} files in package \pkg{grDevices} are now
       installed as compressed files (as long done on Windows), saving ca
       2MB on the installed size.
+      
+      \item The non-screen cairo-based devices are no longer in the X11
+      module and so can in principle be installed without X11.  (Not
+      that we have ever seen a Unix-alike system with cairo but not X11.)
     }
   }
 

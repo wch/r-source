@@ -142,7 +142,7 @@ png <- function(filename = "Rplot%03d.png",
     type <- match.arg(type)
     if(type == "cairo") {
         antialiases <- c("default", "none", "gray", "subpixel")
-        invisible(.External(devCairo, filename, 2L, width, height, pointsize,
+        invisible(.External(devCairo, filename, 5L, width, height, pointsize,
                             bg, res, 1L, 100L))
     } else
     invisible(.External(Cdevga, paste("png:", filename, sep=""),

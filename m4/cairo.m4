@@ -165,8 +165,9 @@ if test "x${r_cv_has_pangocairo}" = xyes; then
    AC_DEFINE(HAVE_PANGOCAIRO, 1, [Define to 1 if you have pangocairo.]) 
 fi
 if test "x${r_cv_cairo_works}" = xyes; then
-   AC_DEFINE(HAVE_WORKING_CAIRO, 1, [Define to 1 if you have cairo.]) 
+   AC_DEFINE(HAVE_WORKING_CAIRO, 1, [Define to 1 if you have cairo.])
 fi
+AM_CONDITIONAL(BUILD_DEVCAIRO, [test "x${r_cv_cairo_works}" = xyes])
 if test "x${r_cairo_pdf}" = xyes; then
    AC_DEFINE(HAVE_CAIRO_PDF, 1, [Define to 1 if you have cairo-ps.]) 
 fi
