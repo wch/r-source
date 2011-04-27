@@ -57,48 +57,7 @@ static void cbm_Size(double *left, double *right,
 }
 
 #include "cairoX11.c"
-
-/* copied from devWindows.c */
-#include <windows.h>
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
-static R_SaveAsBitmap R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
-
-static int RbitmapAlreadyLoaded = 0;
-static HINSTANCE hRbitmapDll;
-
-static int Load_Rbitmap_Dll()
-{
-    if (!RbitmapAlreadyLoaded) {
-	char szFullPath[PATH_MAX];
-	strcpy(szFullPath, R_HomeDir());
-	strcat(szFullPath, "\\library\\grDevices\\libs\\");
-	strcat(szFullPath, R_ARCH);
-	strcat(szFullPath, "\\Rbitmap.dll");
-	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) &&
-	    ((R_SaveAsBmp=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsBmp"))
-	     != NULL) &&
-	    ((R_SaveAsJpeg=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsJpeg"))
-	     != NULL) &&
-	    ((R_SaveAsTIFF=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsTIFF"))
-	     != NULL)
-	    ) {
-	    RbitmapAlreadyLoaded = 1;
-	} else {
-	    if (hRbitmapDll != NULL) FreeLibrary(hRbitmapDll);
-	    RbitmapAlreadyLoaded= -1;
-	    char buf[1000];
-	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
-	    R_ShowMessage(buf);
-	}
-    }
-    return (RbitmapAlreadyLoaded > 0);
-}
-
-
-static int stride;
+#include "rbitmap.h"
 
 #ifdef HAVE_WORKING_CAIRO
 static void null_Activate(pDevDesc dd)
@@ -158,6 +117,8 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     return TRUE;
 }
 
+
+static int stride;
 
 static unsigned int Cbitgp(void *xi, int x, int y)
 {

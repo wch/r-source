@@ -249,13 +249,15 @@ static Rboolean GA_NewFrameConfirm(pDevDesc);
 	/* end of list of required device driver actions	*/
 	/********************************************************/
 
+#include "rbitmap.h"
+
 	/* Support Routines */
 
 static double pixelHeight(drawing  d);
 static double pixelWidth(drawing d);
 static void SetColor(int, double, gadesc*);
 static void SetFont(pGEcontext, double, gadesc*);
-static int Load_Rbitmap_Dll();
+//static int Load_Rbitmap_Dll();
 static void SaveAsPng(pDevDesc dd, const char *fn);
 static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn);
 static void SaveAsBmp(pDevDesc dd, const char *fn);
@@ -3296,47 +3298,6 @@ SEXP savePlot(SEXP args)
     return R_NilValue;
 }
 
-
-/* Rbitmap  */
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
-static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
-
-static int RbitmapAlreadyLoaded = 0;
-static HINSTANCE hRbitmapDll;
-
-static int Load_Rbitmap_Dll()
-{
-    if (!RbitmapAlreadyLoaded) {
-	char szFullPath[PATH_MAX];
-	strcpy(szFullPath, R_HomeDir());
-	strcat(szFullPath, "\\library\\grDevices\\libs\\");
-	strcat(szFullPath, R_ARCH);
-	strcat(szFullPath, "\\Rbitmap.dll");
-	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) &&
-	    ((R_SaveAsPng=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsPng"))
-	     != NULL) &&
-	    ((R_SaveAsBmp=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsBmp"))
-	     != NULL) &&
-	    ((R_SaveAsJpeg=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsJpeg"))
-	     != NULL) &&
-	    ((R_SaveAsTIFF=
-	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsTIFF"))
-	     != NULL)
-	    ) {
-	    RbitmapAlreadyLoaded = 1;
-	} else {
-	    if (hRbitmapDll != NULL) FreeLibrary(hRbitmapDll);
-	    RbitmapAlreadyLoaded= -1;
-	    char buf[1000];
-	    snprintf(buf, 1000, "Unable to load '%s'", szFullPath);
-	    R_ShowMessage(buf);
-	}
-    }
-    return (RbitmapAlreadyLoaded > 0);
-}
 
 static int png_rows = 0;
 

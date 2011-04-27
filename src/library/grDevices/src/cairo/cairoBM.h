@@ -19,22 +19,13 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#ifndef R_DEV_X11_H
-#define R_DEV_X11_H
+#ifndef R_DEV_CAIRO_H
+#define R_DEV_CAIRO_H
 
 #define SYMBOL_FONTFACE 5
 
-/* These are the currently supported device "models" */
 typedef enum {
-    MONOCHROME = 0,
-    GRAYSCALE,
-    PSEUDOCOLOR1,
-    PSEUDOCOLOR2,
-    TRUECOLOR
-} X_COLORTYPE;
-
-typedef enum {
-    WINDOW, /* NB: have "type > WINDOW" below ... */
+    WINDOW,
     XIMAGE,
     PNG,
     JPEG,
@@ -56,7 +47,6 @@ typedef enum {
 # else
 #  include <cairo.h>
 # endif
-//#  include <cairo-xlib.h>
 # ifdef HAVE_CAIRO_SVG
 #  include <cairo-svg.h>
 # endif
@@ -91,33 +81,15 @@ typedef struct {
     double pointsize;			/* Size in points */
     char basefontfamily[500];           /* Initial font family */
 
-    /* X11 Driver Specific */
-    /* Parameters with copy per X11 device. */
-
     int windowWidth;			/* Window width (pixels) */
     int windowHeight;			/* Window height (pixels) */
-    int resize;				/* Window resized */
-//    Window window;			/* Graphics Window */
-//    GC wgc;				/* GC for window */
-//    Cursor gcursor;			/* Graphics Cursor */
-//   XSetWindowAttributes attributes;	/* Window attributes */
-//    XRectangle clip;			/* The clipping rectangle */
-
-//    R_XFont *font;
-    char fontfamily[500];               /* CURRENT fontfamily */
-    char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a pixmap */
     FILE *fp;				/* file for a bitmap device */
     char filename[PATH_MAX];		/* filename for a bitmap device */
     int quality;			/* JPEG quality/TIFF compression */
 
-    Rboolean handleOwnEvents;           /* Flag indicating whether events will
-					   be handled externally from R (TRUE),
-					   or whether R is to handle the events
-					   (FALSE) */
     int res_dpi;			/* used for png/jpeg */
-    Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
     Rboolean onefile;
 
