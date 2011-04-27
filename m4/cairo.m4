@@ -35,7 +35,7 @@ else
   ])
   if test "x${r_cv_has_pangocairo}" = "xyes"; then
     modlist="pangocairo"
-    for module in cairo-xlib cairo-png; do
+    for module in cairo-png; do
       if "${PKGCONF}" --exists ${module}; then
 	modlist="${modlist} ${module}"
       fi
@@ -52,8 +52,15 @@ else
        modlist="${modlist} cairo-svg"
        r_cairo_svg=yes
     fi
+      if "${PKGCONF}" --exists cairo-xlib; then
+         xmodlist="${modlist} cairo-xlib"
+      else
+         xmodlist="${modlist}"
+      fi
     CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+    CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
     CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+    CAIROX11_LIBS=`"${PKGCONF}" --libs ${xmodlist}`
 
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
@@ -91,7 +98,7 @@ int main(void) {
       modlist="cairo"
       ## on Linux, cairo-ft brings in header paths <cairo-ft.h>:
       ## the code which needs this is currently conditionalized
-      for module in cairo-xlib cairo-png cairo-ft; do
+      for module in cairo-png cairo-ft; do
 	if "${PKGCONF}" --exists ${module}; then
 	  modlist="${modlist} ${module}"
 	fi
@@ -108,14 +115,22 @@ int main(void) {
          modlist="${modlist} cairo-svg"
          r_cairo_svg=yes
       fi
+      if "${PKGCONF}" --exists cairo-xlib; then
+         xmodlist="${modlist} cairo-xlib"
+      else
+         xmodlist="${modlist}"
+      fi
       CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
+      CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
           ## This is for static MacOS build
           CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
+          CAIROX11_LIBS=`"${PKGCONF}" --static --libs ${xmodlist}`
           ;;
         *)
           CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
+          CAIROX11_LIBS=`"${PKGCONF}" --libs ${xmodlist}`
           ;;
       esac
 
@@ -162,5 +177,7 @@ if test "x${r_cairo_svg}" = xyes; then
    AC_DEFINE(HAVE_CAIRO_SVG, 1, [Define to 1 if you have cairo-svg.]) 
 fi
 AC_SUBST(CAIRO_CPPFLAGS)
+AC_SUBST(CAIROX11_CPPFLAGS)
 AC_SUBST(CAIRO_LIBS)
+AC_SUBST(CAIROX11_LIBS)
 ])

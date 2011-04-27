@@ -2495,6 +2495,7 @@ AC_CONFIG_FILES(
   src/library/grDevices/DESCRIPTION
   src/library/grDevices/Makefile
   src/library/grDevices/src/Makefile
+  src/library/grDevices/src/cairo/Makefile
   src/library/grid/DESCRIPTION
   src/library/grid/Makefile
   src/library/grid/src/Makefile

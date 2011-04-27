@@ -48,6 +48,8 @@
 #define GETBLUE(col)   (((col) >> BSHIFT) & 0xFF)
 #define GETALPHA(col)   (((col) >> 24) & 0xFF)
 
+#include "bitmap.h"
+
 #ifdef HAVE_PNG
 #include "png.h"
 #include <setjmp.h>

@@ -1756,22 +1756,7 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
     XSync(display, 0);
 }
 
-extern int R_SaveAsPng(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, unsigned int transparent, int res);
-
-extern int R_SaveAsJpeg(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, int quality, FILE *outfile, int res);
-
-extern int R_SaveAsTIFF(void  *d, int width, int height,
-			unsigned int (*gp)(void *, int, int),
-			int bgr, const char *outfile, int res,
-			int compression);
-
-extern int R_SaveAsBmp(void  *d, int width, int height,
-		       unsigned int (*gp)(void *, int, int),
-		       int bgr, FILE *fp, int res);
+#include "bitmap.h"
 
 static int knowncols[512];
 
