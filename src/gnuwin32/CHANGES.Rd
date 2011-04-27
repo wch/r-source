@@ -21,7 +21,11 @@
       the factory-fresh defaults were the same).
 
       \item \code{file.info()} now accepts \sQuote{file} names with
-      trailing directory separators.
+      trailing directory separators, even though such names are invalid
+      on Windows.
+
+      \item The \code{windows()} family of devices now supports()
+      per-pixel alpha for raster images.
     }
   }
   

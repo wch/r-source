@@ -54,7 +54,6 @@ bitmap newbitmap(int width, int height, int depth)
     BITMAP bm;
     HBITMAP hb, old;
     HDC dc, screendc;
-    bitmap obj;
 
     screendc = GetDC(0); /* get screen dc */
 
@@ -82,7 +81,7 @@ bitmap newbitmap(int width, int height, int depth)
 
     GetObject(hb, sizeof(BITMAP), (LPSTR) &bm);
 
-    obj = new_object(BitmapObject, hb, get_bitmap_base());
+    bitmap obj = new_object(BitmapObject, hb, get_bitmap_base());
     if (! obj) {
 	DeleteObject(hb);
 	return NULL;
@@ -101,7 +100,7 @@ bitmap newbitmap(int width, int height, int depth)
 PROTECTED
 int has_transparent_pixels(image img)
 {
-    long i, width, height, total;
+    int i, width, height, total;
     rgb *palette;
     byte *pixel8;
     rgb *pixel32;
@@ -141,67 +140,52 @@ int has_transparent_pixels(image img)
 /*
  *  Create a bitmap version of an image.
  */
+// See also http://msdn.microsoft.com/en-us/library/dd183353%28v=VS.85%29.aspx
 bitmap imagetobitmap(image img)
 {
-    HBITMAP hb;
-    HDC screendc;
-    bitmap obj;
-    int width, height, depth, palsize;
-    unsigned long x, y, i, row_bytes;
-    byte *block, *data, *pixel8;
-    rgb *palette, *pixel32;
-    rgb colour;
-    unsigned long size;
-    BITMAPINFO * bmi;
+    unsigned row_bytes;
+    unsigned size;
 
-    if (! img)
-	return NULL;
+    if (!img) return NULL;
 
     /* remember some facts about the image */
-    width = getwidth(img);
-    height = getheight(img);
-    depth = (getdepth(img) == 8) ? 8 : 24;
-    palette = getpalette(img);
-    palsize = getpalettesize(img);
-    pixel8 = getpixels(img);
-    pixel32 = (rgb *) pixel8;
+    int width = getwidth(img), height = getheight(img);
+    int depth = getdepth(img);
+    rgb *palette = getpalette(img);
+    int palsize = getpalettesize(img);
+    byte *pixel8 = getpixels(img);
+    rgb *pixel32 = (rgb *) pixel8;
 
     /* create DIB info in memory */
-    size = sizeof(BITMAPINFOHEADER) + 4;
-    if (depth == 8) {
-	row_bytes = ((width + 3) / 4) * 4;
-	size = size + (sizeof(RGBQUAD) * palsize);
-	size = size + (row_bytes * height);
-    } else {
-	row_bytes = (((width * 3) + 3) / 4) * 4;
-	size = size + (row_bytes * height);
-    }
+    size = sizeof(BITMAPINFOHEADER) + 4; /* Why + 4 ? */
+    size += (sizeof(RGBQUAD) * palsize);
+    /* rows need to be whole (4-byte) words */
+    if (depth == 8) row_bytes = ((width + 3) / 4) * 4;
+    else if (depth == 24) row_bytes = (((width * 3) + 3) / 4) * 4;
+    else row_bytes = 4 * width;
+    size += (row_bytes * height);
 
     /* create the block, align on LONG boundary
-       block = array(size, byte);
-       i = ((long)block) % 4;
-       bmi = (BITMAPINFO *) (block + (4 - i));
-	
        malloc will have done the alignment, which needs to 
        be for pointers.
     */
-    block = array(size, byte);
-    bmi = (BITMAPINFO *) block;
+    byte *block = array(size, byte);
+    BITMAPINFO *bmi = (BITMAPINFO *) block;
 	
 
     /* assign header info */
     bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     bmi->bmiHeader.biWidth = width;
-    bmi->bmiHeader.biHeight = height;
+    bmi->bmiHeader.biHeight = -height;  // use negative value to flip
     bmi->bmiHeader.biPlanes = 1;
     bmi->bmiHeader.biBitCount = depth;
     bmi->bmiHeader.biCompression = BI_RGB;
     bmi->bmiHeader.biClrUsed = palsize;
 
     /* assign colour table */
-    for (i=0; i < palsize; i++) {
-	colour  = palette[i];
-	data = (byte *) (& bmi->bmiColors[i]);
+    for (int i = 0; i < palsize; i++) {
+	rgb colour  = palette[i];
+	byte *data = (byte *) (& bmi->bmiColors[i]);
 	data[0] = getblue(colour);
 	data[1] = getgreen(colour);
 	data[2] = getred(colour);
@@ -209,43 +193,44 @@ bitmap imagetobitmap(image img)
     }
 
     /* assign the bitmap data itself */
-    data = (byte *) (& bmi->bmiColors[palsize]);
+    byte *data = (byte *) (&bmi->bmiColors[palsize]);
 
     if (depth == 8)
-	for (y=0; y < height; y++) {
-	    for (x=0; x < width; x++) {
-		i = ((height - y - 1) * row_bytes) + x;
-		data[i] = pixel8[y * width + x];
-	    }
+	for (unsigned y = 0; y < height; y++) {
+	    // memcpy(data + y * row_bytes, pixel8 + y * width, width);
+	    for (unsigned x = 0; x < width; x++)
+		data[y * row_bytes + x] = pixel8[y * width + x];
 	}
-    else
-	for (y=0; y < height; y++) {
-	    for (x=0; x < width; x++) {
-		colour = pixel32[y * width + x];
-		i = ((height - y - 1) * row_bytes) + (x * 3);
-		data[i] = getblue(colour);
+    else if (depth == 24)
+	for (unsigned y = 0; y < height; y++) {
+	    for (unsigned x = 0; x < width; x++) {
+		rgb colour = pixel32[y * width + x];
+		int i = y * row_bytes + 3*x;
+		data[i]   = getblue(colour);
 		data[i+1] = getgreen(colour);
 		data[i+2] = getred(colour);
 	    }
 	}
+    else memcpy(data, pixel32, 4*height*width);
 
-    /* create the bitmap from the DIB data */
+    /* Create the bitmap from the DIB data.
+       Could also use CreateDIBsection */
 
-    screendc = GetDC(0);	/* get screen dc */
-    hb = CreateDIBitmap(screendc, & bmi->bmiHeader, CBM_INIT,
-			data, bmi, DIB_RGB_COLORS);
-    ReleaseDC(0, screendc);	/* release screen dc */
+    HDC screendc = GetDC(0);
+    HBITMAP hb = CreateDIBitmap(screendc, &bmi->bmiHeader, CBM_INIT,
+				data, bmi, DIB_RGB_COLORS);
+    ReleaseDC(0, screendc);
 
     /* tidy up */
     discard(block);
 
     /* create the bitmap */
-    obj = new_object(BitmapObject, hb, get_bitmap_base());
-    if (! obj) {
+    bitmap obj = new_object(BitmapObject, hb, get_bitmap_base());
+    if (!obj) {
 	DeleteObject(hb);
 	return NULL;
     }
-    obj->rect = rect(0,0,width,height);
+    obj->rect = rect(0, 0, width, height);
     obj->depth = depth;
     obj->die = private_delbitmap;
 
