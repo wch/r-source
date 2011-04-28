@@ -26,6 +26,12 @@
 
       \item The \code{windows()} family of devices now supports()
       per-pixel alpha for raster images.
+      
+      \item Shutting down the \R session cleaned up the temporary
+      directory before closing all graphics devices.  On Windows this
+      necessitated changing the working directory, so some devices
+      (e.g. \code{tiff()}) could write files in the wrong directory.
+      The order has been reversed.
     }
   }
   

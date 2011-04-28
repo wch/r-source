@@ -50,7 +50,7 @@
 
 #include "win-nls.h"
 
-void R_CleanTempDir(void);		/* from extra.c */
+void R_CleanTempDir(void);		/* from platform.c */
 void editorcleanall(void);                  /* from editor.c */
 
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
@@ -475,9 +475,9 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     R_RunExitFinalizers();
     editorcleanall();
     CleanEd();
-    R_CleanTempDir();
     KillAllDevices();
     AllDevicesKilled = TRUE;
+    R_CleanTempDir(); /* changes directory */
     if (R_Interactive && CharacterMode == RTerm)
 	SetConsoleTitle(oldtitle);
     if (R_CollectWarnings && saveact != SA_SUICIDE
