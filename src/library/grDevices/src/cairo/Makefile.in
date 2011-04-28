@@ -11,7 +11,7 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-
+## need to find bitmap.h
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) @CAIRO_CPPFLAGS@ \
   -I$(top_srcdir)/src/modules/X11 $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
@@ -32,12 +32,12 @@ Makefile: $(srcdir)/Makefile.in \
 
 R: Makefile
 	@$(MAKE) $(cairo_la)
-	cp $(cairo_la) $(R_HOME)/library/grDevices/libs$(R_ARCH)
+	@cp $(cairo_la) $(R_HOME)/library/grDevices/libs$(R_ARCH)
 
 $(cairo_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(cairo_la_LIBADD)
 
-cairoBM.o: $(top_srcdir)/src/modules/X11/cairoX11.c cairoBM.h
+cairoBM.o: cairoX11.c cairoBM.h $(top_srcdir)/src/modules/X11/bitmap.h
 
 mostlyclean: clean
 clean:

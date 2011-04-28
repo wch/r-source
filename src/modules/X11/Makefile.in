@@ -11,14 +11,15 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ $(CPPFLAGS) $(DEFS)
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ \
+  -I$(top_srcdir)/src/library/grDevices/src/cairo $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_X_LIBS = $(X_PRE_LIBS) @CAIROX11_LIBS@ $(X_LIBS) $(X_EXTRA_LIBS)
 
 SOURCES = dataentry.c devX11.c rotated.c rbitmap.c 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = bitmap.h cairoX11.c devX11.h rotated.h
+HEADERS = bitmap.h devX11.h rotated.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
@@ -46,7 +47,7 @@ R: Makefile
 $(R_X11_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(R_X11_la_LIBADD)
 ## <FIXME>
-## Not sure of we want to do this ...
+## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
