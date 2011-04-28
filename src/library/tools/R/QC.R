@@ -3474,7 +3474,7 @@ function(x, ...)
             c(gettextf("Missing link(s) in documentation object '%s':",
                        names(xx)[i]),
               ## NB, link might be empty, and was in mvbutils
-              .pretty_format(sQuote(unique(xx[[i]]))),
+              .pretty_format(unique(xx[[i]])),
               "")
         }
         c(unlist(lapply(seq_along(xx), .fmt)),
