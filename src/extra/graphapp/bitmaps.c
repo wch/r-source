@@ -198,10 +198,8 @@ bitmap imagetobitmap(image img)
     if (depth == 8)
 	for (unsigned y = 0; y < height; y++) {
 	    // memcpy(data + y * row_bytes, pixel8 + y * width, width);
-	    for (unsigned x = 0; x < width; x++) {
-		int i = y * row_bytes + x;
+	    for (unsigned x = 0; x < width; x++)
 		data[y * row_bytes + x] = pixel8[y * width + x];
-	    }
 	}
     else if (depth == 24)
 	for (unsigned y = 0; y < height; y++) {
