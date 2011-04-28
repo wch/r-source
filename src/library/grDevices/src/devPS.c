@@ -5666,7 +5666,6 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
     else
 	fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
     fprintf(pd->pdffp, "  >>\nstream\n");
-    fwrite(buf, 1, outlen, pd->pdffp);
     size_t res = fwrite(buf, 1, outlen, pd->pdffp);
     if(res != outlen) error(_("write failed"));
     Free(buf);
