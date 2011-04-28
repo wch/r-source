@@ -23,8 +23,7 @@
       \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are available.
 
 
-      [Experimental and not compiled in by default (and not all devices
-      yet work correctly).
+      [Experimental and not compiled in by default.
 
       To experiment with them, follow the instructions in the
       \sQuote{R Installation and Administration Manual}.]

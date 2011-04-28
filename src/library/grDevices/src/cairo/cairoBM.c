@@ -140,6 +140,13 @@ static unsigned int Cbitgp(void *xi, int x, int y)
 
 static void BM_Close_bitmap(pX11Desc xd)
 {
+    if (xd->type == PNGdirect) {
+	char buf[PATH_MAX];
+	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+	cairo_surface_write_to_png(xd->cs, buf);
+	return;
+    } 
+
     void *xi = cairo_image_surface_get_data(xd->cs);
     if (!xi) {
 	warning("BM_Close_bitmap called on non-surface");
@@ -150,11 +157,7 @@ static void BM_Close_bitmap(pX11Desc xd)
     if (xd->type == PNG)
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    Cbitgp, 0, xd->fp, 0, xd->res_dpi);
-    else if (xd->type == PNGdirect) {
-	char buf[PATH_MAX];
-	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	cairo_surface_write_to_png(xd->cs, buf);
-    } else if(xd->type == JPEG)
+    else if(xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
 		     Cbitgp, 0, xd->quality, xd->fp, xd->res_dpi);
     else if(xd->type == BMP)
@@ -183,7 +186,7 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if (xd->fp) fclose(xd->fp);
 	}
 	snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+	xd->fp = R_fopen(R_ExpandFileName(buf), "wb");
 	if (!xd->fp)
 	    error(_("could not open file '%s'"), buf);
     }
