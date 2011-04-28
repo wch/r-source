@@ -74,7 +74,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 /* a colour used to represent the background on png if transparent
    NB: used as RGB and BGR
 */
-//#define PNG_TRANS 0xd6d3d6
+
 #define PNG_TRANS 0xfdfefd
 
 /* these really are globals: per machine, not per window */
@@ -2156,7 +2156,8 @@ static void GA_NewPage(const pGEcontext gc,
 	} else if(xd->kind == PNG) {
 	    DRAW(gfillrect(_d, PNG_TRANS, xd->clip));
 	}
-	if(xd->kind == PNG) xd->pngtrans = ggetpixel(xd->gawin, pt(0,0));
+	if(xd->kind == PNG) 
+	    xd->pngtrans = ggetpixel(xd->gawin, pt(0,0)) | 0xff000000;
     } else {
 	xd->clip = getregion(xd);
 	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
@@ -3305,7 +3306,7 @@ static unsigned int privategetpixel2(void *d,int i, int j)
 {
     rgb c;
     c = ((rgb *)d)[i*png_rows + j];
-    return c;
+    return c | 0xff000000;
 }
 
 /* This is the device version */
