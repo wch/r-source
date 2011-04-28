@@ -3478,7 +3478,8 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
 	return R_NilValue;
     else {
 	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
-	if (loc != NULL && ! (loc->sxpinfo.gp & SPECIAL_BINDING_MASK))
+	if (loc != NULL &&
+	    ! (BINDING_IS_LOCKED(loc) || IS_ACTIVE_BINDING(loc)))
 	    return loc;
 	else
 	    return R_NilValue;
@@ -3487,8 +3488,7 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
     
 static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
     /* This depends on the current implementation of bindings */
-    if (loc != R_NilValue &&
-	! (loc->sxpinfo.gp & SPECIAL_BINDING_MASK) &&
+    if (loc != R_NilValue && ! BINDING_IS_LOCKED(loc) &&
 	CAR(loc) != R_UnboundValue) {
 	if (CAR(loc) != value)
 	    SETCAR(loc, value);
