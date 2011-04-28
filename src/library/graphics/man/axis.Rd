@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{axis}
@@ -45,8 +45,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     marks. Zero or negative values will suppress the line or ticks.}
   \item{col, col.ticks}{colors for the axis line and the tick marks
     respectively.  \code{col = NULL} means to use \code{par("fg")},
-    possibly specified inline, and \code{col=NULL} means to use whatever
-    color \code{col} resolved to.}
+    possibly specified inline, and \code{col.ticks = NULL} means to use
+    whatever color \code{col} resolved to.}
   \item{hadj}{adjustment (see \code{\link{par}("adj")}) for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for
@@ -57,7 +57,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     means right or top alignment, and \code{padj=1} means left or bottom
     alignment.  This can be a vector given a value for each string, and
     will be recycled as necessary.
-    
+
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
@@ -81,7 +81,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
   when the plot was first drawn (see \sQuote{Details}).
-  
+
   This function is usually invoked for its side effect, which is to add
   an axis to an already existing plot.
 }
@@ -103,18 +103,18 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   If \code{labels} is not specified, the numeric values supplied or
   calculated for \code{at} are converted to character strings as if they
   were a numeric vector printed by \code{\link{print.default}(digits=7)}.
-  
+
   The code tries hard not to draw overlapping tick labels, and so will
   omit labels where they would abut or overlap previously drawn labels.
   This can result in, for example, every other tick being labelled.
   (The ticks are drawn left to right or bottom to top, and space at
   least the size of an \sQuote{m} is left between labels.)
-  
+
   If either \code{line} or \code{pos} is set, they (rather than
   \code{par("mgp")[3]}) determine the position of the axis line and tick
   marks, and the tick labels are placed \code{par("mgp")[2]} further
   lines into (or towards for \code{pos}) the margin.
-  
+
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
   are controlled by \code{mgp[2:3]} and \code{mex}, the size and
@@ -127,13 +127,13 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \seealso{
   \code{\link{Axis}} for a generic interface.
-  
+
   \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on
-  (nor adapt to) the coordinate system in use.  
-  
-  Several graphics parameters affecting the appearance are documented 
+  (nor adapt to) the coordinate system in use.
+
+  Several graphics parameters affecting the appearance are documented
   in \code{\link{par}}.
 }
 \references{
