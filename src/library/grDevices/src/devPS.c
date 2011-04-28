@@ -5630,7 +5630,8 @@ static void writeRasterXObject(rasterImage raster, int n,
     if (mask >= 0)
 	fprintf(pd->pdffp, "  /SMask %d 0 R\n", maskObj);
     fprintf(pd->pdffp, "  >>\nstream\n");
-    fwrite(buf, 1, outlen, pd->pdffp);
+    size_t res = fwrite(buf, 1, outlen, pd->pdffp);
+    if(res != outlen) error(_("write failed"));
     Free(buf);
     fprintf(pd->pdffp, "endstream\nendobj\n");
 }
@@ -5666,6 +5667,8 @@ static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd)
 	fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
     fprintf(pd->pdffp, "  >>\nstream\n");
     fwrite(buf, 1, outlen, pd->pdffp);
+    size_t res = fwrite(buf, 1, outlen, pd->pdffp);
+    if(res != outlen) error(_("write failed"));
     Free(buf);
     fprintf(pd->pdffp, "endstream\nendobj\n");
 }
@@ -7020,7 +7023,8 @@ static void PDF_endpage(PDFDesc *pd)
 	if(res2 != Z_OK) error("internal error %d in PDF_endpage", res2);
 	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d /Filter /FlateDecode\n>>\nstream\n", 
 		pd->nobjs, (int) outlen);
-	fwrite(buf2, 1, outlen, pd->pdffp);
+	size_t nwrite = fwrite(buf2, 1, outlen, pd->pdffp);
+	if(nwrite != outlen) error(_("write failed"));
 	Free(buf); Free(buf2);
 	fprintf(pd->pdffp, "endstream\nendobj\n");
     } else {
