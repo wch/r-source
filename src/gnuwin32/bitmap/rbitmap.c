@@ -82,7 +82,6 @@ int R_SaveAsPng(void  *d, int width, int height,
 		unsigned int (*gp)(void *, int, int),
 		int bgr, FILE *fp, unsigned int transparent, int res)
 {
-    printf("transparent: %x\n", transparent);
     png_structp png_ptr;
     png_infop info_ptr;
     unsigned int  col, palette[256];
@@ -176,7 +175,6 @@ int R_SaveAsPng(void  *d, int width, int height,
 
     have_alpha &= (transparent == 0);
 
-    printf("have_alpha: %d\n", have_alpha);
     /* Set the image information here.  Width and height are up to 2^31,
      * bit_depth is one of 1, 2, 4, 8, or 16, but valid values also depend on
      * the color_type selected. color_type is one of PNG_COLOR_TYPE_GRAY,

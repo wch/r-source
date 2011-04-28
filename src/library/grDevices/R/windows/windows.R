@@ -141,8 +141,7 @@ png <- function(filename = "Rplot%03d.png",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     type <- match.arg(type)
     if(type == "cairo") {
-        antialiases <- c("default", "none", "gray", "subpixel")
-        invisible(.External(devCairo, filename, 5L, width, height, pointsize,
+        invisible(.External(devCairo, filename, 2L, width, height, pointsize,
                             bg, res, 1L, 100L))
     } else
     invisible(.External(Cdevga, paste("png:", filename, sep=""),
@@ -168,7 +167,6 @@ bmp <- function(filename = "Rplot%03d.bmp",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     type <- match.arg(type)
     if(type == "cairo") {
-        antialiases <- c("default", "none", "gray", "subpixel")
         invisible(.External(devCairo, filename, 9L, width, height, pointsize,
                             bg, res, 1L, 100L))
     } else
@@ -195,7 +193,6 @@ jpeg <- function(filename = "Rplot%03d.jpg",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
     type <- match.arg(type)
     if(type == "cairo") {
-        antialiases <- c("default", "none", "gray", "subpixel")
         invisible(.External(devCairo, filename, 3L, width, height, pointsize,
                             bg, res, 1L, quality))
     } else
@@ -226,7 +223,6 @@ tiff <- function(filename = "Rplot%03d.tif",
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     type <- match.arg(type)
     if(type == "cairo") {
-        antialiases <- c("default", "none", "gray", "subpixel")
         invisible(.External(devCairo, filename, 8L, width, height, pointsize,
                             bg, res, 1L, comp))
     } else
