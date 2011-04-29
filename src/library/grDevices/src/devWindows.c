@@ -68,7 +68,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
-			Rboolean fillOddEven);
+			Rboolean fillOddEven, const char *family);
 
 
 /* a colour used to represent the background on png if transparent
@@ -304,7 +304,7 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
 		       R_GlobalEnv, restoreConsole, "", FALSE,
-		       ((gadesc*) dd->deviceSpecific)->fillOddEven))
+		       ((gadesc*) dd->deviceSpecific)->fillOddEven, ""))
 	PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -627,7 +627,9 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	 * If specify face > 4 then get font from face via Rdevga
 	 * (whether specifed family or not).
 	 */
-	fontfamily = translateFontFamily(gc->fontfamily);
+	char * fm = gc->fontfamily;
+	if (!fm[0]) fm = xd->basefontfamily;
+	fontfamily = translateFontFamily(fm);
 	if (fontfamily && face <= 4) {
 	    xd->font = gnewfont(xd->gawin,
 				fontfamily, fontstyle[face - 1],
@@ -3088,7 +3090,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
-			Rboolean fillOddEven)
+			Rboolean fillOddEven, const char *family)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -3125,6 +3127,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     xd->warn_trans = FALSE;
     strncpy(xd->title, title, 101);
     xd->title[100] = '\0';
+    strncpy(xd->basefontfamily, family, 101);
+    xd->basefontfamily[100] = '\0';
     xd->doSetPolyFill = TRUE;     /* will only set it once */
     xd->fillOddEven = fillOddEven;
 
@@ -3468,7 +3472,7 @@ static void SaveAsTiff(pDevDesc dd, const char *fn)
 SEXP devga(SEXP args)
 {
     pGEDevDesc gdd;
-    const char *display, *title;
+    const char *display, *title, *family;
     const void *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
@@ -3533,6 +3537,11 @@ SEXP devga(SEXP args)
     fillOddEven = asLogical(CAR(args));
     if (fillOddEven == NA_LOGICAL)
 	error(_("invalid value of '%s'"), "fillOddEven");
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) || LENGTH(sc) != 1)
+	error(_("invalid value of '%s'"), "family");
+    family = CHAR(STRING_ELT(sc, 0));
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -3544,7 +3553,8 @@ SEXP devga(SEXP args)
 	if (!GADeviceDriver(dev, display, width, height, ps,
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
-			    restoreConsole, title, clickToConfirm, fillOddEven)) {
+			    restoreConsole, title, clickToConfirm, 
+			    fillOddEven, family)) {
 	    char type[100], *p;
 	    free(dev);
 	    if (display[0]) {

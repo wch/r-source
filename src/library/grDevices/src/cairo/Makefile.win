@@ -18,7 +18,7 @@ endif
 
 PKG_CPPFLAGS=-I$(R_HOME)/src/include -I. -I.. -DHAVE_CONFIG_H  $(arch_DEFS)
 
-USE_PANGO = true
+#USE_PANGO = true
 
 ifeq "$(USE_PANGO)" "true"
 PKG_CPPFLAGS+= -I"$(GTK2_HOME)/include/cairo" \

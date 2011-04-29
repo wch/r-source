@@ -54,7 +54,7 @@ windows <- function(width, height, pointsize,
                     record, rescale, xpinch, ypinch,
                     bg, canvas, gamma, xpos, ypos,
                     buffered, title, restoreConsole, clickToConfirm,
-                    fillOddEven)
+                    fillOddEven, family = "")
 {
     new <- list()
     if(!missing(width)) new$width <- as.double(width)
@@ -84,7 +84,7 @@ windows <- function(width, height, pointsize,
                         old$canvas, old$gamma, old$xpos, old$ypos,
                         old$buffered, .PSenv, old$bg,
                         old$restoreConsole, old$title, old$clickToConfirm,
-                        old$fillOddEven))
+                        old$fillOddEven, family))
 }
 
 win.graph <- function(width, height, pointsize)
@@ -100,7 +100,7 @@ win.graph <- function(width, height, pointsize)
                         FALSE, 1L, old$xpinch, old$ypinch, "white",
                         old$gamma, NA_integer_, NA_integer_, old$buffered,
                         .PSenv, NA, old$restoreConsole, "", TRUE,
-                        old$fillOddEven))
+                        old$fillOddEven, ""))
 }
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
@@ -110,10 +110,11 @@ win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_,
                         FALSE, .PSenv, NA, restoreConsole, "", FALSE,
-                        TRUE))
+                        TRUE, ""))
 
-win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
-                         restoreConsole = TRUE)
+win.metafile <-
+    function(filename = "", width = 7, height = 7, pointsize = 12,
+             family = "", restoreConsole = TRUE)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -121,14 +122,13 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE,
-                        TRUE))
+                        restoreConsole, "", FALSE, TRUE, ""))
 }
 
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px", pointsize = 12,
-                bg = "white", res = NA, restoreConsole = TRUE,
-                type = c("windows", "cairo"))
+                bg = "white", res = NA, family = "sans",
+                restoreConsole = TRUE, type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -141,20 +141,22 @@ png <- function(filename = "Rplot%03d.png",
         switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
     type <- match.arg(type)
     if(type == "cairo") {
+
         invisible(.External(devCairo, filename, 2L, width, height, pointsize,
-                            bg, res, 1L, 100L))
+                            bg, res, 1L, 100L,
+                            if(nzchar(family)) family else "sans"))
     } else
     invisible(.External(Cdevga, paste("png:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE, TRUE))
+                        restoreConsole, "", FALSE, TRUE, family))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp",
                 width = 480, height = 480, units = "px", pointsize = 12,
-                bg = "white", res = NA, restoreConsole = TRUE,
-                type = c("windows", "cairo"))
+                bg = "white", res = NA, family = "sans",
+                restoreConsole = TRUE, type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -168,19 +170,20 @@ bmp <- function(filename = "Rplot%03d.bmp",
     type <- match.arg(type)
     if(type == "cairo") {
         invisible(.External(devCairo, filename, 9L, width, height, pointsize,
-                            bg, res, 1L, 100L))
+                            bg, res, 1L, 100L,
+                            if(nzchar(family)) family else "sans"))
     } else
     invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE, TRUE))
+                        restoreConsole, "", FALSE, TRUE, family))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpg",
                  width = 480, height = 480, units = "px", pointsize = 12,
-                 quality = 75, bg = "white", res = NA, restoreConsole = TRUE,
-                 type = c("windows", "cairo"))
+                 quality = 75, bg = "white", res = NA, family = "sans",
+                 restoreConsole = TRUE, type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -194,7 +197,8 @@ jpeg <- function(filename = "Rplot%03d.jpg",
     type <- match.arg(type)
     if(type == "cairo") {
         invisible(.External(devCairo, filename, 3L, width, height, pointsize,
-                            bg, res, 1L, quality))
+                            bg, res, 1L, quality,
+                            if(nzchar(family)) family else "sans"))
     } else
     invisible(.External(Cdevga, paste("jpeg:", quality, ":",filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
@@ -206,9 +210,8 @@ jpeg <- function(filename = "Rplot%03d.jpg",
 tiff <- function(filename = "Rplot%03d.tif",
                  width = 480, height = 480, units = "px", pointsize = 12,
                  compression = c("none", "rle", "lzw", "jpeg", "zip"),
-                 bg = "white", res = NA,
-                 restoreConsole = TRUE,
-                 type = c("windows", "cairo"))
+                 bg = "white", res = NA, family = "sans",
+                 restoreConsole = TRUE, type = c("windows", "cairo"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
@@ -224,13 +227,14 @@ tiff <- function(filename = "Rplot%03d.tif",
     type <- match.arg(type)
     if(type == "cairo") {
         invisible(.External(devCairo, filename, 8L, width, height, pointsize,
-                            bg, res, 1L, comp))
+                            bg, res, 1L, comp,
+                            if(nzchar(family)) family else "sans"))
     } else
     invisible(.External(Cdevga, paste("tiff:", comp, ":", filename, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, bg, 1,
                         as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                        restoreConsole, "", FALSE, TRUE))
+                        restoreConsole, "", FALSE, TRUE, family))
 }
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)

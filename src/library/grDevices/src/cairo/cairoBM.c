@@ -25,7 +25,7 @@
 /* This module is only compiled if HAVE_WORKING_CAIRO is true */
 
 #ifdef Win32
-#define HAVE_PANGOCAIRO 1
+//#define HAVE_PANGOCAIRO 1
 #define HAVE_CAIRO_SVG 1
 #define HAVE_CAIRO_PDF 1
 #define HAVE_CAIRO_PS 1

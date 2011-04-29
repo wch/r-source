@@ -15,17 +15,23 @@
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
-    restoreConsole = TRUE, type = c("windows", "cairo"))
+    family = "", restoreConsole = TRUE,
+    type = c("windows", "cairo"))
+
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
      units = "px", pointsize = 12, quality = 75, bg = "white",
-     res = NA, restoreConsole = TRUE, type = c("windows", "cairo"))
+     res = NA, family = "", restoreConsole = TRUE,
+     type = c("windows", "cairo"))
+
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
-    restoreConsole = TRUE, type = c("windows", "cairo"))
+    family = "", restoreConsole = TRUE,
+    type = c("windows", "cairo"))
+
 tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
      units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
-     bg = "white", res = NA,
+     bg = "white", res = NA, family = "",
      restoreConsole = TRUE, type = c("windows", "cairo"))
 }
 \arguments{
@@ -53,6 +59,10 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
     bitmap file, if a positive integer.  Also used for units other than
     the default.  If not specified, taken as 72 dpi to set the size of
     text and line widths.}
+  \item{family}{A length-one character vector specifying the default
+    font family.  The default means to use the font numbers 
+    on the Windows GDI versions
+    and \code{"sans"} on the cairographics versions.}
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.}
   \item{type}{Should be plotting be done using Windows GDI or cairographics?}
