@@ -461,14 +461,14 @@ static PangoFontDescription
 	pango_font_description_set_family(fontdesc, "symbol");
     else {
 	const char *fm = gc->fontfamily;
-	if(!fm[0]) fm = family;
-	if(streql(fm, "mono")) fm = "courier";
-	else if(streql(fm, "serif")) fm = times;
-	else if(streql(fm, "sans")) fm = hv;
+	if (!fm[0]) fm = family;
+	if (streql(fm, "mono")) fm = "courier";
+	else if (streql(fm, "serif")) fm = times;
+	else if (streql(fm, "sans")) fm = hv;
 	pango_font_description_set_family(fontdesc, fm);
-	if(face == 2 || face == 4)
+	if (face == 2 || face == 4)
 	    pango_font_description_set_weight(fontdesc, PANGO_WEIGHT_BOLD);
-	if(face == 3 || face == 4)
+	if (face == 3 || face == 4)
 	    pango_font_description_set_style(fontdesc, PANGO_STYLE_OBLIQUE);
     }
     /* seems a ssize < 1 gums up pango, PR#14369 */
@@ -499,17 +499,17 @@ PG_text_extents(cairo_t *cc, PangoLayout *layout,
     pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
 					&rect, &lrect);
 
-    if(width) *width = lrect.width;
-    if(ink) {
-	if(ascent) *ascent = PANGO_ASCENT(rect);
-	if(descent) *descent = PANGO_DESCENT(rect);
-	if(lbearing) *lbearing = PANGO_LBEARING(rect);
-	if(rbearing) *rbearing = PANGO_RBEARING(rect);
+    if (width) *width = lrect.width;
+    if (ink) {
+	if (ascent) *ascent = PANGO_ASCENT(rect);
+	if (descent) *descent = PANGO_DESCENT(rect);
+	if (lbearing) *lbearing = PANGO_LBEARING(rect);
+	if (rbearing) *rbearing = PANGO_RBEARING(rect);
     } else {
-	if(ascent) *ascent = PANGO_ASCENT(lrect);
-	if(descent) *descent = PANGO_DESCENT(lrect);
-	if(lbearing) *lbearing = PANGO_LBEARING(lrect);
-	if(rbearing) *rbearing = PANGO_RBEARING(lrect);
+	if (ascent) *ascent = PANGO_ASCENT(lrect);
+	if (descent) *descent = PANGO_DESCENT(lrect);
+	if (lbearing) *lbearing = PANGO_LBEARING(lrect);
+	if (rbearing) *rbearing = PANGO_RBEARING(lrect);
     }
 }
 
@@ -526,10 +526,10 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     PangoLayout *layout;
     gint iascent, idescent, iwidth;
 
-    if(c == 0) c = 77;
-    if(c < 0) {c = -c; Unicode = 1;}
+    if (c == 0) c = 77;
+    if (c < 0) {c = -c; Unicode = 1;}
 
-    if(Unicode) {
+    if (Unicode) {
 	Rf_ucstoutf8(str, (unsigned int) c);
     } else {
 	/* Here we assume that c < 256 */
@@ -683,7 +683,8 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
     /* then try to load the font into FT */
     if (fs) {
 	int j = 0, index = 0;
-	while (j < fs->nfont) { /* find the font file + face index and use it with FreeType */
+	while (j < fs->nfont) {
+	    /* find the font file + face index and use it with FreeType */
 	    if (FcPatternGetString (fs->fonts[j], FC_FILE, 0, &file)
 		== FcResultMatch &&
 		FcPatternGetInteger(fs->fonts[j], FC_INDEX, 0, &index)
@@ -693,28 +694,37 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 		    FcFontSetDestroy (fs);
 		    return NULL;
 		}
-		/* some FreeType versions have broken index support, fall back to index 0 */
-		if (!FT_New_Face(ft_library, (const char *) file, index, &face) ||
-		    (index && !FT_New_Face(ft_library, (const char *) file, 0, &face))) {
+		/* some FreeType versions have broken index support,
+		   fall back to index 0 */
+		if (!FT_New_Face(ft_library, 
+				 (const char *) file, index, &face) ||
+		    (index && !FT_New_Face(ft_library, 
+					   (const char *) file, 0, &face))) {
 		    FcFontSetDestroy (fs);
-#ifdef __APPLE__ /* FreeType is broken on OS X in that face index is often wrong (unfortunately
-		    even for Helvetica!) - we try to find the best match through enumeration */
-		    /* And italic and bold are swapped */
+
+#ifdef __APPLE__ /* But this function is Apple-only */
+		    /* FreeType is broken on OS X in that face index
+		       is often wrong (unfortunately even for Helvetica!)
+		       - we try to find the best match through enumeration.
+		       And italic and bold are swapped */
 		    if (style == 2) style = 1; else if (style == 1) style = 2;
-		    if (face->num_faces > 1 && (face->style_flags & 3) != style) {
+		    if (face->num_faces > 1 && 
+			(face->style_flags & 3) != style) {
 			FT_Face alt_face;
 			int i = 0;
 			while (i < face->num_faces)
-			    if (!FT_New_Face(ft_library, (const char *) file, i++, &alt_face)) {
+			    if (!FT_New_Face(ft_library, 
+					     (const char *) file, 
+					     i++, &alt_face)) {
 				if ((alt_face->style_flags & 3) == style) {
 				    FT_Done_Face(face);
 				    face = alt_face;
 				    break;
-				} else
-				    FT_Done_Face(alt_face);
+				} else FT_Done_Face(alt_face);
 			    }
 		    }
 #endif
+
 		    return cairo_ft_font_face_create_for_ft_face(face, FT_LOAD_DEFAULT);
 		}
 	    }
@@ -743,10 +753,11 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 	else if (streql(family, "serif")) family = "Times";
 	else if (streql(family, "mono")) family = "Courier";
     }
+    /* check the cache first */
     cairo_face = Rc_findFont(family, face);
     if (!cairo_face) {
 	cairo_face = FC_getFont(family, face - 1);
-	if (!cairo_face) return;
+	if (!cairo_face) return; /* No message? */
 	Rc_addFont(family, face, cairo_face);
     }
     cairo_set_font_face (xd->cc, cairo_face);
@@ -762,22 +773,25 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     int face = gc->fontface;
     double size = gc->cex * gc->ps *fs;
     char *family = "Helvetica";
-    int slant = CAIRO_FONT_SLANT_NORMAL, wt  = CAIRO_FONT_WEIGHT_NORMAL;
+    int slant = CAIRO_FONT_SLANT_NORMAL, wt = CAIRO_FONT_WEIGHT_NORMAL;
 #ifdef WIN32
     char *times = "Times New Roman", *hv = "Arial";
 #else
     char *times = "times", *hv = "Helvetica";
 #endif
 
-    char *fm = gc->fontfamily;
-    if(streql(fm, "mono")) family = "courier";
-    else if(streql(fm, "serif")) family = times
-    else if(streql(fm, "sans")) family = hv
-    else if(fm[0]) family = fm;
     if (face < 1 || face > 5) face = 1;
     if (face == 5) family = "Symbol";
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
+    if (face != 5) {
+	char *fm = gc->fontfamily;
+	if (!fm[0]) fm = xd->basefontfamily;
+	if (streql(fm, "mono")) family = "courier";
+	else if (streql(fm, "serif")) family = times;
+	else if (streql(fm, "sans")) family = hv;
+	else if (fm[0]) family = fm;
+    }
 
     cairo_select_font_face (xd->cc, family, slant, wt);
     /* FIXME: this should really use a matrix if pixels are non-square */
@@ -794,10 +808,10 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     char str[16];
     int Unicode = mbcslocale;
 
-    if(c == 0) c = 77;
-    if(c < 0) {c = -c; Unicode = 1;}
+    if (c == 0) c = 77;
+    if (c < 0) {c = -c; Unicode = 1;}
 
-    if(Unicode) {
+    if (Unicode) {
 	Rf_ucstoutf8(str, (unsigned int) c);
     } else {
 	/* Here, we assume that c < 256 */
@@ -809,10 +823,6 @@ static void Cairo_MetricInfo(int c, pGEcontext gc,
     *ascent  = -exts.y_bearing;
     *descent = exts.height + exts.y_bearing;
     *width = exts.x_advance;
-#if 0
-    printf("c = %d, '%s', face %d %f %f %f\n",
-	   c, str, gc->fontface, *width, *ascent, *descent);
-#endif
 }
 
 static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
