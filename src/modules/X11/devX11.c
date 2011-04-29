@@ -201,6 +201,30 @@ static double BlueGamma	 = 1.0;
 
 #ifdef HAVE_WORKING_CAIRO
 # include "cairoX11.c"
+
+static void Cairo_update(pX11Desc xd)
+{
+    /* We could first paint the canvas colour and
+       then the backing surface. */
+    if(xd->xcc) {
+	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+	cairo_paint(xd->xcc);
+    }
+}
+
+static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    cairo_reset_clip(xd->cc);
+    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    CairoColor(xd->fill, xd);
+    cairo_new_path(xd->cc);
+    cairo_paint(xd->cc);
+    Cairo_update(xd);
+    /* Apparently needed */
+    XSync(display, 0);
+}
 #endif
 
 /* Variables Used To Store Colormap Information */
@@ -2452,7 +2476,7 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 	if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
 	    strcpy(xd->symbolfamily, symbolname);
 	else strcpy(xd->symbolfamily,fn);
-    }
+    } else strcpy(xd->basefontfamily, "sans");
 
     /*	Start the Device Driver and Hardcopy.  */
 

@@ -319,32 +319,6 @@ static cairo_surface_t* createImageSurface(unsigned int *raster, int w, int h)
 }
 
 
-#ifndef NO_X11
-static void Cairo_update(pX11Desc xd)
-{
-    /* We could first paint the canvas colour and
-       then the backing surface. */
-    if(xd->xcc) {
-	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-	cairo_paint(xd->xcc);
-    }
-}
-
-static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
-{
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
-    cairo_reset_clip(xd->cc);
-    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
-    CairoColor(xd->fill, xd);
-    cairo_new_path(xd->cc);
-    cairo_paint(xd->cc);
-    Cairo_update(xd);
-    /* Apparently needed */
-    XSync(display, 0);
-}
-#endif
-
 static void Cairo_Raster(unsigned int *raster, int w, int h,
                          double x, double y, 
                          double width, double height,
@@ -469,15 +443,16 @@ static SEXP Cairo_Cap(pDevDesc dd)
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
-static PangoFontDescription *PG_getFont(const pGEcontext gc, double fs)
+static PangoFontDescription 
+*PG_getFont(const pGEcontext gc, double fs, const char *family)
 {
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
     double size = gc->cex * gc->ps * fs, ssize = PANGO_SCALE * size;
 #ifdef WIN32
-    char *times = "Times New Roman", *hv = "Arial";
+    const char *times = "Times New Roman", *hv = "Arial";
 #else
-    char *times = "times", *hv = "Helvetica";
+    const char *times = "times", *hv = "Helvetica";
 #endif
     if (face < 1 || face > 5) face = 1;
 
@@ -485,11 +460,12 @@ static PangoFontDescription *PG_getFont(const pGEcontext gc, double fs)
     if (face == 5)
 	pango_font_description_set_family(fontdesc, "symbol");
     else {
-	char *fm = gc->fontfamily;
+	const char *fm = gc->fontfamily;
+	if(!fm[0]) fm = family;
 	if(streql(fm, "mono")) fm = "courier";
 	else if(streql(fm, "serif")) fm = times;
 	else if(streql(fm, "sans")) fm = hv;
-	pango_font_description_set_family(fontdesc, fm[0] ? fm : hv);
+	pango_font_description_set_family(fontdesc, fm);
 	if(face == 2 || face == 4)
 	    pango_font_description_set_weight(fontdesc, PANGO_WEIGHT_BOLD);
 	if(face == 3 || face == 4)
@@ -545,7 +521,8 @@ PangoCairo_MetricInfo(int c, const pGEcontext gc,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     char str[16];
     int Unicode = mbcslocale;
-    PangoFontDescription *desc = PG_getFont(gc, xd->fontscale);
+    PangoFontDescription *desc = 
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
     PangoLayout *layout;
     gint iascent, idescent, iwidth;
 
@@ -578,7 +555,8 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
-    PangoFontDescription *desc = PG_getFont(gc, xd->fontscale);
+    PangoFontDescription *desc = 
+	PG_getFont(gc, xd->fontscale, xd->bsefontfamily);
     PangoLayout *layout = PG_layout(desc, xd->cc, str);
 
     PG_text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
@@ -592,12 +570,12 @@ PangoCairo_Text(double x, double y,
 		const char *str, double rot, double hadj,
 		const pGEcontext gc, pDevDesc dd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    gint ascent, lbearing, width;
-    PangoLayout *layout;
-
     if (R_ALPHA(gc->col) > 0) {
-	PangoFontDescription *desc = PG_getFont(gc, xd->fontscale);
+	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+	gint ascent, lbearing, width;
+	PangoLayout *layout;
+	PangoFontDescription *desc = 
+	    PG_getFont(gc, xd->fontscale, xd->basefontfamily);
 	cairo_save(xd->cc);
 	layout = PG_layout(desc, xd->cc, str);
 	PG_text_extents(xd->cc, layout, &lbearing, NULL, &width,
@@ -760,7 +738,8 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     if (face == 5) {
 	if (!*family) family = "Symbol";
     } else {
-	if (!*family || streql(family, "sans")) family = "Helvetica";
+	if (!*family) family = xd->basefontfamily;
+	if (streql(family, "sans")) family = "Helvetica";
 	else if (streql(family, "serif")) family = "Times";
 	else if (streql(family, "mono")) family = "Courier";
     }
@@ -807,8 +786,8 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 #endif
 
 static void Cairo_MetricInfo(int c, pGEcontext gc,
-			  double* ascent, double* descent,
-			  double* width, pDevDesc dd)
+			     double* ascent, double* descent,
+			     double* width, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     cairo_text_extents_t exts;
@@ -848,13 +827,12 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
 }
 
 static void Cairo_Text(double x, double y,
-		    const char *str, double rot, double hadj,
-		    pGEcontext gc, pDevDesc dd)
+		       const char *str, double rot, double hadj,
+		       pGEcontext gc, pDevDesc dd)
 {
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
     if (!utf8Valid(str)) error("invalid string in Cairo_Text");
     if (R_ALPHA(gc->col) > 0) {
+	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	cairo_save(xd->cc);
 	FT_getFont(gc, dd, xd->fontscale);
 	cairo_move_to(xd->cc, x, y);

@@ -97,6 +97,9 @@
       \item \code{update.packages()} now accepts a character vector of
       package names for the \code{oldPkgs} argument.  (Suggestion of
       Tal Galili.)
+      
+      \item Devices \code{svg()}, \code{cairo_pdf()} and
+      \code{cairo_ps()} gain a \code{family} argument.
     }
   }
 

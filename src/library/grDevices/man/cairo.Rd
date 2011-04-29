@@ -14,17 +14,17 @@
 \usage{
 svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
     width = 7, height = 7, pointsize = 12,
-    onefile = FALSE, bg = "white",
+    onefile = FALSE, family = "sans", bg = "white",
     antialias = c("default", "none", "gray", "subpixel"))
 
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
-          onefile = FALSE, bg = "white",
+          onefile = FALSE, family = "sans", bg = "white",
           antialias = c("default", "none", "gray", "subpixel"))
 
 cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
-         onefile = FALSE, bg = "white",
+         onefile = FALSE, family = "sans", bg = "white",
          antialias = c("default", "none", "gray", "subpixel"))
 }
 \arguments{
@@ -38,6 +38,10 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{height}{the height of the device in inches.}
   \item{pointsize}{the default pointsize of plotted text (in big points).}
   \item{onefile}{should all plots appear in one file or in separate files?}
+  \item{family}{one of the device-independent font families,
+    \code{"sans"}, \code{"serif"} and \code{"mono"}, or a character
+    string specify a font family to be searched for in a
+    system-dependent way.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;

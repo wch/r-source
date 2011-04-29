@@ -17,8 +17,8 @@
 ## The bitmap devices are undocumented and may never be released in this form
 cairo_png <-
     function(filename = "Rplot%03d.png",
-             width = 480, height = 480, units = "px",
-             pointsize = 12, bg = "white", res = NA,
+             width = 480, height = 480, units = "px", pointsize = 12,
+             bg = "white", res = NA, family = "sans",
              antialias = c("default", "none", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
@@ -32,14 +32,14 @@ cairo_png <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(devCairo, filename, 2L, width, height, pointsize, bg,
-                        res, antialias, 100L))
+                        res, antialias, 100L, family))
 }
 
 cairo_jpeg <-
     function(filename = "Rplot%03d.jpeg",
-             width = 480, height = 480, units = "px",
-             pointsize = 12, quality = 75,
-             bg = "white", res = NA,
+             width = 480, height = 480, units = "px", pointsize = 12,
+             quality = 75,
+             bg = "white", res = NA, family = "sans",
              antialias = c("default", "none", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
@@ -53,14 +53,14 @@ cairo_jpeg <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(devCairo, filename, 3L, width, height, pointsize, bg,
-                        res, antialias, quality))
+                        res, antialias, quality, family))
 }
 
 cairo_tiff <-
     function(filename = "Rplot%03d.tiff",
              width = 480, height = 480, units = "px", pointsize = 12,
              compression = c("none", "rle", "lzw", "jpeg", "zip"),
-             bg = "white", res = NA,
+             bg = "white", res = NA, family = "sans",
              antialias = c("default", "none", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
@@ -76,13 +76,13 @@ cairo_tiff <-
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     invisible(.External(devCairo, filename, 8L, width, height, pointsize, bg,
-                        res, antialias, comp))
+                        res, antialias, comp, family))
 }
 
 cairo_bmp <-
     function(filename = "Rplot%03d.bmp",
              width = 480, height = 480, units = "px", pointsize = 12,
-             bg = "white", res = NA,
+             bg = "white", res = NA, family = "sans",
              antialias = c("default", "none", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
@@ -96,42 +96,5 @@ cairo_bmp <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(devCairo, filename, 9L, width, height, pointsize, bg,
-                        res, antialias, 100L))
-}
-
-svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
-                width = 7, height = 7, pointsize = 12,
-                onefile = FALSE, bg = "white",
-                antialias = c("default", "none", "gray", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    new <- list()
-    antialiases <- eval(formals()$antialias)
-    antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 4L, 72*width, 72*height,
-                        pointsize, bg, NA_integer_, antialias, onefile))
-}
-
-cairo_pdf <- function(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
-                      width = 7, height = 7, pointsize = 12,
-                      onefile = FALSE, bg = "white",
-                      antialias = c("default", "none", "gray", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    antialiases <- eval(formals()$antialias)
-    antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 6L, 72*width, 72*height,
-                        pointsize, bg, NA_integer_, antialias, onefile))
-}
-
-cairo_ps <- function(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
-                     width = 7, height = 7, pointsize = 12,
-                     onefile = FALSE, bg = "white",
-                     antialias = c("default", "none", "gray", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    antialiases <- eval(formals()$antialias)
-    antialias <- match(match.arg(antialias, antialiases), antialiases)
-    invisible(.External(devCairo, filename, 7L, 72*width, 72*height,
-                        pointsize, bg, NA_integer_, antialias, onefile))
+                        res, antialias, 100L, family))
 }
