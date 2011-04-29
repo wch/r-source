@@ -449,7 +449,7 @@ static PangoFontDescription
     PangoFontDescription *fontdesc;
     gint face = gc->fontface;
     double size = gc->cex * gc->ps * fs, ssize = PANGO_SCALE * size;
-#ifdef WIN32
+#ifdef Win32
     const char *times = "Times New Roman", *hv = "Arial";
 #else
     const char *times = "times", *hv = "Helvetica";
@@ -606,7 +606,11 @@ PangoCairo_Text(double x, double y,
    r44621: now works on Linux, just finds the same fonts as before. [BDR]
 */
 
-#if CAIRO_HAS_FT_FONT && __APPLE__
+#ifdef __APPLE__
+# define USE_FC 1
+#endif
+
+#if CAIRO_HAS_FT_FONT && USE_FC
 
 /* FT implies FC in Cairo */
 #include <cairo-ft.h>
@@ -749,15 +753,24 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     double size = gc->cex * gc->ps *fs;
     cairo_font_face_t *cairo_face = NULL;
     const char *family;
+#ifdef Win32
+    char *times = "Times New Roman", *hv = "Arial";
+#else
+    char *times = "times", *hv = "Helvetica";
+#endif
 
     if (face < 1 || face > 5) face = 1;
     family = gc->fontfamily;
     if (face == 5) {
+#ifdef Win32
+	if (!*family) family = "Standard Symbols L";
+#else
 	if (!*family) family = "Symbol";
+#endif
     } else {
 	if (!*family) family = xd->basefontfamily;
-	if (streql(family, "sans")) family = "Helvetica";
-	else if (streql(family, "serif")) family = "Times";
+	if (streql(family, "sans")) family = hv;
+	else if (streql(family, "serif")) family = times;
 	else if (streql(family, "mono")) family = "Courier";
     }
     /* check the cache first */
@@ -768,7 +781,8 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 	Rc_addFont(family, face, cairo_face);
     }
     cairo_set_font_face (xd->cc, cairo_face);
-    /* FIXME: this should really use a matrix if pixels are non-square */
+    /* FIXME: this should really use cairo_set_font_matrix
+       if pixels are non-square on a screen device. */
     cairo_set_font_size (xd->cc, size);
 }
 
@@ -779,16 +793,20 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     int face = gc->fontface;
     double size = gc->cex * gc->ps *fs;
-    char *family = "Helvetica";
+    char *family;
     int slant = CAIRO_FONT_SLANT_NORMAL, wt = CAIRO_FONT_WEIGHT_NORMAL;
-#ifdef WIN32
+#ifdef Win32
     char *times = "Times New Roman", *hv = "Arial";
 #else
     char *times = "times", *hv = "Helvetica";
 #endif
 
     if (face < 1 || face > 5) face = 1;
+#ifdef Win32
+    if (face == 5) family = "Arial"; // works up to a point
+#else
     if (face == 5) family = "Symbol";
+#endif
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
     if (face != 5) {
@@ -804,7 +822,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
     }
 
     cairo_select_font_face (xd->cc, family, slant, wt);
-    /* FIXME: this should really use a cairo_set_font_matrix
+    /* FIXME: this should really use cairo_set_font_matrix
        if pixels are non-square on a screen device. */
     cairo_set_font_size (xd->cc, size);
 }
