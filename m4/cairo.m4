@@ -66,7 +66,8 @@ else
     LIBS="${LIBS} ${CAIRO_LIBS}"
 
      AC_CACHE_CHECK([whether cairo including pango is >= 1.2 and works], 
-		    [r_cv_cairo_works], [AC_LINK_IFELSE([
+		    [r_cv_cairo_works],
+                    [AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <pango/pango.h>
 #include <pango/pangocairo.h>
 #include <cairo-xlib.h>
@@ -80,7 +81,7 @@ int main(void) {
     pango_font_description_new();
     return 0;
  }
-	],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
+	]])],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
           CAIRO_LIBS=
           CAIRO_CFLAGS=
         ])])
@@ -138,7 +139,8 @@ int main(void) {
       LIBS="${LIBS} ${CAIRO_LIBS}"
 
       AC_CACHE_CHECK([whether cairo is >= 1.2 and works], 
-		     [r_cv_cairo_works], [AC_LINK_IFELSE([
+		     [r_cv_cairo_works], 
+                     [AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <cairo.h>
 #include <cairo-xlib.h>
 #if CAIRO_VERSION  < 10200
@@ -151,7 +153,7 @@ int main(void) {
                             CAIRO_FONT_WEIGHT_BOLD);
     return 0;
  }
-	],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
+	]])],[r_cv_cairo_works=yes],[r_cv_cairo_works=no
           CAIRO_LIBS=
           CAIRO_CFLAGS=
         ])])

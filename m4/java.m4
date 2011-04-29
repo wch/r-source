@@ -236,13 +236,13 @@ if test ${r_cv_java_works} = yes; then
     j_save_CPPF="${CPPFLAGS}"
     LIBS="${JAVA_LIBS}"
     CPPFLAGS="${JAVA_CPPFLAGS}"
-    AC_LINK_IFELSE([
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <jni.h>
 int main(void) {
     JNI_CreateJavaVM(0, 0, 0);
     return 0;
 }
-],[r_cv_jni="yes"],[
+]])],[r_cv_jni="yes"],[
     if test "${acx_java_uses_custom_flags}" = yes; then
       r_cv_jni=no
       AC_MSG_ERROR([Failed to compile a JNI program with custom JAVA_LIBS/JAVA_CPPFLAGS.
@@ -252,13 +252,13 @@ Java/JNI support is optional unless you set either JAVA_LIBS or JAVA_CPPFLAGS.])
     fi
     ## some OSes/Javas need -lpthread
     LIBS="${LIBS} -lpthread"
-    AC_LINK_IFELSE([
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
 #include <jni.h>
 int main(void) {
     JNI_CreateJavaVM(0, 0, 0);
     return 0;
 }
-],[r_cv_jni="yes (with pthreads)"],[r_cv_jni="no"])])
+]])],[r_cv_jni="yes (with pthreads)"],[r_cv_jni="no"])])
     LIBS="${j_save_LIBS}"
     CPPFLAGS="${j_save_CPPF}"
 ])
