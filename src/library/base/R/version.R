@@ -46,7 +46,9 @@ function(x, strict = TRUE, regexp, classes = NULL)
     if(length(x)) {
         ok <- grepl(valid_numeric_version_regexp, x)
         if(!all(ok) && strict)
-            stop("invalid version specification ", x, call. = FALSE)
+            stop("invalid version specification ",
+                 paste(sQuote(unique(x[!ok])), collapse = ", "),
+                 call. = FALSE)
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
     names(y) <- nms
