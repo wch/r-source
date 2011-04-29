@@ -1308,7 +1308,7 @@ be exactly that value: all others are equivalent to @samp{FALSE}.} and
 supplying functions @code{textUTF8} and @code{strWidthUTF8} that expect
 UTF-8-encoded inputs.  Normally the symbol font is encoded in Adobe
 Symbol encoding, but that can be re-encoded to UTF-8 by setting
-@code{wantSymbolUTF8} to @samp{TRUE}.  The Window's port of
+@code{wantSymbolUTF8} to @samp{TRUE}.  The Windows' port of
 cairographics has a rather peculiar assumption: it wants the symbol font
 to be encoded in UTF-8 as if it were encoded in Latin-1: this is
 selected by @code{wantSymbolUTF8 = NA_LOGICAL} (as from @R{} 2.13.1).
