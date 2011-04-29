@@ -25,7 +25,7 @@
 /* This module is only compiled if HAVE_WORKING_CAIRO is true */
 
 #ifdef Win32
-//#define HAVE_PANGOCAIRO 1
+#define HAVE_PANGOCAIRO 1
 #define HAVE_CAIRO_SVG 1
 #define HAVE_CAIRO_PDF 1
 #define HAVE_CAIRO_PS 1
@@ -387,7 +387,11 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
     dd->text = dd->textUTF8 = Cairo_Text;
 #endif
     dd->hasTextUTF8 = TRUE;
+#if defined(Win32) && !defined(USE_FC)
+    dd->wantSymbolUTF8 = NA_LOGICAL;
+#else
     dd->wantSymbolUTF8 = TRUE;
+#endif
     dd->useRotatedTextInContour = FALSE;
 
     dd->newPage = BM_NewPage;

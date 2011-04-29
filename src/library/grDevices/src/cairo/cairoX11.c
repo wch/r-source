@@ -802,11 +802,7 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 #endif
 
     if (face < 1 || face > 5) face = 1;
-#ifdef Win32
-    if (face == 5) family = "Arial"; // works up to a point
-#else
     if (face == 5) family = "Symbol";
-#endif
     if (face == 2 || face == 4) wt = CAIRO_FONT_WEIGHT_BOLD;
     if (face == 3 || face == 4) slant = CAIRO_FONT_SLANT_ITALIC;
     if (face != 5) {
