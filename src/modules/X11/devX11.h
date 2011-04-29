@@ -77,7 +77,7 @@ typedef enum {
 
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP,
-			 int, int, int, const char *, int, int);
+			 int, int, int, const char *, int, int, const char *);
 
 
 	/********************************************************/

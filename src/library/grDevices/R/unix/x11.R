@@ -26,6 +26,7 @@ assign(".X11.Options",
             colortype = "true", maxcubesize = 256,
             fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
             "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"),
+            family = "sans",
             xpos = NA_integer_, ypos = NA_integer_,
 	    title = "", type = "cairo", antialias = "default"),
        envir = .X11env)
@@ -53,7 +54,8 @@ X11.options <- function(..., reset = FALSE)
 }
 
 X11 <- function(display = "", width, height, pointsize, gamma,
-                bg, canvas, fonts, xpos, ypos, title, type, antialias)
+                bg, canvas, fonts, family,
+                xpos, ypos, title, type, antialias)
 {
     if(display == "" && .Platform$GUI == "AQUA" &&
        is.na(Sys.getenv("DISPLAY", NA))) Sys.setenv(DISPLAY = ":0")
@@ -72,6 +74,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!missing(type))
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
+    if(!missing(family)) new$family <- family
 
     antialiases <- get("antialiases", envir = .X11env)
     if(!missing(antialias))
@@ -87,7 +90,8 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     antialias <- match(d$antialias, antialiases)
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
-                  NA_integer_, d$xpos, d$ypos, d$title, type, antialias))
+                  NA_integer_, d$xpos, d$ypos, d$title,
+                  type, antialias, d$family))
 }
 
 x11 <- X11
@@ -114,16 +118,16 @@ png <- function(filename = "Rplot%03d.png",
         new$antialias <- match.arg(antialias, antialiases)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, antialiases)
-    ## do these separately so can remove from X11 module in due course
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "png", path.expand(filename), width, height,
-                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+        invisible(.External(CQuartz, "png", path.expand(filename),
+                            width, height,
+                            pointsize, d$family, TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 2L, width, height, pointsize,
-                            bg, res, antialias, 100L, "sans"))
+                            bg, res, antialias, 100L, d$family))
     else
         .Internal(X11(paste("png::", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -151,17 +155,17 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(!missing(antialias))
         new$antialias <- match.arg(antialias, antialiases)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
-    ## do this separately so can remove from X11 module in due course
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "jpeg", path.expand(filename), width, height,
-                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+        invisible(.External(CQuartz, "jpeg", path.expand(filename),
+                            width, height,
+                            pointsize, d$family, TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 3L, width, height, pointsize,
                             bg, res, match(d$antialias, antialiases),
-                            quality, "sans"))
+                            quality, d$family))
     else
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -194,13 +198,14 @@ tiff <- function(filename = "Rplot%03d.tiff",
     if(type == "quartz" && capabilities("aqua")) {
         width <- width/ifelse(is.na(res), 72, res);
         height <- height/ifelse(is.na(res), 72, res);
-        invisible(.External(CQuartz, "tiff", path.expand(filename), width, height,
-                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+        invisible(.External(CQuartz, "tiff", path.expand(filename),
+                            width, height,
+                            pointsize, d$family, TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 8L, width, height, pointsize,
                             bg, res, match(d$antialias, antialiases),
-                            comp, "sans"))
+                            comp, d$family))
     else
         .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
                       width, height, pointsize, d$gamma,
@@ -232,12 +237,12 @@ bmp <- function(filename = "Rplot%03d.bmp",
         height <- height/ifelse(is.na(res), 72, res);
         invisible(.External(CQuartz, "bmp", path.expand(filename),
                             width, height,
-                            pointsize, "Helvetica", TRUE, TRUE, "", bg,
+                            pointsize, d$family, TRUE, TRUE, "", bg,
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 9L, width, height, pointsize,
                             bg, res, match(d$antialias, antialiases),
-                            100L, "sans"))
+                            100L, d$family))
     else
         .Internal(X11(paste("bmp::", filename, sep=""),
                       width, height, pointsize, d$gamma,

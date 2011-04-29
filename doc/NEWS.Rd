@@ -100,6 +100,12 @@
       
       \item Devices \code{svg()}, \code{cairo_pdf()} and
       \code{cairo_ps()} gain a \code{family} argument.
+
+      On a Unix-alike \code{X11()} gains a \code{family} argument which
+      applies only to the cairo-based versions.  This is now one of the
+      \code{x11.options()}, and so can be passed to the \code{bmp()},
+      \code{jpeg()}, \code{png()} and \code{tiff()} devices, where it
+      applies to the cairo and Quartz types.
     }
   }
 

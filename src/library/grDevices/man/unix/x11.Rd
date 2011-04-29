@@ -22,7 +22,7 @@
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
-    fonts, xpos, ypos, title, type, antialias)
+    fonts, family, xpos, ypos, title, type, antialias)
 
 X11.options(\dots, reset = FALSE)
 }
@@ -49,6 +49,8 @@ X11.options(\dots, reset = FALSE)
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
+  \item{family}{The default family for use with the cairo-based
+    devices.  A length-one character string.}
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
@@ -136,8 +138,9 @@ X11.options(\dots, reset = FALSE)
 }
 
 \section{Cairo Fonts}{
-  The cairographics-based device works directly with font family names such as
-  \code{"Helvetica"} which should be selected by \code{\link{par}} or
+  The cairographics-based device works directly with font family names
+  such as \code{"Helvetica"} which should be selected initially by the
+  \code{family} argument and subsequently by \code{\link{par}} or
   \code{\link{gpar}}.  There are mappings for the three
   device-independent font families, \code{"sans"} for a sans-serif font
   (to \code{"Helvetica"}), \code{"serif"} for a serif font (to
@@ -157,7 +160,7 @@ X11.options(\dots, reset = FALSE)
   such fonts.
   
   Because of known problems with font selection on Mac OS X without
-  Pango, \code{type="cairo"} is not the default (as from \R 2.11.0)
+  Pango, \code{type = "cairo"} is not the default (as from \R 2.11.0)
   unless Pango is available.  These problems include mixing up bold and
   italic and selecting incorrect glyphs.
   
