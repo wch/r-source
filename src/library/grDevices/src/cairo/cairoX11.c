@@ -556,7 +556,7 @@ PangoCairo_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     gint width;
     PangoFontDescription *desc = 
-	PG_getFont(gc, xd->fontscale, xd->bsefontfamily);
+	PG_getFont(gc, xd->fontscale, xd->basefontfamily);
     PangoLayout *layout = PG_layout(desc, xd->cc, str);
 
     PG_text_extents(xd->cc, layout, NULL, NULL, &width, NULL, NULL, 0);
