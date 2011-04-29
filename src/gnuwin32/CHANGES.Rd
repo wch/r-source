@@ -27,6 +27,12 @@
 
       To experiment with them, follow the instructions in the
       \sQuote{R Installation and Administration Manual}.]
+
+      \item All the Windows-specific graphics devices now have a
+      \code{family} argument.  If non-empty this specifies an initial
+      family to be used for fonts 1--4.  If empty the fonts specified in
+      the \file{Rdevga} configuration file are used for the Windows GDI
+      devices and \code{"sans"} for cairographics-based devices.
     }
   }
 
