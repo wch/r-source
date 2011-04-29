@@ -422,7 +422,8 @@ function(which = NULL, dir = NULL, drop = "\\references",
 ## For spell-checking Rd files in a package:
 
 aspell_package_Rd_files <-
-function(dir, drop = "\\references", control = list(), program = NULL)
+function(dir, drop = c("\\author", "\\references"), control = list(),
+         program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
 

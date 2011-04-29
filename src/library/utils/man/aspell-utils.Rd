@@ -13,7 +13,7 @@
   Utilities for spell checking packages via Aspell, Hunspell or Ispell.
 }
 \usage{
-aspell_package_Rd_files(dir, drop = "\\\\references",
+aspell_package_Rd_files(dir, drop = c("\\\\author", "\\\\references"),
                         control = list(), program = NULL)
 aspell_package_vignettes(dir, control = list(), program = NULL)
 aspell_write_personal_dictionary_file(x, out, language = "en",
