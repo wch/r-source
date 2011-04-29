@@ -48,7 +48,7 @@ load(file, envir = parent.frame())
   Saved \R objects are binary files, even those saved with
   \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end of line markers.  \code{load} tries to detect such a
-  converion and gives an informative error message.
+  conversion and gives an informative error message.
 }
 #ifdef windows
 \note{

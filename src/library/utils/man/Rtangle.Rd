@@ -34,7 +34,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   \code{basename(file)} with an extension corresponding to the Sweave
   syntax (e.g. \file{Rnw}, \file{Stex}) replaced by \file{R}.  File
   names \code{"stdout"} and \code{"stderr"} are interpreted as the
-  ouptut and message connection respectively.
+  output and message connection respectively.
 
   If splitting is selected (including by the options in the file), each
   chunk is written to a separate file with extension the name of the

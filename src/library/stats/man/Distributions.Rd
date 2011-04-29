@@ -64,6 +64,6 @@
 
   The CRAN task view on distributions,
   \url{http://cran.r-project.org/web/views/Distributions.html},
-  mentionioning several CRAN packages for additional distributions.
+  mentioning several CRAN packages for additional distributions.
 }
 \keyword{distribution}
