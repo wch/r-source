@@ -71,7 +71,18 @@ ICU_PATH=/sources/icu
 # TIFFDIR = libtiff
 
 # For the cairographics devices
-GTK2_HOME =
+# There are two choices here:
+# (a) Use GTK+
+#     Set CAIRO_HOME to the root of the Gtk+ tree
+#     and CAIRO_TYPE = cairo (or fontconfig or pango for experiments)
+# (b) Use a static build of cairographics from
+#     http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
+#     Set CAIRO_HOME to the parent of the win32/win64 directories
+#     and CAIRO_TYPE = cairowin
+#
+# If CAIRO_HOME is not set the devices are not built.
+CAIRO_HOME =
+CAIRO_TYPE =
 
 # set this to YES to build static HTML help
 BUILD_HTML = NO

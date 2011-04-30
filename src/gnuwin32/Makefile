@@ -42,8 +42,8 @@ rpackages:
 
 ## must come after bitmapdll
 cairodevices:
-ifneq "$(GTK2_HOME)" ""
-	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all WIN=$(WIN) GTK2_HOME=$(GTK2_HOME)
+ifneq "$(CAIRO_HOME)" ""
+	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all WIN=$(WIN) CAIRO_HOME=$(CAIRO_HOME) CAIRO_TYPE=$(CAIRO_TYPE)
 endif
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
