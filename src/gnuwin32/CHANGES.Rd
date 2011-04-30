@@ -40,6 +40,21 @@
       Western Europe you may need to select a family that better
       supports your locale such as \code{"Arial MS Unicode"} or one
       specific to Chinese/Korean/Thai \dots{}.
+
+      \item There is a new \file{antialias} argument to
+      \code{windows()}, \code{win.print()} and the bitmap devices.
+      This is an option that can be set in \code{windows.options()} to
+      set the default for \code{windows()} (and \code{win.graph()}).
+
+      This effectively gives a hint to the Windows plotting system.
+      Whether anti-aliasing is used principally depends on the OS
+      settings: this argument should at least be able to turn it off.
+      The default behaviour (unchanged from before) is that Windows will
+      use anti-aliasing for screen devices (and bitmap devices, as they
+      plot on a hidden screen) if ClearType has been enabled.
+
+      The argument can also be used for the cairographics-based versions
+      of the bitmap devices.
     }
   }
 

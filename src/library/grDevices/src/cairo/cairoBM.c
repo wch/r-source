@@ -345,6 +345,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
     case 2: xd->antialias = CAIRO_ANTIALIAS_NONE; break;
     case 3: xd->antialias = CAIRO_ANTIALIAS_GRAY; break;
     case 4: xd->antialias = CAIRO_ANTIALIAS_SUBPIXEL; break;
+    default: xd->antialias = CAIRO_ANTIALIAS_DEFAULT;
     }
     xd->npages = 0;
     xd->col = R_RGB(0, 0, 0);

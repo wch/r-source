@@ -92,7 +92,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PDF, 16),
     EXTDEF(devCairo, 10),
 #ifdef WIN32
-    EXTDEF(devga, 18),
+    EXTDEF(devga, 19),
     EXTDEF(savePlot, 3),
 #else
     EXTDEF(Quartz, 12),

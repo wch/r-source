@@ -40,6 +40,7 @@
 #include "console.h"
 #include "rui.h"
 #define WIN32_LEAN_AND_MEAN 1
+#define _WIN32_WINNT 0x0500
 #include <windows.h>
 #include "devWindows.h"
 #include "grDevices.h"
@@ -68,7 +69,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
-			Rboolean fillOddEven, const char *family);
+			Rboolean fillOddEven, const char *family, int quality);
 
 
 /* a colour used to represent the background on png if transparent
@@ -304,7 +305,8 @@ static void SaveAsWin(pDevDesc dd, const char *display,
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
 		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
 		       R_GlobalEnv, restoreConsole, "", FALSE,
-		       ((gadesc*) dd->deviceSpecific)->fillOddEven, ""))
+		       ((gadesc*) dd->deviceSpecific)->fillOddEven, "",
+		       DEFAULT_QUALITY))
 	PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -607,6 +609,7 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
     int size, face = gc->fontface, usePoints;
     char* fontfamily;
     double fs = gc->cex * gc->ps;
+    int quality = xd->fontquality;
 
     usePoints = xd->kind <= METAFILE;
     if (!usePoints && xd->res_dpi > 0) fs *= xd->res_dpi/72.0;
@@ -631,13 +634,13 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	if (!fm[0]) fm = xd->basefontfamily;
 	fontfamily = translateFontFamily(fm);
 	if (fontfamily && face <= 4) {
-	    xd->font = gnewfont(xd->gawin,
+	    xd->font = gnewfont2(xd->gawin,
 				fontfamily, fontstyle[face - 1],
-				size, rot, usePoints);
+				size, rot, usePoints, quality);
 	} else {
-	    xd->font = gnewfont(xd->gawin,
+	    xd->font = gnewfont2(xd->gawin,
 				fontname[face - 1], fontstyle[face - 1],
-				size, rot, usePoints);
+				size, rot, usePoints, quality);
 	}
 	if (xd->font) {
 	    strcpy(xd->fontfamily, gc->fontfamily);
@@ -647,9 +650,9 @@ static void SetFont(pGEcontext gc, double rot, gadesc *xd)
 	} else {
 	    /* Fallback: set Arial */
 	    if (face > 4) face = 1;
-	    xd->font = gnewfont(xd->gawin,
+	    xd->font = gnewfont2(xd->gawin,
 				"Arial", fontstyle[face - 1],
-				size, rot, usePoints);
+				size, rot, usePoints, quality);
 	    if (!xd->font)
 		error("unable to set or substitute a suitable font");
 	    xd->fontface = face;
@@ -3090,7 +3093,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv, Rboolean restoreConsole,
 			const char *title, Rboolean clickToConfirm,
-			Rboolean fillOddEven, const char *family)
+			Rboolean fillOddEven, const char *family,
+			int quality)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -3129,6 +3133,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     xd->title[100] = '\0';
     strncpy(xd->basefontfamily, family, 101);
     xd->basefontfamily[100] = '\0';
+    xd->fontquality = quality;
     xd->doSetPolyFill = TRUE;     /* will only set it once */
     xd->fillOddEven = fillOddEven;
 
@@ -3469,19 +3474,23 @@ static void SaveAsTiff(pDevDesc dd, const char *fn)
 
 /* This is Guido's devga device, 'ga' for GraphApp. */
 
+#ifndef CLEARTYPE_QUALITY
+# define CLEARTYPE_QUALITY 5
+#endif
+
 SEXP devga(SEXP args)
 {
     pGEDevDesc gdd;
     const char *display, *title, *family;
     const void *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
-    int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
+    int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered, quality;
     Rboolean restoreConsole, clickToConfirm, fillOddEven;
     SEXP sc, psenv;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    display = CHAR(STRING_ELT(CAR(args), 0)); /* no longer need SaveString */
+    display = CHAR(STRING_ELT(CAR(args), 0));
     args = CDR(args);
     width = asReal(CAR(args));
     args = CDR(args);
@@ -3542,6 +3551,17 @@ SEXP devga(SEXP args)
     if (!isString(sc) || LENGTH(sc) != 1)
 	error(_("invalid value of '%s'"), "family");
     family = CHAR(STRING_ELT(sc, 0));
+    quality = DEFAULT_QUALITY;
+    args = CDR(args);
+    quality = asInteger(CAR(args));
+//    printf("fontquality=%d\n", quality);
+    switch (quality) {
+    case 1: quality = DEFAULT_QUALITY; break;
+    case 2: quality = NONANTIALIASED_QUALITY; break;
+    case 3: quality = CLEARTYPE_QUALITY; break;
+    case 4: quality = ANTIALIASED_QUALITY; break;
+    default: quality = DEFAULT_QUALITY;
+    }
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -3554,7 +3574,7 @@ SEXP devga(SEXP args)
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
 			    restoreConsole, title, clickToConfirm, 
-			    fillOddEven, family)) {
+			    fillOddEven, family, quality)) {
 	    char type[100], *p;
 	    free(dev);
 	    if (display[0]) {

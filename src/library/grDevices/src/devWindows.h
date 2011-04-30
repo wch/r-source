@@ -75,6 +75,7 @@ typedef struct {
     rect  clip;			/* The clipping rectangle */
     font  font;
     char fontfamily[100];
+    int  fontquality;
 
     Rboolean locator;
     Rboolean confirmation;

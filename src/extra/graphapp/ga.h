@@ -172,6 +172,8 @@ void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
 font  gnewfont(drawing d, const char *face, int style, int size,
 	       double rot, int usePoints);
+font  gnewfont2(drawing d, const char *face, int style, int size,
+		double rot, int usePoints, int quality);
 int   ghasfixedwidth(font f);
 field newfield_no_border(const char *text, rect r);
 

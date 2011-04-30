@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/windows.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -26,17 +26,17 @@
 \usage{
 windows(width, height, pointsize, record, rescale, xpinch, ypinch,
         bg, canvas, gamma, xpos, ypos, buffered, title,
-        restoreConsole, clickToConfirm, fillOddEven)
+        restoreConsole, clickToConfirm, fillOddEven, family, antialias)
 
 win.graph(width, height, pointsize)
 x11(width, height, pointsize, bg, gamma, xpos, ypos, title)
 X11(width, height, pointsize, bg, gamma, xpos, ypos, title)
 
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
-             restoreConsole = TRUE)
+             family, restoreConsole = TRUE)
 
 win.print(width = 7, height = 7, pointsize = 12, printer = "",
-          restoreConsole = TRUE)
+          family, antialias, restoreConsole = TRUE)
 }
 
 \arguments{
@@ -92,6 +92,17 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     the console.  Default \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Default \code{TRUE}.}
+  \item{family}{A length-one character vector specifying the default
+    font family.  The default (\code{""} is to use the mapping of font
+    numbers.}
+  \item{antialias}{A length-one character vector.  This is partially
+    matched to \code{"default"}, \code{"none"}, \code{"cleartype"} or
+    \code{"antialiased"}.  These are hints to Windows GDI that may not
+    be able to be followed, but \code{"none"} should ensure that no
+    antialiasing is used.  For a screen device the default depends on
+    the machine settings: it will be \code{"cleartype"} if that has been
+    enabled.  Note that \code{"antialias"} may not give any
+    anti-aliasing even though \code{"cleartype"} can.}
 }
 
 \details{

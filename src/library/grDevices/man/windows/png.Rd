@@ -16,23 +16,23 @@
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
     family = "", restoreConsole = TRUE,
-    type = c("windows", "cairo"))
+    type = c("windows", "cairo"), antialias)
 
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
      units = "px", pointsize = 12, quality = 75, bg = "white",
      res = NA, family = "", restoreConsole = TRUE,
-     type = c("windows", "cairo"))
+     type = c("windows", "cairo"), antialias)
 
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
     units = "px", pointsize = 12, bg = "white", res = NA,
     family = "", restoreConsole = TRUE,
-    type = c("windows", "cairo"))
+    type = c("windows", "cairo"), antialias)
 
 tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
      units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
-     bg = "white", res = NA, family = "",
-     restoreConsole = TRUE, type = c("windows", "cairo"))
+     bg = "white", res = NA, family = "", restoreConsole = TRUE,
+     type = c("windows", "cairo"), antialias)
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.  The
@@ -55,30 +55,34 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{compression}{the type of compression to be used.}
-  \item{res}{The nominal resolution in dpi which will be recorded in the
+  \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for units other than
-    the default.  If not specified, taken as 72 dpi to set the size of
+    the default.  If not specified, taken as 72 ppi to set the size of
     text and line widths.}
   \item{family}{A length-one character vector specifying the default
-    font family.  The default means to use the font numbers 
-    on the Windows GDI versions
-    and \code{"sans"} on the cairographics versions.}
+    font family.  The default means to use the font numbers on the
+    Windows GDI versions and \code{"sans"} on the cairographics
+    versions.}
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.}
   \item{type}{Should be plotting be done using Windows GDI or cairographics?}
+  \item{antialias}{Length-one character vector.  For allowed values and
+    their effect on fonts with \code{type = "windows"} see
+    \code{\link{windows}}. For allowed values and their effect (on fonts
+    and lines) with \code{type = "cairo"} see \code{\link{svg}}.}
 }
-\details{
+\details{  
   Plots in PNG and JPEG format can easily be converted to many other
-  bitmap formats, and both can be displayed in modern web
-  browsers.  The PNG format is lossless and is best for line
-  diagrams and blocks of colour.  The JPEG format is lossy,
-  but may be useful for image plots, for example.  The BMP format is
-  standard on Windows, and supported by most viewers elsewhere.
-  TIFF is a meta-format: the default format written by \code{tiff} is lossless
-  and stores RGB values uncompressed---such files are widely accepted,
-  which is their main virtue over PNG.
+  bitmap formats, and both can be displayed in modern web browsers.  The
+  PNG format is lossless and is best for line diagrams and blocks of
+  colour.  The JPEG format is lossy, but may be useful for image plots,
+  for example.  The BMP format is standard on Windows, and supported by
+  most viewers elsewhere.  TIFF is a meta-format: the default format
+  written by \code{tiff} is lossless and stores RGB values
+  uncompressed---such files are widely accepted, which is their main
+  virtue over PNG.
 
-  Windows imposes limits on the size of bitmaps: these are not
+  Windows GDI imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
   It seems that \code{width} and \code{height} are each limited to
   \eqn{2^{15}-1}{2^15-1}.  In addition, there are limits on the total
@@ -90,18 +94,19 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   dpi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches,
-  \code{res} dpi (default 72) is assumed.
+  \code{res} ppi (default 72) is assumed.
   
-  Both \code{bmp} and \code{png} will use a palette if there are less
-  than 256 colours on the page, and record a 24-bit RGB file otherwise.
+  Both \code{bmp} and \code{png} will use a palette if there are fewer
+  than 256 colours on the page, and record a 24-bit RGB file (or 32-bit
+  AGRB file) otherwise.
 
   \code{png} supports transparent backgrounds on 16-bit (\sQuote{High
     Color}) or better screens: use \code{bg = "transparent"}.  There is
   also support for semi-transparent colours of lines, fills and text.
   However, as there is only partial support for transparency in the
-  graphics toolkit used, if there is a transparent background
-  semi-transparent colours are painted onto a slightly off-white
-  background and hence the pixels are opaque.
+  graphics toolkit used for \code{type = "windows"}, if there is a
+  transparent background semi-transparent colours are painted onto a
+  slightly off-white background and hence the pixels are opaque.
 
   Not all PNG viewers render files with transparency correctly.
 }
@@ -130,9 +135,7 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   \code{\link{Devices}}, \code{\link{dev.print}}
 
   \code{\link{bitmap}} provides an alternative way to generate PNG,
-  JPEG  and other types of bitmap plots.  Devices \code{GDD} in
-  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
-  package \pkg{Cairo} are further alternatives.
+  JPEG  and other types of bitmap plots.
 }
 
 \section{Conventions}{
@@ -141,25 +144,27 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at \code{res} dpi.
+    \item Font sizes are in big points interpreted at \code{res} ppi.
     \item The default font family is Arial.
     \item Line widths are a multiple of 1/96 inch (interpreted at
-    \code{res} dpi), with a minimum of one pixel. 
-    \item The minimum radius of a circle is 1 pixel.
+    \code{res} ppi), with a minimum of one pixel (\code{type =
+      "windows"}) or 0.01 (\code{type = "cairo"}).
+    \item The minimum radius of a circle is 1 pixel for \code{type =
+      "windows"}.
     \item Colours are interpreted by the viewing application.
   }
 }
 
 \examples{
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)
+\dontrun{dev.print(png, file = "myplot.png", width = 1024, height = 768)
 
-png(file="myplot.png", bg="transparent")
+png(file = "myplot.png", bg = "transparent")
 plot(1:10)
-rect(1, 5, 3, 7, col="white")
+rect(1, 5, 3, 7, col = "white")
 dev.off()
 
-jpeg(file="myplot.jpeg")
+jpeg(file = "myplot.jpeg")
 example(rect)
 dev.off()
 }}

@@ -377,6 +377,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define ginvert		GA_ginvert
 #define gmenubar		GA_gmenubar
 #define gnewfont		GA_gnewfont
+#define gnewfont2		GA_gnewfont2
 #define goldfillellipse		GA_goldfillellipse
 #define gpopup		GA_gpopup
 #define gprintf		GA_gprintf

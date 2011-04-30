@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{windows.options}
@@ -23,7 +23,7 @@ windows.options(\dots, reset = FALSE)
     \code{record}, \code{rescale}, \code{xpinch}, \code{ypinch},
     \code{bg}, \code{canvas}, \code{gamma}, \code{xpos}, \code{ypos},
     \code{buffered}, \code{restoreConsole}, \code{clickToConfirm},
-    \code{title} and \code{fillOddEven} can be supplied.}
+    \code{title}, \code{fillOddEven} and \code{antialias} can be supplied.}
   \item{reset}{logical: should the defaults be reset to their
     \sQuote{factory-fresh} values?}
 }
