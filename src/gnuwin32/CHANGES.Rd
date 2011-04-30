@@ -19,9 +19,9 @@
       \item There is support for cairographics-based devices using the
       same code as on Unix-alikes.  This can be selected by the new
       \code{type} argument of the bitmap devices \code{bmp()},
-      \code{jpeg()}, \code{png()} and \code{tiff()}.  New devices
-      \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are available.
-
+      \code{jpeg()}, \code{png()} and \code{tiff()}, and devices
+      \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are now
+      available on Windows.
 
       [Experimental and not compiled in by default.
 
@@ -33,6 +33,13 @@
       family to be used for fonts 1--4.  If empty the fonts specified in
       the \file{Rdevga} configuration file are used for the Windows GDI
       devices and \code{"sans"} for cairographics-based devices.
+
+      This will generally be a Windows font name such as
+      \code{"Lucida Bright"} or one of the device-independent names
+      (\code{"sans"}, \code{"serif"} and \code{"mono"}).  Outside
+      Western Europe you may need to select a family that better
+      supports your locale such as \code{"Arial MS Unicode"} or one
+      specific to Chinese/Korean/Thai \dots{}.
     }
   }
 
@@ -49,7 +56,7 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item \file{Rzlib.dll} (used in packages \emph{via}
+      \item \file{Rzlib.dll} (sometimes used in packages \emph{via}
       \samp{$(ZLIB_LIBS)}) does not include the buggy gzio
       interface from zlib 1.2.5.
     }

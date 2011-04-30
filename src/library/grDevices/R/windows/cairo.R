@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## The bitmap devices are undocumented and may never be released in this form
+## These interfaces are undocumented and unexported.
 cairo_png <-
     function(filename = "Rplot%03d.png",
              width = 480, height = 480, units = "px", pointsize = 12,
