@@ -135,12 +135,41 @@ tiff(filename = "Rplot\%03d.tiff",
 }
 
 \section{Warnings}{
-  Note that by default the \code{width} and \code{height} are in pixels
-  not inches.  A warning will be issued if both are less than 20.
-
+  Note that by default the \code{width} and \code{height} values are in
+  pixels not inches.  A warning will be issued if both are less than 20.
+  
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
+}
+
+\section{Differences between OSes}{
+  These functions are interfaces to three or more different underlying
+  devices.
+  \itemize{
+    \item On Windows, devices based on plotting to a hidden screen using
+    Windows' GDI calls.
+
+    \item On platforms with suppport for X11, plotting to a hidden X11
+    display.
+
+    \item On Mac OS X when working at the console and when \R is
+    compiled with suitable support, using Apple's Quartz plotting
+    system.
+
+    \item Where support has been compiled in for cairographics, plotting
+    on cairo surfaces.  This may use the native platform support for
+    fonts, or it may use \code{fontconfig} to support a wide range of
+    font formats.  (This was first available on Windows in \R 2.14.0.)
+  }
+  Inevitably there will be differences between the options supported and
+  output produced.  Perhaps the most important are support for
+  antialiased fonts and semi-transparent colours: the best results are
+  likely to be obtained with the cairo- or Quartz-based devices where
+  available.
+
+  The default extensions are \file{.jpg} and \file{.tif} on Windows, and
+  \file{.jpeg} and \file{.tiff} elsewhere.
 }
 
 \note{
@@ -158,8 +187,8 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{capabilities}} to see if these devices are
   supported by this build of \R, and if \code{type = "cairo"} is supported.
 
-  \code{\link{bitmap}} provides an alternative way to generate PNG and
-  JPEG plots that does not depend on accessing the X11 display but does
+  \code{\link{bitmap}} provides an alternative way to generate plots in many
+  bitmap formats that does not depend on accessing the X11 display but does
   depend on having GhostScript installed.
 }
 

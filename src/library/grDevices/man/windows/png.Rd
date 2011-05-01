@@ -130,18 +130,48 @@ tiff(filename = "Rplot\%03d.tif",
   \code{file}, the file will contain the last page plotted.
 }
 
+\section{Differences between OSes}{
+  These functions are interfaces to three or more different underlying
+  devices.
+  \itemize{
+    \item On Windows, devices based on plotting to a hidden screen using
+    Windows' GDI calls.
+
+    \item On platforms with suppport for X11, plotting to a hidden X11
+    display.
+
+    \item On Mac OS X when working at the console and when \R is
+    compiled with suitable support, using Apple's Quartz plotting
+    system.
+
+    \item Where support has been compiled in for cairographics, plotting
+    on cairo surfaces.  This may use the native platform support for
+    fonts, or it may use \code{fontconfig} to support a wide range of
+    font formats.  (This was first available on Windows in \R 2.14.0.)
+  }
+  Inevitably there will be differences between the options supported and
+  output produced.  Perhaps the most important are support for
+  antialiased fonts and semi-transparent colours: the best results are
+  likely to be obtained with the cairo- or Quartz-based devices where
+  available.
+
+  The default extensions are \file{.jpg} and \file{.tif} on Windows, and
+  \file{.jpeg} and \file{.tiff} elsewhere.
+}
+
 \note{
-  These Windows versions of these devices effectively plot on a hidden
-  screen and then copy the image to the required format.  This means
-  that they have the same colour handling as the actual screen device,
-  and work best if that is set to a 24-bit or 32-bit colour mode.
+  The \code{type = "windows"} versions of these devices effectively
+  plot on a hidden screen and then copy the image to the required
+  format.  This means that they have the same colour handling as the
+  actual screen device, and work best if that is set to a 24-bit or
+  32-bit colour mode.
 }
 
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}
 
-  \code{\link{bitmap}} provides an alternative way to generate PNG,
-  JPEG  and other types of bitmap plots.
+  \code{\link{bitmap}} provides an alternative way to generate plots in
+  many bitmap formats if GhostScript is available.
 }
 
 \section{Conventions}{
