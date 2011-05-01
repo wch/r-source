@@ -31,45 +31,59 @@ X11.options(\dots, reset = FALSE)
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.  This is ignored (with a warning) if an X11 device is
     already open on another display.}
+  
   \item{width, height}{the width and height of the plotting window, in
     inches.  If \code{NA}, taken from the resources and if
     not specified there defaults to \code{7} inches.  See also
     \sQuote{Resources}.}
+  
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
+  
   \item{gamma}{gamma correction fudge factor.
     Colours in R are sRGB;  if your monitor does not conform to
     sRGB, you might be able to improve things by tweaking this
     parameter to apply additional gamma correction to the RGB channels.
     By default 1 (no additional gamma correction).}
+  
   \item{bg}{colour, the initial background colour.  Default
     \code{"transparent"}.}
+  
   \item{canvas}{colour.  The colour of the canvas, which is visible only
-    when the background colour is transparent.  Should be a solid colour
+    when the background colour is transparent.  Should be an opaque colour
     (and any alpha value will be ignored).  Default \code{"white"}.}
-  \item{fonts}{X11 font description strings into which weight, slant and
+  
+  \item{fonts}{for \code{type = "Xlib"} only:
+    X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
+  
   \item{family}{The default family for use with the cairo-based
     devices.  A length-one character string.}
+  
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
     from the right edge of the screen.  If \code{NA} (the default),
     successive devices are cascaded in 20 pixel steps from the top left.
     See also \sQuote{Resources}.}
+  
   \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
     for an integer will be substituted by the device number (see the
     \code{file} argument to \code{\link{postscript}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
+  
   \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"} or
     \code{"nbcairo"}.  The latter two will only be available if the
     system was compiled with support for cairo.  Default \code{"cairo"}
     where available and reliable, otherwise \code{"Xlib"}.}
+  
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
+  
   \item{reset}{logical: should the defaults be reset to their defaults?}
+  
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Colour Rendering}).}
 }
@@ -138,8 +152,8 @@ X11.options(\dots, reset = FALSE)
 }
 
 \section{Cairo Fonts}{
-  The cairographics-based device works directly with font family names
-  such as \code{"Helvetica"} which should be selected initially by the
+  The cairographics-based devices work directly with font family names
+  such as \code{"Helvetica"} which can be selected initially by the
   \code{family} argument and subsequently by \code{\link{par}} or
   \code{\link{gpar}}.  There are mappings for the three
   device-independent font families, \code{"sans"} for a sans-serif font
@@ -147,12 +161,11 @@ X11.options(\dots, reset = FALSE)
   \code{"Times"}) and \code{"mono"} for a monospaced font (to
   \code{"Courier"}).
 
-  The font selection is handled by \code{Pango} (usually) or
-  \code{cairo} (on Mac OS X and perhaps elsewhere).  Both make use of
-  \code{fontconfig} (\url{http://wwww.fontconfig.org}) to select fonts
-  and so the results depend on the fonts installed on the system running
-  \R -- setting the environmnent variable \env{FC_DEBUG} to 1 allows
-  some tracing of the selection process.
+  The font selection is handled by \code{Pango} (usually \emph{via}
+  \code{fontconfig}) or \code{fontconfig} (on Mac OS X and perhaps
+  elsewhere).  The results depend on the fonts installed on the system
+  running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
+  normally allow some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
@@ -160,9 +173,9 @@ X11.options(\dots, reset = FALSE)
   such fonts.
   
   Because of known problems with font selection on Mac OS X without
-  Pango, \code{type = "cairo"} is not the default (as from \R 2.11.0)
-  unless Pango is available.  These problems include mixing up bold and
-  italic and selecting incorrect glyphs.
+  Pango, \code{type = "cairo"} is not the default unless Pango is
+  available.  These problems include mixing up bold and italic and
+  selecting incorrect glyphs.
   
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of
@@ -264,7 +277,7 @@ X11.options(\dots, reset = FALSE)
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
 \examples{\dontrun{
-## put something this is your .Rprofile to customize the defaults
+## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::X11.options(width=8, height=6, xpos=0,
                                              pointsize=10))

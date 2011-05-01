@@ -1310,8 +1310,9 @@ UTF-8-encoded inputs.  Normally the symbol font is encoded in Adobe
 Symbol encoding, but that can be re-encoded to UTF-8 by setting
 @code{wantSymbolUTF8} to @samp{TRUE}.  The Windows' port of
 cairographics has a rather peculiar assumption: it wants the symbol font
-to be encoded in UTF-8 as if it were encoded in Latin-1: this is
-selected by @code{wantSymbolUTF8 = NA_LOGICAL} (as from @R{} 2.13.1).
+to be encoded in UTF-8 as if it were encoded in Latin-1 rather than
+Adobe Symbol: this is selected by @code{wantSymbolUTF8 = NA_LOGICAL} (as
+from @R{} 2.13.1).
 
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,

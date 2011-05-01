@@ -108,8 +108,12 @@
       devices, where it applies to the cairo and Quartz types.
 
       Analogous changes have been made on Windows, so all \R graphics
-      devices have a \code{family} argument except \code{pictex()}
-      (which has no means to change fonts).
+      devices have a \code{family} argument except \code{X11(type
+	="Xlib"} and \code{pictex()} (which has no means to change fonts).
+
+      \item The \code{bmp()}, \code{jpeg()}, \code{png()} and \code{tiff()}
+      devices now make use of the \code{antialias} argument for
+      \code{type = "quartz"}.
     }
   }
 
