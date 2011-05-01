@@ -1743,7 +1743,7 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->kind = (dsp[0]=='p') ? PNG : BMP;
 	if(strlen(dsp+4) >= 512) error(_("filename too long in %s() call"),
 				       (dsp[0]=='p') ? "png" : "bmp");
-	strcpy(xd->filename, R_ExpandFileName(sp+4));
+	strcpy(xd->filename, R_ExpandFileName(dsp+4));
 	if (!Load_Rbitmap_Dll()) {
 	    warning(_("Unable to load Rbitmap.dll"));
 	    return FALSE;
