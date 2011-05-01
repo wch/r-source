@@ -2198,7 +2198,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         dirs <- sub("^\\d*\\s*", "", res)
         res2 <- data.frame(size = sizes, dir = I(dirs))
         total <- res2[nrow(res2), 1L]
-        if(total > 1024*5) { # report at 5Mb
+        if(!is.na(total) && total > 1024*5) { # report at 5Mb
             resultLog(Log, "NOTE")
             printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]

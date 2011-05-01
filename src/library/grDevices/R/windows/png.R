@@ -36,16 +36,22 @@ png <-
     function(filename = "Rplot%03d.png",
              width = 480, height = 480, units = "px", pointsize = 12,
              bg = "white", res = NA, family = "sans",
-             restoreConsole = TRUE, type = c("windows", "cairo"),
+             restoreConsole = TRUE, type = c("windows", "cairo", "cairo-png"),
              antialias = c("default", "none", "cleartype", "antialiased",
                            "grey", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     antialias <- match.arg(antialias)
-    if(maach.arg(type) == "cairo") {
+    if(match.arg(type) == "cairo") {
         antialias <- match(antialias, aa.cairo)
         invisible(.External(devCairo, filename, 2L,
+                            g$width, g$height, pointsize,
+                            bg, res, antialias, 100L,
+                            if(nzchar(family)) family else "sans"))
+    } else if(match.arg(type) == "cairo-png") {
+        antialias <- match(antialias, aa.cairo)
+        invisible(.External(devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))

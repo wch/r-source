@@ -13,23 +13,24 @@
   Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
 }
 \usage{
-bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
-    units = "px", pointsize = 12, bg = "white", res = NA,
-    family = "", restoreConsole = TRUE,
+bmp(filename = "Rplot\%03d.bmp",
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white", res = NA, family = "", restoreConsole = TRUE,
     type = c("windows", "cairo"), antialias)
 
-jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
-     units = "px", pointsize = 12, quality = 75, bg = "white",
-     res = NA, family = "", restoreConsole = TRUE,
-     type = c("windows", "cairo"), antialias)
+jpeg(filename = "Rplot\%03d.jpg",
+     width = 480, height = 480, units = "px", pointsize = 12,
+     quality = 75,
+     bg = "white", res = NA, family = "", restoreConsole = TRUE,
+     type = c("windows", "cairo", "cairo-png"), antialias)
 
-png(filename = "Rplot\%03d.png", width = 480, height = 480,
-    units = "px", pointsize = 12, bg = "white", res = NA,
-    family = "", restoreConsole = TRUE,
+png(filename = "Rplot\%03d.png",
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white", res = NA, family = "", restoreConsole = TRUE,
     type = c("windows", "cairo"), antialias)
 
-tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
-     units = "px", pointsize = 12,
+tiff(filename = "Rplot\%03d.tif",
+     width = 480, height = 480, units = "px", pointsize = 12,
      compression = c("none", "rle", "lzw", "jpeg", "zip"),
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
      type = c("windows", "cairo"), antialias)
@@ -64,7 +65,7 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
     Windows GDI versions and \code{"sans"} on the cairographics
     versions.}
   \item{restoreConsole}{See the \sQuote{Details} section of
-    \code{\link{windows}}.}
+    \code{\link{windows}}.  For \code{type == "windows"} only.}
   \item{type}{Should be plotting be done using Windows GDI or cairographics?}
   \item{antialias}{Length-one character vector.  For allowed values and
     their effect on fonts with \code{type = "windows"} see
@@ -97,14 +98,19 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   \code{res} ppi (default 72) is assumed.
   
   Both \code{bmp} and \code{png} will use a palette if there are fewer
-  than 256 colours on the page, and record a 24-bit RGB file (or 32-bit
-  AGRB file) otherwise.
-
-  \code{png} supports transparent backgrounds on 16-bit (\sQuote{High
-    Color}) or better screens: use \code{bg = "transparent"}.  There is
-  also support for semi-transparent colours of lines, fills and text.
-  However, as there is only partial support for transparency in the
-  graphics toolkit used for \code{type = "windows"}, if there is a
+  than 256 colours on the page, and record a 24-bit RGB file otherwise.
+  For the \code{png} device, \code{type = "cairo"} does the PNG output in
+  the driver and so is compatible with the \code{"windows"} type.
+  \code{type = "cairo-png"} uses cairographics' PNG backend which will
+  never use a palette and normally creates a larger 32-bit ARGB
+  file---this may work better for specialist uses with semi-transparent
+  colours.
+  
+  \code{png(type = "windows"} supports transparent backgrounds on 16-bit
+  (\sQuote{High Color}) or better screens: use \code{bg =
+    "transparent"}.  There is also support for semi-transparent colours
+  of lines, fills and text.  However, as there is only partial support
+  for transparency in the graphics toolkit used: if there is a
   transparent background semi-transparent colours are painted onto a
   slightly off-white background and hence the pixels are opaque.
 

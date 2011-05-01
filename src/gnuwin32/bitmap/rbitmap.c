@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010  Guido Masarotto and the R Development Core Team
+ *  Copyright (C) 1999-2011  Guido Masarotto and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -172,8 +172,8 @@ int R_SaveAsPng(void  *d, int width, int height,
 	    }
 	}
     }
-
-    have_alpha &= (transparent == 0);
+    col = gp(d,0,0);
+    //have_alpha &= (transparent == 0);
 
     /* Set the image information here.  Width and height are up to 2^31,
      * bit_depth is one of 1, 2, 4, 8, or 16, but valid values also depend on
