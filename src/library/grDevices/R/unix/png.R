@@ -35,7 +35,7 @@
 png <- function(filename = "Rplot%03d.png",
                 width = 480, height = 480, units = "px",
                 pointsize = 12, bg = "white", res = NA, ...,
-                type = c("cairo", "Xlib", "quartz"), antialias)
+                type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -55,11 +55,14 @@ png <- function(filename = "Rplot%03d.png",
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(devCairo, filename, 2L, g$width, g$height,
                             pointsize, bg, res, antialias, 100L, d$family))
+    else if (type == "cairo-png" && capabilities("cairo"))
+        invisible(.External(devCairo, filename, 5L, g$width, g$height,
+                            pointsize, bg, res, antialias, 100L, d$family))
     else
         .Internal(X11(paste("png::", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0))
+                      0L, 0L, "", 0, 0, d$family))
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -89,7 +92,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
         .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0))
+                      0L, 0L, "", 0, 0, d$family))
 }
 
 tiff <- function(filename = "Rplot%03d.tiff",
@@ -121,7 +124,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
         .Internal(X11(paste("tiff::", comp, ":", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0))
+                      0L, 0L, "", 0, 0, d$family))
 }
 
 bmp <- function(filename = "Rplot%03d.bmp",
@@ -150,5 +153,5 @@ bmp <- function(filename = "Rplot%03d.bmp",
         .Internal(X11(paste("bmp::", filename, sep=""),
                       g$width, g$height, pointsize, d$gamma,
                       d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
-                      0L, 0L, "", 0, 0))
+                      0L, 0L, "", 0, 0, d$family))
 }

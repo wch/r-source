@@ -10,22 +10,23 @@
 \alias{bmp}
 \title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
-  Graphics devices for JPEG, PNG or TIFF format bitmap files.
+  Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp",
-    width = 480, height = 480, units = "px",
-    pointsize = 12, bg = "white", res = NA, \dots,
+    width = 480, height = 480, units = "px", pointsize = 12,
+    bg = "white", res = NA, \dots,
     type = c("cairo", "Xlib", "quartz"), antialias)
 
 jpeg(filename = "Rplot\%03d.jpeg",
-     width = 480, height = 480, units = "px",
-     pointsize = 12, quality = 75, bg = "white", res = NA, \dots,
+     width = 480, height = 480, units = "px", pointsize = 12,
+     quality = 75,
+     bg = "white", res = NA, \dots,
      type = c("cairo", "Xlib", "quartz"), antialias)
 
 png(filename = "Rplot\%03d.png",
-    width = 480, height = 480, units = "px",
-    pointsize = 12, bg = "white",  res = NA, \dots,
+    width = 480, height = 480, units = "px", pointsize = 12,
+     bg = "white",  res = NA, \dots,
     type = c("cairo", "Xlib", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
@@ -89,16 +90,18 @@ tiff(filename = "Rplot\%03d.tiff",
   which is their main virtue over PNG.
 
   \code{png} supports transparent backgrounds: use \code{bg =
-  "transparent"}.  Not all PNG viewers render files with transparency
-  correctly.  When transparency is in use in the \code{type = "Xlib"}
+  "transparent"}.  (Not all PNG viewers render files with transparency
+  correctly.)  When transparency is in use in the \code{type = "Xlib"}
   variant a very light grey is used as the background and so appear as
   transparent if used in the plot. This allows opaque white to be used,
-  as in the example.  The \code{type = "cairo"} and \code{type =
-  "cairo1"} variants allows semi-transparent colours, including on a
-  transparent or semi-transparent background.
+  as in the example.  The \code{type = "cairo"}, \code{type =
+  "cairo-png"} and \code{type = "quartz"} variants allows
+  semi-transparent colours, including on a transparent or
+  semi-transparent background.
 
-  \code{tiff(type = "cairo")} supports semi-transparent colours,
-  including on a transparent or semi-transparent background.
+  \code{tiff} with types \code{"cairo"} and \code{"quartz"} supports
+  semi-transparent colours, including on a transparent or
+  semi-transparent background.
 
   \R can be compiled without support for each of these devices: this
   will be reported if you attempt to use them on a system where they are
@@ -118,9 +121,13 @@ tiff(filename = "Rplot\%03d.tiff",
   (including font sizes in points) the resolution used is \code{res} (or
   72ppi if unset).
 
-  \code{png} will use a palette if there are less than 256 colours on
-  the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
-  file if \code{type = "cairo"} and non-opaque colours are used).
+  \code{png} will normally use a palette if there are less than 256
+  colours on the page, and record a 24-bit RGB file otherwise (or a
+  32-bit RGBA file if \code{type = "cairo"} and non-opaque colours are
+  used).  However, \code{type = "cairo-png"} uses cairographics' PNG
+  backend which will never use a palette and normally creates a larger
+  32-bit ARGB file---this may work better for specialist uses with
+  semi-transparent colours.
 }
 
 \value{
@@ -153,10 +160,7 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \code{\link{bitmap}} provides an alternative way to generate PNG and
   JPEG plots that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.  (Devices \code{GDD} in
-  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
-  package \pkg{Cairo} are further alternatives using several other
-  additional pieces of software.)
+  depend on having GhostScript installed.
 }
 
 \section{Conventions}{

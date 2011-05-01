@@ -49,7 +49,7 @@ tiff(filename = "Rplot\%03d.tif",
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted as
-    big points (1/72 inch) at \code{res} dpi.}
+    big points (1/72 inch) at \code{res} ppi.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
@@ -90,9 +90,9 @@ tiff(filename = "Rplot\%03d.tif",
   number of pixels which depend on the graphics hardware.
 
   By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72dpi when none is recorded.  As
+  assume a nominal resolution of 72ppi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the reported
-  dpi value will be changed slightly.
+  ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches,
   \code{res} ppi (default 72) is assumed.
