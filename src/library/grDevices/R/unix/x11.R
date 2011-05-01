@@ -35,9 +35,7 @@ assign(".X11.Options.default",
        get(".X11.Options", envir = .X11env),
        envir = .X11env)
 
-assign("antialiases",
-       c("default", "none", "gray", "subpixel"),
-       envir = .X11env)
+aa.cairo  <- c("default", "none", "gray", "subpixel")
 
 X11.options <- function(..., reset = FALSE)
 {
@@ -78,7 +76,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
 
     antialiases <- get("antialiases", envir = .X11env)
     if(!missing(antialias) && type != "Xlib")
-        new$antialias <- match.arg(antialias, antialiases)
+        new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     type <-
 	if(capabilities("cairo"))
@@ -86,7 +84,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
 	else 0L
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0L
-    antialias <- match(d$antialias, antialiases)
+    antialias <- match(d$antialias, aa.cairo)
     .Internal(X11(d$display, d$width, d$height, d$pointsize, d$gamma,
                   d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                   NA_integer_, d$xpos, d$ypos, d$title,
