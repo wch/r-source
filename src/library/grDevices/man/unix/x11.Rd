@@ -44,9 +44,11 @@ X11.options(\dots, reset = FALSE)
   \item{bg}{colour, the initial background colour.  Default
     \code{"transparent"}.}
   \item{canvas}{colour.  The colour of the canvas, which is visible only
-    when the background colour is transparent.  Should be a solid colour
+    when the background colour is transparent.  Should be an opaque colour
     (and any alpha value will be ignored).  Default \code{"white"}.}
-  \item{fonts}{X11 font description strings into which weight, slant and
+  
+  \item{fonts}{for \code{type = "Xlib"} only:
+    X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
   \item{xpos, ypos}{integer: initial position of the top left corner of the
@@ -136,7 +138,7 @@ X11.options(\dots, reset = FALSE)
 }
 
 \section{Cairo Fonts}{
-  The cairographics-based device works directly with font family names such as
+  The cairographics-based devices work directly with font family names such as
   \code{"Helvetica"} which should be selected by \code{\link{par}} or
   \code{\link{gpar}}.  There are mappings for the three
   device-independent font families, \code{"sans"} for a sans-serif font
@@ -144,12 +146,11 @@ X11.options(\dots, reset = FALSE)
   \code{"Times"}) and \code{"mono"} for a monospaced font (to
   \code{"Courier"}).
 
-  The font selection is handled by \code{Pango} (usually) or
-  \code{cairo} (on Mac OS X and perhaps elsewhere).  Both make use of
-  \code{fontconfig} (\url{http://wwww.fontconfig.org}) to select fonts
-  and so the results depend on the fonts installed on the system running
-  \R -- setting the environmnent variable \env{FC_DEBUG} to 1 allows
-  some tracing of the selection process.
+  The font selection is handled by \code{Pango} (usually \emph{via}
+  \code{fontconfig}) or \code{fontconfig} (on Mac OS X and perhaps
+  elsewhere).  The results depend on the fonts installed on the system
+  running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
+  normally allow some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
@@ -157,9 +158,9 @@ X11.options(\dots, reset = FALSE)
   such fonts.
   
   Because of known problems with font selection on Mac OS X without
-  Pango, \code{type="cairo"} is not the default (as from \R 2.11.0)
-  unless Pango is available.  These problems include mixing up bold and
-  italic and selecting incorrect glyphs.
+  Pango, \code{type = "cairo"} is not the default unless Pango is
+  available.  These problems include mixing up bold and italic and
+  selecting incorrect glyphs.
   
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of
@@ -261,7 +262,7 @@ X11.options(\dots, reset = FALSE)
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
 \examples{\dontrun{
-## put something this is your .Rprofile to customize the defaults
+## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::X11.options(width=8, height=6, xpos=0,
                                              pointsize=10))

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -47,14 +47,14 @@ tiff(filename = "Rplot\%03d.tiff",
     given.  Can be \code{px} (pixels, the default), \code{in} (inches),
     \code{cm} or \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted as
-    big points (1/72 inch) at \code{res} dpi.}
+    big points (1/72 inch) at \code{res} ppi.}
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
   \item{compression}{the type of compression to be used.}
-  \item{res}{The nominal resolution in dpi which will be recorded in the
+  \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
   \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
@@ -106,13 +106,13 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72dpi when none is recorded.  As
+  assume a nominal resolution of 72ppi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the reported
-  dpi value will be changed slightly.
+  ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
   (including font sizes in points) the resolution used is \code{res} (or
-  72dpi if unset).
+  72ppi if unset).
 
   \code{png} will use a palette if there are less than 256 colours on
   the page, and record a 24-bit RGB file otherwise (or a 32-bit RGBA
@@ -161,10 +161,11 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \itemize{
     \item The default device size is in pixels.
-    \item Font sizes are in big points interpreted at \code{res} dpi.
+    \item Font sizes are in big points interpreted at \code{res} ppi.
     \item The default font family is Helvetica.
-    \item Line widths in 1/96 inch, minimum one pixel for \code{type =
-      "Xlib"}, 0.01 for \code{type = "cairo"}.
+    \item Line widths in 1/96 inch (interpreted at \code{res} ppi),
+    minimum one pixel for \code{type = "Xlib"}, 0.01 for \code{type =
+      "cairo"}.
     \item For \code{type = "Xlib"} circle radii are in pixels with
     minimum one.
     \item Colours are interpreted by the viewing application.
