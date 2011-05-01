@@ -76,9 +76,9 @@ X11 <- function(display = "", width, height, pointsize, gamma,
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
     if(!missing(family)) new$family <- family
 
+    antialiases <- get("antialiases", envir = .X11env)
     if(!missing(antialias) && type != "Xlib")
-        new$antialias <-
-            match.arg(antialias, get("antialiases", envir = .X11env))
+        new$antialias <- match.arg(antialias, antialiases)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     type <-
 	if(capabilities("cairo"))

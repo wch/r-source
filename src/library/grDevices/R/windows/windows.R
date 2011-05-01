@@ -36,6 +36,9 @@ assign(".Windows.Options.default",
        get(".Windows.Options", envir = .WindowsEnv),
        envir = .WindowsEnv)
 
+aa.win <- c("default", "none", "cleartype", "antialiased")
+aa.cairo <- c("default", "none", "gray", "subpixel")
+
 windows.options <- function(..., reset=FALSE)
 {
     old <- get(".Windows.Options", envir = .WindowsEnv)
@@ -56,8 +59,7 @@ windows <-
              record, rescale, xpinch, ypinch,
              bg, canvas, gamma, xpos, ypos,
              buffered, title, restoreConsole, clickToConfirm,
-             fillOddEven, family = "",
-             antialias = c("default", "none", "cleartype", "antialiased"))
+             fillOddEven, family = "", antialias)
 {
     new <- list()
     if(!missing(width)) new$width <- as.double(width)
@@ -77,13 +79,13 @@ windows <-
     if(!missing(restoreConsole)) new$restoreConsole <- restoreConsole
     if(!missing(clickToConfirm)) new$clickToConfirm <- clickToConfirm
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
-    if(!missing(antialias)) new$antialias <- match.arg(antialias)
+    if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.win)
     d <- check.options(new = new, envir = .WindowsEnv,
                        name.opt = ".Windows.Options",
                        reset = FALSE, assign.opt = FALSE)
-    rescale <- pmatch(d$rescale, c("R", "fit", "fixed"))
+    rescale <- match(d$rescale, c("R", "fit", "fixed"))
     if(is.na(rescale)) stop("invalid value for 'rescale'")
-    antialias <- match(d$antialias, eval(formals()$antialias))
+    antialias <- pmatch(d$antialias, aa.win)
     invisible(.External(Cdevga, "", d$width, d$height, d$pointsize,
                         d$record, rescale, d$xpinch, d$ypinch,
                         d$canvas, d$gamma, d$xpos, d$ypos,
@@ -105,16 +107,15 @@ win.graph <- function(width, height, pointsize)
                         FALSE, 1L, d$xpinch, d$ypinch, "white",
                         d$gamma, NA_integer_, NA_integer_, d$buffered,
                         .PSenv, NA, d$restoreConsole, "", TRUE,
-                        d$fillOddEven, "", d$antialias))
+                        d$fillOddEven, "",
+                        pmatch(d$antialias, aa.win)))
 }
 
 win.print <-
     function(width = 7, height = 7, pointsize = 12, printer = "",
-             family = "",
-             antialias = c("default", "none", "cleartype", "antialiased"),
-             restoreConsole = TRUE)
+             family = "", antialias = "default", restoreConsole = TRUE)
 {
-    antialias <- match(match.arg(antialias), eval(formals()$antialias))
+    antialias <- match(match.arg(antialias, aa.win), aa.win)
     invisible(.External(Cdevga, paste("win.print:", printer, sep=""),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
@@ -136,151 +137,6 @@ win.metafile <-
                         restoreConsole, "", FALSE, TRUE, family, 1L))
 }
 
-png <-
-    function(filename = "Rplot%03d.png",
-             width = 480, height = 480, units = "px", pointsize = 12,
-             bg = "white", res = NA, family = "sans",
-             restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    filename <- path.expand(filename)
-    units <- match.arg(units, c("in", "px", "cm", "mm"))
-    if(units != "px" && is.na(res))
-        stop("'res' must be specified unless 'units = \"px\"'")
-    height <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
-    type <- match.arg(type)
-    antialias <- match.arg(antialias)
-    if(type == "cairo") {
-        antialias <- match(antialias, c("default", "none", "gray", "subpixel"))
-        invisible(.External(devCairo, filename, 2L, width, height, pointsize,
-                            bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"))
-    } else {
-        antialias <- match(antialias, eval(formals()$antialias))
-        invisible(.External(Cdevga, paste("png:", filename, sep=""),
-                            width, height, pointsize, FALSE, 1L,
-                            NA_real_, NA_real_, bg, 1,
-                            as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                            restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
-    }
-}
-
-bmp <-
-    function(filename = "Rplot%03d.bmp",
-             width = 480, height = 480, units = "px", pointsize = 12,
-             bg = "white", res = NA, family = "sans",
-             restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    filename <- path.expand(filename)
-    units <- match.arg(units, c("in", "px", "cm", "mm"))
-    if(units != "px" && is.na(res))
-        stop("'res' must be specified unless 'units = \"px\"'")
-    height <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
-    type <- match.arg(type)
-    antialias <- match.arg(antialias)
-    if(type == "cairo") {
-        antialias <- match(antialias, c("default", "none", "gray", "subpixel"))
-        invisible(.External(devCairo, filename, 9L, width, height, pointsize,
-                            bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"))
-    } else {
-        antialias <- match(antialias, eval(formals()$antialias))
-        invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
-                            width, height, pointsize, FALSE, 1L,
-                            NA_real_, NA_real_, bg, 1,
-                            as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                            restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
-    }
-}
-
-jpeg <-
-    function(filename = "Rplot%03d.jpg",
-             width = 480, height = 480, units = "px", pointsize = 12,
-             quality = 75, bg = "white", res = NA, family = "sans",
-             restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    filename <- path.expand(filename)
-    units <- match.arg(units, c("in", "px", "cm", "mm"))
-    if(units != "px" && is.na(res))
-        stop("'res' must be specified unless 'units = \"px\"'")
-    height <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=1/25.4, "px"=1) * width
-    type <- match.arg(type)
-    antialias <- match.arg(antialias)
-    if(type == "cairo") {
-        antialias <- match(antialias, c("default", "none", "gray", "subpixel"))
-        invisible(.External(devCairo, filename, 3L, width, height, pointsize,
-                            bg, res, antialias, quality,
-                            if(nzchar(family)) family else "sans"))
-    } else {
-        antialias <- match(antialias, eval(formals()$antialias))
-        invisible(.External(Cdevga,
-                            paste("jpeg:", quality, ":",filename, sep=""),
-                            width, height, pointsize, FALSE, 1L,
-                            NA_real_, NA_real_, bg, 1,
-                            as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                            restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
-    }
-}
-
-tiff <-
-    function(filename = "Rplot%03d.tif",
-             width = 480, height = 480, units = "px", pointsize = 12,
-             compression = c("none", "rle", "lzw", "jpeg", "zip"),
-             bg = "white", res = NA, family = "sans",
-             restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
-{
-    if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    filename <- path.expand(filename)
-    units <- match.arg(units, c("in", "px", "cm", "mm"))
-    if(units != "px" && is.na(res))
-        stop("'res' must be specified unless 'units = \"px\"'")
-    height <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * height
-    width <-
-        switch(units, "in"=res, "cm"=res/2.54, "mm"=res/25.4, "px"=1) * width
-    comp <- switch( match.arg(compression),
-                   "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
-    type <- match.arg(type)
-    antialias <- match.arg(antialias)
-    if(type == "cairo") {
-        antialias <- match(antialias, c("default", "none", "gray", "subpixel"))
-        invisible(.External(devCairo, filename, 8L, width, height, pointsize,
-                            bg, res, antialias, comp,
-                            if(nzchar(family)) family else "sans"))
-    } else {
-        antialias <- match(antialias, eval(formals()$antialias))
-        invisible(.External(Cdevga,
-                            paste("tiff:", comp, ":", filename, sep=""),
-                            width, height, pointsize, FALSE, 1L,
-                            NA_real_, NA_real_, bg, 1,
-                            as.integer(res), NA_integer_, FALSE, .PSenv, NA,
-                            restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
-    }
-}
-
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {
     if(!exists(".Devices")) {
@@ -292,12 +148,12 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
 }
 
 msgWindow <-
-    function(type = c("minimize", "restore", "maximize", "hide", "recordOn", "recordOff"),
+    function(type = c("minimize", "restore", "maximize", "hide",
+                      "recordOn", "recordOff"),
              which = dev.cur())
 {
-    type <- match.arg(type)
-    itype <- match(type, c("minimize", "restore", "maximize", "hide", "recordOn", "recordOff"), 0L)
-    if(which == -1 && itype > 3)
+    itype <- match(match.arg(type), eval(formals()$type))
+    if(which == -1 && itype > 3L)
         stop("'type' not applicable to the R console")
     if(!exists(".Devices")) .Devices <- list("null device")
     if(which > 0 && .Devices[[which]] != "windows")
@@ -307,7 +163,7 @@ msgWindow <-
 
 savePlot <- function(filename = "Rplot",
                      type = c("wmf", "emf", "png", "jpg", "jpeg", "bmp",
-                     "tif", "tiff", "ps", "eps", "pdf"),
+                              "tif", "tiff", "ps", "eps", "pdf"),
                      device = dev.cur(),
                      restoreConsole = TRUE)
 {
@@ -318,7 +174,8 @@ savePlot <- function(filename = "Rplot",
     devname <- names(devlist)[devcur]
     if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
-    else if(regexpr("\\.",filename) < 0) filename <- paste(filename,type,sep=".")
+    else if(regexpr("\\.",filename) < 0)
+        filename <- paste(filename, type, sep = ".")
     filename <- path.expand(filename)
     invisible(.External(CsavePlot, device, filename, type, restoreConsole))
 }
@@ -413,9 +270,9 @@ windowsFont <- function(family)
     checkWindowsFont(family)
 
 
-windowsFonts(# Default Serif font is Times
+windowsFonts(# Default Serif font is Times-like
              serif = windowsFont("TT Times New Roman"),
-             # Default Sans Serif font is Helvetica
+             # Default Sans Serif font is Helvetica-like
              sans = windowsFont("TT Arial"),
-             # Default Monospace font is Courier
+             # Default Monospace font is Courier-like
              mono = windowsFont("TT Courier New"))
