@@ -11,7 +11,7 @@
 
 \maketitle
 
-A simple example: he integers from 1 to 10 are
+A simple example: the integers from 1 to 10 are
 <<print=TRUE>>=
 1:10
 <<results=hide>>=
