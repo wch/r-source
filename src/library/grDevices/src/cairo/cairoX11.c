@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  R Development Core Team
+ *  Copyright (C) 2008--2011  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,20 +26,28 @@
     cairo_create
     cairo_destroy
     cairo_fill_preserve
+    cairo_get_source
+    cairo_get_target
     cairo_image_surface_create
+    cairo_image_surface_create_for_data
     cairo_image_surface_get_data (1.2)
+    cairo_image_surface_get_stride
     cairo_line_to
     cairo_move_to
     cairo_new_path
     cairo_paint
+    cairo_pattern_set_extend
+    cairo_pattern_set_filter
     cairo_rectangle
     cairo_rel_move_to
     cairo_reset_clip
     cairo_restore
     cairo_rotate
     cairo_save
+    cairo_scale
     cairo_set_antialias
     cairo_set_dash
+    cairo_set_fill_rule
     cairo_set_line_cap
     cairo_set_line_join
     cairo_set_line_width
@@ -54,18 +61,14 @@
     cairo_stroke
     cairo_surface_destroy
     cairo_surface_status
-    cairo_surface_write_to_png
+
     cairo_xlib_surface_create
     cairo_xlib_surface_set_size
 
     cairo_show_text
     cairo_text_extents
 
-    cairo_pdf_surface_create (1.2)
-    cairo_ps_surface_create  (1.2)
-    cairo_svg_surface_create (1.2)
-
-    cairo_ft_font_face_create_for_ft_face [OSX]
+    cairo_ft_font_face_create_for_ft_face [OS X]
 
     g_object_unref  (glib)
 
@@ -96,8 +99,8 @@ static void CairoColor(unsigned int col, pX11Desc xd)
     green = pow(green, GreenGamma);
     blue = pow(blue, BlueGamma);
 
-    /* These optimizations should not be necessary, but alpha = 1
-       seems to cause image fallback in some backends */
+    /* This optimization should not be necessary, but alpha = 1 seems
+       to cause image fallback in some backends */
     if (alpha == 255)
 	cairo_set_source_rgb(xd->cc, red, green, blue);
     else

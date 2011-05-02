@@ -24,6 +24,17 @@
 
 /* This module is only compiled if HAVE_WORKING_CAIRO is true */
 
+/* additional entry points used here
+
+    cairo_show_page
+    cairo_pdf_surface_create (1.2)
+    cairo_ps_surface_create  (1.2)
+    cairo_surface_write_to_png
+    cairo_svg_surface_create (1.2)
+    cairo_svg_surface_restrict_to_version (1.2)
+
+ */
+
 #ifdef Win32
 //#define HAVE_PANGOCAIRO 1
 #define HAVE_CAIRO_SVG 1
