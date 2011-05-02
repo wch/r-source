@@ -713,7 +713,7 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 					   (const char *) file, 0, &face))) {
 		    FcFontSetDestroy (fs);
 
-#ifdef __APPLE__ /* But this function is Apple-only */
+#ifdef __APPLE__
 		    /* FreeType is broken on OS X in that face index
 		       is often wrong (unfortunately even for Helvetica!)
 		       - we try to find the best match through enumeration.
