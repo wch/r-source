@@ -1969,6 +1969,15 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i, mkChar("cairo"));
 #ifdef HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = TRUE;
+#elif defined(Win32)
+{
+    /* This is true iff winCairo.dll is available */
+    struct stat sb;
+    char path[1000];
+    snprintf(path, 1000, "%s/library/grDevices/libs/%s/winCairo.dll", 
+	     R_HomeDir(), R_ARCH);
+    LOGICAL(ans)[i++] = stat(path, &sb) == 0;
+}
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif

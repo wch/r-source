@@ -30,10 +30,10 @@ capabilities(what = NULL)
 #endif
 \value{
   A named logical vector.  Current components are
-    \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
-    \item{png}{Is the \code{\link{png}} function operational?}
-    \item{tiff}{Is the \code{\link{tiff}} function operational?}
-    \item{tcltk}{Is the \pkg{tcltk} package operational?
+    \item{jpeg}{is the \code{\link{jpeg}} function operational?}
+    \item{png}{is the \code{\link{png}} function operational?}
+    \item{tiff}{is the \code{\link{tiff}} function operational?}
+    \item{tcltk}{is the \pkg{tcltk} package operational?
 #ifdef unix
       Note that to make use of Tk you will almost always need to check
       that \code{"X11"} is also available.
@@ -48,7 +48,7 @@ capabilities(what = NULL)
       \code{\link{quartz}} function operational?  Only on some Mac OS X
       builds.  Note that this is distinct from
       \code{.Platform$GUI == "AQUA"}, which is true when using the Mac
-      \code{R.app} console.}
+      \code{R.app} GUI console.}
 #endif
 #ifdef windows
     \item{X11}{always \code{FALSE} on Windows.}
@@ -58,10 +58,10 @@ capabilities(what = NULL)
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
       available?}
-    \item{libxml}{Is there support for integrating \code{libxml} with
+    \item{libxml}{is there support for integrating \code{libxml} with
       the \R event loop?}
     \item{fifo}{are FIFO \link{connections} supported?}
-    \item{cledit}{Is command-line editing available in the current \R
+    \item{cledit}{is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
       It will be true for the command-line interface if \code{readline}
@@ -73,16 +73,14 @@ capabilities(what = NULL)
       \code{\link{iconv}} supported?  Always true as from \R 2.10.0.}
     \item{NLS}{is there Natural Language Support (for message translations)?}
     \item{profmem}{is there support for memory profiling?}
-#ifdef windows
-    \item{cairo}{applies to Unix-alikes -- always \code{FALSE}.}
-#endif
+    \item{cairo}{is there support the \code{\link{svg}},
+      \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
+      for \code{type = "cairo"} in the
 #ifdef unix
-    \item{cairo}{is there support for \code{type="Cairo"} in
-      \code{\link{X11}}, \code{\link{png}},\code{\link{jpeg}},
-      \code{\link{tiff}} and \code{\link{bmp}}, and
-      for the \code{\link{svg}}, \code{\link{cairo_pdf}} and
-      \code{\link{cairo_ps}} devices?}
-#endif    
+      \code{\link{X11}},
+#endif
+      \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
+      and \code{\link{tiff}} devices?}
 }
 \seealso{\code{\link{.Platform}}}
 
