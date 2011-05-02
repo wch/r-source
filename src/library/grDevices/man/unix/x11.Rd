@@ -170,7 +170,16 @@ X11.options(\dots, reset = FALSE)
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
   and Administration Manual} for advice on how to obtain and install
-  such fonts.
+  such fonts.  At present the best rendering (including using kerning)
+  will be achieved with TrueType fonts: see
+  \url{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
+  for ways to set up your system to prefer them.  The default family
+  (\code{"Helvetica"}) is likely not to use kerning: alternatives which
+  should if you have them installed are \code{"Arial"}, \code{"DejaVu
+  Sans"} and \code{"Liberation Sans"}. For those who prefer fonts with
+  serifs, try \code{"Times New Roman"}, \code{"DejaVu Serif"} or
+  \code{"Liberation Serif"}.  To match LaTeX text, use something like
+  \code{"CM Roman"}.
   
   Because of known problems with font selection on Mac OS X without
   Pango, \code{type = "cairo"} is not the default unless Pango is

@@ -59,11 +59,11 @@ tiff(filename = "Rplot\%03d.tiff",
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
   \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
-    the underlying \code{\link{X11}} device such as \code{gamma} and
-    \code{fonts}.
+    the underlying \code{\link{X11}} device such as \code{fonts}.
 
     For types \code{"cairo"} and \code{"quartz"}, the \code{family}
-    argument can be supplied.}
+    argument can be supplied.  See, e.g. the \sQuote{Cairo fonts}
+    section in the help for \code{\link{X11}}.}
   
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
     (some Mac OS X builds) or \code{"cairo"}.  The latter will only be

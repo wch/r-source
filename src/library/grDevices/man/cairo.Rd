@@ -41,7 +41,11 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{family}{one of the device-independent font families,
     \code{"sans"}, \code{"serif"} and \code{"mono"}, or a character
     string specify a font family to be searched for in a
-    system-dependent way.}
+    system-dependent way.
+#ifdef unix
+    See, the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
+#endif
+  }
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;
