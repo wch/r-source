@@ -2769,7 +2769,11 @@ useful set of fonts is the `liberation' truetype fonts available at
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with Arial, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
-(@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).
+(@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
+is the `Free UCS Outline Fonts' project
+(@uref{http://www.gnu.org/software/freefont/}) which are
+OpenType/TrueType fonts based on the URW fonts but with extended Unicode
+coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
