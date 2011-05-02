@@ -2208,6 +2208,47 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 #if VALGRIND_LEVEL > 0
     R_size_t actual_size = 0;
 #endif
+
+    /* Handle some scalars directly to improve speed. */
+    if (length == 1) {
+	switch(type) {
+	case REALSXP:
+	case INTSXP:
+	case LGLSXP:
+	    node_class = 1;
+	    alloc_size = NodeClassSize[1];
+	    if (FORCE_GC || NO_FREE_NODES() || VHEAP_FREE() < alloc_size) {
+		R_gc_internal(alloc_size);
+		if (NO_FREE_NODES())
+		    mem_err_cons();
+		if (VHEAP_FREE() < alloc_size)
+		    mem_err_heap(size);
+	    }
+
+	    CLASS_GET_FREE_NODE(node_class, s);
+#if VALGRIND_LEVEL > 2
+	    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+            VALGRIND_MAKE_WRITABLE(s, 3);
+#endif
+#if VALGRIND_LEVEL > 1
+	    switch(type) {
+	    case REALSXP: actual_size = sizeof(double); break;
+	    case INTSXP: actual_size = sizeof(int); break;
+	    case LGLSXP: actual_size = sizeof(int); break;
+	    }
+	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), actual_size);
+#endif
+	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	    SET_NODE_CLASS(s, node_class);
+	    R_SmallVallocSize += alloc_size;
+	    ATTRIB(s) = R_NilValue;
+	    TYPEOF(s) = type;
+	    LENGTH(s) = length;
+	    NAMED(s) = 0;
+	    return(s);
+	}
+    }
+
     if (length < 0 )
 	errorcall(R_GlobalContext->call,
 		  _("negative length vectors are not allowed"));
