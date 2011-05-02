@@ -175,16 +175,17 @@ X11.options(\dots, reset = FALSE)
   \url{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
   for ways to set up your system to prefer them.  The default family
   (\code{"Helvetica"}) is likely not to use kerning: alternatives which
-  should if you have them installed are \code{"Arial"}, \code{"DejaVu
-  Sans"} and \code{"Liberation Sans"}. For those who prefer fonts with
-  serifs, try \code{"Times New Roman"}, \code{"DejaVu Serif"} or
-  \code{"Liberation Serif"}.  To match LaTeX text, use something like
-  \code{"CM Roman"}.
+  should if you have them installed are \code{"Arial"},
+  \code{"DejaVu Sans"} and \code{"Liberation Sans"} (and perhaps
+  \code{"FreeSans"}).  For those who prefer fonts with serifs, try
+  \code{"Times New Roman"}, \code{"DejaVu Serif"} and \code{"Liberation
+  Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
   
   Because of known problems with font selection on Mac OS X without
-  Pango, \code{type = "cairo"} is not the default unless Pango is
-  available.  These problems include mixing up bold and italic and
-  selecting incorrect glyphs.
+  Pango, \code{type = "cairo"} is not the default there unless Pango is
+  available.  These problems include mixing up bold and italic (since
+  worked around), selecting incorrect glyphs and ugly or missing symbol
+  glyphs.
   
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of
@@ -192,7 +193,7 @@ X11.options(\dots, reset = FALSE)
   symbol font installed---\code{fontconfig} then prefers this and
   misinterprets its encoding.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
-  this problem.
+  this problem by preferring the URW Type 1 symbol font.
 \preformatted{<fontconfig>
 <match target="pattern">
   <test name="family"><string>Symbol</string></test>
