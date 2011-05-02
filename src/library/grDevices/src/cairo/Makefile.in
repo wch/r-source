@@ -37,7 +37,7 @@ R: Makefile
 $(cairo_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(cairo_la_LIBADD)
 
-cairoBM.o: cairoX11.c cairoBM.h $(top_srcdir)/src/modules/X11/bitmap.h
+cairoBM.o: cairoFns.c cairoBM.h $(top_srcdir)/src/modules/X11/bitmap.h
 
 mostlyclean: clean
 clean:

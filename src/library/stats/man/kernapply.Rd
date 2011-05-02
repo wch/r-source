@@ -1,6 +1,6 @@
 % File src/library/stats/man/kernapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{kernapply}
@@ -10,6 +10,10 @@
 \alias{kernapply.ts}
 \alias{kernapply.tskernel}
 \alias{kernapply.vector}
+\description{
+  \code{kernapply} computes the convolution between an input sequence 
+  and a specific kernel.
+}
 \usage{
 kernapply(x, \dots)
 
@@ -26,9 +30,10 @@ kernapply(x, \dots)
     smoothed is treated as circular, i.e., periodic.}
   \item{\dots}{arguments passed to or from other methods.}
 }
-\description{
-  \code{kernapply} computes the convolution between an input sequence 
-  and a specific kernel.
+\note{
+  This uses \code{\link{fft}} to perform the convolution, so is fastest
+  when \code{NROW(x)} is a power of 2 or some other highly composite
+  integer.
 }
 \value{
   A smoothed version of the input sequence.

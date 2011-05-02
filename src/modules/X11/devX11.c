@@ -200,7 +200,7 @@ static double GreenGamma = 1.0;
 static double BlueGamma	 = 1.0;
 
 #ifdef HAVE_WORKING_CAIRO
-# include "cairoX11.c"
+# include "cairoFns.c"
 
 static void Cairo_update(pX11Desc xd)
 {

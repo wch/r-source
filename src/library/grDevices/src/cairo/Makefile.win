@@ -57,7 +57,7 @@ all: winCairo.dll
 
 winCairo.dll: cairoBM.o
 
-cairoBM.o: cairoX11.c cairoBM.h ../rbitmap.h
+cairoBM.o: cairoFns.c cairoBM.h ../rbitmap.h
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/winshlib.mk

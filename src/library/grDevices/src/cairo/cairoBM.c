@@ -74,7 +74,7 @@ static void cbm_Size(double *left, double *right,
 }
 
 #define NO_X11 1
-#include "cairoX11.c"
+#include "cairoFns.c"
 
 #ifdef Win32
 # include "rbitmap.h"

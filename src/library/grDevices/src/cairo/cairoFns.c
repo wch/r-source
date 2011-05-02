@@ -604,11 +604,6 @@ PangoCairo_Text(double x, double y,
    No diagnostics that glyphs are present, no kerning. 
  */
 
-/* FIXME: although this should work on all platforms, I didn't get to
-   test it (yet) anywhere else, hence the __APPLE__ condition for now [SU]
-   r44621: now works on Linux, just finds the same fonts as before. [BDR]
-*/
-
 #ifdef __APPLE__
 # define USE_FC 1
 #endif
