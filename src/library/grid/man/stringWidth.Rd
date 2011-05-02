@@ -1,12 +1,13 @@
 % File src/library/grid/man/stringWidth.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{stringWidth}
 \alias{stringWidth}
 \alias{stringHeight}
-\title{Create a Unit Describing the Width of a String}
+\title{Create a Unit Describing the Width and Height of a String or Math
+  Expression}
 \description{
   These functions create a unit object describing the width or height of
   a string.
@@ -16,14 +17,18 @@ stringWidth(string)
 stringHeight(string)
 }
 \arguments{
-  \item{string}{A character vector.}
+  \item{string}{A character vector or a language object (as used for
+    \sQuote{\link{plotmath}} calls.}
 }
 \value{
-  A unit object. 
+  A \code{\link{unit}} object.
 }
 \author{Paul Murrell}
 \seealso{
   \code{\link{unit}} and
   \code{\link{grobWidth}}
+
+  \code{strwidth} in the \pkg{graphics} package for more details of the
+  typographic concepts behind the computations.
 }
 \keyword{dplot}
