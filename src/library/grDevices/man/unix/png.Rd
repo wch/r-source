@@ -27,7 +27,7 @@ jpeg(filename = "Rplot\%03d.jpeg",
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px", pointsize = 12,
      bg = "white",  res = NA, \dots,
-    type = c("cairo", "Xlib", "quartz"), antialias)
+    type = c("cairo", "png-cairo", "Xlib", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
