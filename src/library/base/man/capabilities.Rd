@@ -1,4 +1,3 @@
-% File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
@@ -77,7 +76,7 @@ capabilities(what = NULL)
     \item{cairo}{applies to Unix-alikes -- always \code{FALSE}.}
 #endif
 #ifdef unix
-    \item{cairo}{is there support for \code{type="Cairo"} in
+    \item{cairo}{is there support for \code{type = "cairo"} in
       \code{\link{X11}}, \code{\link{png}},\code{\link{jpeg}},
       \code{\link{tiff}} and \code{\link{bmp}}, and
       for the \code{\link{svg}}, \code{\link{cairo_pdf}} and
