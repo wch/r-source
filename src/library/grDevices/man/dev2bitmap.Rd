@@ -64,21 +64,24 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \code{"pnm"}, \code{"pnmraw"}, \code{"ppm"}, \code{"ppmraw"},
   \code{"pkm"}, \code{"pkmraw"}, \code{"tiffcrle"}, \code{"tiffg3"},
   \code{"tiffg32d"}, \code{"tiffg4"}, \code{"tifflzw"},
-  \code{"tiffpack"}, \code{"tiff12nc"}, \code{"tiff24nc"},
+  \code{"tiffpack"}, \code{"tiff12nc"}, \code{"tiff24nc"}, \code{"tiff32nc"}
   \code{"psmono"}, \code{"psgray"}, \code{"psrgb"}, \code{"bit"},
   \code{"bitrgb"}, \code{"bitcmyk"}, \code{"pngmono"}, \code{"pnggray"},
   \code{"pngalpha"}, \code{"png16"}, \code{"png256"}, \code{"png16m"},
   \code{"png48"}, \code{"jpeg"}, \code{"jpeggray"}, \code{"pdfwrite"}.
   
-  The default type, \code{"png16m"} supports 24-bit colour and
+  The default type, \code{"png16m"}, supports 24-bit colour and
   anti-aliasing.  Versions of \R prior to 2.7.0 defaulted to
   \code{"png256"}, which uses a palette of 256 colours and could be a
   more compact representation.  Monochrome graphs can use
   \code{"pngmono"}, or \code{"pnggray"} if anti-aliasing is desired.
+  Plots with a transparent background and varying degrees of
+  transparency should use \code{"pngalpha"}.
 
   Note that for a colour TIFF image you probably want \code{"tiff24nc"},
   which is 8-bit per channel RGB (the most common TIFF format).  None of
-  the listed TIFF types support transparency.
+  the listed TIFF types support transparency.  \code{"tiff32nc"} uses
+  8-bit per channel CMYK, which printers might require.
   
   For formats which contain a single image, a file specification like
   \code{Rplots\%03d.png} can be used: this is interpreted by Ghostscript.

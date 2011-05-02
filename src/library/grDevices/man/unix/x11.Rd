@@ -31,18 +31,23 @@ X11.options(\dots, reset = FALSE)
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.  This is ignored (with a warning) if an X11 device is
     already open on another display.}
+  
   \item{width, height}{the width and height of the plotting window, in
     inches.  If \code{NA}, taken from the resources and if
     not specified there defaults to \code{7} inches.  See also
     \sQuote{Resources}.}
+  
   \item{pointsize}{the default pointsize to be used.  Defaults to \code{12}.}
+  
   \item{gamma}{gamma correction fudge factor.
     Colours in R are sRGB;  if your monitor does not conform to
     sRGB, you might be able to improve things by tweaking this
     parameter to apply additional gamma correction to the RGB channels.
     By default 1 (no additional gamma correction).}
+  
   \item{bg}{colour, the initial background colour.  Default
     \code{"transparent"}.}
+  
   \item{canvas}{colour.  The colour of the canvas, which is visible only
     when the background colour is transparent.  Should be an opaque colour
     (and any alpha value will be ignored).  Default \code{"white"}.}
@@ -51,25 +56,31 @@ X11.options(\dots, reset = FALSE)
     X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
+  
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
     from the right edge of the screen.  If \code{NA} (the default),
     successive devices are cascaded in 20 pixel steps from the top left.
     See also \sQuote{Resources}.}
+  
   \item{title}{character string, up to 100 bytes.  With the default,
     \code{""}, a suitable title is created internally.  A C-style format
     for an integer will be substituted by the device number (see the
     \code{file} argument to \code{\link{postscript}} for further
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
+  
   \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"} or
     \code{"nbcairo"}.  The latter two will only be available if the
     system was compiled with support for cairo.  Default \code{"cairo"}
     where available and reliable, otherwise \code{"Xlib"}.}
+  
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
+  
   \item{reset}{logical: should the defaults be reset to their defaults?}
+  
   \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
     and \code{maxcubesize} (see section \sQuote{Colour Rendering}).}
 }
@@ -155,12 +166,22 @@ X11.options(\dots, reset = FALSE)
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
   and Administration Manual} for advice on how to obtain and install
-  such fonts.
+  such fonts.  At present the best rendering (including using kerning)
+  will be achieved with TrueType fonts: see
+  \url{http://www.freedesktop.org/software/fontconfig/fontconfig-user.html}
+  for ways to set up your system to prefer them.  The default family
+  (\code{"Helvetica"}) is likely not to use kerning: alternatives which
+  should if you have them installed are \code{"Arial"},
+  \code{"DejaVu Sans"} and \code{"Liberation Sans"} (and perhaps
+  \code{"FreeSans"}).  For those who prefer fonts with serifs, try
+  \code{"Times New Roman"}, \code{"DejaVu Serif"} and \code{"Liberation
+  Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
   
   Because of known problems with font selection on Mac OS X without
-  Pango, \code{type = "cairo"} is not the default unless Pango is
-  available.  These problems include mixing up bold and italic and
-  selecting incorrect glyphs.
+  Pango, \code{type = "cairo"} is not the default there unless Pango is
+  available.  These problems include mixing up bold and italic (since
+  worked around), selecting incorrect glyphs and ugly or missing symbol
+  glyphs.
   
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of
@@ -168,7 +189,7 @@ X11.options(\dots, reset = FALSE)
   symbol font installed---\code{fontconfig} then prefers this and
   misinterprets its encoding.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
-  this problem.
+  this problem by preferring the URW Type 1 symbol font.
 \preformatted{<fontconfig>
 <match target="pattern">
   <test name="family"><string>Symbol</string></test>

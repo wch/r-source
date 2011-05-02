@@ -626,6 +626,11 @@ will install stripped executables, and on platforms where this is
 supported, stripped libraries in directories @file{lib} and
 @file{modules} and in the standard packages.
 
+Note that installing @R{} into a directory which contains spaces is not
+supported, and at least some aspects (such as installing source
+packages) will not work.
+@c The main problem is the Makefile include in etc/Makeconf
+
 @cindex Manuals, installing
 
 To install DVI, info and PDF versions of the manuals, use one or more of
@@ -2707,7 +2712,7 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of the @code{X11}, @code{jpeg()}, @code{png()} and
+The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()} and
 @code{tiff()} graphics devices uses the @code{cairo} and (optionally)
 @code{Pango} libraries.  Cairo version 1.2.0 or later is required.
 Pango needs to be at least version 1.10, and 1.12 is the earliest
@@ -2731,7 +2736,11 @@ useful set of fonts is the `liberation' truetype fonts available at
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with Arial, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
-(@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).
+(@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
+is the `Free UCS Outline Fonts' project
+(@uref{http://www.gnu.org/software/freefont/}) which are
+OpenType/TrueType fonts based on the URW fonts but with extended Unicode
+coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
@@ -2768,11 +2777,8 @@ provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
 or @code{icu4c}.  It will be used by default where available (including
-on Mac OS X >= 10.4): should a broken version of ICU be found this can
-be suppressed by @option{--without-ICU}.
-
-@c The Perl scripts left are
-@c tools: help2man.pl install-info.pl
+on Mac OS X >= 10.4): should a very old or broken version of ICU be
+found this can be suppressed by @option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript

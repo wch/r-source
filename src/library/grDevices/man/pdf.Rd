@@ -22,7 +22,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
-    For use with \code{onefile=FALSE} give a C integer format such
+    For use with \code{onefile = FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
   }
@@ -36,8 +36,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{title}{title string to embed as the \samp{/Title} field in the
     file.  Defaults to \code{"R Graphics Output"}.}
   \item{fonts}{a character vector specifying \R graphics font family
-    names for fonts which will be included in the PDF file.  Defaults to
-    \code{NULL}.}
+    names for additional fonts which will be included in the PDF file.
+    Defaults to \code{NULL}.}
   \item{version}{a string describing the PDF version that will be
     required to view the output.  This is a minimum, and will be
     increased (with a warning) if necessary.  Defaults to \code{"1.4"},
@@ -51,7 +51,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
     if that is set and as \code{"a4"} if it is unset or empty.
-    Defaults \code{"special"}.
+    Defaults to \code{"special"}.
   }
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.  Defaults to \code{"default"}.}
@@ -70,7 +70,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"cmyk"}.  Defaults to \code{"rgb"}.}
   \item{useDingbats}{logical.  Should small circles be rendered
     \emph{via} the Dingbats font?  Defaults to \code{TRUE}, which produces
-    smaller and better output. Setting this to \code{FALSE} can work
+    smaller and better output.  Setting this to \code{FALSE} can work
     around font display problems in broken PDF viewers.
 #ifdef unix
     See the \sQuote{Note} for a possible fix for such viewers.
@@ -97,7 +97,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \file{Rplot1000.pdf}, \dots.
   
   The \code{family} argument can be used to specify a PDF-specific
-  font family as the initial/default font for the device.
+  font family as the initial/default font for the device.  If additional
+  font families are to be used they should be included in the
+  \code{fonts} argument.
 
   If a device-independent \R graphics font family is specified (e.g., via
   \code{par(family=)} in the graphics package), the PDF device makes use
@@ -172,8 +174,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   onto coloured paper, though.
 
   If you are planning to use a large number of raster images in your
-  output, you may need to specify a larger value for \code{maxRasters}.
+  output, you may need to specify a larger value for argument
+  \code{maxRasters}.
 }
+
 \section{Color models}{
   The default color model is sRGB, and model \code{"gray"} maps sRGB
   colors to greyscale using perceived luminosity (biased towards green).
@@ -181,6 +185,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   possible conversion from sRGB to CMYK is used
   (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 }
+
 \section{Conventions}{
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
@@ -201,6 +206,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 
   At very small line widths, the line type may be forced to solid.
 }
+
 \note{
   If you see problems with PDF output, do remember that the problem is
   much more likely to be in your viewer than in \R.  Try another
@@ -247,12 +253,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{\link{X11}}.
 #endif
 }
+
 \seealso{
   \code{\link{pdfFonts}}, \code{\link{pdf.options}},
   \code{\link{embedFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}.
 #ifdef unix
+  
   \code{\link{cairo_pdf}} and (on Mac OS X only) \code{\link{quartz}}
   for other devices that can produce PDF.
 #endif

@@ -1,6 +1,8 @@
 \usepackage{makeidx}
 \pagestyle{headings}
 
+%% Set PDF 1.5 and compression include object compression
+%% Needed for MiKTeX -- most other distributions default to this
 \ifx\pdfoutput\undefined
 \else
   \ifx\pdfoutput\relax

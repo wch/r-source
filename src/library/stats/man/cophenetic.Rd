@@ -18,9 +18,9 @@ cophenetic(x)
 }
 \arguments{
   \item{x}{an R object representing a hierarchical clustering.
-    For the default method, an object of class \code{\link{hclust}} or
+    For the default method, an object of class \code{"\link{hclust}"} or
     with a method for \code{\link{as.hclust}()} such as
-    \code{\link[cluster]{agnes}} in package \pkg{cluster}.}
+    \code{"\link[cluster]{agnes}"} in package \pkg{cluster}.}
 }
 \details{
   The cophenetic distance between two observations that have been
@@ -42,7 +42,7 @@ cophenetic(x)
   that all leaves of the dendrogram object have non-null labels.
 }
 \value{
-  An object of class \code{dist}.
+  An object of class \code{"dist"}.
 }
 \references{
   Sneath, P.H.A. and Sokal, R.R. (1973)
