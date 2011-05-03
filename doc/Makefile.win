@@ -23,9 +23,10 @@ CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE) LC_ALL=C
 
+## Should be allowed to fail if pdflatex is not available
 ../NEWS.pdf: NEWS.rds
 	@$(ECHO) "creating NEWS.pdf"
-	@$(ECHO) "options(warn=1);tools:::Rd2pdf_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	-@$(ECHO) "options(warn=1);tools:::Rd2pdf_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
 
 CHANGES: CHANGES.rds
