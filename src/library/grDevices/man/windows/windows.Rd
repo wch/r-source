@@ -26,7 +26,8 @@
 \usage{
 windows(width, height, pointsize, record, rescale, xpinch, ypinch,
         bg, canvas, gamma, xpos, ypos, buffered, title,
-        restoreConsole, clickToConfirm, fillOddEven, family, antialias)
+        restoreConsole, clickToConfirm, fillOddEven,
+        family, antialias)
 
 win.graph(width, height, pointsize)
 x11(width, height, pointsize, bg, gamma, xpos, ypos, title)
@@ -50,7 +51,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     recording plots.  Default \code{FALSE}.}
   \item{rescale}{character, one of \code{c("R", "fit", "fixed")}.
     Controls the action for resizing of the device.  Default
-    \code{"R"}.  See \sQuote{Details}.}
+    \code{"R"}.  See the \sQuote{Resizing options} section.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
     vertically.  Default \code{NA_real_}, which means to take the
     value from Windows.}
@@ -80,11 +81,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     \file{.wmf}.  Up to 511 characters are allowed. The page number is
     substituted if an integer format is included in the character
     string: see \code{\link{postscript}} for further details, and
-    tilde-expansion (see \code{\link{path.expand}} is performed. (The
+    tilde-expansion (see \code{\link{path.expand}}) is performed. (The
     result must be less than 600 characters long.)  The default,
     \code{""}, means the clipboard.}
   \item{printer}{The name of a printer as known to Windows. The default
-    causes a dialog box to come for the user to choose a printer.}
+    causes a dialog box to come up for the user to choose a printer.}
   \item{restoreConsole}{logical:  see the \sQuote{Details} below.  Defaults to
     \code{FALSE} for screen devices.}
   \item{clickToConfirm}{logical: if true confirmation of a new frame
@@ -93,16 +94,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Default \code{TRUE}.}
   \item{family}{A length-one character vector specifying the default
-    font family.  The default (\code{""} is to use the mapping of font
-    numbers.}
-  \item{antialias}{A length-one character vector.  This is partially
-    matched to \code{"default"}, \code{"none"}, \code{"cleartype"} or
-    \code{"antialiased"}.  These are hints to Windows GDI that may not
-    be able to be followed, but \code{"none"} should ensure that no
-    antialiasing is used.  For a screen device the default depends on
-    the machine settings: it will be \code{"cleartype"} if that has been
-    enabled.  Note that \code{"antialiased"} may not give any
-    anti-aliasing even though \code{"cleartype"} does.}
+    font family.  See section \sQuote{fonts}.}
+  \item{antialias}{A length-one character vector, requesting control
+    over font antialiasing.  This is partially matched to
+    \code{"default"}, \code{"none"}, \code{"cleartype"} or
+    \code{"antialiased"}.  See the \sQuote{Fonts} section.}
 }
 
 \details{
@@ -124,10 +120,52 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   screen (a typical laptop display) was reported as 96 dpi even though
   it is physically about 114 dpi.
 
-  If the \code{filename} is omitted (or specified as \code{""} for a
-  \code{win.metafile} device), the output is copied to the clipboard
-  when the device is closed.
+  The different colours need to be distinguished carefully.  Areas
+  outside the device region are coloured in the Windows application background
+  colour.  The device region is coloured in the canvas colour.  This is
+  over-painted by the background colour of a plot when a new page is
+  called for, but that background colour can be transparent (and is by
+  default).  One difference between setting the canvas colour and the
+  background colour is that when a plot is saved the background
+  colour is copied but the canvas colour is not.  The argument \code{bg}
+  sets the initial value of \code{\link{par}("bg")} in base graphics and
+  \code{\link{gpar}("fill")} in grid graphics
 
+  Recorded plot histories are of class \code{"SavedPlots"}.  They have a
+  \code{print} method, and a subset method.  As the individual plots are
+  of class \code{"recordedplot"} they can be replayed by printing them:
+  see \code{\link{recordPlot}}.  The active plot history is stored in
+  variable \code{.SavedPlots} in the workspace.
+
+  When a screen device is double-buffered (the default) the
+  screen is updated 100ms after last plotting call or every 500ms during
+  continuous plotting.  These times can be altered by setting
+  \code{options("windowsTimeout")} to a vector of two integers before
+  opening the device.
+ 
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
+
+  For \code{win.metafile} only one plot is allowed per file, and Windows
+  seems to disallow reusing the file.  So the \emph{only} way to allow
+  multiple plots is to use a parametrized \code{filename} as in the
+  example.  If the \code{filename} is omitted (or specified as
+  \code{""}), the output is copied to the clipboard when the device is
+  closed.
+  
+  The \code{restoreConsole} argument is a temporary fix for a problem
+  in the current implementation of several Windows graphics devices,
+  and is likely to be removed in an upcoming release.  If set to
+  \code{FALSE}, the console will not receive the focus after the new
+  device is opened.  
+
+  There is support for semi-transparent colours of lines, fills and text
+  on the \code{windows()} device.  These work for saving (from the
+  \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
+  saving to Metafile and PostScript.
+}
+
+\section{Resizing options}{
   If a screen device is re-sized, the default behaviour (\code{"R"}) is
   to redraw the plot(s) as if the new size had been specified
   originally.  Using \code{"fit"} will rescale the existing plot(s) to
@@ -153,70 +191,51 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   area(s) outside the \sQuote{paper} are coloured in the Windows
   application background colour.  Graphics parameters such as
   \code{"din"} refer to the scaled plot if rescaling is in effect.
-
-  The different colours need to be distinguished carefully.  Areas
-  outside the device region are coloured in the Windows application background
-  colour.  The device region is coloured in the canvas colour.  This is
-  over-painted by the background colour of a plot when a new page is
-  called for, but that background colour can be transparent (and is by
-  default).  One difference between setting the canvas colour and the
-  background colour is that when a plot is saved the background
-  colour is copied but the canvas colour is not.  The argument \code{bg}
-  sets the initial value of \code{\link{par}("bg")} in base graphics and
-  \code{\link{gpar}("fill")} in grid graphics
-
-  Recorded plot histories are of class \code{"SavedPlots"}.  They have a
-  \code{print} method, and a subset method.  As the individual plots are
-  of class \code{"recordedplot"} they can be replayed by printing them:
-  see \code{\link{recordPlot}}.  The active plot history is stored in
-  variable \code{.SavedPlots} in the workspace.
-
-  When a screen device is double-buffered (the default) the
-  screen is updated 100ms after last plotting call or every 500ms during
-  continuous plotting.  These times can be altered by setting
-  \code{options("windowsTimeout")} to a vector of two integers before
-  opening the device.
-
-  The fonts used for text drawn in a Windows device may be controlled in
-  two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
-  mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
-  Alternatively, a font family can be specified (e.g., via
-  \code{par(family=)} in the graphics package) and this will be mapped
-  via the Windows font database (see \code{\link{windowsFonts}}).
- 
-  Line widths as controlled by \code{par(lwd=)} are in multiples of
-  1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
-
-  \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
-  the larger of one pixel and 0.01 inch.
-
-  For \code{win.metafile} only one plot is allowed per file, and Windows
-  seems to disallow reusing the file.  So the \emph{only} way to allow
-  multiple plots is to use a parametrized \code{filename} as in the example.
-  
-  The \code{restoreConsole} argument is a temporary fix for a problem
-  in the current implementation of several Windows graphics devices,
-  and is likely to be removed in an upcoming release.  If set to
-  \code{FALSE}, the console will not receive the focus after the new
-  device is opened.  
-
-  There is support for semi-transparent colours of lines, fills and text
-  on the \code{windows()} device.  These work for saving (from the
-  \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
-  saving to Metafile and PostScript.
 }
+
+\section{Fonts}{
+  The fonts used for text drawn in a Windows device may be controlled in
+  two ways.  The file \code{R_HOME\\etc\\\link{Rdevga}} can be used to specify
+  mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
+  Alternatively, a font family can be specified by a non-empty
+  \code{family} argument (or by e.g. \code{par(family=)} in the
+  graphics package) and this will be mapped via the Windows font
+  database (see \code{\link{windowsFonts}}).
+
+  How the fonts look depends on the antialiasing settings, both
+  through the \code{antialias} argument and the machine settings.
+  These are hints to Windows GDI that may not be able to be followed,
+  but \code{antialias = "none"} should ensure that no antialiasing is
+  used.  For a screen device the default depends on the machine
+  settings: it will be \code{"cleartype"} if that has been enabled.
+  Note that \code{"antialiased"} may not give any anti-aliasing even
+  though \code{"cleartype"} does: it appears to refer to the greyscale
+  font antialiasing that is used only for small fonts (below about 9
+  pixels, around 7 points on a typical display).
+
+  When accessing a system through Remote Desktop, both the Remote
+  Desktop settings \emph{and} the user's local account settings are
+  relevant to whether antialiasing is used.
+
+  Some fonts are intended only to be used with ClearType antialiasing,
+  for example the \code{Meiryo} Japanese font.
+}
+% http://blogs.msdn.com/b/rds/archive/2006/09/08/747023.aspx
+
 \section{Conventions}{
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
 
   \itemize{
     \item The default device size is 7 inches square, although this is
-    often incorrectly implemented by Windows.
+    often incorrectly implemented by Windows: see \sQuote{Details}.
     \item Font sizes are in big points.
     \item The default font family is Arial.
     \item Line widths are as a multiple of 1/96 inch, with a minimum of
     one pixel. 
     \item The minimum radius of a circle is 1 pixel.
+    \item \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
+    the larger of one pixel and 0.01 inch.
     \item Colours are interpreted via the unprofiled colour mapping of
     the graphics card -- this is \emph{assumed} to conform to sRGB.
   }

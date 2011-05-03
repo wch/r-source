@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/Rconsole.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rwin configuration}
@@ -18,9 +18,10 @@
   configuration.
   
   The file \file{Rdevga} configures the graphics devices
-  \code{windows}, \code{win.graph}, \code{win.metafile} and
-  \code{win.print}, as well as the bitmap devices \code{bmp},
-  \code{jpeg} and \code{png} (which use \code{windows} internally).
+  \code{\link{windows}}, \code{win.graph}, \code{win.metafile} and
+  \code{win.print}, as well as the bitmap devices \code{\link{bmp}},
+  \code{jpeg}, \code{png} and \code{tiff} (which use for \code{type =
+  "windows"} use \code{windows} internally).
 }
 \usage{
   loadRconsole(file)
@@ -50,6 +51,7 @@
   \code{loadRconsole} is called for its side effect of loading new 
   defaults.  It returns no useful value.
 }
+
 \details{
   There are system copies of these files in
   \file{\var{\link{R_HOME}}\\etc}.  Users can have personal copies of

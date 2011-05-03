@@ -770,9 +770,9 @@ default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
 tried.  @code{Lucida Console} has elegant glyphs for directional quotes
 (but seems rather light unless ClearType is in use): @code{Consolas} is
-another font which we often select.  Non-TrueType fonts such as
-@code{Courier} and @code{FixedSys} lack directional double quotes on all
-the systems we tried.
+another font which we often select when ClearType is in use.
+Non-TrueType fonts such as @code{Courier} and @code{FixedSys} lack
+directional double quotes on all the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
