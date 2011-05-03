@@ -7076,6 +7076,7 @@ static void PDF_NewPage(const pGEcontext gc,
     if (pd->useCompression) {
 	char *tmp = R_tmpnam("pdf", R_TempDir);
 	pd->pdffp = fopen(tmp, "w+b");
+	free(tmp);
 	if(! pd->pdffp) error("cannot open file '%s', reason %s", 
 			      tmp, strerror(errno));
     } else {
