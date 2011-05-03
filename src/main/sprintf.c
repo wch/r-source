@@ -245,7 +245,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			_this = a[nthis];
 			if (has_star) {
-			    int nf; char *p, *q = fmt2;
+			    size_t nf; char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
 				if (*p == '*') q += sprintf(q, "%d", star_arg);
 				else *q++ = *p;
@@ -311,7 +311,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    case 's':
 				if(TYPEOF(_this) != STRSXP) {
 				    /* as.character method might call sprintf() */
-				    int nc = strlen(outputString);
+				    size_t nc = strlen(outputString);
 				    char *z = Calloc(nc+1, char);
 				    strcpy(z, outputString);
 				    PROTECT(tmp = lang2(install("as.character"), _this));
@@ -422,7 +422,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    else { /* not '%' : handle string part */
 		char *ch = Rf_strchr(curFormat, '%'); /* MBCS-aware version used */
-		chunk = (ch) ? ch - curFormat : strlen(curFormat);
+		chunk = (ch) ? (size_t) (ch - curFormat) : strlen(curFormat);
 		strncpy(bit, curFormat, chunk);
 		bit[chunk] = '\0';
 	    }
