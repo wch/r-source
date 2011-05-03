@@ -51,7 +51,10 @@
       settings: this argument should at least be able to turn it off.
       The default behaviour (unchanged from before) is that Windows will
       use anti-aliasing for screen devices (and bitmap devices, as they
-      plot on a hidden screen) if ClearType has been enabled.
+      plot on a hidden screen) if ClearType has been enabled.  For those
+      not using ClearType, \code{windows.options(antialias="cleartype")}
+      will make this the default, and it will probably give more legible
+      plots.
 
       The argument can also be used for the cairographics-based versions
       of the bitmap devices.

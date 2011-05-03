@@ -69,7 +69,7 @@ tiff(filename = "Rplot\%03d.tif",
   \item{type}{Should be plotting be done using Windows GDI or cairographics?}
   \item{antialias}{Length-one character vector.  For allowed values and
     their effect on fonts with \code{type = "windows"} see
-    \code{\link{windows}}. For allowed values and their effect (on fonts
+    \code{\link{windows}}.  For allowed values and their effect (on fonts
     and lines) with \code{type = "cairo"} see \code{\link{svg}}.}
 }
 \details{  
@@ -165,6 +165,9 @@ tiff(filename = "Rplot\%03d.tif",
   format.  This means that they have the same colour handling as the
   actual screen device, and work best if that is set to a 24-bit or
   32-bit colour mode.
+
+  You will probably want \code{antialias = "cleartype"} if this is not
+  the default on your Windows system.
 }
 
 \seealso{
