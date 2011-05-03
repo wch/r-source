@@ -13,11 +13,11 @@
 \alias{print.SavedPlots}
 \alias{[.SavedPlots}
 
-\title{Windows graphics devices}
+\title{Windows Graphics Devices}
 
 \description{
   A graphics device is opened.  For \code{windows}, \code{win.graph},
-  \code{x11} and \code{X11} this is a graphics window on the current
+  \code{x11} and \code{X11} this is a window on the current
   Windows display: the multiple names are for compatibility with other
   systems.  \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
@@ -112,8 +112,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{\link{windows.options}}: the defaults given in the arguments section
   are the defaults for the defaults.  These defaults also apply to the
   internal values of \code{gamma}, \code{xpinch}, \code{ypinch},
-  \code{buffered} and \code{restoreConsole} for \code{win.graph},
-  \code{x11} and \code{X11}.
+  \code{buffered}, \code{restoreConsole} and \code{antialias} for
+  \code{win.graph}, \code{x11} and \code{X11}.
 
   The size of a window is computed from information provided about the
   display: it depends on the system being configured accurately.
@@ -135,7 +135,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{"fixed"} will leave the plot size unchanged, adding scrollbars
   if part of the plot is obscured.
 
-  A graphics window will never be created at more that 85\% of
+  A graphics window will never be created at more than 85\% of
   the screen width or height, but can be resized to a larger size.
   For the first two \code{rescale} options the width and height are
   rescaled proportionally if necessary, and if \code{rescale = "fit"}
@@ -154,8 +154,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   application background colour.  Graphics parameters such as
   \code{"din"} refer to the scaled plot if rescaling is in effect.
 
-  The different colours need to be distinguished carefully.  Area(s)
-  outside the device region is coloured in the Windows application background
+  The different colours need to be distinguished carefully.  Areas
+  outside the device region are coloured in the Windows application background
   colour.  The device region is coloured in the canvas colour.  This is
   over-painted by the background colour of a plot when a new page is
   called for, but that background colour can be transparent (and is by
@@ -179,11 +179,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   The fonts used for text drawn in a Windows device may be controlled in
   two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
-  mappings for \code{par(font=)} (in the graphics package).  Alternatively,
-  a device-independent \R graphics font family can be specified (e.g.,
-  via \code{par(family=)} in the graphics package) and this will be
-  mapped via the Windows font database (see \code{\link{windowsFonts}}).
-
+  mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
+  Alternatively, a font family can be specified (e.g., via
+  \code{par(family=)} in the graphics package) and this will be mapped
+  via the Windows font database (see \code{\link{windowsFonts}}).
+ 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
 

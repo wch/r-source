@@ -42,27 +42,32 @@ png <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
-    antialias <- match.arg(antialias)
     if(match.arg(type) == "cairo") {
-        antialias <- match(antialias, aa.cairo)
+        antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(devCairo, filename, 2L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
     } else if(match.arg(type) == "cairo-png") {
-        antialias <- match(antialias, aa.cairo)
+        antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
     } else {
-        antialias <- match(antialias, aa.win)
+        new <- if (!missing(antialias)) {
+            list(bitmap.aa.win = match.arg(antialias, aa.win))
+        } else list()
+        antialias <-
+            check.options(new = new, envir = .WindowsEnv,
+                          name.opt = ".Windows.Options",
+                          reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
         invisible(.External(Cdevga, paste("png:", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
                             restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
+                            family, match(antialias, aa.win)))
     }
 }
 
@@ -76,21 +81,26 @@ bmp <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
-    antialias <- match.arg(antialias)
     if(match.arg(type) == "cairo") {
-        antialias <- match(antialias, aa.cairo)
+        antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(devCairo, filename,
                             9L, g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
                             if(nzchar(family)) family else "sans"))
     } else {
-        antialias <- match(antialias, aa.win)
+        new <- if (!missing(antialias)) {
+            list(bitmap.aa.win = match.arg(antialias, aa.win))
+        } else list()
+        antialias <-
+            check.options(new = new, envir = .WindowsEnv,
+                          name.opt = ".Windows.Options",
+                          reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
         invisible(.External(Cdevga, paste("bmp:", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
                             restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
+                            family, match(antialias, aa.win)))
     }
 }
 
@@ -104,21 +114,26 @@ jpeg <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
-    antialias <- match.arg(antialias)
     if(match.arg(type) == "cairo") {
-        antialias <- match(antialias, aa.cairo)
+        antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(devCairo, filename, 3L, g$width, height, pointsize,
                             bg, res, antialias, quality,
                             if(nzchar(family)) family else "sans"))
     } else {
-        antialias <- match(antialias, aa.win)
+        new <- if (!missing(antialias)) {
+            list(bitmap.aa.win = match.arg(antialias, aa.win))
+        } else list()
+        antialias <-
+            check.options(new = new, envir = .WindowsEnv,
+                          name.opt = ".Windows.Options",
+                          reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
         invisible(.External(Cdevga,
                             paste("jpeg:", quality, ":",filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
                             restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
+                            family, match(antialias, aa.win)))
     }
 }
 
@@ -133,24 +148,29 @@ tiff <-
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
-    antialias <- match.arg(antialias)
     comp <-
         switch(match.arg(compression),
                "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L, "zip" = 8L)
     if(match.arg(type) == "cairo") {
-        antialias <- match(antialias, aa.cairo)
+        antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(devCairo, filename, 8L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, comp,
                             if(nzchar(family)) family else "sans"))
     } else {
-        antialias <- match(antialias, aa.win)
+        new <- if (!missing(antialias)) {
+            list(bitmap.aa.win = match.arg(antialias, aa.win))
+        } else list()
+        antialias <-
+            check.options(new = new, envir = .WindowsEnv,
+                          name.opt = ".Windows.Options",
+                          reset = FALSE, assign.opt = FALSE)$bitmap.aa.win
         invisible(.External(Cdevga,
                             paste("tiff:", comp, ":", filename, sep=""),
                             g$width, g$height, pointsize, FALSE, 1L,
                             NA_real_, NA_real_, bg, 1,
                             as.integer(res), NA_integer_, FALSE, .PSenv, NA,
                             restoreConsole, "", FALSE, TRUE,
-                            family, antialias))
+                            family, match(antialias, aa.win)))
     }
 }

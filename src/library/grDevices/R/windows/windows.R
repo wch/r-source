@@ -29,7 +29,8 @@ assign(".Windows.Options",
             clickToConfirm = TRUE,
             title = "",
             fillOddEven = TRUE,
-            antialias = "default"),
+            antialias = "default",
+            bitmap.aa.win = "default"),
        envir = .WindowsEnv)
 
 assign(".Windows.Options.default",

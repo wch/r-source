@@ -26,13 +26,13 @@ x11 <- X11 <-
     if(!missing(xpos)) new$xpos <- as.integer(xpos)
     if(!missing(ypos)) new$ypos <- as.integer(ypos)
     if(!missing(title)) new$title <- title
-    old <- check.options(new = new, envir = .WindowsEnv,
-                         name.opt = ".Windows.Options",
-			 reset = FALSE, assign.opt = FALSE)
-    invisible(.External(Cdevga, "", old$width, old$height, old$pointsize,
-                        FALSE, 1L, old$xpinch, old$ypinch, "white",
-                        old$gamma, old$xpos, old$ypos, old$buffered,
-                        .PSenv, old$bg, old$restoreConsole, old$title, TRUE,
-                        old$fillOddEven))
+    d <- check.options(new = new, envir = .WindowsEnv,
+                       name.opt = ".Windows.Options",
+                       reset = FALSE, assign.opt = FALSE)
+    invisible(.External(Cdevga, "", d$width, d$height, d$pointsize,
+                        FALSE, 1L, d$xpinch, d$ypinch, "white",
+                        d$gamma, d$xpos, d$ypos, d$buffered,
+                        .PSenv, d$bg, d$restoreConsole, d$title, TRUE,
+                        d$fillOddEven, d$antialias))
 }
 

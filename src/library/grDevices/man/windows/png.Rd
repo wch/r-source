@@ -67,9 +67,14 @@ tiff(filename = "Rplot\%03d.tif",
   \item{restoreConsole}{See the \sQuote{Details} section of
     \code{\link{windows}}.  For \code{type == "windows"} only.}
   \item{type}{Should be plotting be done using Windows GDI or cairographics?}
-  \item{antialias}{Length-one character vector.  For allowed values and
-    their effect on fonts with \code{type = "windows"} see
-    \code{\link{windows}}.  For allowed values and their effect (on fonts
+  \item{antialias}{Length-one character vector.
+
+    For allowed values and their effect on fonts with \code{type =
+      "windows"} see \code{\link{windows}}: for that type if the
+    argument is missing the default is taken from
+    \code{windows.options()$bitmap.aa.win}.
+
+    For allowed values and their effect (on fonts
     and lines) with \code{type = "cairo"} see \code{\link{svg}}.}
 }
 \details{  
@@ -166,8 +171,10 @@ tiff(filename = "Rplot\%03d.tif",
   actual screen device, and work best if that is set to a 24-bit or
   32-bit colour mode.
 
-  You will probably want \code{antialias = "cleartype"} if this is not
-  the default on your Windows system.
+  For high-quality plots you will probably want \code{antialias =
+    "cleartype"} if this is not the default on your Windows system.  On
+  the other hand, \code{png(antialias = "none")} will give the most
+  compact files
 }
 
 \seealso{
