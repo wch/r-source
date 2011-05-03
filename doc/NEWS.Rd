@@ -135,6 +135,10 @@
 
       \item \code{seek(origin = "current")} incorrectly reported it was
       not implemented for a \code{gzfile()} connection.
+
+      \item \code{c()} and other functions using \code{AnswerType} could
+      silently overflow the maximum supported vector length and cause a
+      crash. \PR{14571}
     }
   }
 }
