@@ -4474,9 +4474,12 @@ is available as from Cygwin 1.7.8 (March 2011).  However, the (new)
 implementation of @code{cacos} gives incorrect results, so
 @code{HAVE_CACOS} is undefined in @file{src/main/complex.c}.
 
-Only building as a shared library works,@footnote{Windows DLLs need to
-have all links resolved at build time and so cannot resolve against
-@file{R.bin}.} so use e.g@:
+Currently Cygwin 1.7.9-1 is unable to build @R{}: the support for
+dynamic loading of DLLs is broken.
+
+Only building as a shared library can possibly work,@footnote{Windows
+DLLs need to have all links resolved at build time and so cannot resolve
+against @file{R.bin}.} so use e.g@:
 
 @example
 ./configure --disable-nls --enable-R-shlib
