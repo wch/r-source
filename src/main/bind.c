@@ -65,7 +65,7 @@ static int HasNames(SEXP x)
 }
 
 static void
-AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
+AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
 {
     switch (TYPEOF(x)) {
     case NILSXP:
@@ -105,7 +105,7 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 	    for (i = 0; i < n; i++) {
 		if (usenames && !data->ans_nnames)
 		    data->ans_nnames = HasNames(VECTOR_ELT(x, i));
-		AnswerType(VECTOR_ELT(x, i), recurse, usenames, data);
+		AnswerType(VECTOR_ELT(x, i), recurse, usenames, data, call);
 	    }
 	}
 	else {
@@ -123,7 +123,7 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 		    if (!isNull(TAG(x))) data->ans_nnames = 1;
 		    else data->ans_nnames = HasNames(CAR(x));
 		}
-		AnswerType(CAR(x), recurse, usenames, data);
+		AnswerType(CAR(x), recurse, usenames, data, call);
 		x = CDR(x);
 	    }
 	}
@@ -137,6 +137,16 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 	data->ans_length += 1;
 	break;
     }
+
+    /* check for overflow in ans_length. Objects are added one at a
+       time for each call to AnswerType so it is safe to check here.
+       Since sizes are signed, positive numbers, the overflow will
+       manifest itself as a negative result (both numbers will be
+       31-bit so we cannot overflow across the 32-bit boundary). If
+       our assumption (all lengths are signed) is violated, this won't
+       work so check when switching length types! */
+    if (data->ans_length < 0)
+	errorcall(call, _("resulting vector exceeds vector length limit in '%s'"), "AnswerType");
 }
 
 
@@ -756,7 +766,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (!isNull(TAG(t))) data.ans_nnames = 1;
 	    else data.ans_nnames = HasNames(CAR(t));
 	}
-	AnswerType(CAR(t), recurse, usenames, &data);
+	AnswerType(CAR(t), recurse, usenames, &data, call);
     }
 
     /* If a non-vector argument was encountered (perhaps a list if */
@@ -866,7 +876,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++) {
 	    if (usenames && !data.ans_nnames)
 		data.ans_nnames = HasNames(VECTOR_ELT(args, i));
-	    AnswerType(VECTOR_ELT(args, i), recurse, usenames, &data);
+	    AnswerType(VECTOR_ELT(args, i), recurse, usenames, &data, call);
 	}
     }
     else if (isList(args)) {
@@ -875,7 +885,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (!isNull(TAG(t))) data.ans_nnames = 1;
 		else data.ans_nnames = HasNames(CAR(t));
 	    }
-	    AnswerType(CAR(t), recurse, usenames, &data);
+	    AnswerType(CAR(t), recurse, usenames, &data, call);
 	}
     }
     else {
@@ -1069,7 +1079,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     data.ans_length = 0;
     data.ans_nnames = 0;
     for (t = args; t != R_NilValue; t = CDR(t))
-	AnswerType(PRVALUE(CAR(t)), 0, 0, &data);
+	AnswerType(PRVALUE(CAR(t)), 0, 0, &data, call);
 
     /* zero-extent matrices shouldn't give NULL, but cbind(NULL) should: */
     if (!data.ans_flags && !data.ans_length) {
