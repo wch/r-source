@@ -80,7 +80,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     Windows metafile, usually given extension \file{.emf} or
     \file{.wmf}.  Up to 511 characters are allowed. The page number is
     substituted if an integer format is included in the character
-    string: see \code{\link{postscript}} for further details, and
+    string (see \code{\link{postscript}} for further details) and
     tilde-expansion (see \code{\link{path.expand}}) is performed. (The
     result must be less than 600 characters long.)  The default,
     \code{""}, means the clipboard.}
@@ -94,11 +94,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
     \code{\link{polygon}} for details.  Default \code{TRUE}.}
   \item{family}{A length-one character vector specifying the default
-    font family.  See section \sQuote{fonts}.}
+    font family.  See section \sQuote{Fonts}.}
   \item{antialias}{A length-one character vector, requesting control
     over font antialiasing.  This is partially matched to
     \code{"default"}, \code{"none"}, \code{"cleartype"} or
-    \code{"antialiased"}.  See the \sQuote{Fonts} section.}
+    \code{"gray"}.  See the \sQuote{Fonts} section.}
 }
 
 \details{
@@ -160,7 +160,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   device is opened.  
 
   There is support for semi-transparent colours of lines, fills and text
-  on the \code{windows()} device.  These work for saving (from the
+  on the screen devices.  These work for saving (from the
   \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
   saving to Metafile and PostScript.
 }
@@ -195,23 +195,21 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
 \section{Fonts}{
   The fonts used for text drawn in a Windows device may be controlled in
-  two ways.  The file \code{R_HOME\\etc\\\link{Rdevga}} can be used to specify
-  mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
+  two ways.  The file \code{R_HOME\\etc\\\link{Rdevga}} can be used to
+  specify mappings for \code{par(font=)} (or the \pkg{grid} equivalent).
   Alternatively, a font family can be specified by a non-empty
-  \code{family} argument (or by e.g. \code{par(family=)} in the
-  graphics package) and this will be mapped via the Windows font
+  \code{family} argument (or by e.g. \code{par(family=)} in the graphics
+  package) and this will be used for fonts 1:4 via the Windows font
   database (see \code{\link{windowsFonts}}).
 
-  How the fonts look depends on the antialiasing settings, both
-  through the \code{antialias} argument and the machine settings.
-  These are hints to Windows GDI that may not be able to be followed,
-  but \code{antialias = "none"} should ensure that no antialiasing is
-  used.  For a screen device the default depends on the machine
-  settings: it will be \code{"cleartype"} if that has been enabled.
-  Note that \code{"antialiased"} may not give any anti-aliasing even
-  though \code{"cleartype"} does: it appears to refer to the greyscale
-  font antialiasing that is used only for small fonts (below about 9
-  pixels, around 7 points on a typical display).
+  How the fonts look depends on the antialiasing settings, both through
+  the \code{antialias} argument and the machine settings.  These are
+  hints to Windows GDI that may not be able to be followed, but
+  \code{antialias = "none"} should ensure that no antialiasing is used.
+  For a screen device the default depends on the machine settings: it
+  will be \code{"cleartype"} if that has been enabled.  Note that the
+  greyscale antialiasing that is used only for small fonts (below about
+  9 pixels, around 7 points on a typical display).
 
   When accessing a system through Remote Desktop, both the Remote
   Desktop settings \emph{and} the user's local account settings are

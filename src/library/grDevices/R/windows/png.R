@@ -37,8 +37,7 @@ png <-
              width = 480, height = 480, units = "px", pointsize = 12,
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo", "cairo-png"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -76,8 +75,7 @@ bmp <-
              width = 480, height = 480, units = "px", pointsize = 12,
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -109,8 +107,7 @@ jpeg <-
              width = 480, height = 480, units = "px", pointsize = 12,
              quality = 75, bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -143,8 +140,7 @@ tiff <-
              compression = c("none", "rle", "lzw", "jpeg", "zip"),
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "antialiased",
-                           "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)

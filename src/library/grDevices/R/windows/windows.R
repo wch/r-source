@@ -37,7 +37,7 @@ assign(".Windows.Options.default",
        get(".Windows.Options", envir = .WindowsEnv),
        envir = .WindowsEnv)
 
-aa.win <- c("default", "none", "cleartype", "antialiased")
+aa.win <- c("default", "none", "cleartype", "gray")
 aa.cairo <- c("default", "none", "gray", "subpixel")
 
 windows.options <- function(..., reset=FALSE)
