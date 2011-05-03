@@ -3676,6 +3676,13 @@ Default: true if @command{du} is found.
 @item _R_CHECK_DOC_SIZES_
 Should @command{qpdf} be used to find the installed sizes of PDFs?
 Default: true if @command{qpdf} is found.
+@item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
+By default the output from running the @R{} code in the vignettes is
+kept only if there is an error.
+Default: false
+@item _R_CHECK_CLEAN_VIGN_TEST_
+Should the @file{vign_test} directory be removed if the test is successful?
+Default: true.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top

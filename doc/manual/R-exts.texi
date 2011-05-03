@@ -1750,17 +1750,20 @@ possible.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
-executed, and the vignettes re-made from their sources as a check of
-completeness of the sources (unless there is a @samp{Vignettes}
-field in the package's @file{DESCRIPTION} file with a false value).
+executed, and the vignette PDFs re-made from their sources as a check of
+completeness of the sources (unless there is a @samp{Vignettes} field in
+the package's @file{DESCRIPTION} file with a false value).
 
-If there is an error in executing the @R{} code in vignette
-@file{@var{foo}}, a log file @file{@var{foo}.log} is created in the
-check directory.  The vignettes are re-made in a copy of the package
-sources in the @file{vign_test} subdirectory of the check directory, so
-for further information on errors look in directory
+If there is an error@footnote{or if option @option{--use-valgrind} is
+used or environment variable @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_}
+is set to a true value} in executing the @R{} code in vignette
+@file{@var{foo.ext}}, a log file @file{@var{foo.ext}.log} is created in
+the check directory.  The vignette PDFs are re-made in a copy of the
+package sources in the @file{vign_test} subdirectory of the check
+directory, so for further information on errors look in directory
 @file{@var{pkgname}/vign_test/inst/doc}.  (It is only retained if there
-are errors.)
+are errors or if environment variable @env{_R_CHECK_CLEAN_VIGN_TEST_} is
+set to a false value.)
 
 @item
 The PDF version of the package's manual is created (to check that the
@@ -10254,7 +10257,9 @@ file is provided as
 @deftypefunx {char *} R_tmpnam2 (const char *@var{prefix}, const char *@var{tmpdir}, const char *@var{fileext})
 Return a pathname for a temporary file with name beginning with
 @var{prefix} and ending with @var{fileext} in directory @var{tmpdir}.
-A @code{NULL} prefix or extension is replaced by @code{""}.
+A @code{NULL} prefix or extension is replaced by @code{""}.  Note that
+the return value is @code{malloc}ed and should be @code{free}d when no
+longer needed (unlike the system call @code{tmpnam}).
 @end deftypefun
 
 @c ----

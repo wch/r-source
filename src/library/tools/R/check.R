@@ -1746,7 +1746,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                     writeLines(out, paste(basename(v), ".log", sep=""))
                     cat(" failed\n")
-                } else cat(" OK\n")
+                } else {
+                    if (config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
+                        writeLines(out, paste(basename(v), ".log", sep=""))
+                    cat(" OK\n")
+                }
             }
             if (R_check_suppress_RandR_message)
                 res <- grep('^Xlib: *extension "RANDR" missing on display', res,
@@ -1765,7 +1769,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
             if (do_rebuild_vignettes &&
                 parse_description_field(desc, "BuildVignettes", TRUE)) {
-                checkingLog(Log, "re-building of vignettes")
+                checkingLog(Log, "re-building of vignette PDFs")
                 ## copy the whole pkg directory to check directory
                 ## so we can work in place, and allow ../../foo references.
                 dir.create(vd2 <- "vign_test")
@@ -1804,7 +1808,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                       "  ...", out, "", ""), collapse = "\n"))
                 } else {
                     ## clean up
-                    unlink(vd2, recursive = TRUE)
+                    if (config_val_to_logical(Sys.getenv("_R_CHECK_CLEAN_VIGN_TEST_", "true")))
+                        unlink(vd2, recursive = TRUE)
                     resultLog(Log, "OK")
                 }
             } else {
