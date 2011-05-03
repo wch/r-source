@@ -180,21 +180,21 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     ## An incomplete last line is not a real problem.
     text <- readLines(f[1L], warn = FALSE)
 
-    ## now sort out an encoding, if needed.
-    enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
-    if (enc == "non-ASCII") {
-        enc <- if (nzchar(encoding)) {
-            encoding
-        } else {
-            warning(sQuote(basename(file)),
-                    " is not valid in the current locale: assuming Latin-1",
-                    domain = NA, call. = FALSE)
-            "latin1"
+    if (encoding != "bytes")  {
+        ## now sort out an encoding, if needed.
+        enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
+        if (enc == "non-ASCII") {
+            enc <- if (nzchar(encoding)) {
+                encoding
+            } else {
+                warning(sQuote(basename(file)),
+                        " has unknown encoding: assuming Latin-1",
+                        domain = NA, call. = FALSE)
+                "latin1"
+            }
         }
-    }
-    if (nzchar(enc)) {
-        text <- iconv(text, enc, "")
-    } else enc <- "ASCII"
+        if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
+    } else enc <- "bytes"
 
     pos <- grep(syntax$syntaxname, text)
 
