@@ -101,8 +101,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     be able to be followed, but \code{"none"} should ensure that no
     antialiasing is used.  For a screen device the default depends on
     the machine settings: it will be \code{"cleartype"} if that has been
-    enabled.  Note that \code{"antialias"} may not give any
-    anti-aliasing even though \code{"cleartype"} can.}
+    enabled.  Note that \code{"antialiased"} may not give any
+    anti-aliasing even though \code{"cleartype"} does.}
 }
 
 \details{
