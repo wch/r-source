@@ -67,8 +67,8 @@ Stangle(file, driver = Rtangle(),
   Non-ASCII source files should contain a line of the form
 \preformatted{\usepackage[foo]{inputenc}}
   but if none is supplied the value of the \code{encoding} argument is
-  used (and if that is empty, the encoding of the current locale, or if
-  that is invalid, Latin-1).
+  used (and if that is empty, Latin-1).  Re-encoding can be turned off
+  completely with \code{encoding = "bytes"}.
 }
 
 \section{Syntax Definition}{
