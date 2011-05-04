@@ -7,6 +7,7 @@
 
 @c @documentencoding ISO-8859-1
 
+@c Put the functions in the variable index
 @syncodeindex fn vr
 
 @dircategory Programming
@@ -739,6 +740,7 @@ line for each demo, giving its name and a description separated by white
 space. (Note that it is not possible to generate this index file
 automatically.)
 
+@cindex .Rinstignore file
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
@@ -1830,6 +1832,7 @@ files are tested and converted to LF line-endings if necessary.
 Run-time checks whether the package works correctly should be performed
 using @command{R CMD check} prior to invoking the final build procedure.
 
+@cindex .Rbuildignore file
 To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
@@ -2049,12 +2052,13 @@ figures, which will not render well in PDF viewers.  Sometimes it is
 much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
+@cindex .install_extras file
 When @command{R CMD build} build the vignette PDFs, it copies these and
 the vignette sources from directory @file{vignettes} to
 @file{inst/doc}.  To install any other files from the @file{vignettes}
 directory, include a file @file{vignettes/.install_extras} which
-specifies these as Perl-style regular expressions on one or more lines.
-(If directories are specified these will be copied recursively.)
+specifies these as Perl-like regular expressions on one or more lines.
+(See the description of the @file{.Rinstignore} file for full details.)
 
 
 @node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
