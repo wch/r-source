@@ -105,7 +105,7 @@ static SEXP tabExpand(SEXP strings)
     PROTECT(result = allocVector(STRSXP, length(strings)));
     for (i = 0; i < length(strings); i++) {
     	input = CHAR(STRING_ELT(strings, i));
-    	for (b = buffer; input && b-buffer < 192; input++) {
+    	for (b = buffer; *input && (b-buffer < 192); input++) {
     	    if (*input == '\t') do {
     	    	*b++ = ' ';
     	    } while (((b-buffer) & 7) != 0);
