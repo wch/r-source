@@ -2049,6 +2049,14 @@ figures, which will not render well in PDF viewers.  Sometimes it is
 much better to generate fairly high resolution bitmap (PNG, JPEG)
 figures and include those in the PDF document.
 
+When @command{R CMD build} build the vignette PDFs, it copies these and
+the vignette sources from directory @file{vignettes} to
+@file{inst/doc}.  To install any other files from the @file{vignettes}
+directory, include a file @file{vignettes/.install_extras} which
+specifies these as Perl-style regular expressions on one or more lines.
+(If directories are specified these will be copied recursively.)
+
+
 @node Encodings and vignettes,  , Writing package vignettes, Writing package vignettes
 @subsection Encodings and vignettes
 

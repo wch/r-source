@@ -320,6 +320,20 @@ get_exclude_patterns <- function()
                     pdfs <- sub("\\.[RrSs](nw|tex)$", ".pdf", vigns$docs)
                     file.copy(c(vigns$docs, pdfs), doc_dir)
                     unlink(pdfs)
+                    extras_file <- file.path("vignettes", ".install_extras")
+                    if (file.exists(extras_file)) {
+                        extras <- readLines(extras_file, warn = FALSE)
+                        if(length(extras)) {
+                            allfiles <- dir("vignettes", all.files = TRUE,
+                                            full.names = TRUE, recursive = TRUE,
+                                            include.dirs = TRUE)
+                            inst <- rep(FALSE, length(allfiles))
+                            for (e in extras)
+                                inst <- inst | grepl(e, allfiles, perl = TRUE,
+                                                     ignore.case = WINDOWS)
+                            file.copy(allfiles[inst], doc_dir, recursive = TRUE)
+                        }
+                    }
                 }
             }
         }
