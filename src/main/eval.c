@@ -3484,6 +3484,15 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	}
 }
 
+#define GET_VEC_LOOP_VALUE(var, pos) do {		\
+    (var) = GETSTACK(pos);				\
+    if (NAMED(var) == 2) {				\
+	(var) = allocVector(TYPEOF(seq), 1);		\
+	SETSTACK(pos, var);				\
+	SET_NAMED(var, 1);				\
+    }							\
+} while (0)
+
 static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
 {
     if (rho == R_BaseEnv || rho == R_BaseNamespace)
@@ -3621,7 +3630,19 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	/* bump up NAMED count of seq to avoid modification by loop code */
 	if (NAMED(seq) < 2) SET_NAMED(seq, NAMED(seq) + 1);
 
-	BCNPUSH(R_NilValue);
+	/* place initial loop variable value object on stack */
+	switch(TYPEOF(seq)) {
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case RAWSXP:
+	    value = allocVector(TYPEOF(seq), 1);
+	    BCNPUSH(value);
+	    break;
+	default: BCNPUSH(R_NilValue);
+	}
 
 	BC_CHECK_SIGINT();
 	pc = codebase + label;
@@ -3637,30 +3658,28 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  SEXP cell = GETSTACK(-3);
 	  switch (TYPEOF(seq)) {
 	  case LGLSXP:
+	    GET_VEC_LOOP_VALUE(value, -1);
+	    LOGICAL(value)[0] = LOGICAL(seq)[i];
+	    break;
 	  case INTSXP:
-	    value = allocVector(TYPEOF(seq), 1);
+	    GET_VEC_LOOP_VALUE(value, -1);
 	    INTEGER(value)[0] = INTEGER(seq)[i];
-	    SET_NAMED(value, 1);
 	    break;
 	  case REALSXP:
-	    value = allocVector(TYPEOF(seq), 1);
+	    GET_VEC_LOOP_VALUE(value, -1);
 	    REAL(value)[0] = REAL(seq)[i];
-	    SET_NAMED(value, 1);
 	    break;
 	  case CPLXSXP:
-	    value = allocVector(TYPEOF(seq), 1);
+	    GET_VEC_LOOP_VALUE(value, -1);
 	    COMPLEX(value)[0] = COMPLEX(seq)[i];
-	    SET_NAMED(value, 1);
 	    break;
 	  case STRSXP:
-	    value = allocVector(TYPEOF(seq), 1);
+	    GET_VEC_LOOP_VALUE(value, -1);
 	    SET_STRING_ELT(value, 0, STRING_ELT(seq, i));
-	    SET_NAMED(value, 1);
 	    break;
 	  case RAWSXP:
-	    value = allocVector(TYPEOF(seq), 1);
+	    GET_VEC_LOOP_VALUE(value, -1);
 	    RAW(value)[0] = RAW(seq)[i];
-	    SET_NAMED(value, 1);
 	    break;
 	  case EXPRSXP:
 	  case VECSXP:
