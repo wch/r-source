@@ -40,7 +40,7 @@ RweaveLatexSetup <-
     if (!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks with options ...\n", sep = "")
     encoding <- attr(file, "encoding")
-    if (encoding == "ASCII") encoding <- ""
+    if (encoding %in% c("ASCII", "bytes")) encoding <- ""
     output <- file(output, open = "w", encoding = encoding)
 
     if (missing(stylepath)) {
