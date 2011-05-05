@@ -72,6 +72,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!missing(type))
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
+    if(!missing(fonts)) new$fonts <- fonts
 
     antialiases <- get("antialiases", envir = .X11env)
     if(!missing(antialias))
