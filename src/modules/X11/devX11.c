@@ -19,7 +19,7 @@
  */
 
 /* The version for R 2.1.0 is partly based on patches by
-   Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese.
+   Ei-ji Nakama for use in Japanese.
 
    <MBCS> all the strings manipulated here like display and fonts specs
    are probably ASCII, or at least start with ASCII in the part searched.
@@ -236,7 +236,7 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 # endif
 
 extern double R_getClockIncrement(void);
-static clock_t last = 0;
+static clock_t last = 0, last_activity = 0;
 static struct tms timeinfo;
 static double incr;
 
@@ -256,6 +256,8 @@ static void CairoHandler(void)
 {
     static int  buffer_lock = 0; /* reentrancy guard */
     if (!buffer_lock && xdl) {
+	/* We could do the timing tests on a per-device basis */
+	if (last > last_activity) return;
 	clock_t current = times(&timeinfo);
 	if((current-last)*incr < 0.25) return;
 	buffer_lock = 1;
@@ -1979,9 +1981,8 @@ static void X11_Close(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->type == WINDOW) {
-	int bf = xd->buffered;
 #ifdef USE_TIMERS
-	if(bf > 1) {
+	if(xd->buffered > 1) {
 	    removeBuffering(xd);
 	    xd->buffered = 0; /* for safety */
 	}
@@ -2529,7 +2530,12 @@ static void X11_Mode(int mode, pDevDesc dd)
     if(mode == 0) {
 #ifdef HAVE_WORKING_CAIRO
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-	if(xd->buffered > 1) return;
+	if(xd->buffered > 1) {
+#ifdef USE_TIMERS
+	    last_activity = times(&timeinfo);
+#endif
+	    return;
+	}
 	if(xd->buffered) cairo_paint(xd->xcc);
 #endif
 	XSync(display, 0);
