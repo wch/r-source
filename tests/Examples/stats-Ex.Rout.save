@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-17 r55484)
+R version 2.14.0 Under development (unstable) (2011-05-05 r55778)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1307,10 +1307,10 @@ Residual standard error: 2.351 on 8 degrees of freedom
 > ### ** Examples
 > 
 > DNase.1 <- subset(DNase, Run == 1)
-> SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)   # response only
- [1] 0.002252677 0.002252677 0.016271550 0.016271550 0.043533453 0.043533453
- [7] 0.115296351 0.115296351 0.297460928 0.297460928 0.720167577 0.720167577
-[13] 1.525513075 1.525513075 2.609666856 2.609666856
+> SSgompertz(log(DNase.1$conc), 4.5, 2.3, 0.7)   # response only
+ [1] 0.00525729 0.00525729 0.07323255 0.07323255 0.18049064 0.18049064
+ [7] 0.36508763 0.36508763 0.63288772 0.63288772 0.97257180 0.97257180
+[13] 1.36033340 1.36033340 1.76786902 1.76786902
 > Asym <- 4.5; b2 <- 2.3; b3 <- 0.7
 > SSgompertz(log(DNase.1$conc), Asym, b2, b3) # response and gradient
  [1] 0.00525729 0.00525729 0.07323255 0.07323255 0.18049064 0.18049064
@@ -17418,7 +17418,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.321 0.327 15.965 0 0 
+Time elapsed:  12.79 0.25 13.114 0 0 
 > grDevices::dev.off()
 null device 
           1 
