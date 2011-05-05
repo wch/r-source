@@ -245,6 +245,11 @@
       \item The non-screen cairo-based devices are no longer in the X11
       module and so can in principle be installed without X11.  (Not
       that we have ever seen a Unix-alike system with cairo but not X11.)
+
+      \item Configure will try to use \code{-fobjc-exceptions} for the
+      Objective-C compiler (if present) to ensure that even compilers
+      that do not enable exceptions by default (such as vanilla gcc) can
+      be used.
     }
   }
 

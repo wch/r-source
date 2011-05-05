@@ -847,6 +847,14 @@ AC_LANG_POP(C++)
 
 R_PROG_OBJC_MAKEFRAG
 R_PROG_OBJC_RUNTIME
+## FSF builds of gcc (and maybe others?) need -fobjc-exceptions otherwise
+## @try and friends don't work
+R_PROG_OBJC_FLAG([-fobjc-exceptions],
+		 R_SH_VAR_ADD(OBJCFLAGS, [-fobjc-exceptions]))
+## FIXME: checks for Foundation are not darwin-specifc at all. In fact the whole
+##        point of R_OBJC_FOUNDATION is to detect foundation classes on other
+##        platforms (on Darwin we already *know* that is it -framework Foundation
+##        but not so on Linux!), so the following was not intended to be conditonal.
 case "${host_os}" in
   darwin*)
     R_OBJC_FOUNDATION
@@ -2059,6 +2067,10 @@ case "${host_os}" in
     ## check for CoreFoundation framework (chances are much higher
     ## that we can build AQUA if this one is present)
     R_CHECK_FRAMEWORK(CFStringGetSystemEncoding, CoreFoundation)
+    ## FIXME: we should verify that we can use Obj-C exceptions
+    ##        such as @try and friends. The OBJC compiler tests
+    ##	      above add -fobjc-exceptions where possible, but
+    ##	      they don't check that the exceptions are available.
     R_AQUA
   ;;
   *)
