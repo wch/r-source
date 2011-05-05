@@ -209,10 +209,7 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
-    if(xd->xcc) {
-	cairo_new_path(xd->xcc);
-	cairo_paint(xd->xcc);
-    }
+    if(xd->buffered) cairo_paint(xd->xcc);
     /* Apparently needed */
     XSync(display, 0);
 }
@@ -604,8 +601,7 @@ static void handleEvent(XEvent event)
     else if (event.type == ConfigureNotify) {
 	while(XCheckTypedEvent(display, ConfigureNotify, &event))
 	    ;
-	XFindContext(display, event.xconfigure.window,
-		     devPtrContext, &temp);
+	XFindContext(display, event.xconfigure.window, devPtrContext, &temp);
 	dd = (pDevDesc) temp;
 	xd = (pX11Desc) dd->deviceSpecific;
 	if (xd->windowWidth != event.xconfigure.width ||
@@ -615,16 +611,18 @@ static void handleEvent(XEvent event)
 	    do_update = 2;
 #if defined HAVE_WORKING_CAIRO
 	    if(xd->useCairo) {
-		if(xd->xcc) {
+		if(xd->buffered) {
 		    cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
 						xd->windowHeight);
 		    cairo_surface_destroy(xd->cs);
 		    cairo_destroy(xd->cc);
-		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-							(double)xd->windowWidth,
-							(double)xd->windowHeight);
+		    xd->cs = 
+			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						   (double)xd->windowWidth,
+						   (double)xd->windowHeight);
 		    xd->cc = cairo_create(xd->cs);
 		    cairo_set_antialias(xd->cc, xd->antialias);
+		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		} else {
 		    cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
 						xd->windowHeight);
@@ -633,8 +631,7 @@ static void handleEvent(XEvent event)
 	    }
 #endif
 	}
-	dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top),
-		     dd);
+	dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
 
 	if (do_update) /* Gobble Expose events; we'll redraw anyway */
 	    while(XCheckTypedEvent(display, Expose, &event))
@@ -665,10 +662,8 @@ static void handleEvent(XEvent event)
 	    /* avoid replaying a display list until something has been drawn */
 	    if(gdd->dirty) {
 #ifdef HAVE_WORKING_CAIRO
-		if(xd->useCairo && xd->xcc && do_update == 1) {
-		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-		    cairo_paint(xd->xcc);
-		} else
+		if(xd->buffered && do_update == 1) cairo_paint(xd->xcc);
+		else
 #endif
 		    GEplayDisplayList(gdd);
 		XSync(display, 0);
@@ -1463,6 +1458,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
 						    (double)xd->windowWidth,
 						    (double)xd->windowHeight);
+		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		} else
 		    xd->cs = 
 			cairo_xlib_surface_create(display, xd->window,
@@ -1486,6 +1482,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
 		cairo_set_antialias(xd->cc, xd->antialias);
 	    }
+	    CairoColor(xd->canvas, xd);
+	    cairo_new_path(xd->cc);
+	    cairo_paint(xd->cc);
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -2403,10 +2402,7 @@ static void X11_Mode(int mode, pDevDesc dd)
     if(mode == 0) {
 #ifdef HAVE_WORKING_CAIRO
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-	if(xd->useCairo && xd->xcc) {
-	    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-	    cairo_paint(xd->xcc);
-	}
+	if(xd->buffered) cairo_paint(xd->xcc);
 #endif
 	XSync(display, 0);
     }
