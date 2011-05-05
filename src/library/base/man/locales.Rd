@@ -125,7 +125,8 @@ Sys.getlocale()
 Sys.getlocale("LC_TIME")
 \dontrun{
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
-Sys.setlocale("LC_TIME", "de_DE.utf8")  # Modern Linux etc.
+Sys.setlocale("LC_TIME", "de_DE.utf8")   # Modern Linux etc.
+Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # ditto
 Sys.setlocale("LC_TIME", "de_DE")  # Mac OS X
 Sys.setlocale("LC_TIME", "German") # Windows
 }

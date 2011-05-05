@@ -21,6 +21,10 @@ Sys.localeconv()
   components will only be useful if you have set the locale category
   \code{LC_NUMERIC} using \code{Sys.setlocale} in the current \R session
   (when \R may not work correctly).
+
+  The monetary components will only be set to non-default values (see
+  the \sQuote{Examples} section if the \code{LC_MONETARY} category is
+  set.  It often is not set: set the examples for how to trigger setting it.
 }
 \value{
   A character vector with 18 named components.  See your ISO C
@@ -48,7 +52,12 @@ Sys.localeconv()
 
 ## Now try your default locale (which might be "C").
 \dontrun{old <- Sys.getlocale()
-Sys.setlocale(locale = "")
+## The category may not be set:
+## the following may do so, but it might not be supported. 
+Sys.setlocale("LC_MONETARY", locale = "")
+Sys.localeconv()
+## or set an appropriate value yourself, e.g.
+Sys.setlocale("LC_MONETARY", "de_AT")
 Sys.localeconv()
 Sys.setlocale(locale = old)}
 

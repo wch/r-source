@@ -246,10 +246,10 @@
       \item \code{fisher.test()} had a buglet: If arguments were
       factors with unused levels, levels were dropped and you'd get an
       error saying that there should be at least two levels,
-      inconsistently with pre-tabulated data (Reported by Michael Fay).
+      inconsistently with pre-tabulated data.  (Reported by Michael Fay).
       
-      \item The locale category \samp{LC_MONETARY} was only been set on
-      Windows: it is now set on Unix-alikes where supported.
+      \item The locale category \samp{LC_MONETARY} was only being set on
+      startup on Windows: that is now done on Unix-alikes where supported.
     }
   }
 }
