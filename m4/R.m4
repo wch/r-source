@@ -429,33 +429,6 @@ else
 fi
 ])# R_PROG_CC_FLAG
 
-## R_PROG_CC_FLAG(FLAG, [ACTION-IF-TRUE])
-## ---------------------------------------
-## Check whether the C compiler handles command line option FLAG,
-## and set shell variable r_cv_prog_cc_flag_SFLAG accordingly (where
-## SFLAG is a shell-safe transliteration of FLAG).
-## In addition, execute ACTION-IF-TRUE in case of success.
-AC_DEFUN([R_PROG_CC_FLAG],
-[ac_safe=AS_TR_SH($1)
-AC_MSG_CHECKING([whether ${CC} accepts $1])
-AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
-[AC_LANG_PUSH(C)
-r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} $1"
-AC_LINK_IFELSE([AC_LANG_PROGRAM()],
-               [eval "r_cv_prog_cc_flag_${ac_safe}=yes"],
-               [eval "r_cv_prog_cc_flag_${ac_safe}=no"])
-CFLAGS="${r_save_CFLAGS}"
-AC_LANG_POP(C)
-])
-if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
-  AC_MSG_RESULT([yes])
-  [$2]
-else
-  AC_MSG_RESULT([no])
-fi
-])# R_PROG_CC_FLAG
-
 ## R_PROG_CC_FLAG_D__NO_MATH_INLINES
 ## ---------------------------
 ## In glibc 2.1, inline version [x86] of exp was broken (exp(-Inf) = NaN).
