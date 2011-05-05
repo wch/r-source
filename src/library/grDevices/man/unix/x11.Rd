@@ -265,6 +265,7 @@ X11.options(\dots, reset = FALSE)
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colours in the palette.
 }
+
 \section{Anti-aliasing}{
   Anti-aliasing is only supported for cairographics-based devices, and
   applies to graphics and to fonts.  It is generally preferable for
@@ -274,6 +275,7 @@ X11.options(\dots, reset = FALSE)
   \code{antialias = "default"} is in principle platform-dependent, but
   seems most often equivalent to \code{antialias = "gray"}.
 }
+
 \section{Conventions}{
   This section describes the implementation of the conventions for
   graphics devices set out in the \dQuote{R Internals Manual}.
@@ -290,6 +292,19 @@ X11.options(\dots, reset = FALSE)
     \emph{assumed} to conform to sRGB.
   }
 }
+
+\section{Experimental Types}{
+  There are two experimental types available if the X11 module is
+  compiled to include them.  Both types \code{"cairob2"} and
+  \code{"cairob3"} are fully double-buffered and update the screen every
+  250ms.  They differ in how they do the update: the first uses
+  cairographics facilities in the same way as \code{"cairo"} whereas the
+  second used \code{Xlib} facilities.  The latter will be faster, but
+  may only work on 24- or 32-bit displays.
+  
+  A re-named version of one of there may or may not be released.
+}
+
 \seealso{
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }

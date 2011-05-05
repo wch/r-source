@@ -147,6 +147,10 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
+
+# ifdef USE_TIMERS
+    XImage *im;
+# endif
 #endif
 
     double fontscale;

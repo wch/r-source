@@ -71,7 +71,8 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!missing(type))
-        new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
+        new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo",
+                                      "cairob2", "cairob3"))
     if(!missing(family)) new$family <- family
     if(!missing(fonts)) new$fonts <- fonts
     if(!missing(antialias) && type != "Xlib")
@@ -85,7 +86,8 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     }
     type <-
 	if(capabilities("cairo"))
-            switch(d$type, "cairo" = 1L, "nbcairo" = 2L, 0L)
+            switch(d$type, "cairo" = 1L, "nbcairo" = 2L,
+                   "cairob2" = 3L, "cairob3" = 4L, 0L)
 	else 0L
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0L
