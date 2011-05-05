@@ -29,8 +29,6 @@
 # include <config.h>
 #endif
 
-/* #undef HAVE_PANGOCAIRO */
-
 #include <Defn.h>
 
 #ifdef HAVE_RINT
@@ -202,16 +200,6 @@ static double BlueGamma	 = 1.0;
 #ifdef HAVE_WORKING_CAIRO
 # include "cairoFns.c"
 
-static void Cairo_update(pX11Desc xd)
-{
-    /* We could first paint the canvas colour and
-       then the backing surface. */
-    if(xd->xcc) {
-	cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-	cairo_paint(xd->xcc);
-    }
-}
-
 static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -221,7 +209,10 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
-    Cairo_update(xd);
+    if(xd->xcc) {
+	cairo_new_path(xd->xcc);
+	cairo_paint(xd->xcc);
+    }
     /* Apparently needed */
     XSync(display, 0);
 }
@@ -1448,20 +1439,23 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    if(xd->useCairo) {
 		cairo_status_t res;
 		if(xd->buffered) {
-		    xd->xcs = cairo_xlib_surface_create(display, xd->window,
-							visual,
-							(double)xd->windowWidth,
-							(double)xd->windowHeight);
+		    xd->xcs = 
+			cairo_xlib_surface_create(display, xd->window,
+						  visual,
+						  (double)xd->windowWidth,
+						  (double)xd->windowHeight);
 		    res = cairo_surface_status(xd->xcs);
 		    if (res != CAIRO_STATUS_SUCCESS) {
-			warning("cairo error '%s'", cairo_status_to_string(res));
+			warning("cairo error '%s'", 
+				cairo_status_to_string(res));
 			/* bail out */
 			return FALSE;
 		    }
 		    xd->xcc = cairo_create(xd->xcs);
 		    res = cairo_status(xd->xcc);
 		    if (res != CAIRO_STATUS_SUCCESS) {
-			warning("cairo error '%s'", cairo_status_to_string(res));
+			warning("cairo error '%s'", 
+				cairo_status_to_string(res));
 			/* bail out */
 			return FALSE;
 		    }
@@ -1470,13 +1464,15 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 						    (double)xd->windowWidth,
 						    (double)xd->windowHeight);
 		} else
-		    xd->cs = cairo_xlib_surface_create(display, xd->window,
-						       visual,
-						       (double)xd->windowWidth,
-						       (double)xd->windowHeight);
+		    xd->cs = 
+			cairo_xlib_surface_create(display, xd->window,
+						  visual,
+						  (double)xd->windowWidth,
+						  (double)xd->windowHeight);
 		res = cairo_surface_status(xd->cs);
 		    if (res != CAIRO_STATUS_SUCCESS) {
-			warning("cairo error '%s'", cairo_status_to_string(res));
+			warning("cairo error '%s'", 
+				cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
@@ -2407,7 +2403,10 @@ static void X11_Mode(int mode, pDevDesc dd)
     if(mode == 0) {
 #ifdef HAVE_WORKING_CAIRO
 	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-	if(xd->useCairo) Cairo_update(xd);
+	if(xd->useCairo && xd->xcc) {
+	    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+	    cairo_paint(xd->xcc);
+	}
 #endif
 	XSync(display, 0);
     }
@@ -2879,7 +2878,7 @@ static SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     useCairo = asInteger(CAR(args));
     if (useCairo == NA_INTEGER)
-	errorcall(call, _("invalid '%s' value"), "useCairo");
+	errorcall(call, _("invalid '%s' value"), "type");
     args = CDR(args);
     antialias = asInteger(CAR(args));
     if (antialias == NA_INTEGER)

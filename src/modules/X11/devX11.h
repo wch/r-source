@@ -63,15 +63,6 @@ typedef enum {
 #  include <cairo.h>
 # endif
 #  include <cairo-xlib.h>
-# ifdef HAVE_CAIRO_SVG
-#  include <cairo-svg.h>
-# endif
-# ifdef HAVE_CAIRO_PDF
-#  include <cairo-pdf.h>
-# endif
-# ifdef HAVE_CAIRO_PS
-#  include <cairo-ps.h>
-# endif
 #endif
 
 
@@ -132,7 +123,7 @@ typedef struct {
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
-    int npages;				/* counter for a pixmap */
+    int npages;				/* counter for a bitmap device */
     FILE *fp;				/* file for a bitmap device */
     char filename[PATH_MAX];		/* filename for a bitmap device */
     int quality;			/* JPEG quality/TIFF compression */
@@ -141,12 +132,17 @@ typedef struct {
 					   be handled externally from R (TRUE),
 					   or whether R is to handle the events
 					   (FALSE) */
-    int res_dpi;			/* used for png/jpeg */
+    int res_dpi;			/* used for png/jpeg/tiff */
     Rboolean warn_trans;		/* have we warned about translucent cols? */
     char title[101];
     Rboolean onefile;
 
 #ifdef HAVE_WORKING_CAIRO
+    /* In the buffered case, xcc and xcs are the xlib context and surface
+       whereas cc, cs are an RGB24 image surface.
+       In the non-buffered case, xcc and xcs are NULL and cc, cs are the
+       cairo context and surface used directly.
+    */
     Rboolean useCairo, buffered;
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
