@@ -120,6 +120,10 @@
 
       \item There are experimental new types for \code{X11()}, enabled
       if \file{src/modules/X11/devX11.c} is compiled with \samp{-DUSE_TIMERS}
+
+      \item The special reference class fields \code{.self} and
+      \code{.refClassDef} are now read-only to prevent corrupting
+      the object. 
     }
   }
 

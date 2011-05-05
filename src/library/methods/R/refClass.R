@@ -160,21 +160,24 @@ envRefSetField <- function(object, field,
             assign(field, fp, envir = selfEnv)
     }
     ## assign references to the object and to its class definition
-    assign(".self", .Object, envir = selfEnv)
-    assign(".refClassDef", classDef, envir = selfEnv)
+    selfEnv$.self <- .Object
+    selfEnv$.refClassDef <- classDef
     if(is.function(classDef@refMethods$finalize))
         reg.finalizer(selfEnv, function(x) x$.self$finalize())
-    if(is.function(classDef@refMethods$initialize))
+    if(is.function(classDef@refMethods$initialize)) {
         .Object$initialize(...)
+        ## intialize methods are allowed to change .self
+        .Object <- selfEnv$.self
+    }
     else {
         if(nargs() > 1) {
             .Object <-
                 methods::initFieldArgs(.Object, classDef, selfEnv, ...)
-            ## reassign in case something changed
-            assign(".self", .Object, envir = selfEnv)
         }
-        .Object
     }
+    lockBinding(".self", selfEnv)
+    lockBinding(".refClassDef", selfEnv)
+    .Object
 }
 
 initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
@@ -191,10 +194,13 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...) {
         for(field in elNames[whichFields])
             envRefSetField(.Object, field, classDef, selfEnv, elements[[field]])
         other <- c(supers, elements[!whichFields])
-        if(length(other))
+        if(length(other)) {
             ## invoke the default method for superclasses & slots
             .Object <- do.call(methods:::.initialize,
                              c(list(.Object), other))
+            ## reassign in case some slot changed
+            assign(".self", .Object, envir = selfEnv)
+        }
     }
     .Object
 }
@@ -1003,8 +1009,6 @@ all.equal.environment <- function(target, current, ...) {
 .checkFieldsInMethod <- function(methodDef, fieldNames, methodNames) {
     if(!.hasCodeTools())
         return(NA)
-    if(length(fieldNames) == 0)
-        return(TRUE)
     paste0 <- function(x) paste('"', x, '"', sep = "", collapse = "; ")
     if(is(methodDef, "refMethodDef")) {
         methodName <- paste0(methodDef@name)
@@ -1021,7 +1025,9 @@ all.equal.environment <- function(target, current, ...) {
                 paste(unlist(assigned$locals)[localsAreFields], collapse="; "), methodName, className),
                 domain = NA)
     globals <- names(assigned$globals)
-    globalsNotFields <- is.na(match(globals, fieldNames))
+    ## check non-fields, but allow to .self (will be an
+    ## error except in $initialize())
+    globalsNotFields <- is.na(match(globals, c(fieldNames, ".self")))
     if(any(globalsNotFields))
         warning(gettextf("Non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)",
                 paste(unlist(assigned$globals)[globalsNotFields], collapse="; "), methodName, className),

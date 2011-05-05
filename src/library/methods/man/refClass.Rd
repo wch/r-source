@@ -212,6 +212,15 @@ name \code{.self}, as shown in the \code{save=} method of the
 example.
 The special object \code{.refClassDef} contains the definition of the
 class of the object.
+These fields are read-only (it makes no sense to modify these
+references), with one exception.
+The \code{.self} field can be modified in the \code{$initialize} %$
+method, because the object is still being created at this stage.
+(Assignments to this field, as to all fields, need to use the
+non-local assignment operator.)
+This is the preferred way to assign S4-style attributes to the object,
+if you need to do so; but remember that these attributes will not
+behave according to reference semantics, unlike fields.
 
 The methods available include methods inherited from superclasses, as
 discussed in the next section.
@@ -383,7 +392,7 @@ this method will be called once the reference object has been
 created.  You should write such a method for a class that needs to do
 some special initialization.
 In particular, a reference method is recommended rather than a method
-for the S4 generic function, because some special initialization is
+for the S4 generic function \code{initialize()}, because some special initialization is
 required for reference objects \emph{before} the initialization of
 fields.
 As with S4 classes, methods are written for \code{$initialize()} %$
