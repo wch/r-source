@@ -177,7 +177,7 @@ X11.options(\dots, reset = FALSE)
   \code{fontconfig}) or \code{fontconfig} (on Mac OS X and perhaps
   elsewhere).  The results depend on the fonts installed on the system
   running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
-  normally allow some tracing of the selection process.
+  normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation

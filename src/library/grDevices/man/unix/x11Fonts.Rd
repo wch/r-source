@@ -46,7 +46,7 @@ X11Fonts(...)
   font and \code{"mono"} for a monospaced font.  As from \R 2.14.0,
   further mappings are provided for \code{"Helvetica"} (the device
   default), \code{"Times"}, \code{"CyrHelvetica"}, \code{"CyrTimes"}
-  (versions of these fonts with Cyrillic support, at least on Linux)
+  (versions of these fonts with Cyrillic support, at least on Linux),
   \code{"Arial"} (on some platforms including Mac OS X and Solaris) and
   \code{"Mincho"} (a CJK font).
 }
