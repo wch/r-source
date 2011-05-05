@@ -72,19 +72,28 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   are:
   \describe{
     \item{\code{eval.max}}{Maximum number of evaluations of the objective
-      function allowed.  Defaults to 200.}
+      function allowed.  Defaults to 200.}% MXFCAL
     \item{\code{iter.max}}{Maximum number of iterations allowed.
-      Defaults to 150.}
+      Defaults to 150.}% MXITER
     \item{\code{trace}}{The value of the objective function and the parameters
       is printed every trace'th iteration.  Defaults to 0 which
       indicates no trace information is to be printed.}
     \item{\code{abs.tol}}{Absolute tolerance.  As from \R{} 2.12.0, defaults
       to 0 so the absolute convergence test is not used.  If the objective
-      function is known to be non-negative, the previous default of 
-      \code{1e-20} would be more appropriate.}
-    \item{\code{rel.tol}}{Relative tolerance.  Defaults to \code{1e-10}.}
-    \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}
-    \item{\code{step.min}}{Minimum step size.  Defaults to \code{2.2e-14}.}
+      function is known to be non-negative, the previous default of
+      \code{1e-20} would be more appropriate.}% AFCTOL  31
+    \item{\code{rel.tol}}{Relative tolerance.  Defaults to
+      \code{1e-10}.}% RFCTOL  32
+    \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}% XCTOL  33
+    \item{\code{xf.tol}}{false convergence tolerance.  Defaults to
+      \code{2.2e-14}.}% XFTOL  34
+    \item{\code{step.min, step.max}}{Minimum and maximum step size.  Both
+      default to \code{1.}.}% LMAX0 35  /  LMAXS 36
+    \item{sing.tol}{singular convergence tolerance; defaults to
+      \code{rel.tol}.}% SCTOL  37
+    \item{scale.init}{...}% DINIT  38
+    \item{diff.g}{an estimated bound on the relative error in the
+      objective function value.}% ETA0  42
   }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }
