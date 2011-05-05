@@ -241,7 +241,6 @@ void R_getProcTime(double *data)
     data[2] = fround(data[2], 3);
 }
 
-attribute_hidden
 double R_getClockIncrement(void)
 {
     return 1.0 / clk_tck;
