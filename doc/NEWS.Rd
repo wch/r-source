@@ -101,19 +101,22 @@
       \item Devices \code{svg()}, \code{cairo_pdf()} and
       \code{cairo_ps()} gain a \code{family} argument.
 
-      On a Unix-alike \code{X11()} gains a \code{family} argument (which
-      applies only to the cairo-based versions).  This is now one of the
-      \code{x11.options()} and so can be passed as an argument to the
-      \code{bmp()}, \code{jpeg()}, \code{png()} and \code{tiff()}
-      devices, where it applies to the cairo and Quartz types.
+      On a Unix-alike \code{X11()} gains a \code{family} argument.  This
+      is now one of the \code{x11.options()} and so can be passed as an
+      argument to the \code{bmp()}, \code{jpeg()}, \code{png()} and
+      \code{tiff()} devices, where it applies to the cairo and Quartz
+      types.
 
       Analogous changes have been made on Windows, so all \R graphics
-      devices have a \code{family} argument except \code{X11(type
-	="Xlib"} and \code{pictex()} (which has no means to change fonts).
+      devices now have a \code{family} argument except \code{pictex()}
+      (which has no means to change fonts).
 
       \item The \code{bmp()}, \code{jpeg()}, \code{png()} and \code{tiff()}
       devices now make use of the \code{antialias} argument for
       \code{type = "quartz"}.
+
+      \item There are several new built-in font mappings for
+      \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
     }
   }
 
@@ -383,6 +386,9 @@
       \item \code{c()} and other functions using \code{AnswerType} could
       silently overflow the maximum supported vector length and cause a
       crash. \PR{14571}
+
+      \item The \code{fonts} argument to \code{X11(type = "Xlib")} was
+      being ignored.
     }
   }
 }

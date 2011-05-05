@@ -57,8 +57,11 @@ X11.options(\dots, reset = FALSE)
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.  See section \sQuote{Fonts}.}
   
-  \item{family}{The default family for use with the cairo-based
-    devices.  A length-one character string.}
+  \item{family}{The default family: a length-one character string.  This
+    is primarily intended for cairo-based devices, but for \code{type =
+    "Xlib"}, the \code{\link{X11Fonts()} database is used to map family
+    names to \code{fonts} (and this argument takes precedence over that
+    one).}
   
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
@@ -117,6 +120,12 @@ X11.options(\dots, reset = FALSE)
   connection.  Both will be slower than \code{type = "Xlib"}, especially
   on a slow X11 connection as all the rendering is done on the machine
   running \R rather than in the X server.
+  
+  Because of known problems with font selection on Mac OS X without
+  Pango (for example, the CRAN distribution), \code{type = "cairo"} is
+  not the default there.  These problems have included mixing up bold
+  and italic (since worked around), selecting incorrect glyphs and ugly
+  or missing symbol glyphs.
 
   All devices which use an X11 server (including the \code{type =
     "Xlib"} versions of bitmap devices such as \code{\link{png}}) share
@@ -132,7 +141,10 @@ X11.options(\dots, reset = FALSE)
   family is specified (e.g., via \code{par(family=)} in the graphics
   package), the X11 device makes use of the X11 font database (see
   \code{X11Fonts}) to convert the R graphics font family to an
-  X11-specific font family description.
+  X11-specific font family description.  If \code{family} is supplied as
+  an argument, the X11 font database is used to convert that, but
+  otherwise the argument \code{fonts} (with default given by
+  \code{X11.options}) is used.
 
   X11 chooses fonts by matching to a pattern, and it is quite possible
   that it will choose a font in the wrong encoding or which does not
@@ -180,12 +192,6 @@ X11.options(\dots, reset = FALSE)
   \code{"FreeSans"}).  For those who prefer fonts with serifs, try
   \code{"Times New Roman"}, \code{"DejaVu Serif"} and \code{"Liberation
   Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
-  
-  Because of known problems with font selection on Mac OS X without
-  Pango, \code{type = "cairo"} is not the default there unless Pango is
-  available.  These problems include mixing up bold and italic (since
-  worked around), selecting incorrect glyphs and ugly or missing symbol
-  glyphs.
   
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of

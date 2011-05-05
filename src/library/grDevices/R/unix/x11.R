@@ -73,9 +73,16 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(type))
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo"))
     if(!missing(family)) new$family <- family
+    if(!missing(fonts)) new$fonts <- fonts
     if(!missing(antialias) && type != "Xlib")
         new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
+    if(d$type == "Xlib" && !missing(family)) {
+        fns <- X11Fonts()
+        if (! family %in% names(fns))
+            stop('unknown family for X11(type = "XLib")')
+        d$fonts[1] <- fns[[family]]
+    }
     type <-
 	if(capabilities("cairo"))
             switch(d$type, "cairo" = 1L, "nbcairo" = 2L, 0L)
@@ -96,8 +103,6 @@ x11 <- X11
 # X11 font database
 ####################
 
-# Each font family has a name, plus a vector of 4 or 5 directories
-# for font metric afm files
 assign(".X11.Fonts", list(), envir = .X11env)
 
 X11FontError <- function(errDesc)
@@ -173,11 +178,18 @@ X11Fonts <- function(...)
 X11Font <- function(font) checkX11Font(font)
 
 X11Fonts(# Default Serif font is Times
-         serif=X11Font("-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         serif = X11Font("-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Sans Serif font is Helvetica
-         sans=X11Font("-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         sans = X11Font("-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Monospace font is Courier
-         mono=X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"))
+         mono = X11Font("-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         Times = X11Font("-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         Helvetica = X11Font("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         CyrTimes = X11Font("-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         CyrHelvetica = X11Font("-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         Arial = X11Font("-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
+         Mincho = X11Font("-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*")
+         )
 
 savePlot <- function(filename = paste("Rplot", type, sep="."),
                      type = c("png", "jpeg", "tiff", "bmp"),
