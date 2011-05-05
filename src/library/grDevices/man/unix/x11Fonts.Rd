@@ -24,7 +24,7 @@ X11Fonts(...)
 }
 \details{
   These functions apply only to an \code{\link{X11}} device with
-  \code{type = "Xlib"} -- \code{X11(type = "Cairo"} uses a different
+  \code{type = "Xlib"} -- \code{X11(type = "Cairo")} uses a different
   mechanism to select fonts.
 
   Such a  device is created with a default font (see
@@ -52,6 +52,6 @@ X11Fonts(...)
 X11Fonts()
 X11Fonts("mono")
 utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
-X11Fonts(utopia=utopia)
+X11Fonts(utopia = utopia)
 }
 \keyword{device}
