@@ -295,14 +295,15 @@ X11.options(\dots, reset = FALSE)
 
 \section{Experimental Types}{
   There are two experimental types available if the X11 module is
-  compiled to include them.  Both types \code{"cairob2"} and
-  \code{"cairob3"} are fully double-buffered and update the screen every
-  250ms.  They differ in how they do the update: the first uses
-  cairographics facilities in the same way as \code{"cairo"} whereas the
-  second used \code{Xlib} facilities.  The latter will be faster, but
-  may only work on 24- or 32-bit displays.
+  compiled to include them.  Types \code{"cairob2"} and \code{"cairob3"}
+  are both fully double-buffered and update the screen about every
+  100ms.  They differ in how they do the update: the first uses
+  cairographics facilities in the same way as \code{type = "cairo"}
+  whereas the second uses \code{Xlib} facilities.  The latter should be
+  faster, but may only work on 24- or 32-bit displays (but then these
+  are the only ones fully supported by cairographics).
   
-  A re-named version of one of there may or may not be released.
+  A re-named version of one of these may or may not be released.
 }
 
 \seealso{

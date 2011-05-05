@@ -29,8 +29,6 @@
 # include <config.h>
 #endif
 
-/* #define USE_TIMERS 1 */
-
 #include <Defn.h>
 
 #ifdef HAVE_RINT
@@ -204,7 +202,7 @@ static double BlueGamma	 = 1.0;
 
 static void Cairo_update(pX11Desc xd)
 {
-    if(!xd || !xd->buffered) return;
+    if(inclose || !xd || !xd->buffered) return;
 #ifdef USE_TIMERS
     if(xd->buffered == 3)
 	XPutImage(display, xd->window, xd->wgc, 
@@ -250,7 +248,9 @@ struct xd_list {
 };
 
 typedef struct xd_list *Xdl;
-static Xdl xdl = NULL;
+static struct xd_list xdl0;
+static Xdl xdl = &xdl0;
+static double update_interval = 0.10;
 
 static void CairoHandler(void)
 {
@@ -259,7 +259,7 @@ static void CairoHandler(void)
 	/* We could do the timing tests on a per-device basis */
 	if (last > last_activity) return;
 	clock_t current = times(&timeinfo);
-	if((current-last)*incr < 0.25) return;
+	if((current-last)*incr < update_interval) return;
 	buffer_lock = 1;
 	for(Xdl z = xdl; z; z = z->next) Cairo_update(z->this);
 	last = times(&timeinfo);
@@ -273,8 +273,8 @@ static void addBuffering(pX11Desc xd)
     static int loaded = 0;
     Xdl xdln = (Xdl) malloc(sizeof(struct xd_list));
     xdln->this = xd;
-    xdln->next = xdl;
-    xdl = xdln;
+    xdln->next = xdl->next;
+    xdl->next = xdln;
     if(loaded) return;
     loaded = 1;
     OldHandler = R_PolledEvents;
@@ -287,7 +287,12 @@ static void addBuffering(pX11Desc xd)
 static void removeBuffering(pX11Desc xd)
 {
     for(Xdl z = xdl; z; z = z->next)
-	if (z->this == xd) { z-> this = NULL; break; }
+	if (z->next->this == xd) {
+	    Xdl old = z->next;
+	    z->next = z->next->next;
+	    free(old);
+	    break; 
+	}
 }
 # endif
 #endif
@@ -696,15 +701,25 @@ static void handleEvent(XEvent event)
 						    xd->windowHeight);
 		    cairo_surface_destroy(xd->cs);
 		    cairo_destroy(xd->cc);
-		    xd->cs = 
-			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						   (double)xd->windowWidth,
-						   (double)xd->windowHeight);
-		    xd->cc = cairo_create(xd->cs);
-		    cairo_set_antialias(xd->cc, xd->antialias);
-		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+		    if(bf != 3)
+			xd->cs = 
+			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						       (double)xd->windowWidth,
+						       (double)xd->windowHeight);
 #ifdef USE_TIMERS
-		    if (bf == 3) {
+		    else {
+			cairo_format_t format = -1 /* -Wall */;
+			switch(depth) {
+			case 24:
+			case 32: format = CAIRO_FORMAT_ARGB32; break;
+			case 16: format = CAIRO_FORMAT_RGB16_565; break;
+			default:
+			    error("depth %d is unsupported\n", depth);
+			}
+			xd->cs = 
+			    cairo_image_surface_create(format,
+						       (double)xd->windowWidth,
+						       (double)xd->windowHeight);
 			void *xi = cairo_image_surface_get_data(xd->cs);
 			xd->im = XCreateImage(display, visual, depth, ZPixmap,
 					      0, (char *) xi,
@@ -716,6 +731,10 @@ static void handleEvent(XEvent event)
 			}
 		    }
 #endif
+		    xd->cc = cairo_create(xd->cs);
+		    cairo_set_antialias(xd->cc, xd->antialias);
+		    if(xd-> xcc) 
+			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    xd->buffered = bf;
 #ifdef USE_TIMERS
 		    last = times(&timeinfo);
@@ -743,7 +762,7 @@ static void handleEvent(XEvent event)
 	    killDevice(ndevNumber(dd));
 	}
 
-    if (do_update) {
+    if (!inclose && do_update) {
 	/* It appears possible that a device may receive an expose
 	 * event in the middle of the device being "kill"ed by R
 	 * This means that R knows nothing about the device
@@ -1556,12 +1575,24 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			}
 		    }
 
-		    xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						    (double)xd->windowWidth,
-						    (double)xd->windowHeight);
+		    if(bf != 3)
+			xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+							    (double)xd->windowWidth,
+							    (double)xd->windowHeight);
 #ifdef USE_TIMERS
-		    if (bf == 3) {
-			void *xi = cairo_image_surface_get_data(xd->cs);
+		    else {
+			cairo_format_t format = -1 /* -Wall */;
+			switch(depth) {
+			case 24:
+			case 32: format = CAIRO_FORMAT_ARGB32; break;
+			case 16: format = CAIRO_FORMAT_RGB16_565; break;
+			default:
+			    error("depth %d is unsupported\n", depth);
+			}
+			xd->cs = 
+			    cairo_image_surface_create(format,
+						       (double)xd->windowWidth,
+						       (double)xd->windowHeight);			void *xi = cairo_image_surface_get_data(xd->cs);
 			xd->im = XCreateImage(display, visual, depth, ZPixmap,
 					      0, (char *) xi,
 					      xd->windowWidth, xd->windowHeight,
@@ -1571,8 +1602,9 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			    warning("XCreateImage failed");
 			    return FALSE;
 			}
-		    } else
+		    }
 #endif
+		    if(xd->xcc)
 			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    xd->buffered = bf;
 #ifdef USE_TIMERS
@@ -1600,10 +1632,10 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		}
 		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
 		cairo_set_antialias(xd->cc, xd->antialias);
+		CairoColor(xd->canvas, xd);
+		cairo_new_path(xd->cc);
+		cairo_paint(xd->cc);
 	    }
-	    CairoColor(xd->canvas, xd);
-	    cairo_new_path(xd->cc);
-	    cairo_paint(xd->cc);
 #endif
 	}
 	/* Save the pDevDesc with the window for event dispatching */
@@ -1982,10 +2014,7 @@ static void X11_Close(pDevDesc dd)
 
     if (xd->type == WINDOW) {
 #ifdef USE_TIMERS
-	if(xd->buffered > 1) {
-	    removeBuffering(xd);
-	    xd->buffered = 0; /* for safety */
-	}
+	if(xd->buffered > 1) removeBuffering(xd);
 #endif
 	/* process pending events */
 	/* set block on destroy events */
@@ -3078,7 +3107,6 @@ static SEXP in_do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (res != CAIRO_STATUS_SUCCESS)
 	    error("cairo error '%s'", cairo_status_to_string(res));
     }
-    /* cairo_image_surface_get_data is from 1.2 */
     else if (streql(type, "jpeg")) {
 	void *xi = cairo_image_surface_get_data(xd->cs);
 	FILE *fp = R_fopen(fn, "w");
