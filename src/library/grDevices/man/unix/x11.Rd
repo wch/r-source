@@ -59,7 +59,7 @@ X11.options(\dots, reset = FALSE)
   
   \item{family}{The default family: a length-one character string.  This
     is primarily intended for cairo-based devices, but for \code{type =
-    "Xlib"}, the \code{\link{X11Fonts()} database is used to map family
+    "Xlib"}, the \code{\link{X11Fonts}()} database is used to map family
     names to \code{fonts} (and this argument takes precedence over that
     one).}
   
