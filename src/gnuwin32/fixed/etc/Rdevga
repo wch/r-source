@@ -4,9 +4,9 @@
 # Format is 
 # [TT] face:style
 # where style is plain, bold, italic or bold&italic.
-# If 'TT' is present, only True Type fonts are searched.
+# If 'TT' is present, only TrueType/OpenType fonts are searched.
 # Remarks:
-#   (a) Windows graphics engine can only rotate True Type fonts;
+#   (a) Windows graphics engine can only rotate TrueType fonts;
 #   (b) Only the first 32 fonts will be used.
 
 TT Arial : plain
