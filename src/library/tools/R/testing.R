@@ -189,7 +189,8 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
              scope = c("both", "base", "recommended"),
-             types = c("examples", "tests", "vignettes"), srcdir = NULL)
+             types = c("examples", "tests", "vignettes"),
+             srcdir = NULL, Ropts = "")
 {
     ow <- options(warn = 1)
     on.exit(ow)
@@ -205,7 +206,7 @@ testInstalledPackages <-
     for (pkg in pkgs) {
         if(is.null(srcdir) && pkg %in% known_packages$base)
             srcdir <- R.home("tests/Examples")
-        res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir)
+        res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
         if (res) {
             status <- 1L
             msg <- gettextf("testing '%s' failed", pkg)
@@ -219,7 +220,7 @@ testInstalledPackages <-
 testInstalledPackage <-
     function(pkg, lib.loc = NULL, outDir = ".",
              types = c("examples", "tests", "vignettes"),
-             srcdir = NULL)
+             srcdir = NULL, Ropts = "")
 {
     types <- pmatch(types, c("examples", "tests", "vignettes"))
     pkgdir <- find.package(pkg, lib.loc)
@@ -239,7 +240,7 @@ testInstalledPackage <-
             unlink(failfile)
             ## Create as .fail in case this R session gets killed
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                         "CMD BATCH --vanilla --no-timing",
+                         "CMD BATCH --vanilla --no-timing", Ropts,
                          shQuote(Rfile), shQuote(failfile))
             if (.Platform$OS.type == "windows") Sys.setenv(R_LIBS="")
             else cmd <- paste("R_LIBS=", cmd)
@@ -288,7 +289,7 @@ testInstalledPackage <-
             message("  Running ", sQuote(f))
             outfile <- paste(f, "out", sep = "")
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
-                         "CMD BATCH --vanilla --no-timing",
+                         "CMD BATCH --vanilla --no-timing", Ropts,
                          shQuote(f), shQuote(outfile))
             cmd <- if (.Platform$OS.type == "windows") paste(cmd, "LANGUAGE=C")
             else paste("LANGUAGE=C", cmd)
