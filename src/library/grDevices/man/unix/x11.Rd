@@ -114,6 +114,12 @@ X11.options(\dots, reset = FALSE)
   connection.  Both will be slower than \code{type = "Xlib"}, especially
   on a slow X11 connection as all the rendering is done on the machine
   running \R rather than in the X server.
+  
+  Because of known problems with font selection on Mac OS X without
+  Pango (for example, the CRAN distribution), \code{type = "cairo"} is
+  not the default there.  These problems have included mixing up bold
+  and italic (since worked around), selecting incorrect glyphs and ugly
+  or missing symbol glyphs.
 
   All devices which use an X11 server (including the \code{type =
     "Xlib"} versions of bitmap devices such as \code{\link{png}}) share
@@ -161,7 +167,7 @@ X11.options(\dots, reset = FALSE)
   \code{fontconfig}) or \code{fontconfig} (on Mac OS X and perhaps
   elsewhere).  The results depend on the fonts installed on the system
   running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
-  normally allow some tracing of the selection process.
+  normally allows some tracing of the selection process.
 
   This works best when high-quality scalable fonts are installed,
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
@@ -177,15 +183,10 @@ X11.options(\dots, reset = FALSE)
   \code{"Times New Roman"}, \code{"DejaVu Serif"} and \code{"Liberation
   Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
   
-  Because of known problems with font selection on Mac OS X without
-  Pango, \code{type = "cairo"} is not the default there unless Pango is
-  available.  These problems include mixing up bold and italic (since
-  worked around), selecting incorrect glyphs and ugly or missing symbol
-  glyphs.
-  
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g. of
-  \code{quote(pi)}) have been seen on Linux systems which have the Wine
+  \code{quote(pi)} and \code{expression(10^degree))})
+  have been seen on Linux systems which have the Wine
   symbol font installed---\code{fontconfig} then prefers this and
   misinterprets its encoding.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent

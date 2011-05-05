@@ -107,14 +107,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   to a PDF-specific font family description.  (See the
   documentation for \code{\link{pdfFonts}}.)
 
-  \R does \emph{not} embed fonts in the PDF file, so it is only
+  This device does \emph{not} embed fonts in the PDF file, so it is only
   straightforward to use mappings to the font families that can be
   assumed to be available in any PDF viewer: \code{"Times"}
   (equivalently \code{"serif"}), \code{"Helvetica"} (equivalently
   \code{"sans"}) and \code{"Courier"} (equivalently \code{"mono"}).
   Other families may be specified, but it is the user's responsibility
   to ensure that these fonts are available on the system and third-party
-  software, e.g., Ghostscript, may be required to embed the fonts so
+  software (e.g., Ghostscript) may be required to embed the fonts so
   that the PDF can be included in other documents (e.g., LaTeX): see
   \code{\link{embedFonts}}.  The URW-based families described for
   \code{\link{postscript}} can be used with viewers
@@ -226,9 +226,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   standard Helvetica and Times fonts, and these too often have different
   font metrics from the true fonts.
 
-  Acrobat Reader can be extended by support for Asian and (so-called)
-  Central European fonts, and these will be needed for the full use of
-  encodings other than Latin-1.  See
+  Acrobat Reader can be extended by \sQuote{font packs}, and these will
+  be needed for the full use of encodings other than Latin-1 (although
+  they may be downloaded as needed).  See
   \url{http://www.adobe.com/downloads/updates} for Reader 9 and X, and
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html} for
   Reader 6 to 8.
