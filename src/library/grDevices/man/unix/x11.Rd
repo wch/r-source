@@ -304,7 +304,12 @@ X11.options(\dots, reset = FALSE)
   \code{Xlib} facilities.  The latter should be faster, but may only
   work on 24- or 32-bit displays (but then these are the only ones fully
   supported by cairographics).
-  
+
+  The refresh interval can be set (in units of seconds) by e.g.
+  \code{\link{options}(X11updates = 0.25)}: the value is consulted when
+  a device is opened and applied to all open devices. It has a
+  granularity of 50ms.
+
   A re-named version of one of these may or may not be released in \R 2.14.0.
 }
 

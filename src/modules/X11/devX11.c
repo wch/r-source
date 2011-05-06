@@ -2669,7 +2669,7 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     {
 	SEXP timeouts = GetOption1(install("X11updates"));
 	double tm = asReal(timeouts);
-	update_interval = (ISNAN(tm) || tm < 0) ? 0.25 : tm;
+	update_interval = (ISNAN(tm) || tm < 0) ? 0.10 : tm;
     }
     
 
