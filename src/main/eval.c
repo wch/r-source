@@ -2824,39 +2824,78 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
     R_BCNodeStackTop[i] = __v__; \
 } while (0)
 
+#define SETSTACK_REAL(i, v) SETSTACK(i, ScalarReal(v))
+#define SETSTACK_INTEGER(i, v) SETSTACK(i, ScalarInteger(v))
+
+#define SETSTACK_LOGICAL(i, v) do { \
+    int __ssl_v__ = (v); \
+    if (__ssl_v__ == NA_LOGICAL) \
+	SETSTACK(i, ScalarLogical(NA_LOGICAL)); \
+    else \
+	SETSTACK(i, __ssl_v__ ? R_TrueValue : R_FalseValue); \
+} while(0)
+
+typedef struct { double dval; int ival; } scalar_value_t;
+
+/* bcStackScalar() checks whether the object in the specified stack
+   location is a simple real, integer, or logical scalar (i.e. length
+   one and no attributes.  If so, the type is returned as the function
+   value and the value is returned in the structure pointed to by the
+   second argument; if not, then zero is returned as the function
+   value. */
+static R_INLINE int bcStackScalar(int i, scalar_value_t *v)
+{
+    SEXP x = GETSTACK(i);
+    if (ATTRIB(x) == R_NilValue) {
+	switch(TYPEOF(x)) {
+	case REALSXP:
+	    if (LENGTH(x) == 1) {
+		v->dval = REAL(x)[0];
+		return REALSXP;
+	    }
+	    else return 0;
+	case INTSXP:
+	    if (LENGTH(x) == 1) {
+		v->ival = INTEGER(x)[0];
+		return INTSXP;
+	    }
+	    else return 0;
+	case LGLSXP:
+	    if (LENGTH(x) == 1) {
+		v->ival = LOGICAL(x)[0];
+		return LGLSXP;
+	    }
+	    else return 0;
+	default:
+	    return 0;
+	}
+    }
+    else return 0;
+}
+
 #define DO_FAST_RELOP2(op,a,b) do { \
-    double __a__ = (a), __b__ = (b); \
-    SEXP val; \
     SKIP_OP(); \
-    if (ISNAN(__a__) || ISNAN(__b__)) val = ScalarLogical(NA_LOGICAL); \
-    else val = (__a__ op __b__) ? R_TrueValue : R_FalseValue; \
-    SETSTACK(-2, val); \
+    SETSTACK_LOGICAL(-2, ((a) op (b)) ? TRUE : FALSE);	\
     R_BCNodeStackTop--; \
     NEXT(); \
 } while (0)
 
 # define FastRelop2(op,opval,opsym) do { \
-    SEXP x = GETSTACK(-2); \
-    SEXP y = GETSTACK(-1); \
-    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue) { \
-	if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
-	    TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
-	    DO_FAST_RELOP2(op, REAL(x)[0], REAL(y)[0]); \
-	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
-		 TYPEOF(y) == REALSXP && LENGTH(y) == 1) { \
-	    double xd = INTEGER(x)[0] == NA_INTEGER ? NA_REAL : INTEGER(x)[0];\
-	    DO_FAST_RELOP2(op, xd, REAL(y)[0]); \
-	} \
-	else if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
-		 TYPEOF(y) == INTSXP && LENGTH(y) == 1) { \
-	    double yd = INTEGER(y)[0] == NA_INTEGER ? NA_REAL : INTEGER(y)[0];\
-	    DO_FAST_RELOP2(op, REAL(x)[0], yd); \
-	} \
-	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
-		 TYPEOF(y) == INTSXP && LENGTH(y) == 1) { \
-	    double xd = INTEGER(x)[0] == NA_INTEGER ? NA_REAL : INTEGER(x)[0];\
-	    double yd = INTEGER(y)[0] == NA_INTEGER ? NA_REAL : INTEGER(y)[0];\
-	    DO_FAST_RELOP2(op, xd, yd); \
+    scalar_value_t vx; \
+    scalar_value_t vy; \
+    int typex = bcStackScalar(-2, &vx); \
+    int typey = bcStackScalar(-1, &vy); \
+    if (typex == REALSXP && ! ISNAN(vx.dval)) { \
+	if (typey == REALSXP && ! ISNAN(vy.dval)) \
+	    DO_FAST_RELOP2(op, vx.dval, vy.dval); \
+	else if (typey == INTSXP && vy.ival != NA_INTEGER) \
+	    DO_FAST_RELOP2(op, vx.dval, vy.ival); \
+    } \
+    else if (typex == INTSXP && vx.ival != NA_INTEGER) { \
+	if (typey == REALSXP && ! ISNAN(vy.dval)) \
+	    DO_FAST_RELOP2(op, vx.ival, vy.dval); \
+	else if (typey == INTSXP && vy.ival != NA_INTEGER) { \
+	    DO_FAST_RELOP2(op, vx.ival, vy.ival); \
 	} \
     } \
     Relop2(opval, opsym); \
@@ -2977,28 +3016,42 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
 # define DO_FAST_BINOP(op,a,b) do { \
-    SEXP val = allocVector(REALSXP, 1); \
     SKIP_OP(); \
-    REAL(val)[0] = (a) op (b); \
-    SETSTACK(-2, val); \
+    SETSTACK_REAL(-2, (a) op (b)); \
     R_BCNodeStackTop--; \
     NEXT(); \
 } while (0)
+
+# define DO_FAST_BINOP_INT(op, a, b) do { \
+    double dval = ((double) (a)) op ((double) (b)); \
+    if (dval <= INT_MAX && dval >= INT_MIN + 1) { \
+        SKIP_OP(); \
+	SETSTACK_INTEGER(-2, (int) dval); \
+	R_BCNodeStackTop--; \
+	NEXT(); \
+    } \
+} while(0)
+
 # define FastBinary(op,opval,opsym) do { \
-    SEXP x = GETSTACK(-2); \
-    SEXP y = GETSTACK(-1); \
-    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue) { \
-	if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
-	    TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
-	    DO_FAST_BINOP(op, REAL(x)[0], REAL(y)[0]); \
-	else if (TYPEOF(x) == INTSXP && LENGTH(x) == 1 && \
-		 INTEGER(x)[0] != NA_INTEGER && \
-		 TYPEOF(y) == REALSXP && LENGTH(y) == 1) \
-	    DO_FAST_BINOP(op, INTEGER(x)[0], REAL(y)[0]); \
-	else if (TYPEOF(x) == REALSXP && LENGTH(x) == 1 && \
-		 TYPEOF(y) == INTSXP && LENGTH(y) == 1 && \
-		 INTEGER(y)[0] != NA_INTEGER) \
-	    DO_FAST_BINOP(op, REAL(x)[0], INTEGER(y)[0]); \
+    scalar_value_t vx; \
+    scalar_value_t vy; \
+    int typex = bcStackScalar(-2, &vx); \
+    int typey = bcStackScalar(-1, &vy); \
+    if (typex == REALSXP) { \
+        if (typey == REALSXP) \
+	    DO_FAST_BINOP(op, vx.dval, vy.dval); \
+	else if (typey == INTSXP && vy.ival != NA_INTEGER) \
+	    DO_FAST_BINOP(op, vx.dval, vy.ival); \
+    } \
+    else if (typex == INTSXP && vx.ival != NA_INTEGER) { \
+	if (typey == REALSXP) \
+	    DO_FAST_BINOP(op, vx.ival, vy.dval); \
+	else if (typey == INTSXP && vy.ival != NA_INTEGER) { \
+	    if (opval == DIVOP) \
+		DO_FAST_BINOP(op, (double) vx.ival, (double) vy.ival); \
+            else \
+		DO_FAST_BINOP_INT(op, vx.ival, vy.ival); \
+	} \
     } \
     Arith2(opval, opsym); \
 } while (0)
