@@ -3382,7 +3382,7 @@ static void loopWithContext(volatile SEXP code, volatile SEXP rho)
     endcontext(&cntxt);
 }
 
-static R_INLINE void checkVectorSubscript(SEXP vec, int k)
+static R_INLINE Rboolean checkVectorSubscript(SEXP vec, int k)
 {
     switch (TYPEOF(vec)) {
     case REALSXP:
@@ -3394,108 +3394,242 @@ static R_INLINE void checkVectorSubscript(SEXP vec, int k)
     case EXPRSXP:
     case RAWSXP:
 	if (k < 0 || k >= LENGTH(vec))
-	    error(_("subscript out of bounds"));
-	break;
-    default: error(_("not a vector object"));
+	    return FALSE;
+	else return TRUE;
+    default: return FALSE;
     }
 }
 
-static SEXP numVecElt(SEXP vec, SEXP idx)
+static R_INLINE int bcStackIndex(int i)
 {
-    int i = asInteger(idx) - 1;
-    if (OBJECT(vec))
-	error(_("can only handle simple real vectors"));
-    checkVectorSubscript(vec, i);
-    switch (TYPEOF(vec)) {
-    case REALSXP: return ScalarReal(REAL(vec)[i]);
-    case INTSXP: return ScalarInteger(INTEGER(vec)[i]);
-    case LGLSXP: return ScalarLogical(LOGICAL(vec)[i]);
-    case CPLXSXP: return ScalarComplex(COMPLEX(vec)[i]);
-    case RAWSXP: return ScalarRaw(RAW(vec)[i]);
-    default:
-	error(_("not a simple vector"));
-	return R_NilValue; /* keep -Wall happy */
+    SEXP idx = GETSTACK(i);
+    switch(TYPEOF(idx)) {
+    case INTSXP:
+	if (LENGTH(idx) == 1 && INTEGER(idx)[0] != NA_INTEGER)
+	    return INTEGER(idx)[0];
+	else return -1;
+    case REALSXP:
+	if (LENGTH(idx) == 1) {
+	    double val = REAL(idx)[0];
+	    if (! ISNAN(val) && val <= INT_MAX && val > INT_MIN)
+		return val;
+	    else return -1;
+	}
+	else return -1;
+    default: return -1;
     }
 }
 
-static SEXP numMatElt(SEXP mat, SEXP idx, SEXP jdx)
+static R_INLINE void DO_NVECELT(SEXP rho)
 {
-    SEXP dim;
-    int k, nrow;
-    int i = asInteger(idx);
-    int j = asInteger(jdx);
+    SEXP idx, args, value;
+    SEXP vec = GETSTACK(-2);
+    int i = bcStackIndex(-1);
 
-    if (OBJECT(mat))
-	error(_("can only handle simple real vectors"));
-
-    dim = getAttrib(mat, R_DimSymbol);
-    if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
-	error(_("incorrect number of subscripts"));
-    nrow = INTEGER(dim)[0];
-    k = i - 1 + nrow * (j - 1);
-    checkVectorSubscript(mat, k);
-
-    switch (TYPEOF(mat)) {
-    case REALSXP: return ScalarReal(REAL(mat)[k]);
-    case INTSXP: return ScalarInteger(INTEGER(mat)[k]);
-    case LGLSXP: return ScalarLogical(LOGICAL(mat)[k]);
-    case CPLXSXP: return ScalarComplex(COMPLEX(mat)[k]);
-    default:
-	error(_("not a simple matrix"));
-	return R_NilValue; /* keep -Wall happy */
+    if (ATTRIB(vec) == R_NilValue && i > 0) {
+	i = i - 1;
+	if (checkVectorSubscript(vec, i)) {
+	    switch (TYPEOF(vec)) {
+	    case REALSXP:
+		R_BCNodeStackTop--;
+		SETSTACK_REAL(-1, REAL(vec)[i]);
+		return;
+	    case INTSXP:
+		R_BCNodeStackTop--;
+		SETSTACK_INTEGER(-1, INTEGER(vec)[i]);
+		return;
+	    case LGLSXP:
+		R_BCNodeStackTop--;
+		SETSTACK_LOGICAL(-1, LOGICAL(vec)[i]);
+		return;
+	    case CPLXSXP:
+		R_BCNodeStackTop--;
+		SETSTACK(-1, ScalarComplex(COMPLEX(vec)[i]));
+		return;
+	    case RAWSXP:
+		R_BCNodeStackTop--;
+		SETSTACK(-1, ScalarRaw(RAW(vec)[i]));
+		return;
+	    }
+	}
     }
+
+    /* fall through to the standard default handler */
+    idx = GETSTACK(-1);
+    args = CONS(idx, R_NilValue);
+    args = CONS(vec, args);
+    SETSTACK(-1, args); /* for GC protection */
+    value = do_subset_dflt(R_NilValue, R_SubsetSym, args, rho);
+    R_BCNodeStackTop--;
+    SETSTACK(-1, value);
 }
 
-static SEXP setNumVecElt(SEXP vec, SEXP idx, SEXP value)
+static R_INLINE SEXP getMatrixDim(SEXP mat)
 {
-    int i = asInteger(idx) - 1;
-    if (OBJECT(vec))
-	error(_("can only handle simple real vectors"));
-    checkVectorSubscript(vec, i);
-    if (NAMED(vec) > 1)
+    if (! OBJECT(mat) &&
+	TAG(ATTRIB(mat)) == R_DimSymbol &&
+	CDR(ATTRIB(mat)) == R_NilValue) {
+	SEXP dim = CAR(ATTRIB(mat));
+	if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2)
+	    return dim;
+	else return R_NilValue;
+    }
+    else return R_NilValue;
+}
+
+static R_INLINE void DO_NMATELT(SEXP rho)
+{
+    SEXP idx, jdx, args, value;
+    SEXP mat = GETSTACK(-3);
+    SEXP dim = getMatrixDim(mat);
+
+    if (dim != R_NilValue) {
+	int i = bcStackIndex(-2);
+	int j = bcStackIndex(-1);
+	if (i > 0 && j > 0) {
+	    int nrow = INTEGER(dim)[0];
+	    int k = i - 1 + nrow * (j - 1);
+	    if (checkVectorSubscript(mat, k)) {
+		switch (TYPEOF(mat)) {
+		case REALSXP:
+		    R_BCNodeStackTop -= 2;
+		    SETSTACK_REAL(-1, REAL(mat)[k]);
+		    return;
+		case INTSXP:
+		    R_BCNodeStackTop -= 2;
+		    SETSTACK_INTEGER(-1, INTEGER(mat)[k]);
+		    return;
+		case LGLSXP:
+		    R_BCNodeStackTop -= 2;
+		    SETSTACK_LOGICAL(-1, LOGICAL(mat)[k]);
+		    return;
+		case CPLXSXP:
+		    R_BCNodeStackTop -= 2;
+		    SETSTACK(-1, ScalarComplex(COMPLEX(mat)[k]));
+		    return;
+		}
+	    }
+	}
+    }
+
+    /* fall through to the standard default handler */
+    idx = GETSTACK(-2);
+    jdx = GETSTACK(-1);
+    args = CONS(jdx, R_NilValue);
+    args = CONS(idx, args);
+    args = CONS(mat, args);
+    SETSTACK(-1, args); /* for GC protection */
+    value = do_subset_dflt(R_NilValue, R_SubsetSym, args, rho);
+    R_BCNodeStackTop -= 2;
+    SETSTACK(-1, value);
+}
+
+#define INTEGER_TO_REAL(x) ((x) == NA_INTEGER ? NA_REAL : (x))
+#define LOGICAL_TO_REAL(x) ((x) == NA_LOGICAL ? NA_REAL : (x))
+
+static R_INLINE Rboolean setElementFromScalar(SEXP vec, int i, int typev,
+					      scalar_value_t *v)
+{
+    if (! checkVectorSubscript(vec, i))
+	return FALSE;
+
+    if (TYPEOF(vec) == REALSXP) {
+	switch(typev) {
+	case REALSXP: REAL(vec)[i] = v->dval; return TRUE;
+	case INTSXP: REAL(vec)[i] = INTEGER_TO_REAL(v->ival); return TRUE;
+	case LGLSXP: REAL(vec)[i] = LOGICAL_TO_REAL(v->ival); return TRUE;
+	}
+    }
+    else if (typev == TYPEOF(vec)) {
+	switch (typev) {
+	case INTSXP: INTEGER(vec)[i] = v->ival; return TRUE;
+	case LGLSXP: LOGICAL(vec)[i] = v->ival; return TRUE;
+	}
+    }
+    return FALSE;
+}
+
+static R_INLINE void DO_SETNVECELT(SEXP rho)
+{
+    SEXP idx, args, value;
+    SEXP vec = GETSTACK(-3);
+
+    if (NAMED(vec) == 2) {
 	vec = duplicate(vec);
-    PROTECT(vec);
-    switch (TYPEOF(vec)) {
-    case REALSXP: REAL(vec)[i] = asReal(value); break;
-    case INTSXP: INTEGER(vec)[i] = asInteger(value); break;
-    case LGLSXP: LOGICAL(vec)[i] = asLogical(value); break;
-    case CPLXSXP: COMPLEX(vec)[i] = asComplex(value); break;
-    default: error(_("not a simple vector"));
+	SETSTACK(-3, vec);
     }
-    UNPROTECT(1);
-    return vec;
+    else if (NAMED(vec) == 1)
+	SET_NAMED(vec, 0);
+
+    if (ATTRIB(vec) == R_NilValue) {
+	int i = bcStackIndex(-1);
+	if (i > 0) {
+	    scalar_value_t v;
+	    int typev = bcStackScalar(-2, &v);
+	    if (setElementFromScalar(vec, i - 1, typev, &v)) {
+		R_BCNodeStackTop -= 2;
+		SETSTACK(-1, vec);
+		return;
+	    }
+	}
+    }
+
+    /* fall through to the standard default handler */
+    value = GETSTACK(-2);
+    idx = GETSTACK(-1);
+    args = CONS(value, R_NilValue);
+    SET_TAG(value, R_valueSym);
+    args = CONS(idx, args);
+    args = CONS(vec, args);
+    SETSTACK(-1, args); /* for GC protection */
+    vec = do_subassign_dflt(R_NilValue, R_SubassignSym, args, rho);
+    R_BCNodeStackTop -= 2;
+    SETSTACK(-1, vec);
 }
 
-static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
+static R_INLINE void DO_SETNMATELT(SEXP rho)
 {
-    SEXP dim;
-    int k, nrow;
-    int i = asInteger(idx);
-    int j = asInteger(jdx);
+    SEXP dim, idx, jdx, args, value;
+    SEXP mat = GETSTACK(-4);
 
-    if (OBJECT(mat))
-	error(_("can only handle simple real vectors"));
-
-    dim = getAttrib(mat, R_DimSymbol);
-    if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
-	error(_("incorrect number of subscripts"));
-    nrow = INTEGER(dim)[0];
-    k = i - 1 + nrow * (j - 1);
-    checkVectorSubscript(mat, k);
-
-    if (NAMED(mat) > 1)
+    if (NAMED(mat) > 1) {
 	mat = duplicate(mat);
-
-    PROTECT(mat);
-    switch (TYPEOF(mat)) {
-    case REALSXP: REAL(mat)[k] = asReal(value); break;
-    case INTSXP: INTEGER(mat)[k] = asInteger(value); break;
-    case LGLSXP: LOGICAL(mat)[k] = asLogical(value); break;
-    case CPLXSXP: COMPLEX(mat)[k] = asComplex(value); break;
-    default: error(_("not a simple matrix"));
+	SETSTACK(-4, mat);
     }
-    UNPROTECT(1);
-    return mat;
+    else if (NAMED(mat) == 1)
+	SET_NAMED(mat, 0);
+
+    dim = getMatrixDim(mat);
+
+    if (dim != R_NilValue) {
+	int i = bcStackIndex(-2);
+	int j = bcStackIndex(-1);
+	if (i > 0 && j > 0) {
+	    scalar_value_t v;
+	    int typev = bcStackScalar(-3, &v);
+	    int nrow = INTEGER(dim)[0];
+	    int k = i - 1 + nrow * (j - 1);
+	    if (setElementFromScalar(mat, k, typev, &v)) {
+		R_BCNodeStackTop -= 3;
+		SETSTACK(-1, mat);
+		return;
+	    }
+	}
+    }
+
+    /* fall through to the standard default handler */
+    value = GETSTACK(-3);
+    idx = GETSTACK(-2);
+    jdx = GETSTACK(-1);
+    args = CONS(value, R_NilValue);
+    SET_TAG(value, R_valueSym);
+    args = CONS(jdx, args);
+    args = CONS(idx, args);
+    args = CONS(mat, args);
+    SETSTACK(-1, args); /* for GC protection */
+    mat = do_subassign_dflt(R_NilValue, R_SubassignSym, args, rho);
+    R_BCNodeStackTop -= 3;
+    SETSTACK(-1, mat);
 }
 
 #define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
@@ -4160,42 +4294,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP); /**** S4 thingy allowed now???*/
     OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
     OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
-    OP(NVECELT, 0): {
-	SEXP vec = GETSTACK(-2);
-	SEXP idx = GETSTACK(-1);
-	value = numVecElt(vec, idx);
-	R_BCNodeStackTop--;
-	SETSTACK(-1, value);
-	NEXT();
-    }
-    OP(NMATELT, 0): {
-	SEXP mat = GETSTACK(-3);
-	SEXP idx = GETSTACK(-2);
-	SEXP jdx = GETSTACK(-1);
-	value = numMatElt(mat, idx, jdx);
-	R_BCNodeStackTop -= 2;
-	SETSTACK(-1, value);
-	NEXT();
-    }
-    OP(SETNVECELT, 0): {
-	SEXP vec = GETSTACK(-3);
-	SEXP idx = GETSTACK(-2);
-	value = GETSTACK(-1);
-	value = setNumVecElt(vec, idx, value);
-	R_BCNodeStackTop -= 2;
-	SETSTACK(-1, value);
-	NEXT();
-    }
-    OP(SETNMATELT, 0): {
-	SEXP mat = GETSTACK(-4);
-	SEXP idx = GETSTACK(-3);
-	SEXP jdx = GETSTACK(-2);
-	value = GETSTACK(-1);
-	value = setNumMatElt(mat, idx, jdx, value);
-	R_BCNodeStackTop -= 3;
-	SETSTACK(-1, value);
-	NEXT();
-    }
+    OP(NVECELT, 0): DO_NVECELT(rho); NEXT();
+    OP(NMATELT, 0): DO_NMATELT(rho); NEXT();
+    OP(SETNVECELT, 0): DO_SETNVECELT(rho); NEXT();
+    OP(SETNMATELT, 0): DO_SETNMATELT(rho); NEXT();
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
