@@ -211,18 +211,6 @@ static void Cairo_update(pX11Desc xd)
     XSync(display, 0);
 }
 
-static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
-{
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
-    cairo_reset_clip(xd->cc);
-    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
-    CairoColor(xd->fill, xd);
-    cairo_new_path(xd->cc);
-    cairo_paint(xd->cc);
-    if(xd->buffered) Cairo_update(xd); else XSync(display, 0);
-}
-
 #ifdef HAVE_TIMES
 # ifdef HAVE_SYS_TIME_H
 #  include <sys/time.h>
@@ -308,6 +296,23 @@ static void removeBuffering(pX11Desc xd)
     }
 }
 #endif /* HAVE_TIMES */
+
+static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    cairo_reset_clip(xd->cc);
+    xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
+    CairoColor(xd->fill, xd);
+    cairo_new_path(xd->cc);
+    cairo_paint(xd->cc);
+    if(xd->buffered) {
+	Cairo_update(xd); 
+#ifdef HAVE_TIMES
+	last = times(&timeinfo);
+#endif
+    } else XSync(display, 0);
+}
 #endif /* HAVE_WORKING_CAIRO */
 
 /* Variables Used To Store Colormap Information */
@@ -2660,6 +2665,14 @@ Rboolean X11DeviceDriver(pDevDesc dd,
 
     strncpy(xd->title, title, 100);
     xd->title[100] = '\0';
+
+    {
+	SEXP timeouts = GetOption1(install("X11updates"));
+	double tm = asReal(timeouts);
+	update_interval = (ISNAN(tm) || tm < 0) ? 0.25 : tm;
+    }
+    
+
 
     if (!X11_Open(dd, xd, disp_name, width, height,
 		  gamma_fac, colormodel, maxcube, bgcolor,
