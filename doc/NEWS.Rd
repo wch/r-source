@@ -118,8 +118,8 @@
       \item There are several new built-in font mappings for
       \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
 
-      \item There are experimental new types for \code{X11()}, enabled
-      if \file{src/modules/X11/devX11.c} is compiled with \samp{-DUSE_TIMERS}
+      \item There are experimental new types for \code{X11()}: see its
+      help page.
 
       \item The special reference class fields \code{.self} and
       \code{.refClassDef} are now read-only to prevent corrupting

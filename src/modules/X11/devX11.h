@@ -148,16 +148,13 @@ typedef struct {
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
 
-# ifdef USE_TIMERS
     XImage *im;
-# endif
 #endif
 
     double fontscale;
 } X11Desc;
 
 typedef X11Desc* pX11Desc;
-
 
 /* This is a private header, so why are these here? */
 
@@ -167,5 +164,4 @@ int Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
 		     int maxcube, Rboolean setHandlers);
 
 int Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, X11Desc *xd);
-
 #endif
