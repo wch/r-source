@@ -748,10 +748,18 @@ AC_HEADER_SYS_WAIT
 ## <NOTE>
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
+##
+## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
+## locale.h pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
+## sys/time.h sys/times.h sys/utsname.h time.h unistd.h
+## dl.h seems to be for HP-UX
+## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.  
+## (It is probably only used for fpsetmask on FreeBSD).
+## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h glob.h grp.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
-  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
+  sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
   sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
 ## </NOTE>
 ## <NOTE>
@@ -1771,7 +1779,7 @@ AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
 ## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
 AC_CHECK_FUNCS(mempcpy)
-## realpath is a POSIX 2001 (and BSD)
+## realpath is POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 AC_CHECK_FUNCS(realpath)
 AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
