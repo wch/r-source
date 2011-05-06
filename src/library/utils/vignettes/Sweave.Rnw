@@ -257,7 +257,7 @@ document.  Note that if \texttt{prefix.string} is used it can specify
 a directory as part of the prefix, so that for example if
 \verb|\SweaveOpts{prefix.string=figures/fig}|, the auto-generated
 figures will be placed in sub-directory \verb|figures|: the Sweave
-document should arrage to create this before use.
+document should arrange to create this before use.
 
 \subsection{Using multiple input files}
 
