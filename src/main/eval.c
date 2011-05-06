@@ -3011,6 +3011,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   R_BCNodeStackTop = __ntop__; \
 } while (0)
 
+#define BCNDUP() do { \
+    SEXP *__ntop__ = R_BCNodeStackTop + 1; \
+    if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
+    __ntop__[-1] = __ntop__[-2]; \
+    R_BCNodeStackTop = __ntop__; \
+} while(0)
+
 #define BCNDUP2ND() do { \
     SEXP *__ntop__ = R_BCNodeStackTop + 1; \
     if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
@@ -3160,15 +3167,6 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
   if (GETSTACK(-2) == R_NilValue) SETSTACK(-2, __cell__); \
   else SETCDR(GETSTACK(-1), __cell__); \
   SETSTACK(-1, __cell__);	       \
-} while (0)
-
-/* make sure NAMED = 2 -- lower values might be safe in some cases but
-   not ingeneral, especially if the ocnstant pool was created by
-   unserializing a compiled expression. */
-#define DO_LDCONST(v) do { \
-  R_Visible = TRUE; \
-  v = VECTOR_ELT(constants, GETOP()); \
-  if (NAMED(v) < 2) SET_NAMED(v, 2); \
 } while (0)
 
 static int tryDispatch(char *generic, SEXP call, SEXP x, SEXP rho, SEXP *pv)
@@ -3591,7 +3589,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	NEXT();
       }
     OP(POP, 0): BCNPOP_IGNORE_VALUE(); NEXT();
-    OP(DUP, 0): value = GETSTACK(-1); BCNPUSH(value); NEXT();
+    OP(DUP, 0): BCNDUP(); NEXT();
     OP(PRINTVALUE, 0): PrintValue(BCNPOP()); NEXT();
     OP(STARTLOOPCNTXT, 1):
 	{
@@ -3713,7 +3711,15 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
     /**** for now LDCONST, LDTRUE, and LDFALSE duplicate/allocate to
 	  be defensive against bad package C code */
-    OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(duplicate(value)); NEXT();
+    OP(LDCONST, 1):
+      R_Visible = TRUE;
+      value = VECTOR_ELT(constants, GETOP());
+      /* make sure NAMED = 2 -- lower values might be safe in some cases but
+	 not ingeneral, especially if the constant pool was created by
+	 unserializing a compiled expression. */
+      /*if (NAMED(value) < 2) SET_NAMED(value, 2);*/
+      BCNPUSH(duplicate(value));
+      NEXT();
     OP(LDNULL, 0): R_Visible = TRUE; BCNPUSH(R_NilValue); NEXT();
     OP(LDTRUE, 0): R_Visible = TRUE; BCNPUSH(mkTrue()); NEXT();
     OP(LDFALSE, 0): R_Visible = TRUE; BCNPUSH(mkFalse()); NEXT();
@@ -4003,7 +4009,8 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
-	BCNPUSH(EnsureLocal(symbol, rho));
+	value = EnsureLocal(symbol, rho);
+	BCNPUSH(value);
 	BCNDUP2ND();
 	/* top three stack entries are now RHS value, LHS value, RHS value */
 	NEXT();
