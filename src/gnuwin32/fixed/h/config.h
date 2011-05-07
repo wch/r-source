@@ -124,6 +124,9 @@
 /* Define to 1 if you have the `chmod' function. */
 #define HAVE_CHMOD 1
 
+/* Define to 1 if you have the `clock_gettime' function. */
+/* #undef HAVE_CLOCK_GETTIME */
+
 /* Define to 1 if you have the `clog' function. */
 #define HAVE_CLOG 1
 
