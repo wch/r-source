@@ -663,9 +663,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 
 int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
-/* Use this to allow e.g. Win32 malloc to call warning.
-   Don't use R-specific type, e.g. Rboolean */
-/* int R_Is_Running = 0; now in Defn.h */
+unsigned int TimeToSeed(void); /* datetime.c */
 
 #include <time.h>
 #ifdef HAVE_SYS_TIME_H
@@ -779,28 +777,8 @@ void setup_Rmainloop(void)
 #endif
 #endif
 
-    /* make sure srand is called before R_tmpnam, PR#14381
-       Copied from RNG.c: Randomize */
-    {
-	int seed;
-#if HAVE_GETTIMEOFDAY
-	{
-	    struct timeval tv;
-	    gettimeofday (&tv, NULL);
-	    seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
-	}
-#elif defined(Win32)
-	/* Try to avoid coincidence for processes launched almost
-	   simultaneously */
-	seed = (int) GetTickCount() + getpid();
-#elif HAVE_TIME
-	/* C89, so should work */
-	seed = time(NULL);
-#else
-	/* unlikely, but use random contents */
-#endif
-	srand(seed);    
-    }
+    /* make sure srand is called before R_tmpnam, PR#14381 */
+    srand(TimeToSeed());
 
     InitTempDir(); /* must be before InitEd */
     InitMemory();

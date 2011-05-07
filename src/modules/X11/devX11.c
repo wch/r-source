@@ -218,31 +218,7 @@ static void Cairo_update(pX11Desc xd)
 
 
 #ifdef USE_TIMERS
-# ifdef HAVE_GETTIMEOFDAY
-#  ifdef HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  endif
-static double currentTime()
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
-}
-
-# elif defined(HAVE_TIMES)
-#  ifdef HAVE_SYS_TIMES_H
-#   include <sys/times.h>
-#  endif
-
-extern double R_getClockIncrement(void); /* From src/unix/sys-unix.c */
-static double incr;
-
-static double currentTime()
-{
-    static struct tms timeinfo;
-    return incr * times(&timeinfo);
-}
-# endif
+double currentTime(void); /* from datetime.c */
 
 /* 
    We record a linked list of devices which are open and double-buffered.

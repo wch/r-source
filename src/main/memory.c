@@ -2561,7 +2561,7 @@ static void gc_end_timing(void)
 	/* add delta to compensate for timer resolution */
 	gctimes[0] += times[0] - gcstarttimes[0] + delta;
 	gctimes[1] += times[1] - gcstarttimes[1] + delta;
-	gctimes[2] += times[2] - gcstarttimes[2] + delta;
+	gctimes[2] += times[2] - gcstarttimes[2];
 	gctimes[3] += times[3] - gcstarttimes[3];
 	gctimes[4] += times[4] - gcstarttimes[4];
     }

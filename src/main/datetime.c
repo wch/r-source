@@ -445,7 +445,9 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 }
 
 
+/* clock_gettime, time are in <time.h>, already included */
 #ifdef HAVE_SYS_TIME_H
+/* gettimeoday */
 # include <sys/time.h>
 #endif
 #ifdef Win32
@@ -453,10 +455,32 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 # include <windows.h>
 #endif
 
-SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
+double currentTime(void)
 {
-    SEXP ans = allocVector(REALSXP, 1);
-#if defined(HAVE_GETTIMEOFDAY) && !defined(Win32)
+    double ans = NA_REAL;
+
+#if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
+    struct timespec tp;
+    /* What this clock does is OS-dependent: CLOCK_REALTIME is at 
+       tick rate on FreeBSD */
+    int res = clock_gettime(
+#ifdef CLOCK_REALTIME_FAST
+	/* FreeBSD */
+	CLOCK_REALTIME_FAST,
+#else
+	CLOCK_REALTIME,
+#endif
+	&tp);
+    if(res == 0) {
+	double tmp = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
+#ifndef HAVE_POSIX_LEAPSECONDS
+	if (n_leapseconds < 0) set_n_leapseconds();
+	tmp -= n_leapseconds;
+#endif
+	ans = tmp;
+    }
+
+#elif defined(HAVE_GETTIMEOFDAY) && !defined(Win32)
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
     if(res == 0) {
@@ -465,10 +489,9 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (n_leapseconds < 0) set_n_leapseconds();
 	tmp -= n_leapseconds;
 #endif
-	REAL(ans)[0] = tmp;
-    } else
-	REAL(ans)[0] = NA_REAL;
-    return ans;
+	ans = tmp;
+    }
+
 #else
     time_t res = time(NULL);
     double tmp = res;
@@ -484,10 +507,55 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tmp += 1e-3 * st.wMilliseconds;
 	}
 #endif
-	REAL(ans)[0] = tmp;
-    } else REAL(ans)[0] = NA_REAL;
-    return ans;
+	ans = tmp;
+    }
 #endif
+
+    return ans;
+}
+
+SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    return ScalarReal(currentTime());
+}
+
+/* For RNG.c, main.c, eventually mkdtemp.c */
+attribute_hidden
+unsigned int TimeToSeed(void)
+{
+    unsigned int seed;
+#if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
+    {
+	struct timespec tp;
+	/* What this clock does is OS-dependent: CLOCK_REALTIME is at 
+	   tick rate on FreeBSD */
+	clock_gettime(
+#ifdef CLOCK_REALTIME_FAST
+	    /* FreeBSD */
+	    CLOCK_REALTIME_FAST,
+#else
+	    CLOCK_REALTIME,
+#endif
+	    &tp);
+	seed = ((uint64_t) tp.tv_nsec << 16) ^ tp.tv_sec;
+    }
+#elif defined(HAVE_GETTIMEOFDAY)
+    {
+	struct timeval tv;
+	gettimeofday (&tv, NULL);
+	seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+    }
+#elif defined(Win32)
+    /* Try to avoid coincidence for processes launched almost
+       simultaneously */
+    seed = (int) GetTickCount() + getpid();
+#elif HAVE_TIME
+    /* C89, so should work */
+    seed = (Int32) time(NULL);
+#else
+    /* unlikely, but use random contents */
+#endif
+    return seed;
 }
 
 
