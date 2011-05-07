@@ -65,7 +65,6 @@ typedef enum {
 #  include <cairo-xlib.h>
 #endif
 
-
 Rboolean X11DeviceDriver(pDevDesc, const char*, double, double, double,
 			 double, X_COLORTYPE, int, int, int, SEXP,
 			 int, int, int, const char *, int, int, const char *);
@@ -149,6 +148,10 @@ typedef struct {
     cairo_antialias_t antialias;
 
     XImage *im;
+
+#ifdef HAVE_TIMES
+    double last, last_activity, update_interval;
+#endif
 #endif
 
     double fontscale;
