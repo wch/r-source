@@ -1765,12 +1765,17 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
-## clock_gettime is POSIX 1993, but not on MacOS X
-R_CHECK_FUNCS([clock_gettime], [#include <time.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
+## clock_gettime is POSIX 1993, but not on MacOS X
+## Some OSes need -lrt: Linux, Solaris, not FreeBSD.
+## Unsurprising, as POSIX 2008 moved it from its timers section to base.
+R_CHECK_FUNCS([clock_gettime], [#include <time.h>])
+if test "${ac_cv_have_decl_clock_gettime}" = "yes"; then
+AC_CHECK_LIB(rt, clock_gettime)
+fi
 ## We need setenv or putenv.  It seems that everyone does have
 ## putenv, as earlier versions of R would have failed without it.
 ## It is not always declared, so we do not require a declaration.
