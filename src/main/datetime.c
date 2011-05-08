@@ -101,38 +101,14 @@ static const int days_in_month[12] =
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 
 #ifndef HAVE_POSIX_LEAPSECONDS
-/* There have been 23 leapseconds, the last being on 2005-12-31.
-   But older OSes will not necessarily know about number 23, so we do
-   a run-time test (the OS could have been patched since configure).
-
-   And a 24th on 2008-12-31, but all OSes seem to ignore
-   leap secnds these days.
+/* There have been 24 leapseconds, the last being on 2008-12-31.
  */
-static int n_leapseconds = -1;
+static int n_leapseconds = 24;
 static const time_t leapseconds[] =
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
   283996800,315532800,362793600,394329600,425865600,489024000,567993600,
   631152000,662688000,709948800,741484800,773020800,820454400,867715200,
   915148800,1136073600,1230768000};
-
-static void set_n_leapseconds(void)
-{
-    struct tm tm;
-    int t1, t2;
-
-    tm.tm_year = 105;
-    tm.tm_mon = 11;
-    tm.tm_mday = 31;
-    tm.tm_hour = 12;
-    tm.tm_min = 0;
-    tm.tm_sec = 0;
-    t1 = mktime(&tm);
-    tm.tm_year = 106;
-    tm.tm_mon = 0;
-    tm.tm_mday = 1;
-    t2 = mktime(&tm);
-    n_leapseconds = t2 - t1 == 84601) ? 24 : 22;
-}
 #endif
 
 /*
@@ -358,7 +334,6 @@ static double mktime0 (struct tm *tm, const int local)
 	res = (double) mktime(tm);
 	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
-	if (n_leapseconds < 0) set_n_leapseconds();
 	for(i = 0; i < n_leapseconds; i++)
 	    if(res > leapseconds[i]) res -= 1.0;
 #endif
@@ -383,7 +358,6 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	   fix t instead as needed. */
 	if (d < 0.0 && (double) t != d) t--;
 #ifndef HAVE_POSIX_LEAPSECONDS
-	if (n_leapseconds < 0) set_n_leapseconds();
 	for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
@@ -480,7 +454,6 @@ double currentTime(void)
        http://en.wikipedia.org/wiki/Unix_time
     */
     if (!ISNAN(ans)) {
-	if (n_leapseconds < 0) set_n_leapseconds();
 	ans -= n_leapseconds;
     }
 #endif
@@ -886,7 +859,6 @@ static void glibc_fix(struct tm *tm, int *invalid)
     struct tm *tm0;
     int tmp;
 #ifndef HAVE_POSIX_LEAPSECONDS
-    if (n_leapseconds < 0) set_n_leapseconds();
     t -= n_leapseconds;
 #endif
     tm0 = localtime(&t);
