@@ -461,56 +461,39 @@ double currentTime(void)
 
 #if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
     struct timespec tp;
-    /* What this clock does is OS-dependent: CLOCK_REALTIME is at 
-       tick rate on FreeBSD */
-    int res = clock_gettime(
-#ifdef CLOCK_REALTIME_FAST
-	/* FreeBSD */
-	CLOCK_REALTIME_FAST,
-#else
-	CLOCK_REALTIME,
-#endif
-	&tp);
-    if(res == 0) {
-	double tmp = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
-#ifndef HAVE_POSIX_LEAPSECONDS
-	if (n_leapseconds < 0) set_n_leapseconds();
-	tmp -= n_leapseconds;
-#endif
-	ans = tmp;
-    }
+    int res = clock_gettime(CLOCK_REALTIME, &tp);
+    if(res == 0)
+	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 
 #elif defined(HAVE_GETTIMEOFDAY) && !defined(Win32)
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
-    if(res == 0) {
-	double tmp = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
-#ifndef HAVE_POSIX_LEAPSECONDS
-	if (n_leapseconds < 0) set_n_leapseconds();
-	tmp -= n_leapseconds;
-#endif
-	ans = tmp;
-    }
+    if(res == 0)
+	ans = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
 
 #else
     time_t res = time(NULL);
-    double tmp = res;
     if(res != (time_t)(-1)) { /* -1 must be an error */
-#ifndef HAVE_POSIX_LEAPSECONDS
-	if (n_leapseconds < 0) set_n_leapseconds();
-	tmp -= n_leapseconds;
-#endif
+	ans = res;
 #ifdef Win32
 	{
+	    /* Time on Windows is only available at tick rate, so
+	       only report in ms. */
 	    SYSTEMTIME st;
 	    GetSystemTime(&st);
-	    tmp += 1e-3 * st.wMilliseconds;
+	    ans += 1e-3 * st.wMilliseconds;
 	}
 #endif
-	ans = tmp;
     }
 #endif
 
+#ifndef HAVE_POSIX_LEAPSECONDS
+    /* No known current OSes */
+    if (!ISNAN(ans)) {
+	if (n_leapseconds < 0) set_n_leapseconds();
+	ans -= n_leapseconds;
+    }
+#endif
     return ans;
 }
 
