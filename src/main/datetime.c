@@ -488,7 +488,7 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarReal(currentTime());
 }
 
-/* For RNG.c, main.c, eventually mkdtemp.c */
+/* For RNG.c, main.c, mkdtemp.c */
 attribute_hidden
 unsigned int TimeToSeed(void)
 {

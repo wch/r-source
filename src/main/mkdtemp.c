@@ -16,7 +16,12 @@
    a copy is available at Foundation, Inc., 51 Franklin Street,
    Fifth Floor, Boston, MA 02110-1301 USA.  */
 
-/* Extracted from misc/mkdtemp.c and sysdeps/posix/tempname.c.  */
+/* Extracted from misc/mkdtemp.c and sysdeps/posix/tempname.c,
+   with R modifications for randomness and Win32.  
+
+   mkdtemp was required by POSIX 2008: we use this substitute on
+   Windows and Solaris 10.
+*/
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -49,15 +54,6 @@
 # include <unistd.h>
 #endif
 
-#ifdef HAVE_GETTIMEOFDAY
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# endif
-#else
-# if HAVE_TIME_H
-#  include <time.h>
-# endif
-#endif
 
 #ifndef Win32
 #include <sys/stat.h>
@@ -100,6 +96,8 @@
 static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+unsigned int TimeToSeed(void); /* datetime.c */
+
 /* Generate a temporary file name based on TMPL.  TMPL must match the
    rules for mk[s]temp (i.e. end in "XXXXXX").  The name constructed
    does not exist at the time of the call to __gen_tempname.  TMPL is
@@ -129,23 +127,9 @@ gen_tempname (char *tmpl)
   /* This is where the Xs start.  */
   XXXXXX = &tmpl[len - 6];
 
-  /* Get some more or less random data.  */
-#ifdef RANDOM_BITS
-  RANDOM_BITS (random_time_bits);
-#else
-# if HAVE_GETTIMEOFDAY
-  {
-    struct timeval tv;
-    gettimeofday (&tv, NULL);
-    random_time_bits = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
-  }
-# elif HAVE_TIME
-  random_time_bits = time (NULL);
-# else
-# error RANDOM_BITS or gettimeofday or time is required
-# endif
-#endif
-  value += random_time_bits ^ getpid ();
+  /* Get some more or less random data.  We need 36 bits. */
+  random_time_bits = TimeToSeed();
+  value += (random_time_bits << 8) ^ getpid ();
 
   for (count = 0; count < TMP_MAX; value += 7777, ++count)
     {
