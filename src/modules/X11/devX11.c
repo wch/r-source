@@ -31,7 +31,8 @@
 
 #include <Defn.h>
 
-#if defined(HAVE_GETTIMEOFDAY) || defined(HAVE_TIMES)
+/* We need a medium-res timer: time() will not do */
+#if defined(HAVE_CLOCK_GETTIME) || defined(HAVE_GETTIMEOFDAY) || defined(HAVE_TIMES)
 # define USE_TIMERS 1
 #endif
 
