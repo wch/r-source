@@ -194,7 +194,9 @@ void R_setStartTime(void)
 attribute_hidden
 void R_getProcTime(double *data)
 {
-    data[2] = currentTime() - StartTime;
+    /* docs say this is rounded to the nearest ms */
+    double et = currentTime() - StartTime;
+    data[2] = 1e-3 * rint(1000*et);
 #ifdef HAVE_GETRUSAGE
     struct rusage self, children;
     getrusage(RUSAGE_SELF, &self);
