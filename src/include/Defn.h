@@ -459,6 +459,7 @@ void (UNLOCK_BINDING)(SEXP b);
 #endif /* USE_RINTERNALS */
 
 #ifdef BYTECODE
+typedef SEXP R_bcstack_t;
 # ifdef BC_INT_STACK
 typedef union { void *p; int i; } IStackval;
 # endif

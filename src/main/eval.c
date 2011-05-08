@@ -3058,21 +3058,21 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 #define BCNPUSH(v) do { \
   SEXP __value__ = (v); \
-  SEXP *__ntop__ = R_BCNodeStackTop + 1; \
+  R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
   if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
   __ntop__[-1] = __value__; \
   R_BCNodeStackTop = __ntop__; \
 } while (0)
 
 #define BCNDUP() do { \
-    SEXP *__ntop__ = R_BCNodeStackTop + 1; \
+    R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
     if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
     __ntop__[-1] = __ntop__[-2]; \
     R_BCNodeStackTop = __ntop__; \
 } while(0)
 
 #define BCNDUP2ND() do { \
-    SEXP *__ntop__ = R_BCNodeStackTop + 1; \
+    R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
     if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
     __ntop__[-1] = __ntop__[-3]; \
     R_BCNodeStackTop = __ntop__; \
@@ -3731,7 +3731,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
   SEXP value, constants;
   BCODE *pc, *codebase;
   int ftype = 0;
-  SEXP *oldntop = R_BCNodeStackTop;
+  R_bcstack_t *oldntop = R_BCNodeStackTop;
   static int evalcount = 0;
 #ifdef BC_INT_STACK
   IStackval *olditop = R_BCIntStackTop;
@@ -4503,7 +4503,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	NEXT();
       }
     OP(SWAP, 0): {
-	SEXP tmp = R_BCNodeStackTop[-1];
+	R_bcstack_t tmp = R_BCNodeStackTop[-1];
 	R_BCNodeStackTop[-1] = R_BCNodeStackTop[-2];
 	R_BCNodeStackTop[-2] = tmp;
 	NEXT();
