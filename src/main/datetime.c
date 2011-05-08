@@ -447,12 +447,8 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 
 /* clock_gettime, time are in <time.h>, already included */
 #ifdef HAVE_SYS_TIME_H
-/* gettimeoday */
+/* gettimeoday, including on Windows */
 # include <sys/time.h>
-#endif
-#ifdef Win32
-# define WIN32_LEAN_AND_MEAN 1
-# include <windows.h>
 #endif
 
 double currentTime(void)
@@ -465,7 +461,7 @@ double currentTime(void)
     if(res == 0)
 	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 
-#elif defined(HAVE_GETTIMEOFDAY) && !defined(Win32)
+#elif defined(HAVE_GETTIMEOFDAY)
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
     if(res == 0)
@@ -473,18 +469,8 @@ double currentTime(void)
 
 #else
     time_t res = time(NULL);
-    if(res != (time_t)(-1)) { /* -1 must be an error */
-	ans = res;
-#ifdef Win32
-	{
-	    /* Time on Windows is only available at tick rate, so
-	       only report in ms. */
-	    SYSTEMTIME st;
-	    GetSystemTime(&st);
-	    ans += 1e-3 * st.wMilliseconds;
-	}
-#endif
-    }
+    if(res != (time_t)(-1)) /* -1 must be an error */
+	ans = (double) res;
 #endif
 
 #ifndef HAVE_POSIX_LEAPSECONDS
@@ -510,16 +496,7 @@ unsigned int TimeToSeed(void)
 #if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
     {
 	struct timespec tp;
-	/* What this clock does is OS-dependent: CLOCK_REALTIME is at 
-	   tick rate on FreeBSD */
-	clock_gettime(
-#ifdef CLOCK_REALTIME_FAST
-	    /* FreeBSD */
-	    CLOCK_REALTIME_FAST,
-#else
-	    CLOCK_REALTIME,
-#endif
-	    &tp);
+	clock_gettime(CLOCK_REALTIME, &tp);
 	seed = ((uint64_t) tp.tv_nsec << 16) ^ tp.tv_sec;
     }
 #elif defined(HAVE_GETTIMEOFDAY)
@@ -528,15 +505,9 @@ unsigned int TimeToSeed(void)
 	gettimeofday (&tv, NULL);
 	seed = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
     }
-#elif defined(Win32)
-    /* Try to avoid coincidence for processes launched almost
-       simultaneously */
-    seed = (int) GetTickCount() + getpid();
-#elif HAVE_TIME
-    /* C89, so should work */
-    seed = (Int32) time(NULL);
 #else
-    /* unlikely, but use random contents */
+    /* C89, so must work */
+    seed = (Int32) time(NULL);
 #endif
     return seed;
 }
