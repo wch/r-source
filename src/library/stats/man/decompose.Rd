@@ -1,6 +1,6 @@
 % File src/library/stats/man/decompose.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{decompose}
@@ -46,16 +46,17 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
 }
 \value{
   An object of class \code{"decomposed.ts"} with following components:
-  \item{seasonal}{The seasonal component (i.e., the repeated seasonal figure)}
-  \item{figure}{The estimated seasonal figure only}
-  \item{trend}{The trend component}
-  \item{random}{The remainder part}
-  \item{type}{The value of \code{type}}
+  \item{x}{The original series.  (Only since \R 2.14.0.)}
+  \item{seasonal}{The seasonal component (i.e., the repeated seasonal figure).}
+  \item{figure}{The estimated seasonal figure only.}
+  \item{trend}{The trend component.}
+  \item{random}{The remainder part.}
+  \item{type}{The value of \code{type}.}
 }
 \references{
   M. Kendall and A. Stuart (1983)
-  The Advanced Theory of Statistics, Vol.3,
-  \emph{Griffin}, 410--414.
+  \emph{The Advanced Theory of Statistics}, Vol.3,
+  Griffin. pp. 410--414.
 }
 \author{
   David Meyer \email{David.Meyer@wu.ac.at}

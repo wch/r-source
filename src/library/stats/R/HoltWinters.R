@@ -371,7 +371,8 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
     seasonal <- ts(rep(figure, periods), start = start(x), frequency = f)
 
     ## return values
-    structure(list(seasonal = seasonal,
+    structure(list(x = x,
+                   seasonal = seasonal,
                    trend = trend,
                    random = if (type == "additive")
                        x - seasonal - trend
@@ -384,11 +385,11 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
 
 plot.decomposed.ts <- function(x, ...)
 {
-    plot(cbind(
-               observed = if (x$type == "additive")
-                 x$random + x$trend + x$seasonal
-               else
-                 x$random * x$trend * x$seasonal,
+    xx <- x$x # added in 2.14.0
+    if(is.null(xx))
+        xx <- with(x,  if (type == "additive") random + trend + seasonal
+                       else random * trend * seasonal)
+    plot(cbind(observed = xx,
                trend    = x$trend,
                seasonal = x$seasonal,
                random   = x$random

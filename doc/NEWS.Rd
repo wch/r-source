@@ -123,7 +123,11 @@
 
       \item The special reference class fields \code{.self} and
       \code{.refClassDef} are now read-only to prevent corrupting
-      the object. 
+      the object.
+
+      \item \code{decompose()} now returns the original series as part
+      of its value, so it can be used (rather than reconstructed) when
+      plotting.  (Suggestion of Rob Hyndman.)
     }
   }
 
