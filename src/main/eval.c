@@ -3178,6 +3178,47 @@ typedef int BCODE;
 #define BCCODE(e) INTEGER(BCODE_CODE(e))
 #endif
 
+static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
+{
+    if (rho == R_BaseEnv || rho == R_BaseNamespace)
+	return R_NilValue;
+    else {
+	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
+	if (loc != NULL &&
+	    ! (BINDING_IS_LOCKED(loc) || IS_ACTIVE_BINDING(loc)) &&
+	    CAR(loc) != R_UnboundValue)
+	    return loc;
+	else
+	    return R_NilValue;
+    }
+}
+    
+static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
+    /* This depends on the current implementation of bindings */
+    if (loc != R_NilValue &&
+	! BINDING_IS_LOCKED(loc) && ! IS_ACTIVE_BINDING(loc) &&
+	CAR(loc) != R_UnboundValue) {
+	if (CAR(loc) != value) {
+	    SETCAR(loc, value);
+	    if (MISSING(loc))
+		SET_MISSING(loc, 0);
+	}
+	return TRUE;
+    }
+    else
+	return FALSE;
+}
+
+static R_INLINE SEXP BINDING_VALUE(SEXP loc)
+{
+    if (loc != R_NilValue && ! IS_ACTIVE_BINDING(loc))
+	return CAR(loc);
+    else
+	return R_UnboundValue;
+}
+
+#define BINDING_SYMBOL(loc) TAG(loc)
+
 static void MISSING_ARGUMENT_ERROR(SEXP symbol)
 {
     const char *n = CHAR(PRINTNAME(symbol));
@@ -3697,35 +3738,6 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
     }							\
 } while (0)
 
-static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
-{
-    if (rho == R_BaseEnv || rho == R_BaseNamespace)
-	return R_NilValue;
-    else {
-	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
-	if (loc != NULL &&
-	    ! (BINDING_IS_LOCKED(loc) || IS_ACTIVE_BINDING(loc)) &&
-	    CAR(loc) != R_UnboundValue)
-	    return loc;
-	else
-	    return R_NilValue;
-    }
-}
-    
-static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
-    /* This depends on the current implementation of bindings */
-    if (loc != R_NilValue && ! BINDING_IS_LOCKED(loc) &&
-	CAR(loc) != R_UnboundValue) {
-	if (CAR(loc) != value)
-	    SETCAR(loc, value);
-	return TRUE;
-    }
-    else
-	return FALSE;
-}
-
-#define BINDING_SYMBOL(loc) TAG(loc)
-
 static SEXP bcEval(SEXP body, SEXP rho)
 {
   SEXP value, constants;
@@ -3932,12 +3944,14 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
+	SEXP loc = GET_BINDING_CELL(symbol, rho);
 	value = GETSTACK(-1);
 	switch (NAMED(value)) {
 	case 0: SET_NAMED(value, 1); break;
 	case 1: SET_NAMED(value, 2); break;
 	}
-	defineVar(symbol, value, rho);
+	if (! SET_BINDING_VALUE(loc, value))
+	    defineVar(symbol, value, rho);
 	NEXT();
       }
     OP(GETFUN, 1):
@@ -4212,7 +4226,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
-	value = EnsureLocal(symbol, rho);
+	SEXP cell = GET_BINDING_CELL(symbol, rho);
+	value = BINDING_VALUE(cell);
+	if (value == R_UnboundValue || NAMED(value) != 1)
+	    value = EnsureLocal(symbol, rho);
 	BCNPUSH(value);
 	BCNDUP2ND();
 	/* top three stack entries are now RHS value, LHS value, RHS value */
@@ -4222,12 +4239,14 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
+	SEXP cell = GET_BINDING_CELL(symbol, rho);
 	value = GETSTACK(-1); /* leave on stack for GC protection */
 	switch (NAMED(value)) {
 	case 0: SET_NAMED(value, 1); break;
 	case 1: SET_NAMED(value, 2); break;
 	}
-	defineVar(symbol, value, rho);
+	if (! SET_BINDING_VALUE(cell, value))
+	    defineVar(symbol, value, rho);
 	R_BCNodeStackTop--; /* now pop LHS value off the stack */
 	/* original right-hand side value is now on top of stack again */
 	/* we do not duplicate the right-hand side value, so to be
