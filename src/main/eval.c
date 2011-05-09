@@ -3214,6 +3214,89 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 
 #define BINDING_SYMBOL(loc) TAG(loc)
 
+/* Defining USE_BINDING_CACHE enables a cache for GETVAR, SETVAR, and
+   others to more efficiently locate bindings in the top frame of the
+   current environment.  The index into of the symbol in the constant
+   table is used as the cache index.  Two options can be used to chose
+   among implementation strategies:
+
+       If CACHE_ON_STACK is defined the the cache is allocated on the
+       byte code stack. Otherwise it is allocated on the heap as a
+       VECSXP.  The stack-based approach is more efficient, but runs
+       the risk of running out of stack space.
+
+       If CACHE_MAX is defined, then a cache of at most that size is
+       used. The value must be a power of 2 so a modulus computation x
+       % CACHE_MAX can be done as x & (CACHE_MAX - 1). More than 90%
+       of the closures in base have constant pools with fewer than 128
+       entries when compiled, to that is a good value to use.
+
+   On average about 1/3 of constant pool entries are symbols, so this
+   approach wastes some space.  This could be avoided by grouping the
+   symbols at the beginning of the constant pool and recording the
+   number.
+
+   Bindings recorded may become invalid if user code removes a
+   variable.  The code in envir.c has been modified to insert
+   R_unboundValue as the value of a binding when it is removed, and
+   code using cached bindings checks for this.
+
+   It would be nice if we could also cache bindings for variables
+   found in enclosing environments. These would become invalid if a
+   new variable is defined in an intervening frame. Some mechanism for
+   invalidating the cache would be needed. This is certainly possible,
+   but finding an efficient mechanism does not seem to be easy.   LT */
+
+#define USE_BINDING_CACHE
+# ifdef USE_BINDING_CACHE
+/* CACHE_MAX must be a power of 2 for modulus using & CACHE_MASK to work*/
+# define CACHE_MAX 128
+# ifdef CACHE_MAX
+#  define CACHE_MASK (CACHE_MAX - 1)
+#  define CACHEIDX(i) ((i) & CACHE_MASK)
+# else
+#  define CACHEIDX(i) (i)
+# endif
+
+# define CACHE_ON_STACK
+# ifdef CACHE_ON_STACK
+typedef R_bcstack_t * R_binding_cache_t;
+#  define GET_CACHED_BINDING_CELL(vcache, sidx) \
+    vcache[CACHEIDX(sidx)]
+
+#  define SET_CACHED_BINDING(cvache, sidx, cell) \
+    vcache[CACHEIDX(sidx)] = (cell)
+# else
+typedef SEXP R_binding_cache_t;
+#  define GET_CACHED_BINDING_CELL(vcache, sidx) \
+    (vcache ? VECTOR_ELT(vcache, CACHEIDX(sidx)) : R_NilValue)
+
+#  define SET_CACHED_BINDING(vcache, sidx, cell) \
+    SET_VECTOR_ELT(vcache, CACHEIDX(sidx), cell)
+# endif
+#else
+typedef void *R_binding_cache_t;
+# define GET_CACHED_BINDING_CELL(vcache, sidx) R_NilValue
+
+# define SET_CACHED_BINDING(vcache, sidx, cell)
+#endif
+
+static R_INLINE SEXP GET_BINDING_CELL_CACHE(SEXP symbol, SEXP rho,
+					    R_binding_cache_t vcache, int idx)
+{
+    SEXP cell = GET_CACHED_BINDING_CELL(vcache, idx);
+    if (cell == R_NilValue || TAG(cell) != symbol) {
+	cell = GET_BINDING_CELL(symbol, rho);
+	if (cell != R_NilValue)
+	    SET_CACHED_BINDING(vcache, idx, cell);
+    }
+    else if (CAR(cell) == R_UnboundValue) {
+	cell = GET_BINDING_CELL(symbol, rho);
+	SET_CACHED_BINDING(vcache, idx, cell);
+    }
+    return cell;
+}
+
 static void MISSING_ARGUMENT_ERROR(SEXP symbol)
 {
     const char *n = CHAR(PRINTNAME(symbol));
@@ -3243,10 +3326,35 @@ static R_INLINE SEXP FORCE_PROMISE(SEXP value, SEXP symbol, SEXP rho,
     return value;
 }
 
-static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
-			    Rboolean dd, Rboolean keepmiss)
+static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell)
 {
-    SEXP value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho);
+    SEXP value;
+    /* only need to search the current frame again if
+       binding was special or frame is a base frame */
+    if (cell != R_NilValue ||
+	rho == R_BaseEnv || rho == R_BaseNamespace)
+	value =  findVar(symbol, rho);
+    else
+	value =  findVar(symbol, ENCLOS(rho));
+    return value;
+}
+
+static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
+			    Rboolean dd, Rboolean keepmiss,
+			    R_binding_cache_t vcache, int sidx)
+{
+    SEXP value;
+    if (dd)
+	value = ddfindVar(symbol, rho);
+    else if (vcache != NULL) {
+	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
+	value = BINDING_VALUE(cell);
+	if (value == R_UnboundValue)
+	    value = FIND_VAR_NO_CACHE(symbol, rho, cell);
+    }
+    else
+	value = findVar(symbol, rho);
+
     if (value == R_UnboundValue)
 	UNBOUND_VARIABLE_ERROR(symbol);
     else if (value == R_MissingArg)
@@ -3259,9 +3367,10 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 }
 
 #define DO_GETVAR(dd,keepmiss) do { \
-  SEXP symbol = VECTOR_ELT(constants, GETOP()); \
+  int sidx = GETOP(); \
+  SEXP symbol = VECTOR_ELT(constants, sidx); \
   R_Visible = TRUE; \
-  BCNPUSH(getvar(symbol, rho, dd, keepmiss));	\
+  BCNPUSH(getvar(symbol, rho, dd, keepmiss, vcache, sidx));	\
   NEXT(); \
 } while (0)
 
@@ -3756,6 +3865,32 @@ static SEXP bcEval(SEXP body, SEXP rho)
   codebase = pc = BCCODE(body);
   constants = BCCONSTS(body);
 
+  R_binding_cache_t vcache = NULL;
+#ifdef USE_BINDING_CACHE
+  {
+      R_len_t n = LENGTH(constants);
+# ifdef CACHE_MAX
+      if (n > CACHE_MAX)
+	  n = CACHE_MAX;
+# endif
+# ifdef CACHE_ON_STACK
+      /* initialize binding cache on the stack */
+      vcache = R_BCNodeStackTop;
+      if (R_BCNodeStackTop + n > R_BCNodeStackEnd)
+	  nodeStackOverflow();
+      while (n > 0) {
+	  *R_BCNodeStackTop = R_NilValue;
+	  R_BCNodeStackTop++;
+	  n--;
+      }
+# else
+      /* allocate binding cache and protect on stack */
+      vcache = allocVector(VECSXP, n);
+      BCNPUSH(vcache);
+# endif
+  }
+#endif
+
   /* check version */
   {
       int version = GETOP();
@@ -3939,7 +4074,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
-	SEXP loc = GET_BINDING_CELL(symbol, rho);
+	SEXP loc = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
 	value = GETSTACK(-1);
 	switch (NAMED(value)) {
 	case 0: SET_NAMED(value, 1); break;
@@ -4221,7 +4356,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
-	SEXP cell = GET_BINDING_CELL(symbol, rho);
+	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
 	value = BINDING_VALUE(cell);
 	if (value == R_UnboundValue || NAMED(value) != 1)
 	    value = EnsureLocal(symbol, rho);
@@ -4234,7 +4369,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	int sidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, sidx);
-	SEXP cell = GET_BINDING_CELL(symbol, rho);
+	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
 	value = GETSTACK(-1); /* leave on stack for GC protection */
 	switch (NAMED(value)) {
 	case 0: SET_NAMED(value, 1); break;
@@ -4390,7 +4525,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	value = GETSTACK(-1);
-	BCNPUSH(getvar(symbol, ENCLOS(rho), FALSE, FALSE));
+	BCNPUSH(getvar(symbol, ENCLOS(rho), FALSE, FALSE, NULL, 0));
 	BCNPUSH(value);
 	/* top three stack entries are now RHS value, LHS value, RHS value */
 	NEXT();
