@@ -710,7 +710,7 @@ extern double elapsedLimitValue		INI_as(-1.0);
 void resetTimeLimits(void);
 
 #ifdef BYTECODE
-#define R_BCNODESTACKSIZE 10000
+#define R_BCNODESTACKSIZE 100000
 extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 # ifdef BC_INT_STACK
 #define R_BCINTSTACKSIZE 10000
