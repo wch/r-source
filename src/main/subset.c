@@ -604,6 +604,23 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset_dflt(call, op, ans, rho);
 }
 
+static R_INLINE int scalarIndex(SEXP s)
+{
+    if (ATTRIB(s) == R_NilValue)
+	switch (TYPEOF(s)) {
+	case REALSXP:
+	    if (LENGTH(s) == 1 && ! ISNAN(REAL(s)[0]))
+		return REAL(s)[0];
+	    else return -1;
+	case INTSXP:
+	    if (LENGTH(s) == 1 && INTEGER(s)[0] != NA_INTEGER)
+		return INTEGER(s)[0];
+	    else return -1;
+	default: return -1;
+	}
+    else return -1;
+}
+    
 SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ax, px, x, subs;
@@ -611,33 +628,68 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* By default we drop extents of length 1 */
 
-    /* Handle case of extracting a single element from a simple vector
-       directly to improve speed for this simple case. */
-    if (CDDR(args) == R_NilValue) {
-	int i;
+    /* Handle cases of extracting a single element from a simple vector
+       or matrix directly to improve speed for these simple case. */
+    SEXP cdrArgs = CDR(args);
+    SEXP cddrArgs = CDR(cdrArgs);
+    if (cdrArgs != R_NilValue && cddrArgs == R_NilValue &&
+	TAG(cdrArgs) == R_NilValue) {
+	/* one index, not named */
 	SEXP x = CAR(args);
-	SEXP s = CADR(args);
-	if (ATTRIB(x) == R_NilValue && ATTRIB(s) == R_NilValue) {
+	if (ATTRIB(x) == R_NilValue) {
+	    SEXP s = CAR(cdrArgs);
+	    int i = scalarIndex(s);
 	    switch (TYPEOF(x)) {
 	    case REALSXP:
-		switch (TYPEOF(s)) {
-		case REALSXP: i = (LENGTH(s) == 1) ? REAL(s)[0] : -1; break;
-		case INTSXP: i = (LENGTH(s) == 1) ? INTEGER(s)[0] : -1; break;
-		default:  i = -1;
-		}
 		if (i >= 1 && i <= LENGTH(x))
 		    return ScalarReal( REAL(x)[i-1] );
 		break;
 	    case INTSXP:
-		switch (TYPEOF(s)) {
-		case REALSXP: i = (LENGTH(s) == 1) ? REAL(s)[0] : -1; break;
-		case INTSXP: i = (LENGTH(s) == 1) ? INTEGER(s)[0] : -1; break;
-		default:  i = -1;
-		}
 		if (i >= 1 && i <= LENGTH(x))
 		    return ScalarInteger( INTEGER(x)[i-1] );
 		break;
+	    case LGLSXP:
+		if (i >= 1 && i <= LENGTH(x))
+		    return ScalarLogical( LOGICAL(x)[i-1] );
+		break;
 	    default: break;
+	    }
+	}
+    }
+    else if (cddrArgs != R_NilValue && CDR(cddrArgs) == R_NilValue &&
+	     TAG(cdrArgs) == R_NilValue && TAG(cddrArgs) == R_NilValue) {
+	/* two indices, not named */
+	SEXP x = CAR(args);
+	SEXP attr = ATTRIB(x);
+	if (TAG(attr) == R_DimSymbol && CDR(attr) == R_NilValue) {
+	    /* only attribute of x is 'dim' */
+	    SEXP dim = CAR(attr);
+	    if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2) {
+		/* x is a matrix */
+		SEXP si = CAR(cdrArgs);
+		SEXP sj = CAR(cddrArgs);
+		int i = scalarIndex(si);
+		int j = scalarIndex(sj);
+		if (i > 0 && j > 0) {
+		    /* indices are legal scalars */
+		    int nrow = INTEGER(dim)[0];
+		    int k = i - 1 + nrow * (j - 1);
+		    switch (TYPEOF(x)) {
+		    case REALSXP:
+			if (k < LENGTH(x))
+			    return ScalarReal( REAL(x)[k] );
+			break;
+		    case INTSXP:
+			if (k < LENGTH(x))
+			    return ScalarInteger( INTEGER(x)[k] );
+			break;
+		    case LGLSXP:
+			if (k < LENGTH(x))
+			    return ScalarLogical( LOGICAL(x)[k] );
+			break;
+		    default: break;
+		    }
+		}
 	    }
 	}
     }
