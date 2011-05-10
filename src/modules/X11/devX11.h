@@ -114,7 +114,6 @@ typedef struct {
     int resize;				/* Window resized */
     Window window;			/* Graphics Window */
     GC wgc;				/* GC for window */
-    Cursor gcursor;			/* Graphics Cursor */
     XSetWindowAttributes attributes;	/* Window attributes */
     XRectangle clip;			/* The clipping rectangle */
 

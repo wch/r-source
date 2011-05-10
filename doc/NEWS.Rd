@@ -128,6 +128,12 @@
       \item \code{decompose()} now returns the original series as part
       of its value, so it can be used (rather than reconstructed) when
       plotting.  (Suggestion of Rob Hyndman.)
+      
+      \item The \code{X11()} device now makes use of cursors to
+      distinguish its states.  The normal cursor is an arrow (rather
+      than a crosshair); the crosshair is used when the locator is in
+      use, and a watch cursor is show when plotting computations are
+      being done.
     }
   }
 

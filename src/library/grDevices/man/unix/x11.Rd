@@ -307,7 +307,8 @@ X11.options(\dots, reset = FALSE)
 
   The refresh interval can be set (in units of seconds) by e.g.
   \code{\link{options}(X11updates = 0.25)}: the value is consulted when
-  a device is opened.  Updates are only looked for every 50ms (at most).
+  a device is opened.  Updates are only looked for every 50ms (at most),
+  and during heavy graphics computations only every 500ms.
 
   A re-named version of one of these may or may not be released in \R 2.14.0.
 }
