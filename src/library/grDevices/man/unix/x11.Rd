@@ -115,11 +115,15 @@ X11.options(\dots, reset = FALSE)
     plot in many languages on a single figure (and this will work even
     in non-UTF-8 locales).  The output should be locale-independent.
   }
-  \code{type = "nbcairo"} is the same device as \code{type="cairo"}
+  \code{type = "nbcairo"} is the same device as \code{type = "cairo"}
   without buffering: which is faster will depend on the X11
   connection.  Both will be slower than \code{type = "Xlib"}, especially
   on a slow X11 connection as all the rendering is done on the machine
-  running \R rather than in the X server.
+  running \R rather than in the X server.  On slow connections
+  \code{type = "nbcairo"} will be faster than \code{type = "cairo"}: on
+  fast connections and with complicated plots the buffering done by
+  \code{type = "cairo"} will make repainting much faster (unless backing
+  store is in use, which for example it always is on Mac OS X displays).
   
   Because of known problems with font selection on Mac OS X without
   Pango (for example, the CRAN distribution), \code{type = "cairo"} is
