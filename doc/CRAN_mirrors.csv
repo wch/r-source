@@ -17,6 +17,7 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 1)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft # ctex.org>",1,cn
 "China (Beijing 2)",China,Bejing,http://cran.csdb.cn/,"Computer Network Information Center, CAS, Beijing","Hull # cnic.cn",1,cn
+"China (Hefei)",China,Hefei,http://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Hong Kong)",China,"Hong Kong",http://mirrors.geoexpat.com/cran/,GeoExpat.Com,"shri # geoexpat.com",1,cn
 "China (Xiamen)",China,Xiamen,http://mirrors.xmu.edu.cn/CRAN/,"Xiamen University","admin # Xdmc.org",1,cn
 Colombia,Colombia,Bogota,http://www.laqee.unal.edu.co/CRAN/,"National University of Colombia","Ernesto Parra Rincon <eparrar # unal.edu.co>",1,co
