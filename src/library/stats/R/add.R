@@ -74,7 +74,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	nas <- !is.na(dev)
 	P <- dev
 	P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
-	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+	aod[, c("LRT", "Pr(>Chi)")] <- list(dev, P)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -199,10 +199,10 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         df <- aod$Df
         nas <- !is.na(df)
         dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
 	rdf <- object$df.residual
-	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1L], rdf)
+	aod[, c("F value", "Pr(>F)")] <- Fstat(aod, aod$RSS[1L], rdf)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -340,7 +340,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
             warning(gettextf("F test assumes quasi%s family", fam),
                     domain = NA)
 	rdf <- object$df.residual
-	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
+	aod[, c("F value", "Pr(>F)")] <- Fstat(aod, rdf)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -395,7 +395,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         nas <- !is.na(dev)
         P <- dev
         P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
-        aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+        aod[, c("LRT", "Pr(>Chi)")] <- list(dev, P)
     }
     head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -461,7 +461,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
         df <- aod$Df
         nas <- !is.na(df)
         dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
 	dfs <- aod$Df
@@ -472,7 +472,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	P <- Fs
 	nas <- !is.na(Fs)
 	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
-	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
+	aod[, c("F value", "Pr(>F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))

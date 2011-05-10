@@ -30,7 +30,7 @@ stat.anova <- function(table, test=c("Rao","LRT","Chisq", "F", "Cp"), scale, df.
 	       vals[dfs %in% 0] <- NA
                vals[!is.na(vals) & vals < 0] <- NA # rather than p = 0
 	       cbind(table,
-                     "P(>|Chi|)" = pchisq(vals, abs(dfs), lower.tail=FALSE)
+                     "Pr(>Chi)" = pchisq(vals, abs(dfs), lower.tail=FALSE)
                      )
 	   },
 	   "F" = {

@@ -16,11 +16,20 @@
       There is a new graphics parameter \code{"ylbias"} which
       allows the y-line bias of the graphics device to be tweaked,
       including to reproduce output from earlier versions of \R.
+
+      Labeling of p-values in various anova tables has been rationalized to \code{"Pr(>F)"} 
+      and \code{"Pr(>Chi)"} (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"}, and \code{"P(>|Chi|)"}
+      variants have been eliminated).  Scripts that extract the p value via indexing by name
+      may need adjustment. 
     }
   }
 
   \subsection{NEW FEATURES}{
     \itemize{
+      \item Rao's efficient score test has been implemented for \code{glm}
+      objects. Specifically, the \code{add1}, \code{drop1}, and \code{anova}
+      methods now allow \code{test="Rao"}.  
+
       \item \code{txtProgressBar()} can write to an open connection
       instead of the console.
 
