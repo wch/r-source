@@ -171,6 +171,7 @@ SEXP do_detach(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcontrol(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcopy(SEXP,SEXP,SEXP,SEXP);
 SEXP do_devcur(SEXP, SEXP, SEXP, SEXP);
+SEXP do_devholdflush(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devnext(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devoff(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devprev(SEXP, SEXP, SEXP, SEXP);

@@ -885,6 +885,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"clip",	do_clip,	0,	111,	4,      {PP_FUNCALL, PREC_FN,   0}},
 {"grconvertX",	do_convertXY,	0,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
 {"grconvertY",	do_convertXY,	1,	11,	3,      {PP_FUNCALL, PREC_FN,   0}},
+{"devHoldFlush",do_devholdflush,0,	111,	1,      {PP_FUNCALL, PREC_FN,   0}},
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

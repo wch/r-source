@@ -600,3 +600,14 @@ SEXP do_devsize(SEXP call, SEXP op, SEXP args, SEXP env)
     REAL(ans)[1] = fabs(bottom - top);
     return(ans);
 }
+
+SEXP do_devholdflush(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    pDevDesc dd = GEcurrentDevice()->dev;
+
+    checkArity(op, args);
+    int level = asInteger(CAR(args));
+    if(dd->holdflush && level != NA_INTEGER) level = (dd->holdflush(dd, level));
+    else level = 0;
+    return ScalarInteger(level);
+}

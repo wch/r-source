@@ -628,6 +628,18 @@ struct _DevDesc {
     void (*eventHelper)();
 #endif
 
+    /* added in 2.14.0, only used by screen devices.
+
+       Allows graphics devices to have multiple levels of suspension: 
+       when this reaches zero output is flushed.
+     */
+#if R_USE_PROTOTYPES
+    int (*holdflush)(pDevDesc dd, int level);
+#else
+    int (*holdflush)();
+#endif
+
+
     /* Area for future expansion.
        By zeroing this, devices are more likely to work if loaded
        into a later version of R than that they were compiled under.

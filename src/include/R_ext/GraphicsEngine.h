@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-8 The R Development Core Team.
+ *  Copyright (C) 2001-11 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -53,9 +53,10 @@ extern "C" {
  * Version 7:  Change graphics event handling, adding eventEnv and eventHelper() 
  *	       to DevDesc.
  * Version 8:  Add dev_Path()
+ * Version 9:  Add dev_HoldFlush()
  */
 
-#define R_GE_version 8
+#define R_GE_version 9
 
 int R_GE_getVersion(void);
 

@@ -210,9 +210,13 @@ static double BlueGamma	 = 1.0;
 #ifdef HAVE_WORKING_CAIRO
 # include "cairoFns.c"
 
+#ifdef USE_TIMERS
+double currentTime(void); /* from datetime.c */
+#endif
+
 static void Cairo_update(pX11Desc xd)
 {
-    if(inclose || !xd || !xd->buffered) return;
+    if(inclose || !xd || !xd->buffered || xd->holdlevel > 0) return;
     if(xd->buffered == 3)
 	XPutImage(display, xd->window, xd->wgc, xd->im, 0, 0, 
 		  0, 0, xd->windowWidth, xd->windowHeight);
@@ -220,12 +224,13 @@ static void Cairo_update(pX11Desc xd)
 	cairo_paint(xd->xcc);
     XDefineCursor(display, xd->window, arrow_cursor);
     XSync(display, 0);
+#ifdef USE_TIMERS
+    xd->last = currentTime();
+#endif
 }
 
 
 #ifdef USE_TIMERS
-double currentTime(void); /* from datetime.c */
-
 /* 
    We record a linked list of devices which are open and double-buffered.
    The head of the list is a dummy entry to make removals the same for 
@@ -251,7 +256,6 @@ static void CairoHandler(void)
 	    if(xd->last > xd->last_activity) continue;
 	    if((current - xd->last) < xd->update_interval) continue;
 	    Cairo_update(xd);
-	    xd->last = currentTime();
 	}
 	buffer_lock = 0;
     }
@@ -302,17 +306,30 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+//    xd->holdlevel = 0;
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
     cairo_new_path(xd->cc);
     cairo_paint(xd->cc);
-    if(xd->buffered) {
-	Cairo_update(xd); 
-#ifdef USE_TIMERS
-	xd->last = currentTime();
-#endif
-    } else XSync(display, 0);
+    if(xd->buffered) Cairo_update(xd); 
+    else XSync(display, 0);
+}
+
+static int Cairo_holdflush(pDevDesc dd, int level)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    int old = xd->holdlevel;
+
+    xd->holdlevel += level;
+    if(xd->holdlevel <= 0) xd->holdlevel = 0;
+//    printf("holdlevel = %d\n",  xd->holdlevel);
+    if(xd->buffered && xd->holdlevel == 0) Cairo_update(xd); 
+    if (old == 0 && xd->holdlevel > 0) {
+	XDefineCursor(display, xd->window, watch_cursor);
+	XSync(display, 0);
+    }
+    return xd->holdlevel;
 }
 #endif /* HAVE_WORKING_CAIRO */
 
@@ -707,6 +724,8 @@ static void handleEvent(XEvent event)
 	xd = (pX11Desc) dd->deviceSpecific;
 	if (xd->windowWidth != event.xconfigure.width ||
 	    xd->windowHeight != event.xconfigure.height) {
+
+	    /* windows resize */
 	    xd->windowWidth = event.xconfigure.width;
 	    xd->windowHeight = event.xconfigure.height;
 	    do_update = 2;
@@ -753,9 +772,6 @@ static void handleEvent(XEvent event)
 		    if(xd-> xcc) 
 			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    xd->buffered = bf;
-#ifdef USE_TIMERS
-		    xd->last = currentTime();
-#endif
 		} else {
 		    cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
 						xd->windowHeight);
@@ -794,7 +810,8 @@ static void handleEvent(XEvent event)
 	    xd = (pX11Desc) dd->deviceSpecific;
 	    /* avoid replaying a display list until something has been drawn */
 	    if(gdd->dirty) {
-		/* We can use the buffered copy where we have it */
+		/* We can use the buffered copy where we have it 
+		   if this is an expose event and not a resize one */
 #ifdef HAVE_WORKING_CAIRO
 		if(xd->buffered == 1 && do_update == 1) cairo_paint(xd->xcc);
 		else if (xd->buffered > 1 && do_update == 1)
@@ -2587,6 +2604,7 @@ static void X11_eventHelper(pDevDesc dd, int code)
 static void X11_Mode(int mode, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    if(xd->holdlevel > 0) return;
     if(mode == 1) {
 	XDefineCursor(display, xd->window, watch_cursor);
 	XSync(display, 0);
@@ -2596,10 +2614,8 @@ static void X11_Mode(int mode, pDevDesc dd)
 #ifdef USE_TIMERS
 	if(xd->buffered > 1) {
 	    xd->last_activity = currentTime();
-	    if((currentTime() - xd->last) > 0.5 /* 5*xd->update_interval */) {
+	    if((currentTime() - xd->last) > 0.5 /* 5*xd->update_interval */)
 		Cairo_update(xd);
-		xd->last = currentTime();
-	    }
 	    return;
 	}
 #endif
@@ -2754,6 +2770,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->metricInfo = Cairo_MetricInfo;
 	dd->strWidth = dd->strWidthUTF8 = Cairo_StrWidth;
 	dd->text = dd->textUTF8 = Cairo_Text;
+	dd->holdflush = Cairo_holdflush;
 #endif
     } else
 #endif

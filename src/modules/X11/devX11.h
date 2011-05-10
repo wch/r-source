@@ -154,6 +154,7 @@ typedef struct {
 #endif
 
     double fontscale;
+    int holdlevel;
 } X11Desc;
 
 typedef X11Desc* pX11Desc;
