@@ -132,6 +132,12 @@ X11.options(\dots, reset = FALSE)
   internal structures, which means that they must use the same
   \code{display} and visual.  If you want to change display, first close
   all such devices.
+  
+  The cursor shown indicates the state of the device.  If quiescent the
+  cursor is an arrow: when the locator is in use it is a crosshair
+  cursor, and when plotting computations are in progress (and this can
+  be detected) it is a watch cursor.  (The exact cursors displayed will
+  depend on the window manager in use.)
 }
 \section{X11 Fonts}{
   This section applies only to \code{type = "Xlib"}.
