@@ -2770,8 +2770,8 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->metricInfo = Cairo_MetricInfo;
 	dd->strWidth = dd->strWidthUTF8 = Cairo_StrWidth;
 	dd->text = dd->textUTF8 = Cairo_Text;
-	dd->holdflush = Cairo_holdflush;
 #endif
+	dd->holdflush = Cairo_holdflush;
     } else
 #endif
     {
