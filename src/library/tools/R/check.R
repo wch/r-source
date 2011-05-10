@@ -2101,7 +2101,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  paste(warn_re, collapse = "|"),
                                  ")", sep = "")
 
-                lines <- grep(warn_re, lines, value = TRUE)
+                lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
