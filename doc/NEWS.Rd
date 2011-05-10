@@ -17,7 +17,7 @@
       allows the y-line bias of the graphics device to be tweaked,
       including to reproduce output from earlier versions of \R.
 
-      Labeling of p-values in various anova tables has been rationalized to \code{"Pr(>F)"} 
+      \item Labeling of p-values in various anova tables has been rationalized to \code{"Pr(>F)"} 
       and \code{"Pr(>Chi)"} (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"}, and \code{"P(>|Chi|)"}
       variants have been eliminated).  Scripts that extract the p value via indexing by name
       may need adjustment. 
