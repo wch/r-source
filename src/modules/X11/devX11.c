@@ -721,25 +721,35 @@ static double pixelHeight(void)
 
 static void handleEvent(XEvent event)
 {
-    caddr_t temp;
-    pDevDesc dd = NULL;	/* -Wall */
-    pX11Desc xd;
-    int devNum = 0;
-    int do_update = 0;
-
     if (event.xany.type == Expose) {
-
-	    /* ----- window repaint ------ */
-
-	while(XCheckTypedEvent(display, Expose, &event)) ;
+	/* ----- window repaint ------ */
+	while (XCheckTypedEvent(display, Expose, &event)) ;
+	if (inclose) return;
+	if (event.xexpose.count != 0) return;
+	caddr_t temp;
 	XFindContext(display, event.xexpose.window, devPtrContext, &temp);
-	dd = (pDevDesc) temp;
-	if (event.xexpose.count == 0) do_update = 1;
+	pDevDesc dd = (pDevDesc) temp;
+	pGEDevDesc gdd = desc2GEDesc(dd);
+	if(gdd->dirty) {
+	    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+	    /* We can use the buffered copy where we have it */ 
+#ifdef HAVE_WORKING_CAIRO
+	    if(xd->buffered == 1) cairo_paint(xd->xcc);
+	    else if (xd->buffered > 1)
+		/* rely on timer to repaint eventually */
+		xd->last_activity = currentTime();
+	    else
+#endif
+		GEplayDisplayList(gdd);
+	    XSync(display, 0);
+	}
     } else if (event.type == ConfigureNotify) {
-	while(XCheckTypedEvent(display, ConfigureNotify, &event)) ;
+	while (XCheckTypedEvent(display, ConfigureNotify, &event)) ;
+	if (inclose) return;
+	caddr_t temp;
 	XFindContext(display, event.xconfigure.window, devPtrContext, &temp);
-	dd = (pDevDesc) temp;
-	xd = (pX11Desc) dd->deviceSpecific;
+	pDevDesc dd = (pDevDesc) temp;
+	pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 	if (xd->windowWidth != event.xconfigure.width ||
 	    xd->windowHeight != event.xconfigure.height) {
 
@@ -747,17 +757,14 @@ static void handleEvent(XEvent event)
 
 	    xd->windowWidth = event.xconfigure.width;
 	    xd->windowHeight = event.xconfigure.height;
-	    do_update = 2;
 #if defined HAVE_WORKING_CAIRO
 	    if(xd->useCairo) {
 		if(xd->buffered) {
-		    int bf = xd->buffered;
-		    if (bf != 3) /* AFAICS this always succeeds */
-			cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
-						    xd->windowHeight);
 		    cairo_surface_destroy(xd->cs); xd->cs = NULL;
 		    cairo_destroy(xd->cc); xd->cc = NULL;
-		    if(bf != 3) {
+		    if(xd->buffered != 3) {
+			cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
+						    xd->windowHeight);
 			xd->cs = 
 			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
 						       (double)xd->windowWidth,
@@ -815,48 +822,21 @@ static void handleEvent(XEvent event)
 		}
 	    }
 #endif
-	    dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
-	    
-	    if (do_update) /* gobble Expose events; we'll redraw anyway */
-		while(XCheckTypedEvent(display, Expose, &event)) ;
+	    dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);	
+	    /* gobble Expose events; we'll redraw anyway */
+	    while (XCheckTypedEvent(display, Expose, &event)) ;
+	    pGEDevDesc gdd = desc2GEDesc(dd);
+	    if(gdd->dirty) {
+		GEplayDisplayList(gdd);
+		XSync(display, 0);
+	    }
 	}
     } else if ((event.type == ClientMessage) &&
 	     (event.xclient.message_type == _XA_WM_PROTOCOLS)) {
 	if (!inclose && event.xclient.data.l[0] == protocol) {
+	    caddr_t temp;
 	    XFindContext(display, event.xclient.window, devPtrContext, &temp);
-	    dd = (pDevDesc) temp;
-	    killDevice(ndevNumber(dd));
-	}
-    }
-
-    if (!inclose && do_update) {
-	/* FIXME: this should be using desc2GEDesc(dd) */
-	/* It appears possible that a device may receive an expose
-	 * event in the middle of the device being "kill"ed by R
-	 * This means that R knows nothing about the device
-	 * so devNumber becomes 0 (the null device) and it was not
-	 * a good idea to pass the null device to GEplayDisplayList
-	 * -- although GEplayDisplayList now checks this.
-	 */
-	devNum = ndevNumber(dd);
-	if (devNum > 0) {
-	    pGEDevDesc gdd = GEgetDevice(devNum);
-	    /* dd = (pDevDesc) temp; already set */
-	    xd = (pX11Desc) dd->deviceSpecific;
-	    /* avoid replaying a display list until something has been drawn */
-	    if(gdd->dirty) {
-		/* We can use the buffered copy where we have it 
-		   if this is an expose event and not a resize one */
-#ifdef HAVE_WORKING_CAIRO
-		if(xd->buffered == 1 && do_update == 1) cairo_paint(xd->xcc);
-		else if (xd->buffered > 1 && do_update == 1)
-		    /* rely on timer to repaint eventually */
-		    xd->last_activity = currentTime();
-		else
-#endif
-		    GEplayDisplayList(gdd);
-		XSync(display, 0);
-	    }
+	    killDevice(ndevNumber((pDevDesc) temp));
 	}
     }
 }
