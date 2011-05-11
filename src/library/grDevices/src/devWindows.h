@@ -100,4 +100,5 @@ typedef struct {
     char title[101];
     Rboolean clickToConfirm; /* for NewFrameConfirm */
     Rboolean doSetPolyFill, fillOddEven; /* polygon fill mode */
+    int holdlevel;
 } gadesc;

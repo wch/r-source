@@ -118,8 +118,8 @@ static drawing _d;
 
 #define DRAW(a) {if(xd->kind != SCREEN) {_d=xd->gawin; CLIP; a;} else {_d=xd->bm; CLIP; a; if(!xd->buffered) {_d=xd->gawin; CLIP; a;} }}
 
-#define SHOW  if(xd->kind==SCREEN) {gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));GALastUpdate=GetTickCount();}
-#define SH if(xd->kind==SCREEN && xd->buffered) GA_Timer(xd)
+#define SHOW  if(xd->kind==SCREEN && GA_xd) {gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));GALastUpdate=GetTickCount();}
+#define SH if(xd->kind==SCREEN && xd->buffered && GA_xd) GA_Timer(xd)
 
 
 #define SF 20  /* scrollbar resolution */
@@ -147,8 +147,25 @@ static rect getregion(gadesc *xd)
     return r;
 }
 
-/* Update the screen 100ms after last plotting call or 500ms after last
-   update */
+/* Update the screen 100ms after last plotting call or 500ms after
+   last update (by default).
+
+   This runs on (asynchronous) timers for each device.
+   Macro SHOW does an immediate update, and records the update 
+   in GALastUpdate.
+   SHOW is called for expose and mouse events, and newpage.
+
+   Macro SH calls GA_Timer.  If it is more than 500ms since the last
+   update it does an update; otherwise it sets a timer running for
+   100ms. In either case cancels any existing timer.
+   SH is called for the graphics primitives.  (This could probably be
+   replace by calling from Mode(0)).
+
+   There are two conditions:
+   (i) xd->buffered is true, which is a per-device condition.
+   (ii) GA_xd is non-null.  This is used to inhibit updates during shutdown
+   of the device, and also (post 2.14.0) when the device is held.
+*/
 
 static UINT_PTR TimerNo = 0;
 static gadesc *GA_xd;
@@ -175,6 +192,28 @@ static void GA_Timer(gadesc *xd)
 			   GA_timer_proc);
     }
 }
+
+static int GA_holdflush(pDevDesc dd, int level)
+{
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+    if(!xd->buffered) return 0;
+    int old = xd->holdlevel;
+    xd->holdlevel += level;
+    if(xd->holdlevel <= 0) xd->holdlevel = 0;
+    if(xd->holdlevel == 0) {
+	GA_xd = xd; 
+	gsetcursor(xd->gawin, ArrowCursor);
+	gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
+	GALastUpdate = GetTickCount();
+    }
+    if (old == 0 && xd->holdlevel > 0) {
+	GA_xd = NULL;
+	gsetcursor(xd->gawin, WatchCursor);
+	if(TimerNo != 0) KillTimer(0, TimerNo);
+    }
+    return xd->holdlevel;
+}
+
 
 	/********************************************************/
 	/* There are a number of actions that every device	*/
@@ -1695,6 +1734,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     dd->canGenKeybd = TRUE;
     dd->gettingEvent = FALSE;
 
+    GA_xd = xd;
     return TRUE;
 }
 
@@ -2132,7 +2172,7 @@ static void GA_NewPage(const pGEcontext gc,
 	SaveAsBitmap(dd, xd->res_dpi);
     }
     if (xd->kind == SCREEN) {
-	if(xd->buffered) SHOW;
+	if(xd->buffered && !xd->holdlevel) SHOW;
 	if (xd->recording && xd->needsave)
 	    AddtoPlotHistory(desc2GEDesc(dd)->savedSnapshot, 0);
 	if (xd->replaying)
@@ -3173,6 +3213,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->textUTF8 = GA_Text_UTF8;
     dd->useRotatedTextInContour = TRUE;
     xd->cntxt = NULL;
+    dd->holdflush = GA_holdflush;
+    xd->holdlevel = 0;
 
     /* set graphics parameters that must be set by device driver */
     /* Window Dimensions in Pixels */

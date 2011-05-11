@@ -23,14 +23,21 @@ dev.flush(level = 1L)
 }
 \details{
   Devices which implement this maintain a stack of hold levels: calling
-  \code{dev.hold} increases it and \code{dev.flush} decreases it.  When
-  calling \code{dev.flush} clears all pending holds the current screen
-  display is refreshed.
-#ifdef unix
+  \code{dev.hold} increases it and \code{dev.flush} decreases
+  it. Calling \code{dev.hold} when the hold level is zero increases the
+  hold level and inhibits graphics display.  When calling
+  \code{dev.flush} clears all pending holds the screen display is
+  refreshed and normal operation is resumed.
 
+#ifdef unix
   This is currently implemented for the cairo-based \code{X11} types
   with buffering.  When the hold level is positive the \sQuote{watch}
-  cursor is set.
+  cursor is set on the device's window.
+#endif
+#ifdef windows
+  This is currently implemented for the \code{windows} device with
+  buffering selected (the default).  When the hold level is positive the
+  \sQuote{busy} cursor is set on the device's window.
 #endif
 }
 \value{

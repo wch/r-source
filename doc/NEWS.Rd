@@ -132,13 +132,14 @@
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather
       than a crosshair); the crosshair is used when the locator is in
-      use, and a watch cursor is show when plotting computations are
+      use, and a watch cursor is shown when plotting computations are
       being done.  (These are the standard names for X11 cursors: how
       they are actually displayed depends on the window manager.)
 
       \item There are experimental functions \code{dev.hold()} and
       \code{dev.flush()} for use with graphics devices with buffering.
-      (Currently implemented only for the \code{X11()} types with buffering.)
+      (Currently implemented only for the cairo-based \code{X11()} types
+      with buffering, and for \code{windows()}.)
     }
   }
 
