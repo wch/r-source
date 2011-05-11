@@ -192,6 +192,10 @@ SweaveReadFile <- function(file, syntax, encoding = "")
                         domain = NA, call. = FALSE)
                 "latin1"
             }
+        } else if (enc == "unknown") {
+            stop(sQuote(basename(file)),
+                 " declares a encoding that Sweave does not know about",
+                 domain = NA, call. = FALSE)
         }
         if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
     } else enc <- "bytes"
