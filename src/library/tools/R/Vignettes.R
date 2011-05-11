@@ -278,7 +278,7 @@ getVignetteEncoding <-  function(file, ...)
 .getVignetteEncoding <- function(lines, convert = FALSE)
 {
     ## Look for input enc lines using inputenc or inputenx
-    ## Note, multiple languages are excluded.
+    ## Note, multiple encodings are excluded.
 
     poss <-
         grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
@@ -309,6 +309,7 @@ getVignetteEncoding <-  function(file, ...)
                "greek" = "ISO-8859-7",
                "hebrew" = "ISO-8859-8",
                "ansinew" = "CP1252",
+               "applemac" = "macroman",
                "unknown")
     } else res
 }
