@@ -198,17 +198,33 @@ static void SetLinetype(const pGEcontext, pX11Desc);
 static void X11_Close_bitmap(pX11Desc xd);
 static char* translateFontFamily(char* family, pX11Desc xd);
 
-
-	/************************/
-	/* X11 Color Management */
-	/************************/
-
 static double RedGamma	 = 1.0;
 static double GreenGamma = 1.0;
 static double BlueGamma	 = 1.0;
 
 #ifdef HAVE_WORKING_CAIRO
 # include "cairoFns.c"
+
+	/************************/
+	/*        Buffering     */
+	/************************/
+
+/*
+  Buffering is only implemented for the cairo-based devices.
+   The original (Feb 2008) version had two types:
+   - "nbcairo".  This wrote directly to a cairo_xlib_surface, xd->cs.
+   - "cairo".  This wrote to a cairo_image_surface xd->cs, and copied that to 
+     the cairo_xlib_surface (xd->xcs) at mode(0) calls.
+
+   Two further types were introduced (experimentally) in May 2011.
+   - "cairob2".  Similar to cairo, but the copying is only done on a timer.
+   - "cairob3".  Writes to a cairo_image_surface xd->cs, uses Xlib facilities
+     to do the copying, on a timer.
+   Timing requires a medium-res timer (but so does proc.time, so presumably
+   all systems have one).  The current method is to update ca 100ms after the 
+   last activity (using the event loop) or at a mode(0) call if it is 500ms 
+   after the last update.
+ */
 
 #ifdef USE_TIMERS
 double currentTime(void); /* from datetime.c */
@@ -280,9 +296,6 @@ static void addBuffering(pX11Desc xd)
     if(timingInstalled) return;
     timingInstalled = 1;
     Rg_PolledEvents = CairoHandler;
-#ifndef HAVE_GETTIMEOFDAY
-    incr = R_getClockIncrement();
-#endif
     Rg_wait_usec = WAIT;
 }
 
@@ -306,6 +319,7 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+//  Suggestion was to drop holding at a new page.
 //    xd->holdlevel = 0;
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
@@ -332,6 +346,12 @@ static int Cairo_holdflush(pDevDesc dd, int level)
     return xd->holdlevel;
 }
 #endif /* HAVE_WORKING_CAIRO */
+
+
+
+	/************************/
+	/* X11 Color Management */
+	/************************/
 
 /* Variables Used To Store Colormap Information */
 static struct { int red; int green; int blue; } RPalette[512];
@@ -708,17 +728,15 @@ static void handleEvent(XEvent event)
     int do_update = 0;
 
     if (event.xany.type == Expose) {
-	while(XCheckTypedEvent(display, Expose, &event))
-	    ;
-	XFindContext(display, event.xexpose.window,
-		     devPtrContext, &temp);
+
+	    /* ----- window repaint ------ */
+
+	while(XCheckTypedEvent(display, Expose, &event)) ;
+	XFindContext(display, event.xexpose.window, devPtrContext, &temp);
 	dd = (pDevDesc) temp;
-	if (event.xexpose.count == 0)
-	    do_update = 1;
-    }
-    else if (event.type == ConfigureNotify) {
-	while(XCheckTypedEvent(display, ConfigureNotify, &event))
-	    ;
+	if (event.xexpose.count == 0) do_update = 1;
+    } else if (event.type == ConfigureNotify) {
+	while(XCheckTypedEvent(display, ConfigureNotify, &event)) ;
 	XFindContext(display, event.xconfigure.window, devPtrContext, &temp);
 	dd = (pDevDesc) temp;
 	xd = (pX11Desc) dd->deviceSpecific;
@@ -734,7 +752,6 @@ static void handleEvent(XEvent event)
 	    if(xd->useCairo) {
 		if(xd->buffered) {
 		    int bf = xd->buffered;
-		    xd->buffered = 0; /* inhibit any redraws */
 		    if (bf != 3) /* AFAICS this always succeeds */
 			cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
 						    xd->windowHeight);
@@ -791,31 +808,29 @@ static void handleEvent(XEvent event)
 		    cairo_set_antialias(xd->cc, xd->antialias);
 		    if(xd-> xcc) 
 			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-		    xd->buffered = bf;
-		} else {
+		} else { /* not buffered */
 		    cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
 						xd->windowHeight);
 		    cairo_reset_clip(xd->cc);
 		}
 	    }
 #endif
+	    dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
+	    
+	    if (do_update) /* gobble Expose events; we'll redraw anyway */
+		while(XCheckTypedEvent(display, Expose, &event)) ;
 	}
-	dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
-
-	if (do_update) /* Gobble Expose events; we'll redraw anyway */
-	    while(XCheckTypedEvent(display, Expose, &event))
-		;
-    }
-    else if ((event.type == ClientMessage) &&
-	     (event.xclient.message_type == _XA_WM_PROTOCOLS))
+    } else if ((event.type == ClientMessage) &&
+	     (event.xclient.message_type == _XA_WM_PROTOCOLS)) {
 	if (!inclose && event.xclient.data.l[0] == protocol) {
-	    XFindContext(display, event.xclient.window,
-			 devPtrContext, &temp);
+	    XFindContext(display, event.xclient.window, devPtrContext, &temp);
 	    dd = (pDevDesc) temp;
 	    killDevice(ndevNumber(dd));
 	}
+    }
 
     if (!inclose && do_update) {
+	/* FIXME: this should be using desc2GEDesc(dd) */
 	/* It appears possible that a device may receive an expose
 	 * event in the middle of the device being "kill"ed by R
 	 * This means that R knows nothing about the device
@@ -826,7 +841,7 @@ static void handleEvent(XEvent event)
 	devNum = ndevNumber(dd);
 	if (devNum > 0) {
 	    pGEDevDesc gdd = GEgetDevice(devNum);
-	    dd = (pDevDesc) temp;
+	    /* dd = (pDevDesc) temp; already set */
 	    xd = (pX11Desc) dd->deviceSpecific;
 	    /* avoid replaying a display list until something has been drawn */
 	    if(gdd->dirty) {
@@ -857,6 +872,10 @@ static void R_ProcessX11Events(void *data)
     }
 }
 
+
+	/************************/
+	/* X11 Font Management  */
+	/************************/
 
 static char *fontname = "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
 static char *symbolname	 = "-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*";
@@ -1615,9 +1634,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    if(xd->useCairo) {
 		cairo_status_t res;
 		if(xd->buffered) {
-		    int bf = xd->buffered;
-		    xd->buffered = 0; /* inhibit any redraws */
-		    if(bf != 3) {
+		    if(xd->buffered != 3) {
 			xd->xcs = 
 			    cairo_xlib_surface_create(display, xd->window,
 						      visual,
@@ -1639,13 +1656,12 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			    /* bail out */
 			    return FALSE;
 			}
-		    }
-
-		    if(bf != 3)
-			xd->cs = cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-							    (double)xd->windowWidth,
-							    (double)xd->windowHeight);
-		    else {
+			xd->cs = 
+			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						       (double)xd->windowWidth,
+						       (double)xd->windowHeight);
+			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+		    } else {
 			cairo_format_t format = -1 /* -Wall */;
 			switch(depth) {
 			case 24:
@@ -1684,11 +1700,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			    return FALSE;
 			}
 		    }
-		    if(xd->xcc)
-			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-		    xd->buffered = bf;
 #ifdef USE_TIMERS
-		    if(bf > 1) addBuffering(xd);
+		    if(xd->buffered > 1) addBuffering(xd);
 #endif
 		} else /* non-buffered */
 		    xd->cs = 
@@ -1702,8 +1715,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    warning("cairo error '%s'", 
 			    cairo_status_to_string(res));
 		    /* bail out */
-		    if(xd->xcc) cairo_destroy(xd->xcc);
 		    if(xd->xcs) cairo_surface_destroy(xd->xcs);
+		    if(xd->xcc) cairo_destroy(xd->xcc);
 		    return FALSE;
 		}
 		xd->cc = cairo_create(xd->cs);
@@ -1712,8 +1725,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    cairo_surface_destroy(xd->cs);
 		    /* bail out */
-		    if(xd->xcc) cairo_destroy(xd->xcc);
 		    if(xd->xcs) cairo_surface_destroy(xd->xcs);
+		    if(xd->xcc) cairo_destroy(xd->xcc);
 		    return FALSE;
 		}
 		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
@@ -2129,7 +2142,7 @@ static void X11_Close(pDevDesc dd)
 
     numX11Devices--;
     if (numX11Devices == 0)  {
-      int fd = ConnectionNumber(display);
+	int fd = ConnectionNumber(display);
 	/* Free Resources Here */
 	while (nfonts--)
 	      R_XFreeFont(display, fontcache[nfonts].font);
@@ -2303,8 +2316,8 @@ static void X11_Raster(unsigned int *raster, int w, int h,
     if (image == NULL || XInitImage(image) == 0)
         error(_("Unable to create XImage"));
 
-    for (i=0; i < imageHeight ;i++) {
-        for (j=0; j < imageWidth; j++) {
+    for (i = 0; i < imageHeight ;i++) {
+        for (j = 0; j < imageWidth; j++) {
             pixel = i * imageWidth + j;
             XPutPixel(image, j, i, 
                       GetX11Pixel(R_RED(rasterImage[pixel]), 
@@ -2345,8 +2358,8 @@ static SEXP X11_Cap(pDevDesc dd)
         /* Copy each byte of screen to an R matrix. 
          * The ARGB32 needs to be converted to an R ABGR32 */
         rint = (unsigned int *) INTEGER(raster);
-        for (i=0; i<xd->windowHeight; i++) {
-            for (j=0; j<xd->windowWidth; j++) {
+        for (i = 0; i < xd->windowHeight; i++) {
+            for (j = 0; j < xd->windowWidth; j++) {
                 /* 
                  * Convert each pixel in image to an R colour
                  */
@@ -2423,7 +2436,7 @@ static void X11_Polyline(int n, double *x, double *y,
 
     points = (XPoint *) R_alloc(n, sizeof(XPoint));
 
-    for(i=0 ; i<n ; i++) {
+    for(i = 0 ; i < n ; i++) {
 	points[i].x = (int)(x[i]);
 	points[i].y = (int)(y[i]);
     }
@@ -2454,7 +2467,7 @@ static void X11_Polygon(int n, double *x, double *y,
 
     points = (XPoint *) R_alloc(n+1, sizeof(XPoint));
 
-    for (i=0 ; i<n ; i++) {
+    for (i = 0 ; i < n ; i++) {
 	points[i].x = (int)(x[i]);
 	points[i].y = (int)(y[i]);
     }
