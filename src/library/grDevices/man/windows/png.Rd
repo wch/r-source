@@ -142,7 +142,7 @@ tiff(filename = "Rplot\%03d.tif",
     \item On Windows, devices based on plotting to a hidden screen using
     Windows' GDI calls.
 
-    \item On platforms with suppport for X11, plotting to a hidden X11
+    \item On platforms with support for X11, plotting to a hidden X11
     display.
 
     \item On Mac OS X when working at the console and when \R is

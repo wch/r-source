@@ -27,7 +27,7 @@ jpeg(filename = "Rplot\%03d.jpeg",
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px", pointsize = 12,
      bg = "white",  res = NA, \dots,
-    type = c("cairo", "png-cairo", "Xlib", "quartz"), antialias)
+    type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
@@ -150,7 +150,7 @@ tiff(filename = "Rplot\%03d.tiff",
     \item On Windows, devices based on plotting to a hidden screen using
     Windows' GDI calls.
 
-    \item On platforms with suppport for X11, plotting to a hidden X11
+    \item On platforms with support for X11, plotting to a hidden X11
     display.
 
     \item On Mac OS X when working at the console and when \R is
