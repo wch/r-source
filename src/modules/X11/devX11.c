@@ -725,7 +725,8 @@ static void handleEvent(XEvent event)
 	if (xd->windowWidth != event.xconfigure.width ||
 	    xd->windowHeight != event.xconfigure.height) {
 
-	    /* windows resize */
+	    /* ----- windows resize ------ */
+
 	    xd->windowWidth = event.xconfigure.width;
 	    xd->windowHeight = event.xconfigure.height;
 	    do_update = 2;
@@ -750,8 +751,9 @@ static void handleEvent(XEvent event)
 			case 24:
 			case 32: format = CAIRO_FORMAT_ARGB32; break;
 			case 16: format = CAIRO_FORMAT_RGB16_565; break;
+			    /* for completeness: will not have got here */
 			default:
-			    error("depth %d is unsupported\n", depth);
+			    error("depth %d is unsupported", depth);
 			}
 			xd->cs = 
 			    cairo_image_surface_create(format,
@@ -1631,14 +1633,15 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			case 32: format = CAIRO_FORMAT_ARGB32; break;
 			case 16: format = CAIRO_FORMAT_RGB16_565; break;
 			default:
-			    error("depth %d is unsupported\n", depth);
+			    warning("depth %d is unsupported", depth);
+			    return FALSE;
 			}
 			xd->cs = 
 			    cairo_image_surface_create(format,
 						       (double)xd->windowWidth,
 						       (double)xd->windowHeight);
 			/* This is checked later, but maybe next line
-			   needes it to have worked */
+			   needs it to have worked */
 			res = cairo_surface_status(xd->cs);
 			if (res != CAIRO_STATUS_SUCCESS) {
 			    warning("cairo error '%s'", 
@@ -1666,16 +1669,17 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 #ifdef USE_TIMERS
 		    if(bf > 1) addBuffering(xd);
 #endif
-		} else
+		} else /* non-buffered */
 		    xd->cs = 
 			cairo_xlib_surface_create(display, xd->window,
 						  visual,
 						  (double)xd->windowWidth,
 						  (double)xd->windowHeight);
+
 		res = cairo_surface_status(xd->cs);
-		    if (res != CAIRO_STATUS_SUCCESS) {
-			warning("cairo error '%s'", 
-				cairo_status_to_string(res));
+		if (res != CAIRO_STATUS_SUCCESS) {
+		    warning("cairo error '%s'", 
+			    cairo_status_to_string(res));
 		    /* bail out */
 		    return FALSE;
 		}
