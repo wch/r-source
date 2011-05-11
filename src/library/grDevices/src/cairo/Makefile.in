@@ -16,7 +16,7 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) @CAIRO_CPPFLAGS@ \
   -I$(top_srcdir)/src/modules/X11 $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
-## FIXME: the X11 module is not made at all if BUILD_X11 is false.
+## the X11 module is not made at all if BUILD_X11 is false.
 SOURCES = cairoBM.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o) $(top_builddir)/src/modules/X11/rbitmap.o
@@ -40,14 +40,11 @@ R: Makefile
 	@$(MAKE) $(cairo_la)
 	@cp $(cairo_la) $(R_HOME)/library/grDevices/libs$(R_ARCH)
 
+$(top_builddir)/src/modules/X11/rbitmap.o:
+	(cd $(top_builddir)/src/modules/X11; $(MAKE) rbitmap.o)
+
 $(cairo_la): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(cairo_la_LIBADD)
-
-cairoBM.o: cairoFns.c cairoBM.h $(top_srcdir)/src/modules/X11/bitmap.h \
-  $(top_srcdir)/src/include/R_ext/GraphicsEngine.h \
-  $(top_srcdir)/src/include/R_ext/GraphicsDevice.h \
-  $(top_srcdir)/src/include/Defn.h
-
 
 mostlyclean: clean
 clean:
@@ -55,3 +52,5 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+## Automagically generated dependencies:
