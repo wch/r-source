@@ -2842,7 +2842,8 @@ typedef union { double dval; int ival; } scalar_value_t;
    one and no attributes.  If so, the type is returned as the function
    value and the value is returned in the structure pointed to by the
    second argument; if not, then zero is returned as the function
-   value. */
+   value. v->ival is set to zero in this case fo avoid uninitialized
+   field warnings from gcc. */
 static R_INLINE int bcStackScalar(int i, scalar_value_t *v)
 {
     SEXP x = GETSTACK(i);
@@ -2853,25 +2854,23 @@ static R_INLINE int bcStackScalar(int i, scalar_value_t *v)
 		v->dval = REAL(x)[0];
 		return REALSXP;
 	    }
-	    else return 0;
+	    else { v->ival = 0; return 0; }
 	case INTSXP:
 	    if (LENGTH(x) == 1) {
 		v->ival = INTEGER(x)[0];
 		return INTSXP;
 	    }
-	    else return 0;
+	    else { v->ival = 0; return 0; }
 	case LGLSXP:
 	    if (LENGTH(x) == 1) {
 		v->ival = LOGICAL(x)[0];
 		return LGLSXP;
 	    }
-	    else return 0;
-	default:
-	    v->ival = 0; /* keep gcc -Wall happy */
-	    return 0;
+	    else { v->ival = 0; return 0; }
+	default: { v->ival = 0; return 0; }
 	}
     }
-    else return 0;
+    else { v->ival = 0; return 0; }
 }
 
 #define DO_FAST_RELOP2(op,a,b) do { \
