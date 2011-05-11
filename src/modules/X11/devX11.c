@@ -725,7 +725,7 @@ static void handleEvent(XEvent event)
 	if (xd->windowWidth != event.xconfigure.width ||
 	    xd->windowHeight != event.xconfigure.height) {
 
-	    /* ----- windows resize ------ */
+	    /* ----- window resize ------ */
 
 	    xd->windowWidth = event.xconfigure.width;
 	    xd->windowHeight = event.xconfigure.height;
@@ -735,17 +735,23 @@ static void handleEvent(XEvent event)
 		if(xd->buffered) {
 		    int bf = xd->buffered;
 		    xd->buffered = 0; /* inhibit any redraws */
-		    if (bf != 3)
+		    if (bf != 3) /* AFAICS this always succeeds */
 			cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
 						    xd->windowHeight);
-		    cairo_surface_destroy(xd->cs);
-		    cairo_destroy(xd->cc);
-		    if(bf != 3)
+		    cairo_surface_destroy(xd->cs); xd->cs = NULL;
+		    cairo_destroy(xd->cc); xd->cc = NULL;
+		    if(bf != 3) {
 			xd->cs = 
 			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
 						       (double)xd->windowWidth,
 						       (double)xd->windowHeight);
-		    else {
+			cairo_status_t res = cairo_surface_status(xd->cs);
+			if (res != CAIRO_STATUS_SUCCESS) {
+			    warning("cairo error '%s'", 
+				    cairo_status_to_string(res));
+			    error("fatal error on resize: please shut down the device");
+			}
+		    } else {
 			cairo_format_t format = -1 /* -Wall */;
 			switch(depth) {
 			case 24:
@@ -759,14 +765,26 @@ static void handleEvent(XEvent event)
 			    cairo_image_surface_create(format,
 						       (double)xd->windowWidth,
 						       (double)xd->windowHeight);
+			cairo_status_t res = cairo_surface_status(xd->cs);
+			if (res != CAIRO_STATUS_SUCCESS) {
+			    warning("cairo error '%s'", 
+				    cairo_status_to_string(res));
+			    error("fatal error on resize: please shut down the device");
+			}
 			void *xi = cairo_image_surface_get_data(xd->cs);
+			if (!xi) {
+			    warning("cairo_image_surface_get_data failed");
+			    cairo_surface_destroy(xd->cs); xd->cs = NULL;
+			    error("fatal error on resize: please shut down the device");
+			}
 			xd->im = XCreateImage(display, visual, depth, ZPixmap,
 					      0, (char *) xi,
 					      xd->windowWidth, xd->windowHeight,
 					      depth >= 24 ? 32: depth, 0);
 			if (!xd->im || XInitImage(xd->im) == 0) {
 			    warning("XCreateImage failed");
-			    /* FIXME */
+			    cairo_surface_destroy(xd->cs); xd->cs = NULL;
+			    error("fatal error on resize: please shut down the device");
 			}
 		    }
 		    xd->cc = cairo_create(xd->cs);
@@ -1617,6 +1635,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			if (res != CAIRO_STATUS_SUCCESS) {
 			    warning("cairo error '%s'", 
 				    cairo_status_to_string(res));
+			    cairo_surface_destroy(xd->xcs);
 			    /* bail out */
 			    return FALSE;
 			}
@@ -1651,6 +1670,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			void *xi = cairo_image_surface_get_data(xd->cs);
 			if (!xi) {
 			    warning("cairo_image_surface_get_data failed");
+			    cairo_surface_destroy(xd->cs);
 			    return FALSE;
 			}
 			xd->im = XCreateImage(display, visual, depth, ZPixmap,
@@ -1660,6 +1680,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			//printf("allocated %p at depth %d\n", xd->im, depth);
 			if (!xd->im || XInitImage(xd->im) == 0) {
 			    warning("XCreateImage failed");
+			    cairo_surface_destroy(xd->cs);
 			    return FALSE;
 			}
 		    }
@@ -1681,13 +1702,18 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 		    warning("cairo error '%s'", 
 			    cairo_status_to_string(res));
 		    /* bail out */
+		    if(xd->xcc) cairo_destroy(xd->xcc);
+		    if(xd->xcs) cairo_surface_destroy(xd->xcs);
 		    return FALSE;
 		}
 		xd->cc = cairo_create(xd->cs);
 		res = cairo_status(xd->cc);
 		if (res != CAIRO_STATUS_SUCCESS) {
 		    warning("cairo error '%s'", cairo_status_to_string(res));
+		    cairo_surface_destroy(xd->cs);
 		    /* bail out */
+		    if(xd->xcc) cairo_destroy(xd->xcc);
+		    if(xd->xcs) cairo_surface_destroy(xd->xcs);
 		    return FALSE;
 		}
 		cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
@@ -2083,8 +2109,8 @@ static void X11_Close(pDevDesc dd)
 
 #ifdef HAVE_WORKING_CAIRO
 	if(xd->useCairo) {
-	    cairo_surface_destroy(xd->cs);
-	    cairo_destroy(xd->cc);
+	    if(xd->cs) cairo_surface_destroy(xd->cs);
+	    if(xd->cc) cairo_destroy(xd->cc);
 	    if(xd->xcs) cairo_surface_destroy(xd->xcs);
 	    if(xd->xcc) cairo_destroy(xd->xcc);
 	    if(xd->im) XFree(xd->im); /* See comment in X11_Raster */
