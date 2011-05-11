@@ -197,6 +197,10 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
 ##    nt <- names(target)
 ##    nc <- names(current)
+    ## Unclass to ensure we get the low-level components (see the
+    ## comment below).
+    target <- unclass(target)
+    current <- unclass(current)
     iseq <-
 	## <FIXME>
 	## Commenting this eliminates PR#674, and assumes that lists are
