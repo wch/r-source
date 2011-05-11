@@ -17,19 +17,20 @@
 ## utility for anova.FOO(), FOO in "lmlist", "glm", "glmlist"
 ## depending on the ordering of the models this might get called with
 ## negative deviance and df changes.
-stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
+stat.anova <- function(table, test=c("Rao","LRT","Chisq", "F", "Cp"), scale, df.scale, n)
 {
     test <- match.arg(test)
     dev.col <- match("Deviance", colnames(table))
-    if(is.na(dev.col)) dev.col <- match("Sum of Sq", colnames(table))
+    if (test=="Rao") dev.col <- match("Rao", colnames(table))
+    if (is.na(dev.col)) dev.col <- match("Sum of Sq", colnames(table))
     switch(test,
-	   "Chisq" = {
+	   "Rao"=,"LRT"=,"Chisq" = {
                dfs <- table[, "Df"]
                vals <- table[, dev.col]/scale * sign(dfs)
 	       vals[dfs %in% 0] <- NA
                vals[!is.na(vals) & vals < 0] <- NA # rather than p = 0
 	       cbind(table,
-                     "P(>|Chi|)" = pchisq(vals, abs(dfs), lower.tail=FALSE)
+                     "Pr(>Chi)" = pchisq(vals, abs(dfs), lower.tail=FALSE)
                      )
 	   },
 	   "F" = {

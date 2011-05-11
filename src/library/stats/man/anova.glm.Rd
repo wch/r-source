@@ -20,7 +20,8 @@
     \code{objects} for the \code{"glmlist"} method.}
   \item{dispersion}{the dispersion parameter for the fitting family.
     By default it is obtained from the object(s).}
-  \item{test}{a character string, (partially) matching one of \code{"Chisq"},
+  \item{test}{a character string, (partially) matching one of \code{"Chisq"}, 
+  \code{"LRT"}, \code{"Rao"},
     \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.}
 }
 \details{
@@ -45,7 +46,11 @@
   most appropriate.  Mallows' \eqn{C_p}{Cp} statistic is the residual
   deviance plus twice the estimate of \eqn{\sigma^2} times
   the residual degrees of freedom, which is closely related to AIC (and
-  a multiple of it if the dispersion is known).
+  a multiple of it if the dispersion is known). 
+  You can also choose \code{"LRT"} and 
+    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test. 
+    The former is synonymous with \code{"Chisq"} (although both have 
+    an asymptotic chi-square distribution).
 
   The dispersion estimate will be taken from the largest model, using
   the value returned by \code{\link{summary.glm}}.  As this will in most
@@ -82,6 +87,8 @@ example("glm", echo = FALSE)}
 anova(glm.D93)
 anova(glm.D93, test = "Cp")
 anova(glm.D93, test = "Chisq")
+glm.D93a <- update(glm.D93, ~treatment*outcome) ## equivalent to Pearson Chi-square
+anova(glm.D93, glm.D93a, test = "Rao")
 }
 \keyword{models}
 \keyword{regression}

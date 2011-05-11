@@ -418,6 +418,8 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	return(anova.glmlist(c(list(object), dotargs),
 			     dispersion = dispersion, test=test))
 
+    ## score tests require a bit of extra computing 
+    doscore <- !is.null(test) && test=="Rao"
     ## extract variables from model
 
     varlist <- attr(object$terms, "variables")
@@ -430,10 +432,28 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     nvars <- max(0, varseq)
     resdev <- resdf <- NULL
 
+    if (doscore){
+      score <- numeric(nvars)
+      # fit a null model
+      method <- object$method
+      y <- object$y
+      fit <- eval(call(if(is.function(method)) "method" else method,
+                       x=x[, varseq == 0, drop = FALSE],
+                       y=y,
+                       weights=object$prior.weights,
+                       start  =object$start,
+                       offset =object$offset,
+                       family =object$family,
+                       control=object$control))
+      r <- fit$residuals
+      w <- fit$weights
+    }
+
     ## if there is more than one explanatory variable then
     ## recall glm.fit to fit variables sequentially
 
-    if(nvars > 1) {
+    ## for score tests, we need to do so in any case
+    if(nvars > 1 || doscore) {
 	method <- object$method
         ## allow for 'y = FALSE' in the call (PR#13098)
         y <- object$y
@@ -454,9 +474,27 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
                              offset =object$offset,
                              family =object$family,
                              control=object$control))
+            if (doscore) {
+              zz <- eval(call(if(is.function(method)) "method" else method,
+                             x=x[, varseq <= i, drop = FALSE],
+                             y=r,
+                             weights=w,
+                             offset=object$offset))
+              score[i] <-  zz$null.deviance - zz$deviance
+              r <- fit$residuals
+              w <- fit$weights
+            }
 	    resdev <- c(resdev, fit$deviance)
 	    resdf <- c(resdf, fit$df.residual)
 	}
+        if (doscore) {
+          zz <- eval(call(if(is.function(method)) "method" else method,
+                          x=x,
+                          y=r,
+                          weights=w,
+                          offset=object$offset))
+          score[nvars] <-  zz$null.deviance - zz$deviance
+        }
     }
 
     ## add values from null and full model
@@ -472,6 +510,8 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     if (length(tl) == 0L) table <- table[1,,drop=FALSE] # kludge for null model
     dimnames(table) <- list(c("NULL", tl),
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
+    if (doscore)
+      table <- cbind(table, Rao=c(NA,score))
     title <- paste("Analysis of Deviance Table", "\n\nModel: ",
 		   object$family$family, ", link: ", object$family$link,
 		   "\n\nResponse: ", as.character(varlist[-1L])[1L],
@@ -504,6 +544,8 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 {
 
+    doscore <- !is.null(test) && test=="Rao"
+    
     ## find responses for all models and remove
     ## any models with a different response
 
@@ -531,6 +573,27 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     resdf  <- as.numeric(lapply(object, function(x) x$df.residual))
     resdev <- as.numeric(lapply(object, function(x) x$deviance))
 
+    if (doscore){
+      score <- numeric(nmodels)
+      score[1] <- NA
+      df <- -diff(resdf)
+      
+      for (i in seq_len(nmodels-1)) {
+        m1 <- if (df[i]>0) object[[i]] else object[[i+1]]
+        m2 <- if (df[i]>0) object[[i+1]] else object[[i]]
+        r <- m1$residuals
+        w <- m1$weights
+        method <- m2$method
+        zz <- eval(call(if(is.function(method)) "method" else method,
+                        x=model.matrix(m2),
+                        y=r,
+                        weights=w,
+                        offset=m2$offset))
+        score[i+1] <-  zz$null.deviance - zz$deviance
+        if (df < 0) score[i+1] <- - score[i+1]
+      }
+    }
+
     ## construct table and title
 
     table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
@@ -539,6 +602,9 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 			paste(deparse(formula(x)), collapse="\n") )
     dimnames(table) <- list(1L:nmodels, c("Resid. Df", "Resid. Dev", "Df",
 					 "Deviance"))
+    if (doscore)
+      table <- cbind(table, Rao=score)
+    
     title <- "Analysis of Deviance Table\n"
     topnote <- paste("Model ", format(1L:nmodels),": ",
 		     variables, sep="", collapse="\n")

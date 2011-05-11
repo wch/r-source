@@ -74,7 +74,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	nas <- !is.na(dev)
 	P <- dev
 	P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
-	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+	aod[, c("LRT", "Pr(>Chi)")] <- list(dev, P)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -199,10 +199,10 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         df <- aod$Df
         nas <- !is.na(df)
         dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
 	rdf <- object$df.residual
-	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1L], rdf)
+	aod[, c("F value", "Pr(>F)")] <- Fstat(aod, aod$RSS[1L], rdf)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -211,7 +211,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     aod
 }
 
-add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
+add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
+                                                 "Chisq", "F"),
 		     x = NULL, k = 2, ...)
 {
     Fstat <- function(table, rdf) {
@@ -225,6 +226,9 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	P[nnas] <- safe_pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
 	list(Fs=Fs, P=P)
     }
+    test <- match.arg(test)
+    if (test=="Chisq") test <- "LRT"
+
     if(!is.character(scope))
 	scope <- add.scope(object, update.formula(object, scope))
     if(!length(scope))
@@ -232,8 +236,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     oTerms <- attr(object$terms, "term.labels")
     int <- attr(object$terms, "intercept")
     ns <- length(scope)
-    dfs <- dev <- numeric(ns+1)
-    names(dfs) <- names(dev) <- c("<none>", scope)
+    dfs <- dev <- score <- numeric(ns+1)
+    names(dfs) <- names(dev) <- names(score) <- c("<none>", scope)
     add.rhs <- paste(scope, collapse = "+")
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
@@ -279,6 +283,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
                   family=object$family, control=object$control)
     dfs[1L] <- z$rank
     dev[1L] <- z$deviance
+    r <- z$residuals
+    w <- z$weights
     ## workaround for PR#7842. terms.formula may have flipped interactions
     sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
                      function(x) paste(sort(x), collapse=":"))
@@ -290,6 +296,11 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      family=object$family, control=object$control)
 	dfs[tt] <- z$rank
 	dev[tt] <- z$deviance
+        if (test=="Rao") {
+          ## WLS for score test (comes out as model SS)
+          zz <- glm.fit(X, r, w, offset=offset)
+          score[tt] <- zz$null.deviance - zz$deviance
+        }
     }
     if (scale == 0)
 	dispersion <- summary(object, dispersion = NULL)$dispersion
@@ -307,20 +318,29 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      row.names = names(dfs), check.names = FALSE)
     if(all(is.na(aic))) aod <- aod[, -3]
     test <- match.arg(test)
-    if(test == "Chisq") {
+    if(test == "LRT") {
         dev <- pmax(0, loglik[1L] - loglik)
         dev[1L] <- NA
         LRT <- if(dispersion == 1) "LRT" else "scaled dev."
         aod[, LRT] <- dev
         nas <- !is.na(dev)
         dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
+    } else if(test == "Rao") {
+        dev <- pmax(0, score) # roundoff guard
+        dev[1L] <- NA
+        nas <- !is.na(dev)
+        SC <- if(dispersion == 1) "Rao score" else "scaled Rao sc."
+        dev <- dev/dispersion
+        aod[, SC] <- dev
+        dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
             warning(gettextf("F test assumes quasi%s family", fam),
                     domain = NA)
 	rdf <- object$df.residual
-	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
+	aod[, c("F value", "Pr(>F)")] <- Fstat(aod, rdf)
     }
     head <- c("Single term additions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -375,7 +395,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         nas <- !is.na(dev)
         P <- dev
         P[nas] <- safe_pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
-        aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+        aod[, c("LRT", "Pr(>Chi)")] <- list(dev, P)
     }
     head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -441,7 +461,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
         df <- aod$Df
         nas <- !is.na(df)
         dev[nas] <- safe_pchisq(dev[nas], df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
 	dfs <- aod$Df
@@ -452,7 +472,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	P <- Fs
 	nas <- !is.na(Fs)
 	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
-	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
+	aod[, c("F value", "Pr(>F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
@@ -464,9 +484,11 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 drop1.mlm <- function(object, scope, ...)
     stop("no 'drop1' method for \"mlm\" models")
 
-drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
+drop1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT", "Chisq", "F"),
 		      k = 2, ...)
 {
+    test <- match.arg(test)
+    if (test=="Chisq") test <- "LRT"
     x <- model.matrix(object)
 #    iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
@@ -485,6 +507,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     chisq <- object$deviance
     dfs <- numeric(ns)
     dev <- numeric(ns)
+    score <- numeric(ns)
     y <- object$y
     if(is.null(y)) {
         y <- model.response(model.frame(object))
@@ -500,10 +523,22 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      family=object$family, control=object$control)
 	dfs[i] <- z$rank
 	dev[i] <- z$deviance
+
+        if (test=="Rao"){
+            r <- z$residuals
+            w <- z$weights
+            ## Approximative refit of full model to residuals using WLS
+            ## Score statistic comes out as (weighted) model SS
+            zz <- glm.fit(x, r, w, offset=object$offset)
+            score[i] <- zz$null.deviance - zz$deviance
+        }
     }
     scope <- c("<none>", scope)
     dfs <- c(object$rank, dfs)
     dev <- c(chisq, dev)
+    if (test=="Rao") {
+      score <- c(NA, score)
+    }
     dispersion <- if (is.null(scale) || scale == 0)
 	summary(object, dispersion = NULL)$dispersion
     else scale
@@ -519,15 +554,22 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
 		      row.names = scope, check.names = FALSE)
     if(all(is.na(aic))) aod <- aod[, -3]
-    test <- match.arg(test)
-    if(test == "Chisq") {
+    if(test == "LRT") {
         dev <- pmax(0, loglik - loglik[1L])
         dev[1L] <- NA
         nas <- !is.na(dev)
         LRT <- if(dispersion == 1) "LRT" else "scaled dev."
         aod[, LRT] <- dev
         dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
-        aod[, "Pr(Chi)"] <- dev
+        aod[, "Pr(>Chi)"] <- dev
+    } else if(test == "Rao") {
+        dev <- pmax(0, score) # roundoff guard
+        nas <- !is.na(dev)
+        SC <- if(dispersion == 1) "Rao score" else "scaled Rao sc."
+        dev <- dev/dispersion
+        aod[, SC] <- dev
+        dev[nas] <- safe_pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        aod[, "Pr(>Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
             warning(gettextf("F test assumes 'quasi%s' family", fam),
@@ -542,7 +584,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	P <- Fs
 	nas <- !is.na(Fs)
 	P[nas] <- safe_pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
-	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
+	aod[, c("F value", "Pr(>F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:", deparse(formula(object)),
 	      if(!is.null(scale) && scale > 0)

@@ -2,7 +2,7 @@
 R version 2.14.0 Under development (unstable) (2011-05-05 r55778)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin10.7.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1970,7 +1970,7 @@ Single term deletions
 Model:
 Fertility ~ Agriculture + Examination + Education + Catholic + 
     Infant.Mortality
-                 Df Sum of Sq  RSS AIC F value   Pr(F)    
+                 Df Sum of Sq  RSS AIC F value  Pr(>F)    
 <none>                        2105 191                    
 Agriculture       1       308 2413 195    5.99  0.0187 *  
 Examination       1        53 2158 190    1.03  0.3155    
@@ -1999,10 +1999,10 @@ Single term deletions
 
 Model:
 counts ~ outcome + treatment
-          Df Deviance  AIC  LRT Pr(Chi)  
-<none>           5.13 56.8               
-outcome    2    10.58 58.2 5.45   0.065 .
-treatment  2     5.13 52.8 0.00   1.000  
+          Df Deviance  AIC  LRT Pr(>Chi)  
+<none>           5.13 56.8                
+outcome    2    10.58 58.2 5.45    0.065 .
+treatment  2     5.13 52.8 0.00    1.000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > drop1(glm.D93, test="F")
@@ -2012,10 +2012,18 @@ Single term deletions
 
 Model:
 counts ~ outcome + treatment
-          Df Deviance  AIC F value Pr(F)
-<none>           5.13 56.8              
-outcome    2    10.58 58.2    2.13  0.23
-treatment  2     5.13 52.8    0.00  1.00
+          Df Deviance  AIC F value Pr(>F)
+<none>           5.13 56.8               
+outcome    2    10.58 58.2    2.13   0.23
+treatment  2     5.13 52.8    0.00   1.00
+> add1(glm.D93, scope=~outcome*treatment, test="Rao") ## Pearson Chi-square 
+Single term additions
+
+Model:
+counts ~ outcome + treatment
+                  Df Deviance  AIC Rao score Pr(>Chi)
+<none>                   5.13 56.8                   
+outcome:treatment  4     0.00 59.6      5.17     0.27
 > ## Don't show: 
 > options(od)
 > ## End Don't show
@@ -2509,12 +2517,21 @@ Response: counts
 Terms added sequentially (first to last)
 
 
-          Df Deviance Resid. Df Resid. Dev P(>|Chi|)  
-NULL                          8    10.5814            
-outcome    2   5.4523         6     5.1291   0.06547 .
-treatment  2   0.0000         4     5.1291   1.00000  
+          Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                          8    10.5814           
+outcome    2   5.4523         6     5.1291  0.06547 .
+treatment  2   0.0000         4     5.1291  1.00000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+> glm.D93a <- update(glm.D93, ~treatment*outcome) ## equivalent to Pearson Chi-square
+> anova(glm.D93, glm.D93a, test = "Rao")
+Analysis of Deviance Table
+
+Model 1: counts ~ outcome + treatment
+Model 2: counts ~ treatment + outcome + treatment:outcome
+  Resid. Df Resid. Dev Df Deviance    Rao Pr(>Chi)
+1         4     5.1291                            
+2         0     0.0000  4   5.1291 5.1732     0.27
 > 
 > 
 > 
@@ -3684,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3a3c1b8>
+<environment: 0x100922f40>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -6732,7 +6749,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x6a19a30>
+<environment: 0x106cef0d8>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7134,7 +7151,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x5d62170>
+<environment: 0x10bd424b0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11510,22 +11527,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x62fd928>
+<environment: 0x1075640a0>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x62fd928>
+<environment: 0x1075640a0>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x62fd928>
+<environment: 0x1075640a0>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x62fd928>
+<environment: 0x1075640a0>
 
 $name
 [1] "identity"
@@ -11536,12 +11553,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x62f2410>
+<environment: 0x107558d20>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x62f2410>
+<environment: 0x107558d20>
 
 > 
 > 
@@ -15198,7 +15215,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x37431d0>
+<environment: 0x10ba82fb8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17271,9 +17288,9 @@ B    L                 27 14 29 19 29 31 41 20 44
 Loading required package: Matrix
 Loading required package: lattice
 
-Attaching package: 'Matrix'
+Attaching package: ‘Matrix’
 
-The following object(s) are masked from 'package:base':
+The following object(s) are masked from ‘package:base’:
 
     det
 

@@ -22,7 +22,7 @@ add1(object, scope, \dots)
 \method{add1}{lm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
      x = NULL, k = 2, \dots)
 
-\method{add1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
+\method{add1}{glm}(object, scope, scale = 0, test = c("none", "Rao", "LRT", "Chisq", "F"),
      x = NULL, k = 2, \dots)
 
 drop1(object, scope, \dots)
@@ -33,7 +33,7 @@ drop1(object, scope, \dots)
 \method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
       test = c("none", "Chisq", "F"), k = 2, \dots)
 
-\method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
+\method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Rao", "LRT", "Chisq", "F"),
       k = 2, \dots)
 }
 \arguments{
@@ -48,7 +48,12 @@ drop1(object, scope, \dots)
     estimated dispersion.
     The \eqn{\chi^2}{Chisq} test can be an exact test
     (\code{lm} models with known scale) or a likelihood-ratio test or a
-    test of the reduction in scaled deviance depending on the method.}
+    test of the reduction in scaled deviance depending on the method.
+    For \code{\link{glm}} fits, you can also choose \code{"LRT"} and 
+    \code{"Rao"} for likelihood ratio tests and Rao's efficient score test. 
+    The former is synonymous with \code{"Chisq"} (although both have 
+    an asymptotic chi-square distribution).
+    }
   \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
   \item{trace}{if \code{TRUE}, print out progress reports.}
   \item{x}{a model matrix containing columns for the fitted model and all
@@ -138,6 +143,7 @@ drop1(lm1, test="F")  # So called 'type II' anova
 \dontshow{example(glm, echo = FALSE)}
 drop1(glm.D93, test="Chisq")
 drop1(glm.D93, test="F")
+add1(glm.D93, scope=~outcome*treatment, test="Rao") ## Pearson Chi-square 
 \testonly{options(od)}
 }
 \keyword{models}
