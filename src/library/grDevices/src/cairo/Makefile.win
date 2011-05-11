@@ -52,18 +52,27 @@ PKG_LIBS=-L"$(CAIRO_HOME)/win$(WIN)" -lcairo -lpixman-1 -lpng -lz \
   -lgdi32 -lmsimg32
 endif
 
-all: winCairo.dll
+SOURCES = cairoBM.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+
+all: makeMakedeps winCairo.dll
 	@cp winCairo.dll $(R_HOME)/library/grDevices/libs$(R_ARCH)
 
-winCairo.dll: cairoBM.o
-
-cairoBM.o: cairoFns.c cairoBM.h ../rbitmap.h
+winCairo.dll: $(OBJECTS)
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/winshlib.mk
 
 mostlyclean distclean: clean
 clean:
-	@-rm -f *.o winCairo.dll
+	@-rm -f Makedeps *.d *.o winCairo.dll
 	@-rm -f $(R_HOME)/library/grDevices/libs$(R_ARCH)/winCairo.dll
 
+
+makeMakedeps: $(DEPENDS)
+	@$(RM) Makedeps
+	-@cat $(DEPENDS) > Makedeps
+
+
+-include Makedeps
