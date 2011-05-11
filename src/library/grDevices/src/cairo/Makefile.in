@@ -16,19 +16,25 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) @CAIRO_CPPFLAGS@ \
   -I$(top_srcdir)/src/modules/X11 $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
+## FIXME: the X11 module is not made at all if BUILD_X11 is false.
 SOURCES = cairoBM.c
+DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o) $(top_builddir)/src/modules/X11/rbitmap.o
 
 cairo_la = cairo$(SHLIB_EXT)
 ## AIX needs LIBM
 cairo_la_LIBADD = @CAIRO_LIBS@ @BITMAP_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
-all: Makefile R
+all: Makefile Makedeps
+	@$(MAKE) Makedeps
+	@$(MAKE) R
 
-Makefile: $(srcdir)/Makefile.in \
-  $(top_builddir)/config.status \
-  $(SOURCES)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
 
 R: Makefile
 	@$(MAKE) $(cairo_la)
@@ -45,7 +51,7 @@ cairoBM.o: cairoFns.c cairoBM.h $(top_srcdir)/src/modules/X11/bitmap.h \
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs *.o $(cairo_la)
+	@-rm -rf .libs _libs Makedeps *.d *.o $(cairo_la)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

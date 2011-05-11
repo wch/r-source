@@ -51,7 +51,7 @@ extractAIC(fit, scale, k = 2, \dots)
   to Mallows' \eqn{C_p}{Cp}) in the case of known scale \eqn{s} and
   \eqn{n \log (RSS/n)}{n log (RSS/n)} for unknown scale.
   \code{\link{AIC}} only handles unknown scale and uses the formula
-  \eqn{n \log (RSS/n) - n + n \log 2\pi - \sum \log w}{n log (RSS/n) - n + n log 2pi - sum(log w)}
+  \eqn{n \log (RSS/n) + n + n \log 2\pi - \sum \log w}{n*log(RSS/n) + n + n*log 2pi - sum(log w)}
   where \eqn{w} are the weights.  Further \code{AIC} counts the scale
   estimation as a parameter in the \code{edf} and \code{extractAIC} does not.
 
