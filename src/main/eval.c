@@ -2835,7 +2835,7 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 	SETSTACK(i, __ssl_v__ ? R_TrueValue : R_FalseValue); \
 } while(0)
 
-typedef struct { double dval; int ival; } scalar_value_t;
+typedef union { double dval; int ival; } scalar_value_t;
 
 /* bcStackScalar() checks whether the object in the specified stack
    location is a simple real, integer, or logical scalar (i.e. length
@@ -2867,6 +2867,7 @@ static R_INLINE int bcStackScalar(int i, scalar_value_t *v)
 	    }
 	    else return 0;
 	default:
+	    v->ival = 0; /* keep gcc -Wall happy */
 	    return 0;
 	}
     }
