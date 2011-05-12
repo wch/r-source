@@ -432,7 +432,7 @@ AC_ARG_WITH([recommended-packages],
 
 ## ICU
 AC_ARG_WITH([ICU],
-[AS_HELP_STRING([--with-ICU],[use ICU library @<:@yes@:>@])],
+[AS_HELP_STRING([--with-ICU],[use ICU library (if available) @<:@yes@:>@])],
 [R_ARG_USE(ICU)],
 [use_ICU=yes])
 
