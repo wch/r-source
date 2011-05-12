@@ -29,6 +29,7 @@
     cairo_show_page
     cairo_pdf_surface_create (1.2)
     cairo_ps_surface_create  (1.2)
+    cairo_ps_surface_set_eps  (1.6)
     cairo_surface_write_to_png
     cairo_svg_surface_create (1.2)
     cairo_svg_surface_restrict_to_version (1.2)
@@ -282,6 +283,11 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if (res != CAIRO_STATUS_SUCCESS) {
 		error("cairo error '%s'", cairo_status_to_string(res));
 	    }
+// We already require >= 1.2
+#if CAIRO_VERSION_MAJOR > 2 || CAIRO_VERSION_MINOR >= 6
+	    if(!xd->onefile)
+		cairo_ps_surface_set_eps(xd->cs, TRUE);
+#endif
 	    xd->cc = cairo_create(xd->cs);
 	    res = cairo_status(xd->cc);
 	    if (res != CAIRO_STATUS_SUCCESS) {

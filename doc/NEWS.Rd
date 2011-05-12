@@ -320,6 +320,9 @@
       \item \code{tools::compactPDF()} gets more compression (usually a
       little, sometimes a lot) by using the compressed object streams of
       PDF 1.5.
+
+      \item \code{cairo_ps(onefile = TRUE)} generates encapsulated EPS
+      on platforms with cairo >= 1.6.
     }
   }
 
