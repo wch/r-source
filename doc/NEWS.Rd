@@ -69,6 +69,17 @@
       \item Sweave custom graphics devices can have a custom function
       \code{foo.off()} to shut them down.      
 
+      \item Warnings are issued when non-portable filenames are found
+      for graphics files (and chunks if \code{split=TRUE}).  Portable
+      names are regarded as alphanumeric plus hyphen, underscore, plus
+      and hash (periods cause problems with recognizing file
+      extensions).
+
+      \item The \code{Rtangle()} driver has a new option
+      \code{show.line.nos} which is by default false; if true it
+      annotates code chunks with a comment giving the line number of the
+      first line in the sources (the behaviour of \R >= 2.12.0).
+
       \item Package installation tangles the vignette sources: this step
       now converts the vignette sources from the vignette/package
       encoding to the current encoding, and records the encoding (if not
