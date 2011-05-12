@@ -143,6 +143,7 @@ X11.options(\dots, reset = FALSE)
   be detected) it is a watch cursor.  (The exact cursors displayed will
   depend on the window manager in use.)
 }
+
 \section{X11 Fonts}{
   This section applies only to \code{type = "Xlib"}.
 
@@ -274,6 +275,12 @@ X11.options(\dots, reset = FALSE)
   is set by \code{X11.options(maxcolorsize=)} and defaults to
   256.  With that setting the largest cube tried is 4 levels each for
   RGB, using 64 colours in the palette.
+
+  % A test in 2011 showed that cairo >= 1.6 works on 8-bit visuals,
+  % but does not interpret colours correctly.  Done via VNC.
+  The cairographics-based devices most likely only work (or work
+  correctly) with \sQuote{truecolor} visuals, although in principle this
+  depends on the cairo installation.
 }
 
 \section{Anti-aliasing}{

@@ -59,10 +59,11 @@ tiff(filename = "Rplot\%03d.tiff",
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
   \item{\dots}{for \code{type = "Xlib"} only, additional arguments to
-    the underlying \code{\link{X11}} device such as \code{fonts}.
+    the underlying \code{\link{X11}} device such as \code{fonts} or
+     \code{family}.
 
     For types \code{"cairo"} and \code{"quartz"}, the \code{family}
-    argument can be supplied.  See, e.g. the \sQuote{Cairo fonts}
+    argument can be supplied.  See the \sQuote{Cairo fonts}
     section in the help for \code{\link{X11}}.}
   
   \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
@@ -103,13 +104,13 @@ tiff(filename = "Rplot\%03d.tiff",
   semi-transparent colours, including on a transparent or
   semi-transparent background.
 
-  \R can be compiled without support for each of these devices: this
-  will be reported if you attempt to use them on a system where they are
-  not supported.  For \code{type = "Xlib"} they may not be usable unless
-  the X11 display is available to the owner of the \R process.
-  \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
-  "quartz"} uses the \code{\link{quartz}} device and so is only
-  available where that is (on some Mac OS X builds: see
+  \R can be compiled without support for some or all of the types for
+  each of these devices: this will be reported if you attempt to use
+  them on a system where they are not supported.  For \code{type =
+  "Xlib"} they may not be usable unless the X11 display is available to
+  the owner of the \R process.  \code{type = "cairo"} requires cairo 1.2
+  or later.  \code{type = "quartz"} uses the \code{\link{quartz}} device
+  and so is only available where that is (on some Mac OS X builds: see
   \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file.  Viewers will often
