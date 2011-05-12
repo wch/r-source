@@ -194,7 +194,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             }
         } else if (enc == "unknown") {
             stop(sQuote(basename(file)),
-                 " declares a encoding that Sweave does not know about",
+                 " declares an encoding that Sweave does not know about",
                  domain = NA, call. = FALSE)
         }
         if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
