@@ -166,13 +166,13 @@ strptime(x, format, tz = "")
   are supported is OS-dependent.  These are accepted for input, but with
   the standard interpretation.
 
-  Specific to \R is \code{\%OSn}, which for output gives the
-  seconds to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
+  Specific to \R is \code{\%OSn}, which for output gives the seconds
+  truncated to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
   not followed by a digit, it uses the setting of
-  \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n = 3}).
-  Further, for \code{strptime} \code{\%OS} will input seconds including
-  fractional seconds.  Note that \code{\%S} ignores (and not rounds)
-  fractional parts on output.
+  \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
+  3}).  Further, for \code{strptime} \code{\%OS} will input seconds
+  including fractional seconds.  Note that \code{\%S} ignores (and not
+  rounds) fractional parts on output.
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
