@@ -279,8 +279,9 @@
       2MB on the installed size.
       
       \item The non-screen cairo-based devices are no longer in the X11
-      module and so can in principle be installed without X11.  (Not
-      that we have ever seen a Unix-alike system with cairo but not X11.)
+      module and so can be installed without X11.  (We have never seen a
+      Unix-alike system with cairographics installed but not X11, but a
+      user might select \option{--without-x}.)
 
       \item Configure will try to use \code{-fobjc-exceptions} for the
       Objective-C compiler (if present) to ensure that even compilers
