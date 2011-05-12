@@ -1596,6 +1596,7 @@ d <- dist(x)
 as.matrix(d)
 ## Threw an error < 2.13.0
 
+
 ## smooth.spline with data with a very small range.  (PR#14552)
 dt <- seq(as.POSIXct("2011-01-01"), as.POSIXct("2011-01-01 10:00:00"), by="min")
 x <- as.double(dt)
@@ -1604,3 +1605,10 @@ s <- smooth.spline(x, y)
 stopifnot(length(s$x) == length(x))
 ## Chose 5 distinct values of x in 2.13.0
 
+
+## readBin on a raw connection
+rawcon <- rawConnection(as.raw(101:110))
+res <- readBin(rawcon, what="integer", size=1, n=4)
+close(rawcon)
+stopifnot(identical(res, 101:104))
+## read the same value repeatedly in 2.13.0

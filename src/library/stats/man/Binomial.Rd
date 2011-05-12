@@ -77,6 +77,8 @@ rbinom(n, size, prob)
   Kachitvichyanukul, V. and Schmeiser, B. W. (1988)
   Binomial random variate generation.
   \emph{Communications of the ACM}, \bold{31}, 216--222.
+
+  For larger values it uses inversion.
 }
 \examples{
 require(graphics)

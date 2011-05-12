@@ -129,7 +129,7 @@
       \code{cairo_ps()} gain a \code{family} argument.
 
       On a Unix-alike \code{X11()} gains a \code{family} argument.  This
-      is now one of the \code{x11.options()} and so can be passed as an
+      is one of the \code{x11.options()} and so can be passed as an
       argument to the \code{bmp()}, \code{jpeg()}, \code{png()} and
       \code{tiff()} devices.
 
@@ -156,8 +156,8 @@
       
       \item There are experimental functions \code{dev.hold()} and
       \code{dev.flush()} for use with graphics devices with buffering.
-      (Currently implemented only for the cairo-based \code{X11()} types
-      with buffering, and for \code{windows()}.)
+      (Currently implemented for the cairo-based \code{X11()} types
+      with buffering and for \code{windows()}.)
     }
   }
 
@@ -437,12 +437,16 @@
       \item \code{seek(origin = "current")} incorrectly reported it was
       not implemented for a \code{gzfile()} connection.
 
-      \item \code{c()} and other functions using \code{AnswerType} could
-      silently overflow the maximum supported vector length and cause a
-      crash. \PR{14571}
+      \item \code{c()}, \code{unlist()}, \code{cbind()} and
+      \code{rbind()} could silently overflow the maximum vector length
+      and cause a segfault. \PR{14571}
 
       \item The \code{fonts} argument to \code{X11(type = "Xlib")} was
       being ignored.
+
+      \item Reading (e.g. with \code{readBin()}) from a raw connection
+      was not advancing the pointer, so successive reads would read the
+      same value.  (Spotted by Bill Dunlap.)
     }
   }
 }
