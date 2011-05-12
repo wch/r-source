@@ -78,10 +78,6 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{file} (or set \code{onefile=TRUE}) the file will contain the
   last page plotted.
 
-%  %http://lwn.net/Articles/256590/
-%  The \code{cairo_ps} output is not yet encapsulated (that is coming in
-%  cairo 1.6).
-
   There is full support of transparency, but using this is one of the
   things liable to trigger bitmap output (and will always do so for
   \code{cairo_ps}).
@@ -100,7 +96,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 
 \section{Anti-aliasing}{
-  Anti-aliasing is applies to both graphics and fonts.  It is generally
+  Anti-aliasing is applied to both graphics and fonts.  It is generally
   preferable for lines and text, but can lead to undesirable effects for
   fills, e.g. for \code{\link{image}} plots, and so is never used for
   fills.

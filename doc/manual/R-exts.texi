@@ -2075,8 +2075,8 @@ within the source file, since @code{Sweave()} processes comments to look
 for options and metadata lines.  When @code{Sweave()} or
 @code{Stangle()} is called on the vignette source, it will be
 converted@footnote{provided the encoding is known: currently if it is
-not that of a current MBCS locale, it is guessed to be Latin-1.} to the
-encoding of the current @R{} session.
+not, it is guessed to be Latin-1.} to the encoding of the current @R{}
+session.
 
 @code{Stangle()} will produce an @R{} code file in the current locale's
 encoding: for a non-ASCII vignette what that is recorded in a comment at

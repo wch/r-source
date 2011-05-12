@@ -18,19 +18,16 @@
       allows the y-line bias of the graphics device to be tweaked,
       including to reproduce output from earlier versions of \R.
 
-      \item Labeling of p-values in various anova tables has been rationalized to \code{"Pr(>F)"} 
-      and \code{"Pr(>Chi)"} (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"}, and \code{"P(>|Chi|)"}
-      variants have been eliminated).  Scripts that extract the p value via indexing by name
-      may need adjustment. 
+      \item Labeling of p-values in various anova tables has been
+      rationalized to be either \code{"Pr(>F)"} or \code{"Pr(>Chi)"}
+      (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
+      variants have been eliminated).  Code which extracts the p value
+      \emph{via} indexing by name may need adjustment.
     }
   }
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Rao's efficient score test has been implemented for \code{glm}
-      objects. Specifically, the \code{add1}, \code{drop1}, and \code{anova}
-      methods now allow \code{test="Rao"}.  
-
       \item \code{txtProgressBar()} can write to an open connection
       instead of the console.
 
@@ -42,12 +39,12 @@
 	TRUE} allows Python-style named captures.  (Wish and
       contribution of \PR{14518}.)
 
-      \item The placement of plotmath text in the margins now makes the
-      same vertical adjustment as ordinary text, so using ordinary and
-      plotmath on the same margin line will seem better aligned (but not
-      exactly aligned, since ordinary text has descenders below the
-      baseline and plotmath places them on the baseline).  (Related to
-      \PR{14537}.)
+      \item The placement of plotmath text in the margins of plots done
+      by base graphics now makes the same vertical adjustment as
+      ordinary text, so using ordinary and plotmath on the same margin
+      line will seem better aligned (but not exactly aligned, since
+      ordinary text has descenders below the baseline and plotmath
+      places them on the baseline).  (Related to \PR{14537}.)
 
       \item \code{sunflowerplot()} now has a formula interface.
       (Wish of \PR{14541}.)
@@ -75,7 +72,7 @@
       (Wish of \PR{14550}.)
 
       \item \code{smooth.spline()} gains a \code{tol} argument which
-      controls how different \code{x} value need to be to regarded as
+      controls how different \code{x} values need to be to regarded as
       distinct.  The default has been changed to be more reliable for
       inputs whose range is small compared to their maximum absolute
       value.  (Wish of \PR{14452}.)
@@ -98,14 +95,35 @@
 
       \code{unzip()} has a new option to restore file times from those
       recorded (in an unknown timezone) in the zip file.
-
-      \item The \code{pdf()} device makes use of Flate compression: this
-      controlled by the new logical argument \code{compress}, and is
-      enabled by default.
       
       \item \code{update.packages()} now accepts a character vector of
       package names for the \code{oldPkgs} argument.  (Suggestion of
       Tal Galili.)
+
+      \item The special reference class fields \code{.self} and
+      \code{.refClassDef} are now read-only to prevent corrupting
+      the object.
+
+      \item \code{decompose()} now returns the original series as part
+      of its value, so it can be used (rather than reconstructed) when
+      plotting.  (Suggestion of Rob Hyndman.)
+
+      \item Rao's efficient score test has been implemented for
+      \code{glm} objects.  Specifically, the \code{add1}, \code{drop1},
+      and \code{anova} methods now allow \code{test = "Rao"}.
+      
+      \item There are experimental functions \code{dev.hold()} and
+      \code{dev.flush()} for use with graphics devices with buffering.
+      (Currently implemented only for the cairo-based \code{X11()} types
+      with buffering, and for \code{windows()}.)
+    }
+  }
+  
+  \subsection{GRAPHICS DEVICES}{
+    \itemize{
+      \item The \code{pdf()} device makes use of Flate compression: this
+      controlled by the new logical argument \code{compress}, and is
+      enabled by default.
       
       \item Devices \code{svg()}, \code{cairo_pdf()} and
       \code{cairo_ps()} gain a \code{family} argument.
@@ -113,8 +131,7 @@
       On a Unix-alike \code{X11()} gains a \code{family} argument.  This
       is now one of the \code{x11.options()} and so can be passed as an
       argument to the \code{bmp()}, \code{jpeg()}, \code{png()} and
-      \code{tiff()} devices, where it applies to the cairo and Quartz
-      types.
+      \code{tiff()} devices.
 
       Analogous changes have been made on Windows, so all \R graphics
       devices now have a \code{family} argument except \code{pictex()}
@@ -129,22 +146,14 @@
 
       \item There are experimental new types for \code{X11()}: see its
       help page.
-
-      \item The special reference class fields \code{.self} and
-      \code{.refClassDef} are now read-only to prevent corrupting
-      the object.
-
-      \item \code{decompose()} now returns the original series as part
-      of its value, so it can be used (rather than reconstructed) when
-      plotting.  (Suggestion of Rob Hyndman.)
       
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather
       than a crosshair); the crosshair is used when the locator is in
       use, and a watch cursor is shown when plotting computations are
       being done.  (These are the standard names for X11 cursors: how
-      they are actually displayed depends on the window manager.)
-
+      they are actually displayed depends on the platform.)
+      
       \item There are experimental functions \code{dev.hold()} and
       \code{dev.flush()} for use with graphics devices with buffering.
       (Currently implemented only for the cairo-based \code{X11()} types
@@ -170,7 +179,8 @@
       directory \file{vignettes} and not \file{inst/doc}: \command{R CMD
       build} will now re-build vignettes in directory \file{vignettes}
       and copy the \file{.Rnw} (etc) files and the corresponding PDFs to
-      \file{inst/doc}.
+      \file{inst/doc}.  Further files to be copied to \file{inst/doc}
+      can be specified \emph{via} the @file{vignettes/.install_extras}.
 
       \item \command{R CMD Sweave} now supports a \option{--driver}
       option to select the Sweave driver: the default is equivalent to
@@ -179,13 +189,25 @@
       \item \command{R CMD Sweave} and \command{R CMD Stangle} support
       \option{--encoding} and \option{--options} options.
 
-      \item \code{Rtangle()} allows \code{output = "stdout"} or
-      \code{output = "stderr"} to select the output or message
+      \item The \code{Rtangle()} driverallows \code{output = "stdout"}
+      or \code{output = "stderr"} to select the output or message
       connection.  This is convenient for scripting using something like
 \preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R}
 
       \item There is a new option \code{pdf.compress} controlling
-      whether PDF figures are generated using Flate compression.
+      whether PDF figures are generated using Flate compression (they
+      are by default).
+
+      \item Warnings are issued when non-portable filenames are found
+      for graphics files (and chunks if \code{split = TRUE}).  Portable
+      names are regarded as alphanumeric plus hyphen, underscore, plus
+      and hash (periods cause problems with recognizing file
+      extensions).
+
+      \item The \code{Rtangle()} driver has a new option
+      \code{show.line.nos} which is by default false; if true it
+      annotates code chunks with a comment giving the line number of the
+      first line in the sources (the behaviour of \R >= 2.12.0).
     }
   }
 
@@ -355,17 +377,6 @@
 
       \item Sweave custom graphics devices can have a custom function
       \code{foo.off()} to shut them down.      
-
-      \item Warnings are issued when non-portable filenames are found
-      for graphics files (and chunks if \code{split=TRUE}).  Portable
-      names are regarded as alphanumeric plus hyphen, underscore, plus
-      and hash (periods cause problems with recognizing file
-      extensions).
-
-      \item The \code{Rtangle()} driver has a new option
-      \code{show.line.nos} which is by default false; if true it
-      annotates code chunks with a comment giving the line number of the
-      first line in the sources (the behaviour of \R >= 2.12.0).
 
       \item Package installation tangles the vignette sources: this step
       now converts the vignette sources from the vignette/package
