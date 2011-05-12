@@ -670,9 +670,10 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SEXP sj = CAR(cddrArgs);
 		int i = scalarIndex(si);
 		int j = scalarIndex(sj);
-		if (i > 0 && j > 0) {
+		int nrow = INTEGER(dim)[0];
+		int ncol = INTEGER(dim)[1];
+		if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 		    /* indices are legal scalars */
-		    int nrow = INTEGER(dim)[0];
 		    int k = i - 1 + nrow * (j - 1);
 		    switch (TYPEOF(x)) {
 		    case REALSXP:
