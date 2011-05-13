@@ -135,7 +135,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 
 \seealso{
   \code{\link{savePlot}}, which for \code{windows} and
-  \code{X11(type = "Cairo")} provides a simple way to record a PNG
+  \code{X11(type = "cairo")} provides a simple way to record a PNG
   record of the current plot.
   
   \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{png}},
