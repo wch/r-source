@@ -112,10 +112,14 @@
       \code{glm} objects.  Specifically, the \code{add1}, \code{drop1},
       and \code{anova} methods now allow \code{test = "Rao"}.
       
-      \item There are experimental functions \code{dev.hold()} and
-      \code{dev.flush()} for use with graphics devices with buffering.
-      (Currently implemented only for the cairo-based \code{X11()} types
-      with buffering, and for \code{windows()}.)
+      \item New functions \code{dev.hold()} and \code{dev.flush()} for
+      use with graphics devices with buffering.  These are used for most
+      of the high-level graphics functions such as \code{boxplot()}, so
+      that the plot is only displayed when the page is complete.
+
+      Currently implemented for \code{windows(buffered = TRUE)} and the
+      cairo-based \code{X11()} types with buffering, the default
+      on-screen devices on Windows and most Unix-alikes.
     }
   }
   
@@ -496,7 +500,7 @@
       \item R colours are now defined to refer to the sRGB color space.
 
       The PDF, PostScript, and Quartz graphics devices record this fact.
-      X11 (and Cairo) and Windows just assume that your screen conforms.
+      X11 (and cairo) and Windows just assume that your screen conforms.
 
       \item \code{system.file()} gains a \code{mustWork} argument
       (suggestion of Bill Dunlap).
@@ -1698,12 +1702,12 @@
       \item Rendering raster images in PDF output was resetting the
       clipping region.
 
-      \item Rendering of raster images on Cairo X11 device was wrong,
+      \item Rendering of raster images on cairo X11 device was wrong,
       particularly when a small image was being scaled up using
       interpolation.
 
-      With Cairo < 1.6, will be better than before, though still a
-      little clunky.  With Cairo >= 1.6, should be sweet as.
+      With cairo < 1.6, will be better than before, though still a
+      little clunky.  With cairo >= 1.6, should be sweet as.
 
       \item Several bugs fixed in \code{read.DIF()}:  single column
       inputs caused errors, cells marked as \code{"character"} could

@@ -42,6 +42,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
                       n), domain = NA)
     if (is.null(dlab)) dlab <- deparse(substitute(x))
 
+    dev.hold(); on.exit(dev.flush())
     if(!add) {
         dlim <- range(unlist(groups, use.names = FALSE), na.rm = TRUE)
 	glim <- c(1L, n) # in any case, not range(at)

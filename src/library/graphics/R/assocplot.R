@@ -41,6 +41,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
     y.delta <- mean(y.h) * space
     xlim <- c(0, sum(x.w) + NROW(f) * x.delta)
     ylim <- c(0, sum(y.h) + NCOL(f) * y.delta)
+    dev.hold(); on.exit(dev.flush())
     plot.new()
     plot.window(xlim, ylim, log = "")
     x.r <- cumsum(x.w + x.delta)

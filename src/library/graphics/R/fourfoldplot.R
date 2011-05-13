@@ -190,6 +190,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     xlim <- c(0, totalWidth)
     ylim <- c(0, totalHeight)
 
+    dev.hold(); on.exit(dev.flush(), add = TRUE)
     plot.new()
     plot.window(xlim = xlim, ylim = ylim, asp = 1)
 

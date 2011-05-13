@@ -148,6 +148,7 @@ function(x, y = NULL,
     }
 
     ## setup plot
+    dev.hold(); on.exit(dev.flush())
     plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
          xaxs = "i", yaxs = "i", main = main, xlab = xlab, ylab = ylab)
 

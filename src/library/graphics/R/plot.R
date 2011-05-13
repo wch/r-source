@@ -61,9 +61,10 @@ plot.default <-
     ylab <- if (is.null(ylab)) xy$ylab else ylab
     xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+    dev.hold(); on.exit(dev.flush())
     plot.new()
     localWindow(xlim, ylim, log, asp, ...)
-    panel.first # eval() is wrong here {Ross I.}
+    panel.first
     plot.xy(xy, type, ...)
     panel.last
     if (axes) {

@@ -211,6 +211,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
     if(length(border) == 0L) border <- par("fg")
 
+    dev.hold(); on.exit(dev.flush())
     if (!add) {
 	plot.new()
 	## shall we switch log for horizontal with

@@ -300,10 +300,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     }
 
     ##-- Plotting
+    dev.hold(); on.exit(dev.flush())
     plot.new()
     if(!extended) {
         opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
-        on.exit(par(opar))
+        on.exit(par(opar), add = TRUE)
     } else {
         ## This code is extremely ugly, and certainly can be improved.
         ## In the case of extended displays, we also need to provide a
@@ -322,7 +323,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
                     mgp = c(1, 1, 0))
-        on.exit(par(opar))
+        on.exit(par(opar), add = TRUE)
         rtxtHeight <-
             strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2L]
         text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,

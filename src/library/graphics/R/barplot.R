@@ -124,10 +124,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     if (beside)
 	w.m <- matrix(w.m, ncol = NC)
     if(plot) { ##-------- Plotting :
+        dev.hold()
 	opar <-
 	    if (horiz)	par(xaxs = "i", xpd = xpd)
 	    else	par(yaxs = "i", xpd = xpd)
-	on.exit(par(opar))
+	on.exit({dev.flush();par(opar)})
 
 	if (!add) {
 	    plot.new()

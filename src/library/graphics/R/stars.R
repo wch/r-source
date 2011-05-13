@@ -107,6 +107,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     ## The asp argument keeps everything (the symbols!) square
     op <- par(mar = mar, xpd = xpd) ; on.exit(par(op))
+    dev.hold(); on.exit(dev.flush(), add = TRUE)
     if(plot && !add)
         plot(0, type="n", ..., xlim=xlim, ylim=ylim,
              main = main, sub = sub, xlab = xlab, ylab=ylab,

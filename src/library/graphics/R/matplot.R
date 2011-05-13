@@ -88,6 +88,7 @@ matplot <- function(x, y, type = "p",
     if(length(bg) < k)	bg  <- rep(bg,	length.out = k)
     if(length(cex) < k) cex <- rep(cex, length.out = k)
     ii <- seq_len(k)
+    dev.hold(); on.exit(dev.flush())
     if(!add) {
 	ii <- ii[-1L]
 	plot(x[,1],y[,1], type=type[1L], xlab=xlab, ylab=ylab,

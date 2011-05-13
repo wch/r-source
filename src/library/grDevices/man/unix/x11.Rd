@@ -116,14 +116,16 @@ X11.options(\dots, reset = FALSE)
     in non-UTF-8 locales).  The output should be locale-independent.
   }
   \code{type = "nbcairo"} is the same device as \code{type = "cairo"}
-  without buffering: which is faster will depend on the X11
-  connection.  Both will be slower than \code{type = "Xlib"}, especially
-  on a slow X11 connection as all the rendering is done on the machine
-  running \R rather than in the X server.  On slow connections
-  \code{type = "nbcairo"} will be faster than \code{type = "cairo"}: on
-  fast connections and with complicated plots the buffering done by
-  \code{type = "cairo"} will make repainting much faster (unless backing
-  store is in use, which for example it always is on Mac OS X displays).
+  without buffering: which is faster will depend on the X11 connection
+  and the type of plotting.  Both will be slower than \code{type =
+  "Xlib"}, especially on a slow X11 connection, as all the rendering is
+  done on the machine running \R rather than in the X server.  On slow
+  connections \code{type = "nbcairo"} will often be faster than
+  \code{type = "cairo"}: on fast connections and with complicated plots
+  the buffering done by \code{type = "cairo"} will make the initial plot
+  much faster.  (Also, repainting when the window is exposed will be much
+  faster unless backing store is in use, which for example it always is
+  on Mac OS X displays).
   
   Because of known problems with font selection on Mac OS X without
   Pango (for example, the CRAN distribution), \code{type = "cairo"} is
@@ -318,13 +320,13 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   There are two experimental types available in this development version
   of \R.
 
-  Types \code{"cairob2"} and \code{"cairob3"} are both fully
-  double-buffered and update the screen about every 100ms.  They differ
-  in how they do the update: the first uses cairographics facilities in
-  the same way as \code{type = "cairo"} whereas the second uses
-  \code{Xlib} facilities.  The latter should be faster, but may only
-  work on 24- or 32-bit displays (but then these are the only ones fully
-  supported by cairographics).
+  Types \code{"cairob2"} and \code{"cairob3"} are both double-buffered
+  and update the screen about every 100ms.  They differ in how they do
+  the update: the first uses cairographics facilities in the same way as
+  \code{type = "cairo"} whereas the second uses \code{Xlib} facilities.
+  The latter should be faster, but may only work on 24- or 32-bit
+  displays (but then these are the only ones fully supported by
+  cairographics).
 
   The refresh interval can be set (in units of seconds) by e.g.
   \code{\link{options}(X11updates = 0.25)}: the value is consulted when

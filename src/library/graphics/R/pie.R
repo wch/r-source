@@ -36,6 +36,7 @@ pie <-
     xlim <- ylim <- c(-1, 1)
     if (pin[1L] > pin[2L]) xlim <- (pin[1L]/pin[2L]) * xlim
     else ylim <- (pin[2L]/pin[1L]) * ylim
+    dev.hold(); on.exit(dev.flush())
     plot.window(xlim, ylim, "", asp = 1)
     if (is.null(col))
         col <- if(is.null(density))

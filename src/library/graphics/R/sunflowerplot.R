@@ -55,6 +55,7 @@ sunflowerplot.default <-
         number <- number[np]
     }
     n <- length(x)
+    dev.hold(); on.exit(dev.flush())
     if(!add)
         plot(x, y, xlab = xlab, ylab = ylab,
              xlim=xlim, ylim=ylim, log=log, type = "n", ...)

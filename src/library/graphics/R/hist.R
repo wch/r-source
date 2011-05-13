@@ -24,7 +24,7 @@ hist.default <-
 	      main = paste("Histogram of" , xname),
 	      xlim = range(breaks), ylim = NULL,
 	      xlab = xname, ylab,
-	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, 
+	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL,
 	      warn.unused = TRUE, ...)
 {
     if (!is.numeric(x))
@@ -167,6 +167,7 @@ plot.histogram <-
     nB <- length(x$breaks)
     if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
 
+    dev.hold(); on.exit(dev.flush())
     if(!add) {
 	if(is.null(ylim))
 	    ylim <- range(y, 0)

@@ -114,13 +114,14 @@ function(x, y,
 
     ## plot polygons
     if(plot) {
+        dev.hold(); on.exit(dev.flush())
         plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
              xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab, main = main)
         for(i in seq_len(NROW(y1) - 1L))
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i],
                     border = border)
         Axis(xorig, side = 1)
-	
+
         equidist <- any(diff(y1[,1L]) < tol.ylab)
         if(equidist)
             axis(2, at = seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
