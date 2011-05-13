@@ -338,6 +338,7 @@ static int Cairo_holdflush(pDevDesc dd, int level)
     xd->holdlevel += level;
     if(xd->holdlevel <= 0) xd->holdlevel = 0;
 //    printf("holdlevel = %d\n",  xd->holdlevel);
+    /* flush if at level zero - also changes cursor */
     if(xd->buffered && xd->holdlevel == 0) Cairo_update(xd); 
     if (old == 0 && xd->holdlevel > 0) {
 	XDefineCursor(display, xd->window, watch_cursor);
