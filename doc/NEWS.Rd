@@ -120,6 +120,10 @@
       Currently implemented for \code{windows(buffered = TRUE)} and the
       cairo-based \code{X11()} types with buffering, the default
       on-screen devices on Windows and most Unix-alikes.
+      
+      \item If a saved workspace (e.g. \file{.RData}) contains objects
+      that cannot be loaded, \R will now start with an error message
+      and a blank workspace, rather than failing to start. 
     }
   }
   

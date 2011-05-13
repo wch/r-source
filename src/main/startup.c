@@ -119,6 +119,11 @@ void set_workspace_name(const char *fn)
 }
 #endif
 
+const char* get_workspace_name()
+{
+    return workspace_name;
+}
+
 void R_RestoreGlobalEnv(void)
 {
     if(RestoreAction == SA_RESTORE) {
