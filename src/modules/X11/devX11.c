@@ -2507,6 +2507,7 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
     int done = 0;
 
     if (xd->type > WINDOW) return 0;
+    if (xd->buffered) Cairo_update(xd);
     R_ProcessX11Events((void*)NULL);	/* discard pending events */
     XDefineCursor(display, xd->window, cross_cursor);
     XSync(display, 1);
