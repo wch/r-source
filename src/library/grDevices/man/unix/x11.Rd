@@ -208,7 +208,7 @@ X11.options(\dots, reset = FALSE)
   Problems with incorrect rendering of symbols (e.g. of
   \code{quote(pi)} and \code{expression(10^degree))})
   have been seen on Linux systems which have the Wine
-  symbol font installed---\code{fontconfig} then prefers this and
+  symbol font installed -- \code{fontconfig} then prefers this and
   misinterprets its encoding.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem by preferring the URW Type 1 symbol font.
