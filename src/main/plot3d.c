@@ -1028,7 +1028,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			    (iii < ns-1) ? "," : "\n");
 #endif
 
-	    GMode(1, dd);
+//	    GMode(1, dd);
 
 	    if (drawLabels) {
 		/* If user supplied labels, use i'th one of them
@@ -1302,7 +1302,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		GPolyline(ns, xxx, yyy, USER, dd);
 	    }
 
-	    GMode(0, dd);
+//	    GMode(0, dd);
 	    vmaxset(vmax);
 	} /* while */
       } /* for(i .. )  for(j ..) */
