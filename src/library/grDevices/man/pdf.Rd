@@ -248,9 +248,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 </alias>
 </fontconfig>  
 }
-  Some further workarounds for problems with symbol fonts on Cairo-based
-  viewers are given in the \sQuote{Cairo Fonts} section of the help for
-  \code{\link{X11}}.
+  Some further workarounds for problems with symbol fonts on
+  viewers using \sQuote{fontconfig} are given in the \sQuote{Cairo Fonts}
+  section of the help for \code{\link{X11}}.
 #endif
 }
 
