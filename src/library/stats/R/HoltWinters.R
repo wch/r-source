@@ -368,7 +368,8 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
         figure - mean(figure)
     else figure / mean(figure)
 
-    seasonal <- ts(rep(figure, periods), start = start(x), frequency = f)
+    seasonal <- ts(rep(figure, periods+1)[seq_len(l)],
+                   start = start(x), frequency = f)
 
     ## return values
     structure(list(seasonal = seasonal,
