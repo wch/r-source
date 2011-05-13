@@ -339,8 +339,20 @@ static int Cairo_holdflush(pDevDesc dd, int level)
     if(xd->holdlevel <= 0) xd->holdlevel = 0;
 //    printf("holdlevel = %d\n",  xd->holdlevel);
     /* flush if at level zero - also changes cursor */
-    if(xd->buffered && xd->holdlevel == 0) Cairo_update(xd); 
+    if(xd->holdlevel == 0) {
+	if(xd->buffered) Cairo_update(xd);
+	else {
+	    XDefineCursor(display, xd->window, arrow_cursor);
+	    XSync(display, 0);
+	}
+    }
     if (old == 0 && xd->holdlevel > 0) {
+	/* Need to flush before holding */
+	if(xd->buffered > 1 && xd->last_activity > xd->last) {
+	    xd->holdlevel = old;
+	    Cairo_update(xd);
+	    xd->holdlevel = level;
+	}
 	XDefineCursor(display, xd->window, watch_cursor);
 	XSync(display, 0);
     }
@@ -2641,7 +2653,15 @@ static void X11_eventHelper(pDevDesc dd, int code)
 static void X11_Mode(int mode, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-    if(xd->holdlevel > 0) return;
+    if(xd->holdlevel > 0) {
+#ifdef HAVE_WORKING_CAIRO
+#ifdef USE_TIMERS
+	if(mode == 0 && xd->buffered > 1)
+	    xd->last_activity = currentTime();
+#endif
+#endif
+	return;
+    }
     if(mode == 1) {
 	XDefineCursor(display, xd->window, watch_cursor);
 	XSync(display, 0);
