@@ -18,7 +18,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
                   srcfile = NULL, encoding = "unknown")
 {
     if(!is.null(text)) {
-        text <- as.character(text)
+        text <- unlist(strsplit(as.character(text), "\n"))
     	if (length(text) == 0L)
 	    return(expression())
 	if (missing(srcfile) && isTRUE(getOption("keep.source")))
