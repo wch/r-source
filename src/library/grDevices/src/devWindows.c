@@ -118,7 +118,7 @@ static drawing _d;
 
 #define DRAW(a) {if(xd->kind != SCREEN) {_d=xd->gawin; CLIP; a;} else {_d=xd->bm; CLIP; a; if(!xd->buffered) {_d=xd->gawin; CLIP; a;} }}
 
-#define SHOW  if(xd->kind==SCREEN && GA_xd) {gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));GALastUpdate=GetTickCount();}
+#define SHOW  if(xd->kind==SCREEN) {gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm)); GALastUpdate = GetTickCount();}
 #define SH if(xd->kind==SCREEN && xd->buffered && GA_xd) GA_Timer(xd)
 
 
@@ -207,9 +207,10 @@ static int GA_holdflush(pDevDesc dd, int level)
 	GALastUpdate = GetTickCount();
     }
     if (old == 0 && xd->holdlevel > 0) {
+	if(TimerNo != 0) KillTimer(0, TimerNo);
+	gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm));
 	GA_xd = NULL;
 	gsetcursor(xd->gawin, WatchCursor);
-	if(TimerNo != 0) KillTimer(0, TimerNo);
     }
     return xd->holdlevel;
 }
@@ -3659,8 +3660,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     char *msg;
     gadesc *xd = dev->deviceSpecific;
 
-    if (!xd || xd->kind != SCREEN)
-	return FALSE;
+    if (!xd || xd->kind != SCREEN) return FALSE;
 
     msg = G_("Waiting to confirm page change...");
     xd->confirmation = TRUE;
