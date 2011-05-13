@@ -1467,6 +1467,11 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor),
 			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
+#ifdef HAVE_WORKING_CAIRO
+    if(xd->useCairo && Vclass != TrueColor) {
+	warning(_("cairo-based types may only work correctly on TrueColor visuals"));
+    }
+#endif
 
     /* Foreground and Background Colors */
 
@@ -2507,6 +2512,8 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
     int done = 0;
 
     if (xd->type > WINDOW) return 0;
+    if (xd->holdlevel > 0)
+	error(_("attempt to use the locator after dev.hold()"));
     if (xd->buffered) Cairo_update(xd);
     R_ProcessX11Events((void*)NULL);	/* discard pending events */
     XDefineCursor(display, xd->window, cross_cursor);

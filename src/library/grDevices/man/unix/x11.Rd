@@ -285,8 +285,14 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   % A test in 2011 showed that cairo >= 1.6 works on 8-bit visuals,
   % but does not interpret colours correctly.  Done via VNC.
   The cairographics-based devices most likely only work (or work
-  correctly) with \sQuote{truecolor} visuals, although in principle this
-  depends on the cairo installation.
+  correctly) with \sQuote{TrueColor} visuals, although in principle this
+  depends on the cairo installation: a warning is given if any other
+  visual is encountered.
+
+  \code{type = "Xlib"} supports \sQuote{TrueColor},
+  \sQuote{PseudoColor}, \sQuote{GrayScale}, \code{StaticGray} and
+  \code{MonoChrome} visuals: \sQuote{StaticColor} and
+  \sQuote{DirectColor} visuals are handled only in black/white.
 }
 
 \section{Anti-aliasing}{

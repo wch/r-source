@@ -21,12 +21,14 @@ savePlot(filename = paste("Rplot", type, sep="."),
   \item{device}{the device to save from.}
 }
 \details{
-  Only \code{X11} devices of types \code{"cairo"} and \code{"nbcairo"}
-  are supported.
+  Only cairo-based \code{X11} devices are supported.
 
   This works by copying the image surface to a file.  For PNG
   will always be a 24-bit per pixel PNG \sQuote{DirectClass} file, for
   JPEG the quality is 75\% and for TIFF there is no compression.
+
+  For devices with buffering this copies the buffer's image surface, so
+  works even if \code{\link{dev.hold}} has been called.
 
   At present the plot is saved after rendering onto the canvas (default
   opaque white), so for the default \code{bg = "transparent"} the

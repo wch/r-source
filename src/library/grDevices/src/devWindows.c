@@ -3040,6 +3040,8 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 
     if (xd->kind != SCREEN)
 	return FALSE;
+    if (xd->holdlevel > 0)
+	error(_("attempt to use the locator after dev.hold()"));
     xd->locator = TRUE;
     xd->clicked = 0;
     show(xd->gawin);
