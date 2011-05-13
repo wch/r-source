@@ -149,6 +149,9 @@
       \item Reading (e.g. with \code{readBin()}) from a raw connection
       was not advancing the pointer, so successive reads would read the
       same value.  (Spotted by Bill Dunlap.)
+      
+      \item Text containing embedded newlines was printed incorrectly by 
+      as.character.srcref().  (Reported by Hadley Wickham.)
     }
   }
 }
