@@ -455,6 +455,10 @@
       
       \item Text containing embedded newlines was printed incorrectly by 
       as.character.srcref().  (Reported by Hadley Wickham.)
+      
+      \item \code{decompose()} used with a series of a non-integer
+      number of periods returned a seasonal component shorter than the
+      original series.  (Reported by Rob Hyndman.)
     }
   }
 }
