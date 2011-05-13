@@ -24,7 +24,7 @@ X11Fonts(...)
 }
 \details{
   These functions apply only to an \code{\link{X11}} device with
-  \code{type = "Xlib"} -- \code{X11(type = "Cairo")} uses a different
+  \code{type = "Xlib"} -- \code{X11(type = "cairo")} uses a different
   mechanism to select fonts.
 
   Such a  device is created with a default font (see
