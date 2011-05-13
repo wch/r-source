@@ -298,13 +298,6 @@ extern int putenv(char *string);
 # define LONGJMP(x,i) longjmp(x,i)
 #endif
 
-/* Availability of timing: on Unix, we need times(2).
-   On Windows and the Mac, we can do without.
-*/
-#if (defined(HAVE_TIMES) || defined(Win32))
-# define _R_HAVE_TIMING_ 1
-#endif
-
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXIDSIZE 10000	/* Largest symbol size, 
 			   in bytes excluding terminator.

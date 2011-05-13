@@ -1271,41 +1271,13 @@ void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-
-#ifdef _R_HAVE_TIMING_
-# include <time.h>
-# ifdef HAVE_SYS_TIMES_H
-#  include <sys/times.h>
-# endif
-# ifndef CLK_TCK
-/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV
- */
-#  ifdef HZ
-#   define CLK_TCK HZ
-#  else
-#   define CLK_TCK 60
-#  endif
-# endif /* not CLK_TCK */
-
-
-
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-/* This could in principle overflow times.  It is of type clock_t,
-   typically long int.  So use gettimeofday if you have it, which
-   is also more accurate.
-   FIXME: Better to use (recommended by POSIX 2008) clock_gettime.
- */
+double currentTime(void); /* from datetime.c */
 SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int Timeout;
-    double tm;
-#ifdef HAVE_GETTIMEOFDAY
-    struct timeval tv;
-#else
-    struct tms timeinfo;
-#endif
-    double timeint, start, elapsed;
+    double tm, timeint, start, elapsed;
 
     checkArity(op, args);
     timeint = asReal(CAR(args));
@@ -1313,12 +1285,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' value"), "time");
     tm = timeint * 1e6;
 
-#ifdef HAVE_GETTIMEOFDAY
-    gettimeofday(&tv, NULL);
-    start = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
-#else
-    start = times(&timeinfo);
-#endif
+    start = currentTime();
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
@@ -1333,36 +1300,18 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* For polling, elapsed time limit ... */
 	R_CheckUserInterrupt();
 	/* Time up? */
-#ifdef HAVE_GETTIMEOFDAY
-	gettimeofday(&tv, NULL);
-	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
-#else
-	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
-#endif
+	elapsed = currentTime() - start;
 	if(elapsed >= timeint) break;
 
 	/* Nope, service pending events */
 	R_runHandlers(R_InputHandlers, what);
 
 	/* Servicing events might take some time, so recheck: */
-#ifdef HAVE_GETTIMEOFDAY
-	gettimeofday(&tv, NULL);
-	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
-#else
-	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
-#endif
+	elapsed = currentTime() - start;
 	if(elapsed >= timeint) break;
 
-	tm = 1e6*(timeint - elapsed); /* old code had "+ 10000;" */
+	tm = 1e6*(timeint - elapsed);
     }
 
     return R_NilValue;
 }
-
-#else /* not _R_HAVE_TIMING_ */
-SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("Sys.sleep is not implemented on this system"));
-    return R_NilValue;		/* -Wall */
-}
-#endif /* not _R_HAVE_TIMING_ */

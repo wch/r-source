@@ -204,7 +204,7 @@ static void R_EndProfiling(void)
     R_Profiling = 0;
 }
 
-#if !defined(Win32) && defined(_R_HAVE_TIMING_)
+#if !defined(Win32)
 double R_getClockIncrement(void);
 #endif
 
@@ -218,7 +218,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 #endif
     int interval;
 
-#if !defined(Win32) && defined(_R_HAVE_TIMING_)
+#if !defined(Win32)
     /* according to man setitimer, it waits until the next clock
        tick, usually 10ms, so avoid too small intervals here
     double clock_incr = R_getClockIncrement();

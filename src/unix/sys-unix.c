@@ -160,16 +160,13 @@ SEXP attribute_hidden do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
     return mkString("Unix");
 }
 
-/* _R_HAVE_TIMING_ is the same as HAVE_TIMES on Unix */
-#ifdef _R_HAVE_TIMING_
-# include <time.h>
 # ifdef HAVE_SYS_TIMES_H
-#  include <sys/times.h> /* gettimeofday, times */
+#  include <sys/times.h> /* times */
 # endif
 
 static double clk_tck, StartTime;
 
-double currentTime(void); /* from datetime.c */
+extern double currentTime(void); /* from datetime.c */
 
 void R_setStartTime(void)
 {
@@ -210,6 +207,8 @@ void R_getProcTime(double *data)
     data[4] = (double) children.ru_stime.tv_sec +
 	1e-3 * (children.ru_stime.tv_usec/1000);
 #else
+    struct tms timeinfo;
+    times(&timeinfo);
     data[0] = fround(timeinfo.tms_utime / clk_tck, 3);
     data[1] = fround(timeinfo.tms_stime / clk_tck, 3);
     data[3] = fround(timeinfo.tms_cutime / clk_tck, 3);
@@ -223,9 +222,7 @@ double R_getClockIncrement(void)
 {
     return 1.0 / clk_tck;
 }
-#else /* not _R_HAVE_TIMING_ */
-void R_setStartTime(void) {}
-#endif /* not _R_HAVE_TIMING_ */
+
 
 #ifdef HAVE_SYS_WAIT_H
 # include <sys/wait.h>

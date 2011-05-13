@@ -31,11 +31,6 @@
 
 #include <Defn.h>
 
-/* We need a medium-res timer: time() will not do */
-#if defined(HAVE_CLOCK_GETTIME) || defined(HAVE_GETTIMEOFDAY) || defined(HAVE_TIMES)
-# define USE_TIMERS 1
-#endif
-
 /* rint is C99 */
 #ifdef HAVE_RINT
 #define R_rint(x) rint(x)
@@ -226,8 +221,18 @@ static double BlueGamma	 = 1.0;
    after the last update.
  */
 
-#ifdef USE_TIMERS
-double currentTime(void); /* from datetime.c */
+#if (defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)) || defined(HAVE_GETTIMEOFDAY)
+extern double currentTime(void); /* from datetime.c */
+#else
+# ifdef HAVE_SYS_TIMES_H
+#  include <sys/times.h> /* times */
+# endif
+extern double R_getClockIncrement(void);
+static double currentTime(void)
+{
+    struct tms timeinfo;
+    return times(&timeinfo)/R_getClockIncrement();
+}
 #endif
 
 static void Cairo_update(pX11Desc xd)
@@ -240,13 +245,10 @@ static void Cairo_update(pX11Desc xd)
 	cairo_paint(xd->xcc);
     XDefineCursor(display, xd->window, arrow_cursor);
     XSync(display, 0);
-#ifdef USE_TIMERS
     xd->last = currentTime();
-#endif
 }
 
 
-#ifdef USE_TIMERS
 /* 
    We record a linked list of devices which are open and double-buffered.
    The head of the list is a dummy entry to make removals the same for 
@@ -313,7 +315,6 @@ static void removeBuffering(pX11Desc xd)
 	timingInstalled = 0;
     }
 }
-#endif /* USE_TIMERS */
 
 static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
@@ -1698,9 +1699,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 			    return FALSE;
 			}
 		    }
-#ifdef USE_TIMERS
 		    if(xd->buffered > 1) addBuffering(xd);
-#endif
 		} else /* non-buffered */
 		    xd->cs = 
 			cairo_xlib_surface_create(display, xd->window,
@@ -2110,7 +2109,7 @@ static void X11_Close(pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     if (xd->type == WINDOW) {
-#if defined(HAVE_WORKING_CAIRO) && defined(USE_TIMERS)
+#ifdef HAVE_WORKING_CAIRO
 	if(xd->buffered > 1) removeBuffering(xd);
 #endif
 	/* process pending events */
@@ -2663,10 +2662,8 @@ static void X11_Mode(int mode, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     if(xd->holdlevel > 0) {
 #ifdef HAVE_WORKING_CAIRO
-#ifdef USE_TIMERS
 	if(mode == 0 && xd->buffered > 1)
 	    xd->last_activity = currentTime();
-#endif
 #endif
 	return;
     }
@@ -2676,14 +2673,12 @@ static void X11_Mode(int mode, pDevDesc dd)
     }
     if(mode == 0) {
 #ifdef HAVE_WORKING_CAIRO
-#ifdef USE_TIMERS
 	if(xd->buffered > 1) {
 	    xd->last_activity = currentTime();
 	    if((currentTime() - xd->last) > 0.5 /* 5*xd->update_interval */)
 		Cairo_update(xd);
 	    return;
 	}
-#endif
 	if(xd->buffered) cairo_paint(xd->xcc);
 #endif
 	XDefineCursor(display, xd->window, arrow_cursor);
@@ -2733,10 +2728,8 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     case 0: break; /* Xlib */
     case 1: xd->buffered = 1; break; /* cairo */
     case 2: xd->buffered = 0; break; /* nbcairo */
-#ifdef USE_TIMERS
     case 3: xd->buffered = 2; break; /* cairob2 */
     case 4: xd->buffered = 3; break; /* cairob3 */
-#endif
     default:
 	warning("that type is not supported on this platform - using \"nbcairo\"");
 	xd->buffered = 0;
@@ -2774,13 +2767,11 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     strncpy(xd->title, title, 100);
     xd->title[100] = '\0';
 
-#ifdef USE_TIMERS
     {
 	SEXP timeouts = GetOption1(install("X11updates"));
 	double tm = asReal(timeouts);
 	xd->update_interval = (ISNAN(tm) || tm < 0) ? 0.10 : tm;
     }
-#endif
 
     if (!X11_Open(dd, xd, disp_name, width, height,
 		  gamma_fac, colormodel, maxcube, bgcolor,

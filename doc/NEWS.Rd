@@ -291,6 +291,8 @@
       Objective-C compiler (if present) to ensure that even compilers
       that do not enable exceptions by default (such as vanilla gcc) can
       be used.
+      
+      \item The system call \code{times} is required.
     }
   }
 

@@ -145,12 +145,8 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
-
     XImage *im;
-
-#ifdef HAVE_TIMES
     double last, last_activity, update_interval;
-#endif
 #endif
 
     double fontscale;

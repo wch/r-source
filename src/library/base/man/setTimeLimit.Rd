@@ -1,6 +1,6 @@
 % File src/library/base/man/setTimeLimit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{setTimeLimit}
@@ -39,13 +39,10 @@ setSessionTimeLimit(cpu = Inf, elapsed = Inf)
   This will happen frequently in \R code and during \code{\link{Sys.sleep}},
   but only at points in compiled C and Fortran code identified by the
   code author.
-  
 #ifdef unix
+  
   \sQuote{Total cpu time} includes that used by child processes where
   the latter is reported.
-
-  It is possible (but very unusual) to build \R without support for
-  \code{\link{proc.time}}, in which case these functions have no effect.
 #endif
 }
 \keyword{ utilities }

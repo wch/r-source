@@ -3233,7 +3233,9 @@ Many devices do indeed do nothing on this call, but some screen devices
 ensure that drawing is flushed to the screen when called with @code{mode
 = 0}.  It is tempting to use it for some sort of buffering, but note
 that `drawing' is interpreted at quite a low level and a typical single
-figure will stop and start drawing many times.
+figure will stop and start drawing many times.  The buffering introduced
+in the @code{X11()} makes use of @code{mode = 0} to indicate activity:
+it updates the screen after @emph{ca} 100ms of inactivity.
 
 @node Graphics events, Specific devices, 'Mode', Graphics devices
 @subsection Graphics events

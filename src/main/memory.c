@@ -2508,9 +2508,8 @@ static void R_gc_full(R_size_t size_needed)
     R_gc_internal(size_needed);
 }
 
-#ifdef _R_HAVE_TIMING_
-double R_getClockIncrement(void);
-void R_getProcTime(double *data);
+extern double R_getClockIncrement(void);
+extern void R_getProcTime(double *data);
 
 static double gctimes[5], gcstarttimes[5];
 static Rboolean gctime_enabled = FALSE;
@@ -2534,25 +2533,15 @@ SEXP attribute_hidden do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
     REAL(ans)[4] = gctimes[4];
     return ans;
 }
-#else /* not _R_HAVE_TIMING_ */
-SEXP attribute_hidden do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("gc.time() is not implemented on this system"));
-    return R_NilValue;		/* -Wall */
-}
-#endif /* not _R_HAVE_TIMING_ */
 
 static void gc_start_timing(void)
 {
-#ifdef _R_HAVE_TIMING_
     if (gctime_enabled)
 	R_getProcTime(gcstarttimes);
-#endif /* _R_HAVE_TIMING_ */
 }
 
 static void gc_end_timing(void)
 {
-#ifdef _R_HAVE_TIMING_
     if (gctime_enabled) {
 	double times[5], delta;
 	R_getProcTime(times);
@@ -2565,7 +2554,6 @@ static void gc_end_timing(void)
 	gctimes[3] += times[3] - gcstarttimes[3];
 	gctimes[4] += times[4] - gcstarttimes[4];
     }
-#endif /* _R_HAVE_TIMING_ */
 }
 
 #define R_MAX(a,b) (a) < (b) ? (b) : (a)

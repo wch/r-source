@@ -1799,7 +1799,9 @@ R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
 
-## Lots of uses of getwd(), file.access(), Sys.glob()
+## Lots of uses of getwd(), file.access(), Sys.glob().
+## We don't need times() except as a fallback for getrusage and
+## clock_gettime/gettimeofday -- but it is older and always there.
 case "${host_os}" in
   mingw*)
   ;;
@@ -1815,6 +1817,9 @@ case "${host_os}" in
     fi
     if test "${ac_cv_search_chdir}" = "no"; then
        AC_MSG_ERROR([Building R requires the 'chdir' system call])
+    fi
+    if test "${ac_cv_search_times}" = "no"; then
+      AC_MSG_ERROR([Building R requires the 'times' system call])
     fi
   ;;
 esac

@@ -1,6 +1,6 @@
 % File src/library/base/man/system.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{system.time}
@@ -36,12 +36,6 @@ unix.time(expr, gcFirst = TRUE)
   A object of class \code{"proc_time"}: see
   \code{\link{proc.time}} for details.
 }
-#ifdef unix
-\note{
-  It is possible to compile \R without support for \code{system.time},
-  when the function will throw an error.
-}
-#endif
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
 }

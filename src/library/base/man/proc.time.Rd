@@ -1,6 +1,6 @@
 % File src/library/base/man/proc.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{proc.time}
@@ -45,16 +45,14 @@ proc.time()
 
   This is a \link{primitive} function.
 }
-\note{
-#ifdef unix
-  It is possible to compile \R without support for \code{proc.time},
-  when the function will throw an error.
-#endif
+
 #ifdef windows
+\note{
   Times of child processes are not available and will always be given as
   \code{NA}.
-#endif
 }
+#endif
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
