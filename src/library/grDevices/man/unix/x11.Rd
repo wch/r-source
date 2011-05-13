@@ -221,6 +221,10 @@ X11.options(\dots, reset = FALSE)
 </match>
 </fontconfig>
 }
+A test for this is to run at the command line \command{fc-match Symbol}.
+If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
+\command{locate symbol.ttf} to see if it is found from a directory with
+\samp{wine} in the name.
 }
 
 \section{Resources}{
