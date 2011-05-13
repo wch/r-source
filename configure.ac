@@ -373,7 +373,7 @@ AC_ARG_WITH([tk-config],
 [TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
-## Cairo etc
+## cairographics etc
 AC_ARG_WITH([cairo],
 [AS_HELP_STRING([--with-cairo],[use cairo (and pango) if available @<:@yes@:>@])],
 [if test "${withval}" = no; then
@@ -583,8 +583,9 @@ R_PROG_PDFVIEWER
 ## Noweb
 AC_PATH_PROG(NOTANGLE, notangle, false)
 
-## Cairo needs pkg-config
-AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
+## cairographics needs pkg-config
+AC_PATH_PROG(PKGCONF, pkg-config , [], 
+	     [$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
 
 AC_PROG_CC
 
