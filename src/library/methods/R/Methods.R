@@ -154,28 +154,29 @@ setGeneric <-
                 fdef <- implicit
             }  # go ahead silently
             else if(is.function(implicit)) {
+                thisPName <- if(identical(thisPackage, ".GlobalEnv"))
+                    "the global environment" else paste("package", dQuote(thisPackage))
                 ## choose the implicit unless an explicit def was given
                 if(is.null(def) && is.null(signature)) {
                     message(gettextf(
-                       "Restoring the implicit generic function for %s from package %s\n    into package %s; the generic differs from the default conversion (%s)",
-                                     sQuote(name), sQuote(package),
-                                     sQuote(thisPackage), cmp), domain = NA)
+                       "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)",
+                                     dQuote(name), dQuote(package),
+                                     thisPName), domain = NA)
                     fdef <- implicit
                 }
                 else {
                     message(gettextf(
-                         "Creating a generic for %s in package %s\n    (the supplied definition differs from and overrides the implicit generic\n    in package %s: %s)",
-                                     sQuote(name), sQuote(thisPackage),
-                                     sQuote(package), cmp),
+                         "Creating a new generic function for %s in %s",
+                                     dQuote(name), thisPName),
                         domain = NA)
                     fdef@package <- attr(fdef@generic, "package") <- thisPackage
                 }
             }
             else { # generic prohibited
                 warning(gettextf(
-			"No generic version of %s on package %s is allowed;\n   a new generic will be assigned with package %s",
-                                 sQuote(name), sQuote(package),
-                                 sQuote(thisPackage)),
+			"No generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s",
+                                 dQuote(name), dQuote(package),
+                                 thisPName),
                         domain = NA)
                 fdef@package <- attr(fdef@generic, "package") <- thisPackage
             }
@@ -476,12 +477,15 @@ setMethod <-
         ## create using the visible non-generic as a pattern and default method
         setGeneric(f, where = where)
         fdef <- getGeneric(f, where = where)
-        if(identical(as.character(fdef@package), getPackageName(where)))
-          message(gettextf("Creating a generic function from function \"%s\"",
-                           f), domain = NA)
+        thisPackage <- getPackageName(where)
+        thisPName <- if(identical(thisPackage, ".GlobalEnv"))
+            "the global environment" else paste("package", dQuote(thisPackage))
+        if(identical(as.character(fdef@package), thisPackage))
+          message(gettextf("Creating a generic function from function \"%s\" in %s",
+                           f, thisPName), domain = NA)
         else
-          message(gettextf("Creating a new generic function for \"%s\" in \"%s\"",
-                           f, getPackageName(where)),
+          message(gettextf("Creating a generic function for \"%s\" from package \"%s\" in %s",
+                           f, fdef@package, thisPName),
                   domain = NA)
     }
     else if(identical(gwhere, NA)) {
