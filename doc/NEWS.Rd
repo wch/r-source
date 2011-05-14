@@ -111,19 +111,10 @@
       \item Rao's efficient score test has been implemented for
       \code{glm} objects.  Specifically, the \code{add1}, \code{drop1},
       and \code{anova} methods now allow \code{test = "Rao"}.
-      
-      \item New functions \code{dev.hold()} and \code{dev.flush()} for
-      use with graphics devices with buffering.  These are used for most
-      of the high-level graphics functions such as \code{boxplot()}, so
-      that the plot is only displayed when the page is complete.
-
-      Currently implemented for \code{windows(buffered = TRUE)} and the
-      cairo-based \code{X11()} types with buffering, the default
-      on-screen devices on Windows and most Unix-alikes.
-      
+            
       \item If a saved workspace (e.g. \file{.RData}) contains objects
-      that cannot be loaded, \R will now start with an error message
-      and a blank workspace, rather than failing to start. 
+      that cannot be loaded, \R will now start with an warning message
+      and an empty workspace, rather than failing to start. 
     }
   }
   
@@ -162,10 +153,14 @@
       being done.  (These are the standard names for X11 cursors: how
       they are actually displayed depends on the platform.)
       
-      \item There are experimental functions \code{dev.hold()} and
-      \code{dev.flush()} for use with graphics devices with buffering.
-      (Currently implemented for the cairo-based \code{X11()} types
-      with buffering and for \code{windows()}.)
+      \item New functions \code{dev.hold()} and \code{dev.flush()} for
+      use with graphics devices with buffering.  These are used for most
+      of the high-level graphics functions such as \code{boxplot()}, so
+      that the plot is only displayed when the page is complete.
+
+      Currently implemented for \code{windows(buffered = TRUE)} and the
+      cairo-based \code{X11()} types with buffering, the default
+      on-screen devices on Windows and most Unix-alikes.
     }
   }
 
