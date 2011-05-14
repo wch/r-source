@@ -117,6 +117,9 @@
     \itemize{
       \item Launching the PDF manuals from the Rgui menus did not work
       on some versions of Windows.
+      
+      \item The windows() screen device would sometimes fail to plot
+      points with \code{pch="."}. \PR{14583}
     }
   }
 }

@@ -2363,7 +2363,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	y0 = y1;
 	y1 = tmp;
     }
-    r = rect((int) x0, (int) y0, (int) x1 - (int) x0, (int) y1 - (int) y0);
+    r = rect((int) x0, (int) y0, nearbyint(x1 - x0), nearbyint(y1 - y0));
 
     SetColor(gc->fill, gc->gamma, xd);
     if (R_OPAQUE(gc->fill)) {
