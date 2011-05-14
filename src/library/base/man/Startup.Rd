@@ -99,7 +99,7 @@
 
   The command-line option \option{--vanilla} implies
   \option{--no-site-file}, \option{--no-init-file},
-  \option{--no-environ} and (except for for \command{R CMD})
+  \option{--no-environ} and (except for \command{R CMD})
   \option{--no-restore}
 #ifdef windows
   Under Windows, it also implies \option{--no-Rconsole}, which
@@ -146,9 +146,9 @@
   distinct from \file{\var{\link{R_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
-  The startup options are for \command{Rgui} and \code{Rterm} but not
-  for \command{Rcmd}: attempting to use e.g. \option{--vanilla} will
-  give a warning or error.
+  The startup options are for \command{Rgui}, \command{Rterm} and
+  \code{R} but not for \command{Rcmd}: attempting to use
+  e.g. \option{--vanilla} with the latter will give a warning or error.
   
   Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
