@@ -22,16 +22,53 @@
 
 /*
     These use POSIX functions that are not available on all platforms,
-    and where they are they may be partially or incorrectly implemented.
-    A number of lightweight alternatives are supplied, but generally
-    timezone support is only available if the OS supplies it.
+    and where they are they may be partially or incorrectly
+    implemented.  A number of lightweight alternatives are supplied,
+    but generally timezone support is only available if the OS
+    supplies it.  However, as these are now also mandated by C99, they
+    are almost universally available, albeit with more room for
+    implementation variations.
 
-    A particular problem is the setting of the timezone TZ on Unix/Linux.
-    POSIX appears to require it, yet many Linux systems do not set it
-    and do not give the correct results/crash strftime if it is not set
-    (or even if it is: see the workaround below).
-    We use unsetenv() to work around this: that is a BSD construct but
+    A particular problem is the setting of the timezone TZ on
+    Unix/Linux.  POSIX appears to require it, yet older Linux systems
+    do not set it and do not give the correct results/crash strftime
+    if it is not set (or even if it is: see the workaround below).  We
+    use unsetenv() to work around this: that is a BSD construct but
     seems to be available on the affected platforms.
+
+    Notes on various time functions:
+
+    The current (2008) POSIX recommendation to find the calendar time
+    is to call clock_gettime(), defined in <time.h>.  This may also be
+    used to find time since some unspecified starting point
+    (e.g. machine reboot), but is not currently so used in R.  It
+    returns in second and nanoseconds, although not necessarily to
+    more than clock-tick accuracy.
+
+    The previous POSIX recommendation was gettimeofday(), defined in
+    <sys/time.h>.  This returns in seconds and microseconds (with
+    unspecified granularity).
+
+    Many systems (including AIX, FreeBSD, Linux, Solaris) have
+    clock_gettime().  Mac OS X and Cygwin have gettimeofday().
+
+    Function time() is C99 and defined in <time.h>.  C99 does not
+    mandate the units, but POSIX does (as the number of seconds since
+    the epoch: although not mandated, time_t seems always to be an
+    integer type).
+
+    Function clock() is C99 and defined in <time.h>.  It measures CPU
+    time at CLOCKS_PER_SEC: there is a small danger of integer
+    overflow.
+
+    Function times() is POSIX and defined in <sys/times.h>.  It
+    returns the elapsed time in clock ticks, plus CPU times in a
+    struct tms* argument (also in clock ticks).
+
+    More precise information on CPU times may be available from the
+    POSIX function getrusage() defined in <sys/resource.h>.  This
+    returns the same time structure as gettimeofday() and on some
+    systems offers millisecond resolution.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -442,8 +479,10 @@ double currentTime(void)
 	ans = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
 
 #else
+    /* No known current OSes */
     time_t res = time(NULL);
-    if(res != (time_t)(-1)) /* -1 must be an error */
+    if(res != (time_t)(-1)) /* -1 must be an error as the real value -1 
+			       was ca 1969 */
 	ans = (double) res;
 #endif
 

@@ -38,20 +38,16 @@ proc.time()
   is the CPU time charged for execution by the system on behalf of the
   calling process.}
  
+  Times of child processes are not available on Windows and will always
+  be given as \code{NA}.
+  
   The resolution of the times will be system-specific and on Unix-alikes
-  times are rounded to the nearest 1ms.  On modern systems they will be
-  that accurate, but on older systems they might be accurate to 1/100 or
-  1/60 sec, and are typically available to 10ms on Windows.
+  times are rounded down to milliseconds.  On modern systems they will
+  be that accurate, but on older systems they might be accurate to 1/100
+  or 1/60 sec.  They are typically available to 10ms on Windows.
 
   This is a \link{primitive} function.
 }
-
-#ifdef windows
-\note{
-  Times of child processes are not available and will always be given as
-  \code{NA}.
-}
-#endif
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -59,7 +55,7 @@ proc.time()
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{system.time}} for timing a valid \R expression,
+  \code{\link{system.time}} for timing an \R expression,
   \code{\link{gc.time}} for how much of the time was spent in garbage
   collection.
 }

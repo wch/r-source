@@ -191,6 +191,11 @@ void R_setStartTime(void)
     StartTime = currentTime();
 }
 
+/* NOTE
+   This used to use times() for elapsed times, which is measured in
+   clock ticks (which can overflow).  It is possible this version uses
+   time() and so is in seconds.  But even Cygwin has gettimeofday.
+ */
 attribute_hidden
 void R_getProcTime(double *data)
 {

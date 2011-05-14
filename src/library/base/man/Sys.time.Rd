@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.time}
@@ -25,10 +25,9 @@ Sys.Date()
 \value{
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see
   \link{DateTimeClasses}).  On almost all systems it will have
-  sub-second accuracy: on systems conforming to POSIX 1003.1-2001 the
-  time will be reported in microsecond increments.  On Windows it
-  increments in clock ticks (1/60 of a second) reported to millisecond
-  accuracy.
+  sub-second accuracy, possibly microseconds or better.  On Windows it
+  increments in clock ticks (usually 1/60 of a second) reported to
+  millisecond accuracy.
 
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
 }
@@ -39,8 +38,7 @@ Sys.Date()
 }
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character
-  string; the elapsed time component of \code{\link{proc.time}} 
-  for possibly finer resolution in changes in time.
+  string.
 
   \code{\link{Sys.timezone}}.
 }
