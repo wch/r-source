@@ -1318,7 +1318,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+        out <- R_runR(Rcmd, opts,
+                      env = c("R_DEFAULT_PACKAGES=NULL", "R_ENVIRON_USER=''"),
+                      arch = arch)
         if (any(grepl("^Error", out))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1388,7 +1390,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            status <- R_runR(NULL, c(Ropts, enc), "LANGUAGE=en",
+            status <- R_runR(NULL, c(Ropts, enc),
+                             c("LANGUAGE=en", "R_ENVIRON_USER=''"),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
@@ -1543,7 +1546,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          ")", sep = "")
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = "LANGUAGE=en",
+                             env = c("LANGUAGE=en", "R_ENVIRON_USER=''"),
                              stdout = "", stderr = "", arch = arch)
             if (status) {
                 errorLog(Log)
@@ -2690,7 +2693,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     ## examples and tests are not.
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
-    ## do run Renviron[.site] for some multiarch runs
+    ## do run Renviron.site for some multiarch runs
+    ## We set R_ENVIRON_USER='' to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
 
