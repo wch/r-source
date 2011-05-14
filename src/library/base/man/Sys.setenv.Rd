@@ -38,7 +38,7 @@ Sys.unsetenv(x)
   \code{"="}.  Windows does, but the facilities provided by \R may not
   handle these correctly so they should be avoided.  Most platforms
   allow setting an environment variable to \code{""}, but Windows does
-  not, and there \code{Sys.setenv("FOO=")} unsets \env{FOO}.
+  not, and there \code{Sys.setenv(FOO="")} unsets \env{FOO}.
   
   There may be system-specific limits on the maximum length of the values
   of individual environment variables or of all environment variables.
@@ -54,8 +54,7 @@ Sys.unsetenv(x)
   Not all systems need support \code{Sys.setenv} (although all known
   current platforms do) nor \code{Sys.unsetenv}.
 #ifdef windows
-  Both are provided on Windows (although C-level \code{unsetenv} is not
-  available).
+  Both are provided on Windows.
 #endif
 #ifdef unix
   If \code{Sys.unsetenv} is not supported, it will at least try to

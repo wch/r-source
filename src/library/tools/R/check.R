@@ -1391,7 +1391,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en", "R_ENVIRON_USER=''"),
+                             c("LANGUAGE=en", "R_ENVIRON_USER='no_such_file'"),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
@@ -1546,7 +1546,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          ")", sep = "")
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en", "R_ENVIRON_USER=''"),
+                             env = c("LANGUAGE=en",
+                                     "R_ENVIRON_USER='no_such_file'"),
                              stdout = "", stderr = "", arch = arch)
             if (status) {
                 errorLog(Log)
