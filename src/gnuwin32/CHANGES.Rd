@@ -23,10 +23,8 @@
       \code{svg()}, \code{cairo_pdf()} and \code{cairo_ps()} are now
       available on Windows.
 
-      [Experimental and not compiled in by default.
-
-      To experiment with them, follow the instructions in the
-      \sQuote{R Installation and Administration Manual}.]
+      These are not compiled in by default: see the instructions in
+      the \sQuote{R Installation and Administration Manual}.
 
       \item All the Windows-specific graphics devices now have a
       \code{family} argument.  If non-empty this specifies an initial
@@ -58,6 +56,9 @@
 
       The argument can also be used for the cairographics-based versions
       of the bitmap devices.
+
+      \item The \sQuote{Update packages ...} menu item now runs
+      \code{update.packages(ask="graphics", checkBuilt=TRUE}.
     }
   }
 
