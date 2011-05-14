@@ -221,13 +221,19 @@ static double BlueGamma	 = 1.0;
  */
 
 #if (defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)) || defined(HAVE_GETTIMEOFDAY)
+/* We need to avoid this in the rare case that it is only in seconds */
 extern double currentTime(void); /* from datetime.c */
 #else
-/* Alternatively, use clock which is C99 */
-# include <time.h>
+/* Alternatively, use times() which R >= 2.14.0 requires.  This could
+  conceivably wrap around, but on the sort of system where this might
+  be used, clock_t is 32-bit (it is typically long or unsigned long)
+  and CLOCKS_PER_SEC is 60-100, so it happens after years of uptime.
+*/
+# include <sys/times.h>
 static double currentTime(void)
 {
-    return ((double) clock()/CLOCKS_PER_SEC;
+    struct tms ti;
+    return ((double) times(&ti))/CLOCKS_PER_SEC;
 }
 #endif
 
