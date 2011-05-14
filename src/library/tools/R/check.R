@@ -1307,7 +1307,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         checkingLog(Log, "whether the package can be loaded")
         Rcmd <- sprintf("library(%s)", pkgname)
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
-        out <- R_runR(Rcmd, opts, arch = arch)
+        env <- "R_DEFAULT_PACKAGES=NULL"
+        env0 <- if(nzchar(arch)) "R_ENVIRON_USER='no_such_file'"
+        out <- R_runR(Rcmd, opts, env0, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1318,9 +1320,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, opts,
-                      env = c("R_DEFAULT_PACKAGES=NULL", "R_ENVIRON_USER=''"),
-                      arch = arch)
+        out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
         if (any(grepl("^Error", out))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1334,7 +1334,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-        out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+        out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
             warnLog()
             ll <- grep("---- unloading", out)
@@ -1350,7 +1350,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "whether the name space can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
-            out <- R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+            out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
             if (any(grepl("^Error", out))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1369,7 +1369,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
                 R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
-            else R_runR(Rcmd, opts)
+            else R_runR(Rcmd, opts, env0)
             if (any(grepl("^(Error|\\.onUnload failed)", out))) {
                 warnLog()
                 ll <- grep("---- unloading", out)
@@ -2695,7 +2695,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
     ## do run Renviron.site for some multiarch runs
-    ## We set R_ENVIRON_USER='' to skip .Renviron files.
+    ## We set R_ENVIRON_USER='no_such_file' to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
 
