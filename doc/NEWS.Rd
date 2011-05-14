@@ -454,8 +454,9 @@
       was not advancing the pointer, so successive reads would read the
       same value.  (Spotted by Bill Dunlap.)
       
-      \item Text containing embedded newlines was printed incorrectly by 
-      as.character.srcref().  (Reported by Hadley Wickham.)
+      \item Parsed text containing embedded newlines was printed
+      incorrectly by as.character.srcref().  (Reported by Hadley
+      Wickham.)
       
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
