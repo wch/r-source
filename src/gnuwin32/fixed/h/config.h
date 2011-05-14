@@ -756,6 +756,9 @@
    */
 #define HAVE_UNSIGNED_LONG_LONG_INT 1
 
+/* Define to 1 if you have the `utime' function. */
+/* #undef HAVE_UTIME */
+
 /* Define to 1 if you have the <utime.h> header file. */
 /* #undef HAVE_UTIME_H */
 

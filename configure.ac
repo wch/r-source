@@ -740,7 +740,6 @@ AC_SUBST(READLINE_LIBS)
 ### * Checks for header files.
 
 AC_HEADER_STDC
-# AC_HEADER_TIME
 AC_HEADER_DIRENT
 if test "${ac_cv_search_opendir}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'opendir' system call])
@@ -1765,6 +1764,7 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid link readlink symlink 
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
+R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## clock_gettime is POSIX 1993, but not on MacOS X
 ## Some OSes need -lrt: Linux, Solaris, not FreeBSD.
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
