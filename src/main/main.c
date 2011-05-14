@@ -37,9 +37,7 @@
 #include "Parse.h"
 #include "Startup.h"
 
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
+#include <locale.h>
 
 #ifdef ENABLE_NLS
 void attribute_hidden nl_Rdummy(void)

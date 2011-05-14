@@ -30,10 +30,7 @@
 
 #include <Defn.h>
 
-/* On most systems libintl.h includes this, but not Fedora Core 1 */
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
+#include <locale.h>
 
 /* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
    also some AIX systems.  NB, included unconditionally later on.

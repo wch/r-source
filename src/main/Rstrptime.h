@@ -32,6 +32,10 @@
 #include <limits.h>
 #include <string.h>*/
 
+/* This is C90 */
+#ifndef HAVE_LOCALE_H
+# define HAVE_LOCALE_H 1
+#endif
 #ifdef HAVE_STRINGS_H
 #include <strings.h>  /* for strncasecmp */
 #endif
