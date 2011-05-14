@@ -3738,7 +3738,7 @@ static R_INLINE void DO_SETNVECELT(SEXP rho)
     value = GETSTACK(-2);
     idx = GETSTACK(-1);
     args = CONS(value, R_NilValue);
-    SET_TAG(value, R_valueSym);
+    SET_TAG(args, R_valueSym);
     args = CONS(idx, args);
     args = CONS(vec, args);
     SETSTACK(-1, args); /* for GC protection */
@@ -3782,7 +3782,7 @@ static R_INLINE void DO_SETNMATELT(SEXP rho)
     idx = GETSTACK(-2);
     jdx = GETSTACK(-1);
     args = CONS(value, R_NilValue);
-    SET_TAG(value, R_valueSym);
+    SET_TAG(args, R_valueSym);
     args = CONS(jdx, args);
     args = CONS(idx, args);
     args = CONS(mat, args);
