@@ -40,12 +40,15 @@
 # include <unistd.h>
 #endif
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>		/* for struct timeval */
+#ifndef HAVE_GETRUSAGE
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/times.h>
+# endif
 #endif
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRUSAGE)
 /* on MacOS X it seems sys/resource.h needs sys/time.h first */
+# include <sys/time.h>
 # include <sys/resource.h>
 #endif
 
@@ -216,7 +219,7 @@ void R_getProcTime(double *data)
 #endif
 }
 
-/* used in eval.c, memory.c */
+/* used in memory.c */
 attribute_hidden
 double R_getClockIncrement(void)
 {

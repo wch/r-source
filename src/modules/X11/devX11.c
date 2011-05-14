@@ -215,23 +215,19 @@ static double BlueGamma	 = 1.0;
    - "cairob2".  Similar to cairo, but the copying is only done on a timer.
    - "cairob3".  Writes to a cairo_image_surface xd->cs, uses Xlib facilities
      to do the copying, on a timer.
-   Timing requires a medium-res timer (but so does proc.time, so presumably
-   all systems have one).  The current method is to update ca 100ms after the 
-   last activity (using the event loop) or at a mode(0) call if it is 500ms 
-   after the last update.
+   Timing requires a medium-res timer. The current method is to update
+   ca 100ms after the last activity (using the event loop) or at a
+   mode(0) call if it is 500ms after the last update.
  */
 
 #if (defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)) || defined(HAVE_GETTIMEOFDAY)
 extern double currentTime(void); /* from datetime.c */
 #else
-# ifdef HAVE_SYS_TIMES_H
-#  include <sys/times.h> /* times */
-# endif
-extern double R_getClockIncrement(void);
+/* Alternatively, use clock which is C99 */
+# include <time.h>
 static double currentTime(void)
 {
-    struct tms timeinfo;
-    return times(&timeinfo)/R_getClockIncrement();
+    return ((double) clock()/CLOCKS_PER_SEC;
 }
 #endif
 

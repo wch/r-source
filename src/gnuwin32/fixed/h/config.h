@@ -725,14 +725,8 @@
 /* Define to 1 if you have the <tiffio.h> header file. */
 /* #undef HAVE_TIFFIO_H */
 
-/* Define to 1 if you have the `time' function. */
-#define HAVE_TIME 1
-
 /* Define to 1 if you have the `times' function. */
 #define HAVE_TIMES 1
-
-/* Define to 1 if you have the <time.h> header file. */
-#define HAVE_TIME_H 1
 
 /* Define to 1 if you have the `tsearch' function. */
 #ifndef WIN64
@@ -761,6 +755,9 @@
 /* Define to 1 if the system has the type `unsigned long long int'. (For intl)
    */
 #define HAVE_UNSIGNED_LONG_LONG_INT 1
+
+/* Define to 1 if you have the <utime.h> header file. */
+/* #undef HAVE_UTIME_H */
 
 /* Define to 1 if you have the `vasprintf' function. */
 #define HAVE_VASPRINTF 1
@@ -1004,9 +1001,6 @@
 
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */
-
-/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
-#define TIME_WITH_SYS_TIME 1
 
 /* Define to use ICU for collation. */
 /* #undef USE_ICU */

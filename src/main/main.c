@@ -665,16 +665,6 @@ int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
 unsigned int TimeToSeed(void); /* datetime.c */
 
-#include <time.h>
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-
-#ifdef Win32
-# include <windows.h> /* for GetTickCount */
-# include <process.h> /* for getpid */
-#endif
-
 const char* get_workspace_name();  /* from startup.c */
 
 void setup_Rmainloop(void)

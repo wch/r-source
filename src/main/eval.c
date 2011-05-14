@@ -204,10 +204,6 @@ static void R_EndProfiling(void)
     R_Profiling = 0;
 }
 
-#if !defined(Win32)
-double R_getClockIncrement(void);
-#endif
-
 static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem_profiling)
 {
 #ifndef Win32
@@ -218,16 +214,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 #endif
     int interval;
 
-#if !defined(Win32)
-    /* according to man setitimer, it waits until the next clock
-       tick, usually 10ms, so avoid too small intervals here
-    double clock_incr = R_getClockIncrement();
-    int nclock = floor(dinterval/clock_incr + 0.5);
-    interval = 1e6 * ((nclock > 1)?nclock:1) * clock_incr + 0.5; */
     interval = 1e6 * dinterval + 0.5;
-#else
-    interval = 1e6 * dinterval + 0.5;
-#endif
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)

@@ -740,7 +740,7 @@ AC_SUBST(READLINE_LIBS)
 ### * Checks for header files.
 
 AC_HEADER_STDC
-AC_HEADER_TIME
+# AC_HEADER_TIME
 AC_HEADER_DIRENT
 if test "${ac_cv_search_opendir}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'opendir' system call])
@@ -752,22 +752,24 @@ AC_HEADER_SYS_WAIT
 ##
 ## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
 ## locale.h pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
-## sys/time.h sys/times.h sys/utsname.h time.h unistd.h
+## sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 ## dl.h seems to be for HP-UX
 ## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.  
 ## (It is probably only used for fpsetmask on FreeBSD).
 ## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
+## sys/param.h is one way to get PATH_MAX.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h glob.h grp.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
+  sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
 AC_CHECK_HEADERS(errno.h inttypes.h limits.h stdarg.h stdbool.h \
                  stdint.h string.h)
+## only vsnprintf.c requires stdarg.h
 ## </NOTE>
 
 R_HEADER_SETJMP
@@ -818,10 +820,6 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(double)
 AC_CHECK_SIZEOF(long double)
 AC_CHECK_SIZEOF(size_t)
-dnl AC_CHECK_SIZEOF(time_t, [
-dnl #include <stdio.h>
-dnl #include <time.h>
-dnl ])
 
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
@@ -1740,9 +1738,6 @@ if test "${ac_cv_have_decl_va_copy}" = "no"; then
 fi
 ## isblank should be a macro according to C99.  It was missing on Solaris 8
 AC_CHECK_FUNCS(isblank)
-
-## time is C89
-R_CHECK_FUNCS([time], [#include <time.h>])
 
 ## fseeko/ftello are POSIX, may be macros
 ## matherr is SVID, redefined in arithmetic.c if present

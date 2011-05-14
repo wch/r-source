@@ -262,16 +262,6 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     }
 }
 
-#include <time.h>
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-
-#ifdef Win32
-# include <windows.h> /* for GetTickCount */
-# include <process.h> /* for getpid */
-#endif
-
 unsigned int TimeToSeed(void); /* datetime.c */
 
 static void Randomize(RNGtype kind)
