@@ -741,6 +741,7 @@ AC_SUBST(READLINE_LIBS)
 
 AC_HEADER_STDC
 AC_HEADER_DIRENT
+## we also assume readdir and closedir
 if test "${ac_cv_search_opendir}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'opendir' system call])
 fi
@@ -750,7 +751,7 @@ AC_HEADER_SYS_WAIT
 ## includes.
 ##
 ## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## locale.h pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
+## pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
 ## sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 ## dl.h seems to be for HP-UX
 ## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.  
@@ -758,15 +759,14 @@ AC_HEADER_SYS_WAIT
 ## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
 ## sys/param.h is one way to get PATH_MAX.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h locale.h \
-  netdb.h netinet/in.h pwd.h strings.h \
+  fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
   sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
-AC_CHECK_HEADERS(errno.h inttypes.h limits.h stdarg.h stdbool.h \
+AC_CHECK_HEADERS(errno.h inttypes.h limits.h locale.h stdarg.h stdbool.h \
                  stdint.h string.h)
 ## only vsnprintf.c requires stdarg.h
 ## </NOTE>
@@ -1790,6 +1790,7 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 #include <unistd.h>
 #endif])
 ## glob is POSIX: we have a substitute on Windows
+## assume without checking that if we have glob we also have globfree
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
@@ -1818,7 +1819,7 @@ case "${host_os}" in
     fi
   ;;
 esac
-
+## We also use getlogin isatty rename unlink without checking.
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy even though ifnames
