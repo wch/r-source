@@ -69,13 +69,15 @@ static void setFileTime(const char *fn, uLong dosdate)
 }
 #else
 # include <time.h>
-# include <sys/time.h>
-# include <utime.h>
+# ifdef HAVE_UTIMES
+#  include <sys/time.h>
+# endif
+# ifdef HAVE_UTIME_H
+#  include <utime.h>
+# endif
 static void setFileTime(const char *fn, tm_unz tmu_date)
 {
     struct tm dt;
-    time_t ftime;
-    struct utimbuf settime;
     dt.tm_sec = tmu_date.tm_sec;
     dt.tm_min = tmu_date.tm_min;
     dt.tm_hour = tmu_date.tm_hour;
@@ -86,9 +88,18 @@ static void setFileTime(const char *fn, tm_unz tmu_date)
     else
 	dt.tm_year = tmu_date.tm_year;
     dt.tm_isdst = -1;
-    ftime = mktime(&dt);
+    time_t ftime = mktime(&dt);
+#elif defined(HAVE_UTIMES)
+    struct timeval times[2];
+
+    times[0].tv.sec = times[1].tv.sec = ftime;
+    times[0].tv.usec = times[1].tv.usec = 0;
+    utimes(fn, &times);
+#elif defined(HAVE_UTIME)
+    struct utimbuf settime;
     settime.actime = settime.modtime = ftime;
     utime(fn, &settime);
+#endif
 }
 #endif
 
