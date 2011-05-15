@@ -839,12 +839,12 @@ TCL_CONFIG
 use_aqua
 BUILD_AQUA_FALSE
 BUILD_AQUA_TRUE
+BUILD_DEVCAIRO_FALSE
+BUILD_DEVCAIRO_TRUE
 CAIROX11_LIBS
 CAIRO_LIBS
 CAIROX11_CPPFLAGS
 CAIRO_CPPFLAGS
-BUILD_DEVCAIRO_FALSE
-BUILD_DEVCAIRO_TRUE
 BUILD_X11_FALSE
 BUILD_X11_TRUE
 X_EXTRA_LIBS
@@ -21076,6 +21076,7 @@ fi
 
 fi
 
+## we also assume readdir and closedir
 if test "${ac_cv_search_opendir}" = "no"; then
    as_fn_error "Building R requires the 'opendir' system call" "$LINENO" 5
 fi
@@ -21125,7 +21126,7 @@ fi
 ## includes.
 ##
 ## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## locale.h pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
+## pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
 ## sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 ## dl.h seems to be for HP-UX
 ## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.
@@ -21133,8 +21134,7 @@ fi
 ## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
 ## sys/param.h is one way to get PATH_MAX.
 for ac_header in arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h locale.h \
-  netdb.h netinet/in.h pwd.h strings.h \
+  fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
   sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 do :
@@ -21154,7 +21154,7 @@ done
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
-for ac_header in errno.h inttypes.h limits.h stdarg.h stdbool.h \
+for ac_header in errno.h inttypes.h limits.h locale.h stdarg.h stdbool.h \
                  stdint.h string.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
@@ -27408,6 +27408,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 ## glob is POSIX: we have a substitute on Windows
+## assume without checking that if we have glob we also have globfree
 for ac_func in glob
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -27485,7 +27486,7 @@ case "${host_os}" in
     fi
   ;;
 esac
-
+## We also use getlogin isatty rename unlink without checking.
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy even though ifnames
@@ -31526,14 +31527,6 @@ if test "x${r_cv_cairo_works}" = xyes; then
 $as_echo "#define HAVE_WORKING_CAIRO 1" >>confdefs.h
 
 fi
- if test "x${r_cv_cairo_works}" = xyes; then
-  BUILD_DEVCAIRO_TRUE=
-  BUILD_DEVCAIRO_FALSE='#'
-else
-  BUILD_DEVCAIRO_TRUE='#'
-  BUILD_DEVCAIRO_FALSE=
-fi
-
 if test "x${r_cairo_pdf}" = xyes; then
 
 $as_echo "#define HAVE_CAIRO_PDF 1" >>confdefs.h
@@ -31555,6 +31548,14 @@ fi
 
 
 fi
+ if test "x${r_cv_cairo_works}" = xyes; then
+  BUILD_DEVCAIRO_TRUE=
+  BUILD_DEVCAIRO_FALSE='#'
+else
+  BUILD_DEVCAIRO_TRUE='#'
+  BUILD_DEVCAIRO_FALSE=
+fi
+
 
 
 ## Aqua
@@ -35437,11 +35438,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35440: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35441: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35444: \$? = $ac_status" >&5
+   echo "$as_me:35445: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35536,11 +35537,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35539: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35540: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35543: \$? = $ac_status" >&5
+   echo "$as_me:35544: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35588,11 +35589,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35591: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35592: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35595: \$? = $ac_status" >&5
+   echo "$as_me:35596: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

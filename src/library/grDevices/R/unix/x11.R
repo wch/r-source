@@ -70,9 +70,12 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(ypos)) new$ypos <- ypos
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
-    if(!missing(type))
+    if(!missing(type)) {
         new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo",
                                       "cairob2", "cairob3"))
+        if(!capabilities("cairo") && type != "Xlib")
+            warning("cairo-based types are not supported on this build - using \"Xlib\"")
+    }
     if(!missing(family)) new$family <- family
     if(!missing(fonts)) new$fonts <- fonts
     if(!missing(antialias) && type != "Xlib")

@@ -2079,6 +2079,7 @@ R_X11_Xmu
 if test "x${want_cairo}" = "xyes"; then
 R_PANGO_CAIRO
 fi
+AM_CONDITIONAL(BUILD_DEVCAIRO, [test "x${r_cv_cairo_works}" = xyes])
 
 
 ## Aqua
