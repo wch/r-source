@@ -150,6 +150,7 @@ void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast,
 void  gfillrect(drawing d, rgb fill, rect r);
 void  gcopy(drawing d, drawing d2, rect r);
 void  gcopyalpha(drawing d, drawing d2, rect r, int alpha);
+void  gcopyalpha2(drawing d, image src, rect r);
 void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
 		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);
