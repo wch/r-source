@@ -92,9 +92,9 @@ static void setFileTime(const char *fn, tm_unz tmu_date)
 #if defined(HAVE_UTIMES)
     struct timeval times[2];
 
-    times[0].tv.sec = times[1].tv.sec = ftime;
-    times[0].tv.usec = times[1].tv.usec = 0;
-    utimes(fn, &times);
+    times[0].tv_sec = times[1].tv_sec = ftime;
+    times[0].tv_usec = times[1].tv_usec = 0;
+    utimes(fn, times);
 #elif defined(HAVE_UTIME)
     struct utimbuf settime;
     settime.actime = settime.modtime = ftime;
