@@ -41,7 +41,7 @@ fourfoldplot(x, color = c("#99CCFF", "#6699CC"),
     each 2 by 2 table.
     Only used if \code{std} equals \code{"margins"}.}
   \item{space}{the amount of space (as a fraction of the maximal radius
-    of the quarter circles) used for the row and column lebals.}
+    of the quarter circles) used for the row and column labels.}
   \item{main}{character string for the fourfold title.}
   \item{mfrow}{a numeric vector of the form \code{c(nr, nc)}, indicating
     that the displays for the 2 by 2 tables should be arranged in an

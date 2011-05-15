@@ -114,7 +114,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \item Font sizes are in big points.
     \item The default font family is Helvetica.
     \item Line widths are multiples of 1/96 inch.
-    \item Circle radii have a minumum of 1/72 inch.
+    \item Circle radii have a minimum of 1/72 inch.
     \item Colours are interpreted by the viewing application.
   }
 }
