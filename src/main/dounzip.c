@@ -89,7 +89,7 @@ static void setFileTime(const char *fn, tm_unz tmu_date)
 	dt.tm_year = tmu_date.tm_year;
     dt.tm_isdst = -1;
     time_t ftime = mktime(&dt);
-#elif defined(HAVE_UTIMES)
+#if defined(HAVE_UTIMES)
     struct timeval times[2];
 
     times[0].tv.sec = times[1].tv.sec = ftime;
