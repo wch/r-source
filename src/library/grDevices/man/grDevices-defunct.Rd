@@ -5,7 +5,7 @@
 
 \name{grDevices-defunct}
 \alias{postscriptFont}
-\title{Defunct Functions in Package grDevices}
+\title{Defunct Functions in Package \pkg{grDevices}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

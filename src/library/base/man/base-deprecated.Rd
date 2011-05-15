@@ -7,7 +7,7 @@
 \alias{base-deprecated}
 \alias{Sys.putenv}
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
-\title{Deprecated Functions in Base package}
+\title{Deprecated Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of

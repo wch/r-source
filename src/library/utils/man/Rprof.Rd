@@ -32,7 +32,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   
   Profiling works by writing out the call stack every \code{interval}
   seconds, to the file specified.  Either the \code{\link{summaryRprof}}
-  function or the wrappper script \command{R CMD Rprof} can be used to
+  function or the wrapper script \command{R CMD Rprof} can be used to
   process the output file to produce a summary of the usage; use
   \command{R CMD Rprof --help} for usage information.
 

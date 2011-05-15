@@ -8,7 +8,7 @@
 \alias{dotplot}
 \alias{stripplot}
 \alias{piechart}
-\title{Defunct Functions in Package graphics}
+\title{Defunct Functions in Package \pkg{graphics}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

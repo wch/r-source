@@ -6,7 +6,7 @@
 \name{stats-deprecated}
 \alias{stats-deprecated}
 %------ NOTE:  ../R/stats-deprecated.R   must be synchronized with this!
-\title{Deprecated Functions in Stats package}
+\title{Deprecated Functions in Package \pkg{stats}}
 %------ PLEASE: one \alias{.} for EACH ! (+ one \usage{} & \arguments{} for all)
 \description{
   These functions are provided for compatibility with older versions of

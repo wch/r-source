@@ -5,7 +5,7 @@
 
 \name{ts-defunct}
 \alias{arima0.diag}
-\title{Defunct functions in Package ts}
+\title{Defunct functions in Package \pkg{ts}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

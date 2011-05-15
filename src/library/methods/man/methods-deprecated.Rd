@@ -6,7 +6,7 @@
 \name{methods-deprecated}
 \alias{methods-deprecated}
 %----- NOTE:  ../R/methods-deprecated.R   must be synchronized with this!
-\title{Deprecated Functions in Methods package}
+\title{Deprecated Functions in Package \pkg{methods}}
 %----- PLEASE: put \alias{.} here for EACH ! --- Do not remove this file, even when ``empty''
 %
 \description{

@@ -52,7 +52,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   Fields that are of zero-width or are wholly beyond the end of the line
   in \code{file} are replaced by \code{NA}.
   
-  Negative-width fields are used to indicate columns to be skipped, eg
+  Negative-width fields are used to indicate columns to be skipped, e.g.,
   \code{-5} to skip 5 columns.  These fields are not seen by
   \code{read.table} and so should not be included in a \code{col.names}
   or \code{colClasses} argument (nor in the header line, if present).

@@ -16,7 +16,7 @@
 \alias{tkputs}        
 \alias{tkread}        
 
-\title{Defunct Functions in Package tcltk}
+\title{Defunct Functions in Package \pkg{tcltk}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

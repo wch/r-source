@@ -36,7 +36,7 @@
 \alias{.saveRDS}
 
 
-\title{Internal Functions in the Base Package}
+\title{Internal Functions in Package \pkg{base}}
 \description{
   Internal functions in the base package, which are only user-visible
   because of the special nature of the base name space.

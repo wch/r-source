@@ -7,7 +7,7 @@
 % NOTE: ../R/tools-defunct.R must be synchronized with this!
 \alias{tools-defunct}
 \alias{Rd_parse}
-\title{Defunct Objects in Package tools}
+\title{Defunct Objects in Package \pkg{tools}}
 \description{
   The functions or variables listed here are defunct, and may get
   removed as soon as of the next release.

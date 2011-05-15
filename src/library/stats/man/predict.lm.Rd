@@ -73,7 +73,7 @@
   is used as a scale factor. For a weighted fit, if the prediction
   is for the original data frame, \code{weights} defaults to the weights
   used for the  model fit, with a warning since it might not be the
-  intended result. If the fit was weighted and newdata is given, the
+  intended result. If the fit was weighted and \code{newdata} is given, the
   default is to assume constant prediction variance, with a warning.
 }
 \value{

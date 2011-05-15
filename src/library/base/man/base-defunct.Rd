@@ -5,7 +5,7 @@
 
 \name{base-defunct}
 \alias{base-defunct}
-\title{Defunct Functions in Base Package}
+\title{Defunct Functions in Package \pkg{base}}
 %------ PLEASE: put \alias{.} here for  EACH !
 \alias{Version}
 \alias{provide}

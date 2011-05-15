@@ -61,7 +61,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab Must have a \var{tag name}\cr
     7 \tab Only one \var{tag name} is allowed\cr
     7 \tab Tag \var{tag name} must not be empty\cr
-    7 \tab 'docType' must be plain text\cr
+    7 \tab \verb{\docType} must be plain text\cr
     5 \tab Tag \verb{\method} is only valid in \verb{\usage}\cr
     5 \tab Tag \verb{\dontrun} is only valid in \verb{\examples}\cr
     5 \tab Tag \var{tag name} is invalid in a \var{block name} block\cr

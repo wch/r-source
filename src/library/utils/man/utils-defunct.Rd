@@ -9,7 +9,7 @@
 \alias{package.contents}
 \alias{zip.file.extract}
 
-\title{Defunct Functions in Package utils}
+\title{Defunct Functions in Package \pkg{utils}}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

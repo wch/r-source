@@ -7,7 +7,7 @@
 %------ NOTE:  ../R/utils-deprecated.R   must be synchronized with this!
 \alias{utils-deprecated}
 \alias{CRAN.packages}
-\title{Deprecated Functions in Package utils}
+\title{Deprecated Functions in Package \pkg{utils}}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
