@@ -2649,7 +2649,7 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     case 0: break; /* Xlib */
     case 1: xd->buffered = 1; break; /* cairo */
     case 2: xd->buffered = 0; break; /* nbcairo */
-    case 3: xd->buffered = 2; break; /* cairob2 */
+    case 3: xd->buffered = 2; break; /* dbcairo */
     default:
 	warning("that type is not supported on this platform - using \"nbcairo\"");
 	xd->buffered = 0;
