@@ -17,17 +17,19 @@
 parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
                   srcfile = NULL, encoding = "unknown")
 {
+    keep.source <- isTRUE(getOption("keep.source"))
     if(!is.null(text)) {
-        text <- unlist(strsplit(as.character(text), "\n"))
+        if (keep.source && grepl("\n", text, fixed=TRUE))
+            text <- unlist(strsplit(sub("$", "\n", as.character(text)), "\n"))
     	if (length(text) == 0L)
 	    return(expression())
-	if (missing(srcfile) && isTRUE(getOption("keep.source")))
+	if (missing(srcfile) && keep.source)
 	    srcfile <- srcfilecopy("<text>", text)
     }
     if(is.character(file))
         if(file == "") file <- stdin()
         else {
-            if (missing(srcfile) && isTRUE(getOption("keep.source")))
+            if (missing(srcfile) && keep.source)
         	srcfile <- srcfile(file, Enc = encoding)
             file <- file(file, "r")
             on.exit(close(file))
