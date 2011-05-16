@@ -189,7 +189,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         RweaveTryStop(chunkexps, options)
 
         ## Some worker functions used below...
-        putSinput <- function(dce) {
+        putSinput <- function(dce, leading) {
             if (!openSinput) {
                 if (!openSchunk) {
                     cat("\\begin{Schunk}\n", file = chunkout)
@@ -200,11 +200,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 cat("\\begin{Sinput}", file = chunkout)
                 openSinput <<- TRUE
             }
-            cat("\n", paste(getOption("prompt"), dce[1L:leading],
+            leading <- max(leading, 1L) # safety check
+            cat("\n", paste(getOption("prompt"), dce[seq_len(leading)],
                             sep = "", collapse = "\n"),
                 file = chunkout, sep = "")
             if (length(dce) > leading)
-                cat("\n", paste(getOption("continue"), dce[-(1L:leading)],
+                cat("\n", paste(getOption("continue"), dce[-seq_len(leading)],
                                 sep = "", collapse = "\n"),
                     file = chunkout, sep = "")
             linesout[thisline + seq_along(dce)] <<- srcline
@@ -226,8 +227,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 dce <- trySrcLines(srcfile, lastshown + 1L, showto, NULL)
                 linedirs <- grepl("^#line ", dce)
 		dce <- dce[!linedirs]
-                leading <<- length(dce) # These are all trailing comments
-                putSinput(dce)
+                putSinput(dce, length(dce)) # These are all trailing comments
                 lastshown <<- showto
             }
         }
@@ -286,7 +286,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (object$debug)
                 cat("\nRnw> ", paste(dce, collapse = "\n+  "),"\n")
 
-            if (options$echo && length(dce)) putSinput(dce)
+            if (options$echo && length(dce)) putSinput(dce, leading)
 
             ## avoid the limitations (and overhead) of output text connections
             if (options$eval) {
