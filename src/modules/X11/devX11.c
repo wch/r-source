@@ -226,13 +226,16 @@ extern double currentTime(void); /* from datetime.c */
 /* Alternatively, use times() which R >= 2.14.0 requires.  This could
   conceivably wrap around, but on the sort of system where this might
   be used, clock_t is 32-bit (it is typically long or unsigned long)
-  and CLOCKS_PER_SEC is 60-100, so it happens after years of uptime.
+  and CLK_TCK is 60-100, so it happens after many months of uptime.
 */
 # include <sys/times.h>
+# ifndef CLK_TCK
+#   define CLK_TCK 60
+# endif
 static double currentTime(void)
 {
     struct tms ti;
-    return ((double) times(&ti))/CLOCKS_PER_SEC;
+    return ((double) times(&ti))/CLK_TCK;
 }
 #endif
 
