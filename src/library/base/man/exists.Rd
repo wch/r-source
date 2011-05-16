@@ -1,6 +1,6 @@
 % File src/library/base/man/exists.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{exists}
@@ -64,7 +64,9 @@ exists(x, where = -1, envir = , frame, mode = "any",
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{get}}.
+  \code{\link{get}}.  For quite a different kind of \dQuote{existence}
+  checking, namely if function arguments were specified,
+  \code{\link{missing}}.
 }
 \examples{
 ##  Define a substitute function if necessary:
