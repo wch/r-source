@@ -172,7 +172,7 @@ static int validate_tm (struct tm *tm)
     }
 
     if (tm->tm_hour < 0 || tm->tm_hour > 23) {
-	res++;
+	if(tm->tm_hour > 24 || tm->tm_min > 0 || tm->tm_sec > 0) res++;
 	tmp = tm->tm_hour/24;
 	tm->tm_hour -= 24 * tmp; tm->tm_mday += tmp;
 	if(tm->tm_hour < 0) {tm->tm_hour += 24; tm->tm_mday--;}
