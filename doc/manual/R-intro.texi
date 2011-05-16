@@ -6931,14 +6931,16 @@ Combine @option{--no-save}, @option{--no-environ},
 @itemx --file=@var{file}
 (not @command{Rgui.exe}) Take input from @var{file}: @samp{-} means
 @code{stdin}.  Implies @option{--no-save} unless @option{--save} has
-been set.
+been set.  On a Unix-alike, no spaces nor other characters which would
+be interpreted by a shell as allowed in @var{file}.
 
 @item -e @var{expression}
 (not @command{Rgui.exe}) Use @var{expression} as an input line.  One or
 more @option{-e} options can be used, but not together with @option{-f}
 or @option{--file}.  Implies @option{--no-save} unless @option{--save}
 has been set.  (There is a limit of 10,000 bytes on the total length of
-expressions used in this way.)
+expressions used in this way.  Avoid spaces and shell metacharacters in
+the expression.)
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
@@ -7325,6 +7327,9 @@ but here @code{stdin()} refers to the program source and
 
 Very short scripts can be passed to @command{Rscript} on the
 command-line via the @option{-e} flag.
+
+Note that on a Unix-alike the input filename (such as @file{foo.R})
+should not contain spaces nor shell metacharacters.
 
 
 @node The command-line editor, Function and variable index, Invoking R, Top
