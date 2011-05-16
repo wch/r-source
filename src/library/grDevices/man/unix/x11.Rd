@@ -323,11 +323,9 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
 }
 
 \section{Experimental Types}{
-  There are two experimental types available in this development version
-  of \R.
-
-  Type \code{"dbcairo"} and \code{"cairob3"} is double-buffered
-  and updates the screen about every 100ms.
+  An experimental type is available in this development version of \R.
+  Type \code{"dbcairo"} is double-buffered and updates the screen about
+  every 100ms, by default.
 
   The refresh interval can be set (in units of seconds) by e.g.
   \code{\link{options}(X11updates = 0.25)}: the value is consulted when

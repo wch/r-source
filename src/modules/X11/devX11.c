@@ -331,6 +331,7 @@ static int Cairo_holdflush(pDevDesc dd, int level)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     int old = xd->holdlevel;
 
+    if(!xd->buffered) return old;
     xd->holdlevel += level;
     if(xd->holdlevel <= 0) xd->holdlevel = 0;
 //    printf("holdlevel = %d\n",  xd->holdlevel);
