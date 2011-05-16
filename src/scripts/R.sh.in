@@ -89,6 +89,8 @@ Options:
   -f, --file=FILE       Take input from 'FILE'
   -e EXPR               Execute 'EXPR' and exit
 
+Neither FILE nor EXPR should contain spaces nor shell metacharacers.
+
 Commands:
   BATCH			Run R in batch mode
   COMPILE		Compile files for use with R
