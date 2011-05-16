@@ -143,7 +143,7 @@
       \item There are several new built-in font mappings for
       \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
 
-      \item There are experimental new types for \code{X11()}: see its
+      \item There is an experimental new type for \code{X11()}: see its
       help page.
       
       \item The \code{X11()} device now makes use of cursors to
@@ -159,8 +159,8 @@
       that the plot is only displayed when the page is complete.
 
       Currently implemented for \code{windows(buffered = TRUE)} and the
-      cairo-based \code{X11()} types with buffering, the default
-      on-screen devices on Windows and most Unix-alikes.
+      cairo-based \code{X11()} types with buffering (which are the
+      default on-screen devices on Windows and most Unix-alikes).
     }
   }
 

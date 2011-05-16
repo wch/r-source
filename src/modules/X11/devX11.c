@@ -211,10 +211,9 @@ static double BlueGamma	 = 1.0;
    - "cairo".  This wrote to a cairo_image_surface xd->cs, and copied that to 
      the cairo_xlib_surface (xd->xcs) at mode(0) calls.
 
-   Two further types were introduced (experimentally) in May 2011.
-   - "cairob2".  Similar to cairo, but the copying is only done on a timer.
-   - "cairob3".  Writes to a cairo_image_surface xd->cs, uses Xlib facilities
-     to do the copying, on a timer.
+   Further types were introduced (experimentally) in May 2011.  We kept:
+   - "dbcairo".  Similar to cairo, but the copying is only done when needed
+      based on a timer.
    Timing requires a medium-res timer. The current method is to update
    ca 100ms after the last activity (using the event loop) or at a
    mode(0) call if it is 500ms after the last update.
@@ -240,11 +239,7 @@ static double currentTime(void)
 static void Cairo_update(pX11Desc xd)
 {
     if(inclose || !xd || !xd->buffered || xd->holdlevel > 0) return;
-    if(xd->buffered == 3)
-	XPutImage(display, xd->window, xd->wgc, xd->im, 0, 0, 
-		  0, 0, xd->windowWidth, xd->windowHeight);
-    else
-	cairo_paint(xd->xcc);
+    cairo_paint(xd->xcc);
     XDefineCursor(display, xd->window, arrow_cursor);
     XSync(display, 0);
     xd->last = currentTime();
@@ -322,8 +317,6 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-//  Suggestion was to drop holding at a new page.
-//    xd->holdlevel = 0;
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
@@ -778,59 +771,21 @@ static void handleEvent(XEvent event)
 		if(xd->buffered) {
 		    cairo_surface_destroy(xd->cs); xd->cs = NULL;
 		    cairo_destroy(xd->cc); xd->cc = NULL;
-		    if(xd->buffered != 3) {
-			cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
+		    cairo_xlib_surface_set_size(xd->xcs, xd->windowWidth,
 						    xd->windowHeight);
-			xd->cs = 
-			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						       (double)xd->windowWidth,
-						       (double)xd->windowHeight);
-			cairo_status_t res = cairo_surface_status(xd->cs);
-			if (res != CAIRO_STATUS_SUCCESS) {
-			    warning("cairo error '%s'", 
-				    cairo_status_to_string(res));
-			    error("fatal error on resize: please shut down the device");
-			}
-		    } else {
-			cairo_format_t format = -1 /* -Wall */;
-			switch(depth) {
-			case 24:
-			case 32: format = CAIRO_FORMAT_ARGB32; break;
-			case 16: format = CAIRO_FORMAT_RGB16_565; break;
-			    /* for completeness: will not have got here */
-			default:
-			    error("depth %d is unsupported", depth);
-			}
-			xd->cs = 
-			    cairo_image_surface_create(format,
-						       (double)xd->windowWidth,
-						       (double)xd->windowHeight);
-			cairo_status_t res = cairo_surface_status(xd->cs);
-			if (res != CAIRO_STATUS_SUCCESS) {
-			    warning("cairo error '%s'", 
-				    cairo_status_to_string(res));
-			    error("fatal error on resize: please shut down the device");
-			}
-			void *xi = cairo_image_surface_get_data(xd->cs);
-			if (!xi) {
-			    warning("cairo_image_surface_get_data failed");
-			    cairo_surface_destroy(xd->cs); xd->cs = NULL;
-			    error("fatal error on resize: please shut down the device");
-			}
-			xd->im = XCreateImage(display, visual, depth, ZPixmap,
-					      0, (char *) xi,
-					      xd->windowWidth, xd->windowHeight,
-					      depth >= 24 ? 32: depth, 0);
-			if (!xd->im || XInitImage(xd->im) == 0) {
-			    warning("XCreateImage failed");
-			    cairo_surface_destroy(xd->cs); xd->cs = NULL;
-			    error("fatal error on resize: please shut down the device");
-			}
+		    xd->cs = 
+			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						   (double) xd->windowWidth,
+						   (double) xd->windowHeight);
+		    cairo_status_t res = cairo_surface_status(xd->cs);
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'", 
+				cairo_status_to_string(res));
+			error("fatal error on resize: please shut down the device");
 		    }
 		    xd->cc = cairo_create(xd->cs);
 		    cairo_set_antialias(xd->cc, xd->antialias);
-		    if(xd-> xcc) 
-			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
+		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		} else { /* not buffered */
 		    cairo_xlib_surface_set_size(xd->cs, xd->windowWidth,
 						xd->windowHeight);
@@ -1635,84 +1590,43 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	    if(xd->useCairo) {
 		cairo_status_t res;
 		if(xd->buffered) {
-		    if(xd->buffered != 3) {
-			xd->xcs = 
-			    cairo_xlib_surface_create(display, xd->window,
-						      visual,
-						      (double)xd->windowWidth,
-						      (double)xd->windowHeight);
-			res = cairo_surface_status(xd->xcs);
-			if (res != CAIRO_STATUS_SUCCESS) {
-			    warning("cairo error '%s'", 
-				    cairo_status_to_string(res));
-			    /* bail out */
-			    return FALSE;
-			}
-			xd->xcc = cairo_create(xd->xcs);
-			res = cairo_status(xd->xcc);
-			if (res != CAIRO_STATUS_SUCCESS) {
-			    warning("cairo error '%s'", 
-				    cairo_status_to_string(res));
-			    cairo_surface_destroy(xd->xcs);
-			    /* bail out */
-			    return FALSE;
-			}
-			xd->cs = 
-			    cairo_image_surface_create(CAIRO_FORMAT_RGB24,
-						       (double)xd->windowWidth,
-						       (double)xd->windowHeight);
-			cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
-		    } else {
-			cairo_format_t format = -1 /* -Wall */;
-			switch(depth) {
-			case 24:
-			case 32: format = CAIRO_FORMAT_ARGB32; break;
-			case 16: format = CAIRO_FORMAT_RGB16_565; break;
-			default:
-			    warning("depth %d is unsupported", depth);
-			    return FALSE;
-			}
-			xd->cs = 
-			    cairo_image_surface_create(format,
-						       (double)xd->windowWidth,
-						       (double)xd->windowHeight);
-			/* This is checked later, but maybe next line
-			   needs it to have worked */
-			res = cairo_surface_status(xd->cs);
-			if (res != CAIRO_STATUS_SUCCESS) {
-			    warning("cairo error '%s'", 
-				    cairo_status_to_string(res));
-			    return FALSE;
-			}
-			void *xi = cairo_image_surface_get_data(xd->cs);
-			if (!xi) {
-			    warning("cairo_image_surface_get_data failed");
-			    cairo_surface_destroy(xd->cs);
-			    return FALSE;
-			}
-			xd->im = XCreateImage(display, visual, depth, ZPixmap,
-					      0, (char *) xi,
-					      xd->windowWidth, xd->windowHeight,
-					      depth >= 24 ? 32: depth, 0);
-			//printf("allocated %p at depth %d\n", xd->im, depth);
-			if (!xd->im || XInitImage(xd->im) == 0) {
-			    warning("XCreateImage failed");
-			    cairo_surface_destroy(xd->cs);
-			    return FALSE;
-			}
+		    xd->xcs = 
+			cairo_xlib_surface_create(display, xd->window,
+						  visual,
+						  (double) xd->windowWidth,
+						  (double) xd->windowHeight);
+		    res = cairo_surface_status(xd->xcs);
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'",
+				cairo_status_to_string(res));
+			/* bail out */
+			return FALSE;
 		    }
+		    xd->xcc = cairo_create(xd->xcs);
+		    res = cairo_status(xd->xcc);
+		    if (res != CAIRO_STATUS_SUCCESS) {
+			warning("cairo error '%s'", 
+				cairo_status_to_string(res));
+			cairo_surface_destroy(xd->xcs);
+			/* bail out */
+			return FALSE;
+		    }
+		    xd->cs = 
+			cairo_image_surface_create(CAIRO_FORMAT_RGB24,
+						   (double) xd->windowWidth,
+						   (double) xd->windowHeight);
+		    cairo_set_source_surface (xd->xcc, xd->cs, 0, 0);
 		    if(xd->buffered > 1) addBuffering(xd);
 		} else /* non-buffered */
 		    xd->cs = 
 			cairo_xlib_surface_create(display, xd->window,
 						  visual,
-						  (double)xd->windowWidth,
-						  (double)xd->windowHeight);
+						  (double) xd->windowWidth,
+						  (double) xd->windowHeight);
 
 		res = cairo_surface_status(xd->cs);
 		if (res != CAIRO_STATUS_SUCCESS) {
-		    warning("cairo error '%s'", 
-			    cairo_status_to_string(res));
+		    warning("cairo error '%s'", cairo_status_to_string(res));
 		    /* bail out */
 		    if(xd->xcs) cairo_surface_destroy(xd->xcs);
 		    if(xd->xcc) cairo_destroy(xd->xcc);
@@ -2125,7 +2039,6 @@ static void X11_Close(pDevDesc dd)
 	    if(xd->cc) cairo_destroy(xd->cc);
 	    if(xd->xcs) cairo_surface_destroy(xd->xcs);
 	    if(xd->xcc) cairo_destroy(xd->xcc);
-	    if(xd->im) XFree(xd->im); /* See comment in X11_Raster */
 	}
 #endif
 
@@ -2733,7 +2646,6 @@ Rboolean X11DeviceDriver(pDevDesc dd,
     case 1: xd->buffered = 1; break; /* cairo */
     case 2: xd->buffered = 0; break; /* nbcairo */
     case 3: xd->buffered = 2; break; /* cairob2 */
-    case 4: xd->buffered = 3; break; /* cairob3 */
     default:
 	warning("that type is not supported on this platform - using \"nbcairo\"");
 	xd->buffered = 0;

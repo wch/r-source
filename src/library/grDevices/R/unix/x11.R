@@ -71,8 +71,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     if(!missing(title)) new$title <- title
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!missing(type)) {
-        new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo",
-                                      "cairob2", "cairob3"))
+        new$type <- match.arg(type, c("Xlib", "cairo", "nbcairo", "dbcairo"))
         if(!capabilities("cairo") && type != "Xlib")
             warning("cairo-based types are not supported on this build - using \"Xlib\"")
     }
@@ -89,8 +88,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     }
     type <-
 	if(capabilities("cairo"))
-            switch(d$type, "cairo" = 1L, "nbcairo" = 2L,
-                   "cairob2" = 3L, "cairob3" = 4L, 0L)
+            switch(d$type, "cairo" = 1L, "nbcairo" = 2L, "dbcairo" = 3L, 0L)
 	else 0L
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0L

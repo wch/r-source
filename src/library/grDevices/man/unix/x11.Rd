@@ -326,20 +326,13 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   There are two experimental types available in this development version
   of \R.
 
-  Types \code{"cairob2"} and \code{"cairob3"} are both double-buffered
-  and update the screen about every 100ms.  They differ in how they do
-  the update: the first uses cairographics facilities in the same way as
-  \code{type = "cairo"} whereas the second uses \code{Xlib} facilities.
-  The latter should be faster, but may only work on 24- or 32-bit
-  displays (but then these are the only ones fully supported by
-  cairographics).
+  Type \code{"dbcairo"} and \code{"cairob3"} is double-buffered
+  and updates the screen about every 100ms.
 
   The refresh interval can be set (in units of seconds) by e.g.
   \code{\link{options}(X11updates = 0.25)}: the value is consulted when
   a device is opened.  Updates are only looked for every 50ms (at most),
   and during heavy graphics computations only every 500ms.
-
-  A re-named version of one of these may or may not be released in \R 2.14.0.
 }
 
 \seealso{

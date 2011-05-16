@@ -136,7 +136,7 @@ typedef struct {
     Rboolean onefile;
 
 #ifdef HAVE_WORKING_CAIRO
-    /* In the buffered case, xcc and xcs are the xlib context and surface
+    /* In the buffered cases, xcc and xcs are the xlib context and surface
        whereas cc, cs are an RGB24 image surface.
        In the non-buffered case, xcc and xcs are NULL and cc, cs are the
        cairo context and surface used directly.
@@ -145,7 +145,6 @@ typedef struct {
     cairo_t *cc, *xcc;
     cairo_surface_t *cs, *xcs;
     cairo_antialias_t antialias;
-    XImage *im;
     double last, last_activity, update_interval;
 #endif
 
