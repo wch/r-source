@@ -102,7 +102,7 @@ void usage(void)
     fprintf(stderr, "  --restore           Do restore previously saved objects at startup\n");
     fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file\n");
     fprintf(stderr, "                        --no-init-file and --no-environ\n");
-    fprintf(stderr, "\n'file' and 'expr' should not contain spaces nor shell metacharacters\n");
+    fprintf(stderr, "\n'file' should not contain spaces nor shell metacharacters\n");
 }
 
 
