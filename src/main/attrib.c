@@ -759,7 +759,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (NAMED(CAR(args)) == 2)
 	SETCAR(args, duplicate(CAR(args)));
     if(IS_S4_OBJECT(CAR(args))) {
-	char *klass = CHAR(STRING_ELT(R_data_class(CAR(args), FALSE), 0));
+	const char *klass = CHAR(STRING_ELT(R_data_class(CAR(args), FALSE), 0));
 	if(getAttrib(CAR(args), R_NamesSymbol) == R_NilValue) {
 	    /* S4 class w/o a names slot or attribute */
 	    if(TYPEOF(CAR(args)) == S4SXP)
