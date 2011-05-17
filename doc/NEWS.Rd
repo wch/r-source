@@ -143,8 +143,8 @@
       \item There are several new built-in font mappings for
       \code{X11(type = "Xlib")}: see the help on \code{X11Fonts()}.
 
-      \item There is an experimental new type for \code{X11()}: see its
-      help page.
+      \item There is a new type \code{X11(type = "dbcairo")} which
+      updates the screeen less frequently: see its help page.
       
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather

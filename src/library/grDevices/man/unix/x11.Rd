@@ -77,10 +77,11 @@ X11.options(\dots, reset = FALSE)
     details).  How non-ASCII titles are handled is
     implementation-dependent.}
   
-  \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"} or
-    \code{"nbcairo"}.  The latter two will only be available if the
-    system was compiled with support for cairo.  Default \code{"cairo"}
-    where available and reliable, otherwise \code{"Xlib"}.}
+  \item{type}{character string, one of \code{"Xlib"}, \code{"cairo"},
+    \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
+    available if the system was compiled without support for
+    cairographics.  The default is \code{"cairo"} where available except
+    on Mac OS X, otherwise \code{"Xlib"}.}
   
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
@@ -115,17 +116,23 @@ X11.options(\dots, reset = FALSE)
     plot in many languages on a single figure (and this will work even
     in non-UTF-8 locales).  The output should be locale-independent.
   }
-  \code{type = "nbcairo"} is the same device as \code{type = "cairo"}
-  without buffering: which is faster will depend on the X11 connection
-  and the type of plotting.  Both will be slower than \code{type =
-  "Xlib"}, especially on a slow X11 connection, as all the rendering is
-  done on the machine running \R rather than in the X server.  On slow
-  connections \code{type = "nbcairo"} will often be faster than
-  \code{type = "cairo"}: on fast connections and with complicated plots
-  the buffering done by \code{type = "cairo"} will make the initial plot
-  much faster.  (Also, repainting when the window is exposed will be much
-  faster unless backing store is in use, which for example it always is
-  on Mac OS X displays).
+  
+  There are three variants of the cairo-based device.  \code{type =
+  "nbcairo"} has no buffering.  \code{type = "cairo"} has some
+  buffering, and supports \code{\link{dev.hold}} and \code{dev.flush}.
+  \code{type = "dbcairo"} buffers output and updates the screen about
+  every 100ms (by default).  The refresh interval can be set (in units
+  of seconds) by e.g.  \code{\link{options}(X11updates = 0.25)}: the
+  value is consulted when a device is opened.  Updates are only looked
+  for every 50ms (at most), and during heavy graphics computations only
+  every 500ms.
+
+  Which version will be fastest depends on the X11 connection and the
+  type of plotting.  You will probably want to use a buffered type
+  unless backing store is in use on the X server (which for example it
+  always is on Mac OS X displays), as otherwise repainting when the
+  window is exposed will be slow.  On slow connections \code{type =
+    "dbcairo"} will probably give the best performance.
   
   Because of known problems with font selection on Mac OS X without
   Pango (for example, the CRAN distribution), \code{type = "cairo"} is
@@ -320,17 +327,6 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
     \item Colours are interpreted by the X11 server, which is
     \emph{assumed} to conform to sRGB.
   }
-}
-
-\section{Experimental Types}{
-  An experimental type is available in this development version of \R.
-  Type \code{"dbcairo"} is double-buffered and updates the screen about
-  every 100ms, by default.
-
-  The refresh interval can be set (in units of seconds) by e.g.
-  \code{\link{options}(X11updates = 0.25)}: the value is consulted when
-  a device is opened.  Updates are only looked for every 50ms (at most),
-  and during heavy graphics computations only every 500ms.
 }
 
 \seealso{
