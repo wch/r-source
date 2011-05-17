@@ -46,6 +46,7 @@ interaction.plot <-
     xlim <- range(xvals)
     xleg <- xlim[2L] + 0.05 * diff(xlim)
     xlim <- xlim + c(-0.2/nr, if(legend) 0.2 + 0.02*nch else 0.2/nr) * diff(xlim)
+    dev.hold(); on.exit(dev.flush())
     matplot(xvals, cells, ..., type = type, xlim = xlim, ylim = ylim,
             xlab = xlab, ylab = ylab, axes = axes, xaxt = "n",
             col = col, lty = lty, pch = pch)
@@ -63,7 +64,7 @@ interaction.plot <-
         if(!is.null(xpd) || { xpd. <- par("xpd")
                               !is.na(xpd.) && !xpd. && (xpd <- TRUE)}) {
             op <- par(xpd = xpd)
-            on.exit(par(op))
+            on.exit(par(op), add = TRUE)
         }
         text(xleg, ylim[2L] - 0.05 * yrng, paste("  ", trace.label), adj = 0)
         if(!fixed) {

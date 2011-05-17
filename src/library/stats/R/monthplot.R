@@ -62,6 +62,7 @@ monthplot.default <-
     if (!is.null(base))
         means <- tapply(x, phase, base)
     if (!add) {
+        dev.hold(); on.exit(dev.flush())
         Call <- match.call()
         Call[[1L]] <- as.name("plot")
         Call$x <- NA

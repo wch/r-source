@@ -103,6 +103,7 @@ plot.TukeyHSD <- function (x, ...)
     for (i in seq_along(x)) {
         xi <- x[[i]][, -4, drop=FALSE] # drop p-values
         yvals <- nrow(xi):1
+        dev.hold(); on.exit(dev.flush())
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",
              axes = FALSE, xlab = "", ylab = "", ...)
         axis(1, ...)

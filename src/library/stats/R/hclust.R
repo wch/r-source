@@ -128,6 +128,7 @@ plot.hclust <-
 		as.character(labels)
 	}
 
+    dev.hold(); on.exit(dev.flush())
     plot.new()
     .Internal(dend.window(n, merge, height,                 hang, labels, ...))
     .Internal(dend       (n, merge, height, order(x$order), hang, labels, ...))

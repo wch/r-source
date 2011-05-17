@@ -309,6 +309,7 @@ plot.dendrogram <-
     }
     if(missing(xlim) || is.null(xlim)) xlim <- xl.
     if(missing(ylim) || is.null(ylim)) ylim <- yl.
+    dev.hold(); on.exit(dev.flush())
     plot(0, xlim = xlim, ylim = ylim, type = "n", xlab = xlab, ylab = ylab,
 	 xaxt = xaxt, yaxt = yaxt, frame.plot = frame.plot, ...)
     if(is.null(dLeaf))
@@ -784,8 +785,9 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
     ## Graphics `output' -----------------------
 
+    dev.hold(); on.exit(dev.flush())
     op <- par(no.readonly = TRUE)
-    on.exit(par(op))
+    on.exit(par(op), add = TRUE)
     layout(lmat, widths = lwid, heights = lhei, respect = TRUE)
     ## draw the side bars
     if(!missing(RowSideColors)) {

@@ -126,6 +126,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
 	    ylim <- extendrange(r= ylim, f = 0.08)
+        dev.hold()
 	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yh, r, ...)
@@ -138,10 +139,12 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	    text.id(yh[show.r], y.id, show.r)
 	}
 	abline(h = 0, lty = 3, col = "gray")
+        dev.flush()
     }
     if (show[2L]) { ## Normal
 	ylim <- range(rs, na.rm=TRUE)
 	ylim[2L] <- ylim[2L] + diff(ylim) * 0.075
+        dev.hold()
 	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
 	if (qqline) qqline(rs, lty = 3, col = "gray50")
 	if (one.fig)
@@ -149,12 +152,14 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	mtext(getCaption(2), 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(qq$x[show.rs], qq$y[show.rs], show.rs)
+        dev.flush()
     }
     if (show[3L]) {
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr, na.rm=TRUE))
 	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
 	yhn0 <- if(is.null(w)) yh else yh[w!=0]
+        dev.hold()
 	plot(yhn0, sqrtabsr, xlab = l.fit, ylab = yl, main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yhn0, sqrtabsr, ...)
@@ -163,12 +168,14 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	mtext(getCaption(3), 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs)
+        dev.flush()
     }
     if (show[4L]) {
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest 'id.n' ones
 	    ymx <- cook[show.r[1L]] * 1.075
 	} else ymx <- max(cook, na.rm = TRUE)
+        dev.hold()
 	plot(cook, type = "h", ylim = c(0, ymx), main = main,
 	     xlab = "Obs. number", ylab = "Cook's distance", ...)
 	if (one.fig)
@@ -176,6 +183,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	mtext(getCaption(4), 3, 0.25, cex = cex.caption)
 	if(id.n > 0)
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
+        dev.flush()
     }
     if (show[5L]) {
         ylab5 <- if (isGlm) "Std. Pearson resid." else "Standardized residuals"
@@ -211,6 +219,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                 facval <- (dm-1) %*% ff
                 xx <- facval # for use in do.plot section.
 
+                dev.hold()
                 plot(facval, rsp, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
@@ -222,6 +231,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                 abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
                 panel(facval, rsp, ...)
                 abline(h = 0, lty = 3, col = "gray")
+                dev.flush()
             }
 	    else { # no factors
 		message("hat values (leverages) are all = ",
@@ -236,6 +246,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
             ## omit hatvalues of 1.
             xx[xx >= 1] <- NA
 
+            dev.hold()
             plot(xx, rsp, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
                  main = main, xlab = "Leverage", ylab = ylab5, type = "n",
                  ...)
@@ -264,6 +275,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                      mgp = c(.25,.25,0), las = 2, tck = 0,
                      cex.axis = cex.id, col.axis = 2)
             }
+            dev.flush()
         } # if(const h_ii) .. else ..
 	if (do.plot) {
 	    mtext(getCaption(5), 3, 0.25, cex = cex.caption)
@@ -277,6 +289,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
     if (show[6L]) {
 	g <- dropInf( hii/(1-hii), hii )
 	ymx <- max(cook, na.rm = TRUE)*1.025
+        dev.hold()
 	plot(g, cook, xlim = c(0, max(g, na.rm=TRUE)), ylim = c(0, ymx),
 	     main = main, ylab = "Cook's distance",
              xlab = expression("Leverage  " * h[ii]),
@@ -316,6 +329,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	    show.r <- order(-cook)[iid]
             text.id(g[show.r], cook[show.r], show.r)
         }
+        dev.flush()
     }
 
     if (!one.fig && par("oma")[3L] >= 1)

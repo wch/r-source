@@ -525,6 +525,7 @@ plot.ts <-
 		do.lab <- TRUE
 	    } else do.lab <- xy.labels
 
+            dev.hold(); on.exit(dev.flush())
 	    ptype <-
 		if(do.lab) "n" else if(missing(type)) "p" else type
 	    plot.default(xy, type = ptype,

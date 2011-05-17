@@ -171,6 +171,7 @@ plot.acf <-
     }
 
     for (I in 1L:Npgs) for (J in 1L:Npgs) {
+        dev.hold()
         ## Page [ I , J ] : Now do   nr x nr  'panels' on this page
         iind <- (I-1)*nr + 1L:nr
         jind <- (J-1)*nr + 1L:nr
@@ -206,6 +207,7 @@ plot.acf <-
             mtext(paste("[",I,",",J,"]"), side=1, line = -0.2, adj=1,
                   col = "dark gray", cex = 1, outer = TRUE)
         }
+        dev.flush()
     }
     invisible()
 }

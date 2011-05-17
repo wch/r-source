@@ -230,6 +230,7 @@ plot.spec <-
     ylog <- ""
     if(log=="dB") x$spec <- 10 * log10(x$spec)
     if(log=="yes") ylog <- "y"
+    dev.hold(); on.exit(dev.flush())
     if(add) {
         matplot(x$freq, x$spec, type = type, add=TRUE, ...)
     } else {
@@ -296,9 +297,10 @@ plot.spec.coherency <-
               lty=ci.lty, col=ci.col)
         title(main)
     } else {
+        dev.hold(); on.exit(dev.flush())
         opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
-        on.exit(par(opar))
+        on.exit(par(opar), add = TRUE)
         plot.new()
         for (j in 2:nser) for (i in 1L:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))
@@ -345,9 +347,10 @@ plot.spec.phase <-
         lines(x$freq, x$phase - cl, lty=ci.lty, col=ci.col)
         title(main)
     } else {
+        dev.hold(); on.exit(dev.flush())
         opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
-        on.exit(par(opar))
+        on.exit(par(opar), add = TRUE)
         plot.new()
         for (j in 2:nser) for (i in 1L:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))

@@ -65,6 +65,7 @@ biplot.default <-
          xlab = xlab, ylab = ylab, sub = sub, main = main, ...)
     text(x, xlabs, cex = cex[1L], col = col[1L], ...)
     par(new = TRUE)
+    dev.hold(); on.exit(dev.flush())
     plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
 	 xlab = "", ylab = "", col = col[1L], ...)
     axis(3, col = col[2L], ...)

@@ -75,7 +75,8 @@ function(x, npcs = min(10, length(x$sdev)),
     type <- match.arg(type)
     pcs <- x$sdev^2
     xp <- seq_len(npcs)
-    if(type=="barplot")
+    dev.hold(); on.exit(dev.flush())
+    if(type == "barplot")
         barplot(pcs[xp], names.arg = names(pcs[xp]), main = main,
                 ylab = "Variances", ...)
     else {
