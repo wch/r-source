@@ -85,9 +85,7 @@ strptime(x, format, tz = "")
     \item{\code{\%c}}{Date and time.   Locale-specific on output,
       \code{"\%a \%b \%e \%H:\%M:\%S \%Y"} on input.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
-    \item{\code{\%H}}{Hours as decimal number (00--23).  As a special
-      exception times such as \samp{24:00:00} are accepted for input,
-      since ISO 8601 allows these.}
+    \item{\code{\%H}}{Hours as decimal number (00--23).}
     \item{\code{\%I}}{Hours as decimal number (01--12).}
     \item{\code{\%j}}{Day of year as decimal number (001--366).}
     \item{\code{\%m}}{Month as decimal number (01--12).}
@@ -105,16 +103,16 @@ strptime(x, format, tz = "")
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
     \item{\code{\%W}}{Week of the year as decimal number (00--53) using
       Monday as the first day of week (and typically with the
-      first Monday of the year as day 1 of week 1).  The UK convention.}
+      first Monday of the year as day 1 of week 1). The UK convention.}
     \item{\code{\%x}}{Date.  Locale-specific on output,
       \code{"\%y/\%m/\%d"} on input.}
     \item{\code{\%X}}{Time.  Locale-specific on output,
       \code{"\%H:\%M:\%S"} on input.}
-    \item{\code{\%y}}{Year without century (00--99).  On input, values
-      00 to 68 are prefixed by 20 and 69 to 99 by 19 -- that is the
-      behaviour specified by the 2004 and 2008 POSIX standards, but they do
-      also say \sQuote{it is expected that in a future version the
-	default century inferred from a 2-digit year will change}.}
+    \item{\code{\%y}}{Year without century (00--99). Values 00 to 68 are
+      prefixed by 20 and 69 to 99 by 19 -- that is the behaviour specified
+      by the 2004 POSIX standard, but it does also say \sQuote{it is
+  expected that in a future version the default century inferred from a
+  2-digit year will change}.}
     \item{\code{\%Y}}{Year with century.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
@@ -220,14 +218,12 @@ strptime(x, format, tz = "")
 \references{
   International Organization for Standardization (2004, 2000, 1988, 1997,
   \dots)
-  \emph{ISO 8601.  Data elements and interchange formats --
+  \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
   current official version, see
   \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
-  
-  The POSIX 1003.1 standard, which is in some respects stricter than ISO 8601.
 }
 \seealso{
   \link{DateTimeClasses} for details of the date-time classes;
