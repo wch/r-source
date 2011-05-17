@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -50,6 +50,8 @@
   }
 
 #ifdef unix
+  \code{file} should not contain spaces nor shell metacharacters.
+  
   Normally the version of \R is determined at installation, but this can
   be overridden by setting the environment variable \env{RHOME}.
 #endif
