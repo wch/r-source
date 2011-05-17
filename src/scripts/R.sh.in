@@ -82,14 +82,14 @@ Options:
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
   --debugger-args=ARGS  Pass ARGS as arguments to the debugger
-  -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
-			(default) and 'Tk'.
+  -g TYPE, --gui=TYPE	Use TYPE as GUI; possible values are 'X11' (default)
+			and 'Tk'.
   --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
-  -f, --file=FILE       Take input from 'FILE'
+  -f FILE, --file=FILE  Take input from 'FILE'
   -e EXPR               Execute 'EXPR' and exit
 
-FILE should not contain spaces nor shell metacharacers.
+FILE may contain spaces but not shell metacharacers.
 
 Commands:
   BATCH			Run R in batch mode
@@ -199,6 +199,18 @@ while test -n "${1}"; do
 	error "option '${1}' requires an argument"
       fi
       args="${args} -e $a"
+      ;;
+    -f)
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
+      else
+	error "option '${1}' requires an argument"
+      fi
+      args="${args} -f $a"
+      ;;
+    --file=*)
+      a=`echo "${1}" | ${SED} -e 's/[^=]*=//' | ${SED} -e 's/ /~+~/g'`
+      args="${args} --file=$a"
       ;;
     --no-environ)
       export R_ENVIRON=''

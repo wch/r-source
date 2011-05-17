@@ -300,22 +300,40 @@ int Rf_initialize_R(int ac, char **av)
 		ac--; av++;
 		Rp->R_Interactive = FALSE;
 		if(strcmp(*av, "-")) {
-		    ifp = R_fopen(*av, "r");
+		    /* Undo the escaping done in the front end */
+		    char path[PATH_MAX], *p = path, *q;
+		    for(q = *av; *q; q++) {
+			if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
+			    q += 2;
+			    *p++ = ' ';
+			} else *p++ = *q;
+		    }
+		    *p = '\0';
+		    ifp = R_fopen(path, "r");
 		    if(!ifp) {
 			snprintf(msg, 1024,
 				 _("cannot open file '%s': %s"),
-				 *av, strerror(errno));
+				 path, strerror(errno));
 			R_Suicide(msg);
 		    }
 		}
 	    } else if(!strncmp(*av, "--file=", 7)) {
 		Rp->R_Interactive = FALSE;
 		if(strcmp((*av)+7, "-")) {
-		    ifp = R_fopen( (*av)+7, "r");
+		    /* Undo the escaping done in the front end */
+		    char path[PATH_MAX], *p = path, *q;
+		    for(q = (*av)+7; *q; q++) {
+			if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
+			    q += 2;
+			    *p++ = ' ';
+			} else *p++ = *q;
+		    }
+		    *p = '\0';
+		    ifp = R_fopen(path, "r");
 		    if(!ifp) {
 			snprintf(msg, 1024,
 				 _("cannot open file '%s': %s"),
-				 (*av)+7, strerror(errno));
+				 path, strerror(errno));
 			R_Suicide(msg);
 		    }
 		}

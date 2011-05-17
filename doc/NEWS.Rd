@@ -237,6 +237,9 @@
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
       \samp{inputenx} is an optional install which provides greater
       coverage of the UTF-8 encoding.)
+      
+      \item \command{Rscript} now accepts file names containing spaces
+      (if these are escaped or quoted in the shell).
     }
   }
 

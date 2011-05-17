@@ -6931,8 +6931,8 @@ Combine @option{--no-save}, @option{--no-environ},
 @itemx --file=@var{file}
 (not @command{Rgui.exe}) Take input from @var{file}: @samp{-} means
 @code{stdin}.  Implies @option{--no-save} unless @option{--save} has
-been set.  On a Unix-alike, no spaces nor other characters which would
-be interpreted by a shell as allowed in @var{file}.
+been set.  On a Unix-alike, shell metacharacters should be avoided in
+@var{file} (but as from @R{} 2.14.0 spaces are allowed).
 
 @item -e @var{expression}
 (not @command{Rgui.exe}) Use @var{expression} as an input line.  One or
