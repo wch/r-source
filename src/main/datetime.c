@@ -171,8 +171,20 @@ static int validate_tm (struct tm *tm)
 	if(tm->tm_min < 0) {tm->tm_min += 60; tm->tm_hour--;}
     }
 
+    if(tm->tm_hour == 24 && tm->tm_min == 0 && tm->tm_sec == 0) {
+	tm->tm_hour = 0; tm->tm_mday++;
+	if(tm->tm_mon >= 0 && tm->tm_mon <= 11) {
+	    if(tm->tm_mday > days_in_month[tm->tm_mon] +
+	       ((tm->tm_mon==1 && isleap(1900+tm->tm_year) ? 1 : 0))) {
+		   tm->tm_mon++; tm->tm_mday = 1;
+		   if(tm->tm_mon == 12) {
+		       tm->tm_year++; tm->tm_mon = 0;
+		   }
+	       }
+	}
+    }
     if (tm->tm_hour < 0 || tm->tm_hour > 23) {
-	if(tm->tm_hour > 24 || tm->tm_min > 0 || tm->tm_sec > 0) res++;
+	res++;
 	tmp = tm->tm_hour/24;
 	tm->tm_hour -= 24 * tmp; tm->tm_mday += tmp;
 	if(tm->tm_hour < 0) {tm->tm_hour += 24; tm->tm_mday--;}

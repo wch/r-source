@@ -115,6 +115,10 @@
       \item If a saved workspace (e.g. \file{.RData}) contains objects
       that cannot be loaded, \R will now start with an warning message
       and an empty workspace, rather than failing to start. 
+      
+      \item \code{strptime()} now accepts times such as \samp{24:00} for
+      midnight at the end of the day, for although these are disallowed by
+      POSIX 1003.1-2008, ISO 8601:2004 allows them.
     }
   }
   
@@ -343,10 +347,6 @@
 
       \item \code{cairo_ps(onefile = TRUE)} generates encapsulated EPS
       on platforms with cairo >= 1.6.
-      
-      \item \code{strptime()} now accepts times such as \samp{24:00} for
-      midnight at the end of the day, for although these are disallowed by
-      POSIX 1003.1-2008, ISO 8601:2004 allows them.
     }
   }
 
