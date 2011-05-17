@@ -280,6 +280,7 @@ plot.HoltWinters <-
 
     preds <- length(predicted.values) > 1 || !is.na(predicted.values)
 
+    dev.hold(); on.exit(dev.flush())
     ## plot fitted/predicted values
     plot(ts(c(fitted(x)[,1], if(preds) predicted.values[,1]),
             start = start(fitted(x)[,1]),
