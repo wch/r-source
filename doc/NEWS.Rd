@@ -145,7 +145,7 @@
 
       \item \code{c()}, \code{unlist()}, \code{cbind()} and
       \code{rbind()} could silently overflow the maximum vector length
-      and cause a segfault. \PR{14571}
+      and cause a segfault.  (\PR{14571})
 
       \item The \code{fonts} argument to \code{X11(type = "Xlib")} was
       being ignored.
@@ -154,8 +154,9 @@
       was not advancing the pointer, so successive reads would read the
       same value.  (Spotted by Bill Dunlap.)
       
-      \item Text containing embedded newlines was printed incorrectly by 
-      as.character.srcref().  (Reported by Hadley Wickham.)
+      \item Parsed text containing embedded newlines was printed
+      incorrectly by as.character.srcref().  (Reported by Hadley
+      Wickham.)
       
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
@@ -215,7 +216,7 @@
       \item R colours are now defined to refer to the sRGB color space.
 
       The PDF, PostScript, and Quartz graphics devices record this fact.
-      X11 (and Cairo) and Windows just assume that your screen conforms.
+      X11 (and cairo) and Windows just assume that your screen conforms.
 
       \item \code{system.file()} gains a \code{mustWork} argument
       (suggestion of Bill Dunlap).
@@ -1417,12 +1418,12 @@
       \item Rendering raster images in PDF output was resetting the
       clipping region.
 
-      \item Rendering of raster images on Cairo X11 device was wrong,
+      \item Rendering of raster images on cairo X11 device was wrong,
       particularly when a small image was being scaled up using
       interpolation.
 
-      With Cairo < 1.6, will be better than before, though still a
-      little clunky.  With Cairo >= 1.6, should be sweet as.
+      With cairo < 1.6, will be better than before, though still a
+      little clunky.  With cairo >= 1.6, should be sweet as.
 
       \item Several bugs fixed in \code{read.DIF()}:  single column
       inputs caused errors, cells marked as \code{"character"} could
