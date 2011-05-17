@@ -67,6 +67,18 @@
       for details on the representation and
       for the behavior of S3 methods with objects from these classes.
 
+      Some slot names correspond to attributes used in old-style S3
+      objects and in \R objects without an explicit class, for
+      example, the \code{names} attribute.  If you define a class for
+      which that attribute will be set, such as a subclass of named
+      vectors, you should include \code{"names"} as a slot.  See the
+      definition of class \code{"namedList"} for an example.  Using the
+      \code{names()} assignment to set such names will generate a
+      warning if there is no names slot and an error if the object in
+      question is not a vector type.  A slot called \code{"names"} can
+      be used anywhere, but only if it is assigned as a slot, not via
+      the default \code{names()} assignment.
+
     }
     \item{Superclasses:}{
 

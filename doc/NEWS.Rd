@@ -119,6 +119,11 @@
       \item \code{strptime()} now accepts times such as \samp{24:00} for
       midnight at the end of the day, for although these are disallowed by
       POSIX 1003.1-2008, ISO 8601:2004 allows them.
+
+      \item Assignment of \code{names()} to S4 objects now checks for
+      a corresponding \code{"names"} slot, and generates a warning or
+      an error if that slot is not defined. See the section on slots
+      in \code{?Classes}.
     }
   }
   
@@ -310,7 +315,12 @@
       inconsistently with pre-tabulated data.  (Reported by Michael Fay).
       
       \item The locale category \samp{LC_MONETARY} was only being set on
-      startup on Windows: that is now done on Unix-alikes where supported.
+      startup on Windows: that is now done on Unix-alikes where
+      supported.
+
+      \item \code{package.skeleton()} will no longer dump S4 objects
+      supplied directly, rather than in a code file.  These cannot be
+      restored correctly from the dumped version.
     }
   }
 }
