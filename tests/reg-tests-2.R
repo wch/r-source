@@ -2568,3 +2568,13 @@ d <- data.frame(num = 1:4,
           pv = package_version(c("1.2-3", "4.5", "6.7", "8.9-10")))
 for (i in seq_along(d)) print(d[[1, i]])
 ## did not dispatch in R < 2.14.0
+
+
+## some tests of 24:00 as midnight
+as.POSIXlt("2011-05-16 24:00:00", tz = "GMT")
+as.POSIXlt("2010-01-31 24:00:00", tz = "GMT")
+as.POSIXlt("2011-02-28 24:00:00", tz = "GMT")
+as.POSIXlt("2008-02-28 24:00:00", tz = "GMT")
+as.POSIXlt("2008-02-29 24:00:00", tz = "GMT")
+as.POSIXlt("2010-12-31 24:00:00", tz = "GMT")
+## new in 2.14.0

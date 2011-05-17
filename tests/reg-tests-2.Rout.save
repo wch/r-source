@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-12 r55421)
+R version 2.14.0 Under development (unstable) (2011-05-16 r55928)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -6736,4 +6736,20 @@ Levels: a b c d e f g h i j k l m n o
 [1] "2011-04-01"
 [1] '1.2.3'
 > ## did not dispatch in R < 2.14.0
+> 
+> 
+> ## some tests of 24:00 as midnight
+> as.POSIXlt("2011-05-16 24:00:00", tz = "GMT")
+[1] "2011-05-17 GMT"
+> as.POSIXlt("2010-01-31 24:00:00", tz = "GMT")
+[1] "2010-02-01 GMT"
+> as.POSIXlt("2011-02-28 24:00:00", tz = "GMT")
+[1] "2011-03-01 GMT"
+> as.POSIXlt("2008-02-28 24:00:00", tz = "GMT")
+[1] "2008-02-29 GMT"
+> as.POSIXlt("2008-02-29 24:00:00", tz = "GMT")
+[1] "2008-03-01 GMT"
+> as.POSIXlt("2010-12-31 24:00:00", tz = "GMT")
+[1] "2011-01-01 GMT"
+> ## new in 2.14.0
 > 
