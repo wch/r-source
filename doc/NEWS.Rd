@@ -238,8 +238,8 @@
       \samp{inputenx} is an optional install which provides greater
       coverage of the UTF-8 encoding.)
       
-      \item \command{Rscript} now accepts file names containing spaces
-      (if these are escaped or quoted in the shell).
+      \item \command{Rscript} on a Unix-alike now accepts file names
+      containing spaces (if these are escaped or quoted in the shell).
     }
   }
 
@@ -452,7 +452,7 @@
 
       \item \code{c()}, \code{unlist()}, \code{cbind()} and
       \code{rbind()} could silently overflow the maximum vector length
-      and cause a segfault. \PR{14571}
+      and cause a segfault.  (\PR{14571})
 
       \item The \code{fonts} argument to \code{X11(type = "Xlib")} was
       being ignored.
