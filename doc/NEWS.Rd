@@ -122,7 +122,7 @@
 
       \item Assignment of \code{names()} to S4 objects now checks for
       a corresponding \code{"names"} slot, and generates a warning or
-      an error if that slot is not defined. See the section on slots
+      an error if that slot is not defined.  See the section on slots
       in \code{?Classes}.
     }
   }
@@ -192,16 +192,17 @@
       build} will now re-build vignettes in directory \file{vignettes}
       and copy the \file{.Rnw} (etc) files and the corresponding PDFs to
       \file{inst/doc}.  Further files to be copied to \file{inst/doc}
-      can be specified \emph{via} the @file{vignettes/.install_extras}.
+      can be specified \emph{via} the file
+      \file{vignettes/.install_extras}.
 
       \item \command{R CMD Sweave} now supports a \option{--driver}
       option to select the Sweave driver: the default is equivalent to
       \option{--driver=RweaveLatex}.
 
       \item \command{R CMD Sweave} and \command{R CMD Stangle} support
-      \option{--encoding} and \option{--options} options.
+      options \option{--encoding} and \option{--options}.
 
-      \item The \code{Rtangle()} driverallows \code{output = "stdout"}
+      \item The \code{Rtangle()} driver allows \code{output = "stdout"}
       or \code{output = "stderr"} to select the output or message
       connection.  This is convenient for scripting using something like
 \preformatted{    R CMD Stangle --options='output="stdout"' foo.Rnw > foo2.R}
@@ -287,7 +288,7 @@
 
       \item The \code{zlib} in the R sources is now version 1.2.5.
       (This is safe even on 32-bit Linux systems because only the basic
-      interface is used currently.)
+      interface is now used.)
       
       \item The \file{.afm} files in package \pkg{grDevices} are now
       installed as compressed files (as long done on Windows), saving ca
@@ -420,7 +421,7 @@
   
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
-      \item The internal functions \code{.readRDS()} and
+     \item The internal functions \code{.readRDS()} and
       \code{.saveRDS()} are now deprecated in favour of the public
       functions \code{readRDS()} and \code{saveRDS()} introduced in \R
       2.13.0.
