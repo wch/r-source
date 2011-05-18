@@ -167,9 +167,10 @@
       of the high-level graphics functions such as \code{boxplot()}, so
       that the plot is only displayed when the page is complete.
 
-      Currently implemented for \code{windows(buffered = TRUE)} and the
-      cairo-based \code{X11()} types with buffering (which are the
-      default on-screen devices on Windows and most Unix-alikes).
+      Currently implemented for \code{windows(buffered = TRUE)},
+      \code{quartz()} and the cairo-based \code{X11()} types with
+      buffering (which are the default on-screen devices on Windows and
+      most Unix-alikes).
     }
   }
 
