@@ -536,6 +536,7 @@ function(vigDeps)
         cat("\n  When sourcing ", sQuote(f), ":\n", sep="")
         stop(result, call. = FALSE, domain = NA)
     }
+    cat("\n *** Run successfully completed ***\n")
 }
 
 ### Local variables: ***
