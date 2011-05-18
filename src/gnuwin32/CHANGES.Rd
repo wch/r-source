@@ -42,6 +42,10 @@
       
       \item The windows() screen device would sometimes fail to plot
       points with \code{pch="."}. \PR{14583}
+      
+      \item \code{system()} and related functions sometimes failed
+      when run in \file{Rgui}.
+      
     }
   }
 }
