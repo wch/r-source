@@ -76,7 +76,7 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \file{Rzlib.dll} (sometimes used in packages \emph{via}
-      \samp{$(ZLIB_LIBS)}) does not include the buggy gzio
+      \samp{$(ZLIB_LIBS)}) does not include the buggy gzio   % for balance: $
       interface from zlib 1.2.5.
     }
   }
@@ -120,6 +120,10 @@
       
       \item The windows() screen device would sometimes fail to plot
       points with \code{pch="."}. \PR{14583}
+      
+      \item \code{system()} and related functions sometimes failed
+      when run in \file{Rgui}.
+      
     }
   }
 }
