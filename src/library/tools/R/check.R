@@ -1713,17 +1713,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 out <- R_runR(Rcmd,
                               if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
 
-                ## Need not be the final line if running under valgrind
-                if(! " *** Run successfully completed ***" %in% out) {
-                    out <- c(out, "", "... incomplete output.  Crash?")
+                if(length(grep("^  When (tangling|sourcing)", out,
+                               useBytes = TRUE))) {
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                     writeLines(out, paste(basename(v), ".log", sep=""))
-                    cat(" failed to complete the test\n")
-                } else if(length(grep("^  When (tangling|sourcing)", out,
-                               useBytes = TRUE))) {
+                } else if(! " *** Run successfully completed ***" %in% out) {
+                    ## (Need not be the final line if running under valgrind)
+                    out <- c(out, "", "... incomplete output.  Crash?")
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
