@@ -517,10 +517,13 @@ get_exclude_patterns <- function()
             if (grepl("/\\.+$", dd)) next
             find_empty_dirs(dd)
         }
-        if (!keep_empty) # might have removed a dir
+        ## allow per-package override
+        keep_empty1 <- parse_description_field(desc, "BuildKeepEmpty",
+                                               keep_empty1)
+        if (!keep_empty1) # might have removed a dir
             files <- dir(d, all.files = TRUE, full.names = TRUE)
         if (length(files) <= 2L) { # always has ., ..
-            if (keep_empty) {
+            if (keep_empty1) {
                 printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
             } else {
                 unlink(d, recursive = TRUE)
@@ -878,8 +881,11 @@ get_exclude_patterns <- function()
             tryCatch(add_datalist(pkgname),
                      error = function(e)
                      printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
-            resave_data_others(pkgname, resave_data)
-            resave_data_rda(pkgname, resave_data)
+            ## allow per-package override
+            resave_data1 <- parse_description_field(desc, "BuildResaveData",
+                                                    resave_data)
+            resave_data_others(pkgname, resave_data1)
+            resave_data_rda(pkgname, resave_data1)
         }
 
         ## Finalize

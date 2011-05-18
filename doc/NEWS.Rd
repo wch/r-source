@@ -105,7 +105,22 @@
       2.13.0.
     }
   }
+  
+  \subsection{UTILITIES}{
+    \itemize{      
+      \item \command{R CMD check} on a multi-architecture installation now
+      skips the user's \file{.Renviron} file for the
+      architecture-specific tests (which do read the 
+      architecture-specific \file{Renviron.site} files).  This is
+      consistent with single-architecture checks, which use
+      \option{--no-environ}.
 
+      \item \command{R CMD build} now looks for \file{DESCRIPTION}
+      fields \samp{BuildResaveData} and \samp{BuildKeepEmpty} for
+      per-package overrides.  See \sQuote{Writing R Extensions}.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
@@ -157,13 +172,6 @@
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
-      
-      \item \code{R CMD check} on a multi-architecture installation now
-      skips the user's \file{.Renviron} file for the
-      architecture-specific tests (which do read the 
-      architecture-specific \file{Renviron.site} files).  This is
-      consistent with single-architecture checks, which use
-      \option{--no-environ}.
     }
   }
 }

@@ -1868,7 +1868,9 @@ the package.)
 One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, if
 they are intentional use the option @option{--keep-empty-dirs} (or set
-the environment variable @env{_R_BUILD_KEEP_EMPTY_DIRS_} to @samp{TRUE}).
+the environment variable @env{_R_BUILD_KEEP_EMPTY_DIRS_} to @samp{TRUE},
+or have a @samp{BuildKeepEmpty} field with a true value in the
+@file{DESCRIPTION} file).
 
 The @option{--resave-data} option allows saved images (@file{.rda} and
 @file{.RData} files) in the @file{data} directory to be optimized for
@@ -1882,7 +1884,9 @@ effective compression.  Using @code{best} adds a dependence on @code{R
 @command{xz} compression is selected for any of the files.  If this is
 thought undesirable, @option{--resave-data=gzip} (which is the default
 if that option is not supplied) will do what compression it can with
-@command{gzip}.
+@command{gzip}.  A package can control how its data is resaved by
+supplying a @samp{BuildResaveData} field (with one of the values given
+earlier in this paragraph) in its @file{DESCRIPTION} file.
 
 The @option{--compact-vignettes} option will run
 @code{tools::compactPDF} over the PDF files in @file{inst/doc} (and its
