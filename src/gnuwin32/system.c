@@ -863,9 +863,7 @@ int cmdlineoptions(int ac, char **av)
     bindtextdomain(PACKAGE, localedir);
 #endif
 
-#ifdef _R_HAVE_TIMING_
     R_setStartTime();
-#endif
 
     /* Store the command line arguments before they are processed
        by the different option handlers. We do this here so that
