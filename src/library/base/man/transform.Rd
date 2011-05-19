@@ -1,6 +1,6 @@
 % File src/library/base/man/transform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{transform}
@@ -39,7 +39,7 @@ current choice should be less problematic.
 
 If some of the values are not vectors of the appropriate length,
   you deserve whatever you get!}
-\seealso{
+\seealso{ \code{\link{within}} for a more flexible approach, 
     \code{\link{subset}},
     \code{\link{list}},
     \code{\link{data.frame}}
