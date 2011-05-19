@@ -2615,7 +2615,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 #ifdef BYTECODE
-static int R_bcVersion = 6;
+static int R_bcVersion = 7;
 static int R_bcMinVersion = 6;
 
 static SEXP R_AddSym = NULL;
@@ -2789,6 +2789,10 @@ enum {
   DUP2ND_OP,
   SWITCH_OP,
   RETURNJMP_OP,
+  STARTVECELT_OP,
+  STARTMATELT_OP,
+  STARTSETVECELT_OP,
+  STARTSETMATELT_OP,
   OPCOUNT
 };
 
@@ -3551,6 +3555,43 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   R_BCNodeStackTop -= 4; \
   SETSTACK(-1, value);	 \
   NEXT(); \
+} while (0)
+
+#define DO_STARTDISPATCH_N(generic) do { \
+    int callidx = GETOP(); \
+    int label = GETOP(); \
+    value = GETSTACK(-1); \
+    if (isObject(value)) { \
+	SEXP call = VECTOR_ELT(constants, callidx); \
+	if (tryDispatch(generic, call, value, rho, &value)) { \
+	    SETSTACK(-1, value); \
+	    BC_CHECK_SIGINT(); \
+	    pc = codebase + label; \
+	} \
+    } \
+    NEXT(); \
+} while (0)
+
+#define DO_START_ASSIGN_DISPATCH_N(generic) do { \
+    int callidx = GETOP(); \
+    int label = GETOP(); \
+    SEXP lhs = GETSTACK(-2); \
+    if (isObject(lhs)) { \
+	SEXP call = VECTOR_ELT(constants, callidx); \
+	SEXP rhs = GETSTACK(-1); \
+	if (NAMED(lhs) == 2) { \
+	    lhs = duplicate(lhs); \
+	    SETSTACK(-2, lhs); \
+	    SET_NAMED(lhs, 1); \
+	} \
+	if (tryAssignDispatch(generic, call, lhs, rhs, rho, &value)) { \
+	    R_BCNodeStackTop--; \
+	    SETSTACK(-1, value); \
+	    BC_CHECK_SIGINT(); \
+	    pc = codebase + label; \
+	} \
+    } \
+    NEXT(); \
 } while (0)
 
 #define DO_ISTEST(fun) do { \
@@ -4745,6 +4786,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
       value = BCNPOP();
       findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, value);
     }
+    OP(STARTVECELT, 2): DO_STARTDISPATCH_N("[");
+    OP(STARTMATELT, 2): DO_STARTDISPATCH_N("[");
+    OP(STARTSETVECELT, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
+    OP(STARTSETMATELT, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
     LASTOP;
   }
 
