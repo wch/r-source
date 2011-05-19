@@ -2769,10 +2769,10 @@ enum {
   ISSYMBOL_OP,
   ISOBJECT_OP,
   ISNUMERIC_OP,
-  NVECELT_OP,
-  NMATELT_OP,
-  SETNVECELT_OP,
-  SETNMATELT_OP,
+  VECELT_OP,
+  MATELT_OP,
+  SETVECELT_OP,
+  SETMATELT_OP,
   AND1ST_OP,
   AND2ND_OP,
   OR1ST_OP,
@@ -2804,23 +2804,33 @@ SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
-#define GETSTACK(i) R_BCNodeStackTop[i]
+#define GETSTACK_PTR(s) (*(s))
+#define GETSTACK(i) GETSTACK_PTR(R_BCNodeStackTop + (i))
 
-#define SETSTACK(i, v) do { \
+#define SETSTACK_PTR(s, v) do { \
     SEXP __v__ = (v); \
-    R_BCNodeStackTop[i] = __v__; \
+    *(s) = __v__; \
 } while (0)
 
-#define SETSTACK_REAL(i, v) SETSTACK(i, ScalarReal(v))
-#define SETSTACK_INTEGER(i, v) SETSTACK(i, ScalarInteger(v))
+#define SETSTACK(i, v) SETSTACK_PTR(R_BCNodeStackTop + (i), v)
 
-#define SETSTACK_LOGICAL(i, v) do { \
+#define SETSTACK_REAL_PTR(s, v) SETSTACK_PTR(s, ScalarReal(v))
+
+#define SETSTACK_REAL(i, v) SETSTACK_REAL_PTR(R_BCNodeStackTop + (i), v)
+
+#define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
+
+#define SETSTACK_INTEGER(i, v) SETSTACK_INTEGER_PTR(R_BCNodeStackTop + (i), v)
+
+#define SETSTACK_LOGICAL_PTR(s, v) do { \
     int __ssl_v__ = (v); \
     if (__ssl_v__ == NA_LOGICAL) \
-	SETSTACK(i, ScalarLogical(NA_LOGICAL)); \
+	SETSTACK_PTR(s, ScalarLogical(NA_LOGICAL)); \
     else \
-	SETSTACK(i, __ssl_v__ ? R_TrueValue : R_FalseValue); \
+	SETSTACK_PTR(s, __ssl_v__ ? R_TrueValue : R_FalseValue); \
 } while(0)
+
+#define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
 
 typedef union { double dval; int ival; } scalar_value_t;
 
@@ -3578,24 +3588,6 @@ static void loopWithContext(volatile SEXP code, volatile SEXP rho)
     endcontext(&cntxt);
 }
 
-static R_INLINE Rboolean checkVectorSubscript(SEXP vec, int k)
-{
-    switch (TYPEOF(vec)) {
-    case REALSXP:
-    case INTSXP:
-    case LGLSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-	if (k < 0 || k >= LENGTH(vec))
-	    return FALSE;
-	else return TRUE;
-    default: return FALSE;
-    }
-}
-
 static R_INLINE int bcStackIndex(R_bcstack_t *s)
 {
     SEXP idx = *s;
@@ -3616,49 +3608,53 @@ static R_INLINE int bcStackIndex(R_bcstack_t *s)
     }
 }
 
-static R_INLINE void DO_NVECELT(SEXP rho)
+static R_INLINE void VECELT_PTR(R_bcstack_t *sx, R_bcstack_t *si,
+				R_bcstack_t *sv, SEXP rho)
 {
     SEXP idx, args, value;
-    SEXP vec = GETSTACK(-2);
-    int i = bcStackIndex(R_BCNodeStackTop - 1);
+    SEXP vec = GETSTACK_PTR(sx);
+    int i = bcStackIndex(si) - 1;
 
-    if (ATTRIB(vec) == R_NilValue && i > 0) {
-	i = i - 1;
-	if (checkVectorSubscript(vec, i)) {
-	    switch (TYPEOF(vec)) {
-	    case REALSXP:
-		R_BCNodeStackTop--;
-		SETSTACK_REAL(-1, REAL(vec)[i]);
-		return;
-	    case INTSXP:
-		R_BCNodeStackTop--;
-		SETSTACK_INTEGER(-1, INTEGER(vec)[i]);
-		return;
-	    case LGLSXP:
-		R_BCNodeStackTop--;
-		SETSTACK_LOGICAL(-1, LOGICAL(vec)[i]);
-		return;
-	    case CPLXSXP:
-		R_BCNodeStackTop--;
-		SETSTACK(-1, ScalarComplex(COMPLEX(vec)[i]));
-		return;
-	    case RAWSXP:
-		R_BCNodeStackTop--;
-		SETSTACK(-1, ScalarRaw(RAW(vec)[i]));
-		return;
-	    }
+    if (ATTRIB(vec) == R_NilValue && i >= 0) {
+	switch (TYPEOF(vec)) {
+	case REALSXP:
+	    if (LENGTH(vec) <= i) break;
+	    SETSTACK_REAL_PTR(sv, REAL(vec)[i]);
+	    return;
+	case INTSXP:
+	    if (LENGTH(vec) <= i) break;
+	    SETSTACK_INTEGER_PTR(sv, INTEGER(vec)[i]);
+	    return;
+	case LGLSXP:
+	    if (LENGTH(vec) <= i) break;
+	    SETSTACK_LOGICAL_PTR(sv, LOGICAL(vec)[i]);
+	    return;
+	case CPLXSXP:
+	    if (LENGTH(vec) <= i) break;
+	    SETSTACK_PTR(sv, ScalarComplex(COMPLEX(vec)[i]));
+	    return;
+	case RAWSXP:
+	    if (LENGTH(vec) <= i) break;
+	    SETSTACK_PTR(sv, ScalarRaw(RAW(vec)[i]));
+	    return;
 	}
     }
 
     /* fall through to the standard default handler */
-    idx = GETSTACK(-1);
+    idx = GETSTACK_PTR(si);
     args = CONS(idx, R_NilValue);
     args = CONS(vec, args);
-    SETSTACK(-1, args); /* for GC protection */
+    PROTECT(args);
     value = do_subset_dflt(R_NilValue, R_SubsetSym, args, rho);
-    R_BCNodeStackTop--;
-    SETSTACK(-1, value);
+    UNPROTECT(1);
+    SETSTACK_PTR(sv, value);
 }
+
+#define DO_VECELT(rho) do { \
+    VECELT_PTR(R_BCNodeStackTop - 2, R_BCNodeStackTop - 1, \
+	       R_BCNodeStackTop - 2, rho);		   \
+    R_BCNodeStackTop--; \
+} while(0)
 
 static R_INLINE SEXP getMatrixDim(SEXP mat)
 {
@@ -3673,7 +3669,7 @@ static R_INLINE SEXP getMatrixDim(SEXP mat)
     else return R_NilValue;
 }
 
-static R_INLINE void DO_NMATELT(SEXP rho)
+static R_INLINE void DO_MATELT(SEXP rho)
 {
     SEXP idx, jdx, args, value;
     SEXP mat = GETSTACK(-3);
@@ -3682,28 +3678,31 @@ static R_INLINE void DO_NMATELT(SEXP rho)
     if (dim != R_NilValue) {
 	int i = bcStackIndex(R_BCNodeStackTop - 2);
 	int j = bcStackIndex(R_BCNodeStackTop - 1);
-	if (i > 0 && j > 0) {
-	    int nrow = INTEGER(dim)[0];
+	int nrow = INTEGER(dim)[0];
+	int ncol = INTEGER(dim)[1];
+	if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 	    int k = i - 1 + nrow * (j - 1);
-	    if (checkVectorSubscript(mat, k)) {
-		switch (TYPEOF(mat)) {
-		case REALSXP:
-		    R_BCNodeStackTop -= 2;
-		    SETSTACK_REAL(-1, REAL(mat)[k]);
-		    return;
-		case INTSXP:
-		    R_BCNodeStackTop -= 2;
-		    SETSTACK_INTEGER(-1, INTEGER(mat)[k]);
-		    return;
-		case LGLSXP:
-		    R_BCNodeStackTop -= 2;
-		    SETSTACK_LOGICAL(-1, LOGICAL(mat)[k]);
-		    return;
-		case CPLXSXP:
-		    R_BCNodeStackTop -= 2;
-		    SETSTACK(-1, ScalarComplex(COMPLEX(mat)[k]));
-		    return;
-		}
+	    switch (TYPEOF(mat)) {
+	    case REALSXP:
+		if (LENGTH(mat) <= k) break;
+		R_BCNodeStackTop -= 2;
+		SETSTACK_REAL(-1, REAL(mat)[k]);
+		return;
+	    case INTSXP:
+		if (LENGTH(mat) <= k) break;
+		R_BCNodeStackTop -= 2;
+		SETSTACK_INTEGER(-1, INTEGER(mat)[k]);
+		return;
+	    case LGLSXP:
+		if (LENGTH(mat) <= k) break;
+		R_BCNodeStackTop -= 2;
+		SETSTACK_LOGICAL(-1, LOGICAL(mat)[k]);
+		return;
+	    case CPLXSXP:
+		if (LENGTH(mat) <= k) break;
+		R_BCNodeStackTop -= 2;
+		SETSTACK(-1, ScalarComplex(COMPLEX(mat)[k]));
+		return;
 	    }
 	}
     }
@@ -3726,10 +3725,10 @@ static R_INLINE void DO_NMATELT(SEXP rho)
 static R_INLINE Rboolean setElementFromScalar(SEXP vec, int i, int typev,
 					      scalar_value_t *v)
 {
-    if (! checkVectorSubscript(vec, i))
-	return FALSE;
+    if (i < 0) return FALSE;
 
     if (TYPEOF(vec) == REALSXP) {
+	if (LENGTH(vec) <= i) return FALSE;
 	switch(typev) {
 	case REALSXP: REAL(vec)[i] = v->dval; return TRUE;
 	case INTSXP: REAL(vec)[i] = INTEGER_TO_REAL(v->ival); return TRUE;
@@ -3737,6 +3736,7 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, int i, int typev,
 	}
     }
     else if (typev == TYPEOF(vec)) {
+	if (LENGTH(vec) <= i) return FALSE;
 	switch (typev) {
 	case INTSXP: INTEGER(vec)[i] = v->ival; return TRUE;
 	case LGLSXP: LOGICAL(vec)[i] = v->ival; return TRUE;
@@ -3745,45 +3745,52 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, int i, int typev,
     return FALSE;
 }
 
-static R_INLINE void DO_SETNVECELT(SEXP rho)
+static R_INLINE void SETVECELT_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
+				   R_bcstack_t *si, R_bcstack_t *sv, SEXP rho)
 {
     SEXP idx, args, value;
-    SEXP vec = GETSTACK(-3);
+    SEXP vec = GETSTACK_PTR(sx);
 
     if (NAMED(vec) == 2) {
 	vec = duplicate(vec);
-	SETSTACK(-3, vec);
+	SETSTACK_PTR(sx, vec);
     }
     else if (NAMED(vec) == 1)
 	SET_NAMED(vec, 0);
 
     if (ATTRIB(vec) == R_NilValue) {
-	int i = bcStackIndex(R_BCNodeStackTop - 1);
+	int i = bcStackIndex(si);
 	if (i > 0) {
 	    scalar_value_t v;
-	    int typev = bcStackScalar(R_BCNodeStackTop - 2, &v);
+	    int typev = bcStackScalar(srhs, &v);
 	    if (setElementFromScalar(vec, i - 1, typev, &v)) {
-		R_BCNodeStackTop -= 2;
-		SETSTACK(-1, vec);
+		SETSTACK_PTR(sv, vec);
 		return;
 	    }
 	}
     }
 
     /* fall through to the standard default handler */
-    value = GETSTACK(-2);
-    idx = GETSTACK(-1);
+    value = GETSTACK_PTR(srhs);
+    idx = GETSTACK_PTR(si);
     args = CONS(value, R_NilValue);
     SET_TAG(args, R_valueSym);
     args = CONS(idx, args);
     args = CONS(vec, args);
-    SETSTACK(-1, args); /* for GC protection */
+    PROTECT(args);
     vec = do_subassign_dflt(R_NilValue, R_SubassignSym, args, rho);
-    R_BCNodeStackTop -= 2;
-    SETSTACK(-1, vec);
+    UNPROTECT(1);
+    SETSTACK_PTR(sv, vec);
 }
 
-static R_INLINE void DO_SETNMATELT(SEXP rho)
+static R_INLINE void DO_SETVECELT(SEXP rho)
+{
+    SETVECELT_PTR(R_BCNodeStackTop - 3, R_BCNodeStackTop - 2,
+		  R_BCNodeStackTop - 1, R_BCNodeStackTop - 3, rho);
+    R_BCNodeStackTop -= 2;
+}
+
+static R_INLINE void DO_SETMATELT(SEXP rho)
 {
     SEXP dim, idx, jdx, args, value;
     SEXP mat = GETSTACK(-4);
@@ -3800,10 +3807,11 @@ static R_INLINE void DO_SETNMATELT(SEXP rho)
     if (dim != R_NilValue) {
 	int i = bcStackIndex(R_BCNodeStackTop - 2);
 	int j = bcStackIndex(R_BCNodeStackTop - 1);
-	if (i > 0 && j > 0) {
+	int nrow = INTEGER(dim)[0];
+	int ncol = INTEGER(dim)[1];
+	if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 	    scalar_value_t v;
 	    int typev = bcStackScalar(R_BCNodeStackTop - 3, &v);
-	    int nrow = INTEGER(dim)[0];
 	    int k = i - 1 + nrow * (j - 1);
 	    if (setElementFromScalar(mat, k, typev, &v)) {
 		R_BCNodeStackTop -= 3;
@@ -4497,10 +4505,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP); /**** S4 thingy allowed now???*/
     OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
     OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
-    OP(NVECELT, 0): DO_NVECELT(rho); NEXT();
-    OP(NMATELT, 0): DO_NMATELT(rho); NEXT();
-    OP(SETNVECELT, 0): DO_SETNVECELT(rho); NEXT();
-    OP(SETNMATELT, 0): DO_SETNMATELT(rho); NEXT();
+    OP(VECELT, 0): DO_VECELT(rho); NEXT();
+    OP(MATELT, 0): DO_MATELT(rho); NEXT();
+    OP(SETVECELT, 0): DO_SETVECELT(rho); NEXT();
+    OP(SETMATELT, 0): DO_SETMATELT(rho); NEXT();
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
