@@ -2769,10 +2769,10 @@ enum {
   ISSYMBOL_OP,
   ISOBJECT_OP,
   ISNUMERIC_OP,
-  VECELT_OP,
-  MATELT_OP,
-  SETVECELT_OP,
-  SETMATELT_OP,
+  VECSUBSET_OP,
+  MATSUBSET_OP,
+  SETVECSUBSET_OP,
+  SETMATSUBSET_OP,
   AND1ST_OP,
   AND2ND_OP,
   OR1ST_OP,
@@ -2789,10 +2789,10 @@ enum {
   DUP2ND_OP,
   SWITCH_OP,
   RETURNJMP_OP,
-  STARTVECELT_OP,
-  STARTMATELT_OP,
-  STARTSETVECELT_OP,
-  STARTSETMATELT_OP,
+  STARTVECSUBSET_OP,
+  STARTMATSUBSET_OP,
+  STARTSETVECSUBSET_OP,
+  STARTSETMATSUBSET_OP,
   OPCOUNT
 };
 
@@ -3187,7 +3187,7 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
 	return (loc != NULL) ? loc : R_NilValue;
     }
 }
-    
+
 static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
     /* This depends on the current implementation of bindings */
     if (loc != R_NilValue &&
@@ -3649,8 +3649,8 @@ static R_INLINE int bcStackIndex(R_bcstack_t *s)
     }
 }
 
-static R_INLINE void VECELT_PTR(R_bcstack_t *sx, R_bcstack_t *si,
-				R_bcstack_t *sv, SEXP rho)
+static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
+				   R_bcstack_t *sv, SEXP rho)
 {
     SEXP idx, args, value;
     SEXP vec = GETSTACK_PTR(sx);
@@ -3691,9 +3691,9 @@ static R_INLINE void VECELT_PTR(R_bcstack_t *sx, R_bcstack_t *si,
     SETSTACK_PTR(sv, value);
 }
 
-#define DO_VECELT(rho) do { \
-    VECELT_PTR(R_BCNodeStackTop - 2, R_BCNodeStackTop - 1, \
-	       R_BCNodeStackTop - 2, rho);		   \
+#define DO_VECSUBSET(rho) do { \
+    VECSUBSET_PTR(R_BCNodeStackTop - 2, R_BCNodeStackTop - 1, \
+		  R_BCNodeStackTop - 2, rho); \
     R_BCNodeStackTop--; \
 } while(0)
 
@@ -3710,7 +3710,7 @@ static R_INLINE SEXP getMatrixDim(SEXP mat)
     else return R_NilValue;
 }
 
-static R_INLINE void DO_MATELT(SEXP rho)
+static R_INLINE void DO_MATSUBSET(SEXP rho)
 {
     SEXP idx, jdx, args, value;
     SEXP mat = GETSTACK(-3);
@@ -3786,8 +3786,9 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, int i, int typev,
     return FALSE;
 }
 
-static R_INLINE void SETVECELT_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
-				   R_bcstack_t *si, R_bcstack_t *sv, SEXP rho)
+static R_INLINE void SETVECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
+				      R_bcstack_t *si, R_bcstack_t *sv,
+				      SEXP rho)
 {
     SEXP idx, args, value;
     SEXP vec = GETSTACK_PTR(sx);
@@ -3824,14 +3825,14 @@ static R_INLINE void SETVECELT_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
     SETSTACK_PTR(sv, vec);
 }
 
-static R_INLINE void DO_SETVECELT(SEXP rho)
+static R_INLINE void DO_SETVECSUBSET(SEXP rho)
 {
-    SETVECELT_PTR(R_BCNodeStackTop - 3, R_BCNodeStackTop - 2,
-		  R_BCNodeStackTop - 1, R_BCNodeStackTop - 3, rho);
+    SETVECSUBSET_PTR(R_BCNodeStackTop - 3, R_BCNodeStackTop - 2,
+		     R_BCNodeStackTop - 1, R_BCNodeStackTop - 3, rho);
     R_BCNodeStackTop -= 2;
 }
 
-static R_INLINE void DO_SETMATELT(SEXP rho)
+static R_INLINE void DO_SETMATSUBSET(SEXP rho)
 {
     SEXP dim, idx, jdx, args, value;
     SEXP mat = GETSTACK(-4);
@@ -4546,10 +4547,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(ISSYMBOL, 0): DO_ISTYPE(SYMSXP); /**** S4 thingy allowed now???*/
     OP(ISOBJECT, 0): DO_ISTEST(OBJECT);
     OP(ISNUMERIC, 0): DO_ISTEST(isNumericOnly);
-    OP(VECELT, 0): DO_VECELT(rho); NEXT();
-    OP(MATELT, 0): DO_MATELT(rho); NEXT();
-    OP(SETVECELT, 0): DO_SETVECELT(rho); NEXT();
-    OP(SETMATELT, 0): DO_SETMATELT(rho); NEXT();
+    OP(VECSUBSET, 0): DO_VECSUBSET(rho); NEXT();
+    OP(MATSUBSET, 0): DO_MATSUBSET(rho); NEXT();
+    OP(SETVECSUBSET, 0): DO_SETVECSUBSET(rho); NEXT();
+    OP(SETMATSUBSET, 0): DO_SETMATSUBSET(rho); NEXT();
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
@@ -4786,10 +4787,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
       value = BCNPOP();
       findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, value);
     }
-    OP(STARTVECELT, 2): DO_STARTDISPATCH_N("[");
-    OP(STARTMATELT, 2): DO_STARTDISPATCH_N("[");
-    OP(STARTSETVECELT, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
-    OP(STARTSETMATELT, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
+    OP(STARTVECSUBSET, 2): DO_STARTDISPATCH_N("[");
+    OP(STARTMATSUBSET, 2): DO_STARTDISPATCH_N("[");
+    OP(STARTSETVECSUBSET, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
+    OP(STARTSETMATSUBSET, 2): DO_START_ASSIGN_DISPATCH_N("[<-");
     LASTOP;
   }
 
