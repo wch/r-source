@@ -534,7 +534,7 @@ get_exclude_patterns <- function()
         }
         ## allow per-package override
         keep_empty1 <- parse_description_field(desc, "BuildKeepEmpty",
-                                               keep_empty1)
+                                               keep_empty)
         if (!keep_empty1) # might have removed a dir
             files <- dir(d, all.files = TRUE, full.names = TRUE)
         if (length(files) <= 2L) { # always has ., ..
