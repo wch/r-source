@@ -1308,7 +1308,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         Rcmd <- sprintf("library(%s)", pkgname)
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
         env <- "R_DEFAULT_PACKAGES=NULL"
-        env0 <- if(nzchar(arch)) "R_ENVIRON_USER='no_such_file'"
+        env0 <- if(nzchar(arch)) {
+            if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
+            else "R_ENVIRON_USER=''"
+        }
         out <- R_runR(Rcmd, opts, env0, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
@@ -1391,7 +1394,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en", "R_ENVIRON_USER='no_such_file'"),
+                             c("LANGUAGE=en", if(nzchar(arch)) env0),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
@@ -1546,8 +1549,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          ")", sep = "")
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en",
-                                     "R_ENVIRON_USER='no_such_file'"),
+                             env = c("LANGUAGE=en", if(nzchar(arch)) env0),
                              stdout = "", stderr = "", arch = arch)
             if (status) {
                 errorLog(Log)
@@ -2738,7 +2740,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
     ## do run Renviron.site for some multiarch runs
-    ## We set R_ENVIRON_USER='no_such_file' to skip .Renviron files.
+    ## We set R_ENVIRON_USER to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
 
