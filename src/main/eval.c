@@ -4836,6 +4836,8 @@ SEXP R_bcEncode(SEXP bytes)
 
 	for (i = 1; i < n;) {
 	    int op = pc[i].i;
+	    if (op < 0 || op >= OPCOUNT)
+		error("unknown instruction code");
 	    pc[i].v = opinfo[op].addr;
 	    i += opinfo[op].argc + 1;
 	}
