@@ -33,6 +33,8 @@ dev.flush(level = 1L)
   This is implemented for the cairo-based \code{X11} types
   with buffering.  When the hold level is positive the \sQuote{watch}
   cursor is set on the device's window.
+
+  It is also available on the \code{quartz} device on Mac OS X.
 #endif
 #ifdef windows
   This is implemented for the \code{windows} device with
