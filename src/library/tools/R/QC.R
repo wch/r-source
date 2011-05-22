@@ -4087,7 +4087,7 @@ function(package, dir, lib.loc = NULL)
     ## It helps to know if non-default standard packages are require()d
     default_package_names<-
          standard_package_names %w/o% c("grid", "splines", "tcltk", "tools")
-    depends_suggests <- c(depends, suggests, pkg_name, default_package_names)
+    depends_suggests <- c(depends, suggests, enhances, pkg_name, default_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
     ## the first argument could be named, or could be a variable name.
