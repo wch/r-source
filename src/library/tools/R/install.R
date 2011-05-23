@@ -64,8 +64,7 @@
         ## Some people have *assumed* that R_HOME uses /
         Sys.setenv(R_HOME = rhome)
         if (nzchar(rarch)) {
-            Sys.setenv(R_ARCH = rarch)
-            Sys.setenv(R_ARCH_BIN = rarch)
+            Sys.setenv(R_ARCH = rarch, R_ARCH_BIN = rarch)
         }
     }
 
@@ -247,9 +246,8 @@
             curPkg <<- pkg_name
         }
 
-        Sys.setenv(R_PACKAGE_NAME = pkg_name)
         instdir <- file.path(lib, pkg_name)
-        Sys.setenv(R_PACKAGE_DIR = instdir) ## installation dir
+        Sys.setenv(R_PACKAGE_NAME = pkg_name, R_PACKAGE_DIR = instdir)
         status <- .Rtest_package_depends_R_version()
         if (status) do_exit_on_error()
 
@@ -370,8 +368,12 @@
                 setwd(wd2)
             }
             if(length(archs))
-                for(arch in archs)
-                    unlink(paste("src", arch, sep = "-"), recursive=TRUE)
+                for(arch in archs) {
+                    ss <- paste("src", arch, sep = "-")
+                    ## it seems fixing permissions is sometimes needed
+                    .Internal(dirchmod(ss))
+                    unlink(ss, recursive = TRUE)
+                }
 
             owd <- setwd("src")
             if (WINDOWS) {
@@ -650,10 +652,11 @@
                             ss <- paste("src", arch, sep = "-")
                             dir.create(ss, showWarnings = FALSE)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
+                            ## avoid read-only files/dir such as nested .svn
+                            .Internal(dirchmod(ss))
                             setwd(ss)
                             ra <- paste0("/", arch)
-                            Sys.setenv(R_ARCH = ra)
-                            Sys.setenv(R_ARCH_BIN = ra)
+                            Sys.setenv(R_ARCH = ra, R_ARCH_BIN = ra)
                             has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
                             setwd(owd)
                             ## allow archs other than the current one to fail.
@@ -757,7 +760,7 @@
 	    ## This cannot be done in a C locale
 	    res <- try(.install_package_code_files(".", instdir))
 	    if (inherits(res, "try-error"))
-		pkgerrmsg("unable to collate files", pkg_name)
+		pkgerrmsg("unable to collate and parse R files", pkg_name)
 
 	    if (file.exists(f <- file.path("R", "sysdata.rda"))) {
                 comp <- TRUE
@@ -1203,7 +1206,7 @@
         ## this will report '* DONE (foo)' if it works, which
         ## R CMD check treats as an indication of success.
         ## so use a backdoor to suppress it.
-        Sys.setenv("_R_INSTALL_NO_DONE_"="yes")
+        Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
         res <- system(cmd1)
         if(res == 0) {
             cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
