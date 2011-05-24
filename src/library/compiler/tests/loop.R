@@ -19,3 +19,8 @@ stopifnot(identical(k(FALSE), kc(FALSE)))
 
 ## **** need more variations on this.
 
+## this would give an error prior to fixing a binding cache bug
+f <- function(x) { for (y in x) { z <- y; g(break) } ; z }
+g <- function(x) x
+cmpfun(f)(c(1,2,3))
+

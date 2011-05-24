@@ -33,7 +33,7 @@
 
 
 #ifdef BYTECODE
-static SEXP bcEval(SEXP, SEXP);
+static SEXP bcEval(SEXP, SEXP, Rboolean);
 #endif
 
 /*#define BC_PROFILING*/
@@ -396,7 +396,7 @@ SEXP eval(SEXP e, SEXP rho)
 	break;
 #ifdef BYTECODE
     case BCODESXP:
-	    tmp = bcEval(e, rho);
+	tmp = bcEval(e, rho, TRUE);
 	    break;
 #endif
     case SYMSXP:
@@ -627,7 +627,7 @@ static SEXP R_compileAndExecute(SEXP call, SEXP rho)
     PROTECT(code = R_compileExpr(call, rho));
     R_jit_enabled = old_enabled;
 
-    val = bcEval(code, rho);
+    val = bcEval(code, rho, TRUE);
     UNPROTECT(3);
     return val;
 }
@@ -2680,7 +2680,7 @@ void R_initialize_bcode(void)
   SET_NAMED(R_FalseValue, 2);
   R_PreserveObject(R_FalseValue);
 #ifdef THREADED_CODE
-  bcEval(NULL, NULL);
+  bcEval(NULL, NULL, FALSE);
 #endif
 }
 
@@ -3247,6 +3247,19 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
    invalidating the cache would be needed. This is certainly possible,
    but finding an efficient mechanism does not seem to be easy.   LT */
 
+/* Both mechanisms implemented here make use of the stack to hold
+   cache information.  This is not a problem except for "safe" for()
+   loops using the STARTLOOPCNTXT instruction to run the body in a
+   separate bcEval call.  Since this approach expects loop setup
+   information to be passed on the stack from the outer bcEval call to
+   an inner one the inner one cannot put things on the stack. For now,
+   bcEval takes an additional argument that disables the cache in
+   calls via STARTLOOPCNTXT for all "safe" loops. It would be better
+   to deal with this in some other way, for example by having a
+   specific STARTFORLOOPCNTXT instruction that deals with transferring
+   the information in some other way. For now disabling the cache is
+   an expedient solution. LT */
+
 #define USE_BINDING_CACHE
 # ifdef USE_BINDING_CACHE
 /* CACHE_MAX must be a power of 2 for modulus using & CACHE_MASK to work*/
@@ -3262,12 +3275,12 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 # ifdef CACHE_ON_STACK
 typedef R_bcstack_t * R_binding_cache_t;
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
-    vcache[CACHEIDX(sidx)]
+    (vcache ? vcache[CACHEIDX(sidx)] : R_NilValue)
 #  define GET_SMALLCACHE_BINDING_CELL(vcache, sidx) \
-    vcache[sidx]
+    (vcache ? vcache[sidx] : R_NilValue)
 
 #  define SET_CACHED_BINDING(cvache, sidx, cell) \
-    vcache[CACHEIDX(sidx)] = (cell)
+    do { if (vcache) vcache[CACHEIDX(sidx)] = (cell); } while (0)
 # else
 typedef SEXP R_binding_cache_t;
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
@@ -3276,7 +3289,7 @@ typedef SEXP R_binding_cache_t;
     (vcache ? VECTOR_ELT(vcache, sidx) : R_NilValue)
 
 #  define SET_CACHED_BINDING(vcache, sidx, cell) \
-    SET_VECTOR_ELT(vcache, CACHEIDX(sidx), cell)
+    do { if (vcache) SET_VECTOR_ELT(vcache, CACHEIDX(sidx), cell); } while (0)
 # endif
 #else
 typedef void *R_binding_cache_t;
@@ -3625,7 +3638,7 @@ static void loopWithContext(volatile SEXP code, volatile SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK)
-	bcEval(code, rho);
+	bcEval(code, rho, FALSE);
     endcontext(&cntxt);
 }
 
@@ -3927,7 +3940,7 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
     }							\
 } while (0)
 
-static SEXP bcEval(SEXP body, SEXP rho)
+static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   SEXP value, constants;
   BCODE *pc, *codebase;
@@ -3953,7 +3966,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
   R_binding_cache_t vcache = NULL;
   Rboolean smallcache = TRUE;
 #ifdef USE_BINDING_CACHE
-  {
+  if (useCache) {
       R_len_t n = LENGTH(constants);
 # ifdef CACHE_MAX
       if (n > CACHE_MAX) {
@@ -4294,7 +4307,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP code = VECTOR_ELT(constants, GETOP());
 	if (ftype != SPECIALSXP) {
 	  if (ftype == BUILTINSXP)
-	    value = bcEval(code, rho);
+	      value = bcEval(code, rho, TRUE);
 	  else
 	    value = mkPROMISE(code, rho);
 	  PUSHCALLARG(value);
