@@ -1393,6 +1393,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
+            env0 <- if(nzchar(arch)) {
+                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
+                else "R_ENVIRON_USER=''"
+            }
             status <- R_runR(NULL, c(Ropts, enc),
                              c("LANGUAGE=en", if(nzchar(arch)) env0),
                              stdout = exout, stderr = exout,
