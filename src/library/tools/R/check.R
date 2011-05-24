@@ -1551,6 +1551,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")", sep = "")
+            env0 <- if(nzchar(arch)) {
+                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
+                else "R_ENVIRON_USER=''"
+            }
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
                              env = c("LANGUAGE=en", if(nzchar(arch)) env0),
