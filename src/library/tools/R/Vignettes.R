@@ -521,7 +521,7 @@ function(vigDeps)
     td <- tempfile()
     dir.create(td)
     file.copy(docDir, td, recursive = TRUE)
-    setwd(file.path(td, "doc"))
+    setwd(file.path(td, basename(docDir)))
     result <- NULL
     tryCatch(utils::Stangle(vig_name, quiet = TRUE, encoding = encoding),
              error = function(e) result <<- conditionMessage(e))
