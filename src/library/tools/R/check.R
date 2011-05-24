@@ -1308,10 +1308,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         Rcmd <- sprintf("library(%s)", pkgname)
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
         env <- "R_DEFAULT_PACKAGES=NULL"
-        env0 <- if(nzchar(arch)) {
-            if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-            else "R_ENVIRON_USER=''"
-        }
         out <- R_runR(Rcmd, opts, env0, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
@@ -1393,10 +1389,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            env0 <- if(nzchar(arch)) {
-                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-                else "R_ENVIRON_USER=''"
-            }
             status <- R_runR(NULL, c(Ropts, enc),
                              c("LANGUAGE=en", if(nzchar(arch)) env0),
                              stdout = exout, stderr = exout,
@@ -1551,10 +1543,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")", sep = "")
-            env0 <- if(nzchar(arch)) {
-                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-                else "R_ENVIRON_USER=''"
-            }
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
                              env = c("LANGUAGE=en", if(nzchar(arch)) env0),
@@ -2751,6 +2739,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     ## We set R_ENVIRON_USER to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
+    env0 <- if(nzchar(arch)) {
+        if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
+        else "R_ENVIRON_USER=''"
+    }
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
