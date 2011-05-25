@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plotdefault.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.default}
@@ -49,11 +49,15 @@
   \item{frame.plot}{a logical indicating whether a box should be drawn
     around the plot.}
 
-  \item{panel.first}{an expression to be evaluated after the plot axes
+  \item{panel.first}{an \sQuote{expression} to be evaluated after the plot axes
     are set up but before any plotting takes place.  This can be useful
-    for drawing background grids or scatterplot smooths.}
+    for drawing background grids or scatterplot smooths.  Note that this
+    works by lazy evaluation: passing this argument from other
+    \code{plot} methods may well not work since it may be evaluated too
+    early.}
   \item{panel.last}{an expression to be evaluated after plotting has
-    taken place.}
+    taken placebut before the axes, title and box are added.  See the
+    comments on \code{panel.first}.}
 
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{other graphical parameters (see \code{\link{par}} and
