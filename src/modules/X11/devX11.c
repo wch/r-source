@@ -345,9 +345,8 @@ static int Cairo_holdflush(pDevDesc dd, int level)
 	    XDefineCursor(display, xd->window, arrow_cursor);
 	    XSync(display, 0);
 	}
-    }
-    if (old == 0 && xd->holdlevel > 0) {
-	/* Need to flush before holding */
+    } else if (old == 0) {
+	/* May need to flush before holding */
 	if(xd->buffered > 1 && xd->last_activity > xd->last) {
 	    xd->holdlevel = old;
 	    Cairo_update(xd);
