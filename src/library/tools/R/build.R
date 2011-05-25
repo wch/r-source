@@ -154,14 +154,17 @@ get_exclude_patterns <- function()
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
 
-    parse_description_field <- function(desc, field, default=TRUE)
+    parse_description_field <-
+        function(desc, field, default = TRUE, logical = TRUE)
     {
         tmp <- desc[field]
         if (is.na(tmp)) default
-        else switch(tmp,
-                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                    default)
+        else if(logical)
+            switch(tmp,
+                   "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                   "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                   default)
+        else tmp
     }
 
     Usage <- function() {
@@ -883,7 +886,7 @@ get_exclude_patterns <- function()
                      printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
             ## allow per-package override
             resave_data1 <- parse_description_field(desc, "BuildResaveData",
-                                                    resave_data)
+                                                    resave_data, FALSE)
             resave_data_others(pkgname, resave_data1)
             resave_data_rda(pkgname, resave_data1)
         }
