@@ -323,6 +323,10 @@
       \item \code{package.skeleton()} will no longer dump S4 objects
       supplied directly, rather than in a code file.  These cannot be
       restored correctly from the dumped version.
+
+      \item Reference class utilities will detect an attempt to modify methods
+      or fields in a locked class definition (e.g., in a namespace)
+      and generate an error.
     }
   }
 }

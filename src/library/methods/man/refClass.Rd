@@ -438,6 +438,15 @@ Named arguments
 are method definitions, which will be
 installed in the class, as if they had been supplied in the
 \code{methods} argument to \code{setRefClass()}.
+Supplying methods in this way, rather than in the call to
+\code{setRefClass()}, is largely for the sake of clearer source code
+when many or large methods are being defined.
+All methods for a class should be defined in the source code that
+defines the class, typically as part of a package.
+In particular, methods can not be redefined in a class in an attached
+package with a namespace: The class method checks for a locked
+binding of the class definition.
+
 
 The new methods can refer to any currently defined method by name
 (including other methods supplied in this call to
@@ -463,6 +472,15 @@ to set it will generate an error.
 Fields that are defined by an explicit accessor function can not be
 locked (on the other hand, the accessor function can be defined to
 generate an error if called with an argument).
+
+All code to lock fields should normally be part of the definition of a
+class; that is, the read-only nature of the fields is meant to be part
+of the class definition, not a dynamic property added later.
+In particular, fields can not be locked in a class in an attached
+package with a namespace:  The class method checks for a locked
+binding of the class definition.
+
+
 }
 
 \item{\code{$trace(what, ..., classMethod = FALSE)}}{ %$}{

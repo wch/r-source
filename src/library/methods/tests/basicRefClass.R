@@ -405,3 +405,10 @@ stopifnot(identical(yy$data, xx$data), identical(yy$edits, xx$edits))
 ## but don't allow assigment
 if(methods:::.hasCodeTools())
         stopifnot(is(tryCatch(yy$.self$data <- xMat, error = function(e)e), "error"))
+
+## the locked binding of refObjectGenerator class should prevent modifying
+## methods, locking fields or setting accessor methods
+evr <- getRefClass("refObjectGenerator") # in methods
+stopifnot(is(tryCatch(evr$methods(foo = function()"..."), error = function(e)e), "error"),
+         is(tryCatch(evr$lock("def"), error = function(e)e), "error"),
+         is(tryCatch(evr$accessors("def"), error = function(e)e), "error"))

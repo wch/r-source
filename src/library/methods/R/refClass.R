@@ -437,6 +437,9 @@ getRefSuperClasses <- function(classes, classDefs) {
     methodsEnv <- def@refMethods
     if(nargs() == 0)
         return(objects(methodsEnv, all.names = TRUE))
+    if(.classDefIsLocked(def))
+        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, methods may not be redefined", def@className, def@package),
+             domain = NA)
     methodDefs <- list(...)
     ## allow either name=function, ... or a single list
     if(length(methodDefs) == 1 && is.list(methodDefs[[1]]))
@@ -514,6 +517,9 @@ lock =  function(...) {
     if(is.character(fields) && all(nzchar(fields))) {}
     else
         stop("Arguments must all be character string names of fields")
+    if(.classDefIsLocked(def))
+        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified", def@className, def@package),
+             domain = NA)
     env <- def@fieldPrototypes
     className <- def@className
     for(what in fields) {
@@ -543,6 +549,9 @@ lock =  function(...) {
 ## define accessor functions, store them in the refMethods environment
 ## of the class definition.
 accessors = function(...) {
+    if(.classDefIsLocked(def))
+        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified", def@className, def@package),
+             domain = NA)
     fieldNames <- c(...)
     methodNames <- firstCap(fieldNames)
     getters <- methodNames$get
