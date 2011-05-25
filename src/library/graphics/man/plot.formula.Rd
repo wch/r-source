@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plotformula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995--2010 R Core Development Team
+% Copyright 1995--2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.formula}
@@ -52,6 +52,11 @@
   Otherwise, the class of \code{x} will determine the type of the plot.
   For factors this will be a parallel boxplot, and argument
   \code{horizontal = TRUE} can be used (see \code{\link{boxplot}}).
+  
+  Note that some arguments passed to other methods will need to be
+  protected from premature evaluation by enclosing them in
+  \code{\link{quote}}, including the \code{panel.first} and
+  \code{panel.last} arguments of \code{\link{plot.default}}.
 }
 \value{
   These functions are invoked for their side effect of drawing
