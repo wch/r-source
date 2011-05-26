@@ -9871,7 +9871,7 @@ missing or infinite or @code{NaN}.
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This may be provided by your platform, in which case it is not included
+This should be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is (probably) in @file{math.h} which
 @file{Rmath.h} includes.
 @end deftypefun
@@ -9885,7 +9885,7 @@ accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This may be provided by your platform, in which case it is not included
+This should be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is (probably) in @file{math.h} which
 @file{Rmath.h} includes.
 @end deftypefun
@@ -9897,10 +9897,10 @@ accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 
 @deftypefun double logspace_add (double @var{logx}, double @var{logy})
 @deftypefunx double logspace_sub (double @var{logx}, double @var{logy})
-Compute the log of a sum or difference from logs of terms, i.e.,
-``x + y'' as @code{log (exp(@var{logx}) + exp(@var{logy}))} and
-``x - y'' as @code{log (exp(@var{logx}) - exp(@var{logy}))},
-without causing overflows or throwing away too much accuracy.
+Compute the log of a sum or difference from logs of terms, i.e., ``x +
+y'' as @code{log (exp(@var{logx}) + exp(@var{logy}))} and ``x - y'' as
+@code{log (exp(@var{logx}) - exp(@var{logy}))}, without causing
+unnecessary overflows or throwing away too much accuracy.
 @end deftypefun
 
 @deftypefun int imax2 (int @var{x}, int @var{y})
@@ -9908,12 +9908,15 @@ without causing overflows or throwing away too much accuracy.
 @deftypefunx double fmax2 (double @var{x}, double @var{y})
 @deftypefunx double fmin2 (double @var{x}, double @var{y})
 Return the larger (@code{max}) or smaller (@code{min}) of two integer or
-double numbers, respectively.
+double numbers, respectively.  Note that @code{fmax2} and @code{fmin2}
+differ from C99's @code{fmax} and @code{fmin} when one of the arguments
+is a @code{NaN}: these versions return @code{NaN}.
 @end deftypefun
 
 @deftypefun double sign (double @var{x})
 Compute the @emph{signum} function, where sign(@var{x}) is 1, 0, or
-@math{-1}, when @var{x} is positive, 0, or negative, respectively.
+@math{-1}, when @var{x} is positive, 0, or negative, respectively, and
+@code{NaN} if @code{x} is a @code{NaN}.
 @end deftypefun
 
 @deftypefun double fsign (double @var{x}, double @var{y})
