@@ -1247,7 +1247,8 @@ extern char *alloca(size_t);
 # endif
 #endif
 
-/* Or use typedef? */
+/* This is now only of historic interest.  C99 requires long double
+   (but it does not require it to be strictly longer than double) */
 #if SIZEOF_LONG_DOUBLE
 # define LDOUBLE long double
 #else
