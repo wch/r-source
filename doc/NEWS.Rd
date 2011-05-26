@@ -27,7 +27,7 @@
       and corresponding reference methods (e.g., \code{$trace()})%$
       have been added.
 
-      \item \command{xz} has been updated to 5.0.2 (very minor bugfix
+      \item \command{xz} has been updated to 5.0.3 (very minor bugfix
       release).
 
       \item \code{tools::compactPDF()} gets more compression (usually a
