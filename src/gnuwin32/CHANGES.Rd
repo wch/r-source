@@ -93,23 +93,12 @@
       \item \code{shell.exec()} now interprets files relative to the current
       working directory (rather than \samp{R_HOME}).
 
-      \item Saving to PDF from the menu of a \code{windows()} device
-      used defaults for \code{family}, \code{fg} and \code{bg} from
-      \code{ps.options()} rather than \code{pdf.options()} (but
-      the factory-fresh defaults were the same).
-
       \item \code{file.info()} now accepts \sQuote{file} names with
       trailing directory separators, even though such names are invalid
       on Windows.
 
       \item The \code{windows()} family of devices now supports()
       per-pixel alpha for raster images.
-      
-      \item Shutting down the \R session cleaned up the temporary
-      directory before closing all graphics devices.  On Windows this
-      necessitated changing the working directory, so some devices
-      (e.g. \code{tiff()}) could write files in the wrong directory.
-      The order has been reversed.
     }
   }
   
@@ -123,7 +112,17 @@
       
       \item \code{system()} and related functions sometimes failed
       when run in \file{Rgui}.
+
+      \item Saving to PDF from the menu of a \code{windows()} device
+      used defaults for \code{family}, \code{fg} and \code{bg} from
+      \code{ps.options()} rather than \code{pdf.options()} (but
+      the factory-fresh defaults were the same).
       
+      \item Shutting down the \R session cleaned up the temporary
+      directory before closing all graphics devices.  On Windows this
+      necessitated changing the working directory, so some devices
+      (e.g. \code{tiff()}) could write files in the wrong directory in
+      closed during shutdown.  The order has been reversed.      
     }
   }
 }
