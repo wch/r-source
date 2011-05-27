@@ -1,8 +1,8 @@
 
-R version 2.13.0 Patched (2011-04-13 r55430)
+R version 2.14.0 Under development (unstable) (2011-05-27 r56000)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -90,8 +90,8 @@ Type 'q()' to quit R.
 [1] TRUE
 > all(c(FALSE,TRUE,FALSE) == is.nan(c   (1.,NaN,NA)))
 [1] TRUE
-> all(c(FALSE,TRUE,FALSE) == is.nan(list(1.,NaN,NA)))
-[1] TRUE
+> ## lists are no longer allowed
+> ## all(c(FALSE,TRUE,FALSE) == is.nan(list(1.,NaN,NA)))
 > 
 > 
 > ##  log() and "pow()" -- POSIX is not specific enough..
@@ -315,5 +315,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.809 0.03 0.851 0 0 
+Time elapsed:  0.51 0 0.51 NA NA 
 > 

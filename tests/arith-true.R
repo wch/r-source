@@ -53,7 +53,8 @@ iNA <- as.integer(NA)
 ## These are "double"s:
 all(!is.nan(c(1.,NA)))
 all(c(FALSE,TRUE,FALSE) == is.nan(c   (1.,NaN,NA)))
-all(c(FALSE,TRUE,FALSE) == is.nan(list(1.,NaN,NA)))
+## lists are no longer allowed
+## all(c(FALSE,TRUE,FALSE) == is.nan(list(1.,NaN,NA)))
 
 
 ##  log() and "pow()" -- POSIX is not specific enough..

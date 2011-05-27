@@ -124,6 +124,10 @@
       a corresponding \code{"names"} slot, and generates a warning or
       an error if that slot is not defined.  See the section on slots
       in \code{?Classes}.
+      
+      \item The default methods for \code{is.finite()}, \code{is.infinite()}
+      and \code{is.nan()} now signal an error if their argument is not
+      a numeric atomic vector.
     }
   }
   

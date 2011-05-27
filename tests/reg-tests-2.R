@@ -204,7 +204,8 @@ is.na(paste(c(1,NA)))
 is.na(list())# logical(0)
 ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
 is.na (ll)
-is.nan(ll)
+ll <- list(pi,NaN,Inf, 1:3, c(0,NA), NA)
+lapply(ll, is.nan)  # is.nan no longer works on lists or character data
 ## end of moved from NA.Rd
 
 ## is.na was returning unset values on nested lists

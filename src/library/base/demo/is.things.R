@@ -52,6 +52,12 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
 		next
 	    }
 	}
+	if(any(f == c("is.nan", "is.finite", "is.infinite"))) {
+	    if(!is.atomic(obj) || is.character(obj) || is.raw(obj)) {
+	    	if(!true.only) r[[f]] <- NA
+	    	next
+	    }
+	}
 	if(debug) cat(f,"")
 	fn <- get(f)
 	rr <- if(is.primitive(fn) || length(formals(fn))>0)  fn(obj) else fn()
