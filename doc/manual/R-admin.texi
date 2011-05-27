@@ -2771,10 +2771,13 @@ X comes with none of these libraries, but @code{cairo} support (without
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
-platforms which have it available, the @code{mstcorefonts} package
-provides TrueType versions of Monotype fonts such as Arial and Times New
-Roman.  Another useful set of fonts is the `liberation' truetype fonts
-available at
+platforms which have it available, the @code{msttcorefonts}
+package@footnote{also known as @code{ttf-mscorefonts-installer} in the
+Debian/Ubuntu world: see also
+@uref{http://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.}  provides
+TrueType versions of Monotype fonts such as Arial and Times New Roman.
+Another useful set of fonts is the `liberation' truetype fonts available
+at
 @uref{https://www.redhat.com/@/promo/@/fonts/},@footnote{@code{ttf-liberation}
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with Arial, Times New
