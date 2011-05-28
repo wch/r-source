@@ -36,6 +36,9 @@
 
       \item \code{cairo_ps(onefile = TRUE)} generates encapsulated EPS
       on platforms with cairo >= 1.6.
+
+      \item Binary reads (e.g. by \code{readChar()} and \code{readBin()})
+      are now supported on clipboard connections.  (Wish of \PR{14593}.)
     }
   }
 
@@ -166,7 +169,7 @@
       same value.  (Spotted by Bill Dunlap.)
       
       \item Parsed text containing embedded newlines was printed
-      incorrectly by as.character.srcref().  (Reported by Hadley
+      incorrectly by \code{as.character.srcref()}.  (Reported by Hadley
       Wickham.)
       
       \item \code{decompose()} used with a series of a non-integer
