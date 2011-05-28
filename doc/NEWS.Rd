@@ -367,6 +367,9 @@
 
       \item \code{cairo_ps(onefile = TRUE)} generates encapsulated EPS
       on platforms with cairo >= 1.6.
+
+      \item Binary reads (e.g. by \code{readChar()} and \code{readBin()})
+      are now supported on clipboard connections.  (Wish of \PR{14593}.)
     }
   }
 

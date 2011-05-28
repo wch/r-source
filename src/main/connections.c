@@ -1980,6 +1980,7 @@ static size_t clp_read(void *ptr, size_t size, size_t nitems,
 	error(_("too large a block specified"));
     used = (request < available) ? request : available;
     strncpy(ptr, this->buff, used);
+    this->pos += used;
     return (size_t) used/size;
 }
 
@@ -1988,7 +1989,7 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 {
     Rclpconn this = con->private;
     int i, len = size * nitems, used = 0;
-    char c, *p = (char *)ptr, *q = this->buff + this->pos;
+    char c, *p = (char *) ptr, *q = this->buff + this->pos;
 
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
