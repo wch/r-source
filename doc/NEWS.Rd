@@ -500,7 +500,7 @@
       same value.  (Spotted by Bill Dunlap.)
       
       \item Parsed text containing embedded newlines was printed
-      incorrectly by as.character.srcref().  (Reported by Hadley
+      incorrectly by \code{as.character.srcref()}.  (Reported by Hadley
       Wickham.)
       
       \item \code{decompose()} used with a series of a non-integer
