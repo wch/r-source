@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-05-27 r56001)
+R version 2.14.0 Under development (unstable) (2011-05-28 r56005)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-pc-mingw32/i386 (32-bit)
@@ -165,7 +165,7 @@ Number of functions in base:	1236
 + 	    }
 + 	}
 + 	if(any(f == c("is.nan", "is.finite", "is.infinite"))) {
-+ 	    if(!is.atomic(obj) || is.character(obj) || is.raw(obj)) {
++ 	    if(!is.atomic(obj)) {
 + 	    	if(!true.only) r[[f]] <- NA
 + 	    	next
 + 	    }
@@ -1506,5 +1506,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  2.26 0.05 2.31 NA NA 
+Time elapsed:  6.46 0.3 6.94 NA NA 
 > 

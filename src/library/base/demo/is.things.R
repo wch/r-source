@@ -53,7 +53,7 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
 	    }
 	}
 	if(any(f == c("is.nan", "is.finite", "is.infinite"))) {
-	    if(!is.atomic(obj) || is.character(obj) || is.raw(obj)) {
+	    if(!is.atomic(obj)) {
 	    	if(!true.only) r[[f]] <- NA
 	    	next
 	    }

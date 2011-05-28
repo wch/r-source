@@ -127,7 +127,7 @@
       
       \item The default methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} now signal an error if their argument is not
-      a numeric atomic vector.
+      an atomic vector.
     }
   }
   
