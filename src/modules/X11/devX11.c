@@ -1561,7 +1561,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 					     1,
 					     blackpixel,
 					     whitepixel);
-	    if (xd->window == 0 ){
+	    if (xd->window == 0 ) {
 	      XFree(hint);
 	      warning(_("unable to create X11 window"));
 	      return FALSE;
@@ -1574,6 +1574,18 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 				    &attributes);
 
 	    XStoreName(display, xd->window, xd->title);
+
+#ifndef USE_Xt
+	    /* For those too idle to make use of Xt (PR#14588) */
+	    XClassHint *chint;
+	    chint = XAllocClassHint();
+	    if (chint) {
+		chint->res_name = "r_x11";
+		chint->res_class = "R_x11";
+		XSetClassHint(display, xd->window, chint);
+	    	XFree(chint);
+	    }
+#endif
 
 	    /* set up protocols so that window manager sends */
 	    /* me an event when user "destroys" window */
