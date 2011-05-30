@@ -39,6 +39,10 @@
 
       \item Binary reads (e.g. by \code{readChar()} and \code{readBin()})
       are now supported on clipboard connections.  (Wish of \PR{14593}.)
+
+      \item \code{as.POSIXlt.factor()} now passes \code{...} to the
+      character method (suggestion of Joshua Ulrich).  [Intended for \R
+      2.13.0 but accidentally removed before release.]
     }
   }
 
@@ -296,9 +300,6 @@
 
       \item \code{merge()} and \code{as.hclust()} methods for objects of
       class \code{"dendrogram"} are now provided.
-
-      \item \code{as.POSIXlt.factor()} now passes \code{...} to the
-      character method (suggestion of Joshua Ulrich).
 
       \item The character method of \code{as.POSIXlt()} now tries to
       find a format that works for all non-\code{NA} inputs, not just
