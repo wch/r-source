@@ -6939,7 +6939,7 @@ be interpreted by a shell as allowed in @var{file}.
 more @option{-e} options can be used, but not together with @option{-f}
 or @option{--file}.  Implies @option{--no-save} unless @option{--save}
 has been set.  (There is a limit of 10,000 bytes on the total length of
-expressions used in this way.  Expresssions containing spaces or shell
+expressions used in this way.  Expressions containing spaces or shell
 metacharacters will need to be quoted.)
 
 @item --no-readline

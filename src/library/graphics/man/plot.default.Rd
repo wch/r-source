@@ -56,7 +56,7 @@
     \code{plot} methods may well not work since it may be evaluated too
     early.}
   \item{panel.last}{an expression to be evaluated after plotting has
-    taken placebut before the axes, title and box are added.  See the
+    taken place but before the axes, title and box are added.  See the
     comments on \code{panel.first}.}
 
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
