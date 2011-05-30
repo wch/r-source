@@ -227,26 +227,11 @@ extern void R_ProcessEvents(void);
 #include <string.h>
 
 /* declare substitutions */
-#if !defined(acosh) && defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH
-extern double acosh(double x);
-#endif
-#if !defined(asinh) && defined(HAVE_DECL_ASINH) && !HAVE_DECL_ASINH
-extern double asinh(double x);
-#endif
-#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
-extern double atanh(double x);
-#endif
-#if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
-extern int snprintf (char *s, size_t n, const char *format, ...);
-#endif
 #if !defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);
 #endif
 #if !defined(strncascmp) && defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
-#endif
-#if !defined(vsnprintf) && defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
-extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
 
 /* Glibc manages to not define this in -pedantic -ansi */
@@ -1233,8 +1218,6 @@ extern char *locale2charset(const char *);
 } while(0)
 
 
-/* FreeBSD defines alloca in stdlib.h, _and_ does not allow a definition
-   as here.  (Since it uses GCC, it should use the first clause.) */
 #ifdef __GNUC__
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
@@ -1242,17 +1225,9 @@ extern char *locale2charset(const char *);
 # ifdef HAVE_ALLOCA_H
 #  include <alloca.h>
 # endif
-# if !HAVE_DECL_ALLOCA  && !defined(__FreeBSD__)
-extern char *alloca(size_t);
+# if !HAVE_DECL_ALLOCA
+extern void *alloca(size_t);
 # endif
-#endif
-
-/* This is now only of historic interest.  C99 requires long double
-   (but it does not require it to be strictly longer than double) */
-#if SIZEOF_LONG_DOUBLE
-# define LDOUBLE long double
-#else
-# define LDOUBLE double
 #endif
 
 #endif /* DEFN_H_ */

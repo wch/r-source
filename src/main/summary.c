@@ -68,7 +68,7 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm, SEXP call)
 
 static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 {
-    LDOUBLE s = 0.0;
+    long double s = 0.0;
     int i;
     Rboolean updated = FALSE;
 
@@ -85,7 +85,7 @@ static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 
 static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 {
-    LDOUBLE sr = 0.0, si = 0.0;
+    long double sr = 0.0, si = 0.0;
     int i;
     Rboolean updated = FALSE;
 
@@ -270,7 +270,7 @@ static Rboolean iprod(int *x, int n, double *value, Rboolean narm)
 
 static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 {
-    LDOUBLE s = 1.0;
+    long double s = 1.0;
     int i;
     Rboolean updated = FALSE;
 
@@ -287,7 +287,7 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 
 static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 {
-    LDOUBLE sr, si, tr, ti;
+    long double sr, si, tr, ti;
     int i;
     Rboolean updated = FALSE;
     sr = 1;
@@ -363,7 +363,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	   or *value ([ir]min / max) is assigned */
 
     if(PRIMVAL(op) == 1) { /* mean */
-	LDOUBLE s = 0., si = 0., t = 0., ti = 0.;
+	long double s = 0., si = 0., t = 0., ti = 0.;
 	int i, n = LENGTH(CAR(args));
 	SEXP x = CAR(args);
 	switch(TYPEOF(x)) {

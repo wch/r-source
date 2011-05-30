@@ -58,7 +58,7 @@ double dnbeta(double x, double a, double b, double ncp, int give_log)
 
     int kMax;
     double k, ncp2, dx2, d, D;
-    LDOUBLE sum, term, p_k, q;
+    long double sum, term, p_k, q;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(ncp))

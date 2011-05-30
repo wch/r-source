@@ -42,11 +42,7 @@ SOURCES_F =  xxxpr.f
 ## If the substitutes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@
 EXTRA_SOURCES_C = \
-	Rmain.c \
-	alloca.c acosh.c asinh.c atanh.c \
-	mkdtemp.c \
-	snprintf.c strdup.c strncasecmp.c \
-	vsnprintf.c xspline.c
+	Rmain.c alloca.c mkdtemp.c strdup.c strncasecmp.c
 
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
@@ -59,7 +55,8 @@ HEADERS = \
 	par-common.c \
 	qsort-body.c \
 	rlocale_data.h \
-	unzip.h
+	unzip.h \
+	xspline.c
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \

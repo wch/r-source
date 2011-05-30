@@ -27,7 +27,7 @@
 static SEXP cumsum(SEXP x, SEXP s)
 {
     int i;
-    LDOUBLE sum = 0.;
+    long double sum = 0.;
     double *rx = REAL(x), *rs = REAL(s);
     for (i = 0 ; i < length(x) ; i++) {
 	if (ISNAN(rx[i])) break;
@@ -72,7 +72,7 @@ static SEXP ccumsum(SEXP x, SEXP s)
 static SEXP cumprod(SEXP x, SEXP s)
 {
     int i;
-    LDOUBLE prod;
+    long double prod;
     double *rx = REAL(x), *rs = REAL(s);
     prod = 1.0;
     for (i = 0 ; i < length(x) ; i++) {

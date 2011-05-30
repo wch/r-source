@@ -72,7 +72,7 @@ double fround(double x, double digits) {
 #define MAX_DIGITS DBL_MAX_10_EXP
     /* = 308 (IEEE); was till R 0.99: (DBL_DIG - 1) */
     /* Note that large digits make sense for very small numbers */
-    LDOUBLE pow10, sgn, intx;
+    long double pow10, sgn, intx;
     int dig;
 
 #ifdef IEEE_754

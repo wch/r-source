@@ -310,6 +310,9 @@
       be used.
       
       \item The system call \code{times} is required.
+
+      \item The C99 functions \code{acosh}, \code{asinh}, \code{atanh},
+      \code{snprintf} and \code{vsnprintf} are now required. 
     }
   }
 

@@ -61,8 +61,8 @@ static double pdhyper (double x, double NR, double NB, double n, int log_p)
  *     x * (NR + NB) <= n * NR
  *
  */
-    LDOUBLE sum = 0;
-    LDOUBLE term = 1;
+    long double sum = 0;
+    long double term = 1;
 
     while (x > 0 && term >= DBL_EPSILON * sum) {
 	term *= x * (NB - n + x) / (n + 1 - x) / (NR + 1 - x);

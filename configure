@@ -27734,10 +27734,9 @@ fi
 
 
 ## Do we need substitutes?
-## acosh, asinh, snprintf, vsnprintf are C99
 ## mkdtemp is not on Solaris, added in POSIX 2008
 ## strdup strncasecmp were first required in POSIX 2008.
-for ac_func in acosh asinh atanh mkdtemp snprintf strdup strncasecmp vsnprintf
+for ac_func in mkdtemp strdup strncasecmp
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -27759,40 +27758,6 @@ done
 
 
 ## Enable declarations in Defn.h?
-ac_fn_c_check_decl "$LINENO" "acosh" "ac_cv_have_decl_acosh" "#include <math.h>
-"
-if test "x$ac_cv_have_decl_acosh" = x""yes; then :
-  ac_have_decl=1
-else
-  ac_have_decl=0
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ACOSH $ac_have_decl
-_ACEOF
-ac_fn_c_check_decl "$LINENO" "asinh" "ac_cv_have_decl_asinh" "#include <math.h>
-"
-if test "x$ac_cv_have_decl_asinh" = x""yes; then :
-  ac_have_decl=1
-else
-  ac_have_decl=0
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ASINH $ac_have_decl
-_ACEOF
-ac_fn_c_check_decl "$LINENO" "atanh" "ac_cv_have_decl_atanh" "#include <math.h>
-"
-if test "x$ac_cv_have_decl_atanh" = x""yes; then :
-  ac_have_decl=1
-else
-  ac_have_decl=0
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ATANH $ac_have_decl
-_ACEOF
-
 ac_fn_c_check_decl "$LINENO" "mkdtemp" "ac_cv_have_decl_mkdtemp" "$ac_includes_default"
 if test "x$ac_cv_have_decl_mkdtemp" = x""yes; then :
   ac_have_decl=1
@@ -27802,16 +27767,6 @@ fi
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_MKDTEMP $ac_have_decl
-_ACEOF
-ac_fn_c_check_decl "$LINENO" "snprintf" "ac_cv_have_decl_snprintf" "$ac_includes_default"
-if test "x$ac_cv_have_decl_snprintf" = x""yes; then :
-  ac_have_decl=1
-else
-  ac_have_decl=0
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_SNPRINTF $ac_have_decl
 _ACEOF
 ac_fn_c_check_decl "$LINENO" "strdup" "ac_cv_have_decl_strdup" "$ac_includes_default"
 if test "x$ac_cv_have_decl_strdup" = x""yes; then :
@@ -27832,16 +27787,6 @@ fi
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_STRNCASECMP $ac_have_decl
-_ACEOF
-ac_fn_c_check_decl "$LINENO" "vsnprintf" "ac_cv_have_decl_vsnprintf" "$ac_includes_default"
-if test "x$ac_cv_have_decl_vsnprintf" = x""yes; then :
-  ac_have_decl=1
-else
-  ac_have_decl=0
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_VSNPRINTF $ac_have_decl
 _ACEOF
 
 
@@ -35439,11 +35384,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35442: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35387: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35446: \$? = $ac_status" >&5
+   echo "$as_me:35391: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35538,11 +35483,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35541: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35486: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35545: \$? = $ac_status" >&5
+   echo "$as_me:35490: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35590,11 +35535,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35593: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35538: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35597: \$? = $ac_status" >&5
+   echo "$as_me:35542: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

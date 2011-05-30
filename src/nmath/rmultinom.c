@@ -51,7 +51,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
 {
     int k;
     double pp;
-    LDOUBLE p_tot = 0.;
+    long double p_tot = 0.;
     /* This calculation is sensitive to exact values, so we try to
        ensure that the calculations are as accurate as possible
        so different platforms are more likely to give the same

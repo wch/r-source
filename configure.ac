@@ -1870,13 +1870,11 @@ fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
-## acosh, asinh, snprintf, vsnprintf are C99
 ## mkdtemp is not on Solaris, added in POSIX 2008
 ## strdup strncasecmp were first required in POSIX 2008.
-AC_REPLACE_FUNCS(acosh asinh atanh mkdtemp snprintf strdup strncasecmp vsnprintf)
+AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?
-AC_CHECK_DECLS([acosh, asinh, atanh], , , [#include <math.h>])
-AC_CHECK_DECLS([mkdtemp, snprintf, strdup, strncasecmp, vsnprintf])
+AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
 
 AC_SEARCH_LIBS(connect, [socket])
 # gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2004)

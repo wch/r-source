@@ -166,7 +166,7 @@ void attribute_hidden InitArithmetic()
 
 /* Keep these two in step */
 /* FIXME: consider using
-    tmp = (LDOUBLE)x1 - floor(q) * (LDOUBLE)x2;
+    tmp = (long double)x1 - floor(q) * (long double)x2;
  */
 static double myfmod(double x1, double x2)
 {

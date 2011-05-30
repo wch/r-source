@@ -64,7 +64,7 @@ pnchisq_raw(double x, double f, double theta,
     double l_lam = -1., l_x = -1.; /* initialized for -Wall */
     int n;
     Rboolean lamSml, tSml, is_r, is_b, is_it;
-    LDOUBLE ans, u, v, t, lt, lu =-1;
+    long double ans, u, v, t, lt, lu =-1;
 
     static const double _dbl_min_exp = M_LN2 * DBL_MIN_EXP;
     /*= -708.3964 for IEEE double precision */
@@ -83,7 +83,7 @@ pnchisq_raw(double x, double f, double theta,
 #endif
 
     if(theta < 80) { /* use 110 for Inf, as ppois(110, 80/2, lower.tail=FALSE) is 2e-20 */
-	LDOUBLE sum = 0, sum2 = 0, lambda = 0.5*theta, pr = exp(-lambda);
+	long double sum = 0, sum2 = 0, lambda = 0.5*theta, pr = exp(-lambda);
 	double ans;
 	int i;
 	/* we need to renormalize here: the result could be very close to 1 */
