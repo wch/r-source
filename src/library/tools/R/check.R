@@ -1308,11 +1308,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         Rcmd <- sprintf("library(%s)", pkgname)
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
         env <- "R_DEFAULT_PACKAGES=NULL"
-        env0 <- if(nzchar(arch)) {
-            if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-            else "R_ENVIRON_USER=''"
-        }
-        out <- R_runR(Rcmd, opts, env0, arch = arch)
+        env1 <- if(nzchar(arch)) env0 else character()
+        out <- R_runR(Rcmd, opts, env1, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1323,7 +1320,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
+        out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
         if (any(grepl("^Error", out))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1337,7 +1334,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-        out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
+        out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
             warnLog()
             ll <- grep("---- unloading", out)
@@ -1353,7 +1350,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "whether the name space can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
-            out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
+            out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
             if (any(grepl("^Error", out))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1372,7 +1369,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
                 R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
-            else R_runR(Rcmd, opts, env0)
+            else R_runR(Rcmd, opts, env1)
             if (any(grepl("^(Error|\\.onUnload failed)", out))) {
                 warnLog()
                 ll <- grep("---- unloading", out)
@@ -1393,10 +1390,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            env0 <- if(nzchar(arch)) {
-                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-                else "R_ENVIRON_USER=''"
-            }
             status <- R_runR(NULL, c(Ropts, enc),
                              c("LANGUAGE=en", if(nzchar(arch)) env0),
                              stdout = exout, stderr = exout,
@@ -1551,10 +1544,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             cmd <- paste("tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")", sep = "")
-            env0 <- if(nzchar(arch)) {
-                if(WINDOWS) "R_ENVIRON_USER='no_such_file'"
-                else "R_ENVIRON_USER=''"
-            }
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
                              env = c("LANGUAGE=en", if(nzchar(arch)) env0),
@@ -1754,25 +1743,25 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE))) {
+                    cat(" failed\n")
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                     writeLines(out, paste(basename(v), ".log", sep=""))
-                    cat(" failed\n")
                 } else if(! " *** Run successfully completed ***" %in% out) {
                     ## (Need not be the final line if running under valgrind)
+                    cat(" failed to complete the test\n")
                     out <- c(out, "", "... incomplete output.  Crash?")
                     res <- c(res,
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
                     writeLines(out, paste(basename(v), ".log", sep=""))
-                    cat(" failed to complete the test\n")
                 } else {
+                    cat(" OK\n")
                     if (config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                         writeLines(out, paste(basename(v), ".log", sep=""))
-                    cat(" OK\n")
                 }
             }
             if (R_check_suppress_RandR_message)
@@ -2751,6 +2740,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     ## We set R_ENVIRON_USER to skip .Renviron files.
     R_opts3 <- "--no-site-file --no-init-file --no-save --no-restore"
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
+    env0 <- if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
