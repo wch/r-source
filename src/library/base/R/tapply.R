@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
+tapply <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE)
 {
     FUN <- if (!is.null(FUN)) match.fun(FUN)
     if (!is.list(INDEX)) INDEX <- list(INDEX)
@@ -36,7 +36,7 @@ tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
 	ngroup <- ngroup * nlevels(index)
     }
     if (is.null(FUN)) return(group)
-    ans <- lapply(split(X, group), FUN, ...)
+    ans <- lapply(X = split(X, group), FUN = FUN, ...)
     index <- as.integer(names(ans))
     if (simplify && all(unlist(lapply(ans, length)) == 1L)) {
 	ansmat <- array(dim=extent, dimnames=namelist)

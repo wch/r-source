@@ -1387,7 +1387,7 @@ Math.data.frame <- function (x, ...)
 {
     mode.ok <- vapply(x, function(x) is.numeric(x) || is.complex(x), NA)
     if (all(mode.ok)) {
-	x[] <- lapply(x, .Generic, ...)
+	x[] <- lapply(X = x, FUN = .Generic, ...)
 	return(x)
     } else {
 	vnames <- names(x)

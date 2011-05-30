@@ -111,7 +111,7 @@ Map <-
 function(f, ...)
 {
     f <- match.fun(f)
-    mapply(f, ..., SIMPLIFY = FALSE)
+    mapply(FUN = f, ..., SIMPLIFY = FALSE)
 }
 
 Negate <-

@@ -67,7 +67,7 @@ function(x, by, FUN, ..., simplify = TRUE)
                 function(e) {
                     ## In case of a common length > 1, sapply() gives
                     ## the transpose of what we need ...
-                    ans <- lapply(split(e, grp), FUN, ...)
+                    ans <- lapply(X = split(e, grp), FUN = FUN, ...)
                     if(simplify &&
                        length(len <- unique(sapply(ans, length))) == 1L) {
                         ## this used to lose classes

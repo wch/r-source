@@ -73,7 +73,7 @@ smooth.spline <-
 	ox <- match(xx, uxx)
 	## Faster, much simplified version of tapply()
 	tapply1 <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE) {
-	    sapply(unname(split(X, INDEX)), FUN, ...,
+	    sapply(X = unname(split(X, INDEX)), FUN = FUN, ...,
 		   simplify = simplify, USE.NAMES = FALSE)
 	}
 	tmp <- matrix(unlist(tapply1(seq_len(n), ox,

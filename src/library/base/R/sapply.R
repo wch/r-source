@@ -56,7 +56,7 @@ simplify2array <- function(x, higher = TRUE)
 sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN)
-    answer <- lapply(X, FUN, ...)
+    answer <- lapply(X = X, FUN = FUN, ...)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
     if(!identical(simplify, FALSE) && length(answer))

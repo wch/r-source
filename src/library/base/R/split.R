@@ -37,7 +37,7 @@ split.default <- function(x, f, drop = FALSE, ...)
 
 ## This is documented to work for matrices too
 split.data.frame <- function(x, f, drop = FALSE, ...)
-    lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
+    lapply(split(x = seq_len(nrow(x)), f = f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
 
 ## split.data.frame <- function(x, f, drop = FALSE, ...)

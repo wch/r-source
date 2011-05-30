@@ -137,7 +137,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    x_char <- sapply(x, format, ...)
+    x_char <- sapply(X = x, FUN = format, ...)
     print(x_char)
     invisible(x)
 }

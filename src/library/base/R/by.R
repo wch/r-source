@@ -61,7 +61,7 @@ print.by <- function(x, ..., vsep)
     dnn <- names(dn)
     if(missing(vsep))
         vsep <- paste(rep("-", 0.75*getOption("width")), collapse = "")
-    lapply(seq_along(x), function(i, x, vsep, ...) {
+    lapply(X = seq_along(x), FUN = function(i, x, vsep, ...) {
         if(i != 1L && !is.null(vsep)) cat(vsep, "\n")
         ii <- i - 1L
         for(j in seq_along(dn)) {

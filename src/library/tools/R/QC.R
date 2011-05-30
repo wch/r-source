@@ -929,7 +929,7 @@ function(package, lib.loc = NULL)
     if(!length(S4_classes)) return(bad_Rd_objects)
 
     sApply <- function(X, FUN, ...) ## fast and special case - only
-        unlist(lapply(X, FUN, ...), recursive=FALSE, use.names=FALSE)
+        unlist(lapply(X = X, FUN = FUN, ...), recursive=FALSE, use.names=FALSE)
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
 

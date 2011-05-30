@@ -30,7 +30,8 @@ format.default <-
 	## do it this way to force evaluation of args
 	if(missing(trim)) trim <- TRUE
 	if(missing(justify)) justify <- "none"
-	res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
+	res <- lapply(X = x,
+                      FUN = function(xx, ...) format.default(unlist(xx),...),
 		      trim = trim, digits = digits, nsmall = nsmall,
 		      justify = justify, width = width, na.encode = na.encode,
 		      scientific = scientific,
@@ -288,7 +289,7 @@ prettyNum <-
 {
     if(!is.character(x)) {
         is.cmplx <- is.complex(x)
-	x <- sapply(x, format, ...)
+	x <- sapply(X = x, FUN = format, ...)
     }
     ## be fast in trivial case (when all options have their default):
     nMark <- big.mark== "" && small.mark== "" && decimal.mark== "."

@@ -43,7 +43,7 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
                  length=rep(x$length, length.out=maxn),
                  ends=rep(x$ends, length.out=maxn),
                  type=rep(x$type, length.out=maxn))
-    newa <- lapply(newa, "[", index, ...)
+    newa <- lapply(X = newa, FUN = "[", index, ...)
     class(newa) <- "arrow"
     newa
 }
@@ -323,7 +323,7 @@ segmentBounds <- function(x, theta) {
     y1 <- rep(x$y1, length.out=n)
     grid.Call("L_locnBounds", unit.c(x0, x1), unit.c(y0, y1), theta)
 }
-  
+
 xDetails.segments <- function(x, theta) {
     bounds <- segmentBounds(x, theta)
     if (is.null(bounds))
@@ -674,7 +674,7 @@ validDetails.pathgrob <- function(x) {
         x$id.lengths <- as.integer(x$id.lengths)
     x
 }
-  
+
 xDetails.pathgrob <- function(x, theta) {
     bounds <- grid:::grid.Call("L_locnBounds", x$x, x$y, theta)
     if (is.null(bounds))
@@ -707,7 +707,7 @@ heightDetails.pathgrob <- function(x) {
         unit(bounds[4L], "inches")
 }
 
-  
+
 drawDetails.pathgrob <- function(x, recording=TRUE) {
       if (is.null(x$id) && is.null(x$id.lengths))
           grid.Call.graphics("L_polygon", x$x, x$y,
@@ -1190,7 +1190,7 @@ rasterGrob <- function(image,
                        interpolate=TRUE,
                        default.units="npc",
                        name=NULL, gp=gpar(), vp=NULL) {
-    
+
     if (inherits(image, "nativeRaster"))
         raster <- image
     else
