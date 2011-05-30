@@ -27,30 +27,32 @@ simplify2array(x, higher=TRUE)
     by \code{base::\link{as.list}}.}
   \item{FUN}{the function to be applied to each element of \code{X}:
     see \sQuote{Details}.  In the case of functions like
-    \code{+}, \code{\%*\%}, etc.,
-    the function name must be backquoted or quoted.}
+    \code{+}, \code{\%*\%}, the function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
-  \item{simplify}{logical or character string; should the result be simplified to a vector,
-    matrix or higher dimensional array if possible?
-    The default, \code{TRUE}, returns a vector or matrix if appropriate,
-    whereas \code{simplify = "array"}, rather recommended typically,
-    the result may be an \code{\link{array}} of \dQuote{rank}
-    (\eqn{=}\code{length(dim(.))}) one higher than the result of \code{FUN(X[[i]])}.}
+  \item{simplify}{logical or character string; should the result be
+    simplified to a vector, matrix or higher dimensional array if
+    possible?  For \code{sapply} it must be named and not abbreviated. 
+    The default value, \code{TRUE}, returns a vector or matrix if appropriate,
+    whereas if \code{simplify = "array"} the result may be an
+    \code{\link{array}} of \dQuote{rank}
+    (\eqn{=}\code{length(dim(.))}) one higher than the result
+    of \code{FUN(X[[i]])}.}
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
     use \code{X} as \code{\link{names}} for the result unless it had names
-    already.}
-  \item{FUN.VALUE}{a (generalized) vector; a template for the return value from FUN.
-    See \sQuote{Details}.}
+    already.  Since this argument follows \code{\dots} its name cannot
+    be abbreviated.}
+  \item{FUN.VALUE}{a (generalized) vector; a template for the return
+    value from FUN.  See \sQuote{Details}.}
   \item{n}{integer: the number of replications.}
   \item{expr}{the expression (language object, usually a call)
     to evaluate repeatedly.}
 
-  \item{x}{a list, typically returned from \code{{lapply}()}.}
+  \item{x}{a list, typically returned from \code{lapply()}.}
   \item{higher}{logical; if true, \code{simplify2array()} will produce a
     (\dQuote{higher rank}) array when appropriate, whereas
-    \code{higher=FALSE} would return a matrix (or vector) only.
-    These two cases correspond to \code{sapply(*, simplify="array")} or
-    \code{simplify=TRUE}, respectively.}
+    \code{higher = FALSE} would return a matrix (or vector) only.
+    These two cases correspond to \code{sapply(*, simplify = "array")} or
+    \code{simplify = TRUE}, respectively.}
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}, each
@@ -84,7 +86,15 @@ simplify2array(x, higher=TRUE)
   Function \code{FUN} must be able to accept as input any of the
   elements of \code{X}.  If the latter is an atomic vector, \code{FUN}
   will always be passed a length-one vector of the same type as \code{X}.
-
+  
+  Arguments in \code{\dots} cannot have the same name as any of the
+  other arguments, and care may be needed to avoid partial matching to
+  \code{FUN}.  In general-purpose code it is good practice to name the
+  first two arguments \code{X} and \code{FUN} if \code{\dots} is passed
+  through: this both avoids partial matching to \code{FUN} and ensures
+  that a sensible error message is given if arguments named \code{X} or
+  \code{FUN} are passed through \code{\dots}.
+  
   Simplification in \code{sapply} is only attempted if \code{X} has
   length greater than zero and if the return values from all elements
   of \code{X} are all of the same (positive) length.  If the common
