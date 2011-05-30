@@ -95,7 +95,7 @@ tiff(filename = "Rplot\%03d.tif",
   number of pixels which depend on the graphics hardware.
 
   By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72ppi when none is recorded.  As
+  assume a nominal resolution of 72 ppi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the reported
   ppi value will be changed slightly.
 
@@ -111,7 +111,7 @@ tiff(filename = "Rplot\%03d.tif",
   file---this may work better for specialist uses with semi-transparent
   colours.
   
-  \code{png(type = "windows"} supports transparent backgrounds on 16-bit
+  \code{png(type = "windows")} supports transparent backgrounds on 16-bit
   (\sQuote{High Color}) or better screens: use \code{bg =
     "transparent"}.  There is also support for semi-transparent colours
   of lines, fills and text.  However, as there is only partial support

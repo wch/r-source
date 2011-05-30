@@ -96,7 +96,7 @@ tiff(filename = "Rplot\%03d.tiff",
   variant a very light grey is used as the background and so appear as
   transparent if used in the plot. This allows opaque white to be used,
   as in the example.  The \code{type = "cairo"}, \code{type =
-  "cairo-png"} and \code{type = "quartz"} variants allows
+  "cairo-png"} and \code{type = "quartz"} variants allow
   semi-transparent colours, including on a transparent or
   semi-transparent background.
 
