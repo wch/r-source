@@ -1869,7 +1869,7 @@ Optional Packages:
                           (0/1/2) [0]
   --with-recommended-packages
                           use/install recommended R packages [yes]
-  --with-ICU              use ICU library [yes]
+  --with-ICU              use ICU library (if available) [yes]
   --with-pic              try to use only PIC/non-PIC objects [default=use
                           both]
   --with-x                use the X Window System
@@ -3934,7 +3934,7 @@ else
 fi
 
 
-## Cairo etc
+## cairographics etc
 
 # Check whether --with-cairo was given.
 if test "${with_cairo+set}" = set; then :
@@ -5482,9 +5482,9 @@ fi
 
 
 
-## Cairo needs pkg-config
-# Extract the first word of "pkg-config", so it can be a program name with args.
-set dummy pkg-config; ac_word=$2
+## cairographics needs pkg-config
+# Extract the first word of "pkg-config ", so it can be a program name with args.
+set dummy pkg-config ; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if test "${ac_cv_path_PKGCONF+set}" = set; then :
@@ -27303,7 +27303,7 @@ _ACEOF
 fi
 done
 
-## realpath is a POSIX 2001 (and BSD)
+## realpath is POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 for ac_func in realpath
 do :
