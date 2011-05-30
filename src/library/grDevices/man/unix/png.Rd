@@ -10,7 +10,7 @@
 \alias{bmp}
 \title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
-  Graphics devices for JPEG, PNG or TIFF format bitmap files.
+  Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp",
@@ -86,24 +86,25 @@ tiff(filename = "Rplot\%03d.tiff",
   which is their main virtue over PNG.
 
   \code{png} supports transparent backgrounds: use \code{bg =
-  "transparent"}.  Not all PNG viewers render files with transparency
-  correctly.  When transparency is in use in the \code{type = "Xlib"}
+  "transparent"}.  (Not all PNG viewers render files with transparency
+  correctly.)  When transparency is in use in the \code{type = "Xlib"}
   variant a very light grey is used as the background and so appear as
   transparent if used in the plot. This allows opaque white to be used,
   as in the example.  The \code{type = "cairo"} and \code{type =
-  "cairo1"} variants allows semi-transparent colours, including on a
+  "quartz"} variants allow semi-transparent colours, including on a
   transparent or semi-transparent background.
 
-  \code{tiff(type = "cairo")} supports semi-transparent colours,
-  including on a transparent or semi-transparent background.
+  \code{tiff} with types \code{"cairo"} and \code{"quartz"} supports
+  semi-transparent colours, including on a transparent or
+  semi-transparent background.
 
-  \R can be compiled without support for each of these devices: this
-  will be reported if you attempt to use them on a system where they are
-  not supported.  For \code{type = "Xlib"} they may not be usable unless
-  the X11 display is available to the owner of the \R process.
-  \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
-  "quartz"} uses the \code{\link{quartz}} device and so is only
-  available where that is (on some Mac OS X builds: see
+  \R can be compiled without support for some or all of the types for
+  each of these devices: this will be reported if you attempt to use
+  them on a system where they are not supported.  For \code{type =
+  "Xlib"} they may not be usable unless the X11 display is available to
+  the owner of the \R process.  \code{type = "cairo"} requires cairo 1.2
+  or later.  \code{type = "quartz"} uses the \code{\link{quartz}} device
+  and so is only available where that is (on some Mac OS X builds: see
   \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file.  Viewers will often
@@ -125,9 +126,9 @@ tiff(filename = "Rplot\%03d.tiff",
 }
 
 \section{Warnings}{
-  Note that by default the \code{width} and \code{height} are in pixels
-  not inches.  A warning will be issued if both are less than 20.
-
+  Note that by default the \code{width} and \code{height} values are in
+  pixels not inches.  A warning will be issued if both are less than 20.
+  
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
@@ -148,12 +149,9 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{capabilities}} to see if these devices are
   supported by this build of \R, and if \code{type = "cairo"} is supported.
 
-  \code{\link{bitmap}} provides an alternative way to generate PNG and
-  JPEG plots that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.  (Devices \code{GDD} in
-  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
-  package \pkg{Cairo} are further alternatives using several other
-  additional pieces of software.)
+  \code{\link{bitmap}} provides an alternative way to generate plots in many
+  bitmap formats that does not depend on accessing the X11 display but does
+  depend on having GhostScript installed.
 }
 
 \section{Conventions}{

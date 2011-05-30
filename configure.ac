@@ -373,7 +373,7 @@ AC_ARG_WITH([tk-config],
 [TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
-## Cairo etc
+## cairographics etc
 AC_ARG_WITH([cairo],
 [AS_HELP_STRING([--with-cairo],[use cairo (and pango) if available @<:@yes@:>@])],
 [if test "${withval}" = no; then
@@ -432,7 +432,7 @@ AC_ARG_WITH([recommended-packages],
 
 ## ICU
 AC_ARG_WITH([ICU],
-[AS_HELP_STRING([--with-ICU],[use ICU library @<:@yes@:>@])],
+[AS_HELP_STRING([--with-ICU],[use ICU library (if available) @<:@yes@:>@])],
 [R_ARG_USE(ICU)],
 [use_ICU=yes])
 
@@ -583,8 +583,9 @@ R_PROG_PDFVIEWER
 ## Noweb
 AC_PATH_PROG(NOTANGLE, notangle, false)
 
-## Cairo needs pkg-config
-AC_PATH_PROG(PKGCONF,pkg-config,[],[$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
+## cairographics needs pkg-config
+AC_PATH_PROG(PKGCONF, pkg-config , [], 
+	     [$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
 
 AC_PROG_CC
 
@@ -1763,7 +1764,7 @@ AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
 ## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
 AC_CHECK_FUNCS(mempcpy)
-## realpath is a POSIX 2001 (and BSD)
+## realpath is POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
 AC_CHECK_FUNCS(realpath)
 AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>

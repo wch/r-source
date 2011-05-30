@@ -768,11 +768,11 @@ use fonts which render them correctly.
 The font used can affect whether quotes are rendered correctly.  The
 default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
-tried.  @code{Lucida Console} has elegant glyphs for directional quotes,
-but seems rather light on Windows XP (it looks better than @code{Courier
-New} on Vista and later): @code{Consolas} is another font which we often
-select.  Non-TrueType fonts such as @code{Courier} and @code{FixedSys}
-lack directional double quotes on all the systems we tried.
+tried.  @code{Lucida Console} has elegant glyphs for directional quotes
+(but seems rather light unless ClearType is in use): @code{Consolas} is
+another font which we often select when ClearType is in use.
+Non-TrueType fonts such as @code{Courier} and @code{FixedSys} lack
+directional double quotes on all the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
@@ -944,7 +944,7 @@ graphics devices and not, say, to @code{pdf}.)
 Note that it is important that the console font uses double-width
 characters for all CJK characters (as that is what the width table used
 assumes): this is true for the fonts intended for CJK locales but not
-for example for Lucida Console or Consolas.
+for example for @code{Lucida Console} or @code{Consolas}.
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
@@ -962,9 +962,9 @@ control panel, and the appropriate language has to be set under
 @emph{both} the `Regional Options' and `Advanced' tabs.
 
 When using @command{Rterm} the window in which it is run has to be set
-up to use a suitable font (e.g. Lucida Console, not the OEM raster
-fonts) and a suitable codepage (which for the Windows Cmd shell can be
-done using @command{chcp}).
+up to use a suitable font (e.g. @code{Lucida Console}, not the OEM
+raster fonts) and a suitable codepage (which for the Windows Cmd shell
+can be done using @command{chcp}).
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.
