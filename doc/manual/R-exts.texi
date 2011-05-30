@@ -1870,7 +1870,8 @@ those pages containing build-time macros will be saved in
 macros, a @file{.pdf} version of the package manual will be built and
 installed in the @file{build/} subdirectory.  (This allows CRAN or other
 repositories to display the manual even if they are unable to install
-the package.)
+the package.)  This can be suppressed by the option @option{--no-manual}
+or if package's description contains @samp{BuildManual: no} or similar.
 
 One of the checks that @command{R CMD build} runs is for empty source
 directories.  These are in most (but not all) cases unintentional, if

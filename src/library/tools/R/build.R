@@ -117,7 +117,7 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL)
 {
-    ## this requires on Windows sh make tar gzip
+    ## this requires on Windows sh make
 
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -156,6 +156,8 @@ get_exclude_patterns <- function()
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
 
+    ## Used for BuildVignettes, BuildManual, BuildKeepEmpty,
+    ## and (character not logical) BuildResaveData
     parse_description_field <-
         function(desc, field, default = TRUE, logical = TRUE)
     {
@@ -182,7 +184,7 @@ get_exclude_patterns <- function()
             "  --force               force removal of INDEX file",
             "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
-            "  --no-manual           do not build the manual even if \\Sexprs are present",
+            "  --no-manual           do not build the PDF manual even if \\Sexprs are present",
             "  --resave-data=        re-save data files as compactly as possible:",
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
@@ -253,7 +255,7 @@ get_exclude_patterns <- function()
 
         libdir <- tempfile("Rinst")
 
-        pkgInstalled <- build_Rd_db(pkgdir, libdir)
+        pkgInstalled <- build_Rd_db(pkgdir, libdir, desc)
 
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
         doc_dir <- file.path("inst", "doc")
@@ -364,8 +366,7 @@ get_exclude_patterns <- function()
             messageLog(Log, "cleaning src")
             if (WINDOWS) {
                 if (file.exists("Makefile.win")) {
-                    Ssystem(Sys.getenv("MAKE", "make"),
-                            "-f Makefile.win clean")
+                    Ssystem(Sys.getenv("MAKE", "make"), "-f Makefile.win clean")
                 } else {
                     if (file.exists("Makevars.win")) {
                         makefiles <- paste()
@@ -462,7 +463,7 @@ get_exclude_patterns <- function()
         }
     }
 
-    build_Rd_db <- function(pkgdir, libdir) {
+    build_Rd_db <- function(pkgdir, libdir, desc) {
     	db <- .build_Rd_db(pkgdir, stages=NULL, os=c("unix", "windows"), step=1)
     	if (!length(db)) return(FALSE)
 
@@ -481,17 +482,19 @@ get_exclude_patterns <- function()
 
 	if (length(containsBuildSexprs)) {
 	    for (i in containsBuildSexprs)
-		db[[i]] <- prepare_Rd(db[[i]], stages="build",
-                                      stage2=FALSE, stage3=FALSE)
+		db[[i]] <- prepare_Rd(db[[i]], stages = "build",
+                                      stage2 = FALSE, stage3 = FALSE)
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
-	    dir.create("build", showWarnings=FALSE)
+	    dir.create("build", showWarnings = FALSE)
 	    saveRDS(partial, file.path("build", "partial.rdb"))
 	}
-	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
+	needRefman <- manual &&
+            parse_description_field(desc, "BuildManual", TRUE) &&
+            any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
 	if (needRefman) {
-	    messageLog(Log, "building the package manual")
-	    dir.create("build", showWarnings=FALSE)
+	    messageLog(Log, "building the PDF package manual")
+	    dir.create("build", showWarnings = FALSE)
 	    refman <- file.path(pkgdir, "build",
                                 paste(basename(pkgdir), ".pdf", sep = ""))
 	    ..Rd2dvi(c("--pdf", "--force", "--no-preview",

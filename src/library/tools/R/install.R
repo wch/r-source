@@ -190,7 +190,7 @@
         full
     }
 
-
+    ## used for LazyData, LazyLoad, KeepSource
     parse_description_field <- function(desc, field, default=TRUE)
     {
         tmp <- desc[field]
@@ -929,11 +929,6 @@
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
-
-	value <- parse_description_field(desc, "SaveImage", default = NA)
-	if (!is.na(value))
-	    warning("field 'SaveImage' is defunct: please remove it",
-		    call. = FALSE, domain = NA)
 
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = lazy)
