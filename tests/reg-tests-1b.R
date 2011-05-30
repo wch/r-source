@@ -1425,7 +1425,10 @@ stopifnot(ncol(mds$points) == 11L)
 ## Used negative eigenvalues in 2.12.0
 
 
-## mapply() & sapply() should not wrongly simplify e.g. for "call":
+## Sweave regression test moved to utils/tests.
+
+
+## mapply() & sapply() should not simplify e.g. for "call":
 f2 <- function(i,j) call(':',i,j)
 stopifnot(identical(2:3,
 		    dim(sapply(1:3, function(i) list(0, 1:i)))),
@@ -1435,17 +1438,17 @@ stopifnot(identical(2:3,
 
 
 ## 'sep' in reshape() (PR#14335)
-test <- data.frame(x=rnorm(100), y=rnorm(100), famid=rep(1:50, each=2),
-                   time=rep(1:2, 50))
+test <- data.frame(x = rnorm(100), y = rnorm(100), famid = rep(1:50, each=2),
+                   time = rep(1:2, 50))
 
-wide <- reshape(data=test, v.names=c("x", "y"), idvar="famid",
-                timevar="time", sep="", direction="wide")
+wide <- reshape(data = test, v.names = c("x", "y"), idvar = "famid",
+                timevar = "time", sep = "", direction = "wide")
 stopifnot(identical(names(wide), c("famid", "x1", "y1", "x2", "y2")))
 ## was c("famid", "x.1", "y.1", "x.2", "y.2") in R <= 2.12.0
 
 
 ## PR#14438
-X <- matrix(0+1:10, ncol=2)[, c(1,1,2,2)]
+X <- matrix(0+1:10, ncol = 2)[, c(1,1,2,2)]
 colnames(X) <- c("X1","Dup1", "X2", "Dup2")
 X2 <- qr.X(qr(X))
 X2
@@ -1612,3 +1615,5 @@ res <- readBin(rawcon, what="integer", size=1, n=4)
 close(rawcon)
 stopifnot(identical(res, 101:104))
 ## read the same value repeatedly in 2.13.0
+
+proc.time()
