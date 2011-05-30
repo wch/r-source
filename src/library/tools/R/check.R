@@ -1738,9 +1738,11 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               if (nzchar(enc))
                               paste(", encoding = '", enc, "'", sep = ""),
                               ")", sep = "")
-                out <- R_runR(Rcmd,
-                              if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2)
-
+                outfile <- paste(basename(v), ".log", sep="")
+                status <- R_runR(Rcmd,
+                                 if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
+                                 stdout = outfile, stderr = outfile)
+                out <- readLines(outfile, warn = FALSE)
                 if(length(grep("^  When (tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
@@ -1748,8 +1750,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
-                    writeLines(out, paste(basename(v), ".log", sep=""))
-                } else if(! " *** Run successfully completed ***" %in% out) {
+                } else if(status || ! " *** Run successfully completed ***" %in% out) {
                     ## (Need not be the final line if running under valgrind)
                     cat(" failed to complete the test\n")
                     out <- c(out, "", "... incomplete output.  Crash?")
@@ -1757,11 +1758,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                              paste("when running code in", sQuote(basename(v))),
                              "  ...",
                              utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
-                    writeLines(out, paste(basename(v), ".log", sep=""))
                 } else {
                     cat(" OK\n")
-                    if (config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
-                        writeLines(out, paste(basename(v), ".log", sep=""))
+                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
+                        unlink(outfile)
                 }
             }
             if (R_check_suppress_RandR_message)
