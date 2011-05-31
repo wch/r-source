@@ -3402,6 +3402,21 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
     int sidx = GETOP(); \
     if (!dd && smallcache) { \
 	SEXP cell = GET_SMALLCACHE_BINDING_CELL(vcache, sidx); \
+	/* try fast handling of REALSXP, INTSXP, LGLSXP */ \
+	/* (cell won't be R_NilValue or an active binding) */ \
+	value = CAR(cell); \
+	int type = TYPEOF(value); \
+	switch(type) { \
+	case REALSXP: \
+	case INTSXP: \
+	case LGLSXP: \
+	    /* may be ok to skip this test: */ \
+	    if (NAMED(value) == 0) \
+		SET_NAMED(value, 1); \
+	    R_Visible = TRUE; \
+	    BCNPUSH(value); \
+	    NEXT(); \
+	} \
 	if (cell != R_NilValue && ! IS_ACTIVE_BINDING(cell)) { \
 	    value = CAR(cell); \
 	    if (TYPEOF(value) != SYMSXP) {	\
