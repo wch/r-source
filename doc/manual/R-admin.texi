@@ -3509,8 +3509,9 @@ path to a shell, e.g. @file{/usr/local/bin/bash}).
 
 To compile @R{}, you will most likely find it easiest to use
 @acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.  The native @command{make} has been reported to fail on SGI
-Irix 6.5 and Alpha/OSF1 (aka Tru64).
+Solaris, as does the native FreeBSD @command{make}.  The native
+@command{make} has been reported to fail on SGI Irix 6.5 and Alpha/OSF1
+(aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
