@@ -144,6 +144,7 @@ function(formula, data = parent.frame(), ..., subset,
     eframe <- parent.frame()
     if (is.matrix(md <- eval(m$data, eframe)))
 	m$data <- md <- as.data.frame(data)
+    ## This is odd: why not dots <- list(...) ?
     dots <- lapply(m$..., eval, md, eframe)
     ## need to avoid evaluation of expressions in do.call later.
     ## see PR#10525

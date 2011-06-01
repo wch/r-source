@@ -55,8 +55,10 @@
   
   Note that some arguments passed to other methods will need to be
   protected from premature evaluation by enclosing them in
-  \code{\link{quote}}, including the \code{panel.first} and
-  \code{panel.last} arguments of \code{\link{plot.default}}.
+  \code{\link{quote}}: currently this is done automatically for
+  \code{main}, \code{sub} and \code{xlab}.  This is needed for the
+  \code{panel.first} and \code{panel.last} arguments of
+  \code{\link{plot.default}}.
 }
 \value{
   These functions are invoked for their side effect of drawing
@@ -67,9 +69,9 @@
   \code{\link{plot.factor}}.
 }
 \examples{
-op <- par(mfrow=c(2,1))
-plot(Ozone ~ Wind, data = airquality, pch=as.character(Month))
-plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),
+op <- par(mfrow = c(2,1))
+plot(Ozone ~ Wind, data = airquality, pch = as.character(Month))
+plot(Ozone ~ Wind, data = airquality, pch = as.character(Month),
      subset = Month != 7)
 par(op)
 
