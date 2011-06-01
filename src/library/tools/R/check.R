@@ -2760,10 +2760,10 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             unlink(pkgoutdir, recursive = TRUE)
         dir.create(pkgoutdir, mode = "0755")
         if (!dir.exists(pkgoutdir)) {
-            errorLog(Log,
-                     sprintf("cannot create check dir %s", sQuote(pkgoutdir)))
+            message(sprintf("ERROR: cannot create check dir %s", sQuote(pkgoutdir)))
             do_exit(1L)
         }
+        Log <- newLog(file.path(pkgoutdir, "00check.log"))
         if (istar) {
             dir <- file.path(pkgoutdir, "00_pkg_src")
             dir.create(dir, mode = "0755")
@@ -2793,7 +2793,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         }
         setwd(startdir)
 
-        Log <- newLog(file.path(pkgoutdir, "00check.log"))
         messageLog(Log, "using log directory ", sQuote(pkgoutdir))
         messageLog(Log, "using ", R.version.string)
         messageLog(Log, "using platform: ", R.version$platform,
