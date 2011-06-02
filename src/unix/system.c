@@ -56,7 +56,7 @@
 
 #include "Runix.h"
 
-attribute_hidden FILE *ifp = NULL;
+attribute_hidden FILE *ifp = NULL; /* used in sys-std.c */
 
 attribute_hidden
 Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c

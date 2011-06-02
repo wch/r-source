@@ -195,8 +195,16 @@ void GEunregisterSystem(int registerIndex)
 
     /* safety check if called before Ginit() */
     if(registerIndex < 0) return;
-    if (numGraphicsSystems == 0)
-	error(_("no graphics system to unregister"));
+    if (numGraphicsSystems == 0) {
+	/* This gets called from KillAllDevices, which is called
+	   during shutdown.  Prior to 2.14.0 it gave an error, which
+	   would inhibit shutdown.  This should not happen, but
+	   apparently it did after a segfault:
+	   https://stat.ethz.ch/pipermail/r-devel/2011-June/061153.html
+	*/
+	warning(_("no graphics system to unregister"));
+	return;
+    }
     /* Run through the existing devices and remove the information
      * from any GEDevDesc's
      */
