@@ -128,6 +128,10 @@
       \item The default methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} now signal an error if their argument is not
       an atomic vector.
+      
+      \item The formula method for \code{plot()} no longer places
+      package \pkg{stats} on the search path (it loads the namespace
+      instead).
     }
   }
   
@@ -334,6 +338,10 @@
       \item Reference class utilities will detect an attempt to modify methods
       or fields in a locked class definition (e.g., in a namespace)
       and generate an error.
+      
+      \item The formula methods for \code{lines()}, \code{points()} and
+      \code{text()} now work even if package \pkg{stats} is not on the
+      search path.
     }
   }
 }

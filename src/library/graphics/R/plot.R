@@ -142,57 +142,53 @@ function(formula, data = parent.frame(), ..., subset,
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(md <- eval(m$data, eframe)))
-	m$data <- md <- as.data.frame(data)
-    ## This is odd: why not dots <- list(...) ?
+    md <- eval(m$data, eframe)
+    if (is.matrix(md)) m$data <- md <- as.data.frame(data)
+    ## NB: this evaluates arguments in ... . (PR#14591)
     dots <- lapply(m$..., eval, md, eframe)
     ## need to avoid evaluation of expressions in do.call later.
     ## see PR#10525
     nmdots <- names(dots)
-    if("main" %in% nmdots) dots[["main"]] <- enquote(dots[["main"]])
-    if("sub" %in% nmdots) dots[["sub"]] <- enquote(dots[["sub"]])
-    if("xlab" %in% nmdots) dots[["xlab"]] <- enquote(dots[["xlab"]])
-
+    if ("main" %in% nmdots) dots[["main"]] <- enquote(dots[["main"]])
+    if ("sub" %in% nmdots) dots[["sub"]] <- enquote(dots[["sub"]])
+    if ("xlab" %in% nmdots) dots[["xlab"]] <- enquote(dots[["xlab"]])
 
     m$ylab <- m$... <- m$ask <- NULL
     subset.expr <- m$subset
     m$subset <- NULL
-    ## FIXME: model.frame is in stats
-    require(stats, quietly=TRUE)
-    m[[1L]] <- as.name("model.frame")
-    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    m <- as.list(m)
+    m[[1L]] <- stats::model.frame.default
+    m <- as.call(c(m, list(na.action = NULL)))
     mf <- eval(m, eframe)
     if (!missing(subset)) {
 	s <- eval(subset.expr, data, eframe)
 	l <- nrow(mf)
 	dosub <- function(x) if (length(x) == l) x[s] else x
 	dots <- lapply(dots, dosub)
-	mf <- mf[s,]
+	mf <- mf[s, ]
     }
     ## check for horizontal arg
     horizontal <- FALSE
-    if("horizontal" %in% names(dots)) horizontal <- dots[["horizontal"]]
+    if ("horizontal" %in% names(dots)) horizontal <- dots[["horizontal"]]
     response <- attr(attr(mf, "terms"), "response")
     if (response) {
 	varnames <- names(mf)
 	y <- mf[[response]]
 	funname <- NULL
 	xn <- varnames[-response]
-        ## <FIXME> why is this trying to do method dispatch?
+        ## Dispatch on class of 'y' (plot() dispatches on class of 'x').
 	if( is.object(y) ) {
 	    found <- FALSE
 	    for(j in class(y)) {
-		funname <- paste("plot.",j,sep = "")
+		funname <- paste("plot.", j, sep = "")
 		if( exists(funname) ) {
 		    found <- TRUE
 		    break
 		}
 	    }
-	    if( !found )
-		funname <- NULL
+	    if( !found ) funname <- NULL
 	}
-	if( is.null(funname) )
-	    funname <- "plot"
+	if( is.null(funname) ) funname <- "plot"
 	if (length(varnames) > 2L) {
             oask <- devAskNewPage(ask)
             on.exit(devAskNewPage(oask))
@@ -208,8 +204,7 @@ function(formula, data = parent.frame(), ..., subset,
                         c(list(mf[[i]], y, ylab = yl, xlab = xl), dots))
                }
 	} else do.call(funname, c(list(y, ylab = ylab), dots))
-    }
-    else do.call("plot.data.frame", c(list(mf), dots))
+    } else do.call("plot.data.frame", c(list(mf), dots))
     invisible()
 }
 
@@ -218,12 +213,13 @@ function(formula,  data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(md <- eval(m$data, eframe)))
-	m$data <- md <- as.data.frame(data)
+    md <- eval(m$data, eframe)
+    if (is.matrix(md)) m$data <- md <- as.data.frame(data)
     dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
-    m[[1L]] <- as.name("model.frame")
-    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    m <- as.list(m)
+    m[[1L]] <- stats::model.frame.default
+    m <- as.call(c(m, list(na.action = NULL)))
     mf <- eval(m, eframe)
     if (!missing(subset)) {
 	s <- eval(m$subset, data, eframe)
@@ -249,8 +245,7 @@ function(formula,  data = parent.frame(), ..., subset)
 	    do.call("lines", c(list(y), dots))
 	else
 	    do.call("lines", c(list(mf[[xn]], y), dots))
-    }
-    else
+    } else
 	stop("must have a response variable")
 }
 
@@ -259,12 +254,13 @@ function(formula, data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(md <- eval(m$data, eframe)))
-	m$data <- md <- as.data.frame(data)
+    md <- eval(m$data, eframe)
+    if (is.matrix(md)) m$data <- md <- as.data.frame(data)
     dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
-    m[[1L]] <- as.name("model.frame")
-    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    m <- as.list(m)
+    m[[1L]] <- stats::model.frame.default
+    m <- as.call(c(m, list(na.action = NULL)))
     mf <- eval(m, eframe)
     if (!missing(subset)) {
 	s <- eval(m$subset, data, eframe)
@@ -290,8 +286,7 @@ function(formula, data = parent.frame(), ..., subset)
 	    do.call("points", c(list(y), dots))
 	else
 	    do.call("points", c(list(mf[[xn]], y), dots))
-    }
-    else
+    } else
 	stop("must have a response variable")
 }
 
@@ -299,12 +294,13 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     eframe <- parent.frame()
-    if (is.matrix(md <- eval(m$data, eframe)))
-	m$data <- md <- as.data.frame(data)
+    md <- eval(m$data, eframe)
+    if (is.matrix(md)) m$data <- md <- as.data.frame(data)
     dots <- lapply(m$..., eval, md, eframe)
     m$... <- NULL
-    m[[1L]] <- as.name("model.frame")
-    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    m <- as.list(m)
+    m[[1L]] <- stats::model.frame.default
+    m <- as.call(c(m, list(na.action = NULL)))
     mf <- eval(m, eframe)
     if (!missing(subset)) {
 	s <- eval(m$subset, data, eframe)
@@ -330,8 +326,7 @@ text.formula <- function(formula, data = parent.frame(), ..., subset)
 	    do.call("text", c(list(y), dots))
 	else
 	    do.call("text", c(list(mf[[xn]], y), dots))
-    }
-    else
+    } else
 	stop("must have a response variable")
 }
 
