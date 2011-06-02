@@ -25,7 +25,7 @@
 \arguments{
   \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
-    \code{formula} should be taken.}
+    \code{formula} should be taken.  A matrix is converted to a data frame.}
   \item{\dots}{Arguments to be passed to or from other methods.
     \code{horizontal = TRUE} is also accepted.}
   \item{subset}{an optional vector specifying a subset of observations
@@ -34,16 +34,28 @@
   \item{ask}{logical, see \code{\link{par}}.}
 }
 \details{
+  For the \code{lines}, \code{points} and \code{text} methods the formula
+  should be of the form \code{y ~ x} or \code{y ~ 1} with a left-hand
+  side and a single term on the right-hand side.  The \code{plot} method
+  accepts other forms discussed later in this section.
+  
   Both the terms in the formula and the \code{\dots} arguments are
   evaluated in \code{data} enclosed in \code{parent.frame()} if
-  \code{data} is a list or a data frame. The terms of the formula and
+  \code{data} is a list or a data frame.  The terms of the formula and
   those arguments in \code{\dots} that are of the same length as
   \code{data} are subjected to the subsetting specified in
-  \code{subset}. If the formula in \code{plot.formula} contains more
-  than one non-response term, a series of plots of y against each term
-  is given.  A plot against the running index can be specified as
+  \code{subset}.  A plot against the running index can be specified as
   \code{plot(y ~ 1)}.
 
+  If the formula in the \code{plot} method contains more than one term
+  on the right-hand side, a series of plots is produced of the response
+  against each non-response term.
+  
+  For the \code{plot} method the formula can be of the form
+  \code{~ z + y + z}: the variables specified on the right-hand side are
+  collected into a data frame, subsetted if specified, and displayed by
+  \code{\link{plot.data.frame}}.
+  
   Missing values are not considered in these methods, and in particular
   cases with missing values are not removed.
 
@@ -51,18 +63,17 @@
   then \code{plot.formula} looks for a plot method for that class first.
   Otherwise, the class of \code{x} will determine the type of the plot.
   For factors this will be a parallel boxplot, and argument
-  \code{horizontal = TRUE} can be used (see \code{\link{boxplot}}).
+  \code{horizontal = TRUE} can be specified (see \code{\link{boxplot}}).
   
-  Note that some arguments passed to other methods will need to be
-  protected from premature evaluation by enclosing them in
-  \code{\link{quote}}: currently this is done automatically for
-  \code{main}, \code{sub} and \code{xlab}.  This is needed for the
-  \code{panel.first} and \code{panel.last} arguments of
-  \code{\link{plot.default}}.
+  Note that some arguments will need to be protected from premature
+  evaluation by enclosing them in \code{\link{quote}}: currently this is
+  done automatically for \code{main}, \code{sub} and \code{xlab}.  For
+  example, it is needed for the \code{panel.first} and \code{panel.last}
+  arguments passed to \code{\link{plot.default}}.
 }
 \value{
   These functions are invoked for their side effect of drawing
-  in the active graphics device.
+  on the active graphics device.
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{points}}, \code{\link{lines}},
