@@ -64,7 +64,7 @@
       \code{text} argument, to allow reading data from a (possibly
       literal) character string.
 
-      \item \code{optim(*, method= .)} now allows \code{method="Brent"}
+      \item \code{optim(*, method = .)} now allows \code{method = "Brent"}
       as an interface to \code{optimize()}, for use in cases such as
       \code{mle()} where \code{optim()} is used internally.
 
@@ -522,7 +522,7 @@
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
 
-      \item \code{fields =list()} failed for \code{setRefClass()}.
+      \item \code{fields = list()} failed for \code{setRefClass()}.
       (Reported by Michael Lawrence.)
     }
   }
