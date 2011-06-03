@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-19 r55507)
+R version 2.13.0 Patched (2011-06-02 r56035)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1903,9 +1903,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### ** Examples
 > 
-> op <- par(mfrow=c(2,1))
-> plot(Ozone ~ Wind, data = airquality, pch=as.character(Month))
-> plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),
+> op <- par(mfrow = c(2,1))
+> plot(Ozone ~ Wind, data = airquality, pch = as.character(Month))
+> plot(Ozone ~ Wind, data = airquality, pch = as.character(Month),
 +      subset = Month != 7)
 > par(op)
 > 
@@ -2953,7 +2953,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.522 0.079 4.625 0 0 
+Time elapsed:  4.53 0.093 4.648 0 0 
 > grDevices::dev.off()
 null device 
           1 
