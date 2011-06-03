@@ -321,7 +321,8 @@ get_exclude_patterns <- function()
                 }
                 ## We may need to install them.
                 if (basename(vigns$dir) == "vignettes") {
-                    dir.create(doc_dir, showWarnings = FALSE)
+                    ## inst may not yet exist
+                    dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
                     pdfs <- sub("\\.[RrSs](nw|tex)$", ".pdf", vigns$docs)
                     file.copy(c(vigns$docs, pdfs), doc_dir)
                     unlink(pdfs)
