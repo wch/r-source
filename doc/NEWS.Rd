@@ -521,6 +521,9 @@
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
+
+      \item \code{fields =list()} failed for \code{setRefClass()}.
+      (Reported by Michael Lawrence.)
     }
   }
 }

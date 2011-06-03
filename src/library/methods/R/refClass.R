@@ -833,10 +833,14 @@ setRefClass <- function(Class, fields = character(),
         names(fields) <- fieldNames
     }
     else if(is.list(fields)) {
-        fieldNames <- names(fields)
-        if(is.null(fieldNames) ||
-           !all(nzchar(fieldNames)))
-            stop("A list argument for fields must have nonempty names for all the fields")
+        if(length(fields) > 0) {
+            fieldNames <- names(fields)
+            if(is.null(fieldNames) ||
+               !all(nzchar(fieldNames)))
+                stop("A list argument for fields must have nonempty names for all the fields")
+        }
+        else
+            fieldNames <- character()
     }
     else
         stop(gettextf("Argument fields must be a list of the field classes or definitions, or else just the names of the fields; got an object of class \"%s\"",
