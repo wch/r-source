@@ -1067,12 +1067,12 @@ kind enough to provide a pre-compiled version for Windows as a
 code (and pre-compiled versions are usually available for simple
 packages).
 
-You can install pre-compiled packages either from CRAN or from a local
-@code{.zip} file by using @code{install.packages}: see its help page.
-There are menu items on the @code{Packages} menu to provide a
-point-and-click interface to package installation.  The packages for
-each minor (2.x) version will be stored in a separate area, so for R
-2.13.? the files are in @file{bin/windows/contrib/2.13}.
+You can install pre-compiled packages either from a repository such as
+CRAN or from a local @code{.zip} file by using @code{install.packages}:
+see its help page.  There are menu items on the @code{Packages} menu to
+provide a point-and-click interface to package installation.  The
+packages for each minor (2.x) version will be stored in a separate area,
+so for R 2.13.? the files are in @file{bin/windows/contrib/2.13}.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/ReadMe},
@@ -1163,22 +1163,16 @@ replaced.
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
 
-Is the package compiled for this version of R?   Packages need to have
+Is the package installed for this version of R?   Packages need to have
 prepared for R 2.10.0 or later, and packages containing compiled code
 for R 2.12.0 or later.
 
 You can tell the version the package was compiled for by looking at the
 @samp{Built:} line in its @file{DESCRIPTION} file 
-@c Next does not work in Vista/7, and in any case there may be multiple DLLs
-@c or at the @samp{Version} tab of its DLL in the @file{libs} directory.
-@c (Right-click on the DLL in Windows Explorer and select @samp{Version}
-@c tab of the @samp{Properties}, or use the @code{DLL.version} function
-@c inside R.)
 
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
-give an informative message about a certain DLL not being found (except
-on Windows 2000).  See
+give an informative message about a certain DLL not being found.  See
 @uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.13/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
@@ -1190,7 +1184,7 @@ of the packages connecting to databases).
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
-installed.  This is an optional part of the installation although it is
+installed.  This is an optional part of the installation, although it is
 selected by default.  If the message is
 @example
 Tcl/Tk support files were not installed
@@ -1206,7 +1200,8 @@ given by value of @env{MY_TCLTK}, and that this is set up correctly
 the Tcl/Tk support files installed (but they can be).  Note that you do
 need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0, and you do need
 the architecture to match, that is a 32-bit or 64-bit build of Tcl/Tk to
-match the R build in use.
+match the R build in use.  (There is no guarantee that a 64-bit build
+will work: it depends on the layout it uses.)
 
 In the past several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/@/Products/@/activetcl/}) as a way to
@@ -1294,8 +1289,8 @@ BUILD_HTML = NO
 @end example
 
 @noindent
-and them all packages installed by that build of R will be installed
-with static HTML pages.
+and them all packages installed by that build of R will (by default) be
+installed with static HTML pages.
 
 @node How can I get a binary version of a package?,  , How do I get static HTML pages?, Packages
 @section How can I get a binary version of a package?
@@ -1338,13 +1333,15 @@ volunteers.
 @section  What should I expect to behave differently from the Unix version of R?
 
 @itemize @bullet
-@item R commands can be interrupted by @key{Esc} in @command{Rgui.exe}
+@item
+R commands can be interrupted by @key{Esc} in @command{Rgui.exe}
 and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}:
-@key{Ctrl-C} is used for copying in the GUI version.
+@key{Ctrl-C} is used for copying in @command{Rgui.exe}.
 
-@item Command-line editing is always available, but is simpler than the
-readline-based editing on Unix.  For @command{Rgui.exe}, the menu item `Help |
-Console' will give details.  For @command{Rterm.exe} see file
+@item 
+Command-line editing is always available, but is somewhat simpler than the
+readline-based editing on Unix.  For @command{Rgui.exe}, the menu item
+`Help | Console' will give details.  For @command{Rterm.exe} see file
 @file{README.rterm}.
 
 @item Paths to files (e.g.@: in @code{source()}) can be specified with
@@ -1492,8 +1489,8 @@ function @code{setwd}: see its help page.
 @node Can I load workspaces saved under Unix/GNU-Linux or Mac OS?,  , How do I store my workspace in a different place?, Workspaces
 @section Can I load workspaces saved under Unix/GNU-Linux or Mac OS?
 
-Yes.  All ports of R use the same format for workspaces, so they are
-interchangeable (for the same 2.x.? version of R, at least).
+Yes.  All ports of R use the same format for saved workspaces, so they
+are interchangeable (for the same 2.x.? version of R, at least).
 
 Note though that character data in a workspace will be in a particular
 encoding that is not recorded in the workspace, so workspaces containing
@@ -1504,6 +1501,9 @@ likely to be transferred correctly: fortunately this covers most of the
 common cases (Mac OS X normally uses UTF-8, and Linux users are likely
 to use UTF-8 or perhaps Latin-1 (which used to be used for English)).
 
+It is possible to save references to package namespaces when saving the
+workspace: if that happens the package will need to be installed on the
+machine loading the workspace.
 
 @newchap{}
 @node The R Console, Building from Source, Workspaces, Top
@@ -1653,7 +1653,7 @@ However, note
 
 @itemize @bullet
 @item
-@command{gdb} will only be able to find the source code if we run in the
+@command{gdb} may only be able to find the source code if we run in the
 location where the source was compiled (@file{@RWVER@/src/gnuwin32} for
 the main system, @file{@RWVER@/src/library/mypkg/src} for a package),
 unless told otherwise by the @command{directory} command.  It is most
@@ -1792,7 +1792,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2011-02-22
+@set LASTEDIT 2011-06-01
 @ifhtml
 @html
 <hr WIDTH="100%">
