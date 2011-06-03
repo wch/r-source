@@ -128,6 +128,14 @@ fg4 <- setRefClass("foo4",
 f4 <- new("foo4", flag = "another test", bar = 1:3)
 stopifnot(identical(f4@made, R.version))
 
+## a trivial class with no fields, using fields = list(), failed up to rev 56035
+foo5 <- setRefClass("foo5", fields = list(),
+                    methods = list(bar = function(test) paste("*",test,"*")))
+
+f5 <- foo5$new()
+stopifnot(identical( f5$bar("xxx"), paste("*","xxx", "*")))
+
+
 ## simple active binding test
 abGen <- setRefClass("ab",
                   fields = list(a = "ANY",
