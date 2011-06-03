@@ -266,7 +266,7 @@ get_exclude_patterns <- function()
         }
         if (vignettes &&
             parse_description_field(desc, "BuildVignettes", TRUE)) {
-            ## Look for vignettes
+            ## Look for vignette sources
             vigns <- pkgVignettes(dir = '.')
             if (!is.null(vigns) && length(vigns$docs)) {
                 if (!pkgInstalled) {
