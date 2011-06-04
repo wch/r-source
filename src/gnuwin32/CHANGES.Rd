@@ -44,15 +44,15 @@
       This is an option that can be set in \code{windows.options()} to
       set the default for \code{windows()} (and \code{win.graph()}).
 
-      This effectively gives a hint to the Windows plotting system.
-      Whether anti-aliasing is used principally depends on the OS
-      settings: this argument should at least be able to turn it off.
-      The default behaviour (unchanged from before) is that Windows will
-      use anti-aliasing for screen devices (and bitmap devices, as they
-      plot on a hidden screen) if ClearType has been enabled.  For those
-      not using ClearType, \code{windows.options(antialias="cleartype")}
-      will make this the default, and it will probably give more legible
-      plots.
+      This gives a hint to the Windows plotting system.  Whether
+      anti-aliasing is actually used principally depends on the OS
+      settings: this argument should at least be able to turn it
+      off.  The default behaviour (unchanged from before) is that Windows
+      will use anti-aliasing for screen devices (and bitmap devices, as
+      they plot on a hidden screen) if ClearType has been enabled.  For
+      those not using ClearType, \code{windows.options(antialias =
+	"cleartype")} will make this the default, and it will probably
+      give more legible plots. 
 
       The argument can also be used for the cairographics-based versions
       of the bitmap devices.
@@ -70,6 +70,10 @@
 
       It is the intention to move to such a toolchain when they become
       mature enough.
+
+      \item Compilation now uses with option \option{-mtune=core2}: this
+      will improve performance a few percent on recent CPUs at the
+      expense of those which are several years old. 
     }
   }
 
@@ -108,7 +112,7 @@
       on some versions of Windows.
       
       \item The windows() screen device would sometimes fail to plot
-      points with \code{pch="."}. \PR{14583}
+      (visibly) points with \code{pch="."}. \PR{14583}
       
       \item \code{system()} and related functions sometimes failed
       when run in \file{Rgui}.
@@ -121,7 +125,7 @@
       \item Shutting down the \R session cleaned up the temporary
       directory before closing all graphics devices.  On Windows this
       necessitated changing the working directory, so some devices
-      (e.g. \code{tiff()}) could write files in the wrong directory in
+      (e.g. \code{tiff()}) could write files in the wrong directory if
       closed during shutdown.  The order has been reversed.      
     }
   }
