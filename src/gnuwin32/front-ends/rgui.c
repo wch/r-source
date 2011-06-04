@@ -55,12 +55,14 @@ int AppMain(int argc, char **argv)
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
 	exit(1);
     }
+#ifndef WIN64
     if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
 	MessageBox(0, "This build requires a CPU which supports SSE2",
 		   "Terminating",
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
 	exit(1);
     }
+#endif
     cmdlineoptions(argc, argv);
     if (!setupui()) {
         MessageBox(0, "Error setting up console.  Try --vanilla option.",

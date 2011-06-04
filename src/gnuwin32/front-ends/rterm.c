@@ -63,10 +63,12 @@ int AppMain(int argc, char **argv)
 	fprintf(stderr, "Error: R.DLL version does not match\n");
 	exit(1);
     }
+#ifndef WIN64
     if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
 	fprintf(stderr, "Error: This build requires a CPU which supports SSE2\n");
 	exit(1);	
     }
+#endif
     
     if (isatty(0))
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
