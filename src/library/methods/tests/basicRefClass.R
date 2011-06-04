@@ -8,7 +8,7 @@ stopifnot(identical(f1$bar, 1))
 fg$methods(showAll = function() c(bar, flag))
 stopifnot(all.equal(f1$showAll(), c(1, "testing")))
 
-fg <- setRefClass("foo", list(bar = "numeric", flag = "character"),
+fg <- setRefClass("foo", list(bar = "numeric", flag = "character",tag = "ANY"),
             methods = list(
             addToBar = function(incr) {
                 b = bar + incr
@@ -63,8 +63,9 @@ stopifnot(is(tryCatch(setRefClass("foo2", list(b2 = "numeric", flag = "complex")
                 })),
           error = function(e)e), "error"))
 ## but with flag as a subclass of "character", should work
+## Also subclasses "tag" which had class "ANY before
 setClass("ratedChar", contains = "character", representation(score = "numeric"))
-foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar"),
+foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar", tag = "numeric"),
             contains = "foo",
             methods = list(addBoth = function(incr) {
                 addToBar(incr) #uses inherited class method
@@ -72,7 +73,7 @@ foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar"),
                 }))
 ## now lock the flag field; should still allow one write
 foo2$lock("flag")
-f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 = ff$bar)
+f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 = ff$bar, tag = 1.5)
 ## but not a second one
 stopifnot(is(tryCatch(f2$flag <- "Try again",
          error = function(e)e), "error"))
