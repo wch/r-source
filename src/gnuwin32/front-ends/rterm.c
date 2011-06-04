@@ -63,7 +63,8 @@ int AppMain(int argc, char **argv)
 	fprintf(stderr, "Error: R.DLL version does not match\n");
 	exit(1);
     }
-#ifndef WIN64
+#ifdef REQUIRE_SSE2
+    /* This feature test is present in XP and later */
     if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
 	fprintf(stderr, "Error: This build requires a CPU which supports SSE2\n");
 	exit(1);	

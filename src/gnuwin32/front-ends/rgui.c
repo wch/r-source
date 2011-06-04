@@ -55,7 +55,8 @@ int AppMain(int argc, char **argv)
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
 	exit(1);
     }
-#ifndef WIN64
+#ifdef REQUIRE_SSE2
+    /* This feature test is present in XP and later */
     if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
 	MessageBox(0, "This build requires a CPU which supports SSE2",
 		   "Terminating",

@@ -106,6 +106,7 @@ HOME32=
 EOPTS=-mtune=core2
 ifeq "$(WIN)" "32"
 EOPTS+=-msse2
+D_SSE2=-DREQUIRE_SSE2
 endif
 
 ## ====== configuration macros for building MSI installer ===========
