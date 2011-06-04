@@ -22,12 +22,12 @@ jpeg(filename = "Rplot\%03d.jpg",
      width = 480, height = 480, units = "px", pointsize = 12,
      quality = 75,
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
-     type = c("windows", "cairo", "cairo-png"), antialias)
+     type = c("windows", "cairo"), antialias)
 
 png(filename = "Rplot\%03d.png",
     width = 480, height = 480, units = "px", pointsize = 12,
     bg = "white", res = NA, family = "", restoreConsole = TRUE,
-    type = c("windows", "cairo"), antialias)
+    type = c("windows", "cairo", "cairo-png"), antialias)
 
 tiff(filename = "Rplot\%03d.tif",
      width = 480, height = 480, units = "px", pointsize = 12,

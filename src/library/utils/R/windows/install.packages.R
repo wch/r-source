@@ -142,7 +142,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE, lock = FALSE)
                     if(any(!ret)) {
                         warning(gettextf("unable to move temporary installation %s to %s",
                                          sQuote(normalizePath(file.path(tmpDir, pkgname, "libs", sub), mustWork = FALSE)),
-                                         sQuote(normalizePath(file.path(instPath, "libs")), mustWork = FALSE)),
+                                         sQuote(normalizePath(file.path(instPath, "libs"), mustWork = FALSE))),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
                         restorePrevious <- TRUE # Might not be used
                     }
