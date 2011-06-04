@@ -71,7 +71,7 @@
       It is the intention to move to such a toolchain when they become
       mature enough.
 
-      \item Compilation now uses with option \option{-mtune=core2}: this
+      \item Compilation now uses option \option{-mtune=core2}: this
       will improve performance a few percent on recent CPUs at the
       expense of those which are several years old. 
     }
