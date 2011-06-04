@@ -524,6 +524,9 @@
 
       \item \code{fields = list()} failed for \code{setRefClass()}.
       (Reported by Michael Lawrence.)
+
+      \item Reference classes could not redefine an inherited field
+      which had class \code{"ANY"}. (Reported by Janko Thyson.)
     }
   }
 }

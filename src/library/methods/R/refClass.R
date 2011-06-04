@@ -614,7 +614,7 @@ accessors = function(...) {
     if(any(hasFields)) {
         for(field in newNames[hasFields])
             ## the new field class must be a subclass of the old
-            if(is.na(match(fieldList[[field]], extends(value[[field]]))))
+            if(is.na(match(fieldList[[field]], c(extends(value[[field]]),"ANY"))))
                 stop(gettextf("The overriding class(\"%s\") of field \"%s\" is not a subclass of the existing field definition (\"%s\")",
                       value[[field]], field, fieldList[[field]]),
                      domain = NA)
