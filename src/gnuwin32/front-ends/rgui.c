@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2007  R Development Core Team
+ *  Copyright (C) 1998--2011  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,6 +52,12 @@ int AppMain(int argc, char **argv)
     CharacterMode = RGui;
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	MessageBox(0, "R.DLL version does not match", "Terminating",
+		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
+	exit(1);
+    }
+    if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
+	MessageBox(0, "This build requires a CPU which supports SSE2",
+		   "Terminating",
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
 	exit(1);
     }

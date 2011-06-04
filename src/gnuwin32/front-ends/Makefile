@@ -1,6 +1,7 @@
 include ../MkRules
 R_HOME = ../../..
 
+## NB: this must not restrict the CPU, as rgui.c and rterm.c have CPU tests.
 CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
  CFLAGS+=$(G_FLAG)

@@ -65,12 +65,12 @@ AWK = gawk
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)gcc $(M_ARCH)
-CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 -mtune=core2
+CFLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@
 CPICFLAGS = 
 CPPFLAGS =
 CXX = $(BINPREF)g++ $(M_ARCH)
 CXXCPP = $(CXX) -E
-CXXFLAGS = -O2 -Wall $(DEBUGFLAG) -mtune=core2
+CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
 CXXPICFLAGS = 
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
@@ -81,12 +81,12 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 FC = $(BINPREF)gfortran $(M_ARCH)
-FCFLAGS = -O3 $(DEBUGFLAG) -mtune=core2
+FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 # additional libs needed when linking with $(FC), e.g. on Solaris
 FCLIBS =
 F77 = $(BINPREF)gfortran $(M_ARCH)
 F77_VISIBILITY = 
-FFLAGS = -O3 $(DEBUGFLAG) -mtune=core2
+FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 FLIBS = -lgfortran
 FCPICFLAGS =
 FPICFLAGS = 
