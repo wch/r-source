@@ -144,12 +144,6 @@ Current binary versions of R run on Windows XP or later, including on
 64-bit versions: @xref{Can I use R on 64-bit Windows?}. The last version
 known to run on Windows 2000 was 2.12.2.
 
-As from R 2.14.0, a CPU supporting SSE2 instructions is required for the
-binary distribution of 32-bit R (64-bit Windows requires such a CPU).
-This means an Intel Pentium 4, AMD Opteron or Athlon 64 or later; any
-CPU which does not meet this requirement is a design at least 9 years'
-old.
-
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 goes end of life 2014-04-08
 
