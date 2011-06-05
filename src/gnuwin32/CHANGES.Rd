@@ -73,18 +73,7 @@
 
       \item Compilation now uses option \option{-mtune=core2}: this
       will improve performance a few percent on recent CPUs at the
-      expense of those which are several years old.
-
-      The 32-bit default build now requires a CPU supporting SSE2 (a
-      Pentium 4 from 2001, AMD Opteron or Athlon 64 from 2003, or later):
-      \R can be built from the sources without this requirement: see
-      file \file{MkRules.dist}.
-
-      Note that these changes will result in different results on some
-      floating-point calculations (since they affect when
-      extended-precision registers are used): in general they will bring
-      32-bit Windows closer to results from other platforms (including
-      64-bit Windows).
+      expense of those which are several years old. 
     }
   }
 

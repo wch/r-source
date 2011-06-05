@@ -1,7 +1,6 @@
 include ../MkRules
 R_HOME = ../../..
 
-## NB: this must not restrict the CPU, as rgui.c and rterm.c have CPU tests.
 CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
  CFLAGS+=$(G_FLAG)
@@ -87,8 +86,6 @@ ifneq "$(WIN)" "64"
 rcico.o: Rcmd.exe.manifest
 rgico.o: Rgui32.manifest
 rtico.o: Rterm32.manifest
-rgui-CPPFLAGS+=$(D_SSE2)
-rterm-CPPFLAGS+=$(D_SSE2)
 else
 RESFLAGS = -DWN64
 rtico.o: Rterm64.manifest

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2011  R Development Core Team
+ *  Copyright (C) 1998--2007  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,15 +55,6 @@ int AppMain(int argc, char **argv)
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
 	exit(1);
     }
-#ifdef REQUIRE_SSE2
-    /* This feature test is present in XP and later */
-    if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
-	MessageBox(0, "This build requires a CPU which supports SSE2",
-		   "Terminating",
-		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
-	exit(1);
-    }
-#endif
     cmdlineoptions(argc, argv);
     if (!setupui()) {
         MessageBox(0, "Error setting up console.  Try --vanilla option.",

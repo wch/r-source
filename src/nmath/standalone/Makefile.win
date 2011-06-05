@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS=-O3 -Wall -pedantic $(EOPTS)
+CFLAGS=-O3 -Wall -pedantic
 ifdef DEBUG
  CFLAGS+=$(G_FLAG)
  DLLFLAGS=

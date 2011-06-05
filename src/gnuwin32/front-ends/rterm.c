@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2011  R Development Core Team
+ *  Copyright (C) 1998--2009  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,15 +63,7 @@ int AppMain(int argc, char **argv)
 	fprintf(stderr, "Error: R.DLL version does not match\n");
 	exit(1);
     }
-#ifdef REQUIRE_SSE2
-    /* This feature test is present in XP and later */
-    if(!IsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
-	fprintf(stderr, "Error: This build requires a CPU which supports SSE2\n");
-	exit(1);	
-    }
-#endif
-    
-    if (isatty(0))
+    if (isatty(0)) 
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
