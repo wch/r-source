@@ -73,7 +73,9 @@
 
       \item Compilation now uses option \option{-mtune=core2}: this
       will improve performance a few percent on recent CPUs at the
-      expense of those which are several years old. 
+      expense of those which are several years old.   This can be
+      overridden when building from the sources: see the \samp{EOPTS}
+      macro defined in file \file{MkRules.dist}.
     }
   }
 
