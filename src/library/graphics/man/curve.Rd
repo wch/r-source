@@ -1,21 +1,30 @@
 % File src/library/graphics/man/curve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{curve}
 \title{Draw Function Plots}
 \alias{curve}
 \alias{plot.function}
+
+\description{
+  Draws a curve corresponding to the given function or, for
+  \code{curve()} also an expression (in \code{x}) over the interval
+  \code{[from, to]}.
+}
+
 \usage{
 curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
       type = "l", ylab = NULL, log = NULL, xlim = NULL, \dots)
 
 \method{plot}{function}(x, y = 0, to = 1, from = y, xlim = NULL, \dots)
 }
+
 \arguments{
-  \item{expr}{a call or an  expression written as a function of \code{x}, or
-    alternatively the name of a function which will be plotted.}
+  \item{expr}{The name of a function, or a \link{call} or an
+    \link{expression} written as a function of \code{x} which will
+    evaluate to an object of the same length as \code{x}.}
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
   \item{from,to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
@@ -28,11 +37,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     specified as arguments.
     \code{plot.function} passes all these to \code{curve}.}
 }
-\description{
-  Draws a curve corresponding to the given function or, for
-  \code{curve()} also an expression (in \code{x}) over the interval
-  \code{[from,to]}.
-}
+
 \details{
   The evaluation of \code{expr} is at \code{n} points equally spaced
   over the range \code{[from, to]}, possibly adapted to log scale.  The
@@ -46,15 +51,27 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For \code{plot(<function>, ..)}, the defaults for \eqn{(from, to)} are
   \eqn{(0, 1)}.
 
-  \code{log} is taken from
-  the current plot only when \code{add} is true, and otherwise
-  defaults to \code{""} indicating linear scales on both axes.
+  \code{log} is taken from the current plot only when \code{add} is
+  true, and otherwise defaults to \code{""} indicating linear scales on
+  both axes.
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
 
   For expensive-to-compute \code{expr}essions, you should use smarter tools.
+  
+  The way \code{curve} handles \code{expr} has caused confusion.  It
+  first looks to see if \code{expr} is a \link{name} (also knowm as a
+  symbol), in which case it is taken to be the name of a function, and
+  the \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
+  checks that \code{expr} is either a \link{call} or an
+  \link{expression}, and that it contains a reference to a variable
+  \code{x} (using \code{\link{all.vars}}): anything else is an error.
+  Then \code{expr} is evaluated in an environment which supplies a
+  vector \code{x} of length \code{n}, and should evaluate to an object
+  of length \code{n}.
 }
+
 \value{
   A list with components \code{x} and \code{y} of the points that were 
   drawn is returned invisibly.
