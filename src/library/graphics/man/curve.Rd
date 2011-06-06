@@ -61,7 +61,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For expensive-to-compute \code{expr}essions, you should use smarter tools.
   
   The way \code{curve} handles \code{expr} has caused confusion.  It
-  first looks to see if \code{expr} is a \link{name} (also knowm as a
+  first looks to see if \code{expr} is a \link{name} (also known as a
   symbol), in which case it is taken to be the name of a function, and
   the \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
   checks that \code{expr} is either a \link{call} or an
