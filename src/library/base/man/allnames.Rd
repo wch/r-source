@@ -1,6 +1,6 @@
 % File src/library/base/man/allnames.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{all.names}
@@ -17,8 +17,8 @@ all.names(expr, functions = TRUE, max.names = -1L, unique = FALSE)
 all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)
 }
 \arguments{
-  \item{expr}{an expression or call from which the names are to be
-    extracted.}
+  \item{expr}{an \link{expression} or \link{call} from which the names
+    are to be extracted.}
   \item{functions}{a logical value indicating whether function names
     should be included in the result.}
   \item{max.names}{the maximum number of names to be returned.  \code{-1}
@@ -38,6 +38,7 @@ all.vars(expr, functions = FALSE, max.names = -1L, unique = TRUE)
 }
 \examples{
 all.names(expression(sin(x+y)))
+all.names(quote(sin(x+y))) # or a call
 all.vars(expression(sin(x+y)))
 }
 \keyword{programming}
