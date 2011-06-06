@@ -69,7 +69,9 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \code{x} (using \code{\link{all.vars}}): anything else is an error.
   Then \code{expr} is evaluated in an environment which supplies a
   vector \code{x} of length \code{n}, and should evaluate to an object
-  of length \code{n}.
+  of length \code{n}.  Note that this means that \code{curve(x, ...)} is
+  taken as a request to plot a function named \code{x} (and it is used
+  as such in the \code{function} method for \code{plot}).
 }
 
 \value{
