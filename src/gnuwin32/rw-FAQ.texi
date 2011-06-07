@@ -839,7 +839,7 @@ advantage of extra features of all x86-64 chips (more registers, SSE2/3
 instructions, @dots{}) and so the code may run faster despite using
 larger pointers.  Changes in the compilation options in R 2.14.0 mean
 that the 64-bit build is now usually slightly faster than the 32-bit
-build on a recent CPU.
+build on a recent CPU (Core 2 Duo or later).
 
 For advanced users the choice may be dictated by whether the contributed
 packages needed are available in 64-bit builds (and if CRAN binary
