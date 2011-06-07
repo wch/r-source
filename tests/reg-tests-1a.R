@@ -2028,8 +2028,7 @@ X <- matrix(rnorm(5 * n), n, 5)
 infm <- lm.influence(mod <- lm(Y ~ X))
 ## failed up to 2003-03-29 (pre 1.7.0)
 im1 <- influence.measures(mod)
-stopifnot(identical(unname(im1$infmat[,1:6]),
-		    unname(dfbetas(mod))))
+stopifnot(all.equal(unname(im1$infmat[,1:6]), unname(dfbetas(mod))))
 
 ## rbind.data.frame with character and ordered columns
 A <- data.frame(a=1)
