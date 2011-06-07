@@ -834,14 +834,10 @@ R's memory manager to more easily handle large objects (in particular
 those of 1GB or more).  The disadvantages are that all the pointers are
 8 rather than 4 bytes and so small objects are larger and more data has
 to be moved around, and that less external software is available for
-64-bit versions of the OS.
-
-The toolchain (compilers, linkers, @dots{}) used to build 64-bit R is
-less mature than that for 32-bit R, but testing so far (and all the CRAN
-packages provide an extensive test suite) suggests that they are mature
-enough for production use.  The compilers are able to take advantage of
-extra features of all x86-64 chips (more registers, SSE2/3 instructions,
-@dots{}) and so the code may run faster despite using larger pointers.
+64-bit versions of the OS. The 64-bit compilers are able to take
+advantage of extra features of all x86-64 chips (more registers, SSE2/3
+instructions, @dots{}) and so the code may run faster despite using
+larger pointers.
 
 For advanced users the choice may be dictated by whether the contributed
 packages needed are available in 64-bit builds (and if CRAN binary
@@ -849,9 +845,9 @@ packages are not that is some indication that installing them from
 sources is problematic).  At the time of writing the most commonly-used
 CRAN packages without 64-bit versions were @code{BRugs} and
 @code{rggobi}. The considerations can be more complex: for example
-32/64-bit @code{RODBC} need 32/64 ODBC drivers respectively, and where
-both exist they may not be able to be installed together.  An extreme
-example is the Microsoft Access/Excel ODBC drivers: if you have
+32/64-bit @code{RODBC} need 32/64-bit ODBC drivers respectively, and
+where both exist they may not be able to be installed together.  An
+extreme example is the Microsoft Access/Excel ODBC drivers: if you have
 installed 64-bit Microsoft Office you can only install the 64-bit
 drivers and so need to use 64-bit @code{RODBC} and hence R.
 
@@ -860,13 +856,16 @@ drivers and so need to use 64-bit @code{RODBC} and hence R.
 
 Obviously, only relevant if the machine is running a 64-bit version of
 Windows -- simply select both when using the installer.  You can also go
-back and add 64-bit components to a 32-bit install.
+back and add 64-bit components to a 32-bit install, or @emph{vice versa}.
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
-file association, which will use the last installation for which this
-option is selected, and if that was for an installation of both, will
-use 32-bit R.
+file association for @file{.RData} files, which will use the last
+installation for which this option is selected, and if that was for an
+installation of both, will use 32-bit R.  To change the association the
+safest way is to edit the Registry entry
+@samp{HKEY_CLASSES_ROOT\RWorkspace\shell\open\command}
+and replace @samp{i386} by @samp{x64} or @emph{vice versa}.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -1567,14 +1566,17 @@ you want to install).
 @section  Can I use a fast BLAS?
 
 Fast BLAS (Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/@/blas/@/faq.html}) routines are used to speed
-up numerical linear algebra.  There is support in the R sources for the
-`tuned' BLAS called ATLAS (@uref{http://math-atlas.sourceforge.net}).
-The savings can be appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix
-@code{svd} took 16.2 sec with the standard BLAS and 7.8 sec with ATLAS.
-Because ATLAS is tuned to a particular chip we can't use it generally:
-the optimal routines for a P4 or an Athlon XP are quite different and
-neither will run at all on a PII.
+@uref{http://www.netlib.org/@/blas/@/faq.html}) routines are used to
+speed up numerical linear algebra.  There is support in the R sources
+for the `tuned' BLAS called ATLAS
+(@uref{http://math-atlas.sourceforge.net}).  The savings can be
+appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix @code{svd} took
+16.2 sec with the standard BLAS and 7.8 sec with ATLAS.  Because ATLAS
+is tuned to a particular chip we can't use it generally: the optimal
+routines for a P4 or an Athlon XP are quite different and neither will
+run at all on a PII.  However, linear algebra on large matrices is not
+often an important part of R computations, and more typical calculations
+on small matrices may run slower.
 
 BLAS support is supplied by the single DLL
 @file{R_HOME\bin\i386\Rblas.dll}, and you can add a fast BLAS just by
@@ -1585,6 +1587,19 @@ Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
 to your system using the R sources.  Unfortunately the process has been
 less successful when tried for the common current chips such as Intel's
 Core 2.
+
+Versions of Dr Kazushige Goto's BLAS (see
+@uref{http://en.wikipedia.org/wiki/Kazushige_Goto}) for 64-bit Windows
+by Ei-Ji Nakama can be found at
+@uref{http://prs.ism.ac.jp/~nakama/SurviveGotoBLAS2/binary/windows/x64/}.
+Just download the file @file{Rblas.dll} appropriate to your CPU and
+replace @file{@var{R_HOME}/bin/x64/Rblas.dll}.  (There is also a generic
+version called @samp{DYNAMIC_ARCH} that tries to adapt itself to the CPU
+found -- however if you know the exact CPU used it is better to download
+the CPU-specific version.)
+
+Note that fast BLAS implementations may give different (and often
+slightly less accurate) results than the reference BLAS included in R.
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
