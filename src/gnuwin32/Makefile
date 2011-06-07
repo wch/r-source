@@ -379,6 +379,12 @@ distribution:
 	@$(MK) crandir
 	@$(RM) -f ../../SVN-REVISION.bak
 
+## Builds what is needed in a 32-bit build to copy to 64/32-bit installer
+32-bit:
+	@$(MK) all
+	@$(MK) bitmapdll
+	@$(MK) recommended
+
 
 ## ============= End of maintainer targets ========================
 
