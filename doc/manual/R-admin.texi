@@ -1348,7 +1348,7 @@ The standard CRAN distribution of a 32/64-bit installer is made by first
 building 32-bit R (just
 
 @example
-make all recommended bitmapdll cairodevices
+make 32-bit
 @end example
 
 @noindent
