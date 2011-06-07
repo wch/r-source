@@ -5029,8 +5029,7 @@ tidy up.  Create a file @file{tidy.R} containing
 
 @example
 @group
-options(keep.source = FALSE)
-source("myfuns.R")
+source("myfuns.R", keep.source = FALSE)
 dump(ls(all = TRUE), file = "new.myfuns.R")
 @end group
 @end example

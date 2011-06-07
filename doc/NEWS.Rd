@@ -130,8 +130,13 @@
       an atomic vector.
       
       \item The formula method for \code{plot()} no longer places
-      package \pkg{stats} on the search path (it loads the namespace
+      package \pkg{stats} on the search path (it loads the name space
       instead).
+      
+      \item \code{source()} tried hard to retain source formatting, and
+      might do so even if argument \code{keep.source} is false if the
+      \code{"keep.source"} option is true.  Now \code{keep.source =
+	FALSE} temporarily sets \code{options(keep.source = FALSE)}.
     }
   }
   
@@ -168,7 +173,7 @@
       than a crosshair); the crosshair is used when the locator is in
       use, and a watch cursor is shown when plotting computations are
       being done.  (These are the standard names for X11 cursors: how
-      they are actually displayed depends on the platform.)
+      they are actually displayed depends on the window manager.)
       
       \item New functions \code{dev.hold()} and \code{dev.flush()} for
       use with graphics devices with buffering.  These are used for most
@@ -177,8 +182,7 @@
 
       Currently implemented for \code{windows(buffered = TRUE)},
       \code{quartz()} and the cairo-based \code{X11()} types with
-      buffering (which are the default on-screen devices on Windows and
-      most Unix-alikes).
+      buffering (which are the default on-screen devices).
     }
   }
 
