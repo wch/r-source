@@ -16,7 +16,8 @@
 
 \usage{
 curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
-      type = "l", ylab = NULL, log = NULL, xlim = NULL, \dots)
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, \dots)
 
 \method{plot}{function}(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, \dots)
 }
@@ -26,16 +27,18 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     \link{expression} written as a function of \code{x} which will
     evaluate to an object of the same length as \code{x}.}
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
-  \item{from,to}{the range over which the function will be plotted.}
+  \item{y}{alias for \code{from} for compatibility with \code{plot}}
+  \item{from, to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
-  \item{add}{logical; if \code{TRUE} add to already existing plot.}
+  \item{add}{logical; if \code{TRUE} add to an already existing plot.}
   \item{xlim}{numeric of length 2; if specified, it provides the defaults
     for \code{c(from, to)}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
-  \item{y}{alias for \code{from} for compatibility with \code{plot()}}
-  \item{ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.  The \code{"function"} method of
-    \code{plot} passes these to \code{curve}.}
+  \item{xname}{character string giving the name to be used for the x axis.}
+  \item{xlab, ylab, log, \dots}{labels and graphical parameters can also be
+    specified as arguments.  For the \code{"function"} method of
+    \code{plot} \code{\dots} can include any of the other arguments of
+    \code{curve}, except \code{expr}.}
 }
 
 \details{
@@ -46,8 +49,12 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   numeric of the same length as the argument \code{t} or \code{x}.
 
   For \code{curve()}, if either of \code{from} or \code{to} is
-  \code{NULL}, it defaults to the corresponding element of \code{xlim},
-  and \code{xlim} defaults to the x-limits of the plot.
+  \code{NULL}, it defaults to the corresponding element of \code{xlim}
+  if that is not \code{NULL}, otherwise that of the x-limits of the
+  current plot (if there is one).  This is what one would expect for
+  \code{add = TRUE}: however for \code{add = FALSE} it uses the x-limits
+  of the \bold{previous} plot if there was one, and \code{c(0, 1)} if no
+  plot device is currently open (this changed in \R 2.14.0).
   
   For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
   \eqn{(0, 1)} unless \code{xlim} is supplied.
@@ -66,10 +73,10 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   symbol), in which case it is taken to be the name of a function, and
   \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
   checks that \code{expr} is either a \link{call} or an
-  \link{expression}, and that it contains a reference to a variable
-  \code{x} (using \code{\link{all.vars}}): anything else is an error.
-  Then \code{expr} is evaluated in an environment which supplies a
-  vector \code{x} of length \code{n}, and should evaluate to an object
+  \link{expression}, and that it contains a reference to the variable
+  given by \code{xname} (using \code{\link{all.vars}}): anything else is
+  an error.  Then \code{expr} is evaluated in an environment which
+  supplies a vector of length \code{n}, and should evaluate to an object
   of length \code{n}.  Note that this means that \code{curve(x, ...)} is
   taken as a request to plot a function named \code{x} (and it is used
   as such in the \code{function} method for \code{plot}).
@@ -86,16 +93,18 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
 \examples{
-plot(qnorm)
+plot(qnorm) # default range c(0, 1) is appropriate here,
+            # but end values are -/+Inf and so are omitted.
 plot(qlogis, main = "The Inverse Logit : qlogis()")
 abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 
-curve(sin, -2*pi, 2*pi)
-curve(tan, main = "curve(tan)  --> same x-scale as previous plot")
+curve(sin, -2*pi, 2*pi, xname = "t")
+curve(tan, xname = "t",
+      main = "curve(tan)  --> same x-scale as previous plot")
 
-op <- par(mfrow = c(2,2))
-curve(x^3-3*x, -2, 2)
-curve(x^2-2, add = TRUE, col = "violet")
+op <- par(mfrow = c(2, 2))
+curve(x^3 - 3*x, -2, 2)
+curve(x^2 - 2, add = TRUE, col = "violet")
 
 ## simple and advanced versions, quite similar:
 plot(cos, -pi,  3*pi)

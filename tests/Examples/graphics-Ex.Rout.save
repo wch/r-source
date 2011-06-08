@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-08 r56079)
+R version 2.14.0 Under development (unstable) (2011-06-08 r56082)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -742,16 +742,18 @@ temperature no yes
 > 
 > ### ** Examples
 > 
-> plot(qnorm)
+> plot(qnorm) # default range c(0, 1) is appropriate here,
+>             # but end values are -/+Inf and so are omitted.
 > plot(qlogis, main = "The Inverse Logit : qlogis()")
 > abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 > 
-> curve(sin, -2*pi, 2*pi)
-> curve(tan, main = "curve(tan)  --> same x-scale as previous plot")
+> curve(sin, -2*pi, 2*pi, xname = "t")
+> curve(tan, xname = "t",
++       main = "curve(tan)  --> same x-scale as previous plot")
 > 
-> op <- par(mfrow = c(2,2))
-> curve(x^3-3*x, -2, 2)
-> curve(x^2-2, add = TRUE, col = "violet")
+> op <- par(mfrow = c(2, 2))
+> curve(x^3 - 3*x, -2, 2)
+> curve(x^2 - 2, add = TRUE, col = "violet")
 > 
 > ## simple and advanced versions, quite similar:
 > plot(cos, -pi,  3*pi)

@@ -145,7 +145,17 @@
       
       \item The one-sided \code{ks.test()} allows \code{exact = TRUE} to
       be specified in the presence of ties (but the approximate
-      calculation remains the default).
+      calculation remains the default: the \code{exact} computation
+      makes assumptions known to be invalid in the presence of ties).
+
+      \item The defaults for \code{curve(from=, to=, xlim = NULL)} are
+      taken from the previous plot if there was one: if there was not the
+      defaults used to be \code{from = 1/27, to = 26/27} and are now
+      \code{from = 0, to = 1}.
+
+      There is a new argument \code{xname} to facilitate plots such as
+      \code{sin(t)} \emph{vs} \code{t}: this can also be used when
+      plotting a function.
     }
   }
   
