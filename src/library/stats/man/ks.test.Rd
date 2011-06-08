@@ -1,6 +1,6 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
@@ -18,7 +18,8 @@ ks.test(x, y, \dots,
   \item{x}{a numeric vector of data values.}
   \item{y}{either a numeric vector of data values, or a character string
     naming a cumulative distribution function or an actual cumulative
-    distribution function such as \code{pnorm}.}
+    distribution function such as \code{pnorm}.  Only continuous CDFs
+    are valid.}
   \item{\dots}{parameters of the distribution specified (as a character
     string) by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be
@@ -28,8 +29,8 @@ ks.test(x, y, \dots,
     See \sQuote{Details} for the meanings of the possible values.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See \sQuote{Details} for the meaning of
-    \code{NULL}.  Not used for the one-sided two-sample case.}
-
+    \code{NULL}.  Not available if ties are present, nor for the
+    one-sided two-sample case.}
 }
 \details{
   If \code{y} is numeric, a two-sample test of the null hypothesis
@@ -42,9 +43,14 @@ ks.test(x, y, \dots,
   function which generated \code{x} is distribution \code{y} with
   parameters specified by \code{\dots}.
 
-  The presence of ties generates a warning, since continuous
-  distributions do not generate them.
-
+  The presence of ties always generates a warning, since continuous
+  distributions do not generate them.  If the ties arose from rounding
+  the tests may be approximately valid, but even modest amounts of
+  rounding can have a significant effect on the calculated statistic.
+  
+  Missing values are silently omitted from \code{x} and (in the
+  two-sample case) \code{y}.
+  
   The possible values \code{"two.sided"}, \code{"less"} and
   \code{"greater"} of \code{alternative} specify the null hypothesis
   that the true distribution function of \code{x} is equal to, not less
