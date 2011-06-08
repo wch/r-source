@@ -59,7 +59,7 @@ t.test(x, \dots)
 
   If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
   be specified and they must be the same length.  Missing values are
-  removed (in pairs if \code{paired} is \code{TRUE}).  If
+  silently removed (in pairs if \code{paired} is \code{TRUE}).  If
   \code{var.equal} is \code{TRUE} then the pooled estimate of the
   variance is used.  By default, if \code{var.equal} is \code{FALSE}
   then the variance is estimated separately for both groups and the
