@@ -40,7 +40,9 @@
 #include "console.h"
 #include "rui.h"
 #define WIN32_LEAN_AND_MEAN 1
-#define _WIN32_WINNT 0x0500
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0500
+#endif
 #include <windows.h>
 #include "devWindows.h"
 #include "grDevices.h"
