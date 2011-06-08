@@ -550,6 +550,9 @@
 
       \item Reference classes could not redefine an inherited field
       which had class \code{"ANY"}. (Reported by Janko Thyson.)
+
+      \item Methods that override previously loaded versions will now
+      be installed and called.  (Reported by Iago Mosqueira.)
     }
   }
 }
