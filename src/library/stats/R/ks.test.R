@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 ks.test <-
-function(x, y, ..., alternative = c("two.sided", "less", "greater"),
-         exact = NULL)
+    function(x, y, ..., alternative = c("two.sided", "less", "greater"),
+             exact = NULL)
 {
 
     pkolmogorov1x <- function(x, n) {
@@ -38,7 +38,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         stop("not enough 'x' data")
     PVAL <- NULL
 
-    if(is.numeric(y)) {
+    if(is.numeric(y)) { ## two-sample case
         DNAME <- paste(DNAME, "and", deparse(substitute(y)))
         y <- y[!is.na(y)]
         n.x <- as.double(n)             # to avoid integer overflow
@@ -53,7 +53,11 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) {
-            warning("cannot compute correct p-values with ties")
+            if (exact) {
+                warning("cannot compute exact p-values with ties")
+                exact <- FALSE
+            } else
+                warning("p-values will be approximate in the presence of ties")
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
             TIES <- TRUE
         }
@@ -71,33 +75,31 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                            as.integer(n.x),
                            as.integer(n.y),
                            PACKAGE = "stats")$p
-    }
-    else {
-        if(is.character(y))
-            y <- get(y, mode="function")
-        if(mode(y) != "function")
-            stop("'y' must be numeric or a string naming a valid function")
-        if(is.null(exact))
-            exact <- (n < 100)
+    } else { ## one-sample case
+        if(is.character(y)) # avoid matching anything in this function
+            y <- get(y, mode = "function", envir = parent.frame())
+        if(!is.function(y))
+            stop("'y' must be numeric or a function of a string naming a valid function")
         METHOD <- "One-sample Kolmogorov-Smirnov test"
         TIES <- FALSE
         if(length(unique(x)) < n) {
-            warning("cannot compute correct p-values with ties")
+            warning("ties should not be present for the Kolomogorov-Smirnov test")
             TIES <- TRUE
         }
+        if(is.null(exact)) exact <- (n < 100) && !TIES
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
                             "two.sided" = max(c(x, 1/n - x)),
                             "greater" = max(1/n - x),
                             "less" = max(x))
-        if(exact && !TIES) {
-            PVAL <- if(alternative == "two.sided")
-                1 - .C("pkolmogorov2x",
-                           p = as.double(STATISTIC),
-                           as.integer(n),
-                           PACKAGE = "stats")$p
+        if(exact) {
+            PVAL <- 1 - if(alternative == "two.sided")
+                .C("pkolmogorov2x",
+                   p = as.double(STATISTIC),
+                   as.integer(n),
+                   PACKAGE = "stats")$p
             else
-                1 - pkolmogorov1x(STATISTIC, n)
+                pkolmogorov1x(STATISTIC, n)
         }
         nm_alternative <- switch(alternative,
                                  "two.sided" = "two-sided",

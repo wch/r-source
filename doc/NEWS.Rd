@@ -142,6 +142,10 @@
       \code{plot()} rather than the generic dispatching internally to
       \code{graphics::plot.function()}.  It is now exported, so can be
       called directly as \code{plot.function()}.
+      
+      \item The one-sided \code{ks.test()} allows \code{exact = TRUE} to
+      be specified in the presence of ties (but the approximate
+      calculation remains the default).
     }
   }
   
