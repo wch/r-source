@@ -28,7 +28,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
   \item{from,to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
-  \item{add}{logical; if \code{TRUE} add to already existing plot.}
+  \item{add}{logical; if \code{TRUE} add to an already existing plot.}
   \item{xlim}{numeric of length 2; if specified, it provides the defaults
     for \code{c(from, to)}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
@@ -46,8 +46,11 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   numeric of the same length as the argument \code{t} or \code{x}.
 
   For \code{curve()}, if either of \code{from} or \code{to} is
-  \code{NULL}, it defaults to the corresponding element of \code{xlim},
-  and \code{xlim} defaults to the x-limits of the plot.
+  \code{NULL}, it defaults to the corresponding element of \code{xlim}
+  if that is not \code{NULL}, otherwise that of the x-limits of the
+  current plot.  This is what one would expect for \code{add = TRUE}:
+  however for \code{add = FALSE} it uses the x-limits of the
+  \bold{previous} plot if there was one, and \code{c(1, 26)/27} if not.
   
   For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
   \eqn{(0, 1)} unless \code{xlim} is supplied.
@@ -85,25 +88,25 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 \examples{
 plot(qnorm)
 plot(qlogis, main = "The Inverse Logit : qlogis()")
-abline(h=0, v=0:2/2, lty=3, col="gray")
+abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 
 curve(sin, -2*pi, 2*pi)
 curve(tan, main = "curve(tan)  --> same x-scale as previous plot")
 
-op <- par(mfrow=c(2,2))
-curve(x^3-3*x, -2, 2)
-curve(x^2-2, add = TRUE, col = "violet")
+op <- par(mfrow = c(2, 2))
+curve(x^3 - 3*x, -2, 2)
+curve(x^2 - 2, add = TRUE, col = "violet")
 
-## simple and sophisticated, quite similar:
+## simple and advanced versions, quite similar:
 plot(cos, -pi,  3*pi)
-plot(cos, xlim = c(-pi,3*pi), n = 1001, col = "blue", add=TRUE)
+plot(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
 
 chippy <- function(x) sin(cos(x)*exp(-x/2))
-curve(chippy, -8, 7, n=2001)
+curve(chippy, -8, 7, n = 2001)
 plot (chippy, -8, -5)
 
-for(ll in c("","x","y","xy"))
-   curve(log(1+x), 1,100, log=ll, sub=paste("log= '",ll,"'",sep=""))
+for(ll in c("", "x", "y", "xy"))
+   curve(log(1+x), 1, 100, log = ll, sub = paste("log= '", ll, "'", sep = ""))
 par(op)
 }
 \keyword{hplot}
