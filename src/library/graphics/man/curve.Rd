@@ -10,7 +10,7 @@
 
 \description{
   Draws a curve corresponding to the given function or, for
-  \code{curve()} also an expression (in \code{x}) over the interval
+  \code{curve} also an expression (in \code{x}) over the interval
   \code{[from, to]}.
 }
 
@@ -34,8 +34,8 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{type}{plot type: see \code{\link{plot.default}}.}
   \item{y}{alias for \code{from} for compatibility with \code{plot()}}
   \item{ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.  \code{plot.function} passes these to
-    \code{curve}.}
+    specified as arguments.  The \code{"function"} method of
+    \code{plot} passes these to \code{curve}.}
 }
 
 \details{
