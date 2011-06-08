@@ -1,6 +1,6 @@
 % File src/library/datasets/man/ChickWeight.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ChickWeight}
@@ -13,7 +13,8 @@
 }
 \usage{ChickWeight}
 \format{
-  This data frame contains the following columns:
+  This object of class \code{c("nfnGroupedData", "nfGroupedData",
+    "groupedData", "data.frame")} containing the following columns:
   \describe{
     \item{weight}{
       a numeric vector giving the body weight of the chick (gm).
@@ -40,6 +41,10 @@
   The body weights of the chicks were measured at birth and every
   second day thereafter until day 20.  They were also measured on day
   21.  There were four groups on chicks on different protein diets.
+  
+  This dataset was originally part of package \code{nlme}, and that has
+  methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
+  \code{print}) for its grouped-data classes. 
 }
 \source{
   Crowder, M. and Hand, D. (1990), \emph{Analysis of Repeated Measures},

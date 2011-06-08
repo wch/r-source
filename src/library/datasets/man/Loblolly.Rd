@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Loblolly.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Loblolly}
@@ -13,7 +13,8 @@
 }
 \usage{Loblolly}
 \format{
-  This data frame contains the following columns:
+  This object of class \code{c("nfnGroupedData", "nfGroupedData",
+    "groupedData", "data.frame")} containing the following columns:
   \describe{
     \item{height}{
       a numeric vector of tree heights (ft).
@@ -26,6 +27,11 @@
       The ordering is according to increasing maximum height.
     }
   }
+}
+\details{   
+  This dataset was originally part of package \code{nlme}, and that has
+  methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
+  \code{print}) for its grouped-data classes. 
 }
 \source{
   Kung, F. H. (1986),
