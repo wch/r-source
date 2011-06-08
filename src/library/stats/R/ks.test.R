@@ -18,18 +18,6 @@ ks.test <-
     function(x, y, ..., alternative = c("two.sided", "less", "greater"),
              exact = NULL)
 {
-
-    pkolmogorov1x <- function(x, n) {
-        ## Probability function for the one-sided one-sample Kolmogorov
-        ## statistics, based on the formula of Birnbaum & Tingey (1951).
-        if(x <= 0) return(0)
-        if(x >= 1) return(1)
-        j <- seq.int(from = 0, to = floor(n * (1 - x)))
-        1 - x * sum(exp(lchoose(n, j)
-                        + (n - j) * log(1 - x - j / n)
-                        + (j - 1) * log(x + j / n)))
-    }
-
     alternative <- match.arg(alternative)
     DNAME <- deparse(substitute(x))
     x <- x[!is.na(x)]
@@ -94,18 +82,28 @@ ks.test <-
                             "less" = max(x))
         if(exact) {
             PVAL <- 1 - if(alternative == "two.sided")
-                .C("pkolmogorov2x",
-                   p = as.double(STATISTIC),
-                   as.integer(n),
-                   PACKAGE = "stats")$p
-            else
+                .C("pkolmogorov2x", p = as.double(STATISTIC),
+                   as.integer(n), PACKAGE = "stats")$p
+            else {
+                pkolmogorov1x <- function(x, n) {
+                    ## Probability function for the one-sided
+                    ## one-sample Kolmogorov statistics, based on the
+                    ## formula of Birnbaum & Tingey (1951).
+                    if(x <= 0) return(0)
+                    if(x >= 1) return(1)
+                    j <- seq.int(from = 0, to = floor(n * (1 - x)))
+                    1 - x * sum(exp(lchoose(n, j)
+                                    + (n - j) * log(1 - x - j / n)
+                                    + (j - 1) * log(x + j / n)))
+                }
                 pkolmogorov1x(STATISTIC, n)
+            }
         }
-        nm_alternative <- switch(alternative,
-                                 "two.sided" = "two-sided",
-                                 "less" = "the CDF of x lies below the null hypothesis",
-                                 "greater" = "the CDF of x lies above the null hypothesis")
-
+        nm_alternative <-
+            switch(alternative,
+                   "two.sided" = "two-sided",
+                   "less" = "the CDF of x lies below the null hypothesis",
+                   "greater" = "the CDF of x lies above the null hypothesis")
     }
 
     names(STATISTIC) <- switch(alternative,
@@ -113,35 +111,28 @@ ks.test <-
                                "greater" = "D^+",
                                "less" = "D^-")
 
-    pkstwo <- function(x, tol = 1e-6) {
-        ## Compute \sum_{-\infty}^\infty (-1)^k e^{-2k^2x^2}
-        ## Not really needed at this generality for computing a single
-        ## asymptotic p-value as below.
-        if(is.numeric(x))
-            x <- as.vector(x)
-        else
-            stop("argument 'x' must be numeric")
-        p <- rep(0, length(x))
-        p[is.na(x)] <- NA
-        IND <- which(!is.na(x) & (x > 0))
-        if(length(IND)) {
-            p[IND] <- .C("pkstwo",
-                         as.integer(length(x[IND])),
-                         p = as.double(x[IND]),
-                         as.double(tol),
-                         PACKAGE = "stats")$p
+    if(is.null(PVAL)) { ## so not exact
+        pkstwo <- function(x, tol = 1e-6) {
+            ## Compute \sum_{-\infty}^\infty (-1)^k e^{-2k^2x^2}
+            ## Not really needed at this generality for computing a single
+            ## asymptotic p-value as below.
+            if(is.numeric(x)) x <- as.double(x)
+            else stop("argument 'x' must be numeric")
+            p <- rep(0, length(x))
+            p[is.na(x)] <- NA
+            IND <- which(!is.na(x) & (x > 0))
+            if(length(IND))
+                p[IND] <- .C("pkstwo", length(x[IND]), p = x[IND],
+                             as.double(tol), PACKAGE = "stats")$p
+            p
         }
-        return(p)
-    }
-
-    if(is.null(PVAL)) {
         ## <FIXME>
         ## Currently, p-values for the two-sided two-sample case are
         ## exact if n.x * n.y < 10000 (unless controlled explicitly).
         ## In all other cases, the asymptotic distribution is used
         ## directly.  But: let m and n be the min and max of the sample
         ## sizes, respectively.  Then, according to Kim and Jennrich
-        ## (1973), if m < n / 10, we should use the
+        ## (1973), if m < n/10, we should use the
         ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
         ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
         PVAL <- ifelse(alternative == "two.sided",

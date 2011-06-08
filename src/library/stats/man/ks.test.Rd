@@ -74,8 +74,9 @@ ks.test(x, y, \dots,
   Otherwise, asymptotic distributions are used whose approximations may
   be inaccurate in small samples.  In the one-sample two-sided case,
   exact p-values are obtained as described in Marsaglia, Tsang & Wang
-  (2003).  The formula of Birnbaum & Tingey (1951) is used for the
-  one-sample one-sided case.
+  (2003) (but not using the optional approximation in the right tail, so
+  this can be slow for small p-values).  The formula of Birnbaum &
+  Tingey (1951) is used for the one-sample one-sided case.
 
   If a single-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
