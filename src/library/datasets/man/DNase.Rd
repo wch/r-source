@@ -1,6 +1,6 @@
 % File src/library/datasets/man/DNase.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{DNase}
@@ -14,7 +14,8 @@
 }
 \usage{DNase}
 \format{
-  This data frame contains the following columns:
+  This object of class \code{c("nfnGroupedData", "nfGroupedData",
+    "groupedData", "data.frame")} containing the following columns:
   \describe{
     \item{Run}{
       an ordered factor with levels \code{10} < \dots < \code{3}
@@ -30,6 +31,11 @@
       measurements were obtained. 
     }
   }
+}
+\details{
+  This dataset was originally part of package \code{nlme}, and that has
+  methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
+  \code{print}) for its grouped-data classes. 
 }
 \source{
   Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for

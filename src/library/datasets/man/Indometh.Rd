@@ -14,7 +14,8 @@
 }
 \usage{Indometh}
 \format{
-  This data frame contains the following columns:
+  This object of class \code{c("nfnGroupedData", "nfGroupedData",
+    "groupedData", "data.frame")} containing the following columns:
  \describe{
     \item{Subject}{
       an ordered factor with containing the subject codes.  The
@@ -31,6 +32,10 @@
 \details{
   Each of the six subjects were given an intravenous injection of
   indometacin.
+  
+  This dataset was originally part of package \code{nlme}, and that has
+  methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
+  \code{print}) for its grouped-data classes. 
 }
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976)

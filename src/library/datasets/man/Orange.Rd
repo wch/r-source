@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Orange.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Orange}
@@ -13,7 +13,8 @@
 }
 \usage{Orange}
 \format{
-  This data frame contains the following columns:
+  This object of class \code{c("nfnGroupedData", "nfGroupedData",
+    "groupedData", "data.frame")} containing the following columns:
   \describe{
     \item{Tree}{
       an ordered factor indicating the tree on which the measurement is
@@ -28,6 +29,11 @@
       forestry.
     }
   }
+}
+\details{   
+  This dataset was originally part of package \code{nlme}, and that has
+  methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
+  \code{print}) for its grouped-data classes. 
 }
 \source{
   Draper, N. R. and Smith, H. (1998), \emph{Applied Regression Analysis
