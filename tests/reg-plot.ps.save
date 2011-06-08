@@ -4217,7 +4217,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 435.34 36.72 (x) .5 0 t
-30.96 304.84 (cos \(x\)) .5 90 t
+30.96 304.84 (cos\(x\)) .5 90 t
 77.04 91.44 793.65 518.24 cl
 0 setgray
 0.75 setlinewidth
@@ -4263,7 +4263,7 @@ o
 18.00 18.00 823.89 577.28 cl
 /Font1 findfont 12 s
 0 setgray
-30.96 304.84 (sin \(x\)) .5 90 t
+30.96 304.84 (sin\(x\)) .5 90 t
 18.00 18.00 823.89 577.28 cl
 0 setgray
 0.75 setlinewidth
@@ -4335,7 +4335,7 @@ o
 /Font1 findfont 12 s
 0 setgray
 435.34 36.72 (x) .5 0 t
-30.96 304.84 (cos \(x\)) .5 90 t
+30.96 304.84 (cos\(x\)) .5 90 t
 ep
 %%Page: 22 22
 bp

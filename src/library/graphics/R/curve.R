@@ -19,16 +19,15 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 {
     sexpr <- substitute(expr)
     if(is.name(sexpr)) {
-	fcall <- paste(sexpr, "(x)")
-	expr <- parse(text = fcall)
-	if(is.null(ylab)) ylab <- fcall
+        ## beter than parse() !
+        expr <- call(as.character(sexpr), quote(x))
     } else {
 	if( !( (is.call(sexpr) || is.expression(sexpr)) &&
               "x" %in% all.vars(sexpr) ))
 	    stop("'expr' must be a function, or a call or an expression containing 'x'")
 	expr <- sexpr
-	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
+    if(is.null(ylab)) ylab <- deparse(expr)
     if (is.null(xlim))
 	delayedAssign("lims",
 		  {pu <- par("usr")[1L:2L]
@@ -44,11 +43,11 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     if(length(lg) == 0) lg <- ""
     x <-
 	if(lg != "" && "x" %in% strsplit(lg, NULL)[[1L]]) {
-	    if(any(c(from,to) <= 0))
+	    if(any(c(from, to) <= 0))
 		stop("'from' and 'to' must be > 0 with log=\"x\"")
-	    exp(seq.int(log(from), log(to), length.out=n))
-	} else seq.int(from, to, length.out=n)
-    y <- eval(expr, envir=list(x = x), enclos=parent.frame())
+	    exp(seq.int(log(from), log(to), length.out = n))
+	} else seq.int(from, to, length.out = n)
+    y <- eval(expr, envir = list(x = x), enclos = parent.frame())
     if (length(y) != length(x))
         stop("'expr' did not evaluate to an object of length 'n'")
     if(add)
