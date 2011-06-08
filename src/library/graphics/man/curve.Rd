@@ -29,13 +29,13 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{from,to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
   \item{add}{logical; if \code{TRUE} add to already existing plot.}
-  \item{xlim}{numeric of length 2; if specified, it serves as default
+  \item{xlim}{numeric of length 2; if specified, it provides the defaults
     for \code{c(from, to)}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
   \item{y}{alias for \code{from} for compatibility with \code{plot()}}
   \item{ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.
-    \code{plot.function} passes all these to \code{curve}.}
+    specified as arguments.  \code{plot.function} passes these to
+    \code{curve}.}
 }
 
 \details{
@@ -47,13 +47,14 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 
   For \code{curve()}, if either of \code{from} or \code{to} is
   \code{NULL}, it defaults to the corresponding element of \code{xlim},
-  and \code{xlim} defaults to the x-limits of the current plot.
-  For \code{plot(<function>, ..)}, the defaults for \eqn{(from, to)} are
-  \eqn{(0, 1)}.
+  and \code{xlim} defaults to the x-limits of the plot.
+  
+  For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
+  \eqn{(0, 1)} unless \code{xlim} is supplied.
 
-  \code{log} is taken from the current plot only when \code{add} is
-  true, and otherwise defaults to \code{""} indicating linear scales on
-  both axes.
+  The value of \code{log} is taken from the current plot when \code{add}
+  is true, and otherwise defaults to \code{""} (indicating linear scales
+  on both axes).
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
@@ -61,9 +62,9 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For expensive-to-compute \code{expr}essions, you should use smarter tools.
   
   The way \code{curve} handles \code{expr} has caused confusion.  It
-  first looks to see if \code{expr} is a \link{name} (also knowm as a
+  first looks to see if \code{expr} is a \link{name} (also known as a
   symbol), in which case it is taken to be the name of a function, and
-  the \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
+  \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
   checks that \code{expr} is either a \link{call} or an
   \link{expression}, and that it contains a reference to a variable
   \code{x} (using \code{\link{all.vars}}): anything else is an error.
