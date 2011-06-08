@@ -16,29 +16,24 @@
 
 ### xy.coords() is now in the imported 'grDevices' package
 
-plot <- function (x, y, ...)
-{
-    if (is.function(x) && is.null(attr(x, "class"))) {
-	if (missing(y)) y <- NULL
-	hasylab <- function(...) !all(is.na(pmatch(names(list(...)), "ylab")))
-	if (hasylab(...))
-	    plot.function(x, y, ...)
-	else
-	    plot.function(x, y, ylab = paste(deparse(substitute(x)), "(x)", sep = ""), ...)
-    }
-    else UseMethod("plot")
-}
+plot <- function (x, y, ...)  UseMethod("plot")
+
 
 ## xlim = NULL (instead of "missing", since it will be passed to plot.default):
-plot.function <- function(x, y = 0, to = 1, from = y, xlim = NULL, ...)
+plot.function <-
+    function(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, ...)
 {
-    if(is.null(xlim)) {
-	if(is.null(from)) from <- 0
+    ## this is to allow things like plot(sin, 0, 2*pi)
+    if (!missing(y) && missing(from)) from <- y
+    if (is.null(xlim)) {
+	if(is.null(from)) from <- 0 # most likely from y = NULL
     } else {
-	if(is.null(from)) from <- xlim[1L]
-	if(missing(to))	  to   <- xlim[2L]
+	if(missing(from)) from <- xlim[1L]
+	if(missing(to))	to <- xlim[2L]
     }
-    curve(x, from, to, xlim = xlim, ...)
+    if (is.null(ylab)) ylab <- paste(substitute(x), "(x)", sep = "")
+    ## name args to avoid partial matches from ...
+    curve(expr = x, from = from, to = to, xlim = xlim, ylab = ylab, ...)
 }
 
 plot.default <-

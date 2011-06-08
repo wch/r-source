@@ -137,6 +137,11 @@
       might do so even if argument \code{keep.source} is false if the
       \code{"keep.source"} option is true.  Now \code{keep.source =
 	FALSE} temporarily sets \code{options(keep.source = FALSE)}.
+      
+      \item There now is a genuine \code{"function"} method for
+      \code{plot()} rather than the generic dispatching internally to
+      \code{graphics::plot.function()}.  It is now exported, so can be
+      called directly as \code{plot.function()}.
     }
   }
   

@@ -8,11 +8,11 @@ export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        image, layout, layout.show, lcm, legend, lines, lines.default,
        locator, matlines, matplot, matpoints, mosaicplot, mtext,
        pairs, panel.smooth, par, persp, pie, plot, plot.design,
-       plot.new, plot.window, plot.xy, points, polygon, polypath,
-       rasterImage, rect, rug,
-       screen, segments, smoothScatter, spineplot, split.screen, stars, stem,
-       strheight, stripchart, strwidth, sunflowerplot, symbols, text,
-       title, xinch, xspline, xyinch, yinch)
+       plot.function, plot.new, plot.window, plot.xy, points, polygon,
+       polypath, rasterImage, rect, rug, screen, segments,
+       smoothScatter, spineplot, split.screen, stars, stem, strheight,
+       stripchart, strwidth, sunflowerplot, symbols, text, title,
+       xinch, xspline, xyinch, yinch)
 
 # leave most of the default methods visible as people seem to call them.
 export(barplot.default, boxplot.default, boxplot.matrix,
@@ -50,6 +50,7 @@ S3method(plot, data.frame)
 S3method(plot, default)
 S3method(plot, factor)
 S3method(plot, formula)
+S3method(plot, "function")
 S3method(plot, histogram)
 S3method(plot, table)
 S3method(points, default)
