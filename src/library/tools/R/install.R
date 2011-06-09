@@ -416,7 +416,7 @@
                                      WINDOWS <- WINDOWS
                                      environment()})
                 parent.env(local.env) <- .GlobalEnv
-                source("install.libs.R", local = local.env())
+                source("install.libs.R", local = local.env)
                 return(TRUE)
             }
             ## otherwise proceed with the default which is to just copy *${SHLIB_EXT}
