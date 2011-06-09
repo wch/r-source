@@ -59,10 +59,10 @@
       \item \command{make install-strip} failed under some configuration
       options.
 
-      \item Packages can customize non-standard installation of
-      libraries via \code{install.libs.R} script. This allows packages
-      that have architecture-specific binaries beyond the package shared
-      library to be installed in a multi-architecture setting.
+      \item Packages can customize non-standard installation of compiled
+      code via a \code{src/install.libs.R} script. This allows packages that
+      have architecture-specific binaries (beyond the package's shared
+      objects/DLLs) to be installed in a multi-architecture setting.
     }
   }
   
