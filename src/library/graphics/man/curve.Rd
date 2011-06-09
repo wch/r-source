@@ -9,9 +9,9 @@
 \alias{plot.function}
 
 \description{
-  Draws a curve corresponding to the given function or, for
-  \code{curve} also an expression (in \code{x}) over the interval
-  \code{[from, to]}.
+  Draws a curve corresponding to a function over the interval
+  \code{[from, to]}. \code{curve} can plot also an expression in the variable
+  \code{x}.
 }
 
 \usage{
@@ -34,8 +34,9 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{type}{plot type: see \code{\link{plot.default}}.}
   \item{y}{alias for \code{from} for compatibility with \code{plot()}}
   \item{ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.  The \code{"function"} method of
-    \code{plot} passes these to \code{curve}.}
+    specified as arguments.  For the \code{"function"} method of
+    \code{plot} \code{\dots} can include any of the other arguments of
+    \code{curve}, except \code{expr}.}
 }
 
 \details{
@@ -55,9 +56,11 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
   \eqn{(0, 1)} unless \code{xlim} is supplied.
 
-  The value of \code{log} is taken from the current plot when \code{add}
-  is true, and otherwise defaults to \code{""} (indicating linear scales
-  on both axes).
+  The default value of \code{log} is taken from the current plot when
+  \code{add} is true, and otherwise defaults to \code{""} (indicating
+  linear scales on both axes).  (So the default behaviour if \code{add =
+    TRUE} is to take the x-limits but not the x-log-scaling from the
+  previous plot.)
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
