@@ -46,7 +46,7 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
         else paste(if (add && par("xlog")) "x",
                    if (add && par("ylog")) "y", sep = "")
     if (length(lg) == 0) lg <- ""
-    if (grepl(xname, lg, fixed = TRUE)) {
+    if (grepl("x", lg, fixed = TRUE)) {
         if (from <= 0 || to <= 0)
             stop("'from' and 'to' must be > 0 with log=\"x\"")
         x <- exp(seq.int(log(from), log(to), length.out = n))

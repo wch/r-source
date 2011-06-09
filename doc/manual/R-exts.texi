@@ -727,23 +727,23 @@ making a shared object (e.g.@: to create executables).  Such packages
 should have files @file{src/Makefile} and @file{src/Makefile.win}
 (unless intended for only Unix-alikes or only Windows).
 
-In very special cases packages may produce binary files other than the
-shared objects. However, such files will not be installed by default
-in multi-arch setting since @code{R CMD INSTALL --libs-only} is used
-to merge multiple architectures and it only copies shared objects. If
-a package wants to install other binaries, is has to provide an R
-script @file{src/install.libs.R} which will be run as part of the
-installation in the @code{src} build directory instead of copying the
-shared objects. The script can use following pre-defined variables in
-R:
-@code{R_PACKAGE_NAME} (name of the package),
-@code{R_PACKAGE_SOURCE} (source directory of the package),
-@code{R_PACKAGE_DIR} (target installation directory of the package),
-@code{R_ARCH} (arch-dependent part of the path), 
-@code{SHLIB_EXT} (extension of shared objects) and
-@code{WINDOWS} (@code{TRUE} on Windows, @code{FALSE} elsewhere).
-Something close to the default behavior could be replicated with the
-following @file{src/install.libs.R} file:
+In very special cases packages may create binary files other than the
+shared objects/DLLs in the @file{src} directory.  Such files will not be
+installed in multi-arch setting since @code{R CMD INSTALL --libs-only}
+is used to merge multiple architectures and it only copies shared
+objects/DLLs.  If a package wants to install other binaries (for example
+executable programs), it should to provide an @R{} script
+@file{src/install.libs.R} which will be run as part of the installation
+in the @code{src} build directory @emph{instead of} copying the shared
+objects/DLLs. The script is run in a separate @R{} environment
+containing the following variables: @code{R_PACKAGE_NAME} (the name of
+the package), @code{R_PACKAGE_SOURCE} (the path to the source directory
+of the package), @code{R_PACKAGE_DIR} (the path of the target
+installation directory of the package), @code{R_ARCH} (the
+arch-dependent part of the path), @code{SHLIB_EXT} (the extension of
+shared objects) and @code{WINDOWS} (@code{TRUE} on Windows, @code{FALSE}
+elsewhere).  Something close to the default behavior could be replicated
+with the following @file{src/install.libs.R} file:
 
 @example
 files <- Sys.glob(paste("*", SHLIB_EXT, sep=''))
