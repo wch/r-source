@@ -1,10 +1,11 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
 \alias{S3groupGeneric}
+\alias{groupGeneric}
 \alias{.Group}
 \alias{Math}
 \alias{Math.data.frame}
@@ -12,8 +13,6 @@
 \alias{Ops.data.frame}
 \alias{Summary}
 \alias{Summary.data.frame}
-%not in S3 \alias{Arith}
-%not in S3 \alias{Compare}
 \alias{Complex}
 \alias{group generic} % used in class.Rd and zMethods.Rd
 \concept{group generic}
@@ -45,14 +44,15 @@
 
   There are four \emph{groups} for which S3 methods can be written,
   namely the \code{"Math"}, \code{"Ops"}, \code{"Summary"} and
-  \code{"Complex"} groups.  These are not \R objects, but methods can be
-  supplied for them and base \R contains \code{\link{factor}},
-  \code{\link{data.frame}} and \code{\link{difftime}} methods for
-  the first three groups.  (There is also a \code{\link{ordered}}
-  method for \code{Ops}, \code{\link{POSIXt}} and \code{\link{Date}}
-  methods for \code{Math} and \code{Ops}, \code{\link{package_version}}
-  methods for \code{Ops} and \code{Summary}, as well as a
-  \code{\link{ts}} method for \code{Ops} in package \pkg{stats}.)
+  \code{"Complex"} groups.  These are not \R objects in base \R, but
+  methods can be supplied for them and base \R contains
+  \code{\link{factor}}, \code{\link{data.frame}} and
+  \code{\link{difftime}} methods for the first three groups.  (There is
+  also a \code{\link{ordered}} method for \code{Ops},
+  \code{\link{POSIXt}} and \code{\link{Date}} methods for \code{Math}
+  and \code{Ops}, \code{\link{package_version}} methods for \code{Ops}
+  and \code{Summary}, as well as a \code{\link{ts}} method for
+  \code{Ops} in package \pkg{stats}.)
 
   \enumerate{
     \item Group \code{"Math"}:
@@ -140,11 +140,11 @@
     Members of this group dispatch on \code{z}.
   }
 
-  Note that a method will used for either one of these groups or one of
-  its members \emph{only} if it corresponds to a \code{"class"}
-  attribute, as the internal code dispatches on \code{\link{oldClass}}
-  and not on \code{\link{class}}.  This is for efficiency: having to
-  dispatch on, say, \code{Ops.integer} would be too slow.
+  Note that a method will be used for one of these groups or one of its
+  members \emph{only} if it corresponds to a \code{"class"} attribute,
+  as the internal code dispatches on \code{\link{oldClass}} and not on
+  \code{\link{class}}.  This is for efficiency: having to dispatch on,
+  say, \code{Ops.integer} would be too slow.
 
   The number of arguments supplied for primitive members of the
   \code{"Math"} group generic methods is not checked prior to dispatch.
@@ -165,6 +165,11 @@
     \item Object \code{.Group} records the group used for dispatch (if
     a specific method is used this is \code{""}).
   }
+}
+\note{
+  Package \pkg{methods} does contain objects with these names, which it
+  has re-used in confusing similar (but different) ways.  See the help
+  for that package.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr

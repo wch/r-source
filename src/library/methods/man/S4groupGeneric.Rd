@@ -1,6 +1,6 @@
 % File src/library/methods/man/S4groupGeneric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{S4groupGeneric}
@@ -14,11 +14,11 @@
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
-\title{Group Generic Functions}
+\title{S4 Group Generic Functions}
 \description{
-  Methods can be defined  for \emph{group
-    generic functions}.  Each group generic function has a number of
-  \emph{member} generic functions associated with it.
+  Methods can be defined for \emph{group generic functions}.  Each group
+  generic function has a number of \emph{member} generic functions
+  associated with it.
 
   Methods  defined for a group generic function cause the same
   method to be defined for each member of the group, but a method explicitly
@@ -27,7 +27,8 @@
 
   The functions shown in this documentation page all reside in the
   \pkg{methods} package, but the mechanism is available to any
-  programmer, by calling \code{\link{setGroupGeneric}}.
+  programmer, by calling \code{\link{setGroupGeneric}} (provided package
+  \pkg{methods} is attached).
 }
 \usage{
 ## S4 group generics:
