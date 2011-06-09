@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -625,6 +625,10 @@ msgstr ""
 msgid "Error: no packages were specified"
 msgstr " エラー：パッケージが指定されていません "
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
 msgid "package dir"
 msgstr " パッケージ dir "
 
@@ -725,6 +729,9 @@ msgid ""
 msgstr ""
 " 'cleanup' は存在しますが実行できません -- 参照 'R Installation and "
 "Adminstration Manual' "
+
+msgid "installing via 'install.libs.R' to"
+msgstr ""
 
 msgid "installing to"
 msgstr " にインストールしています "

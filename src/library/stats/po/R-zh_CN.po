@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1213,11 +1213,19 @@ msgstr "'x'数据不够"
 msgid "not enough 'y' data"
 msgstr "'y'数据不够"
 
-msgid "cannot compute correct p-values with ties"
-msgstr "在有连结的情况下无法正确計算p值"
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr "无法精確計算带连结的p值"
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "p-values will be approximate in the presence of ties"
+msgstr ""
+
+#, fuzzy
+msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y'必需是数值，否则的话请用字符串指定适当的函数"
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgstr ""
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -2368,6 +2376,9 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "cannot compute correct p-values with ties"
+#~ msgstr "在有连结的情况下无法正确計算p值"
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr "'FUN'必需回覆纯量"

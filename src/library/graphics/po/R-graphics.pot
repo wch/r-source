@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,10 +125,13 @@ msgstr ""
 msgid "Missing rows"
 msgstr ""
 
-msgid "'expr' must be a function, call or an expression containing 'x'"
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr ""
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
+msgstr ""
+
+msgid "'expr' did not evaluate to an object of length 'n'"
 msgstr ""
 
 msgid "wrong method"
@@ -138,6 +141,9 @@ msgid "Must specify 'breaks' in hist(<POSIXt>)"
 msgstr ""
 
 msgid "invalid specification of 'breaks'"
+msgstr ""
+
+msgid "Must specify 'breaks' in hist(<Date>)"
 msgstr ""
 
 msgid "'x' must be a numeric vector or matrix"
@@ -285,6 +291,9 @@ msgid "only one column in the argument to 'pairs'"
 msgstr ""
 
 msgid "the 'panel' function made a new plot"
+msgstr ""
+
+msgid "surface extends beyond the box"
 msgstr ""
 
 msgid "'x' values must be positive."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-28 15:10+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1242,11 +1242,19 @@ msgstr " 'x' データの数が十分ではありません "
 msgid "not enough 'y' data"
 msgstr " 'y' データの数が十分ではありません "
 
-msgid "cannot compute correct p-values with ties"
-msgstr " タイがあるため、正しい p 値を計算することができません "
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr " タイがあるため、正確な p 値を計算することができません "
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "p-values will be approximate in the presence of ties"
+msgstr ""
+
+#, fuzzy
+msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr " 'y' は数値または有効な関数の名前である文字列でなければなりません "
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgstr ""
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -2420,6 +2428,9 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] " モデル式中にパラメータ %s がありません "
+
+#~ msgid "cannot compute correct p-values with ties"
+#~ msgstr " タイがあるため、正しい p 値を計算することができません "
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr " 'FUN' は常にスカラを返さねばなりません "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -130,11 +130,14 @@ msgid "Missing rows"
 msgstr "행이 이상합니다"
 
 #, fuzzy
-msgid "'expr' must be a function, call or an expression containing 'x'"
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr'는 'x'를 포함한 함수 또는 표현식이 아니면 되지 않습니다"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from'와 'to'는 정확한 값이 되어어야만 합니다. 그리고 log=\"x\"입니다"
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr ""
 
 msgid "wrong method"
 msgstr "잘못된 메소드입니다"
@@ -144,6 +147,9 @@ msgstr ""
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks'의 지정이 무효입니다"
+
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr ""
 
 #, fuzzy
 msgid "'x' must be a numeric vector or matrix"
@@ -301,6 +307,9 @@ msgstr "'pairs'의 인수는 다만 하나의 열만 가지지 않습니다"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel' 함수는 신규의 plot로 작성했습니다"
+
+msgid "surface extends beyond the box"
+msgstr ""
 
 msgid "'x' values must be positive."
 msgstr "'x'의 값은 positive가 아니면 되지 않습니다"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -148,23 +148,18 @@ msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr "必需提供函数骨架，要么是明确地提供，要么通过已存在的函数来提供"
 
 msgid ""
-"Restoring the implicit generic function for %s from package %s\n"
-"    into package %s; the generic differs from the default conversion (%s)"
-msgstr "把隐含泛型函数%s从程辑包%s恢复到%s；泛型函数与缺省转换(%s)不同"
-
-msgid ""
-"Creating a generic for %s in package %s\n"
-"    (the supplied definition differs from and overrides the implicit "
-"generic\n"
-"    in package %s: %s)"
+"Creating a generic function for %s from %s in %s\n"
+"    (from the saved implicit definition)"
 msgstr ""
-"在程辑包%2$s中为%1$s建立泛型函数\n"
-"    (所提供的函数定义与程辑包%3$s中的隐含泛型函数定义不相同，因此将之覆盖："
-"%4$s)"
 
+#, fuzzy
+msgid "Creating a new generic function for %s in %s"
+msgstr "为'%1$s'里的'%2$s'建立新的泛型函数"
+
+#, fuzzy
 msgid ""
 "No generic version of %s on package %s is allowed;\n"
-"   a new generic will be assigned with package %s"
+"   a new generic will be assigned for %s"
 msgstr ""
 "程序包%2$s不允许泛型版本的%1$s；一个新的泛型函数将会同程序包%3$s一起被分配"
 
@@ -203,10 +198,12 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr "函数'%s'没有定义"
 
-msgid "Creating a generic function from function \"%s\""
+#, fuzzy
+msgid "Creating a generic function from function \"%s\" in %s"
 msgstr "用函数\"%s\"来建立新的泛型函数"
 
-msgid "Creating a new generic function for \"%s\" in \"%s\""
+#, fuzzy
+msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
 msgstr "为'%1$s'里的'%2$s'建立新的泛型函数"
 
 msgid ""
@@ -1377,8 +1374,8 @@ msgid ""
 "on : %s"
 msgstr "在指定的%2$s这个位置不存在类别\"%1$s\"的定义, 定义在: %3$s"
 
-msgid ""
-"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr "\"%s\"场要么无效，要么引用类的方法名\"%s\"不对"
 
 msgid ""
@@ -1398,6 +1395,10 @@ msgstr "\"%s\"不是引用类别"
 
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr "\"%s\"不是在\"%s\"类别里的场"
+
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for this class"
+msgstr "\"%s\"场要么无效，要么引用类的方法名\"%s\"不对"
 
 msgid ""
 "The class of field \"%s\" in the object is not compatible with the desired "
@@ -1422,6 +1423,12 @@ msgstr "不能直接调用callSuper()：只能用其它的方法来调用它"
 msgid "\"%s\" is not a field in this class"
 msgstr "\"%s\"不是在\"%s\"类别里的场"
 
+#, fuzzy
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
+"be redefined"
+msgstr "函数'%s'的方法和'%s'标记都被封闭了，因此无法将之重新定义"
+
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "methods()里的参数必需带名字，或者是带名字的串列"
 
@@ -1435,6 +1442,11 @@ msgstr ""
 #, fuzzy
 msgid "Arguments must all be character string names of fields"
 msgstr "'file'必需是字符串或联结"
+
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
+"be modified"
+msgstr ""
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1536,6 +1548,13 @@ msgid ""
 msgstr ""
 "'classLabel'调用不对：需要的是个名字或类别定义，但得到的却是类别为%s的目标对"
 "象"
+
+msgid "Argument signature= is not meaningful for tracing reference methods"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a method for reference class \"%s\""
+msgstr "\"%s\"不是引用类别"
 
 msgid "argument 'what' should be the name of a function"
 msgstr "参数'what'必需是一个函数名字"
@@ -1677,6 +1696,21 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
+
+#~ msgid ""
+#~ "Restoring the implicit generic function for %s from package %s\n"
+#~ "    into package %s; the generic differs from the default conversion (%s)"
+#~ msgstr "把隐含泛型函数%s从程辑包%s恢复到%s；泛型函数与缺省转换(%s)不同"
+
+#~ msgid ""
+#~ "Creating a generic for %s in package %s\n"
+#~ "    (the supplied definition differs from and overrides the implicit "
+#~ "generic\n"
+#~ "    in package %s: %s)"
+#~ msgstr ""
+#~ "在程辑包%2$s中为%1$s建立泛型函数\n"
+#~ "    (所提供的函数定义与程辑包%3$s中的隐含泛型函数定义不相同，因此将之覆"
+#~ "盖：%4$s)"
 
 #~ msgid ""
 #~ "\" is not a known action (warn, stop, once, ignore); no action recorded "

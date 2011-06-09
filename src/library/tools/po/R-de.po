@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -611,6 +611,10 @@ msgstr "'--multiarch' angegeben, obwohl es nur eine sub-Architektur gibt"
 msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+
 msgid "package dir"
 msgstr "Paket Verzeichnis"
 
@@ -713,6 +717,9 @@ msgid ""
 msgstr ""
 "'cleanup'existiert, ist aber nicht ausführbar -- bitte im 'R Installation "
 "and Administration Manual' nachlesen"
+
+msgid "installing via 'install.libs.R' to"
+msgstr ""
 
 msgid "installing to"
 msgstr "installiert nach"

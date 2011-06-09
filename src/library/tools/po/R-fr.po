@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -630,6 +630,10 @@ msgstr ""
 msgid "Error: no packages were specified"
 msgstr "Erreur : aucun package spécifié"
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr "impossible de créer le répertoire '%s'"
+
 msgid "package dir"
 msgstr "le répertoire"
 
@@ -731,6 +735,9 @@ msgid ""
 msgstr ""
 "'cleanup' existe mais n'est pas exécutable -- voyez le manuel d'installation "
 "et d'administration de R"
+
+msgid "installing via 'install.libs.R' to"
+msgstr ""
 
 msgid "installing to"
 msgstr "installation dans"

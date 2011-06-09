@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -153,20 +153,17 @@ msgstr ""
 "분명히 또는 기존의 함수에 의해 기능 골격을 주어지지 않으면 되지 않습니다"
 
 msgid ""
-"Restoring the implicit generic function for %s from package %s\n"
-"    into package %s; the generic differs from the default conversion (%s)"
+"Creating a generic function for %s from %s in %s\n"
+"    (from the saved implicit definition)"
 msgstr ""
 
-msgid ""
-"Creating a generic for %s in package %s\n"
-"    (the supplied definition differs from and overrides the implicit "
-"generic\n"
-"    in package %s: %s)"
-msgstr ""
+#, fuzzy
+msgid "Creating a new generic function for %s in %s"
+msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 msgid ""
 "No generic version of %s on package %s is allowed;\n"
-"   a new generic will be assigned with package %s"
+"   a new generic will be assigned for %s"
 msgstr ""
 
 #, fuzzy
@@ -215,11 +212,11 @@ msgid "no existing definition for function \"%s\""
 msgstr "함수'%s'를 위한 기존의 정의가 아닙니다"
 
 #, fuzzy
-msgid "Creating a generic function from function \"%s\""
+msgid "Creating a generic function from function \"%s\" in %s"
 msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
-msgid "Creating a new generic function for \"%s\" in \"%s\""
+msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
 msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
 
 #, fuzzy
@@ -1619,9 +1616,9 @@ msgid ""
 "on : %s"
 msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
 
-msgid ""
-"Field \"%s\" is not a valid field or method name for reference class \"%s\""
-msgstr ""
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for reference class \"%s\""
+msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
 msgid ""
 "Method %s from class %s was not processed into a class method until being "
@@ -1639,6 +1636,10 @@ msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 #, fuzzy
 msgid "\"%s\" is not a field in class \"%s\""
+msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
+
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for this class"
 msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
 msgid ""
@@ -1670,6 +1671,12 @@ msgid "\"%s\" is not a field in this class"
 msgstr "\"%s\" 클래스에서 \"%s\"의 slot이 아닙니다"
 
 #, fuzzy
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
+"be redefined"
+msgstr "함수'%s' 또는 기호 %s의 메소드는 밀폐되어 다시 정의할수가 없습니다"
+
+#, fuzzy
 msgid "Arguments to methods() must be named, or one named list"
 msgstr "메소드와 함수의 가인수는 동일 순서로 나타나지 않습니다"
 
@@ -1679,6 +1686,11 @@ msgid ""
 msgstr ""
 
 msgid "Arguments must all be character string names of fields"
+msgstr ""
+
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
+"be modified"
 msgstr ""
 
 msgid ""
@@ -1790,6 +1802,13 @@ msgid ""
 msgstr ""
 "'classLabel'에서 무효인 호출입니다: 이름 또는 클래스 정의를 예측해 \n"
 "클래스 \"%s\"의 오브젝트를 얻었습니다"
+
+msgid "Argument signature= is not meaningful for tracing reference methods"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a method for reference class \"%s\""
+msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 msgid "argument 'what' should be the name of a function"
 msgstr "인수'what' 함수의 이름이어야 합니다"

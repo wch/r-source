@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1390,6 +1390,10 @@ msgstr "method=\"quick\"只适用于数值的'x'"
 
 msgid "method=\"radix\" is only for integer 'x'"
 msgstr " method=\"radix\"只适用于整数的'x'"
+
+#, fuzzy
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "'wait'的值必需是'TRUE'或'FALSE'值"
 
 msgid "'echo' must be logical"
 msgstr "'echo'必需为逻辑值"

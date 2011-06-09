@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-30 02:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -613,6 +613,10 @@ msgstr "'--multiarch' определен только для одной используемой субархитектуры"
 msgid "Error: no packages were specified"
 msgstr "Ошибка: пакеты не определены"
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr "Не могу создать папку '%s'"
+
 msgid "package dir"
 msgstr "директория пакетов"
 
@@ -713,6 +717,9 @@ msgid ""
 msgstr ""
 "'cleanup' есть, но его невозможно выполнить  -- смотрите 'R Installation and "
 "Adminstration Manual'"
+
+msgid "installing via 'install.libs.R' to"
+msgstr ""
 
 msgid "installing to"
 msgstr "устанавливаю в"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
-"PO-Revision-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
+"PO-Revision-Date: 2011-06-09 13:48\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -148,11 +148,14 @@ msgstr "rows * columns too small"
 msgid "Missing rows"
 msgstr "Missing rows"
 
-msgid "'expr' must be a function, call or an expression containing 'x'"
-msgstr "‘expr’ must be a function, call or an expression containing ‘x’"
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
+msgstr "‘expr’ must be a function, or a call or an expression containing ‘%s’"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "‘from’ and ‘to’ must be > 0 with log=“x”"
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr "‘expr’ did not evaluate to an object of length ‘n’"
 
 msgid "wrong method"
 msgstr "wrong method"
@@ -162,6 +165,9 @@ msgstr "Must specify ‘breaks’ in hist(<POSIXt>)"
 
 msgid "invalid specification of 'breaks'"
 msgstr "invalid specification of ‘breaks’"
+
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr "Must specify ‘breaks’ in hist(<Date>)"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "‘x’ must be a numeric vector or matrix"
@@ -313,6 +319,9 @@ msgstr "only one column in the argument to ‘pairs’"
 
 msgid "the 'panel' function made a new plot"
 msgstr "the ‘panel’ function made a new plot"
+
+msgid "surface extends beyond the box"
+msgstr "surface extends beyond the box"
 
 msgid "'x' values must be positive."
 msgstr "‘x’ values must be positive."

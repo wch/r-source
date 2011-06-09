@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -133,11 +133,15 @@ msgstr "fileiras * colunas pequeno demais"
 msgid "Missing rows"
 msgstr "Fileiras faltando"
 
-msgid "'expr' must be a function, call or an expression containing 'x'"
+#, fuzzy
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr' deve ser uma função, chamada ou uma expressão contendo 'x'"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' e 'to' devem ser > 0 com log=\"x\""
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr ""
 
 msgid "wrong method"
 msgstr "método errado"
@@ -147,6 +151,10 @@ msgstr "Deve-se especificar 'breaks' em hist(<POSIXt>)"
 
 msgid "invalid specification of 'breaks'"
 msgstr "especificação de 'breaks' inválida"
+
+#, fuzzy
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr "Deve-se especificar 'breaks' em hist(<POSIXt>)"
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x' deve ser um vetor numérico ou matriz"
@@ -237,7 +245,9 @@ msgstr ""
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect' deve ser lógico ou matriz com as mesmas dimensões que 'mat'"
 
-msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n ="
+msgid ""
+"layout matrix must contain at least one reference\n"
+"to each of the values {1..n}; here  n ="
 msgstr ""
 "matriz de layout deve conter pelo menos uma referência\n"
 "para cada um dos valores {1..n}; aqui  n ="
@@ -274,7 +284,8 @@ msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x' e 'y' devem ter somente uma ou o mesmo número de colunas"
 
 msgid "default 'pch' is smaller than number of columns and hence recycled"
-msgstr "'pch' por padrão é inferior ao número de colunas e, portanto, reciclado"
+msgstr ""
+"'pch' por padrão é inferior ao número de colunas e, portanto, reciclado"
 
 msgid "missing values in contingency table"
 msgstr "valores ausentes na tabela de contingência"
@@ -299,6 +310,9 @@ msgstr "apenas uma coluna no argumento para 'pairs'"
 
 msgid "the 'panel' function made a new plot"
 msgstr "a função 'panel' fez um novo gráfico"
+
+msgid "surface extends beyond the box"
+msgstr ""
 
 msgid "'x' values must be positive."
 msgstr "os valores de 'x' devem ser positivos."

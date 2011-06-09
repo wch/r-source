@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1255,11 +1255,19 @@ msgstr "insuficientes dados 'x'"
 msgid "not enough 'y' data"
 msgstr "insuficientes dados 'y'"
 
-msgid "cannot compute correct p-values with ties"
-msgstr "com emparelhamento, não é possível computar valores-p corretos"
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr "não é possível computar o valor de p exato com o de desempate"
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "p-values will be approximate in the presence of ties"
+msgstr ""
+
+#, fuzzy
+msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y' deve ser numérico ou uma cadeia nomeando uma função válida"
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgstr ""
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -2448,6 +2456,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "cannot compute correct p-values with ties"
+#~ msgstr "com emparelhamento, não é possível computar valores-p corretos"
 
 #~ msgid "no terms component"
 #~ msgstr "nenhum componente de termos"

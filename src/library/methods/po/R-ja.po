@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -170,25 +170,18 @@ msgstr ""
 " 明示的もしくは既存の関数経由で関数の骨格(skelton) を与える必要があります "
 
 msgid ""
-"Restoring the implicit generic function for %s from package %s\n"
-"    into package %s; the generic differs from the default conversion (%s)"
+"Creating a generic function for %s from %s in %s\n"
+"    (from the saved implicit definition)"
 msgstr ""
-" 隠匿された総称的関数 %s をパッケージ %s から %s へ戻す際、総称がデフォルトの"
-"変換(%s) と異なりました "
 
-msgid ""
-"Creating a generic for %s in package %s\n"
-"    (the supplied definition differs from and overrides the implicit "
-"generic\n"
-"    in package %s: %s)"
-msgstr ""
-" %s に対する総称を %s パッケージ中に作成しています \n"
-" (与えられた定義が異なるため, パッケージ \"%s\" 中に隠匿された総称を \n"
-" 上書きします: %s) "
+#, fuzzy
+msgid "Creating a new generic function for %s in %s"
+msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
 
+#, fuzzy
 msgid ""
 "No generic version of %s on package %s is allowed;\n"
-"   a new generic will be assigned with package %s"
+"   a new generic will be assigned for %s"
 msgstr ""
 " 如何なる %s の総称バージョン (パッケージ \"%s\" からの) も許されません； \n"
 " 新しい総称がパッケージ %s を用いて割り当てられます "
@@ -235,10 +228,12 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr " 関数 \"%s\" に対する既存の定義はありません "
 
-msgid "Creating a generic function from function \"%s\""
+#, fuzzy
+msgid "Creating a generic function from function \"%s\" in %s"
 msgstr " 関数 \"%s\" から総称関数を生成します "
 
-msgid "Creating a new generic function for \"%s\" in \"%s\""
+#, fuzzy
+msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
 msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
 
 msgid ""
@@ -1590,8 +1585,8 @@ msgid ""
 msgstr ""
 " クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です "
 
-msgid ""
-"Field \"%s\" is not a valid field or method name for reference class \"%s\""
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 " 欄 \"%s\" は参照クラス \"%s\" に対する適正な欄もしくはメソッド名ではありませ"
 "ん "
@@ -1615,6 +1610,12 @@ msgstr " \"%s\" は参照クラスではありません "
 
 msgid "\"%s\" is not a field in class \"%s\""
 msgstr " \"%s\" はクラス \"%s\" 中の欄ではありません "
+
+#, fuzzy
+msgid "\"%s\" is not a valid field or method name for this class"
+msgstr ""
+" 欄 \"%s\" は参照クラス \"%s\" に対する適正な欄もしくはメソッド名ではありませ"
+"ん "
 
 msgid ""
 "The class of field \"%s\" in the object is not compatible with the desired "
@@ -1642,6 +1643,14 @@ msgstr ""
 msgid "\"%s\" is not a field in this class"
 msgstr " \"%s\" はこのクラス中の欄（field)ではありません "
 
+#, fuzzy
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, methods may not "
+"be redefined"
+msgstr ""
+" 関数 \"%s\" とシグネチァ(signature) %s に対するメソッドは封印(sealed)されて"
+"おり、再定義出来ません "
+
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 " methods() の引数は名前付きか，一つの名前付きリストでなければなりません "
@@ -1656,6 +1665,11 @@ msgstr ""
 #, fuzzy
 msgid "Arguments must all be character string names of fields"
 msgstr " 引数はすべて欄の文字列の名前でなければなりません "
+
+msgid ""
+"The definition of class \"%s\" in package \"%s\" is locked, fields may not "
+"be modified"
+msgstr ""
 
 msgid ""
 "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1774,6 +1788,13 @@ msgid ""
 msgstr ""
 " 不正な 'classLabel' への呼び出し：名前かクラス定義を期待しましたが、クラス "
 "%s のオブジェクトでした "
+
+msgid "Argument signature= is not meaningful for tracing reference methods"
+msgstr ""
+
+#, fuzzy
+msgid "\"%s\" is not a method for reference class \"%s\""
+msgstr " \"%s\" は参照クラスではありません "
 
 msgid "argument 'what' should be the name of a function"
 msgstr " 引数 'what' は関数名でなければなりません "
@@ -1945,6 +1966,23 @@ msgstr " ファイルを移動するか、クラスまたはメソッドを削�
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#~ msgid ""
+#~ "Restoring the implicit generic function for %s from package %s\n"
+#~ "    into package %s; the generic differs from the default conversion (%s)"
+#~ msgstr ""
+#~ " 隠匿された総称的関数 %s をパッケージ %s から %s へ戻す際、総称がデフォル"
+#~ "トの変換(%s) と異なりました "
+
+#~ msgid ""
+#~ "Creating a generic for %s in package %s\n"
+#~ "    (the supplied definition differs from and overrides the implicit "
+#~ "generic\n"
+#~ "    in package %s: %s)"
+#~ msgstr ""
+#~ " %s に対する総称を %s パッケージ中に作成しています \n"
+#~ " (与えられた定義が異なるため, パッケージ \"%s\" 中に隠匿された総称を \n"
+#~ " 上書きします: %s) "
 
 #~ msgid ""
 #~ "\" is not a known action (warn, stop, once, ignore); no action recorded "

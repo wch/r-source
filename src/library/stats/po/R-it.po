@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1292,11 +1292,19 @@ msgstr "dati 'x' insufficienti"
 msgid "not enough 'y' data"
 msgstr "dati 'y' insufficienti"
 
-msgid "cannot compute correct p-values with ties"
-msgstr "impossibile calcolae p-value corretti in presenza di ties"
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr "impossibile calcolare p-value esatto in presenza di ties"
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "p-values will be approximate in the presence of ties"
+msgstr ""
+
+#, fuzzy
+msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y' deve essere numerico o una stringa contente un nome di funzione"
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -2542,6 +2550,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "cannot compute correct p-values with ties"
+#~ msgstr "impossibile calcolae p-value corretti in presenza di ties"
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr "'FUN' deve sempre restituire uno scalare"

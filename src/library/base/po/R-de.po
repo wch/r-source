@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1425,6 +1425,10 @@ msgstr "Methode=\"quick\" nur für numerisches 'x'"
 
 msgid "method=\"radix\" is only for integer 'x'"
 msgstr "Methode=\"radix\" nur für ganzzahliges 'x'"
+
+#, fuzzy
+msgid "'local' must be TRUE, FALSE or an environment"
+msgstr "'wait' muss TRUE oder FALSE sein"
 
 msgid "'echo' must be logical"
 msgstr "'echo' muss boolesch sein"

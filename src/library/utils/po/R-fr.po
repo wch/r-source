@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -653,6 +653,11 @@ msgstr "Création de 'Read-and-delete-me'..."
 msgid "Saving functions and data ..."
 msgstr "Sauvegarde des fonctions et des données..."
 
+msgid ""
+"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the code_files= argument"
+msgstr ""
+
 msgid "Copying code files ..."
 msgstr "Recopiage des fichiers de code..."
 
@@ -680,7 +685,9 @@ msgstr "impossible d'accéder à l'index de l'entrepôt %s"
 msgid "Invalid 'filters' argument."
 msgstr "argument 'filters' incorrect"
 
-msgid "invalid 'oldPkgs'; must be a result from old.packages()"
+#, fuzzy
+msgid ""
+"invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr "'oldPkgs' incorrect ; il faut des données renvoyées par old.packages()"
 
 msgid "illformed 'instPkgs' matrix"

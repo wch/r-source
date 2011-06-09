@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1330,6 +1330,9 @@ msgid "method=\"quick\" is only for numeric 'x'"
 msgstr ""
 
 msgid "method=\"radix\" is only for integer 'x'"
+msgstr ""
+
+msgid "'local' must be TRUE, FALSE or an environment"
 msgstr ""
 
 msgid "'echo' must be logical"

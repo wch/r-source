@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -633,6 +633,11 @@ msgstr "Создаю Read-and-delete-me..."
 msgid "Saving functions and data ..."
 msgstr "Сохраняю функции и данные..."
 
+msgid ""
+"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the code_files= argument"
+msgstr ""
+
 msgid "Copying code files ..."
 msgstr "Копирую файлы с кодом..."
 
@@ -660,7 +665,9 @@ msgstr "недоступен индекс для хранилища %s"
 msgid "Invalid 'filters' argument."
 msgstr "Неправильные аргументы 'filter'"
 
-msgid "invalid 'oldPkgs'; must be a result from old.packages()"
+#, fuzzy
+msgid ""
+"invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr "неверное значение 'oldPkgs'; должен быть результатом old.packages()"
 
 msgid "illformed 'instPkgs' matrix"

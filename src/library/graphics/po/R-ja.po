@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-25 11:51+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -132,11 +132,15 @@ msgstr " 行数 * 列数が小さすぎます "
 msgid "Missing rows"
 msgstr " 行が欠けています "
 
-msgid "'expr' must be a function, call or an expression containing 'x'"
+#, fuzzy
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr " 'expr' は 'x' を含む関数、呼び出しまたは表現式でなければなりません "
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr " log=\"x\" ならば 'from' と 'to' は正値でなければなりません "
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr ""
 
 msgid "wrong method"
 msgstr " 間違ったメソッドです "
@@ -146,6 +150,10 @@ msgstr " hist.POSIXt メソッドでは 'breaks' を指定しなければなり�
 
 msgid "invalid specification of 'breaks'"
 msgstr " 'breaks' の指定が無効です "
+
+#, fuzzy
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr " hist.POSIXt メソッドでは 'breaks' を指定しなければなりません "
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr " 'x' は数値ベクトル又は行列でなければなりません "
@@ -301,6 +309,9 @@ msgstr " 'pairs' の引数はただ一つの列しか持ちません "
 
 msgid "the 'panel' function made a new plot"
 msgstr " 'panel' 関数は新規のプロットを行いました "
+
+msgid "surface extends beyond the box"
+msgstr ""
 
 msgid "'x' values must be positive."
 msgstr " 'x' の値は正でなければなりません "

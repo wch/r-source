@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -591,6 +591,10 @@ msgstr "'--multiarch'只设定了一个可以用的子体系结构"
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr "无法建立目录'%s'"
+
 msgid "package dir"
 msgstr "程序包目录"
 
@@ -691,6 +695,9 @@ msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
+
+msgid "installing via 'install.libs.R' to"
+msgstr ""
 
 msgid "installing to"
 msgstr "安装至"

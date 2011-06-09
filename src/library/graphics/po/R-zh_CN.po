@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-02-18 12:36\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -131,11 +131,15 @@ msgstr "行 * 列的结果太小"
 msgid "Missing rows"
 msgstr "缺少行"
 
-msgid "'expr' must be a function, call or an expression containing 'x'"
+#, fuzzy
+msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr'要么是函数，要么调用，要么是包含'x'的表达式"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "log=\"x\"意味着'from'和'to'的值必需大于零"
+
+msgid "'expr' did not evaluate to an object of length 'n'"
+msgstr ""
 
 msgid "wrong method"
 msgstr "方法不对"
@@ -145,6 +149,9 @@ msgstr ""
 
 msgid "invalid specification of 'breaks'"
 msgstr "'breaks'定义不对"
+
+msgid "Must specify 'breaks' in hist(<Date>)"
+msgstr ""
 
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x'要么是数值向量，要么是矩阵"
@@ -294,6 +301,9 @@ msgstr "参数里只有一个列用在'pairs'上"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'函数画了一个新的图"
+
+msgid "surface extends beyond the box"
+msgstr ""
 
 msgid "'x' values must be positive."
 msgstr "'x'必需是正数."

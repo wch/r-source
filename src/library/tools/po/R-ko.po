@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-06 17:15\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -602,6 +602,10 @@ msgstr ""
 msgid "Error: no packages were specified"
 msgstr ""
 
+#, fuzzy
+msgid "ERROR: cannot create check dir %s"
+msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
+
 msgid "package dir"
 msgstr ""
 
@@ -709,6 +713,9 @@ msgstr ""
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Administration Manual'"
+msgstr ""
+
+msgid "installing via 'install.libs.R' to"
 msgstr ""
 
 msgid "installing to"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -634,6 +634,11 @@ msgstr " Read-and-delete-me を作成中 ... "
 msgid "Saving functions and data ..."
 msgstr " 関数とデータを保存中 ... "
 
+msgid ""
+"Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
+"the code_files= argument"
+msgstr ""
+
 msgid "Copying code files ..."
 msgstr " コードファイルをコピー中 ... "
 
@@ -661,7 +666,9 @@ msgstr " リポジトリー %s に対する索引にアクセスできません 
 msgid "Invalid 'filters' argument."
 msgstr " 不正な 'filters' 引数 "
 
-msgid "invalid 'oldPkgs'; must be a result from old.packages()"
+#, fuzzy
+msgid ""
+"invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
 " 不正な 'oldPkgs'; old.packages() からの結果のようでなければなりません "
 

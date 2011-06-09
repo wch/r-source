@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -11,6 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "invalid 'filename'"
+msgstr "부적절한 'family' 인수입니다"
 
 msgid "'coef' must not be negative"
 msgstr "'coef'는 negative로는 될수 없습니다"
@@ -318,6 +322,9 @@ msgstr "디바이스 '%s'는 유효하지는 않습니다"
 msgid "Available devices are %s"
 msgstr "이용 가능한 디바이스는 %s입니다"
 
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'title'"
 msgstr "부적절한 'family' 인수입니다"
@@ -331,11 +338,10 @@ msgstr "quartzFonts에서 부적절한 인수입니다(font명이 필요합니�
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
-#, fuzzy
-msgid "invalid 'filename'"
-msgstr "부적절한 'family' 인수입니다"
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr ""
 
-msgid "'res' must be specified unless 'units = \"px\"'"
+msgid "unknown family for X11(type = \"XLib\")"
 msgstr ""
 
 msgid "invalid X11 font specification:"

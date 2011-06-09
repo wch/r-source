@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-03-25 15:11+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 1.1.0 \n"
+
+msgid "invalid 'filename'"
+msgstr " 不正な 'filename' 引数です "
 
 msgid "'coef' must not be negative"
 msgstr " 'coef' は負にはなれません "
@@ -300,6 +303,9 @@ msgstr " デバイス '%s' は利用可能ではありません "
 msgid "Available devices are %s"
 msgstr " 利用可能なデバイスは %s です "
 
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "
+
 msgid "invalid 'title'"
 msgstr " 不正な 'title' です "
 
@@ -312,11 +318,11 @@ msgstr " quartzFonts 中の不正な引数です（フォント名が必要で�
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です） "
 
-msgid "invalid 'filename'"
-msgstr " 不正な 'filename' 引数です "
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr ""
 
-msgid "'res' must be specified unless 'units = \"px\"'"
-msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があります "
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です "

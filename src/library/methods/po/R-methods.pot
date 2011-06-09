@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,13 +101,13 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 
-msgid "Restoring the implicit generic function for %s from package %s\n    into package %s; the generic differs from the default conversion (%s)"
+msgid "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)"
 msgstr ""
 
-msgid "Creating a generic for %s in package %s\n    (the supplied definition differs from and overrides the implicit generic\n    in package %s: %s)"
+msgid "Creating a new generic function for %s in %s"
 msgstr ""
 
-msgid "No generic version of %s on package %s is allowed;\n   a new generic will be assigned with package %s"
+msgid "No generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s"
 msgstr ""
 
 msgid "function \"%s\" appears to be a generic function, but with generic name \"%s\""
@@ -134,10 +134,10 @@ msgstr ""
 msgid "no existing definition for function \"%s\""
 msgstr ""
 
-msgid "Creating a generic function from function \"%s\""
+msgid "Creating a generic function from function \"%s\" in %s"
 msgstr ""
 
-msgid "Creating a new generic function for \"%s\" in \"%s\""
+msgid "Creating a generic function for \"%s\" from package \"%s\" in %s"
 msgstr ""
 
 msgid "apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\""
@@ -1010,7 +1010,7 @@ msgstr ""
 msgid "no definition of class \"%s\" in the specified position, %s, definition(s) on : %s"
 msgstr ""
 
-msgid "Field \"%s\" is not a valid field or method name for reference class \"%s\""
+msgid "\"%s\" is not a valid field or method name for reference class \"%s\""
 msgstr ""
 
 msgid "Method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class."
@@ -1023,6 +1023,9 @@ msgid "\"%s\" is not a reference class"
 msgstr ""
 
 msgid "\"%s\" is not a field in class \"%s\""
+msgstr ""
+
+msgid "\"%s\" is not a valid field or method name for this class"
 msgstr ""
 
 msgid "The class of field \"%s\" in the object is not compatible with the desired class \"%s\" in the target"
@@ -1043,6 +1046,9 @@ msgstr ""
 msgid "\"%s\" is not a field in this class"
 msgstr ""
 
+msgid "The definition of class \"%s\" in package \"%s\" is locked, methods may not be redefined"
+msgstr ""
+
 msgid "Arguments to methods() must be named, or one named list"
 msgstr ""
 
@@ -1050,6 +1056,9 @@ msgid "Topic \"%s\" is not a method name in class \"%s\"\nThe class definition f
 msgstr ""
 
 msgid "Arguments must all be character string names of fields"
+msgstr ""
+
+msgid "The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified"
 msgstr ""
 
 msgid "Field \"%s\"  of class \"%s\" has a non-default binding and cannot be locked"
@@ -1116,6 +1125,12 @@ msgid "An object of class \""
 msgstr ""
 
 msgid "invalid call to 'classLabel': expected a name or a class definition, got an object of class %s"
+msgstr ""
+
+msgid "Argument signature= is not meaningful for tracing reference methods"
+msgstr ""
+
+msgid "\"%s\" is not a method for reference class \"%s\""
 msgstr ""
 
 msgid "argument 'what' should be the name of a function"

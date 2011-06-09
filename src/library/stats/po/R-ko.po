@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1287,11 +1287,19 @@ msgstr "'x' 데이터의 수가 충분하지는 않습니다"
 msgid "not enough 'y' data"
 msgstr "'y' 데이터의 수가 충분하지는 않습니다"
 
-msgid "cannot compute correct p-values with ties"
-msgstr "ties가 있기 때문에, 올바른 p값을 계산할 수가 없습니다"
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "p-values will be approximate in the presence of ties"
+msgstr ""
+
+#, fuzzy
+msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y'는 수치 또는 유효한 함수의 이름인 문자열이 아니면 안됩니다"
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -2530,6 +2538,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "cannot compute correct p-values with ties"
+#~ msgstr "ties가 있기 때문에, 올바른 p값을 계산할 수가 없습니다"
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr "'FUN'는 항상 sclalar를 돌려주지 않으면 되지 않습니다"

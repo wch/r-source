@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-04-10 07:45\n"
+"POT-Creation-Date: 2011-06-09 13:48\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1221,10 +1221,17 @@ msgstr "yetersiz 'x' verisi"
 msgid "not enough 'y' data"
 msgstr "yetersiz 'y' verisi"
 
-msgid "cannot compute correct p-values with ties"
+#, fuzzy
+msgid "cannot compute exact p-values with ties"
+msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
+
+msgid "p-values will be approximate in the presence of ties"
 msgstr ""
 
-msgid "'y' must be numeric or a string naming a valid function"
+msgid "'y' must be numeric or a function of a string naming a valid function"
+msgstr ""
+
+msgid "ties should not be present for the Kolomogorov-Smirnov test"
 msgstr ""
 
 msgid ""
