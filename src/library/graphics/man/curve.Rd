@@ -9,9 +9,9 @@
 \alias{plot.function}
 
 \description{
-  Draws a curve corresponding to the given function or, for
-  \code{curve} also an expression (in \code{x}) over the interval
-  \code{[from, to]}.
+  Draws a curve corresponding to a function over the interval
+  \code{[from, to]}. \code{curve} can plot also an expression in the variable
+  \code{xname}, default \samp{x}.
 }
 
 \usage{
@@ -59,9 +59,11 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
   \eqn{(0, 1)} unless \code{xlim} is supplied.
 
-  The value of \code{log} is taken from the current plot when \code{add}
-  is true, and otherwise defaults to \code{""} (indicating linear scales
-  on both axes).
+  The default value of \code{log} is taken from the current plot when
+  \code{add} is true, and otherwise defaults to \code{""} (indicating
+  linear scales on both axes).  (So the default behaviour if \code{add =
+    TRUE} is to take the x-limits but not the x-log-scaling from the
+  previous plot.)
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
