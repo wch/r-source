@@ -24,8 +24,8 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
         expr <- call(as.character(sexpr), as.name(xname))
     } else {
 	if ( !( (is.call(sexpr) || is.expression(sexpr)) &&
-              "x" %in% all.vars(sexpr) ))
-	    stop("'expr' must be a function, or a call or an expression containing 'x'")
+              xname %in% all.vars(sexpr) ))
+	    stop(gettextf("'expr' must be a function, or a call or an expression containing '%s'", xname), domain = NA)
 	expr <- sexpr
     }
     if (is.null(ylab)) ylab <- deparse(expr)
