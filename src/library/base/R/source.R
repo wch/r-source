@@ -33,7 +33,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		  parent.frame() else baseenv())
 	.Internal(eval.with.vis(expr, envir, enclos))
 
-    envir <- if (local) parent.frame() else .GlobalEnv
+    envir <- if (isTRUE(local)) {
+        parent.frame()
+    } else if(identical(local, FALSE)) {
+        .GlobalEnv
+    } else if (is.environment(local)) {
+        local
+    } else stop("'local' must be TRUE, FALSE or an environment")
     have_encoding <- !missing(encoding) && encoding != "unknown"
     if (!missing(echo)) {
 	if (!is.logical(echo))

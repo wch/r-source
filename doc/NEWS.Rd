@@ -149,13 +149,18 @@
       makes assumptions known to be invalid in the presence of ties).
 
       \item The defaults for \code{curve(from=, to=, xlim = NULL)} are
-      taken from the previous plot if there was one: if there was not the
+      taken from the previous plot if there was one: if there was none the
       defaults used to be \code{from = 1/27, to = 26/27} and are now
       \code{from = 0, to = 1}.
 
       There is a new argument \code{xname} to facilitate plots such as
       \code{sin(t)} \emph{vs} \code{t}: this can also be used when
       plotting a function.
+
+      \item The \code{local} argument to \code{source()} can specify an
+      environment as well as \code{TRUE} (\code{parent.env()}) and
+      \code{FALSE} (\code{.GlobalEnv}).  It gives better error messages
+      for other values, such as \code{NA}.
     }
   }
   

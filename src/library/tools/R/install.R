@@ -405,7 +405,7 @@
         {
             ## install.lib.R allows customization of the libs installation process
             if (file.exists("install.libs.R")) {
-                message('installing via install.libs.R to ', instdir)
+                message("installing via 'install.libs.R' to ", instdir)
                 ## the following variables are defined to be available,
                 ## and to prevent abuse we don't expose anything else
                 local.env <- local({ SHLIB_EXT <- SHLIB_EXT
@@ -416,11 +416,11 @@
                                      WINDOWS <- WINDOWS
                                      environment()})
                 parent.env(local.env) <- .GlobalEnv
-                evalq(source("install.libs.R", local=TRUE), local.env)
+                source("install.libs.R", local = local.env())
                 return(TRUE)
             }
             ## otherwise proceed with the default which is to just copy *${SHLIB_EXT}
-            files <- Sys.glob(paste0("*", SHLIB_EXT)) 
+            files <- Sys.glob(paste0("*", SHLIB_EXT))
             if (length(files)) {
                 libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
                 dest <- file.path(instdir, libarch)
