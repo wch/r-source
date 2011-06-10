@@ -30,7 +30,10 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{y}{alias for \code{from} for compatibility with \code{plot}}
   \item{from, to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
-  \item{add}{logical; if \code{TRUE} add to an already existing plot.}
+  \item{add}{logical; if \code{TRUE} add to an already existing plot; if
+    \code{NA} start a new plot taking the defaults for the limits and
+    log-scaling of the x-axis from the previous plot.  Ignored (with a
+    warning) if no graphics device is open.}
   \item{xlim}{numeric of length 2; if specified, it provides the defaults
     for \code{c(from, to)}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
@@ -60,10 +63,8 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \eqn{(0, 1)} unless \code{xlim} is supplied.
 
   The default value of \code{log} is taken from the current plot when
-  \code{add} is true, and otherwise defaults to \code{""} (indicating
-  linear scales on both axes).  (So the default behaviour if \code{add =
-    TRUE} is to take the x-limits but not the x-log-scaling from the
-  previous plot.)
+  \code{add} is true, and otherwise the x value is taken from the
+  existing plot (if any) and the y value defaults to linear.
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
@@ -73,7 +74,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   The way \code{curve} handles \code{expr} has caused confusion.  It
   first looks to see if \code{expr} is a \link{name} (also known as a
   symbol), in which case it is taken to be the name of a function, and
-  \code{expr} is replaced by the call \code{expr(x)}.  Otherwise it
+  \code{expr} is replaced by the call \code{expr(xname)}.  Otherwise it
   checks that \code{expr} is either a \link{call} or an
   \link{expression}, and that it contains a reference to the variable
   given by \code{xname} (using \code{\link{all.vars}}): anything else is
@@ -101,7 +102,7 @@ plot(qlogis, main = "The Inverse Logit : qlogis()")
 abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 
 curve(sin, -2*pi, 2*pi, xname = "t")
-curve(tan, xname = "t",
+curve(tan, xname = "t", add = NA,
       main = "curve(tan)  --> same x-scale as previous plot")
 
 op <- par(mfrow = c(2, 2))
@@ -110,7 +111,7 @@ curve(x^2 - 2, add = TRUE, col = "violet")
 
 ## simple and advanced versions, quite similar:
 plot(cos, -pi,  3*pi)
-plot(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
+curve(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
 
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n = 2001)

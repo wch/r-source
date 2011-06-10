@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-08 r56082)
+R version 2.14.0 Under development (unstable) (2011-06-09 r56106)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -748,7 +748,7 @@ temperature no yes
 > abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 > 
 > curve(sin, -2*pi, 2*pi, xname = "t")
-> curve(tan, xname = "t",
+> curve(tan, xname = "t", add = NA,
 +       main = "curve(tan)  --> same x-scale as previous plot")
 > 
 > op <- par(mfrow = c(2, 2))
@@ -757,7 +757,7 @@ temperature no yes
 > 
 > ## simple and advanced versions, quite similar:
 > plot(cos, -pi,  3*pi)
-> plot(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
+> curve(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
 > 
 > chippy <- function(x) sin(cos(x)*exp(-x/2))
 > curve(chippy, -8, 7, n = 2001)

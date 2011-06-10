@@ -28,12 +28,16 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 	    stop(gettextf("'expr' must be a function, or a call or an expression containing '%s'", xname), domain = NA)
 	expr <- sexpr
     }
+    if (dev.cur() == 1L && !identical(add, FALSE)) {
+        warning("'add' will be ignored as there is no existing plot")
+        add <- FALSE
+    }
+    addF <- identical(add, FALSE)
     if (is.null(ylab)) ylab <- deparse(expr)
     if (is.null(from) || is.null(to)) {
         xl <- if (!is.null(xlim)) xlim
-        else if (dev.cur() > 1L) {
+        else if (!addF) {
             ## determine xlim of current plot.
-            ## NB: we do this even for add = FALSE.
             pu <- par("usr")[1L:2L]
             if (par("xaxs") == "r") pu <- extendrange(pu, f = -1/27)
             if (par("xlog")) 10^pu else pu
@@ -41,10 +45,7 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
         if (is.null(from)) from <- xl[1L]
         if (is.null(to)) to <- xl[2L]
     }
-    lg <-
-        if (length(log)) log
-        else paste(if (add && par("xlog")) "x",
-                   if (add && par("ylog")) "y", sep = "")
+    lg <- if (length(log)) log else if (!addF && par("xlog")) "x" else ""
     if (length(lg) == 0) lg <- ""
     if (grepl("x", lg, fixed = TRUE)) {
         if (from <= 0 || to <= 0)
@@ -55,7 +56,7 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     y <- eval(expr, envir = ll, enclos = parent.frame())
     if (length(y) != length(x))
         stop("'expr' did not evaluate to an object of length 'n'")
-    if (add)
+    if (isTRUE(add))
 	lines(x = x, y = y, type = type, ...)
     else
         plot(x = x, y = y, type = type, xlab = xlab, ylab = ylab,

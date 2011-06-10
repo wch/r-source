@@ -1,7 +1,7 @@
 postscript("reg-tests-1b.ps", encoding = "ISOLatin1.enc")
 
 ## force standard handling for data frames
-options(stringsAsFactors=TRUE)
+options(stringsAsFactors = TRUE)
 ## .Machine
 (Meps <- .Machine$double.eps)# and use it in this file
 
@@ -15,9 +15,12 @@ x <- structure(list(2), class="foo")
 str(x)
 ## gave infinite recursion < 2.6.0
 
+
 curve(sin, -2*pi, 3*pi); pu1 <- par("usr")[1:2]
-curve(cos); stopifnot(all.equal(par("usr")[1:2], pu1))
+curve(cos, add = NA) # add = NA new in 2.14.0
+stopifnot(all.equal(par("usr")[1:2], pu1))
 ## failed in R <= 2.6.0
+
 
 ## tests of side-effects with CHARSXP caching
 x <- y <- "abc"
@@ -342,6 +345,7 @@ stopifnot(inherits(t1, "try-error"),
 	  identical(dd$x, dd[,"xx"]))
 ## From 2.5.0 to 2.7.1, the non-match indexing gave NULL instead of error
 
+
 ## data.frame[ (<NA>), ] when row.names had  "NA"
 x <- data.frame(x=1:3, y=2:4, row.names=c("a","b","NA"))
 y  <- x [c(2:3, NA),]
@@ -349,8 +353,10 @@ y.ok <- data.frame(x=c(2:3,NA), y=c(3:4,NA), row.names=c("b", "NA", "NA.1"))
 stopifnot(identical(y, y.ok))
 ## From 2.5.0 to 2.7.1,  y had row name "NA" twice
 
+
 stopifnot(shapiro.test(c(0,0,1))$p.value >= 0)
 ## was wrong up to 2.7.1, because of rounding errors (in single precision).
+
 
 stopifnot(rcond(cbind(1, c(3,3))) == 0)
 ## gave an error (because Lapack's LU detects exact singularity)
@@ -388,7 +394,7 @@ Data <- data.frame(x=c(1,1,1,1,1,2,2,3,3,3,3,3,3,4,4,4,5,5,5,5,6,6,6,6,6,6,
                    181,152,188,173,196,180,171,188,174,198, 172, 176,162,188,
                    182,182,141,191,190,159,170,163,197),
                    weight=c(1, rep(0.1, 51)))
-G.st <- c(k=0.005, g1=50,g2=550)
+G.st <- c(k=0.005, g1=50, g2=550)
 # model has length-1 (and 52) variables
 Ta <- min(Data$x)
 Tb <- max(Data$x)
@@ -398,9 +404,8 @@ nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
                 /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st, trace=TRUE)
 
 #with weights
-nls(y~((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))
-                /(1-exp(-k*(Tb-Ta))))), data=Data, start=G.st,
-    trace=TRUE, weights=weight)
+nls(y ~ ((g1)*exp((log(g2/g1))*(1-exp(-k*(x-Ta)))/(1-exp(-k*(Tb-Ta))))),
+    data = Data, start = G.st, trace = TRUE, weights = weight)
 ## failed for find weights in R <= 2.7.1
 
 
@@ -448,6 +453,7 @@ unlink("foo.txt")
 stopifnot(identical(z, c(1,2)))
 ## changed in 2.7.2 patched
 
+
 ## cov / cor / var etc with NAs :
 stopifnot(inherits(try(var(NULL)), "try-error"))## gave NA in 1.2.2
 v0 <- var(0[FALSE]) # gave "'x' is empty" in the past;  NA in 1.2.2
@@ -461,6 +467,7 @@ stopifnot(is.NA(v1), is.NA(v2), is.NA(sx),
 	  all.equal(0.5, var(x, na.rm=TRUE), tol=8*Meps)# should even be exact
 	  )
 
+
 ## write.dcf() indenting for ".<foo>" (PR#12816)
 zz <- textConnection("foo", "w")
 write.dcf(list(Description = 'what a fat goat .haha'),
@@ -471,7 +478,7 @@ close(zz)
 ## was " .haha" (not according to DCF standard)
 
 
-## Pdf() with CIDfonts active -- they need MBCS to be supported
+## pdf() with CIDfonts active -- they need MBCS to be supported
 pdf(family="Japan1") # << for CIDfonts, pd->fonts is NULL
 try({
     plot(1,1,pch="", axes=FALSE)
@@ -479,6 +486,7 @@ try({
 })
 dev.off()
 ## text() seg.faulted up to 2.7.2 (and early 2.8.0-alpha)
+
 
 ## PS mixing CIDfonts and Type1 - reverse case
 postscript(family="Helvetica")
@@ -792,7 +800,8 @@ stopifnot(inherits(con, "try-error") && nopen == nrow(showConnections()))
 
 ## PR#13574
 x <- 1:11; y <- c(6:1, 7, 11:8)
-stopifnot(all.equal(cor.test(x, y, method="spearman", alternative="greater")$p.value, cor.test(x, -y, method="spearman", alternative="less")$p.value))
+stopifnot(all.equal(cor.test(x, y, method="spearman", alternative="greater")$p.value,
+                    cor.test(x, -y, method="spearman", alternative="less")$p.value))
 ## marginally different < 2.9.0 patched
 
 
@@ -1034,6 +1043,7 @@ z <- read.table("test.dat", header = TRUE)
 unlink("test.dat")
 stopifnot(identical(z, data.frame("B1.B2"="B3")))
 ## Left part of header to be read as data in R < 2.11.0
+
 
 ## switch() with  empty  '...'
 stopifnot(is.null(switch("A")),
@@ -1333,7 +1343,8 @@ z2 <- quantile(x, type = 6, probs = c(.5, 0))
 stopifnot(z1 == rev(z2))
 ## differed in 2.11.x
 
-## backspline() with decreasing knot locations
+
+## backSpline() with decreasing knot locations
 require(splines)
 d1 <- c(616.1, 570.1, 523.7, 477.3, 431.3, 386.2, 342.4, 300.4, 260.4,
         222.7, 187.8, 155.7, 126.7, 100.8,  78.1,  58.6,  42.2,  28.7,
@@ -1411,8 +1422,8 @@ stopifnot(identical(attributes(!M), attributes(M)))
 
 
 ## Preserve intercepts in drop.terms
-tt <- terms(~a+b-1)
-tt2 <- terms(~b-1)
+tt <- terms(~ a + b - 1)
+tt2 <- terms(~ b - 1)
 stopifnot(identical(drop.terms(tt, 1), tt2))
 stopifnot(identical(tt[2], tt2))
 stopifnot(identical(tt[1:2], tt))
@@ -1542,8 +1553,8 @@ unlink(tf)
 
 
 ## NA_complex_ in prettyNum()
-format(c(pi+0i, NA),   drop0=TRUE)
-prettyNum(NA_complex_, drop0=TRUE)
+format(c(pi+0i, NA),   drop0 = TRUE)
+prettyNum(NA_complex_, drop0 = TRUE)
 ## gave errors in R < 2.12.2
 
 
@@ -1578,7 +1589,7 @@ dfA <- data.frame(A=1:2, B=3:4, row.names=letters[1:2])
 dfB <- dfA[2:1,]
 res <- try(data.frame(dfA, dfA[2:1,], check.rows=TRUE))
 stopifnot(inherits(res, "try-error"))
-## worked in 2.12.2.
+## 'worked' in 2.12.2.
 
 
 ## uniroot(f,..) when f(.) == -Inf :
