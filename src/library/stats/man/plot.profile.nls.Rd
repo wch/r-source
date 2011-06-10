@@ -27,8 +27,16 @@
  \item{absVal}{a logical value indicating whether or not the plots
    should be on the scale of the absolute value of the profile t.
    Defaults to \code{TRUE}.} 
- \item{\dots}{other arguments to the \code{plot} function can be passed
-   here (but will be ignored).}
+ \item{\dots}{other arguments to the \code{\link{plot.default}}
+   function can be passed here (but not \code{xlab}, \code{xlim},
+   \code{ylim} nor \code{type}).}
+}
+\details{
+  The plots are produced in a set of hard-coded colours, but as these
+  are coded by number their effect can be changed by setting the
+  \code{\link{palette}}.  Colour 1 is used for the axes and 4 for the
+  profile itself.  Colours 3 and 6 are used for the axis line at zero and
+  the horizontal/vertical lines dropping to the axes.
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988),
