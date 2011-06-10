@@ -58,7 +58,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
     use horizontal labeling. }
  \item{axes, frame.plot}{logicals indicating if axes and a box should be
    drawn, as in \code{\link{plot.default}}.}
- \item{\dots}{additional graphical parameters, currently only passed to
+ \item{\dots}{additional \link{graphical parameters}, currently only passed to
    \code{\link{title}()}.}
 }
 \description{

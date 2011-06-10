@@ -62,7 +62,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
 
-  \item{\dots}{other graphical parameters may also be passed as
+  \item{\dots}{other \link{graphical parameters} may also be passed as
     arguments to this function, particularly, \code{cex.axis},
     \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
     and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or

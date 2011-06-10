@@ -45,8 +45,8 @@ text(x, \dots)
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
   \item{col, font}{the color and (if \code{vfont = NULL}) font to be
     used, possibly vectors. These default to the values of the global
-    graphical parameters in \code{\link{par}()}.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}),
+    \link{graphical parameters} in \code{\link{par}()}.}
+  \item{\dots}{further \link{graphical parameters} (from \code{\link{par}}),
     such as \code{srt}, \code{family} and \code{xpd}.}
 }
 \description{
@@ -78,8 +78,9 @@ text(x, \dots)
   with values returned by \code{identify} to recreate an interactively
   labelled plot.
 
-  Text can be rotated by using graphical parameters \code{srt} (see
-  \code{\link{par}}); this rotates about the centre set by \code{adj}.
+  Text can be rotated by using \link{graphical parameters} \code{srt}
+  (see \code{\link{par}}); this rotates about the centre set by
+  \code{adj}.
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and

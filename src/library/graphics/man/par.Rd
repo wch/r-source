@@ -78,7 +78,9 @@
 \concept{ylog}
 \concept{color}
 \concept{colour}
-  
+\alias{graphical parameter}
+\alias{graphical parameters}
+
 \title{Set or Query Graphical Parameters}
 
 %% The 'real documentation' is the code in ../../../main/par.c

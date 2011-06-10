@@ -18,7 +18,7 @@ box(which = "plot", lty = "solid", \dots)
 \item{which}{character, one of \code{"plot"}, \code{"figure"},
   \code{"inner"} and \code{"outer"}.}
 \item{lty}{line type of the box.}
-\item{\dots}{further graphical parameters, such as \code{bty},
+\item{\dots}{further \link{graphical parameters}, such as \code{bty},
   \code{col}, or \code{lwd}, see \code{\link{par}}.  Note that
   \code{xpd} is not accepted as clipping is always to the device
   region.}

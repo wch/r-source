@@ -15,8 +15,8 @@ plot(x, y, \dots)
         \code{plot} method} can be provided.}
   \item{y}{the y coordinates of points in the plot, \emph{optional}
     if \code{x} is an appropriate structure.}
-  \item{\dots}{Arguments to be passed to methods, such as graphical
-    parameters (see \code{\link{par}}).
+  \item{\dots}{Arguments to be passed to methods, such as
+    \link{graphical parameters} (see \code{\link{par}}).
     Many methods will accept the following arguments:
     \describe{
     \item{\code{type}}{what type of plot should be drawn.  Possible types are

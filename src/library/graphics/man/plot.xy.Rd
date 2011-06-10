@@ -32,7 +32,7 @@ plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
   \item{cex}{character expansion.}
   \item{lwd}{line width, also used for (non-filled) plot symbols, see
     \code{\link{lines}} and \code{\link{points}}.}
-  \item{\dots}{further graphical parameters such as \code{xpd},
+  \item{\dots}{further \link{graphical parameters} such as \code{xpd},
     \code{lend}, \code{ljoin} and \code{lmitre}.}
 }
 \details{

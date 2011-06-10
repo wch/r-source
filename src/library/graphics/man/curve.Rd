@@ -41,8 +41,8 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     \code{\link{plot.window}}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
   \item{xname}{character string giving the name to be used for the x axis.}
-  \item{xlab, ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.  See \sQuote{Details} for the
+  \item{xlab, ylab, log, \dots}{labels and \link{graphical parameters}
+    can also be specified as arguments.  See \sQuote{Details} for the
     interpretation of the default for \code{log}.
 
     For the \code{"function"} method of \code{plot}, \code{\dots} can

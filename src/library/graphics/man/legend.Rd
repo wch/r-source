@@ -89,7 +89,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     coerced by \code{\link{as.graphicsAnnot}}.}
   \item{inset}{inset distance(s) from the margins as a fraction of the
     plot region when legend is placed by keyword.}
-  \item{xpd}{if supplied, a value of the graphical parameter \code{xpd}
+  \item{xpd}{if supplied, a value of the \link{graphical parameter} \code{xpd}
     to be used while the legend is being drawn.}
   \item{title.col}{color for \code{title}.}
   \item{title.adj}{horizontal adjustment for \code{title}: see the help

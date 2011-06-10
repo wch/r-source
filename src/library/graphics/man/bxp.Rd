@@ -52,7 +52,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     \code{1:n} where \code{n} is the number of boxes.}
   \item{show.names}{Set to \code{TRUE} or \code{FALSE} to override the
     defaults on whether an x-axis label is printed for each group.}
-  \item{pars,\dots}{graphical parameters (etc) can be passed as
+  \item{pars,\dots}{\link{graphical parameters} (etc) can be passed as
     arguments to this function, either as a list (\code{pars}) or
     normally(\code{\dots}), see the following.  (Those in \code{\dots}
     take precedence over those in \code{pars}.)

@@ -31,7 +31,7 @@
     plus \code{"secs"}, \code{"mins"}, \code{"hours"} for
     date-time objects.
  }
-  \item{\dots}{graphical parameters, or arguments to
+  \item{\dots}{\link{graphical parameters}, or arguments to
     \code{\link{hist.default}} such as \code{include.lowest},
       \code{right} and \code{labels}.}
   \item{xlab}{a character string giving the label for the x axis, if plotted.}

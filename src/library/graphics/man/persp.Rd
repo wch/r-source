@@ -86,7 +86,7 @@ persp(x, \dots)
     \code{"detailed"} draws normal ticks as per 2D plots.}
   \item{nticks}{the (approximate) number of tick marks to draw on the
     axes.  Has no effect if \code{ticktype} is \code{"simple"}.}
-  \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
+  \item{\dots}{additional \link{graphical parameters} (see \code{\link{par}}).}
 }
 \value{
   \code{persp()} returns the \emph{viewing transformation matrix}, say

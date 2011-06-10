@@ -34,7 +34,7 @@ polypath(x, y = NULL,
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{rule}{character value specifying the path fill mode: either
     \code{"winding"} or \code{"evenodd"}.} 
-  \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
+  \item{\dots}{\link{graphical parameters} such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as arguments.}
 }
 \details{

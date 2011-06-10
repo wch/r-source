@@ -47,7 +47,8 @@
   \item{add}{logical.  If \code{TRUE}, only the bars are added to the
     current plot.  This is what \code{lines.histogram(*)} does.}
   \item{ann}{logical.  Should annotations (titles and axis titles) be plotted?}
-  \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
+  \item{\dots}{further \link{graphical parameters} to
+    \code{title} and \code{axis}.}
 }
 \details{
   \code{lines.histogram(*)} is the same as

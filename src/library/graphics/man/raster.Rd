@@ -22,7 +22,7 @@ rasterImage(image,
     from positive x-axis, about the bottom-left corner).}
   \item{interpolate}{a logical vector (or scalar) indicating
     whether to apply linear interpolation to the image when drawing. }
-  \item{\dots}{graphical parameters.}
+  \item{\dots}{\link{graphical parameters}.}
 }
 \description{
   \code{rasterImage} draws a raster image at the given locations and sizes.

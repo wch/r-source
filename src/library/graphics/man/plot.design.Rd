@@ -27,7 +27,8 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
     subset.  It must return one number for a numeric (vector) input.}
   \item{data}{data frame containing the variables referenced by \code{x}
     when that is formula like.}
-  \item{\dots}{graphical arguments such as \code{col}, see \code{\link{par}}.}
+  \item{\dots}{\link{graphical parameters} such as \code{col},
+    see \code{\link{par}}.}
   \item{ylim}{range of y values, as in \code{\link{plot.default}}.}
   \item{xlab}{x axis label, see \code{\link{title}}.}
   \item{ylab}{y axis label with a \sQuote{smart} default.}

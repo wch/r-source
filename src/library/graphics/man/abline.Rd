@@ -21,7 +21,7 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
   \item{v}{the x-value(s) for vertical line(s).}
   \item{coef}{a vector of length two giving the intercept and slope.}
   \item{reg}{an object with a \code{\link{coef}} method.  See \sQuote{Details}.}
-  \item{\dots}{graphical parameters such as
+  \item{\dots}{\link{graphical parameters} such as
     \code{col}, \code{lty} and \code{lwd} (possibly as vectors: see
     \sQuote{Details}) and the line characteristics \code{lend}, \code{ljoin} and
     \code{lmitre}.}
@@ -54,7 +54,7 @@ abline(reg=, untf = FALSE, \dots)
   otherwise a line is drawn in the transformed coordinate system. The
   \code{h} and \code{v} parameters always refer to original coordinates.
 
-  The graphical parameters \code{col}, \code{lty} and \code{lwd}
+  The \link{graphical parameters} \code{col}, \code{lty} and \code{lwd}
   can be specified; see \code{\link{par}} for details.  For the
   \code{h=} and \code{v=} usages they can be vectors of length greater
   than one, recycled as necessary.

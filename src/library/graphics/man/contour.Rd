@@ -65,7 +65,7 @@ contour(x, \dots)
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
   \item{\dots}{additional arguments to \code{\link{plot.window}},
     \code{\link{title}}, \code{\link{Axis}} and \code{\link{box}},
-    typically graphical parameters such as \code{cex.axis}.}
+    typically \link{graphical parameters} such as \code{cex.axis}.}
 }
 \details{
   \code{contour} is a generic function with only a default method in
@@ -94,7 +94,7 @@ contour(x, \dots)
 
   There is limited control over the axes and frame as arguments
   \code{col}, \code{lwd} and \code{lty} refer to the contour lines
-  (rather than being general graphical parameters).  For more control,
+  (rather than being general \link{graphical parameters}).  For more control,
   add contours to a plot, or add axes and frame to a contour plot.
 }
 \references{

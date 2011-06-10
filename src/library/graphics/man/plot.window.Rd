@@ -26,7 +26,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \item{log}{character; indicating which axes should be in log scale.}
   \item{asp}{numeric, giving the \bold{asp}ect ratio y/x,
     see \sQuote{Details}.}
-  \item{\dots}{further graphical parameters as in \code{\link{par}}.
+  \item{\dots}{further \link{graphical parameters} as in \code{\link{par}}.
     The relevant ones are \code{xaxs}, \code{yaxs} and \code{lab}.
   }
 }
@@ -49,7 +49,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   }}
 
   Note that the coordinate ranges will be extended by 4\% if the
-  appropriate graphical parameter \code{xaxs} or \code{yaxs} has value
+  appropriate \link{graphical parameter} \code{xaxs} or \code{yaxs} has value
   \code{"s"} (which is the default).
 
   To reverse an axis, use \code{xlim} or \code{ylim} of the form
@@ -65,7 +65,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   arguments.
 
   A side-effect of the call is to set up the \code{usr}, \code{xaxp} and
-  \code{yaxp} graphical parameters.  (It is for the latter two that
+  \code{yaxp} \link{graphical parameters}.  (It is for the latter two that
   \code{lab} is used.)
 }
 \seealso{

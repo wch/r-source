@@ -23,7 +23,7 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
     annotations are to be made at the tickmarks, or a vector of character
     strings to be placed at the tickpoints.}
   \item{\dots}{Further arguments to be passed from or to other methods,
-    typically graphical parameters.}
+    typically \link{graphical parameters}.}
 }
 \details{
   \code{axis.POSIXct} and \code{axis.Date} work quite hard to choose
