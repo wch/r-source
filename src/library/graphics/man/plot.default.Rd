@@ -30,7 +30,10 @@
     \code{"h"} for histogram-like vertical lines.  Finally,
     \code{"n"} does not produce any points or lines.}
   \item{xlim}{the x limits (x1, x2) of the plot.  Note that \code{x1 > x2}
-    is allowed and leads to a \sQuote{reversed axis}.}
+    is allowed and leads to a \sQuote{reversed axis}.
+
+    The default value, \code{NULL}, indicates that the range of the
+    \link{finite} values to be plotted should be used.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
     is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
@@ -49,15 +52,16 @@
   \item{frame.plot}{a logical indicating whether a box should be drawn
     around the plot.}
 
-  \item{panel.first}{an \sQuote{expression} to be evaluated after the plot axes
-    are set up but before any plotting takes place.  This can be useful
-    for drawing background grids or scatterplot smooths.  Note that this
-    works by lazy evaluation: passing this argument from other
+  \item{panel.first}{an \sQuote{expression} to be evaluated after the
+    plot axes are set up but before any plotting takes place.  This can
+    be useful for drawing background grids or scatterplot smooths.  Note
+    that this works by lazy evaluation: passing this argument from other
     \code{plot} methods may well not work since it may be evaluated too
     early.}
+  
   \item{panel.last}{an expression to be evaluated after plotting has
     taken place but before the axes, title and box are added.  See the
-    comments on \code{panel.first}.}
+    comments about \code{panel.first}.}
 
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{other graphical parameters (see \code{\link{par}} and
