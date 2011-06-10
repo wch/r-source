@@ -32,39 +32,50 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \item{n}{integer; the number of x values at which to evaluate.}
   \item{add}{logical; if \code{TRUE} add to an already existing plot; if
     \code{NA} start a new plot taking the defaults for the limits and
-    log-scaling of the x-axis from the previous plot.  Ignored (with a
-    warning) if no graphics device is open.}
-  \item{xlim}{numeric of length 2; if specified, it provides the defaults
-    for \code{c(from, to)}.}
+    log-scaling of the x-axis from the previous plot.  Taken as
+    \code{FALSE} (with a warning if a different value is supplied) if no
+    graphics device is open.}
+  \item{xlim}{\code{NULL} or a numeric vector of length 2;
+    if non-\code{NULL} it provides the defaults for \code{c(from, to)}
+    and, unless \code{add = TRUE}, selects the x-limits of the plot -- see
+    \code{\link{plot.window}}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
   \item{xname}{character string giving the name to be used for the x axis.}
   \item{xlab, ylab, log, \dots}{labels and graphical parameters can also be
-    specified as arguments.  For the \code{"function"} method of
-    \code{plot} \code{\dots} can include any of the other arguments of
-    \code{curve}, except \code{expr}.}
+    specified as arguments.  See \sQuote{Details} for the
+    interpretation of the default for \code{log}.
+
+    For the \code{"function"} method of \code{plot}, \code{\dots} can
+    include any of the other arguments of \code{curve}, except
+    \code{expr}.
+  }
 }
 
 \details{
-  The evaluation of \code{expr} is at \code{n} points equally spaced
-  over the range \code{[from, to]}, possibly adapted to log scale.  The
-  points determined in this way are then joined with straight lines.
-  \code{x(t)} or \code{expr} (with \code{x} inside) must return a
-  numeric of the same length as the argument \code{t} or \code{x}.
+  The function or expression \code{expr} (for \code{curve}) or function
+  \code{x} is evaluated at \code{n} points equally spaced over the range
+  \code{[from, to]}.  The points determined in this way are then plotted.
 
-  For \code{curve()}, if either of \code{from} or \code{to} is
-  \code{NULL}, it defaults to the corresponding element of \code{xlim}
-  if that is not \code{NULL}, otherwise that of the x-limits of the
-  current plot (if there is one).  This is what one would expect for
-  \code{add = TRUE}: however for \code{add = FALSE} it uses the x-limits
-  of the \bold{previous} plot if there was one, and \code{c(0, 1)} if no
-  plot device is currently open (this changed in \R 2.14.0).
-  
-  For \code{plot(<function>)}, the defaults for \eqn{(from, to)} are
-  \eqn{(0, 1)} unless \code{xlim} is supplied.
+  If either \code{from} or \code{to} is \code{NULL}, it defaults to the
+  corresponding element of \code{xlim} if that is not \code{NULL}.
+
+  What happens when neither \code{from}/\code{to} nor \code{xlim}
+  specifies both x-limits is a complex story.  For
+  \code{plot(<function>)} and for \code{curve(add = FALSE)} the defaults
+  are \eqn{(0, 1)}.  For \code{curve(add = NA)} and \code{curve(add =
+  TRUE)} the defaults are taken from the x-limits used for the previous
+  plot.  (This differs from versions of \R prior to 2.14.0.)
+
+  The value of \code{log} is used both to determine the plot axes
+  (unless \code{add = TRUE}) and how \sQuote{equally spaced} is
+  interpreted: if the x component indicates log-scaling, the points at
+  which the expression or function is plotted are equally spaced on log
+  scale.
 
   The default value of \code{log} is taken from the current plot when
-  \code{add} is true, and otherwise the x value is taken from the
-  existing plot (if any) and the y value defaults to linear.
+  \code{add = TRUE}, whereas if \code{add = NA} the x component is taken
+  from the existing plot (if any) and the y component defaults to
+  linear.  For \code{add = FALSE} the default is \code{""}
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
@@ -74,12 +85,13 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   The way \code{curve} handles \code{expr} has caused confusion.  It
   first looks to see if \code{expr} is a \link{name} (also known as a
   symbol), in which case it is taken to be the name of a function, and
-  \code{expr} is replaced by the call \code{expr(xname)}.  Otherwise it
-  checks that \code{expr} is either a \link{call} or an
-  \link{expression}, and that it contains a reference to the variable
-  given by \code{xname} (using \code{\link{all.vars}}): anything else is
-  an error.  Then \code{expr} is evaluated in an environment which
-  supplies a vector of length \code{n}, and should evaluate to an object
+  \code{expr} is replaced by a call to \code{expr} with a single
+  argument with name given by \code{xname}.  Otherwise it checks that
+  \code{expr} is either a \link{call} or an \link{expression}, and that
+  it contains a reference to the variable given by \code{xname} (using
+  \code{\link{all.vars}}): anything else is an error.  Then \code{expr}
+  is evaluated in an environment which supplies a vector for name given
+  by \code{xname} of length \code{n}, and should evaluate to an object
   of length \code{n}.  Note that this means that \code{curve(x, ...)} is
   taken as a request to plot a function named \code{x} (and it is used
   as such in the \code{function} method for \code{plot}).
