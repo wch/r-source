@@ -1,12 +1,14 @@
 % File src/library/stats/man/vcov.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{vcov}
 \alias{vcov}
 \alias{vcov.lm}
 \alias{vcov.glm}
+\alias{vcov.summary.lm}
+\alias{vcov.summary.glm}
 \alias{vcov.lme}
 \alias{vcov.gls}
 \title{
@@ -21,7 +23,8 @@ vcov(object, \dots)
 }
 \arguments{
   \item{object}{
-    a fitted model object.
+    a fitted model object, typically.  Sometimes also a
+    \code{\link{summary}()} object of such a fitted model.
   }
   \item{\dots}{
     additional arguments for method functions.  For the
@@ -39,10 +42,15 @@ vcov(object, \dots)
   methods for this function.
   Classes with methods for this function include:
   \code{lm}, \code{mlm}, \code{glm}, \code{nls},
+  \code{summary.lm}, \code{summary.glm},
   \code{negbin}, \code{polr}, \code{rlm} (in package \pkg{MASS}),
   \code{multinom} (in package \pkg{nnet})
-  \code{gls}, \code{lme} (in package \pkg{nlme},
+  \code{gls}, \code{lme} (in package \pkg{nlme}),
   \code{coxph} and \code{survreg} (in package \pkg{survival}).
+
+  (\code{vcov()} methods for summary objects allow more
+  efficient and still encapsulated access when both
+  \code{summary(mod)} and \code{vcov(mod)} are needed.)
 }
 \keyword{models}
 \keyword{nonlinear}

@@ -163,6 +163,9 @@
       environment as well as \code{TRUE} (\code{parent.env()}) and
       \code{FALSE} (\code{.GlobalEnv}).  It gives better error messages
       for other values, such as \code{NA}.
+
+      \item \code{vcov()} gains methods for \code{"summary.lm"} and
+      \code{"summary.glm"}.
     }
   }
   

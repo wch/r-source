@@ -16,7 +16,7 @@
 
 vcov <- function(object, ...) UseMethod("vcov")
 
-## The next three have to call the method, as classes which
+## The next three have to call the summary method explicitly, as classes which
 ## inherit from "glm" need not have summary methods which
 ## inherit from "summary.glm", and similarly for "lm" and "mlm"
 
@@ -34,6 +34,9 @@ vcov.mlm <- function(object, ...)
     so <- summary.mlm(object)[[1L]]
     kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
 }
+
+vcov.summary.glm <- function(object, ...) object$cov.scaled
+vcov.summary.lm  <- function(object, ...) object$sigma^2 * object$cov.unscaled
 
 ## gls and lme methods moved to nlme in 2.6.0
 
