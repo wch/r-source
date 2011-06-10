@@ -18,10 +18,10 @@ segments(x0, y0, x1 = x0, y1 = y0,
   \item{x0, y0}{coordinates of points \bold{from} which to draw.}
   \item{x1, y1}{coordinates of points \bold{to} which to draw.  At least
     one must be supplied.}
-  \item{col, lty, lwd}{graphical parameters as in
+  \item{col, lty, lwd}{\link{graphical parameters} as in
     \code{\link{par}}, possibly vectors.  \code{NA} values in \code{col}
     cause the segment to be omitted.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}),
+  \item{\dots}{further \link{graphical parameters} (from \code{\link{par}}),
     such as \code{xpd} and the line characteristics \code{lend}, \code{ljoin}
     and \code{lmitre}.}
 }
@@ -30,7 +30,7 @@ segments(x0, y0, x1 = x0, y1 = y0,
   \code{(x0[i], y0[i])} and the point \code{(x1[i], y1[i])}.  The
   coordinate vectors will be recycled to the length of the longest.
 
-  The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
+  The \link{graphical parameters} \code{col}, \code{lty} and \code{lwd} can be
   vectors of length greater than one and will be recycled if necessary.
 }
 \references{

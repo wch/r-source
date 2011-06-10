@@ -54,7 +54,7 @@ image(x, \dots)
   \item{useRaster}{logical; if \code{TRUE} a bitmap raster is used to
     plot the image instead of polygons. The grid must be regular in that
     case, otherwise an error is raised.}
-  \item{\dots}{graphical parameters for \code{\link{plot}} may also be
+  \item{\dots}{\link{graphical parameters} for \code{\link{plot}} may also be
     passed as arguments to this function, as can the plot aspect ratio
     \code{asp} and \code{axes} (see \code{\link{plot.window}}).}
 }

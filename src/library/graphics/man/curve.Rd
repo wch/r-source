@@ -35,7 +35,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     and, unless \code{add = TRUE}, selects the x-limits of the plot -- see
     \code{\link{plot.window}}.}
   \item{type}{plot type: see \code{\link{plot.default}}.}
-  \item{ylab, log, \dots}{labels and graphical parameters can also be
+  \item{ylab, log, \dots}{labels and \link{graphical parameters} can also be
     specified as arguments. See \sQuote{Details} for the
     interpretation of the default for \code{log}.
 

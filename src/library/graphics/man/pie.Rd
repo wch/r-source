@@ -47,7 +47,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   \item{border, lty}{(possibly vectors) arguments passed to
     \code{\link{polygon}} which draws each slice.}
   \item{main}{an overall title for the plot.}
-  \item{\dots}{graphical parameters can be given as arguments to
+  \item{\dots}{\link{graphical parameters} can be given as arguments to
     \code{pie}.  They will affect the main title and labels only.}
 }
 \note{

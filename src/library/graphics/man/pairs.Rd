@@ -49,7 +49,7 @@ pairs(x, \dots)
   \item{\dots}{
     arguments to be passed to or from methods.
     
-    Also, graphical parameters can be given as can arguments to
+    Also, \link{graphical parameters} can be given as can arguments to
     \code{plot} such as \code{main}.  \code{par("oma")} will be set
     appropriately unless specified.
   }
@@ -74,12 +74,12 @@ pairs(x, \dots)
   any) is passed a single column, and the \code{text.panel} function is
   passed a single \code{(x, y)} location and the column name.
 
-  The graphical parameters \code{pch} and \code{col} can be used to
-  specify a vector of plotting symbols and colors to be used in the
+  The \link{graphical parameters} \code{pch} and \code{col} can be used
+  to specify a vector of plotting symbols and colors to be used in the
   plots.
 
-  The graphical parameter \code{oma} will be set by \code{pairs.default}
-  unless supplied as an argument.
+  The \link{graphical parameter} \code{oma} will be set by
+  \code{pairs.default} unless supplied as an argument.
 
   A panel function should not attempt to start a new plot, but just plot
   within a given coordinate system: thus \code{plot} and \code{boxplot}

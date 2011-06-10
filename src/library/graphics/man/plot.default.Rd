@@ -47,7 +47,7 @@
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
   \item{axes}{a logical value indicating whether both axes should be drawn on
-    the plot.  Use graphical parameter \code{"xaxt"} or \code{"yaxt"}
+    the plot.  Use \link{graphical parameter} \code{"xaxt"} or \code{"yaxt"}
     to suppress just one of the axes.}
   \item{frame.plot}{a logical indicating whether a box should be drawn
     around the plot.}
@@ -64,11 +64,11 @@
     comments about \code{panel.first}.}
 
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{other graphical parameters (see \code{\link{par}} and
+  \item{\dots}{other \link{graphical parameters} (see \code{\link{par}} and
     section \sQuote{Details} below).}
 }
 \details{
-  Commonly used graphical parameters are:
+  Commonly used \link{graphical parameters} are:
   \describe{
     \item{\code{col}}{The colors for lines and points.  Multiple colors can be
       specified so that each point can be given its own color.  If there

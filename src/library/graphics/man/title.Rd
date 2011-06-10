@@ -24,7 +24,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
     outwards from the plot edge.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
-  \item{\dots}{further graphical parameters from \code{\link{par}}.  Use
+  \item{\dots}{further \link{graphical parameters} from \code{\link{par}}.  Use
     e.g., \code{col.main} or \code{cex.sub} instead of just \code{col}
     or \code{cex}.  \code{adj} controls the justification of the titles.
     \code{xpd} can be used to set the clipping region:
@@ -45,7 +45,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   The labels passed to \code{title} can be character strings or
   language objects (names, calls or expressions), or a list
   containing the string to be plotted, and a selection of the optional
-  modifying graphical parameters \code{cex=}, \code{col=} and
+  modifying \link{graphical parameters} \code{cex=}, \code{col=} and
   \code{font=}.  Other objects will be coerced by
   \code{\link{as.graphicsAnnot}}. 
 

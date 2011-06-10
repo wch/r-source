@@ -32,7 +32,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     the border as for the shading lines.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
   \item{lwd}{line width for borders and shading.}
-  \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
+  \item{\dots}{\link{graphical parameters} such as \code{xpd}, \code{lend},
     \code{ljoin} and \code{lmitre} can be given as
     arguments.}
 }

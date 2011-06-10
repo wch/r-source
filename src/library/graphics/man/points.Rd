@@ -22,7 +22,7 @@ points(x, \dots)
   \item{x, y}{coordinate vectors of points to plot.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot.default}}.}
-  \item{\dots}{Further graphical parameters may also be supplied as
+  \item{\dots}{Further \link{graphical parameters} may also be supplied as
     arguments.  See \sQuote{Details}.}
 }
 \details{
@@ -60,10 +60,11 @@ points(x, \dots)
   Others less commonly used are \code{lty} and \code{lwd} for
   types such as \code{"b"} and \code{"l"}.
 
-  Graphical parameters \code{pch}, \code{col}, \code{bg}, \code{cex} and
-  \code{lwd} can be vectors (which will be recycled as needed) giving a
-  value for each point plotted.  If lines are to be plotted (e.g. for
-  \code{type = "b"}/ the first element of \code{lwd} is used.
+  The \link{graphical parameters} \code{pch}, \code{col}, \code{bg},
+  \code{cex} and \code{lwd} can be vectors (which will be recycled as
+  needed) giving a value for each point plotted.  If lines are to be
+  plotted (e.g. for \code{type = "b"}/ the first element of \code{lwd}
+  is used.
 
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
   value is \code{NA} are omitted from the plot.

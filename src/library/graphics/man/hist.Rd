@@ -75,7 +75,7 @@ hist(x, \dots)
   \item{warn.unused}{logical.  If \code{plot=FALSE} and 
     \code{warn.unused=TRUE}, a warning will be issued when graphical
     parameters are passed to \code{hist.default()}.}
-  \item{\dots}{further arguments and graphical parameters passed to
+  \item{\dots}{further arguments and \link{graphical parameters} passed to
     \code{\link{plot.histogram}} and thence to \code{\link{title}} and
     \code{\link{axis}} (if \code{plot=TRUE}).}
 }

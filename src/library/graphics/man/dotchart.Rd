@@ -51,7 +51,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
     \code{\link{plot.window}}, e.g.}
   \item{main}{overall title for the plot, see \code{\link{title}}.}
   \item{xlab, ylab}{axis annotations as in \code{title}.}
-  \item{\dots}{graphical parameters can also be specified as arguments.}
+  \item{\dots}{\link{graphical parameters} can also be specified as arguments.}
 }
 \value{
   This function is invoked for its side effect, which is to produce two

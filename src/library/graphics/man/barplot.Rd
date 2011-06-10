@@ -110,8 +110,8 @@ barplot(height, \dots)
     names.  Only used if \code{legend.text} is supplied.}
   \item{\dots}{arguments to be passed to/from other methods.  For the
     default method these can include further arguments (such as
-    \code{axes}, \code{asp} and \code{main}) and graphical
-    parameters (see \code{\link{par}}) which are passed to
+    \code{axes}, \code{asp} and \code{main}) and
+    \link{graphical parameters} (see \code{\link{par}}) which are passed to
     \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
 }
