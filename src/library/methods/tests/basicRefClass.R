@@ -395,3 +395,11 @@ tt <- TestClass2$new(version=3) # default text
 stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
 
 
+##getRefClass() method and function should work with either
+## a class name or a class representation (bug report 14600)
+tg <- setRefClass("tg", fields = "a")
+t1 <- tg$new(a=1)
+tgg <- t1$getRefClass()
+tggg <- getRefClass("tg")
+stopifnot(identical(tgg$def, tggg$def),
+          identical(tg$def, tgg$def))
