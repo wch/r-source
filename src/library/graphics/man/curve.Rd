@@ -53,8 +53,9 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 
 \details{
   The function or expression \code{expr} (for \code{curve}) or function
-  \code{x} is evaluated at \code{n} points equally spaced over the range
-  \code{[from, to]}.  The points determined in this way are then plotted.
+  \code{x} (for \code{plot}) is evaluated at \code{n} points equally
+  spaced over the range \code{[from, to]}.  The points determined in
+  this way are then plotted.
 
   If either \code{from} or \code{to} is \code{NULL}, it defaults to the
   corresponding element of \code{xlim} if that is not \code{NULL}.
@@ -66,11 +67,10 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   TRUE)} the defaults are taken from the x-limits used for the previous
   plot.  (This differs from versions of \R prior to 2.14.0.)
 
-  The value of \code{log} is used both to determine the plot axes
-  (unless \code{add = TRUE}) and how \sQuote{equally spaced} is
-  interpreted: if the x component indicates log-scaling, the points at
-  which the expression or function is plotted are equally spaced on log
-  scale.
+  The value of \code{log} is used both to specify the plot axes (unless
+  \code{add = TRUE}) and how \sQuote{equally spaced} is interpreted: if
+  the x component indicates log-scaling, the points at which the
+  expression or function is plotted are equally spaced on log scale.
 
   The default value of \code{log} is taken from the current plot when
   \code{add = TRUE}, whereas if \code{add = NA} the x component is taken
@@ -90,7 +90,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   \code{expr} is either a \link{call} or an \link{expression}, and that
   it contains a reference to the variable given by \code{xname} (using
   \code{\link{all.vars}}): anything else is an error.  Then \code{expr}
-  is evaluated in an environment which supplies a vector for name given
+  is evaluated in an environment which supplies a vector of name given
   by \code{xname} of length \code{n}, and should evaluate to an object
   of length \code{n}.  Note that this means that \code{curve(x, ...)} is
   taken as a request to plot a function named \code{x} (and it is used
