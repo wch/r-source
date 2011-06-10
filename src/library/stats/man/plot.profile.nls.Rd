@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.profile.nls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.profile.nls}
@@ -13,8 +13,8 @@
   \code{profile.nls}.
 }
 \usage{
-\method{plot}{profile.nls}(x, levels, conf= c(99, 95, 90, 80, 50)/100,
-     absVal =TRUE, \dots)
+\method{plot}{profile.nls}(x, levels, conf = c(99, 95, 90, 80, 50)/100,
+     absVal = TRUE, \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"profile.nls"} }
@@ -28,7 +28,7 @@
    should be on the scale of the absolute value of the profile t.
    Defaults to \code{TRUE}.} 
  \item{\dots}{other arguments to the \code{plot} function can be passed
-   here.}
+   here (but will be ignored).}
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988),
