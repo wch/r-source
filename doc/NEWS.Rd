@@ -164,8 +164,12 @@
       \code{FALSE} (\code{.GlobalEnv}).  It gives better error messages
       for other values, such as \code{NA}.
 
-      \item \code{vcov()} gains methods for \code{"summary.lm"} and
+      \item \code{vcov()} gains methods for classes \code{"summary.lm"} and
       \code{"summary.glm"}.
+
+      \item The \code{plot()} method for class \code{"profile.nls"}
+      gains \code{ylab} and \code{lty} arguments, and passes \code{...}
+      on to \code{plot.default}.
     }
   }
   

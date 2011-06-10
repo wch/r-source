@@ -3,7 +3,7 @@
 #
 #  Copyright 1999-1999 Saikat DebRoy <saikat$stat.wisc.edu>,
 #                      Douglas M. Bates <bates$stat.wisc.edu>,
-#  Copyright 2005-6   The R Development Core Team
+#  Copyright 2005-11  The R Development Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -222,7 +222,8 @@ profile.nls <-
 }
 
 plot.profile.nls <-
-    function(x, levels, conf = c(99, 95, 90, 80, 50)/100, absVal = TRUE, ...)
+    function(x, levels, conf = c(99, 95, 90, 80, 50)/100, absVal = TRUE,
+             ylab = NULL, lty = 2, ...)
 {
     obj <- x
     dfres <- attr(obj, "summary")$df[2L]
@@ -243,19 +244,20 @@ plot.profile.nls <-
             if (is.na(xlim[1L])) xlim[1L] <- min(x[[i]]$par.vals[, i])
             if (is.na(xlim[2L])) xlim[2L] <- max(x[[i]]$par.vals[, i])
             dev.hold()
+            if (is.null(ylab)) ylab <- expression(abs(tau))
             plot(abs(tau) ~ par.vals[, i], data = obj[[i]], xlab = i,
-                 ylim = c(0, mlev), xlim = xlim, ylab = expression(abs(tau)),
-                 type = "n")
+                 ylim = c(0, mlev), xlim = xlim, ylab = ylab, type = "n",
+                 ...)
             avals <- rbind(as.data.frame(predict(sp)),
                            data.frame(x = obj[[i]]$par.vals[, i],
                                       y = obj[[i]]$tau))
             avals$y <- abs(avals$y)
             lines(avals[ order(avals$x), ], col = 4)
-            abline(v = predict(bsp, 0)$y , col = 3, lty = 2)
+            abline(v = predict(bsp, 0)$y , col = 3, lty = lty)
             for(lev in levels) {
                 pred <- predict(bsp, c(-lev, lev))$y
-                lines(pred, rep.int(lev, 2), type = "h", col = 6, lty = 2)
-                lines(pred, rep.int(lev, 2), type = "l", col = 6, lty = 2)
+                lines(pred, rep.int(lev, 2), type = "h", col = 6, lty = lty)
+                lines(pred, rep.int(lev, 2), type = "l", col = 6, lty = lty)
             }
             dev.flush()
         }
@@ -267,14 +269,15 @@ plot.profile.nls <-
             if (is.na(xlim[1L])) xlim[1L] <- min(x[[i]]$par.vals[, i])
             if (is.na(xlim[2L])) xlim[2L] <- max(x[[i]]$par.vals[, i])
             dev.hold()
+            if (is.null(ylab)) ylab <- expression(tau)
             plot(tau ~ par.vals[, i], data = obj[[i]], xlab = i,
-                 ylim = c(-mlev, mlev), xlim = xlim, ylab = expression(tau),
-                 type = "n")
+                 ylim = c(-mlev, mlev), xlim = xlim, ylab = ylab, type = "n",
+                 ...)
             lines(predict(sp), col = 4)
-            abline(h = 0, col = 3, lty = 2)
-            for(lev in  levels) {
+            abline(h = 0, col = 3, lty = lty)
+            for(lev in levels) {
                 pred <- predict(bsp, c(-lev, lev))$y
-                lines(pred, c(-lev, lev), type = "h", col = 6, lty = 2)
+                lines(pred, c(-lev, lev), type = "h", col = 6, lty = lty)
             }
             dev.flush()
         }
