@@ -879,17 +879,23 @@ setRefClass <- function(Class, fields = character(),
 }
 
 getRefClass <- function(Class, where = topenv(parent.frame())) {
-    if(is(Class, "envRefClass"))
-        classDef <- get(".refClassDef", envir = Class)
-    else
+    if(is(Class, "refClassRepresentation")) {
+        classDef <- Class
+        Class <- classDef@className
+    }
+    else if(is.character(Class)) {
         classDef <- getClass(Class, where = where)
-    if(!is(classDef, "refClassRepresentation"))
-        stop(gettextf("Class \"%s\" is defined but is not a reference class",
+        if(!is(classDef, "refClassRepresentation"))
+            stop(gettextf("Class \"%s\" is defined but is not a reference class",
                       Class), domain = NA)
+    }
+    else
+        stop(gettextf("Class must be a reference class representation or a character string; got an object of class \"%s\"",
+                      class(Class)), domain = NA)
     value <- new("refObjectGenerator")
     env <- as.environment(value)
-    env$def <- classDef
     env$className <- Class
+    env$def <- classDef
     value
 }
 

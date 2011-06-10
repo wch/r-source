@@ -421,3 +421,16 @@ evr <- getRefClass("refObjectGenerator") # in methods
 stopifnot(is(tryCatch(evr$methods(foo = function()"..."), error = function(e)e), "error"),
          is(tryCatch(evr$lock("def"), error = function(e)e), "error"),
          is(tryCatch(evr$accessors("def"), error = function(e)e), "error"))
+
+##getRefClass() method and function should work with either
+## a class name or a class representation (bug report 14600)
+tg <- setRefClass("tg", fields = "a")
+t1 <- tg$new(a=1)
+tgg <- t1$getRefClass()
+tggg <- getRefClass("tg")
+stopifnot(identical(tgg$def, tggg$def),
+          identical(tg$def, tgg$def))
+## TODO:  the className returned by setRefClass should have
+## a package attribute, which would allow:
+##          identical(tg$className, tgg$className))
+
