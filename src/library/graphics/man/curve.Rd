@@ -26,8 +26,8 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     \link{expression} written as a function of \code{x} which will
     evaluate to an object of the same length as \code{x}.}
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
-  \item{y}{alias for \code{from} for compatibility with \code{plot()}}
-  \item{from,to}{the range over which the function will be plotted.}
+  \item{y}{alias for \code{from} for compatibility with \code{plot}}
+  \item{from, to}{the range over which the function will be plotted.}
   \item{n}{integer; the number of x values at which to evaluate.}
   \item{add}{logical; if \code{TRUE} add to an already existing plot.}
   \item{xlim}{\code{NULL} or a numeric vector of length 2;
@@ -39,9 +39,10 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
     specified as arguments. See \sQuote{Details} for the
     interpretation of the default for \code{log}.
 
-    For the \code{"function"} method of
-    \code{plot}, \code{\dots} can include any of the other arguments of
-    \code{curve}, except \code{expr}.}
+    For the \code{"function"} method of \code{plot}, \code{\dots} can
+    include any of the other arguments of \code{curve}, except
+    \code{expr}.
+  }
 }
 
 \details{
@@ -94,11 +95,19 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   A list with components \code{x} and \code{y} of the points that were 
   drawn is returned invisibly.
 }
+
+\section{Warning}{
+  For historical reasons, \code{add} is allowed as an argument to the
+  \code{"function"} method of \code{plot}, but its behaviour may surprise
+  you.  It is recommended to use \code{add} only with \code{curve}.
+}
+
 \seealso{
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
 \examples{
-plot(qnorm)
+plot(qnorm) # default range c(0, 1) is appropriate here,
+            # but end values are -/+Inf and so are omitted.
 plot(qlogis, main = "The Inverse Logit : qlogis()")
 abline(h = 0, v = 0:2/2, lty = 3, col = "gray")
 
@@ -111,14 +120,15 @@ curve(x^2 - 2, add = TRUE, col = "violet")
 
 ## simple and advanced versions, quite similar:
 plot(cos, -pi,  3*pi)
-plot(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
+curve(cos, xlim = c(-pi, 3*pi), n = 1001, col = "blue", add = TRUE)
 
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n = 2001)
 plot (chippy, -8, -5)
 
 for(ll in c("", "x", "y", "xy"))
-   curve(log(1+x), 1, 100, log = ll, sub = paste("log= '", ll, "'", sep = ""))
+   curve(log(1+x), 1, 100, log = ll,
+         sub = paste("log= '", ll, "'", sep = ""))
 par(op)
 }
 \keyword{hplot}
