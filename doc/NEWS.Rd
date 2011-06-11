@@ -152,7 +152,7 @@
       now no longer takes the defaults x limits from the previous plot
       (if any): rather they default to \code{c(0, 1)} just as the
       \code{"function"} method for \code{plot()}.  To get the previous
-      behaviour use \code{curve = NA)}, which also takes the default for
+      behaviour use \code{curve(add = NA)}, which also takes the default for
       log-scaling of the x-axis from the previous plot.
       
       \item Both \code{curve()} and the \code{plot()} method for
