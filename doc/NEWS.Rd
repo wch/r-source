@@ -111,7 +111,7 @@
   
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
-      \item The internal functions \code{.readRDS()} and
+     \item The internal functions \code{.readRDS()} and
       \code{.saveRDS()} are now deprecated in favour of the public
       functions \code{readRDS()} and \code{saveRDS()} introduced in \R
       2.13.0.
@@ -185,7 +185,7 @@
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
 
-      \item \code{fields =list()} failed for \code{setRefClass()}.
+      \item \code{fields = list()} failed for \code{setRefClass()}.
       (Reported by Michael Lawrence.)
 
       \item Reference classes could not redefine an inherited field
@@ -512,7 +512,7 @@
 
       \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
       and \code{hasMethods} are revised to deal consistently with
-      the \code{package=} argument and be consistent with soft namespace
+      the \code{package=} argument and be consistent with soft name space
       policy for finding objects.
 
       \item \code{tools::Rdiff()} now has the option to return not only
@@ -614,13 +614,13 @@
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
 
-      \item \code{rstandard.glm} gains a \code{type} argument which can
+      \item \code{rstandard.glm()} gains a \code{type} argument which can
       be used to request standardized Pearson residuals.
 
       \item A start on a Turkish translation, thanks to Murat Alkan.
 
       \item \code{.libPaths()} calls \code{normalizePath(winslash = "/")}
-      on the paths: this helps (usually) present them in a
+      on the paths: this helps (usually) to present them in a
       user-friendly form and should detect duplicate paths accessed via
       different symbolic links.
     }
