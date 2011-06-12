@@ -1,6 +1,6 @@
 % File src/library/base/man/do.call.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{do.call}
@@ -26,7 +26,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
 }
 \details{
   If \code{quote} is \code{FALSE}, the default, then the arguments are
-  evaluated (in the calling environment, not \code{envir}.).  If
+  evaluated (in the calling environment, not in \code{envir}).  If
   \code{quote} is \code{TRUE} then each argument is quoted (see
   \code{\link{quote}}) so that the effect of argument evaluation is to
   remove the quotes -- leaving the original arguments unevaluated when the
