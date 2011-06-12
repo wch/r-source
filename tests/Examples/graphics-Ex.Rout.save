@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-09 r56106)
+R version 2.14.0 Under development (unstable) (2011-06-10 r56120)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -764,7 +764,8 @@ temperature no yes
 > plot (chippy, -8, -5)
 > 
 > for(ll in c("", "x", "y", "xy"))
-+    curve(log(1+x), 1, 100, log = ll, sub = paste("log= '", ll, "'", sep = ""))
++    curve(log(1+x), 1, 100, log = ll,
++          sub = paste("log= '", ll, "'", sep = ""))
 > par(op)
 > 
 > 
@@ -1531,7 +1532,7 @@ List of 2
 > 
 > ### Name: par
 > ### Title: Set or Query Graphical Parameters
-> ### Aliases: par .Pars
+> ### Aliases: par .Pars 'graphical parameter' 'graphical parameters'
 > ### Keywords: iplot dplot environment
 > 
 > ### ** Examples

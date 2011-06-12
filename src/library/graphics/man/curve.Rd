@@ -104,6 +104,13 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   A list with components \code{x} and \code{y} of the points that were 
   drawn is returned invisibly.
 }
+
+\section{Warning}{
+  For historical reasons, \code{add} is allowed as an argument to the
+  \code{"function"} method of \code{plot}, but its behaviour may surprise
+  you.  It is recommended to use \code{add} only with \code{curve}.
+}
+
 \seealso{
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
@@ -130,7 +137,8 @@ curve(chippy, -8, 7, n = 2001)
 plot (chippy, -8, -5)
 
 for(ll in c("", "x", "y", "xy"))
-   curve(log(1+x), 1, 100, log = ll, sub = paste("log= '", ll, "'", sep = ""))
+   curve(log(1+x), 1, 100, log = ll,
+         sub = paste("log= '", ll, "'", sep = ""))
 par(op)
 }
 \keyword{hplot}
