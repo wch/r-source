@@ -1,6 +1,6 @@
 % File src/library/stats/man/dummy.coef.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dummy.coef}
@@ -31,7 +31,7 @@ dummy.coef(object, \dots)
   terms, usually one less in number than the number of levels.  This
   function re-expresses the coefficients in the original coding; as the
   coefficients will have been fitted in the reduced basis, any implied
-  constraints (e.g., zero sum for \code{contr.helmert} or \code{contr.sum}
+  constraints (e.g., zero sum for \code{contr.helmert} or \code{contr.sum})
   will be respected.  There will be little point in using
   \code{dummy.coef} for \code{contr.treatment} contrasts, as the missing
   coefficients are by definition zero.
