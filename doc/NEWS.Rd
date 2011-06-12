@@ -145,7 +145,7 @@
       
       \item The one-sided \code{ks.test()} allows \code{exact = TRUE} to
       be specified in the presence of ties (but the approximate
-      calculation remains the default: the \code{exact} computation
+      calculation remains the default: the \sQuote{exact} computation
       makes assumptions known to be invalid in the presence of ties).
 
       \item The behaviour of \code{curve(add = FALSE)} has changed: it
@@ -372,9 +372,9 @@
       supplied directly, rather than in a code file.  These cannot be
       restored correctly from the dumped version.
 
-      \item Reference class utilities will detect an attempt to modify methods
-      or fields in a locked class definition (e.g., in a namespace)
-      and generate an error.
+      \item Reference class utilities will detect an attempt to modify
+      methods or fields in a locked class definition (e.g., in a name
+      space) and generate an error.
       
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
@@ -891,7 +891,7 @@
 
       \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
       and \code{hasMethods} are revised to deal consistently with
-      the \code{package=} argument and be consistent with soft namespace
+      the \code{package=} argument and be consistent with soft name space
       policy for finding objects.
 
       \item \code{tools::Rdiff()} now has the option to return not only
@@ -993,13 +993,13 @@
       \item \code{file.copy(from, to)} no longer regards it as an error
       to supply a zero-length \code{from}: it now simply does nothing.
 
-      \item \code{rstandard.glm} gains a \code{type} argument which can
+      \item \code{rstandard.glm()} gains a \code{type} argument which can
       be used to request standardized Pearson residuals.
 
       \item A start on a Turkish translation, thanks to Murat Alkan.
 
       \item \code{.libPaths()} calls \code{normalizePath(winslash = "/")}
-      on the paths: this helps (usually) present them in a
+      on the paths: this helps (usually) to present them in a
       user-friendly form and should detect duplicate paths accessed via
       different symbolic links.
     }
