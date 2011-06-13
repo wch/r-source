@@ -9,6 +9,8 @@
 \alias{setdiff}
 \alias{is.element}
 \alias{setequal}
+\concept(set operations}
+\concept{sets}
 \title{Set Operations}
 \usage{
 union(x, y)
