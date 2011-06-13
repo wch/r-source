@@ -180,7 +180,7 @@ rc.status <- function()
 {
     ## special rules apply when we are inside quotes (see fileCompletionPreferred() below)
     insideQuotes <- {
-        lbss <- head(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
+        lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
         ((sum(lbss == "'") %% 2 == 1) ||
          (sum(lbss == '"') %% 2 == 1))
     }
@@ -199,7 +199,7 @@ rc.status <- function()
                                       perl = TRUE))[[1L]]
     start <- ## 0-indexed
         if (all(start < 0L)) 0L
-        else tail(start + attr(start, "match.length"), 1L) - 1L
+        else tail.default(start + attr(start, "match.length"), 1L) - 1L
     .CompletionEnv[["start"]] <- start
     .CompletionEnv[["token"]] <- substr(linebuffer, start + 1L, end)
     .CompletionEnv[["token"]]
@@ -255,7 +255,7 @@ specialOpLocs <- function(text)
                function(s) gregexpr(s, text, fixed = TRUE)[[1L]],
                simplify = FALSE)
     ## this gets the last ones
-    ge <- sapply(ge, tail, 1)
+    ge <- sapply(ge, tail.default, 1)
     ge <- ge[ge > 0]
 }
 
@@ -576,7 +576,7 @@ inFunction <-
 
         if ((length(grep("=", suffix, fixed = TRUE))) &&
             (length(grep(",", substr(suffix,
-                                     tail(gregexpr("=", suffix, fixed = TRUE)[[1L]], 1L),
+                                     tail.default(gregexpr("=", suffix, fixed = TRUE)[[1L]], 1L),
                                      1000000L), fixed = TRUE)) == 0L))
         {
             ## we are on the wrong side of a = to be an argument, so
@@ -587,7 +587,7 @@ inFunction <-
         {
             possible <- suppressWarnings(strsplit(prefix, breakRE, perl = TRUE))[[1L]]
             possible <- possible[possible != ""]
-            if (length(possible)) return(tail(possible, 1))
+            if (length(possible)) return(tail.default(possible, 1))
             else return(character())
         }
     }
@@ -715,7 +715,7 @@ fileCompletionPreferred <- function()
 
         ## yes if the number of quote signs to the left is odd
         linebuffer <- .CompletionEnv[["linebuffer"]]
-        lbss <- head(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
+        lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
         ((sum(lbss == "'") %% 2 == 1) ||
          (sum(lbss == '"') %% 2 == 1))
 
@@ -737,7 +737,7 @@ correctFilenameToken <- function()
 
     ## Find part between last " or ' 
     linebuffer <- .CompletionEnv[["linebuffer"]]
-    lbss <- head(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
+    lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
     whichDoubleQuote <- lbss == '"'
     whichSingleQuote <- lbss == "'"
     insideDoubleQuote <- (sum(whichDoubleQuote) %% 2 == 1)
@@ -879,7 +879,7 @@ fileCompletions <- function(token)
         ## filename completion.
 
         ## lastArithOp <- tail(gregexpr("/", text, fixed = TRUE)[[1L]], 1)
-        lastArithOp <- tail(gregexpr("[\"'^/*+-]", text)[[1L]], 1)
+        lastArithOp <- tail.default(gregexpr("[\"'^/*+-]", text)[[1L]], 1)
         if (haveArithOp <- (lastArithOp > 0))
         {
             prefix <- substr(text, 1L, lastArithOp)
