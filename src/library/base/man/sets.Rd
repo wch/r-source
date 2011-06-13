@@ -1,6 +1,6 @@
 % File src/library/base/man/sets.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sets}
@@ -9,6 +9,11 @@
 \alias{setdiff}
 \alias{is.element}
 \alias{setequal}
+\concept{set operations}
+\concept{sets} % not that useful for searches, but requested in a bug report
+\alias{intersection}
+\concept{difference}
+
 \title{Set Operations}
 \usage{
 union(x, y)
