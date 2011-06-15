@@ -118,17 +118,17 @@ gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
 @end example
 
 The pathname of the directory into which the sources are unpacked should
-not contain spaces, as @command{make} (specifically @acronym{GNU}
-@command{make} 3.81) does not expect spaces.
+not contain spaces, as most @command{make} programs (and specifically
+@acronym{GNU} @command{make}) do not expect spaces.
 
 If you want the build to be usable by a group of users, set @code{umask}
 before unpacking so that the files will be readable by the target group
-(e.g.,@: @code{umask 022} to be usable by all users).  (Keep this
-setting of @code{umask} whilst building and installing.)
+(e.g.,@: @code{umask 022} to be usable by all users).  Keep this
+setting of @code{umask} whilst building and installing.
 
-If you use the GNU version of @command{tar} and do this as a root
+If you use a recent GNU version of @command{tar} and do this as a root
 account (which on Windows includes accounts with administrator
-privileges) you may seem many warnings about changing ownership.  In
+privileges) you may see many warnings about changing ownership.  In
 which case you can use
 
 @example
@@ -151,12 +151,12 @@ A patched version of the current release, @samp{r-patched}, and the
 current development version, @samp{r-devel}, are available as daily
 tarballs and via access to the R Subversion repository.  (For the two
 weeks prior to the release of a minor (2.x.0) version, @samp{r-patched}
-will refer to beta/release candidates of the upcoming release, the
-patched version of the current release being available only via
+tarballs may refer to beta/release candidates of the upcoming release,
+the patched version of the current release being available via
 Subversion.)
 
 The tarballs are available from
-@uref{ftp://ftp.stat.math.ethz.ch/@/pub/@/Software/R/}.  Download either
+@uref{ftp://ftp.stat.math.ethz.ch/@/pub/@/Software/R/}.  Download
 @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
 versions) and unpack as described in the previous section.  They are
 built in exactly the same way as distributions of R releases.
@@ -184,8 +184,9 @@ svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @end example
 
 @noindent
-to check out @samp{r-devel} into directory @var{path}.  The alpha, beta
-and RC versions of an upcoming @var{x.y.0} release are available from
+to check out @samp{r-devel} into directory @var{path} (which will be
+created if necessary).  The alpha, beta and RC versions of an upcoming
+@var{x.y.0} release are available from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/} in
 the four-week period prior to the release.
 
@@ -214,7 +215,7 @@ you have unpacked.  After downloading manually you need to execute
 @command{tools/link-recommended} from the top level of the sources to
 make the requisite links in @file{src/library/Recommended}.  A suitable
 incantation from the top level of the R sources using @command{wget}
-might be
+might be (for the correct value of @file{@var{dir}})
 
 @example
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
@@ -228,8 +229,8 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @chapter Installing R under Unix-alikes
 @cindex Installing under Unix-alikes
 
-@R{} will configure and build under a number of common Unix and
-Unix-alike platforms including @samp{@var{cpu}-*-linux-gnu} for the
+@R{} will configure and build under most common Unix and Unix-alike
+platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @cputype{alpha}, @cputype{arm}, @cputype{hppa}, @cputype{ix86},
 @cputype{ia64}, @cputype{m68k}, @cputype{mips}, @cputype{mipsel},
 @cputype{powerpc}, @cputype{s390}, @cputype{sparc}, and @cputype{x86_64}
@@ -381,7 +382,7 @@ By default @HTML{} help pages are created when needed rather than being
 built at install time.
 
 If you need to disable the server and want HTML help, there is the
-option to continue to build @HTML{} pages when packages are installed
+option to build @HTML{} pages when packages are installed
 (including those installed with @R{}).  This is enabled by the
 @command{configure} option @option{--enable-prebuilt-html}.  Whether
 @command{R CMD INSTALL} (and hence @code{install.packages}) pre-builds
@@ -407,10 +408,10 @@ There is a set of manuals that can be built from the sources,
 
 @table @samp
 @item refman
-Printed versions of the help pages for the most-commonly-used base packages.
+Printed versions of the help pages for the base packages.
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(over 3000 pages).
+(over 3200 pages).
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -446,12 +447,12 @@ such as @command{xdvi} and @command{dvips}.  The PDF versions can be
 viewed using any recent PDF viewer: they have hyperlinks that can be
 followed.  The info files are suitable for reading online with Emacs or
 the standalone @acronym{GNU} @command{info} program.  The DVI and PDF
-versions will be created using the papersize selected at configuration
+versions will be created using the paper size selected at configuration
 (default ISO a4): this can be overridden by setting @env{R_PAPERSIZE}
 @enindex R_PAPERSIZE
 on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
-a different papersize, you should first delete the file
+a different paper size, you should first delete the file
 @file{doc/manual/version.texi}.)
 
 There are some issues with making the reference manual, and in
@@ -765,9 +766,10 @@ within the appropriate @file{bin} directory,
 @file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.  For
 backwards compatibility with @R{} < 2.12.0, there are executables
 @file{@var{R_HOME}/bin/R.exe} or @file{@var{R_HOME}/bin/Rscript.exe}:
-these will run an executable from one of the subdirectories, which being
+these will run an executable from one of the subdirectories, which one
+being taken first from the
 @enindex R_ARCH
-taken first from the @env{R_ARCH} environment variable, then from the
+@env{R_ARCH} environment variable, then from the
 @option{--arch} command-line option@footnote{with possible values
 @samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
 installation default (which is 32-bit for a combined 32/64 bit @R{}
@@ -926,7 +928,7 @@ before re-running @command{make}.
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 2000 or later on ix86
+from @acronym{CRAN} to run on Windows XP or later on ix86
 @acronym{CPU}s (including AMD64/Intel64@footnote{formerly known as
 EM64T.} chips and Windows x64).
 
@@ -958,7 +960,7 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 
 @R{} can be built as either a 32-bit or 64-bit application on Windows:
 to build the 64-bit application you need a 64-bit edition of Windows:
-such an OS can also be used to build 32-bit \R.
+such an OS can also be used to build 32-bit @R{}.
 
 The standard installer combines 32-bit and 64-bit builds into a single
 executable which can then be installed into the same location and share
@@ -996,7 +998,7 @@ will call this directory @file{@var{R_HOME}} below.
 
 For a 64-bit build you will need a 64-bit toolchain and the appropriate
 64-bit version of Tcl/Tk: both of these are contained in
-@file{Rtools212.exe}.
+@file{Rtools213.exe}.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -1251,6 +1253,7 @@ rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackage @r{(the base packages)}
 htmldocs @r{(the HTML documentation)}
 bitmapdll @r{(the bitmap support files)}
+cairodevices @r{(the cairo-based graphics devices)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in package @strong{grid}:}
 	  @r{ only needed if building from an svn checkout)}
@@ -1297,7 +1300,8 @@ installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL-2
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
-of R, and also the sources of libraries which are included).
+of R, and also the sources of packages (including their external
+software) which are included).
 
 
 The defaults for the startup parameters may also be customized.  For example
@@ -1349,7 +1353,7 @@ make msi
 @end example
 
 @noindent
-which will results in a file with a name like
+which will result in a file with a name like
 @file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
 installed, but those who need it will know what to do with it (usually
 by running @command{msiexec /i} with additional options).  Properties
@@ -4607,7 +4611,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.12.x.}  @file{Rtools212.exe}, available from
+named@footnote{for @R{} 2.13.x.}  @file{Rtools213.exe}, available from
 @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You should download
 and run it, choosing the default ``Package authoring installation'' to
 build add-on packages, or the ``full installation'' if you intend to
@@ -4796,7 +4800,7 @@ where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
 
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain included in @file{Rtools212.exe}, and was
+@code{4.5.0}.  The toolchain included in @file{Rtools213.exe}, and was
 collected from the files at
 @uref{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
