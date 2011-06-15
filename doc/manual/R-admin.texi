@@ -2657,25 +2657,22 @@ those to set the architecture, should be specified as part of @code{CC}
 rather than of @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (You also need
-@samp{X11} installed to use the @code{jpeg()}, @code{png()},
-@code{tiff()} and @code{bmp()} devices.)  For recent Fedora
-distributions it means (at least) @samp{libX11}, @samp{libX11-devel},
-@samp{libXt} and @samp{libXt-devel}.  On Debian we recommend the
-meta-package @samp{xorg-dev}.  If you really do not want these you will
-need to explicitly configure @R{} without X11, using
+installed, including its headers and client libraries. For recent Fedora
+distributions it means (at least) RPMs @samp{libX11},
+@samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.  On Debian we
+recommend the meta-package @samp{xorg-dev}.  If you really do not want
+these you will need to explicitly configure @R{} without X11, using
 @option{--with-x=no}.
 
 The command-line editing (and command completion) depends on the
-@code{readline} library available from any @acronym{GNU} mirror: version
-4.2 or later is needed for all the features to be enabled.  Otherwise
-you will need to configure with @option{--with-readline=no} (or
-equivalent).
+@acronym{GNU} @code{readline} library: version 4.2 or later is needed
+for all the features to be enabled.  Otherwise you will need to
+configure with @option{--with-readline=no} (or equivalent).
 
 A suitably comprehensive @code{iconv} function is essential.  The @R{}
 usage requires @code{iconv} to be able to translate between
-@code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} as the
-current encoding and @code{"ASCII"}, and to translate to and from the
+@code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} (as the
+current encoding) and @code{"ASCII"}, and to translate to and from the
 Unicode wide-character formats @code{"UCS-[24][BL]E"} --- this is true
 for @code{glibc} but not of most commercial Unixes.  However, you can
 make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
@@ -2789,7 +2786,8 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later, including 1.4.x and 1.5.x) and
 @code{zlib} or @code{libtiff} (any recent version of 3.x.y -- 3.8.2 and
-3.9.[124] have been tested) respectively.
+3.9.[124] have been tested) respectively.  They also need support for
+either @code{X11} or @code{cairo} (see above).
 
 If you have them installed (including the appropriate headers and of
 suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
@@ -2857,7 +2855,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.8 have been tested (including most versions
+Versions of Tcl/Tk up to 8.5.9 have been tested (including most versions
 of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
