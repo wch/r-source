@@ -121,7 +121,7 @@
             "\nand on Windows only",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
-            "      --merge-multiarch	bi-arch by merging",
+            "      --merge-multiarch	bi-arch by merging from a tarball",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste0("for this one it is ",

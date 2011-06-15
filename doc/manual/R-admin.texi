@@ -1779,9 +1779,10 @@ achieve this is to set the @env{PATH} environment variable in files
 @file{R_HOME/etc/x64/Renviron.site}.
 
 @command{R CMD INSTALL} works in Windows to install source packages if
-you have set up the tools needed (see @ref{The Windows toolset}).
-@command{R CMD INSTALL --help} will tell you the current options under
-Windows (which differ from those on a Unix-alike).
+you have set up the tools needed (see @ref{The Windows toolset}).  No
+additional tools are needed if the package does not contain compiled
+code, and @code{install.packages(type="source")} will work for such
+packages (and for those with compiled code if the tools are in the path).
 
 We have seen occasional permission problems after unpacking source
 packages on some Vista/Windows 7/Server 2008 systems: these have been
@@ -1811,9 +1812,10 @@ source of @file{tools:::.install_packages} for the list.} option
 32- and 64-bit installs.  (This can only be applied to a tarball, and
 will only succeed if both installs succeed.)
 
-
-Some notes on porting packages to 64-bit Windows can be found at
-@uref{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
+If you have a package without compiled code and no Windows-specific
+help, you can zip up an installation on another OS and install from the
+that zip file on Windows.  However, such a package can be installed from
+the sources on Windows without any additional tools.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -1822,18 +1824,11 @@ On Mac OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
-from a suitable repository, and is the default for @acronym{CRAN} builds
-of R.  These Macintosh binary package files have the extension
-@samp{tgz}.  The @R{} GUI provides for installation of either binary or
-source packages, from @acronym{CRAN} or local files.
-
-Originally there was just package type @code{mac.binary}, and this was
-used for `universal' binaries, that is those designed to run on multiple
-CPU types (PowerPC and i386 at the time).  Later it became necessary to
-use different binary distributions for different versions of Mac OS X,
-and we now have @code{mac.binary.universal} (for Mac OS 10.4 aka
-`Tiger', last built for @R{} 2.10.1) and @code{mac.binary.leopard} (for
-Mac OS 10.5 and 10.6).
+from a suitable repository, and type @code{mac.binary.leopard} is the
+default for @acronym{CRAN} builds of R.  These Macintosh binary package
+files have the extension @samp{tgz}.  The R.app GUI provides for
+installation of either binary or source packages, from @acronym{CRAN} or
+local files.
 
 @node Customizing package compilation, Multiple sub-architectures, Mac OS X packages, Installing packages
 @subsection Customizing package compilation
@@ -1908,7 +1903,8 @@ R CMD INSTALL --libs-only @var{pkg}
 @noindent
 using the path to @command{R} or @command{R --arch} to select the
 additional sub-architecture.  On Windows there is also @command{R CMD
-INSTALL --merge-multiarch} to build and merge the two architectures.
+INSTALL --merge-multiarch} to build and merge the two architectures,
+starting with a source tarball.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -1977,8 +1973,9 @@ Utilities such as @code{install.packages} can be pointed at any
 own.  The `base' of a repository is a URL such as
 @uref{http://www.omegahat.org/R/}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @samp{ftp://} and
-@samp{file://}).  Under that base URL there should be directory trees
-for one or more of the following types of package distributions:
+@samp{file://}, but not on most systems @samp{https://}).  Under that
+base URL there should be directory trees for one or more of the
+following types of package distributions:
 
 @itemize
 @item 
@@ -1991,13 +1988,9 @@ for one or more of the following types of package distributions:
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"mac.binary"}: located at
-@file{bin/macosx/universal/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
-and containing @file{.tgz} files.  If the repository contains only
-packages for a specific architecture, the package distribution type
-can be set to @code{"mac.binary.xxx"} where @var{xxx} specifies the
-architecture, replacing @code{universal} by @var{xxx} in the path
-above.
+@code{"mac.binary.leopard"}: located at
+@file{bin/macosx/leopard/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
+and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -2201,10 +2194,10 @@ to make this easier for users. See
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
-if it defaults to @samp{C}.
+if it defaults to @samp{C} (as it often does when logging it remotely
+and in batch jobs).
 
-Internally Mac OS X uses a form similar to Linux but without specifying
-the encoding (which is normally @code{UTF-8}).  It is based on ICU
+Internally Mac OS X uses a form similar to Linux.  It is based on ICU
 locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
 XPG ones, but utilities such as @code{Sys.setlocale()} do now normally
 accept XPG forms.  So there are locales like @code{de_AT.ISO8859-15}
@@ -2240,7 +2233,7 @@ It is usually possible to change the language once @R{} is running
 @env{LANGUAGE}, @emph{provided}@footnote{If you try changing from French
 to Russian except in a UTF-8 locale, you will most likely find messages
 change to English.} the language you are changing to can be output in
-the current character set.  But this is OS-specific, and has been know
+the current character set.  But this is OS-specific, and has been known
 to stop working on an OS upgrade.
 
 Messages are divided into @emph{domains}, and translations may be
@@ -2275,12 +2268,13 @@ to a generic German one (@samp{de}) for an Austrian user.  However, if a
 specific translation catalogue exists but does not contain a
 translation, the less specific catalogues are consulted.  For example,
 @R{} has catalogues for @samp{en_GB} that translate the Americanisms
-(e.g., @samp{gray}) in the standard messages into English.  Two other
-examples: there are catalogues for @samp{es}, which is Spanish as
-written in Spain and these will by default also be used in
-Spanish-speaking Latin American countries, and also for @samp{pt_BR},
-which are used for Brazilian locales but not for locales specifying
-Portugal.
+(e.g., @samp{gray}) in the standard messages into English.@footnote{the
+language written in England: some people living in the USA appropriate
+this name for their language.}  Two other examples: there are catalogues
+for @samp{es}, which is Spanish as written in Spain and these will by
+default also be used in Spanish-speaking Latin American countries, and
+also for @samp{pt_BR}, which are used for Brazilian locales but not for
+locales specifying Portugal.
 
 Translations in the right language but the wrong charset be made use of
 @enindex LANGUAGE
@@ -2304,16 +2298,16 @@ prepare and install translation catalogues.
 Many current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions: this has long been true for UltraSparc and more recently
 for MIPS, PPC and @cputype{x86_64} (sometimes known as @cputype{amd64}
-and @cputype{Intel64}: all but a few low-power current @cputype{ix86}
-CPUs support this chipset).  Many OSes running on such @acronym{CPU}s
-offer the choice of building a 32-bit or a 64-bit version of R (and
-details are given below under specific OSes).  For most a 32-bit version
-is the default, but for some (e.g., @cputype{x86_64} Linux and Mac OS
-10.6) 64-bit is.
+and @cputype{Intel64} and earlier as @cputype{EM64T}: practically all
+current @cputype{ix86} CPUs support this set of instructions).  Most
+OSes running on such @acronym{CPU}s offer the choice of building a
+32-bit or a 64-bit version of R (and details are given below under
+specific OSes).  For most a 32-bit version is the default, but for some
+(e.g., @cputype{x86_64} Linux and Mac OS >= 10.6) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
-@acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559
-and @acronym{IEEE}@tie{}754} double-precision reals, and so compute to
+@acronym{IEC}@tie{}60559@footnote{also known as
+@acronym{IEEE}@tie{}754} double-precision reals, and so compute to
 the same precision@footnote{at least when storing quantities: the on-FPU
 precision is allowed to vary} and with the same limits on the sizes of
 numerical quantities.  The principal difference is in the size of the
@@ -2338,11 +2332,11 @@ issue with objects more than 10% of the size of the address space
 third (around 1Gb).
 
 @item
-32-bit OSes by default limit file sizes to 2GB (and this may also apply
-to 32-bit builds on 64-bit OSes).  This can often be worked around: and
-@command{configure} selects suitable defines if this is possible.  (We
-have also largely worked around that limit on 32-bit Windows.)  64-bit
-builds have much larger limits.
+Most 32-bit OSes by default limit file sizes to 2GB (and this may also
+apply to 32-bit builds on 64-bit OSes).  This can often be worked
+around: and @command{configure} selects suitable defines if this is
+possible.  (We have also largely worked around that limit on 32-bit
+Windows.)  64-bit builds have much larger limits.
 
 @item
 Because the pointers are larger, @R{}'s basic structures are larger.
@@ -2356,14 +2350,15 @@ However, `other things' may not be equal.  In the specific case of
 @cputype{x86_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
 (such as SSE2 instructions) which are guaranteed to be present but are
 optional on the 32-bit CPU, and also has more general-purpose registers.
-This means that on chips like Intel Core 2 Duo the vanilla 64-bit
-version of @R{} is around 10% faster on both Linux and Mac OS X --- this
-can be reduced by tuning the compilation to the chip.
+This means that on chips like a desktop Intel Core 2 Duo the vanilla
+64-bit version of @R{} is around 10% faster on both Linux and Mac OS X.
+(Laptop CPUs are relatively slower in 64-bit mode.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
 datasets (and perhaps large files) a 64-bit build.  You can often build
 both and install them in the same place: @xref{Sub-architectures}.
+(This is done in the Mac and Windows binary distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
@@ -2371,8 +2366,9 @@ use of 32-bit integers (especially in FORTRAN code).  On all builds of
 @R{}, the maximum length (number of elements) of a vector is
 @math{2^{31}-1}, about 2 billion, and on 64-bit builds the size of a
 block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
-is anticipated these will be raised eventually but routine use of 8GB
-objects is (when this was written in 2005) several years off.
+is anticipated these will be raised eventually@footnote{this comment has
+been in the manual since 2005.} but the need for 8GB objects is (when
+this was written in 2011) exceptional.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -2392,7 +2388,7 @@ Unix-alike if that is separate from the sources).
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
 string containing the current @R{} version, for example @code{"2.11.0"}.
 
-There is full access to @R{}'s handling of @code{NaN}s, @code{Inf} and
+There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
 
 @example
@@ -2456,7 +2452,7 @@ If @R{} has not already be made in the directory tree,
 @command{configure} must be run as described in the main build
 instructions.
 
-Then
+Then (in @file{src/nmath/standalone})
 
 @example
 make
