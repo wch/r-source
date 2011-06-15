@@ -2627,22 +2627,21 @@ Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (You also need
 @samp{X11} installed to use the @code{jpeg()}, @code{png()},
 @code{tiff()} and @code{bmp()} devices.)  For recent Fedora
-distributions it means (at least) @samp{libX11}, @samp{libX11-devel},
-@samp{libXt} and @samp{libXt-devel}.  On Debian we recommend the
-meta-package @samp{xorg-dev}.  If you really do not want these you will
-need to explicitly configure @R{} without X11, using
+distributions it means (at least) RPMs @samp{libX11},
+@samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.  On Debian we
+recommend the meta-package @samp{xorg-dev}.  If you really do not want
+these you will need to explicitly configure @R{} without X11, using
 @option{--with-x=no}.
 
 The command-line editing (and command completion) depends on the
-@code{readline} library available from any @acronym{GNU} mirror: version
-4.2 or later is needed for all the features to be enabled.  Otherwise
-you will need to configure with @option{--with-readline=no} (or
-equivalent).
+@acronym{GNU} @code{readline} library: version 4.2 or later is needed
+for all the features to be enabled.  Otherwise you will need to
+configure with @option{--with-readline=no} (or equivalent).
 
 A suitably comprehensive @code{iconv} function is essential.  The @R{}
 usage requires @code{iconv} to be able to translate between
-@code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} as the
-current encoding and @code{"ASCII"}, and to translate to and from the
+@code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} (as the
+current encoding) and @code{"ASCII"}, and to translate to and from the
 Unicode wide-character formats @code{"UCS-[24][BL]E"} --- this is true
 for @code{glibc} but not of most commercial Unixes.  However, you can
 make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
@@ -2826,7 +2825,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.8 have been tested (including most versions
+Versions of Tcl/Tk up to 8.5.9 have been tested (including most versions
 of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
@@ -3048,6 +3047,9 @@ Once it is built and installed, it can be used by configuring @R{} with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
+Our understanding is that this project is now frozen and so will not be
+updated for CPUs released since mid-2010.
+
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
 svn up
@@ -3061,14 +3063,14 @@ is backward compatible with version 9 (see below), and the pure layered
 model.  The layered model gives the user fine-grained control over four
 different library layers: interface, threading, computation, and
 run-time library support. Some examples of linking to MKL using this
-layered model are given below. These examples are for GCC compilers on
-@cputype{x86_64}.  The choice of interface layer is important on
+layered model are given below. (These examples are for GCC compilers on
+@cputype{x86_64}.)  The choice of interface layer is important on
 @cputype{x86_64} since the Intel Fortran compiler returns complex values
-differently from the @acronym{GNU} Fortran compiler. You must therefore
-use the interface layer that matches your compiler (@code{mkl_intel*} or
-@code{mkl_gf*}).
+in different registers from the @acronym{GNU} Fortran compiler. You must
+therefore use the interface layer that matches your compiler
+(@code{mkl_intel*} or @code{mkl_gf*}).
 
-R can be linked to a sequential version of MKL by
+R can be linked to a sequential version of MKL by something like
 
 @example
 MKL_LIB_PATH=/opt/intel/mkl/10.0.3.020/lib/em64t/
@@ -3091,11 +3093,11 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
 @end example
 
 @noindent
-The default number of threads will be chosen by the OpenMP* software,
+The default number of threads will be chosen by the OpenMP software,
 but can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}.
 
-Static MKL may be used with
+Static sequential MKL may be used with
 
 @example
 MKL="   -L$@{MKL_LIB_PATH@}                               \
@@ -3125,10 +3127,10 @@ Andy Liaw for the information.)
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
 
-Note that the @acronym{BLAS} library will be used for many of the add-on
-packages as well as for @R{} itself.  This means that it is better to
-use a shared/dynamic @acronym{BLAS} library, as most of a static library
-will be compiled into the @R{} executable and each @acronym{BLAS}-using
+The @acronym{BLAS} library will be used for many of the add-on packages
+as well as for @R{} itself.  This means that it is better to use a
+shared/dynamic @acronym{BLAS} library, as most of a static library will
+be compiled into the @R{} executable and each @acronym{BLAS}-using
 package.
 
 @R{} offers the option of compiling the @acronym{BLAS} into a dynamic
@@ -3232,7 +3234,8 @@ platforms}.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
-because it is necessary on some platforms.
+because it is necessary on some platforms.  Reporting problems where it
+is used unnecessarily will simply irritate the @R{} helpers.
 
 @node Caveats,  , LAPACK, Linear algebra
 @subsection Caveats
@@ -3324,8 +3327,7 @@ If you need to re-configure @R{} with different options you may need to run
 @section Internationalization support
 
 Translation of messages is supported via @acronym{GNU} @code{gettext}
-unless disabled by the configure option @option{--disable-nls} or the
-underlying OS has insufficiently standard C functions to support it.
+unless disabled by the configure option @option{--disable-nls}.
 The @code{configure} report will show @code{NLS} as one of the
 `Additional capabilities' if support has been compiled in, and running
 in an English locale (but not the @code{C} locale) will include
@@ -3367,11 +3369,11 @@ in the previous paragraph.  This looks first at a file specified by the
 environment variable @env{CONFIG_SITE}, and if not is set at files such
 as @file{/usr/local/share/config.site} and
 @file{/usr/local/etc/config.site} in the area (exemplified by
-@file{/usr/local} where @R{}) would be installed.
+@file{/usr/local}) where @R{} would be installed.
 
 These variables are @emph{precious}, implying that they do not have to
 be exported to the environment, are kept in the cache even if not
-specified on the command line and checked for consistency between two
+specified on the command line, checked for consistency between two
 configure runs (provided that caching is used), and are kept during
 automatic reconfiguration as if having been passed as command line
 arguments, even if no cache is used.
@@ -3401,7 +3403,7 @@ One common variable to change is @env{R_PAPERSIZE}, which defaults to
 
 This is used both when configuring @R{} to set the default, and when
 running @R{} to override the default.  It is also used to set the
-papersize when making DVI and PDF manuals.
+paper size when making DVI and PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
 is unset.  (If the (Debian Linux) program @command{paperconf} is found
@@ -3439,15 +3441,15 @@ front end shell script which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
-@code{CFLAGS} produces worthwhile performance gains.  On systems using
-the @acronym{GNU} linker (especially those using @R{} as a shared
-library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
-is worthwhile, and on recent systems
-@samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
-@uref{http://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
-specific @acronym{CPU} family (e.g.@: @samp{-mtune=native} for
-@command{gcc}) can give worthwhile performance gains, especially on
-older architectures such as @cputype{ix86}.
+@code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains
+with @command{gcc} and @command{gfortran}.  On systems using the
+@acronym{GNU} linker (especially those using @R{} as a shared library),
+it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS} is
+worthwhile, and @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is
+recommended at @uref{http://lwn.net/@/Articles/@/192624/}.  Tuning
+compilation to a specific @acronym{CPU} family (e.g.@:
+@samp{-mtune=native} for @command{gcc}) can give worthwhile performance
+gains, especially on older architectures such as @cputype{ix86}.
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -3474,8 +3476,9 @@ path to a shell, e.g. @file{/usr/local/bin/bash}).
 
 To compile @R{}, you will most likely find it easiest to use
 @acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.  The native @command{make} has been reported to fail on SGI
-Irix 6.5 and Alpha/OSF1 (aka Tru64).
+Solaris, as does the native FreeBSD @command{make}.  The native
+@command{make} has been reported to fail on SGI Irix 6.5 and Alpha/OSF1
+(aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
@@ -3554,7 +3557,7 @@ FORTRAN 77 compliance.
 For performance reasons@footnote{e.g., to use an optimized @acronym{BLAS} on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
-It is possible to use @command{f2c}, the FORTRAN-to-C converter
+It may be possible to use @command{f2c}, the FORTRAN-to-C converter
 (@uref{http://www.netlib.org/@/f2c}), via a script.  (An example script
 is given in @file{scripts/f77_f2c}: this can be customized by setting
 @enindex F2C
@@ -3562,10 +3565,11 @@ is given in @file{scripts/f77_f2c}: this can be customized by setting
 @enindex CC
 the environment variables @env{F2C}, @env{F2CLIBS}, @env{CC} and
 @enindex CPP
-@env{CPP}.)  You may need to ensure that the FORTRAN type @code{integer}
-is translated to the C type @code{int}.  Normally @file{f2c.h} contains
-@samp{typedef long int integer;}, which will work on a 32-bit platform
-but not on a 64-bit platform.  If your compiler is not @command{gcc} you
+@env{CPP}.)  You will need to ensure that the FORTRAN type
+@code{integer} is translated to the C type @code{int}.  Normally
+@file{f2c.h} contains @samp{typedef long int integer;}, which will work
+on a 32-bit platform but not on a 64-bit platform.  If your compiler is
+not @command{gcc} you
 @enindex FPICFLAGS
 will need to set @env{FPICFLAGS} appropriately.
 
@@ -3710,13 +3714,13 @@ console and sometimes remotely from an X11 session running on a Windows
 machine, you may have to setup the fonts differently for the two usages.
 
 The `modern' version of the @samp{X11()} device is based on @samp{cairo}
-graphics and uses @samp{fontconfig} to pick and render fonts.  This is
-done on the server, and although there can be selection issues, they are
-more amenable than the issues with @samp{X11()} discussed in the rest of
-this section.
+graphics and (in most implementations) uses @samp{fontconfig} to pick and
+render fonts.  This is done on the server, and although there can be
+selection issues, they are more amenable than the issues with
+@samp{X11()} discussed in the rest of this section.
 
 When X11 was designed, most displays were around 75dpi, whereas today
-they are of the order of 100dpi or even higher.  If you find that X11()
+they are of the order of 100dpi or more.  If you find that X11()
 is reporting@footnote{for example, @code{X11 font at size 14 could not
 be loaded}.} missing font sizes, especially larger ones, it is likely
 that you are not using scalable fonts and have not installed the 100dpi
@@ -3725,7 +3729,7 @@ will likely have something like Fedora's
 @example
 xorg-x11-fonts-75dpi
 xorg-x11-fonts-100dpi
-xorg-x11-fonts-truetype
+xorg-x11-fonts-ISO8859-2-75dpi
 xorg-x11-fonts-Type1
 xorg-x11-fonts-cyrillic
 @end example
@@ -3755,8 +3759,8 @@ If you are using a single-byte encoding, for example ISO 8859-2 in
 Eastern Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
 appropriate family of fonts in your encoding (the last field in the
 listing).  If you find none, it is likely that you need to install
-further font packages, such as @samp{xorg-x11-fonts-cyrillic} shown in
-the listing above.
+further font packages, such as @samp{xorg-x11-fonts-ISO8859-2-75dpi} and
+@samp{xorg-x11-fonts-cyrillic} shown in the listing above.
 
 Multi-byte encodings (most commonly UTF-8) are even more complicated.
 There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
@@ -3764,8 +3768,8 @@ only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
 used, made up of fonts encoded in other encodings.  If the locale you
 are using has an entry in the @samp{XLC_LOCALE} directory (typically
-@file{/usr/X11R6/lib/X11/locale}, it is likely that all you need to do
-is to pick a suitable font specification that has fonts in the encodings
+@file{/usr/share/X11/locale}, it is likely that all you need to do is to
+pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be
 displayed when running in @samp{ja_JP.UTF-8} but not when running in
@@ -3775,12 +3779,12 @@ character sets, e.g.@: ISO 8859-1 (Western European), JISX0208 (Kanji),
 KSC5601 (Korean), GB2312 (Chinese Han) and JISX0201 (Kana)).
 
 On some systems scalable fonts are available covering a wide range of
-glyphs.  One source is TrueType fonts, and these can provide high
-coverage.  Another is Type 1 fonts: the URW set of Type 1 fonts provides
-standard typefaces such as Helvetica with a larger coverage of Unicode
-glyphs than the standard X11 bitmaps, including Cyrillic.  These are
-generally not part of the default install, and the X server may need to
-be configured to use them.  They might be under the X11 @file{fonts}
+glyphs.  One source is TrueType/OpenType fonts, and these can provide
+high coverage.  Another is Type 1 fonts: the URW set of Type 1 fonts
+provides standard typefaces such as Helvetica with a larger coverage of
+Unicode glyphs than the standard X11 bitmaps, including Cyrillic.  These
+are generally not part of the default install, and the X server may need
+to be configured to use them.  They might be under the X11 @file{fonts}
 directory or elsewhere, for example,
 
 @example
@@ -4185,8 +4189,9 @@ out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2:
 @file{libRblas.so} and @file{lapack.so} are generated with code that
 causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
-impossible with Solaris Studio 12.2.  The trick seems to be manually set
-@code{FLIBS}.  For example, on @cputype{amd64}, set in @file{Makeconf}
+impossible with Solaris Studio 12.2.  For a stanadrd build the trick
+seems to be manually set @code{FLIBS}.  For example, on @cputype{amd64},
+set in @file{Makeconf}
 
 @example
 FLIBS_IN_SO = -R/opt/solstudio12.2/lib/amd64 \
@@ -4233,7 +4238,7 @@ SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
 @noindent
-but the use of @code{-no-fstore} can be less numerically stable.
+but the use of @code{-nofstore} can be less numerically stable.
 
 The Solaris Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
@@ -4241,7 +4246,7 @@ These are selected by the @option{-library} flag, which as it is needed
 for both compiling and linking is best specified as part of the
 compiler.  The examples above use @samp{stlport4}, currently the most
 modern of the options: the default (but still needed to be specified as
-it is needed for linking) is @samp{Cstd} which dates from 1998: see
+it is needed for linking) is @samp{Cstd}: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
@@ -4287,7 +4292,8 @@ version of Solaris in use.  (This can be ascertained from @command{gcc
 several reports of problems were due to using @command{gcc} compiled on
 one version of Solaris on a later version.
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 needed
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 (the
+most recent version on OpenCSW) needed
 
 @example
 CPPFLAGS=-I/opt/csw/include
@@ -4514,7 +4520,7 @@ TK_LIB_SPEC='-ltk84'
 The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
-At the time of writing not all the tests pass: there are incorrect
+Even with Cygwin 1.7.8, not all the tests passed: there were incorrect
 results from wide-character regular expressions code and from sourcing
 CR-delimited files.
 
@@ -4685,6 +4691,9 @@ of @samp{MiKTeX} almost suffices (the @pkg{grid} vignettes need
 allowed to (although that is not actually used).  The @file{Rtools*.exe}
 installer does @emph{not} include any version of @LaTeX{}.
 
+It is also possible to use the TeXLive distribution from
+@uref{http://www.tug.org/texlive/}.
+
 @enindex R_RD4DVI
 @enindex R_RD4PDF
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
@@ -4812,8 +4821,7 @@ subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
 are linked statically.
 
 It is also possible to use the 32-bit toolchain from the
-@code{mingw-w64} project (which is currently using pre-releases of
-@command{gcc 4.5.2}) and options to use that are documented in file
+@code{mingw-w64} project and options to use that are documented in file
 @file{MkRules.dist}.
 
 @node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
@@ -4835,18 +4843,12 @@ unless @option{--no-test-load} is used.}  This is based on files from
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100917.zip},
 including a pre-release of @command{gcc 4.5.2}.  However, this has been
 patched to use static Fortran and C++ runtime libraries: a suitable
-toolchain is included in @file{Rtools212.exe}.
+toolchain is included in @file{Rtools213.exe}.
 
 @strong{NB:} 64-bit toolchains after late April 2010 at that site
-generate objects with symbols without a leading underscore.  Other
-toolchains may use leading underscores, in which case @code{SYMPAT64} in
-@file{src/gnuwin32/MkRules.dist} needs to be set (see the comments in
-that file).  If you are using a binary distribution of @R{}, check that
-the settings of @code{BINPREF} and @code{SYMPAT} in file
-@file{etc/x64/Makeconf} are appropriate to your toolchain (following the
-comments in the file).  The use or not of leading underscores affects
-linking to external static and import libraries but not linking directly
-to DLLs.
+generate objects with symbols without a leading underscore. Ony such
+toolchains are supported (and not that used to build @R{} 2.11.1 on
+64-bit Windows).
 
 Other toolchains are available: for example under
 @uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
