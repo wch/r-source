@@ -94,14 +94,14 @@ provided information on the C++ interface) are gratefully acknowledged.
 @cindex Packages
 @cindex Creating packages
 
-Packages provide a mechanism for loading optional code and attached
-documentation as needed.  The @R{} distribution itself includes about 25
+Packages provide a mechanism for loading optional code, data and
+documentation as needed.  The @R{} distribution itself includes about 30
 packages.
 
-In the following, we assume that you know the @samp{library()} command,
-including its @samp{lib.loc} argument, and we also assume basic
-knowledge of the @code{INSTALL} utility.  Otherwise, please look at @R{}'s
-help pages
+In the following, we assume that you know the @code{library()} command,
+including its @code{lib.loc} argument, and we also assume basic
+knowledge of the @command{R CMD INSTALL} utility.  Otherwise, please
+look at @R{}'s help pages on
 
 @example
 ?library
@@ -124,6 +124,67 @@ R-admin, R Installation and Administration}, for further details.
 @end ifset
 
 Other types of extensions are supported (but rare): @xref{Package types}.
+
+Some notes on terminology complete this introduction.  These will help
+with the reading of this manual, and also in describing concepts
+accurately when asking for help.
+
+A @emph{package} is a directory of files which extend @R{}, either a
+@emph{source package} (the master files of a package), or a tarball
+containing the files of a source package, or an @emph{installed}
+package, the result of running @command{R CMD INSTALL} on a source
+package.  On some platforms there are also @emph{binary packages}, a zip
+or tarball containing the files of an installed package which can be
+unpacked rather than installing from sources.
+
+A package is @strong{not}@footnote{although this is common mis-usage.
+It seems to stem from S, whose analogues of @R{}'s packages were
+officially known as @emph{library sections} and later as
+@emph{chapters}, but almost always referred to as @emph{libraries}.} a
+@emph{library}.  The latter is used in two senses in @R{} documentation.
+The first is a directory into which packages are installed, e.g.@:
+@file{/usr/lib/R/library}: in that sense it is sometimes referred to as
+a @emph{library directory} or @emph{library tree} (since the library is
+a directory which contains packages as directories, which themselves
+contain directories).  The second sense is that used by the operating
+system, as a shared library or static library or (especially on Windows)
+a DLL, where the second L stands for `library'.  Installed packages may
+contain compiled code in what is known on most Unix-alikes as a
+@emph{shared object} and on Windows as a DLL (and used to be called a
+@emph{shared library} on some Unix-alikes).  The concept of a
+@emph{shared library} (@emph{dynamic library} on Mac OS X) as a
+collection of compiled code to which a package might link is also used,
+especially for @R{} itself on some platforms.
+
+There are a number of well-defined operations on source packages.  The
+most common is @emph{installation} which takes a source package and
+installs it in a library using @command{R CMD INSTALL} or
+@code{install.packages}.  Source packages can be @emph{built}, a
+distinct concept.  This involves taking a source directory and creating
+a tarball ready for distribution, including cleaning it up and creating
+PDF documentation from any @emph{vignettes} it may contain.  Source
+packages (and most often tarballs) can be @emph{checked}, when a test
+installation is done and tested (including running its examples); also,
+the contents of the package are tested in various ways for consistency
+and portability.
+
+@emph{Compilation} is not a correct term for a package.  Installing a
+source package which contains C, C++ or Fortran code will involve
+compiling that code.  As from @R{} 2.13.0 there is also the possibility
+of (`byte') compiling the @R{} code in a package (using the facilities
+of package @pkg{compiler}): at some future time this might be done
+routinely when @emph{compiling} a package may come to mean compiling its
+@R{} code.
+
+It used to be unambiguous to talk about @emph{loading} an installed
+package using @code{library()}, but since the advent of package name
+spaces this has been less clear: people now often talk about
+@emph{loading} the package's name space and then @emph{attaching} the
+package so it becomes visible on the search path.  Function
+@code{library} performs both steps, but a package's name space can be
+loaded without the package being attached (for example by calls like
+@code{splines::ns}).
+
 
 @menu
 * Package structure::           
