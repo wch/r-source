@@ -108,6 +108,10 @@ srcfilecopy <- function(filename, lines) {
     stopifnot(is.character(filename), length(filename) == 1L)
 
     e <- new.env(parent=emptyenv())
+    
+    # Remove embedded newlines
+    if (any(grepl("\n", lines, fixed=TRUE)))
+	lines <- unlist(strsplit(sub("$", "\n", as.character(lines)), "\n"))
 
     e$filename <- filename
     e$lines <- as.character(lines)
