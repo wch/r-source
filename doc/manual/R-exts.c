@@ -10,14 +10,14 @@
 #include <R.h>
 #include <Rinternals.h>
 
+/* second version */
 SEXP out(SEXP x, SEXP y)
 {
-    R_len_t i, j, nx, ny;
+    R_len_t i, j, nx = length(x), ny = length(y);
     double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames;
 
-    nx = length(x); ny = length(y);
-    PROTECT(ans = allocVector(REALSXP, nx*ny));
+    PROTECT(ans = allocMatrix(REALSXP, nx, ny));
     rans = REAL(ans);
     for(i = 0; i < nx; i++) {
 	tmp = rx[i];
@@ -41,9 +41,8 @@ SEXP out(SEXP x, SEXP y)
 SEXP getListElement(SEXP list, const char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
-    int i;
 
-    for (i = 0; i < length(list); i++)
+    for (R_len_t i = 0; i < length(list); i++)
 	if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) {
 	    elmt = VECTOR_ELT(list, i);
 	    break;
@@ -69,7 +68,7 @@ SEXP getvar(SEXP name, SEXP rho)
 #include <Rdefines.h>
 SEXP convolve2(SEXP a, SEXP b)
 {
-    int i, j, na, nb, nab;
+    R_len_t i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -109,7 +108,7 @@ SEXP convolve2b(SEXP a, SEXP b)
 
 SEXP convolveE(SEXP args)
 {
-    int i, j, na, nb, nab;
+    R_len_t i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP a, b, ab;
 
@@ -132,15 +131,15 @@ SEXP convolveE(SEXP args)
 
 SEXP showArgs(SEXP args)
 {
-    int i;
-    Rcomplex cpl;
-    const char *name;
-    SEXP el;
-
     args = CDR(args); /* skip 'name' */
-    for(i = 0; args != R_NilValue; i++, args = CDR(args)) {
-        name = isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
-	el = CAR(args);
+    for(int i = 0; args != R_NilValue; i++, args = CDR(args)) {
+        const char *name = 
+            isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
+	SEXP el = CAR(args);
+	if (length(el) == 0) {
+	    Rprintf("[%d] '%s' R type, length 0\n", i+1, name);
+	    continue;
+	}
 	switch(TYPEOF(el)) {
 	case REALSXP:
 	    Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
@@ -150,8 +149,10 @@ SEXP showArgs(SEXP args)
 	    Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
 	    break;
 	case CPLXSXP:
-	    cpl = COMPLEX(el)[0];
+	{
+	    Rcomplex cpl = COMPLEX(el)[0];
 	    Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+	}
 	    break;
 	case STRSXP:
 	    Rprintf("[%d] '%s' %s\n", i+1, name,
@@ -166,7 +167,7 @@ SEXP showArgs(SEXP args)
 
 SEXP showArgs1(SEXP largs)
 {
-    int i, nargs = LENGTH(largs);
+    R_len_t i, nargs = LENGTH(largs);
     Rcomplex cpl;
     SEXP el, names = getAttrib(largs, R_NamesSymbol);
     const char *name;
@@ -218,7 +219,7 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 {
-    int i, n = length(list);
+    R_len_t i, n = length(list);
     SEXP R_fcall, ans;
 
     if(!isNewList(list)) error("'list' must be a list");
@@ -286,7 +287,7 @@ SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
     double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
-    int start, i, j;
+    R_len_t start, i, j;
 
     expr = CADR(args);
     if(!isString(theta = CADDR(args)))
