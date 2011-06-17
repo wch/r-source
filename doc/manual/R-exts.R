@@ -18,8 +18,8 @@ dyn.load(paste("R-exts", .Platform$dynlib.ext, sep=""))
 
 out <- function(x, y)
 {
-   storage.mode(x) <- storage.mode(y) <- "double"
-   .Call("out", x, y)
+    storage.mode(x) <- storage.mode(y) <- "double"
+    .Call("out", x, y)
 }
 out(1:3, 2:4)
 
@@ -43,10 +43,10 @@ convE(u, u)
 ## ----- Lists examples -----
 
 showArgs <- function(...) invisible(.External("showArgs", ...))
-showArgs(u=u, x=x, let=letters)
+showArgs(u = u, x = x, let = letters)
 
 showArgs1 <- function(...) invisible(.Call("showArgs1", list(...)))
-showArgs1(u=u, x=x, let=letters)
+showArgs1(u = u, x = x, let = letters)
 
 a <- list(a = 1:5, b = rnorm(10), test = runif(100))
 .Call("lapply", a, quote(sum(x)), new.env())
@@ -75,8 +75,8 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
 {
     eps <- sqrt(.Machine$double.eps)
     ans <- eval(substitute(expr), rho)
-    grad <- matrix(,length(ans), length(theta),
-                   dimnames=list(NULL, theta))
+    grad <- matrix(, length(ans), length(theta),
+                   dimnames = list(NULL, theta))
     for (i in seq_along(theta)) {
         old <- get(theta[i], envir=rho)
         delta <- eps * min(1, abs(old))
