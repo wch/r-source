@@ -15,10 +15,10 @@
 #  http://www.r-project.org/Licenses/
 
 vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
-logical <- function(length = 0) vector("logical", length)
-character <- function(length = 0) vector("character", length)
-integer <- function(length = 0) vector("integer", length)
-double <- function(length = 0) vector("double", length)
+logical <- function(length = 0) .Internal(vector("logical", length))
+character <- function(length = 0) .Internal(vector("character", length))
+integer <- function(length = 0) .Internal(vector("integer", length))
+double <- function(length = 0) .Internal(vector("double", length))
 real <- double
 numeric <- double
 complex <- function(length.out = 0,

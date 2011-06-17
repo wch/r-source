@@ -1,6 +1,6 @@
 % File src/library/base/man/vector.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{vector}
@@ -18,7 +18,9 @@ is.vector(x, mode = "any")
 \arguments{
   \item{mode}{A character string giving an atomic mode or
     \code{"list"}, or (except for \code{vector}) \code{"any"}.}
-  \item{length}{A non-negative integer specifying the desired length.}
+  \item{length}{A non-negative integer specifying the desired length.
+    Double and logical values will be coerced to integer:
+    supplying an argument of length other than one will give a warning.}
   \item{x}{An object.}
 }
 %% The implementation of is.vector allows any _type_ to be named,
