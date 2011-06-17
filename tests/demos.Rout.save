@@ -1,5 +1,5 @@
 
-R version 2.13.0 Under development (unstable) (2011-03-10 r54722)
+R version 2.13.0 Patched (2011-06-17 r56144)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1509,5 +1509,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.885 0.122 2.438 0 0 
+Time elapsed:  1.482 0.087 1.581 0 0 
 > 
