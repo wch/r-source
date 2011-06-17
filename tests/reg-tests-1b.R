@@ -1627,4 +1627,5 @@ close(rawcon)
 stopifnot(identical(res, 101:104))
 ## read the same value repeatedly in 2.13.0
 
+
 proc.time()

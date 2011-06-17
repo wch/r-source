@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-05-28 r56005)
+R version 2.14.0 Under development (unstable) (2011-06-17 r56152)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-pc-mingw32/i386 (32-bit)
@@ -6772,4 +6772,13 @@ Levels: a b c d e f g h i j k l m n o
 > as.POSIXlt("2010-12-31 24:00:00", tz = "GMT")
 [1] "2011-01-01 GMT"
 > ## new in 2.14.0
+> 
+> 
+> ## Unwarranted conversion of logical values
+> try(double(FALSE))
+Error in double(FALSE) : invalid 'length' argument
+> x <- 1:3
+> try(length(x) <- TRUE)
+Error in length(x) <- TRUE : invalid value
+> ## coerced to integer in 2.13.x
 > 

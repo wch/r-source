@@ -2578,3 +2578,10 @@ as.POSIXlt("2008-02-28 24:00:00", tz = "GMT")
 as.POSIXlt("2008-02-29 24:00:00", tz = "GMT")
 as.POSIXlt("2010-12-31 24:00:00", tz = "GMT")
 ## new in 2.14.0
+
+
+## Unwarranted conversion of logical values
+try(double(FALSE))
+x <- 1:3
+try(length(x) <- TRUE)
+## coerced to integer in 2.13.x

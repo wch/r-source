@@ -180,6 +180,11 @@
       \item The \code{length} argument of \code{vector()} and its
       wrappers such as \code{numeric()} is required to be of length 1
       (instead of a warning as previously).
+
+      \item \code{vector(len)} and \code{length(x) <- len} no longer
+      acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
+      were ever documented to, but there was special-casing in the C
+      code).
     }
   }
   

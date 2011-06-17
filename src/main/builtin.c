@@ -34,14 +34,7 @@ static R_len_t asVecSize(SEXP x)
     double d;
 
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	if (LENGTH(x) > 1)
-	    warning(_("%d lengths supplied: the first will be used"), 
-		    LENGTH(x));
 	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    res = IntegerFromLogical(LOGICAL(x)[0], &warn);
-	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
-	    return res;
 	case INTSXP:
 	    res = INTEGER(x)[0];
 	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
@@ -55,7 +48,7 @@ static R_len_t asVecSize(SEXP x)
 	    return (R_size_t) d;
 	}
     }
-    return -1;
+    return -1;  /* which gives error in the caller */
 }
 
 SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
