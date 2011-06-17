@@ -51,7 +51,7 @@ dev.list <- function()
     i <- seq_along(n)[n != ""]
     names(i) <- n[i]
     i <- i[-1L]
-    if(length(i) == 0) NULL else i
+    if(length(i) == 0L) NULL else i
 }
 
 dev.cur <- function()
@@ -327,10 +327,10 @@ checkIntFormat <- function(s)
 {
     ## OK if no unescaped %, so first remove those
     s <- gsub("%%", "", s)
-    if(length(grep("%", s)) == 0) return(TRUE)
+    if(length(grep("%", s)) == 0L) return(TRUE)
     ## now remove at most one valid(ish) integer format
     s <- sub("%[#0 ,+-]*[0-9.]*[diouxX]", "", s)
-    length(grep("%", s)) == 0
+    length(grep("%", s)) == 0L
 }
 
 devAskNewPage <- function(ask=NULL) .Internal(devAskNewPage(ask))

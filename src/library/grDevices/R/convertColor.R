@@ -164,8 +164,8 @@ colorspaces <-
              denom <- sum(XYZ*c(1,15,3))
              wdenom <- sum(white*c(1,15,3))
 
-             u1 <- ifelse(denom == 0,1,4*XYZ[1L]/denom)
-             v1 <- ifelse(denom == 0,1,9*XYZ[2L]/denom)
+             u1 <- ifelse(denom == 0, 1, 4*XYZ[1L]/denom)
+             v1 <- ifelse(denom == 0, 1, 9*XYZ[2L]/denom)
              ur <- 4*white[1L]/wdenom
              vr <- 9*white[2L]/wdenom
 
@@ -295,11 +295,11 @@ adjustcolor <- function(col, alpha.f = 1, red.f = 1, green.f = 1,
                         blue.f = 1, offset = c(0,0,0,0),
                         transform = diag(c(red.f, green.f, blue.f, alpha.f)))
 {
-    stopifnot(length(offset) %% 4 == 0,
-              !is.null(d <- dim(transform)), d == c(4,4))
-    x <- col2rgb(col, alpha=TRUE)/255
+    stopifnot(length(offset) %% 4L == 0L,
+              !is.null(d <- dim(transform)), d == c(4L, 4L))
+    x <- col2rgb(col, alpha = TRUE)/255
     x[] <- pmax(0, pmin(1,
                         transform %*% x +
-                        matrix(offset, nrow=4, ncol=ncol(x))))
-    rgb(x[1,], x[2,], x[3,], x[4,])
+                        matrix(offset, nrow = 4L, ncol = ncol(x))))
+    rgb(x[1L,], x[2L,], x[3L,], x[4L,])
 }

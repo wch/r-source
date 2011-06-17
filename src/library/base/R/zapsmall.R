@@ -16,7 +16,7 @@
 
 zapsmall <- function(x, digits = getOption("digits"))
 {
-    if (length(digits) == 0)
+    if (length(digits) == 0L)
         stop("invalid 'digits'")
     if (all(ina <- is.na(x)))
         return(x)

@@ -35,11 +35,11 @@ substring <- function(text, first, last=1000000L)
     .Internal(`substr<-`(text, as.integer(first), as.integer(last), value))
 
 abbreviate <-
-    function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE,
+    function(names.arg, minlength = 4L, use.classes = TRUE, dot = FALSE,
              strict = FALSE, method = c("left.kept", "both.sides"))
 {
     ## we just ignore use.classes
-    if(minlength <= 0)
+    if(minlength <= 0L)
 	return(rep.int("", length(names.arg)))
     ## need to remove leading/trailing spaces before we check for dups
     ## This is inefficient but easier than modifying do_abbrev (=> FIXME !)
