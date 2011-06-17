@@ -24,7 +24,7 @@ as.single(x, \dots)
 }
 \arguments{
   \item{length}{A non-negative integer specifying the desired length.
-    Double and logical values will be coerced to integer:
+    Double values will be coerced to integer:
     supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
