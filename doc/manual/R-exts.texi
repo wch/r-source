@@ -214,7 +214,7 @@ should not be empty).  The package subdirectory may also contain files
 @file{LICENSE}, @file{LICENCE}, @file{COPYING} and @file{NEWS}.  Other
 files such as @file{INSTALL} (for non-standard installation
 instructions), @file{README} or @file{ChangeLog} will be ignored by
-@R{}, but may be useful to end-users.
+@R{}, but may be useful to end users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
@@ -876,7 +876,12 @@ file, these two are compared, with differences being reported but not
 causing an error.  The directory @file{tests} is copied to the check
 area, and the tests are run with the copy as the working directory and
 with @code{R_LIBS} set to ensure that the copy of the package installed
-during testing will be found by @code{library(@var{pkg_name})}.
+during testing will be found by @code{library(@var{pkg_name})}.  Note
+that the package-specific tests are run in a vanilla @R{} session
+without setting the random-number seed, so tests which use random
+numbers will need to do so to obtain reproducible results (and it can be
+helpful to do so in all cases, to avoid occasional failures when tests
+are run by others).
 
 If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
