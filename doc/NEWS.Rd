@@ -43,6 +43,12 @@
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
       character method (suggestion of Joshua Ulrich).  [Intended for \R
       2.13.0 but accidentally removed before release.]
+      
+      \item \code{vector()} and its wrappers such as \code{integer()}
+      and \code{double()} now warn if called with a \code{length}
+      argument of more than one element.  This helps track down user
+      errors such as calling \code{double(x)} instead of
+      \code{as.double(x)}.
     }
   }
 
@@ -193,6 +199,9 @@
 
       \item Methods that override previously loaded versions will now
       be installed and called.  (Reported by Iago Mosqueira.)
+
+      \item \code{addmargins()} called \code{numeric(apos)} rather than
+      \code{numeric(length(apos))}.
     }
   }
 }

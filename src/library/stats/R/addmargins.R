@@ -141,7 +141,7 @@ addmargins <-
 		    n.new/(skip+n.mar*runl))
 
 	## Define a vector to hold all the values of the new table
-	values <- numeric(apos)
+	values <- double(length(apos))
 
 	## First fill in the body of the table
 	values[apos] <- as.vector(A)
