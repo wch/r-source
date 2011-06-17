@@ -18,7 +18,9 @@ is.real(x)
   and are provided for backwards compatibility only.
 }
 \arguments{
-  \item{length}{desired length.}
+  \item{length}{A non-negative integer specifying the desired length.
+    Double and logical values will be coerced to integer:
+    supplying an argument of length other than one is an error.}
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
