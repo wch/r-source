@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -18,7 +18,7 @@ length(x) <- value
 }
 \arguments{
   \item{x}{an \R object.  For replacement, a vector or factor.}
-  \item{value}{an integer.}
+  \item{value}{an integer: double values will be coerced to integer.}
 }
 \value{
   The default method currently returns an \code{\link{integer}} of

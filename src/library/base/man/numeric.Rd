@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{numeric}
@@ -22,7 +22,7 @@ is.numeric(x)
 }
 \arguments{
   \item{length}{A non-negative integer specifying the desired length.
-    Double and logical values will be coerced to integer:
+    Double values will be coerced to integer:
     supplying an argument of length other than one will give a warning.}
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}

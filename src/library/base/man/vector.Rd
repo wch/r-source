@@ -19,7 +19,7 @@ is.vector(x, mode = "any")
   \item{mode}{A character string giving an atomic mode or
     \code{"list"}, or (except for \code{vector}) \code{"any"}.}
   \item{length}{A non-negative integer specifying the desired length.
-    Double and logical values will be coerced to integer:
+    Double values will be coerced to integer:
     supplying an argument of length other than one will give a warning.}
   \item{x}{An object.}
 }
