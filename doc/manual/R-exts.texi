@@ -8413,7 +8413,7 @@ SEXP showArgs(SEXP args)
 @group
     case STRSXP:
       Rprintf("[%d] '%s' %s\n", i+1, name,
-             CHAR(STRING_ELT(CAR(args), 0)));
+             CHAR(STRING_ELT(el, 0)));
       break;
 @end group
 @group

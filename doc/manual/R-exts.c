@@ -12,9 +12,9 @@
 
 SEXP out(SEXP x, SEXP y)
 {
-    int i, j, nx, ny;
+    R_len_t i, j, nx, ny;
     double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
-    SEXP ans, dim, dimnames, dd;
+    SEXP ans, dim, dimnames;
 
     nx = length(x); ny = length(y);
     PROTECT(ans = allocVector(REALSXP, nx*ny));
@@ -29,7 +29,6 @@ SEXP out(SEXP x, SEXP y)
     setAttrib(ans, R_DimSymbol, dim);
 
     PROTECT(dimnames = allocVector(VECSXP, 2));
-    dd = getAttrib(x, R_NamesSymbol);
     SET_VECTOR_ELT(dimnames, 0, getAttrib(x, R_NamesSymbol));
     SET_VECTOR_ELT(dimnames, 1, getAttrib(y, R_NamesSymbol));
     setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -89,7 +88,7 @@ SEXP convolve2(SEXP a, SEXP b)
 
 SEXP convolve2b(SEXP a, SEXP b)
 {
-    int i, j, na, nb, nab;
+    R_len_t i, j, na, nb, nab;
     double *xa, *xb, *xab;
     SEXP ab;
 
@@ -202,7 +201,7 @@ SEXP showArgs1(SEXP largs)
 
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 {
-    int i, n = length(list);
+    R_len_t i, n = length(list);
     SEXP ans;
 
     if(!isNewList(list)) error("'list' must be a list");
