@@ -171,11 +171,15 @@
       gains \code{ylab} and \code{lty} arguments, and passes \code{...}
       on to \code{plot.default}.
 
-      \item Arguments such as the \code{mode} argument of
-      \code{as.vector()} and \code{is.vector()} and the
-      \code{description} argument of \code{file()} are required to be of
-      length one, rather than any further elements being silently
+      \item Character-string arguments such as the \code{mode} argument
+      of \code{vector()}, \code{as.vector()} and \code{is.vector()} and
+      the \code{description} argument of \code{file()} are required to
+      be of length one, rather than any further elements being silently
       discarded.  This helps catch incorrect usage in programming.
+
+      \item The \code{length} argument of \code{vector()} and its
+      wrappers such as \code{numeric()} is required to be of length 1
+      (instead of a warning as previously).
     }
   }
   

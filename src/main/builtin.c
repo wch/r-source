@@ -723,11 +723,11 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
+    if (length(CADR(args)) != 1) error(_("invalid '%s' argument"), "length");
     len = asVecSize(CADR(args));
     if (len < 0) error(_("invalid '%s' argument"), "length");
     s = coerceVector(CAR(args), STRSXP);
-    if (length(s) == 0)
-	error(_("vector: zero-length 'type' argument"));
+    if (length(s) != 1) error(_("invalid '%s' argument"), "mode");
     mode = str2type(CHAR(STRING_ELT(s, 0))); /* ASCII */
     if (mode == -1 && streql(CHAR(STRING_ELT(s, 0)), "double"))
 	mode = REALSXP;
