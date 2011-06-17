@@ -30,22 +30,23 @@
 
 static R_len_t asVecSize(SEXP x)
 {
-    int warn = 0, res;
-    double d;
-
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
-	case INTSXP:
-	    res = INTEGER(x)[0];
+	case INTSXP: 
+	{
+	    int res = INTEGER(x)[0];
 	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
 	    return res;
+	}
 	case REALSXP:
-	    d = REAL(x)[0];
+	{
+	    double d = REAL(x)[0];
 	    if(ISNAN(d)) error(_("vector size cannot be NA/NaN"));
 	    if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
 	    if(d < 0) error(_("vector size cannot be negative"));
 	    if(d > R_LEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_size_t) d;
+	}
 	}
     }
     return -1;  /* which gives error in the caller */
