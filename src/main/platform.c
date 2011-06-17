@@ -352,7 +352,7 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     ed = CAR(args);
 
     n = length(fn);
-    if (!isString(ed))
+    if (!isString(ed) || length(ed) != 1)
 	error(_("invalid '%s' specification"), "editor");
     if (n > 0) {
 	if (!isString(fn))
@@ -383,15 +383,12 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	title = (const char**) R_alloc(1, sizeof(char*));
 	title[0] = "";
     }
-    if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0))) {
-	SEXP ed0 = STRING_ELT(ed, 0);
+    SEXP ed0 = STRING_ELT(ed, 0);
 #ifdef Win32
-	editor = acopy_string(reEnc(CHAR(ed0), getCharCE(ed0), CE_UTF8, 1));
+    editor = acopy_string(reEnc(CHAR(ed0), getCharCE(ed0), CE_UTF8, 1));
 #else
-	editor = acopy_string(translateChar(ed0));
+    editor = acopy_string(translateChar(ed0));
 #endif
-    } else
-	editor = "";
     R_EditFiles(n, f, title, editor);
     return R_NilValue;
 }

@@ -170,6 +170,12 @@
       \item The \code{plot()} method for class \code{"profile.nls"}
       gains \code{ylab} and \code{lty} arguments, and passes \code{...}
       on to \code{plot.default}.
+
+      \item Arguments such as the \code{mode} argument of
+      \code{as.vector()} and \code{is.vector()} and the
+      \code{description} argument of \code{file()} are required to be of
+      length one, rather than any further elements being silently
+      discarded.  This helps catch incorrect usage in programming.
     }
   }
   

@@ -891,7 +891,7 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     DllInfo *info;
 
     checkArity(op,args);
-    if (!isString(CAR(args)) || length(CAR(args)) < 1)
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
     GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
@@ -907,7 +907,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[2 * PATH_MAX];
 
     checkArity(op,args);
-    if (!isString(CAR(args)) || length(CAR(args)) < 1)
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
     GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
