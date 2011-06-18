@@ -418,7 +418,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        pkgInfo <- vector(length = 3L, mode = "list")
+        pkgInfo <- vector("list", 3L)
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
                 txt <- readRDS(f)$DESCRIPTION

@@ -197,7 +197,7 @@ glm.fit <-
                          domain = NA)
                 else {
                     coefold <- start
-                    offset + as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+                    offset + as.vector(if (NCOL(x) == 1L) x * start else x %*% start)
                 }
             else family$linkfun(mustart)
         mu <- linkinv(eta)
@@ -418,7 +418,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	return(anova.glmlist(c(list(object), dotargs),
 			     dispersion = dispersion, test=test))
 
-    ## score tests require a bit of extra computing 
+    ## score tests require a bit of extra computing
     doscore <- !is.null(test) && test=="Rao"
     ## extract variables from model
 
@@ -545,7 +545,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 {
 
     doscore <- !is.null(test) && test=="Rao"
-    
+
     ## find responses for all models and remove
     ## any models with a different response
 
@@ -577,7 +577,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
       score <- numeric(nmodels)
       score[1] <- NA
       df <- -diff(resdf)
-      
+
       for (i in seq_len(nmodels-1)) {
         m1 <- if (df[i]>0) object[[i]] else object[[i+1]]
         m2 <- if (df[i]>0) object[[i+1]] else object[[i]]
@@ -604,7 +604,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 					 "Deviance"))
     if (doscore)
       table <- cbind(table, Rao=score)
-    
+
     title <- "Analysis of Deviance Table\n"
     topnote <- paste("Model ", format(1L:nmodels),": ",
 		     variables, sep="", collapse="\n")

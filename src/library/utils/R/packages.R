@@ -287,13 +287,13 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    
+
     if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
     	subset <- oldPkgs
     	oldPkgs <- NULL
-    } else 
+    } else
     	subset <- NULL
-    
+
     if(is.null(oldPkgs)) {
         ## since 'available' is supplied, 'contriburl' and 'method' are unused
 	oldPkgs <- old.packages(lib.loc = lib.loc,
@@ -303,7 +303,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 	    return(invisible())
     } else if (!(is.matrix(oldPkgs) && is.character(oldPkgs)))
 	stop("invalid 'oldPkgs'; must be a character vector or a result from old.packages()")
-	
+
     if(!is.null(subset)) {
     	oldPkgs <- oldPkgs[ rownames(oldPkgs) %in% subset, ,drop=FALSE]
     	if (nrow(oldPkgs) == 0)
@@ -869,9 +869,6 @@ function(pkgs, available, dependencies = c("Depends", "Imports", "LinkingTo"))
     if(is.null(available))
         stop(gettextf("%s must be supplied", sQuote(available)), domain = NA)
     info <- available[pkgs, dependencies, drop = FALSE]
-    ## we always want a list here, but apply can simplify to a matrix.
-    ## x <- apply(info, 1L, .clean_up_dependencies)
-    ## if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
     x <- vector("list", length(pkgs)); names(x) <- pkgs
     for (i in seq_along(pkgs))
         x[[i]] <- .clean_up_dependencies(info[i, ])

@@ -1655,7 +1655,7 @@ substituteFunctionArgs <-
                          functionName,
                          paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
                          paste(newArgs, collapse = ", ")), domain = NA)
-        ll <- vector("list", 2*n)
+        ll <- vector("list", 2L*n)
         for(i in seq_len(n)) {
             ll[[i]] <- as.name(args[[i]])
             ll[[n+i]] <- as.name(newArgs[[i]])
