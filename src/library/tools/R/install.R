@@ -550,9 +550,8 @@
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
-                    .Call("R_setFileTime", instdir,
-                          file.info(file.path(lockdir, pkg_name))$mtime,
-                          PACKAGE = "base")
+                    .Call("R_setFileTime", file.path(lockdir, pkg_name),
+                          file.info(instdir)$mtime, PACKAGE = "base")
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
                     system(paste("mv", shQuote(instdir),
