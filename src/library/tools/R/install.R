@@ -167,8 +167,9 @@
                 dir.exists(lp <- file.path(lockdir, curPkg))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
-                    ## FIXME: this does not preserve dates
                     file.copy(lp, dirname(pkgdir), recursive = TRUE)
+                    .Call("R_setFileTime", pkgdir, file.info(lp)$mtime,
+                          PACKAGE = "base")
                     unlink(lp, recursive = TRUE)
                 } else {
                     ## some shells require that they be run in a known dir
@@ -549,6 +550,9 @@
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
+                    .Call("R_setFileTime", instdir,
+                          file.info(file.path(lockdir, pkg_name))$mtime,
+                          PACKAGE = "base")
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
                     system(paste("mv", shQuote(instdir),
