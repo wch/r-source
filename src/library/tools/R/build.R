@@ -790,11 +790,29 @@ get_exclude_patterns <- function()
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
-        if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
-            errorLog(Log, "copying to build directory failed")
-            do_exit(1L)
+        if (WINDOWS) {
+            ## this does not preserve dates, does copy permissions
+            if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
+                errorLog(Log, "copying to build directory failed")
+                do_exit(1L)
+            }
+            setwd(Tdir)
+        } else {
+            ## this does preserve dates, may or may not copy permissions
+            TAR <- Sys.getenv("TAR", "tar")
+            ## -h means dereference symbolic links: some prefer -L
+            res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
+            if (!res) {
+                Tdir <- tempfile("Rbuild")
+                dir.create(Tdir, mode = "0755")
+                setwd(Tdir)
+                res <- system(paste(TAR, "-xf",  shQuote(filepath)))
+            }
+            if (res) {
+                errorLog(Log, "copying to build directory failed")
+                do_exit(1L)
+            }
         }
-        setwd(Tdir)
 
         ## Now correct the package name (PR#9266)
         if (pkgname != intname) {

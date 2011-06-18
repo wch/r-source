@@ -220,3 +220,12 @@ readRenviron <- function(path)
 
 normalizePath <- function(path, winslash = "\\", mustWork = NA)
     .Internal(normalizePath(path.expand(path), winslash, mustWork))
+
+Sys.setFileTime <- function(path, time)
+{
+    if (!is.character(path) || length(path) != 1L)
+        stop("invalid 'path' argument")
+    time <- as.POSIXct(time)
+    if (is.na(time))  stop("invalid 'time' argument")
+    invisible(.Call("R_setFileTime", path, time, PACKAGE = "base"))
+}

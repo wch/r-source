@@ -2559,8 +2559,8 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifdef Win32 /* untested */
-static void winSetFileTime(const char *fn, time_t ftime)
+#ifdef Win32
+static int winSetFileTime(const char *fn, time_t ftime)
 {
     SYSTEMTIME st;
     FILETIME modft;
@@ -2568,7 +2568,7 @@ static void winSetFileTime(const char *fn, time_t ftime)
     HANDLE hFile;
 
     utctm = gmtime(&ftime);
-    if (!utctm) return; 
+    if (!utctm) return 0;
 
     st.wYear         = (WORD) utctm->tm_year + 1900;
     st.wMonth        = (WORD) utctm->tm_mon + 1;
@@ -2577,14 +2577,15 @@ static void winSetFileTime(const char *fn, time_t ftime)
     st.wHour         = (WORD) utctm->tm_hour;
     st.wMinute       = (WORD) utctm->tm_min;
     st.wSecond       = (WORD) utctm->tm_sec;
-    st.wMilliseconds = 0;
+    st.wMilliseconds = (WORD) ms;
     if (!SystemTimeToFileTime(&st, &modft)) return;
 
     hFile = CreateFile(fn, GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
 		       FILE_FLAG_BACKUP_SEMANTICS, NULL);
     if (hFile == INVALID_HANDLE_VALUE) return;
-    SetFileTime(hFile, NULL, NULL, &modft);
+    int res  = SetFileTime(hFile, NULL, NULL, &modft);
     CloseHandle(hFile);
+    return res != 0; /* success is non-zero */
 }
 #else
 # ifdef HAVE_UTIMES
@@ -2597,21 +2598,21 @@ static void winSetFileTime(const char *fn, time_t ftime)
 SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
 {
     const char *fn = translateChar(STRING_ELT(name, 0));
-    int ftime = asInteger(time);
+    int ftime = asInteger(time), res;
 
 #ifdef Win32
-    winSetFileTime(fn, (time_t)ftime);
+    res  = winSetFileTime(fn, (time_t)ftime);
 #elif defined(HAVE_UTIMES)
     struct timeval times[2];
 
     times[0].tv_sec = times[1].tv_sec = ftime;
     times[0].tv_usec = times[1].tv_usec = 0;
-    utimes(fn, times);
+    res = utimes(fn, times) == 0;
 #elif defined(HAVE_UTIME)
     struct utimbuf settime;
 
     settime.actime = settime.modtime = ftime;
-    utime(fn, &settime);
+    res = utime(fn, &settime) == 0;
 #endif
-    return R_NilValue;
+    return ScalarLogical(res);
 }

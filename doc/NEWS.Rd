@@ -185,6 +185,9 @@
       acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
       were ever documented to, but there was special-casing in the C
       code).
+      
+      \item There is a new function \code{Sys.setFileTime()} to set the
+      time of a file (including a directory).
     }
   }
   

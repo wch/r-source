@@ -35,7 +35,7 @@ Sys.info()
 \details{
   This function is not implemented on all \R platforms, and returns
   \code{NULL} when not available.  Where possible it is based on POSIX
-  system calls.  (Under Windows, it is obtained from Windows system
+  system calls.  (Under Windows, it is obtained by Windows system
   calls.)
 
   \code{Sys.info()} returns details of the platform \R is running on,
