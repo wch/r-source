@@ -14,14 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
-logical <- function(length = 0) .Internal(vector("logical", length))
-character <- function(length = 0) .Internal(vector("character", length))
-integer <- function(length = 0) .Internal(vector("integer", length))
-double <- function(length = 0) .Internal(vector("double", length))
-real <- double
-numeric <- double
-complex <- function(length.out = 0,
+vector <- function(mode = "logical", length = 0L).Internal(vector(mode, length))
+logical <- function(length = 0L) .Internal(vector("logical", length))
+character <- function(length = 0L) .Internal(vector("character", length))
+integer <- function(length = 0L) .Internal(vector("integer", length))
+real <- numeric <- double <-
+    function(length = 0L) .Internal(vector("double", length))
+
+complex <- function(length.out = 0L,
 		    real = numeric(), imaginary = numeric(),
 		    modulus = 1, argument = 0) {
     if(missing(modulus) && missing(argument)) {
@@ -29,10 +29,10 @@ complex <- function(length.out = 0,
 	.Internal(complex(length.out, real, imaginary))
     } else {
 	n <- max(length.out, length(argument), length(modulus))
-	rep(modulus,length.out=n) *
-	    exp(1i * rep(argument, length.out=n))
+	rep(modulus, length.out = n) *
+	    exp(1i * rep(argument, length.out = n))
     }
 }
 
-single <- function(length = 0)
+single <- function(length = 0L)
     structure(vector("double", length), Csingle=TRUE)

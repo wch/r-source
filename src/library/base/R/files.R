@@ -39,7 +39,7 @@ file.show <-
 {
     files <- path.expand(c(...))
     nfiles <- length(files)
-    if(nfiles == 0)
+    if(nfiles == 0L)
         return(invisible(NULL))
     ## avoid re-encoding files to the current encoding.
     if(l10n_info()[["UTF-8"]] && encoding == "UTF-8") encoding <- ""

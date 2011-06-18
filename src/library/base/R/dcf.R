@@ -47,7 +47,7 @@ function(file, fields = NULL, all = FALSE)
             out <- as.data.frame(out, stringsAsFactors = FALSE)
         }
         else {
-            levs <- colSums(cnts > 1L) == 0
+            levs <- colSums(cnts > 1L) == 0L
             if(any(levs)) {
                 inds <- tf %in% levels(tf)[levs]
                 out[cbind(nums[inds], tf[inds])] <- vals[inds]

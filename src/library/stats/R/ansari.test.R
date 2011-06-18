@@ -147,7 +147,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
         }
     }
     else {
-        EVEN <- ((N %% 2) == 0)
+        EVEN <- ((N %% 2L) == 0L)
         normalize <- function(s, r, TIES, m=length(x), n=length(y)) {
             z <- if(EVEN)
                 s - m * (N + 2)/4

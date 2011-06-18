@@ -197,7 +197,7 @@ glm.fit <-
                          domain = NA)
                 else {
                     coefold <- start
-                    offset + as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+                    offset + as.vector(if (NCOL(x) == 1L) x * start else x %*% start)
                 }
             else family$linkfun(mustart)
         mu <- linkinv(eta)

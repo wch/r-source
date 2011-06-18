@@ -119,27 +119,27 @@ plot.acf <-
               ...)
 {
     ci.type <- match.arg(ci.type)
-    if((nser <- ncol(x$lag)) < 1) stop("x$lag must have at least 1 column")
+    if((nser <- ncol(x$lag)) < 1L) stop("x$lag must have at least 1 column")
     if (is.null(ylab))
         ylab <- switch(x$type,
                        correlation = "ACF",
                        covariance = "ACF (cov)",
                        partial = "Partial ACF")
     if (is.null(snames <- x$snames))
-        snames <- paste("Series ", if (nser == 1) x$series else 1L:nser)
+        snames <- paste("Series ", if (nser == 1L) x$series else 1L:nser)
 
     with.ci <- ci > 0 && x$type != "covariance"
     with.ci.ma <- with.ci && ci.type == "ma" && x$type == "correlation"
-    if(with.ci.ma && x$lag[1,1,1] != 0) {
+    if(with.ci.ma && x$lag[1L, 1L, 1L] != 0L) {
         warning("can use ci.type=\"ma\" only if first lag is 0")
         with.ci.ma <- FALSE
     }
     clim0 <- if (with.ci) qnorm((1 + ci)/2)/sqrt(x$n.used) else c(0, 0)
 
-    Npgs <- 1 ## we will do [ Npgs x Npgs ] pages !
+    Npgs <- 1L ## we will do [ Npgs x Npgs ] pages !
     nr <- nser
-    if(nser > 1) { ## at most m x m (m := max.mfrow)  panels per page
-        sn.abbr <- if(nser > 2) abbreviate(snames) else snames
+    if(nser > 1L) { ## at most m x m (m := max.mfrow)  panels per page
+        sn.abbr <- if(nser > 2L) abbreviate(snames) else snames
 
         if(nser > max.mfrow) {
             ##  We need more than one page: The plots are laid out
@@ -149,7 +149,7 @@ plot.acf <-
             Npgs <- ceiling(nser / max.mfrow)
             nr <- ceiling(nser / Npgs)  # <= max.mfrow
         }
-        opar <- par(mfrow = rep(nr, 2), mar = mar, oma = oma, mgp = mgp,
+        opar <- par(mfrow = rep(nr, 2L), mar = mar, oma = oma, mgp = mgp,
                     ask = ask, xpd = xpd, cex.main = cex.main)
         on.exit(par(opar))
         if(verbose) { # FIXME: message() can be suppressed but not str()

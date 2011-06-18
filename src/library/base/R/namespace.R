@@ -86,7 +86,7 @@ getExportedValue <- function(ns, name) {
     ns <- tryCatch(asNamespace(pkg), hasNoNamespaceError = function(e) NULL)
     if (is.null(ns)) {
         pos <- match(paste("package", pkg, sep=":"), search(), 0L)
-        if (pos == 0)
+        if (pos == 0L)
             stop(gettextf("package %s has no name space and is not on the search path", sQuote(pkg)), domain = NA)
         get(name, pos = pos, inherits = FALSE)
     }
@@ -1163,7 +1163,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 registerS3methods <- function(info, package, env)
 {
     n <- NROW(info)
-    if(n == 0) return()
+    if(n == 0L) return()
 
     assignWrapped <- function(x, method, home, envir) {
 	method <- method            # force evaluation

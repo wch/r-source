@@ -214,7 +214,7 @@ as.table.default <- function(x, ...)
 	return(x)
     else if(is.array(x) || is.numeric(x)) {
 	x <- as.array(x)
-	if(any(dim(x) == 0))
+	if(any(dim(x) == 0L))
 	    stop("cannot coerce into a table")
 	## Try providing dimnames where missing.
 	dnx <- dimnames(x)

@@ -77,12 +77,12 @@ nlsModel.plinear <- function(form, data, start, wts)
     dimGrad <- dim(attr(rhs, "gradient"))
     marg <- length(dimGrad)
     if(marg > 0) {
-        gradSetArgs <- vector("list", marg+1)
+        gradSetArgs <- vector("list", marg + 1L)
         for(i in 2:marg)
             gradSetArgs[[i]] <- rep(TRUE, dimGrad[i-1])
         useParams <- rep(TRUE, dimGrad[marg])
     } else {
-        gradSetArgs <- vector("list", 2)
+        gradSetArgs <- vector("list", 2L)
         useParams <- rep(TRUE, length(attr(rhs, "gradient")))
     }
     gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
@@ -266,12 +266,12 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     dimGrad <- dim(attr(rhs, "gradient"))
     marg <- length(dimGrad)
     if(marg > 0L) {
-        gradSetArgs <- vector("list", marg+1)
+        gradSetArgs <- vector("list", marg + 1L)
         for(i in 2L:marg)
             gradSetArgs[[i]] <- rep(TRUE, dimGrad[i-1])
         useParams <- rep(TRUE, dimGrad[marg])
     } else {
-        gradSetArgs <- vector("list", 2)
+        gradSetArgs <- vector("list", 2L)
         useParams <- rep(TRUE, length(attr(rhs, "gradient")))
     }
     npar <- length(useParams)

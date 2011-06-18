@@ -87,8 +87,8 @@ rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
     d <- dim(rgb)
     if(d[1L] != 3) stop("rgb matrix must have 3 rows")
     n <- d[2L]
-    if(n == 0)
-        return(cbind(c(h=1,s=1,v=1))[,0])
+    if(n == 0L)
+        return(cbind(c(h = 1, s = 1, v = 1))[, 0L])
     ## else:
     rgb <- rgb/maxColorValue
     if (gamma != 1)
@@ -163,12 +163,12 @@ heat.colors <- function (n, alpha = 1)
 
 cm.colors <- function (n, alpha = 1)
 {
-    if ((n <- as.integer(n[1L])) > 0) {
-	even.n <- n %% 2 == 0
-	k <- n%/%2
-	l1 <- k + 1 - even.n
+    if ((n <- as.integer(n[1L])) > 0L) {
+	even.n <- n %% 2L == 0L
+	k <- n %/% 2L
+	l1 <- k + 1L - even.n
 	l2 <- n - k + even.n
-	c(if(l1 > 0)
+	c(if(l1 > 0L)
 	  hsv(h =  6/12, s = seq.int(.5, ifelse(even.n,.5/k,0), length.out = l1),
 	      v = 1, alpha = alpha),
 	  if(l2 > 1)

@@ -408,7 +408,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        pkgInfo <- vector(length = 3L, mode = "list")
+        pkgInfo <- vector("list", 3L)
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
                 txt <- readRDS(f)$DESCRIPTION
@@ -511,7 +511,7 @@ function(x, ...)
     ## Split according to LibPath, preserving order of libraries.
     libs <- db[, "LibPath"]
     libs <- factor(libs, levels=unique(libs))
-    out <- if(nrow(db) == 0)
+    out <- if(nrow(db) == 0L)
         NULL
     else lapply(split(1 : nrow(db), libs),
                 function(ind) db[ind, c("Package", "Title"),
@@ -551,7 +551,7 @@ function(chname, package = NULL, lib.loc = NULL,
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
+    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0L)
         return(dll_list)
 
     ## Be defensive about possible system-specific extension for shared
@@ -615,7 +615,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
+    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0L)
         if(.Platform$OS.type == "windows")
             stop("no DLL was specified")
         else
@@ -912,7 +912,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 if (have_vers) {
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
-                    if(nzchar(pfile) == 0)
+                    if(!nzchar(pfile))
                         stop(gettextf("package '%s' required by '%s' could not be found",
                                       pkg, pkgname),
                              call. = FALSE, domain = NA)
