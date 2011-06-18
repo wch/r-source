@@ -185,6 +185,18 @@ package so it becomes visible on the search path.  Function
 loaded without the package being attached (for example by calls like
 @code{splines::ns}).
 
+The option of @emph{lazy loading} of code or data is mentioned at
+several points.  This is an optional part of the installation, selected
+by default for @R{} code.  When used the @R{} objects of the package are
+created at installation time, and stored in a database in the @file{R}
+directory of the installed package, being loaded into the session at
+first use.  This makes the @R{} session run faster and used less
+(virtual) memory.
+@ifset UseExternalXrefs
+(For techincal details,
+@pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
+@end ifset
+
 
 @menu
 * Package structure::           
@@ -563,12 +575,16 @@ Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used instead of @samp{Collate}.
 
-The @samp{LazyLoad} and @samp{LazyData} fields control whether
-the @R{} objects and the datasets (respectively) use lazy-loading: set
-the field's value to @samp{yes} or @samp{true} for lazy-loading and
+The @samp{LazyLoad} and @samp{LazyData} fields control whether the @R{}
+objects and the datasets (respectively) use lazy-loading: set the
+field's value to @samp{yes} or @samp{true} for lazy-loading and
 @samp{no} or @samp{false} for no lazy-loading.  (Capitalized values are
 also accepted.)  If the package you are writing uses the @pkg{methods}
-package, specify @samp{LazyLoad: yes}.
+package, specify@footnote{That is the default, but this stops someone
+overriding it when using @command{R CMD INSTALL}.}  @samp{LazyLoad:
+yes}.  There is very rarely a good reason to de-select lazy-loading for
+code: a conceivable one is where a package does make use of almost all
+its objects on loading, for example to construct a GUI.
 
 The @samp{ZipData} field controls whether the automatic Windows build
 will zip up the data directory or not: set this to @samp{no} if your
@@ -907,9 +923,9 @@ Support for package bundles was removed in @R{} 2.11.0.
 The @file{data} subdirectory is for data files, either to be made
 available @emph{via} lazy-loading or for loading using @code{data()}.
 (The choice is made by the @samp{LazyData} field in the
-@file{DESCRIPTION} file.)  It should not be used for other data files
-needed by the package, and the convention has grown up to use directory
-@file{inst/extdata} for such files.
+@file{DESCRIPTION} file: the default is not to do so.)  It should not be
+used for other data files needed by the package, and the convention has
+grown up to use directory @file{inst/extdata} for such files.
 
 Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
@@ -970,6 +986,9 @@ field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
 @code{xz} and the default, @code{gzip}.  The only way to discover which
 is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
+
+Lazy-loading is not supported for very large datasets (those which when
+serialized exceed 2GB).
 
 @node Non-R scripts in packages,  , Data in packages, Package structure
 @subsection Non-R scripts in packages
