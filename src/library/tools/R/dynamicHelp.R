@@ -58,7 +58,7 @@ httpd <- function(path, query, ...)
                        sep=""))
         if(nrow(res)) {
             paths <- paste("/library/", res[, "Package"], "/html/",
-                           res[, "topic"], ".html", sep = "")
+                           res[, "name"], ".html", sep = "")
             urls <- paste('<a href="', paths, '">',
                           res[, "Package"], "::", res[, "topic"],
                           '</a>', sep = "")

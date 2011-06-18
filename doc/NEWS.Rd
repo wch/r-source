@@ -202,6 +202,9 @@
 
       \item \code{addmargins()} called \code{numeric(apos)} rather than
       \code{numeric(length(apos))}.
+      
+      \item The HTML help search sometimes produced bad links.
+      (\PR{14608})
     }
   }
 }

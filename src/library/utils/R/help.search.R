@@ -434,7 +434,7 @@ help.search <-
     i <- NULL
     for(f in fields) i <- c(i, searchDbField(f))
     db <- dbBase[sort(unique(i)),
-		 c("topic", "title", "Package", "LibPath"),
+		 c("topic", "title", "Package", "LibPath", "name"),
 		 drop = FALSE]
     if(verbose>= 2L) {
         message(gettextf("matched %d objects.", NROW(db)), domain=NA)
