@@ -58,7 +58,7 @@
       of the bitmap devices.
 
       \item The \sQuote{Update packages ...} menu item now runs
-      \code{update.packages(ask="graphics", checkBuilt=TRUE}.
+      \code{update.packages(ask="graphics", checkBuilt=TRUE)}.
 
       \item \code{R CMD INSTALL} preserves the package-directory
       modification time when it restores an earlier install of the package.
