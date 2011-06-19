@@ -215,10 +215,11 @@
   \url{http://www.r-project.org/doc/Rnews/Rnews_2001-2.pdf}
 }
 \section{Warning}{
-  Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
+  Some Unix-like systems (especially Linux ones) do not have environment
+  variable \env{TZ}
   set, yet have internal code that expects it (as does POSIX).  We have
   tried to work around this, but if you get unexpected results try
-  setting \code{"TZ"}.  See \code{\link{Sys.timezone}} for valid settings.
+  setting \env{TZ}.  See \code{\link{Sys.timezone}} for valid settings.
 }
 \examples{\donttest{% <-->  may fail on platforms wrongly set up
 (z <- Sys.time())             # the current date, as class "POSIXct"

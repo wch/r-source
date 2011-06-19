@@ -135,6 +135,7 @@ floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
 unlist(unclass(z))            # a list shown as a named vector
 
 ## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
+## (the origin used by SAS)
 z <- 1472562988
 # ways to convert this
 as.POSIXct(z, origin="1960-01-01")                # local

@@ -118,8 +118,8 @@ Sys.timezone()
   \sQuote{Examples}).
 
   An attempt is made (once only per session) to map Windows' idea of
-  the current time zone to a location, following
-  \url{http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html}.
+  the current time zone to a location, following an earlier version of
+  \url{http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml}
   If this is not successful, it can be overridden by setting the
   \env{TZ} environment variable.
 
