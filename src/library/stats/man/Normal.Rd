@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Normal}
-\alias{Normal}
 \alias{dnorm}
 \alias{pnorm}
 \alias{qnorm}

@@ -188,6 +188,10 @@
       
       \item There is a new function \code{Sys.setFileTime()} to set the
       time of a file (including a directory).
+      
+      \item The \code{\\name} of a help file is now included in the list
+      of topics searched by \code{help()}, so need not be repeated as
+      an \code{\\alias}.
     }
   }
   
