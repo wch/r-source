@@ -3650,7 +3650,7 @@ Default: true.
 If true, check data for ascii and uncompressed saves, and also check if
 using @command{bzip2} or @code{xz} compression would be significantly
 better.  Implies @env{_R_CHECK_COMPACT_DATA_} is true.
-Default: false.
+Default: true.
 @item _R_CHECK_SKIP_ARCH_
 Comma-separated list of architectures that will be omitted from
 checking in a multi-arch setup.

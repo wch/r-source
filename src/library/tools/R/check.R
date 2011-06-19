@@ -2680,7 +2680,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
     R_check_ascii_data <-
     	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
     R_check_compact_data2 <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA2_", "FALSE"))
+    	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA2_", "TRUE"))
     R_check_compact_data <- R_check_compact_data2 ||
     	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
     R_check_vc_dirs <-

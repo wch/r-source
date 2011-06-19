@@ -303,8 +303,13 @@
       vignette fails to run, unless this is caused by a missing package.
 
       It now unpacks tarballs in the same way as \command{R CMD
-      INSTALL}, including making use of the environment variable
+	INSTALL}, including making use of the environment variable
       \env{R_INSTALL_TAR} to override the default behaviour.
+
+      \item The default for the environment variable
+      \env{_R_CHECK_COMPACT_DATA2_} is now true, so if using the newer
+      forms of compression introduced in \R 2.10.0 would be beneficial
+      is checked by default.
 
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
