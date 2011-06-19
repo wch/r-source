@@ -6,8 +6,6 @@
 \name{base-internal}
 \alias{.subset}
 \alias{.subset2}
-\alias{.find.package}
-\alias{.path.package}
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
 \alias{testPlatformEquivalence}
@@ -89,7 +87,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+    of \code{NULL} corresponds to all libraries currently known to
+    \code{\link{.libPaths}()}.}
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package(s) are not found?}
   \item{useImports}{logical.  Should  the \code{Imports} field be processed?}

@@ -1,6 +1,6 @@
 % File src/library/base/man/system.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{system.file}
@@ -15,10 +15,8 @@ system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
     root of the package.  Wildcards are not supported.}
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
-  \item{lib.loc}{a character vector with path names of \R libraries, or
-    \code{NULL}.  The default value of \code{NULL} corresponds to all
-    libraries currently known.  If the default is used, the loaded
-    packages are searched before the libraries.}
+  \item{lib.loc}{a character vector with path names of \R libraries.
+    See \sQuote{Details} for the meaning of the default value of \code{NULL}.}
   \item{mustWork}{logical.  If \code{TRUE}, an error is given if there
     are no matching files.}
 }
@@ -32,6 +30,10 @@ system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
 
   The unnamed arguments in \code{...} are usually character strings, but
   if character vectors they are recycled to the same length.
+
+  This uses \code{\link{find.package}} to find the package, and hence
+  with the default \code{lib.loc = NULL} looks first for attached
+  packages then in each library listed in \code{\link{.libPaths}()}.
 }
 \value{
   A character vector of positive length, containing the file paths

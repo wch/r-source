@@ -1,6 +1,6 @@
 % File src/library/base/man/Constants.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Constants}
@@ -22,9 +22,7 @@ month.name
 pi
 }
 \details{
-  \R has a small number of built-in constants (there is also a rather
-  larger library of data sets which can be loaded with the function
-  \code{\link{data}}).
+  \R has a small number of built-in constants.
 
   The following constants are available:
   \itemize{

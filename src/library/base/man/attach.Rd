@@ -42,9 +42,9 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 
   By default the database is attached in position 2 in the search path,
   immediately after the user's workspace and before all previously
-  loaded packages and previously attached databases.  This can be altered
-  to attach later in the search path with the \code{pos} option, but you
-  cannot attach at \code{pos=1}.
+  attached packages and previously attached databases.  This can be
+  altered to attach later in the search path with the \code{pos} option,
+  but you cannot attach at \code{pos = 1}.
 
   The database is not actually attached.  Rather, a new environment is
   created on the search path and the elements of a list (including

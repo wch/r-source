@@ -1,6 +1,6 @@
 % File src/library/base/man/detach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{detach}
@@ -31,7 +31,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE, force = FALSE)
   \item{character.only}{a logical indicating whether \code{name}
     can be assumed to be character strings.}
   \item{force}{logical: should a package be detached even though other
-    loaded packages depend on it?}
+    attached packages depend on it?}
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()}
@@ -90,7 +90,7 @@ stopifnot(inherits(tryCatch(detach(pkg), error=function(.).),  "error"))
 }
 detach(pkg, character.only = TRUE)
 
-## careful: do not do this unless 'splines' is not already loaded.
+## careful: do not do this unless 'splines' is not already attached.
 library(splines)
 detach(2) # 'pos' used for 'name'
 

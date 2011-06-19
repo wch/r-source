@@ -7,6 +7,9 @@
 
 \alias{find.package}
 \alias{path.package}
+%% moved from base-internal.Rd in 2.13.1
+\alias{.find.package}
+\alias{.path.package}
 
 \title{Find Packages}
 \description{
@@ -22,7 +25,8 @@ path.package(package, quiet = FALSE)
   \item{package}{character vector: the names of packages.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+    of \code{NULL} corresponds to checking the attached packages, then
+    all libraries currently known in \code{\link{.libPaths}()}.}
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package is not found?}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
@@ -41,11 +45,16 @@ path.package(package, quiet = FALSE)
   it need not be installed.
 
   \code{path.package} returns the paths from which the named packages
-  were loaded, or if none were named, for all currently loaded packages.
+  were loaded, or if none were named, for all currently attached packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
-  are not loaded, and given an error if none are.
+  are not attached, and given an error if none are.
 }
 \value{
   A character vector of paths of package directories.
+}
+\note{
+  \code{.find.package} and \code{.path.package} were internal-only
+  versions prior to \R 2.13.0, and are now wrappers for these public
+  versions.
 }
 \keyword{files}

@@ -1,6 +1,6 @@
 % File src/library/base/man/library.dynam.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
@@ -31,7 +31,8 @@ library.dynam.unload(chname, libpath,
     path are used.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+    of \code{NULL} corresponds to all libraries currently known to
+    \code{\link{.libPaths}()}.}
   \item{libpath}{the path to the loaded package whose DLL is to be unloaded.}
   \item{verbose}{a logical value indicating whether an announcement
     is printed on the console before loading the DLL.  The

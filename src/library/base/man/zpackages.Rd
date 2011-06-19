@@ -17,7 +17,7 @@
     of all available packages in \code{lib.loc}.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+    of \code{NULL} corresponds to \code{\link{.libPaths}()}.}
 }
 \details{
   \code{.packages()} returns the names of the currently
