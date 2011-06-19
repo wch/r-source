@@ -15,7 +15,7 @@
 \description{
   \code{library} and \code{require} load add-on packages.
 
-  \code{.First.lib} is called when a package is loaded;
+  \code{.First.lib} is called when a package without a name space is attached;
   \code{.Last.lib} is called when a package is detached.
 }
 \usage{
@@ -45,7 +45,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
     search list as given by \code{\link{search}()}.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.
+    of \code{NULL} corresponds to all libraries currently known to
+    \code{\link{.libPaths}()}.
     Non-existent library trees are silently ignored.}
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
@@ -111,10 +112,10 @@ require(package, lib.loc = NULL, quietly = FALSE,
   package \code{somename}, and returns this in an object of class
   \code{"packageInfo"}.  The structure of this class may change in
   future versions.  When used with the default value (\code{NULL}) for
-  \code{lib.loc}, the loaded packages are searched before the libraries.
+  \code{lib.loc}, the attached packages are searched before the libraries.
 
   \code{.First.lib} is called when a package without a name space is
-  loaded by \code{library}.  (For packages with name spaces see
+  attached by \code{library}.  (For packages with name spaces see
   \code{\link{.onLoad}}.)  It is called with two arguments, the name of
   the library directory where the package was found (i.e., the
   corresponding element of \code{lib.loc}), and the name of the package.
@@ -129,7 +130,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   abandoned, and the package will be unavailable.  Similarly, if the
   option \code{".First.lib"} has a list element with the package's name,
   this element is called in the same manner as \code{.First.lib} when
-  the package is loaded.  This mechanism allows the user to set package
+  the package is attached.  This mechanism allows the user to set package
   \sQuote{load hooks} in addition to startup code as provided by the
   package maintainers, but \code{\link{setHook}} is preferred.
 
@@ -139,7 +140,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   so errors will not stop the package being detached.)
 }
 \value{
-  Normally \code{library} returns (invisibly) the list of loaded
+  Normally \code{library} returns (invisibly) the list of attached
   packages, but \code{TRUE} or \code{FALSE} if \code{logical.return} is
   \code{TRUE}.  When called as \code{library()} it returns an object of
   class \code{"libraryIQR"}, and for \code{library(help=)}, one of
@@ -211,7 +212,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 
-  The initial set of packages loaded is set by
+  The initial set of packages attached is set by
   \code{\link{options}(defaultPackages=)}: see also \code{\link{Startup}}.
 }
 \references{
