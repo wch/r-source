@@ -4223,7 +4223,7 @@ out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2:
 @file{libRblas.so} and @file{lapack.so} are generated with code that
 causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building @R{} as a shared library may be
-impossible with Solaris Studio 12.2.  For a stanadrd build the trick
+impossible with Solaris Studio 12.2.  For a standard build the trick
 seems to be manually set @code{FLIBS}.  For example, on @cputype{amd64},
 set in @file{Makeconf}
 
@@ -4881,7 +4881,7 @@ patched to use static Fortran and C++ runtime libraries: a suitable
 toolchain is included in @file{Rtools213.exe}.
 
 @strong{NB:} 64-bit toolchains after late April 2010 at that site
-generate objects with symbols without a leading underscore. Ony such
+generate objects with symbols without a leading underscore. Only such
 toolchains are supported (and not that used to build @R{} 2.11.1 on
 64-bit Windows).
 
