@@ -193,7 +193,7 @@ directory of the installed package, being loaded into the session at
 first use.  This makes the @R{} session run faster and used less
 (virtual) memory.
 @ifset UseExternalXrefs
-(For techincal details,
+(For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
 @end ifset
 
