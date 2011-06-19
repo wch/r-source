@@ -5,7 +5,6 @@
 
 \name{Deprecated}
 \title{Marking Objects as Deprecated}
-\alias{Deprecated}
 \alias{.Deprecated}
 
 \description{

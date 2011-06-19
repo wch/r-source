@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{locales}
-\alias{locales}
 \alias{Sys.getlocale}
 \alias{Sys.setlocale}
 \alias{LC_ALL}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.show.viewport}
-\alias{grid.show.viewport}
 \title{Draw a Diagram of a Grid Viewport}
 \description{
   This function uses Grid graphics to draw a diagram of

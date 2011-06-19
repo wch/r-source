@@ -11,7 +11,6 @@ dataentry(data, modes)
 de(\dots, Modes = list(), Names = NULL)
 }
 \alias{data.entry}
-\alias{dataentry}
 \alias{de}
 \alias{de.ncols}
 \alias{de.restore}

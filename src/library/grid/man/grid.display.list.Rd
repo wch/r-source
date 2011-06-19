@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.display.list}
-\alias{grid.display.list}
 \alias{engine.display.list}
 \title{Control the Grid Display List}
 \description{

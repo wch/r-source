@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{shapiro.test}
-\alias{shapiro.test}
 \title{Shapiro-Wilk Normality Test}
 \description{
   Performs the Shapiro-Wilk test of normality.

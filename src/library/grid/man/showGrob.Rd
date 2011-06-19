@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{showGrob}
-\alias{showGrob}
 \title{
   Label grid grobs.
 }

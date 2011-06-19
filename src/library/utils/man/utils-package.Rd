@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{utils-package}
-\alias{utils-package}
 \alias{utils}
 \docType{package}
 \title{

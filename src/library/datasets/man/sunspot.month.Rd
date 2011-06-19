@@ -5,7 +5,6 @@
 
 \name{sunspot.month}
 \docType{data}
-\alias{sunspot.month}
 \title{
   Monthly Sunspot Data, 1749--1997
 }

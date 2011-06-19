@@ -1,5 +1,4 @@
 \name{ReferenceClasses}
-\alias{ReferenceClasses}
 \alias{setRefClass}
 \alias{getRefClass}
 \alias{initFieldArgs}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getS3method}
-\alias{getS3method}
 \title{Get An S3 Method}
 \description{
   Get a method for an S3 generic, possibly from a name space. 

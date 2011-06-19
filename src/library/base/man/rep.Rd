@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{rep}
-\alias{rep}
 \alias{rep.factor}
 \alias{rep.int}
 \alias{rep.POSIXct}

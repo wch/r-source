@@ -13,7 +13,6 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
          upper = max(interval), maximum = FALSE,
          tol = .Machine$double.eps^0.25)
 }
-\alias{optimize}
 \alias{optimise}
 \arguments{
   \item{f}{the function to be optimized. The function is

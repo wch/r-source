@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{file.choose}
-\alias{file.choose}
 \title{Choose a File Interactively}
 \description{
  Choose a file interactively.

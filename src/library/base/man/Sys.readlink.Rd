@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.readlink}
-\alias{Sys.readlink}
 \title{
   Read File Symbolic Links
 }

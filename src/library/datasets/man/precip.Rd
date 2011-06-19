@@ -5,7 +5,6 @@
 
 \name{precip}
 \docType{data}
-\alias{precip}
 \title{Annual Precipitation in US Cities}
 \description{
   The average amount of precipitation (rainfall) in inches for each of

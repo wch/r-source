@@ -5,7 +5,6 @@
 
 \name{Orange}
 \docType{data}
-\alias{Orange}
 \title{Growth of Orange Trees}
 \description{
   The \code{Orange} data frame has 35 rows and 3 columns of records of

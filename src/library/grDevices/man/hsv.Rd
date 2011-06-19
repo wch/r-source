@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{hsv}
-\alias{hsv}
 \title{HSV Color Specification}
 \description{
   Create a vector of colors from vectors specifying hue, saturation and

@@ -8,7 +8,6 @@
 \usage{
 sequence(nvec)
 }
-\alias{sequence}
 \arguments{
   \item{nvec}{a non-negative integer vector each element of which
     specifies the end point of a sequence.}

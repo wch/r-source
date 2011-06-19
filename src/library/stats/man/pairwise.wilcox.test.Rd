@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{pairwise.wilcox.test}
-\alias{pairwise.wilcox.test}
 \title{Pairwise Wilcoxon Rank Sum Tests}
 \description{
   Calculate pairwise comparisons between group levels with corrections

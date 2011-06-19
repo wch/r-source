@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{range}
-\alias{range}
 \alias{range.default}
 \title{Range of Values}
 \usage{

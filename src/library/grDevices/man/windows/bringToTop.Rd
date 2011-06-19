@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bringToTop}
-\alias{bringToTop}
 \alias{stayOnTop}
 
 \title{Assign Focus to a Window}

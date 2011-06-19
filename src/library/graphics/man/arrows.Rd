@@ -10,7 +10,6 @@ arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2,
        col = par("fg"), lty = par("lty"), lwd = par("lwd"),
        \dots)
 }
-\alias{arrows}
 \arguments{
   \item{x0, y0}{coordinates of points \bold{from} which to draw.}
   \item{x1, y1}{coordinates of points \bold{to} which to draw.  At least

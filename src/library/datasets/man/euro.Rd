@@ -5,7 +5,6 @@
 
 \name{euro}
 \docType{data}
-\alias{euro}
 \alias{euro.cross}
 \title{Conversion Rates of Euro Currencies}
 \description{Conversion rates between the various Euro currencies.}

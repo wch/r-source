@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{promptData}
-\alias{promptData}
 \title{Generate Outline Documentation for a Data Set}
 \description{
   Generates a shell of documentation for a data set.

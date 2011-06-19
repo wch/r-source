@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{relist}
-\alias{relist}
 \alias{relist.default}
 \alias{relist.list}
 \alias{relist.factor}

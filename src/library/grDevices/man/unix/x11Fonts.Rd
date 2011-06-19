@@ -5,7 +5,6 @@
 
 \name{X11Fonts}
 \alias{X11Font}
-\alias{X11Fonts}
 \concept{fonts}
 \title{X11 Fonts}
 \description{

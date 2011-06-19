@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{isSymmetric}
-\alias{isSymmetric}
 \alias{isSymmetric.matrix}
 \title{Test if a Matrix or other Object is Symmetric}
 \description{

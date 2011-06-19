@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Rscript}
-\alias{Rscript}
 \title{Scripting Front-End for R}
 \description{
   This is an alternative front end for use in \samp{#!} scripts and

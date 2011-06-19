@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{complete.cases}
-\alias{complete.cases}
 \title{Find Complete Cases}
 \description{
   Return a logical vector indicating which cases are complete, i.e.,

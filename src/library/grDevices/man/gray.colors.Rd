@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{gray.colors}
-\alias{gray.colors}
 \alias{grey.colors}
 \title{Gray Color Palette}
 \description{

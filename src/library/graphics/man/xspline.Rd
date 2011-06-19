@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xspline}
-\alias{xspline}
 \title{Draw an X-spline}
 \description{
   Draw an X-spline, a curve drawn relative to control points.

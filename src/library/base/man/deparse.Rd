@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{deparse}
-\alias{deparse}
 \title{Expression Deparsing}
 \description{
   Turn unevaluated expressions into character strings.

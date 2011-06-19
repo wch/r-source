@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{interactive}
-\alias{interactive}
 \title{Is R Running Interactively?}
 \description{
   Return \code{TRUE} when \R is being used interactively and

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{message}
-\alias{message}
 \alias{suppressMessages}
 \alias{packageStartupMessage}
 \alias{.packageStartupMessage}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{gEdit}
-\alias{gEdit}
 \alias{gEditList}
 \alias{applyEdit}
 \alias{applyEdits}

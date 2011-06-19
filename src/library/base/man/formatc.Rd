@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{formatC}
-\alias{formatC}
 \alias{prettyNum}
 \description{
     Formatting numbers individually and flexibly, using \code{C} style

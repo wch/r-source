@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{capabilities}
-\alias{capabilities}
 \title{Report Capabilities of this Build of R}
 \description{
   Report on the optional features which have been compiled into this

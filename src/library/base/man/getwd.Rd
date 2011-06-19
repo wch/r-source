@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getwd}
-\alias{getwd}
 \alias{setwd}
 \title{Get or Set Working Directory}
 \usage{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{rasterImage}
-\alias{rasterImage}
 \title{Draw One or More Raster Images}
 \usage{
 rasterImage(image,

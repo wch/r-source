@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tools-deprecated}
-\alias{tools-deprecated}
 \title{Deprecated Objects in Package \pkg{tools}}
 \description{
   The functions or variables listed here are provided for compatibility

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{summary.aov}
-\alias{summary.aov}
 \alias{summary.aovlist}
 \alias{print.summary.aov}
 \alias{print.summary.aovlist}

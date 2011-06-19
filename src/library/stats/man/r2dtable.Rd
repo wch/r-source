@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{r2dtable}
-\alias{r2dtable}
 \title{Random 2-way Tables with Given Marginals}
 \description{
   Generate random 2-way tables with given marginals using Patefield's

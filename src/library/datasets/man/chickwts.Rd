@@ -5,7 +5,6 @@
 
 \name{chickwts}
 \docType{data}
-\alias{chickwts}
 \title{Chicken Weights by Feed Type}
 \description{
   An experiment was conducted to measure and compare the effectiveness

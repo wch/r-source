@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ar.ols}
-\alias{ar.ols}
 \title{Fit Autoregressive Models to Time Series by OLS}
 \usage{
 ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{showMethods}
-\alias{showMethods}
 \title{Show all the methods for the specified function(s)}
 \description{
   Show a summary of the methods for one or more generic functions,

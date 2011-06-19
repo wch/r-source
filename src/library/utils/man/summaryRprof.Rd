@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{summaryRprof}
-\alias{summaryRprof}
 \title{Summarise Output of R Sampling Profiler}
 \description{
 Summarise the output of the \code{\link{Rprof}} function to show the

@@ -5,7 +5,6 @@
 
 \name{numeric}
 \title{Numeric Vectors}
-\alias{numeric}
 \alias{as.numeric}
 \alias{is.numeric}
 \alias{is.numeric.Date}

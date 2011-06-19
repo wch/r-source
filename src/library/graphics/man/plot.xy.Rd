@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.xy}
-\alias{plot.xy}
 \title{Basic Internal Plot Function}
 \description{
   This is \emph{the} internal function that does the basic plotting of

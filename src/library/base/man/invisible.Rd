@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{invisible}
-\alias{invisible}
 \title{Change the Print Mode to Invisible}
 \description{
   Return a (temporarily) invisible copy of an object.

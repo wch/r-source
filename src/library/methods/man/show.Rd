@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{show}
-\alias{show}
 \alias{show-methods}
 \alias{show,ANY-method}
 \alias{show,traceable-method}

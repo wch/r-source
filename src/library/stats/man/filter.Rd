@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{filter}
-\alias{filter}
 \title{Linear Filtering on a Time Series}
 \usage{
 filter(x, filter, method = c("convolution", "recursive"),

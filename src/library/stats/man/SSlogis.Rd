@@ -9,7 +9,6 @@
 \usage{
 SSlogis(input, Asym, xmid, scal)
 }
-\alias{SSlogis}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{Asym}{a numeric parameter representing the asymptote.}

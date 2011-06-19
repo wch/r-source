@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{gl}
-\alias{gl}
 \title{Generate Factor Levels}
 \description{
   Generate factors by specifying the pattern of their levels.

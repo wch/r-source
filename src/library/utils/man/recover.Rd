@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{recover}
-\alias{recover}
 \alias{limitedLabels}
 \title{Browsing after an Error}
 \description{

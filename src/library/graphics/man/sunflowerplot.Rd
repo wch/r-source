@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{sunflowerplot}
-\alias{sunflowerplot}
 \alias{sunflowerplot.default}
 \alias{sunflowerplot.formula}
 \title{Produce a Sunflower Scatter Plot}

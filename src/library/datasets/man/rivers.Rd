@@ -5,7 +5,6 @@
 
 \name{rivers}
 \docType{data}
-\alias{rivers}
 \title{Lengths of Major North American Rivers}
 \description{
   This data set gives the lengths (in miles) of 141 \dQuote{major}

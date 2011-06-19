@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{spec.pgram}
-\alias{spec.pgram}
 \title{Estimate Spectral Density of a Time Series by a Smoothed
     Periodogram}
 \usage{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{setGeneric}
-\alias{setGeneric}
 \alias{setGroupGeneric}
 \title{Define a New Generic Function}
 \description{

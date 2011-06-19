@@ -5,7 +5,6 @@
 
 \name{reorder.default}
 \alias{reorder}
-\alias{reorder.default}
 \title{Reorder Levels of a Factor}
 \description{
   \code{reorder} is a generic function.  The \code{"default"} method

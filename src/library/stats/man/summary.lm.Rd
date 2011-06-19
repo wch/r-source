@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{summary.lm}
-\alias{summary.lm}
 \alias{summary.mlm}% mlm is *not* mentioned at all
 \alias{print.summary.lm}
 \title{Summarizing Linear Model Fits}

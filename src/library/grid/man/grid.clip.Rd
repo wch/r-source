@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.clip}
-\alias{grid.clip}
 \alias{clipGrob}
 \title{Set the Clipping Region}
 \description{

@@ -9,7 +9,6 @@
 \usage{
 SSbiexp(input, A1, lrc1, A2, lrc2)
 }
-\alias{SSbiexp}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{A1}{a numeric parameter representing the multiplier of the first

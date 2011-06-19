@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{environment}
-\alias{environment}
 \alias{environment<-}
 \alias{.GlobalEnv}
 \alias{globalenv}

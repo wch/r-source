@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{codoc}
-\alias{codoc}
 \alias{codocClasses}
 \alias{codocData}
 \alias{print.codoc}

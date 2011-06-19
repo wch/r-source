@@ -6,7 +6,6 @@
 \name{as.Date}
 \alias{format.Date}
 \alias{as.character.Date}
-\alias{as.Date}
 \alias{as.Date.character}
 \alias{as.Date.default}
 \alias{as.Date.factor}

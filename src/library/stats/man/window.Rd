@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{window}
-\alias{window}
 \alias{window.default}
 \alias{window.ts}
 \alias{window<-}

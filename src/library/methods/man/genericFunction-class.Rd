@@ -5,7 +5,6 @@
 
 \name{genericFunction-class}
 \docType{class}
-\alias{genericFunction-class}
 \alias{groupGenericFunction-class}
 \title{Generic Function Objects }
 \description{

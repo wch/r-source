@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{strsplit}
-\alias{strsplit}
 \title{Split the Elements of a Character Vector}
 \description{
   Split the elements of a character vector \code{x} into substrings

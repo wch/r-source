@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{attr}
-\alias{attr}
 \alias{attr<-}
 \title{Object Attributes}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{install.packages}
-\alias{install.packages}
 \title{Install Packages from Repositories or Local Files}
 \description{
   Download and install packages from CRAN-like repositories or from

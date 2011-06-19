@@ -5,7 +5,6 @@
 
 \name{iris}
 \docType{data}
-\alias{iris}
 \alias{iris3}
 \title{Edgar Anderson's Iris Data}
 \description{

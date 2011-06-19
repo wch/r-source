@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{fix}
-\alias{fix}
 \title{Fix an Object}
 \description{
   \code{fix} invokes \code{\link{edit}} on \code{x} and then assigns the new

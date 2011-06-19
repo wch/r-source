@@ -5,7 +5,6 @@
 
 \name{lynx}
 \docType{data}
-\alias{lynx}
 \title{Annual Canadian Lynx trappings 1821--1934}
 \description{
   Annual numbers of lynx trappings for 1821--1934 in Canada. Taken from

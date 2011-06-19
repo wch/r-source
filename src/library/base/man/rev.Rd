@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{rev}
-\alias{rev}
 \alias{rev.default}
 \title{Reverse Elements}
 \usage{

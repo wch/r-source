@@ -9,7 +9,6 @@
 \usage{
 SSasympOrig(input, Asym, lrc)
 }
-\alias{SSasympOrig}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{Asym}{a numeric parameter representing the horizontal asymptote.}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.points}
-\alias{grid.points}
 \alias{pointsGrob}
 \title{Draw Data Symbols}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{makeClassRepresentation}
-\alias{makeClassRepresentation}
 \title{Create a Class Definition}
 \description{
   Constructs an object of class \code{\linkS4class{classRepresentation}}

@@ -5,7 +5,6 @@
 
 \name{islands}
 \docType{data}
-\alias{islands}
 \title{Areas of the World's Major Landmasses}
 \description{
   The areas in thousands of square miles of the landmasses which exceed

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{colorRamp}
-\alias{colorRamp}
 \alias{colorRampPalette}
 \title{Color interpolation}
 \description{

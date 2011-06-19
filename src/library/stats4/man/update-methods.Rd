@@ -5,7 +5,6 @@
 
 \name{update-methods}
 \docType{methods}
-\alias{update-methods}
 \alias{update,ANY-method}
 \alias{update,mle-method}
 \title{Methods for Function \code{update} in Package \pkg{stats4}}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{polypath}
-\alias{polypath}
 \title{Path Drawing}
 \description{
   \code{path} draws a path whose vertices are

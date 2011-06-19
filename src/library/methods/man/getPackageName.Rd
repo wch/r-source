@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getPackageName}
-\alias{getPackageName}
 \alias{setPackageName}
 \alias{packageSlot}
 \alias{packageSlot<-}

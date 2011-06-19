@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bug.report}
-\alias{bug.report}
 \title{Send a Bug Report}
 \usage{
 bug.report(subject = "",  address,

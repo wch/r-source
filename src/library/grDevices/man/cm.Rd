@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{cm}
-\alias{cm}
 \title{Unit Transformation}
 \description{
   Translates from inches to cm (centimeters).

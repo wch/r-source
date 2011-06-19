@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ts.plot}
-\alias{ts.plot}
 \title{Plot Multiple Time Series}
 \usage{
 ts.plot(\dots, gpars = list())

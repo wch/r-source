@@ -14,7 +14,6 @@ factor.scope(factor, scope)
 }
 \alias{add.scope}
 \alias{drop.scope}
-\alias{factor.scope}
 \arguments{
  \item{terms1}{the terms or formula for the base model.}
  \item{terms2}{the terms or formula for the upper (\code{add.scope}) or

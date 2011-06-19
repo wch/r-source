@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
-\alias{texi2dvi}
 \title{Compile LaTeX Files}
 \description{
   Run \code{latex} and \code{bibtex} until all cross-references are

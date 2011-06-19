@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{readRenviron}
-\alias{readRenviron}
 \title{
   Set Environment Variables from a File
 }

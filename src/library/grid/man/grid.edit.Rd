@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.edit}
-\alias{grid.edit}
 \alias{grid.gedit}
 \alias{editGrob}
 \title{Edit the Description of a Grid Graphical Object}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{installFoundDepends}
-\alias{installFoundDepends}
 \title{A function to install unresolved dependencies}
 \description{
   This function will take the \code{Found} element of a

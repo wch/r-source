@@ -8,7 +8,6 @@
 \usage{
 Sys.getenv(x = NULL, unset = "", names = NA)
 }
-\alias{Sys.getenv}
 \arguments{
   \item{x}{a character vector, or \code{NULL}.}
   \item{unset}{a character string.}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ansari.test}
-\alias{ansari.test}
 \alias{ansari.test.default}
 \alias{ansari.test.formula}
 \title{Ansari-Bradley Test}

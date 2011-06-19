@@ -5,7 +5,6 @@
 
 \name{packageStatus}
 \title{Package Management Tools}
-\alias{packageStatus}
 \alias{print.packageStatus}
 \alias{summary.packageStatus}
 \alias{update.packageStatus}

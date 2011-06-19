@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{levels}
-\alias{levels}
 \alias{levels.default}
 \alias{levels<-}
 \alias{levels<-.factor}

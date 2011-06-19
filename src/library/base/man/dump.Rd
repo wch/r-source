@@ -9,7 +9,6 @@
 dump(list, file = "dumpdata.R", append = FALSE, 
      control = "all", envir = parent.frame(), evaluate = TRUE)
 }
-\alias{dump}
 \description{
   This function takes a vector of names of \R objects and produces
   text representations of the objects on a file or connection.

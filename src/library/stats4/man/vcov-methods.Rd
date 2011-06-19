@@ -5,7 +5,6 @@
 
 \name{vcov-methods}
 \docType{methods}
-\alias{vcov-methods}
 \alias{vcov,ANY-method}
 \alias{vcov,mle-method}
 \title{Methods for Function \code{vcov} in Package \pkg{stats4}}

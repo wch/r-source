@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{languageEl}
-\alias{languageEl}
 \alias{languageEl<-}
 \alias{isGrammarSymbol}
 \title{Elements of Language Objects}

@@ -8,7 +8,6 @@
 \usage{
 C(object, contr, how.many, \dots)
 }
-\alias{C}
 \arguments{
   \item{object}{a factor or ordered factor}
   \item{contr}{which contrasts to use. Can be a matrix with one row for

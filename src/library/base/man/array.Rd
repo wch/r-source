@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{array}
-\alias{array}
 \alias{as.array}
 \alias{as.array.default}
 \alias{is.array}

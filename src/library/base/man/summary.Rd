@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{summary}
-\alias{summary}
 \alias{summary.default}
 \alias{summary.data.frame}
 \alias{summary.factor}

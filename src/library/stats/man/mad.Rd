@@ -9,7 +9,6 @@
 mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
     low = FALSE, high = FALSE)
 }
-\alias{mad}
 \arguments{
   \item{x}{a numeric vector.}
   \item{center}{Optionally, the centre: defaults to the median.}

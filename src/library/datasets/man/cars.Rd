@@ -5,7 +5,6 @@
 
 \name{cars}
 \docType{data}
-\alias{cars}
 \title{Speed and Stopping Distances of Cars}
 \description{
   The data give the speed of cars and the distances taken to stop.

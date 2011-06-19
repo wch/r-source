@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{strtoi}
-\alias{strtoi}
 \title{Convert Strings to Integers}
 \description{
   Convert strings to integers according to the given base using the C

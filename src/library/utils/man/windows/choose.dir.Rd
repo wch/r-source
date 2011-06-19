@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{choose.dir}
-\alias{choose.dir}
 \title{Choose a Folder Interactively}
 \description{
   Use a Windows shell folder widget to choose a folder interactively.

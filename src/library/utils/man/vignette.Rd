@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{vignette}
-\alias{vignette}
 \alias{edit.vignette}
 \alias{print.vignette}
 \alias{vignettes} % to link to from e.g. grid-package.Rd

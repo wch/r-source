@@ -5,7 +5,6 @@
 
 \name{droplevels}
 \title{droplevels}
-\alias{droplevels}
 \alias{droplevels.factor}
 \alias{droplevels.data.frame}
 \concept{categorical variable}

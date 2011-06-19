@@ -5,7 +5,6 @@
 
 \name{ToothGrowth}
 \docType{data}
-\alias{ToothGrowth}
 \title{The Effect of Vitamin C on Tooth Growth in Guinea Pigs}
 \description{
   The response is the length of odontoblasts (teeth) in each of 10

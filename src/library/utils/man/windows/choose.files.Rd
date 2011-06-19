@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{choose.files}
-\alias{choose.files}
 \alias{Filters}
 \title{Choose a List of Files Interactively}
 \description{

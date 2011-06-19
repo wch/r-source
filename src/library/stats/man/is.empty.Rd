@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{is.empty.model}
-\alias{is.empty.model}
 \title{Test if a Model's Formula is Empty}
 \description{
   \R's formula notation allows models with no intercept and no

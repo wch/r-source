@@ -7,7 +7,6 @@
 \alias{format.POSIXct}
 \alias{format.POSIXlt}
 \alias{strftime}
-\alias{strptime}
 \alias{as.character.POSIXt}
 \title{Date-time Conversion Functions to and from Character}
 \description{

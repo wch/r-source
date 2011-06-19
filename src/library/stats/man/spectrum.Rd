@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{spectrum}
-\alias{spectrum}
 \alias{spec}
 \title{Spectral Density Estimation}
 \description{

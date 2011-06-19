@@ -5,7 +5,6 @@
 
 \name{mtcars}
 \docType{data}
-\alias{mtcars}
 \title{Motor Trend Car Road Tests}
 \description{
   The data was extracted from the 1974 \emph{Motor Trend} US magazine,

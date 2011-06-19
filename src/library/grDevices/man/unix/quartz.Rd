@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{quartz}
-\alias{quartz}
 \alias{quartz.options}
 
 \title{MacOS X Quartz Device}

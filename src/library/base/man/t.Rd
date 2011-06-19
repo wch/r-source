@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{t}
-\alias{t}
 \alias{t.default}
 \alias{t.data.frame}
 \title{Matrix Transpose}

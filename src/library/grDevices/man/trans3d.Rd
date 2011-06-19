@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{trans3d}
-\alias{trans3d}
 \title{3D to 2D Transformation for Perspective Plots}
 \description{
   Projection of 3-dimensional to 2-dimensional points using a 4x4

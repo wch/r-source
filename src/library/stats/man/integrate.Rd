@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{integrate}
-\alias{integrate}
 \alias{print.integrate}
 \title{Integration of One-Dimensional Functions}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{loadings}
-\alias{loadings}
 \alias{print.loadings}
 \alias{print.factanal}
 \title{Print Loadings in Factor Analysis}

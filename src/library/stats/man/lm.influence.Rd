@@ -12,7 +12,6 @@ influence(model, \dots)
 
 lm.influence(model, do.coef = TRUE)
 }
-\alias{lm.influence}
 \alias{influence}
 \alias{influence.lm}
 \alias{influence.glm}

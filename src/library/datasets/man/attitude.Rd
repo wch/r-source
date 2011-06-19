@@ -5,7 +5,6 @@
 
 \name{attitude}
 \docType{data}
-\alias{attitude}
 \title{The Chatterjee--Price Attitude Data}
 \description{
   From a survey of the clerical employees of a large financial

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{periodicSpline}
-\alias{periodicSpline}
 \title{Create a Periodic Interpolation Spline}
 \description{
   Create a periodic interpolation spline, either from \code{x} and

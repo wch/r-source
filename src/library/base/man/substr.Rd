@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{substr}
-\alias{substr}
 \alias{substring}
 \alias{substr<-}
 \alias{substring<-}

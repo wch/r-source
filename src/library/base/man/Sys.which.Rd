@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.which}
-\alias{Sys.which}
 \title{Find Full Paths to Executables}
 \description{
   This is an interface to the system command \code{which}.

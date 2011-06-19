@@ -12,7 +12,6 @@
 \alias{RweaveLatexWritedoc}
 \alias{RweaveTryStop}
 \alias{SweaveHooks}
-\alias{SweaveUtils}
 \alias{makeRweaveLatexCodeRunner}
 \title{Sweave Driver Utilities}
 \description{

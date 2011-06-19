@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.ts}
-\alias{plot.ts}
 \alias{lines.ts}
 \title{Plotting Time-Series Objects}
 \description{

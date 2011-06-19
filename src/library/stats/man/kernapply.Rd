@@ -5,7 +5,6 @@
 
 \name{kernapply}
 \title{Apply Smoothing Kernel}
-\alias{kernapply}
 \alias{kernapply.default}
 \alias{kernapply.ts}
 \alias{kernapply.tskernel}

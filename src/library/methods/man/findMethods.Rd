@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{findMethods}
-\alias{findMethods}
 \alias{findMethodSignatures}
 \alias{hasMethods}
 \alias{getMethods}

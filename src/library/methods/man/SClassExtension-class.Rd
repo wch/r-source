@@ -5,7 +5,6 @@
 
 \name{SClassExtension-class}
 \docType{class}
-\alias{SClassExtension-class}
 \title{Class to Represent Inheritance (Extension) Relations }
 \description{  An object from this class represents a single \sQuote{is}
   relationship; lists of these objects are used to represent all the

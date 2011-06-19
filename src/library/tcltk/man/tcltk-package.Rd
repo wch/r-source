@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tcltk-package}
-\alias{tcltk-package}
 \alias{tcltk}
 \docType{package}
 \title{

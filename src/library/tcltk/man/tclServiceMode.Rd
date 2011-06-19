@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tclServiceMode}
-\alias{tclServiceMode}
 \title{ Allow Tcl events to be serviced or not }
 \description{
 This function controls or reports on the Tcl service mode,

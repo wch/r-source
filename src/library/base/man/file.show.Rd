@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{file.show}
-\alias{file.show}
 \title{Display One or More Files}
 \description{Display one or more files.}
 \usage{

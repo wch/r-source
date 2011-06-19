@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{system2}
-\alias{system2}
 \title{Invoke a System Command}
 \description{
   \code{system2} invokes the OS command specified by \code{command}.

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{isSealedMethod}
-\alias{isSealedMethod}
 \alias{isSealedClass}
 \title{ Check for a Sealed Method or Class }
 \description{

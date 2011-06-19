@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{devAskNewPage}
-\alias{devAskNewPage}
 \title{ Prompt before New Page }
 \description{
   This function can be used to control (for the current device)

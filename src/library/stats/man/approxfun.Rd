@@ -5,7 +5,6 @@
 
 \name{approxfun}
 \alias{approx}
-\alias{approxfun}
 \title{Interpolation Functions}
 \description{
   Return a list of points which linearly interpolate given data points,

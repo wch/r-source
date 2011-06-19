@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ps.options}
-\alias{ps.options}
 \alias{setEPS}
 \alias{setPS}
 \title{Auxiliary Function to Set/View Defaults for Arguments of postscript}

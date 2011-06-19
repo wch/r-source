@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{LINK}
-\alias{LINK}
 \title{Create Executable Programs}
 \description{
   Front-end for creating executable programs.

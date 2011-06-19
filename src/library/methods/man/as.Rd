@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{as}
-\alias{as}
 \alias{as<-}
 \alias{coerce}
 \alias{coerce<-}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{modifyList}
-\alias{modifyList}
 \title{Recursively Modify Elements of a List}
 \description{
   Modifies a possibly nested list recursively by changing a subset of

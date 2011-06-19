@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{line}
-\alias{line}
 \alias{residuals.tukeyline}
 \title{Robust Line Fitting}
 \description{

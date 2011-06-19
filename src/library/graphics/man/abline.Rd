@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{abline}
-\alias{abline}
 \title{Add Straight Lines to a Plot}
 \description{
   This function adds one or more straight lines through the current plot.

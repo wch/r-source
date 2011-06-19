@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{extendrange}
-\alias{extendrange}
 \title{Extend a Numerical Range by a Small Percentage}
 \description{
   Extends a numerical range by a small percentage, i.e., fraction,

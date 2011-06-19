@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{NA}
-\alias{NA}
 \alias{NA_integer_}
 \alias{NA_real_}
 \alias{NA_complex_}

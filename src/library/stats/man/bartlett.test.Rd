@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bartlett.test}
-\alias{bartlett.test}
 \alias{bartlett.test.default}
 \alias{bartlett.test.formula}
 \title{Bartlett Test of Homogeneity of Variances}

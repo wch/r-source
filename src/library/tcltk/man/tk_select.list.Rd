@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tk_select.list}
-\alias{tk_select.list}
 \title{Select Items from a List}
 \description{
   Select item(s) from a character vector using a Tk listbox.

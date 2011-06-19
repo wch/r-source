@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.isoreg}
-\alias{plot.isoreg}
 \alias{lines.isoreg}
 \title{Plot Method for isoreg Objects}
 \description{

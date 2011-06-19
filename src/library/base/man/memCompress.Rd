@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{memCompress}
-\alias{memCompress}
 \alias{memDecompress}
 \concept{gzip}
 \concept{bzip2}

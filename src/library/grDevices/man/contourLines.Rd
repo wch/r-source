@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{contourLines}
-\alias{contourLines}
 \title{Calculate Contour Lines}
 \description{
   Calculate contour lines for a given set of data.

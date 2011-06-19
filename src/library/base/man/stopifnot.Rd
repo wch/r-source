@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
-\alias{stopifnot}
 \concept{assertion}
 \title{Ensure the Truth of R Expressions}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{weekdays}
-\alias{weekdays}
 \alias{weekdays.POSIXt}
 \alias{weekdays.Date}
 \alias{months}

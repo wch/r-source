@@ -8,7 +8,6 @@
 \usage{
 polyroot(z)
 }
-\alias{polyroot}
 \arguments{
   \item{z}{the vector of polynomial coefficients in increasing order.}
 }

@@ -5,7 +5,6 @@
 
 \name{order}
 \title{Ordering Permutation}
-\alias{order}
 \alias{sort.list}
 \concept{sort data frame}
 \description{

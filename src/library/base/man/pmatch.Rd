@@ -8,7 +8,6 @@
 \usage{
 pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
 }
-\alias{pmatch}
 \arguments{
   \item{x}{the values to be matched: converted to a character vector by
     \code{\link{as.character}}.}

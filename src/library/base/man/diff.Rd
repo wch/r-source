@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{diff}
-\alias{diff}
 \alias{diff.default}
 \alias{diff.POSIXt}
 \alias{diff.Date}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tempfile}
-\alias{tempfile}
 \alias{tempdir}
 \title{Create Names for Temporary Files}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{cov.wt}
-\alias{cov.wt}
 \title{Weighted Covariance Matrices}
 \usage{
 cov.wt(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,

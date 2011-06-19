@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{kmeans}
-\alias{kmeans}
 \alias{print.kmeans}
 \title{
 K-Means Clustering

@@ -14,7 +14,6 @@
 xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
           recycle = FALSE)
 }
-\alias{xy.coords}
 \arguments{
   \item{x, y}{the x and y coordinates of a set of points.
     Alternatively, a single argument \code{x} can be provided.}

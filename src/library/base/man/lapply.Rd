@@ -5,7 +5,6 @@
 
 \name{lapply}
 \title{Apply a Function over a List or Vector}
-\alias{lapply}
 \alias{sapply}
 \alias{vapply}
 \alias{replicate}

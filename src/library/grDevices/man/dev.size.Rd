@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{dev.size}
-\alias{dev.size}
 \title{ Find Size of Device Surface }
 \description{
   Find the dimensions of the device surface of the current device.

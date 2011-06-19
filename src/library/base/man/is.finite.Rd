@@ -5,7 +5,6 @@
 
 \name{is.finite}
 \title{Finite, Infinite and NaN Numbers}
-\alias{is.finite}
 \alias{is.infinite}
 \alias{Inf}
 \alias{NaN}

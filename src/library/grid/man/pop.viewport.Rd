@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{pop.viewport}
-\alias{pop.viewport}
 \title{Pop a Viewport off the Grid Viewport Stack}
 \description{
   Grid maintains a viewport stack --- a list of nested drawing

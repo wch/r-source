@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xyz.coords}
-\alias{xyz.coords}
 \title{Extracting Plotting Structures}
 \description{
   Utility for obtaining consistent x, y and z coordinates and labels

@@ -9,7 +9,6 @@
 search()
 searchpaths()
 }
-\alias{search}
 \alias{searchpaths}
 \description{
   Gives a list of \code{\link{attach}}ed \emph{packages}

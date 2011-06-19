@@ -5,7 +5,6 @@
 
 \name{airquality}
 \docType{data}
-\alias{airquality}
 \title{New York Air Quality Measurements}
 \description{
   Daily air quality measurements in New York, May to September 1973.

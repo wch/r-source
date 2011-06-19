@@ -5,7 +5,6 @@
 
 \name{class}
 \title{Object Classes}
-\alias{class}
 \alias{class<-}
 \alias{oldClass}
 \alias{oldClass<-}

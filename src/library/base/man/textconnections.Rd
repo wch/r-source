@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{textConnection}
-\alias{textConnection}
 \alias{textConnectionValue}
 \title{Text Connections}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{create.post}
-\alias{create.post}
 \title{
   Ancillary Function for Preparing Emails and Postings
 }

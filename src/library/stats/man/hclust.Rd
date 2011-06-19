@@ -5,7 +5,6 @@
 
 \name{hclust}
 \title{Hierarchical Clustering}
-\alias{hclust}
 \alias{plot.hclust}
 \alias{plclust}
 \alias{print.hclust}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{winProgressBar}
-\alias{winProgressBar}
 \alias{getWinProgressBar}
 \alias{setWinProgressBar}
 \alias{close.winProgressBar}

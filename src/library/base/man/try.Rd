@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{try}
-\alias{try}
 \title{Try an Expression Allowing Error Recovery}
 \description{
   \code{try} is a wrapper to run an expression that might fail and allow

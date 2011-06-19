@@ -8,7 +8,6 @@
 \usage{
 is.R()
 }
-\alias{is.R}
 \description{
   Test if running under \R.
 }

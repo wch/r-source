@@ -5,7 +5,6 @@
 
 \name{nhtemp}
 \docType{data}
-\alias{nhtemp}
 \title{Average Yearly Temperatures in New Haven}
 \description{
   The mean annual temperature in degrees Fahrenheit in New Haven,

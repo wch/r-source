@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
-\alias{parse_Rd}
 \alias{print.Rd}
 \alias{as.character.Rd}
 \title{ Parse an Rd file }

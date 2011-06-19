@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Quotes}
-\alias{Quotes}
 \alias{backtick}
 \alias{backquote}
 \alias{'}%'

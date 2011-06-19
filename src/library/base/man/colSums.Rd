@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{colSums}
-\alias{colSums}
 \alias{rowSums}
 \alias{colMeans}
 \alias{rowMeans}

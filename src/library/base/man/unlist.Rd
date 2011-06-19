@@ -13,7 +13,6 @@
 \usage{
 unlist(x, recursive = TRUE, use.names = TRUE)
 }
-\alias{unlist}
 \arguments{
   \item{x}{an \R object, typically a list or vector.}
   \item{recursive}{logical.  Should unlisting be applied to list

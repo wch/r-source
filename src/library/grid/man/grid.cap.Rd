@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.cap}
-\alias{grid.cap}
 \title{
   Capture a raster image
 }

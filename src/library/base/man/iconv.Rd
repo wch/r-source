@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{iconv}
-\alias{iconv}
 \alias{iconvlist}
 \concept{encoding}
 \title{Convert Character Vector between Encodings}

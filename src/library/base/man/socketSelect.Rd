@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{socketSelect}
-\alias{socketSelect}
 \title{Wait on Socket Connections}
 \usage{
 socketSelect(socklist, write = FALSE, timeout = NULL)

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Reserved}
-\alias{Reserved}
 \alias{reserved}
 \title{Reserved Words in R}
 \description{

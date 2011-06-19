@@ -14,7 +14,6 @@ bindingIsLocked(sym, env)
 makeActiveBinding(sym, fun, env)
 bindingIsActive(sym, env)
 }
-\alias{bindenv}
 \alias{lockEnvironment}
 \alias{environmentIsLocked}
 \alias{lockBinding}

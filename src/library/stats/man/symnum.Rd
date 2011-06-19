@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{symnum}
-\alias{symnum}
 \title{Symbolic Number Coding}
 \concept{matrix visualization}
 \description{

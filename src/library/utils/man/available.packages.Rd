@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{available.packages}
-\alias{available.packages}
 \title{List Available Packages at CRAN-like Repositories}
 \description{
   \code{available.packages} returns a matrix of details corresponding to

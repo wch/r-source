@@ -11,7 +11,6 @@ debugonce(fun, text="", condition=NULL)
 undebug(fun)
 isdebugged(fun)
 }
-\alias{debug}
 \alias{debugonce}
 \alias{undebug}
 \alias{isdebugged}

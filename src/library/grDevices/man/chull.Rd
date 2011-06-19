@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{chull}
-\alias{chull}
 \title{Compute Convex Hull of a Set of Points}
 \usage{
 chull(x, y = NULL)

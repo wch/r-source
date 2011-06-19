@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{help}
-\alias{help}
 \title{Documentation}
 \description{
   \code{help} is the primary interface to the help systems.

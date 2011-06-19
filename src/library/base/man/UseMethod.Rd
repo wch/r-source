@@ -5,7 +5,6 @@
 
 \name{UseMethod}
 \title{Class Methods}
-\alias{UseMethod}
 \alias{NextMethod}
 \alias{S3Methods}
 \alias{.Method}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Cstack_info}
-\alias{Cstack_info}
 \title{Report Information on C Stack Size and Usage}
 \description{
   Report information on the C stack size and usage (if available).

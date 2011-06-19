@@ -1,5 +1,4 @@
 \name{testInheritedMethods}
-\alias{testInheritedMethods}
 \alias{MethodSelectionReport-class}
 \alias{.Other-class}
 \title{

@@ -17,7 +17,6 @@ quasi(link = "identity", variance = "constant")
 quasibinomial(link = "logit")
 quasipoisson(link = "log")
 }
-\alias{family}
 \alias{binomial}
 \alias{gaussian}
 \alias{Gamma}

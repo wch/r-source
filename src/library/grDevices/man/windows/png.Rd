@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{png}
-\alias{png}
 \alias{jpeg}
 \alias{tiff}
 \alias{bmp}

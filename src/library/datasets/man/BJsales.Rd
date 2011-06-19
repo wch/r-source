@@ -5,7 +5,6 @@
 
 \name{BJsales}
 \docType{data}
-\alias{BJsales}
 \alias{BJsales.lead}
 \title{Sales Data with Leading Indicator}
 \description{

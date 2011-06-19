@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.sleep}
-\alias{Sys.sleep}
 \title{Suspend Execution for a Time Interval}
 \description{
   Suspend execution of \R expressions for a given number of seconds

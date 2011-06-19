@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.default}
-\alias{plot.default}
 \title{The Default Scatterplot Function}
 \description{
   Draw a scatter plot with decorations such as axes and titles

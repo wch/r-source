@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{stack}
-\alias{stack}
 \alias{stack.default}
 \alias{stack.data.frame}
 \alias{unstack}

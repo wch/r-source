@@ -5,7 +5,6 @@
 % Distributed under GPL 2 or later
 
 \name{adjustcolor}
-\alias{adjustcolor}
 \title{Adjust Colors in One or More Directions Conveniently.}
 \description{
   Adjust or modify a vector of colors by \dQuote{turning knobs} on one or more

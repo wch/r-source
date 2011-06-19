@@ -14,7 +14,6 @@ lsf.str(pos = -1, envir, \dots)
 \method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots,
       digits = max(1, getOption("str")$digits.d))
 }
-\alias{ls.str}
 \alias{lsf.str}
 \alias{print.ls_str}
 \description{

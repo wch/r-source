@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{interaction.plot}
-\alias{interaction.plot}
 \title{Two-way Interaction Plot}
 \description{
   Plots the mean (or other summary) of the response for two-way

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.layout}
-\alias{grid.layout}
 \title{Create a Grid Layout}
 \description{
   This function returns a Grid layout, which describes a subdivision

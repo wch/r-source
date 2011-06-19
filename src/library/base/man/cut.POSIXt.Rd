@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{cut.POSIXt}
-\alias{cut.POSIXt}
 \alias{cut.Date}
 \title{Convert a Date or Date-Time Object to a Factor}
 \description{

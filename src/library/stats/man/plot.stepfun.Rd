@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.stepfun}
-\alias{plot.stepfun}
 \alias{lines.stepfun}
 \title{Plot Step Functions}
 \description{

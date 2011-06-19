@@ -5,7 +5,6 @@
 
 \name{TDist}
 \encoding{UTF-8}
-\alias{TDist}
 \alias{dt}
 \alias{pt}
 \alias{qt}

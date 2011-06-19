@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{stats-package}
-\alias{stats-package}
 \alias{stats}
 \docType{package}
 \title{

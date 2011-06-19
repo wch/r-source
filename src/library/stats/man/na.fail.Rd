@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{na.fail}
-\alias{na.fail}
 \alias{na.fail.default}
 \alias{na.omit}
 \alias{na.omit.data.frame}

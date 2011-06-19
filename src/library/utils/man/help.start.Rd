@@ -5,7 +5,6 @@
 
 \name{help.start}
 \title{Hypertext Documentation}
-\alias{help.start}
 \description{
   Start the hypertext (currently HTML) version of \R's online
   documentation.

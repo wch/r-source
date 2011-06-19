@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{splines-package}
-\alias{splines-package}
 \alias{splines}
 \docType{package}
 \title{

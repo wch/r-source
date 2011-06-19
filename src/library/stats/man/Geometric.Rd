@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Geometric}
-\alias{Geometric}
 \alias{dgeom}
 \alias{pgeom}
 \alias{qgeom}

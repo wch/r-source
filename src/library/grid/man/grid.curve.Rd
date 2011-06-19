@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.curve}
-\alias{grid.curve}
 \alias{curveGrob}
 \alias{arcCurvature}
 \title{ Draw a Curve Between Locations }

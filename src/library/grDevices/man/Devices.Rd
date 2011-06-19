@@ -5,7 +5,6 @@
 
 \name{Devices}
 \title{List of Graphical Devices}
-\alias{Devices}
 \alias{device}
 \description{The following graphics devices are currently available:
   \itemize{

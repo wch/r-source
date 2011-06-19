@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{untar}
-\alias{untar}
 \title{
   Extract or List Tar Archives
 }

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.segments}
-\alias{grid.segments}
 \alias{segmentsGrob}
 \title{ Draw Line Segments }
 \description{

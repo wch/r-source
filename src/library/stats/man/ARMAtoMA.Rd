@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ARMAtoMA}
-\alias{ARMAtoMA}
 \title{Convert ARMA Process to Infinite MA Process}
 \description{
   Convert ARMA process to infinite MA process.

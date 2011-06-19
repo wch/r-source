@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bxp}
-\alias{bxp}
 \title{Draw Box Plots from Summaries}
 \description{
   \code{bxp} draws box plots based on the given summaries in \code{z}.

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{options}
-\alias{options}
 \alias{.Options}
 \alias{getOption}
 \alias{option} % so help files can do 'set \link{} \code{"foo"}'

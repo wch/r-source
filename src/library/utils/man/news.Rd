@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{news}
-\alias{news}
 \title{Build and Query R or Package News Information}
 \description{
   Build and query the news for R or add-on packages.

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{promptClass}
-\alias{promptClass}
 \title{Generate a Shell for Documentation of a Formal Class}
 \description{
   Assembles all relevant slot and method information for a class, with

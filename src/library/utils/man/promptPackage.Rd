@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{promptPackage}
-\alias{promptPackage}
 \title{Generate a Shell for Documentation of a Package}
 \description{
   Generates a shell of documentation for an installed or source package.

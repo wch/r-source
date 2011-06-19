@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tk_choose.dir}
-\alias{tk_choose.dir}
 \title{Choose a Folder Interactively}
 \description{
   Use a Tk widget to choose a directory interactively.

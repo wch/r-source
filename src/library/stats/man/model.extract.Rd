@@ -11,7 +11,6 @@ model.offset(x)
 model.response(data, type = "any")
 model.weights(x)
 }
-\alias{model.extract}
 \alias{model.offset}
 \alias{model.response}
 \alias{model.weights}

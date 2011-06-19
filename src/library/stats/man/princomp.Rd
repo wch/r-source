@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{princomp}
-\alias{princomp}
 \alias{princomp.formula}
 \alias{princomp.default}
 \alias{plot.princomp}

@@ -9,7 +9,6 @@
 attach(what, pos = 2, name = deparse(substitute(what)),
        warn.conflicts = TRUE)
 }
-\alias{attach}
 \arguments{
   \item{what}{\sQuote{database}.  This can be a
     \code{data.frame} or a \code{list} or a \R data file created with

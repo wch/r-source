@@ -9,7 +9,6 @@
 stop(\dots, call. = TRUE, domain = NULL)
 geterrmessage()
 }
-\alias{stop}
 \alias{geterrmessage}
 \arguments{
   \item{\dots}{zero or more objects which can be coerced to character

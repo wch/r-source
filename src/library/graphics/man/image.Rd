@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{image}
-\alias{image}
 \alias{image.default}
 \title{Display a Color Image}
 \usage{

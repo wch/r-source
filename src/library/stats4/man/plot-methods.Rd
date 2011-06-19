@@ -5,7 +5,6 @@
 
 \name{plot-methods}
 \docType{methods}
-\alias{plot-methods}
 \alias{plot,ANY,ANY-method}
 \alias{plot,profile.mle,missing-method}
 \title{Methods for Function \code{plot} in Package \pkg{stats4}}

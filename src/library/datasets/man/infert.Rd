@@ -5,7 +5,6 @@
 
 \name{infert}
 \docType{data}
-\alias{infert}
 \title{Infertility after Spontaneous and Induced Abortion}
 \description{
   This is a matched case-control study dating from before the

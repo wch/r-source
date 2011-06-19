@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{removeSource}
-\alias{removeSource}
 \title{
   Remove Stored Source from a Function.
 }

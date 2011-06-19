@@ -18,7 +18,6 @@ cov2cor(V)
 }
 \alias{var}
 \alias{cov}
-\alias{cor}
 \alias{cov2cor}
 \description{
   \code{var}, \code{cov} and \code{cor} compute the variance of \code{x}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{new}
-\alias{new}
 \alias{initialize}
 \title{ Generate an Object from a Class }
 \description{

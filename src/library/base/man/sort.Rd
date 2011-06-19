@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{sort}
-\alias{sort}
 \alias{sort.default}
 \alias{sort.POSIXlt}
 \alias{sort.int}

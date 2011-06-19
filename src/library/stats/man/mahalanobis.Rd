@@ -8,7 +8,6 @@
 \usage{
 mahalanobis(x, center, cov, inverted=FALSE, ...)
 }
-\alias{mahalanobis}
 \arguments{
   \item{x}{vector or matrix of data with, say, \eqn{p} columns.}
   \item{center}{mean vector of the distribution or second data vector of

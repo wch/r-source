@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.remove}
-\alias{grid.remove}
 \alias{grid.gremove}
 \alias{removeGrob}
 \title{Remove a Grid Graphical Object}

@@ -5,7 +5,6 @@
 
 \name{shell}
 \Rdversion{1.1}
-\alias{shell}
 \title{Invoke a System Command, using a Shell}
 
 \usage{

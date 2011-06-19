@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{power.t.test}
-\alias{power.t.test}
 \encoding{UTF-8}
 \title{Power calculations for one and two sample t tests}
 \usage{

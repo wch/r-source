@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{layout}
-\alias{layout}
 \alias{layout.show}
 \alias{lcm}
 \title{Specifying Complex Plot Arrangements}

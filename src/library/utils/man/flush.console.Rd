@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{flush.console}
-\alias{flush.console}
 \title{Flush Output to A Console}
 \description{
   This does nothing except on console-based versions of \R.

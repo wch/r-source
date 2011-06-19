@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{expand.model.frame}
-\alias{expand.model.frame}
 \title{Add new variables to a model frame}
 \description{
   Evaluates new variables as if they had been part of the formula of the

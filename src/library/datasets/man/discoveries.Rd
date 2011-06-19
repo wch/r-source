@@ -5,7 +5,6 @@
 
 \name{discoveries}
 \docType{data}
-\alias{discoveries}
 \title{Yearly Numbers of Important Discoveries}
 \description{
   The numbers of \dQuote{great} inventions and scientific

@@ -8,7 +8,6 @@
 \usage{
 do.call(what, args, quote = FALSE, envir = parent.frame())
 }
-\alias{do.call}
 \arguments{
   \item{what}{either a function or a non-empty character string naming the
     function to be called.}

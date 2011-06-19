@@ -8,7 +8,6 @@
 % copyright (C) 2000-3   The R Core Development Team
 %
 \name{ppr}
-\alias{ppr}
 \alias{ppr.default}
 \alias{ppr.formula}
 \title{Projection Pursuit Regression}

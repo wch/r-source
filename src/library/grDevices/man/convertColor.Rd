@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{convertColor}
-\alias{convertColor}
 \alias{colorspaces}
 \title{Convert between Colour Spaces}
 \description{

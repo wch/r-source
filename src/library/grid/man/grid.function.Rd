@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.function}
-\alias{grid.function}
 \alias{functionGrob}
 \alias{grid.abline}
 \title{Draw a curve representing a function}

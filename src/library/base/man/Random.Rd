@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Random}
-\alias{Random}
 \alias{RNG}
 \alias{RNGkind}
 \alias{RNGversion}

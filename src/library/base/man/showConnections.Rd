@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{showConnections}
-\alias{showConnections}
 \alias{getConnection}
 \alias{getAllConnections}
 \alias{closeAllConnections}

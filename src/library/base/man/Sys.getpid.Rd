@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.getpid}
-\alias{Sys.getpid}
 
 \title{Get the Process ID of the R Session}
 \description{

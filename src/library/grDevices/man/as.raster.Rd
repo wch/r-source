@@ -5,7 +5,6 @@
 
 \name{as.raster}
 \alias{is.raster}
-\alias{as.raster}
 \alias{as.raster.logical}
 \alias{as.raster.numeric}
 \alias{as.raster.character}

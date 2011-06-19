@@ -5,7 +5,6 @@
 
 \name{UKLungDeaths}
 \docType{data}
-\alias{UKLungDeaths}
 \alias{ldeaths}
 \alias{fdeaths}
 \alias{mdeaths}

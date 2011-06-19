@@ -5,7 +5,6 @@
 
 \name{pressure}
 \docType{data}
-\alias{pressure}
 \title{Vapor Pressure of Mercury as a Function of Temperature}
 \description{
   Data on the relation between temperature in degrees Celsius and vapor

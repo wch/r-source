@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{make.names}
-\alias{make.names}
 \title{Make Syntactically Valid Names}
 \description{
   Make syntactically valid names out of character vectors.

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{difftime}
-\alias{difftime}
 \alias{as.difftime}
 \alias{as.double.difftime}
 \alias{is.numeric.difftime}

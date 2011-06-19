@@ -5,7 +5,6 @@
 
 \name{windowsFonts}
 \alias{windowsFont}
-\alias{windowsFonts}
 \concept{fonts}
 \title{Windows Fonts}
 \description{

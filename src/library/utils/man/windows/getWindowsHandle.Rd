@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getWindowsHandle}
-\alias{getWindowsHandle}
 \title{Get a Windows Handle}
 \description{
   Get the Windows handle of a window or of the \R{} process.

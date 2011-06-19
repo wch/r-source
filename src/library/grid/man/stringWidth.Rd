@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{stringWidth}
-\alias{stringWidth}
 \alias{stringHeight}
 \title{Create a Unit Describing the Width and Height of a String or Math
   Expression}

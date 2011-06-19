@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cbind}
-\alias{cbind}%%--do C-internal method dispatching !!
+%%--do C-internal method dispatching !!
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}

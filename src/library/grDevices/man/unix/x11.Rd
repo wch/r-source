@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{x11}
-\alias{x11}
 \alias{X11}
 \alias{X11.options}
 

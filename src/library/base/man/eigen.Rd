@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{eigen}
-\alias{eigen}
 \concept{eigen vector}
 \concept{eigen value}
 \title{Spectral Decomposition of a Matrix}

@@ -5,7 +5,6 @@
 
 \name{citation}
 \alias{CITATION}
-\alias{citation}
 \alias{readCitationFile}
 \title{Citing R and R Packages in Publications}
 \description{

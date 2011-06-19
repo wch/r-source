@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{serialize}
-\alias{serialize}
 \alias{unserialize}
 \title{Simple Serialization Interface}
 \description{

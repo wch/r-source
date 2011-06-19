@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.draw}
-\alias{grid.draw}
 \title{Draw a grid grob}
 \description{
   Produces graphical output from a graphical object.

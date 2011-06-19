@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{setOldClass}
-\alias{setOldClass}
 \alias{.setOldIs}
 \alias{POSIXct-class}
 \alias{POSIXlt-class}

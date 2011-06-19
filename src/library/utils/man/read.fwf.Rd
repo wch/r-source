@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{read.fwf}
-\alias{read.fwf}
 \title{Read Fixed Width Format Files}
 \description{
   Read a table of \bold{f}ixed \bold{w}idth \bold{f}ormatted

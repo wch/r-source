@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{fft}
-\alias{fft}
 \alias{mvfft}
 \title{Fast Discrete Fourier Transform}
 \description{

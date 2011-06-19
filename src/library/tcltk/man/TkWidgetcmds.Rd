@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{TkWidgetcmds}
-\alias{TkWidgetcmds}
 \alias{tkactivate}
 \alias{tkadd}
 \alias{tkaddtag}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{names}
-\alias{names}
 \alias{names.default}
 \alias{names<-}
 \alias{names<-.default}

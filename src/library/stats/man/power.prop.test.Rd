@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{power.prop.test}
-\alias{power.prop.test}
 \encoding{UTF-8}
 \title{Power Calculations for Two-Sample Test for Proportions}
 \description{

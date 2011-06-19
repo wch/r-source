@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
-\alias{RweaveLatex}
 \alias{RweaveLatexSetup}
 \title{R/LaTeX Driver for Sweave}
 \description{

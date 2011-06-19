@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{COMPILE}
-\alias{COMPILE}
 \title{Compile Files for Use with R}
 \description{
   Compile given source files so that they can subsequently be collected

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
-\alias{cmdscale}
 \concept{ordination}
 \concept{MDS}
 \title{Classical (Metric) Multidimensional Scaling}

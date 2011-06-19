@@ -8,7 +8,6 @@
 \usage{
 SSgompertz(x, Asym, b2, b3)
 }
-\alias{SSgompertz}
 \arguments{
  \item{x}{a numeric vector of values at which to evaluate the model.}
  \item{Asym}{a numeric parameter representing the asymptote.}

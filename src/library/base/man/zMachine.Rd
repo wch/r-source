@@ -8,7 +8,6 @@
 \usage{
 .Machine
 }
-\alias{.Machine}
 \description{
   \code{.Machine} is a variable holding information on the numerical
   characteristics of the machine \R is running on, such as the largest

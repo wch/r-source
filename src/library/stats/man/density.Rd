@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{density}
-\alias{density}
 \alias{density.default}
 \alias{print.density}
 \title{Kernel Density Estimation}

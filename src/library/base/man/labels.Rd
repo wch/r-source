@@ -8,7 +8,6 @@
 \usage{
 labels(object, \dots)
 }
-\alias{labels}
 \alias{labels.default}
 \arguments{
   \item{object}{Any \R object: the function is generic.}

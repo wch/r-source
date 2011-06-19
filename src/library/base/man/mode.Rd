@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{mode}
-\alias{mode}
 \alias{mode<-}
 \alias{storage.mode}
 \alias{storage.mode<-}

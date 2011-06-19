@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{predict.glm}
-\alias{predict.glm}
 \concept{regression}
 \title{Predict Method for GLM Fits}
 \usage{

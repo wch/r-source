@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{check.options}
-\alias{check.options}
 \title{Set Options with Consistency Checks}
 \usage{
 check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,

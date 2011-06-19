@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{as.graphicsAnnot}
-\alias{as.graphicsAnnot}
 \title{Coerce an Object for Graphics Annotation}
 \description{
   Coerce an \R object into a form suitable for graphics annotation.

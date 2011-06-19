@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{character}
-\alias{character}
 \alias{as.character}
 \alias{as.character.default}
 \alias{as.character.factor}

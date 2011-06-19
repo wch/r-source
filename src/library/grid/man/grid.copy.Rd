@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.copy}
-\alias{grid.copy}
 \title{Make a Copy of a Grid Graphical Object}
 \description{
   This function is redundant and will disappear in future versions.

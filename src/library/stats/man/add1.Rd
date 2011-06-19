@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{add1}
-\alias{add1}
 \alias{add1.default}
 \alias{add1.lm}
 \alias{add1.glm}

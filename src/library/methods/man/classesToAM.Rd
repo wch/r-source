@@ -1,5 +1,4 @@
 \name{classesToAM}
-\alias{classesToAM}
 \title{
 Compute an Adjacency Matrix for Superclasses of Class Definitions
 }

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{showViewport}
-\alias{showViewport}
 \title{
   Display grid viewports.
 }

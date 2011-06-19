@@ -5,7 +5,6 @@
 
 \name{grep}
 \title{Pattern Matching and Replacement}
-\alias{grep}
 \alias{grepl}
 \alias{sub}
 \alias{gsub}

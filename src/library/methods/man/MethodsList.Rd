@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{MethodsList}
-\alias{MethodsList}
 \alias{makeMethodsList}
 \alias{SignatureMethod}
 \alias{insertMethod}

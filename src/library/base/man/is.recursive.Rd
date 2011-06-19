@@ -5,7 +5,6 @@
 
 \name{is.recursive}
 \alias{is.atomic}
-\alias{is.recursive}
 \title{Is an Object Atomic or Recursive?}
 \usage{
 is.atomic(x)

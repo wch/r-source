@@ -10,7 +10,6 @@ plot.new()
 frame()
 }
 \alias{plot.new}
-\alias{frame}
 \description{
   This function (\code{frame} is an alias for
   \code{plot.new}) causes the completion of plotting in the current plot

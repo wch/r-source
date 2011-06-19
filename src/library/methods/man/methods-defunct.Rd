@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{methods-defunct}
-\alias{methods-defunct}
 \alias{getAllMethods}
 \alias{mlistMetaName}
 \alias{removeMethodsObject}

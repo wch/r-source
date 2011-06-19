@@ -5,7 +5,6 @@
 
 \name{rle}
 \title{Run Length Encoding}
-\alias{rle}
 \alias{inverse.rle}
 \alias{print.rle}
 \concept{runs}

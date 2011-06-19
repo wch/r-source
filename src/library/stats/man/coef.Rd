@@ -9,7 +9,6 @@
 coef(object, \dots)
 coefficients(object, \dots)
 }
-\alias{coef}
 \alias{coefficients}
 \arguments{
   \item{object}{an object for which the extraction of model coefficients is

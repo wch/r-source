@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.locator}
-\alias{grid.locator}
 \title{ Capture a Mouse Click }
 \description{
   Allows the user to click the mouse once within the current

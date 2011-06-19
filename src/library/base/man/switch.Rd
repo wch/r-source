@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{switch}
-\alias{switch}
 \title{Select One of a List of Alternatives}
 \description{
   \code{switch} evaluates \code{EXPR} and accordingly chooses one of the

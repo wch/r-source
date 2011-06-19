@@ -5,7 +5,6 @@
 
 \name{UCBAdmissions}
 \docType{data}
-\alias{UCBAdmissions}
 \title{Student Admissions at UC Berkeley}
 \description{
   Aggregate data on applicants to graduate school at Berkeley for the

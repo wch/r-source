@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{GammaDist}
-\alias{GammaDist}
 \alias{dgamma}
 \alias{pgamma}
 \alias{qgamma}

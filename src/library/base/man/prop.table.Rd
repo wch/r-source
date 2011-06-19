@@ -9,7 +9,6 @@
 \usage{
 prop.table(x, margin=NULL)
 }
-\alias{prop.table}
 \arguments{
  \item{x}{ table }
  \item{margin}{ index, or vector of indices to generate margin for}

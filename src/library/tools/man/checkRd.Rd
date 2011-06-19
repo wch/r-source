@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{checkRd}
-\alias{checkRd}
 \title{ Check an Rd Object }
 \description{
   Check an help file or the output of the \code{\link{parse_Rd}} function.

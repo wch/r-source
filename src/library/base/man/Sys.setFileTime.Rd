@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.setFileTime}
-\alias{Sys.setFileTime}
 \title{
   Set File Time
 }

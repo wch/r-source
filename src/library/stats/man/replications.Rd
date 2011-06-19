@@ -8,7 +8,6 @@
 \usage{
 replications(formula, data=NULL, na.action)
 }
-\alias{replications}
 \arguments{
   \item{formula}{a formula or a terms object or a data frame.}
   \item{data}{a data frame used  to  find  the  objects in \code{formula}.}

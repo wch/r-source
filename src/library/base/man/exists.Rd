@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{exists}
-\alias{exists}
 \title{Is an Object Defined?}
 \description{
   Look for an \R object of the given name.

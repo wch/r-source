@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{factanal}
-\alias{factanal}
 \encoding{UTF-8}
 \title{Factor Analysis}
 \description{

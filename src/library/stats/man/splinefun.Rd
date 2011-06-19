@@ -5,7 +5,6 @@
 
 \name{splinefun}
 \alias{spline}
-\alias{splinefun}
 \alias{splinefunH}
 \title{Interpolating Splines}
 \description{

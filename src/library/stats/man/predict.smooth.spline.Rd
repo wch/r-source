@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{predict.smooth.spline}
-\alias{predict.smooth.spline}
 \title{Predict from Smoothing Spline Fit}
 \description{
   Predict a smoothing spline fit at new points, return the derivative if

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{browserText}
-\alias{browserText}
 \alias{browserCondition}
 \alias{browserSetDebug}
 \title{

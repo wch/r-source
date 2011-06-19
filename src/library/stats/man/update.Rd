@@ -10,7 +10,6 @@ update(object, \dots)
 
 \method{update}{default}(object, formula., \dots, evaluate = TRUE)
 }
-\alias{update}
 \alias{update.default}
 \arguments{
  \item{object}{An existing fit from a model function such as \code{lm},

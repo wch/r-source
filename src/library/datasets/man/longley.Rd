@@ -5,7 +5,6 @@
 
 \name{longley}
 \docType{data}
-\alias{longley}
 \title{Longley's Economic Regression Data}
 \description{
   A macroeconomic data set which provides a well-known example for a

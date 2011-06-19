@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{checkFF}
-\alias{checkFF}
 \alias{print.checkFF}
 \title{Check Foreign Function Calls}
 \usage{

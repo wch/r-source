@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{PP.test}
-\alias{PP.test}
 \title{Phillips-Perron Test for Unit Roots}
 \usage{
 PP.test(x, lshort = TRUE)

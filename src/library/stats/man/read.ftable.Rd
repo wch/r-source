@@ -5,7 +5,6 @@
 
 \name{read.ftable}
 \title{Manipulate Flat Contingency Tables}
-\alias{read.ftable}
 \alias{write.ftable}
 \alias{format.ftable}
 \description{Read, write and coerce \sQuote{flat} contingency tables.}

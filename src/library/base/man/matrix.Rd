@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{matrix}
-\alias{matrix}
 \alias{as.matrix}
 \alias{as.matrix.default}
 \alias{as.matrix.data.frame}

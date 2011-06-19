@@ -5,7 +5,6 @@
 % Distributed under GPL 2 or later
 
 \name{order.dendrogram}
-\alias{order.dendrogram}
 \alias{labels.dendrogram}
 \title{Ordering or Labels of the Leaves in a Dendrogram}
 \description{

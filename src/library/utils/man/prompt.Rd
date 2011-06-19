@@ -5,7 +5,6 @@
 
 \name{prompt}
 \title{Produce Prototype of an R Documentation File}
-\alias{prompt}
 \alias{prompt.default}
 \alias{prompt.data.frame}
 \description{

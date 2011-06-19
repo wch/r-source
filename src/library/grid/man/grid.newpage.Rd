@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.newpage}
-\alias{grid.newpage}
 \title{Move to a New Page on a Grid Device}
 \description{
   This function erases the current device or moves to a new page.

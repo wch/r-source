@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{BATCH}
-\alias{BATCH}
 \title{Batch Execution of R}
 \description{Run \R non-interactively with input from \code{infile} and
   send output (stdout/stderr) to another file.}

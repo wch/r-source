@@ -5,7 +5,6 @@
 
 \name{warpbreaks}
 \docType{data}
-\alias{warpbreaks}
 \title{The Number of Breaks in Yarn during Weaving}
 \description{
   This data set gives the number of warp breaks per loom, where a loom

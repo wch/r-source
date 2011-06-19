@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{contour}
-\alias{contour}
 \alias{contour.default}
 \title{Display Contours}
 \description{

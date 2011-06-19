@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{supsmu}
-\alias{supsmu}
 \title{Friedman's SuperSmoother}
 \description{
   Smooth the (x, y) values by Friedman's \sQuote{super smoother}.

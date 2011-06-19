@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{checkVignettes}
-\alias{checkVignettes}
 \alias{print.checkVignettes}
 \title{Check Package Vignettes}
 \description{

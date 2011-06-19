@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{S4groupGeneric}
-\alias{S4groupGeneric}
 \alias{GroupGenericFunctions}
 \alias{Math}
 \alias{Ops}

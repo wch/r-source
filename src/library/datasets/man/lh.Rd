@@ -5,7 +5,6 @@
 
 \name{lh}
 \docType{data}
-\alias{lh}
 \title{
   Luteinizing Hormone in Blood Samples
 }

@@ -8,7 +8,6 @@
 \usage{
 \method{anova}{glm}(object, \dots, dispersion = NULL, test = NULL)
 }
-\alias{anova.glm}
 \alias{anova.glmlist}
 \description{
   Compute an analysis of deviance table for one or more generalized

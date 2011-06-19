@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tsdiag}
-\alias{tsdiag}
 \alias{tsdiag.arima0}
 \alias{tsdiag.Arima}
 \alias{tsdiag.StructTS}

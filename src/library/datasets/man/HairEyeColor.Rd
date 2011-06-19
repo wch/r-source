@@ -5,7 +5,6 @@
 
 \name{HairEyeColor}
 \docType{data}
-\alias{HairEyeColor}
 \title{Hair and Eye Color of Statistics Students}
 \description{
   Distribution of hair and eye color and sex in 592 statistics students.

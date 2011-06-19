@@ -5,7 +5,6 @@
 
 \name{language-class}
 \docType{class}
-\alias{language-class}
 \alias{(-class}
 \alias{<--class}
 \alias{call-class}

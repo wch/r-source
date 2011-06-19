@@ -5,7 +5,6 @@
 
 \name{attributes}
 \title{Object Attribute Lists}
-\alias{attributes}
 \alias{attributes<-}
 \alias{mostattributes<-}
 \description{

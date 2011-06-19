@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{startDynamicHelp}
-\alias{startDynamicHelp}
 \alias{help.ports}
 \title{Start the Dynamic HTML Help System}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{setClassUnion}
-\alias{setClassUnion}
 \alias{isClassUnion}
 \alias{ClassUnionRepresentation-class}
 \title{Classes Defined as the Union of Other Classes}

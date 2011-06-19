@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{browseURL}
-\alias{browseURL}
 \title{Load URL into a WWW Browser}
 \description{
   Load a given URL into a WWW browser.

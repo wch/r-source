@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getNames}
-\alias{getNames}
 \title{ List the names of grobs on the display list }
 \description{
   Returns a character vector containing the names of all

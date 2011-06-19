@@ -5,7 +5,6 @@
 
 \name{Nile}
 \docType{data}
-\alias{Nile}
 \title{Flow of the River Nile}
 \usage{Nile}
 \description{

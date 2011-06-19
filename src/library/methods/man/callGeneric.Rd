@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{callGeneric}
-\alias{callGeneric}
 \title{Call the Current Generic Function from a Method}
 \description{
   A call to \code{callGeneric} can only appear inside a method

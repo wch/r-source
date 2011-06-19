@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{vignetteDepends}
-\alias{vignetteDepends}
 \title{
   Retrieve Dependency Information for a Vignette}
 \description{

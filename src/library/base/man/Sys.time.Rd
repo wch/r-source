@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.time}
-\alias{Sys.time}
 \alias{Sys.Date}
 
 \title{Get Current Date and Time}

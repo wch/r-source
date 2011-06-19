@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{help.search}
-\alias{help.search}
 \alias{??}
 \alias{print.hsearch}
 \title{Search the Help System}

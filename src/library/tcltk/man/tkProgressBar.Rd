@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tkProgressBar}
-\alias{tkProgressBar}
 \alias{getTkProgressBar}
 \alias{setTkProgressBar}
 \alias{close.tkProgressBar}

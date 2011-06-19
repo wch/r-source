@@ -5,7 +5,6 @@
 
 \name{logLik-methods}
 \docType{methods}
-\alias{logLik-methods}
 \alias{logLik,ANY-method}
 \alias{logLik,mle-method}
 \title{Methods for Function \code{logLik} in Package \pkg{stats4}}

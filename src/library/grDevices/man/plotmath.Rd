@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plotmath}
-\alias{plotmath}
 \alias{symbol}
 \alias{plain}
 \alias{bold}

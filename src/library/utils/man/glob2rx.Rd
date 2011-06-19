@@ -5,7 +5,6 @@
 % Distributed under GPL 2 or later
 
 \name{glob2rx}
-\alias{glob2rx}
 \title{Change Wildcard or Globbing Pattern into Regular Expression}
 \description{
   Change \emph{wildcard} aka \emph{globbing} patterns into the

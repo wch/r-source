@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{mosaicplot}
-\alias{mosaicplot}
 \alias{mosaicplot.default}
 \alias{mosaicplot.formula}
 \encoding{UTF-8}

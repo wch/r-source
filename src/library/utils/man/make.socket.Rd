@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{make.socket}
-\alias{make.socket}
 \alias{print.socket}
 \title{Create a Socket Connection}
 \usage{

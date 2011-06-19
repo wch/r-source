@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.glob}
-\alias{Sys.glob}
 \title{Wildcard Expansion on File Paths}
 \description{
   Function to do wildcard expansion (also known as \sQuote{globbing}) on

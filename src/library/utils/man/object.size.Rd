@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{object.size}
-\alias{object.size}
 \alias{print.object_size}
 \title{Report the Space Allocated for an Object}
 \description{

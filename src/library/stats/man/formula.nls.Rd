@@ -5,7 +5,6 @@
 
 \name{formula.nls}
 \encoding{UTF-8}
-\alias{formula.nls}
 \title{Extract Model Formula from nls Object}
 \usage{
 \method{formula}{nls}(x, \dots)

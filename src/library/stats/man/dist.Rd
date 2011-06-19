@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{dist}
-\alias{dist}
 \alias{print.dist}
 \alias{format.dist}
 \alias{labels.dist}

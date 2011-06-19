@@ -5,7 +5,6 @@
 
 \name{EuStockMarkets}
 \docType{data}
-\alias{EuStockMarkets}
 \title{
   Daily Closing Prices of Major European Stock Indices, 1991--1998
 }

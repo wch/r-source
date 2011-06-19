@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{checkTnF}
-\alias{checkTnF}
 \alias{print.checkTnF}
 \title{Check R Packages or Code for T/F}
 \description{

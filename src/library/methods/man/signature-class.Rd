@@ -5,7 +5,6 @@
 
 \name{signature-class}
 \docType{class}
-\alias{signature-class}
 \alias{show,signature-method}
 \title{Class \code{"signature"} For Method Definitions}
 \description{This class represents the mapping of some of the formal

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{reg.finalizer}
-\alias{reg.finalizer}
 \title{Finalization of Objects}
 \description{
   Registers an \R function to be called upon garbage collection of

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{conditions}
-\alias{conditions}
 \alias{condition}
 \alias{computeRestarts}
 \alias{conditionCall}

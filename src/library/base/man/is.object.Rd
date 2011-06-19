@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{is.object}
-\alias{is.object}
 \title{Is an Object \sQuote{internally classed}?}
 \usage{
 is.object(x)

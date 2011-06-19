@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{sum}
-\alias{sum}
 \title{Sum of Vector Elements}
 \description{
   \code{sum} returns the sum of all the values

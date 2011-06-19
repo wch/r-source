@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{gPath}
-\alias{gPath}
 \title{ Concatenate Grob Names }
 \description{
   This function can be used to generate a grob path for use

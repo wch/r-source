@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{page}
-\alias{page}
 \title{Invoke a Pager on an R Object}
 \description{
   Displays a representation of the object named by \code{x} in a pager

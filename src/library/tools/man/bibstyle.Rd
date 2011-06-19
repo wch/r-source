@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bibstyle}
-\alias{bibstyle}
 \title{
 Select or define a bibliography style.
 }

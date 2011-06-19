@@ -6,7 +6,6 @@
 \name{Bessel}
 \title{Bessel Functions}
 \alias{bessel}
-\alias{Bessel}
 \alias{besselI}
 \alias{besselJ}
 \alias{besselK}

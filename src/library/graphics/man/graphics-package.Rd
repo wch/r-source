@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{graphics-package}
-\alias{graphics-package}
 \alias{graphics}
 \docType{package}
 \title{

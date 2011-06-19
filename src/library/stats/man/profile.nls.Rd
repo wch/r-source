@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{profile.nls}
-\alias{profile.nls}
 \title{Method for Profiling nls Objects}
 \description{
   Investigates the profile log-likelihood function for a fitted model of

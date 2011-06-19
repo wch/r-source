@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
-\alias{txtProgressBar}
 \alias{getTxtProgressBar}
 \alias{setTxtProgressBar}
 \alias{close.txtProgressBar}

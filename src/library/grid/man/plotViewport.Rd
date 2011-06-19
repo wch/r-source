@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plotViewport}
-\alias{plotViewport}
 \title{ Create a Viewport with a Standard Plot Layout }
 \description{
   This is a convenience function for producing a viewport with

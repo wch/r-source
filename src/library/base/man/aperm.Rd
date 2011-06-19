@@ -5,7 +5,6 @@
 
 \name{aperm}
 \title{Array Transposition}
-\alias{aperm}
 \alias{aperm.default}
 \alias{aperm.table}
 \description{

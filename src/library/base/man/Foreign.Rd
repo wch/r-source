@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Foreign}
-\alias{Foreign}
 \alias{.C}
 \alias{.Fortran}
 \alias{.External}

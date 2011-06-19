@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xfig}
-\alias{xfig}
 \title{XFig Graphics Device}
 \description{
   \code{xfig} starts the graphics device driver for producing XFig

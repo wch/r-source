@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.grab}
-\alias{grid.grab}
 \alias{grid.grabExpr}
 \title{ Grab the current grid output }
 \description{

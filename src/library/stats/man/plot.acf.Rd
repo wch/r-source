@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.acf}
-\alias{plot.acf}
 \title{Plot Autocovariance and Autocorrelation Functions}
 \description{
   Plot method for objects of class \code{"acf"}.

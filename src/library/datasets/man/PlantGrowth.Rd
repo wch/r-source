@@ -5,7 +5,6 @@
 
 \name{PlantGrowth}
 \docType{data}
-\alias{PlantGrowth}
 \title{Results from an Experiment on Plant Growth}
 \description{
   Results from an experiment to compare yields (as measured by dried

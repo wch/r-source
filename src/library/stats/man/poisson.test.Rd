@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{poisson.test}
-\alias{poisson.test}
 \title{Exact Poisson tests}
 \description{
      Performs an exact test of a simple null hypothesis about the

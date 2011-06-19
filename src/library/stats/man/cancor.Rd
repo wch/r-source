@@ -5,7 +5,6 @@
 
 \name{cancor}
 \title{Canonical Correlations}
-\alias{cancor}
 \usage{
 cancor(x, y, xcenter = TRUE, ycenter = TRUE)
 }

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{remove.packages}
-\alias{remove.packages}
 \concept{uninstall}
 \title{Remove Installed Packages}
 \description{

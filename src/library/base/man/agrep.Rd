@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{agrep}
-\alias{agrep}
 \alias{fuzzy matching}
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
-\alias{write_PACKAGES}
 \title{Generate PACKAGES files}
 \description{
   Generate \file{PACKAGES} and \file{PACKAGES.gz} files for a

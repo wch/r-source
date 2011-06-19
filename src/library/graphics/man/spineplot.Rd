@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{spineplot}
-\alias{spineplot}
 \alias{spineplot.default}
 \alias{spineplot.formula}
 \title{Spine Plots and Spinograms}

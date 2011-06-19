@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{memory.profile}
-\alias{memory.profile}
 \title{Profile the Usage of Cons Cells}
 \description{
     Lists the usage of the cons cells by \code{SEXPREC} type.

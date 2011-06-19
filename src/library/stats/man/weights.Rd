@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{weights}
-\alias{weights}
 \alias{weights.default}
 
 \title{Extract Model Weights}

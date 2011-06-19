@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{example}
-\alias{example}
 \title{Run an Examples Section from the Online Help}
 \description{
   Run all the \R code from the \bold{Examples} part of \R's online help

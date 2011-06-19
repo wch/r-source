@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{aspell-utils}
-\alias{aspell-utils}
 \alias{aspell_package_Rd_files}
 \alias{aspell_package_vignettes}
 \alias{aspell_write_personal_dictionary_file}

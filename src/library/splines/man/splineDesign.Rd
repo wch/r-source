@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{splineDesign}
-\alias{splineDesign}
 \alias{spline.des}
 \title{Design Matrix for B-splines}
 \description{

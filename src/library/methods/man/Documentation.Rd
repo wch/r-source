@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Documentation}
-\alias{Documentation}
 \alias{Documentation-class}
 \alias{Documentation-methods}
 \title{Using and Creating On-line Documentation for Classes and

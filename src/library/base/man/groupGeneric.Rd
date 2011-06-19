@@ -5,7 +5,6 @@
 
 \name{groupGeneric}
 \alias{S3groupGeneric}
-\alias{groupGeneric}
 \alias{.Group}
 \alias{Math}
 \alias{Math.data.frame}

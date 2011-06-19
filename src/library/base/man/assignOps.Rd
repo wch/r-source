@@ -9,7 +9,6 @@
 \alias{<<-}
 \alias{->}
 \alias{->>}
-\alias{assignOps}
 \title{Assignment Operators}
 \description{
   Assign a value to a name.

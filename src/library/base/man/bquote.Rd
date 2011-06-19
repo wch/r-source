@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{bquote}
-\alias{bquote}
 \title{Partial substitution in expressions}
 \description{
   An analogue of the LISP backquote macro.  \code{bquote} quotes its

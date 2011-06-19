@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{pairwise.t.test}
-\alias{pairwise.t.test}
 \title{ Pairwise t tests}
 \description{
  Calculate pairwise comparisons between group levels with corrections

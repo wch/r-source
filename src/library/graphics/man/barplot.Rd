@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{barplot}
-\alias{barplot}
 \alias{barplot.default}
 \title{Bar Plots}
 \description{

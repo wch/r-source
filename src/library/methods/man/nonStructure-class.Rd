@@ -1,6 +1,5 @@
 \name{nonStructure-class}
 \docType{class}
-\alias{nonStructure-class}
 \alias{Math,nonStructure-method}
 \alias{Math2,nonStructure-method}
 \alias{Ops,vector,nonStructure-method}

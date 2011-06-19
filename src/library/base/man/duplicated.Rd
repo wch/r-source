@@ -5,7 +5,6 @@
 
 \name{duplicated}
 \title{Determine Duplicate Elements}
-\alias{duplicated}
 \alias{duplicated.default}
 \alias{duplicated.data.frame}
 \alias{duplicated.matrix}

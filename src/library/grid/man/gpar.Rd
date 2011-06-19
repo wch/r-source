@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{gpar}
-\alias{gpar}
 \alias{get.gpar}
 \title{Handling Grid Graphical Parameters}
 \description{

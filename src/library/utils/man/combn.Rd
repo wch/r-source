@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{combn}
-\alias{combn}
 \title{Generate All Combinations of n Elements, Taken m at a Time}
 \description{
   Generate all combinations of the elements of \code{x} taken \code{m}

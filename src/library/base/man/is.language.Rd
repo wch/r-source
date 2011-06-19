@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{is.language}
-\alias{is.language}
 \title{Is an Object a Language Object?}
 \usage{
 is.language(x)

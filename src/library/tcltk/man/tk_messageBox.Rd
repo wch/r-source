@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{tk_messageBox}
-\alias{tk_messageBox}
 
 \title{Tk Message Box}
 

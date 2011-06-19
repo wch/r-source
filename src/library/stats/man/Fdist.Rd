@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{FDist}
-\alias{FDist}
 \alias{df}
 \alias{pf}
 \alias{qf}

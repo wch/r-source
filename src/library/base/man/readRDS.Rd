@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{readRDS}
-\alias{readRDS}
 \alias{saveRDS}
 \title{Serialization Interface for Single Objects}
 \description{

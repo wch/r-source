@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{pos.to.env}
-\alias{pos.to.env}
 \title{Convert Positions in the Search Path to Environments}
 \description{
   Returns the environment at a specified position in the search path.

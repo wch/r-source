@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{srcfile}
-\alias{srcfile}
 \alias{srcfilecopy}
 \alias{getSrcLines}
 \alias{srcref}

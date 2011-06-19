@@ -8,7 +8,6 @@
 \usage{
 match.arg(arg, choices, several.ok = FALSE)
 }
-\alias{match.arg}
 \arguments{
   \item{arg}{a character vector (of length one unless \code{several.ok}
     is \code{TRUE}) or \code{NULL}.}

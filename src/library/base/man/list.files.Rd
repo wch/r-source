@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{list.files}
-\alias{list.files}
 \alias{dir}
 \alias{list.dirs}
 \title{List the Files in a Directory/Folder}

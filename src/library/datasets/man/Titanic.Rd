@@ -5,7 +5,6 @@
 
 \name{Titanic}
 \docType{data}
-\alias{Titanic}
 \title{Survival of passengers on the Titanic}
 \description{
   This data set provides information on the fate of passengers on the

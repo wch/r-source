@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{canCoerce}
-\alias{canCoerce}
 \title{Can an Object be Coerced to a Certain S4 Class?}
 \description{
   Test if an object can be coerced to a given S4 class.

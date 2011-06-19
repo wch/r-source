@@ -6,7 +6,6 @@
 \name{initialize-methods}
 \docType{methods}
 \title{Methods to Initialize New Objects from a Class}
-\alias{initialize-methods}
 \alias{initialize,ANY-method}
 \alias{initialize,traceable-method}
 \alias{initialize,signature-method}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{sys.parent}
-\alias{sys.parent}
 \alias{sys.call}
 \alias{sys.calls}
 \alias{sys.frame}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
-\alias{smooth.spline}
 %\alias{print.smooth.spline}% is not exported
 \title{Fit a Smoothing Spline}
 \description{

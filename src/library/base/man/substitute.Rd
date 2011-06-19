@@ -10,7 +10,6 @@ substitute(expr, env)
 quote(expr)
 enquote(cl)
 }
-\alias{substitute}
 \alias{quote}
 \alias{enquote}
 \description{

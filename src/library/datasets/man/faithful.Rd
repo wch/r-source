@@ -5,7 +5,6 @@
 
 \name{faithful}
 \docType{data}
-\alias{faithful}
 \encoding{UTF-8}
 \title{Old Faithful Geyser Data}
 \description{

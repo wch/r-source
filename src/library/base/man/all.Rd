@@ -8,7 +8,6 @@
 \usage{
 all(\dots, na.rm = FALSE)
 }
-\alias{all}
 \description{
   Given a set of logical vectors, are all of the values true?
 }

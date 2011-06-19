@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{predict.bSpline}
-\alias{predict.bSpline}
 \alias{predict.nbSpline}
 \alias{predict.pbSpline}
 \alias{predict.npolySpline}

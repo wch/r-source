@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{interpSpline}
-\alias{interpSpline}
 \title{Create an Interpolation Spline}
 \description{
   Create an interpolation spline, either from \code{x} and \code{y}

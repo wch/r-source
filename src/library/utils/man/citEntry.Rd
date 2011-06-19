@@ -5,7 +5,6 @@
 
 \name{citEntry}
 \title{Bibliography Entries (Older Interface)}
-\alias{citEntry}
 \alias{citHeader}
 \alias{citFooter}
 \description{

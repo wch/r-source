@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{all.names}
-\alias{all.names}
 \alias{all.vars}
 \title{Find All Names in an Expression}
 \description{

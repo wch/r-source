@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{expression}
-\alias{expression}
 \alias{is.expression}
 \alias{as.expression}
 \alias{as.expression.default}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{manova}
-\alias{manova}
 \title{Multivariate Analysis of Variance}
 \description{
   A class for the multivariate analysis of variance.

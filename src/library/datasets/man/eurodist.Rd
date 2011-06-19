@@ -5,7 +5,6 @@
 
 \name{eurodist}
 \docType{data}
-\alias{eurodist}
 \title{Distances Between European Cities}
 \description{
   The data give the road distances (in km) between 21 cities in Europe.

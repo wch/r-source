@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{screeplot}
-\alias{screeplot}
 \alias{screeplot.default}
 \title{Screeplots}
 \usage{

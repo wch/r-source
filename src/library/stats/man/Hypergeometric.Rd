@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Hypergeometric}
-\alias{Hypergeometric}
 \alias{dhyper}
 \alias{phyper}
 \alias{qhyper}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Startup}
-\alias{Startup}
 \alias{Rprofile}
 \alias{.Rprofile}
 \alias{Rprofile.site}

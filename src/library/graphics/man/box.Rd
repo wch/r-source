@@ -13,7 +13,6 @@
 \usage{
 box(which = "plot", lty = "solid", \dots)
 }
-\alias{box}
 \arguments{
 \item{which}{character, one of \code{"plot"}, \code{"figure"},
   \code{"inner"} and \code{"outer"}.}

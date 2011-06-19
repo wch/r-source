@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{.checkMFClasses}
-\alias{.checkMFClasses}
 \alias{.MFclass}
 \alias{.getXlevels}
 \title{Functions to Check the Type of Variables passed to Model Frames}

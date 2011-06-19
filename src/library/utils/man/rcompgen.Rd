@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{rcompgen}
-\alias{rcompgen}
 \alias{rc.settings}
 \alias{rc.status}
 \alias{rc.getOption}

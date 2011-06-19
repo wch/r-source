@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{svd}
-\alias{svd}
 \alias{La.svd}
 \title{Singular Value Decomposition of a Matrix}
 \usage{

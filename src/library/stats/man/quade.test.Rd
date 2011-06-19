@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{quade.test}
-\alias{quade.test}
 \alias{quade.test.default}
 \alias{quade.test.formula}
 \title{Quade Test}

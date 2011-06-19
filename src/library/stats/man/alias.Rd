@@ -13,7 +13,6 @@ alias(object, \dots)
 \method{alias}{lm}(object, complete = TRUE, partial = FALSE,
       partial.pattern = FALSE, \dots)
 }
-\alias{alias}
 \alias{alias.formula}
 \alias{alias.lm}
 \arguments{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{acf}
-\alias{acf}
 \alias{ccf}
 \alias{pacf}
 \alias{pacf.default}

@@ -5,7 +5,6 @@
 
 \name{Formaldehyde}
 \docType{data}
-\alias{Formaldehyde}
 \title{Determination of Formaldehyde}
 \description{
   These data are from a chemical experiment to prepare a standard curve

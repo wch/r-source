@@ -5,7 +5,6 @@
 
 \name{varimax}
 \alias{promax}
-\alias{varimax}
 \title{Rotation Methods for Factor Analysis}
 \description{
   These functions \sQuote{rotate} loading matrices in factor analysis.

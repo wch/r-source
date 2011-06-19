@@ -16,7 +16,6 @@ qqline(y, datax = FALSE, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), \dots)
 }
-\alias{qqnorm}
 \alias{qqnorm.default}
 \alias{qqplot}
 \alias{qqline}

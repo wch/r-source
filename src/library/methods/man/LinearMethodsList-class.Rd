@@ -5,7 +5,6 @@
 
 \name{LinearMethodsList-class}
 \docType{class}
-\alias{LinearMethodsList-class}
 \title{Class "LinearMethodsList"}
 \description{
   A version of methods lists that has been \sQuote{linearized}

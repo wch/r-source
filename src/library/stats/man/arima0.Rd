@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{arima0}
-\alias{arima0}
 \alias{print.arima0}
 \alias{predict.arima0}
 \concept{ARNA}

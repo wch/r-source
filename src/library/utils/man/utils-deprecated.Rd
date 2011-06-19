@@ -5,7 +5,6 @@
 
 \name{utils-deprecated}
 %------ NOTE:  ../R/utils-deprecated.R   must be synchronized with this!
-\alias{utils-deprecated}
 \alias{CRAN.packages}
 \title{Deprecated Functions in Package \pkg{utils}}
 \description{

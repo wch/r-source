@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Japanese}
-\alias{Japanese}
 \title{Japanese characters in R}
 \description{
   The implementation of Hershey vector fonts provides a large number of

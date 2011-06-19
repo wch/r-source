@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
-\alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}
 #ifdef windows

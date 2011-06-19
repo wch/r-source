@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{winDialog}
-\alias{winDialog}
 \alias{winDialogString}
 \title{Dialog Boxes under Windows}
 \description{

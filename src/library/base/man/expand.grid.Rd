@@ -8,7 +8,6 @@
 \usage{
 expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
-\alias{expand.grid}
 \arguments{
   \item{\dots}{vectors, factors or a list containing these.}
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}

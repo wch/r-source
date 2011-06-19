@@ -22,7 +22,6 @@ x \%/\% y
 \alias{^}
 \alias{\%\%}
 \alias{\%/\%}
-\alias{Arithmetic}
 \concept{remainder}
 \concept{modulo}
 \concept{modulus}

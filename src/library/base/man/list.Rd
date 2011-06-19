@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{list}
-\alias{list}
 \alias{pairlist}
 \alias{alist}
 \alias{as.list}

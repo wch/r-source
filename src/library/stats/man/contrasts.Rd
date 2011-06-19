@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{contrasts}
-\alias{contrasts}
 \alias{contrasts<-}
 \title{Get and Set Contrast Matrices}
 \description{

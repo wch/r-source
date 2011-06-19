@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grobX}
-\alias{grobX}
 \alias{grobY}
 \title{Create a Unit Describing a Grob Boundary Location}
 \description{

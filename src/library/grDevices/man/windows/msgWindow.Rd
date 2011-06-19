@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{msgWindow}
-\alias{msgWindow}
 
 \title{Manipulate a Window}
 

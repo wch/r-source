@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getDLLRegisteredRoutines}
-\alias{getDLLRegisteredRoutines}
 \alias{getDLLRegisteredRoutines.character}
 \alias{getDLLRegisteredRoutines.DLLInfo}
 \alias{print.NativeRoutineList}

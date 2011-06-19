@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{read.fortran}
-\alias{read.fortran}
 \title{Read Fixed-Format Data}
 \description{
 Read fixed-format data files using Fortran-style format specifications.

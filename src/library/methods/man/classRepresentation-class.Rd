@@ -5,7 +5,6 @@
 
 \name{classRepresentation-class}
 \docType{class}
-\alias{classRepresentation-class}
 \title{Class Objects }
 \description{  These are the objects that hold the definition of
   classes of objects.  They are constructed and stored as meta-data by

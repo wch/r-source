@@ -5,7 +5,6 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.info}
-\alias{Sys.info}
 \title{Extract System and User Information}
 \description{
   Reports system and user information.

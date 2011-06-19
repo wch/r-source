@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{polygon}
-\alias{polygon}
 \title{Polygon Drawing}
 \description{
   \code{polygon} draws the polygons whose vertices are

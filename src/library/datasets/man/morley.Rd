@@ -5,7 +5,6 @@
 
 \name{morley}
 \docType{data}
-\alias{morley}
 \title{Michaelson-Morley Speed of Light Data}
 \description{
   The classical data of Michaelson and Morley on the speed of light.

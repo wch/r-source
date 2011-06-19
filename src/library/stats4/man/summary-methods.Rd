@@ -5,7 +5,6 @@
 
 \name{summary-methods}
 \docType{methods}
-\alias{summary-methods}
 \alias{summary,ANY-method}
 \alias{summary,mle-method}
 \title{Methods for Function \code{summary} in Package \pkg{stats4}}

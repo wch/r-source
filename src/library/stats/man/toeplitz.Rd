@@ -8,7 +8,6 @@
 \usage{
 toeplitz(x)
 }
-\alias{toeplitz}
 \arguments{
   \item{x}{the first row to form the Toeplitz matrix.}
 }

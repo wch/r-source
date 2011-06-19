@@ -10,7 +10,6 @@
 \usage{
 readline(prompt = "")
 }
-\alias{readline}
 \arguments{
   \item{prompt}{the string printed when prompting the user for input.
   Should usually end with a space \code{" "}.}

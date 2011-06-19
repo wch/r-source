@@ -5,7 +5,6 @@
 
 \name{terms.object}
 \title{Description of Terms Objects}
-\alias{terms.object}
 \description{
   An object of class \code{\link{terms}} holds information about a
   model.  Usually the model was specified in terms of a

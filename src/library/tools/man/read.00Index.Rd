@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{read.00Index}
-\alias{read.00Index}
 \title{Read 00Index-style Files}
 \description{
   Read item/description information from \file{00Index}-like files.  Such

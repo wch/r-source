@@ -7,7 +7,6 @@
 \name{extractAIC}
 \title{Extract AIC from a Fitted Model}
 %
-\alias{extractAIC}
 \usage{
 extractAIC(fit, scale, k = 2, \dots)
 }

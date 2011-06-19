@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{taskCallbackManager}
-\alias{taskCallbackManager}
 \title{Create an R-level Task Callback Manager}
 \description{
   This provides an entirely S-language mechanism

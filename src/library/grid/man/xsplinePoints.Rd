@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xsplinePoints}
-\alias{xsplinePoints}
 \title{
   Return the points that would be used to draw an Xspline.
 }

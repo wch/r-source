@@ -13,7 +13,6 @@
 \alias{|.hexmode}
 \alias{&.hexmode}
 \alias{xor.hexmode}
-\alias{hexmode}
 \title{Display Numbers in Hexadecimal}
 \description{
   Convert or print integers in hexadecimal format, with as many digits

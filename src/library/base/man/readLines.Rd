@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{readLines}
-\alias{readLines}
 \title{Read Text Lines from a Connection}
 \description{
   Read some or all text lines from a connection.

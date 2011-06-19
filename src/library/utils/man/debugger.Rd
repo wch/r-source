@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{debugger}
-\alias{debugger}
 \alias{dump.frames}
 \title{Post-Mortem Debugging}
 \description{

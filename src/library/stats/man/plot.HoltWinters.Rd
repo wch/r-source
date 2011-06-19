@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.HoltWinters}
-\alias{plot.HoltWinters}
 \title{Plot function for HoltWinters objects}
 \description{
   Produces a chart of the original time series along with the fitted

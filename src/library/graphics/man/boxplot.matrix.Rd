@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{boxplot.matrix}
-\alias{boxplot.matrix}
 \title{Draw a Boxplot for each Column (Row) of a Matrix}
 \description{
   Interpreting the columns (or rows) of a matrix as different groups, draw a

@@ -5,7 +5,6 @@
 
 \name{matmult}
 \alias{\%*\%}
-\alias{matmult}
 \title{Matrix Multiplication}
 \description{
   Multiplies two matrices, if they are conformable.

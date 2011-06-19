@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Recall}
-\alias{Recall}
 \title{Recursive Calling}
 \usage{
 Recall(\dots)

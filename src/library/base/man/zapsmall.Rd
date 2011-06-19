@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{zapsmall}
-\alias{zapsmall}
 \title{Rounding of Numbers}
 \usage{
 zapsmall(x, digits = getOption("digits"))

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{NumericConstants}
-\alias{NumericConstants}
 \alias{1L}
 \alias{0x1}
 \alias{1i}

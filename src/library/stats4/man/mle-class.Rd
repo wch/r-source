@@ -6,7 +6,6 @@
 \name{mle-class}
 \docType{class}
 \title{Class \code{"mle"} for Results of Maximum Likelihood Estimation}
-\alias{mle-class}
 \alias{nobs,mle-method}
 \description{This class encapsulates results of a generic maximum
   likelihood procedure.}

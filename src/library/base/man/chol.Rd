@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{chol}
-\alias{chol}
 \alias{chol.default}
 \title{The Choleski Decomposition}
 \description{

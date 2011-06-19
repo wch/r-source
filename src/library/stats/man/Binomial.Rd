@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Binomial}
-\alias{Binomial}
 \alias{dbinom}
 \alias{pbinom}
 \alias{qbinom}

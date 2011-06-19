@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xtabs}
-\alias{xtabs}
 \alias{print.xtabs}
 \title{Cross Tabulation}
 \description{

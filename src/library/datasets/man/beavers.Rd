@@ -5,7 +5,6 @@
 
 \name{beavers}
 \docType{data}
-\alias{beavers}
 \alias{beaver1}
 \alias{beaver2}
 \title{Body Temperature Series of Two Beavers}

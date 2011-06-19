@@ -5,7 +5,6 @@
 
 \name{dimnames}
 \title{Dimnames of an Object}
-\alias{dimnames}
 \alias{dimnames<-}
 \alias{dimnames.data.frame}
 \alias{dimnames<-.data.frame}

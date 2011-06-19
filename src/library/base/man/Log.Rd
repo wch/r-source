@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{log}
-\alias{log}
 \alias{logb}
 \alias{log10}
 \alias{log2}

@@ -8,7 +8,6 @@
 \usage{
 replace(x, list, values)
 }
-\alias{replace}
 \description{
 \code{replace} replaces the values in \code{x}
 with indices given in \code{list} by those given in \code{values}.

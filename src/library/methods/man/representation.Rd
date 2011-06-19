@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{representation}
-\alias{representation}
 \alias{prototype}
 \title{ Construct a Representation or a Prototype for a Class Definition}
 \description{

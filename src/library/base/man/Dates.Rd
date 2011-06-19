@@ -5,7 +5,6 @@
 
 \name{Dates}
 \alias{Date}
-\alias{Dates}
 \alias{print.Date}
 \alias{summary.Date}
 \alias{Math.Date}

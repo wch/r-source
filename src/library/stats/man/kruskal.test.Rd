@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{kruskal.test}
-\alias{kruskal.test}
 \alias{kruskal.test.default}
 \alias{kruskal.test.formula}
 \title{Kruskal-Wallis Rank Sum Test}

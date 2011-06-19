@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{head}
-\alias{head}
 \alias{head.default}
 \alias{head.data.frame}
 \alias{head.function}

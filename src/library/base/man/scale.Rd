@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{scale}
-\alias{scale}
 \alias{scale.default}
 \title{Scaling and Centering of Matrix-like Objects}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{update.packages}
-\alias{update.packages}
 \alias{old.packages}
 \alias{new.packages}
 \title{Compare Installed Packages with CRAN-like Repositories}

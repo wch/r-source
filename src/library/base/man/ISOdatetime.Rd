@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ISOdatetime}
-\alias{ISOdatetime}
 \alias{ISOdate}
 \title{Date-time Conversion Functions from Numeric Representations}
 \description{

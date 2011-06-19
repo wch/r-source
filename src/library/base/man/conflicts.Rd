@@ -8,7 +8,6 @@
 \usage{
 conflicts(where = search(), detail = FALSE)
 }
-\alias{conflicts}
 \arguments{
  \item{where}{A subset of the search path, by default the whole search path.}
  \item{detail}{If \code{TRUE}, give the masked or masking functions for

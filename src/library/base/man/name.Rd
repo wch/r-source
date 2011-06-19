@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{name}
-\alias{name}
 %\alias{symbol} use for plotmath as from R 2.6.0
 \alias{is.symbol}
 \alias{as.symbol}

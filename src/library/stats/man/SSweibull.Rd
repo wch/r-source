@@ -8,7 +8,6 @@
 \usage{
 SSweibull(x, Asym, Drop, lrc, pwr)
 }
-\alias{SSweibull}
 \arguments{
  \item{x}{a numeric vector of values at which to evaluate the model.}
  \item{Asym}{a numeric parameter representing the horizontal asymptote on

@@ -5,7 +5,6 @@
 
 \name{selfStart}
 \encoding{UTF-8}
-\alias{selfStart}
 \alias{selfStart.default}
 \alias{selfStart.formula}
 \title{Construct Self-starting Nonlinear Models}

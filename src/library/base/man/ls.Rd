@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{ls}
-\alias{ls}
 \alias{objects}
 \title{List Objects}
 \usage{

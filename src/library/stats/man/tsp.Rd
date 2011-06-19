@@ -5,7 +5,6 @@
 
 \name{tsp}
 \title{Tsp Attribute of Time-Series-like Objects}
-\alias{tsp}
 \alias{tsp<-}
 \alias{hasTsp}
 \usage{

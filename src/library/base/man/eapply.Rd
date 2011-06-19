@@ -8,7 +8,6 @@
 \usage{
 eapply(env, FUN, \dots, all.names = FALSE, USE.NAMES = TRUE)
 }
-\alias{eapply}
 \arguments{
   \item{env}{environment to be used.}
   \item{FUN}{the function to be applied, found \emph{via}

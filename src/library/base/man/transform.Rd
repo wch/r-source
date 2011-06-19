@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{transform}
-\alias{transform}
 \alias{transform.default}
 \alias{transform.data.frame}
 \title{Transform an Object, for Example a Data Frame}

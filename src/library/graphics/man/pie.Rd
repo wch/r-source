@@ -5,7 +5,6 @@
 
 \name{pie}
 \title{Pie Charts}
-\alias{pie}
 \description{
   Draw a pie chart.
 }

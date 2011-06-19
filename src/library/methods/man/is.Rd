@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{is}
-\alias{is}
 \alias{extends}
 \alias{setIs}
 \title{Is an Object from a Class?}

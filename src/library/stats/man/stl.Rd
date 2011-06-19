@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{stl}
-\alias{stl}
 % all methods -> ./stlmethods.Rd
 \title{Seasonal Decomposition of Time Series by Loess}
 \description{

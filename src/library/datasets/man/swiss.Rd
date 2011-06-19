@@ -5,7 +5,6 @@
 
 \name{swiss}
 \docType{data}
-\alias{swiss}
 \title{Swiss Fertility and Socioeconomic Indicators (1888) Data}
 \description{
   Standardized fertility measure and socio-economic indicators for each

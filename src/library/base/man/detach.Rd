@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{detach}
-\alias{detach}
 \title{Detach Objects from the Search Path}
 \usage{
 detach(name, pos = 2, unload = FALSE, character.only = FALSE, force = FALSE)

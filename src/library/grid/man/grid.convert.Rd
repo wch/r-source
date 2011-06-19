@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.convert}
-\alias{grid.convert}
 \alias{grid.convertX}
 \alias{grid.convertY}
 \alias{grid.convertWidth}

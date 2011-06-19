@@ -8,7 +8,6 @@
 \usage{
 offset(object)
 }
-\alias{offset}
 \arguments{
  \item{object}{An offset to be included in a model frame}
 }

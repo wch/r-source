@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{apply}
-\alias{apply}
 \title{Apply Functions Over Array Margins}
 \description{
   Returns a vector or array or list of values obtained by applying a

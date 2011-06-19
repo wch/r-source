@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getCallingDLL}
-\alias{getCallingDLL}
 \alias{getCallingDLLe}
 \title{Compute DLL for Native Interface Call}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{make.rgb}
-\alias{make.rgb}
 \alias{colorConverter}
 \title{Create colour spaces }
 \description{

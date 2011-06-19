@@ -5,7 +5,6 @@
 
 \name{state}
 \docType{data}
-\alias{state}
 \alias{state.abb}
 \alias{state.area}
 \alias{state.center}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{capture.output}
-\alias{capture.output}
 \title{Send Output to a Character String or File}
 \description{
   Evaluates its arguments with the output being returned as a character

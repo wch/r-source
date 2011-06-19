@@ -5,7 +5,6 @@
 
 \name{randu}
 \docType{data}
-\alias{randu}
 \title{Random Numbers from Congruential Generator RANDU}
 \description{
   400 triples of successive random numbers were taken from the VAX

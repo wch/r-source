@@ -8,7 +8,6 @@
 \usage{
 ls.diag(ls.out)
 }
-\alias{ls.diag}
 \arguments{
   \item{ls.out}{Typically the result of \code{\link{lsfit}()}}
 }

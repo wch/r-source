@@ -14,7 +14,6 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 }
 \alias{reformulate}
 \alias{drop.terms}
-\alias{delete.response}
 \alias{[.terms}
 \arguments{
   \item{termobj}{A \code{terms} object}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{boxplot}
-\alias{boxplot}
 \alias{boxplot.default}
 \alias{boxplot.formula}
 \title{Box Plots}

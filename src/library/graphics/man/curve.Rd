@@ -5,7 +5,6 @@
 
 \name{curve}
 \title{Draw Function Plots}
-\alias{curve}
 \alias{plot.function}
 
 \description{

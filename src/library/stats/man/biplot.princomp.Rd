@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{biplot.princomp}
-\alias{biplot.princomp}
 \alias{biplot.prcomp}
 \title{
 Biplot for Principal Components

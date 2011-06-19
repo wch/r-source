@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{parse}
-\alias{parse}
 \title{Parse Expressions}
 \description{
   \code{parse} returns the parsed but unevaluated expressions in a

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{eval}
-\alias{eval}
 \alias{evalq}
 \alias{eval.parent}
 \alias{local}

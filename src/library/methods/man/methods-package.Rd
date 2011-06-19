@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{methods-package}
-\alias{methods-package}
 \docType{package}
 \title{
 Formal Methods and Classes

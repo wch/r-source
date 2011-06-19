@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{reorder.dendrogram}
-\alias{reorder.dendrogram}
 \title{Reorder a Dendrogram}
 \description{
   A method for the generic function \code{\link{reorder}}.

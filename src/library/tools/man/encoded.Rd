@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{encoded_text_to_latex}
-\alias{encoded_text_to_latex}
 \title{Translate non-ASCII Text to LaTeX Escapes}
 \description{
   Translate non-ASCII characters in text to LaTeX escape sequences.

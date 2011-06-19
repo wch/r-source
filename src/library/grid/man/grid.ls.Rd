@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.ls}
-\alias{grid.ls}
 \alias{nestedListing}
 \alias{pathListing}
 \alias{grobPathListing}

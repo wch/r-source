@@ -5,7 +5,6 @@
 % Distributed under GPL 2 or later
 
 \name{format}
-\alias{format}
 \alias{format.AsIs}
 \alias{format.data.frame}
 \alias{format.default}

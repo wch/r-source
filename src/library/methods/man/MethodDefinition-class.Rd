@@ -5,7 +5,6 @@
 
 \name{MethodDefinition-class}
 \docType{class}
-\alias{MethodDefinition-class}
 \alias{SealedMethodDefinition-class}
 \title{Classes to Represent Method Definitions}
 \description{

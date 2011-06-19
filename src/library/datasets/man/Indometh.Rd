@@ -5,7 +5,6 @@
 
 \name{Indometh}
 \docType{data}
-\alias{Indometh}
 \title{Pharmacokinetics of Indomethacin}
 \description{
   The \code{Indometh} data frame has 66 rows and 3 columns of data on

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Cauchy}
-\alias{Cauchy}
 \alias{dcauchy}
 \alias{pcauchy}
 \alias{qcauchy}

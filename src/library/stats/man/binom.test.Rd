@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{binom.test}
-\alias{binom.test}
 \title{Exact Binomial Test}
 \description{
   Performs an exact test of a simple null hypothesis about the

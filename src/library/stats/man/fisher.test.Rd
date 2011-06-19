@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
-\alias{fisher.test}
 \title{Fisher's Exact Test for Count Data}
 \description{
   Performs Fisher's exact test for testing the null of independence of

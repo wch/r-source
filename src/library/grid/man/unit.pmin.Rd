@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{unit.pmin}
-\alias{unit.pmin}
 \alias{unit.pmax}
 \title{ Parallel Unit Minima and Maxima }
 \description{

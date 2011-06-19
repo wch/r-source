@@ -5,7 +5,6 @@
 
 \name{MethodWithNext-class}
 \docType{class}
-\alias{MethodWithNext-class}
 \title{Class MethodWithNext }
 \description{ Class of method definitions set up for callNextMethod }
 \section{Objects from the Class}{

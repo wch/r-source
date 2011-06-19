@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{force}
-\alias{force}
 \title{Force Evaluation of an Argument}
 \description{
   Forces the evaluation of a function argument.

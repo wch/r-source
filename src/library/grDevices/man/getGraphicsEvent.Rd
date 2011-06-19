@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{getGraphicsEvent}
-\alias{getGraphicsEvent}
 \alias{setGraphicsEventHandlers}
 \alias{getGraphicsEventEnv}
 \alias{setGraphicsEventEnv}

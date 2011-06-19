@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xyTable}
-\alias{xyTable}
 \title{Multiplicities of (x,y) Points, e.g., for a Sunflower Plot}
 \concept{2D binning}
 \description{

@@ -9,7 +9,6 @@
 gc(verbose = getOption("verbose"), reset=FALSE)
 gcinfo(verbose)
 }
-\alias{gc}
 \alias{gcinfo}
 \arguments{
   \item{verbose}{logical; if \code{TRUE}, the garbage collection prints

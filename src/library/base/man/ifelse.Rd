@@ -8,7 +8,6 @@
 \usage{
 ifelse(test, yes, no)
 }
-\alias{ifelse}
 \description{
 \code{ifelse} returns a value with the same shape as
 \code{test} which is filled with elements selected

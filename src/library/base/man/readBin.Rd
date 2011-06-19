@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{readBin}
-\alias{readBin}
 \alias{writeBin}
 \title{Transfer Binary Data To and From Connections}
 \description{

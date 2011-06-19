@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{windows}
-\alias{windows}
 \alias{win.graph}
 \alias{win.metafile}
 \alias{win.print}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{read.table}
-\alias{read.table}
 \alias{read.csv}
 \alias{read.csv2}
 \alias{read.delim}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{model.frame}
-\alias{model.frame}
 \alias{model.frame.default}
 \alias{model.frame.lm}
 \alias{model.frame.glm}

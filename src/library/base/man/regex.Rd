@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{regex}
-\alias{regex}
 \alias{regexp}
 \alias{regular expression}
 \concept{regular expression}

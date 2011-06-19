@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{identify.hclust}
-\alias{identify.hclust}
 \title{Identify Clusters in a Dendrogram}
 \description{
   \code{identify.hclust} reads the position of the graphics pointer when the

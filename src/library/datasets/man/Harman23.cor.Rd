@@ -5,7 +5,6 @@
 
 \name{Harman23.cor}
 \docType{data}
-\alias{Harman23.cor}
 \title{Harman Example 2.3}
 \description{
   A correlation matrix of eight physical measurements on 305 girls between

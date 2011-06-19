@@ -6,7 +6,6 @@
 \name{getInitial}
 \encoding{UTF-8}
 \title{Get Initial Parameter Estimates}
-\alias{getInitial}
 \alias{getInitial.default}
 \alias{getInitial.formula}
 \alias{getInitial.selfStart}

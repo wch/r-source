@@ -8,7 +8,6 @@
 \description{
   \code{format.pval} is intended for formatting p-values.
 }
-\alias{format.pval}
 \usage{
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA", ...)

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{lm}
-\alias{lm}
 \alias{print.lm}
 \concept{regression}
 \title{Fitting Linear Models}

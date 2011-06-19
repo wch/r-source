@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{xtfrm}
-\alias{xtfrm}
 \alias{xtfrm.default}
 \alias{xtfrm.factor}
 \alias{xtfrm.AsIs}

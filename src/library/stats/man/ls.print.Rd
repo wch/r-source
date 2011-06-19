@@ -8,7 +8,6 @@
 \usage{
 ls.print(ls.out, digits = 4, print.it = TRUE)
 }
-\alias{ls.print}
 \arguments{
   \item{ls.out}{Typically the result of \code{\link{lsfit}()}}
   \item{digits}{The number of significant digits used for printing}

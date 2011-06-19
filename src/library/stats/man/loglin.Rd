@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{loglin}
-\alias{loglin}
 \title{Fitting Log-Linear Models}
 \usage{
 loglin(table, margin, start = rep(1, length(table)), fit = FALSE,

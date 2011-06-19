@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
-\alias{base-deprecated}
 \alias{Sys.putenv}
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Package \pkg{base}}

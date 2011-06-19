@@ -1,5 +1,4 @@
 \name{menu.ttest}
-\alias{menu.ttest}
 \alias{menu.ttest2}
 \alias{menu.ttest3}
 \title{An Example Dialog for t Tests}

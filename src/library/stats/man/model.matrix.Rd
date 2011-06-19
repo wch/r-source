@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{model.matrix}
-\alias{model.matrix}
 \alias{model.matrix.default}
 \alias{model.matrix.lm}
 \title{Construct Design Matrices}

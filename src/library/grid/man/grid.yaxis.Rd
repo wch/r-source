@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.yaxis}
-\alias{grid.yaxis}
 \alias{yaxisGrob}
 \title{Draw a Y-Axis}
 \description{

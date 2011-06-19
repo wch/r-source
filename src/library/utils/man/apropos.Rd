@@ -10,7 +10,6 @@ apropos(what, where = FALSE, ignore.case = TRUE, mode = "any")
 
 find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 }
-\alias{apropos}
 \alias{find}
 \arguments{
   \item{what}{character string with name of an object, or more generally

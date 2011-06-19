@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{mirrorAdmin}
-\alias{mirrorAdmin}
 \alias{mirror2html}
 \alias{checkCRAN}
 \title{Managing Repository Mirrors}

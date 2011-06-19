@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.set}
-\alias{grid.set}
 \alias{setGrob}
 \title{Set a Grid Graphical Object}
 \description{

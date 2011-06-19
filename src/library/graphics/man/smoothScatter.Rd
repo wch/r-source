@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{smoothScatter}
-\alias{smoothScatter}
 \title{Scatterplots with Smoothed Densities Color Representation}
 
 \description{\code{smoothScatter} produces a smoothed color density

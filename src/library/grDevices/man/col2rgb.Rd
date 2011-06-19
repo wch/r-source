@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
-\alias{col2rgb}
 \title{Color to RGB Conversion}
 \description{
   \R color to RGB (red/green/blue) conversion.

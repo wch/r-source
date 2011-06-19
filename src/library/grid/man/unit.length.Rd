@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{unit.length}
-\alias{unit.length}
 \title{Length of a Unit Object}
 \description{
   The length of a unit object is defined as the number of unit

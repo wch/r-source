@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{contributors}
-\alias{contributors}
 \title{R Project Contributors}
 \description{
   The \R Who-is-who, describing who made significant contributions to

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{formals}
-\alias{formals}
 \alias{formals<-}
 \title{Access to and Manipulation of the Formal Arguments}
 \description{

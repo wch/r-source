@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{fligner.test}
-\alias{fligner.test}
 \alias{fligner.test.default}
 \alias{fligner.test.formula}
 \title{Fligner-Killeen Test of Homogeneity of Variances}

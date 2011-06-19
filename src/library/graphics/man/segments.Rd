@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{segments}
-\alias{segments}
 \title{Add Line Segments to a Plot}
 \description{
   Draw line segments between pairs of points.

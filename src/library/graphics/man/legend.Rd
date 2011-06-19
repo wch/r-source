@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{legend}
-\alias{legend}
 \title{Add Legends to Plots}
 \usage{
 legend(x, y = NULL, legend, fill = NULL, col = par("col"),

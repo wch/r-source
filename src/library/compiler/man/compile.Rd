@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{compile}
-\alias{compile}
 \alias{cmpfun}
 \alias{cmpfile}
 \alias{loadcmp}

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{body}
-\alias{body}
 \alias{body<-}
 \title{Access to and Manipulation of the Body of a Function}
 \description{

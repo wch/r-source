@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{setMethod}
-\alias{setMethod}
 \alias{removeMethod}
 \title{ Create and Save a Method }
 \description{

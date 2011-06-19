@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{naresid}
-\alias{naresid}
 \alias{naresid.default}
 \alias{naresid.exclude}
 \alias{napredict}

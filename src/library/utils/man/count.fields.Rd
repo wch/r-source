@@ -9,7 +9,6 @@
 count.fields(file, sep = "", quote = "\"'", skip = 0,
              blank.lines.skip = TRUE, comment.char = "#")
 }
-\alias{count.fields}
 \arguments{
   \item{file}{a character string naming an ASCII data file, or a
     \code{\link{connection}}, which will be opened if necessary,

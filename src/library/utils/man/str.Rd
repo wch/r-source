@@ -5,7 +5,6 @@
 
 \name{str}
 \title{Compactly Display the Structure of an Arbitrary R Object}
-\alias{str}
 \alias{str.default}
 \alias{str.data.frame}
 \alias{strOptions}

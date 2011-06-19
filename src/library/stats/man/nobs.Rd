@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{nobs}
-\alias{nobs}
 \alias{nobs.default}
 \title{
   Extract the Number of Observations from a Fit.

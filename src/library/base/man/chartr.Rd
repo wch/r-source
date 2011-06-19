@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{chartr}
-\alias{chartr}
 \alias{tolower}
 \alias{toupper}
 \alias{casefold}

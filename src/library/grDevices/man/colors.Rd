@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{colors}
-\alias{colors}
 \alias{colours}
 \title{Color Names}
 \description{

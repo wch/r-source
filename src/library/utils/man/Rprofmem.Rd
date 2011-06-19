@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Rprofmem}
-\alias{Rprofmem}
 \title{Enable Profiling of R's Memory Use}
 \description{
  Enable or disable reporting of memory allocation in R.

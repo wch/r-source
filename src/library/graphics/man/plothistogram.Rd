@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.histogram}
-\alias{plot.histogram}
 \alias{lines.histogram}
 \title{Plot Histograms}
 \description{

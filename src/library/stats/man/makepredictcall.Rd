@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{makepredictcall}
-\alias{makepredictcall}
 \alias{makepredictcall.default}
 \alias{SafePrediction}
 \title{Utility Function for Safe Prediction}

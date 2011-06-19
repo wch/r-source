@@ -11,7 +11,6 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
            dot = FALSE, strict = FALSE,
            method = c("left.kept", "both.sides"))
 }
-\alias{abbreviate}
 \arguments{
   \item{names.arg}{a character vector of names to be abbreviated, or an
     object to be coerced to a character vector by \code{\link{as.character}}.}

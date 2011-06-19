@@ -5,7 +5,6 @@
 
 \name{JohnsonJohnson}
 \docType{data}
-\alias{JohnsonJohnson}
 \title{Quarterly Earnings per Johnson & Johnson Share}
 \description{
   Quarterly earnings (dollars) per Johnson & Johnson share 1960--80.

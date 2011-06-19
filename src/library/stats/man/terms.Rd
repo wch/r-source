@@ -8,7 +8,6 @@
 \usage{
 terms(x, \dots)
 }
-\alias{terms}
 \alias{terms.terms}
 \alias{terms.aovlist}
 \alias{terms.default}

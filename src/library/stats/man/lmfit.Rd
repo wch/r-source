@@ -12,7 +12,6 @@ lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7,
 lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
         singular.ok = TRUE, \dots)
 }
-\alias{lm.fit}
 \alias{lm.wfit}
 \description{
   These are the basic computing engines called by \code{\link{lm}} used

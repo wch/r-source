@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{S3Part}
-\alias{S3Part}
 \alias{S3Part<-}
 \alias{S3Class}
 \alias{S3Class<-}

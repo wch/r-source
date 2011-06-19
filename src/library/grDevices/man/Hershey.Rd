@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Hershey}
-\alias{Hershey}
 \title{Hershey Vector Fonts in R}
 \description{
   If the \code{family} graphical parameter (see \code{\link{par}})

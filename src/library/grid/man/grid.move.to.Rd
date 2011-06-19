@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.move.to}
-\alias{grid.move.to}
 \alias{grid.line.to}
 \alias{moveToGrob}
 \alias{lineToGrob}

@@ -6,7 +6,6 @@
 \name{NLSstClosestX}
 \encoding{UTF-8}
 \title{Inverse Interpolation}
-\alias{NLSstClosestX}
 \alias{NLSstClosestX.sortedXyData}
 \usage{
 NLSstClosestX(xy, yval)

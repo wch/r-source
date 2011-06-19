@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{HTMLheader}
-\alias{HTMLheader}
 \title{
   Generate a standard HTML header for R help
 }

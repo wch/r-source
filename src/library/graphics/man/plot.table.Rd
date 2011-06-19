@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.table}
-\alias{plot.table}
 \alias{lines.table}
 \alias{points.table}
 \title{Plot Methods for \code{table} Objects}

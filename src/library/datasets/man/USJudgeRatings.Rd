@@ -5,7 +5,6 @@
 
 \name{USJudgeRatings}
 \docType{data}
-\alias{USJudgeRatings}
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
 \description{
   Lawyers' ratings of state judges in the US Superior Court.

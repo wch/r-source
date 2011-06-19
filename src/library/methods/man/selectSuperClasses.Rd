@@ -1,5 +1,4 @@
 \name{selectSuperClasses}
-\alias{selectSuperClasses}
 \alias{.selectSuperClasses}
 \title{Super Classes (of Specific Kinds) of a Class}
 \description{

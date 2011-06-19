@@ -5,7 +5,6 @@
 
 \name{person}
 \title{Persons}
-\alias{person}
 \alias{as.person}
 \alias{as.person.default}
 \alias{[.person}

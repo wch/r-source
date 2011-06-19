@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{seq.Date}
-\alias{seq.Date}
 \title{Generate Regular Sequences of Dates}
 \description{
   The method for \code{\link{seq}} for objects of class class

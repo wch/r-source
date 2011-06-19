@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{friedman.test}
-\alias{friedman.test}
 \alias{friedman.test.default}
 \alias{friedman.test.formula}
 \title{Friedman Rank Sum Test}

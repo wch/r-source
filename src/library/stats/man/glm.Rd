@@ -5,7 +5,6 @@
 
 \name{glm}
 \title{Fitting Generalized Linear Models}
-\alias{glm}
 \alias{glm.fit}
 \alias{weights.glm}
 \alias{print.glm}

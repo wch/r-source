@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.record}
-\alias{grid.record}
 \alias{recordGrob}
 \title{ Encapsulate calculations and drawing }
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{append}
-\alias{append}
 \title{Vector Merging}
 \description{
   Add elements to a vector.

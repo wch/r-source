@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{path.expand}
-\alias{path.expand}
 \alias{tilde expansion}
 \title{Expand File Paths}
 \description{

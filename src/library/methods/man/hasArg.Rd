@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{hasArg}
-\alias{hasArg}
 \title{Look for an Argument in the Call}
 \description{
   Returns \code{TRUE} if \code{name} corresponds to an argument in the

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{quit}
-\alias{quit}
 \alias{q}
 \alias{.Last}
 \alias{.Last.sys}

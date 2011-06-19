@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{windows.options}
-\alias{windows.options}
 \title{Auxiliary Function to Set/View Defaults for Arguments of windows()}
 \description{
   The auxiliary function \code{windows.options} can be used to set or view

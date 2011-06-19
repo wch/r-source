@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{package.dependencies}
-\alias{package.dependencies}
 \title{Check Package Dependencies}
 \description{
   Parses and checks the dependencies of a package against the currently

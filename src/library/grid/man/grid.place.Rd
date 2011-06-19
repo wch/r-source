@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.place}
-\alias{grid.place}
 \alias{placeGrob}
 \title{ Place an Object within a Frame }
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{plot.density}
-\alias{plot.density}
 \title{Plot Method for Kernel Density Estimation}
 \usage{
 \method{plot}{density}(x, main = NULL, xlab = NULL, ylab = "Density", type = "l",

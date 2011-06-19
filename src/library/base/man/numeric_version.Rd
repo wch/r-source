@@ -5,7 +5,6 @@
 
 \name{numeric_version}
 % User-level functions.
-\alias{numeric_version}
 \alias{as.numeric_version}
 \alias{is.numeric_version}
 \alias{package_version}

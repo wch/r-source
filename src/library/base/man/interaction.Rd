@@ -8,7 +8,6 @@
 \usage{
 interaction(\dots, drop = FALSE, sep = ".", lex.order = FALSE)
 }
-\alias{interaction}
 \arguments{
   \item{\dots}{the factors for which interaction is to be computed, or a
     single list giving those factors.}

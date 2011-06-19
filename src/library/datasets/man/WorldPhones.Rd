@@ -5,7 +5,6 @@
 
 \name{WorldPhones}
 \docType{data}
-\alias{WorldPhones}
 \title{The World's Telephones}
 \description{
   The number of telephones in various regions of the world (in

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{method.skeleton}
-\alias{method.skeleton}
 \title{Create a Skeleton File for a New Method}
 \description{
   This function writes a source file containing a call to

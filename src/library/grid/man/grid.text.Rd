@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{grid.text}
-\alias{grid.text}
 \alias{textGrob}
 \title{Draw Text}
 \description{

@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Signals}
-\alias{Signals}
 \title{Interrupting Execution of R}
 \description{
   On receiving \code{SIGUSR1} \R will save the workspace and quit.

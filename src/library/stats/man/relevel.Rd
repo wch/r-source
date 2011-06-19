@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{relevel}
-\alias{relevel}
 \alias{relevel.default}
 \alias{relevel.factor}
 \alias{relevel.ordered}

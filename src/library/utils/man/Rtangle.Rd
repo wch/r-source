@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{Rtangle}
-\alias{Rtangle}
 \alias{RtangleSetup}
 \title{R Driver for Stangle}
 \description{

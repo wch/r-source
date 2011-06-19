@@ -4,7 +4,6 @@
 % Distributed under GPL 2 or later
 
 \name{shQuote}
-\alias{shQuote}
 \title{Quote Strings for Use in OS Shells}
 \description{
   Quote a string to be passed to an operating system shell.
