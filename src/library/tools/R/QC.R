@@ -949,7 +949,8 @@ function(package, lib.loc = NULL)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
 
-    aliases <- lapply(db, .Rd_get_metadata, "alias")
+    aliases <- c(lapply(db, .Rd_get_metadata, "alias"),
+                 lapply(db, .Rd_get_metadata, "name"))
     named_class <- lapply(aliases, grepl, pattern="-class$")
     nClass <- sApply(named_class, sum)
     oneAlias <- sApply(aliases, length) == 1L
@@ -1111,7 +1112,8 @@ function(package, lib.loc = NULL)
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
-    aliases <- lapply(db, .Rd_get_metadata, "alias")
+    aliases <- c(lapply(db, .Rd_get_metadata, "alias"),
+                 lapply(db, .Rd_get_metadata, "name"))
     idx <- sapply(aliases, length) == 1L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
@@ -1266,7 +1268,8 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db_aliases <- lapply(db, .Rd_get_metadata, "alias")
+    db_aliases <- c(lapply(db, .Rd_get_metadata, "alias"),
+                    lapply(db, .Rd_get_metadata, "name"))
     db_keywords <- lapply(db, .Rd_get_metadata, "keyword")
 
     db_names <- .Rd_get_names_from_Rd_db(db)
@@ -4902,7 +4905,8 @@ function(package, dir, lib.loc = NULL)
             db <- Rd_db(dir = dir)
             files <- basename(names(db))
             names <- sapply(db, .Rd_get_metadata, "name")
-            aliases <- lapply(db, .Rd_get_metadata, "alias")
+            aliases <- c(lapply(db, .Rd_get_metadata, "alias"),
+                         lapply(db, .Rd_get_metadata, "name"))
         } else {
             return(out)
         }

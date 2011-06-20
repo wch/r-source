@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-05-05 r55778)
+R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.7.0/x86_64 (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,7 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: AIC
 > ### Title: Akaike's An Information Criterion
-> ### Aliases: AIC BIC
+> ### Aliases: BIC
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -65,7 +65,6 @@ lm2  6 336.3417
 > 
 > ### Name: ARMAacf
 > ### Title: Compute Theoretical ACF for an ARMA Process
-> ### Aliases: ARMAacf
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -109,7 +108,6 @@ lm2  6 336.3417
 > 
 > ### Name: ARMAtoMA
 > ### Title: Convert ARMA Process to Infinite MA Process
-> ### Aliases: ARMAtoMA
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -133,7 +131,7 @@ lm2  6 336.3417
 > 
 > ### Name: Beta
 > ### Title: The Beta Distribution
-> ### Aliases: Beta dbeta pbeta qbeta rbeta
+> ### Aliases: dbeta pbeta qbeta rbeta
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -155,7 +153,7 @@ lm2  6 336.3417
 > 
 > ### Name: Binomial
 > ### Title: The Binomial Distribution
-> ### Aliases: Binomial dbinom pbinom qbinom rbinom
+> ### Aliases: dbinom pbinom qbinom rbinom
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -186,7 +184,7 @@ lm2  6 336.3417
 > 
 > ### Name: Cauchy
 > ### Title: The Cauchy Distribution
-> ### Aliases: Cauchy dcauchy pcauchy qcauchy rcauchy
+> ### Aliases: dcauchy pcauchy qcauchy rcauchy
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -204,7 +202,7 @@ lm2  6 336.3417
 > 
 > ### Name: Chisquare
 > ### Title: The (non-central) Chi-Squared Distribution
-> ### Aliases: Chisquare dchisq pchisq qchisq rchisq
+> ### Aliases: dchisq pchisq qchisq rchisq
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -277,7 +275,7 @@ lm2  6 336.3417
 > 
 > ### Name: Exponential
 > ### Title: The Exponential Distribution
-> ### Aliases: Exponential dexp pexp qexp rexp
+> ### Aliases: dexp pexp qexp rexp
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -295,7 +293,7 @@ lm2  6 336.3417
 > 
 > ### Name: FDist
 > ### Title: The F Distribution
-> ### Aliases: FDist df pf qf rf
+> ### Aliases: df pf qf rf
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -320,7 +318,7 @@ lm2  6 336.3417
 > 
 > ### Name: GammaDist
 > ### Title: The Gamma Distribution
-> ### Aliases: GammaDist dgamma pgamma qgamma rgamma
+> ### Aliases: dgamma pgamma qgamma rgamma
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -343,7 +341,7 @@ lm2  6 336.3417
 > 
 > ### Name: Geometric
 > ### Title: The Geometric Distribution
-> ### Aliases: Geometric dgeom pgeom qgeom rgeom
+> ### Aliases: dgeom pgeom qgeom rgeom
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -365,7 +363,7 @@ lm2  6 336.3417
 > 
 > ### Name: HoltWinters
 > ### Title: Holt-Winters Filtering
-> ### Aliases: HoltWinters print.HoltWinters residuals.HoltWinters
+> ### Aliases: print.HoltWinters residuals.HoltWinters
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -457,7 +455,7 @@ s12   0.92099
 > 
 > ### Name: Hypergeometric
 > ### Title: The Hypergeometric Distribution
-> ### Aliases: Hypergeometric dhyper phyper qhyper rhyper
+> ### Aliases: dhyper phyper qhyper rhyper
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -483,7 +481,6 @@ s12   0.92099
 > 
 > ### Name: IQR
 > ### Title: The Interquartile Range
-> ### Aliases: IQR
 > ### Keywords: univar robust distribution
 > 
 > ### ** Examples
@@ -501,7 +498,7 @@ s12   0.92099
 > 
 > ### Name: Logistic
 > ### Title: The Logistic Distribution
-> ### Aliases: Logistic dlogis plogis qlogis rlogis
+> ### Aliases: dlogis plogis qlogis rlogis
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -521,7 +518,7 @@ s12   0.92099
 > 
 > ### Name: Lognormal
 > ### Title: The Log Normal Distribution
-> ### Aliases: Lognormal dlnorm plnorm qlnorm rlnorm
+> ### Aliases: dlnorm plnorm qlnorm rlnorm
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -579,7 +576,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: NLSstAsymptotic
 > ### Title: Fit the Asymptotic Regression Model
-> ### Aliases: NLSstAsymptotic NLSstAsymptotic.sortedXyData
+> ### Aliases: NLSstAsymptotic.sortedXyData
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -601,7 +598,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: NLSstClosestX
 > ### Title: Inverse Interpolation
-> ### Aliases: NLSstClosestX NLSstClosestX.sortedXyData
+> ### Aliases: NLSstClosestX.sortedXyData
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -621,7 +618,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: NLSstLfAsymptote
 > ### Title: Horizontal Asymptote on the Left Side
-> ### Aliases: NLSstLfAsymptote NLSstLfAsymptote.sortedXyData
+> ### Aliases: NLSstLfAsymptote.sortedXyData
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -641,7 +638,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: NLSstRtAsymptote
 > ### Title: Horizontal Asymptote on the Right Side
-> ### Aliases: NLSstRtAsymptote NLSstRtAsymptote.sortedXyData
+> ### Aliases: NLSstRtAsymptote.sortedXyData
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -661,7 +658,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: NegBinomial
 > ### Title: The Negative Binomial Distribution
-> ### Aliases: NegBinomial dnbinom pnbinom qnbinom rnbinom
+> ### Aliases: dnbinom pnbinom qnbinom rnbinom
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -704,7 +701,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: Normal
 > ### Title: The Normal Distribution
-> ### Aliases: Normal dnorm pnorm qnorm rnorm
+> ### Aliases: dnorm pnorm qnorm rnorm
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -752,7 +749,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: Poisson
 > ### Title: The Poisson Distribution
-> ### Aliases: Poisson dpois ppois qpois rpois
+> ### Aliases: dpois ppois qpois rpois
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -792,7 +789,7 @@ c    3    2    1    0    2    1    0    1    0     0
 > 
 > ### Name: SSD
 > ### Title: SSD Matrix and Estimated Variance Matrix in Multivariate Models
-> ### Aliases: SSD estVar
+> ### Aliases: estVar
 > ### Keywords: models multivariate
 > 
 > ### ** Examples
@@ -856,7 +853,6 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 > 
 > ### Name: SSasymp
 > ### Title: Self-Starting Nls Asymptotic Regression Model
-> ### Aliases: SSasymp
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -902,7 +898,7 @@ Asym   94.1282     8.4030  11.202 0.001525 **
 resp0  -8.2508     1.2261  -6.729 0.006700 ** 
 lrc    -3.2176     0.1386 -23.218 0.000175 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.7493 on 3 degrees of freedom
 
@@ -945,7 +941,6 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 > 
 > ### Name: SSasympOff
 > ### Title: Self-Starting Nls Asymptotic Regression Model with an Offset
-> ### Aliases: SSasympOff
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -987,7 +982,7 @@ Asym  38.1398     0.9164  41.620 1.99e-06 ***
 lrc   -4.3806     0.2042 -21.457 2.79e-05 ***
 c0    51.2232    11.6698   4.389   0.0118 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 1.663 on 4 degrees of freedom
 
@@ -1028,7 +1023,6 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > 
 > ### Name: SSasympOrig
 > ### Title: Self-Starting Nls Asymptotic Regression Model through the Origin
-> ### Aliases: SSasympOrig
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1067,7 +1061,6 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > 
 > ### Name: SSbiexp
 > ### Title: Self-Starting Nls Biexponential model
-> ### Aliases: SSbiexp
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1110,7 +1103,7 @@ lrc1   0.5794     0.1247   4.648  0.00235 **
 A2     0.1915     0.1106   1.731  0.12698    
 lrc2  -1.7878     0.7871  -2.271  0.05737 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.04103 on 7 degrees of freedom
 
@@ -1149,7 +1142,6 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > 
 > ### Name: SSfol
 > ### Title: Self-Starting Nls First-order Compartment Model
-> ### Aliases: SSfol
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1197,7 +1189,7 @@ lKe  -2.9196     0.1709 -17.085 1.40e-07 ***
 lKa   0.5752     0.1728   3.328   0.0104 *  
 lCl  -3.9159     0.1273 -30.768 1.35e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.732 on 8 degrees of freedom
 
@@ -1212,7 +1204,6 @@ Residual standard error: 0.732 on 8 degrees of freedom
 > 
 > ### Name: SSfpl
 > ### Title: Self-Starting Nls Four-Parameter Logistic Model
-> ### Aliases: SSfpl
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1256,7 +1247,7 @@ B     348.971     57.899   6.027 0.000314 ***
 xmid   19.391      2.194   8.836 2.12e-05 ***
 scal    6.673      1.002   6.662 0.000159 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 2.351 on 8 degrees of freedom
 
@@ -1301,7 +1292,6 @@ Residual standard error: 2.351 on 8 degrees of freedom
 > 
 > ### Name: SSgompertz
 > ### Title: Self-Starting Nls Gompertz Growth Model
-> ### Aliases: SSgompertz
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1351,7 +1341,7 @@ Asym  4.60333    0.65321   7.047 8.71e-06 ***
 b2    2.27134    0.14373  15.803 7.24e-10 ***
 b3    0.71647    0.02206  32.475 7.85e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.02684 on 13 degrees of freedom
 
@@ -1366,7 +1356,6 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > 
 > ### Name: SSlogis
 > ### Title: Self-Starting Nls Logistic Model
-> ### Aliases: SSlogis
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1406,7 +1395,6 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > 
 > ### Name: SSmicmen
 > ### Title: Self-Starting Nls Michaelis-Menten Model
-> ### Aliases: SSmicmen
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1447,7 +1435,7 @@ Parameters:
 Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
 K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
@@ -1463,7 +1451,7 @@ Parameters:
 Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
 K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
@@ -1500,7 +1488,6 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > 
 > ### Name: SSweibull
 > ### Title: Self-Starting Nls Weibull Growth Curve Model
-> ### Aliases: SSweibull
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1542,7 +1529,7 @@ Drop 110.9971     2.6330   42.16 1.10e-09 ***
 lrc   -5.9934     0.3733  -16.05 8.83e-07 ***
 pwr    2.6461     0.1613   16.41 7.62e-07 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 2.061 on 7 degrees of freedom
 
@@ -1557,7 +1544,7 @@ Residual standard error: 2.061 on 7 degrees of freedom
 > 
 > ### Name: SignRank
 > ### Title: Distribution of the Wilcoxon Signed Rank Statistic
-> ### Aliases: SignRank dsignrank psignrank qsignrank rsignrank
+> ### Aliases: dsignrank psignrank qsignrank rsignrank
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1587,7 +1574,7 @@ Residual standard error: 2.061 on 7 degrees of freedom
 > 
 > ### Name: StructTS
 > ### Title: Fit Structural Time Series
-> ### Aliases: StructTS print.StructTS predict.StructTS
+> ### Aliases: print.StructTS predict.StructTS
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -1646,7 +1633,7 @@ Variances:
 > 
 > ### Name: TDist
 > ### Title: The Student t Distribution
-> ### Aliases: TDist dt pt qt rt
+> ### Aliases: dt pt qt rt
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1681,7 +1668,7 @@ Variances:
 > 
 > ### Name: Tukey
 > ### Title: The Studentized Range Distribution
-> ### Aliases: Tukey ptukey qtukey
+> ### Aliases: ptukey qtukey
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1706,7 +1693,7 @@ Variances:
 > 
 > ### Name: TukeyHSD
 > ### Title: Compute Tukey Honest Significant Differences
-> ### Aliases: TukeyHSD TukeyHSD.aov print.TukeyHSD plot.TukeyHSD
+> ### Aliases: TukeyHSD.aov print.TukeyHSD plot.TukeyHSD
 > ### Keywords: models design
 > 
 > ### ** Examples
@@ -1719,7 +1706,7 @@ wool         1  450.7  450.67  3.3393 0.073614 .
 tension      2 2034.3 1017.13  7.5367 0.001378 **
 Residuals   50 6747.9  134.96                    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > TukeyHSD(fm1, "tension", ordered = TRUE)
   Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -1745,7 +1732,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 > 
 > ### Name: Uniform
 > ### Title: The Uniform Distribution
-> ### Aliases: Uniform dunif punif qunif runif
+> ### Aliases: dunif punif qunif runif
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1773,7 +1760,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 > 
 > ### Name: Weibull
 > ### Title: The Weibull Distribution
-> ### Aliases: Weibull dweibull pweibull qweibull rweibull
+> ### Aliases: dweibull pweibull qweibull rweibull
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1800,7 +1787,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 > 
 > ### Name: Wilcoxon
 > ### Title: Distribution of the Wilcoxon Rank Sum Statistic
-> ### Aliases: Wilcoxon dwilcox pwilcox qwilcox rwilcox
+> ### Aliases: dwilcox pwilcox qwilcox rwilcox
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -1846,7 +1833,7 @@ U
 > 
 > ### Name: acf
 > ### Title: Auto- and Cross- Covariance and -Correlation Function Estimation
-> ### Aliases: acf ccf pacf pacf.default [.acf
+> ### Aliases: ccf pacf pacf.default [.acf
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -1909,7 +1896,6 @@ U
 > 
 > ### Name: acf2AR
 > ### Title: Compute an AR Process Exactly Fitting an ACF
-> ### Aliases: acf2AR
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -1933,8 +1919,8 @@ ar(3) 0.6000000 0.3000 -0.2
 > 
 > ### Name: add1
 > ### Title: Add or Drop All Possible Single Terms to a Model
-> ### Aliases: add1 add1.default add1.lm add1.glm drop1 drop1.default
-> ###   drop1.lm drop1.glm
+> ### Aliases: add1.default add1.lm add1.glm drop1 drop1.default drop1.lm
+> ###   drop1.glm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -1978,7 +1964,7 @@ Education         1      1163 3268 209   22.64 2.4e-05 ***
 Catholic          1       448 2553 198    8.72  0.0052 ** 
 Infant.Mortality  1       409 2514 197    7.96  0.0073 ** 
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > ## following example(glm)
 > ## Don't show: 
@@ -2004,7 +1990,7 @@ counts ~ outcome + treatment
 outcome    2    10.58 58.2 5.45    0.065 .
 treatment  2     5.13 52.8 0.00    1.000  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > drop1(glm.D93, test="F")
 Warning in drop1.glm(glm.D93, test = "F") :
   F test assumes 'quasipoisson' family
@@ -2038,7 +2024,6 @@ outcome:treatment  4     0.00 59.6      5.17     0.27
 > 
 > ### Name: addmargins
 > ### Title: Puts Arbitrary Margins on Multidimensional Tables or Arrays
-> ### Aliases: addmargins
 > ### Keywords: manip array
 > 
 > ### ** Examples
@@ -2249,8 +2234,8 @@ x      1  2  3  4  5  6  7 Sum
 > 
 > ### Name: aggregate
 > ### Title: Compute Summary Statistics of Data Subsets
-> ### Aliases: aggregate aggregate.default aggregate.data.frame
-> ###   aggregate.formula aggregate.ts
+> ### Aliases: aggregate.default aggregate.data.frame aggregate.formula
+> ###   aggregate.ts
 > ### Keywords: category array
 > 
 > ### ** Examples
@@ -2426,7 +2411,7 @@ Frequency = 1
 > 
 > ### Name: alias
 > ### Title: Find Aliases (Dependencies) in a Model
-> ### Aliases: alias alias.formula alias.lm
+> ### Aliases: alias.formula alias.lm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -2459,7 +2444,7 @@ N1:P1:K1     0     0
 > 
 > ### Name: anova.glm
 > ### Title: Analysis of Deviance for Generalized Linear Model Fits
-> ### Aliases: anova.glm anova.glmlist
+> ### Aliases: anova.glmlist
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -2522,7 +2507,7 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291  0.06547 .
 treatment  2   0.0000         4     5.1291  1.00000  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > glm.D93a <- update(glm.D93, ~treatment*outcome) ## equivalent to Pearson Chi-square
 > anova(glm.D93, glm.D93a, test = "Rao")
 Analysis of Deviance Table
@@ -2543,7 +2528,7 @@ Model 2: counts ~ treatment + outcome + treatment:outcome
 > 
 > ### Name: anova.lm
 > ### Title: ANOVA for Linear Model Fits
-> ### Aliases: anova.lm anova.lmlist
+> ### Aliases: anova.lmlist
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -2561,7 +2546,7 @@ dpi        1  12.40  12.401  0.8576 0.3593551
 ddpi       1  63.05  63.054  4.3605 0.0424711 *  
 Residuals 45 650.71  14.460                      
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > ## same effect via separate models
 > fit0 <- lm(sr ~ 1, data = LifeCycleSavings)
@@ -2584,7 +2569,7 @@ Model 5: sr ~ pop15 + pop75 + dpi + ddpi
 4     46 713.77  1    12.401  0.8576 0.3593551    
 5     45 650.71  1    63.054  4.3605 0.0424711 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > anova(fit4, fit2, fit0, test="F") # unconventional order
 Analysis of Variance Table
@@ -2597,7 +2582,7 @@ Model 3: sr ~ 1
 2     47 726.17 -2   -75.455 2.6090 0.0847088 .  
 3     49 983.63 -2  -257.460 8.9023 0.0005527 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > 
 > 
@@ -2609,7 +2594,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: anova.mlm
 > ### Title: Comparisons between Multivariate Linear Models
-> ### Aliases: anova.mlm anova.mlmlist
+> ### Aliases: anova.mlmlist
 > ### Keywords: regression models multivariate
 > 
 > ### ** Examples
@@ -2685,7 +2670,7 @@ Contrasts orthogonal to
 1      9      1249.6                                          
 2     10  1   2013.2 0.9456   17.381      5      5 0.003534 **
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > ## Assuming sphericity
 > anova(mlmfit, mlmfit0, X=~1, test="Spherical") 
@@ -2814,7 +2799,7 @@ Residuals    8
 > 
 > ### Name: ansari.test
 > ### Title: Ansari-Bradley Test
-> ### Aliases: ansari.test ansari.test.default ansari.test.formula
+> ### Aliases: ansari.test.default ansari.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -2875,7 +2860,7 @@ ratio of scales
 > 
 > ### Name: aov
 > ### Title: Fit an Analysis of Variance Model
-> ### Aliases: aov print.aov print.aovlist Error
+> ### Aliases: print.aov print.aovlist Error
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -2980,7 +2965,7 @@ N:K        1  33.135  33.135  2.1460 0.168648
 P:K        1   0.482   0.482  0.0312 0.862752   
 Residuals 12 185.287  15.441                    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > options(op)# reset to previous
 > 
 > 
@@ -2994,7 +2979,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: approxfun
 > ### Title: Interpolation Functions
-> ### Aliases: approx approxfun
+> ### Aliases: approx
 > ### Keywords: arith dplot
 > 
 > ### ** Examples
@@ -3044,7 +3029,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: ar
 > ### Title: Fit Autoregressive Models to Time Series
-> ### Aliases: ar ar.burg ar.burg.default ar.burg.mts ar.yw ar.yw.default
+> ### Aliases: ar.burg ar.burg.default ar.burg.mts ar.yw ar.yw.default
 > ###   ar.yw.mts ar.mle print.ar predict.ar
 > ### Keywords: ts
 > 
@@ -3206,7 +3191,6 @@ BJsales.lead 0.01315      0.07657
 > 
 > ### Name: ar.ols
 > ### Title: Fit Autoregressive Models to Time Series by OLS
-> ### Aliases: ar.ols
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -3367,7 +3351,6 @@ FTSE 5.192e-05 4.254e-05 5.615e-05 6.224e-05
 > 
 > ### Name: arima
 > ### Title: ARIMA Modelling of Time Series
-> ### Aliases: arima
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -3494,7 +3477,6 @@ sigma^2 estimated as 81.12:  log likelihood = -414.08,  aic = 838.16
 > 
 > ### Name: arima.sim
 > ### Title: Simulate from an ARIMA Model
-> ### Aliases: arima.sim
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -3551,7 +3533,7 @@ Frequency = 1
 > 
 > ### Name: arima0
 > ### Title: ARIMA Modelling of Time Series - Preliminary Version
-> ### Aliases: arima0 print.arima0 predict.arima0
+> ### Aliases: print.arima0 predict.arima0
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -3663,7 +3645,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > ### Name: as.hclust
 > ### Title: Convert Objects to Class hclust
-> ### Aliases: as.hclust as.hclust.default as.hclust.twins
+> ### Aliases: as.hclust.default as.hclust.twins
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples
@@ -3685,7 +3667,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 
-detaching ‘package:cluster’
+detaching 'package:cluster'
 
 > nameEx("asOneSidedFormula")
 > ### * asOneSidedFormula
@@ -3694,14 +3676,13 @@ detaching ‘package:cluster’
 > 
 > ### Name: asOneSidedFormula
 > ### Title: Convert to One-Sided Formula
-> ### Aliases: asOneSidedFormula
 > ### Keywords: models
 > 
 > ### ** Examples
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x100922f40>
+<environment: 0x02840ff8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -3715,7 +3696,6 @@ detaching ‘package:cluster’
 > 
 > ### Name: ave
 > ### Title: Group Averages Over Level Combinations of Factors
-> ### Aliases: ave
 > ### Keywords: univar
 > 
 > ### ** Examples
@@ -3795,7 +3775,7 @@ Warning in bw.bcv(x) : minimum occurred at one end of the range
 > 
 > ### Name: bartlett.test
 > ### Title: Bartlett Test of Homogeneity of Variances
-> ### Aliases: bartlett.test bartlett.test.default bartlett.test.formula
+> ### Aliases: bartlett.test.default bartlett.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -3828,7 +3808,6 @@ Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
 > 
 > ### Name: binom.test
 > ### Title: Exact Binomial Test
-> ### Aliases: binom.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -3879,7 +3858,7 @@ probability of success
 > 
 > ### Name: biplot.princomp
 > ### Title: Biplot for Principal Components
-> ### Aliases: biplot.princomp biplot.prcomp
+> ### Aliases: biplot.prcomp
 > ### Keywords: multivariate hplot
 > 
 > ### ** Examples
@@ -3946,7 +3925,6 @@ probability of success
 > 
 > ### Name: Box.test
 > ### Title: Box-Pierce and Ljung-Box Tests
-> ### Aliases: Box.test
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -3977,7 +3955,6 @@ X-squared = 0.0014, df = 1, p-value = 0.9704
 > 
 > ### Name: cancor
 > ### Title: Canonical Correlations
-> ### Aliases: cancor
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -4079,7 +4056,7 @@ I(x^2)         -0.542292   0.138460  -3.917 0.001374 **
 I(x^3)          0.020905   0.004372   4.782 0.000242 ***
 I((x - 10)^2)         NA         NA      NA       NA    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 2.838 on 15 degrees of freedom
 Multiple R-squared: 0.9702,	Adjusted R-squared: 0.9643 
@@ -4113,7 +4090,6 @@ I(x^3) -0.73        0.93 -0.99
 > 
 > ### Name: chisq.test
 > ### Title: Pearson's Chi-squared Test for Count Data
-> ### Aliases: chisq.test
 > ### Keywords: htest distribution
 > 
 > ### ** Examples
@@ -4231,7 +4207,6 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: cmdscale
 > ### Title: Classical (Metric) Multidimensional Scaling
-> ### Aliases: cmdscale
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -4256,7 +4231,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: coef
 > ### Title: Extract Model Coefficients
-> ### Aliases: coef coefficients
+> ### Aliases: coefficients
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -4275,7 +4250,6 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: complete.cases
 > ### Title: Find Complete Cases
-> ### Aliases: complete.cases
 > ### Keywords: NA logic
 > 
 > ### ** Examples
@@ -4300,7 +4274,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: confint
 > ### Title: Confidence Intervals for Model Parameters
-> ### Aliases: confint confint.default
+> ### Aliases: confint.default
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -4347,7 +4321,6 @@ treatment3  -0.3919928  0.39199279
 > 
 > ### Name: constrOptim
 > ### Title: Linearly Constrained Optimization
-> ### Aliases: constrOptim
 > ### Keywords: optimize
 > 
 > ### ** Examples
@@ -4426,7 +4399,7 @@ treatment3  -0.3919928  0.39199279
 > 
 > ### Name: contrasts
 > ### Title: Get and Set Contrast Matrices
-> ### Aliases: contrasts contrasts<-
+> ### Aliases: contrasts<-
 > ### Keywords: design regression
 > 
 > ### ** Examples
@@ -4573,7 +4546,6 @@ t -1 -1 -1 -1
 > 
 > ### Name: convolve
 > ### Title: Convolution of Sequences via FFT
-> ### Aliases: convolve
 > ### Keywords: math dplot
 > 
 > ### ** Examples
@@ -4612,7 +4584,7 @@ t -1 -1 -1 -1
 > 
 > ### Name: cophenetic
 > ### Title: Cophenetic Distances for a Hierarchical Clustering
-> ### Aliases: cophenetic cophenetic.default cophenetic.dendrogram
+> ### Aliases: cophenetic.default cophenetic.dendrogram
 > ### Keywords: cluster multivariate
 > 
 > ### ** Examples
@@ -4667,7 +4639,7 @@ List of 7
 > 
 > ### Name: cor
 > ### Title: Correlation, Variance and Covariance (Matrices)
-> ### Aliases: var cov cor cov2cor
+> ### Aliases: var cov cov2cor
 > ### Keywords: univar multivariate array
 > 
 > ### ** Examples
@@ -4711,7 +4683,7 @@ Population   B    B   , . 1
 Year         B    B   , . B 1  
 Employed     B    B   . . B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > ## Spearman's rho  and  Kendall's tau
 > symnum(clS <- cor(longley, method = "spearman"))
@@ -4724,7 +4696,7 @@ Population   B    B   ,   1
 Year         B    B   ,   1 1  
 Employed     B    B   .   B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(clK <- cor(longley, method = "kendall"))
              GNP. GNP U A P Y E
 GNP.deflator 1                 
@@ -4735,7 +4707,7 @@ Population   B    B   .   1
 Year         B    B   .   1 1  
 Employed     *    *   .   + + 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > ## How much do they differ?
 > i <- lower.tri(Cl)
 > cor(cbind(P = Cl[i], S = clS[i], K = clK[i]))
@@ -4803,7 +4775,7 @@ Education        . . .  1
 Catholic             .     1  
 Infant.Mortality             1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > ## Kendall's tau doesn't change much:
 > symnum(cor(swiss, method = "kendall"))
                  F A Ex Ed C I
@@ -4814,7 +4786,7 @@ Education        . . .  1
 Catholic             .     1  
 Infant.Mortality .           1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > 
 > 
@@ -4826,7 +4798,7 @@ attr(,"legend")
 > 
 > ### Name: cor.test
 > ### Title: Test for Association/Correlation Between Paired Samples
-> ### Aliases: cor.test cor.test.default cor.test.formula
+> ### Aliases: cor.test.default cor.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -4923,7 +4895,6 @@ sample estimates:
 > 
 > ### Name: cov.wt
 > ### Title: Weighted Covariance Matrices
-> ### Aliases: cov.wt
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -4989,7 +4960,6 @@ y -0.2425356  1.0000000
 > 
 > ### Name: cpgram
 > ### Title: Plot Cumulative Periodogram
-> ### Aliases: cpgram
 > ### Keywords: ts hplot
 > 
 > ### ** Examples
@@ -5014,7 +4984,6 @@ y -0.2425356  1.0000000
 > 
 > ### Name: cutree
 > ### Title: Cut a Tree into Groups of Data
-> ### Aliases: cutree
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples
@@ -5113,7 +5082,7 @@ grp2  1  2  3  4
 > 
 > ### Name: decompose
 > ### Title: Classical Seasonal Decomposition by Moving Averages
-> ### Aliases: decompose plot.decomposed.ts
+> ### Aliases: plot.decomposed.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -5146,7 +5115,7 @@ grp2  1  2  3  4
 > 
 > ### Name: delete.response
 > ### Title: Modify Terms Objects
-> ### Aliases: reformulate drop.terms delete.response [.terms
+> ### Aliases: reformulate drop.terms [.terms
 > ### Keywords: programming
 > 
 > ### ** Examples
@@ -5273,7 +5242,6 @@ surv(ft, case) ~ a + b * f
 > 
 > ### Name: dendrapply
 > ### Title: Apply a Function to All Nodes of a Dendrogram
-> ### Aliases: dendrapply
 > ### Keywords: iteration
 > 
 > ### ** Examples
@@ -5534,10 +5502,10 @@ NULL
 > 
 > ### Name: dendrogram
 > ### Title: General Tree Structures
-> ### Aliases: dendrogram as.dendrogram as.dendrogram.dendrogram
-> ###   as.dendrogram.hclust as.hclust.dendrogram cut.dendrogram
-> ###   [[.dendrogram merge.dendrogram plot.dendrogram print.dendrogram
-> ###   rev.dendrogram str.dendrogram is.leaf
+> ### Aliases: as.dendrogram as.dendrogram.dendrogram as.dendrogram.hclust
+> ###   as.hclust.dendrogram cut.dendrogram [[.dendrogram merge.dendrogram
+> ###   plot.dendrogram print.dendrogram rev.dendrogram str.dendrogram
+> ###   is.leaf
 > ### Keywords: multivariate tree hplot
 > 
 > ### ** Examples
@@ -5737,7 +5705,7 @@ NULL
 > 
 > ### Name: density
 > ### Title: Kernel Density Estimation
-> ### Aliases: density density.default print.density
+> ### Aliases: density.default print.density
 > ### Keywords: distribution smooth
 > 
 > ### ** Examples
@@ -5872,7 +5840,7 @@ optcosine     99.95
 > 
 > ### Name: deriv
 > ### Title: Symbolic and Algorithmic Derivatives of Simple Expressions
-> ### Aliases: D deriv deriv.default deriv.formula deriv3 deriv3.default
+> ### Aliases: D deriv.default deriv.formula deriv3 deriv3.default
 > ###   deriv3.formula
 > ### Keywords: math nonlinear
 > 
@@ -6036,7 +6004,7 @@ function (b0, b1, th, x)
 > 
 > ### Name: diffinv
 > ### Title: Discrete Integration: Inverse of Differencing
-> ### Aliases: diffinv diffinv.default diffinv.ts
+> ### Aliases: diffinv.default diffinv.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -6056,7 +6024,7 @@ function (b0, b1, th, x)
 > 
 > ### Name: dist
 > ### Title: Distance Matrix Computation
-> ### Aliases: dist print.dist format.dist labels.dist as.matrix.dist as.dist
+> ### Aliases: print.dist format.dist labels.dist as.matrix.dist as.dist
 > ###   as.dist.default
 > ### Keywords: multivariate cluster
 > 
@@ -6181,7 +6149,7 @@ y 2.4
 > 
 > ### Name: dummy.coef
 > ### Title: Extract Coefficients in Original Coding
-> ### Aliases: dummy.coef dummy.coef.lm dummy.coef.aovlist
+> ### Aliases: dummy.coef.lm dummy.coef.aovlist
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -6270,7 +6238,7 @@ P:K:           0:0        1:0        0:1        1:1
 > 
 > ### Name: ecdf
 > ### Title: Empirical Cumulative Distribution Function
-> ### Aliases: ecdf plot.ecdf print.ecdf summary.ecdf quantile.ecdf
+> ### Aliases: plot.ecdf print.ecdf summary.ecdf quantile.ecdf
 > ### Keywords: dplot hplot
 > 
 > ### ** Examples
@@ -6377,7 +6345,6 @@ Empirical CDF:	  10 unique values with summary
 > 
 > ### Name: eff.aovlist
 > ### Title: Compute Efficiencies of Multistratum Analysis of Variance
-> ### Aliases: eff.aovlist
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -6445,7 +6412,7 @@ Within 1 1 1 0.75 0.75 0.75  0.75
 > 
 > ### Name: effects
 > ### Title: Effects from Fitted Model
-> ### Aliases: effects effects.lm effects.glm
+> ### Aliases: effects.lm effects.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -6474,7 +6441,6 @@ attr(,"class")
 > 
 > ### Name: embed
 > ### Title: Embedding a Time Series
-> ### Aliases: embed
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -6501,7 +6467,6 @@ attr(,"class")
 > 
 > ### Name: expand.model.frame
 > ### Title: Add new variables to a model frame
-> ### Aliases: expand.model.frame
 > ### Keywords: manip regression
 > 
 > ### ** Examples
@@ -6565,7 +6530,6 @@ attr(,"class")
 > 
 > ### Name: extractAIC
 > ### Title: Extract AIC from a Fitted Model
-> ### Aliases: extractAIC
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -6579,7 +6543,6 @@ attr(,"class")
 > 
 > ### Name: factanal
 > ### Title: Factor Analysis
-> ### Aliases: factanal
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -6674,7 +6637,7 @@ v6 0.4047824  0.49580764  0.3209708  0.2866938 -0.2682391 -0.57719858
 > 
 > ### Name: factor.scope
 > ### Title: Compute Allowed Changes in Adding to or Dropping from a Formula
-> ### Aliases: add.scope drop.scope factor.scope
+> ### Aliases: add.scope drop.scope
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -6696,7 +6659,7 @@ v6 0.4047824  0.49580764  0.3209708  0.2866938 -0.2682391 -0.57719858
 > 
 > ### Name: family
 > ### Title: Family Objects for Models
-> ### Aliases: family binomial gaussian Gamma inverse.gaussian poisson quasi
+> ### Aliases: binomial gaussian Gamma inverse.gaussian poisson quasi
 > ###   quasibinomial quasipoisson print.family
 > ### Keywords: models
 > 
@@ -6749,7 +6712,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x106cef0d8>
+<environment: 0x03bbf6a4>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -6850,7 +6813,7 @@ Residual Deviance: 135.8 	AIC: NA
 > 
 > ### Name: fft
 > ### Title: Fast Discrete Fourier Transform
-> ### Aliases: fft mvfft
+> ### Aliases: mvfft
 > ### Keywords: math dplot
 > 
 > ### ** Examples
@@ -6871,7 +6834,6 @@ Residual Deviance: 135.8 	AIC: NA
 > 
 > ### Name: filter
 > ### Title: Linear Filtering on a Time Series
-> ### Aliases: filter
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -6954,7 +6916,6 @@ Frequency = 1
 > 
 > ### Name: fisher.test
 > ### Title: Fisher's Exact Test for Count Data
-> ### Aliases: fisher.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -7062,7 +7023,6 @@ alternative hypothesis: two.sided
 > 
 > ### Name: fivenum
 > ### Title: Tukey Five-Number Summaries
-> ### Aliases: fivenum
 > ### Keywords: univar robust distribution
 > 
 > ### ** Examples
@@ -7080,7 +7040,7 @@ alternative hypothesis: two.sided
 > 
 > ### Name: fligner.test
 > ### Title: Fligner-Killeen Test of Homogeneity of Variances
-> ### Aliases: fligner.test fligner.test.default fligner.test.formula
+> ### Aliases: fligner.test.default fligner.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -7114,7 +7074,7 @@ Fligner-Killeen:med chi-squared = 14.4828, df = 5, p-value = 0.01282
 > 
 > ### Name: formula
 > ### Title: Model Formulae
-> ### Aliases: formula formula.default formula.formula formula.terms
+> ### Aliases: formula.default formula.formula formula.terms
 > ###   formula.data.frame as.formula print.formula [.formula
 > ### Keywords: models
 > 
@@ -7151,7 +7111,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x10bd424b0>
+<environment: 0x04125604>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7171,7 +7131,6 @@ y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 +
 > 
 > ### Name: formula.nls
 > ### Title: Extract Model Formula from nls Object
-> ### Aliases: formula.nls
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -7191,7 +7150,7 @@ circumference ~ A/(1 + exp((B - age)/C))
 > 
 > ### Name: friedman.test
 > ### Title: Friedman Rank Sum Test
-> ### Aliases: friedman.test friedman.test.default friedman.test.formula
+> ### Aliases: friedman.test.default friedman.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -7276,7 +7235,7 @@ Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
 > 
 > ### Name: ftable
 > ### Title: Flat Contingency Tables
-> ### Aliases: ftable ftable.default print.ftable
+> ### Aliases: ftable.default print.ftable
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -7375,7 +7334,6 @@ V/S Gears
 > 
 > ### Name: ftable.formula
 > ### Title: Formula Notation for Flat Contingency Tables
-> ### Aliases: ftable.formula
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -7459,8 +7417,7 @@ Crew  Child        0      0
 > 
 > ### Name: getInitial
 > ### Title: Get Initial Parameter Estimates
-> ### Aliases: getInitial getInitial.default getInitial.formula
-> ###   getInitial.selfStart
+> ### Aliases: getInitial.default getInitial.formula getInitial.selfStart
 > ### Keywords: models nonlinear manip
 > 
 > ### ** Examples
@@ -7480,7 +7437,7 @@ Crew  Child        0      0
 > 
 > ### Name: glm
 > ### Title: Fitting Generalized Linear Models
-> ### Aliases: glm glm.fit weights.glm print.glm
+> ### Aliases: glm.fit weights.glm print.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -7538,7 +7495,7 @@ Prewt        -0.5655     0.1612  -3.509 0.000803 ***
 TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
 TreatFT       4.5631     2.1333   2.139 0.036035 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for gaussian family taken to be 48.69504)
 
@@ -7568,7 +7525,7 @@ Coefficients:
 (Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
 log(u)       0.0153431  0.0004150   36.98 2.75e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for Gamma family taken to be 0.002446059)
 
@@ -7592,7 +7549,7 @@ Coefficients:
 (Intercept) -0.0239085  0.0013265  -18.02 4.00e-07 ***
 log(u)       0.0235992  0.0005768   40.91 1.36e-09 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for Gamma family taken to be 0.001813354)
 
@@ -7617,7 +7574,6 @@ Number of Fisher Scoring iterations: 3
 > 
 > ### Name: glm.control
 > ### Title: Auxiliary for Controlling GLM Fitting
-> ### Aliases: glm.control
 > ### Keywords: optimize models
 > 
 > ### ** Examples
@@ -7631,7 +7587,7 @@ Number of Fisher Scoring iterations: 3
 > 
 > ### Name: hclust
 > ### Title: Hierarchical Clustering
-> ### Aliases: hclust plot.hclust plclust print.hclust
+> ### Aliases: plot.hclust plclust print.hclust
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples
@@ -7668,7 +7624,6 @@ Number of Fisher Scoring iterations: 3
 > 
 > ### Name: heatmap
 > ### Title: Draw a Heat Map
-> ### Aliases: heatmap
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -7722,7 +7677,7 @@ raises     .  ,  . , 1
 critical             .  1   
 advance          . . .     1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > heatmap(Ca,             symm = TRUE, margins=c(6,6))# with reorder()
 > heatmap(Ca, Rowv=FALSE, symm = TRUE, margins=c(6,6))# _NO_ reorder()
 > 
@@ -7742,7 +7697,7 @@ WRIT    * +  B  *  *  B  B B 1
 PHYS    , ,  +  +  +  +  + + + 1   
 RTEN    * *  *  *  *  B  * B B *  1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
 +              distfun = function(c) as.dist(1 - c), keep.dendro = TRUE)
@@ -7797,7 +7752,6 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > 
 > ### Name: identify.hclust
 > ### Title: Identify Clusters in a Dendrogram
-> ### Aliases: identify.hclust
 > ### Keywords: cluster iplot
 > 
 > ### ** Examples
@@ -7831,10 +7785,10 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > 
 > ### Name: influence.measures
 > ### Title: Regression Deletion Diagnostics
-> ### Aliases: influence.measures print.infl summary.infl hat hatvalues
-> ###   hatvalues.lm rstandard rstandard.lm rstandard.glm rstudent
-> ###   rstudent.lm rstudent.glm dfbeta dfbeta.lm dfbetas dfbetas.lm dffits
-> ###   covratio cooks.distance cooks.distance.lm cooks.distance.glm
+> ### Aliases: print.infl summary.infl hat hatvalues hatvalues.lm rstandard
+> ###   rstandard.lm rstandard.glm rstudent rstudent.lm rstudent.glm dfbeta
+> ###   dfbeta.lm dfbetas dfbetas.lm dffits covratio cooks.distance
+> ###   cooks.distance.lm cooks.distance.glm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -7848,7 +7802,7 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > 
 > ### Name: integrate
 > ### Title: Integration of One-Dimensional Functions
-> ### Aliases: integrate print.integrate
+> ### Aliases: print.integrate
 > ### Keywords: math utilities
 > 
 > ### ** Examples
@@ -7869,7 +7823,7 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > integrate(integrand, lower = 0, upper = 100000)
 3.135268 with absolute error < 4.2e-07
 > integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
-failed with message ‘the integral is probably divergent’
+failed with message 'the integral is probably divergent'
 > 
 > ## some functions do not handle vector input properly
 > f <- function(x) 2.0
@@ -7905,7 +7859,6 @@ Error in integrate(f, 0, 1) :
 > 
 > ### Name: interaction.plot
 > ### Title: Two-way Interaction Plot
-> ### Aliases: interaction.plot
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -7959,7 +7912,6 @@ Error in integrate(f, 0, 1) :
 > 
 > ### Name: is.empty.model
 > ### Title: Test if a Model's Formula is Empty
-> ### Aliases: is.empty.model
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -7982,7 +7934,6 @@ Error in integrate(f, 0, 1) :
 > 
 > ### Name: isoreg
 > ### Title: Isotonic / Monotone Regression
-> ### Aliases: isoreg
 > ### Keywords: regression smooth
 > 
 > ### ** Examples
@@ -8054,7 +8005,7 @@ R^2 = 0.21
 > 
 > ### Name: kernapply
 > ### Title: Apply Smoothing Kernel
-> ### Aliases: kernapply kernapply.default kernapply.ts kernapply.tskernel
+> ### Aliases: kernapply.default kernapply.ts kernapply.tskernel
 > ###   kernapply.vector
 > ### Keywords: ts
 > 
@@ -8072,7 +8023,7 @@ R^2 = 0.21
 > 
 > ### Name: kernel
 > ### Title: Smoothing Kernel Objects
-> ### Aliases: kernel bandwidth.kernel df.kernel is.tskernel plot.tskernel
+> ### Aliases: bandwidth.kernel df.kernel is.tskernel plot.tskernel
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -8127,7 +8078,7 @@ coef[ 6] = 0.02041
 > 
 > ### Name: kmeans
 > ### Title: K-Means Clustering
-> ### Aliases: kmeans print.kmeans
+> ### Aliases: print.kmeans
 > ### Keywords: multivariate cluster
 > 
 > ### ** Examples
@@ -8203,7 +8154,7 @@ Available components:
 > 
 > ### Name: kruskal.test
 > ### Title: Kruskal-Wallis Rank Sum Test
-> ### Aliases: kruskal.test kruskal.test.default kruskal.test.formula
+> ### Aliases: kruskal.test.default kruskal.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -8257,7 +8208,6 @@ Kruskal-Wallis chi-squared = 29.2666, df = 4, p-value = 6.901e-06
 > 
 > ### Name: ks.test
 > ### Title: Kolmogorov-Smirnov Tests
-> ### Aliases: ks.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -8345,7 +8295,6 @@ alternative hypothesis: the CDF of x lies below that of y
 > 
 > ### Name: ksmooth
 > ### Title: Kernel Regression Smoother
-> ### Aliases: ksmooth
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -8368,7 +8317,7 @@ alternative hypothesis: the CDF of x lies below that of y
 > 
 > ### Name: lag
 > ### Title: Lag a Time Series
-> ### Aliases: lag lag.default
+> ### Aliases: lag.default
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -8392,7 +8341,6 @@ alternative hypothesis: the CDF of x lies below that of y
 > 
 > ### Name: lag.plot
 > ### Title: Time Series Lag Plots
-> ### Aliases: lag.plot
 > ### Keywords: hplot ts
 > 
 > ### ** Examples
@@ -8422,7 +8370,7 @@ alternative hypothesis: the CDF of x lies below that of y
 > 
 > ### Name: line
 > ### Title: Robust Line Fitting
-> ### Aliases: line residuals.tukeyline
+> ### Aliases: residuals.tukeyline
 > ### Keywords: robust regression
 > 
 > ### ** Examples
@@ -8452,7 +8400,7 @@ Coefficients:
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm print.lm
+> ### Aliases: print.lm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8488,7 +8436,7 @@ Coefficients:
 > 
 > ### Name: lm.influence
 > ### Title: Regression Diagnostics
-> ### Aliases: lm.influence influence influence.lm influence.glm
+> ### Aliases: influence influence.lm influence.glm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8514,7 +8462,7 @@ pop75       -1.6914977  1.0835989  -1.561 0.125530
 dpi         -0.0003369  0.0009311  -0.362 0.719173    
 ddpi         0.4096949  0.1961971   2.088 0.042471 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 3.803 on 45 degrees of freedom
 Multiple R-squared: 0.3385,	Adjusted R-squared: 0.2797 
@@ -8581,7 +8529,7 @@ groupCtl groupTrt
 > 
 > ### Name: lm.fit
 > ### Title: Fitter Functions for Linear Models
-> ### Aliases: lm.fit lm.wfit
+> ### Aliases: lm.wfit
 > ### Keywords: regression array
 > 
 > ### ** Examples
@@ -8643,7 +8591,6 @@ List of 8
 > 
 > ### Name: loess
 > ### Title: Local Polynomial Regression Fitting
-> ### Aliases: loess
 > ### Keywords: smooth loess
 > 
 > ### ** Examples
@@ -8717,7 +8664,7 @@ $df
 > 
 > ### Name: logLik
 > ### Title: Extract Log-Likelihood
-> ### Aliases: logLik print.logLik str.logLik logLik.lm
+> ### Aliases: print.logLik str.logLik logLik.lm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -8763,7 +8710,6 @@ Coefficients:
 > 
 > ### Name: loglin
 > ### Title: Fitting Log-Linear Models
-> ### Aliases: loglin
 > ### Keywords: category models
 > 
 > ### ** Examples
@@ -8806,7 +8752,6 @@ $margin[[3]]
 > 
 > ### Name: lowess
 > ### Title: Scatter Plot Smoothing
-> ### Aliases: lowess
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -8828,7 +8773,6 @@ $margin[[3]]
 > 
 > ### Name: ls.diag
 > ### Title: Compute Diagnostics for 'lsfit' Regression Results
-> ### Aliases: ls.diag
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8842,7 +8786,6 @@ $margin[[3]]
 > 
 > ### Name: lsfit
 > ### Title: Find the Least Squares Fit
-> ### Aliases: lsfit
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8874,7 +8817,6 @@ X           -0.371  0.3114 -1.1913    0.249
 > 
 > ### Name: mad
 > ### Title: Median Absolute Deviation
-> ### Aliases: mad
 > ### Keywords: univar robust
 > 
 > ### ** Examples
@@ -8903,7 +8845,6 @@ X           -0.371  0.3114 -1.1913    0.249
 > 
 > ### Name: mahalanobis
 > ### Title: Mahalanobis Distance
-> ### Aliases: mahalanobis
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -8941,7 +8882,6 @@ X           -0.371  0.3114 -1.1913    0.249
 > 
 > ### Name: make.link
 > ### Title: Create a Link for GLM Families
-> ### Aliases: make.link
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -8965,7 +8905,7 @@ List of 5
 > 
 > ### Name: makepredictcall
 > ### Title: Utility Function for Safe Prediction
-> ### Aliases: makepredictcall makepredictcall.default SafePrediction
+> ### Aliases: makepredictcall.default SafePrediction
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -8992,7 +8932,6 @@ List of 5
 > 
 > ### Name: mantelhaen.test
 > ### Title: Cochran-Mantel-Haenszel Chi-Squared Test for Count Data
-> ### Aliases: mantelhaen.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -9177,7 +9116,7 @@ Cochran-Mantel-Haenszel M^2 = 10.2001, df = 9, p-value = 0.3345
 > 
 > ### Name: mauchly.test
 > ### Title: Mauchly's Test of Sphericity
-> ### Aliases: mauchly.test mauchly.test.SSD mauchly.test.mlm
+> ### Aliases: mauchly.test.SSD mauchly.test.mlm
 > ### Keywords: htest models multivariate
 > 
 > ### ** Examples
@@ -9284,7 +9223,6 @@ W = 0.9601, p-value = 0.8497
 > 
 > ### Name: mcnemar.test
 > ### Title: McNemar's Chi-squared Test for Count Data
-> ### Aliases: mcnemar.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -9322,7 +9260,7 @@ McNemar's chi-squared = 16.8178, df = 1, p-value = 4.115e-05
 > 
 > ### Name: median
 > ### Title: Median Value
-> ### Aliases: median median.default
+> ### Aliases: median.default
 > ### Keywords: univar robust
 > 
 > ### ** Examples
@@ -9342,7 +9280,6 @@ McNemar's chi-squared = 16.8178, df = 1, p-value = 4.115e-05
 > 
 > ### Name: medpolish
 > ### Title: Median Polish of a Matrix
-> ### Aliases: medpolish
 > ### Keywords: robust
 > 
 > ### ** Examples
@@ -9405,7 +9342,7 @@ NA        0    3    0
 > 
 > ### Name: model.extract
 > ### Title: Extract Components from a Model Frame
-> ### Aliases: model.extract model.offset model.response model.weights
+> ### Aliases: model.offset model.response model.weights
 > ### Keywords: manip programming models
 > 
 > ### ** Examples
@@ -9559,7 +9496,7 @@ NA        0    3    0
 > 
 > ### Name: model.frame
 > ### Title: Extracting the Model Frame from a Formula or Fit
-> ### Aliases: model.frame model.frame.default model.frame.lm model.frame.glm
+> ### Aliases: model.frame.default model.frame.lm model.frame.glm
 > ###   model.frame.aovlist get_all_vars
 > ### Keywords: models
 > 
@@ -9578,7 +9515,7 @@ NA        0    3    0
 > 
 > ### Name: model.matrix
 > ### Title: Construct Design Matrices
-> ### Aliases: model.matrix model.matrix.default model.matrix.lm
+> ### Aliases: model.matrix.default model.matrix.lm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -9700,7 +9637,7 @@ b4                    3  0  0  0  0  3
 > 
 > ### Name: model.tables
 > ### Title: Compute Tables of Results from an Aov Model Fit
-> ### Aliases: model.tables model.tables.aov model.tables.aovlist
+> ### Aliases: model.tables.aov model.tables.aovlist
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -9715,7 +9652,7 @@ b4                    3  0  0  0  0  3
 > 
 > ### Name: monthplot
 > ### Title: Plot a Seasonal or other Subseries from a Time Series
-> ### Aliases: monthplot monthplot.default monthplot.ts monthplot.stl
+> ### Aliases: monthplot.default monthplot.ts monthplot.stl
 > ###   monthplot.StructTS
 > ### Keywords: hplot ts
 > 
@@ -9750,7 +9687,7 @@ b4                    3  0  0  0  0  3
 > 
 > ### Name: mood.test
 > ### Title: Mood Two-Sample Test of Scale
-> ### Aliases: mood.test mood.test.default mood.test.formula
+> ### Aliases: mood.test.default mood.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -9781,7 +9718,7 @@ alternative hypothesis: two.sided
 > 
 > ### Name: na.action
 > ### Title: NA Action
-> ### Aliases: na.action na.action.default
+> ### Aliases: na.action.default
 > ### Keywords: NA methods
 > 
 > ### ** Examples
@@ -9801,7 +9738,7 @@ attr(,"class")
 > 
 > ### Name: na.contiguous
 > ### Title: Find Longest Contiguous Stretch of non-NAs
-> ### Aliases: na.contiguous na.contiguous.default
+> ### Aliases: na.contiguous.default
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -9840,9 +9777,8 @@ attr(,"class")
 > 
 > ### Name: na.fail
 > ### Title: Handle Missing Values in Objects
-> ### Aliases: na.fail na.fail.default na.omit na.omit.data.frame
-> ###   na.omit.default na.exclude na.exclude.data.frame na.exclude.default
-> ###   na.pass
+> ### Aliases: na.fail.default na.omit na.omit.data.frame na.omit.default
+> ###   na.exclude na.exclude.data.frame na.exclude.default na.pass
 > ### Keywords: NA
 > 
 > ### ** Examples
@@ -9880,7 +9816,6 @@ $na.action
 > 
 > ### Name: nextn
 > ### Title: Highly Composite Numbers
-> ### Aliases: nextn
 > ### Keywords: math
 > 
 > ### ** Examples
@@ -9902,7 +9837,6 @@ $na.action
 > 
 > ### Name: nlm
 > ### Title: Non-Linear Minimization
-> ### Aliases: nlm
 > ### Keywords: nonlinear optimize
 > 
 > ### ** Examples
@@ -10033,7 +9967,6 @@ $iterations
 > 
 > ### Name: nlminb
 > ### Title: Optimization using PORT routines
-> ### Aliases: nlminb
 > ### Keywords: optimize
 > 
 > ### ** Examples
@@ -10047,7 +9980,6 @@ $iterations
 > 
 > ### Name: nls
 > ### Title: Nonlinear Least Squares
-> ### Aliases: nls
 > ### Keywords: nonlinear regression models
 > 
 > ### ** Examples
@@ -10071,7 +10003,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10101,7 +10033,7 @@ xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 .lin   2.3452     0.0782    30.0  2.2e-13 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10120,7 +10052,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10140,7 +10072,7 @@ Asym   2.3452     0.0782    30.0  2.2e-13 ***
 xmid   1.4831     0.0814    18.2  1.2e-10 ***
 scal   1.0415     0.0323    32.3  8.5e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0192 on 13 degrees of freedom
 
@@ -10173,7 +10105,7 @@ Parameters:
 Vm 2.07e+02   9.22e+00   22.42  7.0e-10 ***
 K  5.46e-02   7.98e-03    6.84  4.5e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 1.21 on 10 degrees of freedom
 
@@ -10250,7 +10182,7 @@ a b
 > nlmod <- nls(y ~  Const + A * exp(B * x))
 Warning in nls(y ~ Const + A * exp(B * x)) :
   No starting values specified for some parameters.
-Intializing ‘Const’, ‘A’, ‘B’ to '1.'.
+Intializing 'Const', 'A', 'B' to '1.'.
 Consider specifying 'start' or using a selfStart model
 > 
 > plot(x,y, main = "nls(*), data, true function and fit, n=100")
@@ -10290,7 +10222,7 @@ th       0.608      0.115    5.31  1.9e-06 ***
 .lin1   28.963      1.230   23.55  < 2e-16 ***
 .lin2  -34.227      3.793   -9.02  1.4e-12 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 4.67 on 57 degrees of freedom
 
@@ -10355,7 +10287,7 @@ b20  -36.917      8.033   -4.60  0.00026 ***
 b21  -26.508      7.012   -3.78  0.00149 ** 
 th     0.797      0.127    6.30  8.0e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 1.11 on 17 degrees of freedom
 
@@ -10373,7 +10305,6 @@ Residual standard error: 1.11 on 17 degrees of freedom
 > 
 > ### Name: nls.control
 > ### Title: Control the Iterations in nls
-> ### Aliases: nls.control
 > ### Keywords: nonlinear regression models
 > 
 > ### ** Examples
@@ -10405,7 +10336,6 @@ $warnOnly
 > 
 > ### Name: numericDeriv
 > ### Title: Evaluate Derivatives Numerically
-> ### Aliases: numericDeriv
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -10469,7 +10399,6 @@ attr(,"gradient")
 > 
 > ### Name: oneway.test
 > ### Title: Test for Equal Means in a One-Way Layout
-> ### Aliases: oneway.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -10499,7 +10428,7 @@ Response: extra
 group      1 12.482 12.4820  3.4626 0.07919 .
 Residuals 18 64.886  3.6048                  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > 
 > 
@@ -10511,7 +10440,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: optim
 > ### Title: General-purpose Optimization
-> ### Aliases: optim
 > ### Keywords: nonlinear optimize
 > 
 > ### ** Examples
@@ -10525,7 +10453,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: optimize
 > ### Title: One Dimensional Optimization
-> ### Aliases: optimize optimise
+> ### Aliases: optimise
 > ### Keywords: optimize
 > 
 > ### ** Examples
@@ -10645,7 +10573,7 @@ $objective
 > 
 > ### Name: order.dendrogram
 > ### Title: Ordering or Labels of the Leaves in a Dendrogram
-> ### Aliases: order.dendrogram labels.dendrogram
+> ### Aliases: labels.dendrogram
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -10688,7 +10616,7 @@ $objective
 > 
 > ### Name: p.adjust
 > ### Title: Adjust P-values for Multiple Comparisons
-> ### Aliases: p.adjust p.adjust.methods
+> ### Aliases: p.adjust.methods
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -10872,7 +10800,6 @@ $objective
 > 
 > ### Name: pairwise.prop.test
 > ### Title: Pairwise comparisons for proportions
-> ### Aliases: pairwise.prop.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -10908,7 +10835,6 @@ P value adjustment method: holm
 > 
 > ### Name: pairwise.t.test
 > ### Title: Pairwise t tests
-> ### Aliases: pairwise.t.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -10966,7 +10892,6 @@ P value adjustment method: holm
 > 
 > ### Name: pairwise.wilcox.test
 > ### Title: Pairwise Wilcoxon Rank Sum Tests
-> ### Aliases: pairwise.wilcox.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11052,7 +10977,6 @@ P value adjustment method: bonferroni
 > 
 > ### Name: plot.acf
 > ### Title: Plot Autocovariance and Autocorrelation Functions
-> ### Aliases: plot.acf
 > ### Keywords: hplot ts
 > 
 > ### ** Examples
@@ -11075,7 +10999,7 @@ P value adjustment method: bonferroni
 > 
 > ### Name: plot.isoreg
 > ### Title: Plot Method for isoreg Objects
-> ### Aliases: plot.isoreg lines.isoreg
+> ### Aliases: lines.isoreg
 > ### Keywords: hplot print
 > 
 > ### ** Examples
@@ -11180,7 +11104,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.lm
 > ### Title: Plot Diagnostics for an lm Object
-> ### Aliases: plot.lm plot.mlm
+> ### Aliases: plot.mlm
 > ### Keywords: hplot regression
 > 
 > ### ** Examples
@@ -11228,7 +11152,6 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.ppr
 > ### Title: Plot Ridge Functions for Projection Pursuit Regression Fit
-> ### Aliases: plot.ppr
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -11257,7 +11180,6 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.profile.nls
 > ### Title: Plot a profile.nls Object
-> ### Aliases: plot.profile.nls
 > ### Keywords: nonlinear regression models
 > 
 > ### ** Examples
@@ -11288,7 +11210,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.stepfun
 > ### Title: Plot Step Functions
-> ### Aliases: plot.stepfun lines.stepfun
+> ### Aliases: lines.stepfun
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -11331,7 +11253,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.ts
 > ### Title: Plotting Time-Series Objects
-> ### Aliases: plot.ts lines.ts
+> ### Aliases: lines.ts
 > ### Keywords: hplot ts
 > 
 > ### ** Examples
@@ -11377,7 +11299,6 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: poisson.test
 > ### Title: Exact Poisson tests
-> ### Aliases: poisson.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11424,7 +11345,7 @@ rate ratio
 > 
 > ### Name: poly
 > ### Title: Compute Orthogonal Polynomials
-> ### Aliases: poly polym predict.poly makepredictcall.poly
+> ### Aliases: polym predict.poly makepredictcall.poly
 > ### Keywords: math
 > 
 > ### ** Examples
@@ -11518,7 +11439,6 @@ attr(,"degree")
 > 
 > ### Name: power
 > ### Title: Create a Power Link Object
-> ### Aliases: power
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -11527,22 +11447,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x1075640a0>
+<environment: 0x021991fc>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x1075640a0>
+<environment: 0x021991fc>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x1075640a0>
+<environment: 0x021991fc>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x1075640a0>
+<environment: 0x021991fc>
 
 $name
 [1] "identity"
@@ -11553,12 +11473,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x107558d20>
+<environment: 0x02144170>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x107558d20>
+<environment: 0x02144170>
 
 > 
 > 
@@ -11572,7 +11492,6 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 > ### Name: power.anova.test
 > ### Title: Power Calculations for Balanced One-Way Analysis of Variance
 > ###   Tests
-> ### Aliases: power.anova.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11637,7 +11556,6 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 > 
 > ### Name: power.prop.test
 > ### Title: Power Calculations for Two-Sample Test for Proportions
-> ### Aliases: power.prop.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11692,7 +11610,6 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 > 
 > ### Name: power.t.test
 > ### Title: Power calculations for one and two sample t tests
-> ### Aliases: power.t.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11747,7 +11664,6 @@ pmax(eta^(1/lambda), .Machine$double.eps)
 > 
 > ### Name: PP.test
 > ### Title: Phillips-Perron Test for Unit Roots
-> ### Aliases: PP.test
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -11779,7 +11695,6 @@ Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 > 
 > ### Name: ppoints
 > ### Title: Ordinates for Probability Plotting
-> ### Aliases: ppoints
 > ### Keywords: dplot arith distribution
 > 
 > ### ** Examples
@@ -11802,7 +11717,7 @@ Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 > 
 > ### Name: ppr
 > ### Title: Projection Pursuit Regression
-> ### Aliases: ppr ppr.default ppr.formula
+> ### Aliases: ppr.default ppr.formula
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -11929,8 +11844,8 @@ Coefficients of ridge terms:
 > 
 > ### Name: prcomp
 > ### Title: Principal Components Analysis
-> ### Aliases: prcomp prcomp.formula prcomp.default plot.prcomp
-> ###   predict.prcomp print.prcomp summary.prcomp print.summary.prcomp
+> ### Aliases: prcomp.formula prcomp.default plot.prcomp predict.prcomp
+> ###   print.prcomp summary.prcomp print.summary.prcomp
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -11987,7 +11902,6 @@ Cumulative Proportion  0.6201 0.8675 0.95664 1.00000
 > 
 > ### Name: predict.HoltWinters
 > ### Title: Prediction Function for Fitted Holt-Winters Models
-> ### Aliases: predict.HoltWinters
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -12008,7 +11922,6 @@ Cumulative Proportion  0.6201 0.8675 0.95664 1.00000
 > 
 > ### Name: predict
 > ### Title: Model Predictions
-> ### Aliases: predict
 > ### Keywords: methods
 > 
 > ### ** Examples
@@ -12101,7 +12014,6 @@ predict.smooth.spline.fit :
 > 
 > ### Name: predict.Arima
 > ### Title: Forecast from ARIMA fits
-> ### Aliases: predict.Arima
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -12158,7 +12070,6 @@ $se
 > 
 > ### Name: predict.glm
 > ### Title: Predict Method for GLM Fits
-> ### Aliases: predict.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -12187,7 +12098,7 @@ sexM          0.1750     0.7783   0.225    0.822
 ldose         0.9060     0.1671   5.422 5.89e-08 ***
 sexM:ldose    0.3529     0.2700   1.307    0.191    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -12219,7 +12130,7 @@ Number of Fisher Scoring iterations: 4
 > 
 > ### Name: predict.lm
 > ### Title: Predict method for Linear Model Fits
-> ### Aliases: predict.lm predict.mlm
+> ### Aliases: predict.mlm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -12370,7 +12281,6 @@ Warning in predict.lm(wfit, new, interval = "prediction") :
 > 
 > ### Name: predict.loess
 > ### Title: Predict Loess Curve or Surface
-> ### Aliases: predict.loess
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -12444,7 +12354,6 @@ $df
 > 
 > ### Name: predict.nls
 > ### Title: Predicting from Nonlinear Least Squares Fits
-> ### Aliases: predict.nls
 > ### Keywords: nonlinear regression models
 > 
 > ### ** Examples
@@ -12480,7 +12389,6 @@ $df
 > 
 > ### Name: predict.smooth.spline
 > ### Title: Predict from Smoothing Spline Fit
-> ### Aliases: predict.smooth.spline
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -12745,8 +12653,8 @@ $y
 > 
 > ### Name: princomp
 > ### Title: Principal Components Analysis
-> ### Aliases: princomp princomp.formula princomp.default plot.princomp
-> ###   print.princomp predict.princomp
+> ### Aliases: princomp.formula princomp.default plot.princomp print.princomp
+> ###   predict.princomp
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -12824,7 +12732,6 @@ Standard deviations:
 > 
 > ### Name: print.ts
 > ### Title: Printing Time-Series Objects
-> ### Aliases: print.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -12844,7 +12751,6 @@ Standard deviations:
 > 
 > ### Name: printCoefmat
 > ### Title: Print Coefficient Matrices
-> ### Aliases: printCoefmat
 > ### Keywords: print
 > 
 > ### ** Examples
@@ -12864,7 +12770,7 @@ Standard deviations:
 [2,]  10.1836  3.5496  2.8689 0.0041185 ** 
 [3,]   9.1644  2.7365  3.3490 0.0008111 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > options(show.coef.Pvalues = FALSE)
 > printCoefmat(cmat, digits=2)
      Estimate Std.Err Z value
@@ -12877,7 +12783,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 [2,]     10.2     3.5     2.9  0.004 ** 
 [3,]      9.2     2.7     3.3  8e-04 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > options(show.coef.Pvalues = TRUE)# revert
 > 
 > 
@@ -12890,7 +12796,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: profile.nls
 > ### Title: Method for Profiling nls Objects
-> ### Aliases: profile.nls
 > ### Keywords: nonlinear regression models
 > 
 > ### ** Examples
@@ -12948,7 +12853,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: proj
 > ### Title: Projections of Models
-> ### Aliases: proj proj.default proj.lm proj.aov proj.aovlist
+> ### Aliases: proj.default proj.lm proj.aov proj.aovlist
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -13219,7 +13124,6 @@ attr(,"factors")$Residuals
 > 
 > ### Name: prop.test
 > ### Title: Test of Equal or Given Proportions
-> ### Aliases: prop.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -13283,7 +13187,6 @@ sample estimates:
 > 
 > ### Name: prop.trend.test
 > ### Title: Test for trend in proportions
-> ### Aliases: prop.trend.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -13329,7 +13232,7 @@ X-squared = 12.1731, df = 1, p-value = 0.0004848
 > 
 > ### Name: qqnorm
 > ### Title: Quantile-Quantile Plots
-> ### Aliases: qqnorm qqnorm.default qqplot qqline
+> ### Aliases: qqnorm.default qqplot qqline
 > ### Keywords: hplot distribution
 > 
 > ### ** Examples
@@ -13352,7 +13255,7 @@ X-squared = 12.1731, df = 1, p-value = 0.0004848
 > 
 > ### Name: quade.test
 > ### Title: Quade Test
-> ### Aliases: quade.test quade.test.default quade.test.formula
+> ### Aliases: quade.test.default quade.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -13399,7 +13302,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Name: quantile
 > ### Title: Sample Quantiles
-> ### Aliases: quantile quantile.default
+> ### Aliases: quantile.default
 > ### Keywords: univar
 > 
 > ### ** Examples
@@ -13440,7 +13343,6 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Name: r2dtable
 > ### Title: Random 2-way Tables with Given Marginals
-> ### Aliases: r2dtable
 > ### Keywords: distribution
 > 
 > ### ** Examples
@@ -13474,7 +13376,7 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > 
 > ### Name: read.ftable
 > ### Title: Manipulate Flat Contingency Tables
-> ### Aliases: read.ftable write.ftable format.ftable
+> ### Aliases: write.ftable format.ftable
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -13547,7 +13449,6 @@ Female 1st                0     4     1   140
 > 
 > ### Name: rect.hclust
 > ### Title: Draw Rectangles Around Hierarchical Clusters
-> ### Aliases: rect.hclust
 > ### Keywords: aplot cluster
 > 
 > ### ** Examples
@@ -13582,7 +13483,7 @@ South Carolina
 > 
 > ### Name: relevel
 > ### Title: Reorder Levels of Factor
-> ### Aliases: relevel relevel.default relevel.factor relevel.ordered
+> ### Aliases: relevel.default relevel.factor relevel.ordered
 > ### Keywords: utilities models
 > 
 > ### ** Examples
@@ -13604,7 +13505,7 @@ woolB         -5.778      3.162  -1.827   0.0736 .
 tensionL      10.000      3.872   2.582   0.0128 *  
 tensionH      -4.722      3.872  -1.219   0.2284    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared: 0.2691,	Adjusted R-squared: 0.2253 
@@ -13621,7 +13522,6 @@ F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.00123
 > 
 > ### Name: reorder.dendrogram
 > ### Title: Reorder a Dendrogram
-> ### Aliases: reorder.dendrogram
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -13652,7 +13552,7 @@ F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.00123
 > 
 > ### Name: reorder.default
 > ### Title: Reorder Levels of a Factor
-> ### Aliases: reorder reorder.default
+> ### Aliases: reorder
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -13675,7 +13575,6 @@ F-statistic: 6.138 on 3 and 50 DF,  p-value: 0.00123
 > 
 > ### Name: replications
 > ### Title: Number of Replications of Terms
-> ### Aliases: replications
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -13703,7 +13602,6 @@ block     N     P     K
 > 
 > ### Name: reshape
 > ### Title: Reshape Grouped Data
-> ### Aliases: reshape
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -14194,7 +14092,6 @@ Wyoming           62.9   173  97203
 > 
 > ### Name: runmed
 > ### Title: Running Medians - Robust Scatter Plot Smoothing
-> ### Aliases: runmed
 > ### Keywords: smooth robust
 > 
 > ### ** Examples
@@ -14246,7 +14143,7 @@ nhtemp+   ylab = "Mean annual temperature in New Haven, CT (deg. F)")
 > 
 > ### Name: scatter.smooth
 > ### Title: Scatter Plot with Smooth Curve Fitted by Loess
-> ### Aliases: scatter.smooth loess.smooth
+> ### Aliases: loess.smooth
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -14265,7 +14162,7 @@ nhtemp+   ylab = "Mean annual temperature in New Haven, CT (deg. F)")
 > 
 > ### Name: screeplot
 > ### Title: Screeplots
-> ### Aliases: screeplot screeplot.default
+> ### Aliases: screeplot.default
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -14299,7 +14196,6 @@ Standard deviations:
 > 
 > ### Name: sd
 > ### Title: Standard Deviation
-> ### Aliases: sd
 > ### Keywords: univar
 > 
 > ### ** Examples
@@ -14317,7 +14213,7 @@ Standard deviations:
 > 
 > ### Name: se.contrast
 > ### Title: Standard Errors for Contrasts in Model Terms
-> ### Aliases: se.contrast se.contrast.aov se.contrast.aovlist
+> ### Aliases: se.contrast.aov se.contrast.aovlist
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -14378,7 +14274,7 @@ A:B          2  81.556  40.778  4.8226 0.015274 *
   A:B: C2    1  68.056  68.056  8.0486 0.008085 **
 Residuals   30 253.667   8.456                    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > ## t.stat^2 is the F value on the A:B: C1 line (with Helmert contrasts)
 > ## Now look at all three interaction contrasts
 > cont <- c(1, -1)[A] * cbind(c(1, -1, 0), c(1, 0, -1), c(0, 1, -1))[B,]
@@ -14478,7 +14374,7 @@ eff.vl> options(contrasts = old)
 > 
 > ### Name: selfStart
 > ### Title: Construct Self-starting Nonlinear Models
-> ### Aliases: selfStart selfStart.default selfStart.formula
+> ### Aliases: selfStart.default selfStart.formula
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -14549,7 +14445,6 @@ List of 10
 > 
 > ### Name: setNames
 > ### Title: Set the Names in an Object
-> ### Aliases: setNames
 > ### Keywords: list
 > 
 > ### ** Examples
@@ -14574,7 +14469,6 @@ foo bar baz
 > 
 > ### Name: shapiro.test
 > ### Title: Shapiro-Wilk Normality Test
-> ### Aliases: shapiro.test
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -14604,7 +14498,6 @@ W = 0.9309, p-value = 5.616e-05
 > 
 > ### Name: simulate
 > ### Title: Simulate Responses
-> ### Aliases: simulate
 > ### Keywords: models datagen
 > 
 > ### ** Examples
@@ -14667,7 +14560,6 @@ attr(,"kind")[[2]]
 > 
 > ### Name: smooth
 > ### Title: Tukey's (Running Median) Smoothing
-> ### Aliases: smooth
 > ### Keywords: robust smooth
 > 
 > ### ** Examples
@@ -14738,7 +14630,6 @@ S Tukey smoother resulting from  smooth(x = x3R, kind = "S")
 > 
 > ### Name: smooth.spline
 > ### Title: Fit a Smoothing Spline
-> ### Aliases: smooth.spline
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -14871,7 +14762,6 @@ Penalized Criterion: 0.4973656
 > 
 > ### Name: smoothEnds
 > ### Title: End Points Smoothing (for Running Medians)
-> ### Aliases: smoothEnds
 > ### Keywords: smooth robust
 > 
 > ### ** Examples
@@ -14902,7 +14792,7 @@ Penalized Criterion: 0.4973656
 > 
 > ### Name: sortedXyData
 > ### Title: Create a 'sortedXyData' Object
-> ### Aliases: sortedXyData sortedXyData.default
+> ### Aliases: sortedXyData.default
 > ### Keywords: manip
 > 
 > ### ** Examples
@@ -14929,7 +14819,6 @@ Penalized Criterion: 0.4973656
 > 
 > ### Name: spec.ar
 > ### Title: Estimate Spectral Density of a Time Series from AR Fit
-> ### Aliases: spec.ar
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -14957,7 +14846,6 @@ Penalized Criterion: 0.4973656
 > ### Name: spec.pgram
 > ### Title: Estimate Spectral Density of a Time Series by a Smoothed
 > ###   Periodogram
-> ### Aliases: spec.pgram
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -15004,7 +14892,7 @@ Penalized Criterion: 0.4973656
 > 
 > ### Name: spectrum
 > ### Title: Spectral Density Estimation
-> ### Aliases: spectrum spec
+> ### Aliases: spec
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -15042,7 +14930,7 @@ Penalized Criterion: 0.4973656
 > 
 > ### Name: splinefun
 > ### Title: Interpolating Splines
-> ### Aliases: spline splinefun splinefunH
+> ### Aliases: spline splinefunH
 > ### Keywords: math dplot
 > 
 > ### ** Examples
@@ -15119,7 +15007,6 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > 
 > ### Name: stat.anova
 > ### Title: GLM Anova Statistics
-> ### Aliases: stat.anova
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -15167,7 +15054,6 @@ treatment  2   0.0000         4     5.1291
 > 
 > ### Name: step
 > ### Title: Choose a model by AIC in a Stepwise Algorithm
-> ### Aliases: step
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -15181,8 +15067,7 @@ treatment  2   0.0000         4     5.1291
 > 
 > ### Name: stepfun
 > ### Title: Step Function Class
-> ### Aliases: stepfun is.stepfun as.stepfun print.stepfun summary.stepfun
-> ###   knots
+> ### Aliases: is.stepfun as.stepfun print.stepfun summary.stepfun knots
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -15215,7 +15100,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x10ba82fb8>
+<environment: 0x03dc710c>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15244,7 +15129,6 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 > 
 > ### Name: stl
 > ### Title: Seasonal Decomposition of Time Series by Loess
-> ### Aliases: stl
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -15334,8 +15218,7 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 > 
 > ### Name: summary.aov
 > ### Title: Summarize an Analysis of Variance Model
-> ### Aliases: summary.aov summary.aovlist print.summary.aov
-> ###   print.summary.aovlist
+> ### Aliases: summary.aovlist print.summary.aov print.summary.aovlist
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -15408,7 +15291,7 @@ N:P          4  399.28   99.82
 > 
 > ### Name: summary.glm
 > ### Title: Summarizing Generalized Linear Model Fits
-> ### Aliases: summary.glm print.summary.glm
+> ### Aliases: print.summary.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -15425,7 +15308,7 @@ N:P          4  399.28   99.82
 > 
 > ### Name: summary.lm
 > ### Title: Summarizing Linear Model Fits
-> ### Aliases: summary.lm summary.mlm print.summary.lm
+> ### Aliases: summary.mlm print.summary.lm
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -15452,7 +15335,7 @@ Coefficients:
 groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
 groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
@@ -15473,7 +15356,7 @@ groupTrt    4.661  0.2202177 21.16542 3.615345e-14
 > 
 > ### Name: summary.manova
 > ### Title: Summary Method for Multivariate Analysis of Variance
-> ### Aliases: summary.manova print.summary.manova
+> ### Aliases: print.summary.manova
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -15487,7 +15370,7 @@ groupTrt    4.661  0.2202177 21.16542 3.615345e-14
 > 
 > ### Name: summary.princomp
 > ### Title: Summary method for Principal Components Analysis
-> ### Aliases: summary.princomp print.summary.princomp
+> ### Aliases: print.summary.princomp
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -15523,7 +15406,6 @@ Rape     -0.54          0.82
 > 
 > ### Name: supsmu
 > ### Title: Friedman's SuperSmoother
-> ### Aliases: supsmu
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -15546,7 +15428,6 @@ Rape     -0.54          0.82
 > 
 > ### Name: symnum
 > ### Title: Symbolic Number Coding
-> ### Aliases: symnum
 > ### Keywords: utilities character
 > 
 > ### ** Examples
@@ -15556,12 +15437,12 @@ Rape     -0.54          0.82
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ $ 
 attr(,"legend")
-[1] 0 ‘.’ 2 ‘-’ 4 ‘+’ 6 ‘$’ 8
+[1] 0 '.' 2 '-' 4 '+' 6 '$' 8
 > symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=TRUE)
 0 1 2 3 4 5 6 7 8 
 . . . - - + + $ 8 
 attr(,"legend")
-[1] 0 ‘.’ 2 ‘-’ 4 ‘+’ 6 ‘$’ 8
+[1] 0 '.' 2 '-' 4 '+' 6 '$' 8
 > 
 > symnum(1:12 %% 3 == 0)# --> "|" = TRUE, "." = FALSE  for logical
  [1] . . | . . | . . | . . |
@@ -15623,7 +15504,7 @@ raises     .  ,  . ,
 critical             .      
 advance          . . .      
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr.= NULL)
                         
 rating     1            
@@ -15634,7 +15515,7 @@ raises     . , . , 1
 critical           . 1  
 advance        . . .   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr.= FALSE)
            rating complaints privileges learning raises critical advance
 rating     1                                                            
@@ -15645,7 +15526,7 @@ raises     .      ,          .          ,        1
 critical                                         .      1               
 advance                      .          .        .               1      
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(attitude), abbr.= 2)
            rt cm pr lr rs cr ad
 rating     1                   
@@ -15656,7 +15537,7 @@ raises     .  ,  .  ,  1
 critical               .  1    
 advance          .  .  .     1 
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
                                                        
@@ -15686,7 +15567,7 @@ attr(,"legend")
 [24,] * , , . , , .     , . . * * . , ,     .     B 1  
 [25,] B + . . + . , . . .   , B ,   * *   . +   . B B 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
                                          
  [1,] 1                                  
@@ -15708,7 +15589,7 @@ attr(,"legend")
 [17,]   , .   1 ,   , .   1 ,   , .   1  
 [18,]   ,     , 1   ,     , 1   ,     , 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm1 <- cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
                                          
  [1,] 1                                  
@@ -15730,7 +15611,7 @@ attr(,"legend")
 [17,]   , +   , +       . . * .     . 1  
 [18,]   . .   * , . . .   , ,     .   . 1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm1, diag=FALSE)
                                         
  [1,]                                   
@@ -15752,7 +15633,7 @@ attr(,"legend")
 [17,]   , +   , +       . . * .     .   
 [18,]   . .   * , . . .   , ,     .   . 
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm2 <- cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
                                          
  [1,] 1                                  
@@ -15774,7 +15655,7 @@ attr(,"legend")
 [17,]                                 1  
 [18,]                                   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > symnum(cm2, lower=FALSE)
                                          
  [1,] 1                                  
@@ -15796,7 +15677,7 @@ attr(,"legend")
 [17,]                                 1  
 [18,]                                   1
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 > 
 > ## NA's:
 > Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA
@@ -15809,7 +15690,7 @@ attr(,"legend")
 [5,]     .     
 [6,] , ?       
 attr(,"legend")
-[1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1 \t    ## NA: ‘?’
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1 \t    ## NA: '?'
 > 
 > ## Graphical P-values (aka "significance stars"):
 > pval <- rev(sort(c(outer(1:6, 10^-(1:3)))))
@@ -15847,7 +15728,7 @@ attr(,"legend")
 > 
 > ### Name: t.test
 > ### Title: Student's t-Test
-> ### Aliases: t.test t.test.default t.test.formula
+> ### Aliases: t.test.default t.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -15922,7 +15803,6 @@ mean in group 1 mean in group 2
 > 
 > ### Name: termplot
 > ### Title: Plot Regression Terms
-> ### Aliases: termplot
 > ### Keywords: hplot regression
 > 
 > ### ** Examples
@@ -15955,7 +15835,6 @@ Loading required package: splines
 > 
 > ### Name: terms.object
 > ### Title: Description of Terms Objects
-> ### Aliases: terms.object
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -16030,7 +15909,7 @@ attr(,".Environment")
 > 
 > ### Name: time
 > ### Title: Sampling Times of Time Series
-> ### Aliases: time cycle frequency deltat time.default
+> ### Aliases: cycle frequency deltat time.default
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16082,7 +15961,6 @@ attr(,".Environment")
 > 
 > ### Name: toeplitz
 > ### Title: Form Symmetric Toeplitz Matrix
-> ### Aliases: toeplitz
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16106,7 +15984,7 @@ attr(,".Environment")
 > 
 > ### Name: ts
 > ### Title: Time-Series Objects
-> ### Aliases: ts as.ts as.ts.default is.ts Ops.ts cbind.ts is.mts [.ts t.ts
+> ### Aliases: as.ts as.ts.default is.ts Ops.ts cbind.ts is.mts [.ts t.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16153,7 +16031,6 @@ attr(,".Environment")
 > 
 > ### Name: ts.plot
 > ### Title: Plot Multiple Time Series
-> ### Aliases: ts.plot
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16173,7 +16050,7 @@ attr(,".Environment")
 > 
 > ### Name: ts.union
 > ### Title: Bind Two or More Time Series
-> ### Aliases: ts.union ts.intersect
+> ### Aliases: ts.intersect
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16519,7 +16396,7 @@ Frequency = 1
 > 
 > ### Name: tsdiag
 > ### Title: Diagnostic Plots for Time-Series Fits
-> ### Aliases: tsdiag tsdiag.arima0 tsdiag.Arima tsdiag.StructTS
+> ### Aliases: tsdiag.arima0 tsdiag.Arima tsdiag.StructTS
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -16545,7 +16422,6 @@ Frequency = 1
 > 
 > ### Name: uniroot
 > ### Title: One Dimensional Root (Zero) Finding
-> ### Aliases: uniroot
 > ### Keywords: optimize
 > 
 > ### ** Examples
@@ -16559,7 +16435,7 @@ Frequency = 1
 > 
 > ### Name: update
 > ### Title: Update and Re-fit a Model Call
-> ### Aliases: update update.default
+> ### Aliases: update.default
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -16595,7 +16471,7 @@ Coefficients:
 groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
 groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
@@ -16624,7 +16500,6 @@ Coefficients:
 > 
 > ### Name: update.formula
 > ### Title: Model Updating
-> ### Aliases: update.formula
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -16644,7 +16519,7 @@ log(y) ~ x
 > 
 > ### Name: var.test
 > ### Title: F Test to Compare Two Variances
-> ### Aliases: var.test var.test.default var.test.formula
+> ### Aliases: var.test.default var.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -16688,7 +16563,7 @@ ratio of variances
 > 
 > ### Name: varimax
 > ### Title: Rotation Methods for Factor Analysis
-> ### Aliases: promax varimax
+> ### Aliases: promax
 > ### Keywords: multivariate
 > 
 > ### ** Examples
@@ -16750,7 +16625,7 @@ $rotmat
 > 
 > ### Name: weighted.mean
 > ### Title: Weighted Arithmetic Mean
-> ### Aliases: weighted.mean weighted.mean.default
+> ### Aliases: weighted.mean.default
 > ### Keywords: univar
 > 
 > ### ** Examples
@@ -16770,7 +16645,6 @@ $rotmat
 > 
 > ### Name: weighted.residuals
 > ### Title: Compute Weighted Residuals
-> ### Aliases: weighted.residuals
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -16806,7 +16680,7 @@ $rotmat
 > 
 > ### Name: wilcox.test
 > ### Title: Wilcoxon Rank Sum and Signed Rank Tests
-> ### Aliases: wilcox.test wilcox.test.default wilcox.test.formula
+> ### Aliases: wilcox.test.default wilcox.test.formula
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -16912,7 +16786,7 @@ alternative hypothesis: true location shift is not equal to 0
 > 
 > ### Name: window
 > ### Title: Time Windows
-> ### Aliases: window window.default window.ts window<- window<-.ts
+> ### Aliases: window.default window.ts window<- window<-.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -17006,7 +16880,7 @@ Warning: extending time series when replacing values
 > 
 > ### Name: xtabs
 > ### Title: Cross Tabulation
-> ### Aliases: xtabs print.xtabs
+> ### Aliases: print.xtabs
 > ### Keywords: category
 > 
 > ### ** Examples
@@ -17288,9 +17162,9 @@ B    L                 27 14 29 19 29 31 41 20 44
 Loading required package: Matrix
 Loading required package: lattice
 
-Attaching package: ‘Matrix’
+Attaching package: 'Matrix'
 
-The following object(s) are masked from ‘package:base’:
+The following object(s) are masked from 'package:base':
 
     det
 
@@ -17338,7 +17212,7 @@ y . . . . 2
 > 
 > cleanEx()
 
-detaching ‘package:Matrix’, ‘package:lattice’
+detaching 'package:Matrix', 'package:lattice'
 
 > nameEx("zC")
 > ### * zC
@@ -17347,7 +17221,6 @@ detaching ‘package:Matrix’, ‘package:lattice’
 > 
 > ### Name: C
 > ### Title: Sets Contrasts for a Factor
-> ### Aliases: C
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -17386,7 +17259,7 @@ woolB                   -5.778      3.162  -1.827   0.0736 .
 C(tension, base = 2)1   10.000      3.872   2.582   0.0128 *  
 C(tension, base = 2)3   -4.722      3.872  -1.219   0.2284    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 11.62 on 50 degrees of freedom
 Multiple R-squared: 0.2691,	Adjusted R-squared: 0.2253 
@@ -17418,7 +17291,7 @@ agegp^5         -0.20288    0.19523  -1.039  0.29872
 C(tobgp, , 1).L  0.58501    0.18331   3.191  0.00142 ** 
 C(alcgp, , 1).L  1.46034    0.18899   7.727 1.10e-14 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -17435,7 +17308,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.79 0.25 13.114 0 0 
+Time elapsed:  14.25 11.48 28.63 NA NA 
 > grDevices::dev.off()
 null device 
           1 

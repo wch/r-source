@@ -433,13 +433,14 @@ Rd_aliases <-
 function(package, dir, lib.loc = NULL)
 {
     ## Get the Rd aliases (topics) from an installed package or the
-    ## unpacked package sources.
+    ## unpacked package sources.  Include names as well.
 
     if(!missing(package)) {
         dir <- find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
         if(file_test("-f", rds)) {
-            aliases <- readRDS(rds)$Aliases
+            db <- readRDS(rds)
+            aliases <- c(db$Aliases, list(db$Name))
             if(length(aliases)) sort(unlist(aliases)) else character()
         } else
             character()
@@ -463,7 +464,8 @@ function(package, dir, lib.loc = NULL)
     else {
         if(file_test("-d", file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
-            aliases <- lapply(db, .Rd_get_metadata, "alias")
+            aliases <- c(lapply(db, .Rd_get_metadata, "alias"),
+                         lapply(db, .Rd_get_metadata, "name"))
             if(length(aliases))
                 sort(unique(unlist(aliases, use.names = FALSE)))
             else character()

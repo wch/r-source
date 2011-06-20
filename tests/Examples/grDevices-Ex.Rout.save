@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-23 r55608)
+R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,7 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: Devices
 > ### Title: List of Graphical Devices
-> ### Aliases: Devices device
+> ### Aliases: device
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -51,7 +51,6 @@ Type 'q()' to quit R.
 > 
 > ### Name: Hershey
 > ### Title: Hershey Vector Fonts in R
-> ### Aliases: Hershey
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -105,7 +104,6 @@ $allowed
 > 
 > ### Name: Japanese
 > ### Title: Japanese characters in R
-> ### Aliases: Japanese
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -137,7 +135,7 @@ $allowed
 > 
 > ### Name: Type1Font
 > ### Title: Type 1 and CID Fonts
-> ### Aliases: Type1Font CIDFont
+> ### Aliases: CIDFont
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -166,7 +164,6 @@ $allowed
 > 
 > ### Name: adjustcolor
 > ### Title: Adjust Colors in One or More Directions Conveniently.
-> ### Aliases: adjustcolor
 > 
 > ### ** Examples
 > 
@@ -240,7 +237,7 @@ Warning in text.default(1:8, labels = paste(x, "++", sep = ""), col = x.,  :
 > 
 > ### Name: as.raster
 > ### Title: Create a Raster Object
-> ### Aliases: is.raster as.raster as.raster.logical as.raster.numeric
+> ### Aliases: is.raster as.raster.logical as.raster.numeric
 > ###   as.raster.character as.raster.matrix as.raster.array
 > ### Keywords: dplot
 > 
@@ -370,7 +367,6 @@ Warning in text.default(1:8, labels = paste(x, "++", sep = ""), col = x.,  :
 > 
 > ### Name: boxplot.stats
 > ### Title: Box Plot Statistics
-> ### Aliases: boxplot.stats
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -506,7 +502,6 @@ $out
 > 
 > ### Name: check.options
 > ### Title: Set Options with Consistency Checks
-> ### Aliases: check.options
 > ### Keywords: utilities programming
 > 
 > ### ** Examples
@@ -552,7 +547,6 @@ $ch
 > 
 > ### Name: chull
 > ### Title: Compute Convex Hull of a Set of Points
-> ### Aliases: chull
 > ### Keywords: graphs
 > 
 > ### ** Examples
@@ -579,7 +573,6 @@ $ch
 > 
 > ### Name: cm
 > ### Title: Unit Transformation
-> ### Aliases: cm
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -602,7 +595,6 @@ $ch
 > 
 > ### Name: col2rgb
 > ### Title: Color to RGB Conversion
-> ### Aliases: col2rgb
 > ### Keywords: color dplot
 > 
 > ### ** Examples
@@ -1456,7 +1448,7 @@ List of 150
 > 
 > ### Name: colorRamp
 > ### Title: Color interpolation
-> ### Aliases: colorRamp colorRampPalette
+> ### Aliases: colorRampPalette
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -1513,7 +1505,7 @@ List of 150
 > 
 > ### Name: colors
 > ### Title: Color Names
-> ### Aliases: colors colours
+> ### Aliases: colours
 > ### Keywords: color dplot sysdata
 > 
 > ### ** Examples
@@ -1537,7 +1529,6 @@ List of 150
 > 
 > ### Name: contourLines
 > ### Title: Calculate Contour Lines
-> ### Aliases: contourLines
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1556,7 +1547,7 @@ List of 150
 > 
 > ### Name: convertColor
 > ### Title: Convert between Colour Spaces
-> ### Aliases: convertColor colorspaces
+> ### Aliases: colorspaces
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -1640,7 +1631,7 @@ List of 150
 > 
 > ### Name: densCols
 > ### Title: Colors for Smooth Density Plots
-> ### Aliases: densCols blues9
+> ### Aliases: blues9
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1694,7 +1685,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: dev.interactive
 > ### Title: Is the Current Graphics Device Interactive?
-> ### Aliases: dev.interactive deviceIsInteractive
+> ### Aliases: deviceIsInteractive
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -1714,7 +1705,6 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: dev.size
 > ### Title: Find Size of Device Surface
-> ### Aliases: dev.size
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1757,7 +1747,6 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: extendrange
 > ### Title: Extend a Numerical Range by a Small Percentage
-> ### Aliases: extendrange
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1783,7 +1772,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: getGraphicsEvent
 > ### Title: Wait for a mouse or keyboard event from a graphics window
-> ### Aliases: getGraphicsEvent setGraphicsEventHandlers getGraphicsEventEnv
+> ### Aliases: setGraphicsEventHandlers getGraphicsEventEnv
 > ###   setGraphicsEventEnv
 > ### Keywords: iplot
 > 
@@ -1801,7 +1790,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: gray
 > ### Title: Gray Level Specification
-> ### Aliases: gray grey
+> ### Aliases: grey
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -1820,7 +1809,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: gray.colors
 > ### Title: Gray Color Palette
-> ### Aliases: gray.colors grey.colors
+> ### Aliases: grey.colors
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -1840,7 +1829,6 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: hcl
 > ### Title: HCL Color Specification
-> ### Aliases: hcl
 > ### Keywords: color dplot
 > 
 > ### ** Examples
@@ -1898,7 +1886,6 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: hsv
 > ### Title: HSV Color Specification
-> ### Aliases: hsv
 > ### Keywords: color dplot
 > 
 > ### ** Examples
@@ -1928,7 +1915,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: make.rgb
 > ### Title: Create colour spaces
-> ### Aliases: make.rgb colorConverter
+> ### Aliases: colorConverter
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -2002,7 +1989,6 @@ display gamma = 2.2
 > 
 > ### Name: n2mfrow
 > ### Title: Compute Default mfrow From Number of Plots
-> ### Aliases: n2mfrow
 > ### Keywords: dplot utilities
 > 
 > ### ** Examples
@@ -2066,7 +2052,6 @@ Sturges   Scott      FD
 > 
 > ### Name: palette
 > ### Title: Set or View the Graphics Palette
-> ### Aliases: palette
 > ### Keywords: color sysdata
 > 
 > ### ** Examples
@@ -2148,7 +2133,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 > 
 > ### Name: pdf
 > ### Title: PDF Graphics Device
-> ### Aliases: pdf
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -2186,7 +2170,6 @@ Warning in plot.xy(xy.coords(x, y), type = type, ...) :
 > 
 > ### Name: pdf.options
 > ### Title: Auxiliary Function to Set/View Defaults for Arguments of pdf
-> ### Aliases: pdf.options
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -2225,7 +2208,6 @@ List of 19
 > 
 > ### Name: pictex
 > ### Title: A PicTeX Graphics Driver
-> ### Aliases: pictex
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -2265,10 +2247,9 @@ postscript
 > 
 > ### Name: plotmath
 > ### Title: Mathematical Annotation in R
-> ### Aliases: plotmath symbol plain bold italic bolditalic hat bar dot ring
-> ###   widehat widetilde displaystyle textstyle scriptstyle
-> ###   scriptscriptstyle underline phantom over frac atop integral inf sup
-> ###   group bgroup
+> ### Aliases: symbol plain bold italic bolditalic hat bar dot ring widehat
+> ###   widetilde displaystyle textstyle scriptstyle scriptscriptstyle
+> ###   underline phantom over frac atop integral inf sup group bgroup
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2348,7 +2329,7 @@ postscript
 > 
 > ### Name: postscriptFonts
 > ### Title: PostScript and PDF Font Families
-> ### Aliases: postscriptFonts pdfFonts
+> ### Aliases: pdfFonts
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -2856,7 +2837,7 @@ attr(,"class")
 > 
 > ### Name: pretty.Date
 > ### Title: Pretty Breakpoints for Date-Time Classes
-> ### Aliases: pretty.Date pretty.POSIXt
+> ### Aliases: pretty.POSIXt
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -2930,7 +2911,7 @@ $`span = 1000 years`
 > ### Name: ps.options
 > ### Title: Auxiliary Function to Set/View Defaults for Arguments of
 > ###   postscript
-> ### Aliases: ps.options setEPS setPS
+> ### Aliases: setEPS setPS
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -2959,15 +2940,15 @@ List of 18
 > 
 > ### ---- error checking of arguments: ----
 > ps.options(width=0:12, onefile=0, bg=pi)
-Warning: ‘mode(onefile)’ and ‘mode(bg)’ differ between new and previous
-	 ==> NOT changing ‘onefile’ & ‘bg’
-Warning: ‘length(width)’ differs between new and previous
-	 ==> NOT changing ‘width’
+Warning: 'mode(onefile)' and 'mode(bg)' differ between new and previous
+	 ==> NOT changing 'onefile' & 'bg'
+Warning: 'length(width)' differs between new and previous
+	 ==> NOT changing 'width'
 > # override the check for 'width', but not 'bg':
 > ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE))
-Warning: ‘mode(bg)’ differs between new and previous
-	 ==> NOT changing ‘bg’
-Warning: ‘length(width)’ differs between new and previous
+Warning: 'mode(bg)' differs between new and previous
+	 ==> NOT changing 'bg'
+Warning: 'length(width)' differs between new and previous
 > utils::str(ps.options())
 List of 18
  $ onefile    : logi TRUE
@@ -3000,7 +2981,6 @@ List of 18
 > 
 > ### Name: recordGraphics
 > ### Title: Record Graphics Operations
-> ### Aliases: recordGraphics
 > ### Keywords: device
 > 
 > ### ** Examples
@@ -3028,7 +3008,6 @@ List of 18
 > 
 > ### Name: rgb
 > ### Title: RGB Color Specification
-> ### Aliases: rgb
 > ### Keywords: color
 > 
 > ### ** Examples
@@ -3060,7 +3039,6 @@ List of 18
 > 
 > ### Name: rgb2hsv
 > ### Title: RGB to HSV Conversion
-> ### Aliases: rgb2hsv
 > ### Keywords: color dplot
 > 
 > ### ** Examples
@@ -3160,7 +3138,6 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ### Name: trans3d
 > ### Title: 3D to 2D Transformation for Perspective Plots
-> ### Aliases: trans3d
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -3178,7 +3155,6 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ### Name: xy.coords
 > ### Title: Extracting Plotting Structures
-> ### Aliases: xy.coords
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -3241,7 +3217,6 @@ NULL
 > 
 > ### Name: xyTable
 > ### Title: Multiplicities of (x,y) Points, e.g., for a Sunflower Plot
-> ### Aliases: xyTable
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -3303,7 +3278,6 @@ $number
 > 
 > ### Name: xyz.coords
 > ### Title: Extracting Plotting Structures
-> ### Aliases: xyz.coords
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -3398,7 +3372,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.025 0.076 2.126 0 0 
+Time elapsed:  2.28 1.06 3.47 NA NA 
 > grDevices::dev.off()
 null device 
           1 

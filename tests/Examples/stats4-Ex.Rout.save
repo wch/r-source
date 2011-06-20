@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-06 r55347)
+R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,7 +32,6 @@ Type 'q()' to quit R.
 > 
 > ### Name: mle
 > ### Title: Maximum Likelihood Estimation
-> ### Aliases: mle
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -153,7 +152,7 @@ lxhalf  1.6615  6.4794
 > 
 > ### Name: update-methods
 > ### Title: Methods for Function 'update' in Package 'stats4'
-> ### Aliases: update-methods update,ANY-method update,mle-method
+> ### Aliases: update,ANY-method update,mle-method
 > ### Keywords: methods
 > 
 > ### ** Examples
@@ -179,7 +178,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.034 0.026 1.089 0 0 
+Time elapsed:  1.16 0.12 1.5 NA NA 
 > grDevices::dev.off()
 null device 
           1 

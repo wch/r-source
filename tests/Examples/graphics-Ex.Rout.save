@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-10 r56120)
+R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,7 +32,6 @@ Type 'q()' to quit R.
 > 
 > ### Name: abline
 > ### Title: Add Straight Lines to a Plot
-> ### Aliases: abline
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -72,7 +71,6 @@ Type 'q()' to quit R.
 > 
 > ### Name: arrows
 > ### Title: Add Arrows to a Plot
-> ### Aliases: arrows
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -96,7 +94,6 @@ Type 'q()' to quit R.
 > 
 > ### Name: assocplot
 > ### Title: Association Plots
-> ### Aliases: assocplot
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -122,7 +119,6 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: axTicks
 > ### Title: Compute Axis Tickmark Locations
-> ### Aliases: axTicks
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -181,7 +177,7 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: axis.POSIXct
 > ### Title: Date and Date-time Plotting Functions
-> ### Aliases: axis.POSIXct axis.Date
+> ### Aliases: axis.Date
 > ### Keywords: utilities chron
 > 
 > ### ** Examples
@@ -225,7 +221,6 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: axis
 > ### Title: Add an Axis to a Plot
-> ### Aliases: axis
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -257,7 +252,7 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: barplot
 > ### Title: Bar Plots
-> ### Aliases: barplot barplot.default
+> ### Aliases: barplot.default
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -336,7 +331,6 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: box
 > ### Title: Draw a Box around a Plot
-> ### Aliases: box
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -355,7 +349,7 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: boxplot
 > ### Title: Box Plots
-> ### Aliases: boxplot boxplot.default boxplot.formula
+> ### Aliases: boxplot.default boxplot.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -418,7 +412,6 @@ Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
 > 
 > ### Name: boxplot.matrix
 > ### Title: Draw a Boxplot for each Column (Row) of a Matrix
-> ### Aliases: boxplot.matrix
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -439,7 +432,6 @@ Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
 > 
 > ### Name: bxp
 > ### Title: Draw Box Plots from Summaries
-> ### Aliases: bxp
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -533,7 +525,7 @@ Warning in bxp(bx.p, notch = TRUE, boxfill = "lightblue", border = 2:6,  :
 > 
 > ### Name: cdplot
 > ### Title: Conditional Density Plots
-> ### Aliases: cdplot cdplot.default cdplot.formula
+> ### Aliases: cdplot.default cdplot.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -578,7 +570,6 @@ temperature no yes
 > 
 > ### Name: clip
 > ### Title: Set Clipping Region
-> ### Aliases: clip
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -603,7 +594,7 @@ temperature no yes
 > 
 > ### Name: contour
 > ### Title: Display Contours
-> ### Aliases: contour contour.default
+> ### Aliases: contour.default
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -693,7 +684,7 @@ temperature no yes
 > 
 > ### Name: coplot
 > ### Title: Conditioning Plots
-> ### Aliases: coplot co.intervals
+> ### Aliases: co.intervals
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -737,7 +728,7 @@ temperature no yes
 > 
 > ### Name: curve
 > ### Title: Draw Function Plots
-> ### Aliases: curve plot.function
+> ### Aliases: plot.function
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -779,7 +770,6 @@ temperature no yes
 > 
 > ### Name: dotchart
 > ### Title: Cleveland's Dot Plots
-> ### Aliases: dotchart
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -801,7 +791,6 @@ temperature no yes
 > 
 > ### Name: filled.contour
 > ### Title: Level (Contour) Plots
-> ### Aliases: filled.contour
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -845,7 +834,6 @@ temperature no yes
 > 
 > ### Name: fourfoldplot
 > ### Title: Fourfold Plots
-> ### Aliases: fourfoldplot
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -889,7 +877,6 @@ Female Yes                89  17 202 131  94  24
 > 
 > ### Name: grid
 > ### Title: Add Grid to a Plot
-> ### Aliases: grid
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -923,7 +910,7 @@ Female Yes                89  17 202 131  94  24
 > 
 > ### Name: hist.POSIXt
 > ### Title: Histogram of a Date or Date-Time Object
-> ### Aliases: hist.POSIXt hist.Date
+> ### Aliases: hist.Date
 > ### Keywords: chron dplot hplot
 > 
 > ### ** Examples
@@ -946,7 +933,7 @@ Female Yes                89  17 202 131  94  24
 > 
 > ### Name: hist
 > ### Title: Histograms
-> ### Aliases: hist hist.default
+> ### Aliases: hist.default
 > ### Keywords: dplot hplot distribution
 > 
 > ### ** Examples
@@ -1031,7 +1018,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > ### Name: identify
 > ### Title: Identify Points in a Scatter Plot
-> ### Aliases: identify identify.default
+> ### Aliases: identify.default
 > ### Keywords: iplot
 > 
 > ### ** Examples
@@ -1063,7 +1050,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > ### Name: image
 > ### Title: Display a Color Image
-> ### Aliases: image image.default
+> ### Aliases: image.default
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -1101,7 +1088,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > ### Name: layout
 > ### Title: Specifying Complex Plot Arrangements
-> ### Aliases: layout layout.show lcm
+> ### Aliases: layout.show lcm
 > ### Keywords: iplot dplot environment
 > 
 > ### ** Examples
@@ -1158,7 +1145,6 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > ### Name: legend
 > ### Title: Add Legends to Plots
-> ### Aliases: legend
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -1306,7 +1292,7 @@ List of 2
 > 
 > ### Name: lines
 > ### Title: Add Connected Line Segments to a Plot
-> ### Aliases: lines lines.default
+> ### Aliases: lines.default
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -1325,7 +1311,7 @@ List of 2
 > 
 > ### Name: matplot
 > ### Title: Plot Columns of Matrices
-> ### Aliases: matplot matpoints matlines
+> ### Aliases: matpoints matlines
 > ### Keywords: hplot aplot array
 > 
 > ### ** Examples
@@ -1388,7 +1374,7 @@ List of 2
 > 
 > ### Name: mosaicplot
 > ### Title: Mosaic Plots
-> ### Aliases: mosaicplot mosaicplot.default mosaicplot.formula
+> ### Aliases: mosaicplot.default mosaicplot.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1434,7 +1420,6 @@ List of 2
 > 
 > ### Name: mtext
 > ### Title: Write Text into the Margins of a Plot
-> ### Aliases: mtext
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -1461,7 +1446,7 @@ List of 2
 > 
 > ### Name: pairs
 > ### Title: Scatterplot Matrices
-> ### Aliases: pairs pairs.default pairs.formula
+> ### Aliases: pairs.default pairs.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1514,7 +1499,6 @@ List of 2
 > 
 > ### Name: panel.smooth
 > ### Title: Simple Panel Plot
-> ### Aliases: panel.smooth
 > ### Keywords: hplot dplot
 > 
 > ### ** Examples
@@ -1532,7 +1516,7 @@ List of 2
 > 
 > ### Name: par
 > ### Title: Set or Query Graphical Parameters
-> ### Aliases: par .Pars 'graphical parameter' 'graphical parameters'
+> ### Aliases: .Pars 'graphical parameter' 'graphical parameters'
 > ### Keywords: iplot dplot environment
 > 
 > ### ** Examples
@@ -1606,7 +1590,7 @@ armed.forces
 > 
 > ### Name: persp
 > ### Title: Perspective Plots
-> ### Aliases: persp persp.default
+> ### Aliases: persp.default
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -1691,7 +1675,6 @@ armed.forces
 > 
 > ### Name: pie
 > ### Title: Pie Charts
-> ### Aliases: pie
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1725,7 +1708,6 @@ armed.forces
 > 
 > ### Name: plot
 > ### Title: Generic X-Y Plotting
-> ### Aliases: plot
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1754,7 +1736,6 @@ armed.forces
 > 
 > ### Name: plot.data.frame
 > ### Title: Plot Method for Data Frames
-> ### Aliases: plot.data.frame
 > ### Keywords: hplot methods
 > 
 > ### ** Examples
@@ -1777,7 +1758,6 @@ armed.forces
 > 
 > ### Name: plot.default
 > ### Title: The Default Scatterplot Function
-> ### Aliases: plot.default
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1831,7 +1811,6 @@ armed.forces
 > 
 > ### Name: plot.design
 > ### Title: Plot Univariate Effects of a Design or Model
-> ### Aliases: plot.design
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1846,7 +1825,7 @@ wool         1  450.7  450.67  3.3393 0.073614 .
 tension      2 2034.3 1017.13  7.5367 0.001378 **
 Residuals   50 6747.9  134.96                    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > plot.design(       Form, data = warpbreaks, col = 2)# same as above
 > 
 > ## More than one y :
@@ -1877,7 +1856,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: plot.factor
 > ### Title: Plotting Factor Variables
-> ### Aliases: plot.factor
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -1901,7 +1879,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: plot.formula
 > ### Title: Formula Notation for Scatterplots
-> ### Aliases: plot.formula lines.formula points.formula text.formula
+> ### Aliases: lines.formula points.formula text.formula
 > ### Keywords: hplot aplot
 > 
 > ### ** Examples
@@ -1929,7 +1907,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: plot.table
 > ### Title: Plot Methods for 'table' Objects
-> ### Aliases: plot.table lines.table points.table
+> ### Aliases: lines.table points.table
 > ### Keywords: hplot category
 > 
 > ### ** Examples
@@ -1957,7 +1935,7 @@ N
 > 
 > ### Name: plot.window
 > ### Title: Set up World Coordinates for Graphics Window
-> ### Aliases: plot.window xlim ylim asp
+> ### Aliases: xlim ylim asp
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -1981,7 +1959,6 @@ N
 > 
 > ### Name: plot.xy
 > ### Title: Basic Internal Plot Function
-> ### Aliases: plot.xy
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2001,7 +1978,7 @@ plot.xy(xy.coords(x, y), type = type, ...)
 > 
 > ### Name: plot.histogram
 > ### Title: Plot Histograms
-> ### Aliases: plot.histogram lines.histogram
+> ### Aliases: lines.histogram
 > ### Keywords: hplot iplot
 > 
 > ### ** Examples
@@ -2050,7 +2027,7 @@ attr(,"class")
 > 
 > ### Name: points
 > ### Title: Add Points to a Plot
-> ### Aliases: points points.default pch
+> ### Aliases: points.default pch
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2111,7 +2088,6 @@ attr(,"class")
 > 
 > ### Name: polygon
 > ### Title: Polygon Drawing
-> ### Aliases: polygon
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2164,7 +2140,6 @@ attr(,"class")
 > 
 > ### Name: polypath
 > ### Title: Path Drawing
-> ### Aliases: polypath
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2215,7 +2190,6 @@ attr(,"class")
 > 
 > ### Name: rasterImage
 > ### Title: Draw One or More Raster Images
-> ### Aliases: rasterImage
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2245,7 +2219,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### Name: rect
 > ### Title: Draw One or More Rectangles
-> ### Aliases: rect
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2292,7 +2265,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### Name: rug
 > ### Title: Add a Rug to a Plot
-> ### Aliases: rug
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2314,7 +2286,7 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### Name: screen
 > ### Title: Creating and Controlling Multiple Screens on a Single Device
-> ### Aliases: screen split.screen erase.screen close.screen
+> ### Aliases: split.screen erase.screen close.screen
 > ### Keywords: aplot dplot device
 > 
 > ### ** Examples
@@ -2356,7 +2328,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### Name: segments
 > ### Title: Add Line Segments to a Plot
-> ### Aliases: segments
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2380,7 +2351,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > 
 > ### Name: smoothScatter
 > ### Title: Scatterplots with Smoothed Densities Color Representation
-> ### Aliases: smoothScatter
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -2424,7 +2394,7 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: spineplot
 > ### Title: Spine Plots and Spinograms
-> ### Aliases: spineplot spineplot.default spineplot.formula
+> ### Aliases: spineplot.default spineplot.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -2512,7 +2482,6 @@ temperature no yes
 > 
 > ### Name: stars
 > ### Title: Star (Spider/Radar) Plots and Segment Diagrams
-> ### Aliases: stars
 > ### Keywords: hplot multivariate
 > 
 > ### ** Examples
@@ -2573,7 +2542,6 @@ temperature no yes
 > 
 > ### Name: stem
 > ### Title: Stem-and-Leaf Plots
-> ### Aliases: stem
 > ### Keywords: univar distribution
 > 
 > ### ** Examples
@@ -2615,7 +2583,7 @@ temperature no yes
 > 
 > ### Name: stripchart
 > ### Title: 1-D Scatter Plots
-> ### Aliases: stripchart stripchart.default stripchart.formula
+> ### Aliases: stripchart.default stripchart.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
@@ -2648,7 +2616,7 @@ temperature no yes
 > 
 > ### Name: strwidth
 > ### Title: Plotting Dimensions of Character Strings and Math Expressions
-> ### Aliases: strwidth strheight
+> ### Aliases: strheight
 > ### Keywords: dplot character
 > 
 > ### ** Examples
@@ -2741,7 +2709,7 @@ $`11.33`
 > 
 > ### Name: sunflowerplot
 > ### Title: Produce a Sunflower Scatter Plot
-> ### Aliases: sunflowerplot sunflowerplot.default sunflowerplot.formula
+> ### Aliases: sunflowerplot.default sunflowerplot.formula
 > ### Keywords: hplot smooth nonparametric
 > 
 > ### ** Examples
@@ -2785,7 +2753,6 @@ List of 3
 > 
 > ### Name: symbols
 > ### Title: Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots)
-> ### Aliases: symbols
 > ### Keywords: aplot hplot multivariate
 > 
 > ### ** Examples
@@ -2823,7 +2790,6 @@ List of 3
 > 
 > ### Name: title
 > ### Title: Plot Annotation
-> ### Aliases: title
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2901,7 +2867,6 @@ function (xy = 1, warn.log = TRUE)
 > 
 > ### Name: xspline
 > ### Title: Draw an X-spline
-> ### Aliases: xspline
 > ### Keywords: aplot
 > 
 > ### ** Examples
@@ -2960,7 +2925,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.588 0.08 4.693 0 0 
+Time elapsed:  4.26 5.44 9.92 NA NA 
 > grDevices::dev.off()
 null device 
           1 
