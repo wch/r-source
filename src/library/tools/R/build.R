@@ -800,6 +800,8 @@ get_exclude_patterns <- function()
             ## This should preserve dates and permissions (subject to
             ## umask, if that is consulted which it seems it usually is not).
             ## Permissions are increased later.
+            ## If we had GNU cp we might use
+            ## cp -Lr --preserve=timestamps
             if (system(paste("cp -pr", shQuote(pkgname), shQuote(Tdir)))) {
                 errorLog(Log, "copying to build directory failed")
                 do_exit(1L)

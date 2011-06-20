@@ -866,6 +866,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(fsize)[i] = (double) sb.st_size;
 	    LOGICAL(isdir)[i] = (sb.st_mode & S_IFDIR) > 0;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
+	    /* POSIX 2008 changed this to a struct timespec st_mtim etc
+	       Not all OSes (e.g. Darwin) agree on this.
+	     */
 	    REAL(mtime)[i] = (double) sb.st_mtime;
 	    REAL(ctime)[i] = (double) sb.st_ctime;
 	    REAL(atime)[i] = (double) sb.st_atime;
