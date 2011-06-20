@@ -1046,6 +1046,9 @@
       on the paths: this helps (usually) to present them in a
       user-friendly form and should detect duplicate paths accessed via
       different symbolic links.
+
+      \item \code{download.file()} can be now used with external methods
+      even if there are spaces in the URL or the target filename.
     }
   }
 
