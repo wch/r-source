@@ -324,6 +324,10 @@
       
       \item \command{Rscript} on a Unix-alike now accepts file names
       containing spaces (if these are escaped or quoted in the shell).
+
+      \item \command{R CMD build} on a Unix-alike (only) now tries to
+      preserve dates on files it copies from its input directory.  (This
+      was the undocumented behaviour prior to \R 2.13.0.)
     }
   }
 

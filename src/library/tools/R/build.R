@@ -790,9 +790,20 @@ get_exclude_patterns <- function()
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
-        if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
-            errorLog(Log, "copying to build directory failed")
-            do_exit(1L)
+        if (WINDOWS) {
+            ## This preserves read-only for files, but not dates
+            if (!file.copy(pkgname, Tdir, recursive = TRUE)) {
+                errorLog(Log, "copying to build directory failed")
+                do_exit(1L)
+            }
+        } else {
+            ## This should preserve dates and permissions (subject to
+            ## umask, if that is consulted which it seems it usually is not).
+            ## Permissions are increased later.
+            if (system(paste("cp -pr", shQuote(pkgname), shQuote(Tdir)))) {
+                errorLog(Log, "copying to build directory failed")
+                do_exit(1L)
+            }
         }
         setwd(Tdir)
 
