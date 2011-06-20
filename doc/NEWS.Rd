@@ -193,6 +193,10 @@
       of topics searched by \code{help()}, so need not be repeated as
       an \code{\\alias}.  (Currently the QC code has not been updated,
       so it will issue spurious warnings.)
+      
+      \item The file times reported by \code{file.info()} are reported
+      to sub-second resolution on systems which support it.  (Currently
+      the POSIX 2008 and FreeBSD/Darwin/NetBD methods are detected.)
     }
   }
   

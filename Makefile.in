@@ -29,6 +29,7 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
 
 ACLOCAL_M4 = aclocal.m4
+## NB: this is duplicated in m4/Makefile.in
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
 	m4/bigendian.m4 \
@@ -37,7 +38,8 @@ ACINCLUDE_DEPENDENCIES = \
 	m4/codeset.m4 \
 	m4/gettext.m4 m4/gettext-lib.m4 \
 	m4/java.m4 \
-	m4/libtool.m4 m4/ltoptions.m4 m4/ltversion.m4 m4/ltsugar.m4 m4/lt~obsolete.m4
+	m4/libtool.m4 m4/ltoptions.m4 m4/ltversion.m4 m4/ltsugar.m4 m4/lt~obsolete.m4 \
+	m4/stat-time.m4
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck

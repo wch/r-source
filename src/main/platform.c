@@ -788,6 +788,20 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 # endif
 #endif
 
+#if defined HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC
+# ifdef TYPEOF_STRUCT_STAT_ST_ATIM_IS_STRUCT_TIMESPEC
+#  define STAT_TIMESPEC(st, st_xtim) ((st).st_xtim)
+# else
+#  define STAT_TIMESPEC_NS(st, st_xtim) ((st).st_xtim.tv_nsec)
+# endif
+#elif defined HAVE_STRUCT_STAT_ST_ATIMESPEC_TV_NSEC
+# define STAT_TIMESPEC(st, st_xtim) ((st).st_xtim##espec)
+#elif defined HAVE_STRUCT_STAT_ST_ATIMENSEC
+# define STAT_TIMESPEC_NS(st, st_xtim) ((st).st_xtim##ensec)
+#elif defined HAVE_STRUCT_STAT_ST_ATIM_ST__TIM_TV_NSEC
+# define STAT_TIMESPEC_NS(st, st_xtim) ((st).st_xtim.st__tim.tv_nsec)
+#endif
+
 SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir,
@@ -849,7 +863,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 #ifdef Win32
 	wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
-	/* 'Sharpie and fellow ignorami use trailing / on Windows,
+	/* 'Sharpie' and fellow ignorami use trailing / on Windows,
 	   where it is not valid */
 	wchar_t *p = wfn + (wcslen(wfn) - 1);
 	if (*p == L'/' || *p == L'\\') *p = 0;
@@ -866,12 +880,27 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(fsize)[i] = (double) sb.st_size;
 	    LOGICAL(isdir)[i] = (sb.st_mode & S_IFDIR) > 0;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
+
+#if defined STAT_TIMESPEC
 	    /* POSIX 2008 changed this to a struct timespec st_mtim etc
-	       Not all OSes (e.g. Darwin) agree on this.
-	     */
+	       Not all OSes (e.g. Darwin) agree on this. */
+	    REAL(mtime)[i] = (double) STAT_TIMESPEC(sb, st_mtim).tv_sec
+		+ 1e-9 * STAT_TIMESPEC(sb, st_mtim).tv_nsec;
+	    REAL(ctime)[i] = (double) STAT_TIMESPEC(sb, st_ctim).tv_sec
+		+ 1e-9 * STAT_TIMESPEC(sb, st_ctim).tv_nsec;
+	    REAL(atime)[i] = (double) STAT_TIMESPEC(sb, st_atim).tv_sec
+		+ 1e-9 * STAT_TIMESPEC(sb, st_atim).tv_nsec;
+#else
+	    /* FIXME: there are higher-resolution ways to do this on Windows */
 	    REAL(mtime)[i] = (double) sb.st_mtime;
 	    REAL(ctime)[i] = (double) sb.st_ctime;
 	    REAL(atime)[i] = (double) sb.st_atime;
+# ifdef STAT_TIMESPEC_NS
+	    REAL(mtime)[i] += STAT_TIMESPEC_NS (st, st_mtim);
+	    REAL(ctime)[i] += STAT_TIMESPEC_NS (st, st_ctim);
+	    REAL(atime)[i] += STAT_TIMESPEC_NS (st, st_atim);
+# endif
+#endif
 #ifdef UNIX_EXTRAS
 	    INTEGER(uid)[i] = (int) sb.st_uid;
 	    INTEGER(gid)[i] = (int) sb.st_gid;

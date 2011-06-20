@@ -2128,6 +2128,9 @@ R_PCRE
 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
+
+## stat times
+gl_STAT_TIME
  
 ## R profiling.
 if test "${want_R_profiling}" = yes; then
