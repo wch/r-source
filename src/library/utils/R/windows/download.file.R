@@ -45,15 +45,15 @@ download.file <- function(url, destfile, method,
     else if(method == "wget") {
         extra <- if(quiet) "--quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
-        status <- system(paste("wget", extra, url,
-                               "-O", path.expand(destfile)))
+        status <- system(paste("wget", extra, shQuote(url),
+                               "-O", shQuote(path.expand(destfile))))
     } else if(method == "curl") {
         extra <- if(quiet) "-s -S" else ""
-        status <- system(paste("curl", extra, url,
-                               " -o", path.expand(destfile)))
+        status <- system(paste("curl", extra, shQuote(url),
+                               " -o", shQuote(path.expand(destfile))))
     } else if(method == "lynx")
         status <- shell(paste("lynx -dump", shQuote(url), ">",
-                              path.expand(destfile)))
+                              shQuote(path.expand(destfile))))
 
     if(status > 0L)
         warning("download had nonzero exit status")
