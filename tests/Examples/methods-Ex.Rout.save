@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-22 r55587)
+R version 2.13.0 Patched (2011-06-19 r56186)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -597,7 +597,7 @@ Error in initialize(value, ...) :
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: S4groupGeneric
-> ### Title: Group Generic Functions
+> ### Title: S4 Group Generic Functions
 > ### Aliases: S4groupGeneric GroupGenericFunctions Math Ops Summary Arith
 > ###   Logic Compare Complex Math2
 > ### Keywords: methods
@@ -1309,7 +1309,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x2ce3190>
+<environment: 0x2854b98>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -2892,7 +2892,7 @@ function (object)
     }
     NULL
 }
-<environment: 0x3072a08>
+<environment: 0x2c2bbe0>
 
 Signatures:
         object    
@@ -3244,7 +3244,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.917 0.04 6.004 0 0 
+Time elapsed:  5.878 0.042 5.971 0 0 
 > grDevices::dev.off()
 null device 
           1 
