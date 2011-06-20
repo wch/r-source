@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Classes}
+\alias{Classes}
 \alias{__ClassMetaData}
 \alias{.environment-class}
 \alias{.externalptr-class}

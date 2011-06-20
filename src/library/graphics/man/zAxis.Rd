@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Axis}
+\alias{Axis}
 \title{Generic Function to Add an Axis to a Plot}
 \description{
   Generic function to add a suitable axis to the current plot.

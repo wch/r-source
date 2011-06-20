@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{NegBinomial}
+\alias{NegBinomial}
 \alias{dnbinom}
 \alias{pnbinom}
 \alias{qnbinom}

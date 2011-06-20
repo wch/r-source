@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{callNextMethod}
+\alias{callNextMethod}
 \title{Call an Inherited Method}
 \description{
   A call to \code{callNextMethod} can only appear inside a method

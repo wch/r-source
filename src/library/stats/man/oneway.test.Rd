@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{oneway.test}
+\alias{oneway.test}
 \title{Test for Equal Means in a One-Way Layout}
 \description{
   Test whether two or more samples from normal distributions have the

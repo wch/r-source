@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{TkCommands}
+\alias{TkCommands}
 \alias{tcl}
 \alias{tktitle}
 \alias{tktitle<-}

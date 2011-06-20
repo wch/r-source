@@ -5,6 +5,7 @@
 
 \name{trees}
 \docType{data}
+\alias{trees}
 \title{Girth, Height and Volume for Black Cherry Trees}
 \description{
   This data set provides measurements of the girth, height and volume

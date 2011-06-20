@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{IQR}
+\alias{IQR}
 \title{The Interquartile Range}
 \usage{
 IQR(x, na.rm = FALSE, type = 7)

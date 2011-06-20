@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{convertNative}
+\alias{convertNative}
 \title{ Convert a Unit Object to Native units }
 \description{
   \bold{This function is deprecated in grid version 0.8 and will be

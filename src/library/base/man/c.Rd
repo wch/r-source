@@ -8,6 +8,7 @@
 \usage{
 c(\dots, recursive=FALSE)
 }
+\alias{c}
 \description{
   This is a generic function which combines its arguments.
 

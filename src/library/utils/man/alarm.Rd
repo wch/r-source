@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{alarm}
+\alias{alarm}
 \concept{beep}
 \concept{bell}
 \title{Alert the User}

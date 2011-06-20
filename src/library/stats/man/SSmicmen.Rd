@@ -9,6 +9,7 @@
 \usage{
 SSmicmen(input, Vm, K)
 }
+\alias{SSmicmen}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{Vm}{a numeric parameter representing the maximum value of the response.}

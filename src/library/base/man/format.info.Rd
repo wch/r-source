@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{format.info}
+\alias{format.info}
 \title{format(.) Information}
 \description{
   Information is returned on how \code{\link{format}(x, digits, nsmall)}

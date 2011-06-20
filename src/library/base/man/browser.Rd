@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{browser}
+\alias{browser}
 \title{Environment Browser}
 \description{
   Interrupt the execution of an expression and allow the inspection of

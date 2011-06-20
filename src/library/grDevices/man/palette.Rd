@@ -8,6 +8,7 @@
 \usage{
 palette(value)
 }
+\alias{palette}
 \arguments{
   \item{value}{an optional character vector.}
 }

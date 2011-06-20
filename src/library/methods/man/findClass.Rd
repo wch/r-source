@@ -8,6 +8,7 @@
 \alias{resetClass}
 \alias{isClass}
 \alias{getClasses}
+\alias{findClass}
 \alias{sealClass}
 \title{Computations with Classes}
 \description{

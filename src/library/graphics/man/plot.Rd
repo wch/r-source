@@ -5,6 +5,7 @@
 
 \name{plot}
 \title{Generic X-Y Plotting}
+\alias{plot}
 \usage{
 plot(x, y, \dots)
 }

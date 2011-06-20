@@ -10,6 +10,7 @@ prop.test(x, n, p = NULL,
           alternative = c("two.sided", "less", "greater"),
           conf.level = 0.95, correct = TRUE)
 }
+\alias{prop.test}
 \arguments{
   \item{x}{a vector of counts of successes, a one-dimensional table with
     two entries, or a two-dimensional table (or matrix) with 2 columns,

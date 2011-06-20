@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{lag}
+\alias{lag}
 \alias{lag.default}
 \title{Lag a Time Series}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cumsum}
+\alias{cumsum}
 \alias{cumprod}
 \alias{cummin}
 \alias{cummax}

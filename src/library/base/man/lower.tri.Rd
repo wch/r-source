@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{lower.tri}
+\alias{lower.tri}
 \alias{upper.tri}
 \title{Lower and Upper Triangular Part of a Matrix}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
+\alias{RShowDoc}
 \title{Show R Manuals and Other Documentation}
 \description{
   Utility function to find and display \R documentation.

@@ -8,6 +8,7 @@
 \usage{
 structure(.Data, \dots)
 }
+\alias{structure}
 \arguments{
   \item{.Data}{an object which will have
     various attributes attached to it.}

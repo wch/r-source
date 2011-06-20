@@ -10,6 +10,7 @@ effects(object, \dots)
 
 \method{effects}{lm}(object, set.sign = FALSE, \dots)
 }
+\alias{effects}
 \alias{effects.lm}
 \alias{effects.glm}
 \arguments{

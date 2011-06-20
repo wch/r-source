@@ -8,6 +8,7 @@
 \usage{
 \method{plot}{factor}(x, y, legend.text = NULL, \dots)
 }
+\alias{plot.factor}
 \arguments{
     \item{x, y}{numeric or factor. \code{y} may be missing.}
     \item{legend.text}{character vector for annotation of y axis in the

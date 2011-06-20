@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{chooseBioCmirror}
+\alias{chooseBioCmirror}
 \alias{getBioCmirrors}
 \title{Select a Bioconductor Mirror}
 \description{

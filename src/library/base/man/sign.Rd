@@ -8,6 +8,7 @@
 \usage{
 sign(x)
 }
+\alias{sign}
 \arguments{
   \item{x}{a numeric vector}
 }

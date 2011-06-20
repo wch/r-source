@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{file_test}
+\alias{file_test}
 \title{
   Shell-style Tests on Files
 }

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.grill}
+\alias{grid.grill}
 \title{Draw a Grill}
 \description{
   This function draws a grill within a Grid viewport.

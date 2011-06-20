@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getLoadedDLLs}
+\alias{getLoadedDLLs}
 \alias{print.DLLInfo}
 \alias{print.DLLInfoList}
 \alias{$.DLLInfo}

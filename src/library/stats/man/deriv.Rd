@@ -5,6 +5,7 @@
 
 \name{deriv}
 \alias{D}
+\alias{deriv}
 \alias{deriv.default}
 \alias{deriv.formula}
 \alias{deriv3}

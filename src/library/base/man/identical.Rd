@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{identical}
+\alias{identical}
 \title{Test Objects for Exact Equality}
 \description{
   The safe and reliable way to test two objects for being

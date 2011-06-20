@@ -5,6 +5,7 @@
 
 \name{row.names}
 \title{Get and Set Row Names for Data Frames}
+\alias{row.names}
 \alias{row.names.data.frame}
 \alias{row.names.default}
 \alias{row.names<-}

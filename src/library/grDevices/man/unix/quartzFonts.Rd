@@ -5,6 +5,7 @@
 
 \name{quartzFonts}
 \alias{quartzFont}
+\alias{quartzFonts}
 \concept{fonts}
 \concept{encoding}
 \title{quartz Fonts}

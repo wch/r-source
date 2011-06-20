@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{data.matrix}
+\alias{data.matrix}
 \title{Convert a Data Frame to a Numeric Matrix}
 \description{
   Return the matrix obtained by converting all the variables in a data

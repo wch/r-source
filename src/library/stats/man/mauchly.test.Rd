@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mauchly.test}
+\alias{mauchly.test}
 \alias{mauchly.test.SSD}
 \alias{mauchly.test.mlm}
 \title{Mauchly's Test of Sphericity}

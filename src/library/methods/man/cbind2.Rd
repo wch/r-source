@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cbind2}
+\alias{cbind2}
 \alias{rbind2}
 %\docType{methods} - here in same file
 \alias{cbind2-methods}

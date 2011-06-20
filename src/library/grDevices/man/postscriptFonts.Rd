@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{postscriptFonts}
+\alias{postscriptFonts}
 \alias{pdfFonts}
 \concept{fonts}
 \concept{encoding}

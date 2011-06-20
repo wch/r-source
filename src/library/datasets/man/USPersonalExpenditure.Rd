@@ -5,6 +5,7 @@
 
 \name{USPersonalExpenditure}
 \docType{data}
+\alias{USPersonalExpenditure}
 \title{Personal Expenditure Data}
 \description{
   This data set consists of United States personal expenditures (in

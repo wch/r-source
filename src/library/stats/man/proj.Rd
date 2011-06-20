@@ -16,6 +16,7 @@ proj(object, \dots)
 
 \method{proj}{lm}(object, onedf = FALSE, unweighted.scale = FALSE, \dots)  
 }
+\alias{proj}
 \alias{proj.default}
 \alias{proj.lm}
 \alias{proj.aov}

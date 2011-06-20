@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{on.exit}
+\alias{on.exit}
 \title{Function Exit Code}
 \description{
   \code{on.exit} records the expression given as its argument as needing

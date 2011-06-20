@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{undoc}
+\alias{undoc}
 \alias{print.undoc}
 \title{Find Undocumented Objects}
 \usage{

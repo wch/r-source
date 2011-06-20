@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Exponential}
+\alias{Exponential}
 \alias{dexp}
 \alias{pexp}
 \alias{qexp}

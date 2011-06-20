@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{formatDL}
+\alias{formatDL}
 \title{Format Description Lists}
 \description{Format vectors of items and their descriptions as 2-column
   tables or LaTeX-style description lists.

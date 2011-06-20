@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
+\alias{plot.lm}
 \alias{plot.mlm}%which is .NotYetImplemented()
 \title{Plot Diagnostics for an lm Object}
 \usage{

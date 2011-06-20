@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{na.contiguous}
+\alias{na.contiguous}
 \alias{na.contiguous.default}
 \title{Find Longest Contiguous Stretch of non-NAs}
 \description{

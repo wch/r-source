@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{file.path}
+\alias{file.path}
 \title{Construct Path to File}
 \description{
   Construct the path to a file from components in a platform-independent

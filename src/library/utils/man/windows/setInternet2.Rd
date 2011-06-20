@@ -5,6 +5,7 @@
 
 \name{setInternet2}
 \Rdversion{1.1}
+\alias{setInternet2}
 \title{
 Set or disable the use of Internet Explorer for Internet access.
 }

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{readChar}
+\alias{readChar}
 \alias{writeChar}
 \title{Transfer Character Strings To and From Connections}
 \description{

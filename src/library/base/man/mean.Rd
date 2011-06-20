@@ -10,6 +10,7 @@ mean(x, \dots)
 
 \method{mean}{default}(x, trim = 0, na.rm = FALSE, \dots)
 }
+\alias{mean}
 \alias{mean.default}
 \alias{mean.data.frame}
 \arguments{

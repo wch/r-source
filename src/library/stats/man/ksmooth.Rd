@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ksmooth}
+\alias{ksmooth}
 \title{Kernel Regression Smoother}
 \description{
   The Nadaraya--Watson kernel regression estimate.

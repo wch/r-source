@@ -8,6 +8,7 @@
 \usage{
 boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 }
+\alias{boxplot.stats}
 \arguments{
   \item{x}{a numeric vector for which the boxplot will
     be constructed (\code{\link{NA}}s and \code{\link{NaN}}s are allowed

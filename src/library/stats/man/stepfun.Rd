@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{stepfun}
+\alias{stepfun}
 \alias{is.stepfun}
 \alias{as.stepfun}
 \alias{print.stepfun}

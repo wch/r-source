@@ -5,6 +5,7 @@
 
 \name{EmptyMethodsList-class}
 \docType{class}
+\alias{EmptyMethodsList-class}
 \title{Internal Class representing Empty Methods List }
 \description{
   Objects from class \code{"EmptyMethodsList"} are generated during

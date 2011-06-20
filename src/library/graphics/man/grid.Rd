@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid}
+\alias{grid}
 \title{Add Grid to a Plot}
 \description{
   \code{grid} adds an \code{nx} by \code{ny} rectangular grid to an

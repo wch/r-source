@@ -5,6 +5,7 @@
 
 \name{Rdindex}
 \title{Generate Index from Rd Files}
+\alias{Rdindex}
 \description{
   Print a 2-column index table with names and titles from given
   R documentation files to a given output file or connection.  The

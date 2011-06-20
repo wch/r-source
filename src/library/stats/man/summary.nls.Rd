@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{summary.nls}
+\alias{summary.nls}
 \alias{print.summary.nls}
 \title{Summarizing Non-Linear Least-Squares Model Fits}
 \description{

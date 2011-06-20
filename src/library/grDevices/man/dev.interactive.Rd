@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dev.interactive}
+\alias{dev.interactive}
 \alias{deviceIsInteractive}
 \title{Is the Current Graphics Device Interactive?}
 \description{

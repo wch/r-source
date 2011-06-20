@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{read.DIF}
+\alias{read.DIF}
 \title{Data Input from Spreadsheet}
 \description{
   Reads a file in Data Interchange Format (DIF) and creates a data frame

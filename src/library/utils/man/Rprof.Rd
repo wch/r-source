@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Rprof}
+\alias{Rprof}
 \title{Enable Profiling of R's Execution}
 \description{
   Enable or disable profiling of the execution of \R expressions.

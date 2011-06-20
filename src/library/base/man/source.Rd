@@ -20,6 +20,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        continue.echo = getOption("continue"),
        skip.echo = 0, keep.source = getOption("keep.source"))
 }
+\alias{source}
 \arguments{
   \item{file}{a \link{connection} or a character string giving the pathname
     of the file or URL to read from.  \code{""} indicates the connection

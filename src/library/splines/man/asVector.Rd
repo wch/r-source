@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{asVector}
+\alias{asVector}
 \title{Coerce an Object to a Vector}
 \description{
   This is a generic function.  Methods for this function coerce objects

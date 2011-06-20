@@ -5,6 +5,7 @@
 
 \name{factor}
 \title{Factors}
+\alias{factor}
 \alias{ordered}
 \alias{is.factor}
 \alias{is.ordered}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{promptMethods}
+\alias{promptMethods}
 \title{ Generate a Shell for Documentation of Formal Methods }
 \description{
   Generates a shell of documentation for the methods of a generic

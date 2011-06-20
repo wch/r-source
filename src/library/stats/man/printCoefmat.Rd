@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{printCoefmat}
+\alias{printCoefmat}
 \title{Print Coefficient Matrices}
 \description{
   Utility function to be used in higher-level \code{\link{print}}

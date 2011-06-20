@@ -5,6 +5,7 @@
 
 \name{ftable}
 \title{Flat Contingency Tables}
+\alias{ftable}
 \alias{ftable.default}
 \alias{print.ftable}
 \description{Create \sQuote{flat} contingency tables.}

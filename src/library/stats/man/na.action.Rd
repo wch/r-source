@@ -11,6 +11,7 @@
 \usage{
 na.action(object, \dots)
 }
+\alias{na.action}
 \alias{na.action.default}
 \arguments{
   \item{object}{any object whose \code{\link{NA}} action is given.}

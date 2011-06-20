@@ -10,6 +10,7 @@ fitted(object, \dots)
 fitted.values(object, \dots)
 }
 \alias{fitted.values}
+\alias{fitted}
 \alias{fitted.default}
 \arguments{
   \item{object}{an object for which the extraction of model fitted values is

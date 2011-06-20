@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{testInstalledPackage}
+\alias{testInstalledPackage}
 \alias{testInstalledPackages}
 \alias{testInstalledBasic}
 \title{Test Installed Packages}

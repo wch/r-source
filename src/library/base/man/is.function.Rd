@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{is.function}
+\alias{is.function}
 \alias{is.primitive}
 \title{Is an Object of Type (Primitive) Function?}
 \usage{

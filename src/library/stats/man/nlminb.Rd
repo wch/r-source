@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nlminb}
+\alias{nlminb}
 \title{Optimization using PORT routines }
 \description{
   Unconstrained and constrained optimization using PORT routines.

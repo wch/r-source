@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ns}
+\alias{ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
 \description{
   Generate the B-spline basis matrix for a natural cubic spline.

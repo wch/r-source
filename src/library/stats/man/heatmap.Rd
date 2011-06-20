@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{heatmap}
+\alias{heatmap}
 \title{ Draw a Heat Map }
 \description{
   A heat map is a false color image (basically

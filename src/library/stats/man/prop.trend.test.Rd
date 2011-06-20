@@ -8,6 +8,7 @@
 \usage{
 prop.trend.test(x, n, score = seq_along(x))
 }
+\alias{prop.trend.test}
 \arguments{
   \item{x}{ Number of events }
   \item{n}{ Number of trials }

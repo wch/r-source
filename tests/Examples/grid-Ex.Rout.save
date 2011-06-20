@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
+R version 2.14.0 Under development (unstable) (2011-03-16 r54820)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,6 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: Grid
 > ### Title: Grid Graphics
+> ### Aliases: Grid
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -57,6 +58,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: arrow
 > ### Title: Describe arrows to add to a line.
+> ### Aliases: arrow
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -87,6 +89,7 @@ attr(,"class")
 > 
 > ### Name: convertNative
 > ### Title: Convert a Unit Object to Native units
+> ### Aliases: convertNative
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -170,7 +173,7 @@ viewport[C]->(viewport[D])
 > 
 > ### Name: gEdit
 > ### Title: Create and Apply Edit Objects
-> ### Aliases: gEditList applyEdit applyEdits
+> ### Aliases: gEdit gEditList applyEdit applyEdits
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -189,6 +192,7 @@ viewport[C]->(viewport[D])
 > 
 > ### Name: gPath
 > ### Title: Concatenate Grob Names
+> ### Aliases: gPath
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -206,6 +210,7 @@ g1::g2
 > 
 > ### Name: getNames
 > ### Title: List the names of grobs on the display list
+> ### Aliases: getNames
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -225,7 +230,7 @@ g1::g2
 > 
 > ### Name: gpar
 > ### Title: Handling Grid Graphical Parameters
-> ### Aliases: get.gpar
+> ### Aliases: gpar get.gpar
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -300,7 +305,7 @@ $lty
 > 
 > ### Name: grid.arrows
 > ### Title: Draw Arrows
-> ### Aliases: arrowsGrob
+> ### Aliases: grid.arrows arrowsGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -383,6 +388,7 @@ $lty
 > 
 > ### Name: grid.cap
 > ### Title: Capture a raster image
+> ### Aliases: grid.cap
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -407,7 +413,7 @@ $lty
 > 
 > ### Name: grid.clip
 > ### Title: Set the Clipping Region
-> ### Aliases: clipGrob
+> ### Aliases: grid.clip clipGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -437,7 +443,7 @@ $lty
 > 
 > ### Name: grid.convert
 > ### Title: Convert Between Different grid Coordinate Systems
-> ### Aliases: grid.convertX grid.convertY grid.convertWidth
+> ### Aliases: grid.convert grid.convertX grid.convertY grid.convertWidth
 > ###   grid.convertHeight convertUnit convertX convertY convertWidth
 > ###   convertHeight
 > ### Keywords: dplot
@@ -513,7 +519,7 @@ $lty
 > 
 > ### Name: grid.curve
 > ### Title: Draw a Curve Between Locations
-> ### Aliases: curveGrob arcCurvature
+> ### Aliases: grid.curve curveGrob arcCurvature
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -564,6 +570,7 @@ $lty
 > 
 > ### Name: grid.draw
 > ### Title: Draw a grid grob
+> ### Aliases: grid.draw
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -584,7 +591,7 @@ $lty
 > 
 > ### Name: grid.edit
 > ### Title: Edit the Description of a Grid Graphical Object
-> ### Aliases: grid.gedit editGrob
+> ### Aliases: grid.edit grid.gedit editGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -610,7 +617,7 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > 
 > ### Name: grid.frame
 > ### Title: Create a Frame for Packing Objects
-> ### Aliases: frameGrob
+> ### Aliases: grid.frame frameGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -630,7 +637,7 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > 
 > ### Name: grid.function
 > ### Title: Draw a curve representing a function
-> ### Aliases: functionGrob grid.abline
+> ### Aliases: grid.function functionGrob grid.abline
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -681,7 +688,7 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > 
 > ### Name: grid.get
 > ### Title: Get a Grid Graphical Object
-> ### Aliases: grid.gget getGrob
+> ### Aliases: grid.get grid.gget getGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -706,7 +713,7 @@ NULL
 > 
 > ### Name: grid.grab
 > ### Title: Grab the current grid output
-> ### Aliases: grid.grabExpr
+> ### Aliases: grid.grab grid.grabExpr
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -729,6 +736,7 @@ NULL
 > 
 > ### Name: grid.layout
 > ### Title: Create a Grid Layout
+> ### Aliases: grid.layout
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -766,7 +774,7 @@ NULL
 > 
 > ### Name: grid.lines
 > ### Title: Draw Lines in a Grid Viewport
-> ### Aliases: linesGrob grid.polyline polylineGrob
+> ### Aliases: grid.lines linesGrob grid.polyline polylineGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -795,6 +803,7 @@ NULL
 > 
 > ### Name: grid.locator
 > ### Title: Capture a Mouse Click
+> ### Aliases: grid.locator
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -837,7 +846,7 @@ NULL
 > 
 > ### Name: grid.ls
 > ### Title: List the names of grobs or viewports
-> ### Aliases: nestedListing pathListing grobPathListing
+> ### Aliases: grid.ls nestedListing pathListing grobPathListing
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -937,7 +946,7 @@ List of 6
 > 
 > ### Name: grid.move.to
 > ### Title: Move or Draw to a Specified Position
-> ### Aliases: grid.line.to moveToGrob lineToGrob
+> ### Aliases: grid.move.to grid.line.to moveToGrob lineToGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -962,7 +971,7 @@ List of 6
 > 
 > ### Name: grid.null
 > ### Title: Null Graphical Object
-> ### Aliases: nullGrob
+> ### Aliases: grid.null nullGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -982,7 +991,7 @@ List of 6
 > 
 > ### Name: grid.path
 > ### Title: Draw a Path
-> ### Aliases: pathGrob
+> ### Aliases: grid.path pathGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1059,6 +1068,7 @@ List of 6
 > 
 > ### Name: grid.plot.and.legend
 > ### Title: A Simple Plot and Legend Demo
+> ### Aliases: grid.plot.and.legend
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1075,7 +1085,7 @@ List of 6
 > 
 > ### Name: grid.polygon
 > ### Title: Draw a Polygon
-> ### Aliases: polygonGrob
+> ### Aliases: grid.polygon polygonGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1104,7 +1114,7 @@ List of 6
 > 
 > ### Name: grid.raster
 > ### Title: Render a raster object
-> ### Aliases: rasterGrob
+> ### Aliases: grid.raster rasterGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1135,7 +1145,7 @@ List of 6
 > 
 > ### Name: grid.record
 > ### Title: Encapsulate calculations and drawing
-> ### Aliases: recordGrob
+> ### Aliases: grid.record recordGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1156,7 +1166,7 @@ List of 6
 > 
 > ### Name: roundrect
 > ### Title: Draw a rectangle with rounded corners
-> ### Aliases: grid.roundrect roundrectGrob
+> ### Aliases: roundrect grid.roundrect roundrectGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1179,6 +1189,7 @@ List of 6
 > 
 > ### Name: grid.show.layout
 > ### Title: Draw a Diagram of a Grid Layout
+> ### Aliases: grid.show.layout
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1199,6 +1210,7 @@ List of 6
 > 
 > ### Name: grid.show.viewport
 > ### Title: Draw a Diagram of a Grid Viewport
+> ### Aliases: grid.show.viewport
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1219,7 +1231,7 @@ List of 6
 > 
 > ### Name: grid.text
 > ### Title: Draw Text
-> ### Aliases: textGrob
+> ### Aliases: grid.text textGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1268,7 +1280,7 @@ List of 6
 > 
 > ### Name: grid.xspline
 > ### Title: Draw an Xspline
-> ### Aliases: xsplineGrob
+> ### Aliases: grid.xspline xsplineGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1329,6 +1341,7 @@ List of 6
 > 
 > ### Name: showGrob
 > ### Title: Label grid grobs.
+> ### Aliases: showGrob
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1409,6 +1422,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: showViewport
 > ### Title: Display grid viewports.
+> ### Aliases: showViewport
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1438,6 +1452,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: unit
 > ### Title: Function to Create a Unit Object
+> ### Aliases: unit
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1465,6 +1480,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: unit.length
 > ### Title: Length of a Unit Object
+> ### Aliases: unit.length
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1490,7 +1506,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: unit.pmin
 > ### Title: Parallel Unit Minima and Maxima
-> ### Aliases: unit.pmax
+> ### Aliases: unit.pmin unit.pmax
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1510,6 +1526,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: unit.rep
 > ### Title: Replicate Elements of Unit Objects
+> ### Aliases: unit.rep
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1699,6 +1716,7 @@ Warning in grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height, resolveHJus
 > 
 > ### Name: vpPath
 > ### Title: Concatenate Viewport Names
+> ### Aliases: vpPath
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1716,6 +1734,7 @@ vp1::vp2
 > 
 > ### Name: xsplinePoints
 > ### Title: Return the points that would be used to draw an Xspline.
+> ### Aliases: xsplinePoints
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1731,7 +1750,7 @@ vp1::vp2
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.1 0.32 3.69 NA NA 
+Time elapsed:  2.409 0.025 2.434 0 0 
 > grDevices::dev.off()
 null device 
           1 

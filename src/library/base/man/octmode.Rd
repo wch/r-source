@@ -13,6 +13,7 @@
 \alias{|.octmode}
 \alias{&.octmode}
 \alias{xor.octmode}
+\alias{octmode}
 \title{Display Numbers in Octal}
 \description{
   Convert or print integers in octal format, with as many digits as are

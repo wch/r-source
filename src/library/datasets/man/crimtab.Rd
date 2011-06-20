@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{crimtab}
+\alias{crimtab}
 \docType{data}
 \encoding{UTF-8}
 \title{Student's 3000 Criminals Data}

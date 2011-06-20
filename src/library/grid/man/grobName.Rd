@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grobName}
+\alias{grobName}
 \title{Generate a Name for a Grob}
 \description{
   This function generates a unique (within-session) name for

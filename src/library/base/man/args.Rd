@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{args}
+\alias{args}
 \title{Argument List of a Function}
 \description{
   Displays the argument names and corresponding default values of a

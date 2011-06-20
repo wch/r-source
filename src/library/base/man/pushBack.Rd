@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pushBack}
+\alias{pushBack}
 \alias{pushBackLength}
 \title{Push Text Back on to a Connection}
 \description{

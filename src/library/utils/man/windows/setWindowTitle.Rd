@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{setWindowTitle}
+\alias{setWindowTitle}
 \alias{getWindowTitle}
 \alias{getIdentification}
 \alias{setStatusBar}

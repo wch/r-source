@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{get}
+\alias{get}
 \alias{mget}
 \title{Return the Value of a Named Object}
 \description{

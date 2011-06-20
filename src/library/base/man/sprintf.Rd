@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sprintf}
+\alias{sprintf}
 \alias{gettextf}
 \title{Use C-style String Formatting Commands}
 \description{

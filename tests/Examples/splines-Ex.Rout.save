@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
+R version 2.13.0 Patched (2011-04-13 r55430)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,6 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: asVector
 > ### Title: Coerce an Object to a Vector
+> ### Aliases: asVector
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -65,6 +66,7 @@ List of 2
 > 
 > ### Name: backSpline
 > ### Title: Monotone Inverse Spline
+> ### Aliases: backSpline
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -85,6 +87,7 @@ List of 2
 > 
 > ### Name: bs
 > ### Title: B-Spline Basis for Polynomial Splines
+> ### Aliases: bs
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -136,7 +139,7 @@ bs(height, df = 5)3  27.6161     0.4571  60.415 4.70e-13 ***
 bs(height, df = 5)4  40.8481     0.3866 105.669 3.09e-15 ***
 bs(height, df = 5)5  49.1296     0.3090 158.979  < 2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.2276 on 9 degrees of freedom
 Multiple R-squared: 0.9999,	Adjusted R-squared: 0.9998 
@@ -166,6 +169,7 @@ Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 
 > 
 > ### Name: interpSpline
 > ### Title: Create an Interpolation Spline
+> ### Aliases: interpSpline
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -191,6 +195,7 @@ Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 
 > 
 > ### Name: ns
 > ### Title: Generate a Basis Matrix for Natural Cubic Splines
+> ### Aliases: ns
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -242,7 +247,7 @@ ns(height, df = 5)3  33.2582     0.3541   93.93 8.91e-15 ***
 ns(height, df = 5)4  50.7894     0.6062   83.78 2.49e-14 ***
 ns(height, df = 5)5  45.0363     0.2784  161.75  < 2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.2645 on 9 degrees of freedom
 Multiple R-squared: 0.9998,	Adjusted R-squared: 0.9997 
@@ -264,6 +269,7 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > 
 > ### Name: periodicSpline
 > ### Title: Create a Periodic Interpolation Spline
+> ### Aliases: periodicSpline
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -290,7 +296,7 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > 
 > ### Name: polySpline
 > ### Title: Piecewise Polynomial Spline Representation
-> ### Aliases: as.polySpline
+> ### Aliases: polySpline as.polySpline
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -328,8 +334,8 @@ polynomial representation of spline for weight ~ height
 > 
 > ### Name: predict.bSpline
 > ### Title: Evaluate a Spline at New Values of x
-> ### Aliases: predict.nbSpline predict.pbSpline predict.npolySpline
-> ###   predict.ppolySpline
+> ### Aliases: predict.bSpline predict.nbSpline predict.pbSpline
+> ###   predict.npolySpline predict.ppolySpline
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -363,7 +369,7 @@ polynomial representation of spline for weight ~ height
 > 
 > ### Name: predict.bs
 > ### Title: Evaluate a Spline Basis
-> ### Aliases: predict.ns
+> ### Aliases: predict.bs predict.ns
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -447,7 +453,7 @@ attr(,"class")
 > 
 > ### Name: splineDesign
 > ### Title: Design Matrix for B-splines
-> ### Aliases: spline.des
+> ### Aliases: splineDesign spline.des
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -482,6 +488,7 @@ attr(,"class")
 > 
 > ### Name: splineKnots
 > ### Title: Knot Vector from a Spline
+> ### Aliases: splineKnots
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -500,6 +507,7 @@ attr(,"class")
 > 
 > ### Name: splineOrder
 > ### Title: Determine the Order of a Spline
+> ### Aliases: splineOrder
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -517,6 +525,7 @@ attr(,"class")
 > 
 > ### Name: xyVector
 > ### Title: Construct an 'xyVector' Object
+> ### Aliases: xyVector
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -552,7 +561,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.24 0.09 0.33 NA NA 
+Time elapsed:  0.297 0.015 0.328 0 0 
 > grDevices::dev.off()
 null device 
           1 

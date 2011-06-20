@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rect.hclust}
+\alias{rect.hclust}
 \title{Draw Rectangles Around Hierarchical Clusters}
 \description{
   Draws rectangles around the branches of a dendrogram highlighting the

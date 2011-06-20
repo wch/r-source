@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{help.request}
+\alias{help.request}
 \title{Send a Post to R-help}
 \description{
   Prompts the user to check they have done all that is expected of them

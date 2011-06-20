@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Weibull}
+\alias{Weibull}
 \alias{dweibull}
 \alias{pweibull}
 \alias{qweibull}

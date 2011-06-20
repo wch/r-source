@@ -5,6 +5,7 @@
 
 \name{stats-defunct}
 %------ NOTE:  ../R/stats-defunct.R   must be synchronized with this!
+\alias{stats-defunct}
 \title{Defunct Functions in Package \pkg{stats}}
 %------ PLEASE: put \alias{.} here for  EACH !
 \alias{dnchisq}

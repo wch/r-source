@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RSiteSearch}
+\alias{RSiteSearch}
 \title{
   Search for Key Words or Phrases in the R-help Mailing List Archives
   or Documentation

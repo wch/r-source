@@ -18,6 +18,7 @@ kappa.tri(z, exact = FALSE, LINPACK = TRUE, norm=NULL, \dots)
 rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 }
 \alias{rcond}
+\alias{kappa}
 \alias{kappa.default}
 \alias{kappa.lm}
 \alias{kappa.qr}

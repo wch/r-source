@@ -5,6 +5,7 @@
 
 \name{pretty.Date}
 \title{Pretty Breakpoints for Date-Time Classes}
+\alias{pretty.Date}
 \alias{pretty.POSIXt}
 \usage{
 \method{pretty}{Date}(x, n = 5, min.n = n \%/\% 2, sep = " ", \dots)

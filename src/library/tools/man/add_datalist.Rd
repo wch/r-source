@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{add_datalist}
+\alias{add_datalist}
 \title{
   Add a \file{datalist} File to a Package
 }

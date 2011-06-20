@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cdplot}
+\alias{cdplot}
 \alias{cdplot.default}
 \alias{cdplot.formula}
 \title{Conditional Density Plots}

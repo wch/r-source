@@ -5,6 +5,7 @@
 
 \name{recordPlot}
 \alias{replayPlot}
+\alias{recordPlot}
 \alias{print.recordedplot}
 \title{Record and Replay Plots}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{densCols}
+\alias{densCols}
 \alias{blues9}
 \title{Colors for Smooth Density Plots}
 \description{

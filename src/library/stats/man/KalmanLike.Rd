@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{KalmanLike}
+\alias{KalmanLike}
 \alias{KalmanRun}
 \alias{KalmanSmooth}
 \alias{KalmanForecast}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{normalizePath}
+\alias{normalizePath}
 \title{Express File Paths in Canonical Form}
 \description{
   Convert file paths to canonical form for the platform, to display them

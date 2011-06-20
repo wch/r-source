@@ -9,6 +9,7 @@
 \usage{
 SSfol(Dose, input, lKe, lKa, lCl)
 }
+\alias{SSfol}
 \arguments{
   \item{Dose}{a numeric value representing the initial dose.}
   \item{input}{a numeric vector at which to evaluate the model.}

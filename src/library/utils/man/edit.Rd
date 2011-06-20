@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{edit}
+\alias{edit}
 \alias{edit.default}
 \alias{vi}
 \alias{emacs}

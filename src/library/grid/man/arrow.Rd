@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{arrow}
+\alias{arrow}
 \title{ Describe arrows to add to a line. }
 \description{
   Produces a description of what arrows to add to a line.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{setClass}
+\alias{setClass}
 \title{Create a Class Definition}
 \description{
   Create  a class definition, specifying the representation (the slots) and/or the classes contained in this one (the superclasses), plus other optional details.

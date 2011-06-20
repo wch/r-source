@@ -9,6 +9,7 @@
 match.call(definition = NULL, call = sys.call(sys.parent()),
            expand.dots = TRUE)
 }
+\alias{match.call}
 \arguments{
   \item{definition}{a function, by default the function from which
     \code{match.call} is called.  See details.}

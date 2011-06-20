@@ -11,6 +11,7 @@ loess.control(surface = c("interpolate", "direct"),
               trace.hat = c("exact", "approximate"),
               cell = 0.2, iterations = 4, \dots)
 }
+\alias{loess.control}
 \arguments{
  \item{surface}{should the fitted surface be computed exactly or via
    interpolation from a kd tree?}

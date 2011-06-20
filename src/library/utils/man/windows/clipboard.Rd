@@ -8,6 +8,7 @@
 \alias{getClipboardFormats}
 \alias{readClipboard}
 \alias{writeClipboard}
+\alias{clipboard}
 \title{Read/Write to/from the Windows Clipboard}
 \description{
   Transfer text between a character vector and the Windows clipboard.

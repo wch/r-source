@@ -5,6 +5,7 @@
 
 \name{DNase}
 \docType{data}
+\alias{DNase}
 \title{Elisa assay of DNase}
 \description{
   The \code{DNase} data frame has 176 rows and 3 columns of data

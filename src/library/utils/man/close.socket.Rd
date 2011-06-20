@@ -8,6 +8,7 @@
 \usage{
 close.socket(socket, \dots)
 }
+\alias{close.socket}
 \arguments{
   \item{socket}{A \code{socket} object}
   \item{\dots}{further arguments passed to or from other methods.}

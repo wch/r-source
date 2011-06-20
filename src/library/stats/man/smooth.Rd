@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{smooth}
+\alias{smooth}
 \title{Tukey's (Running Median) Smoothing}
 \description{
   Tukey's smoothers, \emph{3RS3R}, \emph{3RSS}, \emph{3R}, etc.

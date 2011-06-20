@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tar}
+\alias{tar}
 \title{
   Create a Tar Archive
 }

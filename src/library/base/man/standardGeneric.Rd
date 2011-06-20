@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{standardGeneric}
+\alias{standardGeneric}
 \title{Formal Method System -- Dispatching S4 Methods}
 % and other Placeholders
 \description{

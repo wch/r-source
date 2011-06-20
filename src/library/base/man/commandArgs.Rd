@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{commandArgs}
+\alias{commandArgs}
 \title{Extract Command Line Arguments}
 \description{
   Provides access to a copy of the command line arguments supplied when

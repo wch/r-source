@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{download.packages}
+\alias{download.packages}
 \title{Download Packages from CRAN-like Repositories}
 \description{
   These functions can be used to automatically compare the version

@@ -12,6 +12,7 @@
 \usage{
 prod(\dots, na.rm = FALSE)
 }
+\alias{prod}
 \arguments{
   \item{\dots}{numeric or complex or logical vectors.}
   \item{na.rm}{logical.  Should missing values be removed?}

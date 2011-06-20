@@ -5,6 +5,7 @@
 % Distributed under GPL 2 or later
 %
 \name{norm}
+\alias{norm}
 \title{Compute the Norm of a Matrix}
 \description{
   Computes a matrix norm of \code{x} using Lapack.  The norm can be

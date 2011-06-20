@@ -15,6 +15,7 @@
 strwidth(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 }
+\alias{strwidth}
 \alias{strheight}
 \arguments{
   \item{s}{a character or \link{expression} vector whose dimensions

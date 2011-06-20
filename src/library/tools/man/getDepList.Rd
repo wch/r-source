@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getDepList}
+\alias{getDepList}
 \alias{pkgDepends}
 \title{Functions to Retrieve Dependency Information}
 \description{

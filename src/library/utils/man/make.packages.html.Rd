@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{make.packages.html}
+\alias{make.packages.html}
 \title{Update HTML Package List}
 \usage{
 make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE,

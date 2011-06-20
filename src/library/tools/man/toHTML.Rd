@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{toHTML}
+\alias{toHTML}
 \alias{toHTML.packageIQR}
 \alias{toHTML.news_db}
 \title{

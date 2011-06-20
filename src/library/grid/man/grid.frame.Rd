@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.frame}
+\alias{grid.frame}
 \alias{frameGrob}
 \title{ Create a Frame for Packing Objects }
 \description{

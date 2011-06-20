@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{splineKnots}
+\alias{splineKnots}
 \title{Knot Vector from a Spline}
 \description{
   Return the knot vector corresponding to a spline object.

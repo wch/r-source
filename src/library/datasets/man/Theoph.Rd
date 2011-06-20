@@ -5,6 +5,7 @@
 
 \name{Theoph}
 \docType{data}
+\alias{Theoph}
 \title{Pharmacokinetics of Theophylline}
 \description{
   The \code{Theoph} data frame has 132 rows and 5 columns of data from

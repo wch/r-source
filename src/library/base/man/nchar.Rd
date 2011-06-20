@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nchar}
+\alias{nchar}
 \alias{nzchar}
 \title{Count the Number of Characters (or Bytes or Width)}
 \usage{

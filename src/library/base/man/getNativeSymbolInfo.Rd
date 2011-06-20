@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getNativeSymbolInfo}
+\alias{getNativeSymbolInfo}
 \alias{NativeSymbolInfo} % the class
 \alias{NativeSymbol} % the class
 \alias{RegisteredNativeSymbol} % the class

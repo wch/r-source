@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{hcl}
+\alias{hcl}
 \encoding{UTF-8}
 \title{HCL Color Specification}
 \description{

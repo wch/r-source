@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{prmatrix}
+\alias{prmatrix}
 \title{Print Matrices, Old-style}
 \usage{
 prmatrix(x, rowlab =, collab =,

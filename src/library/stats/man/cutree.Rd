@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cutree}
+\alias{cutree}
 \title{Cut a Tree into Groups of Data}
 \description{
   Cuts a tree, e.g., as resulting from \code{\link{hclust}}, into several

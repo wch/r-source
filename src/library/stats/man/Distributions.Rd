@@ -6,6 +6,7 @@
 \name{Distributions}
 \alias{distribution}
 \alias{distributions}
+\alias{Distributions}
 \title{Distributions in the stats package}
 \description{
   Density, cumulative distribution function, quantile function and random

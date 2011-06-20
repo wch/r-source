@@ -21,6 +21,7 @@ isTRUE(x)
 \alias{|}
 \alias{||}
 \alias{xor}
+\alias{Logic}
 \alias{isTRUE}
 \description{
   These operators act on logical and number-like vectors.

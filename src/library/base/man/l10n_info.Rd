@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{l10n_info}
+\alias{l10n_info}
 \title{Localization Information}
 \description{
   Report on localization information.

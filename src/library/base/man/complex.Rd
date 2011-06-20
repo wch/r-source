@@ -5,6 +5,7 @@
 
 \name{complex}
 \title{Complex Vectors}
+\alias{complex}
 \alias{as.complex}
 \alias{is.complex}
 \alias{Re}

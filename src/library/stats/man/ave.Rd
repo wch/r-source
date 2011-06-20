@@ -8,6 +8,7 @@
 \usage{
 ave(x, \dots, FUN = mean)
 }
+\alias{ave}
 \arguments{
   \item{x}{A numeric.}
   \item{\dots}{Grouping variables, typically factors, all of the same

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{aov}
+\alias{aov}
 \alias{print.aov}
 \alias{print.aovlist}
 \alias{Error}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Memory-limits}
+\alias{Memory-limits}
 \concept{memory}
 \concept{limits}
 \title{Memory Limits in R}

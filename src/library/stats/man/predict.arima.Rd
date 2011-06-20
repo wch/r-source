@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{predict.Arima}
+\alias{predict.Arima}
 \title{Forecast from ARIMA fits}
 \description{
   Forecast from models fitted by \code{\link{arima}}.

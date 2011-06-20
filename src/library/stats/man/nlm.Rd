@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nlm}
+\alias{nlm}
 \title{Non-Linear Minimization}
 \concept{optimization}
 \usage{

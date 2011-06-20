@@ -5,6 +5,7 @@
 
 \name{InsectSprays}
 \docType{data}
+\alias{InsectSprays}
 \title{Effectiveness of Insect Sprays}
 \description{
   The counts of insects in agricultural experimental units treated with

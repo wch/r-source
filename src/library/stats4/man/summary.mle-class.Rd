@@ -5,6 +5,7 @@
 
 \name{summary.mle-class}
 \docType{class}
+\alias{summary.mle-class}
 \title{Class \code{"summary.mle"}, Summary of \code{"mle"} Objects}
 \description{Extract of "mle" object}
 \section{Objects from the Class}{

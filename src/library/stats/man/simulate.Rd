@@ -12,6 +12,7 @@
 \usage{
 simulate(object, nsim = 1, seed = NULL, \dots)
 }
+\alias{simulate}
 \arguments{
   \item{object}{an object representing a fitted model.}
   \item{nsim}{number of response vectors to simulate.  Defaults to \code{1}.}

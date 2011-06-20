@@ -5,6 +5,7 @@
 % Distributed under GPL 2 or later
 
 \name{slot}
+\alias{slot}
 \alias{.hasSlot}
 \alias{slot<-}
 \alias{@<-}

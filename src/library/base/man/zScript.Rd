@@ -5,6 +5,7 @@
 
 \name{.Script}
 \title{Scripting Language Interface}
+\alias{.Script}
 \description{
   Internal interface to run a script through its interpreter.
 }

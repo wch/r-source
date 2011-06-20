@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
+\alias{chooseCRANmirror}
 \alias{getCRANmirrors}
 \title{Select a CRAN Mirror}
 \description{

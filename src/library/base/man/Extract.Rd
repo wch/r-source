@@ -5,6 +5,7 @@
 
 \name{Extract}
 \title{Extract or Replace Parts of an Object}
+\alias{Extract}
 \alias{Subscript}
 \alias{[}
 \alias{[.listof}

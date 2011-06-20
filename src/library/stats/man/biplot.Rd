@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{biplot}
+\alias{biplot}
 \alias{biplot.default}
 \title{Biplot of Multivariate Data}
 \usage{

@@ -5,6 +5,7 @@
 
 \name{LifeCycleSavings}
 \docType{data}
+\alias{LifeCycleSavings}
 \title{Intercountry Life-Cycle Savings Data}
 \description{
   Data on the savings ratio 1960--1970.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.profile.nls}
+\alias{plot.profile.nls}
 \title{Plot a profile.nls Object}
 \description{
   Displays a series of plots of the profile t function and interpolated

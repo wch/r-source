@@ -5,6 +5,7 @@
 
 \name{show-methods}
 \docType{methods}
+\alias{show-methods}
 \alias{show,mle-method}
 \alias{show,summary.mle-method}
 \title{Methods for Function \code{show} in Package \pkg{stats4}}

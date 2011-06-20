@@ -5,6 +5,7 @@
 
 \name{ObjectsWithPackage-class}
 \docType{class}
+\alias{ObjectsWithPackage-class}
 \title{A Vector of Object Names, with associated Package Names }
 \description{
   This class of objects is used to represent ordinary character string

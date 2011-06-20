@@ -5,6 +5,7 @@
 
 \name{AirPassengers}
 \docType{data}
+\alias{AirPassengers}
 \title{Monthly Airline Passenger Numbers 1949-1960}
 \description{
  The classic Box & Jenkins airline data.  Monthly totals of

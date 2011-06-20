@@ -9,6 +9,7 @@
 residuals(object, \dots)
 resid(object, \dots)
 }
+\alias{residuals}
 \alias{resid}
 \alias{residuals.default}
 \arguments{

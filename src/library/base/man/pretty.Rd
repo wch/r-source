@@ -12,6 +12,7 @@ pretty(x, \dots)
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
        eps.correct = 0, \dots)
 }
+\alias{pretty}
 \alias{pretty.default}
 \arguments{
   \item{x}{an object coercible to numeric by \code{\link{as.numeric}}.}

@@ -5,6 +5,7 @@
 
 \name{split}
 \title{Divide into Groups and Reassemble}
+\alias{split}
 \alias{split.default}
 \alias{split.data.frame}
 \alias{split<-}

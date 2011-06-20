@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{t.test}
+\alias{t.test}
 \alias{t.test.default}
 \alias{t.test.formula}
 \title{Student's t-Test}

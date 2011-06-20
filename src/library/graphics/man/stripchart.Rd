@@ -5,6 +5,7 @@
 
 \name{stripchart}
 \title{1-D Scatter Plots}
+\alias{stripchart}
 \alias{stripchart.default}
 \alias{stripchart.formula}
 

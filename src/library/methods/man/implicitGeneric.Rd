@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{implicitGeneric}
+\alias{implicitGeneric}
 \alias{setGenericImplicit}
 \alias{prohibitGeneric}
 \alias{registerImplicitGenerics}

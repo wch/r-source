@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pairwise.prop.test}
+\alias{pairwise.prop.test}
 \title{ Pairwise comparisons for proportions}
 \description{
   Calculate pairwise comparisons between pairs of proportions with

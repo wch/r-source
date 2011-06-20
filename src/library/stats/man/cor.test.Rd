@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cor.test}
+\alias{cor.test}
 \alias{cor.test.default}
 \alias{cor.test.formula}
 \concept{Kendall correlation coefficient}

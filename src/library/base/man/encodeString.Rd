@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{encodeString}
+\alias{encodeString}
 \title{
   Encode Character Vector as for Printing
 }

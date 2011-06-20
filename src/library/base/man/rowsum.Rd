@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rowsum}
+\alias{rowsum}
 \alias{rowsum.default}
 \alias{rowsum.data.frame}
 \title{Give Column Sums of a Matrix or Data Frame, Based on a Grouping Variable}

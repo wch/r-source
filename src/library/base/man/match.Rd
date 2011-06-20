@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{match}
+\alias{match}
 \alias{\%in\%}
 \title{Value Matching}
 \description{

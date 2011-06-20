@@ -8,6 +8,7 @@
 \usage{
 charmatch(x, table, nomatch = NA_integer_)
 }
+\alias{charmatch}
 \arguments{
   \item{x}{the values to be matched: converted to a character vector by
     \code{\link{as.character}}.}

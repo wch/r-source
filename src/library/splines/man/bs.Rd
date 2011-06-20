@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{bs}
+\alias{bs}
 \title{B-Spline Basis for Polynomial Splines}
 \description{
   Generate the B-spline basis matrix for a polynomial spline.

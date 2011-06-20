@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{file.edit}
+\alias{file.edit}
 \title{Edit One or More Files}
 \description{Edit one or more files in a text editor.}
 \usage{

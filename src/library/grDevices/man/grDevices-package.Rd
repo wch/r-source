@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grDevices-package}
+\alias{grDevices-package}
 \alias{grDevices}
 \docType{package}
 \title{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{char.expand}
+\alias{char.expand}
 \title{Expand a String with Respect to a Target Table}
 \usage{char.expand(input, target, nomatch = stop("no match"))}
 \description{

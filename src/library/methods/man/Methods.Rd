@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Methods}
+\alias{Methods}
 \title{General Information on Methods}
 \description{
   This documentation section covers some general topics on how methods

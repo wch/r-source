@@ -1,4 +1,5 @@
 \name{inheritedSlotNames}
+\alias{inheritedSlotNames}
 \title{Names of Slots Inherited From a Super Class}
 \description{
   For a class (or class definition, see \code{\link{getClass}} and

@@ -10,6 +10,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
      col = NA, border = NULL, lty = par("lty"), lwd = par("lwd"),
      \dots)
 }
+\alias{rect}
 \arguments{
   \item{xleft}{a vector (or scalar) of left x positions.}
   \item{ybottom}{a vector (or scalar) of bottom y positions.}

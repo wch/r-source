@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{absolute.size}
+\alias{absolute.size}
 \title{ Absolute Size of a Grob }
 \description{
   This function converts a unit object into absolute units.

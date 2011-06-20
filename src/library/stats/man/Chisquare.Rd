@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
+\alias{Chisquare}
 \alias{dchisq}
 \alias{pchisq}
 \alias{qchisq}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{setTimeLimit}
+\alias{setTimeLimit}
 \alias{setSessionTimeLimit}
 \title{Set CPU and/or Elapsed Time Limits}
 \description{

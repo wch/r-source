@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pdf}
+\alias{pdf}
 \encoding{UTF-8}
 
 \title{PDF Graphics Device}

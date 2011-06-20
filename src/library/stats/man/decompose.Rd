@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{decompose}
+\alias{decompose}
 \alias{plot.decomposed.ts}
 \title{
   Classical Seasonal Decomposition by Moving Averages

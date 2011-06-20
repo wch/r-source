@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SweaveTeXFilter}
+\alias{SweaveTeXFilter}
 \title{
 Strip R code out of Sweave file
 }

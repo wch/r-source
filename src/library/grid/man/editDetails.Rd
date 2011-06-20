@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{editDetails}
+\alias{editDetails}
 \title{ Customising grid Editing }
 \description{
   This generic hook function is called whenever a grid grob is edited

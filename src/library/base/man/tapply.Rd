@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tapply}
+\alias{tapply}
 \title{Apply a Function Over a Ragged Array}
 \description{
   Apply a function to each cell of a ragged array, that is to each

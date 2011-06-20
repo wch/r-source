@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{preplot}
+\alias{preplot}
 \title{Pre-computations for a Plotting Object}
 \description{
     Compute an object to be used for plots relating to the given model object.

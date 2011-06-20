@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{toString}
+\alias{toString}
 \alias{toString.default}
 
 \title{Convert an R Object to a Character String}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{poly}
+\alias{poly}
 \alias{polym}
 \alias{predict.poly}
 \alias{makepredictcall.poly}

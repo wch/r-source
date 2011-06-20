@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.show.layout}
+\alias{grid.show.layout}
 \title{Draw a Diagram of a Grid Layout}
 \description{
   This function uses Grid graphics to draw a diagram of a

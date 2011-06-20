@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tools-package}
+\alias{tools-package}
 \alias{tools}
 \docType{package}
 \title{Tools for Package Development}

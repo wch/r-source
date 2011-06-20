@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Lognormal}
+\alias{Lognormal}
 \alias{dlnorm}
 \alias{plnorm}
 \alias{qlnorm}

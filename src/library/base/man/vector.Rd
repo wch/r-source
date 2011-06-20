@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{vector}
+\alias{vector}
 \alias{as.vector}
 \alias{as.vector.factor}
 \alias{is.vector}

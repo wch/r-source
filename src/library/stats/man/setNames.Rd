@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{setNames}
+\alias{setNames}
 \title{Set the Names in an Object}
 \usage{
 setNames(object, nm)

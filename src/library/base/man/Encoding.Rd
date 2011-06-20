@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Encoding}
+\alias{Encoding}
 \alias{Encoding<-}
 \alias{enc2native}
 \alias{enc2utf8}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{maintainer}
+\alias{maintainer}
 
 \title{
    Show Package Maintainer

@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
+R version 2.13.0 Patched (2011-04-13 r55430)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,6 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: AirPassengers
 > ### Title: Monthly Airline Passenger Numbers 1949-1960
+> ### Aliases: AirPassengers
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -73,6 +74,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: BOD
 > ### Title: Biochemical Oxygen Demand
+> ### Aliases: BOD
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -113,7 +115,7 @@ Parameters:
 A     19.143      2.496    7.67   0.0016 **
 lrc   -0.633      0.382   -1.65   0.1733   
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 2.55 on 4 degrees of freedom
 
@@ -131,6 +133,7 @@ Residual standard error: 2.55 on 4 degrees of freedom
 > 
 > ### Name: ChickWeight
 > ### Title: Weight versus age of chicks on different diets
+> ### Aliases: ChickWeight
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -144,6 +147,7 @@ Residual standard error: 2.55 on 4 degrees of freedom
 > 
 > ### Name: DNase
 > ### Title: Elisa assay of DNase
+> ### Aliases: DNase
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -173,7 +177,7 @@ B     2.377239   0.109516  21.707 5.35e-11 ***
 xmid  1.507403   0.102080  14.767 4.65e-09 ***
 scal  1.062579   0.056996  18.643 3.16e-10 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.01981 on 12 degrees of freedom
 
@@ -196,6 +200,7 @@ Model 2: density ~ SSfpl(log(conc), A, B, xmid, scal)
 > 
 > ### Name: Formaldehyde
 > ### Title: Determination of Formaldehyde
+> ### Aliases: Formaldehyde
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -219,7 +224,7 @@ Coefficients:
 (Intercept) 0.005086   0.007834   0.649    0.552    
 carb        0.876286   0.013535  64.744 3.41e-07 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.008649 on 4 degrees of freedom
 Multiple R-squared: 0.999,	Adjusted R-squared: 0.9988 
@@ -240,6 +245,7 @@ F-statistic:  4192 on 1 and 4 DF,  p-value: 3.409e-07
 > 
 > ### Name: HairEyeColor
 > ### Title: Hair and Eye Color of Statistics Students
+> ### Aliases: HairEyeColor
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -268,6 +274,7 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: Harman23.cor
 > ### Title: Harman Example 2.3
+> ### Aliases: Harman23.cor
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -401,6 +408,7 @@ The p-value is 0.0988
 > 
 > ### Name: Harman74.cor
 > ### Title: Harman Example 7.4
+> ### Aliases: Harman74.cor
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -738,6 +746,7 @@ Cumulative Var   0.147   0.285   0.384   0.471   0.503
 > 
 > ### Name: InsectSprays
 > ### Title: Effectiveness of Insect Sprays
+> ### Aliases: InsectSprays
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -752,7 +761,7 @@ Cumulative Var   0.147   0.285   0.384   0.471   0.503
 spray        5 2668.8  533.77  34.702 < 2.2e-16 ***
 Residuals   66 1015.2   15.38                      
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 > plot(fm1)
 > fm2 <- aov(sqrt(count) ~ spray, data = InsectSprays)
@@ -761,7 +770,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 spray        5 88.438 17.6876  44.799 < 2.2e-16 ***
 Residuals   66 26.058  0.3948                      
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot(fm2)
 > par(opar)
 > 
@@ -776,6 +785,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: JohnsonJohnson
 > ### Title: Quarterly Earnings per Johnson & Johnson Share
+> ### Aliases: JohnsonJohnson
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -789,6 +799,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: LifeCycleSavings
 > ### Title: Intercountry Life-Cycle Savings Data
+> ### Aliases: LifeCycleSavings
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -814,7 +825,7 @@ pop75       -1.6914977  1.0835989  -1.561 0.125530
 dpi         -0.0003369  0.0009311  -0.362 0.719173    
 ddpi         0.4096949  0.1961971   2.088 0.042471 *  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 3.803 on 45 degrees of freedom
 Multiple R-squared: 0.3385,	Adjusted R-squared: 0.2797 
@@ -831,6 +842,7 @@ F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 > 
 > ### Name: Loblolly
 > ### Title: Growth of Loblolly pine trees
+> ### Aliases: Loblolly
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -855,6 +867,7 @@ F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 > 
 > ### Name: Nile
 > ### Title: Flow of the River Nile
+> ### Aliases: Nile
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -968,6 +981,7 @@ Variances:
 > 
 > ### Name: Orange
 > ### Title: Growth of Orange Trees
+> ### Aliases: Orange
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -993,6 +1007,7 @@ Variances:
 > 
 > ### Name: OrchardSprays
 > ### Title: Potency of Orchard Sprays
+> ### Aliases: OrchardSprays
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1010,6 +1025,7 @@ Variances:
 > 
 > ### Name: PlantGrowth
 > ### Title: Results from an Experiment on Plant Growth
+> ### Aliases: PlantGrowth
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1029,7 +1045,7 @@ Response: weight
 group      2  3.7663  1.8832  4.8461 0.01591 *
 Residuals 27 10.4921  0.3886                  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
 > 
 > 
@@ -1041,6 +1057,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: Puromycin
 > ### Title: Reaction Velocity of an Enzymatic Reaction
+> ### Aliases: Puromycin
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1071,7 +1088,7 @@ Parameters:
 Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
 K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
@@ -1084,7 +1101,7 @@ Parameters:
 Vm 1.603e+02  6.480e+00  24.734 1.38e-09 ***
 K  4.771e-02  7.782e-03   6.131 0.000173 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 9.773 on 9 degrees of freedom
 
@@ -1110,6 +1127,7 @@ Residual standard error: 9.773 on 9 degrees of freedom
 > 
 > ### Name: Theoph
 > ### Title: Pharmacokinetics of Theophylline
+> ### Aliases: Theoph
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1132,7 +1150,7 @@ lKe  -2.4365     0.2257 -10.797 4.77e-06 ***
 lKa   0.1583     0.2297   0.689     0.51    
 lCl  -3.2861     0.1448 -22.695 1.51e-08 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.8465 on 8 degrees of freedom
 
@@ -1157,6 +1175,7 @@ Residual standard error: 0.8465 on 8 degrees of freedom
 > 
 > ### Name: Titanic
 > ### Title: Survival of passengers on the Titanic
+> ### Aliases: Titanic
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1187,6 +1206,7 @@ Sex        No Yes
 > 
 > ### Name: ToothGrowth
 > ### Title: The Effect of Vitamin C on Tooth Growth in Guinea Pigs
+> ### Aliases: ToothGrowth
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1205,6 +1225,7 @@ Sex        No Yes
 > 
 > ### Name: UCBAdmissions
 > ### Title: Student Admissions at UC Berkeley
+> ### Aliases: UCBAdmissions
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1239,7 +1260,7 @@ Admit      Male Female
 > 
 > ### Name: UKDriverDeaths
 > ### Title: Road Casualties in Great Britain 1969-84
-> ### Aliases: Seatbelts
+> ### Aliases: UKDriverDeaths Seatbelts
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1293,7 +1314,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### Name: UKLungDeaths
 > ### Title: Monthly Deaths from Lung Diseases in the UK
-> ### Aliases: ldeaths fdeaths mdeaths
+> ### Aliases: UKLungDeaths ldeaths fdeaths mdeaths
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1316,6 +1337,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### Name: UKgas
 > ### Title: UK Quarterly Gas Consumption
+> ### Aliases: UKgas
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1332,6 +1354,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### Name: USArrests
 > ### Title: Violent Crime Rates by US State
+> ### Aliases: USArrests
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1349,6 +1372,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### Name: USJudgeRatings
 > ### Title: Lawyers' Ratings of State Judges in the US Superior Court
+> ### Aliases: USJudgeRatings
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1366,6 +1390,7 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### Name: USPersonalExpenditure
 > ### Title: Personal Expenditure Data
+> ### Aliases: USPersonalExpenditure
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1416,6 +1441,7 @@ Private Education   -0.293625 -0.0399168  0.000000  0.017388  0.000000
 > 
 > ### Name: VADeaths
 > ### Title: Death Rates in Virginia (1940)
+> ### Aliases: VADeaths
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1440,7 +1466,7 @@ age:site     4   42.5   10.63   3.9963  0.104141
 gender:site  1   73.0   72.96  27.4216  0.006355 ** 
 Residuals    4   10.6    2.66                       
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 > plot(aov.VAD)
 > par(opar)
@@ -1456,6 +1482,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: WWWusage
 > ### Title: Internet Usage per Minute
+> ### Aliases: WWWusage
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1484,6 +1511,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: WorldPhones
 > ### Title: The World's Telephones
+> ### Aliases: WorldPhones
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1505,6 +1533,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: ability.cov
 > ### Title: Ability and Intelligence Tests
+> ### Aliases: ability.cov
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1518,6 +1547,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: airmiles
 > ### Title: Passenger Miles on Commercial US Airlines, 1937-1960
+> ### Aliases: airmiles
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1536,6 +1566,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: airquality
 > ### Title: New York Air Quality Measurements
+> ### Aliases: airquality
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1553,6 +1584,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: anscombe
 > ### Title: Anscombe's Quartet of 'Identical' Simple Linear Regressions
+> ### Aliases: anscombe
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1590,7 +1622,7 @@ Response: y1
 x1         1 27.510 27.5100   17.99 0.00217 **
 Residuals  9 13.763  1.5292                   
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 Analysis of Variance Table
 
 Response: y2
@@ -1598,7 +1630,7 @@ Response: y2
 x2         1 27.500 27.5000  17.966 0.002179 **
 Residuals  9 13.776  1.5307                    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 Analysis of Variance Table
 
 Response: y3
@@ -1606,7 +1638,7 @@ Response: y3
 x3         1 27.470 27.4700  17.972 0.002176 **
 Residuals  9 13.756  1.5285                    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 Analysis of Variance Table
 
 Response: y4
@@ -1614,7 +1646,7 @@ Response: y4
 x4         1 27.490 27.4900  18.003 0.002165 **
 Residuals  9 13.742  1.5269                    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
 > ## See how close they are (numerically!)
 > sapply(objects(pattern="lm\\.[1-4]$"), function(n) coef(get(n)))
@@ -1666,6 +1698,7 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
 > 
 > ### Name: attenu
 > ### Title: The Joyner-Boore Attenuation Data
+> ### Aliases: attenu
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1707,6 +1740,7 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
 > 
 > ### Name: attitude
 > ### Title: The Chatterjee-Price Attitude Data
+> ### Aliases: attitude
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1747,7 +1781,7 @@ raises       0.08173    0.22148   0.369 0.715480
 critical     0.03838    0.14700   0.261 0.796334    
 advance     -0.21706    0.17821  -1.218 0.235577    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 7.068 on 23 degrees of freedom
 Multiple R-squared: 0.7326,	Adjusted R-squared: 0.6628 
@@ -1770,7 +1804,7 @@ Coefficients:
 (Intercept) 14.37632    6.61999   2.172   0.0385 *  
 complaints   0.75461    0.09753   7.737 1.99e-08 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 6.993 on 28 degrees of freedom
 Multiple R-squared: 0.6813,	Adjusted R-squared: 0.6699 
@@ -1790,7 +1824,7 @@ F-statistic: 59.86 on 1 and 28 DF,  p-value: 1.988e-08
 > 
 > ### Name: beavers
 > ### Title: Body Temperature Series of Two Beavers
-> ### Aliases: beaver1 beaver2
+> ### Aliases: beavers beaver1 beaver2
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1827,6 +1861,7 @@ F-statistic: 59.86 on 1 and 28 DF,  p-value: 1.988e-08
 > 
 > ### Name: cars
 > ### Title: Speed and Stopping Distances of Cars
+> ### Aliases: cars
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1854,7 +1889,7 @@ Coefficients:
 (Intercept)  -0.7297     0.3758  -1.941   0.0581 .  
 log(speed)    1.6024     0.1395  11.484 2.26e-15 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.4053 on 48 degrees of freedom
 Multiple R-squared: 0.7331,	Adjusted R-squared: 0.7276 
@@ -1898,6 +1933,7 @@ Model 4: dist ~ poly(speed, degree)
 > 
 > ### Name: chickwts
 > ### Title: Chicken Weights by Feed Type
+> ### Aliases: chickwts
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1916,7 +1952,7 @@ Response: weight
 feed       5 231129   46226  15.365 5.936e-10 ***
 Residuals 65 195556    3009                      
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0),
 +             mar = c(4.1, 4.1, 2.1, 1.1))
 > plot(fm1)
@@ -1933,6 +1969,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: co2
 > ### Title: Mauna Loa Atmospheric CO2 Concentration
+> ### Aliases: co2
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -1952,6 +1989,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: crimtab
 > ### Title: Student's 3000 Criminals Data
+> ### Aliases: crimtab
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2066,6 +2104,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: discoveries
 > ### Title: Yearly Numbers of Important Discoveries
+> ### Aliases: discoveries
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2085,6 +2124,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: esoph
 > ### Title: Smoking, Alcohol and (O)esophageal Cancer
+> ### Aliases: esoph
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2143,7 +2183,7 @@ agegp^5        -0.20288    0.19523  -1.039  0.29872
 unclass(tobgp)  0.26162    0.08198   3.191  0.00142 ** 
 unclass(alcgp)  0.65308    0.08452   7.727 1.10e-14 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -2172,7 +2212,7 @@ Number of Fisher Scoring iterations: 6
 > 
 > ### Name: euro
 > ### Title: Conversion Rates of Euro Currencies
-> ### Aliases: euro.cross
+> ### Aliases: euro euro.cross
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2228,6 +2268,7 @@ TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 > 
 > ### Name: faithful
 > ### Title: Old Faithful Geyser Data
+> ### Aliases: faithful
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2268,7 +2309,7 @@ ne60
 > 
 > ### Name: freeny
 > ### Title: Freeny's Revenue Data
-> ### Aliases: freeny.x freeny.y
+> ### Aliases: freeny freeny.x freeny.y
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2309,7 +2350,7 @@ price.index            -0.7542     0.1607  -4.693 4.28e-05 ***
 income.level            0.7675     0.1339   5.730 1.93e-06 ***
 market.potential        1.3306     0.5093   2.613   0.0133 *  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.01473 on 34 degrees of freedom
 Multiple R-squared: 0.9981,	Adjusted R-squared: 0.9978 
@@ -2331,6 +2372,7 @@ F-statistic:  4354 on 4 and 34 DF,  p-value: < 2.2e-16
 > 
 > ### Name: infert
 > ### Title: Infertility after Spontaneous and Induced Abortion
+> ### Aliases: infert
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2353,7 +2395,7 @@ Coefficients:
 spontaneous   1.1972     0.2116   5.657 1.54e-08 ***
 induced       0.4181     0.2056   2.033    0.042 *  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -2385,7 +2427,7 @@ education12+ yrs -1.40321    0.83416  -1.682   0.0925 .
 spontaneous       2.04591    0.31016   6.596 4.21e-11 ***
 induced           1.28876    0.30146   4.275 1.91e-05 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -2414,7 +2456,7 @@ coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced +
 spontaneous 1.9859    7.2854   0.3524 5.635 1.75e-08 ***
 induced     1.4090    4.0919   0.3607 3.906 9.38e-05 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
             exp(coef) exp(-coef) lower .95 upper .95
 spontaneous     7.285     0.1373     3.651    14.536
@@ -2430,7 +2472,7 @@ Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
 > 
 > cleanEx()
 
-detaching 'package:splines'
+detaching ‘package:splines’
 
 > nameEx("iris")
 > ### * iris
@@ -2439,7 +2481,7 @@ detaching 'package:splines'
 > 
 > ### Name: iris
 > ### Title: Edgar Anderson's Iris Data
-> ### Aliases: iris3
+> ### Aliases: iris iris3
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2462,6 +2504,7 @@ detaching 'package:splines'
 > 
 > ### Name: islands
 > ### Title: Areas of the World's Major Landmasses
+> ### Aliases: islands
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2482,6 +2525,7 @@ detaching 'package:splines'
 > 
 > ### Name: longley
 > ### Title: Longley's Economic Regression Data
+> ### Aliases: longley
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2510,7 +2554,7 @@ Armed.Forces -1.033e-02  2.143e-03  -4.822 0.000944 ***
 Population   -5.110e-02  2.261e-01  -0.226 0.826212    
 Year          1.829e+00  4.555e-01   4.016 0.003037 ** 
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.3049 on 9 degrees of freedom
 Multiple R-squared: 0.9955,	Adjusted R-squared: 0.9925 
@@ -2532,6 +2576,7 @@ F-statistic: 330.3 on 6 and 9 DF,  p-value: 4.984e-10
 > 
 > ### Name: morley
 > ### Title: Michaelson-Morley Speed of Light Data
+> ### Aliases: morley
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2557,7 +2602,7 @@ Run         19 113344  5965.5  1.1053 0.363209
 Expt         4  94514 23628.5  4.3781 0.003071 **
 Residuals   76 410166  5396.9                    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > fm0 <- update(fm, . ~ . - Run)
 > anova(fm0, fm)
 Analysis of Variance Table
@@ -2578,6 +2623,7 @@ Model 2: Speed ~ Run + Expt
 > 
 > ### Name: mtcars
 > ### Title: Motor Trend Car Road Tests
+> ### Aliases: mtcars
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2597,6 +2643,7 @@ Model 2: Speed ~ Run + Expt
 > 
 > ### Name: nhtemp
 > ### Title: Average Yearly Temperatures in New Haven
+> ### Aliases: nhtemp
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2615,6 +2662,7 @@ Model 2: Speed ~ Run + Expt
 > 
 > ### Name: nottem
 > ### Title: Average Monthly Temperatures at Nottingham, 1920-1939
+> ### Aliases: nottem
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2637,6 +2685,7 @@ Model 2: Speed ~ Run + Expt
 > 
 > ### Name: occupationalStatus
 > ### Title: Occupational Status of Fathers and their Sons
+> ### Aliases: occupationalStatus
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2689,7 +2738,7 @@ Diag7         0.506709   0.115936   4.371 1.24e-05 ***
 Diag8         0.221880   0.134803   1.646 0.099771 .  
 Rscore:Cscore 0.136974   0.007489  18.289  < 2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 (Dispersion parameter for poisson family taken to be 1)
 
@@ -2715,6 +2764,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: precip
 > ### Title: Annual Precipitation in US Cities
+> ### Aliases: precip
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2733,6 +2783,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: presidents
 > ### Title: Quarterly Approval Ratings of US Presidents
+> ### Aliases: presidents
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2751,6 +2802,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: pressure
 > ### Title: Vapor Pressure of Mercury as a Function of Temperature
+> ### Aliases: pressure
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2773,6 +2825,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: quakes
 > ### Title: Locations of Earthquakes off Fiji
+> ### Aliases: quakes
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2790,6 +2843,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: randu
 > ### Title: Random Numbers from Congruential Generator RANDU
+> ### Aliases: randu
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2817,6 +2871,7 @@ Warning: Not plotting observations with leverage one:
 > 
 > ### Name: sleep
 > ### Title: Student's Sleep Data
+> ### Aliases: sleep
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2849,7 +2904,7 @@ mean of the differences
 > 
 > ### Name: stackloss
 > ### Title: Brownlee's Stack Loss Plant Data
-> ### Aliases: stack.loss stack.x
+> ### Aliases: stackloss stack.loss stack.x
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -2871,7 +2926,7 @@ stack.xAir.Flow     0.7156     0.1349   5.307  5.8e-05 ***
 stack.xWater.Temp   1.2953     0.3680   3.520  0.00263 ** 
 stack.xAcid.Conc.  -0.1521     0.1563  -0.973  0.34405    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 3.243 on 17 degrees of freedom
 Multiple R-squared: 0.9136,	Adjusted R-squared: 0.8983 
@@ -2888,6 +2943,7 @@ F-statistic:  59.9 on 3 and 17 DF,  p-value: 3.016e-09
 > 
 > ### Name: sunspot.month
 > ### Title: Monthly Sunspot Data, 1749-1997
+> ### Aliases: sunspot.month
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3055,6 +3111,7 @@ FALSE  TRUE
 > 
 > ### Name: sunspots
 > ### Title: Monthly Sunspot Numbers, 1749-1983
+> ### Aliases: sunspots
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3073,6 +3130,7 @@ FALSE  TRUE
 > 
 > ### Name: swiss
 > ### Title: Swiss Fertility and Socioeconomic Indicators (1888) Data
+> ### Aliases: swiss
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3098,7 +3156,7 @@ Education        -0.87094    0.18303  -4.758 2.43e-05 ***
 Catholic          0.10412    0.03526   2.953  0.00519 ** 
 Infant.Mortality  1.07705    0.38172   2.822  0.00734 ** 
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 7.165 on 41 degrees of freedom
 Multiple R-squared: 0.7067,	Adjusted R-squared: 0.671 
@@ -3115,6 +3173,7 @@ F-statistic: 19.76 on 5 and 41 DF,  p-value: 5.594e-10
 > 
 > ### Name: trees
 > ### Title: Girth, Height and Volume for Black Cherry Trees
+> ### Aliases: trees
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3138,7 +3197,7 @@ Coefficients:
 (Intercept) -2.35332    0.23066  -10.20 4.18e-11 ***
 log(Girth)   2.19997    0.08983   24.49  < 2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.115 on 29 degrees of freedom
 Multiple R-squared: 0.9539,	Adjusted R-squared: 0.9523 
@@ -3159,7 +3218,7 @@ Coefficients:
 log(Girth)   1.98265    0.07501  26.432  < 2e-16 ***
 log(Height)  1.11712    0.20444   5.464 7.81e-06 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.08139 on 28 degrees of freedom
 Multiple R-squared: 0.9777,	Adjusted R-squared: 0.9761 
@@ -3193,6 +3252,7 @@ Coefficients:
 > 
 > ### Name: uspop
 > ### Title: Populations Recorded by the US Census
+> ### Aliases: uspop
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3211,6 +3271,7 @@ Coefficients:
 > 
 > ### Name: volcano
 > ### Title: Topographic Information on Auckland's Maunga Whau Volcano
+> ### Aliases: volcano
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3229,6 +3290,7 @@ Coefficients:
 > 
 > ### Name: warpbreaks
 > ### Title: The Number of Breaks in Yarn during Weaving
+> ### Aliases: warpbreaks
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3267,7 +3329,7 @@ tensionH        -20.000      5.157  -3.878 0.000320 ***
 woolB:tensionM   21.111      7.294   2.895 0.005698 ** 
 woolB:tensionH   10.556      7.294   1.447 0.154327    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 10.94 on 48 degrees of freedom
 Multiple R-squared: 0.3778,	Adjusted R-squared: 0.3129 
@@ -3283,7 +3345,7 @@ tension       2 2034.3 1017.13  8.4980 0.0006926 ***
 wool:tension  2 1002.8  501.39  4.1891 0.0210442 *  
 Residuals    48 5745.1  119.69                      
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
 > 
 > 
@@ -3296,6 +3358,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: women
 > ### Title: Average Heights and Weights for American Women
+> ### Aliases: women
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3314,6 +3377,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > ### Name: CO2
 > ### Title: Carbon Dioxide Uptake in Grass Plants
+> ### Aliases: CO2
 > ### Keywords: datasets
 > 
 > ### ** Examples
@@ -3336,7 +3400,7 @@ Asym  38.1398     0.9164  41.620 1.99e-06 ***
 lrc  -34.2766    18.9661  -1.807    0.145    
 c0    -4.3806     0.2042 -21.457 2.79e-05 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 1.663 on 4 degrees of freedom
 
@@ -3362,7 +3426,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.75 1.72 4.66 NA NA 
+Time elapsed:  4.975 0.148 5.203 0 0 
 > grDevices::dev.off()
 null device 
           1 

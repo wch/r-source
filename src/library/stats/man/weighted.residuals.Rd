@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{weighted.residuals}
+\alias{weighted.residuals}
 \title{Compute Weighted Residuals}
 \usage{
 weighted.residuals(obj, drop0 = TRUE)

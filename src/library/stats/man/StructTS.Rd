@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{StructTS}
+\alias{StructTS}
 \alias{print.StructTS}
 \alias{predict.StructTS}
 \title{Fit Structural Time Series}

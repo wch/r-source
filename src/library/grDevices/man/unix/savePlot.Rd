@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{savePlot}
+\alias{savePlot}
 \title{Save Cairo X11 Plot to File}
 \description{
   Save the current page of a cairo \code{\link{X11}()} device to a file. 

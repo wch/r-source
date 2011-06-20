@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{stars}
+\alias{stars}
 \title{Star (Spider/Radar) Plots and Segment Diagrams}
 \description{
   Draw star plots or segment diagrams of a multivariate data set.

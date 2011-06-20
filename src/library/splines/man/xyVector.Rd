@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{xyVector}
+\alias{xyVector}
 \title{Construct an \code{xyVector} Object}
 \description{
   Create an object to represent a set of x-y pairs.  The resulting

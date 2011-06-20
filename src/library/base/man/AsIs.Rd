@@ -5,6 +5,7 @@
 
 \name{AsIs}
 \alias{I}
+\alias{AsIs}
 \alias{print.AsIs}
 \alias{[.AsIs}
 \title{Inhibit Interpretation/Conversion of Objects}

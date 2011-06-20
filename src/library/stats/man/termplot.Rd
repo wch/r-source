@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{termplot}
+\alias{termplot}
 \title{Plot Regression Terms}
 \description{
   Plots regression terms against their predictors, optionally with

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{model.tables}
+\alias{model.tables}
 \alias{model.tables.aov}
 \alias{model.tables.aovlist}
 \title{Compute Tables of Results from an Aov Model Fit}

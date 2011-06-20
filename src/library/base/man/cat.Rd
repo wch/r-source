@@ -9,6 +9,7 @@
 cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
     append = FALSE)
 }
+\alias{cat}
 \description{
   Outputs the objects, concatenating the representations.  \code{cat}
   performs much less conversion than \code{\link{print}}.

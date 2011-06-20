@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.pretty}
+\alias{grid.pretty}
 \title{ Generate a Sensible Set of Breakpoints }
 \description{
   Produces a pretty set of breakpoints within the range given.

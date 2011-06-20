@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{type.convert}
+\alias{type.convert}
 \title{Type Conversion on Character Variables}
 \description{
   Convert a character vector to logical, integer, numeric, complex or

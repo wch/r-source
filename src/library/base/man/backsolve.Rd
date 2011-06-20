@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{backsolve}
+\alias{backsolve}
 \alias{forwardsolve}
 \title{Solve an Upper or Lower Triangular System}
 \description{

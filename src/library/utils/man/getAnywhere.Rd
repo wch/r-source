@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getAnywhere}
+\alias{getAnywhere}
 \alias{argsAnywhere}
 \alias{[.getAnywhere}
 \alias{print.getAnywhere}

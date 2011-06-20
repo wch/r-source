@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{missing}
+\alias{missing}
 \title{Does a Formal Argument have a Value?}
 \usage{
 missing(x)

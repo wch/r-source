@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{col}
+\alias{col}
 \title{Column Indexes}
 \description{
   Returns a matrix of integers indicating their column number in a

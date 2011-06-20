@@ -9,6 +9,7 @@
 title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
       line = NA, outer = FALSE, \dots)
 }
+\alias{title}
 \arguments{
   \item{main}{The main title (on top) using font and size (character
     expansion) \code{par("font.main")} and color

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{axTicks}
+\alias{axTicks}
 \title{Compute Axis Tickmark Locations}
 \description{
   Compute pretty tickmark locations, the same way as \R does internally.

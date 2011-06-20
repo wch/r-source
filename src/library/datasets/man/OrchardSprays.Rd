@@ -5,6 +5,7 @@
 
 \name{OrchardSprays}
 \docType{data}
+\alias{OrchardSprays}
 \title{Potency of Orchard Sprays}
 \description{
   An experiment was conducted to assess the potency of various

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{arima}
+\alias{arima}
 \concept{ARMA}
 \title{ARIMA Modelling of Time Series}
 \description{

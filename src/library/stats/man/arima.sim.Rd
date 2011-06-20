@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{arima.sim}
+\alias{arima.sim}
 \concept{autoregression}
 \title{Simulate from an ARIMA Model}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{assign}
+\alias{assign}
 \title{Assign a Value to a Name}
 \description{
   Assign a value to a name in an environment.

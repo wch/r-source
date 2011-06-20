@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.refresh}
+\alias{grid.refresh}
 \title{ Refresh the current grid scene }
 \description{
   Replays the current grid display list.

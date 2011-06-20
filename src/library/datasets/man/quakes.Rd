@@ -5,6 +5,7 @@
 
 \name{quakes}
 \docType{data}
+\alias{quakes}
 \title{Locations of Earthquakes off Fiji}
 \description{
   The data set give the locations of 1000 seismic events of MB > 4.0.

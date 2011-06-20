@@ -8,6 +8,7 @@
 \usage{
 embed (x, dimension = 1) 
 }
+\alias{embed}
 \arguments{
   \item{x}{a numeric vector, matrix, or time series.}
   \item{dimension}{a scalar representing the embedding dimension.}

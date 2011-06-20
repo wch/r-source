@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{download.file}
+\alias{download.file}
 \concept{proxy}
 \concept{ftp}
 \concept{http}

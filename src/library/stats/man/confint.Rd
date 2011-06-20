@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{confint}
+\alias{confint}
 \alias{confint.default}
 \title{Confidence Intervals for Model Parameters}
 \description{

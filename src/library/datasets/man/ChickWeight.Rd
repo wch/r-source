@@ -5,6 +5,7 @@
 
 \name{ChickWeight}
 \docType{data}
+\alias{ChickWeight}
 \title{Weight versus age of chicks on different diets}
 \description{
   The \code{ChickWeight} data frame has 578 rows and 4 columns from an

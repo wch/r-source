@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Rdiff}
+\alias{Rdiff}
 \title{Difference R Output Files}
 \description{
   Given two \R output files, compute differences ignoring headers,

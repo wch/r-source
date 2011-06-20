@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{convolve}
+\alias{convolve}
 \title{Convolution of Sequences via FFT}
 \description{
   Use the Fast Fourier Transform to compute the several kinds of

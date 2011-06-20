@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ftable.formula}
+\alias{ftable.formula}
 \title{Formula Notation for Flat Contingency Tables}
 \description{Produce or manipulate a flat contingency table using
   formula notation.}

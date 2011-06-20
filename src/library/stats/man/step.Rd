@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{step}
+\alias{step}
 \title{
 Choose a model by AIC in a Stepwise Algorithm
 }

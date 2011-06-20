@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{browseEnv}
+\alias{browseEnv}
 \alias{wsbrowser}
 \title{Browse Objects in Environment}
 \description{

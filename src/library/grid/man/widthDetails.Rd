@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{widthDetails}
+\alias{widthDetails}
 \alias{heightDetails}
 \title{ Width and Height of a grid grob }
 \description{

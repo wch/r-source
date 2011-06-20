@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sink}
+\alias{sink}
 \alias{sink.number}
 \concept{tee}
 \title{Send R Output to a File}

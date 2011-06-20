@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{with}
+\alias{with}
 \alias{with.default}
 \alias{within}
 \alias{within.list}

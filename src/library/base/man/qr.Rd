@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{qr}
+\alias{qr}
 \alias{qr.default}
 \alias{qr.coef}
 \alias{qr.qy}

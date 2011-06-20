@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{shell.exec}
+\alias{shell.exec}
 \title{Open a File or URL using Windows File Associations}
 \usage{
 shell.exec(file)

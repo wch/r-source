@@ -5,6 +5,7 @@
 
 \name{seq}
 \title{Sequence Generation}
+\alias{seq}
 \alias{seq.default}
 \alias{seq.int}
 \alias{seq_along}

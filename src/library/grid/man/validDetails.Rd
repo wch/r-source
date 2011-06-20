@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{validDetails}
+\alias{validDetails}
 \title{ Customising grid grob Validation }
 \description{
   This generic hook function is called whenever a grid grob is created

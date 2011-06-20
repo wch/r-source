@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{.BasicFunsList}
+\alias{.BasicFunsList}
 \title{List of Builtin and Special Functions}
 \description{
   A named list providing instructions for turning builtin and special

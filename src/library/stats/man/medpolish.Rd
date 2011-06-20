@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{medpolish}
+\alias{medpolish}
 \title{Median Polish of a Matrix}
 \description{
   Fits an additive model using Tukey's \emph{median polish} procedure.

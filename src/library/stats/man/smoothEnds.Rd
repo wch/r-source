@@ -5,6 +5,7 @@
 
 \name{smoothEnds}
 \title{End Points Smoothing (for Running Medians)}
+\alias{smoothEnds}
 \usage{
 smoothEnds(y, k = 3)
 }

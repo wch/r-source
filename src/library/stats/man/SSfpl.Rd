@@ -9,6 +9,7 @@
 \usage{
 SSfpl(input, A, B, xmid, scal)
 }
+\alias{SSfpl}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{A}{a numeric parameter representing the horizontal asymptote on

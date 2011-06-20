@@ -9,6 +9,7 @@
 comment(x)
 comment(x) <- value
 }
+\alias{comment}
 \alias{comment<-}
 \arguments{
  \item{x}{any \R object}

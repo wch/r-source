@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.design}
+\alias{plot.design}
 \title{Plot Univariate Effects of a Design or Model}
 \description{
   Plot univariate effects of one or more \code{\link{factor}}s,

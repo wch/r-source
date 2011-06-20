@@ -5,6 +5,7 @@
 
 \name{attenu}
 \docType{data}
+\alias{attenu}
 \title{The Joyner--Boore Attenuation Data}
 \description{
   This data gives peak accelerations measured at various observation

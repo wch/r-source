@@ -191,7 +191,8 @@
       
       \item The \code{\\name} of a help file is now included in the list
       of topics searched by \code{help()}, so need not be repeated as
-      an \code{\\alias}.
+      an \code{\\alias}.  (Currently the QC code has not been updated,
+      so it will issue spurious warnings.)
     }
   }
   

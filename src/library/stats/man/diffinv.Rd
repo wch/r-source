@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{diffinv}
+\alias{diffinv}
 \alias{diffinv.default}
 \alias{diffinv.ts}
 \title{Discrete Integration: Inverse of Differencing}

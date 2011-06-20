@@ -5,6 +5,7 @@
 
 \name{airmiles}
 \docType{data}
+\alias{airmiles}
 \title{Passenger Miles on Commercial US Airlines, 1937--1960}
 \description{
   The revenue passenger miles flown by commercial airlines in

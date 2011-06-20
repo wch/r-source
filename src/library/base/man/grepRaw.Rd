@@ -5,6 +5,7 @@
 
 \name{grepRaw}
 \title{Pattern Matching for Raw Vectors}
+\alias{grepRaw}
 \description{
   \code{grepRaw} searches for substring \code{pattern} matches within a
   raw vector \code{x}.

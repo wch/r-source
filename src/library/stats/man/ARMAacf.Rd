@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ARMAacf}
+\alias{ARMAacf}
 \title{Compute Theoretical ACF for an ARMA Process}
 \description{
  Compute the theoretical autocorrelation function or partial

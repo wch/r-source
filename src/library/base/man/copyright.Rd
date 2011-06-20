@@ -5,6 +5,7 @@
 
 \name{copyright}
 \title{Copyrights of Files Used to Build R}
+\alias{copyright}
 \alias{copyrights}
 \description{
   \R is released under the \sQuote{GNU Public License}: see

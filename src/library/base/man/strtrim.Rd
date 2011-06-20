@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{strtrim}
+\alias{strtrim}
 \title{Trim Character Strings to Specified Widths}
 \description{
   Trim character strings to specified display widths.

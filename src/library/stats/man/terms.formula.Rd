@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{terms.formula}
+\alias{terms.formula}
 \title{Construct a terms Object from a Formula}
 \description{
   This function takes a formula and some optional arguments and

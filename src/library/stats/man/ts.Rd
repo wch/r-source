@@ -5,6 +5,7 @@
 
 \name{ts}
 \title{Time-Series Objects}
+\alias{ts}
 \alias{as.ts}
 \alias{as.ts.default}
 \alias{is.ts}

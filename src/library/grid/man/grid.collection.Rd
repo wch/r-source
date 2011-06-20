@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.collection}
+\alias{grid.collection}
 \title{Create a Coherent Group of Grid Graphical Objects}
 \description{
   This function is deprecated; please use \code{gTree}.

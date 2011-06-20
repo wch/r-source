@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rapply}
+\alias{rapply}
 \title{Recursively Apply a Function to a List}
 \description{
   \code{rapply} is a recursive version of \code{\link{lapply}}.

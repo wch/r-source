@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{vpPath}
+\alias{vpPath}
 \title{ Concatenate Viewport Names }
 \description{
   This function can be used to generate a viewport path for use

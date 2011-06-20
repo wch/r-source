@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{hist.POSIXt}
+\alias{hist.POSIXt}
 \alias{hist.Date}
 \title{Histogram of a Date or Date-Time Object}
 \description{

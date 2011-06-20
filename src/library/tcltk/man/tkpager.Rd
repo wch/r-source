@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tkpager}
+\alias{tkpager}
 \title{Page file using Tk text widget}
 \description{
   This plugs into \code{file.show}, showing files in separate windows. 

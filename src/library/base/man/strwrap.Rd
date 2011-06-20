@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{strwrap}
+\alias{strwrap}
 \title{Wrap Character Strings to Format Paragraphs}
 \description{
   Each character string in the input is first split into paragraphs (or

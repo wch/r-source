@@ -5,6 +5,7 @@
 
 \name{print.ts}
 \title{Printing Time-Series Objects}
+\alias{print.ts}
 \description{
   Print method for time series objects.
 }

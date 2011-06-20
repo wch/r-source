@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{which}
+\alias{which}
 \alias{arrayInd}
 \title{Which indices are TRUE?}
 \description{

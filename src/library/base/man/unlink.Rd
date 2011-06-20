@@ -6,6 +6,7 @@
 \name{unlink}
 \title{Delete Files and Directories}
 \usage{unlink(x, recursive = FALSE, force = FALSE)}
+\alias{unlink}
 \arguments{
   \item{x}{a character vector with the names of the file(s) or
     directories to be deleted.

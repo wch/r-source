@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{print.default}
+\alias{print.default}
 \description{
   \code{print.default} is the \emph{default} method of the generic
   \code{\link{print}} function which prints its argument.

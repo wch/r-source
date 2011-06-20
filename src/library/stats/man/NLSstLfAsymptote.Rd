@@ -6,6 +6,7 @@
 \name{NLSstLfAsymptote}
 \encoding{UTF-8}
 \title{Horizontal Asymptote on the Left Side}
+\alias{NLSstLfAsymptote}
 \alias{NLSstLfAsymptote.sortedXyData}
 \description{
   Provide an initial guess at the horizontal asymptote on the left side

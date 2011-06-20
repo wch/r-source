@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{toRd}
+\alias{toRd}
 \alias{toRd.default}
 \alias{toRd.bibentry}
 \title{

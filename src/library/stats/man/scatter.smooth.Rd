@@ -5,6 +5,7 @@
 
 \name{scatter.smooth}
 \title{Scatter Plot with Smooth Curve Fitted by Loess}
+\alias{scatter.smooth}
 \alias{loess.smooth}
 \description{
   Plot and add a smooth curve computed by \code{loess} to a scatter plot.

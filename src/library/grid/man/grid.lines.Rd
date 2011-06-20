@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.lines}
+\alias{grid.lines}
 \alias{linesGrob}
 \alias{grid.polyline}
 \alias{polylineGrob}

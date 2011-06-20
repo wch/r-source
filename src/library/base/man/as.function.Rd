@@ -10,6 +10,7 @@ as.function(x, \dots)
 
 \method{as.function}{default}(x, envir = parent.frame(), \dots)
 }
+\alias{as.function}
 \alias{as.function.default}
 \arguments{
   \item{x}{object to convert, a list for the default method.}

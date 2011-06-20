@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{power}
+\alias{power}
 \title{Create a Power Link Object}
 \usage{
 power(lambda = 1)

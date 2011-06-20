@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{locator}
+\alias{locator}
 \title{Graphical Input}
 \description{
   Reads the position of the graphics cursor when the (first) mouse

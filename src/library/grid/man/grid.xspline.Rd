@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.xspline}
+\alias{grid.xspline}
 \alias{xsplineGrob}
 \title{ Draw an Xspline }
 \description{

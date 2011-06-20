@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{points}
+\alias{points}
 \alias{points.default}
 \alias{pch}
 \title{Add Points to a Plot}

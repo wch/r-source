@@ -5,6 +5,7 @@
 
 \name{anscombe}
 \docType{data}
+\alias{anscombe}
 \title{Anscombe's Quartet of \sQuote{Identical} Simple Linear Regressions}
 \description{
   Four \eqn{x}-\eqn{y} datasets which have the same traditional

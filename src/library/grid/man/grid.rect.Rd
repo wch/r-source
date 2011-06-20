@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.rect}
+\alias{grid.rect}
 \alias{rectGrob}
 \title{Draw rectangles }
 \description{

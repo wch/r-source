@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rtags}
+\alias{rtags}
 \title{ An Etags-like Tagging Utility for R }
 \description{
   \code{rtags} provides etags-like indexing capabilities for R code,

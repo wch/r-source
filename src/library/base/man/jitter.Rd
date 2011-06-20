@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{jitter}
+\alias{jitter}
 \title{\sQuote{Jitter} (Add Noise) to Numbers}
 \usage{
 jitter(x, factor=1, amount = NULL)

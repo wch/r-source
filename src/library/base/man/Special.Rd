@@ -5,6 +5,7 @@
 
 \name{Special}
 \title{Special Functions of Mathematics}
+\alias{Special}
 \alias{beta}
 \alias{lbeta}
 \alias{gamma}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{traceback}
+\alias{traceback}
 \alias{.Traceback}
 \title{Print Call Stacks}
 \description{

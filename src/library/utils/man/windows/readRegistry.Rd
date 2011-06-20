@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{readRegistry}
+\alias{readRegistry}
 \title{Read a Windows Registy Hive}
 \description{
   Read values of keys in the Windows Registry, and optionally whole hives.

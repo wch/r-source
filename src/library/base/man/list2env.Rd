@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{list2env}
+\alias{list2env}
 \title{From A List, Build or Add To an Environment}
 \description{
   From a \emph{named} \code{\link{list} x}, create an

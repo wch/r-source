@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SHLIB}
+\alias{SHLIB}
 \title{Build Shared Object/DLL for Dynamic Loading}
 \description{
   Compile the given source files and then link all specified object

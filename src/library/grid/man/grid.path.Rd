@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.path}
+\alias{grid.path}
 \alias{pathGrob}
 \title{ Draw a Path }
 \description{

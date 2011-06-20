@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{findInterval}
+\alias{findInterval}
 \title{Find Interval Numbers or Indices}
 \usage{
 findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)

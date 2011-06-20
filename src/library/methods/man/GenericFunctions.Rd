@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{GenericFunctions}
+\alias{GenericFunctions}
 \alias{isGeneric}
 \alias{isGroup}
 \alias{removeGeneric}

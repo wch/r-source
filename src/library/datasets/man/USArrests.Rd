@@ -5,6 +5,7 @@
 
 \name{USArrests}
 \docType{data}
+\alias{USArrests}
 \title{Violent Crime Rates by US State}
 \description{
   This data set contains statistics, in arrests per 100,000 residents

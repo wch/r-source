@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SweaveSyntConv}
+\alias{SweaveSyntConv}
 \title{Convert Sweave Syntax}
 \description{
   This function converts the syntax of files in \code{\link{Sweave}}

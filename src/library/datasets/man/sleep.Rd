@@ -7,6 +7,7 @@
 \name{sleep}
 \docType{data}
 \encoding{UTF-8}
+\alias{sleep}
 \title{Student's Sleep Data}
 \description{
   Data which show the effect of two soporific drugs (increase in hours

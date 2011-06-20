@@ -12,6 +12,7 @@ autoloader(name, package, \dots)
 .AutoloadEnv
 .Autoloaded
 }
+\alias{autoload}
 \alias{autoloader}
 \alias{.AutoloadEnv}
 \alias{.Autoloaded}

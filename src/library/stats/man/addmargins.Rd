@@ -5,6 +5,7 @@
 
 \name{addmargins}
 
+\alias{addmargins}
 \concept{totals}
 \concept{margins}
 

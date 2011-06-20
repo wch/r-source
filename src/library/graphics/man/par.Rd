@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{par}
+\alias{par}
 \alias{.Pars}
 \concept{adj}
 \concept{ann}

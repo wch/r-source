@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{vcov}
+\alias{vcov}
 \alias{vcov.lm}
 \alias{vcov.glm}
 \alias{vcov.summary.lm}

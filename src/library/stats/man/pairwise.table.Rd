@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pairwise.table}
+\alias{pairwise.table}
 \title{Tabulate p values for pairwise comparisons}
 \description{
  Creates  table of p values for pairwise comparisons

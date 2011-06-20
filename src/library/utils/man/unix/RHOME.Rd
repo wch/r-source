@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RHOME}
+\alias{RHOME}
 \title{R Home Directory}
 \description{
   Returns the location of the \R home directory, which is the root of

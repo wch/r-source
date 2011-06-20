@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{push.viewport}
+\alias{push.viewport}
 \title{Push a Viewport onto the Grid Viewport Stack}
 \description{
   Grid maintains a viewport stack --- a list of nested drawing

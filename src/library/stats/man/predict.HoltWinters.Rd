@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{predict.HoltWinters}
+\alias{predict.HoltWinters}
 \title{Prediction Function for Fitted Holt-Winters Models}
 \description{
   Computes predictions and prediction intervals for models fitted by

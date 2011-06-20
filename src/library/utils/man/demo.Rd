@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{demo}
+\alias{demo}
 \title{Demonstrations of R Functionality}
 \description{
   \code{demo} is a user-friendly interface to running some demonstration

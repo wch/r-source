@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Poisson}
+\alias{Poisson}
 \alias{dpois}
 \alias{ppois}
 \alias{qpois}

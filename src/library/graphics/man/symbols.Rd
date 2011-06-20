@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{symbols}
+\alias{symbols}
 \concept{circle}
 \concept{star}
 \concept{square}

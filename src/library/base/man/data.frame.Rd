@@ -5,6 +5,7 @@
 
 \name{data.frame}
 \title{Data Frames}
+\alias{data.frame}
 \alias{default.stringsAsFactors}
 \description{
   This function creates data frames, tightly coupled

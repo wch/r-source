@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{splineOrder}
+\alias{splineOrder}
 \title{Determine the Order of a Spline}
 \description{
   Return the order of a spline object.

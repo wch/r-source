@@ -8,6 +8,7 @@
 \usage{
 stem(x, scale = 1, width = 80, atom = 1e-08)
 }
+\alias{stem}
 \description{
   \code{stem} produces a stem-and-leaf plot of the values in \code{x}.
   The parameter \code{scale} can be used to expand the scale of the

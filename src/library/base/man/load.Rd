@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{load}
+\alias{load}
 \title{Reload Saved Datasets}
 \description{
   Reload datasets written with the function \code{save}.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unit.c}
+\alias{unit.c}
 \title{Combine Unit Objects}
 \description{
   This function produces a new unit object by combining the

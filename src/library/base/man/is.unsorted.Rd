@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{is.unsorted}
+\alias{is.unsorted}
 \title{Test if an Object is Not Sorted}
 \description{
   Test if an object is not sorted, without the cost of sorting it.

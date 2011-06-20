@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{as.hclust}
+\alias{as.hclust}
 \alias{as.hclust.default}
 \alias{as.hclust.twins}
 \title{Convert Objects to Class hclust}

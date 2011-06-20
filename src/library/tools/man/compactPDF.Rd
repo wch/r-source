@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{compactPDF}
+\alias{compactPDF}
 \title{
   Compact PDF Files
 }

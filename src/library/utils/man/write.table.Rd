@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{write.table}
+\alias{write.table}
 \alias{write.csv}
 \alias{write.csv2}
 \title{Data Output}

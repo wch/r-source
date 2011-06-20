@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mantelhaen.test}
+\alias{mantelhaen.test}
 \title{Cochran-Mantel-Haenszel Chi-Squared Test for Count Data}
 \description{
   Performs a Cochran-Mantel-Haenszel chi-squared test of the null that

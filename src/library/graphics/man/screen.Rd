@@ -11,6 +11,7 @@ screen(n = , new = TRUE)
 erase.screen(n = )
 close.screen(n, all.screens = FALSE)
 }
+\alias{screen}
 \alias{split.screen}
 \alias{erase.screen}
 \alias{close.screen}

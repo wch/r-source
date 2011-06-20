@@ -5,6 +5,7 @@
 
 \name{print.data.frame}
 \title{Printing Data Frames}
+\alias{print.data.frame}
 \description{
   Print a data frame.
 }

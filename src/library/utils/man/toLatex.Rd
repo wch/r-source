@@ -5,6 +5,7 @@
 
 \name{toLatex}
 \title{Converting R Objects to BibTeX or LaTeX}
+\alias{toLatex}
 \alias{print.Latex}
 \alias{toBibtex}
 \alias{print.Bibtex}

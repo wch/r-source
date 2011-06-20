@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rank}
+\alias{rank}
 \title{Sample Ranks}
 \description{
   Returns the sample ranks of the values in a vector.  Ties (i.e., equal

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{time}
+\alias{time}
 \alias{cycle}
 \alias{frequency}
 \alias{deltat}

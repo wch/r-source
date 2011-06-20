@@ -5,6 +5,7 @@
 
 \name{table}
 \title{Cross Tabulation and Table Creation}
+\alias{table}
 \alias{summary.table}
 \alias{print.summary.table}%% {print.table} is in ./print.Rd
 \alias{as.data.frame.table}

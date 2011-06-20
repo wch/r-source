@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{View}
+\alias{View}
 \title{Invoke a Data Viewer}
 \description{
   Invoke a spreadsheet-style data viewer on a matrix-like \R object.

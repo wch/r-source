@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tsSmooth}
+\alias{tsSmooth}
 \alias{tsSmooth.StructTS}
 \title{Use Fixed-Interval Smoothing on Time Series}
 \description{

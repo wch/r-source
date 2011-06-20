@@ -5,6 +5,7 @@
 
 \name{UKgas}
 \docType{data}
+\alias{UKgas}
 \title{UK Quarterly Gas Consumption}
 \usage{UKgas}
 \description{

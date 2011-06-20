@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{profile}
+\alias{profile}
 \title{Generic Function for Profiling Models}
 \usage{
 profile(fitted, \dots)

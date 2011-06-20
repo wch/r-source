@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{fixPre1.8}
+\alias{fixPre1.8}
 \title{Fix Objects Saved from R Versions Previous to 1.8}
 \description{
   Beginning with R version 1.8.0, the class of an object contains the

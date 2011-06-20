@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Memory}
+\alias{Memory}
 \alias{mem.limits}
 \title{Memory Available for Data Storage}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{shortPathName}
+\alias{shortPathName}
 \title{Express File Paths in Short Form}
 \description{
   Convert file paths to the short (DOS) form, with 8+3 path components

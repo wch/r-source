@@ -5,6 +5,7 @@
 
 \name{WWWusage}
 \docType{data}
+\alias{WWWusage}
 \title{Internet Usage per Minute}
 \usage{WWWusage}
 \description{

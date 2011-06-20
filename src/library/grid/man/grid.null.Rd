@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.null}
+\alias{grid.null}
 \alias{nullGrob}
 \title{ Null Graphical Object }
 \description{

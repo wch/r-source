@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{RdTextFilter}
+\alias{RdTextFilter}
 \title{
 Select text in an Rd file.
 }

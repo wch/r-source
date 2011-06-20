@@ -9,6 +9,7 @@
 \special{function( arglist ) expr}
 \special{return(value)}
 }
+\alias{function}
 \alias{return}
 \description{
   These functions provide the base mechanisms for defining

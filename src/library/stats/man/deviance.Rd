@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{deviance}
+\alias{deviance}
 \title{Model Deviance}
 \description{
   Returns the deviance of a fitted model object.

@@ -12,6 +12,7 @@ dummy.coef(object, \dots)
 
 \method{dummy.coef}{aovlist}(object, use.na = FALSE, \dots)
 }
+\alias{dummy.coef}
 \alias{dummy.coef.lm}
 \alias{dummy.coef.aovlist}
 \arguments{

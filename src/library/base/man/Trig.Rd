@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Trig}
+\alias{Trig}
 \alias{cos}
 \alias{sin}
 \alias{tan}

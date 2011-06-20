@@ -5,6 +5,7 @@
 
 \name{women}
 \docType{data}
+\alias{women}
 \title{Average Heights and Weights for American Women}
 \description{
   This data set gives the average heights and weights for American women

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{p.adjust}
+\alias{p.adjust}
 \alias{p.adjust.methods}
 \title{Adjust P-values for Multiple Comparisons}
 \description{Given a set of p-values, returns p-values adjusted using

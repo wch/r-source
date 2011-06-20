@@ -5,6 +5,7 @@
 
 \name{sunspots}
 \docType{data}
+\alias{sunspots}
 \title{Monthly Sunspot Numbers, 1749--1983}
 \description{
   Monthly mean relative sunspot numbers from 1749 to 1983.  Collected at

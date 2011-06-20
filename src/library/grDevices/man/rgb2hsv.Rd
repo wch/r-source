@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rgb2hsv}
+\alias{rgb2hsv}
 \title{RGB to HSV Conversion}
 \concept{color space conversion}
 \description{

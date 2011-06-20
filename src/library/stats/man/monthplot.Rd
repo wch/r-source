@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{monthplot}
+\alias{monthplot}
 \alias{monthplot.default}
 \alias{monthplot.ts}
 \alias{monthplot.stl}

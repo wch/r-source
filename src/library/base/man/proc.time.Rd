@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{proc.time}
+\alias{proc.time}
 \alias{print.proc_time}
 \title{Running Time of R}
 \description{

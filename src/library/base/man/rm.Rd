@@ -13,6 +13,7 @@ rm    (\dots, list = character(), pos = -1,
        envir = as.environment(pos), inherits = FALSE)
 }
 \alias{rm}
+\alias{remove}
 \arguments{
   \item{\dots}{the objects to be removed, as names (unquoted) or
     character strings (quoted).}

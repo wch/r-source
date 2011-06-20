@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.circle}
+\alias{grid.circle}
 \alias{circleGrob}
 \title{ Draw a Circle }
 \description{

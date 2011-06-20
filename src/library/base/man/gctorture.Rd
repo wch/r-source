@@ -9,6 +9,7 @@
 gctorture(on = TRUE)
 gctorture2(step, wait = step, inhibit_release = FALSE)
 }
+\alias{gctorture}
 \alias{gctorture2}
 \arguments{
   \item{on}{logical; turning it on/off.}

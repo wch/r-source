@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{menu}
+\alias{menu}
 \title{Menu Interaction Function}
 \description{
   \code{menu} presents the user with a menu of choices labelled from 1

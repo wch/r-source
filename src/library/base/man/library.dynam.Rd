@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
+\alias{library.dynam}
 \alias{library.dynam.unload}
 \alias{.dynLibs}
 \title{Loading DLLs from Packages}

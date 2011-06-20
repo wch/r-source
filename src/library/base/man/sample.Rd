@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sample}
+\alias{sample}
 \alias{sample.int}
 \title{Random Samples and Permutations}
 \description{

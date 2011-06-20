@@ -12,6 +12,7 @@
 \usage{
 tabulate(bin, nbins = max(1, bin, na.rm = TRUE))
 }
+\alias{tabulate}
 \arguments{
     \item{bin}{a numeric vector (of positive integers), or a factor.}
     \item{nbins}{the number of bins to be used.}

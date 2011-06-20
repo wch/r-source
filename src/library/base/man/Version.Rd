@@ -5,6 +5,7 @@
 
 \name{R.Version}
 \title{Version Information}
+\alias{R.Version}
 \alias{R.version}
 \alias{version}
 \alias{R.version.string}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Control}
+\alias{Control}
 \alias{if}
 \alias{else}
 \alias{for}

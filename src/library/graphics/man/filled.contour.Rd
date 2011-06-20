@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{filled.contour}
+\alias{filled.contour}
 \title{Level (Contour) Plots}
 \usage{
 filled.contour(x = seq(0, 1, length.out = nrow(z)),

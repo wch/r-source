@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{connections}
+\alias{connections}
 \alias{connection}
 \alias{file}
 \alias{clipboard}

@@ -5,6 +5,7 @@
 
 \name{all.equal}
 \title{Test if Two Objects are (Nearly) Equal}
+\alias{all.equal}
 \alias{all.equal.default}
 \alias{all.equal.numeric}
 \alias{all.equal.character}

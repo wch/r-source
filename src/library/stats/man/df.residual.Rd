@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{df.residual}
+\alias{df.residual}
 %\alias{df.residual.default}
 \title{Residual Degrees-of-Freedom}
 \description{

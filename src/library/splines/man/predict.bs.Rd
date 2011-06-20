@@ -5,6 +5,7 @@
 
 \name{predict.bs}
 \title{Evaluate a Spline Basis}
+\alias{predict.bs}
 \alias{predict.ns}
 \description{
   Evaluate a predefined spline basis at given values.

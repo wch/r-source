@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getClass}
+\alias{getClass}
 \alias{getClassDef}
 \title{Get Class Definition }
 \description{

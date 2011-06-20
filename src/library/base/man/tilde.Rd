@@ -5,6 +5,7 @@
 
 \name{tilde}
 \alias{~}
+\alias{tilde}
 \title{Tilde Operator}
 \description{
   Tilde is used to separate the left- and right-hand sides in model formula.

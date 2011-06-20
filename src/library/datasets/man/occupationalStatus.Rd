@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{occupationalStatus}
+\alias{occupationalStatus}
 \docType{data}
 \title{Occupational Status of Fathers and their Sons}
 \description{

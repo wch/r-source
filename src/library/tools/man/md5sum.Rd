@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{md5sum}
+\alias{md5sum}
 \title{Compute MD5 Checksums}
 \description{
   Compute the 32-byte MD5 checksums of one or more files.

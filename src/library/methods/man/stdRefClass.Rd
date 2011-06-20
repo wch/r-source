@@ -1,6 +1,7 @@
 \name{envRefClass-class}
 \Rdversion{1.1}
 \docType{class}
+\alias{envRefClass-class}
 \alias{$,envRefClass-method}
 \alias{$<-,envRefClass-method}
 \alias{initialize,envRefClass-method}

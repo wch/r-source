@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sys.source}
+\alias{sys.source}
 \title{Parse and Evaluate Expressions from a File}
 \description{
   Parses expressions in the given file, and then successively evaluates

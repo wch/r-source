@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{gc.time}
+\alias{gc.time}
 \title{Report Time Spent in Garbage Collection}
 \description{
   This function reports the time spent in garbage collection so far in

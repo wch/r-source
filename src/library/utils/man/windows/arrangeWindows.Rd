@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{arrangeWindows}
+\alias{arrangeWindows}
 \title{
 Rearrange windows in the R GUI.
 }

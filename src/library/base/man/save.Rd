@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{save}
+\alias{save}
 \alias{save.image}
 \title{Save R Objects}
 \description{

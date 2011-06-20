@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Box.test}
+\alias{Box.test}
 \concept{portmanteau}
 \title{Box-Pierce and Ljung-Box Tests}
 \description{

@@ -8,6 +8,7 @@
 \usage{
 rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 }
+\alias{rgb}
 \description{
   This function creates colors corresponding to the given
   intensities (between 0 and \code{max}) of the red, green and blue

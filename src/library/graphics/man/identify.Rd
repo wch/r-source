@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{identify}
+\alias{identify}
 \alias{identify.default}
 \title{Identify Points in a Scatter Plot}
 \usage{

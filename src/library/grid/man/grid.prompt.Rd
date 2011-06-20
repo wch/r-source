@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.prompt}
+\alias{grid.prompt}
 \title{ Prompt before New Page }
 \description{
   This function can be used to control whether the user

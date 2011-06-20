@@ -5,6 +5,7 @@
 
 \name{profile-methods}
 \docType{methods}
+\alias{profile-methods}
 \alias{profile,ANY-method}
 \alias{profile,mle-method}
 \title{Methods for Function \code{profile} in Package \pkg{stats4}}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ks.test}
+\alias{ks.test}
 \title{Kolmogorov-Smirnov Tests}
 \description{
   Perform a one- or two-sample Kolmogorov-Smirnov test.

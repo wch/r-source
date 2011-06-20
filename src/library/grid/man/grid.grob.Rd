@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.grob}
+\alias{grid.grob}
 \alias{grob}
 \alias{gTree}
 \alias{grobTree}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{bibentry}
+\alias{bibentry}
 \alias{print.bibentry}
 \title{Bibliography Entries}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pictex}
+\alias{pictex}
 \title{A PicTeX Graphics Driver}
 \usage{
 pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,

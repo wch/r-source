@@ -5,6 +5,7 @@
 
 \name{Defunct}
 \title{Marking Objects as Defunct}
+\alias{Defunct}
 \alias{.Defunct}
 
 \description{

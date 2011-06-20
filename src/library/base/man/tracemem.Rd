@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tracemem}
+\alias{tracemem}
 \alias{untracemem}
 \alias{retracemem}
 \title{Trace Copying of Objects}

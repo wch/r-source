@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{call}
+\alias{call}
 \alias{is.call}
 \alias{as.call}
 \title{Function Calls}

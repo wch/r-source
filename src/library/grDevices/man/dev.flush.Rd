@@ -5,6 +5,7 @@
 
 \name{dev.flush}
 \alias{dev.hold}
+\alias{dev.flush}
 \title{
   Hold or Flush Output on an On-Screen Graphics Device.
 }

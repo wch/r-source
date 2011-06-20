@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mcnemar.test}
+\alias{mcnemar.test}
 \title{McNemar's Chi-squared Test for Count Data}
 \description{
   Performs McNemar's chi-squared test for symmetry of rows and columns

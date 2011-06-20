@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unit.rep}
+\alias{unit.rep}
 \title{ Replicate Elements of Unit Objects }
 \description{
   Replicates the units according to the values given in \code{times} and

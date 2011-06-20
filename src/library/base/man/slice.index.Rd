@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{slice.index}
+\alias{slice.index}
 \title{Slice Indexes in an Array}
 \description{
   Returns a matrix of integers indicating the number of their slice in a

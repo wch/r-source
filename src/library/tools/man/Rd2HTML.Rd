@@ -5,6 +5,7 @@
 
 \name{Rd2HTML}
 \alias{Rd2txt}
+\alias{Rd2HTML}
 \alias{Rd2ex}
 \alias{Rd2latex}
 \title{ Rd Converters }

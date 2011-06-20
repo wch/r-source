@@ -5,6 +5,7 @@
 % Distributed under GPL 2 or later
 
 \name{packageDescription}
+\alias{packageDescription}
 \alias{packageVersion}
 \alias{print.packageDescription}
 \title{Package Description}

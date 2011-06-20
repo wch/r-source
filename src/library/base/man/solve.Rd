@@ -10,6 +10,7 @@ solve(a, b, \dots)
 
 \method{solve}{default}(a, b, tol, LINPACK = FALSE, \dots)
 }
+\alias{solve}
 \alias{solve.default}
 \arguments{
   \item{a}{a square numeric or complex matrix containing the coefficients of

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{TukeyHSD}
+\alias{TukeyHSD}
 \alias{TukeyHSD.aov}
 \alias{print.TukeyHSD}
 \alias{plot.TukeyHSD}

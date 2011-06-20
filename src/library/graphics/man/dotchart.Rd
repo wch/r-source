@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dotchart}
+\alias{dotchart}
 \title{Cleveland's Dot Plots}
 \description{
   Draw a Cleveland dot plot.

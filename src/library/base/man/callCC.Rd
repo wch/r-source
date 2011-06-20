@@ -8,6 +8,7 @@
 \usage{
 callCC(fun)
 }
+\alias{callCC}
 \arguments{
   \item{fun}{function of one argument, the exit procedure.}
 }

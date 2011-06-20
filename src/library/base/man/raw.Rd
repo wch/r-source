@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{raw}
+\alias{raw}
 \alias{as.raw}
 \alias{is.raw}
 \title{Raw Vectors}

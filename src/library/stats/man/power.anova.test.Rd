@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{power.anova.test}
+\alias{power.anova.test}
 \encoding{UTF-8}
 \title{Power Calculations for Balanced One-Way Analysis of Variance Tests}
 \usage{

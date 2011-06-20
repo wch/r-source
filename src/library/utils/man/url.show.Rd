@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{url.show}
+\alias{url.show}
 \title{Display a text URL}
 \description{
   Extension of \code{\link{file.show}} to display text files from a remote 

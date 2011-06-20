@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dim}
+\alias{dim}
 \alias{dim.data.frame}
 \alias{dim<-}
 \title{Dimensions of an Object}

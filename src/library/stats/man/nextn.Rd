@@ -8,6 +8,7 @@
 \usage{
 nextn(n, factors = c(2,3,5))
 }
+\alias{nextn}
 \arguments{
 \item{n}{an integer.}
 \item{factors}{a vector of positive integer factors.}

@@ -9,6 +9,7 @@
 \usage{
 paste(\dots, sep = " ", collapse = NULL)
 }
+\alias{paste}
 \arguments{
   \item{\dots}{one or more \R objects, to be converted to character vectors.}
   \item{sep}{a character string to separate the terms.  Not

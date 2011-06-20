@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.data.frame}
+\alias{plot.data.frame}
 \title{Plot Method for Data Frames}
 \description{
   \code{plot.data.frame}, a method for the \code{\link{plot}} generic.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{constrOptim}
+\alias{constrOptim}
 \title{Linearly Constrained Optimization}
 \description{
 Minimise a function subject to linear inequality constraints using an

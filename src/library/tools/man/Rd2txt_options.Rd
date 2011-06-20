@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Rd2txt_options}
+\alias{Rd2txt_options}
 \title{
 Set formatting options for text help
 }

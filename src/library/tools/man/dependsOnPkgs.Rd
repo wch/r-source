@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dependsOnPkgs}
+\alias{dependsOnPkgs}
 \title{Find Reverse Dependencies}
 \description{
   Find \sQuote{reverse} dependencies of packages, that is those packages

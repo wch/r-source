@@ -5,6 +5,7 @@
 % Distributed under GPL 2 or later
 
 \name{ecdf}
+\alias{ecdf}
 \alias{plot.ecdf}
 \alias{print.ecdf}
 \alias{summary.ecdf}

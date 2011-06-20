@@ -8,6 +8,7 @@
 \usage{
 nlevels(x)
 }
+\alias{nlevels}
 \description{
   Return the number of levels which its argument has.
 }

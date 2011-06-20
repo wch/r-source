@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{length}
+\alias{length}
 \alias{length<-}
 \alias{length<-.factor}
 \title{Length of an Object}

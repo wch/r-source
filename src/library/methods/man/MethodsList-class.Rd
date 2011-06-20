@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{MethodsList-class}
+\alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 \docType{class}
 \title{Class MethodsList, Deprecated Representation of Methods }

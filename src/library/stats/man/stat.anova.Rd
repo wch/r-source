@@ -8,6 +8,7 @@
 \usage{
 stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"), scale, df.scale, n)
 }
+\alias{stat.anova}
 \arguments{
  \item{table}{numeric matrix as results from
    \code{\link{anova.glm}(\dots, test=NULL)}.}

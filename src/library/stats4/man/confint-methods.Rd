@@ -5,6 +5,7 @@
 
 \name{confint-methods}
 \docType{methods}
+\alias{confint-methods}
 \alias{confint,ANY-method}
 \alias{confint,profile.mle-method}
 \alias{confint,mle-method}

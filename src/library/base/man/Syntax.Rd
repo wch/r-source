@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Syntax}
+\alias{Syntax}
 \title{Operator Syntax and Precedence}
 \description{
   Outlines \R syntax and gives the precedence of operators

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nsl}
+\alias{nsl}
 \title{Look up the IP Address by Hostname}
 \description{
   Interface to \code{gethostbyname}.

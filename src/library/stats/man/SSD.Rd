@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSD}
+\alias{SSD}
 \alias{estVar}
 \title{SSD Matrix and Estimated Variance Matrix in Multivariate Models}
 \description{

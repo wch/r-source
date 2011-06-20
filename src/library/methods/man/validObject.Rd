@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{validObject}
+\alias{validObject}
 \alias{getValidity}
 \alias{setValidity}
 \title{ Test the Validity of an Object }

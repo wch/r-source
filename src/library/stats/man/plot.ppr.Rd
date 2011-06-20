@@ -7,6 +7,7 @@
 % copyright (C) 1995-8 B. D. Ripley
 %
 \name{plot.ppr}
+\alias{plot.ppr}
 \title{
 Plot Ridge Functions for Projection Pursuit Regression Fit
 }

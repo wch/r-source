@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{basename}
+\alias{basename}
 \alias{dirname}
 \title{Manipulate File Paths}
 \description{

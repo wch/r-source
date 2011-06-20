@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{xgettext}
+\alias{xgettext}
 \alias{xngettext}
 \alias{xgettext2pot}
 \title{Extract Translatable Messages from R Files in a Package}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
+\alias{chol2inv}
 \title{Inverse from Choleski (or QR) Decomposition}
 \description{
   Invert a symmetric, positive definite square matrix from its Choleski

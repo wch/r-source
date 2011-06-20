@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mle}
+\alias{mle}
 \title{Maximum Likelihood Estimation}
 \description{
   Estimate parameters by the method of maximum likelihood.

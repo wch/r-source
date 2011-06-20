@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.spec}
+\alias{plot.spec}
 \alias{plot.spec.coherency}
 \alias{plot.spec.phase}
 \title{Plotting Spectral Densities}

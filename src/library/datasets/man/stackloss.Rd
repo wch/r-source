@@ -5,6 +5,7 @@
 
 \name{stackloss}
 \docType{data}
+\alias{stackloss}
 \alias{stack.loss}
 \alias{stack.x}
 \title{Brownlee's Stack Loss Plant Data}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.formula}
+\alias{plot.formula}
 \alias{lines.formula}
 \alias{points.formula}
 \alias{text.formula}

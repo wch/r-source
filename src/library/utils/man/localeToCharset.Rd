@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{localeToCharset}
+\alias{localeToCharset}
 \title{
   Select a Suitable Encoding Name from a Locale Name
 }

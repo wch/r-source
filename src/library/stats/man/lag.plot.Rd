@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{lag.plot}
+\alias{lag.plot}
 \title{Time Series Lag Plots}
 \description{
   Plot time series against lagged versions of themselves.

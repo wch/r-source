@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{gray}
+\alias{gray}
 \alias{grey}
 \title{Gray Level Specification}
 \description{

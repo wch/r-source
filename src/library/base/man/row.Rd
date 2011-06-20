@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{row}
+\alias{row}
 \title{Row Indexes}
 \description{
   Returns a matrix of integers indicating their row number in a

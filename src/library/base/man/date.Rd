@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{date}
+\alias{date}
 \title{System Date and Time}
 \description{
   Returns a character string of the current system date and time.

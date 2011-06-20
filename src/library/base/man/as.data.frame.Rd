@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
+\alias{as.data.frame}
 \alias{is.data.frame}
 \alias{as.data.frame.AsIs}
 \alias{as.data.frame.character}

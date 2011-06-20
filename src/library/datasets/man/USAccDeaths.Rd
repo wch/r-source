@@ -5,6 +5,7 @@
 
 \name{USAccDeaths}
 \docType{data}
+\alias{USAccDeaths}
 \title{
   Accidental Deaths in the US 1973--1978
 }

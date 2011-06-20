@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sweep}
+\alias{sweep}
 \title{Sweep out Array Summaries}
 \description{
   Return an array obtained from an input array by sweeping out a summary

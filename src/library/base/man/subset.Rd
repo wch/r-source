@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{subset}
+\alias{subset}
 \alias{subset.default}
 \alias{subset.matrix}
 \alias{subset.data.frame}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{drawDetails}
+\alias{drawDetails}
 \alias{preDrawDetails}
 \alias{postDrawDetails}
 \alias{draw.details}

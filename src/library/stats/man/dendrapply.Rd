@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dendrapply}
+\alias{dendrapply}
 \title{Apply a Function to All Nodes of a Dendrogram}
 \description{
   Apply function \code{FUN} to each node of a \code{\link{dendrogram}}

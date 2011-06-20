@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{readNEWS}
+\alias{readNEWS}
 \alias{checkNEWS}
 \title{Read R's NEWS file or a similar one}
 \description{

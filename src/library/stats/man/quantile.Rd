@@ -5,6 +5,7 @@
 
 \name{quantile}
 \title{Sample Quantiles}
+\alias{quantile}
 \alias{quantile.default}
 \description{
   The generic function \code{quantile} produces sample quantiles

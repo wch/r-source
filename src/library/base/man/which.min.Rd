@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{which.min}
+\alias{which.min}
 \alias{which.max}
 \title{Where is the Min() or Max() ?}
 \concept{argmin}

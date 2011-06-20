@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{numericDeriv}
+\alias{numericDeriv}
 \title{Evaluate Derivatives Numerically}
 \description{
     \code{numericDeriv} numerically evaluates the gradient of an expression.

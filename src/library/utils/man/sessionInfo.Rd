@@ -5,6 +5,7 @@
 
 \name{sessionInfo}
 \title{Collect Information About the Current R Session}
+\alias{sessionInfo}
 \alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{

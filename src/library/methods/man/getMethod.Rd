@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getMethod}
+\alias{getMethod}
 \alias{findMethod}
 \alias{existsMethod}
 \alias{selectMethod}

@@ -12,6 +12,7 @@ kronecker(X, Y, FUN = "*", make.dimnames = FALSE, \dots)
 X \%x\% Y
 }
 
+\alias{kronecker}
 \alias{\%x\%}
 
 \arguments{

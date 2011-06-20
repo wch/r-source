@@ -5,6 +5,7 @@
 
 \name{savehistory}
 \alias{loadhistory}
+\alias{savehistory}
 \alias{history}
 \alias{timestamp}
 \title{Load or Save or Display the Commands History}

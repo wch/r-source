@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{by}
+\alias{by}
 \alias{by.default}
 \alias{by.data.frame}
 \alias{print.by}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{integer}
+\alias{integer}
 \alias{as.integer}
 \alias{is.integer}
 \title{Integer Vectors}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Wilcoxon}
+\alias{Wilcoxon}
 \alias{dwilcox}
 \alias{pwilcox}
 \alias{qwilcox}

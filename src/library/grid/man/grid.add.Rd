@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.add}
+\alias{grid.add}
 \alias{addGrob}
 \alias{setChildren}
 \title{Add a Grid Graphical Object}

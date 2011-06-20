@@ -5,6 +5,7 @@
 
 \name{tools-defunct}
 % NOTE: ../R/tools-defunct.R must be synchronized with this!
+\alias{tools-defunct}
 \alias{Rd_parse}
 \title{Defunct Objects in Package \pkg{tools}}
 \description{

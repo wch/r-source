@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{backSpline}
+\alias{backSpline}
 \title{Monotone Inverse Spline}
 \description{
   Create a monotone inverse of a monotone natural spline.

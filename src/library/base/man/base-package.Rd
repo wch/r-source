@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{base-package}
+\alias{base-package}
 \alias{base}
 \docType{package}
 \title{

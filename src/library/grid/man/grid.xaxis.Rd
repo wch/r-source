@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.xaxis}
+\alias{grid.xaxis}
 \alias{xaxisGrob}
 \title{Draw an X-Axis}
 \description{

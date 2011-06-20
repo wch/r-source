@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{savePlot}
+\alias{savePlot}
 \title{Save Windows Plot to a File}
 \usage{
 savePlot(filename = "Rplot",

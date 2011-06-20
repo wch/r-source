@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Logistic}
+\alias{Logistic}
 \alias{dlogis}
 \alias{plogis}
 \alias{qlogis}

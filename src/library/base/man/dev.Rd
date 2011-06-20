@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{.Device}
+\alias{.Device}
 \alias{.Devices}
 \title{
   Lists of Open/Active Graphics Devices

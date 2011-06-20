@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{axis.POSIXct}
+\alias{axis.POSIXct}
 \alias{axis.Date}
 \title{Date and Date-time Plotting Functions}
 \description{

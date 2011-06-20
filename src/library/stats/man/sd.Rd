@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sd}
+\alias{sd}
 \title{Standard Deviation}
 \description{
   This function computes the standard deviation of the values in

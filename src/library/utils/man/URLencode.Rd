@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{URLencode}
+\alias{URLencode}
 \alias{URLdecode}
 \title{Encode or Decode a (partial) URL}
 \description{

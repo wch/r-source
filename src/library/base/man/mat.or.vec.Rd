@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mat.or.vec}
+\alias{mat.or.vec}
 \title{Create a Matrix or a Vector}
 \usage{
 mat.or.vec(nr, nc)

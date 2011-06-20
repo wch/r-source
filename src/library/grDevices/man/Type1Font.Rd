@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Type1Font}
+\alias{Type1Font}
 \alias{CIDFont}
 \concept{fonts}
 \concept{encoding}

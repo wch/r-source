@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{delayedAssign}
+\alias{delayedAssign}
 \alias{promise}
 \alias{promises}
 \title{Delay Evaluation}

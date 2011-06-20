@@ -9,6 +9,7 @@
 lsfit(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
       yname = NULL)
 }
+\alias{lsfit}
 \arguments{
 \item{x}{a matrix whose rows correspond to cases and whose columns
   correspond to variables.}

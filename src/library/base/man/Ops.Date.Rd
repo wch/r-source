@@ -6,6 +6,7 @@
 \name{Ops.Date}
 \alias{+.Date}
 \alias{-.Date}
+\alias{Ops.Date}
 
 \title{Operators on the Date Class}
 \description{

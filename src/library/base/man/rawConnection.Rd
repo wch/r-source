@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{rawConnection}
+\alias{rawConnection}
 \alias{rawConnectionValue}
 \title{Raw Connections}
 \description{

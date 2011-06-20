@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Beta}
+\alias{Beta}
 \alias{dbeta}
 \alias{pbeta}
 \alias{qbeta}

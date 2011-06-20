@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
+\alias{setRepositories}
 \title{Select Package Repositories}
 \description{
   Interact with the user to choose the package repositories to be used.

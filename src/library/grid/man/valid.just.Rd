@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{valid.just}
+\alias{valid.just}
 \title{Validate a Justification}
 \description{
   This utility function is useful for determining

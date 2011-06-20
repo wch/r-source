@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{mood.test}
+\alias{mood.test}
 \alias{mood.test.default}
 \alias{mood.test.formula}
 \title{Mood Two-Sample Test of Scale}

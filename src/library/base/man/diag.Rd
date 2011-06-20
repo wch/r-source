@@ -9,6 +9,7 @@
 diag(x = 1, nrow, ncol)
 diag(x) <- value
 }
+\alias{diag}
 \alias{diag<-}
 \description{
   Extract or replace the diagonal of a matrix,

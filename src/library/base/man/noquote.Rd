@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{noquote}
+\alias{noquote}
 \alias{print.noquote}
 \alias{as.matrix.noquote}
 \alias{c.noquote}

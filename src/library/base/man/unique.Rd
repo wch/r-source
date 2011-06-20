@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unique}
+\alias{unique}
 \alias{unique.default}
 \alias{unique.data.frame}
 \alias{unique.matrix}

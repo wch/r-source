@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{persp}
+\alias{persp}
 \alias{persp.default}
 \title{Perspective Plots}
 \description{

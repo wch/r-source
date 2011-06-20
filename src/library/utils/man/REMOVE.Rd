@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{REMOVE}
+\alias{REMOVE}
 \title{Remove Add-on Packages}
 \description{Utility for removing add-on packages.}
 \usage{

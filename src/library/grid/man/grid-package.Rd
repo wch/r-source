@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid-package}
+\alias{grid-package}
 \docType{package}
 \title{
   The Grid Graphics Package

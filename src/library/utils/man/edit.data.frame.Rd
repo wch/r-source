@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{edit.data.frame}
+\alias{edit.data.frame}
 \alias{edit.matrix}
 \title{Edit Data Frames and Matrices}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{compareVersion}
+\alias{compareVersion}
 \title{Compare Two Package Version Numbers}
 \description{
   Compare two package version numbers to see which is later.

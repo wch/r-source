@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unit}
+\alias{unit}
 \title{Function to Create a Unit Object}
 \description{
   This function creates a unit object --- a vector of unit values.

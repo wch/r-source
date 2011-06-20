@@ -8,6 +8,7 @@
 \usage{
 any(\dots, na.rm = FALSE)
 }
+\alias{any}
 \description{
   Given a set of logical vectors, is at least one of the values true?
 }

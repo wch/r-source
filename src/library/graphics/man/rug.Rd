@@ -5,6 +5,7 @@
 
 \name{rug}
 \title{Add a Rug to a Plot}
+\alias{rug}
 \usage{
 rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
     quiet = getOption("warn") < 0, \dots)

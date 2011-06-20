@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nls.control}
+\alias{nls.control}
 \title{Control the Iterations in nls}
 \description{
   Allow the user to set some characteristics of the \code{nls}

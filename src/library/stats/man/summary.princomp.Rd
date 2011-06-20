@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{summary.princomp}
+\alias{summary.princomp}
 \alias{print.summary.princomp}
 \title{Summary method for Principal Components Analysis}
 \usage{

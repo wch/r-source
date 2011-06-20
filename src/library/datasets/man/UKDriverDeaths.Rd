@@ -5,6 +5,7 @@
 
 \name{UKDriverDeaths}
 \docType{data}
+\alias{UKDriverDeaths}
 \alias{Seatbelts}
 \title{
   Road Casualties in Great Britain 1969--84

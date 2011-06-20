@@ -5,6 +5,7 @@
 
 \name{median}
 \title{Median Value}
+\alias{median}
 \alias{median.default}
 \usage{
 median(x, na.rm = FALSE)

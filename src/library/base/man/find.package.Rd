@@ -5,6 +5,7 @@
 
 \name{find.package}
 
+\alias{find.package}
 \alias{path.package}
 %% moved from base-internal.Rd in 2.13.1
 \alias{.find.package}

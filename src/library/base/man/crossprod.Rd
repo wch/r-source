@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{crossprod}
+\alias{crossprod}
 \alias{tcrossprod}
 \title{Matrix Crossproduct}
 \description{

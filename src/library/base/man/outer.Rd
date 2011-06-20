@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{outer}
+\alias{outer}
 \alias{\%o\%}
 \title{Outer Product of Arrays}
 \description{

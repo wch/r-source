@@ -5,6 +5,7 @@
 
 \name{Sys.localeconv}
 \alias{localeconv}
+\alias{Sys.localeconv}
 \title{Find Details of the Numerical and Monetary Representations
   in the Current Locale}
 \description{

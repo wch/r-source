@@ -8,6 +8,7 @@
 \usage{
 system.file(\dots, package = "base", lib.loc = NULL, mustWork = FALSE)
 }
+\alias{system.file}
 \arguments{
   \item{\dots}{character vectors, specifying subdirectory and file(s)
     within some package.  The default, none, returns the

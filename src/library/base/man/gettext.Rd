@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{gettext}
+\alias{gettext}
 \alias{ngettext}
 \alias{bindtextdomain}
 \title{Translate Text Messages}

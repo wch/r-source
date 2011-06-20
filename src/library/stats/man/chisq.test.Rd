@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{chisq.test}
+\alias{chisq.test}
 \concept{goodness-of-fit}
 \title{Pearson's Chi-squared Test for Count Data}
 \description{

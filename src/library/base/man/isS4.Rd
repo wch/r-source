@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{isS4}
+\alias{isS4}
 \alias{asS4}
 \alias{S4}
 \alias{asS3}

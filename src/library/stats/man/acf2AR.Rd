@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{acf2AR}
+\alias{acf2AR}
 \title{Compute an AR Process Exactly Fitting an ACF}
 \description{
   Compute an AR process exactly fitting an autocorrelation function.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{summary.glm}
+\alias{summary.glm}
 \alias{print.summary.glm}
 \title{Summarizing Generalized Linear Model Fits}
 \usage{

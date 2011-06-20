@@ -11,6 +11,7 @@ ncol(x)
 NCOL(x)
 NROW(x)
 }
+\alias{nrow}
 \alias{NROW}
 \alias{ncol}
 \alias{NCOL}

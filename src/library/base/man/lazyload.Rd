@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{lazyLoad}
+\alias{lazyLoad}
 \alias{lazyLoadDBexec}
 \title{Lazy Load a Database of R Objects}
 \description{

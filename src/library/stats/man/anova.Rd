@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{anova}
+\alias{anova}
 \alias{print.anova}
 \concept{regression}
 \title{Anova Tables}

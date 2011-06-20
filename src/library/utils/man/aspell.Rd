@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{aspell}
+\alias{aspell}
 \title{Spell Check Interface}
 \description{
   Spell check given files via Aspell, Hunspell or Ispell.

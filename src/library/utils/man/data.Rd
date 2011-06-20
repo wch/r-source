@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{data}
+\alias{data}
 \alias{print.packageIQR}
 \title{Data Sets}
 \description{

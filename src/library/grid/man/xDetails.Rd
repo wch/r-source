@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{xDetails}
+\alias{xDetails}
 \alias{yDetails}
 \title{ Boundary of a grid grob }
 \description{

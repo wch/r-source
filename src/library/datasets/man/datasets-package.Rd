@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{datasets-package}
+\alias{datasets-package}
 \alias{datasets}
 \docType{package}
 \title{

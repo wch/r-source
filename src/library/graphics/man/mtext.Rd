@@ -14,6 +14,7 @@
 mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
       adj = NA, padj = NA, cex = NA, col = NA, font = NA, \dots)
 }
+\alias{mtext}
 \arguments{
   \item{text}{a character or \link{expression} vector specifying
     the \emph{text} to be written.  Other objects are coerced by

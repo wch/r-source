@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{identity}
+\alias{identity}
 \title{Identity Function}
 \description{
   A trivial identity function returning its argument.

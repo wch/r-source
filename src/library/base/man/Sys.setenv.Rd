@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Sys.setenv}
+\alias{Sys.setenv}
 \alias{Sys.unsetenv}
 \title{Set or Unset Environment Variables}
 \usage{

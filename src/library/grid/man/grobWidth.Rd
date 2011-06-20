@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grobWidth}
+\alias{grobWidth}
 \alias{grobHeight}
 \title{Create a Unit Describing the Width of a Grob}
 \description{

@@ -5,6 +5,7 @@
 
 \name{sunspot.year}
 \docType{data}
+\alias{sunspot.year}
 \title{
   Yearly Sunspot Data, 1700--1988
 }

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{lines}
+\alias{lines}
 \alias{lines.default}
 \title{Add Connected Line Segments to a Plot}
 \description{

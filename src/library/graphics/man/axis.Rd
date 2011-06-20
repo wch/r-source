@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{axis}
+\alias{axis}
 \title{Add an Axis to a Plot}
 \description{Adds an axis to the current plot, allowing the
   specification of the side, position, labels, and other options.

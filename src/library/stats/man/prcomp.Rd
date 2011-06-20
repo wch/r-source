@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{prcomp}
+\alias{prcomp}
 \alias{prcomp.formula}
 \alias{prcomp.default}
 \alias{plot.prcomp}

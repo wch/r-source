@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{assocplot}
+\alias{assocplot}
 \encoding{UTF-8}
 \title{Association Plots}
 \description{

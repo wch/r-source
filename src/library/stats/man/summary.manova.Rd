@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{summary.manova}
+\alias{summary.manova}
 \alias{print.summary.manova}
 \title{Summary Method for Multivariate Analysis of Variance}
 \description{

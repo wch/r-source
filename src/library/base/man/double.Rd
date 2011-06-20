@@ -5,6 +5,7 @@
 
 \name{double}
 \title{Double-Precision Vectors}
+\alias{double}
 \alias{as.double}
 \alias{is.double}
 \alias{single}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{sQuote}
+\alias{sQuote}
 \alias{dQuote}
 \title{Quote Text}
 \description{

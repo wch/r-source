@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{logical}
+\alias{logical}
 \alias{as.logical}
 \alias{as.logical.factor}
 \alias{is.logical}

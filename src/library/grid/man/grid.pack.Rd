@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.pack}
+\alias{grid.pack}
 \alias{packGrob}
 \title{ Pack an Object within a Frame }
 \description{

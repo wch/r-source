@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{package.skeleton}
+\alias{package.skeleton}
 \title{Create a Skeleton for a New Source Package}
 \description{
   \code{package.skeleton} automates some of the setup for a new source

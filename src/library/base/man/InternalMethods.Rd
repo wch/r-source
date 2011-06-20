@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{InternalMethods}
+\alias{InternalMethods}
 \alias{InternalGenerics}
 \alias{internal generic}
 \alias{.S3PrimitiveGenerics}

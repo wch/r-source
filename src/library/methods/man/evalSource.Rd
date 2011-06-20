@@ -1,4 +1,5 @@
 \name{evalSource}
+\alias{evalSource}
 \alias{insertSource}
 \alias{sourceEnvironment-class}
 \title{

@@ -5,6 +5,7 @@
 
 \name{license}
 \title{The R License Terms}
+\alias{license}
 \alias{licence}
 \description{
   The license terms under which \R is distributed.

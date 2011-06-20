@@ -10,6 +10,7 @@ NULL
 as.null(x, \dots)
 is.null(x)
 }
+\alias{NULL}
 \alias{as.null}
 \alias{as.null.default}
 \alias{is.null}

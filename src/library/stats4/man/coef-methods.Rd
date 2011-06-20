@@ -5,6 +5,7 @@
 
 \name{coef-methods}
 \docType{methods}
+\alias{coef-methods}
 \alias{coef,ANY-method}
 \alias{coef,mle-method}
 \alias{coef,summary.mle-method}

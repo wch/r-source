@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Tukey}
+\alias{Tukey}
 \title{The Studentized Range Distribution}
 \description{
   Functions of the distribution of the studentized range, \eqn{R/s},

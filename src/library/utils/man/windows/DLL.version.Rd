@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{DLL.version}
+\alias{DLL.version}
 \title{DLL Version Information}
 \description{
   Return the version of the package and the version of \R used to

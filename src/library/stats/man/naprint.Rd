@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{naprint}
+\alias{naprint}
 \alias{naprint.default}
 \alias{naprint.exclude}
 \alias{naprint.omit}

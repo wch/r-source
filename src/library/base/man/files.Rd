@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{files}
+\alias{files}
 \alias{file.append}
 \alias{file.copy}
 \alias{file.create}

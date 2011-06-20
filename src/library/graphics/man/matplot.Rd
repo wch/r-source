@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{matplot}
+\alias{matplot}
 \alias{matpoints}
 \alias{matlines}
 \title{Plot Columns of Matrices}

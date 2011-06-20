@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{buildVignettes}
+\alias{buildVignettes}
 \alias{pkgVignettes}
 \title{List and Build Package Vignettes}
 \description{

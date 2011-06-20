@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{getWindowsHandles}
+\alias{getWindowsHandles}
 \title{
   Get handles of windows.
 }

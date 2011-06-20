@@ -5,6 +5,7 @@
 
 \name{scan}
 \title{Read Data Values}
+\alias{scan}
 \description{
   Read data into a vector or list from the console or file.
 }

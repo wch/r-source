@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Sweave}
+\alias{Sweave}
 \alias{Stangle}
 \alias{SweaveSyntaxLatex}
 \alias{SweaveSyntaxNoweb}

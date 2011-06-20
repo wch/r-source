@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{writeLines}
+\alias{writeLines}
 \title{Write Lines to a Connection}
 \description{
   Write text lines to a connection.

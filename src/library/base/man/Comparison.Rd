@@ -10,6 +10,7 @@
 \alias{!=}
 \alias{>=}
 \alias{>}
+\alias{Comparison}
 \alias{collation}
 \title{Relational Operators}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{print.power.htest}
+\alias{print.power.htest}
 \title{Print method for power calculation object}
 \description{
   Print object of class \code{"power.htest"} in nice layout.

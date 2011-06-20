@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{panel.smooth}
+\alias{panel.smooth}
 \title{Simple Panel Plot}
 \description{
   An example of a simple useful \code{panel} function to be used as

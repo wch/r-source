@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pdf.options}
+\alias{pdf.options}
 \title{Auxiliary Function to Set/View Defaults for Arguments of pdf}
 \description{
   The auxiliary function \code{pdf.options} can be used to set or view

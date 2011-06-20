@@ -5,6 +5,7 @@
 
 \name{profile.mle-class}
 \docType{class}
+\alias{profile.mle-class}
 \title{
   Class \code{"profile.mle"}; Profiling information for \code{"mle"} object
 }

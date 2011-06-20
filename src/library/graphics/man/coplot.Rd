@@ -16,6 +16,7 @@ coplot(formula, data, given.values, panel = points, rows, columns,
        number = 6, overlap = 0.5, xlim, ylim, \dots) 
 co.intervals(x, number = 6, overlap = 0.5)
 }
+\alias{coplot}
 \alias{co.intervals}
 \arguments{
   \item{formula}{a formula describing the form of conditioning plot.  A

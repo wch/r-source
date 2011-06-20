@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Question}
+\alias{Question}
 \alias{?}
 \title{Documentation Shortcuts}
 \description{

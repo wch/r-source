@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{warning}
+\alias{warning}
 \alias{suppressWarnings}
 \title{Warning Messages}
 \description{

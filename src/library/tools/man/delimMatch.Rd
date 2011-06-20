@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{delimMatch}
+\alias{delimMatch}
 \title{Delimited Pattern Matching}
 \description{
   Match delimited substrings in a character vector, with proper nesting.

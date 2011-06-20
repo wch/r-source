@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{margin.table}
+\alias{margin.table}
 \title{Compute table margin}
 \description{
   For a contingency table in array form, compute the sum of table

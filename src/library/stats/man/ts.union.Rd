@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ts.union}
+\alias{ts.union}
 \alias{ts.intersect}
 \title{Bind Two or More Time Series}
 \usage{

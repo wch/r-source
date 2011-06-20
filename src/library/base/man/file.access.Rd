@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{file.access}
+\alias{file.access}
 \title{Ascertain File Accessibility}
 \description{
   Utility function to access information about files on the user's

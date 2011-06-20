@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{make.link}
+\alias{make.link}
 \title{Create a Link for GLM Families}
 %%-- implementation in ../R/family.R
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{memory.size}
+\alias{memory.size}
 \alias{memory.limit}
 \title{Report on Memory Allocation}
 \description{

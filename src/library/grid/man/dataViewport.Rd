@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dataViewport}
+\alias{dataViewport}
 \title{ Create a Viewport with Scales based on Data }
 \description{
   This is a convenience function for producing a viewport with

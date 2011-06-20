@@ -5,6 +5,7 @@
 
 \name{getFromNamespace}
 \alias{assignInNamespace}
+\alias{getFromNamespace}
 \alias{fixInNamespace}
 \title{Utility functions for Developing Namespaces}
 \description{

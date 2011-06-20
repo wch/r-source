@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{makeLazyLoading}
+\alias{makeLazyLoading}
 \title{Lazy Loading of Packages}
 \usage{
 makeLazyLoading(package, lib.loc = NULL, compress = TRUE,

@@ -16,6 +16,7 @@ print(x, \dots)
 
 \method{print}{function}(x, useSource = TRUE, \dots)
 }
+\alias{print}
 \alias{print.factor}
 \alias{print.function}
 \alias{print.htest}

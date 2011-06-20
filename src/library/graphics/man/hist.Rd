@@ -18,6 +18,7 @@ hist(x, \dots)
      axes = TRUE, plot = TRUE, labels = FALSE,
      nclass = NULL, warn.unused = TRUE, \dots)
 }
+\alias{hist}
 \alias{hist.default}
 \arguments{
   \item{x}{a vector of values for which the histogram is desired.}

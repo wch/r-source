@@ -5,6 +5,7 @@
 
 \name{det}
 \title{Calculate the Determinant of a Matrix}
+\alias{det}
 \alias{determinant}
 \alias{determinant.matrix}
 \usage{

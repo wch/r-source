@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tkStartGUI}
+\alias{tkStartGUI}
 \title{Tcl/Tk GUI startup}
 \description{
   Starts up the Tcl/Tk GUI

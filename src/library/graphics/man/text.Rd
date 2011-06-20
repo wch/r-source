@@ -13,6 +13,7 @@ text(x, \dots)
      pos = NULL, offset = 0.5, vfont = NULL,
      cex = 1, col = NULL, font = NULL, \dots)
 }
+\alias{text}
 \alias{text.default}
 \arguments{
   \item{x, y}{numeric vectors of coordinates where the text

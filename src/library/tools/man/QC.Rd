@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{QC}
+\alias{QC}
 \alias{checkDocFiles}
 \alias{checkDocStyle}
 \alias{checkReplaceFuns}

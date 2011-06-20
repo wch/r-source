@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Grid}
+\alias{Grid}
 \title{Grid Graphics}
 \description{
   General information about the grid graphics package.

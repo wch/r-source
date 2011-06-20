@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{loess}
+\alias{loess}
 \title{Local Polynomial Regression Fitting}
 \usage{
 loess(formula, data, weights, subset, na.action, model = FALSE,

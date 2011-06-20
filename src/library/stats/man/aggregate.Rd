@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{aggregate}
+\alias{aggregate}
 \alias{aggregate.default}
 \alias{aggregate.data.frame}
 \alias{aggregate.formula}

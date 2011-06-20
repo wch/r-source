@@ -12,6 +12,7 @@ cut(x, \dots)
     include.lowest = FALSE, right = TRUE, dig.lab = 3,
     ordered_result = FALSE, \dots)
 }
+\alias{cut}
 \alias{cut.default}
 \arguments{
   \item{x}{a numeric vector which is to be converted to a factor by cutting.}

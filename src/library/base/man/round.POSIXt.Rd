@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{round.POSIXt}
+\alias{round.POSIXt}
 \alias{trunc.POSIXt}
 \alias{round.Date}
 \alias{trunc.Date}

@@ -5,6 +5,7 @@
 
 \name{trace}
 \title{Interactive Tracing and Debugging of Calls to a Function or Method}
+\alias{trace}
 \alias{untrace}
 \alias{tracingState}
 \alias{.doTrace}

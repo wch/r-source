@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-19 r56183)
+R version 2.14.0 Under development (unstable) (2011-04-02 r55261)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,6 +32,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: HTMLheader
 > ### Title: Generate a standard HTML header for R help
+> ### Aliases: HTMLheader
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
@@ -60,7 +61,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: Rd2HTML
 > ### Title: Rd Converters
-> ### Aliases: Rd2txt Rd2ex Rd2latex
+> ### Aliases: Rd2txt Rd2HTML Rd2ex Rd2latex
 > ### Keywords: documentation
 > 
 > ### ** Examples
@@ -72,6 +73,7 @@ Type 'q()' to quit R.
 > 
 > ### Name: Rd2txt_options
 > ### Title: Set formatting options for text help
+> ### Aliases: Rd2txt_options
 > ### Keywords: documentation
 > 
 > ### ** Examples
@@ -99,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x017457ec>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -133,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x017457ec>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -167,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x017457ec>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -203,6 +205,7 @@ $underline_titles
 > 
 > ### Name: bibstyle
 > ### Title: Select or define a bibliography style.
+> ### Aliases: bibstyle
 > ### Keywords: utilties documentation
 > 
 > ### ** Examples
@@ -228,7 +231,7 @@ $underline_titles
 +     volume=26,
 +     pages="211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs), .init=TRUE)
-<environment: 0x01403014>
+<environment: 0171378c>
 > print(refs, .bibstyle="unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
@@ -402,7 +405,7 @@ of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
 > 
 > ### Name: checkFF
 > ### Title: Check Foreign Function Calls
-> ### Aliases: print.checkFF
+> ### Aliases: checkFF print.checkFF
 > ### Keywords: programming utilities
 > 
 > ### ** Examples
@@ -416,7 +419,7 @@ of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
 > 
 > ### Name: checkRdaFiles
 > ### Title: Report on Details of Saved Images or Re-saves them
-> ### Aliases: resaveRdaFiles
+> ### Aliases: checkRdaFiles resaveRdaFiles
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -438,6 +441,7 @@ of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
 > 
 > ### Name: delimMatch
 > ### Title: Delimited Pattern Matching
+> ### Aliases: delimMatch
 > ### Keywords: character
 > 
 > ### ** Examples
@@ -462,13 +466,14 @@ attr(,"match.length")
 > 
 > ### Name: dependsOnPkgs
 > ### Title: Find Reverse Dependencies
+> ### Aliases: dependsOnPkgs
 > ### Keywords: utilities
 > 
 > ### ** Examples
 > 
 > ## there are few dependencies in a vanilla R installation
 > dependsOnPkgs("lattice")
-[1] "Hmisc"  "Matrix" "nlme"   "mgcv"  
+[1] "Matrix" "nlme"   "mgcv"  
 > 
 > 
 > 
@@ -480,6 +485,7 @@ attr(,"match.length")
 > 
 > ### Name: encoded_text_to_latex
 > ### Title: Translate non-ASCII Text to LaTeX Escapes
+> ### Aliases: encoded_text_to_latex
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -549,7 +555,7 @@ attr(,"match.length")
 > 
 > ### Name: getDepList
 > ### Title: Functions to Retrieve Dependency Information
-> ### Aliases: pkgDepends
+> ### Aliases: getDepList pkgDepends
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -583,6 +589,7 @@ attr(,"class")
 > 
 > ### Name: installFoundDepends
 > ### Title: A function to install unresolved dependencies
+> ### Aliases: installFoundDepends
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -605,6 +612,7 @@ NULL
 > 
 > ### Name: makeLazyLoading
 > ### Title: Lazy Loading of Packages
+> ### Aliases: makeLazyLoading
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -624,6 +632,7 @@ NULL
 > 
 > ### Name: md5sum
 > ### Title: Compute MD5 Checksums
+> ### Aliases: md5sum
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -641,7 +650,7 @@ NULL
 > 
 > ### Name: parseLatex
 > ### Title: These experimental functions work with a subset of LaTeX code.
-> ### Aliases: deparseLatex latexToUtf8
+> ### Aliases: parseLatex deparseLatex latexToUtf8
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
@@ -655,7 +664,7 @@ NULL
 > 
 > ### Name: readNEWS
 > ### Title: Read R's NEWS file or a similar one
-> ### Aliases: checkNEWS
+> ### Aliases: readNEWS checkNEWS
 > ### Keywords: file documentation
 > 
 > ### ** Examples
@@ -674,7 +683,7 @@ NULL
 > 
 > ### Name: showNonASCII
 > ### Title: Pick Out Non-ASCII Characters
-> ### Aliases: showNonASCIIfile
+> ### Aliases: showNonASCII showNonASCIIfile
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -704,7 +713,7 @@ NULL
 > 
 > ### Name: toHTML
 > ### Title: Display an object in HTML.
-> ### Aliases: toHTML.packageIQR toHTML.news_db
+> ### Aliases: toHTML toHTML.packageIQR toHTML.news_db
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
@@ -775,7 +784,7 @@ An illustration of lexical scoping.
 > 
 > ### Name: undoc
 > ### Title: Find Undocumented Objects
-> ### Aliases: print.undoc
+> ### Aliases: undoc print.undoc
 > ### Keywords: documentation
 > 
 > ### ** Examples
@@ -792,6 +801,7 @@ An illustration of lexical scoping.
 > 
 > ### Name: vignetteDepends
 > ### Title: Retrieve Dependency Information for a Vignette
+> ### Aliases: vignetteDepends
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -827,6 +837,7 @@ attr(,"class")
 > 
 > ### Name: write_PACKAGES
 > ### Title: Generate PACKAGES files
+> ### Aliases: write_PACKAGES
 > ### Keywords: file utilities
 > 
 > ### ** Examples
@@ -846,7 +857,7 @@ attr(,"class")
 > 
 > ### Name: xgettext
 > ### Title: Extract Translatable Messages from R Files in a Package
-> ### Aliases: xngettext xgettext2pot
+> ### Aliases: xgettext xngettext xgettext2pot
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -859,7 +870,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.34 0.2 0.58 NA NA 
+Time elapsed:  0.481 0.024 0.507 0 0 
 > grDevices::dev.off()
 null device 
           1 

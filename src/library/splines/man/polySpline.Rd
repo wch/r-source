@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{polySpline}
+\alias{polySpline}
 \alias{as.polySpline}
 \title{Piecewise Polynomial Spline Representation}
 \description{

@@ -9,6 +9,7 @@
 \usage{
 asOneSidedFormula(object)
 }
+\alias{asOneSidedFormula}
 \arguments{
  \item{object}{a one-sided formula, an expression, a numeric value, or a
    character string.}

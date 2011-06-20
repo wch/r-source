@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{showNonASCII}
+\alias{showNonASCII}
 \alias{showNonASCIIfile}
 \title{Pick Out Non-ASCII Characters}
 \description{

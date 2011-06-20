@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.get}
+\alias{grid.get}
 \alias{grid.gget}
 \alias{getGrob}
 \title{Get a Grid Graphical Object}

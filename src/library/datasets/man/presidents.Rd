@@ -5,6 +5,7 @@
 
 \name{presidents}
 \docType{data}
+\alias{presidents}
 \title{Quarterly Approval Ratings of US Presidents}
 \description{
   The (approximately) quarterly approval rating for the President of the

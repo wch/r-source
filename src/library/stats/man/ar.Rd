@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ar}
+\alias{ar}
 \alias{ar.burg}
 \alias{ar.burg.default}
 \alias{ar.burg.mts}

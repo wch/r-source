@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{make.unique}
+\alias{make.unique}
 \title{Make Character Strings Unique}
 \description{
   Makes the elements of a character vector unique by

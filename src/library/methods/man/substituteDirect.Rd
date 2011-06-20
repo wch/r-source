@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{substituteDirect}
+\alias{substituteDirect}
 \title{SubstituteDirect}
 \description{
   Substitute for the variables named in the second argument the

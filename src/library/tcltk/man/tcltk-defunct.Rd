@@ -5,6 +5,7 @@
 
 \name{tcltk-defunct}
 %------ NOTE:  ../R/tcltk-defunct.R   must be synchronized with this!
+\alias{tcltk-defunct}
 \alias{$.tclvar}
 \alias{$<-.tclvar}
 \alias{tkcmd}

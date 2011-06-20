@@ -5,6 +5,7 @@
 
 \name{DateTimeClasses}
 % implementation mostly in ../R/datetime.R
+\alias{DateTimeClasses}
 \alias{POSIXct}
 \alias{POSIXlt}
 \alias{POSIXt}

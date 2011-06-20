@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SignRank}
+\alias{SignRank}
 \alias{dsignrank}
 \alias{psignrank}
 \alias{qsignrank}

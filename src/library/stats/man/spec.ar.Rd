@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{spec.ar}
+\alias{spec.ar}
 \title{Estimate Spectral Density of a Time Series from AR Fit}
 \usage{
 spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,

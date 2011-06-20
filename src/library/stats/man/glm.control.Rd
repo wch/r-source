@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{glm.control}
+\alias{glm.control}
 \title{Auxiliary for Controlling GLM Fitting}
 \description{
   Auxiliary function for \code{\link{glm}} fitting.

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{installed.packages}
+\alias{installed.packages}
 \title{Find Installed Packages}
 \description{
   Find (or retrieve) details of all packages installed in the specified

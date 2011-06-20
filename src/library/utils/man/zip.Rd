@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{zip}
+\alias{zip}
 \title{
   Create Zip archives
 }

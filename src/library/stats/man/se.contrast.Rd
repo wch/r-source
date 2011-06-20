@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{se.contrast}
+\alias{se.contrast}
 \alias{se.contrast.aov}
 \alias{se.contrast.aovlist}
 \title{Standard Errors for Contrasts in Model Terms}

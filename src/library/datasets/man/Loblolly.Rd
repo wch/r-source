@@ -5,6 +5,7 @@
 
 \name{Loblolly}
 \docType{data}
+\alias{Loblolly}
 \title{Growth of Loblolly pine trees}
 \description{
   The \code{Loblolly} data frame has 84 rows and 3 columns of records of

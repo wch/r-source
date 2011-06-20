@@ -5,6 +5,7 @@
 
 \name{isoreg}
 \title{Isotonic / Monotone Regression}
+\alias{isoreg}
 \concept{monotonic regression}
 \description{
   Compute the isotonic (monotonely increasing nonparametric) least

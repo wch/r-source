@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unzip}
+\alias{unzip}
 \title{
   Extract or List Zip Archives
 }

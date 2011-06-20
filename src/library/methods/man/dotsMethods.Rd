@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dotsMethods}
+\alias{dotsMethods}
 \title{The Use of \code{...} in Method Signatures}
 \description{
   The \dQuote{\dots} argument in \R functions is treated specially, in that it

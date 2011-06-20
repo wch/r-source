@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{merge}
+\alias{merge}
 \alias{merge.default}
 \alias{merge.data.frame}
 \concept{join}

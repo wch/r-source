@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{HoltWinters}
+\alias{HoltWinters}
 \alias{print.HoltWinters}
 \alias{residuals.HoltWinters}
 \title{Holt-Winters Filtering}

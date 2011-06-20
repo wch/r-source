@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.plot.and.legend}
+\alias{grid.plot.and.legend}
 \title{ A Simple Plot and Legend Demo }
 \description{
   This function is just a wrapper for a simple demonstration of how

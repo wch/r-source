@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{file.info}
+\alias{file.info}
 \title{Extract File Information}
 \description{
   Utility function to extract information about files on the user's

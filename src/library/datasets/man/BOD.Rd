@@ -5,6 +5,7 @@
 
 \name{BOD}
 \docType{data}
+\alias{BOD}
 \title{ Biochemical Oxygen Demand }
 \description{
   The \code{BOD} data frame has 6 rows and 2 columns giving the

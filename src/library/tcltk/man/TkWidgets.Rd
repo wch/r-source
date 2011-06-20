@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{TkWidgets}
+\alias{TkWidgets}
 \alias{tkwidget}
 \alias{tkbutton}
 \alias{tkcanvas}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{data.class}
+\alias{data.class}
 \title{Object Classes}
 \description{
   Determine the class of an arbitrary \R object.

@@ -5,6 +5,7 @@
 
 \name{utils-defunct}
 %------ NOTE:  ../R/utils-defunct.R   must be synchronized with this!
+\alias{utils-defunct}
 \alias{package.contents}
 \alias{zip.file.extract}
 

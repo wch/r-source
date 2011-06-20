@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.polygon}
+\alias{grid.polygon}
 \alias{polygonGrob}
 \title{ Draw a Polygon }
 \description{

@@ -5,6 +5,7 @@
 
 \name{uspop}
 \docType{data}
+\alias{uspop}
 \title{Populations Recorded by the US Census}
 \description{
   This data set gives the population of the United States (in millions)

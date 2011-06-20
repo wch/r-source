@@ -5,6 +5,7 @@
 
 \name{methods}
 \title{List Methods for S3 Generic Functions or Classes}
+\alias{methods}
 \alias{print.MethodsFunction}
 \description{
   List all available methods for an S3 generic function, or all

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{parseLatex}
+\alias{parseLatex}
 \alias{deparseLatex}
 \alias{latexToUtf8}
 \title{

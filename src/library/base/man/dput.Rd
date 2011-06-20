@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dput}
+\alias{dput}
 \alias{dget}
 \title{Write an Object to a File or Recreate it}
 \description{

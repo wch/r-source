@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{drop}
+\alias{drop}
 \title{Drop Redundant Extent Information}
 \description{
   Delete the dimensions of an array which have only one level.

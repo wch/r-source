@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{update.formula}
+\alias{update.formula}
 \title{Model Updating}
 \usage{
 \method{update}{formula}(old, new, \dots)

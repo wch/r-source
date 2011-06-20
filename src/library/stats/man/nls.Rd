@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{nls}
+\alias{nls}
 \title{Nonlinear Least Squares}
 \description{
   Determine the nonlinear (weighted) least-squares estimates of the

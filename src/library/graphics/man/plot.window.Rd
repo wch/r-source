@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{plot.window}
+\alias{plot.window}
 \alias{xlim}
 \alias{ylim}
 \alias{asp}

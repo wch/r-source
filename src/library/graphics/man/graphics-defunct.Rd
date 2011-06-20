@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{graphics-defunct}
+\alias{graphics-defunct}
 \alias{dotplot}
 \alias{stripplot}
 \alias{piechart}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{checkRdaFiles}
+\alias{checkRdaFiles}
 \alias{resaveRdaFiles}
 \title{
   Report on Details of Saved Images or Re-saves them

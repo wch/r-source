@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{typeof}
+\alias{typeof}
 \alias{type}
 \title{The Type of an Object}
 \description{

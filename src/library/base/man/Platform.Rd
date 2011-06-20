@@ -8,6 +8,7 @@
 \usage{
 .Platform
 }
+\alias{.Platform}
 \description{
   \code{.Platform} is a list with some details of the platform under
   which \R was built.  This provides means to write OS-portable \R

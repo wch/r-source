@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{n2mfrow}
+\alias{n2mfrow}
 \title{Compute Default mfrow From Number of Plots}
 \description{
   Easy setup for plotting multiple figures (in a rectangular layout) on

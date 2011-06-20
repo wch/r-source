@@ -5,6 +5,7 @@
 
 \name{NLSstAsymptotic}
 \encoding{UTF-8}
+\alias{NLSstAsymptotic}
 \alias{NLSstAsymptotic.sortedXyData}
 \title{Fit the Asymptotic Regression Model}
 \usage{

@@ -5,6 +5,7 @@
 
 \name{library}
 \title{Loading and Listing of Packages}
+\alias{library}
 \alias{require}
 \alias{.First.lib}
 \alias{.Last.lib}

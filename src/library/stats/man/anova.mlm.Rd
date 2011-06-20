@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{anova.mlm}
+\alias{anova.mlm}
 \alias{anova.mlmlist}
 \title{Comparisons between Multivariate Linear Models}
 \description{

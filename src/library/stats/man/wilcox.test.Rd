@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
+\alias{wilcox.test}
 \alias{wilcox.test.default}
 \alias{wilcox.test.formula}
 \concept{Mann-Whitney Test}

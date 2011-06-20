@@ -5,6 +5,7 @@
 
 \name{real}
 \title{Real Vectors}
+\alias{real}
 \alias{as.real}
 \alias{is.real}
 \usage{

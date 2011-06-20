@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Uniform}
+\alias{Uniform}
 \title{The Uniform Distribution}
 \usage{
 dunif(x, min=0, max=1, log = FALSE)

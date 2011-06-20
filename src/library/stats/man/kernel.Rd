@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{kernel}
+\alias{kernel}
 \alias{bandwidth.kernel}
 \alias{df.kernel}
 \alias{is.tskernel}

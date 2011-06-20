@@ -5,6 +5,7 @@
 
 \name{environment-class}
 \docType{class}
+\alias{environment-class}
 \title{Class \code{"environment"}}
 \description{ A formal class for R environments.}
 \section{Objects from the Class}{

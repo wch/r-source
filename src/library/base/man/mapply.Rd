@@ -5,6 +5,7 @@
 % Distributed under GPL 2 or later
 
 \name{mapply}
+\alias{mapply}
 \alias{Vectorize}
 \title{Apply a Function to Multiple List or Vector Arguments}
 \description{

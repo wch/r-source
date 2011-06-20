@@ -9,6 +9,7 @@
 read.socket(socket, maxlen = 256, loop = FALSE)
 write.socket(socket, string)
 }
+\alias{read.socket}
 \alias{write.socket}
 \arguments{
     \item{socket}{a socket object}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{recordGraphics}
+\alias{recordGraphics}
 \title{Record Graphics Operations}
 \description{
   Records arbitrary code on the graphics engine display list.

@@ -11,6 +11,7 @@ as.formula(object, env = parent.frame())
 
 \method{print}{formula}(x, showEnv = !identical(e, .GlobalEnv), \dots)
 }
+\alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
 \alias{formula.terms}

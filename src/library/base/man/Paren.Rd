@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{Paren}
+\alias{Paren}
 \alias{(}
 \alias{\{}
 \title{Parentheses and Braces}

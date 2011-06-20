@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{withVisible}
+\alias{withVisible}
 \title{Return both a value and its visibility}
 \description{
 This function evaluates an expression, returning it in a two element list

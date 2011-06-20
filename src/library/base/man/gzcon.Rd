@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{gzcon}
+\alias{gzcon}
 \title{
   (De)compress I/O Through Connections
 }

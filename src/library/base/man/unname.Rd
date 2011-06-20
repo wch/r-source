@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{unname}
+\alias{unname}
 \title{Remove \code{names} or \code{dimnames}}
 \description{
   Remove the \code{\link{names}} or \code{\link{dimnames}} attribute of

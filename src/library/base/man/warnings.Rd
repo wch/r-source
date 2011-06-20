@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{warnings}
+\alias{warnings}
 \alias{last.warning}
 \alias{print.warnings}
 \title{Print Warning Messages}

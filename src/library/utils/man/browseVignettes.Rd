@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{browseVignettes}
+\alias{browseVignettes}
 \alias{print.browseVignettes}
 \title{List Vignettes in an HTML Browser}
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{optim}
+\alias{optim}
 \title{General-purpose Optimization}
 \concept{minimization}
 \concept{maximization}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
+\alias{icuSetCollate}
 \title{ Setup Collation by ICU }
 \description{
   Controls the way collation is done by ICU (an optional part of the \R

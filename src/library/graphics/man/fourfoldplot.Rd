@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{fourfoldplot}
+\alias{fourfoldplot}
 \title{Fourfold Plots}
 \description{
   Creates a fourfold display of a 2 by 2 by \eqn{k} contingency table on

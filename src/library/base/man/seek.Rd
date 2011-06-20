@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{seek}
+\alias{seek}
 \alias{seek.connection}
 \alias{truncate}
 \alias{truncate.connection}

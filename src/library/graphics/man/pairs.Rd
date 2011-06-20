@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{pairs}
+\alias{pairs}
 \alias{pairs.default}
 \alias{pairs.formula}
 

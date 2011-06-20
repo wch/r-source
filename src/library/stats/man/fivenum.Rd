@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{fivenum}
+\alias{fivenum}
 \title{Tukey Five-Number Summaries}
 \description{
   Returns Tukey's five number summary (minimum, lower-hinge, median,

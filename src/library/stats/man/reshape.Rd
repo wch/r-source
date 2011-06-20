@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{reshape}
+\alias{reshape}
 \title{Reshape Grouped Data}
 \description{
   This function reshapes a data frame between \sQuote{wide} format with

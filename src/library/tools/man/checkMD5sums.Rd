@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{checkMD5sums}
+\alias{checkMD5sums}
 \title{Check and Create MD5 Checksum Files}
 \description{
   \code{checkMD5sums} checks the files against a file \file{MD5}.

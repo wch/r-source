@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{var.test}
+\alias{var.test}
 \alias{var.test.default}
 \alias{var.test.formula}
 \title{F Test to Compare Two Variances}

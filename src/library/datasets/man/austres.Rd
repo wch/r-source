@@ -5,6 +5,7 @@
 
 \name{austres}
 \docType{data}
+\alias{austres}
 \title{
   Quarterly Time Series of the Number of Australian Residents
 }

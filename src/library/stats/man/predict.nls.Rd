@@ -5,6 +5,7 @@
 
 \name{predict.nls}
 \title{Predicting from Nonlinear Least Squares Fits}
+\alias{predict.nls}
 \usage{
 \method{predict}{nls}(object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
         interval = c("none", "confidence", "prediction"),

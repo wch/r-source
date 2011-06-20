@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.arrows}
+\alias{grid.arrows}
 \alias{arrowsGrob}
 \title{ Draw Arrows }
 \description{

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{postscript}
+\alias{postscript}
 \alias{.ps.prolog}
 \concept{encoding}
 \title{PostScript Graphics}

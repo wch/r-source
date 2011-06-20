@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{builtins}
+\alias{builtins}
 \title{Returns the Names of All Built-in Objects}
 \description{
   Return the names of all the built-in objects.  These are fetched

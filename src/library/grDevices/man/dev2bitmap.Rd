@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
+\alias{dev2bitmap}
 \alias{bitmap}
 \title{Graphics Device for Bitmap Files via Ghostscript}
 \usage{

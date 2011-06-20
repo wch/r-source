@@ -14,6 +14,7 @@
 lowess(x, y = NULL, f = 2/3, iter = 3,
        delta = 0.01 * diff(range(xy$x[o])))
 }
+\alias{lowess}
 \arguments{
   \item{x, y}{vectors giving the coordinates of the points in the scatter plot.
     Alternatively a single plotting structure can be specified -- see

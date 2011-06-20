@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{stats4-package}
+\alias{stats4-package}
 \alias{stats4}
 \docType{package}
 \title{Statistical Functions using S4 Classes}

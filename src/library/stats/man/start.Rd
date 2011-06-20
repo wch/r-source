@@ -9,6 +9,7 @@
 start(x, \dots)
 end(x, \dots)
 }
+\alias{start}
 \alias{end}
 \arguments{
     \item{x}{a univariate or multivariate time-series, or a vector or matrix.}

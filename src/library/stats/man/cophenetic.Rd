@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{cophenetic}
+\alias{cophenetic}
 \alias{cophenetic.default}
 \alias{cophenetic.dendrogram}
 \title{Cophenetic Distances for a Hierarchical Clustering}

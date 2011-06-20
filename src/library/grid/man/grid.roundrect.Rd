@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{roundrect}
+\alias{roundrect}
 \alias{grid.roundrect}
 \alias{roundrectGrob}
 \title{Draw a rectangle with rounded corners}

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{as.environment}
+\alias{as.environment}
 \title{ Coerce to an Environment Object }
 \description{
   A generic function coercing an \R object to an

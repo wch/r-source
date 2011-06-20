@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{grid.raster}
+\alias{grid.raster}
 \alias{rasterGrob}
 \title{
   Render a raster object

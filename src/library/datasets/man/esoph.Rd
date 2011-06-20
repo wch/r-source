@@ -5,6 +5,7 @@
 
 \name{esoph}
 \docType{data}
+\alias{esoph}
 \title{Smoking, Alcohol and (O)esophageal Cancer}
 \description{
   Data from a case-control study of (o)esophageal cancer in

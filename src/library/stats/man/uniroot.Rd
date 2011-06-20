@@ -11,6 +11,7 @@ uniroot(f, interval, \dots,
         f.lower = f(lower, ...), f.upper = f(upper, ...),
         tol = .Machine$double.eps^0.25, maxiter = 1000)
 }
+\alias{uniroot}
 \arguments{
   \item{f}{the function for which the root is sought.}
   \item{interval}{a vector containing the end-points of the interval
