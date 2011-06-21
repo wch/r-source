@@ -7354,20 +7354,22 @@ file @file{README.Rterm} for command-line editing under
 @code{Rterm.exe}.
 
 When using @R{} with @strong{readline} capabilities, the functions
-described below are available.
+described below are available, as well as others (probably) documented
+in @command{man readline} or @command{info readline} on your system.
 
 Many of these use either Control or Meta characters.  Control
 characters, such as @kbd{Control-m}, are obtained by holding the
 @key{CTRL} down while you press the @key{m} key, and are written as
 @kbd{C-m} below.  Meta characters, such as @kbd{Meta-b}, are typed by
 holding down @key{META}@footnote{On a PC keyboard this is usually the
-Alt key, occasionally the `Windows' key.} and pressing @key{b}, and
-written as @kbd{M-b} in the following.  If your terminal does not have a
-@key{META} key enabled, you can still type Meta characters using
-two-character sequences starting with @kbd{ESC}.  Thus, to enter
-@kbd{M-b}, you could type @key{ESC}@key{b}.  The @kbd{ESC} character
-sequences are also allowed on terminals with real Meta keys.  Note that
-case is significant for Meta characters.
+Alt key, occasionally the `Windows' key.  On a Mac keyboard normally no
+meta key is available.} and pressing @key{b}, and written as @kbd{M-b}
+in the following.  If your terminal does not have a @key{META} key
+enabled, you can still type Meta characters using two-character
+sequences starting with @kbd{ESC}.  Thus, to enter @kbd{M-b}, you could
+type @key{ESC}@key{b}.  The @kbd{ESC} character sequences are also
+allowed on terminals with real Meta keys.  Note that case is significant
+for Meta characters.
 
 @appendixsection Editing actions
 
@@ -7379,7 +7381,9 @@ this editing phase causes the characters to be inserted in the command
 you are editing, displacing any characters to the right of the cursor.
 In @emph{vi} mode character insertion mode is started by @kbd{M-i} or
 @kbd{M-a}, characters are typed and insertion mode is finished by typing
-a further @key{ESC}.
+a further @key{ESC}.  (The default is Emacs-style, and only that is
+described here: for @emph{vi} mode see the @strong{readline}
+documentation.)
 
 Pressing the @key{RET} command at any time causes the command to be
 re-submitted.
