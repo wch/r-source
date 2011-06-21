@@ -112,7 +112,7 @@ str(ls)
 str(args) #- more useful than  args(args) !
 str(freeny)
 str(str)
-str(.Machine, digits.d = 20)
+str(.Machine, digits.d = 20)# extra digits for identification of binary numbers
 str( lsfit(1:9,1:9))
 str( lsfit(1:9,1:9), max.level = 1)
 str( lsfit(1:9,1:9), width = 60, strict.width = "cut")

@@ -38,10 +38,10 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
   of conditional debugging. It is an illusion, because execution is
   always paused at the call to browser, but control is only passed
   to the evaluator described below if \code{expr} evaluates to \code{TRUE}.
-  In most cases it is going to be more efficient to use an \code{if} 
+  In most cases it is going to be more efficient to use an \code{if}
   statement in the calling program, but in some cases using this argument
   will be simpler.
-  
+
   The \code{skipCalls} argument should be used when the \code{browser()}
   call is nested within another debugging function:  it will look further
   up the call stack to report its location.
@@ -70,12 +70,12 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
 
   The number of lines printed for the deparsed call can be limited by
   setting \code{\link{options}(deparse.max.lines)}.
-  
-  Setting \link{option} \code{"browserNLdisabled"} to \code{TRUE}
+
+  Setting \link[=options]{option} \code{"browserNLdisabled"} to \code{TRUE}
   disables the use of an empty line as a synonym for \code{c}.  If this
   is done, the user will be re-prompted for input until a valid command
   or an expression is entered.
-  
+
   This is a primitive function but does argument matching in the
   standard way.
 }

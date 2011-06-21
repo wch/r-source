@@ -106,7 +106,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   It inhibits the conversion of inputs with marked encodings, and is
   forced (with a warning) if any input is found which is marked as
   \code{"bytes"}.
-  
+
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if
   \code{useBytes = TRUE}.
@@ -128,7 +128,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grep(value = FALSE)} returns an integer vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
   \code{invert = TRUE}.
-  
+
   \code{grep(value = TRUE)} returns a character vector containing the
   selected elements of \code{x} (after coercion, preserving names but no
   other attributes).
@@ -180,7 +180,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   just one UTF-8 string will force all the matching to be done in
   Unicode, which attracts a penalty of around \eqn{3\times{}}{3x} for
   the default POSIX 1003.2 mode.
-  
+
   If you can make use of \code{useBytes = TRUE}, the strings will not be
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
@@ -214,13 +214,13 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
 
   \code{\link{agrep}} for approximate matching.
-  
+
   \code{\link{charmatch}}, \code{\link{pmatch}} for partial matching,
   \code{\link{match}} for matching to whole strings.
 
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
-  
+
   \code{\link{apropos}} uses regexps and has more examples.
 
   \code{\link{grepRaw}} for matching raw vectors.
@@ -259,6 +259,17 @@ txt[gsub("g","#", txt) !=
 regexpr("en", txt)
 
 gregexpr("e", txt)
+
+## Using grepl() for filtering
+## Find functions with argument names matching "warn":
+findArgs <- function(env, pattern) {
+  nms <- ls(envir = as.environment(env))
+  aa <- sapply(nms, function(.) { o <- get(.)
+               if(is.function(o)) names(formals(o)) })
+  iw <- sapply(aa, function(a) any(grepl(pattern, a, ignore.case=TRUE)))
+  aa[iw]
+}
+findArgs("package:base", "warn")
 
 ## trim trailing white space
 str <- 'Now is the time      '

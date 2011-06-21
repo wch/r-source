@@ -43,7 +43,7 @@ pretty(x, \dots)
 }
 \details{
   \code{pretty} ignores non-finite values in \code{x}.
-  
+
   Let \code{d <- max(x) - min(x)} \eqn{\ge 0}.
   If \code{d} is not (very close) to 0, we let \code{c <- d/n},
   otherwise more or less \code{c <- max(abs(range(x)))*shrink.sml / min.n}.
@@ -56,7 +56,7 @@ pretty(x, \dots)
   \eqn{c/b \in [1,10)}{c/b in [1,10}
   and the two \sQuote{\emph{bias}} coefficients, \eqn{h
   =}\code{high.u.bias} and \eqn{f =}\code{u5.bias}.
-  
+
   \dots\dots\dots
 }
 \seealso{

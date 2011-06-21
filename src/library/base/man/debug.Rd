@@ -1,3 +1,4 @@
+
 % File src/library/base/man/debug.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2009 R Core Development Team
@@ -53,12 +54,12 @@ isdebugged(fun)
   particular typing an object name will cause the object to be printed,
   and \code{ls()} lists the objects in the calling frame.  (If you want
   to look at an object with a name such as \code{n}, print it explicitly.)
-  
-  Setting \link{option} \code{"browserNLdisabled"} to \code{TRUE}
+
+  Setting \link[=options]{option} \code{"browserNLdisabled"} to \code{TRUE}
   disables the use of an empty line as a synonym for \code{n}.  If this
   is done, the user will be re-prompted for input until a valid command
   or an expression is entered.
-  
+
   To debug a function is defined inside a function, single-step though
   to the end of its definition, and then call \code{debug} on its name.
 
