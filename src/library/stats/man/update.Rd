@@ -1,19 +1,22 @@
 % File src/library/stats/man/update.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{update}
 \title{Update and Re-fit a Model Call}
-\usage{
-update(object, \dots)
-
-\method{update}{default}(object, formula., \dots, evaluate = TRUE)
-}
 \alias{update}
 \alias{update.default}
+\alias{getCall}
+\alias{getCall.default}
+\usage{
+update(object, \dots)
+\method{update}{default}(object, formula., \dots, evaluate = TRUE)
+
+getCall(x, \dots)
+}
 \arguments{
- \item{object}{An existing fit from a model function such as \code{lm},
+ \item{object, x}{An existing fit from a model function such as \code{lm},
    \code{glm} and many others.}
  \item{formula.}{Changes to the formula -- see \code{update.formula} for
    details.}
@@ -22,11 +25,19 @@ update(object, \dots)
  \item{evaluate}{If true evaluate the new call else return the call.}
 }
 \description{
-\code{update} will update and (by default) re-fit a model. It does this
-by extracting the call stored in the object, updating the call and (by
-default) evaluating that call. Sometimes it is useful to call
-\code{update} with only one argument, for example if the data frame has
-been corrected.
+  \code{update} will update and (by default) re-fit a model.  It does this
+  by extracting the call stored in the object, updating the call and (by
+  default) evaluating that call.  Sometimes it is useful to call
+  \code{update} with only one argument, for example if the data frame has
+  been corrected.
+
+  \dQuote{Extracting the call} in \code{update()} and similar functions
+  uses \code{getCall()} which itself is a (S3) generic function with a
+  default method that simply gets \code{x$call}.
+
+  Because of this, \code{update()} will often work (via its default
+  method) on new model classes, either automatically, or by providing a
+  simple \code{getCall()} method for that class.
 }
 \value{
   If \code{evaluate = TRUE} the fitted object, otherwise the updated call.
@@ -53,6 +64,8 @@ lm.D9
 summary(lm.D90 <- update(lm.D9, . ~ . - 1))
 options(contrasts = c("contr.helmert", "contr.poly"))
 update(lm.D9)
+getCall(lm.D90)# "through the origin"
+
 options(oldcon)
 }
 \keyword{models}

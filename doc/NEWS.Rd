@@ -78,16 +78,16 @@
       value.  (Wish of \PR{14452}.)
 
       \item \code{gl()} runs faster by avoiding calling \code{factor()}.
-      
+
       \item The \code{print()} method for \code{object.size()} accepts
       \samp{B} as well as \samp{b} as an abbreviation for \sQuote{bytes}.
-      
+
       \item \code{unlink()} gains a \code{force} argument to work like
       \command{rm -f} and if possible override restrictive permissions.
-      
+
       \item \code{pbirthday()} and \code{qbirthday()} now use exact
       calculations for \code{coincident = 2}.
-      
+
       \item \code{unzip()} and \code{unz()} connection have been updated
       with support for more recent Zip64 features (including large file
       sizes and \command{bzip2} compression, but not yet UTF-8 file
@@ -95,7 +95,7 @@
 
       \code{unzip()} has a new option to restore file times from those
       recorded (in an unknown timezone) in the zip file.
-      
+
       \item \code{update.packages()} now accepts a character vector of
       package names for the \code{oldPkgs} argument.  (Suggestion of
       Tal Galili.)
@@ -111,11 +111,11 @@
       \item Rao's efficient score test has been implemented for
       \code{glm} objects.  Specifically, the \code{add1}, \code{drop1},
       and \code{anova} methods now allow \code{test = "Rao"}.
-            
+
       \item If a saved workspace (e.g. \file{.RData}) contains objects
       that cannot be loaded, \R will now start with an warning message
-      and an empty workspace, rather than failing to start. 
-      
+      and an empty workspace, rather than failing to start.
+
       \item \code{strptime()} now accepts times such as \samp{24:00} for
       midnight at the end of the day, for although these are disallowed by
       POSIX 1003.1-2008, ISO 8601:2004 allows them.
@@ -124,25 +124,25 @@
       a corresponding \code{"names"} slot, and generates a warning or
       an error if that slot is not defined.  See the section on slots
       in \code{?Classes}.
-      
+
       \item The default methods for \code{is.finite()}, \code{is.infinite()}
       and \code{is.nan()} now signal an error if their argument is not
       an atomic vector.
-      
+
       \item The formula method for \code{plot()} no longer places
       package \pkg{stats} on the search path (it loads the name space
       instead).
-      
+
       \item \code{source()} tried hard to retain source formatting, and
       might do so even if argument \code{keep.source} is false if the
       \code{"keep.source"} option is true.  Now \code{keep.source =
 	FALSE} temporarily sets \code{options(keep.source = FALSE)}.
-      
+
       \item There now is a genuine \code{"function"} method for
       \code{plot()} rather than the generic dispatching internally to
       \code{graphics::plot.function()}.  It is now exported, so can be
       called directly as \code{plot.function()}.
-      
+
       \item The one-sided \code{ks.test()} allows \code{exact = TRUE} to
       be specified in the presence of ties (but the approximate
       calculation remains the default: the \sQuote{exact} computation
@@ -154,11 +154,11 @@
       \code{"function"} method for \code{plot()}.  To get the previous
       behaviour use \code{curve(add = NA)}, which also takes the default for
       log-scaling of the x-axis from the previous plot.
-      
+
       \item Both \code{curve()} and the \code{plot()} method for
       functions have a new argument \code{xname} to facilitate plots
       such as \code{sin(t)} \emph{vs} \code{t}.
-      
+
       \item The \code{local} argument to \code{source()} can specify an
       environment as well as \code{TRUE} (\code{parent.env()}) and
       \code{FALSE} (\code{.GlobalEnv}).  It gives better error messages
@@ -185,27 +185,31 @@
       acccept \code{TRUE}/\code{FALSE} for \code{len} (not that they
       were ever documented to, but there was special-casing in the C
       code).
-      
+
       \item There is a new function \code{Sys.setFileTime()} to set the
       time of a file (including a directory).
-      
+
       \item The \code{\\name} of a help file is now included in the list
       of topics searched by \code{help()}, so need not be repeated as
       an \code{\\alias}.  (Currently the QC code has not been updated,
       so it will issue spurious warnings.)
-      
+
       \item The file times reported by \code{file.info()} are reported
       to sub-second resolution on systems which support it.  (Currently
       the POSIX 2008 and FreeBSD/Darwin/NetBD methods are detected.)
+
+      \item New \code{getCall(m)} as abstraction for \code{m$call},
+      enabling \code{update(m)}'s default method to apply more
+      universally.
     }
   }
-  
+
   \subsection{GRAPHICS DEVICES}{
     \itemize{
       \item The \code{pdf()} device makes use of Flate compression: this
       controlled by the new logical argument \code{compress}, and is
       enabled by default.
-      
+
       \item Devices \code{svg()}, \code{cairo_pdf()} and
       \code{cairo_ps()} gain a \code{family} argument.
 
@@ -227,14 +231,14 @@
 
       \item There is a new type \code{X11(type = "dbcairo")} which
       updates the screeen less frequently: see its help page.
-      
+
       \item The \code{X11()} device now makes use of cursors to
       distinguish its states.  The normal cursor is an arrow (rather
       than a crosshair); the crosshair is used when the locator is in
       use, and a watch cursor is shown when plotting computations are
       being done.  (These are the standard names for X11 cursors: how
       they are actually displayed depends on the window manager.)
-      
+
       \item New functions \code{dev.hold()} and \code{dev.flush()} for
       use with graphics devices with buffering.  These are used for most
       of the high-level graphics functions such as \code{boxplot()}, so
@@ -325,7 +329,7 @@
       environment variable \env{RD2DVI_INPUTENC} is used.  (LaTeX package
       \samp{inputenx} is an optional install which provides greater
       coverage of the UTF-8 encoding.)
-      
+
       \item \command{Rscript} on a Unix-alike now accepts file names
       containing spaces (if these are escaped or quoted in the shell).
 
@@ -371,11 +375,11 @@
       \item The \code{zlib} in the R sources is now version 1.2.5.
       (This is safe even on 32-bit Linux systems because only the basic
       interface is now used.)
-      
+
       \item The \file{.afm} files in package \pkg{grDevices} are now
       installed as compressed files (as long done on Windows), saving ca
       2MB on the installed size.
-      
+
       \item The non-screen cairo-based devices are no longer in the X11
       module and so can be installed without X11.  (We have never seen a
       Unix-alike system with cairographics installed but not X11, but a
@@ -385,11 +389,11 @@
       Objective-C compiler (if present) to ensure that even compilers
       that do not enable exceptions by default (such as vanilla gcc) can
       be used.
-      
+
       \item The system call \code{times} is required.
 
       \item The C99 functions \code{acosh}, \code{asinh}, \code{atanh},
-      \code{snprintf} and \code{vsnprintf} are now required. 
+      \code{snprintf} and \code{vsnprintf} are now required.
     }
   }
 
@@ -399,7 +403,7 @@
       factors with unused levels, levels were dropped and you'd get an
       error saying that there should be at least two levels,
       inconsistently with pre-tabulated data.  (Reported by Michael Fay).
-      
+
       \item The locale category \samp{LC_MONETARY} was only being set on
       startup on Windows: that is now done on Unix-alikes where
       supported.
@@ -411,7 +415,7 @@
       \item Reference class utilities will detect an attempt to modify
       methods or fields in a locked class definition (e.g., in a name
       space) and generate an error.
-      
+
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
@@ -424,11 +428,11 @@
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
       \code{"NA"}.
-      
+
       \item \code{persp(box = TRUE)} now warns if the surface extends
       outside the box (since occlusion for the box and axes is computed
       assuming the box is a bounding box). (\PR{202}.)
-      
+
       \item \code{RShowDoc()} can now display the licences shipped with
       \R, e.g. \code{RShowDoc("GPL-3")}.
 
@@ -458,7 +462,7 @@
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
       character method (suggestion of Joshua Ulrich).  [Intended for \R
       2.13.0 but accidentally removed before release.]
-      
+
       \item \code{vector()} and its wrappers such as \code{integer()}
       and \code{double()} now warn if called with a \code{length}
       argument of more than one element.  This helps track down user
@@ -486,7 +490,7 @@
       objects/DLLs) to be installed in a multi-architecture setting.
     }
   }
-  
+
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
       \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
@@ -500,7 +504,7 @@
       default in \R 2.14.0.
 
       \item Sweave custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.      
+      \code{foo.off()} to shut them down.
 
       \item Warnings are issued when non-portable filenames are found
       for graphics files (and chunks if \code{split = TRUE}).  Portable
@@ -529,7 +533,7 @@
       are GPL-2 | GPL-3.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
      \item The internal functions \code{.readRDS()} and
@@ -538,12 +542,12 @@
       2.13.0.
     }
   }
-  
+
   \subsection{UTILITIES}{
-    \itemize{      
+    \itemize{
       \item \command{R CMD check} on a multi-architecture installation now
       skips the user's \file{.Renviron} file for the
-      architecture-specific tests (which do read the 
+      architecture-specific tests (which do read the
       architecture-specific \file{Renviron.site} files).  This is
       consistent with single-architecture checks, which use
       \option{--no-environ}.
@@ -553,7 +557,7 @@
       per-package overrides.  See \sQuote{Writing R Extensions}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
@@ -567,10 +571,10 @@
 
       \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
       methods for the selected column (spotted by Bill Dunlap).
-      
+
       \item \code{sort.int()} would strip the class of an object, but
-      leave its object bit set.  (Reported by Bill Dunlap.)      
-      
+      leave its object bit set.  (Reported by Bill Dunlap.)
+
       \item \code{pbirthday()} and \code{qbirthday()} did not implement
       the algorithm exactly as given in their reference and so were
       unnecessarily inaccurate.
@@ -580,7 +584,7 @@
 
       The description of the problem was inaccurate: the probability is
       a tail probablity (\sQuote{2 \emph{or more} people share a birthday})
-      
+
       \item Complex arithmetic sometimes warned incorrectly about
       producing NAs when there were NaNs in the input.
 
@@ -597,11 +601,11 @@
       \item Reading (e.g. with \code{readBin()}) from a raw connection
       was not advancing the pointer, so successive reads would read the
       same value.  (Spotted by Bill Dunlap.)
-      
+
       \item Parsed text containing embedded newlines was printed
       incorrectly by \code{as.character.srcref()}.  (Reported by Hadley
       Wickham.)
-      
+
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
@@ -617,7 +621,7 @@
 
       \item \code{addmargins()} called \code{numeric(apos)} rather than
       \code{numeric(length(apos))}.
-      
+
       \item The HTML help search sometimes produced bad links.
       (\PR{14608})
     }

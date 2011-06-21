@@ -22,7 +22,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        dunif, dweibull, dwilcox, eff.aovlist, effects, estVar, end,
        expand.model.frame, extractAIC, factor.scope, family, fft,
        fitted, fitted.values, fivenum, formula, frequency, ftable,
-       Gamma, gaussian, get_all_vars, glm, glm.control, glm.fit,
+       Gamma, gaussian, get_all_vars, getCall, glm, glm.control, glm.fit,
        hasTsp, hat, hatvalues, hatvalues.lm, influence,
        influence.measures, integrate, interaction.plot,
        inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
@@ -157,6 +157,7 @@ S3method(formula, terms)
 S3method(frequency, default)
 S3method(ftable, default)
 S3method(ftable, formula)
+S3method(getCall, default)
 S3method(influence, glm)
 S3method(influence, lm)
 S3method(labels, dist)
