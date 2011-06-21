@@ -74,8 +74,13 @@ file.info(\dots)
 
   What is meant by the three file times depends on the OS and file
   system.  On Windows native file systems \code{ctime} is the file
-  creation time.  What is meant by \sQuote{file access} and hence the
+  creation time (something which is not recorded on most Unix-alike file
+  systems).  What is meant by \sQuote{file access} and hence the
   \sQuote{last access time} is system-dependent.
+  
+  The times are reported to an accuracy of a second.  Many file systems
+  only record times in seconds, and some (e.g. modification time on FAT
+  systems) are recorded in increments of 2 or more seconds.
 }
 #ifdef unix
 \note{
