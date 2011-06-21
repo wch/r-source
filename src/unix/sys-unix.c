@@ -337,7 +337,7 @@ SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *login;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 7));
+    PROTECT(ans = allocVector(STRSXP, 8));
     if(uname(&name) == -1) {
 	UNPROTECT(1);
 	return R_NilValue;
@@ -358,7 +358,16 @@ SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     SET_STRING_ELT(ans, 6, mkChar("unknown"));
 #endif
-    PROTECT(ansnames = allocVector(STRSXP, 7));
+#if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID) && defined(HAVE_GETEUID)
+    {
+	struct passwd *stpwd;
+	stpwd = getpwuid(geteuid());
+	SET_STRING_ELT(ans, 7, stpwd ? mkChar(stpwd->pw_name) : mkChar("unknown"));
+    }
+#else
+    SET_STRING_ELT(ans, 7, mkChar("unknown"));
+#endif
+    PROTECT(ansnames = allocVector(STRSXP, 8));
     SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
     SET_STRING_ELT(ansnames, 1, mkChar("release"));
     SET_STRING_ELT(ansnames, 2, mkChar("version"));
@@ -366,6 +375,7 @@ SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, 4, mkChar("machine"));
     SET_STRING_ELT(ansnames, 5, mkChar("login"));
     SET_STRING_ELT(ansnames, 6, mkChar("user"));
+    SET_STRING_ELT(ansnames, 7, mkChar("effective_user"));
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

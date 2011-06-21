@@ -25,18 +25,22 @@ Sys.info()
     ascertained.}
   \item{user}{The name of the real user ID, or \code{"unknown"} if it
     cannot be ascertained.}
+  \item{effective_user}{The name of the effective user ID, or
+    \code{"unknown"} if it
+    cannot be ascertained.  This may differ from the real user in
+    \sQuote{set-user-ID} processes.}
 #ifdef unix
   
   The first five fields come from the \code{uname(2)} system call.  The
-  login name comes from \code{getlogin(2)}, and the user name from
-  \code{getpwuid(getuid())}
+  login name comes from \code{getlogin(2)}, and the user names from
+  \code{getpwuid(getuid())} and \code{getpwuid(geteuid())}
 #endif
 }
 \details{
   This function is not implemented on all \R platforms, and returns
   \code{NULL} when not available.  Where possible it is based on POSIX
   system calls.  (Under Windows, it is obtained by Windows system
-  calls.)
+  calls and the last three values are the same.)
 
   \code{Sys.info()} returns details of the platform \R is running on,
   whereas \code{\link{R.version}} gives details of the platform \R was
@@ -48,6 +52,11 @@ Sys.info()
   login or user names will be what you might reasonably expect.
   (In particular on some Linux distributions the login name is unknown
   from sessions with re-directed inputs.)
+  
+  The use of alternatives such as \code{system("whoami")} is not
+  portable: the POSIX command \code{system("id")} is much more portable
+  on Unix-alikes, provided only the POSIX options are used (and not the
+  many GNU extensions).
 }
 
 \seealso{

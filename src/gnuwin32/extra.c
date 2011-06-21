@@ -600,7 +600,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 7));
+    PROTECT(ans = allocVector(STRSXP, 8));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
     if(!GetVersionEx((OSVERSIONINFO *)&osvi))
 	error(_("unsupported version of Windows"));
@@ -662,7 +662,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     wcstoutf8(buf, user, 1000);
     SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
     SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
-    PROTECT(ansnames = allocVector(STRSXP, 7));
+    SET_STRING_ELT(ans, 7, STRING_ELT(ans, 5));
+    PROTECT(ansnames = allocVector(STRSXP, 8));
     SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
     SET_STRING_ELT(ansnames, 1, mkChar("release"));
     SET_STRING_ELT(ansnames, 2, mkChar("version"));
@@ -670,6 +671,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, 4, mkChar("machine"));
     SET_STRING_ELT(ansnames, 5, mkChar("login"));
     SET_STRING_ELT(ansnames, 6, mkChar("user"));
+    SET_STRING_ELT(ansnames, 7, mkChar("effective_user"));
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

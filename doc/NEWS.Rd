@@ -198,9 +198,13 @@
       to sub-second resolution on systems which support it.  (Currently
       the POSIX 2008 and FreeBSD/Darwin/NetBSD methods are detected.)
 
-      \item New \code{getCall(m)} as abstraction for \code{m$call},
-      enabling \code{update(m)}'s default method to apply more
-      universally.
+      \item New function \code{getCall(m)} as an abstraction for
+      \code{m$call}, enabling \code{update(m)}'s default method to apply
+      more universally.  (NB: this can be masked by existing functions
+      in packages.)
+
+      \item \code{Sys.info()} gains a \code{euser} component to report
+      the \sQuote{effective} user on OSes which have that concept.
     }
   }
 
