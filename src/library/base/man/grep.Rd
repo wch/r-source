@@ -264,6 +264,7 @@ gregexpr("e", txt)
 ## Find functions with argument names matching "warn":
 findArgs <- function(env, pattern) {
   nms <- ls(envir = as.environment(env))
+  nms <- nms[is.na(match(nms, c("F","T")))] # <-- work around "checking hack"
   aa <- sapply(nms, function(.) { o <- get(.)
                if(is.function(o)) names(formals(o)) })
   iw <- sapply(aa, function(a) any(grepl(pattern, a, ignore.case=TRUE)))
