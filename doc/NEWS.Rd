@@ -196,7 +196,7 @@
 
       \item The file times reported by \code{file.info()} are reported
       to sub-second resolution on systems which support it.  (Currently
-      the POSIX 2008 and FreeBSD/Darwin/NetBD methods are detected.)
+      the POSIX 2008 and FreeBSD/Darwin/NetBSD methods are detected.)
 
       \item New \code{getCall(m)} as abstraction for \code{m$call},
       enabling \code{update(m)}'s default method to apply more
