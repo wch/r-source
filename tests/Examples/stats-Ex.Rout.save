@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-20 r56193)
+R version 2.14.0 Under development (unstable) (2011-06-21 r56205)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -3701,7 +3701,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x18a0d60>
+<environment: 0x28d2a30>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -6749,7 +6749,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x51c3ec8>
+<environment: 0x5afde78>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7151,7 +7151,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x5ebe418>
+<environment: 0x67f98d8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11527,22 +11527,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x65ba0b0>
+<environment: 0x47ebfd8>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x65ba0b0>
+<environment: 0x47ebfd8>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x65ba0b0>
+<environment: 0x47ebfd8>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x65ba0b0>
+<environment: 0x47ebfd8>
 
 $name
 [1] "identity"
@@ -11553,12 +11553,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x65cc8f0>
+<environment: 0x47c0410>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x65cc8f0>
+<environment: 0x47c0410>
 
 > 
 > 
@@ -15215,7 +15215,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x5e58f08>
+<environment: 0x6976918>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -16559,7 +16559,7 @@ Frequency = 1
 > 
 > ### Name: update
 > ### Title: Update and Re-fit a Model Call
-> ### Aliases: update update.default
+> ### Aliases: update update.default getCall getCall.default
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -16611,6 +16611,9 @@ Coefficients:
 (Intercept)       group1  
      4.8465      -0.1855  
 
+> getCall(lm.D90)# "through the origin"
+lm(formula = weight ~ group - 1)
+> 
 > options(oldcon)
 > 
 > 
@@ -17435,7 +17438,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.868 0.333 13.267 0 0 
+Time elapsed:  12.803 0.358 13.282 0 0 
 > grDevices::dev.off()
 null device 
           1 
