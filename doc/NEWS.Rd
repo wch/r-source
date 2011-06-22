@@ -628,6 +628,11 @@
 
       \item The HTML help search sometimes produced bad links.
       (\PR{14608})
+
+      \item Command completion will no longer be broken if
+      \code{tail.default()} is redefined by the user. (Problem reported
+      by Henrik Bengtsson.)
+
     }
   }
 }
