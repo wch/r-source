@@ -632,7 +632,9 @@
       \item Command completion will no longer be broken if
       \code{tail.default()} is redefined by the user. (Problem reported
       by Henrik Bengtsson.)
-
+      
+      \item LaTeX rendering of markup in titles of help pages has been
+      improved; in particular, \code{\\eqn{}} may be used there.
     }
   }
 }
