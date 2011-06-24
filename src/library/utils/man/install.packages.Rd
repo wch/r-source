@@ -21,7 +21,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  libs_only = FALSE, INSTALL_opts, \dots)
 }
 \arguments{
-  \item{pkgs}{character vector of the short names of packages whose
+  \item{pkgs}{character vector of the names of packages whose
     current versions should be downloaded from the repositories.
     
     If \code{repos = NULL}, a character vector of file paths of
