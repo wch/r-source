@@ -1,6 +1,6 @@
 % File src/library/methods/man/StructureClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{StructureClasses}
@@ -51,12 +51,12 @@
   for multiple classes, perhaps with the class name and the arguments
   passed in.
 
-  Objects created from the classes \code{"matrix"} and \code{"array"} are unusual, to put
-  it mildly, and have been for some time.  Although they may appear to
-  be objects from these classes, they do not have the internal
-  structure of either an S3 or S4 class object.  In particular, they
-  have no \code{"class"} attribute and are not recognized as objects
-  with classes (that is, both \code{\link{is.object}} and
+  Objects created from the classes \code{"matrix"} and \code{"array"}
+  are unusual, to put it mildly, and have been for some time.  Although
+  they may appear to be objects from these classes, they do not have the
+  internal structure of either an S3 or S4 class object.  In particular,
+  they have no \code{"class"} attribute and are not recognized as
+  objects with classes (that is, both \code{\link{is.object}} and
   \code{\link{isS4}} will return \code{FALSE} for such objects).
   However, methods (both S4 and S3) can be defined for these
   pseudo-classes and new classes (both S4 and S3) can inherit from them.
@@ -111,7 +111,7 @@
   \code{\link{new}}; therefore, a such a class (what is called a
   \dQuote{mixin} in some languages) uses the default method for
   \code{\link{initialize}}, with no special arguments.
-  
+
 }
 \section{Extends}{
   The specific classes all extend class \code{"structure"}, directly, and
@@ -144,8 +144,8 @@
 }
 \seealso{Class \linkS4class{nonStructure}, which enforces the
   alternative model, in which all slots are dropped if any math
-  transformation or operation is applied to an object from a class extending one of
-  the basic classes.
+  transformation or operation is applied to an object from a class
+  extending one of the basic classes.
 }
 \references{
  Chambers, John M. (2008)

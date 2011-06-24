@@ -33,11 +33,11 @@ sealClass(Class, where)
     usually take a class definition instead of the string.  To restrict
     the class to those defined in a particular package, set the
     \code{\link{packageSlot}} of the character string.}
-  \item{where}{ The
-    environment in which to modify or remove the
-    definition.  Defaults to the top-level environment of the calling function
-    (the global environment for ordinary computations, but the
-    environment or name space of a package in the source for a package).
+  \item{where}{the \code{\link{environment}} in which to modify or
+    remove the definition.  Defaults to the top-level environment of the
+    calling function (the global environment for ordinary computations,
+    but the environment or name space of a package in the source for a
+    package).
 
     When searching for class definitions, \code{where} defines where to
     do the search, and the default is to search from the top-level
