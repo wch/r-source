@@ -16,6 +16,29 @@
 
 ## TODO: can we do something useful with cross-package links?
 
+
+### * .Rd_get_latex
+
+# Return latex form of text, encoded in UTF-8.  Note that
+# textConnection converts to the local encoding, and we convert back,
+# so unrepresentable characters will be lost
+
+.Rd_get_latex <-
+function(x) {
+    # We'd like to use capture.output here, but don't want to depend
+    # on utils, so we duplicate some of it
+    rval <- NULL
+    file <- textConnection("rval", "w", local = TRUE)
+
+    save <- options(useFancyQuotes = FALSE)
+    sink(file)
+    tryCatch(Rd2latex(x, fragment=TRUE),
+             finally = {sink(); options(save); close(file)})
+
+    if (is.null(rval)) rval <- character()
+    else enc2utf8(rval)
+}
+
 latex_canonical_encoding  <- function(encoding)
 {
     if (encoding == "") encoding <- utils::localeToCharset()[1L]
@@ -640,7 +663,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	Rd <- Rd[sortorder]
 	sections <- sections[sortorder]
 
-	title <- .Rd_format_title(.Rd_get_title(Rd))
+	title <- .Rd_get_latex(.Rd_get_section(Rd, "title"))
 
 	name <- Rd[[2L]]
 
