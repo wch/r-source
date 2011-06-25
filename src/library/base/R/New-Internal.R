@@ -47,7 +47,7 @@ try <- function(expr, silent = FALSE) {
             cat(msg, file = stderr())
             .Internal(printDeferredWarnings())
         }
-        invisible(structure(msg, class = "try-error"))
+        invisible(structure(msg, class = "try-error", condition = e))
     })
 }
 

@@ -200,6 +200,10 @@
 
       \item \code{Sys.info()} gains a \code{euser} component to report
       the \sQuote{effective} user on OSes which have that concept.
+
+      \item The result returned by \code{try()} now contains the
+      original error condition object at the \code{"condition"}
+      attribute.
     }
   }
 
