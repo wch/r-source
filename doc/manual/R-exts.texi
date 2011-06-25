@@ -3885,6 +3885,7 @@ distribution, and hence starts with
 @example
 @group
 \name@{Normal@}
+\alias@{Normal@}
 \alias@{dnorm@}
 \alias@{pnorm@}
 \alias@{qnorm@}
@@ -3897,8 +3898,9 @@ Also, it is often convenient to have several different ways to refer to
 an @R{} object, and an @code{\alias} does not need to be the name of an
 object.
 
-As from version 2.14.0, the @code{\name} is treated as a topic and need
-not be repeated.  
+Note that the @code{\name} is not necessarily a topic documented, and if
+so desired it needs to have an explicit @code{\alias} entry (as in this
+example).
 
 @item \title@{@var{Title}@}
 @findex \title

@@ -60,7 +60,7 @@ httpd <- function(path, query, ...)
             paths <- paste("/library/", res[, "Package"], "/html/",
                            res[, "name"], ".html", sep = "")
             urls <- paste('<a href="', paths, '">',
-                          res[, "Package"], "::", res[, "name"],
+                          res[, "Package"], "::", res[, "topic"],
                           '</a>', sep = "")
             out <- c(out, "<dl>",
                      paste("<dt>", urls, "</dt>\n",

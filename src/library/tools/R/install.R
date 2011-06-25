@@ -1695,10 +1695,6 @@
                    Internal = character(),
                    stringsAsFactors = FALSE)
     } else {
-        names <- Rd$Name
-        if (length(names))
-            topics <- lapply(seq_along(names), 
-                function(i) unique(c(names[i], topics[[i]])) )
         lens <- sapply(topics, length)
         files <- sub("\\.[Rr]d$", "", Rd$File)
         internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)

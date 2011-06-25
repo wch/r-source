@@ -470,7 +470,7 @@ printhsearchInternal  <- function(x, ...)
 				   "using", type, "matching:")),
 		     "\n"),
 		   outConn)
-	dbnam <- paste(db[, "Package"], "::", db[ , "name"],
+	dbnam <- paste(db[, "Package"], "::", db[ , "topic"],
 		       sep = "")
 	dbtit <- paste(db[ , "title"], sep = "")
 	writeLines(formatDL(dbnam, dbtit), outConn)
