@@ -187,11 +187,11 @@ loaded without the package being attached (for example by calls like
 
 The option of @emph{lazy loading} of code or data is mentioned at
 several points.  This is an optional part of the installation, selected
-by default for @R{} code.  When used the @R{} objects of the package are
-created at installation time, and stored in a database in the @file{R}
-directory of the installed package, being loaded into the session at
-first use.  This makes the @R{} session run faster and used less
-(virtual) memory.
+by default for @R{} code (and not using it is deprecated).  When used
+the @R{} objects of the package are created at installation time, and
+stored in a database in the @file{R} directory of the installed package,
+being loaded into the session at first use.  This makes the @R{} session
+run faster and used less (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
@@ -582,9 +582,8 @@ field's value to @samp{yes} or @samp{true} for lazy-loading and
 also accepted.)  If the package you are writing uses the @pkg{methods}
 package, specify@footnote{That is the default, but this stops someone
 overriding it when using @command{R CMD INSTALL}.}  @samp{LazyLoad:
-yes}.  There is very rarely a good reason to de-select lazy-loading for
-code: a conceivable one is where a package does make use of almost all
-its objects on loading, for example to construct a GUI.
+yes}.  The use of @samp{LazyLoad: no} is now deprecated and will be
+removed in @R{} 2.14.0.
 
 The @samp{ZipData} field controls whether the automatic Windows build
 will zip up the data directory or not: set this to @samp{no} if your
