@@ -951,7 +951,11 @@
 	}
 
 	## LazyLoading
-	value <- parse_description_field(desc, "LazyLoad", default = lazy)
+	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
+        if(!value) {
+            value <- TRUE
+            warning("only LazyLoad = TRUE is supported", call. = FALSE)
+        }
 	if (install_R && dir.exists("R") && length(dir("R")) && value) {
 	    starsmsg(stars, "preparing package for lazy loading")
             keep.source <-

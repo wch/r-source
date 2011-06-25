@@ -204,6 +204,10 @@
       \item The result returned by \code{try()} now contains the
       original error condition object at the \code{"condition"}
       attribute.
+
+      \item All packages are lazy-loaded irrespective of the
+      \samp{LazyLoad} field in the \file{DESCRIPTION} file.
+      (Experimental: documentation is not yet updated.)
     }
   }
 
@@ -543,6 +547,10 @@
       \code{.saveRDS()} are now deprecated in favour of the public
       functions \code{readRDS()} and \code{saveRDS()} introduced in \R
       2.13.0.
+      
+      \item Switching off lazy-loading of code \emph{via} the
+      \samp{LazyLoad} field of the \file{DESCRIPTION} file is now
+      deprecated.  In future all packages will be lazy-loaded.
     }
   }
 
