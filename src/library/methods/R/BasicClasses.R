@@ -50,6 +50,10 @@
 
     .setBaseClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
 
+    .setBaseClass("builtin", prototype = `<-`, where = envir); clList <- c(clList, "builtin")
+
+    .setBaseClass("special", prototype = `if`, where = envir); clList <- c(clList, "special")
+
     ## S4, S3 are basic classes that are used to define methods related to being S4, S3 object
     for(cl in c("S4", "S3")) {
         tmp <- newClassRepresentation(className=cl, prototype = defaultPrototype(), virtual=TRUE, package = "methods")
@@ -537,9 +541,9 @@
       assign(".S3MethodsClasses", S3table, envir = where)
     }
     else S3table <- get(".S3MethodsClasses", envir = where)
-    specialTypes <- c("environment", "externalptr", "name", "NULL")
-    specialClasses <- paste(".", specialTypes, sep="")
-    for(i in seq_along(specialTypes)) {
+    specialClasses <- .indirectAbnormalClasses
+    specialTypes <- .AbnormalTypes # only part matching classes used
+    for(i in seq_along(specialClasses)) {
         cl <- specialTypes[[i]]
       ncl <- specialClasses[[i]]
       setClass(ncl, representation(.xData = cl), where = where)

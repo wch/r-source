@@ -742,15 +742,15 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
 
 ## see $RHOME/src/main/duplicate.c for the corresponding datatypes
 ## not copied by duplicate1
-.AbnormalTypes <- c("environment", "name", "primitive", "externalptr", "weakref", "NULL", "bytecode")
+.AbnormalTypes <- c("environment", "name", "externalptr",  "NULL")
 
-.indirectAbnormalClasses <- c(environment = ".environment",
-                              name = ".name",
-                              primitive = ".primitive",
-                              weakref = ".weakref",
-                              "NULL" = ".NULL",
-                              bytecode = ".bytecode"
-                              )
+
+.indirectAbnormalClasses <- paste(".", .AbnormalTypes, sep="")
+names(.indirectAbnormalClasses) <- .AbnormalTypes
+
+## the types not supported by indirect classes (yet)
+.AbnormalTypes <- c(.AbnormalTypes,
+                    "special","builtin", "weakref", "bytecode")
 
 .addAbnormalDataType <- function(classes) {
   types <- match(classes, .AbnormalTypes, 0) > 0
