@@ -190,7 +190,7 @@ several points.  This is an optional part of the installation, selected
 by default for @R{} code.  When used the @R{} objects of the package are
 created at installation time, and stored in a database in the @file{R}
 directory of the installed package, being loaded into the session at
-first use.  This makes the @R{} session run faster and used less
+first use.  This makes the @R{} session run faster and use less
 (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
