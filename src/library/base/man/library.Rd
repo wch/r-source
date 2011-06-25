@@ -58,16 +58,9 @@ require(package, lib.loc = NULL, quietly = FALSE,
     \code{.conflicts.OK}.  A conflict is a function masking a function,
     or a non-function masking a non-function.
   }
-  \item{keep.source}{logical.  If \code{TRUE}, functions
-    \sQuote{keep their source} including comments, see argument
-    \code{keep.source} to \code{\link{options}}.  This applies only to
-    the named package, and not to any packages or name spaces which might be
-    loaded to satisfy dependencies or imports.  It will be over-ridden
-    by a \samp{KeepSource} field in the packages' description.
-
-    This argument does not apply to packages using lazy-loading.
-    Whether they have kept source is determined when they are installed
-    (and is most likely false).
+  \item{keep.source}{logical. Now ignored.
+    This argument does not apply to packages using lazy-loading:
+    whether they have kept source is determined when they are installed.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}

@@ -186,12 +186,12 @@ loaded without the package being attached (for example by calls like
 @code{splines::ns}).
 
 The option of @emph{lazy loading} of code or data is mentioned at
-several points.  This is an optional part of the installation, selected
-by default for @R{} code.  When used the @R{} objects of the package are
-created at installation time, and stored in a database in the @file{R}
-directory of the installed package, being loaded into the session at
-first use.  This makes the @R{} session run faster and use less
-(virtual) memory.
+several points.  This is part of the installation, always selected for
+@R{} code (since @R{} 2.14.0) but optional for data.  When used the @R{}
+objects of the package are created at installation time, and stored in a
+database in the @file{R} directory of the installed package, being
+loaded into the session at first use.  This makes the @R{} session run
+faster and use less (virtual) memory.
 @ifset UseExternalXrefs
 (For technical details,
 @pxref{Lazy loading, , Lazy loading, R-ints,  R Internals}.)
@@ -571,16 +571,12 @@ Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used instead of @samp{Collate}.
 
-The @samp{LazyLoad} and @samp{LazyData} fields control whether the @R{}
-objects and the datasets (respectively) use lazy-loading: set the
-field's value to @samp{yes} or @samp{true} for lazy-loading and
-@samp{no} or @samp{false} for no lazy-loading.  (Capitalized values are
-also accepted.)  If the package you are writing uses the @pkg{methods}
-package, specify@footnote{That is the default, but this stops someone
-overriding it when using @command{R CMD INSTALL}.}  @samp{LazyLoad:
-yes}.  There is very rarely a good reason to de-select lazy-loading for
-code: a conceivable one is where a package does make use of almost all
-its objects on loading, for example to construct a GUI.
+The @samp{LazyData} field controls whether the @R{} datasets use
+lazy-loading: set the field's value to @samp{yes} or @samp{true} for
+lazy-loading and @samp{no} or @samp{false} for no lazy-loading.
+(Capitalized values are also accepted.)  The @samp{LazyLoad} field was
+used in versions prior to 2.14.0, but now is ignored (with a warning if
+a false value is supplied).
 
 The @samp{KeepSource} field controls if the package code is sourced
 using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
@@ -674,16 +670,15 @@ case) letter or digit and have one of the extensions @file{.R},
 @file{.R}, as this extension seems to be not used by any other software.
 It should be possible to read in the files using @code{source()}, so
 @R{} objects must be created by assignments.  Note that there need be no
-connection between the name of the file and the @R{} objects created by it.
-Ideally, the @R{} code files should only directly assign @R{} objects
-and definitely should not call functions with side effects such as
-@code{require} and @code{options}.  If computations are required to
+connection between the name of the file and the @R{} objects created by
+it.  Ideally, the @R{} code files should only directly assign @R{}
+objects and definitely should not call functions with side effects such
+as @code{require} and @code{options}.  If computations are required to
 create objects these can use code `earlier' in the package (see the
-@samp{Collate} field) plus, @emph{only if lazyloading is used},
-functions in the @samp{Depends} packages provided that the objects
-created do not depend on those packages except @emph{via} name space
-imports.  (Packages without name spaces will work under somewhat less
-restrictive assumptions.)
+@samp{Collate} field) plus functions in the @samp{Depends} packages
+provided that the objects created do not depend on those packages except
+@emph{via} name space imports.  (Packages without name spaces will work
+under somewhat less restrictive assumptions.)
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects: please use suitable
