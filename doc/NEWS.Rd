@@ -121,6 +121,10 @@
       \code{.saveRDS()} are now deprecated in favour of the public
       functions \code{readRDS()} and \code{saveRDS()} introduced in \R
       2.13.0.
+      
+      \item Switching off lazy-loading of code \emph{via} the
+      \samp{LazyLoad} field of the \file{DESCRIPTION} file is now
+      deprecated.  In future all packages will be lazy-loaded.
     }
   }
   

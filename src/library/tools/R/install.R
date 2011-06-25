@@ -64,8 +64,7 @@
         ## Some people have *assumed* that R_HOME uses /
         Sys.setenv(R_HOME = rhome)
         if (nzchar(rarch)) {
-            Sys.setenv(R_ARCH = rarch)
-            Sys.setenv(R_ARCH_BIN = rarch)
+            Sys.setenv(R_ARCH = rarch, R_ARCH_BIN = rarch)
         }
     }
 
@@ -187,7 +186,7 @@
         full
     }
 
-
+    ## used for LazyData, LazyLoad, KeepSource
     parse_description_field <- function(desc, field, default=TRUE)
     {
         tmp <- desc[field]
@@ -399,7 +398,7 @@
         {
             ## install.lib.R allows customization of the libs installation process
             if (file.exists("install.libs.R")) {
-                message('installing via install.libs.R to ', instdir)
+                message("installing via 'install.libs.R' to ", instdir)
                 ## the following variables are defined to be available,
                 ## and to prevent abuse we don't expose anything else
                 local.env <- local({ SHLIB_EXT <- SHLIB_EXT
@@ -414,7 +413,7 @@
                 return(TRUE)
             }
             ## otherwise proceed with the default which is to just copy *${SHLIB_EXT}
-            files <- Sys.glob(paste0("*", SHLIB_EXT)) 
+            files <- Sys.glob(paste0("*", SHLIB_EXT))
             if (length(files)) {
                 libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
                 dest <- file.path(instdir, libarch)
@@ -667,8 +666,7 @@
                             file.copy(files, ss, recursive = TRUE)
                             setwd(ss)
                             ra <- paste0("/", arch)
-                            Sys.setenv(R_ARCH = ra)
-                            Sys.setenv(R_ARCH_BIN = ra)
+                            Sys.setenv(R_ARCH = ra, R_ARCH_BIN = ra)
                             has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
                             setwd(owd)
                             ## allow archs other than the current one to fail.
@@ -772,7 +770,7 @@
 	    ## This cannot be done in a C locale
 	    res <- try(.install_package_code_files(".", instdir))
 	    if (inherits(res, "try-error"))
-		pkgerrmsg("unable to collate files", pkg_name)
+		pkgerrmsg("unable to collate and parse R files", pkg_name)
 
 	    if (file.exists(f <- file.path("R", "sysdata.rda"))) {
                 comp <- TRUE
@@ -949,6 +947,7 @@
 
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = lazy)
+        if(!value) warning("LazyLoad = FALSE is deprecated", call. = FALSE)
 	if (install_R && dir.exists("R") && value) {
 	    starsmsg(stars, "preparing package for lazy loading")
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
