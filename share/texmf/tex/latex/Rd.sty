@@ -187,6 +187,8 @@
 %% as from R 2.12.0 set \file in monospaced font, not sans-serif
 \newcommand{\file}[1]{`\texttt{#1}'}
 
+\newcommand{\Figure}[2]{\includegraphics[#2]{#1}}
+
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\newcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1@\texttt{#1}}}}
 {\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}

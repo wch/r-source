@@ -667,6 +667,18 @@ Rd2txt <-
                    putf(paste(eqn, collapse="\n"))
     		   blankLine()
                },
+               "\\figure" = {
+                   blankLine()
+                   save <- startCapture()
+                   writeContent(block[[length(block)]], tag)
+                   alt <- endCapture(save)
+                   if (length(alt)) {
+                   	alt <- frmt(alt, justify="centre",
+                               width=WIDTH-indent)
+                   	putf(paste(alt, collapse="\n"))
+                   	blankLine()
+                   }
+               },
                "\\tabular" = writeTabular(block),
                "\\subsection" = writeSection(block, tag),
                "\\if"=,

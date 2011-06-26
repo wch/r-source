@@ -994,7 +994,15 @@
 				types = build_help_types,
 				outenc = outenc)
 	    }
-	}
+	    if (file_test("-d", figdir <- file.path(pkg_dir, "man", "figures"))) {
+		starsmsg(paste0(stars, "*"), "copying figures")
+		dir.create(destdir <- file.path(instdir, "help", "figures"))
+		file.copy(Sys.glob(c(file.path(figdir, "*.png"),
+		                     file.path(figdir, "*.jpg"),
+				     file.path(figdir, "*.svg"),
+				     file.path(figdir, "*.pdf"))), destdir)
+	    }
+        }
 
 	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {

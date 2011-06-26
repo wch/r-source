@@ -1,10 +1,11 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
+\newcommand{\Rlogo}{\if{html}{\figure{../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
-\title{R News}
+\title{ R News}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.14.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.14.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The \code{yLineBias} of the \code{X11()} and
@@ -208,6 +209,15 @@
       \item All packages are lazy-loaded irrespective of the
       \samp{LazyLoad} field in the \file{DESCRIPTION} file.
       (Experimental: documentation is not yet updated.)
+      
+      \item Added new \samp{\figure} tag to Rd markup, so
+      that figures can be included in help pages when displayed
+      in HTML or LaTeX.
+      
+      \item The built-in httpd server now allows access to files
+      in the session temporary directory \code{tempdir()},
+      addressed as the \samp{/session} directory on the httpd
+      server.
     }
   }
 
@@ -430,7 +440,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.13.0 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.13.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
@@ -646,7 +656,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.13.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.13.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{replicate()} (by default) and \code{vapply()} (always)
@@ -1464,7 +1474,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.2 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.12.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{max()} and \code{min()} work harder to ensure that
@@ -1508,7 +1518,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.2}{
+\section{\Rlogo CHANGES IN R VERSION 2.12.2}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Complex arithmetic (notably \code{z^n} for complex \code{z}
@@ -1726,7 +1736,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.1}{
+\section{\Rlogo CHANGES IN R VERSION 2.12.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The DVI/PDF reference manual now includes the help pages for
@@ -1907,7 +1917,7 @@
   }
 }
 
-\section{CHANGES IN R VERSION 2.12.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item Reading a package's \file{CITATION} file now defaults to
@@ -2624,7 +2634,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.11.1 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.11.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{install.packages()} has a new optional argument
@@ -2737,7 +2747,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.11.1}{
+\section{\Rlogo CHANGES IN R VERSION 2.11.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \command{R CMD INSTALL} checks if dependent packages are
@@ -2867,7 +2877,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.11.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.11.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Packages must have been installed under \R >= 2.10.0, as the
@@ -3474,7 +3484,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.10.1 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.10.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The handling of line textures in the \code{postscript()} and
@@ -3619,7 +3629,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.10.1}{
+\section{\Rlogo CHANGES IN R VERSION 2.10.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The PCRE library has been updated to version 8.00.
@@ -3822,7 +3832,7 @@
 }
 
 
-\section{CHANGES IN R VERSION 2.10.0}{
+\section{\Rlogo CHANGES IN R VERSION 2.10.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item Package help is now converted from \code{Rd} by the \R-based

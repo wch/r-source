@@ -3702,7 +3702,8 @@ for exchanging information between developers and/or interested useRs.
 * Marking text::                
 * Lists and tables::            
 * Cross-references::            
-* Mathematics::                 
+* Mathematics::
+* Figures::
 * Insertions::                  
 * Indices::                     
 * Platform-specific sections::  
@@ -4610,7 +4611,7 @@ the search path.  Because they have been frequently misused, the HTML
 help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
 if it does not find file @file{@var{foo}.html}.
 
-@node Mathematics, Insertions, Cross-references, Writing R documentation files
+@node Mathematics, Figures, Cross-references, Writing R documentation files
 @section Mathematics
 @cindex Mathematics in documentation
 @findex \eqn
@@ -4674,7 +4675,51 @@ and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
 Note that only basic @LaTeX{} can be used, there being no provision to
 specify @LaTeX{} style files such as the AMS extensions.
 
-@node Insertions, Indices, Mathematics, Writing R documentation files
+@node Figures, Insertions, Mathematics, Writing R documentation files
+@section Figures
+@cindex Figures in documentation
+@findex \figure
+
+To include figures in help pages, use the 
+@code{\figure} markup.  There are three forms.
+
+The two commonly used simple forms are @code{\figure@{@var{filename}@}} and
+@code{\figure@{@var{filename}@}@{@var{alternate text}@}}.  This
+will include a copy of the figure in either HTML or @LaTeX{} output.  In
+text output, the alternate text will be displayed instead.  (When the
+second argument is omitted, the filename will be used.)
+Both the filename and the alternate text will be parsed verbatim,
+and should not include special characters that are significant
+in HTML or @LaTeX{}.
+
+The expert form is 
+@code{\figure@{@var{filename}@}@{options: @var{string}@}}.  (The
+word @samp{options:} must be typed exactly as shown and followed
+by at least one space.)  In this form, the @var{string} is
+copied into the HTML @code{img} tag as attributes following
+the @code{src} attribute, or into the second argument of
+the @code{\Figure} macro in LaTeX, which by default is used
+as options to an @code{\includegraphics} call.  As it is unlikely
+that any single string would suffice for both display modes,
+the expert form would normally be wrapped in conditionals.  
+It is up to the author to make sure that legal HTML/LaTeX is
+used.  For example, to include a logo in both HTML (using the simple
+form) and LaTeX (using the expert form), the following could be used:
+
+@example
+\if@{html@}@{\figure@{logo.jpg@}@{Our logo@}@}
+\if@{latex@}@{\figure@{logo.jpg@}@{options: width=0.5in@}@}
+@end example
+
+The files containing the figures should be stored in the directory
+@file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
+@file{.png} and @file{.svg} from that directory will be copied to the
+@file{html/figures} directory at install time. (Figures 
+in PDF format will not display in most HTML browsers, but
+might be the best choice in reference manuals.)  Specify the filename
+relative to @file{man/figures} in the @code{\figure} directive.
+
+@node Insertions, Indices, Figures, Writing R documentation files
 @section Insertions
 
 @findex \R

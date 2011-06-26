@@ -118,6 +118,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     inEqn <- FALSE
     inPre <- FALSE
     sectionLevel <- 0
+    hasFigures <- FALSE
 
     startByte <- function(x) {
     	srcref <- attr(x, "srcref")
@@ -468,6 +469,19 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    inEqn <<- FALSE
                    of0('}{}')
                },
+               "\\figure" = {
+               	   of0('\\Figure{')
+               	   writeContent(block[[1L]], tag)
+               	   of0('}{')
+               	   if (length(block) > 1) {
+		       includeoptions <- .Rd_get_latex(block[[2]])
+		       if (length(includeoptions) 
+			   && grepl("^options: ", includeoptions))
+			   of0(sub("^options: ", "", includeoptions))
+                   }
+               	   of0('}')
+               	   hasFigures <<- TRUE
+               },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
@@ -680,5 +694,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     if (encode_warn)
 	warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
 	       outputEncoding)
-    invisible(structure(out, latexEncoding = latexEncoding))
+    invisible(structure(out, latexEncoding = latexEncoding, 
+                             hasFigures = hasFigures))
 }

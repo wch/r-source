@@ -347,6 +347,10 @@ function(f, pdf_file) {
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[ae,hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
+        "\\usepackage{graphicx}\n",
+        "\\setkeys{Gin}{width=0.7\\textwidth}\n",
+        "\\graphicspath{{", normalizePath(file.path(R.home("doc"), "html"), "/"),
+                            "/}}\n",
         "\\hypersetup{pdfpagemode=None,pdfstartview=FitH}\n",
         "\\begin{document}\n",
         "\\chapter*{}\\sloppy\n",
@@ -564,7 +568,7 @@ function(file)
 function(x)
 {
     .get_Rd_section_names <- function(x)
-        sapply(x, function(e) .Rd_deparse(e[[1L]]))
+        sapply(x, function(e) .Rd_get_text(e[[1L]]))
 
     do_chunk <- function(x) {
         ## <FIXME>

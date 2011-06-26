@@ -96,6 +96,7 @@ httpd <- function(path, query, ...)
                "css" = "text/css",
                "gif" = "image/gif", # in R2HTML
                "jpg" = "image/jpeg",
+               "png" = "image/png",
                "html" = "text/html",
                "pdf" = "application/pdf",
                "eps" =,
@@ -128,7 +129,7 @@ httpd <- function(path, query, ...)
     else if(path %in% c("/ONEWS", "/OONEWS")) # not installed
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain"))
-    else if(!grepl("^/(doc|library)/", path))
+    else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
 
@@ -139,6 +140,8 @@ httpd <- function(path, query, ...)
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
+    figureRegexp <- "^/library/([^/]*)/figures/([^/]*)$"
+    sessionRegexp <- "^/session/"
 
     file <- NULL
     if (grepl(topicRegexp, path)) {
@@ -305,6 +308,15 @@ httpd <- function(path, query, ...)
     	else
     	    return( list(file = system.file("NEWS", package = pkg),
     	                 "content-type" = "text/plain") )
+    } else if (grepl(figureRegexp, path)) {
+        pkg <- sub(figureRegexp, "\\1", path)
+        fig <- sub(figureRegexp, "\\2", path)
+        file <- system.file("help", "figures", fig, package=pkg)
+        return( list(file=file, "content-type" = mime_type(path)) )
+    } else if (grepl(sessionRegexp, path)) {
+        tail <- sub(sessionRegexp, "", path)
+    	file <- file.path(tempdir(), tail)
+    	return( list(file=file, "content-type" = mime_type(path)) )
     } else if (grepl(cssRegexp, path)) {
     	pkg <- sub(cssRegexp, "\\1", path)
         return( list(file = system.file("html", "R.css", package = pkg),
