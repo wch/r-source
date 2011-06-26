@@ -628,7 +628,7 @@ void attribute_hidden InitBaseEnv()
 
 void attribute_hidden InitGlobalEnv()
 {
-    R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_BaseEnv);
+    R_GlobalEnv = R_NewHashedEnv(R_BaseEnv, ScalarInteger(0));
 #ifdef NEW_CODE /* Not used */
     HASHTAB(R_GlobalEnv) = R_NewHashTable(100);
 #endif
