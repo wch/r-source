@@ -16,6 +16,12 @@
 
 #### R based engine for R CMD build
 
+## R developers can use this to debug the function by running it
+## directly as tools:::.build_packages(args), where the args should
+## be what commandArgs(TRUE) would return, that is a character vector
+## of (space-delimited) terms that would be passed to R CMD build.
+
+
 ### emulation of Perl Logfile.pm
 
 newLog <- function(filename = "")

@@ -19,6 +19,13 @@
 
 ##' @param args
 
+## R developers can use this to debug the function by running it
+## directly as tools:::.install_packages(args), where the args should
+## be what commandArgs(TRUE) would return, that is a character vector
+## of (space-delimited) terms that would be passed to R CMD INSTALL.  E.g.
+##
+## tools:::.install_packages(c("--preclean", "--no-multiarch", "tree"))
+
 ##' @return ...
 .install_packages <- function(args = NULL)
 {
@@ -361,7 +368,7 @@
     ## to be run from package source directory
     run_clean <- function()
     {
-        if (dir.exists("src") && length(dir("src"))) {
+        if (dir.exists("src") && length(dir("src", all.files = TRUE) > 2L)) {
             if (WINDOWS) archs <- c("i386", "x64")
             else {
                 wd2 <- setwd(file.path(R.home("bin"), "exec"))
@@ -607,7 +614,8 @@
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
         }
 
-        if (install_libs && dir.exists("src") && length(dir("src"))) {
+        if (install_libs && dir.exists("src") &&
+            length(dir("src", all.files = TRUE) > 2L)) {
             starsmsg(stars, "libs")
             if (!file.exists(file.path(R.home("include"), "R.h")))
                 ## maybe even an error?  But installing Fortran-based packages should work
@@ -775,6 +783,7 @@
             }
         }                               # end of src dir
 
+        ## R files must start with a letter
 	if (install_R && dir.exists("R") && length(dir("R"))) {
 	    starsmsg(stars, "R")
 	    dir.create(file.path(instdir, "R"), recursive = TRUE,
@@ -830,9 +839,10 @@
 	    }
 	}                           # end of R
 
+        ## data files must not be hidden: data() may ignore them
 	if (install_data && dir.exists("data") && length(dir("data"))) {
 	    starsmsg(stars, "data")
-	    files <- Sys.glob(file.path("data", "*"))
+	    files <- Sys.glob(file.path("data", "*")) # ignores dotfiles
 	    if (length(files)) {
 		is <- file.path(instdir, "data")
 		dir.create(is, recursive = TRUE, showWarnings = FALSE)
@@ -876,6 +886,7 @@
 	    } else warning("empty 'data' directory", call. = FALSE)
         }
 
+        ## demos must start with a letter
 	if (install_demo && dir.exists("demo") && length(dir("demo"))) {
 	    starsmsg(stars, "demo")
 	    dir.create(file.path(instdir, "demo"), recursive = TRUE,
@@ -887,6 +898,7 @@
 	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
 	}
 
+        ## dotnames are ignored.
 	if (install_exec && dir.exists("exec") && length(dir("exec"))) {
 	    starsmsg(stars, "exec")
 	    dir.create(file.path(instdir, "exec"), recursive = TRUE,
@@ -940,14 +952,16 @@
             }
             if (compact_docs) {
                 pdfs <- dir(file.path(instdir, "doc"), pattern="\\.pdf",
-                            recursive = TRUE, full.names = TRUE)
+                            recursive = TRUE, full.names = TRUE,
+                            all.files = TRUE)
                 ## print selectively
                 res <- compactPDF(pdfs)
                 print(res[res$old > 1e5, ])
             }
 	}
 
-	if (install_tests && dir.exists("tests") && length(dir("tests"))) {
+	if (install_tests && dir.exists("tests") &&
+            length(dir("tests", all.files = TRUE) > 2L)) {
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
