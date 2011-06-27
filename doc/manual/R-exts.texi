@@ -906,8 +906,9 @@ Subdirectory @file{exec} could contain additional executables the
 package needs, typically scripts for interpreters such as the shell,
 Perl, or Tcl.  This mechanism is currently used only by a very few
 packages, and still experimental.  NB: only files (and not directories)
-under @file{exec} are installed, and they are all marked as executable
-(mode @code{755}, moderated by @samp{umask}) on POSIX platforms.
+under @file{exec} are installed (and those starting with a dot are
+ignored), and they are all marked as executable (mode @code{755},
+moderated by @samp{umask}) on POSIX platforms.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -929,14 +930,15 @@ used for other data files needed by the package, and the convention has
 grown up to use directory @file{inst/extdata} for such files.
 
 Data files can have one of three types as indicated by their extension:
-plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
-or @file{.csv}, see @code{?data} for the file formats, and note that
-@file{.csv} is @strong{not} the
-standard@footnote{e.g@: @uref{http://tools.ietf.org/@/html/@/rfc4180}.} CSV
-format), or @code{save()} images (@file{.RData} or @file{.rda}). Note
-that @R{} code should be ``self-sufficient'' and not make use of extra
-functionality provided by the package, so that the data file can also be
-used without having to load the package.
+plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
+@file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
+note that @file{.csv} is @strong{not} the standard@footnote{e.g@:
+@uref{http://tools.ietf.org/@/html/@/rfc4180}.} CSV format), or
+@code{save()} images (@file{.RData} or @file{.rda}).  The files should
+not be hidden (have names starting with a dot).  Note that @R{} code
+should be ``self-sufficient'' and not make use of extra functionality
+provided by the package, so that the data file can also be used without
+having to load the package.
 
 Images (extensions @file{.RData} or @file{.rda}) can contain references
 to the name spaces of packages that were used to create them.
