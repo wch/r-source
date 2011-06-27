@@ -630,7 +630,8 @@
                     if (res == 0) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else { ## no src/Makefile.win
-                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$")
+                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
+                                all.files = TRUE)
                     ## NB, not R.home("bin")
                     f  <- dir(file.path(R.home(), "bin"))
                     archs <- f[f %in% c("i386", "x64")]
@@ -702,7 +703,8 @@
                     setwd(owd)
                 } else { ## no src/Makefile
                     owd <- setwd("src")
-                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$")
+                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
+                                all.files = TRUE)
                     ## This allows Makevars to set OBJECTS or its own targets.
                     allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
                     wd2 <- setwd(file.path(R.home("bin"), "exec"))
@@ -1924,6 +1926,7 @@
     }
 
     ## Now check for files to remove.
+    ## These start with a letter.
     bfs <- sub("\\.[Rr]d$", "", basename(files)) # those to keep
     if ("html" %in% types) {
         type <- "html"
