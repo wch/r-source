@@ -652,6 +652,9 @@
       
       \item LaTeX rendering of markup in titles of help pages has been
       improved; in particular, \code{\\eqn{}} may be used there.
+
+      \item \code{isClass()} used its own namespace as the default of
+      the \code{where} argument inadvertently.
     }
   }
 }
