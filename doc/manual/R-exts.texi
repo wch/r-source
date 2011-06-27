@@ -767,6 +767,8 @@ platforms} with associated extensions @file{.c}, @file{.cc} or
 headers, also for C++@footnote{Using @file{.hpp}, although somewhat
 popular, is not guaranteed to be portable.} or Fortran 9x include files.
 (Use of extension @file{.C} for C++ is no longer supported.)
+Files in the @file{src} directory should not be hidden (start with a
+dot), and hidden files will under some versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package, and we do not support using both C++ and
