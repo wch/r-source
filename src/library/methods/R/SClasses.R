@@ -362,14 +362,9 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
 isClass <-
   ## Is this a formally defined class?
   function(Class, formal=TRUE, where = topenv(parent.frame()))
-{
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
-    if(missing(where))
-        !is.null(getClassDef(Class))
-    else
-        !is.null(getClassDef(Class, where))
-}
+    !is.null(getClassDef(Class, where))
 
 ### TODO   s/Class/._class/  -- in order to allow 'Class' as regular slot name
 new <-
