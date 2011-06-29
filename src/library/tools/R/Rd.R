@@ -686,15 +686,22 @@ function(x)
 
 .Rd_get_text <-
 function(x) {
+    # Handle easy cases first
+    if (is.character(x)) return(c(x))
+    
     # We'd like to use capture.output here, but don't want to depend
     # on utils, so we duplicate some of it
     rval <- NULL
     file <- textConnection("rval", "w", local = TRUE)
 
     save <- options(useFancyQuotes = FALSE)
+    Rdsave <- Rd2txt_options(underline_titles = FALSE)
     sink(file)
     tryCatch(Rd2txt(x, fragment=TRUE),
-             finally = {sink(); options(save); close(file)})
+             finally = {sink() 
+                        options(save)
+                        Rd2txt_options(Rdsave)
+                        close(file)})
 
     if (is.null(rval)) rval <- character()
     else enc2utf8(rval)
