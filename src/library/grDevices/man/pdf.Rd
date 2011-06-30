@@ -63,8 +63,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     speaking, in bp, that is 1/72 of an inch, but approximately in
     points.  Defaults to \code{12}.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page? -- is only relevant for \code{paper != "special"}.  Defaults
-    to true.}
+    page? -- is only relevant for \code{paper != "special"}.  
+    Defaults to \code{TRUE}.}
   \item{colormodel}{a character string describing the color model:
     currently allowed values are \code{"rgb"}, \code{"gray"} and
     \code{"cmyk"}.  Defaults to \code{"rgb"}.}
@@ -79,7 +79,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
-    \code{\link{polygon}} for details.  Default \code{FALSE}.}
+    \code{\link{polygon}} for details.  Defaults to \code{FALSE}.}
   \item{maxRasters}{integer.  The maximum number of raster images that
     can be stored in this PDF document.  Defaults to \code{64L}.}
   \item{compress}{logical.  Should PDF streams be generated with Flate
