@@ -4,7 +4,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{CHANGES IN R VERSION 2.13.0 patched}{
+\section{CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
