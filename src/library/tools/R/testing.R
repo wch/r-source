@@ -447,7 +447,8 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "d-p-q-r-tests")
     tests2 <- c("complex", "print-tests", "lapack", "datasets")
-    tests3 <- c("reg-tests-1", "reg-tests-2", "reg-IO", "reg-IO2", "reg-S4")
+    tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-2",
+                "reg-IO", "reg-IO2", "reg-S4")
 
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
