@@ -67,7 +67,7 @@ The current version of this document is @value{VERSION}.
 * Obtaining R::                 
 * Installing R under Unix-alikes::  
 * Installing R under Windows::  
-* Installing R under Mac OS X::  
+* Installing R under (Mac) OS X::  
 * Running R::                   
 * Add-on packages::             
 * Internationalization::        
@@ -109,7 +109,7 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU} @command{tar}
 version 1.15 or later, or that from the @samp{libarchive} (as used on
-Mac OS 10.6) or `Heirloom Toolchest' distributions.} @command{tar}
+OS 10.6) or `Heirloom Toolchest' distributions.} @command{tar}
 installed.  On other systems you need to have the @command{gzip} program
 installed, when you can use
 
@@ -247,11 +247,11 @@ perhaps (it is tested less frequently on these platforms)
 @samp{i386-@/*-@/netbsd} and @samp{i386-@/*-@/openbsd}.
 
 @cindex Linux
-@cindex Mac OS X
+@cindex OS X
 In addition, binary distributions are available for some common Linux
-distributions and for Mac OS X.  See the @acronym{FAQ} for current
-details.  These are installed in platform-specific ways, so for the rest
-of this chapter we consider only building from the sources.
+distributions and for OS X (formerly Mac OS).  See the @acronym{FAQ} for
+current details.  These are installed in platform-specific ways, so for
+the rest of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -702,7 +702,7 @@ share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
 @acronym{CPU}s (e.g.@: @cputype{ppc}, @cputype{i386} and
-@cputype{x86_64}) under Mac OS >= 10.4.
+@cputype{x86_64}) under (Mac) OS X >= 10.4.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -922,7 +922,7 @@ R_COMPILER_SUPPRESS_ALL=1
 @noindent
 before re-running @command{make}.
 
-@node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
+@node Installing R under Windows, Installing R under (Mac) OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
@@ -1450,13 +1450,13 @@ their results in the @file{tests} folder of the @R{} home directory (as
 given by @code{R.home()}).
 
 
-@node Installing R under Mac OS X, Running R, Installing R under Windows, Top
-@chapter Installing R under Mac OS X
-@cindex Mac OS X
+@node Installing R under (Mac) OS X, Running R, Installing R under Windows, Top
+@chapter Installing R under (Mac) OS X
+@cindex OS X
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
-binaries for Mac OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on Mac OS X 10.5/6.
+binaries for OS X for a base distribution and a large number of
+add-on packages from @acronym{CRAN} to run on OS X 10.5/6/7.
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
@@ -1466,11 +1466,11 @@ See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
 
 @menu
-* Building from source on Mac OS X::  
+* Building from source on (Mac) OS X::  
 @end menu
 
-@node Building from source on Mac OS X,  , Installing R under Mac OS X, Installing R under Mac OS X
-@section Building from source on Mac OS X
+@node Building from source on (Mac) OS X,  , Installing R under (Mac) OS X, Installing R under (Mac) OS X
+@section Building from source on (Mac) OS X
 
 If you want to build this port from the sources, you should read the R for
 Mac OS X FAQ for full details.  You will need to collect and install
@@ -1487,11 +1487,11 @@ make
 
 @noindent
 and then sit back and wait.  The first two options are the default and
-use the BLAS and LAPACK built into Mac OS X.  This has pros and cons: it
+use the BLAS and LAPACK built into OS X.  This has pros and cons: it
 used to be faster (but has not been on some recent multicore hardware)
 but less accurate.
 
-The second line of options are also default on Mac OS X, but needed only
+The second line of options are also default on OS X, but needed only
 if you want to build @R{} for use with @code{R.app} Console, and imply
 @option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
 These options configure @R{} to be built and installed as a framework
@@ -1514,10 +1514,10 @@ specify @option{--with-included-gettext} to avoid linking against a
 @file{/usr/local/lib}.
 
 Note that building the @file{R.app} GUI console is a separate project:
-see the Mac OS X FAQ for details.
+see the OS X FAQ for details.
 
 
-@node Running R, Add-on packages, Installing R under Mac OS X, Top
+@node Running R, Add-on packages, Installing R under (Mac) OS X, Top
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
@@ -1661,7 +1661,7 @@ library paths, separated by colons (semicolons on Windows).
 
 @menu
 * Windows packages::            
-* Mac OS X packages::           
+* OS X packages::               
 * Customizing package compilation::  
 * Multiple sub-architectures::  
 @end menu
@@ -1747,11 +1747,11 @@ amongst those repositories that the @R{} installation is aware of.
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
 
-@node Windows packages, Mac OS X packages, Installing packages, Installing packages
+@node Windows packages, OS X packages, Installing packages, Installing packages
 @subsection Windows
 
 What @code{install.packages} does by default is different on Unix-alikes
-(except Mac OS X) and Windows.  On Unix-alikes it consults the list of
+(except OS X) and Windows.  On Unix-alikes it consults the list of
 available @emph{source} packages on @acronym{CRAN} (or other
 repository/ies), downloads the latest version of the package sources,
 and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
@@ -1821,20 +1821,20 @@ help, you can zip up an installation on another OS and install from the
 that zip file on Windows.  However, such a package can be installed from
 the sources on Windows without any additional tools.
 
-@node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
-@subsection Mac OS X
+@node OS X packages, Customizing package compilation, Windows packages, Installing packages
+@subsection OS X
 
-On Mac OS X @code{install.packages} works as it does on other Unix-alike
+On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository, and type @code{mac.binary.leopard} is the
-default for @acronym{CRAN} builds of R.  These Macintosh binary package
+default for @acronym{CRAN} builds of R.  These OS X binary package
 files have the extension @samp{tgz}.  The R.app GUI provides for
 installation of either binary or source packages, from @acronym{CRAN} or
 local files.
 
-@node Customizing package compilation, Multiple sub-architectures, Mac OS X packages, Installing packages
+@node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
 
 The R system and package-specific compilation flags can be overridden or
@@ -1874,7 +1874,7 @@ appropriate).  This is read immediately after @file{Makeconf}.
 
 When installing packages from their sources, there are some extra
 considerations on installations which use sub-architectures.  These are
-commonly used on Mac OS X and Windows, but can in principle be used on
+commonly used on (Mac) OS X and Windows, but can in principle be used on
 other platforms.
 
 When a source package is installed by a build of @R{} which supports
@@ -2047,7 +2047,7 @@ where @option{--extra-arch} selects only those checks which depend on
 the installed code and not those which analyse the sources.  (If
 multiple sub-architectures fail only because they need different
 settings, e.g.@: environment variables, @option{--no-multiarch} may need
-to be added to the @code{INSTALL} lines.)  On Mac OS X and other
+to be added to the @code{INSTALL} lines.)  On (Mac) OS X and other
 Unix-alikes the architecture to run is selected by @option{--arch}: this
 can also be used on Windows with @file{@var{R_HOME}/bin/R.exe}, but it
 is more usual to select the path to the @command{Rcmd.exe} of the
@@ -2161,7 +2161,7 @@ Chinese.
 @menu
 * Locales under Linux::         
 * Locales under Windows::       
-* Locales under Mac OS X::      
+* Locales under OS X::          
 @end menu
 
 @node Locales under Linux, Locales under Windows, Locales, Locales
@@ -2175,7 +2175,7 @@ above.  (See @command{man locale} and @command{locale -a} for more
 details.)  Similar schemes are used by most Unix-alikes: some (including
 some distributions of Linux) use @samp{.utf8} rather than @samp{.UTF-8}.
 
-@node Locales under Windows, Locales under Mac OS X, Locales under Linux, Locales
+@node Locales under Windows, Locales under OS X, Locales under Linux, Locales
 @subsection Locales under Windows
 
 Windows also uses locales, but specified in a rather less concise way.
@@ -2189,11 +2189,11 @@ Some care is needed with Windows' locale names.  For example,
 @code{chinese} is Traditional Chinese and not Simplified Chinese as used
 in most of the Chinese-speaking world.
 
-@node Locales under Mac OS X,  , Locales under Windows, Locales
-@subsection Locales under Mac OS X
+@node Locales under OS X,  , Locales under Windows, Locales
+@subsection Locales under OS X
 
-Mac OS X supports locales in its own particular way, but the R GUI tries
-to make this easier for users. See
+OS X supports locales in its own particular way, but the R GUI tries to
+make this easier for users. See
 @uref{http://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
@@ -2201,7 +2201,7 @@ terminal may need to set the locale to something like @samp{en_GB.UTF-8}
 if it defaults to @samp{C} (as it often does when logging it remotely
 and in batch jobs).
 
-Internally Mac OS X uses a form similar to Linux.  It is based on ICU
+Internally OS X uses a form similar to Linux.  It is based on ICU
 locales IDs (@uref{http://userguide.icu-project.org/@/locale}) and not
 XPG ones, but utilities such as @code{Sys.setlocale()} do now normally
 accept XPG forms.  So there are locales like @code{de_AT.ISO8859-15}
@@ -2307,7 +2307,7 @@ current @cputype{ix86} CPUs support this set of instructions).  Most
 OSes running on such @acronym{CPU}s offer the choice of building a
 32-bit or a 64-bit version of R (and details are given below under
 specific OSes).  For most a 32-bit version is the default, but for some
-(e.g., @cputype{x86_64} Linux and Mac OS >= 10.6) 64-bit is.
+(e.g., @cputype{x86_64} Linux and (Mac) OS X >= 10.6) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
 @acronym{IEC}@tie{}60559@footnote{also known as
@@ -2355,14 +2355,14 @@ However, `other things' may not be equal.  In the specific case of
 (such as SSE2 instructions) which are guaranteed to be present but are
 optional on the 32-bit CPU, and also has more general-purpose registers.
 This means that on chips like a desktop Intel Core 2 Duo the vanilla
-64-bit version of @R{} is around 10% faster on both Linux and Mac OS X.
+64-bit version of @R{} is around 10% faster on both Linux and OS X.
 (Laptop CPUs are relatively slower in 64-bit mode.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
 datasets (and perhaps large files) a 64-bit build.  You can often build
 both and install them in the same place: @xref{Sub-architectures}.
-(This is done in the Mac and Windows binary distributions.)
+(This is done in the OS X and Windows binary distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
@@ -2661,8 +2661,8 @@ types: this is checked at configuration.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and
-Mac OS 10.6) or @command{tar} from the Heirloom Toolchest
+@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and OS
+10.6) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
@@ -2718,11 +2718,11 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()} and
-@code{tiff()} graphics devices uses the @code{cairo} and (optionally)
-@code{Pango} libraries.  Cairo version 1.2.0 or later is required.
-Pango needs to be at least version 1.10, and 1.12 is the earliest
-version we have tested.  (For Fedora users we believe the
+The `modern' version of the @code{X11()}, @code{jpeg()}, @code{png()}
+and @code{tiff()} graphics devices uses the @code{cairo} and
+(optionally) @code{Pango} libraries.  Cairo version 1.2.0 or later is
+required.  Pango needs to be at least version 1.10, and 1.12 is the
+earliest version we have tested.  (For Fedora users we believe the
 @code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
 @command{pkg-config}, and uses that to check first that the
 @samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
@@ -2730,8 +2730,8 @@ additional flags are needed for the @samp{cairo-xlib} package, then if
 suitable code can be compiled.  These tests will fail if
 @command{pkg-config} is not installed, and are likely to fail if
 @code{cairo} was built statically (unusual).  Most systems with
-@code{Gtk+} 2.8 or later installed will have suitable libraries.  Mac OS
-X comes with none of these libraries, but @code{cairo} support (without
+@code{Gtk+} 2.8 or later installed will have suitable libraries.  OS X
+comes with none of these libraries, but @code{cairo} support (without
 @code{Pango}) has been added to the binary distribution:
 @code{pkg-config} is still needed and can be installed from the sources.
 
@@ -2781,7 +2781,7 @@ Debian meta-package @samp{xorg-dev}), but some distributions have split
 this into smaller parts, so for example recent versions of Fedora
 require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 
-Some systems (notably Mac OS X and at least some FreeBSD systems) have
+Some systems (notably OS X and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
 to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{http://site.icu-project.org/}), and this
@@ -2789,8 +2789,8 @@ provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
 or @code{icu4c}.  It will be used by default where available (including
-on Mac OS X >= 10.4): should a very old or broken version of ICU be
-found this can be suppressed by @option{--without-ICU}.
+on OS X >= 10.4): should a very old or broken version of ICU be found
+this can be suppressed by @option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
@@ -2933,9 +2933,9 @@ must contain position-independent code), and that is not checked.
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{vecLib} on Mac OS X).  The correct incantation for these is
-usually found @emph{via} @option{--with-blas} with no value on the
-appropriate platforms.
+@code{vecLib} on OS X).  The correct incantation for these is usually
+found @emph{via} @option{--with-blas} with no value on the appropriate
+platforms.
 
 Some of the external @acronym{BLAS}es are multi-threaded.  One issue is
 that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
@@ -3193,7 +3193,7 @@ run-time library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
+as @code{sunperf} on Solaris, @code{vecLib} on OS X and ACML on
 @cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
 gains are thought to be small (and may be negative), and the default is
 not to search for a suitable LAPACK library, and this is definitely
@@ -3700,7 +3700,7 @@ recent reports.
 * X11 issues::                  
 * Linux::                       
 * FreeBSD::                     
-* Mac OS X::                    
+* (Mac) OS X::                  
 * Solaris::                     
 * AIX::                         
 * Cygwin::                      
@@ -3966,13 +3966,13 @@ Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
-@node FreeBSD, Mac OS X, Linux, Platform notes
+@node FreeBSD, (Mac) OS X, Linux, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 
 Rainer Hurling has reported success on @cputype{amd64} FreeBSD 9.0 (and
 on earlier versions in the past), and Brian Ripley tested
-@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of Mac OS X) is
+@cputype{amd64} FreeBSD 8.2.  Since Darwin (the base OS of (Mac) OS X) is
 based on FreeBSD we find testing on Darwin tends to pick up most
 potential problems on FreeBSD.  However, FreeBSD lacks adequate
 collation support for multi-byte locales (but a port of ICU is
@@ -4008,14 +4008,14 @@ Then @R{} itself can be built by something like
 There are also FreeBSD packages for a small eclectic collection of
 @acronym{CRAN} packages.
 
-@node Mac OS X, Solaris, FreeBSD, Platform notes
-@section Mac OS X
-@cindex Mac OS X
+@node (Mac) OS X, Solaris, FreeBSD, Platform notes
+@section (Mac) OS X
+@cindex OS X
 
-You can build @R{} as a Unix application on Mac OS X using the Apple
+You can build @R{} as a Unix application on OS X using the Apple
 Developer Tools (`Xcode') and @command{gfortran}.  You may also need to
 install an X sub-system or configure with @option{--without-x}.  The X
-window manager is part of the standard Mac OS X distribution since Mac
+window manager is part of the standard OS X distribution since
 OS X version 10.3 (Panther), but it is typically not pre-installed prior
 to 10.5 (Leopard).  You will also need @command{gfortran} and
 @code{libreadline} (or configure with @option{--without-readline}).
@@ -4050,11 +4050,11 @@ distribution).
 * Snow Leopard::                
 @end menu
 
-@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
+@node 64-bit builds, Snow Leopard, (Mac) OS X, (Mac) OS X
 @subsection 64-bit builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
-needed is to select suitable compiler options, e.g.@: for recent Intel
+needed is to select suitable compiler options, e.g.@: for most Intel
 Macs
 
 @example
@@ -4070,7 +4070,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit builds, Mac OS X
+@node Snow Leopard,  , 64-bit builds, (Mac) OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
@@ -4108,7 +4108,7 @@ LIBS=-L/usr/X11/lib
 @end example
 
 
-@node Solaris, AIX, Mac OS X, Platform notes
+@node Solaris, AIX, (Mac) OS X, Platform notes
 @section Solaris
 @cindex Solaris
 
