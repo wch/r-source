@@ -3730,7 +3730,7 @@ recent reports.
 * X11 issues::                  
 * Linux::                       
 * FreeBSD::                     
-* (Mac) OS X::                  
+* Mac OS X::                    
 * Solaris::                     
 * AIX::                         
 * Cygwin::                      
@@ -3996,7 +3996,7 @@ Others have found on at least some versions of @cputype{ix86} Linux that
 the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
-@node FreeBSD, (Mac) OS X, Linux, Platform notes
+@node FreeBSD, Mac OS X, Linux, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 
@@ -4038,7 +4038,7 @@ Then @R{} itself can be built by something like
 There are also FreeBSD packages for a small eclectic collection of
 @acronym{CRAN} packages.
 
-@node (Mac) OS X, Solaris, FreeBSD, Platform notes
+@node Mac OS X, Solaris, FreeBSD, Platform notes
 @section (Mac) OS X
 @cindex OS X
 
@@ -4080,7 +4080,7 @@ distribution).
 * Snow Leopard::                
 @end menu
 
-@node 64-bit builds, Snow Leopard, (Mac) OS X, (Mac) OS X
+@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
 @subsection 64-bit builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
@@ -4100,7 +4100,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit builds, (Mac) OS X
+@node Snow Leopard,  , 64-bit builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
@@ -4138,7 +4138,7 @@ LIBS=-L/usr/X11/lib
 @end example
 
 
-@node Solaris, AIX, (Mac) OS X, Platform notes
+@node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
 @cindex Solaris
 
