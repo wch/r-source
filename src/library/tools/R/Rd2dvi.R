@@ -101,14 +101,14 @@
             }
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
             ## people have file names with quotes in them.
-            res <- Rd2latex(f, out, encoding=encoding,
-                                              outputEncoding=outputEncoding)
+            res <- Rd2latex(f, out, encoding = encoding,
+                            outputEncoding = outputEncoding)
             latexEncodings <- c(latexEncodings,
                                 attr(res,"latexEncoding"))
             lines <- readLines(out)
             if (attr(res, "hasFigures")) {
                 graphicspath <- paste("\\graphicspath{{",
-                                      normalizePath(file.path(dirname(f), "figures"), "/"), 
+                                      normalizePath(file.path(dirname(f), "figures"), "/"),
                                       "/}}", sep="")
             	lines <- c(graphicspath, lines)
             	hasFigures <- TRUE
@@ -139,7 +139,7 @@
 
     latexEncodings <- character() # Record any encodings used in the output
     hasFigures <- FALSE           # and whether graphics is used
-    
+
     ## First check for a latex dir.
     ## Second guess is this is a >= 2.10.0 package with stored .rds files.
     ## If it does not exist, guess this is a source package.
@@ -284,7 +284,7 @@
     if (asChapter)
         cat("\\clearpage\n", file = outcon)
 
-    invisible(list(latexEncodings=latexEncodings, hasFigures=hasFigures))
+    invisible(list(latexEncodings = latexEncodings, hasFigures = hasFigures))
 }
 
 
@@ -415,8 +415,9 @@ function(pkgdir, outfile, title, batch = FALSE,
          enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
          internals = FALSE, index = TRUE)
 {
-    ## Write directly to the final location.  Encodings and figures may mean we need
-    ## to make edits, but for most files one pass should be enough.
+    ## Write directly to the final location.  Encodings and figures
+    ## may mean we need to make edits, but for most files one pass
+    ## should be enough.
     out <- file(outfile, "wt")
     if (!nzchar(enc)) enc <- "unknown"
 
@@ -501,8 +502,13 @@ function(pkgdir, outfile, title, batch = FALSE,
         res <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals,
                          silent = batch)
-        latexEncodings <- res$latexEncodings
-        hasFigures <- res$hasFigures
+        if(length(res)) {
+            latexEncodings <- res$latexEncodings
+            hasFigures <- res$hasFigures
+        } else {
+            latexEncodings <- character()
+            hasFigures <- FALSE
+        }
     }
 
     ## Rd2.tex part 3: footer

@@ -53,17 +53,17 @@ Rd2txt_options <- local({
 })
 
 transformMethod <- function(i, blocks, Rdfile) {
-    editblock <- function(block, newtext) 
+    editblock <- function(block, newtext)
     	list(structure(newtext, Rd_tag = attr(block, "Rd_tag"),
     	                   srcref = attr(block, "srcref")))
-    	                   
+
     # Most of the internal functions below are more like macros
     # than functions; they mess around with these variables:
-    
+
     chars <- NULL
     char <- NULL
     j <- NULL
-    
+
     findOpen <- function(i) {
     	j <- i
     	char <- NULL
@@ -71,10 +71,10 @@ transformMethod <- function(i, blocks, Rdfile) {
     	    j <- j + 1L
     	    tag <- attr(blocks[[j]], "Rd_tag")
     	    if (tag == "RCODE") {
-    	        
+
     	        # FIXME:  This search and the ones below will be fooled
     	        # by "#" comments
-    	        
+
     	    	chars <- strsplit(blocks[[j]], "")[[1]]
     		parens <- cumsum( (chars == "(") - (chars == ")") )
     		if (any(parens > 0)) {
@@ -89,7 +89,7 @@ transformMethod <- function(i, blocks, Rdfile) {
     	char <<- char
     	j <<- j
     }
-    
+
     findComma <- function(i) {
 	j <- i
 	level <- 1L
@@ -113,10 +113,10 @@ transformMethod <- function(i, blocks, Rdfile) {
 	    stopRd(block, Rdfile, sprintf("no comma in argument list following %s", blocktag))
         chars <<- chars
         char <<- char
-        j <<- j 
+        j <<- j
     }
 
-    
+
     findClose <- function(i) {
         j <- i
     	level <- 1L
@@ -138,18 +138,18 @@ transformMethod <- function(i, blocks, Rdfile) {
     	    stopRd(block, Rdfile, sprintf("no closing parenthesis following %s", blocktag))
 	chars <<- chars
         char <<- char
-        j <<- j  
+        j <<- j
     }
-    
-    rewriteBlocks <- function() 
+
+    rewriteBlocks <- function()
     	c(blocks[seq_len(j-1)],
-    	            editblock(blocks[[j]], 
+    	            editblock(blocks[[j]],
     	                      paste(chars[seq_len(char)], collapse="")),
     	            if (char < length(chars))
-    	                editblock(blocks[[j]], 
+    	                editblock(blocks[[j]],
     	                          paste(chars[-seq_len(char)], collapse="")),
 	            if (j < length(blocks)) blocks[-seq_len(j)])
-    
+
     deleteBlanks <- function() {
 	while (char < length(chars)) {
 	    if (chars[char + 1] == " ") {
@@ -157,36 +157,36 @@ transformMethod <- function(i, blocks, Rdfile) {
 	    	chars[char] <- ""
 	    } else
 	    	break
-	} 
+	}
 	char <<- char
 	chars <<- chars
     }
-    
+
     block <- blocks[[i]]
     blocktag <- attr(block, "Rd_tag")
     srcref <- attr(block, "srcref")
     class <- block[[2L]] # or signature
     generic <- as.character(block[[1L]])
     default <- as.character(class) == "default"
-    
+
     if(generic %in% c("[", "[[", "$")) {
 	## need to assemble the call by matching parens in RCODE
 	findOpen(i) # Sets chars, char and j
 	chars[char] <- ""
 	blocks <- c(blocks[seq_len(j-1)],
-	            editblock(blocks[[j]], 
+	            editblock(blocks[[j]],
 	                      paste(chars[seq_len(char)], collapse="")),
 	            if (char < length(chars))
-	                editblock(blocks[[j]], 
+	                editblock(blocks[[j]],
 	                          paste(chars[-seq_len(char)], collapse="")),
 	            if (j < length(blocks)) blocks[-seq_len(j)])
-	
+
 	findComma(j) # Sets chars, char and j
 	chars[char] <- generic
 	# Delete blanks after the comma
-	deleteBlanks() 
+	deleteBlanks()
 	blocks <- rewriteBlocks()
-	
+
 	findClose(j)
 	# Edit the closing paren
 	chars[char] <- switch(generic,
@@ -195,7 +195,7 @@ transformMethod <- function(i, blocks, Rdfile) {
 		"$" = "")
 	blocks[j] <- editblock(blocks[[j]],
 	                         paste(chars, collapse=""))
-	
+
 	methodtype <- if (grepl("<-", blocks[[j]])) "replacement " else ""
     } else if(grepl(sprintf("^%s$",
 			   paste(c("\\+", "\\-", "\\*",
@@ -209,14 +209,14 @@ transformMethod <- function(i, blocks, Rdfile) {
 	findOpen(i)
 	chars[char] <- ""
 	blocks <- rewriteBlocks()
-	
+
 	if (generic != "!") {
 	    findComma(j)
 	    chars[char] <- paste(" ", generic, " ", sep="")
 	    # Delete blanks after the comma
 	    deleteBlanks()
 	    blocks <- rewriteBlocks()
-	}    
+	}
 	findClose(j)
 	chars[char] <- ""
 	blocks[j] <- editblock(blocks[[j]],
@@ -228,22 +228,22 @@ transformMethod <- function(i, blocks, Rdfile) {
 	chars[char] <- paste(generic, "(", sep="")
 	blocks <- rewriteBlocks()
 	findClose(j)
-	methodtype <- if (grepl("<-", blocks[[j]])) "replacement " else ""        
+	methodtype <- if (grepl("<-", blocks[[j]])) "replacement " else ""
     }
-    
+
     if (blocktag == "\\S4method")
     	blocks <- c( blocks[seq_len(i-1)],
 		     list(structure(paste("## S4 ", methodtype, "method for signature '", sep=""),
 			   Rd_tag="RCODE", srcref=srcref)),
 		     class,
 		     list(structure("'\n", Rd_tag="RCODE", srcref=srcref)),
-		     blocks[-seq_len(i)] )    
-    else if (default) 
+		     blocks[-seq_len(i)] )
+    else if (default)
     	blocks <- c( blocks[seq_len(i-1)],
     		     list(structure(paste("## Default S3 ", methodtype, "method:\n", sep=""),
     		     	       Rd_tag="RCODE", srcref=srcref)),
     		     blocks[-seq_len(i)] )
-    else 
+    else
     	blocks <- c( blocks[seq_len(i-1)],
 		     list(structure(paste("## S3 ", methodtype, "method for class '", sep=""),
 			   Rd_tag="RCODE", srcref=srcref)),
@@ -673,9 +673,9 @@ Rd2txt <-
                    writeContent(block[[length(block)]], tag)
                    alt <- endCapture(save)
                    if (length(alt)) {
-                   	alt <- frmt(alt, justify="centre",
-                               width=WIDTH-indent)
-                   	putf(paste(alt, collapse="\n"))
+                   	alt <- frmt(alt, justify = "centre",
+                                    width = WIDTH - indent)
+                   	putf(paste(alt, collapse = "\n"))
                    	blankLine()
                    }
                },
@@ -807,7 +807,7 @@ Rd2txt <-
                    "\\dontrun"= writeDR(block, tag),
 		   USERMACRO =,
 		   "\\newcommand" =,
-		   "\\renewcommand" =,                   
+		   "\\renewcommand" =,
                    COMMENT =,
                    "\\dontshow" =,
                    "\\testonly" = {}, # do nothing

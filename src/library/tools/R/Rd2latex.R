@@ -222,7 +222,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             of1("{")
             writeContent(block[[2L]], tag)
             of1("}")
-        }   
+        }
     }
 
     ## Currently ignores [option] except for [=dest] form
@@ -473,9 +473,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                	   of0('\\Figure{')
                	   writeContent(block[[1L]], tag)
                	   of0('}{')
-               	   if (length(block) > 1) {
+               	   if (length(block) > 1L) {
 		       includeoptions <- .Rd_get_latex(block[[2]])
-		       if (length(includeoptions) 
+		       if (length(includeoptions)
 			   && grepl("^options: ", includeoptions))
 			   of0(sub("^options: ", "", includeoptions))
                    }
@@ -525,7 +525,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         itemskip <- FALSE
 
 	tags <- RdTags(blocks)
-	
+
 	i <- 0
 	while (i < length(tags)) {
 	    i <- i + 1
@@ -694,6 +694,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     if (encode_warn)
 	warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
 	       outputEncoding)
-    invisible(structure(out, latexEncoding = latexEncoding, 
-                             hasFigures = hasFigures))
+    invisible(structure(out, latexEncoding = latexEncoding,
+                        hasFigures = hasFigures))
 }

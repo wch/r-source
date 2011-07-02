@@ -451,10 +451,10 @@ Rd2HTML <-
                    of1('<img src="../figures/')
                    writeContent(block[[1]], tag)
                    of1('" ')
-               	   if (length(block) > 1
+               	   if (length(block) > 1L
                	       && length(imgoptions <- .Rd_get_latex(block[[2]]))
-		       && grepl("^options: ", imgoptions)) 
-			   of1(sub("^options: ", "", imgoptions))
+		       && grepl("^options: ", imgoptions))
+                       of1(sub("^options: ", "", imgoptions))
 	           else {
 		       of1('alt="')
 		       writeContent(block[[length(block)]])
