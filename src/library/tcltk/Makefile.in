@@ -42,7 +42,7 @@ all: Makefile DESCRIPTION
 	fi
 	@if test @use_tcltk@ = yes; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
-	  $(ECHO) "byte-compiling '$(pkg)'" \
+	  $(ECHO) "byte-compiling '$(pkg)'"; \
 	  $(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null ; \
