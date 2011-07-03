@@ -37,7 +37,6 @@ RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
   $(top_srcdir)/src/main/names.c
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
-	@$(ECHO) "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "byte-compiling '$(pkg)'"
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \

@@ -80,6 +80,26 @@ mkR2:
 	fi
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 
+## version for base on Unix, substitutes for @which@
+mkRbase:
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
+	    $(ECHO) > "$${f}"; \
+	    for rsrc in $(RSRC); do \
+	      $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
+	      cat $${rsrc} >> "$${f}"; \
+	    done; \
+	  else \
+	    cat $(RSRC) > "$${f}"; \
+	  fi; \
+	  f2=$${TMPDIR:-/tmp}/R2$$$$; \
+	  sed -e "s:@WHICH@:${WHICH}:" "$${f}" > "$${f2}"; \
+	  rm -f "$${f}"; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f2}" all.R)
+	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	fi
 
 mkdesc:
 	@if test -f DESCRIPTION; then \
