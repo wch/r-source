@@ -23,7 +23,7 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkdemos mkpo
-	@$(MAKE) mklazy
+	@$(MAKE) mklazycomp
 
 
 include $(top_srcdir)/share/make/basepkg.mk

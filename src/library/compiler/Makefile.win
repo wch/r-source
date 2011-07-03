@@ -17,7 +17,7 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo
-	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 $(MAKE) -f Makefile.win mklazy
+	@$(MAKE) -f Makefile.win mklazycomp
 
 
 include $(top_srcdir)/share/make/basepkg.mk

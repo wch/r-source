@@ -27,7 +27,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) mkR mkdesc mkpo instdirs iconvlist
-	@$(MAKE) mklazy
+	@$(MAKE) mklazycomp
 
 iconvlist: $(top_builddir)/library/$(pkg)/iconvlist
 

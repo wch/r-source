@@ -39,7 +39,7 @@ R:
 	  (cd $${pkg} && $(MAKE) compile) || exit 1; \
 	done
 	@for pkg in $(R_PKGS_BASE1); do \
-	  (R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 cd $${pkg} && $(MAKE)) || exit 1; \
+	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@(cd base && $(MAKE) mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \

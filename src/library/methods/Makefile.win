@@ -32,7 +32,9 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(ECHO) "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(ECHO) "byte-compiling '$(pkg)'"
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \
+	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)

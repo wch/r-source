@@ -26,6 +26,6 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) mkR mkdesc instdirs mkpo
 	@$(MAKE) mksrc
-	@$(MAKE) mklazy
+	@$(MAKE) mklazycomp
 
 include $(top_srcdir)/share/make/basepkg.mk

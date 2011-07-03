@@ -25,7 +25,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkpo instdirs
 	@$(MAKE) mksrc
-	@$(MAKE) mklazy
+	@$(MAKE) mklazycomp
 	@$(R_GZIPCMD) -9f $(top_builddir)/library/grDevices/afm/*.afm
 
 include $(top_srcdir)/share/make/basepkg.mk

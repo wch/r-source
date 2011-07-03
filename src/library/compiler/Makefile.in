@@ -23,7 +23,7 @@ all: Makefile DESCRIPTION @MAINTAINER_MODE_TRUE@ from-noweb
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR mkdesc mkpo
-	@R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 $(MAKE) mklazy
+	@$(MAKE) mklazycomp
 
 NOTANGLE = @NOTANGLE@
 from-noweb: $(srcdir)/R/cmp.R

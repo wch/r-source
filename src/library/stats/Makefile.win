@@ -18,6 +18,6 @@ all:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkdemos mkpo
 	@$(MAKE) -f Makefile.win mksrc-win2
-	@$(MAKE) -f Makefile.win mklazy
+	@$(MAKE) -f Makefile.win mklazycomp
 
 include $(top_srcdir)/share/make/basepkg.mk
