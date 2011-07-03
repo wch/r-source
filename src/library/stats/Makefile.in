@@ -30,5 +30,5 @@ all: Makefile DESCRIPTION
 	@$(MAKE) mksrc
 	@$(MAKE) mklazycomp
 
-
 include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

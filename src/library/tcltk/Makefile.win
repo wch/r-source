@@ -31,3 +31,4 @@ all:
 endif
 
 include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk

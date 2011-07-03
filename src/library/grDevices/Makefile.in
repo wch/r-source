@@ -30,3 +30,4 @@ all: Makefile DESCRIPTION
 	@$(R_GZIPCMD) -9f $(top_builddir)/library/grDevices/afm/*.afm
 
 include $(top_srcdir)/share/make/basepkg.mk
+include $(top_srcdir)/share/make/lazycomp.mk
