@@ -119,8 +119,8 @@
             "      --compact-docs	re-compress PDF files under inst/doc",
             "      --with-keep.source",
             "      --without-keep.source",
-            "			use (or not) 'keep.source' for R code in a",
-            "			package using lazy-loading",
+            "			use (or not) 'keep.source' for R code",
+            "      --byte-compile	byte-compile R code",
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
            "\nfor Unix",
@@ -973,16 +973,24 @@
             warning("only LazyLoad = TRUE is supported", call. = FALSE)
         }
 	if (install_R && dir.exists("R") && length(dir("R")) && value) {
-	    starsmsg(stars, "preparing package for lazy loading")
+            if (byte_compile)
+                starsmsg(stars, "byte-compile and prepare package for lazy loading")
+            else
+                starsmsg(stars, "preparing package for lazy loading")
             keep.source <-
                 parse_description_field(desc, "KeepSource",
                                         default = keep.source)
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
+            if (byte_compile) {
+                compiler::compilePKGS(1L)
+                compiler::setCompilerOptions(suppressUndefined = TRUE)
+            }
 	    res <- try({.getRequiredPackages(quietly = TRUE)
 			makeLazyLoading(pkg_name, lib,
                                         keep.source = keep.source)})
+            if (byte_compile) compiler::compilePKGS(0L)
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("lazy loading failed", pkg_name)
 	}
@@ -1083,6 +1091,7 @@
     fake <- FALSE
     lazy <- TRUE
     lazy_data <- FALSE
+    byte_compile <- FALSE
     ## This is not very useful unless R CMD INSTALL reads a startup file
     lock <- getOption("install.lock", NA) # set for overall or per-package
     pkglock <- FALSE  # set for per-package locking
@@ -1220,6 +1229,8 @@
             keep.source <- TRUE
         } else if (a == "--without-keep.source") {
             keep.source <- FALSE
+        } else if (a == "--byte-compile") {
+            byte_compile <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

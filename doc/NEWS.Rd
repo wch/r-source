@@ -324,6 +324,10 @@
       There are corresponding options \option{--with-keep.source} and
       \option{--without-keep.source} for \command{R CMD INSTALL} for
       packages using lazy-loading.
+
+      \item \command{R CMD INSTALL} has a new option
+      \option{--byte-compile} to byte-compile the packages during
+      installation.
     }
   }
 
@@ -440,7 +444,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R VERSION 2.13.0 patched}{
+\section{\Rlogo CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
