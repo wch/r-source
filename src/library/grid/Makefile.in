@@ -19,12 +19,13 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 INSTDIRS = doc
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
+DEFPKGS = NULL
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
-	@$(MAKE) mkR mkdesc instdirs mkpo
+	@$(MAKE) mkR1 mkdesc instdirs mkpo
 	@$(MAKE) mksrc
 	@$(MAKE) mklazycomp
 

@@ -16,16 +16,20 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc2 mkpo mksrc-win2
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkpo mksrc-win2
+	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	fi
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
-compile:
+compile: mklazycomp
+
+include $(top_srcdir)/share/make/basepkg.mk
+
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
-
-
-include $(top_srcdir)/share/make/basepkg.mk

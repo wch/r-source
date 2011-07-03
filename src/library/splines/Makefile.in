@@ -19,11 +19,12 @@ pkg = splines
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
+DEFPKGS = NULL
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc mkpo
+	@$(MAKE) mkR1 mkdesc mkpo
 	@$(MAKE) mksrc
 	@$(MAKE) mklazycomp
 

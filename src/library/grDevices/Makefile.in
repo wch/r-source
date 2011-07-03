@@ -19,11 +19,12 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 INSTDIRS = afm enc icc
+DEFPKGS = NULL
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR mkdesc mkpo instdirs
+	@$(MAKE) mkR1 mkdesc mkpo instdirs
 	@$(MAKE) mksrc
 	@$(MAKE) mklazycomp
 	@$(R_GZIPCMD) -9f $(top_builddir)/library/grDevices/afm/*.afm

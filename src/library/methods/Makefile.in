@@ -25,12 +25,14 @@ all: Makefile DESCRIPTION
 	@$(MAKE) mksrc
 	@$(MAKE) RfilesLazy
 
+include $(top_srcdir)/share/make/basepkg.mk
+
 RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
 ## loadNamespace() depends on the NAMESPACE file.  We remove the
 ## dumped copy (it is rebuilt later), and we have already installed
 ## NAMESPACE in the library tree.
-## This depends many other things, including the list of primitives.
+## This depends on many other things, including the list of primitives.
 ## Depending on names.c at least catches the latter.
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
   $(top_srcdir)/src/main/names.c
@@ -43,5 +45,3 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
-
-include $(top_srcdir)/share/make/basepkg.mk

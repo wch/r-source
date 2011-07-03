@@ -13,14 +13,14 @@ pkg = grDevices
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 INSTDIRS = afm enc icc
-
+DEFPKGS = NULL
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc mkpo instdirs
+	@$(MAKE) -f Makefile.win mkR1 mkdesc mkpo instdirs
 	@$(MAKE) -f Makefile.win mksrc-win2
-	@$(MAKE) -f Makefile.win mklazy
+	@$(MAKE) -f Makefile.win mklazycomp
 	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm
 
 

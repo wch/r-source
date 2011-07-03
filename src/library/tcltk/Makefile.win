@@ -12,14 +12,14 @@ include $(top_builddir)/Makeconf
 pkg = tcltk
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/zzz.R`
-
+DEFPKGS = NULL
 BUILD_TCLTK = yes
 
 ifeq "$(BUILD_TCLTK)" "yes"
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc mkexec mkdemos mkpo
+	@$(MAKE) -f Makefile.win mkR1 mkdesc mkexec mkdemos mkpo
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@$(MAKE) -f Makefile.win mklazycomp
 else

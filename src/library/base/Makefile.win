@@ -17,14 +17,16 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc2 mkdemos2 mkpo
+	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkdemos2 mkpo
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
 
-compile:
+compile: mklazycomp
+
+include $(top_srcdir)/share/make/basepkg.mk
+
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@cat $(srcdir)/makebasedb.R | \
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/baseloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
-
-include $(top_srcdir)/share/make/basepkg.mk

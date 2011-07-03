@@ -20,6 +20,7 @@ instdirs:
 	   done; \
 	 fi; done
 
+## used for datasets
 mkR:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -35,6 +36,25 @@ mkR:
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@if test -f $(srcdir)/NAMESPACE;  then \
+	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
+	fi
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+
+## do not install all.R
+mkR1:
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
+	    for rsrc in $(RSRC); do \
+	      $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
+	      cat $${rsrc} >> "$${f}"; \
+	    done; \
+	  else \
+	    cat $(RSRC) > "$${f}"; \
+	  fi; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@if test -f $(srcdir)/NAMESPACE;  then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
 	fi
@@ -59,26 +79,6 @@ mkR2:
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
 	fi
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-
-## version for base on Unix, substitutes for @which@
-mkRbase:
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
-	    $(ECHO) > "$${f}"; \
-	    for rsrc in $(RSRC); do \
-	      $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
-	      cat $${rsrc} >> "$${f}"; \
-	    done; \
-	  else \
-	    cat $(RSRC) > "$${f}"; \
-	  fi; \
-	  f2=$${TMPDIR:-/tmp}/R2$$$$; \
-	  sed -e "s:@WHICH@:${WHICH}:" "$${f}" > "$${f2}"; \
-	  rm -f "$${f}"; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f2}" all.R)
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 
 mkdesc:
@@ -112,17 +112,20 @@ mkexec:
 	  done; \
 	fi
 
+## not currently used
 mklazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
-mklazycomp:
+mklazycomp: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@$(ECHO) "byte-compiling '$(pkg)'"
+	@$(ECHO) "byte-compiling package '$(pkg)'"
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	  R_DEFAULT_PACKAGES=$(DEFPKGS) LC_ALL=C $(R_EXE) > /dev/null
 
 mkpo:
 	@if test -d $(srcdir)/inst/po; then \
