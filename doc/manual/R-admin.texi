@@ -1646,6 +1646,7 @@ library paths, separated by colons (semicolons on Windows).
 * OS X packages::               
 * Customizing package compilation::  
 * Multiple sub-architectures::  
+* Byte-compilation::            
 @end menu
 
 
@@ -1851,7 +1852,7 @@ There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
 appropriate).  This is read immediately after @file{Makeconf}.
 
-@node Multiple sub-architectures,  , Customizing package compilation, Installing packages
+@node Multiple sub-architectures, Byte-compilation, Customizing package compilation, Installing packages
 @subsection Multiple sub-architectures
 
 When installing packages from their sources, there are some extra
@@ -1891,6 +1892,19 @@ using the path to @command{R} or @command{R --arch} to select the
 additional sub-architecture.  On Windows there is also @command{R CMD
 INSTALL --merge-multiarch} to build and merge the two architectures,
 starting with a source tarball.
+
+@node Byte-compilation,  , Multiple sub-architectures, Installing packages
+@subsection Byte-compilation
+
+In @R{} 2.14.x only the base and recommended packages are byte-compiled
+by default.  Other packages can be byte-compiled on installation by
+using the option @option{--byte-compile} with @command{R CMD INSTALL} or
+with @code{install.packages(type = "source")}.
+
+Not all contributed packages work correctly when byte-compiled (for
+example because they interfere with the sealing of name spaces).  For
+most packages (especially those which make extensive use of compiled
+code) the speed-up is small.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
