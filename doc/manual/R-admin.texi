@@ -261,7 +261,6 @@ the rest of this chapter we consider only building from the sources.
 * Uninstallation::              
 * Sub-architectures::           
 * Testing a Unix-alike Installation::  
-* Byte-compiler::               
 @end menu
 
 @node Simple compilation, Help options, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -824,7 +823,7 @@ e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
 will run on the platform so the architecture of @command{Rscript} does
 not matter.
 
-@node Testing a Unix-alike Installation, Byte-compiler, Sub-architectures, Installing R under Unix-alikes
+@node Testing a Unix-alike Installation,  , Sub-architectures, Installing R under Unix-alikes
 @section Testing an Installation
 
 Full testing is possible only if the test files have been installed with
@@ -896,31 +895,6 @@ try setting
 LANGUAGE=en LC_TIME=C
 @end example
 
-@node Byte-compiler,  , Testing a Unix-alike Installation, Installing R under Unix-alikes
-@section Byte-compiler
-
-@R{} 2.13.0 introduced a new `byte' compiler which compiles @R{} code to
-a `byte code' representation.  This is by default not used, but is
-available for experimentation.  To compile all the base and recommended
-packages, run
-
-@example
-make bytecode
-@end example
-
-@noindent
-in the top-level build directory.  This will build (or re-build)
-@R{} in the normal way, then compile the package code (which for the
-recommended packages entails a complete re-install of the package from
-the tarball).  To update @R{}, set the environment variables
-
-@example
-R_COMPILE_PKGS=1
-R_COMPILER_SUPPRESS_ALL=1
-@end example
-
-@noindent
-before re-running @command{make}.
 
 @node Installing R under Windows, Installing R under (Mac) OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
@@ -951,11 +925,10 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 
 @menu
 * Building from source::        
-* Byte-compiler on Windows::    
 * Testing a Windows Installation::  
 @end menu
 
-@node Building from source, Byte-compiler on Windows, Installing R under Windows, Installing R under Windows
+@node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
 
 @R{} can be built as either a 32-bit or 64-bit application on Windows:
@@ -1428,32 +1401,8 @@ of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
 acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
-@node Byte-compiler on Windows, Testing a Windows Installation, Building from source, Installing R under Windows
-@section Byte-compiler
 
-@R{} 2.13.0 introduced a new `byte' compiler which compiles @R{} code to
-a `byte code' representation.  This is by default not used, but is
-available for experimentation.  To compile all the base and recommended
-packages, first build @R{} from the sources in the normal way, then run
-
-@example
-make bytecode
-@end example
-
-@noindent
-in the @file{src/gnuwin32} directory. To update @R{}, set the
-environment variables
-
-@example
-R_COMPILE_PKGS=1
-R_COMPILER_SUPPRESS_ALL=1
-@end example
-
-@noindent
-before re-running @command{make}.
-
-
-@node Testing a Windows Installation,  , Byte-compiler on Windows, Installing R under Windows
+@node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
 
 The Windows installer contains a set of test files used when building

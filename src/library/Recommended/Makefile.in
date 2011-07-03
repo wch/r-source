@@ -40,7 +40,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs
-INSTALL_OPTS=--no-lock --data-compress=xz
+INSTALL_OPTS=--pkglock --data-compress=xz --byte-compile
 
 .tgz.ts:
 	@$(ECHO) "begin installing recommended package" `basename $< .tgz`
@@ -51,7 +51,8 @@ INSTALL_OPTS=--no-lock --data-compress=xz
 ## what is really going on?
 ##
 ## Also, avoid any copies installed in user/site libraries
-	@MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1)
+	@MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1)
 ## </FIXME>
 	@cat $@.out; rm $@.out
 	@touch $@

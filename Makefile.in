@@ -224,23 +224,4 @@ check check-devel check-all check-recommended:
 reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
-## This is a temporary target -- we'll do a better job soon
-bytecode: all
-	@if test ! -e $(top_builddir)/library/compiler; \
-	    then $(ECHO) "install the compiler first"; exit 1; fi
-	    exit
-	@for pkg in $(R_PKGS_BASE); do \
-	    $(ECHO) compiling code in package \"$${pkg}\"; \
-            touch $(top_builddir)/src/library/$${pkg}/all.R; \
-            (cd $(top_builddir)/src/library/$${pkg}; \
-	     R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 $(MAKE)) \
-	done
-	@for pkg in $(R_PKGS_RECOMMENDED); do \
-	    $(ECHO) compiling code in package \"$${pkg}\"; \
-	    R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
-	    $(top_builddir)/bin/R CMD INSTALL \
-	        -l $(top_builddir)/library \
-		$(srcdir)/src/library/Recommended/$${pkg}.tgz; \
-	done
-
 TAGS:

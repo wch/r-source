@@ -25,11 +25,13 @@ all: Makefile DESCRIPTION
 	@$(MAKE) mkR mkdesc2 mkpo
 	@$(MAKE) mksrc
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@(cat $(srcdir)/R/makeLazyLoad.R; \
-	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
+compile:
+	@(cat $(srcdir)/R/makeLazyLoad.R; \
+	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
+	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 include $(top_srcdir)/share/make/basepkg.mk

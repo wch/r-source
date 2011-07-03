@@ -327,7 +327,7 @@
 
       \item \command{R CMD INSTALL} has a new option
       \option{--byte-compile} to byte-compile the packages during
-      installation.
+      installation (since all packages are now-lazyloaded).
     }
   }
 
@@ -388,6 +388,9 @@
 
   \subsection{INSTALLATION}{
     \itemize{
+      \item The base and recommended packages are now always
+      byte-compiled (equivalent to \command{make bytecode} in \R 2.13.x).
+      
       \item Configure option \option{--with-system-zlib} now only makes
       use of the basic interface of \code{zlib} and not the
       C function \samp{gzseek} which has shown erroneous behaviour in

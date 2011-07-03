@@ -31,8 +31,15 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 ## so we remake it before dumping the DESCRIPTION files.
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in profile $(R_PKGS_BASE); do \
+	@for pkg in profile base tools compiler; do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
+	done
+	@for pkg in base tools; do \
+	  $(ECHO) "byte-compiling package '$${pkg}'"; \
+	  (cd $${pkg} && $(MAKE) compile) || exit 1; \
+	done
+	@for pkg in $(R_PKGS_BASE1); do \
+	  (R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@(cd base && $(MAKE) mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
