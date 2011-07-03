@@ -30,7 +30,7 @@
       on some versions of Windows.
       
       \item The windows() screen device would sometimes fail to plot
-      points with \code{pch="."}. \PR{14583}
+      (visibly) points with \code{pch="."}. \PR{14583}
       
       \item \code{system()} and related functions sometimes failed
       when run in \file{Rgui}.
@@ -43,7 +43,7 @@
       \item Shutting down the \R session cleaned up the temporary
       directory before closing all graphics devices.  On Windows this
       necessitated changing the working directory, so some devices
-      (e.g. \code{tiff()}) could write files in the wrong directory in
+      (e.g. \code{tiff()}) could write files in the wrong directory if
       closed during shutdown.  The order has been reversed.      
     }
   }
