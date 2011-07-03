@@ -93,7 +93,7 @@
   }
 }
   
-\section{CHANGES IN R VERSION 2.13.0 patched}{
+\section{CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \command{R CMD build} no longer attempts to preserve file
