@@ -1904,7 +1904,13 @@ with @code{install.packages(type = "source")}.
 Not all contributed packages work correctly when byte-compiled (for
 example because they interfere with the sealing of name spaces).  For
 most packages (especially those which make extensive use of compiled
-code) the speed-up is small.
+code) the speed-up is small.  Unless a package is used frequently the
+time spent in byte-compilation can outweigh the time saved in execution:
+also byte-compilation can add substantially to the installed size of the
+package.
+
+Byte-compilation can be controlled on a per-package basis by the
+@samp{ByteCompile} field in the @file{DESCRIPTION} file.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages

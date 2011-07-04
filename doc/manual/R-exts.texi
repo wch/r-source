@@ -583,6 +583,12 @@ using @code{keep.source = TRUE} or @code{FALSE}: it might be needed
 exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
+The @samp{ByteCompile} field controls if the package code is
+byte-compiled on installation: the default is currently not to, so this
+may be useful for a package known to benefit particularly from
+byte-compilation (which can take quite a long time and increases the
+installed size of the package).
+
 The @samp{ZipData} field controls whether the automatic Windows build
 will zip up the data directory or not: set this to @samp{no} if your
 package will not work with a zipped data directory.  (Setting to any

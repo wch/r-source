@@ -334,7 +334,9 @@
 
       \item \command{R CMD INSTALL} has a new option
       \option{--byte-compile} to byte-compile the packages during
-      installation (since all packages are now-lazyloaded).
+      installation (since all packages are now lazy-loaded).  This can
+      be controlled on a per-package basis by the optional field
+      \samp{ByteCompile} in the \file{DESCRIPTION} file.
     }
   }
 

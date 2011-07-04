@@ -973,8 +973,14 @@
             warning("only LazyLoad = TRUE is supported", call. = FALSE)
         }
 	if (install_R && dir.exists("R") && length(dir("R")) && value) {
-            if (byte_compile)
-                starsmsg(stars, "byte-compile and prepare package for lazy loading")
+            BC <- parse_description_field(desc, "ByteCompile",
+                                          default = byte_compile)
+            if (BC) {
+                starsmsg(stars,
+                         "byte-compile and prepare package for lazy loading")
+                compiler::compilePKGS(1L)
+                compiler::setCompilerOptions(suppressUndefined = TRUE)
+            }
             else
                 starsmsg(stars, "preparing package for lazy loading")
             keep.source <-
@@ -983,14 +989,10 @@
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
-            if (byte_compile) {
-                compiler::compilePKGS(1L)
-                compiler::setCompilerOptions(suppressUndefined = TRUE)
-            }
 	    res <- try({.getRequiredPackages(quietly = TRUE)
 			makeLazyLoading(pkg_name, lib,
                                         keep.source = keep.source)})
-            if (byte_compile) compiler::compilePKGS(0L)
+            if (BC) compiler::compilePKGS(0L)
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("lazy loading failed", pkg_name)
 	}
