@@ -19,6 +19,9 @@ all:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkdemos2 mkpo
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
+	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	fi
 
 compile: mklazycomp
 
