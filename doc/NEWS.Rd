@@ -450,6 +450,9 @@
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
+      
+      \item Build time expressions in help files did not have access
+      to functions in the package being built.      
     }
   }
 }

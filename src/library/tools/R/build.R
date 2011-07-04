@@ -218,7 +218,7 @@ get_exclude_patterns <- function()
     }
 
     temp_install_pkg <- function(pkgdir, libdir) {
-	dir.create(libdir, mode = "0755")
+	dir.create(libdir, mode = "0755", showWarnings = FALSE)
         ## assume vignettes only need one arch
         if (WINDOWS) {
             cmd <- file.path(R.home("bin"), "Rcmd.exe")
@@ -482,7 +482,13 @@ get_exclude_patterns <- function()
 	if (!length(containsSexprs)) return(FALSE)
 
 	messageLog(Log, "installing the package to process help pages")
-	temp_install_pkg(pkgdir, libdir)
+	
+        dir.create(libdir, mode = "0755", showWarnings = FALSE)
+        savelib <- .libPaths()
+        .libPaths(libdir)
+        on.exit(.libPaths(savelib), add = TRUE)	
+        
+        temp_install_pkg(pkgdir, libdir)
 
 	containsBuildSexprs <-
             which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
