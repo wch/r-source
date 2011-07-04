@@ -104,21 +104,19 @@ void attribute_hidden PrintVersion(char *s)
 
 void attribute_hidden PrintVersionString(char *s)
 {
-    if(strcmp(R_SVN_REVISION, "unknown")==0)
-    {
+    if(strcmp(R_SVN_REVISION, "unknown") == 0) {
 	sprintf(s, "R version %s.%s %s (%s-%s-%s)",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
-    }
-    else{
-	if(strlen(R_STATUS)==0){
-	    sprintf(s, "R version %s.%s (%s-%s-%s)",
-		    R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
-	}
-	else{
-	    sprintf(s, "R version %s.%s %s (%s-%s-%s r%s)",
-		    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
-		    R_SVN_REVISION);
-	}
+    } else if(strlen(R_STATUS) == 0) {
+	sprintf(s, "R version %s.%s (%s-%s-%s)",
+		R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
+    } else if(strcmp(R_STATUS, "Under development (unstable)") == 0) {
+	sprintf(s, "R %s (%s-%s-%s r%s)",
+		R_STATUS, R_YEAR, R_MONTH, R_DAY, R_SVN_REVISION);	
+    } else {
+	sprintf(s, "R version %s.%s %s (%s-%s-%s r%s)",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION);
     }
 }
 

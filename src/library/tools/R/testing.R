@@ -117,8 +117,8 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, Log=FALSE)
     clean <- function(txt)
     {
         ## remove R header
-        if(length(top <- grep("^(R version|R : Copyright)", txt,
-                              perl = TRUE, useBytes = TRUE)) &&
+        if(length(top <- grep("^(R version|R : Copyright|R Under development)",
+                              txt, perl = TRUE, useBytes = TRUE)) &&
            length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
             txt <- txt[-(top[1L]:bot[1L])]
         ## remove BATCH footer

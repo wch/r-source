@@ -5,7 +5,7 @@
 \title{ R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R VERSION 2.14.0}{
+\section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item The \code{yLineBias} of the \code{X11()} and
@@ -218,6 +218,13 @@
       in the session temporary directory \code{tempdir()},
       addressed as the \samp{/session} directory on the httpd
       server.
+      
+      \item Development versions of \R are no longer referred to by the
+      number under which they might be released, e.g. in the startup
+      banner, \command{R --version} and \code{sessionUtils()}.  The
+      correct way to refer to a development version of R is
+      \sQuote{R-devel}, preferably with the date and SVN version number.\cr
+      E.g. \samp{R-devel (2011-07-04 r56266)}
     }
   }
 
