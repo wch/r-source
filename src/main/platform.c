@@ -2055,7 +2055,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path;
     wchar_t *p, dir[MAX_PATH];
-    int res, show, recursive;
+    int res, show, recursive, serrno = 0;
 
     checkArity(op, args);
     path = CAR(args);
@@ -2082,18 +2082,21 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    *p = L'\0';
 	    if (*(p-1) != L':') {
 		res = _wmkdir(dir);
-		if (res && errno != EEXIST) goto end;
+		serrno = errno;
+		if (res && serrno != EEXIST) goto end;
 	    }
 	    *p = L'\\';
 	}
     }
     res = _wmkdir(dir);
-    if (show && res && errno == EEXIST)
+    serrno = errno;
+    if (show && res && serrno == EEXIST)
 	warning(_("'%ls' already exists"), dir);
+    return ScalarLogical(res == 0);
 end:
-    if (show && res && errno != EEXIST)
+    if (show && res && serrno != EEXIST)
 	warning(_("cannot create dir '%ls', reason '%s'"), dir, 
-		strerror(errno));
+		strerror(serrno));
     return ScalarLogical(res == 0);
 }
 #endif
