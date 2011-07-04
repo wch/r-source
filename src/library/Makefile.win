@@ -30,10 +30,9 @@ R:
 	    all install-tests || exit 1; \
 	done
 	@for pkg in base tools; do \
-	  $(ECHO) "byte-compiling package '$${pkg}'"; \
 	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
 	    R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
-	    compile || exit 1; \
+	    mklazycomp || exit 1; \
 	done
 	@for pkg in $(R_PKGS_BASE1); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \

@@ -35,8 +35,7 @@ R:
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@for pkg in base tools; do \
-	  $(ECHO) "byte-compiling package '$${pkg}'"; \
-	  (cd $${pkg} && $(MAKE) compile) || exit 1; \
+	  (cd $${pkg} && $(MAKE) mklazycomp) || exit 1; \
 	done
 	@for pkg in $(R_PKGS_BASE1); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \

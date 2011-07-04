@@ -23,11 +23,10 @@ all:
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
 	fi
 
-compile: mklazycomp
-
 include $(top_srcdir)/share/make/basepkg.mk
 
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
+	@$(ECHO) "byte-compiling package '$(pkg)'"
 	@cat $(srcdir)/makebasedb.R | \
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null

@@ -23,11 +23,10 @@ all:
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
-compile: mklazycomp
-
 include $(top_srcdir)/share/make/basepkg.mk
 
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
+	@$(ECHO) "byte-compiling package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
