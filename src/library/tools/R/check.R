@@ -1396,7 +1396,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
             status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en", if(nzchar(arch)) env0),
+                             c("LANGUAGE=en", if(nzchar(arch)) env0, jitstr),
                              stdout = exout, stderr = exout,
                              stdin = exfile, arch = arch)
             if (status) {
@@ -1551,7 +1551,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                          ")", sep = "")
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en", if(nzchar(arch)) env0),
+                             env = c("LANGUAGE=en", if(nzchar(arch)) env0,
+                                     jitstr),
                              stdout = "", stderr = "", arch = arch)
             if (status) {
                 errorLog(Log)
@@ -1746,6 +1747,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 outfile <- paste(basename(v), ".log", sep="")
                 status <- R_runR(Rcmd,
                                  if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
+                                 jitstr,
                                  stdout = outfile, stderr = outfile)
                 out <- readLines(outfile, warn = FALSE)
                 if(length(grep("^  When (tangling|sourcing)", out,
@@ -1811,7 +1813,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                               file.path(pkgoutdir, "vign_test", pkgname0),
                               "')", sep = "")
                 outfile <- tempfile()
-                status <- R_runR(Rcmd, R_opts2,
+                status <- R_runR(Rcmd, R_opts2, jitstr,
                                  stdout = outfile, stderr = outfile)
                 if (status) {
                     noteLog(Log)
@@ -2502,6 +2504,14 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
         readRenviron(Renv)
     else if (file.exists(Renv <- "~/.R/check.Renviron")) readRenviron(Renv)
+
+    ## A user might have turned on JIT compilation.  That does not
+    ## work well, so mostly disable it
+    jit <- Sys.getenv("R_ENABLE_JIT")
+    jitstr <- if(nzchar(jit)) {
+        Sys.setenv(R_ENABLE_JIT = "0")
+        paste("R_ENABLE_JIT=", jit, sep = "")
+    } else character()
 
     if (is.null(args)) {
         args <- commandArgs(TRUE)
