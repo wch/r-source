@@ -19,6 +19,11 @@ RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
+## For people who do make -C ../src/library/tools
+update:
+	@$(MAKE) all
+	@$(MAKE) mklazycomp
+
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)

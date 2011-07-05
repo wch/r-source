@@ -32,13 +32,13 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in profile base tools compiler; do \
-	  (cd $${pkg} && $(MAKE)) || exit 1; \
+	  (cd $${pkg} && $(MAKE) all) || exit 1; \
 	done
 	@for pkg in base tools; do \
 	  (cd $${pkg} && $(MAKE) mklazycomp) || exit 1; \
 	done
 	@for pkg in $(R_PKGS_BASE1); do \
-	  (cd $${pkg} && $(MAKE)) || exit 1; \
+	  (cd $${pkg} && $(MAKE) all) || exit 1; \
 	done
 	@(cd base && $(MAKE) mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \

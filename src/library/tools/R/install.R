@@ -975,13 +975,13 @@
 	if (install_R && dir.exists("R") && length(dir("R")) && value) {
             BC <- parse_description_field(desc, "ByteCompile",
                                           default = byte_compile)
-            ## need to disable JIT: package compilation might have been
-            ## turned on via the env variable R_COMPILE_PKGS, so we do
-            ## this outside the BC condition.
-            Sys.setenv(R_ENABLE_JIT = 0L)
+            rcp <- as.numeric(Sys.getenv("R_COMPILE_PKGS"))
+            BC <- BC || (!is.na(rcp) && rcp > 0)
             if (BC) {
                 starsmsg(stars,
                          "byte-compile and prepare package for lazy loading")
+                ## need to disable JIT
+                Sys.setenv(R_ENABLE_JIT = 0L)
                 compiler::compilePKGS(1L)
                 compiler::setCompilerOptions(suppressUndefined = TRUE)
             }
