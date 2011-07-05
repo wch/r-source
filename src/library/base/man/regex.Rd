@@ -69,9 +69,9 @@
   giving the first and last characters, separated by a hyphen.  (Because
   their interpretation is locale- and implementation-dependent, they are
   best avoided.)  The only portable way to specify all ASCII letters is
-  to list them all as the character class
-  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.  (The
-  current implementation uses numerical order of the encoding: prior to
+  to list them all as the character class\cr
+  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr
+  (The current implementation uses numerical order of the encoding: prior to
   \R 2.10.0 locale-specific collation was used, and might be again.)
 
   Certain named classes of characters are predefined.  Their
@@ -103,7 +103,7 @@
     \item{\samp{[:print:]}}{
       Printable characters: \samp{[:alnum:]}, \samp{[:punct:]} and space.}
 
-    \item{\samp{[:punct:]}}{Punctuation characters:
+    \item{\samp{[:punct:]}}{Punctuation characters:\cr
       \samp{! " # $ \% & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` \{ | \} ~}.}
 %'"`  keep Emacs Rd mode happy
 
@@ -113,7 +113,7 @@
 
     \item{\samp{[:upper:]}}{Upper-case letters in the current locale.}
 
-    \item{\samp{[:xdigit:]}}{Hexadecimal digits:
+    \item{\samp{[:xdigit:]}}{Hexadecimal digits:\cr
       \samp{0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f}.}
   }
 
