@@ -1,6 +1,6 @@
 ## simple call, only field names
 fg <- setRefClass("foo", c("bar", "flag"))
-f1<- new("foo")
+f1 <- new("foo")
 f1$bar
 f1 <- fg$new(flag = "testing")
 f1$bar <- 1
@@ -8,15 +8,15 @@ stopifnot(identical(f1$bar, 1))
 fg$methods(showAll = function() c(bar, flag))
 stopifnot(all.equal(f1$showAll(), c(1, "testing")))
 
-fg <- setRefClass("foo", list(bar = "numeric", flag = "character",tag = "ANY"),
-            methods = list(
-            addToBar = function(incr) {
-                b = bar + incr
-                bar <<- b
-                b
-            }
-            ))
-ff = new("foo", bar = 1.5)
+fg <- setRefClass("foo", list(bar = "numeric", flag = "character",
+                              tag = "ANY"),
+                  methods = list(addToBar = function(incr) {
+                      b <- bar + incr
+                      bar <<- b
+                      b
+                  } )
+                  )
+ff <- new("foo", bar = 1.5)
 stopifnot(identical(ff$bar, 1.5))
 ff$bar <- pi
 stopifnot(identical(ff$bar, pi))
@@ -55,7 +55,8 @@ stopifnot(all.equal(ffbar * 10, ff$getBar()))
 ff$barTimes(.1)
 
 ## inheritance.  redefines flag so should fail:
-stopifnot(is(tryCatch(setRefClass("foo2", list(b2 = "numeric", flag = "complex"),
+stopifnot(is(tryCatch(setRefClass("foo2", list(b2 = "numeric",
+					       flag = "complex"),
             contains = "foo",
             refMethods = list(addBoth = function(incr) {
                 addToBar(incr) #uses inherited class method
@@ -64,16 +65,19 @@ stopifnot(is(tryCatch(setRefClass("foo2", list(b2 = "numeric", flag = "complex")
           error = function(e)e), "error"))
 ## but with flag as a subclass of "character", should work
 ## Also subclasses "tag" which had class "ANY before
-setClass("ratedChar", contains = "character", representation(score = "numeric"))
-foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar", tag = "numeric"),
-            contains = "foo",
-            methods = list(addBoth = function(incr) {
+setClass("ratedChar", contains = "character",
+         representation(score = "numeric"))
+foo2 <- setRefClass("foo2", list(b2 = "numeric", flag = "ratedChar",
+				 tag = "numeric"),
+	    contains = "foo",
+	    methods = list(addBoth = function(incr) {
                 addToBar(incr) #uses inherited class method
-                b2<<- b2 + incr
+                b2 <<- b2 + incr
                 }))
 ## now lock the flag field; should still allow one write
 foo2$lock("flag")
-f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 = ff$bar, tag = 1.5)
+f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"),
+               b2 = ff$bar, tag = 1.5)
 ## but not a second one
 stopifnot(is(tryCatch(f2$flag <- "Try again",
          error = function(e)e), "error"))
@@ -87,7 +91,8 @@ f22 <- fg$new(bar = f2$bar, flag = f2$flag)
 f2e <- f2$export("foo")
 stopifnot(identical(f2e$bar, f22$bar), identical(f2e$flag, f22$flag),
           identical(class(f2e), class(f22)))
-stopifnot(identical(f2$flag,  as("ANY", "ratedChar")), identical(f2$bar, -3),
+stopifnot(identical(f2$flag,  as("ANY", "ratedChar")),
+          identical(f2$bar, -3),
           all.equal(f2$b2, 2:4+0))
 f2$addBoth(-1)
 stopifnot(all.equal(f2$bar, -4), all.equal(f2$b2, 1:3+0))
@@ -95,16 +100,19 @@ stopifnot(all.equal(f2$bar, -4), all.equal(f2$b2, 1:3+0))
 ## test callSuper()
 setRefClass("foo3", fields = list(flag2 = "ratedChar"),
             contains = "foo2",
-            methods = list(addBoth = function(incr) {
-                callSuper(incr)
-                flag2 <<- as(paste(flag, paste(incr, collapse = ", "), sep = "; "), "ratedChar")
+	    methods = list(addBoth = function(incr) {
+		callSuper(incr)
+		flag2 <<- as(paste(flag, paste(incr, collapse = ", "),
+				   sep = "; "),
+                             "ratedChar")
                 incr
             }))
 
 f2 <- foo2$new(bar = -3, flag = as("ANY", "ratedChar"), b2 =  1:3)
 f3 <- new("foo3")
 f3$import(f2)
-stopifnot(all.equal(f3$b2, f2$b2), all.equal(f3$bar, f2$bar), all.equal(f3$flag, f2$flag))
+stopifnot(all.equal(f3$b2, f2$b2), all.equal(f3$bar, f2$bar),
+          all.equal(f3$flag, f2$flag))
 f3$addBoth(1)
 stopifnot(all.equal(f3$bar, -2), all.equal(f3$b2, 2:4+0),
           all.equal(f3$flag2, as("ANY; 1", "ratedChar")))
@@ -131,7 +139,8 @@ stopifnot(identical(f4@made, R.version))
 
 ## a trivial class with no fields, using fields = list(), failed up to rev 56035
 foo5 <- setRefClass("foo5", fields = list(),
-                    methods = list(bar = function(test) paste("*",test,"*")))
+                    methods = list(bar = function(test)
+                    paste("*",test,"*")))
 
 f5 <- foo5$new()
 stopifnot(identical( f5$bar("xxx"), paste("*","xxx", "*")))
@@ -153,13 +162,13 @@ stopifnot(identical(ab1$a, 2), identical(ab1$b, 2))
 ## a simple editor for matrix objects.  Method  $edit() changes some
 ## range of values; method $undo() undoes the last edit.
 mEditor <- setRefClass("matrixEditor",
-      fields = list( data = "matrix",
-        edits = "list"),
-      methods = list(
+        fields = list(data = "matrix",
+		     edits = "list"),
+       methods = list(
      edit = function(i, j, value) {
        ## the following string documents the edit method
        'Replaces the range [i, j] of the
-        object by value.
+	object by value.
         '
          backup <-
              list(i, j, data[i,j])
@@ -239,7 +248,7 @@ mv$methods( initialize = function(file = "./matrixView.pdf", ...) {
     setMarkViewer("OFF")
   })
 
-ff = mv$new( data = xMat)
+ff <- mv$new( data = xMat)
 stopifnot(identical(markViewer, "ON")) # check initialize
 ff$edit(2,2,0)
 ff$data
@@ -299,7 +308,9 @@ stopifnot(identical(mnames2, objects(getClass("refClassB")@refMethods)))
 
 if(methods:::.hasCodeTools()) {
     ## code warnings assigning locally to field names
-    stopifnot(is(tryCatch(mv$methods(test = function(x) {data <- x[!is.na(x)]; mean(data)}), warning = function(e)e), "warning"))
+    stopifnot(is(tryCatch(mv$methods(test = function(x)
+                                 { data <- x[!is.na(x)]; mean(data)}),
+                          warning = function(e)e), "warning"))
 
     ## warnings for nonlocal assignment that is not a field
     stopifnot(is(tryCatch(mv$methods(test2 = function(x) {something <<- data[!is.na(x)]}), warning = function(e)e), "warning"))
@@ -330,8 +341,9 @@ xx <- 1:10; environment(xx) <- a # environment attribute
 stopifnot(identical(as.environment(a), environment(xx)))
 
 
-## tests of [[<- and $<- for subclasses of environment.  At one point methods for these assignments were defined
-## and caused inf. recursion when the arguments to the [[<- case were changed in base.
+## tests of [[<- and $<- for subclasses of environment.  At one point
+## methods for these assignments were defined and caused
+## inf. recursion when the arguments to the [[<- case were changed in base.
 setClass("myEnv", contains = "environment")
 m <- new("myEnv", a="test")
 m2 <- new("myEnv"); m3 <- new("myEnv")
@@ -339,7 +351,7 @@ m2 <- new("myEnv"); m3 <- new("myEnv")
 stopifnot(!identical(as.environment(m), as.environment(m2)),
           !identical(as.environment(m3), as.environment(m2)))
 m[["x"]] <- 1; m$y <- 2
-stopifnot(identical(c(m[["x"]], m$y), c(1,2)))
+stopifnot(identical(c(m[["x"]], m$y), c(1,2)), is(m, "myEnv"))
 rm(x, envir = m) # check rm() works, does not clobber class
 stopifnot(identical(sort(objects(m)), sort(c("a", "y"))),
           is(m, "myEnv"))
