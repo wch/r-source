@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-22 r55587)
+R version 2.13.1 RC (2011-07-05 r56282)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1155,11 +1155,11 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ### ** Examples
 > 
 > Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
-> SSfol(Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3)  # response only
+> SSfol(Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3) # response only
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 > lKe <- -2.5; lKa <- 0.5; lCl <- -3
-> SSfol(Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl)  # response and gradient
+> SSfol(Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl) # response and gradient
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 attr(,"gradient")
@@ -3684,7 +3684,7 @@ detaching ‘package:cluster’
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x39253b0>
+<environment: 0x3c52ac0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4106,7 +4106,8 @@ I(x^3) -0.73        0.93 -0.99
 > 
 > ## From Agresti(2007) p.39
 > M <- as.table(rbind(c(762, 327, 468), c(484,239,477)))
-> dimnames(M) <- list(gender=c("M","F"), party=c("Democrat","Independent", "Republican"))
+> dimnames(M) <- list(gender=c("M","F"),
++                     party=c("Democrat","Independent", "Republican"))
 > (Xsq <- chisq.test(M))  # Prints test summary
 
 	Pearson's Chi-squared test
@@ -5687,7 +5688,8 @@ NULL
 > ## merge() all parts back (using default 'height' instead of original one):
 > den.1 <- Reduce(merge, dend2$lower)
 > ## or merge() all four parts at same height --> 4 branches (!)
-> d. <- merge(dend2$lower[[1]], dend2$lower[[2]], dend2$lower[[3]], dend2$lower[[4]])
+> d. <- merge(dend2$lower[[1]], dend2$lower[[2]], dend2$lower[[3]],
++             dend2$lower[[4]])
 > ## (with a warning) or the same using  do.call :
 > stopifnot(identical(d., do.call(merge, dend2$lower)))
 > plot(d., main="merge(d1, d2, d3, d4)  |->  dendrogram with a 4-split")
@@ -6734,7 +6736,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x5d72950>
+<environment: 0x64d6f80>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -7136,7 +7138,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env=new.env()))
-<environment: 0x7fefba8>
+<environment: 0x83ef650>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11174,7 +11176,8 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ## Analysis of the life-cycle savings data
 > ## given in Belsley, Kuh and Welsch.
-> plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings))
+> lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+> plot(lm.SR)
 > 
 > ## 4 plots on 1 page;
 > ## allow room for printing model formula in outer margin:
@@ -11512,22 +11515,22 @@ attr(,"degree")
 $linkfun
 function (mu) 
 mu
-<environment: 0x6439f00>
+<environment: 0x80dfce0>
 
 $linkinv
 function (eta) 
 eta
-<environment: 0x6439f00>
+<environment: 0x80dfce0>
 
 $mu.eta
 function (eta) 
 rep.int(1, length(eta))
-<environment: 0x6439f00>
+<environment: 0x80dfce0>
 
 $valideta
 function (eta) 
 TRUE
-<environment: 0x6439f00>
+<environment: 0x80dfce0>
 
 $name
 [1] "identity"
@@ -11538,12 +11541,12 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<environment: 0x642c2d8>
+<environment: 0x80e8390>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<environment: 0x642c2d8>
+<environment: 0x80e8390>
 
 > 
 > 
@@ -15090,8 +15093,9 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 > plot(x.,y.)
 > curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 > curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
-> legend("topleft", paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
-+         col=2:3, lty=1)
+> legend("topleft",
++        paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
++        col = 2:3, lty = 1)
 > 
 > 
 > 
@@ -15200,7 +15204,7 @@ function (v)
     xout = as.double(v), as.integer(length(v)), as.integer(method), 
     as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE, 
     PACKAGE = "stats")$xout
-<environment: 0x7d58ba0>
+<environment: 0x6aa3ce8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17420,7 +17424,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.696 0.36 14.802 0 0 
+Time elapsed:  14.886 0.447 15.637 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-19 r55507)
+R version 2.13.1 RC (2011-07-05 r56282)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1f24548>
+<environment: 0x1c96d68>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1f24548>
+<environment: 0x1c96d68>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x1f24548>
+<environment: 0x1c96d68>
 
 $showURLs
 [1] FALSE
@@ -226,13 +226,14 @@ $underline_titles
 +     author = c(person(c("George", "E", "P"), "Box"),
 +                person(c("David",  "R"),      "Cox")),
 +     year = 1964,
-+     title="An Analysis of Transformations",
-+     journal="Journal of the Royal Statistical Society, Series B",
-+     volume=26,
-+     pages="211-252"))
-> bibstyle("unsorted", sortKeys = function(refs) seq_along(refs), .init=TRUE)
-<environment: 0x1881940>
-> print(refs, .bibstyle="unsorted")    
++     title = "An Analysis of Transformations",
++     journal = "Journal of the Royal Statistical Society, Series B",
++     volume = 26,
++     pages = "211-252"))
+> bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
++        .init = TRUE)
+<environment: 0x18f4268>
+> print(refs, .bibstyle = "unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
 Austria. ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
@@ -870,7 +871,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.273 0.01 0.284 0 0 
+Time elapsed:  0.332 0.011 0.363 0 0 
 > grDevices::dev.off()
 null device 
           1 

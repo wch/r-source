@@ -1,5 +1,5 @@
 
-R version 2.13.0 Patched (2011-04-19 r55507)
+R version 2.13.1 RC (2011-07-05 r56282)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -302,7 +302,7 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > ### ** Examples
 > 
 > require(graphics)
-> ispl <- polySpline( interpSpline( weight ~ height,  women, bSpline = TRUE ) )
+> ispl <- polySpline(interpSpline( weight ~ height,  women, bSpline = TRUE))
 > print( ispl )   # print the piecewise polynomial representation
 polynomial representation of spline for weight ~ height
    constant   linear   quadratic       cubic
@@ -561,7 +561,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.173 0.009 0.183 0 0 
+Time elapsed:  0.213 0.015 0.233 0 0 
 > grDevices::dev.off()
 null device 
           1 
