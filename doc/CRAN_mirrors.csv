@@ -29,7 +29,6 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","m
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info # rakanu.com>",1,de
-"Germany (Nuernberg)",Germany,Nuernberg,http://cran.myamplifiers.com/,"Hetzner Online AG, Nuernberg","nikrans # Gmail.com",1,de
 "Germany (Wiesbaden)",Germany,Wiesbaden,http://ftp.yalwa.org/cran/,"Yalwa GmbH, Wiesbaden","webmaster # yalwa.com",1,de
 Greece,Greece,Crete,http://cran.cc.uoc.gr/,"University of Crete","mirrors # Cc.uoc.gr",1,gr
 Indonesia,Indonesia,Jakarta,http://cran.cermin.lipi.go.id/,"Indonesian Institute of Sciences","mirror # Teori.fisika.lipi.go.id",1,id
@@ -50,7 +49,6 @@ Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University o
 "Poland (Gdansk)",Poland,Gdansk,http://cran.privatejetscharter.net/,"Privatejetscharter.net, Gdansk","info # Privatejetscharter.net",1,pl
 "Poland (Oswiecim)",Poland,Oswiecim,http://piotrkosoft.net/pub/mirrors/CRAN/,"Piotrkosoft - Data Storage Center","Piotr Maluty <piotr.maluty # gmail.com>",1,pl
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
-Portugal,Portugal,Porto,http://neacm.fe.up.pt/CRAN/,"Universidade do Porto","neacm # fe.up.pt",0,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
 Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr # nus.edu.sg>",1,sg
 "Slovakia 1",Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
