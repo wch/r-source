@@ -1,5 +1,5 @@
 
-R version 2.14.0 Under development (unstable) (2011-04-06 r55347)
+R Under development (unstable) (2011-07-04 r56273)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -51,8 +51,11 @@ Type 'q()' to quit R.
 > stopifnot(nobs(fit0) == length(y))
 > 
 > ## This needs a constrained parameter space: most methods will accept NA
-> ll <- function(ymax = 15, xhalf = 6)
-+     if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
+> ll <- function(ymax = 15, xhalf = 6) {
++     if(ymax > 0 && xhalf > 0)
++       -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
++     else NA
++ }
 > (fit <- mle(ll, nobs = length(y)))
 
 Call:
@@ -111,8 +114,9 @@ Profiling...
 ymax  17.8845 34.6194
 xhalf  1.6616  6.4792
 > 
-> ## use bounded optimization
-> ## the lower bounds are really > 0, but we use >=0 to stress-test profiling
+> ## Use bounded optimization
+> ## The lower bounds are really > 0,
+> ## but we use >=0 to stress-test profiling
 > (fit2 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
 
 Call:
@@ -179,7 +183,7 @@ Coefficients:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.034 0.026 1.089 0 0 
+Time elapsed:  1.057 0.018 1.244 0 0 
 > grDevices::dev.off()
 null device 
           1 
