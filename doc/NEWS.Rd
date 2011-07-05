@@ -1215,14 +1215,14 @@
       potentially much slower) can be switched on by setting environment
       variable \env{_R_CHECK_COMPACT_DATA2_} to \samp{TRUE}.
 
-      The types of files in the \code{data} directory are now checked,
+      The types of files in the \file{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
       It now extracts and runs the \R code for each vignette in a
       separate directory and \R process: this is done in the package's
       declared encoding.  Rather than call
       \code{tools::checkVignettes()}, it calls
-      \code{tool::buildVignettes()} to see if the vignettes can be
+      \code{tools::buildVignettes()} to see if the vignettes can be
       re-built as they would be by \command{R CMD build}.  Option
       \option{--use-valgrind} now applies only to these runs, and not
       when running code to rebuild the vignettes.  This version does a
@@ -1233,7 +1233,7 @@
       output to \file{stdout}: in particular contains more details of
       the tests.
 
-      It now check all syntactically valid Rd usage entries, and warns
+      It now checks all syntactically valid Rd usage entries, and warns
       about assignments (unless these give the usage of replacement
       functions).
 
