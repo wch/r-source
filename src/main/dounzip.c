@@ -169,11 +169,12 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 	/* Rprintf("extracting %s\n", outname); */
 	if (!overwrite && R_FileExists(outname)) {
 	    warning(_(" not overwriting file '%s"), outname);
-	}   
+	}
 	fout = R_fopen(outname, "wb");
+	int serrno = errno;
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
-	    error(_("cannot open file '%s': %s"), outname, strerror(errno));
+	    error(_("cannot open file '%s': %s"), outname, strerror(serrno));
 	    return 3;		/* not reached */
 	}
 	while (1) {
@@ -538,12 +539,13 @@ R_newunz(const char *description, const char *const mode)
 #include <string.h>
 #include "zlib.h"
 #include "unzip.h"
+/*
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #else
 extern int errno;
 #endif
-
+*/
 
 #define local static
 

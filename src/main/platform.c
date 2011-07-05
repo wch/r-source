@@ -2050,12 +2050,18 @@ SEXP attribute_hidden do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* NB: we save errno immediately after the call here.  This should not
+  be necessary on a POSIX OS, but it is on Windows, where it seems
+  that on some versions strerror itself changes errno (something
+  allowed in C99 but disallowed in POSIX).  Also, something under
+  warning() might set errno in a future version.
+*/
 #ifndef Win32
 /* mkdir is defined in <sys/stat.h> */
 SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP path;
-    int res, show, recursive, mode;
+    int res, show, recursive, mode, serrno = 0;
     char *p, dir[PATH_MAX];
 
     checkArity(op, args);
@@ -2080,17 +2086,20 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    res = mkdir(dir, mode);
 	    /* Solaris 10 returns ENOSYS on automount, PR#13834
 	       EROFS is allowed by POSIX, so we skip that too */
-	    if (res && errno != EEXIST && errno != ENOSYS && errno != EROFS) 
+	    serrno = errno;
+	    if (res && serrno != EEXIST && serrno != ENOSYS && serrno != EROFS) 
 		goto end;
 	    *p = '/';
 	}
     }
     res = mkdir(dir, mode);
-    if (show && res && errno == EEXIST)
+    serrno = errno;
+    if (show && res && serrno == EEXIST)
 	warning(_("'%s' already exists"), dir);
 end:
-    if (show && res && errno != EEXIST)
-	warning(_("cannot create dir '%s', reason '%s'"), dir, strerror(errno));
+    if (show && res && serrno != EEXIST)
+	warning(_("cannot create dir '%s', reason '%s'"), dir,
+		strerror(serrno));
     return ScalarLogical(res == 0);
 }
 #else /* Win32 */

@@ -354,6 +354,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 		strcpy(ob, con->init_out);
 		ob += ninit; onb -= ninit; ninit = 0;
 	    }
+	    errno = 0;
 	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
 	    if(ires == (size_t)(-1) && errno == E2BIG) again = TRUE;
 	    if(ires == (size_t)(-1) && errno != E2BIG)
@@ -404,6 +405,7 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    ib = con->iconvbuff; inb = con->inavail;
 	    ob = con->oconvbuff; onb = 50;
+	    errno = 0;
 	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
 	    con->inavail = inb;
 	    if(res == (size_t)-1) { /* an error condition */
@@ -848,6 +850,7 @@ static Rboolean fifo_open(Rconnection con)
     else flags = O_WRONLY;
     if(!con->blocking) flags |= O_NONBLOCK;
     if(con->mode[0] == 'a') flags |= O_APPEND;
+    errno = 0; /* precaution */
     fd = open(name, flags);
     if(fd < 0) {
 	if(errno == ENXIO) warning(_("fifo '%s' is not ready"), name);
@@ -1037,7 +1040,7 @@ static Rboolean pipe_open(Rconnection con)
 	fp = R_popen(con->description, mode);
     if(!fp) {
 	warning(_("cannot open pipe() cmd '%s': %s"), con->description,
-			strerror(errno));
+		strerror(errno));
 	return FALSE;
     }
     ((Rfileconn)(con->private))->fp = fp;
@@ -1201,6 +1204,7 @@ static Rboolean gzfile_open(Rconnection con)
     if(strchr(con->mode, 'w')) sprintf(mode, "wb%1d", gzcon->compress);
     else if (con->mode[0] == 'a') sprintf(mode, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
+    errno = 0; /* precaution */
     fp = R_gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
@@ -1335,6 +1339,7 @@ static Rboolean bzfile_open(Rconnection con)
     /* regardless of the R view of the file, the file must be opened in
        binary mode where it matters */
     mode[0] = con->mode[0];
+    errno = 0; /* precaution */
     fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open bzip2-ed file '%s', probable reason '%s'"),
@@ -1520,6 +1525,7 @@ static Rboolean xzfile_open(Rconnection con)
     /* regardless of the R view of the file, the file must be opened in
        binary mode where it matters */
     mode[0] = con->mode[0];
+    errno = 0; /* precaution */
     xz->fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!xz->fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),

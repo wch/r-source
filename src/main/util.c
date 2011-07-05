@@ -331,10 +331,10 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
     o_buf = (char *)out;
     o_len = ((size_t) nout) * sizeof(ucs2_t);
     status = Riconv(cd, &i_buf, (size_t *)&i_len, &o_buf, (size_t *)&o_len);
-
+    int serrno = errno;
     Riconv_close(cd);
     if (status == (size_t)-1) {
-	switch(errno){
+	switch(serrno){
 	case EINVAL:
 	    return (size_t) -2;
 	case EILSEQ:
