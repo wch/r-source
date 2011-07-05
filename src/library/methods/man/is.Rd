@@ -366,7 +366,8 @@ removeClass("track")
 
 ## Second Example:
 ## A class that adds a slot to "character"
-setClass("stringsDated", contains = "character", representation(stamp="POSIXt"))
+setClass("stringsDated", contains = "character",
+         representation(stamp="POSIXt"))
 
 ## Convert automatically to a factor by explicit coerce
 setIs("stringsDated", "factor",
@@ -382,8 +383,10 @@ ld <- new("stringsDated", ll, stamp = Sys.time())
 levels(as(ld, "factor"))
 levels(ld) # will be NULL--see comment in section on inheritance above.
 
-## In contrast, a class that simply extends "factor" has no such ambiguities
-setClass("factorDated", contains = "factor", representation(stamp="POSIXt"))
+## In contrast, a class that simply extends "factor"
+## has no such ambiguities
+setClass("factorDated", contains = "factor",
+         representation(stamp="POSIXt"))
 fd <- new("factorDated", factor(ll), stamp = Sys.time())
 identical(levels(fd), levels(as(fd, "factor")))
 }

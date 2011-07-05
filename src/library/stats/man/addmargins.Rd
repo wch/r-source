@@ -25,7 +25,7 @@
 }
 
 \usage{
-  addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
+addmargins(A, margin = seq_along(dim(A)), FUN = sum, quiet = FALSE)
 }
 
 \arguments{

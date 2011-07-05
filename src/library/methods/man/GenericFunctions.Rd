@@ -33,7 +33,9 @@ findFunction(f, generic = TRUE, where = topenv(parent.frame()))
 dumpMethods(f, file, signature, methods, where)
 signature(\dots)
 
-removeMethods(f, where = topenv(parent.frame()), all = missing(where))
+removeMethods(f, where = topenv(parent.frame()),
+              all = missing(where))
+
 setReplaceMethod(f, \dots, where = topenv(parent.frame()))
 
 getGenerics(where, searchForm = FALSE)

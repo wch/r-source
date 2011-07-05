@@ -100,8 +100,9 @@ testInheritedMethods(f, signatures, test = TRUE, virtual = FALSE,
   submitted to the R Journal).
 }
 \examples{
-## if no other attached  packages have methods for `+` or its group generic 
-## functions, this returns a 16 by 2 matrix of selection patterns (in R 2.9.0)
+## if no other attached packages have methods for `+` or its group
+## generic functions, this returns a 16 by 2 matrix of selection
+## patterns (in R 2.9.0)
 testInheritedMethods("+")
 }
 

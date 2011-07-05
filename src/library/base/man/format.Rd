@@ -22,8 +22,8 @@ format(x, \dots)
        width = NULL, na.encode = TRUE, scientific = NA,
        big.mark = "",   big.interval = 3L,
        small.mark = "", small.interval = 5L,
-       decimal.mark = ".", zero.print = NULL, drop0trailing = FALSE,
-       \dots)
+       decimal.mark = ".", zero.print = NULL,
+       drop0trailing = FALSE, \dots)
 
 \method{format}{data.frame}(x, \dots, justify = "none")
 
