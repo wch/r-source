@@ -69,7 +69,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   Wadsworth & Brooks/Cole.
 
   Cleveland, W. S. (1985)
-  \emph{The elements of graphing data}.
+  \emph{The Elements of Graphing Data}.
   Wadsworth: Monterey, CA, USA.
 }
 \seealso{
@@ -83,8 +83,8 @@ pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
 names(pie.sales) <- c("Blueberry", "Cherry",
     "Apple", "Boston Cream", "Other", "Vanilla Cream")
 pie(pie.sales) # default colours
-pie(pie.sales,
-    col = c("purple", "violetred1", "green3", "cornsilk", "cyan", "white"))
+pie(pie.sales, col = c("purple", "violetred1", "green3",
+                       "cornsilk", "cyan", "white"))
 pie(pie.sales, col = gray(seq(0.4,1.0,length=6)))
 pie(pie.sales, density = 10, angle = 15 + 10 * 1:6)
 pie(pie.sales, clockwise=TRUE, main="pie(*, clockwise=TRUE)")

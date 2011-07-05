@@ -62,7 +62,8 @@
 "VIRTUAL"
 "missing"
 
-"namedList" # the alternative to "list" that preserves the names attribute
+"namedList" # the alternative to "list" that preserves
+            # the names attribute
 }
 \section{Objects from the Classes}{
   Objects can be created by calls of the form \code{new(Class, ...)},

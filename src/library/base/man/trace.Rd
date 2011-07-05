@@ -229,7 +229,8 @@ f <- function(x, y) {
 
 ## arrange to call the browser on entering and exiting
 ## function f
-trace("f", quote(browser(skipCalls=4)), exit = quote(browser(skipCalls=4)))
+trace("f", quote(browser(skipCalls=4)),
+      exit = quote(browser(skipCalls=4)))
 
 ## instead, conditionally assign some data, and then browse
 ## on exit, but only then.  Don't bother me otherwise

@@ -75,7 +75,8 @@ classesToAM(classes, includeSubclasses = FALSE,
 }
 \examples{
 
-## the super- and subclasses of "standardGeneric" and "derivedDefaultMethod"
+## the super- and subclasses of "standardGeneric"
+## and "derivedDefaultMethod"
 am <- classesToAM(list(class(show), class(getMethod(show))), TRUE)
 am
 

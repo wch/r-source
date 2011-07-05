@@ -17,7 +17,8 @@
 \method{plot}{stl}(x, labels = colnames(X),
      set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
                      tck = -0.01, mfrow = c(nplot, 1)),
-     main = NULL, range.bars = TRUE, \dots, col.range = "light gray")
+     main = NULL, range.bars = TRUE, \dots,
+     col.range = "light gray")
 }
 \arguments{
   \item{x}{\code{\link{stl}} object.}

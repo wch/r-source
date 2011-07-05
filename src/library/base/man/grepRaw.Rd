@@ -11,8 +11,8 @@
   raw vector \code{x}.
 }
 \usage{
-grepRaw(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE, 
-    fixed = FALSE, all = FALSE, invert = FALSE) 
+grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
+        value = FALSE, fixed = FALSE, all = FALSE, invert = FALSE) 
 }
 \arguments{
   \item{pattern}{raw vector containing a \link{regular expression}

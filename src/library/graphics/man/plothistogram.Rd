@@ -18,7 +18,8 @@
                             paste(x$xname, collapse="\n")),
                sub = NULL, xlab = x$xname, ylab,
                xlim = range(x$breaks), ylim = NULL,
-               axes = TRUE, labels = FALSE, add = FALSE, ann = TRUE, \dots)
+               axes = TRUE, labels = FALSE, add = FALSE,
+               ann = TRUE, \dots)
 
 \method{lines}{histogram}(x, \dots)
 }

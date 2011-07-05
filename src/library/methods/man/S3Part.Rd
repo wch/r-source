@@ -227,7 +227,8 @@ empty list for any other object.
  Springer (For the original S4 version.)
 }
 \examples{
-## two examples extending S3 class "lm", class "xlm"  directly and "ylm" indirectly
+## two examples extending S3 class "lm", class "xlm" directly
+## and "ylm" indirectly
 setClass("xlm", representation(eps = "numeric"), contains = "lm")
 setClass("ylm", representation(header = "character"), contains = "xlm")
 \dontshow{
@@ -259,7 +260,8 @@ ym2 <- new("ymm", myLm, header = "Example2", eps = .001)
 # but for class "ymm", an S3 part of class "lm" is an error:
 try(new("ymm", lm.D9, header = "Example2", eps = .001))
 
-setClass("dataFrameD", representation(date = "Date"), contains = "data.frame")
+setClass("dataFrameD", representation(date = "Date"),
+         contains = "data.frame")
 myDD <- new("dataFrameD", myData, date = Sys.Date())
 
 ## S3Part() applied to classes with a data part (.Data slot)
@@ -275,7 +277,8 @@ stopifnot(identical(m1, S3Part(mx1, strict = TRUE)))
 
 \dontshow{
 
-for(cl in c("ylm", "xlm", "ymm", "xmm", "dataFrameD", "NumX", "MatX")) removeClass(cl)
+for(cl in c("ylm", "xlm", "ymm", "xmm", "dataFrameD", "NumX", "MatX"))
+    removeClass(cl)
 
 }
 }

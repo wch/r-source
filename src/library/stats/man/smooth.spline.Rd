@@ -255,9 +255,10 @@ stopifnot(all.equal(predict(s02, xx),
 }
 \donttest{
 ## The following shows the problematic behavior of 'spar' searching:
-(s2  <- smooth.spline(y18, control = list(trace=TRUE,tol=1e-6, low= -1.5)))
-(s2m <- smooth.spline(y18, cv = TRUE,
-                      control = list(trace=TRUE,tol=1e-6, low= -1.5)))
+(s2  <- smooth.spline(y18, control =
+                      list(trace = TRUE, tol = 1e-6, low = -1.5)))
+(s2m <- smooth.spline(y18, cv = TRUE, control =
+                      list(trace = TRUE, tol = 1e-6, low = -1.5)))
 ## both above do quite similarly (Df = 8.5 +- 0.2)
 }}
 \keyword{smooth}

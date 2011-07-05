@@ -18,7 +18,8 @@
 getSrcFilename(x, full.names = FALSE, unique = TRUE)
 getSrcDirectory(x, unique=TRUE) 
 getSrcref(x)
-getSrcLocation(x, which=c("line", "column", "byte", "parse"), first=TRUE)
+getSrcLocation(x, which = c("line", "column", "byte", "parse"),
+               first = TRUE)
 }
 \arguments{
   \item{x}{

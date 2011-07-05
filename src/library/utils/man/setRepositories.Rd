@@ -10,8 +10,8 @@
   Interact with the user to choose the package repositories to be used.
 }
 \usage{
-setRepositories(graphics = getOption("menu.graphics"), ind = NULL,
-                addURLs = character())
+setRepositories(graphics = getOption("menu.graphics"),
+                ind = NULL, addURLs = character())
 }
 \arguments{
   \item{graphics}{Logical. If true, use a graphical list: on Windows or
@@ -66,6 +66,7 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL,
   \code{\link{chooseCRANmirror}}, \code{\link{install.packages}}.
 }
 \examples{\dontrun{
-setRepositories(addURLs = c(CRANxtras = "http://www.stats.ox.ac.uk/pub/RWin"))
+setRepositories(addURLs =
+                c(CRANxtras = "http://www.stats.ox.ac.uk/pub/RWin"))
 }}
 \keyword{ utilities }

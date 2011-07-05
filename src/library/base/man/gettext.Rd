@@ -74,7 +74,8 @@ for(n in 0:3)
                               "\%d variables have missing values"),
                   n))
 
-\dontrun{## for translation, those strings should appear in R-pkg.pot as
+\dontrun{
+## for translation, those strings should appear in R-pkg.pot as
 msgid        "\%d variable has missing values"
 msgid_plural "\%d variables have missing values"
 msgstr[0] ""

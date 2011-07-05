@@ -15,11 +15,12 @@
   \code{options(keep.source = TRUE)}.
 }
 \usage{
-findLineNum(srcfile, line, nameonly = TRUE, envir = parent.frame(),
-            lastenv)
+findLineNum(srcfile, line, nameonly = TRUE,
+            envir = parent.frame(), lastenv)
 
-setBreakpoint(srcfile, line, nameonly = TRUE, envir = parent.frame(),
-              lastenv, verbose = TRUE, tracer, print = FALSE, ...)
+setBreakpoint(srcfile, line, nameonly = TRUE,
+              envir = parent.frame(), lastenv, verbose = TRUE,
+              tracer, print = FALSE, ...)
 }
 \arguments{
   \item{srcfile}{The name of the file containing the source code.}

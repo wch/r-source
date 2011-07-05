@@ -53,7 +53,8 @@ as.dendrogram(object, \dots)
 
 \method{str}{dendrogram}(object, max.level = NA, digits.d = 3,
     give.attr = FALSE, wid = getOption("width"),
-    nest.lev = 0, indent.str = "", last.str = "`", stem = "--", \dots)
+    nest.lev = 0, indent.str = "", last.str = "`", stem = "--",
+    \dots)
 
 is.leaf(object)
 }
@@ -238,7 +239,8 @@ str(d3, last.str="'")
 ## merge() all parts back (using default 'height' instead of original one):
 den.1 <- Reduce(merge, dend2$lower)
 ## or merge() all four parts at same height --> 4 branches (!)
-d. <- merge(dend2$lower[[1]], dend2$lower[[2]], dend2$lower[[3]], dend2$lower[[4]])
+d. <- merge(dend2$lower[[1]], dend2$lower[[2]], dend2$lower[[3]],
+            dend2$lower[[4]])
 ## (with a warning) or the same using  do.call :
 stopifnot(identical(d., do.call(merge, dend2$lower)))
 plot(d., main="merge(d1, d2, d3, d4)  |->  dendrogram with a 4-split")

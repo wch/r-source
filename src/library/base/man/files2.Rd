@@ -16,7 +16,8 @@
   file system.
 }
 \usage{
-dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
+dir.create(path, showWarnings = TRUE, recursive = FALSE,
+          mode = "0777")
 Sys.chmod(paths, mode = "0777", use_umask=TRUE)
 Sys.umask(mode = NA)
 }
@@ -133,8 +134,9 @@ Sys.umask(mode = NA)
 
 \examples{\dontrun{
 ## Fix up maximal allowed permissions in a file tree
-Sys.chmod(list.dirs('.'), "777")
-f <- list.files('.', all.files = TRUE, full.names = TRUE, recursive =TRUE)
+Sys.chmod(list.dirs("."), "777")
+f <- list.files(".", all.files = TRUE, full.names = TRUE,
+                recursive =TRUE)
 Sys.chmod(f, (file.info(f)$mode | "664"))
 }}
 \keyword{file}

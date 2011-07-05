@@ -307,7 +307,8 @@ myLm <- lm(cbind(y, y^3)  ~ time, myData)
 
 showClass("data.frame")# to see the predefined S4 "oldClass"
 
-## two examples extending S3 class "lm", class "xlm"  directly and "ylm" indirectly
+## two examples extending S3 class "lm", class "xlm" directly
+## and "ylm" indirectly
 setClass("xlm", representation(eps = "numeric"), contains = "lm")
 setClass("ylm", representation(header = "character"), contains = "xlm")
 ym1 = new("ylm", myLm, header = "Example", eps = 0.)
@@ -350,10 +351,12 @@ selectMethod("show", "stamped")
 removeClass("stamped4")
 \dontshow{
 set.seed(113)}
-someLetters <- stamped(sample(letters, 10),  ISOdatetime(2008, 10, 15, 12, 0, 0))
+someLetters <- stamped(sample(letters, 10),
+                       ISOdatetime(2008, 10, 15, 12, 0, 0))
 
 st <- new("stamped", someLetters)
-st  # show() method prints the object's class, then calls the S3 print method.
+st
+# show() method prints the object's class, then calls the S3 print method.
 
 stopifnot(identical(S3Part(st, TRUE), someLetters))
 
@@ -364,7 +367,8 @@ new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
 ## The code in R that defines "ts" as an S4 class
 setClass("ts", contains = "structure",
       representation(tsp = "numeric"),
-      prototype(NA, tsp = rep(1,3))) # prototype to be a legal S3 time-series
+      prototype(NA, tsp = rep(1,3)))
+# prototype to be a legal S3 time-series
 ## and now registers it as an S3 class
     setOldClass("ts", S4Class = "ts", where = envir)
 }

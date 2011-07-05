@@ -12,7 +12,9 @@
   of a package.
 }
 \usage{
-buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
+buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE,
+              clean = TRUE)
+
 pkgVignettes(package, dir, lib.loc = NULL)
 }
 \arguments{

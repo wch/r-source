@@ -11,9 +11,10 @@
   which depend on this one, and (optionally) so on recursively.
 }
 \usage{
-dependsOnPkgs(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
+dependsOnPkgs(pkgs,
+              dependencies = c("Depends", "Imports", "LinkingTo"),
               recursive = TRUE, lib.loc = NULL,
-              installed = installed.packages(lib.loc, fields = "Enhances"))
+          installed = installed.packages(lib.loc, fields = "Enhances"))
 }
 \arguments{
   \item{pkgs}{a character vector of package names.}

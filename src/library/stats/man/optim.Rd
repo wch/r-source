@@ -312,8 +312,9 @@ arrows(tspinit[s,1], tspinit[s,2], tspinit[s+1,1], tspinit[s+1,2],
 text(x, y, labels(eurodist), cex=0.8)
 
 set.seed(123) # chosen to get a good soln relatively quickly
-res <- optim(sq, distance, genseq, method="SANN",
-             control = list(maxit=30000, temp=2000, trace=TRUE, REPORT=500))
+res <- optim(sq, distance, genseq, method = "SANN",
+             control = list(maxit = 30000, temp = 2000, trace = TRUE,
+                            REPORT = 500))
 res  # Near optimum distance around 12842
 
 tspres <- loc[res$par,]

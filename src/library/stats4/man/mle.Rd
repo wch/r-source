@@ -45,8 +45,11 @@ od <- options(digits = 5)
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 ## This needs a constrained parameter space: most methods will accept NA
-ll <- function(ymax = 15, xhalf = 6)
-    if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
+ll <- function(ymax = 15, xhalf = 6) {
+    if(ymax > 0 && xhalf > 0)
+      -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
+    else NA
+}
 (fit <- mle(ll, nobs=length(y)))
 mle(ll, fixed=list(xhalf=6))
 ## alternative using bounds on optimization
@@ -63,8 +66,9 @@ vcov(fit)
 plot(profile(fit), absVal = FALSE)
 confint(fit)
 
-## use bounded optimization
-## the lower bounds are really > 0, but we use >=0 to stress-test profiling
+## Use bounded optimization
+## The lower bounds are really > 0,
+## but we use >=0 to stress-test profiling
 (fit1 <- mle(ll, method = "L-BFGS-B", lower = c(0, 0)))
 plot(profile(fit1), absVal=FALSE)
 

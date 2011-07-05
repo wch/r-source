@@ -154,7 +154,8 @@ tkimage.configure(...)
 tkimage.create(...)
 tkimage.names(...)
 
-## NB: some widgets also have a selection.clear command, hence the "X".
+## NB: some widgets also have a selection.clear command,
+## hence the "X".
 
 tkXselection.clear(...)
 tkXselection.get(...)
@@ -165,8 +166,9 @@ tkwait.variable(...)
 tkwait.visibility(...)
 tkwait.window(...)
 
-## winfo actually has a large number of subcommands, but it's rarely
-## used, so use tkwinfo("atom", ...) etc. instead.
+## winfo actually has a large number of subcommands,
+## but it's rarely used,
+## so use tkwinfo("atom", ...) etc. instead.
 
 tkwinfo(...)
 

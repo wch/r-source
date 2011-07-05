@@ -12,7 +12,8 @@
   \code{FALSE} in every other case.
 }
 \usage{
-identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
+identical(x, y, num.eq = TRUE, single.NA = TRUE,
+          attrib.as.set = TRUE)
 }
 \arguments{
   \item{x, y}{any \R objects.}

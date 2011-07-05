@@ -186,7 +186,8 @@ lapply(x, quantile, probs = 1:3/4)
 sapply(x, quantile)
 i39 <- sapply(3:9, seq) # list of vectors
 sapply(i39, fivenum)
-vapply(i39, fivenum, c(Min.=0, "1st Qu."=0, Median=0, "3rd Qu."=0, Max.=0))
+vapply(i39, fivenum,
+       c(Min. = 0, "1st Qu." = 0, Median = 0, "3rd Qu." = 0, Max. = 0))
 
 ## sapply(*, "array") -- artificial example
 (v <- structure(10*(5:8), names=LETTERS[1:4]))

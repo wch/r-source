@@ -13,8 +13,8 @@
   processing by other functions.
 }
 \usage{
-parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
-         fragment = FALSE, warningCalls = TRUE)
+parse_Rd(file, srcfile = NULL, encoding = "unknown",
+         verbose = FALSE, fragment = FALSE, warningCalls = TRUE)
 \method{print}{Rd}(x, deparse = FALSE, \dots)
 \method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }

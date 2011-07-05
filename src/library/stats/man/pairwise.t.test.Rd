@@ -13,7 +13,8 @@
 \usage{
 pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
                 pool.sd = !paired, paired = FALSE,
-                alternative = c("two.sided", "less", "greater"),  \dots)
+                alternative = c("two.sided", "less", "greater"),
+                \dots)
 }
 \arguments{
  \item{x}{ response vector. }

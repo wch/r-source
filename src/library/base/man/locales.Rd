@@ -131,6 +131,7 @@ Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
 
-Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting, usually
+Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,
+                                   #  usually
 }
 \keyword{utilities}
