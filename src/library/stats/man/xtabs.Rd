@@ -13,8 +13,8 @@
   using a formula interface.
 }
 \usage{
-xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE, na.action,
-      exclude = c(NA, NaN), drop.unused.levels = FALSE)
+xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
+      na.action, exclude = c(NA, NaN), drop.unused.levels = FALSE)
 }
 \arguments{
   \item{formula}{a \link{formula} object with the cross-classifying variables

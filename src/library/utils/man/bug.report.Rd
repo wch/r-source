@@ -8,7 +8,8 @@
 \title{Send a Bug Report}
 \usage{
 bug.report(subject = "",  address,
-           file = "R.bug.report", package = NULL, lib.loc = NULL, \dots)
+           file = "R.bug.report", package = NULL, lib.loc = NULL,
+           \dots)
 }
 \arguments{
   \item{subject}{Subject of the email.}

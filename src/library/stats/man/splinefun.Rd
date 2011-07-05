@@ -14,7 +14,8 @@
   \emph{function} performing the interpolation.
 }
 \usage{
-splinefun(x, y = NULL, method = c("fmm", "periodic", "natural", "monoH.FC"),
+splinefun(x, y = NULL,
+          method = c("fmm", "periodic", "natural", "monoH.FC"),
           ties = mean)
 
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
@@ -156,8 +157,9 @@ x. <- sort(runif(n)) ; y. <- cumsum(abs(rnorm(n)))
 plot(x.,y.)
 curve(splinefun(x.,y.)(x),                add=TRUE, col=2, n=1001)
 curve(splinefun(x.,y., method="mono")(x), add=TRUE, col=3, n=1001)
-legend("topleft", paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
-        col=2:3, lty=1)
+legend("topleft",
+       paste("splinefun( \"", c("fmm", "monoH.CS"), "\" )", sep=''),
+       col = 2:3, lty = 1)
 }
 \keyword{math}
 \keyword{dplot}

@@ -130,7 +130,8 @@ x1 == x2                           # FALSE on most machines
 identical(all.equal(x1, x2), TRUE) # TRUE everywhere
 
 \donttest{
-z <- c(32:126, 160:255) # range of most 8-bit charsets, Latin-1 in Unicode
+# range of most 8-bit charsets, as well as of Latin-1 in Unicode
+z <- c(32:126, 160:255)
 x <- if(l10n_info()$MBCS) {
     intToUtf8(z, multiple = TRUE)
 } else rawToChar(as.raw(z), multiple= TRUE)

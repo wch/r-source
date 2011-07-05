@@ -7,8 +7,8 @@
 \alias{make.packages.html}
 \title{Update HTML Package List}
 \usage{
-make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE,
-                   docdir = R.home("doc"))
+make.packages.html(lib.loc = .libPaths(), temp = FALSE,
+                   verbose = TRUE, docdir = R.home("doc"))
 }
 \description{
   Re-create the HTML list of packages.

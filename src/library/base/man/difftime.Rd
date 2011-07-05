@@ -40,8 +40,8 @@ as.difftime(tim, format = "\%X", units = "auto")
 \method{units}{difftime}(x) <- value
 \method{as.double}{difftime}(x, units = "auto", ...)
 
-## Group methods, notably for round(), signif(), floor(), ceiling(),
-## trunc(), abs(); called directly, *not* as Math():
+## Group methods, notably for round(), signif(), floor(),
+## ceiling(), trunc(), abs(); called directly, *not* as Math():
 \method{Math}{difftime}(x, \dots)
 }
 \arguments{

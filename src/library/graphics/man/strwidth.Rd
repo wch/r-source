@@ -12,8 +12,11 @@
   or as fraction of the figure width \code{par("fin")}.
 }
 \usage{
-strwidth(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
-strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
+strwidth(s, units = "user", cex = NULL, font = NULL,
+         vfont = NULL, ...)
+
+strheight(s, units = "user", cex = NULL, font = NULL,
+          vfont = NULL, ...)
 }
 \alias{strwidth}
 \alias{strheight}

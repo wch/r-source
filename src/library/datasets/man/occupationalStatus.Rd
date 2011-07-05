@@ -21,7 +21,7 @@
   Goodman, L. A. (1979)
   Simple Models for the Analysis of Association in Cross-Classifications
   having Ordered Categories.
-  \emph{J. Am.\ Stat.\ Assoc.}, \bold{74} (367), 537--552.
+  \emph{J. Am. Stat. Assoc.}, \bold{74} (367), 537--552.
 
   The data set has been in package \pkg{gnm} and been provided by the
   package authors.

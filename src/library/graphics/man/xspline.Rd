@@ -10,8 +10,8 @@
   Draw an X-spline, a curve drawn relative to control points.
 }
 \usage{
-xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
-        border = par("fg"), col = NA, \dots)
+xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE,
+        draw = TRUE, border = par("fg"), col = NA, \dots)
 }
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices

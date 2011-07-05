@@ -14,8 +14,8 @@
   graphics file formats.
 }
 \usage{
-quartz(title, width, height, pointsize, family, fontsmooth, antialias,
-       type, file = NULL, bg, canvas, dpi)
+quartz(title, width, height, pointsize, family, fontsmooth,
+       antialias, type, file = NULL, bg, canvas, dpi)
 
 quartz.options(\dots, reset = FALSE)
 }

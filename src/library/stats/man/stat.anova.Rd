@@ -6,7 +6,8 @@
 \name{stat.anova}
 \title{GLM Anova Statistics}
 \usage{
-stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"), scale, df.scale, n)
+stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"),
+           scale, df.scale, n)
 }
 \alias{stat.anova}
 \arguments{

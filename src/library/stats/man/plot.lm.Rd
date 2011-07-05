@@ -10,9 +10,9 @@
 \usage{
 \method{plot}{lm}(x, which = c(1:3,5), %% was which = 1:4
      caption = list("Residuals vs Fitted", "Normal Q-Q",
-          "Scale-Location", "Cook's distance",
-          "Residuals vs Leverage",
-          expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
+       "Scale-Location", "Cook's distance",
+       "Residuals vs Leverage",
+       expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
      panel = if(add.smooth) panel.smooth else points,
      sub.caption = NULL, main = "",
      ask = prod(par("mfcol")) < length(which) && dev.interactive(),
@@ -128,7 +128,8 @@ require(graphics)
 
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.
-plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings))
+lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+plot(lm.SR)
 
 ## 4 plots on 1 page;
 ## allow room for printing model formula in outer margin:

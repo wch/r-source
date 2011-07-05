@@ -7,7 +7,8 @@
 \alias{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, unload = FALSE, character.only = FALSE, force = FALSE)
+detach(name, pos = 2, unload = FALSE, character.only = FALSE,
+       force = FALSE)
 }
 \arguments{
   \item{name}{

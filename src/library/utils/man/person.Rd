@@ -161,10 +161,10 @@ p[1]$email
 ## AC is the first author [aut] who wrote the S original.
 ## BR is the second author [aut], who translated the code to R [trl],
 ## and maintains the package [cre].
-b <- c(person("Angelo", "Canty", role = "aut",
-         comment = "S original, http://statwww.epfl.ch/davison/BMA/library.html"),
+b <- c(person("Angelo", "Canty", role = "aut", comment =
+         "S original, http://statwww.epfl.ch/davison/BMA/library.html"),
        person(c("Brian", "D."), "Ripley", role = c("aut", "trl", "cre"),
-         comment = "R port", email = "ripley@stats.ox.ac.uk")
+              comment = "R port", email = "ripley@stats.ox.ac.uk")
      )
 b
 

@@ -6,9 +6,9 @@
 \name{arrows}
 \title{Add Arrows to a Plot}
 \usage{
-arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2,
-       col = par("fg"), lty = par("lty"), lwd = par("lwd"),
-       \dots)
+arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30,
+       code = 2, col = par("fg"), lty = par("lty"),
+       lwd = par("lwd"), \dots)
 }
 \alias{arrows}
 \arguments{

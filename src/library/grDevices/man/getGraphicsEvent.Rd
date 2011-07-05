@@ -154,7 +154,8 @@ dragplot <- function(..., xlim=NULL, ylim=NULL, xaxs="r", yaxs="r") {
 }
 
 dragplot(rnorm(1000), rnorm(1000))
-# This currently only works on the Windows and X11(type="Xlib") screen devices...
+# This currently only works on the Windows
+# and X11(type = "Xlib") screen devices...
 getGraphicsEvent()
 par(savepar)
 }

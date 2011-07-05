@@ -20,7 +20,8 @@ merge(x, y, \dots)
 
 \method{merge}{data.frame}(x, y, by = intersect(names(x), names(y)),
       by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
-      sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, \dots)
+      sort = TRUE, suffixes = c(".x",".y"),
+      incomparables = NULL, \dots)
 }
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one.}

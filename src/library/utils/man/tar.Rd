@@ -14,7 +14,8 @@
 \usage{
 tar(tarfile, files = NULL,
     compression = c("none", "gzip", "bzip2", "xz"),
-    compression_level = 6, tar = Sys.getenv("tar"), extra_flags = "")
+    compression_level = 6, tar = Sys.getenv("tar"),
+    extra_flags = "")
 }
 
 \arguments{

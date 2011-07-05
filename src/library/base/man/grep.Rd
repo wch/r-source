@@ -24,8 +24,8 @@
 grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
      fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
-grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
-      useBytes = FALSE)
+grepl(pattern, x, ignore.case = FALSE, perl = FALSE,
+      fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)

@@ -145,9 +145,9 @@ sort(c(10:3,2:12), method = "qu", index.return=TRUE) # is not
 ##        ^^^^^
 
 x <- c(1:3, 3:5, 10)
-is.unsorted(x)                #-> FALSE: is sorted
-is.unsorted(x, strictly=TRUE) #-> TRUE : is not (and cannot be) sorted strictly
-
+is.unsorted(x)                # FALSE: is sorted
+is.unsorted(x, strictly=TRUE) # TRUE : is not (and cannot be)
+                              # sorted strictly
 \dontrun{
 ## Small speed comparison simulation:
 N <- 2000

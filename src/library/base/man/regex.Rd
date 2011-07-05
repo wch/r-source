@@ -104,7 +104,8 @@
       Printable characters: \samp{[:alnum:]}, \samp{[:punct:]} and space.}
 
     \item{\samp{[:punct:]}}{Punctuation characters:
-      \samp{! " # $ \% & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` \{ | \} ~}.}
+      \samp{! " # $ \% & ' ( ) * + , - . / : ; < = >
+	    ? @ [ \\ ] ^ _ ` \{ | \} ~}.}
 %'"`  keep Emacs Rd mode happy
 
     \item{\samp{[:space:]}}{
