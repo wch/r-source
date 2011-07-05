@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2011
-@set FAQ_DATE @value{FAQ_YEAR}-04-07
+@set FAQ_DATE @value{FAQ_YEAR}-07-05
 @set REL_YEAR 2011
 @set REL_MAJOR 2
 @set REL_MINOR 13
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -510,32 +510,27 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
 
-@c Linux binaries as of 2009-04-15:
+@c Linux binaries as of 2011-07-05:
 @c
 @c debian
 @c   etch-cran
-@c            i386   2.8.1  Johannes Ranke
-@c            amd64  2.8.1  Johannes Ranke
+@c            i386   2.11.0  Johannes Ranke
+@c            amd64  2.11.0  Johannes Ranke
 @c   lenny-cran
-@c            i386   2.8.1  Johannes Ranke
+@c            i386   2.13.0  Johannes Ranke
+@c            amd64  2.13.0  Johannes Ranke
+@c   squeeze-cran
+@c            i386   2.13.0  Johannes Ranke
+@c            amd64  2.13.0  Johannes Ranke
 @c redhat
-@c   el4      i386   2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c            x86_64 2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   el5      i386   2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c            x86_64 2.8.1  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   fedora8  i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora9  i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora10 i386   2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c            x86_64 2.8.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c suse
-@c   10.3     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
-@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
-@c   11.0     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
-@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
-@c   11.1     i586   2.8.1  Detlef Steuer <steuer@hsu-hh.de>
-@c            x86_64 2.8.1  Detlef Steuer <steuer@hsu-hh.de>
+@c   el4      i386   2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c            x86_64 2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   el5      i386   2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c            x86_64 2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   fedora10 i386   2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c            x86_64 2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   fedora11 i386   2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c            x86_64 2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c ubuntu
 @c   intrepid [Intrepid Ibex, 8.10]
 @c           i386   2.8.1  Vincent Goulet
@@ -556,13 +551,9 @@ packages.
 @quotation
 @multitable {Red Hat} {i386/x86_64} {hardy/karmic/lucid/maverick} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64 @tab etch-cran @tab Johannes Ranke
-@item          @tab i386       @tab lenny-cran @tab Johannes Ranke
+@item Debian   @tab i386/amd64 @tab etch/lenny/squeeze @tab Johannes Ranke
 @item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11 @tab Martyn Plummer
-@c @item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
-@c @item SuSE     @tab i586/x86_64 @tab 10.3/11.0/11.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab hardy/karmic/lucid/maverick @tab Vincent Goulet
-@item          @tab amd64  @tab hardy/karmic/lucid/maverick @tab Michael Rutter
+@item Ubuntu   @tab i386/amd64 @tab hardy/lucid/maverick/natty @tab Michael Rutter
 @end multitable
 @end quotation
 
@@ -578,7 +569,7 @@ available from @CRAN{}.  See
 @url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
-provided by Vincent Goulet and Michael Rutter.
+provided by Michael Rutter.
 
 R binaries for Fedora, maintained by Tom ``Spot'' Callaway, are provided
 as part of the Fedora distribution and can be accessed through
@@ -605,9 +596,9 @@ information about RPMs for openSUSE.
 @c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
 @c created by Stephen Shiboski <steve@biostat.ucsf.edu>.
 
-The @file{bin/solaris} directory of a @CRAN{} site contains binary
-packages for Solaris on the SPARC and x64 platforms, provided by Mithun
-Sridharan.
+@c The @file{bin/solaris} directory of a @CRAN{} site contains binary
+@c packages for Solaris on the SPARC and x64 platforms, provided by Mithun
+@c Sridharan.
 
 No other binary distributions are currently publically available via
 @CRAN{}.
@@ -1719,15 +1710,17 @@ interface is created automatically.  There is no need for the user to do
 any extra scripting or learn any new scripting techniques.  Rwui can
 also be found at @uref{http://rwui.cryst.bbk.ac.uk}.
 
-Finally, the @cpkg{R.rsp} package by Henrik Bengtsson introduces ``R
-Server Pages''.  Analogous to Java Server Pages, an R server page is
-typically @HTML{} with embedded R code that gets evaluated when the page
-is requested.  The package includes an internal cross-platform HTTP
-server implemented in Tcl, so provides a good framework for including
-web-based user interfaces in packages.  The approach is similar to the
-use of the @cpkg{brew} package with @url{http://rapache.net/, Rapache}
-with the advantage of cross-platform support and easy installation.
+The @cpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
+Pages''.  Analogous to Java Server Pages, an R server page is typically
+@HTML{} with embedded R code that gets evaluated when the page is
+requested.  The package includes an internal cross-platform HTTP server
+implemented in Tcl, so provides a good framework for including web-based
+user interfaces in packages.  The approach is similar to the use of the
+@cpkg{brew} package with @url{http://rapache.net/, Rapache} with the
+advantage of cross-platform support and easy installation.
 
+Finally, the @cpkg{Rook} package by Jeffrey Horner provides a web server
+server interface borrowing heavily from Ruby's Rack project.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -2275,6 +2268,8 @@ dir /opt/R/src/unix
 * Why does backslash behave strangely inside strings?::  
 * How can I put error bars or confidence bands on my plot?::  
 * How do I create a plot with two y-axes?::  
+* How do I access the source code for a function?::  
+* Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3296,7 +3291,7 @@ package, and the @code{geom_errorbar()}, @code{geom_errorbarh()},
 displayed with @code{Dotplot()} or @code{xYplot()} in the @cpkg{Hmisc}
 package and @code{segplot()} in the @cpkg{latticeExtra} package.
 
-@node How do I create a plot with two y-axes?,  , How can I put error bars or confidence bands on my plot?, R Miscellanea
+@node How do I create a plot with two y-axes?, How do I access the source code for a function?, How can I put error bars or confidence bands on my plot?, R Miscellanea
 @section How do I create a plot with two y-axes?
 
 Creating a graph with two y-axes, i.e., with two sorts of data that are
@@ -3310,6 +3305,55 @@ automate the process somewhat.  See
 @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
 for more information, including strong arguments against this sort of
 graph.
+
+@node How do I access the source code for a function?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, How do I create a plot with two y-axes?, R Miscellanea
+@section How do I access the source code for a function?
+
+In most cases, typing the name of the function will print its source 
+code. However, code is sometimes hidden in a namespace, or compiled.  For 
+a complete overview on how to access source code, see Uwe Ligges (2006),
+``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
+43--45 (@url{http://cran.r-project.org/doc/Rnews/Rnews_2006-4.pdf}).
+
+@node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?,  , How do I access the source code for a function?, R Miscellanea
+@section Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?
+
+As described in @code{?summary.lm}, when the intercept is zero (e.g.,
+from @code{y ~ x - 1} or @code{y ~ x + 0}), @code{summary.lm()} uses the
+formula
+@ifnottex
+  R^2 = 1 - Sum(R[i]^2) / Sum((y[i])^2)
+@end ifnottex
+@tex
+$ R^2 = 1 - \sum_i R_i^2 / \sum_i y_i^2 $
+@end tex
+which is different from the usual
+@ifnottex
+  R^2 = 1 - Sum(R[i]^2) / Sum((y[i] - mean(y))^2).
+@end ifnottex
+@tex
+$ R^2 = 1 - \sum R_i^2 / \sum_i (y_i - \hbox{mean}(y))^2. $ 
+@end tex
+There are several reasons for this:
+@itemize
+@item
+Otherwise the @math{R^2} could be negative (because the model with zero
+intercept can fit @emph{worse} than the constant-mean model it is
+implicitly compared to).
+@item
+If you set the slope to zero in the model with a line through the
+origin you get fitted values y*=0
+@item
+The model with constant, non-zero mean is not nested in the model
+with a line through the origin.
+@end itemize
+
+All these come down to saying that if you know @emph{a priori} that
+@math{E[Y]=0} when @math{x=0} then the `null' model that you should
+compare to the fitted line, the model where @math{x} doesn't explain any
+of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
+don't know a priori that @math{E[Y]=0} when @math{x=0}, then you
+probably shouldn't be fitting a line through the origin.)
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
