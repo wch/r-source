@@ -99,6 +99,9 @@ mkRbase:
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f2}" all.R)
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	else if test all.R -nt $(top_builddir)/library/$(pkg)/R/$(pkg); then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  fi \
 	fi
 
 mkdesc:
