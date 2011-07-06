@@ -54,8 +54,7 @@ function(topic, package = NULL, lib.loc = NULL,
     else match.arg(tolower(help_type),
                    c("text", "html", "postscript", "ps", "pdf"))
     if (help_type %in% c("postscript", "ps"))
-        warning("Postscript offline help is deprecated",
-                call. = FALSE, immediate. = TRUE)
+        stop("Postscript offline help is defunct", call. = FALSE)
 
     paths <- index.search(topic,
                           find.package(package, lib.loc, verbose = verbose))
@@ -256,4 +255,16 @@ function(x, ...)
     if(!file.exists(paste(RdDB, "rdx", sep=".")))
                 stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
     tools:::fetchRdDB(RdDB, basename(file))
+}
+
+## moved in 2.14.0 from unix/windows versions
+offline_help_helper <- function(texfile, type = "pdf")
+{
+    tools::texi2dvi(texfile, pdf = TRUE, clean=TRUE)
+    ofile <- sub("tex$", "pdf", texfile)
+    if(!file.exists(ofile))
+        stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)
+    if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
+    message("Saving help page to ", sQuote(basename(ofile)))
+    invisible()
 }
