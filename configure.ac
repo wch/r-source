@@ -436,15 +436,6 @@ AC_ARG_WITH([ICU],
 [R_ARG_USE(ICU)],
 [use_ICU=yes])
 
-## Byte-compilation of packages.
-AC_ARG_ENABLE([byte-compiled-packages],
-[AS_HELP_STRING([--enable-byte-compiled-packages],
-                [(not yet operational) byte-compile R packages @<:@no@:>@])],
-[want_byte_compiled_packages="${enableval}"],
-[want_byte_compiled_packages=no])
-AM_CONDITIONAL(BYTE_COMPILE_PACKAGES,
-               [test "x${want_byte_compiled_packages}" = xyes])
-
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
