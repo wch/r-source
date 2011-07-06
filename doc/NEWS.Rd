@@ -690,6 +690,10 @@
 
       \item \code{isClass()} used its own namespace as the default of
       the \code{where} argument inadvertently.
+      
+      \item Rd conversion to latex mis-handled multi-line titles
+      (including cases where there was a blank line in the \samp{\title}
+      section).
     }
   }
 }
