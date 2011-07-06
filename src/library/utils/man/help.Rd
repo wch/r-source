@@ -105,11 +105,11 @@ help(topic, package = NULL, lib.loc = NULL,
 
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
-  input as a LaTeX style file after \code{Rd.sty}.  Some 
+  input as a LaTeX style file after \code{Rd.sty}.  Some
   \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
-  (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI} /
-  \env{R_RD4PDF} (see \sQuote{Making manuals} in the
-  \sQuote{R Installation and Administration Manual}).
+  (\emph{via} \code{getOption("papersize")}) and \env{R_RD4PDF} (see
+  \sQuote{Making manuals} in the \sQuote{R Installation and
+  Administration Manual}).
 
   If there is a function \code{offline_help_helper} in the workspace or
   further down the search path it is used to do the typesetting,

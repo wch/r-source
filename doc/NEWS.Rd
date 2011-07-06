@@ -427,6 +427,9 @@
 
       \item The C99 functions \code{acosh}, \code{asinh}, \code{atanh},
       \code{snprintf} and \code{vsnprintf} are now required.
+      
+      \item There is no longer support for making DVI manuals \emph{via}
+      \command{make dvi}, \command{make install-dvi} and similar.
     }
   }
 

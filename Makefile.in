@@ -203,11 +203,11 @@ distdir: $(DISTFILES) vignettes
 	@cp library/utils/doc/*.pdf $(distdir)/src/library/utils/inst/doc
 	@(cd $(distdir); tools/link-recommended)
 
-dvi info pdf:
+info pdf:
 	-@(cd doc && $(MAKE) $@)
-install-dvi install-info install-pdf:
+install-info install-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
-uninstall-dvi uninstall-info uninstall-pdf:
+uninstall-info uninstall-pdf:
 	-@(cd doc/manual && $(MAKE) $@)
 
 install-tests:

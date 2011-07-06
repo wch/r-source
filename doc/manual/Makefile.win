@@ -25,18 +25,13 @@ subdir = doc/manual
 SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
   R-intro.texi R-ints.texi R-lang.texi
 
-OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = LC_ALL=C makeinfo
 PDFLATEX = pdflatex $(R_TEXOPTS)
-LATEX = latex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
-TEX = tex $(R_TEXOPTS)
-
-BATCHLATEX = $(LATEX) -interaction=nonstopmode
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
 MAKEINDEX = LC_ALL=C makeindex
@@ -48,7 +43,6 @@ TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 
 R_PAPERSIZE = a4
-R_RD4DVI = ae
 # omit 'hyper' to omit the hyperlinks
 R_RD4PDF = times,hyper
 #R_RD4PDF = lm,hyper
@@ -66,20 +60,9 @@ fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
 .SUFFIXES:
-.SUFFIXES: .dvi .html .info .texi .pdf
+.SUFFIXES: .html .info .texi .pdf
 
 all: pdf
-
-ifeq ($(strip $(TEXI2DVI)),)
-.texi.dvi:
-	$(TEX) $<
-	$(TEXINDEX) $*.cp $*.fn $*.vr
-	$(TEX) $<
-	$(TEX) $<
-else
-.texi.dvi:
-	$(TEXI2DVI) $<
-endif
 
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
@@ -107,56 +90,6 @@ R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
 	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 
-
-dvi: refman.dvi $(OBJECTS_DVI)
-$(OBJECTS_DVI): $(texiincludes) 
-
-refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
-  refman.top refman.bot
-	@$(ECHO) "DVI/LaTeX documentation: reference index ..."
-	@$(RM) -f *.aux refman.toc refman.ind
-	@(opt="$(R_PAPERSIZE)paper"; \
-	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
-	  opt="$(R_RD4DVI)"; \
-	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
-	  cat $(srcdir)/refman.top; \
-	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
-	  cat $(srcdir)/refman.bot) > refman.tex
-	@$(RM) -f *.aux refman.toc refman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHLATEX) refman.tex 
-	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHLATEX) refman.tex 
-
-fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
-  refman.top refman.bot
-	@$(ECHO) "DVI/LaTeX documentation: reference index ..."
-	@$(RM) -f *.aux refman.toc refman.ind
-	@(opt="$(R_PAPERSIZE)paper"; \
-	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
-	  opt="$(R_RD4DVI)"; \
-	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
-	  cat $(srcdir)/refman.top; \
-	  $(ECHO) "\\part{}"; \
-	  texinputs=`(for f in $(refman_TEXINPUTS); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
-	  $(ECHO) "\\part{}"; \
-	  texinputs=`(for f in $(texinputs_RECOMMENDED); \
-	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
-	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
-	  cat $(srcdir)/refman.bot) > fullrefman.tex
-	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHLATEX) fullrefman.tex 
-	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
-	  $(BATCHLATEX) fullrefman.tex 
 
 html: $(OBJECTS_HTML)
 $(OBJECTS_HTML): $(texiincludes) Rman.css
@@ -249,7 +182,7 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f *.pdf *.dvi *.info* *.html
+	@-rm -f *.pdf *.info* *.html
 maintainer-clean: distclean
 
 ../FAQ: R-FAQ.texi

@@ -429,25 +429,23 @@ R @acronym{FAQ}
 To make these (except @samp{fullrefman}), use
 
 @example
-make dvi      @r{to create DVI versions}
 make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman}).}
 @end example
 
 You will not be able to build any of these unless you have
-@command{makeinfo} version 4.7 or later installed, and for DVI or PDF
-you must have @command{texi2dvi} and @file{texinfo.tex} installed (which
-are part of the @acronym{GNU} @pkg{texinfo} distribution but are,
-especially @file{texinfo.tex}, often made part of the @TeX{} package in
+@command{makeinfo} version 4.7 or later installed, and for PDF you must
+have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
+of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
+@file{texinfo.tex}, often made part of the @TeX{} package in
 re-distributions).
 
-The DVI versions can be previewed and printed using standard programs
-such as @command{xdvi} and @command{dvips}.  The PDF versions can be
-viewed using any recent PDF viewer: they have hyperlinks that can be
-followed.  The info files are suitable for reading online with Emacs or
-the standalone @acronym{GNU} @command{info} program.  The DVI and PDF
-versions will be created using the paper size selected at configuration
-(default ISO a4): this can be overridden by setting @env{R_PAPERSIZE}
+The PDF versions can be viewed using any recent PDF viewer: they have
+hyperlinks that can be followed.  The info files are suitable for
+reading online with Emacs or the standalone @acronym{GNU} @command{info}
+program.  The PDF versions will be created using the paper size selected
+at configuration (default ISO a4): this can be overridden by setting
+@env{R_PAPERSIZE}
 @enindex R_PAPERSIZE
 on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
@@ -482,24 +480,22 @@ and its mirrors.  These type-1 fonts have poor hinting and so are
 nowhere near so readable on-screen as the other three options.
 
 @item ae
-(The default for DVI.)  A package to use composites of Computer Modern
-fonts.  This works well most of the time, and its PDF is more readable
-on-screen than the previous two options.  There are three fonts for
-which it will need to use bitmapped fonts, @file{tctt0900.600pk},
-@file{tctt1000.600pk} and @file{tcrm1000.600pk}.  Unfortunately, if
-those files are not available, Acrobat Reader will substitute
-completely incorrect glyphs so you need to examine the logs carefully.
+A package to use composites of Computer Modern fonts.  This works well
+most of the time, and its PDF is more readable on-screen than the
+previous two options.  There are three fonts for which it will need to
+use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and
+@file{tcrm1000.600pk}.  Unfortunately, if those files are not available,
+Acrobat Reader will substitute completely incorrect glyphs so you need
+to examine the logs carefully.
 @end table
 
-The default can be overridden by setting the environment variables
-@enindex R_RD4DVI
+The default can be overridden by setting the environment variable
 @enindex R_RD4PDF
-@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix-alikes, these will be
-picked up at install time and stored in @file{etc/Renviron}, but can
-still be overridden when the manuals are built.)  The default value for
-@env{R_RD4PDF} is @samp{times,hyper}: omit @samp{hyper} if you do not
-want hyperlinks, e.g.@: for printing.  The default for @env{R_RD4DVI} is
-@samp{ae}.
+@env{R_RD4PDF}.  (On Unix-alikes, this will be picked up at install time
+and stored in @file{etc/Renviron}, but can still be overridden when the
+manuals are built.)  The default value for @env{R_RD4PDF} is
+@samp{times,hyper}: omit @samp{hyper} if you do not want hyperlinks,
+e.g.@: for printing.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -633,25 +629,23 @@ packages) will not work.
 
 @cindex Manuals, installing
 
-To install DVI, info and PDF versions of the manuals, use one or more of
+To install info and PDF versions of the manuals, use one or more of
 
 @example
-make install-dvi
 make install-info
 make install-pdf
 @end example
 
 @noindent
 Once again, it is optional to specify @code{prefix}, @code{libdir} or
-@code{rhome} (the DVI and PDF manuals are installed under the @R{} home
+@code{rhome} (the PDF manuals are installed under the @R{} home
 directory).  (@command{make install-info} needs Perl installed if there
 is no command @command{install-info} on the system.)
 
 More precise control is possible.  For info, the setting used is that of
 @code{infodir} (default @file{@var{prefix}/info}, set by configure
-option @option{--infodir}).  The DVI and PDF files are installed into
-the @R{} @file{doc} tree, set by the @command{make} variable
-@code{rdocdir}.
+option @option{--infodir}).  The PDF files are installed into the @R{}
+@file{doc} tree, set by the @command{make} variable @code{rdocdir}.
 
 A staged installation is possible, that it is installing @R{} into a
 temporary directory in order to move the installed tree to its final
@@ -685,7 +679,7 @@ optionally specifying @code{prefix} etc in the same way as specified for
 installation.
 
 This will also uninstall any installed manuals.  There are specific
-targets to uninstall DVI, info and PDF manuals in file
+targets to uninstall info and PDF manuals in file
 @file{doc/manual/Makefile}.
 
 Target @code{uninstall-tests} will uninstall any installed tests, as
@@ -1221,16 +1215,8 @@ make -f Makefile.win info
 @end example
 
 @noindent
-To make DVI versions of the manuals use
-
-@example
-cd ../../doc/manual
-make -f Makefile.win dvi
-@end example
-
-@noindent
-(all assuming you have @command{pdftex}/@command{pdflatex} or
-@command{tex}/@command{latex} installed and in your path).
+(all assuming you have @command{pdftex}/@command{pdflatex} or installed
+and in your path).
 
 See the @ref{Making the manuals} section in the Unix-alike section for setting
 options such as the paper size.
@@ -2678,7 +2664,7 @@ some commercial Unixes).
 
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
-the @HTML{} manuals will be linked to @acronym{CRAN}. To make DVI or PDF
+the @HTML{} manuals will be linked to @acronym{CRAN}. To make PDF
 versions of the manuals you will also need file @file{texinfo.tex}
 installed (which is part of the @acronym{GNU} @pkg{texinfo} distribution
 but is often made part of the @TeX{} package in re-distributions) as
@@ -2691,7 +2677,7 @@ older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
 @pkg{texinfo} 4.13.
 
 @cindex Vignettes
-The DVI and PDF documentation (including @file{doc/NEWS.pdf} and
+The PDF documentation (including @file{doc/NEWS.pdf} and
 building vignettes needs @command{tex} and @command{latex}, or
 @command{pdftex} and @command{pdflatex}.  We require @LaTeX{} version
 @code{2005/12/01} or later (for UTF-8 support).  Building PDF package
@@ -3406,7 +3392,7 @@ One common variable to change is @env{R_PAPERSIZE}, which defaults to
 
 This is used both when configuring @R{} to set the default, and when
 running @R{} to override the default.  It is also used to set the
-paper size when making DVI and PDF manuals.
+paper size when making PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
 is unset.  (If the (Debian Linux) program @command{paperconf} is found
@@ -3457,11 +3443,10 @@ gains, especially on older architectures such as @cputype{ix86}.
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
 
-@enindex R_RD4DVI
 @enindex R_RD4PDF
 @enindex R_PAPERSIZE
 The default settings for making the manuals are controlled by
-@env{R_RD4PDF}, @env{R_RD4DVI} and @env{R_PAPERSIZE}.
+@env{R_RD4PDF} and @env{R_PAPERSIZE}.
 
 @node Setting the shell, Using make, Configuration variables, Configuration on a Unix-alike
 @section Setting the shell
@@ -4697,11 +4682,10 @@ installer does @emph{not} include any version of @LaTeX{}.
 It is also possible to use the TeXLive distribution from
 @uref{http://www.tug.org/texlive/}.
 
-@enindex R_RD4DVI
 @enindex R_RD4PDF
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
-and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
-suitably; ensure you have the required fonts installed.
+and set the environment variable @env{R_RD4PDF} suitably; ensure you
+have the required fonts installed.
 
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer
