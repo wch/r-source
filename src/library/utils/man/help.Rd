@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help}
@@ -38,9 +38,10 @@ help(topic, package = NULL, lib.loc = NULL,
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
-   Possible values are \code{"text"}, \code{"html"},
-   \code{"postscript"}, \code{"ps"} and \code{"pdf"}.  Case is ignored,
-   and partial matching is allowed.}
+   Possible values are \code{"text"}, \code{"html"} and \code{"pdf"}.
+   Case is ignored, and partial matching is allowed.  Values
+   \code{"postscript"} and \code{"ps"} are deprecated and will be removed
+   in the near future.}
 }
 \details{
   The following types of help are available:

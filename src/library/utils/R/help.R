@@ -53,8 +53,12 @@ function(topic, package = NULL, lib.loc = NULL,
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type),
                    c("text", "html", "postscript", "ps", "pdf"))
+    if (help_type %in% c("postscript", "ps"))
+        warning("Postscript offline help is deprecated",
+                call. = FALSE, immediate. = TRUE)
 
-    paths <- index.search(topic, find.package(package, lib.loc, verbose = verbose))
+    paths <- index.search(topic,
+                          find.package(package, lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)
