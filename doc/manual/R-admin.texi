@@ -922,6 +922,10 @@ R_COMPILER_SUPPRESS_ALL=1
 @noindent
 before re-running @command{make}.
 
+It is however recommended that experimentation is done in the R-devel
+version of @R{}, which has an updated version of the byte-compiler and
+more facilities to use it.
+
 @node Installing R under Windows, Installing R under (Mac) OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows

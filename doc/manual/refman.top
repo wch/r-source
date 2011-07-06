@@ -1,7 +1,7 @@
 \usepackage{makeidx}
 \pagestyle{headings}
 
-%% Set PDF 1.5 and compression include object compression
+%% Set PDF 1.5 and compression, including object compression
 %% Needed for MiKTeX -- most other distributions default to this
 \ifx\pdfoutput\undefined
 \else
@@ -11,7 +11,7 @@
       % PDF output
       \pdfminorversion=5
       \pdfcompresslevel=9
-      \pdfobjcompresslevel=3
+      \pdfobjcompresslevel=2
     \fi
   \fi
 \fi

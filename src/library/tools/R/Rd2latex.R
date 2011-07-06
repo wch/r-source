@@ -664,6 +664,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	sections <- sections[sortorder]
 
 	title <- .Rd_get_latex(.Rd_get_section(Rd, "title"))
+        ## This might have blank lines
+        title <- paste(title[nzchar(title)], collapse = " ")
 
 	name <- Rd[[2L]]
 
