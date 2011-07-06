@@ -225,6 +225,10 @@
       correct way to refer to a development version of R is
       \sQuote{R-devel}, preferably with the date and SVN version number.\cr
       E.g. \samp{R-devel (2011-07-04 r56266)}
+      
+      \item There is a new function \code{texi2pdf()} in package
+      \pkg{tools}, currently a convenience wrapper for
+      \code{texi2dvi(pdf = TRUE)}.
     }
   }
 

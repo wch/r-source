@@ -259,8 +259,8 @@ getOption(x, default = NULL)
     \item{\code{stringsAsFactors}:}{The default setting for arguments of
       \code{\link{data.frame}} and \code{\link{read.table}}.}
 
-    \item{\code{texi2dvi}:}{used by function
-      \code{\link{texi2dvi}} in package \pkg{tools}.
+    \item{\code{texi2dvi}:}{used by functions
+      \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
 #ifdef unix
       Set at startup from the environment variable \env{R_TEXI2DVICMD}.
 #endif

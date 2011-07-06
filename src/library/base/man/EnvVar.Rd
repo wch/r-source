@@ -69,7 +69,8 @@
       the locale -- see \code{\link{Sys.getlocale}}.  Consulted at startup.}
     \item{\env{MAKEINDEX}:}{The path to \command{makeindex}.
       If unset to a value determined when \R was built.
-      Used by the emulation mode of \code{\link{texi2dvi}}.}
+      Used by the emulation mode of \code{\link{texi2dvi}} and
+      \code{\link{texi2pdf}}.}
     \item{\env{R_BATCH}:}{Optional -- set in a batch session.}
     \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
@@ -115,7 +116,7 @@
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
-      by \command{R CMD Rd2dvi --pdf}.}
+      by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
@@ -130,7 +131,7 @@
 #ifdef unix
       Consulted at startup to set the default for
       \code{\link{options}("texi2dvi")}, used by
-      \code{\link{texi2dvi}} in package \pkg{tools}.
+      \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
 #endif
     }
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the

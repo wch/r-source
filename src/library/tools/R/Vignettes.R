@@ -106,8 +106,7 @@ function(package, dir, lib.loc = NULL,
                 bf <- file_path_sans_ext(basename(f))
                 if(bf %in% bad_vignettes) break
                 bft <- paste(bf, ".tex", sep = "")
-                .eval_with_capture(tryCatch(texi2dvi(file = bft, pdf = TRUE,
-                                                     clean = FALSE,
+                .eval_with_capture(tryCatch(texi2pdf(file = bft, clean = FALSE,
                                                      quiet = TRUE),
                                             error = function(e)
                                             result$latex[[f]] <<-
@@ -229,7 +228,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE)
         setwd(startdir)
         ## This can fail if run in a directory whose path contains spaces.
         if(!have.makefile)
-            texi2dvi(file = bft, pdf = TRUE, clean = FALSE, quiet = quiet)
+            texi2pdf(file = bft, clean = FALSE, quiet = quiet)
     }
 
     if(have.makefile) {

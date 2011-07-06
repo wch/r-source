@@ -633,7 +633,7 @@ function(dir, outDir, keep.source = TRUE)
         ## We need to ensure that vignetteDir is in TEXINPUTS and BIBINPUTS.
         ## <FIXME>
         ## What if this fails?
-        texi2dvi(texfile, pdf = TRUE, quiet = TRUE, texinputs = vigns$dir)
+        texi2pdf(texfile, quiet = TRUE, texinputs = vigns$dir)
         ## </FIXME>
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
@@ -918,7 +918,7 @@ compactPDF <-
                       gs_extras,
                       p), FALSE, FALSE)
         else
-            system2(qpdf, c("--stream-data=compress", 
+            system2(qpdf, c("--stream-data=compress",
 			    "--object-streams=generate", p, tf), FALSE, FALSE)
         if(!res && file.exists(tf)) {
             old <- file.info(p)$size; new <-  file.info(tf)$size

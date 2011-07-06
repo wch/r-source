@@ -110,7 +110,7 @@ translates this into the \LaTeX{} document shown in
 Figures~\ref{fig:ex1.tex} and~\ref{fig:ex1.pdf}. The latter can also
 be created directly from within \R{} using
 <<>>=
-tools::texi2dvi("example-1.tex", pdf = TRUE)
+tools::texi2pdf("example-1.tex")
 @
 
 The first difference between \texttt{example-1.Rnw} and

@@ -5,6 +5,7 @@
 
 \name{texi2dvi}
 \alias{texi2dvi}
+\alias{texi2pdf}
 \title{Compile LaTeX Files}
 \description{
   Run \code{latex} and \code{bibtex} until all cross-references are
@@ -12,6 +13,10 @@
 }
 \usage{
 texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
+         texi2dvi = getOption("texi2dvi"),
+         texinputs = NULL, index = TRUE)
+
+texi2pdf(file, clean = FALSE, quiet = TRUE,
          texi2dvi = getOption("texi2dvi"),
          texinputs = NULL, index = TRUE)
 }
@@ -34,6 +39,9 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   \item{index}{logical: should indices be prepared?}
 }
 \details{
+  \code{texi2pdf} is a wrapper for the common case of
+  \code{texi2dvi(pdf = TRUE)}.
+  
   Despite the name, this is used in \R to compile LaTeX files,
   specifically those generated from vignettes.  It
   ensures that the \file{\var{\link{R_HOME}}/share/texmf} directory is

@@ -55,9 +55,9 @@ checkVignettes(package, dir, lib.loc = NULL,
 
   If \code{weave} is true, the vignettes are run through
   \code{\link{Sweave}}, which will produce a \file{.tex} file for each
-  vignette.  If \code{latex} is also true,
-  \code{\link{texi2dvi}(pdf = TRUE)} is run on the \file{.tex} files
-  from those vignettes which did not give errors in the previous steps.
+  vignette.  If \code{latex} is also true, \code{\link{texi2pdf}} is run
+  on the \file{.tex} files from those vignettes which did not give
+  errors in the previous steps.
 }
 \value{
   An object of class \code{"checkVignettes"}, which is a list with the

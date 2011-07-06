@@ -260,7 +260,7 @@ function(x, ...)
 ## moved in 2.14.0 from unix/windows versions
 offline_help_helper <- function(texfile, type = "pdf")
 {
-    tools::texi2dvi(texfile, pdf = TRUE, clean=TRUE)
+    tools::texi2pdf(texfile, clean=TRUE)
     ofile <- sub("tex$", "pdf", texfile)
     if(!file.exists(ofile))
         stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)

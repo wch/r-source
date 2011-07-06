@@ -1,70 +1,25 @@
 useDynLib(tools, .registration = TRUE)
 
-export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rd2txt_options",
-       "Rdindex", "bibstyle", "checkDocFiles", "checkDocStyle",
-       "checkFF", "checkMD5sums", "checkReplaceFuns",
-       "checkS3methods", "checkTnF", "checkVignettes", "codoc",
-       "codocClasses", "codocData", "md5sum", "undoc", "file_ext",
-       "file_path_as_absolute", "file_path_sans_ext",
-       "list_files_with_exts", "findHTMLlinks",
-       "list_files_with_type", "showNonASCII", "showNonASCIIfile",
-       "delimMatch", "parse_Rd", "checkRd", "texi2dvi",
-       "buildVignettes", "pkgVignettes", "pkgDepends", "getDepList",
-       "installFoundDepends", "vignetteDepends", "write_PACKAGES",
-       "xgettext", "xgettext2pot", "xngettext",
-       "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs",
-       "checkNEWS", "readNEWS", "dependsOnPkgs", "Rdiff",
+export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
+       "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db",
+       "Rd_parse", "Rdiff", "Rdindex", "SweaveTeXFilter",
+       "add_datalist", "bibstyle", "buildVignettes",
+       "charset_to_Unicode", "checkDocFiles", "checkDocStyle",
+       "checkFF", "checkMD5sums", "checkNEWS", "checkRd",
+       "checkRdaFiles", "checkReplaceFuns", "checkS3methods",
+       "checkTnF", "checkVignettes", "codoc", "codocClasses",
+       "codocData", "compactPDF", "delimMatch", "deparseLatex",
+       "dependsOnPkgs", "encoded_text_to_latex", "file_ext",
+       "file_path_as_absolute", "file_path_sans_ext", "findHTMLlinks",
+       "getDepList", "installFoundDepends", "latexToUtf8",
+       "list_files_with_exts", "list_files_with_type", "md5sum",
+       "package.dependencies", "parseLatex", "parse_Rd", "pkgDepends",
+       "pkgVignettes", "read.00Index", "readNEWS", "resaveRdaFiles",
+       "showNonASCII", "showNonASCIIfile", "startDynamicHelp",
        "testInstalledBasic", "testInstalledPackage",
-       "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
-       "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles",
-       "compactPDF", "add_datalist", "HTMLheader", "toHTML", "toRd",
-       "parseLatex", "deparseLatex", "latexToUtf8")
-
-export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
-
-S3method("print", "checkDocFiles")
-S3method("print", "checkDocStyle")
-S3method("print", "checkFF")
-S3method("print", "checkReplaceFuns")
-S3method("print", "checkS3methods")
-S3method("print", "checkTnF")
-S3method("print", "checkVignettes")
-S3method("print", "codoc")
-S3method("print", "codocClasses")
-S3method("print", "codocData")
-S3method("print", "LaTeX")
-S3method("print", "Rd")
-S3method("print", "subdir_tests")
-S3method("print", "undoc")
-S3method("print", "xgettext")
-S3method("print", "xngettext")
-
-S3method("print", "checkRd")
-S3method("print", "check_Rd_contents")
-S3method("print", "check_Rd_metadata")
-S3method("print", "check_Rd_xrefs")
-S3method("print", "check_T_and_F")
-S3method("print", "check_code_usage_in_package")
-S3method("print", "check_demo_index")
-S3method("print", "check_dotInternal")
-S3method("print", "check_make_vars")
-S3method("print", "check_package_CRAN_incoming")
-S3method("print", "check_package_code_syntax")
-S3method("print", "check_package_depends")
-S3method("print", "check_package_description")
-S3method("print", "check_package_description_encoding")
-S3method("print", "check_package_license")
-S3method("print", "check_package_datasets")
-S3method("print", "check_package_compact_datasets")
-S3method("print", "check_packages_used")
-S3method("print", "check_vignette_index")
-S3method("print", "compactPDF")
-
-S3method("toHTML", "packageIQR")
-S3method("toHTML", "news_db")
-
-S3method("toRd", "default")
-S3method("toRd", "bibentry")
+       "testInstalledPackages", "texi2dvi", "texi2pdf", "toHTML",
+       "toRd", "undoc", "vignetteDepends", "write_PACKAGES",
+       "xgettext", "xgettext2pot", "xngettext")
 
 S3method("as.character", "Rd")
 
@@ -92,3 +47,47 @@ S3method("format", "codocData")
 S3method("format", "compactPDF")
 S3method("format", "subdir_tests")
 S3method("format", "undoc")
+
+S3method("print", "LaTeX")
+S3method("print", "Rd")
+S3method("print", "checkDocFiles")
+S3method("print", "checkDocStyle")
+S3method("print", "checkFF")
+S3method("print", "checkRd")
+S3method("print", "checkReplaceFuns")
+S3method("print", "checkS3methods")
+S3method("print", "checkTnF")
+S3method("print", "checkVignettes")
+S3method("print", "codoc")
+S3method("print", "codocClasses")
+S3method("print", "codocData")
+S3method("print", "compactPDF")
+S3method("print", "subdir_tests")
+S3method("print", "undoc")
+S3method("print", "xgettext")
+S3method("print", "xngettext")
+
+S3method("print", "check_Rd_contents")
+S3method("print", "check_Rd_metadata")
+S3method("print", "check_Rd_xrefs")
+S3method("print", "check_T_and_F")
+S3method("print", "check_code_usage_in_package")
+S3method("print", "check_demo_index")
+S3method("print", "check_dotInternal")
+S3method("print", "check_make_vars")
+S3method("print", "check_package_CRAN_incoming")
+S3method("print", "check_package_code_syntax")
+S3method("print", "check_package_depends")
+S3method("print", "check_package_description")
+S3method("print", "check_package_description_encoding")
+S3method("print", "check_package_license")
+S3method("print", "check_package_datasets")
+S3method("print", "check_package_compact_datasets")
+S3method("print", "check_packages_used")
+S3method("print", "check_vignette_index")
+
+S3method("toHTML", "news_db")
+S3method("toHTML", "packageIQR")
+
+S3method("toRd", "bibentry")
+S3method("toRd", "default")

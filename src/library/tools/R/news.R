@@ -363,7 +363,7 @@ function(f, pdf_file) {
     close(out)
     od <- setwd(tempdir())
     on.exit(setwd(od))
-    texi2dvi("NEWS.tex", pdf=TRUE, quiet = TRUE)
+    texi2pdf("NEWS.tex", quiet = TRUE)
     setwd(od); on.exit()
     invisible(file.copy(file.path(tempdir(), "NEWS.pdf"),
                         pdf_file, overwrite = TRUE))
