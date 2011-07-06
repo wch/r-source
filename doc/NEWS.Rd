@@ -125,6 +125,9 @@
       \item Switching off lazy-loading of code \emph{via} the
       \samp{LazyLoad} field of the \file{DESCRIPTION} file is now
       deprecated.  In future all packages will be lazy-loaded.
+      
+      \item The off-line \code{help()} types \samp{"postscript"} and
+      \samp{"ps"} are deprecated.
     }
   }
   
