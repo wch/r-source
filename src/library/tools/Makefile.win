@@ -19,6 +19,9 @@ all:
 	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mkpo mksrc-win2
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	else if test all.R -nt $(top_builddir)/library/$(pkg)/R/$(pkg); then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  fi \
 	fi
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
