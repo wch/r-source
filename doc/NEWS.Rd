@@ -399,9 +399,6 @@
 
       \item \command{zip.file.extract()} is now defunct: use
       \code{unzip()} or \code{unz()} instead.
-      
-      \item The off-line \code{help()} types \samp{"postscript"} and
-      \samp{"ps"} are defunct.  Only \code{"pdf"} is supported.
     }
   }
 

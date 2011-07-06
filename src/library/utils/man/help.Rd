@@ -39,8 +39,9 @@ help(topic, package = NULL, lib.loc = NULL,
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
    Possible values are \code{"text"}, \code{"html"} and \code{"pdf"}.
-   Case is ignored, and partial matching is allowed.  (Values
-   \code{"postscript"} and \code{"ps"} are defunct.)}
+   Case is ignored, and partial matching is allowed.  Values
+   \code{"postscript"} and \code{"ps"} are deprecated and will be removed
+   in the near future.}
 }
 \details{
   The following types of help are available:
@@ -55,7 +56,7 @@ help(topic, package = NULL, lib.loc = NULL,
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
-    \item For \code{help} only, typeset as a PDF file --
+    \item For \code{help} only, typeset as a PostScript or PDF file --
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
@@ -95,9 +96,13 @@ help(topic, package = NULL, lib.loc = NULL,
 }
 
 \section{Offline help}{
-  Typeset documentation is produced by running the LaTeX conversion of
-  the help page through \command{pdflatex}.  This will produce a PDF
-  file in the working directory.
+  Typeset documentation is produced by running the LaTeX version of the
+  help page through \command{latex} and \command{dvips} or, if
+  \code{help_type = "PDF"}, \command{pdflatex}.  This will produce
+  either a PostScript or PDF file and possibly (depending on the
+  configuration of \command{dvips}) send a PostScript file to a printer.
+  You can set \code{\link{options}("dvipscmd")} to customize how
+  \command{dvips}) is called.
 
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
@@ -111,8 +116,7 @@ help(topic, package = NULL, lib.loc = NULL,
   further down the search path it is used to do the typesetting,
   otherwise the function of that name in the \code{utils} name space
   (to which the first paragraph applies).  It should have two 
-  arguments, the name of the LaTeX file to be typeset and the type
-  (which will currently always be \samp{"pdf"}).
+  arguments, the name of the LaTeX file to be typeset and the type.
 }
 
 \note{
