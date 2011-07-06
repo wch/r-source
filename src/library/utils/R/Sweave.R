@@ -388,6 +388,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --driver=name   use named Sweave driver",
             "  --encoding=enc  default encoding 'enc' for file",
             "  --options=      comma-separated list of Sweave options",
+            "  --pdf           convert to PDF document",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -401,6 +402,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     file <- character()
     driver <- encoding <- options <- ""
+    toPDF <- FALSE
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -423,6 +425,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             encoding <- substr(a, 12, 1000)
         } else if (substr(a, 1, 10) == "--options=") {
             options <- substr(a, 11, 1000)
+        } else if (a == "--pdf") {
+            toPDF <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else file <- c(file, a)
@@ -440,6 +444,12 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         args <- c(args, opts)
     }
     do.call(Sweave, args)
+    if (toPDF) {
+        texfile <- sub("\\.[rsRS][[:alpha:]]+$", ".tex", file)
+        tools::texi2pdf(texfile, clean = TRUE)
+        ofile <- sub("\\.tex$", ".pdf", texfile)
+        message("Created PDF document ", sQuote(basename(ofile)))
+    }
     do_exit()
 }
 

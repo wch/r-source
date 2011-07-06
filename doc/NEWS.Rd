@@ -315,6 +315,9 @@
       \item There is a new option \code{pdf.compress} controlling
       whether PDF figures are generated using Flate compression (they
       are by default).
+
+      \item \command{R CMD Sweave} now has a \option{--pdf} option to
+      produce a PDF version of the processed Sweave document.
     }
   }
 
