@@ -1223,8 +1223,8 @@ make -f Makefile.win info
 @end example
 
 @noindent
-(all assuming you have @command{pdftex}/@command{pdflatex} or installed
-and in your path).
+(all assuming you have @command{pdftex}/@command{pdflatex} installed and
+in your path).
 
 See the @ref{Making the manuals} section in the Unix-alike section for setting
 options such as the paper size.
