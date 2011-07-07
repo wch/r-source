@@ -44,7 +44,7 @@ TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 
 R_PAPERSIZE = a4
 # omit 'hyper' to omit the hyperlinks
-R_RD4PDF = times,hyper
+R_RD4PDF = times,inconsolata,hyper
 #R_RD4PDF = lm,hyper
 #R_RD4PDF = cm-super,hyper
 #R_RD4PDF = ae,hyper

@@ -5194,7 +5194,7 @@ fi
 
 : ${R_RD4DVI="ae"}
 
-: ${R_RD4PDF="times,hyper"}
+: ${R_RD4PDF="times,inconsolata,hyper"}
 
 
 ## Unzip && zip && gzip && bip2

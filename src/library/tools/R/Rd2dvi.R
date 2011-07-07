@@ -705,7 +705,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             ## allow for --no-preview --pdf
             if (preview != "false")
                 preview <- Sys.getenv("R_PDFVIEWER", if(WINDOWS) "open" else "false")
-            Sys.setenv(R_RD4DVI = Sys.getenv("R_RD4PDF", "times,hyper"))
+            Sys.setenv(R_RD4DVI = Sys.getenv("R_RD4PDF", "times,inconsolata,hyper"))
         } else if (substr(a, 1, 8) == "--title=") {
             title <- substr(a, 9, 1000)
         } else if (a == "-o") {

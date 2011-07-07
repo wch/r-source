@@ -460,10 +460,14 @@ Computer Modern fonts.  We have provided four alternatives:
 
 @table @code
 @item times
-(The default for PDF.) Using standard PostScript fonts.  This works
-well both for on-screen viewing and for printing.
-The one disadvantage is that the Usage and Examples sections may come
-out rather wide.
+(The default for PDF.) Using standard PostScript fonts.  This works well
+both for on-screen viewing and for printing.  One disadvantage is that
+the Usage and Examples sections may come out rather wide: this can be
+overcome by using @emph{in addition} either of the options
+@code{beramono} or @code{inconsolata}, which replace the Courier New
+monospaced font by Bera Sans mono or Inconsolata respectively.  (You
+will need the appropriate @LaTeX{} package @code{bera} or
+@code{inconsolata} installed.)
 
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as

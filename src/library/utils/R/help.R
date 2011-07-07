@@ -225,7 +225,7 @@ function(x, ...)
     texfile <- paste(topic, ".tex", sep = "")
     on.exit(unlink(texfile)) ## ? leave to helper
     opt <- if(type == "PDF") {
-        if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times"
+        if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times,inconsolata"
     } else {
         if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae"
     }
