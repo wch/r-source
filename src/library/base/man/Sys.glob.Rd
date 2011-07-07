@@ -28,7 +28,7 @@ Sys.glob(paths, dirmark = FALSE)
   This expands wildcards in file paths.  For precise details, see your
   system's documentation on the \code{glob} system call.  There is a
   POSIX 1003.2 standard (see
-  \url{http://www.opengroup.org/onlinepubs/009695399/functions/glob.html})
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/functions/glob.html})
   but some OSes will go beyond this.  The \R implementation will always
   do \link{tilde expansion}.
 
