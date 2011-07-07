@@ -231,10 +231,10 @@
       \code{texi2dvi(pdf = TRUE)}.
       
       \item There are two new options for typesetting PDF manuals from
-      Rd files.  These are \code{beramono} and \code[inconsolata}, and
+      Rd files.  These are \samp{beramono} and \samp{inconsolata}, and
       used the named font for mononspaced output. They are intended to
-      be used in combination with \code{times}, and
-      \code{times,inconsolata,hyper} is now the default for the
+      be used in combination with \samp{times}, and
+      \samp{times,inconsolata,hyper} is now the default for the
       reference manual and package manuals.
     }
   }
