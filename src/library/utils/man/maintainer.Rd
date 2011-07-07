@@ -39,9 +39,13 @@ maintainer(pkg)
  David Scott <d.scott@auckland.ac.nz> from code on R-help originally
  due to Charlie Sharpsteen <source@sharpsteen.net>.
 }
-\references{ 
-\url{http://n4.nabble.com/R-help-question-How-can-we-enable-useRs-to-contribute-corrections-to-help-files-faster-tp1572568p1572868.html}
+\references{
+  \url{https://stat.ethz.ch/pipermail/r-help/2010-February/230027.html}
 }
+% failed 2011-07-07
+% \references{ 
+% \url{http://n4.nabble.com/R-help-question-How-can-we-enable-useRs-to-contribute-corrections-to-help-files-faster-tp1572568p1572868.html}
+% }
 \seealso{
 \code{\link{packageDescription}}, \code{\link{bug.report}}
 }
