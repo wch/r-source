@@ -452,22 +452,26 @@ environment and using @command{make -e}.  (If re-making the manuals for
 a different paper size, you should first delete the file
 @file{doc/manual/version.texi}.)
 
-There are some issues with making the reference manual, and in
-particular with the PDF version @file{refman.pdf}.  The help files
-contain both ISO Latin1 characters (e.g.@: in @file{text.Rd}) and
-upright quotes, neither of which are contained in the standard @LaTeX{}
-Computer Modern fonts.  We have provided four alternatives:
+There are some issues with making the PDF reference manual,
+@file{refman.pdf}.  The help files contain both ISO Latin1 characters
+(e.g.@: in @file{text.Rd}) and upright quotes, neither of which are
+contained in the standard @LaTeX{} Computer Modern fonts.  We have
+provided four alternatives:
 
 @table @code
 @item times
-(The default for PDF.) Using standard PostScript fonts.  This works well
-both for on-screen viewing and for printing.  One disadvantage is that
-the Usage and Examples sections may come out rather wide: this can be
-overcome by using @emph{in addition} either of the options
-@code{beramono} or @code{inconsolata}, which replace the Courier New
-monospaced font by Bera Sans mono or Inconsolata respectively.  (You
-will need the appropriate @LaTeX{} package @code{bera} or
-@code{inconsolata} installed.)
+(The default.) Using standard PostScript fonts, Times Roman, Helvetica
+and Courier.  This works well both for on-screen viewing and for
+printing.  One disadvantage is that the Usage and Examples sections may
+come out rather wide: this can be overcome by using @emph{in addition}
+either of the options @code{beramono} or @code{inconsolata}, which
+replace the Courier monospaced font by Bera Sans mono or Inconsolata
+respectively.  (You will need the appropriate @LaTeX{} package
+@code{bera} or @code{inconsolata} installed.)
+
+Note that in most @LaTeX{} installations this will not actually use the
+standard fonts for PDF, but rather embed the URW clones NimbusRom,
+NimbusSans and (for Courier, if used) NimbusMon.
 
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
@@ -498,8 +502,8 @@ The default can be overridden by setting the environment variable
 @env{R_RD4PDF}.  (On Unix-alikes, this will be picked up at install time
 and stored in @file{etc/Renviron}, but can still be overridden when the
 manuals are built.)  The default value for @env{R_RD4PDF} is
-@samp{times,hyper}: omit @samp{hyper} if you do not want hyperlinks,
-e.g.@: for printing.
+@samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
+hyperlinks, e.g.@: for printing.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
