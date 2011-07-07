@@ -13,11 +13,8 @@
   chi-squared with \eqn{df} degrees of freedom, see \code{\link{pchisq}}.
 }
 \usage{
-ptukey(q, nmeans, df, nranges = 1, lower.tail = TRUE,
-       log.p = FALSE)
-
-qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE,
-       log.p = FALSE)
+ptukey(q, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
+qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
 }
 \alias{ptukey}
 \alias{qtukey}

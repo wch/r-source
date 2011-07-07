@@ -17,13 +17,8 @@
 }
 \usage{
 dcauchy(x, location = 0, scale = 1, log = FALSE)
-
-pcauchy(q, location = 0, scale = 1, lower.tail = TRUE,
-        log.p = FALSE)
-
-qcauchy(p, location = 0, scale = 1, lower.tail = TRUE,
-       log.p = FALSE)
-
+pcauchy(q, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
+qcauchy(p, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
 rcauchy(n, location = 0, scale = 1)
 }
 \arguments{

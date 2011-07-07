@@ -10,8 +10,7 @@
   Load a given URL into a WWW browser.
 }
 \usage{
-browseURL(url, browser = getOption("browser"),
-          encodeIfNeeded = FALSE)
+browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
 }
 \arguments{
   \item{url}{a non-empty character string giving the URL to be loaded.}

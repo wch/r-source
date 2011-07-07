@@ -16,11 +16,9 @@ bw.nrd0(x)
 
 bw.nrd(x)
 
-bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
-       tol = 0.1 * lower)
+bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax, tol = 0.1 * lower)
 
-bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
-       tol = 0.1 * lower)
+bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax, tol = 0.1 * lower)
 
 bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
       method = c("ste", "dpi"), tol = 0.1 * lower)

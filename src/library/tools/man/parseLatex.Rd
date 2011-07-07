@@ -11,19 +11,18 @@
 These experimental functions work with a subset of LaTeX code.
 }
 \description{
-The \code{parseLatex} function parses LaTeX source, producing a structured object;
-\code{deparseLatex} reverses the process.  The \code{latexToUtf8} function takes a 
-LaTeX object, and processes a number of different macros to convert them into 
-the corresponding UTF-8 characters.
+  The \code{parseLatex} function parses LaTeX source, producing a
+  structured object; \code{deparseLatex} reverses the process.  The
+  \code{latexToUtf8} function takes a LaTeX object, and processes a number
+  of different macros to convert them into the corresponding UTF-8
+  characters.
 }
 \usage{
-parseLatex(text, filename = deparse(substitute(text)),
-           verbose = FALSE,
+parseLatex(text, filename = deparse(substitute(text)), verbose = FALSE,
            verbatim = c("verbatim", "verbatim*", "Sinput", "Soutput"))
 deparseLatex(x, dropBraces=FALSE)
 latexToUtf8(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{text}{
 A character vector containing LaTeX source code.
