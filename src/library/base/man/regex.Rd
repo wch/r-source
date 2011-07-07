@@ -201,7 +201,7 @@
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 8.0 as described here.
+  from the sources within \R, the PCRE version is 8.12 as described here.
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
@@ -311,7 +311,7 @@
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2, the
-  TRE documentation and the POSIX standard,  and the \code{pcrepattern}
+  TRE documentation and the POSIX standard, and the \code{pcrepattern}
   man page from PCRE 8.0.
 }
 \seealso{
@@ -323,7 +323,7 @@
   \url{http://laurikari.net/tre/documentation/regex-syntax/}).
 
   The POSIX 1003.2 standard at
-  \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09}
 
   The \code{pcrepattern} can be found as part of
   \url{http://www.pcre.org/pcre.txt}, and details of Perl's own
