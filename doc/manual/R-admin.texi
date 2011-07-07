@@ -463,10 +463,14 @@ Computer Modern fonts.  We have provided four alternatives:
 
 @table @code
 @item times
-(The default for PDF.) Using standard PostScript fonts.  This works
-well both for on-screen viewing and for printing.
-The one disadvantage is that the Usage and Examples sections may come
-out rather wide.
+(The default for PDF.) Using standard PostScript fonts.  This works well
+both for on-screen viewing and for printing.  One disadvantage is that
+the Usage and Examples sections may come out rather wide (and @R{}
+2.14.0 will have workarounds for this).
+
+Note that in most @LaTeX{} installations this will not actually use the
+standard fonts for PDF, but rather embed the URW clones NimbusRom,
+NimbusSans and (for Courier, if used) NimbusMon.
 
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
