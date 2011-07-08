@@ -1,6 +1,6 @@
 % File src/library/base/man/proc.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{proc.time}
@@ -38,30 +38,24 @@ proc.time()
   is the CPU time charged for execution by the system on behalf of the
   calling process.}
  
+  Times of child processes are not available on Windows and will always
+  be given as \code{NA}.
+  
   The resolution of the times will be system-specific and on Unix-alikes
-  times are rounded to the nearest 1ms.  On modern systems they will be
-  that accurate, but on older systems they might be accurate to 1/100 or
-  1/60 sec, and are typically available to 10ms on Windows.
+  times are rounded down to milliseconds.  On modern systems they will
+  be that accurate, but on older systems they might be accurate to 1/100
+  or 1/60 sec.  They are typically available to 10ms on Windows.
 
   This is a \link{primitive} function.
 }
-\note{
-#ifdef unix
-  It is possible to compile \R without support for \code{proc.time},
-  when the function will throw an error.
-#endif
-#ifdef windows
-  Times of child processes are not available and will always be given as
-  \code{NA}.
-#endif
-}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{system.time}} for timing a valid \R expression,
+  \code{\link{system.time}} for timing an \R expression,
   \code{\link{gc.time}} for how much of the time was spent in garbage
   collection.
 }

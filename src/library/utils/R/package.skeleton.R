@@ -160,9 +160,13 @@ package.skeleton <-
                  file = file.path(code_dir,
                  sprintf("%s-internal.R", name)))
         for(item in list){
-            if(is.function(get(item, envir = environment)))
+            objItem <- get(item, envir = environment)
+            if(is.function(objItem))  {
+                if(isS4(objItem))
+                    stop(gettextf("Generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the code_files= argument", item), domain = NA)
                 dump(item,
                      file = file.path(code_dir, sprintf("%s.R", list0[item])))
+            }
             else       # we cannot guarantee this is a valid file name
                 try(save(list = item, envir = environment,
                          file = file.path(data_dir, sprintf("%s.rda", item))))
@@ -272,6 +276,7 @@ package.skeleton <-
         ## If we use given code files, we could still check whether
         ## these file are valid across platforms ...
         ## </NOTE>
+        list <- as.character(list) # remove S4 class if any, to add names() later
         if(length(list) == 0L) return(list)
         list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
         wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",

@@ -180,7 +180,7 @@ get_exclude_patterns <- function()
             "  --force               force removal of INDEX file",
             "  --keep-empty-dirs     do not remove empty dirs",
             "  --no-vignettes        do not rebuild package vignettes",
-            "  --no-manual           do not build the manual even if \\Sexprs are present",
+            "  --no-manual           do not build the PDF manual even if \\Sexprs are present",
             "  --resave-data=        re-save data files as compactly as possible:",
             '                        "no", "best", "gzip" (default)',
             "  --resave-data         same as --resave-data=best",
@@ -212,7 +212,7 @@ get_exclude_patterns <- function()
     }
 
     temp_install_pkg <- function(pkgdir, libdir) {
-	dir.create(libdir, mode = "0755")
+	dir.create(libdir, mode = "0755", showWarnings = FALSE)
         ## assume vignettes only need one arch
         if (WINDOWS) {
             cmd <- file.path(R.home("bin"), "Rcmd.exe")
@@ -459,24 +459,30 @@ get_exclude_patterns <- function()
 	if (!length(containsSexprs)) return(FALSE)
 
 	messageLog(Log, "installing the package to process help pages")
-	temp_install_pkg(pkgdir, libdir)
+
+        dir.create(libdir, mode = "0755", showWarnings = FALSE)
+        savelib <- .libPaths()
+        .libPaths(libdir)
+        on.exit(.libPaths(savelib), add = TRUE)
+
+        temp_install_pkg(pkgdir, libdir)
 
 	containsBuildSexprs <-
             which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
 
 	if (length(containsBuildSexprs)) {
 	    for (i in containsBuildSexprs)
-		db[[i]] <- prepare_Rd(db[[i]], stages="build",
-                                      stage2=FALSE, stage3=FALSE)
+		db[[i]] <- prepare_Rd(db[[i]], stages = "build",
+                                      stage2 = FALSE, stage3 = FALSE)
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
-	    dir.create("build", showWarnings=FALSE)
+	    dir.create("build", showWarnings = FALSE)
 	    saveRDS(partial, file.path("build", "partial.rdb"))
 	}
 	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
 	if (needRefman) {
-	    messageLog(Log, "building the package manual")
-	    dir.create("build", showWarnings=FALSE)
+	    messageLog(Log, "building the PDF package manual")
+	    dir.create("build", showWarnings = FALSE)
 	    refman <- file.path(pkgdir, "build",
                                 paste(basename(pkgdir), ".pdf", sep = ""))
 	    ..Rd2dvi(c("--pdf", "--force", "--no-preview",
@@ -694,7 +700,7 @@ get_exclude_patterns <- function()
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2010 The R Core Development Team.",
+                "Copyright (C) 1997-2011 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")

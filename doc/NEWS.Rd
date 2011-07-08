@@ -4,16 +4,31 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+     \item \code{fisher.test()} had a buglet: If arguments were
+      factors with unused levels, levels were dropped and you'd get an
+      error saying that there should be at least two levels,
+      inconsistently with pre-tabulated data.  (Reported by Michael Fay).
+
+      \item \code{package.skeleton()} will no longer dump S4 objects
+      supplied directly, rather than in a code file.  These cannot be
+      restored correctly from the dumped version.
+    }  
+  }
+}
+
 \section{CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{iconv()} no longer translates \code{NA} strings as
       \code{"NA"}.
-      
+
       \item \code{persp(box = TRUE)} now warns if the surface extends
       outside the box (since occlusion for the box and axes is computed
       assuming the box is a bounding box). (\PR{202}.)
-      
+
       \item \code{RShowDoc()} can now display the licences shipped with
       \R, e.g. \code{RShowDoc("GPL-3")}.
 
@@ -43,7 +58,7 @@
       \item \code{as.POSIXlt.factor()} now passes \code{...} to the
       character method (suggestion of Joshua Ulrich).  [Intended for \R
       2.13.0 but accidentally removed before release.]
-      
+
       \item \code{vector()} and its wrappers such as \code{integer()}
       and \code{double()} now warn if called with a \code{length}
       argument of more than one element.  This helps track down user
@@ -71,7 +86,7 @@
       objects/DLLs) to be installed in a multi-architecture setting.
     }
   }
-  
+
   \subsection{SWEAVE & VIGNETTES}{
     \itemize{
       \item \code{Sweave()} and \code{Stangle()} gain an \code{encoding}
@@ -85,7 +100,7 @@
       default in \R 2.14.0.
 
       \item Sweave custom graphics devices can have a custom function
-      \code{foo.off()} to shut them down.      
+      \code{foo.off()} to shut them down.
 
       \item Warnings are issued when non-portable filenames are found
       for graphics files (and chunks if \code{split = TRUE}).  Portable
@@ -114,7 +129,7 @@
       are GPL-2 | GPL-3.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
    \itemize{
      \item The internal functions \code{.readRDS()} and
@@ -130,12 +145,12 @@
       \samp{"ps"} are deprecated.
     }
   }
-  
+
   \subsection{UTILITIES}{
-    \itemize{      
+    \itemize{
       \item \command{R CMD check} on a multi-architecture installation now
       skips the user's \file{.Renviron} file for the
-      architecture-specific tests (which do read the 
+      architecture-specific tests (which do read the
       architecture-specific \file{Renviron.site} files).  This is
       consistent with single-architecture checks, which use
       \option{--no-environ}.
@@ -145,7 +160,7 @@
       per-package overrides.  See \sQuote{Writing R Extensions}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{plot.lm(which = 5)} was intended to order factor
@@ -159,10 +174,10 @@
 
       \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
       methods for the selected column (spotted by Bill Dunlap).
-      
+
       \item \code{sort.int()} would strip the class of an object, but
-      leave its object bit set.  (Reported by Bill Dunlap.)      
-      
+      leave its object bit set.  (Reported by Bill Dunlap.)
+
       \item \code{pbirthday()} and \code{qbirthday()} did not implement
       the algorithm exactly as given in their reference and so were
       unnecessarily inaccurate.
@@ -172,7 +187,7 @@
 
       The description of the problem was inaccurate: the probability is
       a tail probablity (\sQuote{2 \emph{or more} people share a birthday})
-      
+
       \item Complex arithmetic sometimes warned incorrectly about
       producing NAs when there were NaNs in the input.
 
@@ -189,11 +204,11 @@
       \item Reading (e.g. with \code{readBin()}) from a raw connection
       was not advancing the pointer, so successive reads would read the
       same value.  (Spotted by Bill Dunlap.)
-      
+
       \item Parsed text containing embedded newlines was printed
       incorrectly by \code{as.character.srcref()}.  (Reported by Hadley
       Wickham.)
-      
+
       \item \code{decompose()} used with a series of a non-integer
       number of periods returned a seasonal component shorter than the
       original series.  (Reported by Rob Hyndman.)
@@ -209,7 +224,7 @@
 
       \item \code{addmargins()} called \code{numeric(apos)} rather than
       \code{numeric(length(apos))}.
-      
+
       \item The HTML help search sometimes produced bad links.
       (\PR{14608})
 
@@ -226,6 +241,9 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).
+      
+      \item Build-time expressions in help files did not have access
+      to functions in the package being built (with \command{R CMD build}).  
     }
   }
 }
@@ -767,14 +785,14 @@
       potentially much slower) can be switched on by setting environment
       variable \env{_R_CHECK_COMPACT_DATA2_} to \samp{TRUE}.
 
-      The types of files in the \code{data} directory are now checked,
+      The types of files in the \file{data} directory are now checked,
       as packages are \emph{still} misusing it for non-\R data files.
 
       It now extracts and runs the \R code for each vignette in a
       separate directory and \R process: this is done in the package's
       declared encoding.  Rather than call
       \code{tools::checkVignettes()}, it calls
-      \code{tool::buildVignettes()} to see if the vignettes can be
+      \code{tools::buildVignettes()} to see if the vignettes can be
       re-built as they would be by \command{R CMD build}.  Option
       \option{--use-valgrind} now applies only to these runs, and not
       when running code to rebuild the vignettes.  This version does a
@@ -785,7 +803,7 @@
       output to \file{stdout}: in particular contains more details of
       the tests.
 
-      It now check all syntactically valid Rd usage entries, and warns
+      It now checks all syntactically valid Rd usage entries, and warns
       about assignments (unless these give the usage of replacement
       functions).
 

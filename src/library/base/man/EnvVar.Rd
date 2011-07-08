@@ -116,7 +116,7 @@
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
-      by \command{R CMD Rd2dvi --pdf}.}
+      by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
@@ -124,8 +124,7 @@
     \item{\env{R_RD4DVI}:}{Options for \command{latex} processing of
       \code{Rd} files. Used by \command{R CMD Rd2dvi}.}
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
-      \code{Rd} files.
-      Used by \command{R CMD Rd2dvi}.}
+      \code{Rd} files.  Used by \command{R CMD Rd2pdf}.}
     \item{\env{R_SHARE_DIR}:}{The location of the \R \file{share}
       directory.  Set by \R.} 
     \item{\env{R_TEXI2DVICMD}:}{The path to \command{texi2dvi}.

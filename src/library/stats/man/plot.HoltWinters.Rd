@@ -50,7 +50,7 @@
   \emph{Management Science} \bold{6}, 324--342.
 }
 \author{
-  David Meyer \email{David.Meyer@wu-wien.ac.at}
+  David Meyer \email{David.Meyer@wu.ac.at}
 }
 \seealso{
   \code{\link{HoltWinters}}, \code{\link{predict.HoltWinters}}
