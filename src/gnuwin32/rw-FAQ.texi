@@ -1809,7 +1809,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2011-06-01
+@set LASTEDIT 2011-07-08
 @ifhtml
 @html
 <hr WIDTH="100%">

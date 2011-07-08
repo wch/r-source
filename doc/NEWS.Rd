@@ -456,18 +456,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{fisher.test()} had a buglet: If arguments were
-      factors with unused levels, levels were dropped and you'd get an
-      error saying that there should be at least two levels,
-      inconsistently with pre-tabulated data.  (Reported by Michael Fay).
-
       \item The locale category \samp{LC_MONETARY} was only being set on
       startup on Windows: that is now done on Unix-alikes where
       supported.
-
-      \item \code{package.skeleton()} will no longer dump S4 objects
-      supplied directly, rather than in a code file.  These cannot be
-      restored correctly from the dumped version.
 
       \item Reference class utilities will detect an attempt to modify
       methods or fields in a locked class definition (e.g., in a name
@@ -477,6 +468,21 @@
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
     }
+  }
+}
+
+\section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+     \item \code{fisher.test()} had a buglet: If arguments were
+      factors with unused levels, levels were dropped and you'd get an
+      error saying that there should be at least two levels,
+      inconsistently with pre-tabulated data.  (Reported by Michael Fay).
+
+      \item \code{package.skeleton()} will no longer dump S4 objects
+      supplied directly, rather than in a code file.  These cannot be
+      restored correctly from the dumped version.
+    }  
   }
 }
 
