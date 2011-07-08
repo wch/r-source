@@ -97,6 +97,7 @@ httpd <- function(path, query, ...)
                "gif" = "image/gif", # in R2HTML
                "jpg" = "image/jpeg",
                "png" = "image/png",
+               "svg" = "image/svg+xml",
                "html" = "text/html",
                "pdf" = "application/pdf",
                "eps" =,
