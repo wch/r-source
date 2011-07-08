@@ -204,9 +204,12 @@ function(x, ...)
                       delete.file = TRUE)
         }
         else if(type %in% c("ps", "postscript", "pdf")) {
+            path <- dirname(file)
+            dirpath <- dirname(path)
+            texinputs <- file.path(dirpath, "help", "figures")
             tf2 <- tempfile("Rlatex")
             tools::Rd2latex(.getHelpFile(file), tf2)
-            .show_help_on_topic_offline(tf2, topic, type)
+            .show_help_on_topic_offline(tf2, topic, type, texinputs)
             unlink(tf2)
         }
     }
@@ -214,7 +217,8 @@ function(x, ...)
     invisible(x)
 }
 
-.show_help_on_topic_offline <- function(file, topic, type = "postscript")
+.show_help_on_topic_offline <-
+    function(file, topic, type = "pdf", texinputs = NULL)
 {
     encoding <-""
     lines <- readLines(file)
@@ -224,15 +228,17 @@ function(x, ...)
                         perl = TRUE, useBytes = TRUE)
     texfile <- paste(topic, ".tex", sep = "")
     on.exit(unlink(texfile)) ## ? leave to helper
-    opt <- if(type == "PDF") {
+    opt <- if(tolower(type) == "pdf") {
         if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times,inconsolata"
     } else {
         if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae"
     }
+    has_figure <- any(grepl("\\Figure", lines))
     cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
         "\\usepackage[", opt, "]{Rd}\n",
         if(nzchar(encoding)) sprintf("\\usepackage[%s]{inputenc}\n", encoding),
         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
+        "\\usepackage{graphicx}\n",
         "\\begin{document}\n",
         file = texfile, sep = "")
     file.append(texfile, file)
@@ -240,7 +246,8 @@ function(x, ...)
     helper <- if (exists("offline_help_helper", envir = .GlobalEnv))
         get("offline_help_helper", envir = .GlobalEnv)
     else utils:::offline_help_helper
-    helper(texfile, type)
+    if (has_figure) helper(texfile, type, texinputs)
+    else helper(texfile, type)
     invisible()
 }
 
@@ -254,6 +261,32 @@ function(x, ...)
     pkgname <- basename(dirpath)
     RdDB <- file.path(path, pkgname)
     if(!file.exists(paste(RdDB, "rdx", sep=".")))
-                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
+        stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
     tools:::fetchRdDB(RdDB, basename(file))
 }
+
+
+offline_help_helper <- function(texfile, type = "postscript", texinputs = NULL)
+{
+    PDF <- type == "pdf"
+    tools::texi2dvi(texfile, pdf = PDF, clean = TRUE, texinputs = texinputs)
+    ofile <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
+    if(!PDF) {
+        dfile <- sub("tex$", "dvi", texfile)
+        on.exit(unlink(dfile))
+        dvips <- getOption("dvipscmd", default = "dvips")
+        res <- system2(dvips, dfile, stdout = FALSE, stderr = FALSE)
+        if(res)
+            stop(gettextf("running %s failed", sQuote(dvips)), domain = NA)
+        if(!file.exists(ofile)) {
+            message(gettextf("%s produced no output file: sent to printer?",
+                             sQuote(dvips)), domain = NA)
+            return(invisible())
+        }
+    } else if(!file.exists(ofile))
+        stop(gettextf("creation of %s failed", sQuote(ofile)), domain = NA)
+    if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
+    message("Saving help page to ", sQuote(basename(ofile)))
+    invisible()
+}
+

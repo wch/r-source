@@ -116,7 +116,10 @@ help(topic, package = NULL, lib.loc = NULL,
   further down the search path it is used to do the typesetting,
   otherwise the function of that name in the \code{utils} name space
   (to which the first paragraph applies).  It should have two 
-  arguments, the name of the LaTeX file to be typeset and the type.
+  arguments, the name of the LaTeX file to be typeset and the type.  As
+  from \R 2.14.0 it should accept a third argument, \code{texinputs},
+  which will give the graphics path when the help document contains
+  figures, and will otherwise not be supplied.
 }
 
 \note{
