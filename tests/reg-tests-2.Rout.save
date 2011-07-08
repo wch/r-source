@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-06-17 r56152)
+R Under development (unstable) (2011-07-07 r56315)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -6295,11 +6295,11 @@ Error in .C(sym$address, NULL) :
 > foo()
 callFunc(default = TRUE)
 > foo(given = TRUE)
-callFunc(default = TRUE, given = TRUE)
+callFunc(given = TRUE)
 > foo("blah blah")
-callFunc(default = TRUE, given = "blah blah")
+callFunc(given = "blah blah")
 > foo(given = TRUE)
-callFunc(default = TRUE, given = TRUE)
+callFunc(given = TRUE)
 > foo()
 callFunc(default = TRUE)
 > ## altered foo() in 2.8.1.
@@ -6331,7 +6331,7 @@ function(given = NULL) {
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
-    callObj <- quote(callFunc(default = TRUE))
+    callObj <- quote(callFunc())
     if (!is.null(given)) 
         callObj$given <- given
     if (is.null(given)) 
@@ -6342,7 +6342,7 @@ function (given = NULL)
 > foo
 function (given = NULL) 
 {
-    callObj <- quote(callFunc(default = TRUE))
+    callObj <- quote(callFunc())
     if (!is.null(given)) 
         callObj$given <- given
     if (is.null(given)) 
