@@ -163,6 +163,13 @@ mksrc-win2:
 	  (cd src && $(MAKE) -f Makefile.win) || exit 1; \
 	fi
 
+
+mkfigs:
+	@if test -d  $(srcdir)/man/figures; then \
+	  mkdir -p $(top_builddir)/library/$(pkg)/help/figures; \
+	  cp  $(srcdir)/man/figures/* $(top_builddir)/library/$(pkg)/help/figures; \
+	fi
+
 install-tests:
 	@if test -d tests; then \
 	  mkdir -p $(top_builddir)/library/$(pkg)/tests; \

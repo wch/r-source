@@ -1,3 +1,4 @@
+\usepackage{graphicx}
 \usepackage{makeidx}
 \pagestyle{headings}
 

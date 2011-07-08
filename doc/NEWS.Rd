@@ -212,7 +212,8 @@
       
       \item Added new \samp{\figure} tag to Rd markup, so
       that figures can be included in help pages when displayed
-      in HTML or LaTeX.
+      in HTML or LaTeX.  There is an example in the help page for
+      \code{points()}.
       
       \item The built-in httpd server now allows access to files
       in the session temporary directory \code{tempdir()},

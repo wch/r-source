@@ -1,6 +1,6 @@
 % File src/library/graphics/man/points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{points}
@@ -86,11 +86,16 @@ points(x, \dots)
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
   do not include a border.
+  
+  \if{text}{\figure{}{Illustration of pch 0:25}}
+%  \if{html}{\figure{pch.svg}{Illustration of pch 0:25}}
+  \if{html}{\figure{pch.png}{Illustration of pch 0:25}}
+  \if{latex}{\figure{pch.pdf}{options: width=15cm}}
 
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
-  and \code{bg} the background color.
+  and \code{bg} the background color (which is \samp{"grey"} in the figure):
   \itemize{
     \item \code{pch=19}: solid circle,
     \item \code{pch=20}: bullet (smaller solid circle, 2/3 the size of 19),
@@ -165,6 +170,15 @@ x <- seq(0,2*pi, len=51)
 plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
  main='plot(..., type="o", pch=21, bg=par("bg"))')
 par(op)
+
+\dontrun{
+## The figure was produced by calls like
+png("pch.png", height=0.7, width = 7, res = 100, units="in")
+par(mar = rep(0,4))
+plot(c(-1, 26), 0:1, type="n", axes= FALSE)
+text(0:25, 0.6, 0:25, cex = 0.5)
+points(0:25, rep(0.3, 26), pch = 0:25, bg = "grey")
+}
 
 ##-------- Showing all the extra & some char graphics symbols ---------
 pchShow <-
