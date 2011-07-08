@@ -393,7 +393,10 @@ par(\dots, no.readonly = FALSE)
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the margin size specified in
-      inches.}
+      inches.\cr
+      \if{html}{\figure{mai.png}{options: width=35\%}}
+      \if{latex}{\figure{mai.pdf}{options: width=7cm}}
+    }
     \item{\code{mar}}{A numerical vector of the form \code{c(bottom,
         left, top, right)} which gives the number of lines of margin to be
       specified on the four sides of the plot.
@@ -450,7 +453,10 @@ par(\dots, no.readonly = FALSE)
       an error (ignored with a warning) to try to use \code{new = TRUE}
       on a device that does not currently contain a high-level plot.}
     \item{\code{oma}}{A vector of the form \code{c(bottom, left, top,
-        right)} giving the size of the outer margins in lines of text.}
+        right)} giving the size of the outer margins in lines of text.\cr
+      \if{html}{\figure{oma.png}{options: width=25\%}}
+      \if{latex}{\figure{oma.pdf}{options: width=6cm}}
+    }
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the region \emph{inside} outer margins in NDC (=
       normalized device coordinates), i.e., as a fraction (in \eqn{[0, 1]})

@@ -458,8 +458,8 @@ Rd2HTML <-
 	           else {
 		       of1('alt="')
 		       writeContent(block[[length(block)]])
-		       of1('" />')
 		   }
+                   of1('" />')
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
