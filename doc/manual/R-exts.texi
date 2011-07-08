@@ -4690,31 +4690,29 @@ specify @LaTeX{} style files such as the AMS extensions.
 @cindex Figures in documentation
 @findex \figure
 
-To include figures in help pages, use the 
-@code{\figure} markup.  There are three forms.
+To include figures in help pages, use the @code{\figure} markup.  There
+are three forms.
 
-The two commonly used simple forms are @code{\figure@{@var{filename}@}} and
-@code{\figure@{@var{filename}@}@{@var{alternate text}@}}.  This
-will include a copy of the figure in either HTML or @LaTeX{} output.  In
-text output, the alternate text will be displayed instead.  (When the
-second argument is omitted, the filename will be used.)
-Both the filename and the alternate text will be parsed verbatim,
-and should not include special characters that are significant
-in HTML or @LaTeX{}.
+The two commonly used simple forms are @code{\figure@{@var{filename}@}}
+and @code{\figure@{@var{filename}@}@{@var{alternate text}@}}.  This will
+include a copy of the figure in either HTML or @LaTeX{} output.  In text
+output, the alternate text will be displayed instead.  (When the second
+argument is omitted, the filename will be used.)  Both the filename and
+the alternate text will be parsed verbatim, and should not include
+special characters that are significant in HTML or @LaTeX{}.
 
-The expert form is 
-@code{\figure@{@var{filename}@}@{options: @var{string}@}}.  (The
-word @samp{options:} must be typed exactly as shown and followed
-by at least one space.)  In this form, the @var{string} is
-copied into the HTML @code{img} tag as attributes following
-the @code{src} attribute, or into the second argument of
-the @code{\Figure} macro in LaTeX, which by default is used
-as options to an @code{\includegraphics} call.  As it is unlikely
-that any single string would suffice for both display modes,
-the expert form would normally be wrapped in conditionals.  
-It is up to the author to make sure that legal HTML/LaTeX is
-used.  For example, to include a logo in both HTML (using the simple
-form) and LaTeX (using the expert form), the following could be used:
+The expert form is @code{\figure@{@var{filename}@}@{options:
+@var{string}@}}.  (The word @samp{options:} must be typed exactly as
+shown and followed by at least one space.)  In this form, the
+@var{string} is copied into the HTML @code{img} tag as attributes
+following the @code{src} attribute, or into the second argument of the
+@code{\Figure} macro in LaTeX, which by default is used as options to an
+@code{\includegraphics} call.  As it is unlikely that any single string
+would suffice for both display modes, the expert form would normally be
+wrapped in conditionals.  It is up to the author to make sure that legal
+HTML/LaTeX is used.  For example, to include a logo in both HTML (using
+the simple form) and LaTeX (using the expert form), the following could
+be used:
 
 @example
 \if@{html@}@{\figure@{logo.jpg@}@{Our logo@}@}
@@ -4733,9 +4731,7 @@ relative to @file{man/figures} in the @code{\figure} directive.
 @section Insertions
 
 @findex \R
-Use @code{\R} for the @R{} system
-itself.  Use
-@code{\dots}
+Use @code{\R} for the @R{} system itself.  Use @code{\dots}
 @findex \dots
 for the dots in function argument lists @samp{@dots{}}, and
 @code{\ldots}

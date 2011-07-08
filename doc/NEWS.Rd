@@ -484,6 +484,9 @@
       supplied directly, rather than in a code file.  These cannot be
       restored correctly from the dumped version.
       
+      \item Build-time expressions in help files did not have access
+      to functions in the package being built (with \command{R CMD build}).  
+      
       \item Because \code{quote()} did not mark its result as being in
       use, modification of the result could in some circumstances
       modify the original call.
@@ -645,7 +648,7 @@
       \code{cex.axis} was used.  (Related to \PR{14550}.)
 
       \item \code{dataframe[[row,col]]} now dispatches on \code{[[}
-      methods for the selected column (spotted by Bill Dunlap).
+      methods for the selected column.  (Spotted by Bill Dunlap).
 
       \item \code{sort.int()} would strip the class of an object, but
       leave its object bit set.  (Reported by Bill Dunlap.)
@@ -712,10 +715,7 @@
       
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
-      section).
-      
-      \item Build-time expressions in help files did not have access
-      to functions in the package being built (with \command{R CMD build}).  
+      section).  (It seems this happened only in 2.13.0 patched.)
     }
   }
 }
