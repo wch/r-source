@@ -345,6 +345,15 @@ that class itself, but then you could just overrwite the object).
              ' Untrace the method given as the first argument.
 '
              .TraceWithMethods(..., untrace = TRUE,  where = .self, classMethod = classMethod)
+         },
+         show = function() {
+             cat('Reference class object of class ', classLabel(class(.self)),
+        '\n', sep = "")
+             fields <- names(.refClassDef@fieldClasses)
+             for(fi in fields) {
+                 cat('Field "', fi, '":\n', sep = "")
+                 methods::show(field(fi))
+             }
          }
          )
 
@@ -410,6 +419,7 @@ makeEnvRefMethods <- function() {
     ## NOTE:  "$" method requires setting in methods:::.InitStructureMethods
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
+    setMethod("show", "envRefClass", function(object) object$show())
     ## next call is touchy:  setRefClass() returns an object of class
     ## refObjectGenerator, but the class should have been defined before
     ## the return value is constructed.

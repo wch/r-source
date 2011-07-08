@@ -237,6 +237,12 @@
       be used in combination with \samp{times}, and
       \samp{times,inconsolata,hyper} is now the default for the
       reference manual and package manuals.
+
+      \item Automatic printing for reference classes is now done by
+      the \code{$show()} method.  A method is defined for class
+      \samp{envRefClass} and may be overriden for user classes (see
+      the \code{?ReferenceClasses} example).  S4 \code{show()} methods
+      should no longer be needed for reference classes.
     }
   }
 

@@ -17,6 +17,7 @@
 \alias{extendsMetaName}
 \alias{classPrototypeDef-class}
 %%
+\alias{classLabel}
 \alias{testVirtual}
 \alias{makePrototypeFromClassDef}
 \alias{newEmptyObject}
@@ -63,6 +64,8 @@
 }
 
 \usage{
+classLabel(Class)
+
 testVirtual(properties, extends, prototype, where)
 
 makePrototypeFromClassDef(slots, ClassDef, extends, where)
@@ -283,6 +286,11 @@ setDataPart(object, value, check = TRUE)
       This can be either a logical value or an object of class
       \code{\linkS4class{SClassExtension}} containing various
       functions to test and/or coerce the relationship.
+    }
+
+{\code{classLabel}: }{
+        Returns an informative character string identifying the class
+        and, if appropriate, the package from which the class came.
     }
 
     \item{\code{completeExtends}:}{

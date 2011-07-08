@@ -574,21 +574,43 @@
                   objs <- names(args)
                   hasEnvArg <- length(args) && !all(nzchar(objs))
                   if(hasEnvArg) {
-                      i <- seq_along(args)[!nzchar(objs)]
+                      ii <- seq_along(args)[!nzchar(objs)]
+                      i <- integer()
+                      for(iii in ii) {
+                          if(is(args[[iii]], "environment"))
+                              i <- c(i, iii)
+                      }
                       if(length(i)>1)
                           stop("Can't have more than one unnamed argument as environment")
-                      selfEnv <- args[[i]]
-                      args <- args[-i]
-                      objs <- objs[-i]
-                      if(!is(selfEnv, "environment"))
-                          stop("Unnamed argument to new() must be an environment for the new object")
-                      selfEnv <- as.environment(selfEnv)
+                      if(length(i) == 1) {
+                          selfEnv <- args[[i]]
+                          args <- args[-i]
+                          objs <- objs[-i]
+                          if(!is(selfEnv, "environment"))
+                              stop("Unnamed argument to new() must be an environment for the new object")
+                          selfEnv <- as.environment(selfEnv)
+                      }
+                      ## else, no environment superclasses
+                      else
+                          selfEnv <- new.env()
                   }
                   else
                       selfEnv <- new.env()
-                  for(what in objs)
-                      assign(what, elNamed(args, what), envir = selfEnv)
+                  if(length(objs)) {
+                      ## don't assign locally named slots of subclasses
+                      ClassDef <- getClass(class(.Object))
+                      slots <- slotNames(ClassDef)
+                      localObjs <- is.na(match(objs, slots))
+                      if(any(localObjs)) {
+                          for(what in objs[localObjs])
+                              assign(what, elNamed(args, what), envir = selfEnv)
+                          objs <- objs[!localObjs]
+                          args <- args[!localObjs]
+                      }
+                  }
                   .Object@.xData <- selfEnv
+                  if(length(objs)) # call next method with remaining args
+                      .Object <- do.call(callNextMethod, c(.Object, args))
                   .Object
               }, where = where)
 }

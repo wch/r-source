@@ -13,6 +13,7 @@
 \alias{refMethodDef-class}
 \alias{refMethodDefWithTrace-class}
 \alias{SuperClassMethod-class}
+\alias{show,envRefClass-method}
 \alias{show,refMethodDef-method}
 \alias{show,refClassRepresentation-method}
 \title{
@@ -307,18 +308,18 @@ method replaces the direct use of a field name, when the name of the
 field must be calculated, or for looping over several fields.
 }
 
+\item{\code{$export(Class)}}{ %$
+Returns the result of coercing the object to \code{Class} (typically
+one of the superclasses of the object's class).  Calling the method
+has no side effect on the object itself.
+}
+
 \item{\code{$getRefClass()}; \code{$getClass()}}{
 These return respectively the generator object and the formal class
 definition for the reference class of this object, efficiently.
 }
 
 
-
-\item{\code{$export(Class)}}{ %$
-Returns the result of coercing the object to \code{Class} (typically
-one of the superclasses of the object's class).  Calling the method
-has no side effect on the object itself.
-}
 
 \item{\code{$import(value, Class = class(value))}}{ %$
 Import the object \code{value} into the current object, replacing the
@@ -340,6 +341,19 @@ Typically, a specialized \code{$initialize()}% $
 method carries out its own computations, then invokes \code{$initFields()}% $
 to perform standard initialization, as shown in the
 \code{matrixViewer} class in the example below.
+}
+
+\item{\code{$show()}}{ %$
+This method is called when the object is printed automatically,
+analogously to the \code{\link{show}} function.  A general method is
+defined for class \code{"envRefClass"}.  User-defined reference
+classes will often define their own method: see the Example below.
+
+Note two points in the example.  As with any \code{show()} method, it
+is a good idea to print the class explicitly to allow for subclasses
+using the method.  Second, to call the \emph{function} \code{show()}
+from the method, as opposed to the \code{$show()} %$
+method itself, refer to \code{methods::show()} explicitly.
 }
 
 \item{\code{$trace(what, ...)}, \code{$untrace(what)} }{ 
@@ -606,7 +620,7 @@ of the \code{\link{trace}} function.
 A corresponding \code{$trace()} %$
 reference method is available for
 either an object or for the reference class generator
-(\code{xx$trace()} or \code{mEditor$trace()} in the example below).
+(\code{xx$trace()} or \code{mEdit$trace()} in the example below).
 Using \code{$trace()} on an object sets up a tracing
 version for future invocations of the specified method for that
 object.
@@ -631,7 +645,7 @@ John Chambers
  \examples{
 ## a simple editor for matrix objects.  Method  $edit() changes some
 ## range of values; method $undo() undoes the last edit.
-mEditor <- setRefClass("matrixEditor",
+mEdit <- setRefClass("mEdit",
       fields = list( data = "matrix",
         edits = "list"),
       methods = list(
@@ -657,19 +671,27 @@ mEditor <- setRefClass("matrixEditor",
          ## trim the edits list
          length(edits) <<- length(edits) - 2
          invisible(prev)
+     },
+     show = function() {
+       'Method for automatically printing matrix editors'
+       cat("Reference matrix editor object of class",
+          classLabel(class(.self)), "\n")
+       cat("Data: \n")
+       methods::show(data)
+       cat("Undo list is of length", length(edits), "\n")
      }
      ))
     
 xMat <- matrix(1:12,4,3)
-xx <- mEditor$new(data = xMat)
+xx <- mEdit$new(data = xMat)
 xx$edit(2, 2, 0)
-xx$data
+xx
 xx$undo()
-mEditor$help("undo")
+mEdit$help("undo")
 stopifnot(all.equal(xx$data, xMat))
 
 ## add a method to save the object
-mEditor$methods(
+mEdit$methods(
      save = function(file) {
        'Save the current object on the file
         in R external object format.
@@ -679,7 +701,7 @@ mEditor$methods(
 )  
 
 tf <- tempfile()
-xx$save(tf) #$
+xx$save(tf)
 \dontshow{
 load(tf)
 unlink(tf)
@@ -690,7 +712,7 @@ stopifnot(identical(xx$data, .self$data))
 ## Inheriting a reference class:  a matrix viewer
 mv <- setRefClass("matrixViewer", 
     fields = c("viewerDevice", "viewerFile"),
-    contains = "matrixEditor",
+    contains = "mEdit",
     methods = list( view = function() {
         dd <- dev.cur(); dev.set(viewerDevice)
         devAskNewPage(FALSE)
@@ -718,11 +740,11 @@ mv$methods( initialize =
 ## debugging an object: call browser() in method $edit()
 xx$trace(edit, browser)
 
-## debugging all objects from class mEditor in method $undo()
-mEditor$trace(undo, browser)
+## debugging all objects from class mEdit in method $undo()
+mEdit$trace(undo, browser)
 }
 \dontshow{
-removeClass("matrixEditor")
+removeClass("mEdit")
 resetGeneric("$")
 resetGeneric("initialize")
 } %$

@@ -157,11 +157,19 @@ show <- function(object)
               where = envir)
 }
 
+.showPackage <- function(className) {
+    if(is.logical(opt <- getOption("showPackageForClass")))
+        opt
+    else
+        is.list(.Call("R_getClassFromCache", as.character(className), .classTable, PACKAGE = "methods"))
+}
 ## an informative string label for a class
 classLabel <- function(Class) {
     if(is.character(Class) && length(Class)) {
         className <- Class[[1L]]
         packageName <- attr(Class, "package")
+        if(is.null(packageName))
+            packageName <- ""
     }
     else {
         if(is(Class, "classRepresentation")) {
@@ -170,15 +178,13 @@ classLabel <- function(Class) {
         }
         else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s", classLabel(class(Class))), domain = NA)
     }
-### TODO:  implement a test for the class NOT directly visible OR multiple versions
-### and include the from... phrase in this case
-#     if(....) {
-#         if(identical(packageName, ".GlobalEnv"))
-#             fromString <- " (from the global environment)"
-#         else
-#             fromString <- paste(" (from package \"", packageName, "\")", sep="")
-#         className <- paste("\"", className, "\"", fromString, sep="")
-#     }
-#     else
-    .dQ(className)
+    if(.showPackage(className)) {
+       if(identical(packageName, ".GlobalEnv"))
+           packageName <- " (from the global environment)"
+        else
+            packageName <- paste(" (from package \"", packageName, "\")", sep="")
+       paste('"', className, '"', packageName, sep = "")
+   }
+   else
+       paste('"', className, '"', sep = "")
 }
