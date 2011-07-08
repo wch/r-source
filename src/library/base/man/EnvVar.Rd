@@ -122,7 +122,7 @@
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
-      \code{Rd} files.  Used by \command{R CMD Rd2dvi}.}
+      \code{Rd} files.  Used by \command{R CMD Rd2pdf}.}
     \item{\env{R_SHARE_DIR}:}{The location of the \R \file{share}
       directory.  Set by \R.} 
     \item{\env{R_TEXI2DVICMD}:}{The path to \command{texi2dvi}.

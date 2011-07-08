@@ -7080,10 +7080,8 @@ Post-process @R{} profiling files.
 Convert Rd format to various other formats, including @HTML{}, @LaTeX{},
 plain text, and extracting the examples.  @code{Rd2txt} can be used as
 shorthand for @code{Rd2conv -t txt}.
-@item Rd2dvi
 @itemx Rd2pdf
-Convert Rd format to DVI/PDF.  @code{Rd2pdf} can be used as shorthand
-for @code{Rd2dvi --pdf}.
+Convert Rd format to PDF.
 @item Stangle
 Extract S/R code from Sweave documentation
 @item Sweave

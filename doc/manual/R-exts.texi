@@ -5056,7 +5056,7 @@ be recognized, and the coverage of non-Latin characters@footnote{@R{}
 some OSes this will need Cyrillic support added to @LaTeX{}, so
 environment variable @env{_R_CYRILLIC_TEX_} may need to be set to a
 non-empty value to enable this.} is fairly low.  Using @LaTeX{}
-@code{inputenx} (see @code{?Rd2dvi} in @R{}) will give greater coverage
+@code{inputenx} (see @code{?Rd2pdf} in @R{}) will give greater coverage
 of UTF-8.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
@@ -5073,7 +5073,7 @@ encoding, and includes a
 @noindent
 command, and this needs to be matched by a suitable invocation of the
 @command{\usepackage@{inputenc@}} command.  The @R{} utility @command{R
-CMD Rd2dvi} looks at the converted code and includes the encodings used:
+CMD Rd2pdf} looks at the converted code and includes the encodings used:
 it might for example use
 
 @example
@@ -5083,7 +5083,7 @@ it might for example use
 @noindent
 (Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
 later.  Also, the use of Cyrillic characters in @samp{UTF-8} appears to
-also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2dvi}
+also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2pdf}
 includes this conditionally on the file @file{t2aenc.def} being present
 and environment variable @env{_R_CYRILLIC_TEX_} being set.)
 
@@ -5113,7 +5113,7 @@ documentation in @file{Rd} files, which can be specified either
 explicitly or by the path to a directory with the sources of a package.
 In the latter case, a reference manual for all documented objects in the
 package is created, including the information in the @file{DESCRIPTION}
-files.
+files.  Use for DVI output was deprecated in @R{} 2.14.0.
 
 @findex R CMD Sweave
 @findex R CMD Stangle

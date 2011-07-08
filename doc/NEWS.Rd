@@ -476,9 +476,6 @@
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
-      
-      \item Build time expressions in help files did not have access
-      to functions in the package being built.      
     }
   }
 }
@@ -705,6 +702,9 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).
+      
+      \item Build-time expressions in help files did not have access
+      to functions in the package being built (with \command{R CMD build}).  
     }
   }
 }

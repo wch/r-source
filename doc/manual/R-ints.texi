@@ -3857,7 +3857,7 @@ installed.  We have attempted to abstract out the cross-platform
 differences, and almost all the setting of typeset documents is done by
 @code{tools::texi2dvi}.  This is used for offline printing of help
 documents, preparing vignettes and for package manuals via @command{R
-CMD Rd2dvi}.  It is not currently used for the @R{} manuals created in
+CMD Rd2pdf}.  It is not currently used for the @R{} manuals created in
 directory @file{doc/manual}.
 
 @code{tools::texi2dvi} makes use of a system command @command{texi2dvi}
