@@ -482,12 +482,12 @@ get_exclude_patterns <- function()
 	if (!length(containsSexprs)) return(FALSE)
 
 	messageLog(Log, "installing the package to process help pages")
-	
+
         dir.create(libdir, mode = "0755", showWarnings = FALSE)
         savelib <- .libPaths()
         .libPaths(libdir)
-        on.exit(.libPaths(savelib), add = TRUE)	
-        
+        on.exit(.libPaths(savelib), add = TRUE)
+
         temp_install_pkg(pkgdir, libdir)
 
 	containsBuildSexprs <-
@@ -724,7 +724,7 @@ get_exclude_patterns <- function()
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2010 The R Core Development Team.",
+                "Copyright (C) 1997-2011 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")

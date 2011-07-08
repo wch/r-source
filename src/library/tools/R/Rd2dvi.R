@@ -584,6 +584,9 @@ function(pkgdir, outfile, title, batch = FALSE,
 
 ### * ..Rd2dvi
 
+## Driver called from R CMD Rd2dvi
+## See the comments in install.R as to how this can be called directly.
+
 ..Rd2dvi <- function(args = NULL, quit = TRUE)
 {
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -600,7 +603,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     Usage <- function() {
         cat("Usage: R CMD Rd2dvi [options] files",
             "",
-            "Generate DVI (or PDF) output from the Rd sources specified by files, by",
+            "Generate PDF (or DVI) output from the Rd sources specified by files, by",
             "either giving the paths to the files, or the path to a directory with",
             "the sources of a package, or an installed package.",
             "",
@@ -635,8 +638,8 @@ function(pkgdir, outfile, title, batch = FALSE,
             "      --internals	typeset 'internal' documentation (usually skipped)",
             "",
             "The output papersize is set by the environment variable R_PAPERSIZE.",
-            "The DVI previewer is set by the environment variable xdvi.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",
+            "The DVI previewer is set by the environment variable xdvi.",
             "",
             "Report bugs to <r-bugs@r-project.org>.",
             sep = "\n")
@@ -689,7 +692,7 @@ function(pkgdir, outfile, title, batch = FALSE,
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2010 The R Core Development Team.",
+                "Copyright (C) 2000-2011 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
@@ -741,6 +744,9 @@ function(pkgdir, outfile, title, batch = FALSE,
         message("no inputs")
         q("no", status = 1L, runLast = FALSE)
     }
+
+    if (out_ext != "pdf")
+        warning("DVI output from Rd2dvi is depreccated", call. = FALSE)
 
     ## Windows does not allow .../man/, say, for a directory
     if(WINDOWS) files[1L] <- sub("[\\/]$", "", files[1L])

@@ -2552,7 +2552,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2010 The R Core Development Team.",
+                "Copyright (C) 1997-2011 The R Core Development Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")

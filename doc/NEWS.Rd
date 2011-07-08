@@ -406,6 +406,11 @@
 
       \item \command{zip.file.extract()} is now defunct: use
       \code{unzip()} or \code{unz()} instead.
+      
+      \item \command{R CMD Rd2dvi} without the \option{--pdf} option is
+      now deprecated: only PDF output will be supported in future
+      releases (since this allows the use of fonts only supported for
+      PDF).
     }
   }
 
@@ -435,7 +440,7 @@
       \item Configure will try to use \code{-fobjc-exceptions} for the
       Objective-C compiler (if present) to ensure that even compilers
       that do not enable exceptions by default (such as vanilla gcc) can
-      be used.
+      be used.  (Objective-C is currently only used on Mac OS X.)
 
       \item The system call \code{times} is required.
 
@@ -443,7 +448,9 @@
       \code{snprintf} and \code{vsnprintf} are now required.
       
       \item There is no longer support for making DVI manuals \emph{via}
-      \command{make dvi}, \command{make install-dvi} and similar.
+      \command{make dvi}, \command{make install-dvi} and similar.  Only
+      PDF manuals are supported (to allow the use of fonts which are
+      only available for PDF.)
     }
   }
 
