@@ -2419,7 +2419,11 @@ SEXP attribute_hidden do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     check1arg(args, call, "expr");
-    return(CAR(args));
+    SEXP val = CAR(args); 
+    /* Make sure expression has NAMED == 2 before being returning
+       in to avoid modification of source code */
+    if (NAMED(val) != 2) SET_NAMED(val, 2);
+    return(val);
 }
 
 typedef struct {

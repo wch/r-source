@@ -15,6 +15,10 @@
       \item \code{package.skeleton()} will no longer dump S4 objects
       supplied directly, rather than in a code file.  These cannot be
       restored correctly from the dumped version.
+      
+      \item Because \code{quote()} did not mark its result as being in
+      use, modification of the result could in some circumstances
+      modify the original call.
     }  
   }
 }
