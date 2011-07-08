@@ -4722,7 +4722,7 @@ be used:
 The files containing the figures should be stored in the directory
 @file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
 @file{.png} and @file{.svg} from that directory will be copied to the
-@file{html/figures} directory at install time. (Figures 
+@file{help/figures} directory at install time. (Figures 
 in PDF format will not display in most HTML browsers, but
 might be the best choice in reference manuals.)  Specify the filename
 relative to @file{man/figures} in the @code{\figure} directive.

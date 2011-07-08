@@ -141,7 +141,7 @@ httpd <- function(path, query, ...)
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
-    figureRegexp <- "^/library/([^/]*)/figures/([^/]*)$"
+    figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     sessionRegexp <- "^/session/"
 
     file <- NULL
@@ -311,7 +311,7 @@ httpd <- function(path, query, ...)
     	                 "content-type" = "text/plain") )
     } else if (grepl(figureRegexp, path)) {
         pkg <- sub(figureRegexp, "\\1", path)
-        fig <- sub(figureRegexp, "\\2", path)
+        fig <- sub(figureRegexp, "\\3", path)
         file <- system.file("help", "figures", fig, package=pkg)
         return( list(file=file, "content-type" = mime_type(path)) )
     } else if (grepl(sessionRegexp, path)) {

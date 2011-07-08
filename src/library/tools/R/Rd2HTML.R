@@ -448,7 +448,7 @@ Rd2HTML <-
                    inEqn <<- FALSE
                },
                "\\figure" = {
-                   of1('<img src="../figures/')
+                   of1('<img src="figures/')
                    writeContent(block[[1]], tag)
                    of1('" ')
                	   if (length(block) > 1L
