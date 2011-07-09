@@ -2379,7 +2379,7 @@ screendumps.  However, some have been unnecessarily large due to
 @command{pdftex} settings.  The modern default is to use both PDF
 compression and PDF object compression (which needs the PDF 1.5
 specification from 2003): this is the default in most @TeX{}
-distributions by not MiKTeX.  It can be overridden by code in the
+distributions but not MiKTeX.  It can be overridden by code in the
 preamble of an Sweave or @LaTeX{} file: see how this is done for the
 @R{} reference manual at
 @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
