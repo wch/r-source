@@ -275,18 +275,6 @@ src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
   although no actual copyright statement appears in the code.
 
 
-src/main/vsnprintf.c
-
-  Taken from the wget 1.8.1 distribution: only used on platforms
-  without vsnprintf.
-  /*
-   * Copyright Patrick Powell 1995
-   * This code is based on code written by Patrick Powell (papowell@astart.com)
-   * It may be used for any purpose as long as this notice remains intact
-   * on all source code distributions
-   */
-
-
 src/extra/xdr/*
 
 	Copyright (undated) Sun Microsystems, Inc.
@@ -306,8 +294,8 @@ src/main/connections.c, src/main/gzio.h
 
 src/main/dounzip.c, unzip.h
 
-  Contain code Copyright (C) 1998-2005 Gilles Vollant from contrib/minizip
-  in the zlib 1.2.3 distribution.
+  Contain code Copyright (C) 1998-2010 Gilles Vollant from contrib/minizip
+  in the zlib 1.2.3 distribution with updates taken from 1.2.5.
 
 
 src/main/acosh.c, asinh.c, atanh.c
