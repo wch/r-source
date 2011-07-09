@@ -298,19 +298,6 @@ src/main/dounzip.c, unzip.h
   in the zlib 1.2.3 distribution with updates taken from 1.2.5.
 
 
-src/main/acosh.c, asinh.c, atanh.c
-
-used as substitution code only.  Based on
-
-  Cephes Math Library Release 2.8:  June, 2000
-  Copyright 1984, 1995, 2000 by Stephen L. Moshier
-
-According to http://www.netlib.org/cephes/readme
-
-  What you see here may be used freely but it comes with no support or
-  guarantee.
-
-
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 
