@@ -89,7 +89,7 @@ points(x, \dots)
 
 % SVG support in browsers is patchy, e.g. not Konqueror
 %  \if{html}{\figure{pch.svg}{options: width=100\%}}
-  \if{html}{\figure{pch.png}{options: width=100\%}}
+  \if{html}{\figure{pch.png}{Illustration of pch=0:25}}
   \if{latex}{\figure{pch.pdf}{options: width=15cm}}
 
   The following  \R plotting symbols are can be obtained with
