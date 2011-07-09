@@ -86,8 +86,10 @@ points(x, \dots)
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
   do not include a border.
-  
-  \if{html}{\figure{pch.svg}{options: width=100\%}}
+
+% SVG support in browsers is patchy, e.g. not Konqueror
+%  \if{html}{\figure{pch.svg}{options: width=100\%}}
+  \if{html}{\figure{pch.png}{options: width=100\%}}
   \if{latex}{\figure{pch.pdf}{options: width=15cm}}
 
   The following  \R plotting symbols are can be obtained with

@@ -448,7 +448,9 @@ Rd2HTML <-
                    inEqn <<- FALSE
                },
                "\\figure" = {
-                   of1('<img src="figures/')
+                   ## This is what is needed for static html pages
+                   if(dynamic) of1('<img src="figures/')
+                   else of1('<img src="../help/figures/')
                    writeContent(block[[1]], tag)
                    of1('" ')
                	   if (length(block) > 1L
