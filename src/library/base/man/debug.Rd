@@ -63,8 +63,7 @@ isdebugged(fun)
   to the end of its definition, and then call \code{debug} on its name.
 
   If you want to debug a function not starting at the very beginning,
-  use \code{\link{trace}(..., at = *)} or
-  \code{\link[utils]{setBreakpoint}}.
+  use \code{\link{trace}(..., at = *)} or \code{\link{setBreakpoint}}.
 
   Using \code{debug} is persistent, and unless debugging is turned off
   the debugger will be entered on every invocation (note that if the
