@@ -48,9 +48,8 @@ setClass <-
         superClasses <- names(classDef@contains)
     }
     classDef <- completeClassDefinition(Class, classDef, where, doExtends = FALSE)
-    oldDef <- getClassDef(Class, where)
-    if(is(oldDef, "classRepresentation"))
-      .uncacheClass(Class, oldDef)
+    ## uncache an old definition for this package, if one is cached
+    .uncacheClass(Class, classDef)
     if(length(superClasses) > 0L) {
         sealed <- classDef@sealed
         classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later

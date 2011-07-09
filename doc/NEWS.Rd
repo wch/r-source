@@ -474,6 +474,12 @@
       \item The formula methods for \code{lines()}, \code{points()} and
       \code{text()} now work even if package \pkg{stats} is not on the
       search path.
+
+      \item In principle, S4 classes from different packages could
+      have the same name.  This has never worked, but a first step has
+      been taken:  Classes should now be found correctly from each
+      package's namespace or given the package slot.  Methods for the
+      same generic function may still be selected incorrectly.
     }
   }
 }

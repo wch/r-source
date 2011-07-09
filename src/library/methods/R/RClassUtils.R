@@ -1888,7 +1888,8 @@ substituteFunctionArgs <-
     if(exists(name, envir = .classTable, inherits = FALSE)) {
         newpkg <- def@package
         prev <- get(name, envir = .classTable)
-        if(is(prev, "classRepresentation"))  # we might worry if  prev not identical?
+        if(is(prev, "classRepresentation") &&
+           identical(prev@package, newpkg) )
             return(remove(list = name, envir = .classTable))
          i <- match(newpkg, names(prev))
         if(!is.na(i))

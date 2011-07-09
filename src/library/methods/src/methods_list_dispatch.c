@@ -824,9 +824,19 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
 {
     SEXP value;
     if(TYPEOF(class) == STRSXP) {
+	SEXP package = PACKAGE_SLOT(class);
 	value = findVarInFrame(table, install(CHAR(STRING_ELT(class, 0))));
 	if(value == R_UnboundValue)
 	    return R_NilValue;
+	else if(TYPEOF(package) == STRSXP) {
+	    SEXP defPkg = PACKAGE_SLOT(value);
+	    /* check equality of package */
+	    if(TYPEOF(defPkg) == STRSXP && length(defPkg) ==1 &&
+	       STRING_ELT(defPkg,0) != STRING_ELT(package, 0))
+		return R_NilValue;
+	    else
+		return value;
+	}
 	else /* may return a list if multiple instances of class */
 	    return value;
     }
