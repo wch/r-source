@@ -87,18 +87,19 @@ points(x, \dots)
   \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
   do not include a border.
   
-  \if{text}{\figure{}{Illustration of pch 0:25}}
   \if{html}{\figure{pch.svg}{options: width=100\%}}
-%  \if{html}{\figure{pch.png}{Illustration of pch 0:25}}
   \if{latex}{\figure{pch.pdf}{options: width=15cm}}
 
   The following  \R plotting symbols are can be obtained with
   \code{pch=19:25}: those with \code{21:25} can be colored and
   filled with different colors: \code{col} gives the border color
-  and \code{bg} the background color (which is \samp{"grey"} in the figure):
+  and \code{bg} the background color
+  \if{html}{(which is \samp{"grey"} in the figure)}
+  \if{latex}{(which is \samp{"grey"} in the figure)}
   \itemize{
     \item \code{pch=19}: solid circle,
-    \item \code{pch=20}: bullet (smaller solid circle, 2/3 the size of 19),
+    \item \code{pch=20}: bullet (smaller solid circle,
+    2/3 the size of \code{19}),
     \item \code{pch=21}: filled circle,
     \item \code{pch=22}: filled square,
     \item \code{pch=23}: filled diamond,

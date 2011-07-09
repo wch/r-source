@@ -550,8 +550,8 @@ getOption(x, default = NULL)
 \section{Options used on Unix only}{
   \describe{
     \item{\code{dvipscmd}:}{character string giving a command to be used in
-    off-line printing of help pages \emph{via} PostScript.  Defaults to
-    \command{"dvips"}.}
+    the (deprecated) off-line printing of help pages \emph{via}
+    PostScript.  Defaults to \command{"dvips"}.}
   }
 }
 \section{Options used on Windows only}{

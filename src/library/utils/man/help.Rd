@@ -56,7 +56,7 @@ help(topic, package = NULL, lib.loc = NULL,
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
-    \item For \code{help} only, typeset as a PostScript or PDF file --
+    \item For \code{help} only, typeset as a PDF or PostScript file --
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
@@ -97,12 +97,10 @@ help(topic, package = NULL, lib.loc = NULL,
 
 \section{Offline help}{
   Typeset documentation is produced by running the LaTeX version of the
-  help page through \command{latex} and \command{dvips} or, if
-  \code{help_type = "PDF"}, \command{pdflatex}.  This will produce
-  either a PostScript or PDF file and possibly (depending on the
-  configuration of \command{dvips}) send a PostScript file to a printer.
-  You can set \code{\link{options}("dvipscmd")} to customize how
-  \command{dvips}) is called.
+  help page through \command{pdflatex} or (deprecated) \command{latex}
+  and \command{dvips}.  This will produce a PDF or PostScript file and
+  possibly (depending on the configuration of \command{dvips}) send a
+  PostScript file to a printer.
 
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
@@ -114,12 +112,15 @@ help(topic, package = NULL, lib.loc = NULL,
 
   If there is a function \code{offline_help_helper} in the workspace or
   further down the search path it is used to do the typesetting,
-  otherwise the function of that name in the \code{utils} name space
-  (to which the first paragraph applies).  It should have two 
+  otherwise the function of that name in the \code{utils} name space (to
+  which the first paragraph applies).  It should accept at least two
   arguments, the name of the LaTeX file to be typeset and the type.  As
   from \R 2.14.0 it should accept a third argument, \code{texinputs},
   which will give the graphics path when the help document contains
   figures, and will otherwise not be supplied.
+  
+  Postsccript rendering of help pages containing figures will often not
+  include the figures (which is one reason it is deprecated).
 }
 
 \note{
