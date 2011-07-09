@@ -130,8 +130,8 @@ tracingState(on = NULL)
   will call the tracer just before the fourth step of the third step
   of the function.  See the example below.
 
-  Using \code{\link[utils]{setBreakpoint}()} (package \pkg{utils}) may
-  be an alternative, calling \code{trace(...., at, ...)}.
+  Using \code{\link{setBreakpoint}} (from package \pkg{utils}) may be an
+  alternative, calling \code{trace(...., at, ...)}.
 
   An intrinsic limitation in the \code{exit} argument is that it won't
   work if the function itself uses \code{on.exit}, since the existing
