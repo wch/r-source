@@ -207,7 +207,7 @@
 
 %% \code without `-' ligatures
 {\catcode`\-=\active%
-  \global\def\code{\bgroup%
+  \global\def\code{\bgroup\@noligs%
     \catcode`\-=\active \let-\codedash%
     \Rd@code}}
 \def\codedash{-\discretionary{}{}{}}

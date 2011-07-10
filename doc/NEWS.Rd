@@ -728,6 +728,10 @@
       \item Rd conversion to latex mis-handled multi-line titles
       (including cases where there was a blank line in the \samp{\title}
       section).  (It seems this happened only in 2.13.0 patched.)
+      
+      \item In a a \file{.Rd} file, \samp{\\code{''}} was mis-converted
+      to latex and rendered in e.g. PDF as a double quote (a single
+      character).
     }
   }
 }
