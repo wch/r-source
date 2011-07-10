@@ -195,7 +195,7 @@
       the POSIX 2008 and FreeBSD/Darwin/NetBSD methods are detected.)
 
       \item New function \code{getCall(m)} as an abstraction for
-      \code{m$call}, enabling \code{update(m)}'s default method to apply
+      \code{m$call}, enabling \code{update(m)}'s default method to apply % $ 
       more universally.  (NB: this can be masked by existing functions
       in packages.)
 
@@ -243,6 +243,10 @@
       \samp{envRefClass} and may be overriden for user classes (see
       the \code{?ReferenceClasses} example).  S4 \code{show()} methods
       should no longer be needed for reference classes.
+      
+      \item \code{tools::Rdiff} (by default) and \code{R CMD Rdiff}
+      now ignore differences in pointer values when comparing printed
+      environments, compiled byte code, etc.   
     }
   }
 
