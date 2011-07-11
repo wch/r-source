@@ -126,7 +126,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
         if(grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
         if (nullPointers) 
         ## remove pointer addresses from listings
-            txt <- gsub("<(environment|bytecode|pointer|promise): 0x[[:xdigit:]]{8}>", "<\\1: 0x00000000>", txt)
+            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
         ## regularize fancy quotes.  First UTF-8 ones:
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
