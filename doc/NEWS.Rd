@@ -5,6 +5,13 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Sweave now knows about a few more Windows' encodings,
+      including \code{cp1250} and \code{cp1257}.  (Belated user request.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
      \item \code{fisher.test()} had a buglet: If arguments were
