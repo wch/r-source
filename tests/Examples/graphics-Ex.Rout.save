@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-07-05 r56287)
+R Under development (unstable) (2011-07-10 r56347)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,6 +21,7 @@ Type 'q()' to quit R.
 > pkgname <- "graphics"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('graphics')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -1846,7 +1847,7 @@ wool         1  450.7  450.67  3.3393 0.073614 .
 tension      2 2034.3 1017.13  7.5367 0.001378 **
 Residuals   50 6747.9  134.96                    
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > plot.design(       Form, data = warpbreaks, col = 2)# same as above
 > 
 > ## More than one y :
@@ -1989,7 +1990,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2200bb0>
+<bytecode: 0x01b98c7c>
 <environment: namespace:graphics>
 > 
 > 
@@ -2067,6 +2068,15 @@ attr(,"class")
 > plot(x, sin(x), type="o", pch=21, bg=par("bg"), col = "blue", cex=.6,
 +  main='plot(..., type="o", pch=21, bg=par("bg"))')
 > par(op)
+> 
+> ## Not run: 
+> ##D ## The figure was produced by calls like
+> ##D png("pch.png", height=0.7, width = 7, res = 100, units="in")
+> ##D par(mar = rep(0,4))
+> ##D plot(c(-1, 26), 0:1, type="n", axes= FALSE)
+> ##D text(0:25, 0.6, 0:25, cex = 0.5)
+> ##D points(0:25, rep(0.3, 26), pch = 0:25, bg = "grey")
+> ## End(Not run)
 > 
 > ##-------- Showing all the extra & some char graphics symbols ---------
 > pchShow <-
@@ -2884,7 +2894,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3c0b5d8>
+<bytecode: 0x02bb9004>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2964,7 +2974,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.348 0.122 6.829 0 0 
+Time elapsed:  3.56 5.37 9.04 NA NA 
 > grDevices::dev.off()
 null device 
           1 
