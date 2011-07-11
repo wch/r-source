@@ -34,13 +34,13 @@ RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 ## NAMESPACE in the library tree.
 ## This depends on many other things, including the list of primitives.
 ## Depending on names.c at least catches the latter.
+EXTRAS = @BYTE_COMPILE_PACKAGES_TRUE@ R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
   $(top_srcdir)/src/main/names.c
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@$(ECHO) "byte-compiling '$(pkg)'"
+@BYTE_COMPILE_PACKAGES_TRUE@	@$(ECHO) "byte-compiling '$(pkg)'"
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \
-	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
+	  $(EXTRAS) R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)

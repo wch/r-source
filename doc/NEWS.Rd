@@ -437,8 +437,11 @@
 
   \subsection{INSTALLATION}{
     \itemize{
-      \item The base and recommended packages are now always
-      byte-compiled (equivalent to \command{make bytecode} in \R 2.13.x).
+      \item The base and recommended packages are now byte-compiled
+      (equivalent to \command{make bytecode} in \R 2.13.x).  On a
+      Unix-alike this can be disabled by configuring with
+      \option{--disable-byte-compiled-packages} (although this is intended
+      only for expert use and is not supported).
       
       \item Configure option \option{--with-system-zlib} now only makes
       use of the basic interface of \code{zlib} and not the

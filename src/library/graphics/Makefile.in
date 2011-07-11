@@ -24,7 +24,8 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR1 mkdesc mkdemos mkpo mkfigs
-	@$(MAKE) mklazycomp
+@BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
+@BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
 
 
 include $(top_srcdir)/share/make/basepkg.mk

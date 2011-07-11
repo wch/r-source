@@ -24,6 +24,7 @@ all: Makefile R
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+R_PKGS_CMP = @BYTE_COMPILE_PACKAGES_TRUE@ base tools
 ## FIXME: do some of this in parallel?
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
@@ -34,7 +35,7 @@ R:
 	@for pkg in profile base tools compiler; do \
 	  (cd $${pkg} && $(MAKE) all) || exit 1; \
 	done
-	@for pkg in base tools; do \
+	@for pkg in $(R_PKGS_CMP); do \
 	  (cd $${pkg} && $(MAKE) mklazycomp) || exit 1; \
 	done
 	@for pkg in $(R_PKGS_BASE1); do \

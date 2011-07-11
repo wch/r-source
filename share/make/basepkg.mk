@@ -135,11 +135,11 @@ mkexec:
 	  done; \
 	fi
 
-## not currently used
+## only use if byte-compilation is disabled
 mklazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
+	  R_DEFAULT_PACKAGES=$(DEFPKGS) LC_ALL=C $(R_EXE) > /dev/null
 
 mklazycomp: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
@@ -163,11 +163,12 @@ mksrc-win2:
 	  (cd src && $(MAKE) -f Makefile.win) || exit 1; \
 	fi
 
-
+## install man/figures: currently only used for graphics
 mkfigs:
 	@if test -d  $(srcdir)/man/figures; then \
 	  mkdir -p $(top_builddir)/library/$(pkg)/help/figures; \
-	  cp  $(srcdir)/man/figures/* $(top_builddir)/library/$(pkg)/help/figures; \
+	  cp $(srcdir)/man/figures/* \
+	    $(top_builddir)/library/$(pkg)/help/figures; \
 	fi
 
 install-tests:

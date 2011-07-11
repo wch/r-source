@@ -40,7 +40,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs
-INSTALL_OPTS=--pkglock --data-compress=xz --byte-compile
+INSTALL_OPTS=--pkglock --data-compress=xz@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
 
 .tgz.ts:
 	@$(ECHO) "begin installing recommended package" `basename $< .tgz`

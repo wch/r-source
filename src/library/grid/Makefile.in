@@ -27,7 +27,8 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) mkR1 mkdesc instdirs mkpo
 	@$(MAKE) mksrc
-	@$(MAKE) mklazycomp
+@BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
+@BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
 
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk
