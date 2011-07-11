@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-07-10 r56347)
+R Under development (unstable) (2011-07-11 r56352)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,7 +21,6 @@ Type 'q()' to quit R.
 > pkgname <- "graphics"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> options(pager = "console")
 > library('graphics')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -1847,7 +1846,7 @@ wool         1  450.7  450.67  3.3393 0.073614 .
 tension      2 2034.3 1017.13  7.5367 0.001378 **
 Residuals   50 6747.9  134.96                    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > plot.design(       Form, data = warpbreaks, col = 2)# same as above
 > 
 > ## More than one y :
@@ -1990,7 +1989,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x01b98c7c>
+<bytecode: 0x363db48>
 <environment: namespace:graphics>
 > 
 > 
@@ -2894,7 +2893,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x02bb9004>
+<bytecode: 0x4fdfbf8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2974,7 +2973,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.56 5.37 9.04 NA NA 
+Time elapsed:  4.301 0.087 4.412 0 0 
 > grDevices::dev.off()
 null device 
           1 
