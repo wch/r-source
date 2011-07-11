@@ -31,7 +31,11 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
 
     targetfilename <- .normalizePath(srcfile$filename)
 
-    fnsrc <- attr(body(f), "srcfile")
+    fnsrc <- attr(f, "srcref")
+    if (!is.null(fnsrc))
+    	fnsrc <- attr(fnsrc, "srcfile")
+    else
+    	fnsrc <- attr(body(f), "srcfile")
     if (is.null(fnsrc)) return(NULL)
 
     if (missing(srcfile)) {
@@ -83,7 +87,8 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
     return(NULL)
 }
 
-findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), lastenv) {
+findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(),
+			lastenv) {
     count <- 0
     result <- list()
 
@@ -101,6 +106,9 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), last
     	if (missing(envir)) lastenv <- globalenv()
     	else lastenv <- emptyenv()
     }
+    
+    if (!is.environment(envir))
+    	envir <- environment(envir)
 
     fns <- character(0)
     envirs <- list()

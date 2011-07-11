@@ -18,6 +18,7 @@ removeSource <- function(fn) {
     stopifnot(is.function(fn))
     if (is.primitive(fn)) return(fn)
     attr(fn, "source") <- NULL
+    attr(fn, "srcref") <- NULL
     attr(body(fn), "wholeSrcref") <- NULL
     attr(body(fn), "srcfile") <- NULL    
     

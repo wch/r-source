@@ -2105,15 +2105,16 @@ all.equal(as.raw(1:3), as.raw(3:1))
 ## tests of deparsing
 # if we run this from stdin, we will have no source, so fake it
 f <- function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-attr(f, "source") <-
-    "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"
+attr(f, "srcref") <- srcref(srcfilecopy("", 
+    "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"),
+    c(1L, 1L, 1L, 56L))
 f # uses the source
 dput(f) # not source
 dput(f, control="all") # uses the source
 cat(deparse(f), sep="\n")
 dump("f", file="")
 # remove the source
-attr(f, "source") <- NULL
+attr(f, "srcref") <- NULL
 f
 dput(f, control="all")
 dump("f", file="")
@@ -2364,7 +2365,7 @@ stopifnot(identical(of2, of),
 ## ^^ would have failed up to R 2.9.x
 foo
 print(foo, useSource = FALSE)
-attr(foo, "source") <- NULL
+attr(foo, "srcref") <- NULL
 foo
 (f <- structure(function(){}, note = "just a note",
                 yada = function() "not the same"))

@@ -79,11 +79,17 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             cat(gettextf('encoding = "%s" chosen', encoding), "\n", sep = "")
         if(file == "") file <- stdin()
         else {
-            if (isTRUE(keep.source))
-            	srcfile <- srcfile(file, encoding = encoding)
-	    file <- file(file, "r", encoding = encoding)
+            filename <- file
+	    file <- file(filename, "r", encoding = encoding)
 	    on.exit(close(file))
-            from_file <- TRUE
+            if (isTRUE(keep.source)) {
+	    	lines <- readLines(file)
+	    	on.exit()
+	    	close(file)
+            	srcfile <- srcfilecopy(filename, lines)
+	    } else
+            	from_file <- TRUE
+            
             ## We translated the file (possibly via a guess),
             ## so don't want to mark the strings.as from that encoding
             ## but we might know what we have encoded to, so
@@ -102,7 +108,10 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         op <- options(keep.source = FALSE)
         on.exit(options(op), add = TRUE)
     } else op <- NULL
-    exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+    if (!from_file) 
+        exprs <- .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
+    else
+    	exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
     on.exit()
     if (from_file) close(file)
     if (!is.null(op)) options(op)
@@ -241,10 +250,16 @@ function(file, envir = baseenv(), chdir = FALSE,
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(gettextf("'%s' is not an existing file", file))
-    oop <- options(keep.source = as.logical(keep.source),
+    keep.source <- as.logical(keep.source)
+    oop <- options(keep.source = keep.source,
 		   topLevelEnvironment = as.environment(envir))
     on.exit(options(oop))
-    exprs <- parse(n = -1, file = file)
+    if (keep.source) {
+    	lines <- readLines(file)
+    	srcfile <- srcfilecopy(file, lines)
+    	exprs <- parse(text=lines, srcfile=srcfile)
+    } else
+    	exprs <- parse(n = -1, file = file)
     if (length(exprs) == 0L)
 	return(invisible())
     if (chdir && (path <- dirname(file)) != ".") {

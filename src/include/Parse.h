@@ -31,8 +31,11 @@
 typedef struct {
 
     Rboolean keepSrcRefs;	/* Whether to attach srcrefs to objects as they are parsed */
+    Rboolean didAttach;		/* Record of whether a srcref was attached */
     SEXP SrcFile;		/* The srcfile object currently being parsed */
+    SEXP Original;		/* The underlying srcfile object */
     PROTECT_INDEX SrcFileProt;	/* The SrcFile may change */
+    PROTECT_INDEX OriginalProt; /* ditto */
     				/* Position information about the current parse */
     int xxlineno;		/* Line number according to #line directives */
     int xxcolno;		/* Character number on line */
@@ -43,7 +46,7 @@ typedef struct {
 void R_InitSrcRefState(SrcRefState *state);
 void R_FinalizeSrcRefState(SrcRefState *state);
 
-SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *, SrcRefState *); /* in ReplIteration,
+SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
 						       R_ReplDLLdo1 */
 SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP, SEXP); /* in source.c */
 SEXP R_Parse1File(FILE*, int, ParseStatus *, SrcRefState *); /* in R_ReplFile */

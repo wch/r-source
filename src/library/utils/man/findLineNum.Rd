@@ -50,6 +50,10 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   usually find all user code other than S4 methods; the second one is
   quite slow, as it will typically search all attached system
   libraries.)
+  
+  For convenience, \code{envir} may be specified indirectly:  if it is
+  not an environment, it will be replaced with
+  \code{environment(envir)}.
 
   \code{setBreakpoint} is a simple wrapper function for
   \code{\link{trace}}.  It will set breakpoints at the locations found

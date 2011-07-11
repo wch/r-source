@@ -1092,7 +1092,7 @@ static void SymbolShortcuts(void)
     R_QuoteSymbol = install("quote");
     R_RowNamesSymbol = install("row.names");
     R_SeedsSymbol = install(".Random.seed");
-    R_SourceSymbol = install("source");
+    R_SourceSymbol = install("source");   /* Still present for back compatibility, but not used */
     R_TspSymbol = install("tsp");
     /* ../include/Defn.h , i.e. non-public : */
     R_CommentSymbol = install("comment");

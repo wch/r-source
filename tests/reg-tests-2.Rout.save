@@ -5810,8 +5810,9 @@ structure(list(X1.4 = 1:4), .Names = "X1.4", row.names = c("1",
 > ## tests of deparsing
 > # if we run this from stdin, we will have no source, so fake it
 > f <- function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-> attr(f, "source") <-
-+     "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"
+> attr(f, "srcref") <- srcref(srcfilecopy("", 
++     "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"),
++     c(1L, 1L, 1L, 56L))
 > f # uses the source
 function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
 > dput(f) # not source
@@ -5822,7 +5823,6 @@ function (x, xm = max(1L, x))
 }
 > dput(f, control="all") # uses the source
 function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-
 > cat(deparse(f), sep="\n")
 function (x, xm = max(1L, x)) 
 {
@@ -5832,9 +5832,8 @@ function (x, xm = max(1L, x))
 > dump("f", file="")
 f <-
 function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-
 > # remove the source
-> attr(f, "source") <- NULL
+> attr(f, "srcref") <- NULL
 > f
 function (x, xm = max(1L, x)) 
 {
@@ -6328,6 +6327,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
+
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6338,7 +6338,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-> attr(foo, "source") <- NULL
+> attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
 {
@@ -6369,13 +6369,16 @@ function ()
 > print.function <- function(x, ...) { str(x,...); invisible(x) }
 > print.function
 function (x, ...)  
- - attr(*, "source")= chr "function(x, ...) { str(x,...); invisible(x) }"
+ - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026d3014> 
 > f
 function ()  
- - attr(*, "source")= chr "function(){}"
+ - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026e31c8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
-  ..- attr(*, "source")= chr "function() \"not the same\""
+  ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x026e31c8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

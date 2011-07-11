@@ -184,9 +184,14 @@ SEXP attribute_hidden do_printfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
 {
     int i;
-    SEXP t = getAttrib(s, R_SourceSymbol);
-    if (!isString(t) || !useSource)
+    SEXP t = getAttrib(s, R_SrcrefSymbol);
+    if (!isInteger(t) || !useSource)
 	t = deparse1(s, 0, useSource | DEFAULTDEPARSE);
+    else {
+        PROTECT(t = lang2(install("as.character"), t));
+        t = eval(t, R_BaseEnv);
+        UNPROTECT(1);
+    }
     for (i = 0; i < LENGTH(t); i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
     if (isClosure) {

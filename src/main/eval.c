@@ -1435,7 +1435,7 @@ SEXP attribute_hidden do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rval;
+    SEXP rval, srcref;
 
     if (TYPEOF(op) == PROMSXP) {
 	op = forcePromise(op);
@@ -1445,7 +1445,9 @@ SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 	WrongArgCount("lambda");
     CheckFormals(CAR(args));
     rval = mkCLOSXP(CAR(args), CADR(args), rho);
-    setAttrib(rval, R_SourceSymbol, CADDR(args));
+    srcref = CADDR(args);
+    if (!isNull(srcref))
+    	setAttrib(rval, R_SrcrefSymbol, srcref);
     return rval;
 }
 

@@ -20,6 +20,10 @@
 \alias{summary.srcref}
 \alias{as.character.srcref}
 \alias{.isOpen}
+\alias{srcfilealias-class}
+\alias{srcfilealias}
+\alias{open.srcfilealias}
+\alias{close.srcfilealias}
 
 \title{References to source files}
 \description{
@@ -28,6 +32,7 @@ These functions are for working with source files.
 \usage{
 srcfile(filename, encoding = getOption("encoding"), Enc = "unknown")
 srcfilecopy(filename, lines)
+srcfilealias(filename, srcfile)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
 \method{print}{srcfile}(x, \dots)
@@ -69,6 +74,11 @@ srcref(srcfile, lloc)
   class \code{srcfilecopy}, which saves the source lines in a character
   vector.
 
+  The \code{srcfilealias} function produces an object of the descendant
+  class \code{srcfilealias}, which gives an alternate name to another 
+  srcfile.  This is produced by the parser when a \code{#line} directive
+  is used.
+  
   The \code{getSrcLines} function reads the specified lines from
   \code{srcfile}.
 

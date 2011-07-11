@@ -221,7 +221,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     }
 
     R_PPStackTop = savestack;
-    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &state->status, NULL);
+    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &state->status);
     
     switch(state->status) {
 
@@ -238,7 +238,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     case PARSE_OK:
 
 	R_IoBufferReadReset(&R_ConsoleIob);
-	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status, NULL);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
 	if (browselevel) {
 	    browsevalue = ParseBrowser(R_CurrentExpr, rho);
 	    if(browsevalue == 1) return -1;
@@ -340,7 +340,7 @@ int R_ReplDLLdo1(void)
 	if(c == ';' || c == '\n') break;
     }
     R_PPStackTop = 0;
-    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status, NULL);
+    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
 
     switch(status) {
     case PARSE_NULL:
@@ -349,7 +349,7 @@ int R_ReplDLLdo1(void)
 	break;
     case PARSE_OK:
 	R_IoBufferReadReset(&R_ConsoleIob);
-	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status, NULL);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
 	R_Visible = FALSE;
 	R_EvalDepth = 0;
 	resetTimeLimits();

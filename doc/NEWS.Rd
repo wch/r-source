@@ -247,6 +247,12 @@
       \item \code{tools::Rdiff} (by default) and \code{R CMD Rdiff}
       now ignore differences in pointer values when comparing printed
       environments, compiled byte code, etc.   
+
+      \item The \code{"source"} attribute on functions created with
+      \code{keep.source=TRUE} has been replaced with a \code{"srcref"}
+      attribute.  The \code{"srcref"} attribute references an in-memory
+      copy of the source file using the \code{"srcfilecopy"} or the
+      new \code{"srcfilealias"} class.
     }
   }
 
