@@ -1887,10 +1887,6 @@ The PDF version of the package's manual is created (to check that the
 @file{Rd} files can be converted successfully).
 @end enumerate
 
-All these tests are run with collation set to the @code{C} locale, and
-for the examples and tests with environment variable @env{LANGUAGE=en}:
-this is to minimize differences between platforms.
-
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
 selected by adding command-line options. It also allows customization by
