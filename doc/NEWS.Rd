@@ -516,10 +516,6 @@
       \item Because \code{quote()} did not mark its result as being in
       use, modification of the result could in some circumstances
       modify the original call.
-      
-      \item In a \file{.Rd} file, \samp{\\code{''}} was mis-converted
-      to latex and rendered in e.g. PDF as a double quote (a single
-      character).
     }  
   }
 }
