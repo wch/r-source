@@ -1,6 +1,10 @@
 # @configure_input@
 #
 # ${R_HOME}/etc/Makeconf
+#
+# R was configured using the following call
+# (not including env. vars and site configuration)
+# configure @R_CONFIG_ARGS@
 
 ## This fails if it contains spaces, or if it is quoted
 include $(R_SHARE_DIR)/make/vars.mk

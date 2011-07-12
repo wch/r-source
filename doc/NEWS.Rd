@@ -480,6 +480,13 @@
       \command{make dvi}, \command{make install-dvi} and similar.  Only
       PDF manuals are supported (to allow the use of fonts which are
       only available for PDF.)
+
+      \item The \file{configure} arguments used during configuration of
+      \R are included as a commment in \file{Makeconf} for informative
+      purposes on unix in a form suitable for shell execution. Note that
+      those are merely command-line arguments, they do not include
+      environment variables (one more reason to use configure variables
+      instead) or site configuration settings.
     }
   }
 

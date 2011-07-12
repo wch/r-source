@@ -109,6 +109,9 @@ case "${host_os}" in
 esac
 AC_SUBST(R_OSTYPE)
 
+R_CONFIG_ARGS="${ac_configure_args}"
+AC_SUBST(R_CONFIG_ARGS)
+
 ### ** Defaults.
 
 ## NB: autoconf loads such files too
