@@ -101,6 +101,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                        "unknown")
             else "unknown"
 	}
+    } else {
+    	lines <- readLines(file)
+    	srcfile <- srcfilecopy(deparse(substitute(file)), lines)
     }
 
     ## parse() uses this option in the C code.
