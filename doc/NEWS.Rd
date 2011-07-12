@@ -509,6 +509,10 @@
       been taken:  Classes should now be found correctly from each
       package's namespace or given the package slot.  Methods for the
       same generic function may still be selected incorrectly.
+
+      \item Work around an issue in Linux (\code{select()} resetting
+      \code{tv}) which prevents internet operations from timing out
+      properly.
     }
   }
 }
