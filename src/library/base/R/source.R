@@ -103,7 +103,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	}
     } else {
     	lines <- readLines(file)
-    	srcfile <- srcfilecopy(deparse(substitute(file)), lines)
+    	if (isTRUE(keep.source))
+    	    srcfile <- srcfilecopy(deparse(substitute(file)), lines)
     }
 
     ## parse() uses this option in the C code.
