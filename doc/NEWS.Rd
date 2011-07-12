@@ -253,6 +253,11 @@
       attribute.  The \code{"srcref"} attribute references an in-memory
       copy of the source file using the \code{"srcfilecopy"} or the
       new \code{"srcfilealias"} class.
+      
+      \item A new item 
+      \href{http://developer.r-project.org/TechDocs}{Technical Papers}
+      has been added to the HTML help main page.  This links to a
+      collection of papers about R issues.
     }
   }
 
