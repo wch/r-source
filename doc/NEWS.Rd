@@ -1,5 +1,5 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
-\newcommand{\Rlogo}{\if{html}{\figure{../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
+\newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
 \title{ R News}
