@@ -80,7 +80,7 @@ help(topic, package = NULL, lib.loc = NULL,
   none of the first three arguments is specified.
 
   Some topics need to be quoted (by \link{backtick}s) or given as a
-  character string.  There include those which cannot syntactically
+  character string.  These include those which cannot syntactically
   appear on their own such as unary and binary operators,
   \code{function} and control-flow \link{reserved} words (including
   \code{if}, \code{else} \code{for}, \code{in}, \code{repeat},
