@@ -513,6 +513,10 @@
       \item Work around an issue in Linux (\code{select()} resetting
       \code{tv}) which prevents internet operations from timing out
       properly.
+
+      Several stack trampling and overflow issues have been fixed in
+      TRE, triggered by \code{agrep} and friends with long patterns.
+      (\PR{14627}.)
     }
   }
 }
