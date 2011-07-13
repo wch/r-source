@@ -30,6 +30,9 @@ On Windows (MinGW?), iswctype is missing 'blank'.
 REG_LITERAL was not matching "" in some cases, hence a change at
 line 1652 of tre-parse.c.
 
+We fixed stack trampling in tre_tnfa_run_approx() and converted
+tre_ast_to_tnfa() from recursion to iteration over a TRE stack.
+
 We commented out in tre-match-approx.c
 
 /* These seem compiler/OS-specific, but unexplained
