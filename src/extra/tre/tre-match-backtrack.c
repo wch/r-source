@@ -72,15 +72,8 @@ char *alloca ();
 #include "tre-match-utils.h"
 #include "tre.h"
 #include "xmalloc.h"
-/* fake definition */
-extern void Rf_error(const char *str);
-#define assert(a) R_assert(a)
 
-static void assert(void * expr)
-{
-    if(!expr)
-	Rf_error("internal error in executing regexp");
-}
+#define assert(a) R_assert(a)
 
 typedef struct {
   int pos;

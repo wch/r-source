@@ -55,15 +55,7 @@ On Linux the first is intended to be used only with GCC.
 #include "tre.h"
 #include "xmalloc.h"
 
-/* fake definition */
-extern void Rf_error(const char *str);
-#define assert(a) R_assert(a)
-
-static void assert(int expr)
-{
-    if(expr == 0)
-	Rf_error("internal error in executing regexp");
-}
+#define assert(a) R_assert(a) 
 
 #define TRE_M_COST	0
 #define TRE_M_NUM_INS	1

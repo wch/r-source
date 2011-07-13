@@ -187,6 +187,18 @@ struct tnfa_transition {
 #define ASSERT_BACKREF		256   /* A back reference in `backref'. */
 #define ASSERT_LAST		256
 
+/* define R_assert() which can replace assert() */
+
+/* fake definition (important: jsut const char* str is not enough!) */
+extern void Rf_error(const char *str, ...);
+
+#ifdef NDEBUG
+#define R_assert(e) ((void) 0)
+#else
+/* The line below requires an ANSI C preprocessor (stringify operator) */
+#define R_assert(e) ((e) ? (void) 0 : Rf_error("assertion '%s' failed in executing regexp: file '%s', line %d\n", #e, __FILE__, __LINE__))
+#endif /* NDEBUG */
+
 /* Tag directions. */
 typedef enum {
   TRE_TAG_MINIMIZE = 0,

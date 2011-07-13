@@ -65,16 +65,7 @@ char *alloca ();
 #include "tre.h"
 #include "xmalloc.h"
 
-/* fake definition */
-extern void Rf_error(const char *str);
 #define assert(a) R_assert(a)
-
-static void assert(int expr)
-{
-    if(expr == 0)
-	Rf_error("internal error in TRE");
-}
-
 
 typedef struct {
   tre_tnfa_transition_t *state;
