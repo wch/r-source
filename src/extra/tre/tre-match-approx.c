@@ -494,6 +494,8 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 	      continue;
 	    *deque_end = &reach_next[id];
 	    deque_end++;
+	    if (deque_end >= (ringbuffer + 512))
+	      deque_end = ringbuffer;
 	    assert(deque_end != deque_start);
 	  }
 
