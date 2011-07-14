@@ -158,3 +158,11 @@ stopifnot(identical(regexpr(" ", x), regexpr(" ", x, fixed=TRUE)))
 # fixed=TRUE reported match position in bytes in R <= 2.10.0
 stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
 ## always worked.
+
+## this broke and segfaulted in 2.13.1 and earlier (PR#14627)
+x <- paste(rep("a ", 600), collapse="")
+testit(agrep(x, x))
+testit(agrep(x, x, max.distance=0.5))
+
+## this is used in QC to check dependencies and was broken intermittently by TRE changes
+stopifnot(isTRUE(grepl('^[[:space:]]*(R|[[:alpha:]][[:alnum:].]*[[:alnum:]])([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?[[:space:]]*$', ' R (>= 2.13.0) ')))
