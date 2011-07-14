@@ -1803,8 +1803,8 @@ tre_ast_to_tnfa_iter(tre_stack_t *stack, tre_ast_node_t *node, tre_tnfa_transiti
 
       case UNION:
 	uni = (tre_union_t *)node->obj;
-	STACK_PUSHR(stack, voidptr, uni->left);
 	STACK_PUSHR(stack, voidptr, uni->right);
+	STACK_PUSHR(stack, voidptr, uni->left);
 	break;
 
       case CATENATION:
@@ -1816,8 +1816,8 @@ tre_ast_to_tnfa_iter(tre_stack_t *stack, tre_ast_node_t *node, tre_tnfa_transiti
 	if (errcode != REG_OK)
 	  return errcode;
 	
-	STACK_PUSHR(stack, voidptr, cat->left);
 	STACK_PUSHR(stack, voidptr, cat->right);
+	STACK_PUSHR(stack, voidptr, cat->left);
 	break;
 
       case ITERATION:
@@ -1834,11 +1834,10 @@ tre_ast_to_tnfa_iter(tre_stack_t *stack, tre_ast_node_t *node, tre_tnfa_transiti
 	    errcode = tre_make_trans(iter->arg->lastpos, iter->arg->firstpos,
 				     transitions, counts, offs);
 	    if (errcode != REG_OK)
-	      return errcode;
-	  
-	    STACK_PUSHR(stack, voidptr, iter->arg);
-	    break;
+	      return errcode;	  
 	  }
+	STACK_PUSHR(stack, voidptr, iter->arg);
+	break;
       }
   }
   return REG_OK;
