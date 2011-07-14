@@ -75,7 +75,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   (This can be controlled using \code{lastenv}; e.g. 
   \code{envir=environment(foo)}, \code{lastenv=globalenv()} will find only the
   private copy, as the search is stopped before seeing the public
-  copy.
+  copy.)
 
   S version 4 methods are also somewhat tricky to find.  They are stored
   with the generic function, which may be in the \pkg{base} or other
