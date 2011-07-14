@@ -42,6 +42,41 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse="\n"))
     }
 
+    .HTMLusermanuals <- function()
+    {
+        pkgs <- unlist(.get_standard_package_names())
+    
+        out <- HTMLheader("R User Manuals")
+        for (pkg in pkgs) {
+            filename <- system.file(file.path("Meta", "vignette.rds"),
+            			    package=pkg)
+     	    if (file.exists(filename)) {
+     	    	vignettes <- readRDS(filename)
+     	    	out <- c(out, paste('<h2>Manuals in package', sQuote(pkg),'</h2>'),
+     	    	              '<ul>')
+     	    	for (i in seq_len(nrow(vignettes))) {
+     	    	    manual <- vignettes$Title[i]
+     	    	    if (nchar(vignettes$PDF[i]))
+     	    	    	manual <- c(manual, 
+     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$PDF[i],
+     	    	    	    	  '">PDF</a>', sep=''))
+     	    	    if (nchar(vignettes$File[i]))
+     	    	    	manual <- c(manual,
+     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$File[i],
+     	    	    	    	  '">source</a>', sep=''))
+     	    	    if (nchar(vignettes$R[i]))
+     	    	    	manual <- c(manual,
+     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$R[i],
+     	    	    	    	  '">R code</a>', sep=''))     	    	    	    	  
+     	    	    out <- c(out, paste('<li>', paste(manual, collapse=''), '</li>', sep=''))
+     	    	 }
+     	    	 out <- c(out, '</ul>')
+     	    }
+     	}
+        out <- c(out, "<hr>\n</body></html>")
+        list(payload = paste(out, collapse="\n"))
+    }
+
     .HTMLsearch <- function(query)
     {
         res <- if(identical(names(query), "category"))
@@ -133,6 +168,8 @@ httpd <- function(path, query, ...)
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
+    else if(path == "/doc/html/UserManuals.html")
+    	return(.HTMLusermanuals())
 
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past

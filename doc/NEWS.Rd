@@ -254,10 +254,11 @@
       copy of the source file using the \code{"srcfilecopy"} or the
       new \code{"srcfilealias"} class.
       
-      \item A new item 
+      \item New items \href{UserManuals.html}{User Manuals} and 
       \href{http://developer.r-project.org/TechDocs}{Technical Papers}
-      has been added to the HTML help main page.  This links to a
-      collection of papers about R issues.
+      have been added to the HTML help main page.  These link to
+      vignettes in the base and recommended packages and to a
+      collection of papers about R issues, respectively.
     }
   }
 
