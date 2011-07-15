@@ -33,19 +33,8 @@ code2LazyLoadDB <-
         ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
         makeLazyLoadDB(ns, dbbase, compress = compress)
     }
-    else {
-        loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
-        if(file.exists(codeFile))
-            sys.source(codeFile, loadenv, keep.source = keep.source)
-        ## now transfer contents of loadenv to a new env to mimic library
-        ## the actual copy has to be done by C code to avoid forcing
-        ## promises that might have been created using delay().
-        env <- new.env(hash=TRUE)
-        .Internal(lib.fixup(loadenv, env))
-        ## save the package name in the environment
-        assign(".packageName", barepackage, envir = env)
-        makeLazyLoadDB(env, dbbase, compress = compress)
-    }
+    else 
+        stop("all packages should have a NAMESPACE")
 }
 
 sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)

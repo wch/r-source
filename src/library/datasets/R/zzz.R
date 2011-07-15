@@ -15,6 +15,3 @@
 #  http://www.r-project.org/Licenses/
 
 .noGenerics <- TRUE
-.First.lib <- function(...) {
-    lockEnvironment(as.environment("package:datasets"), TRUE)
-}

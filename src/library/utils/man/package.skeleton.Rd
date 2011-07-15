@@ -15,7 +15,7 @@
 \usage{
 package.skeleton(name = "anRpackage", list,
                  environment = .GlobalEnv,
-                 path = ".", force = FALSE, namespace = FALSE,
+                 path = ".", force = FALSE, namespace = TRUE,
                  code_files = character())
 }
 \arguments{
@@ -28,9 +28,8 @@ package.skeleton(name = "anRpackage", list,
     \sQuote{Details}.}
   \item{path}{path to put the package directory in.}
   \item{force}{If \code{FALSE} will not overwrite an existing directory.}
-  \item{namespace}{a logical indicating whether to add a name space for
-    the package.  If \code{TRUE}, a \code{NAMESPACE} file is created
-    to export all objects whose names begin with a letter, plus all S4
+  \item{namespace}{a logical, no longer used. A \code{NAMESPACE} file is 
+    always created to export all objects whose names begin with a letter, plus all S4
     methods and classes.}
   \item{code_files}{a character vector with the paths to R code files to
     build the package around.  See \sQuote{Details}.}

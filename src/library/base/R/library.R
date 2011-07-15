@@ -330,78 +330,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             }
 
             ## non-namespace branch
-            codeFile <- file.path(which.lib.loc, package, "R", package)
-            ## create environment (not attached yet)
-            loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
-            ## save the package name in the environment
-            assign(".packageName", package, envir = loadenv)
-            if(length(deps)) assign(".Depends", deps, envir = loadenv)
-            ## source file into loadenv
-            if(file.exists(codeFile)) {
-                res <- try(sys.source(codeFile, loadenv,
-                                      keep.source = keep.source))
-                if(inherits(res, "try-error"))
-                    stop(gettextf("unable to load R code in package %s",
-                                  sQuote(package)),
-                         call. = FALSE, domain = NA)
-            } else if(verbose)
-                warning(gettextf("package %s contains no R code",
-                                 sQuote(package)), domain = NA)
-            ## lazy-load data sets if required
-            dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
-            if(file.exists(paste0(dbbase, ".rdb")))
-                lazyLoad(dbbase, loadenv)
-            ## lazy-load a sysdata database if present
-            dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
-            if(file.exists(paste0(dbbase, ".rdb")))
-                lazyLoad(dbbase, loadenv)
-            ## now transfer contents of loadenv to an attached frame
-            env <- attach(NULL, pos = pos, name = pkgname)
-            ## detach does not allow character vector args
-            on.exit(do.call("detach", list(name = pkgname)))
-            attr(env, "path") <- file.path(which.lib.loc, package)
-            ## the actual copy has to be done by C code to avoid forcing
-            ## promises that might have been created using delayedAssign().
-            .Internal(lib.fixup(loadenv, env))
-
-            ## Do this before we use any code from the package
-            bindTranslations(package, pkgpath)
-
-            ## run .First.lib
-            if(exists(".First.lib", mode = "function",
-                      envir = env, inherits = FALSE)) {
-                firstlib <- get(".First.lib", mode = "function",
-                                envir = env, inherits = FALSE)
-                tt <- try(firstlib(which.lib.loc, package))
-                if(inherits(tt, "try-error"))
-                    if (logical.return) return(FALSE)
-                    else stop(gettextf(".First.lib failed for %s",
-                                       sQuote(package)), domain = NA)
-            }
-            if(!is.null(firstlib <- getOption(".First.lib")[[package]])) {
-                tt <- try(firstlib(which.lib.loc, package))
-                if(inherits(tt, "try-error"))
-                    if (logical.return) return(FALSE)
-                    else stop(gettextf(".First.lib failed for %s",
-                                       sQuote(package)), domain = NA)
-            }
-            ## If there are generics or metadata the package should
-            ## depend on methods and so have turned methods dispatch on.
-            if(.isMethodsDispatchOn()) {
-                nogenerics <- checkNoGenerics(env, package)
-                doCache <- !nogenerics || methods:::.hasS4MetaData(env)
-            }
-            else {
-                nogenerics <- TRUE; doCache <- FALSE
-            }
-            if(warn.conflicts &&
-               !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                checkConflicts(package, pkgname, pkgpath, nogenerics, env)
-
-            if(doCache)
-                methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-            runUserHook(package, pkgpath)
-            on.exit()
+            stop("All packages should have a NAMESPACE")
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",

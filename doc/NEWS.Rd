@@ -131,7 +131,7 @@
       an atomic vector.
 
       \item The formula method for \code{plot()} no longer places
-      package \pkg{stats} on the search path (it loads the name space
+      package \pkg{stats} on the search path (it loads the namespace
       instead).
 
       \item \code{source()} tried hard to retain source formatting, and
@@ -374,6 +374,12 @@
       installation (since all packages are now lazy-loaded).  This can
       be controlled on a per-package basis by the optional field
       \samp{ByteCompile} in the \file{DESCRIPTION} file.
+
+      \item Packages without explicit \file{NAMESPACE} files will have
+      a default one created at build or INSTALL time, so all packages
+      will have namespaces.  A consequence of this is that
+      \code{.First.lib} functions need to be renamed, usually as
+      \code{.onLoad} but sometimes as \code{.onAttach}.      
     }
   }
 
@@ -1092,7 +1098,7 @@
 
       \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
       and \code{hasMethods} are revised to deal consistently with
-      the \code{package=} argument and be consistent with soft name space
+      the \code{package=} argument and be consistent with soft namespace
       policy for finding objects.
 
       \item \code{tools::Rdiff()} now has the option to return not only
@@ -1472,7 +1478,7 @@
       warning that they should be re-installed will be given.
 
       \item The \sQuote{experimental} alternative specification of a
-      name space via \code{.Export()} etc is now defunct.
+      namespace via \code{.Export()} etc is now defunct.
 
       \item The option \option{--unsafe} to \command{R CMD INSTALL} is
       deprecated: use the identical option \option{--no-lock} instead.
@@ -1720,7 +1726,7 @@
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item The \sQuote{experimental} alternative specification of a
-      name space via \code{.Export()} etc is now deprecated.
+      namespace via \code{.Export()} etc is now deprecated.
 
       \item \code{zip.file.extract()} is now deprecated.
 
@@ -3110,7 +3116,7 @@
       \item The use of \code{.required} by \code{require()} and
        \code{detach()} has been replaced by \code{.Depends} which is set
        from the \code{Depends} field of a package (even in packages with
-       name spaces).  By default \code{detach()} prevents such
+       namespaces).  By default \code{detach()} prevents such
        dependencies from being detached: this can be overridden by the
        argument \code{force}.
 
@@ -3903,7 +3909,7 @@
       \code{x} or \code{y} which deparsed to more than one line.
       (Reported by Laurent Gauthier.)
 
-      \item S4 methods are uncached whenever the name space containing
+      \item S4 methods are uncached whenever the namespace containing
       them is unloaded (by \code{unloadNamespace()} as well as by
       \code{detach(unload = TRUE))}.
 
@@ -4401,7 +4407,7 @@
 
        A function \code{offline_help_helper()} will be used if this exists
        in the workspace or further down the search path, otherwise
-       the function of that name in the \pkg{utils} name space is used.
+       the function of that name in the \pkg{utils} namespace is used.
 
       \item Plain text help is now used as the fallback for HTML help (as
        it always was for Compiled HTML help on Windows).

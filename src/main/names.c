@@ -741,7 +741,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"options",	do_options,	0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sink",	do_sink,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"sink.number",	do_sinknumber,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"lib.fixup",	do_libfixup,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"rapply",	do_rapply,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"islistfactor",do_islistfactor,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"colSums",	do_colsum,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},

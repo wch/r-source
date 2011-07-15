@@ -86,7 +86,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #ifdef unix
   The \code{local} argument allows one to control whether the symbols in
   the DLL being attached are visible to other DLLs.  While maintaining
-  the symbols in their own name space is good practice, the ability to
+  the symbols in their own namespace is good practice, the ability to
   share symbols across related \sQuote{chapters} is useful in many
   cases.  Additionally, on certain platforms and versions of an
   operating system, certain libraries must have their symbols loaded
@@ -214,7 +214,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 }
 \seealso{
   \code{\link{library.dynam}} to be used inside a package's
-  \code{\link{.First.lib}} initialization.
+  \code{\link{.onLoad}} initialization.
 
   \code{\link{SHLIB}} for how to create suitable DLLs.
 

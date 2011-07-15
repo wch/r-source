@@ -179,9 +179,9 @@ routinely when @emph{compiling} a package may come to mean compiling its
 It used to be unambiguous to talk about @emph{loading} an installed
 package using @code{library()}, but since the advent of package name
 spaces this has been less clear: people now often talk about
-@emph{loading} the package's name space and then @emph{attaching} the
+@emph{loading} the package's namespace and then @emph{attaching} the
 package so it becomes visible on the search path.  Function
-@code{library} performs both steps, but a package's name space can be
+@code{library} performs both steps, but a package's namespace can be
 loaded without the package being attached (for example by calls like
 @code{splines::ns}).
 
@@ -204,7 +204,7 @@ faster and use less (virtual) memory.
 * Checking and building packages::  
 * Writing package vignettes::   
 * Submitting a package to CRAN::  
-* Package name spaces::         
+* Package namespaces::         
 * Writing portable packages::   
 * Diagnostic messages::         
 * Internationalization::        
@@ -230,7 +230,7 @@ instructions), @file{README} or @file{ChangeLog} will be ignored by
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
 subsections below.  The @file{NAMESPACE} file is described in the
-section on @ref{Package name spaces}.
+section on @ref{Package namespaces}.
 
 @cindex configure file
 @cindex cleanup file
@@ -484,9 +484,9 @@ A package (or @samp{R}) can appear more than once in the @samp{Depends},
 but only the first occurrence will be used in versions of @R{} prior to
 2.7.0: these are now very unlikely to be encountered.
 
-The @samp{Imports} field lists packages whose name spaces are
+The @samp{Imports} field lists packages whose namespaces are
 imported from (as specified in the @file{NAMESPACE} file) but which do
-not need to be attached.  Name spaces accessed by the @samp{::} and
+not need to be attached.  Namespaces accessed by the @samp{::} and
 @samp{:::} operators must be listed here, or in @samp{Suggests} or
 @samp{Enhances} (see below).  Ideally this field will include all the
 standard packages that are used, and it is important to include S4-using
@@ -494,7 +494,7 @@ packages (as their class definitions can change and the
 @file{DESCRIPTION} file is used to decide which packages to re-install
 when this happens).  Packages declared in the @samp{Depends} field
 should not also be in the @samp{Imports} field.  Version requirements
-can be specified, but will @strong{not} be checked when the name space is
+can be specified, but will @strong{not} be checked when the namespace is
 loaded (whereas they are checked by @command{R CMD check}).
 
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
@@ -516,7 +516,7 @@ The general rules are
 
 @itemize @bullet
 @item
-Packages whose name space only is needed to load the package using
+Packages whose namespace only is needed to load the package using
 @code{library(@var{pkgname})} must be listed in the @samp{Imports}
 field and not in the @samp{Depends} field.
 @item
@@ -684,13 +684,13 @@ as @code{require} and @code{options}.  If computations are required to
 create objects these can use code `earlier' in the package (see the
 @samp{Collate} field) plus functions in the @samp{Depends} packages
 provided that the objects created do not depend on those packages except
-@emph{via} name space imports.  (Packages without name spaces will work
+@emph{via} namespace imports.  (Packages without namespaces will work
 under somewhat less restrictive assumptions.)
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects: please use suitable
 compression as suggested by @code{tools::resaveRdaFiles}) this will be
-lazy-loaded into the name space/package environment -- this is intended
+lazy-loaded into the namespace/package environment -- this is intended
 for system datasets that are not intended to be user-accessible
 @emph{via} @code{data}.  Also, files ending in @samp{.in} will be
 allowed in the @file{R} directory to allow a @file{configure} script to
@@ -713,20 +713,20 @@ usable in some locales and may display incorrectly in others.
 @findex .First.lib
 @findex .Last.lib
 @findex library.dynam
-Various @R{} functions in a package can be used to initialize and clean
-up.  For packages without a name space, these are @code{.First.lib} and
-@code{.Last.lib}.  (@xref{Load hooks}, for packages with a name space.)
-It is conventional to define these functions in a file called
-@file{zzz.R}.  If @code{.First.lib} is defined in a package, it is
-called with arguments @code{libname} and @code{pkgname} after the
-package is loaded and attached.  A common use is to call
-@code{library.dynam} inside @code{.First.lib} to load compiled code:
-another use is to call those functions with side effects.  If
-@code{.Last.lib} exists in a package it is called (with argument the
-full path to the installed package) just before the package is detached.
-It is uncommon to detach packages and rare to have a @code{.Last.lib}
-function: one use is to call @code{library.dynam.unload} to unload
-compiled code.
+Various @R{} functions in a package can be used to initialize and
+clean up.  @xref{Load hooks}.@footnote{Up to R
+version 2.14.0, the @code{.First.lib} and @code{.Last.lib} functions
+handled these tasks in packages without namespaces.  (In current R
+versions, @emph{all} packages have namespaces.)  To help with
+conversion of old packages, here is how they were handled: It was
+conventional to define these functions in a file called @file{zzz.R}.
+If @code{.First.lib} was defined in a package, it was called with
+arguments @code{libname} and @code{pkgname} after the package was
+loaded and attached.  A common use was to call @code{library.dynam}
+inside @code{.First.lib} to load compiled code: another use was to
+call some functions with side effects.  If @code{.Last.lib} existed in
+a package it was called (with argument the full path to the installed
+package) just before the package was detached.}
 
 
 The @file{man} subdirectory should contain (only) documentation files
@@ -745,8 +745,8 @@ for ``internal'' use only, it should provide a file
 clearly states that these are not meant to be called by the user.  See
 e.g.@: the sources for package @pkg{grid} in the @R{} distribution for
 an example.  Note that packages which use internal objects extensively
-should hide those objects in a name space, when they do not need to be
-documented (@pxref{Package name spaces}).
+should hide those objects in a namespace, when they do not need to be
+documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
@@ -948,7 +948,7 @@ provided by the package, so that the data file can also be used without
 having to load the package.
 
 Images (extensions @file{.RData} or @file{.rda}) can contain references
-to the name spaces of packages that were used to create them.
+to the namespaces of packages that were used to create them.
 Preferably there should be no such references in data files, and in any
 case they should only be to packages listed in the @code{Depends} and
 @code{Imports}, as otherwise it may be impossible to install the
@@ -1807,9 +1807,9 @@ used in the same locale.
 @item
 It is checked that the package can be loaded, first with the usual
 default packages and then only with package @pkg{base} already
-loaded. If the package has a name space, it is checked if this can be
-loaded in an empty session with only the @pkg{base} name space loaded.
-(Name spaces and packages can be loaded very early in the session,
+loaded. If the package has a namespace, it is checked if this can be
+loaded in an empty session with only the @pkg{base} namespace loaded.
+(Namespaces and packages can be loaded very early in the session,
 before the default packages are available, so packages should work
 then.)
 
@@ -1820,7 +1820,7 @@ corresponding generic, and whether the final argument of replacement
 functions is called @samp{value}.  All foreign function calls
 (@code{.C}, @code{.Fortran}, @code{.Call} and @code{.External} calls)
 are tested to see if they have a @code{PACKAGE} argument, and if not,
-whether the appropriate DLL might be deduced from the name space of the
+whether the appropriate DLL might be deduced from the namespace of the
 package.  Any other calls are reported.  (The check is generous, and
 users may want to supplement this by examining the output of
 @code{tools::checkFF("mypkg", verbose=TRUE)}, especially if the
@@ -2254,7 +2254,7 @@ encoding, so @file{fortunes.tex} will be in UTF-8 in any locale.  Had
 @code{read.table} been told the data were UTF-8, @file{fortunes.tex}
 would have been in the locale's encoding.
 
-@node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
+@node Submitting a package to CRAN, Package namespaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
 @cindex CRAN
 @cindex CRAN submission
@@ -2451,41 +2451,52 @@ Windows with a combined distribution of binary packages, so the
 under just one of the architectures.
 
 
-@node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
-@section Package name spaces
-@cindex name spaces
+@node Package namespaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
+@section Package namespaces
+@cindex namespaces
 
-@R{} has a name space management system for packages.  This system
+@R{} has a namespace management system for packages.  This system
 allows the package writer to specify which variables in the package
 should be @emph{exported} to make them available to package users, and
 which variables should be @emph{imported} from other packages.
 
-The current mechanism for specifying a name space for a package is to
+The current mechanism for specifying a namespace for a package is to
 place a @file{NAMESPACE} file in the top level package directory.  This
-file contains @emph{name space directives} describing the imports and
-exports of the name space.  Additional directives register any shared
+file contains @emph{namespace directives} describing the imports and
+exports of the namespace.  Additional directives register any shared
 objects to be loaded and any S3-style methods that are provided.  Note
 that although the file looks like @R{} code (and often has @R{}-style
 comments) it is not processed as @R{} code.  Only very simple
 conditional processing of @code{if} statements is implemented.
 
-Like other packages, packages with name spaces are loaded and attached
-to the search path by calling @code{library}.  Only the exported
-variables are placed in the attached frame.  Loading a package that
-imports variables from other packages will cause these other packages to
-be loaded as well (unless they have already been loaded), but they will
+Packages are loaded and attached to the search path by calling
+@code{library} or @code{require}.  Only the exported variables are
+placed in the attached frame.  Loading a package that imports
+variables from other packages will cause these other packages to be
+loaded as well (unless they have already been loaded), but they will
 @emph{not} be placed on the search path by these implicit loads.
 
-Name spaces are @emph{sealed} once they are loaded.  Sealing means that
+Namespaces are @emph{sealed} once they are loaded.  Sealing means that
 imports and exports cannot be changed and that internal variable
 bindings cannot be changed.  Sealing allows a simpler implementation
-strategy for the name space mechanism.  Sealing also allows code
+strategy for the namespace mechanism.  Sealing also allows code
 analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
 
-Note that adding a name space to a package changes the search strategy.
-The package name space comes first in the search, then the imports, then
-the base name space and then the normal search path.
+The namespace changes the search strategy for variables used by
+functions in the package.  If not found locally, @R{} searches the
+package namespace first, then the imports, then the base namespace
+and then the normal search path.
+
+If a @file{NAMESPACE} file is not present, then one is generated
+automatically when the package is built or installed.  Objects with
+names starting with a dot (@code{"."}) are not exported, but all other
+objects are.  By default nothing is imported.
+
+Prior to version 2.14.0, namespaces were optional in packages. In
+such packages searches for non-local variables started with the search
+path, so a package's own functions could be masked by those of a
+package appearing earlier.
 
 @menu
 * Specifying imports and exports::  
@@ -2493,11 +2504,11 @@ the base name space and then the normal search path.
 * Load hooks::                  
 * An example::                  
 * Summary -- converting an existing package::  
-* Name spaces with S4 classes and methods::  
+* Namespaces with S4 classes and methods::  
 @end menu
 
 
-@node Specifying imports and exports, Registering S3 methods, Package name spaces, Package name spaces
+@node Specifying imports and exports, Registering S3 methods, Package namespaces, Package namespaces
 @subsection Specifying imports and exports
 
 Exports are specified using the @code{export} directive in the
@@ -2523,14 +2534,16 @@ exportPattern("^[^\\.]")
 @end example
 
 @noindent
-exports all variables that do not start with a period.  However, such
+exports all variables that do not start with a period, and 
+this is the default in packages with no @file{NAMESPACE} file.
+However, such
 broad patterns are not recommended for production code: it is better to
 list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
 @R{}.)
 
-A package with a name space implicitly imports the base name space.
-Variables exported from other packages with name spaces need to be
+Packages implicitly import the base namespace.
+Variables exported from other packages with namespaces need to be
 imported explicitly using the directives @code{import} and
 @code{importFrom}.  The @code{import} directive imports all exported
 variables from the specified package(s).  Thus the directives
@@ -2555,23 +2568,25 @@ importFrom(foo, f, g)
 specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.
 
-It is possible to export variables from a name space that it has
-imported from other name spaces.
+It is possible to export variables from a namespace that it has
+imported from other namespaces.
 
 If a package only needs a few objects from another package it can use a
 fully qualified variable reference in the code instead of a formal
 import.  A fully qualified reference to the function @code{f} in package
-@pkg{foo} is of the form @code{foo:::f}.  This is less efficient than a
+@pkg{foo} is of the form @code{foo::f}.  This is less efficient than a
 formal import and also loses the advantage of recording all dependencies
 in the @file{NAMESPACE} file, so this approach is usually not
-recommended.  Evaluating @code{foo:::f} will cause package @pkg{foo} to
+recommended.  Evaluating @code{foo::f} will cause package @pkg{foo} to
 be loaded, but not attached, if it was not loaded already---this can be
 an advantage in delaying the loading of a rarely used package.
 
-Using @code{foo:::f} allows access to unexported objects: to confine
-references to exported objects use @code{foo::f}.
+Using @code{foo:::f} instead of @code{foo::f} allows access to
+unexported objects.  This is generally not recommended, as the
+semantics of unexported objects may be changed by the package author
+in routine maintenance.
 
-@node Registering S3 methods, Load hooks, Specifying imports and exports, Package name spaces
+@node Registering S3 methods, Load hooks, Specifying imports and exports, Package namespaces
 @subsection Registering S3 methods
 
 The standard method for S3-style @code{UseMethod} dispatching might fail
@@ -2589,39 +2604,35 @@ S3method(print, foo)
 
 @noindent
 ensures that the method is registered and available for @code{UseMethod}
-dispatch.  The function @code{print.foo} does not need to be exported.
+dispatch, and the function @code{print.foo} does not need to be exported.
 Since the generic @code{print} is defined in @pkg{base} it does not need
-to be imported explicitly.  This mechanism is intended for use with
-generics that are defined in a name space.  Any methods for a generic
-defined in a package that does not use a name space should be exported,
-and the package defining and exporting the methods should be attached to
-the search path if the methods are to be found.
+to be imported explicitly.  
 
 (Note that function and class names may be quoted, and reserved words
 and non-standard names such as @code{[<-} and @code{function} must
 be.)
 
-@node Load hooks, An example, Registering S3 methods, Package name spaces
+@node Load hooks, An example, Registering S3 methods, Package namespaces
 @subsection Load hooks
-
-There are a number of hooks that apply to packages with name spaces.
-See @code{help(".onLoad")} for more details.
 
 @findex .onLoad
 @findex .onAttach
-Packages with name spaces do not use the @code{.First.lib} function.
-Since loading and attaching are distinct operations when a name space is
-used, separate hooks are provided for each.  These hook functions are
-called @code{.onLoad} and @code{.onAttach}.  They take the same
-arguments as @code{.First.lib}; they should be defined in the name space
+There are a number of hooks called as packages are loaded, attached,
+detached, and unloaded.  See @code{help(".onLoad")} for more details.
+
+Since loading and attaching are distinct operations, 
+separate hooks are provided for each.  These hook functions are
+called @code{.onLoad} and @code{.onAttach}.  They both take arguments
+@code{libname} and @code{pkgname}; they should be defined in the namespace
 but not exported.
 
 @findex .Last.lib
 @findex .onUnload
-However, packages with name spaces @emph{do} use the @code{.Last.lib}
-function (provided it is exported from the name space) when
-@code{detach} is called on the package.  There is also a hook
-@code{.onUnload} which is called when the name space is unloaded
+Packages use the @code{.Last.lib}
+function (provided it is exported from the namespace) when
+@code{detach} is called on the package.  It is called with a single argument,
+the full path to the installed package. There is also a hook
+@code{.onUnload} which is called when the namespace is unloaded
 (@emph{via} a call to @code{unloadNamespace}, perhaps called by
 @code{detach(unload=TRUE)}) with argument the full path to the installed
 package's directory.  @code{.onUnload} should be defined in the name
@@ -2662,7 +2673,7 @@ useDynLib(foo, myRoutine, myOtherRoutine)
 
 By specifying these names in the @code{useDynLib} directive, the native
 symbols are resolved when the package is loaded and @R{} variables
-identifying these symbols are added to the package's name space with
+identifying these symbols are added to the package's namespace with
 these names.  These can be used in the @code{.C}, @code{.Call},
 @code{.Fortran} and @code{.External} calls in place of the name of the
 routine and the @code{PACKAGE} argument.  For instance, we can call the
@@ -2706,7 +2717,7 @@ Symbols without explicit names are assigned to the @R{} variable with
 that name.
 
 In some cases, it may be preferable not to create @R{} variables in the
-package's name space that identify the native routines.  It may be too
+package's namespace that identify the native routines.  It may be too
 costly to compute these for many routines when the package is loaded
 if many of these routines are not likely to be used.  In this case,
 one can still perform the symbol resolution correctly using the DLL,
@@ -2736,7 +2747,7 @@ use the following directive in the @file{NAMESPACE} file:
 myDLL = useDynLib(foo, myRoutine_sym = myRoutine, myOtherRoutine)
 @end example
 
-Then, the @R{} variable @code{myDLL} is in the package's name space and
+Then, the @R{} variable @code{myDLL} is in the package's namespace and
 available for calls such as @code{myDLL$dynRoutine} to access routines
 that are not explicitly resolved at load time.
 
@@ -2747,7 +2758,7 @@ list of symbols again in the @code{useDynLib} directive in the
 specified by giving a name by which the routine is to be specified along
 with the address of the routine and any information about the number and
 type of the parameters.  Using the @code{.registration} argument of
-@code{useDynLib}, we can instruct the name space mechanism to create
+@code{useDynLib}, we can instruct the namespace mechanism to create
 @R{} variables for these symbols.  For example, suppose we have the
 following registration information for a DLL named @code{myDLL}:
 
@@ -2774,7 +2785,7 @@ useDynLib(myDLL, .registration = TRUE)
 @noindent
 causes the DLL to be loaded and also for the @R{} variables @code{foo},
 @code{bar_sym}, @code{R_call_sym} and @code{R_version_sym} to be
-defined in the package's name space.
+defined in the package's namespace.
 
 Note that the names for the @R{} variables are taken from the entry in
 the registration information and do not need to be the same as the name
@@ -2808,7 +2819,7 @@ More information about this symbol lookup, along with some approaches
 for customizing it, is available from
 @uref{http://www.omegahat.org/@/examples/@/RDotCall}.
 
-@node An example, Summary -- converting an existing package, Load hooks, Package name spaces
+@node An example, Summary -- converting an existing package, Load hooks, Package namespaces
 @subsection An example
 
 As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
@@ -2880,10 +2891,10 @@ in @pkg{bar} the function @code{c} is defined to be equivalent to
 @code{sum}, but in @pkg{foo} the variable @code{c} refers to the
 standard function @code{c} in @pkg{base}.
 
-@node Summary -- converting an existing package, Name spaces with S4 classes and methods, An example, Package name spaces
+@node Summary -- converting an existing package, Namespaces with S4 classes and methods, An example, Package namespaces
 @subsection Summary -- converting an existing package
 
-To summarize, converting an existing package to use a name space involves
+To summarize, converting a pre-2.14.0 package to use a namespace involves
 several simple steps:
 
 @itemize @bullet
@@ -2902,13 +2913,12 @@ Replace @code{.First.lib} functions with @code{.onLoad} functions or
 @code{useDynLib} directives.
 @end itemize
 
-@c or were in ca 2003
-@c @noindent
-@c Some code analysis tools to aid in this process are currently under
-@c development.
+The first two of these are done automatically, but a package author
+can usually improve on @R{}'s guesswork.
 
-@node Name spaces with S4 classes and methods,  , Summary -- converting an existing package, Package name spaces
-@subsection Name spaces with S4 classes and methods
+
+@node Namespaces with S4 classes and methods,  , Summary -- converting an existing package, Package namespaces
+@subsection Namespaces with S4 classes and methods
 
 Some additional steps are needed for packages which make use of formal
 (S4-style) classes and methods (unless these are purely used
@@ -2939,17 +2949,17 @@ export(AIC, BIC, nobs)
 @noindent
 All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
-using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
+using @code{exportClassPattern}@footnote{As from @R{} 2.13.0 this
 defaults to the same pattern as @code{exportPattern}: use something like
 @code{exportClassPattern("^$")} to override this.} in the same style as
-for @code{exportPattern} Generics for which S4 methods are defined need
+for @code{exportPattern}. Generics for which S4 methods are defined need
 to be declared in an @code{exportMethods} directive, and where the
 generics are formed by taking over existing functions, those functions
 need to be imported (explicitly unless they are defined in the
-@code{base} name space).
+@code{base} namespace).
 
-Note that exporting methods on a generic in the name space will also
-export the generic, and exporting a generic in the name space will also
+Note that exporting methods on a generic in the namespace will also
+export the generic, and exporting a generic in the namespace will also
 export its methods.  Where a generic has been created in the package
 solely to add S4 methods to it, it can be declared @emph{via} either or
 both of @code{exports} or @code{exportMethods}, but the latter seems
@@ -3004,15 +3014,15 @@ exportClasses(c1, c2)
 respectively.
 
 Note that @code{importMethodsFrom} will also import any generics defined
-in the name space on those methods.
+in the namespace on those methods.
 
-If your package imports the whole of a name space, it will automatically
-import the classes from that name space.  It will also import methods,
+If your package imports the whole of a namespace, it will automatically
+import the classes from that namespace.  It will also import methods,
 but it is best to do so explicitly, especially where there are methods
-being imported from more than one name space.
+being imported from more than one namespace.
 
 
-@node Writing portable packages, Diagnostic messages, Package name spaces, Creating R packages
+@node Writing portable packages, Diagnostic messages, Package namespaces, Creating R packages
 @section Writing portable packages
 
 @menu
@@ -3451,7 +3461,7 @@ settings).
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
 @code{warning} and @code{message} messages are in place, most easily
-if the package has a name space.  They make use of message catalogs in
+if the package has a namespace.  They make use of message catalogs in
 the same way as C-level messages, but using domain @code{R-@var{pkg}}
 rather than @code{@var{pkg}}.  Translation of character strings inside
 @code{stop}, @code{warning} and @code{message} calls is automatically
@@ -3474,7 +3484,7 @@ same name, and will choose an appropriate singular or plural form for
 the selected language depending on the value of its first argument
 @code{n}.
 
-Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
+Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
@@ -6013,7 +6023,7 @@ Browse[1]> n
 @end example
 @noindent
 For your own functions, it may be as easy to use @code{fix} to insert
-temporary code, but @code{trace} can help with functions in a name space
+temporary code, but @code{trace} can help with functions in a namespace
 (as can @code{fixInNamespace}).  Alternatively, use
 @code{trace(,edit=TRUE)} to insert code visually.
 
@@ -6610,7 +6620,7 @@ specific shared object (or use @code{"base"} for code compiled into
 package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package with a
-name space, the shared object loaded by the first (if any)
+namespace, the shared object loaded by the first (if any)
 @code{useDynLib} directive will be used.)
 
 For @code{.C} and @code{.Fortran} you can specify an @code{ENCODING}
@@ -6714,9 +6724,11 @@ for platform independence.  On Unix-alike systems the path supplied to
 directory or, if it starts with @samp{~}, relative to the user's home
 directory.
 
-Loading is most often done @emph{via} a call to @code{library.dynam}
+Loading is most often done automatically based on the @code{useDynLib()}
+declaration in the @file{NAMESPACE} file, but may be done 
+explicitly @emph{via} a call to @code{library.dynam}.
 @findex library.dynam
-in the @code{.First.lib} function of a package.  This has the form
+This has the form
 
 @example
 library.dynam("libname", package, lib.loc)
@@ -7074,7 +7086,8 @@ will compile @file{test.c}!
 If the @file{src} subdirectory of an add-on package contains source code
 with one of the extensions listed above or a file @file{Makevars} but
 @strong{not} a file @code{Makefile}, @command{R CMD INSTALL} creates a
-shared object (for loading into @R{} in the @code{.First.lib} or
+shared object (for loading into @R{} through @code{useDynlib()} in the
+@file{NAMESPACE}, or in the
 @code{.onLoad} function of the package) using the @command{R CMD SHLIB}
 mechanism.  If file @file{Makevars} exists it is read first, then the
 system makefile and then any personal @file{Makevars} files.
@@ -10934,7 +10947,7 @@ foo.default <- base::foo
 argument list, one can e.g.@: use @code{formals(foo.default) <-
 c(formals(foo.default), alist(... = ))}.)
 
-The same idea can be applied for functions in other packages with name spaces.
+The same idea can be applied for functions in other packages with namespaces.
 
 @node Linking GUIs and other front-ends to R, Function and variable index, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R

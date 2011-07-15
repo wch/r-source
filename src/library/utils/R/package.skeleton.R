@@ -133,10 +133,7 @@ package.skeleton <-
           if(namespace)
           "* Edit the exports in 'NAMESPACE', and add necessary imports.",
           "* Put any C/C++/Fortran code in 'src'.",
-          if(namespace)
-          "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
-          else
-          "* If you have compiled code, add a .First.lib() function in 'R' to load the shared object.",
+          "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'.",
           "* Run R CMD build to build the package tarball.",
           "* Run R CMD check to check the package tarball.",
           "",

@@ -7,16 +7,18 @@
 \alias{.onLoad}
 \alias{.onUnload}
 \alias{.onAttach}
-\title{Hooks for Name Space events}
+\alias{.Last.lib}
+\title{Hooks for Namespace Events}
 \description{
-  Packages with name spaces can supply functions to be called when
-  loaded, attached or unloaded.
+  Packages can supply functions to be called when
+  loaded, attached, detached or unloaded.
 }
 
 \usage{
 .onLoad(libname, pkgname)
 .onAttach(libname, pkgname)
 .onUnload(libpath)
+.Last.lib(libpath)
 }
 \arguments{
   \item{libname}{a character string giving the library directory where
@@ -25,13 +27,18 @@
   \item{libpath}{a character string giving the complete path to the package.}
 }
 \details{
-  These functions apply only to packages with name spaces.
-
   After loading, \code{\link{loadNamespace}} looks for a hook function named
   \code{.onLoad} and runs it before sealing the namespace and processing
   exports.
 
-  If a name space is unloaded (via \code{\link{unloadNamespace}}),
+  If a function \code{\link{.Last.lib}} is visible in the package, it
+  will be called when the package is detached: this does need to be
+  exported. Beware that it might be called if \code{.onAttach} or
+  \code{.onLoad} has failed, so it should be written defensively.  (It
+  is called within \code{\link{try}}, so errors will not stop the
+  package being detached.)
+  
+  If a namespace is unloaded (via \code{\link{unloadNamespace}}),
   a hook function \code{.onUnload} is run before final unloading.
   
   Note that the code in \code{.onLoad} and \code{.onUnload} is run
@@ -46,15 +53,12 @@
   environment is sealed.  This is less likely to be useful than
   \code{.onLoad}, which should be seen as the analogue of
   \code{\link{.First.lib}} (which is only used for packages without a
-  name space).
+  namespace).
 
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
-  as internal variables in the name space and should not be exported.
+  as internal variables in the namespace and should not be exported.
   
-  If a function \code{\link{.Last.lib}} is visible in the package, it
-  will be called when the package is detached: this does need to be exported.
-
-  Anything needed for the functioning of the name space should be
+  Anything needed for the functioning of the namespace should be
   handled at load/unload times by the \code{.onLoad} and
   \code{.onUnload} hooks.  For example, DLLs can be loaded (unless done
   by a \code{useDynLib} directive in the \file{NAMESPACE} file) and
@@ -63,6 +67,7 @@
   package becomes visible to the user, for example a start-up message.
 }
 \seealso{
-  \code{\link{setHook}} shows how users can set hooks on the same events.
+  \code{\link{setHook}} shows how users can set hooks on the same events, and 
+  lists the sequence of events involving all of the hooks.
 }
 \keyword{utilities}

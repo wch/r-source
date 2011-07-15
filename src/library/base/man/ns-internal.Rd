@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{ns-internals}
-\title{Name Space Internals}
+\title{Namespace Internals}
 
 \alias{asNamespace}
 \alias{getNamespaceInfo}
@@ -49,14 +49,14 @@ loadingNamespaceInfo()
 }
 
 \arguments{
-  \item{ns}{string or name space environment.}
+  \item{ns}{string or namespace environment.}
   \item{base.OK}{logical.}
   \item{impenv}{environment.}
-  \item{expenv}{name space environment.}
+  \item{expenv}{namespace environment.}
   \item{vars}{character vector.}
   \item{generics}{optional character vector.}
-  \item{self}{name space environment.}
-  \item{package}{string naming the package/name space to load.}
+  \item{self}{namespace environment.}
+  \item{package}{string naming the package/namespace to load.}
   \item{packages}{vector of package names parallel to \code{generics}.}
   \item{package.lib}{character vector specifying library.}
   \item{mustExist}{logical.}
@@ -70,12 +70,13 @@ loadingNamespaceInfo()
   \item{metaname}{the methods table name.}
 }
 \description{
-  Internal name space support functions.  Not intended to be called directly.
+  Internal namespace support functions.  Not intended to be called directly.
 }
 \details{
   \code{packageHasNamespace} does not indicate if the package has a
   namespace, rather if it has a \file{NAMESPACE} file, which \code{base}
-  does not.  But then you are not intended to be using it \dots.
+  and many older packages do not.  But then you are not intended to be 
+  using it \dots.
 }
 
 \keyword{internal}

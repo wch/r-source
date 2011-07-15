@@ -968,6 +968,11 @@
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
+	
+	if (!file.exists(namespace <- file.path(instdir, "NAMESPACE"))) {
+	    starsmsg(stars, "Creating default NAMESPACE file")
+	    writeDefaultNamespace(namespace)
+	}
 
 	## LazyLoading
 	value <- parse_description_field(desc, "LazyLoad", default = TRUE)

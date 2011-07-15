@@ -52,7 +52,7 @@ library.dynam.unload(chname, libpath,
   
   \code{library.dynam} is designed to be used inside a package rather
   than at the command line, and should really only be used inside
-  \code{\link{.First.lib}} or \code{\link{.onLoad}}.  The
+  \code{\link{.onLoad}}.  The
   system-specific extension for DLLs (e.g., \file{.so} or \file{.sl} on
   Unix systems, \file{.so} on Mac OS X, \file{.dll} on Windows) should
   not be added.
@@ -83,7 +83,7 @@ library.dynam.unload(chname, libpath,
   If \code{chname} is specified, an object of class
   \code{"\link{DLLInfo}"} that identifies the DLL and can be used in
   future calls is returned invisibly.  For packages that have name
-  spaces, a list of these objects is stored in the name space's
+  spaces, a list of these objects is stored in the namespace's
   environment for use at run-time.
 
   Note that the class \code{"\link{DLLInfo}"} has a method for \code{$}
@@ -109,7 +109,7 @@ library.dynam.unload(chname, libpath,
   \code{\link{getLoadedDLLs}} for information on \code{"DLLInfo"} and
   \code{"DLLInfoList"} objects.
   
-  \code{\link{.First.lib}}, \code{\link{library}},
+  \code{\link{.onLoad}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.libPaths}}
   
