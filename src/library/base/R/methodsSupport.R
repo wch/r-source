@@ -29,7 +29,7 @@ trace <- function(what, tracer, exit, at, print, signature, where = topenv(paren
     tState <- tracingState(FALSE)
     on.exit(tracingState(tState))
     ## now call the version in the methods package, to ensure we get
-    ## the correct name space (e.g., correct version of class())
+    ## the correct namespace (e.g., correct version of class())
     call <- sys.call()
     call[[1L]] <- quote(methods::.TraceWithMethods)
     call$where <- where
@@ -50,7 +50,7 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
         return(.primUntrace(what)) ## can't have called trace except in primitive form
     ## at this point we can believe that the methods namespace was successfully loaded
     ## now call the version in the methods package, to ensure we get
-    ## the correct name space (e.g., correct version of class())
+    ## the correct namespace (e.g., correct version of class())
     call <- sys.call()
     call[[1L]] <- quote(methods::.TraceWithMethods)
     call$where <- where

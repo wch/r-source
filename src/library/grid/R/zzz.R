@@ -45,7 +45,7 @@ assign(".GRID.STATE", vector("list", 64L), envir = .GridEvalEnv)
         ## Not very friendly to other registered graphics systems
         ## but its safety first for now
         if(length(.Devices) > 1L)
-            warning("shutting down all devices when unloading 'grid' name space",
+            warning("shutting down all devices when unloading 'grid' namespace",
                     call. = FALSE)
         graphics.off()
         .Call(L_killGrid)

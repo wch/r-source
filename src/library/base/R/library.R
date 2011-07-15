@@ -293,8 +293,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
                     keep.source)
 
-            ## If the name space mechanism is available and the package
-            ## has a name space, then the name space loading mechanism
+            ## If the namespace mechanism is available and the package
+            ## has a namespace, then the namespace loading mechanism
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
@@ -713,7 +713,7 @@ find.package <-
                                pattern = paste("^", pkg, "$", sep = ""),
                                full.names = TRUE)
             ## Note that we cannot use tools::file_test() here, as
-            ## cyclic name space dependencies are not supported.  Argh.
+            ## cyclic namespace dependencies are not supported.  Argh.
             paths <- c(paths,
                        dirs[file.info(dirs)$isdir &
                             file.exists(file.path(dirs,

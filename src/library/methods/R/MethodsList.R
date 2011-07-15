@@ -223,7 +223,7 @@ MethodsListSelect <-
         ## On the initial call:
         ## turn off any further method dispatch on this function, to avoid recursive
         ## loops if f is a function used in MethodsListSelect.
-        ## TODO: Using name spaces in the methods package would eliminate the need for this
+        ## TODO: Using namespaces in the methods package would eliminate the need for this
         .setMethodsForDispatch(f, fdef, finalDefault)
         if(is(mlist, "MethodsList")) {
             on.exit(.setMethodsForDispatch(f, fdef, mlist))

@@ -156,12 +156,12 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     .Internal(detach(pos))
 
     if(pkgname %in% loadedNamespaces()) {
-        ## the lazyload DB is flushed when the name space is unloaded
+        ## the lazyload DB is flushed when the namespace is unloaded
         if(unload) {
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
                      warning(sQuote(pkgname),
-                             " name space cannot be unloaded:\n  ",
+                             " namespace cannot be unloaded:\n  ",
                              conditionMessage(e), call. = FALSE))
         }
     } else {

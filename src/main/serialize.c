@@ -113,9 +113,9 @@
    integer.  This produces more compact output for code; it has little
    effect on data.
 
-   Environments recognized as package or name space environments are
+   Environments recognized as package or namespace environments are
    not saved directly. Instead, a STRSXP is saved that is then used to
-   attempt to find the package/name space when unserialized.  The
+   attempt to find the package/namespace when unserialized.  The
    exact mechanism for choosing the name and finding the package/name
    space from the name still has to be developed, but the
    serialization format should be able to accommodate any reasonable
@@ -129,7 +129,7 @@
 
    A mechanism is provided to allow special handling of non-system
    reference objects (all weak references and external pointers, and
-   all environments other than package environments, name space
+   all environments other than package environments, namespace
    environments, and the global environment).  The hook function
    consists of a function pointer and a data value.  The serialization
    function pointer is called with the reference object and the data

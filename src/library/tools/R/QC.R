@@ -686,7 +686,7 @@ function(package, dir, lib.loc = NULL,
     ## (exported) functions in the package.)
 
     ## Determine functions which have no usage but really should have.
-    ## If there is no name space (including base), we have no idea.
+    ## If there is no namespace (including base), we have no idea.
     ## If there is one, everything "exported" (in the package env)
     ## should also have a \usage, apart from
     ## * Defunct functions

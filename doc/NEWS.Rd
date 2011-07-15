@@ -239,7 +239,7 @@
       reference manual and package manuals.
 
       \item Automatic printing for reference classes is now done by
-      the \code{$show()} method.  A method is defined for class
+      the \code{$show()} method.  A method is defined for class % $
       \samp{envRefClass} and may be overriden for user classes (see
       the \code{?ReferenceClasses} example).  S4 \code{show()} methods
       should no longer be needed for reference classes.
@@ -259,6 +259,9 @@
       have been added to the HTML help main page.  These link to
       vignettes in the base and recommended packages and to a
       collection of papers about R issues, respectively.
+      
+      \item Documentation and messages have been standardized to 
+      use \dQuote{namespace} rather than \dQuote{name space}.
     }
   }
 

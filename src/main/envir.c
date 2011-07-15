@@ -598,7 +598,7 @@ static SEXP R_HashProfile(SEXP table)
    sxpinfo).
 
    It is possible that the benefit of caching may be significantly
-   reduced if we introduce name space management.  Since maintaining
+   reduced if we introduce namespace management.  Since maintaining
    cache integrity is a bit tricky and since it might complicate
    threading a bit (I'm not sure it will but it needs to be thought
    through if nothing else) it might make sense to remove caching at
@@ -646,7 +646,7 @@ void attribute_hidden InitGlobalEnv()
     R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
     R_PreserveObject(R_NamespaceRegistry);
     defineVar(install("base"), R_BaseNamespace, R_NamespaceRegistry);
-    /**** needed to properly initialize the base name space */
+    /**** needed to properly initialize the base namespace */
 }
 
 #ifdef USE_GLOBAL_CACHE
@@ -3175,9 +3175,9 @@ SEXP attribute_hidden do_isNSEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP R_NamespaceEnvSpec(SEXP rho)
 {
-    /* The name space spec is a character vector that specifies the
-       name space.  The first element is the name space name.  The
-       second element, if present, is the name space version.  Further
+    /* The namespace spec is a character vector that specifies the
+       namespace.  The first element is the namespace name.  The
+       second element, if present, is the namespace version.  Further
        elements may be added later. */
     if (rho == R_BaseNamespace)
 	return R_BaseNamespaceName;
@@ -3218,7 +3218,7 @@ static SEXP checkNSname(SEXP call, SEXP name)
 	}
 	/* else fall through */
     default:
-	errorcall(call, _("bad name space name"));
+	errorcall(call, _("bad namespace name"));
     }
     return name;
 }
@@ -3230,7 +3230,7 @@ SEXP attribute_hidden do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     name = checkNSname(call, CAR(args));
     val = CADR(args);
     if (findVarInFrame(R_NamespaceRegistry, name) != R_UnboundValue)
-	errorcall(call, _("name space already registered"));
+	errorcall(call, _("namespace already registered"));
     defineVar(name, val, R_NamespaceRegistry);
     return R_NilValue;
 }
@@ -3242,7 +3242,7 @@ SEXP attribute_hidden do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     name = checkNSname(call, CAR(args));
     if (findVarInFrame(R_NamespaceRegistry, name) == R_UnboundValue)
-	errorcall(call, _("name space not registered"));
+	errorcall(call, _("namespace not registered"));
     if( !HASHASH(PRINTNAME(name)))
 	hashcode = R_Newhashpjw(CHAR(PRINTNAME(name)));
     else

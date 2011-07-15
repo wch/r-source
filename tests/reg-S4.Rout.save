@@ -738,7 +738,7 @@ Creating a new generic function for "rbind" in the global environment
 +           function(x,i,j,drop) new(class(x), x@.Data[i]))
 [1] "["
 > ## defining S4 methods for sort() has no effect on calls to
-> ## sort() from functions in a name space; e.g., median.default.
+> ## sort() from functions in a namespace; e.g., median.default.
 > ## but setting an xtfrm() method works.
 > setMethod("xtfrm", "L", function(x) xtfrm(unlist(x@.Data)))
 [1] "xtfrm"

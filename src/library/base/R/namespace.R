@@ -87,7 +87,7 @@ getExportedValue <- function(ns, name) {
     if (is.null(ns)) {
         pos <- match(paste("package", pkg, sep=":"), search(), 0L)
         if (pos == 0L)
-            stop(gettextf("package %s has no name space and is not on the search path", sQuote(pkg)), domain = NA)
+            stop(gettextf("package %s has no namespace and is not on the search path", sQuote(pkg)), domain = NA)
         get(name, pos = pos, inherits = FALSE)
     }
     else getExportedValue(pkg, name)
@@ -119,7 +119,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     nspath <- getNamespaceInfo(ns, "path")
     attname <- paste("package", nsname, sep = ":")
     if (attname %in% search())
-        stop("name space is already attached")
+        stop("namespace is already attached")
     env <- attach(NULL, pos = pos, name = attname)
     ## we do not want to run e.g. .Last.lib here
     on.exit(.Internal(detach(pos)))
@@ -159,7 +159,7 @@ loadNamespace <- function (package, lib.loc = NULL,
     }
     loading <- dynGet("__NameSpacesLoading__", NULL)
     if (match(package, loading, 0L))
-        stop("cyclic name space dependency detected when loading ",
+        stop("cyclic namespace dependency detected when loading ",
              sQuote(package), ", already loading ",
              paste(sQuote(loading), collapse = ", "),
              domain = NA)
@@ -291,7 +291,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             symbols
           }
 
-        ## find package and check it has a name space
+        ## find package and check it has a namespace
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0L)
             stop(gettextf("there is no package called %s", sQuote(package)),
@@ -303,7 +303,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             hasNoNamespaceError <-
                 function (package, package.lib, call = NULL) {
                 class <- c("hasNoNamespaceError", "error", "condition")
-                msg <- gettextf("package %s does not have a name space",
+                msg <- gettextf("package %s does not have a namespace",
                                 sQuote(package))
                 structure(list(message = msg, package = package,
                                package.lib = package.lib, call = call),
@@ -367,7 +367,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## dynamic variable to allow/disable .Import and friends
         "__NamespaceDeclarativeOnly__" <- declarativeOnly
 
-        ## store info for loading name space for loadingNamespaceInfo to read
+        ## store info for loading namespace for loadingNamespaceInfo to read
         "__LoadingNamespaceInfo__" <- list(libname = package.lib,
                                            pkgname = package)
 
@@ -552,7 +552,7 @@ loadingNamespaceInfo <- function() {
         }
         notFound
     }
-    dynGet("__LoadingNamespaceInfo__", stop("not loading a name space"))
+    dynGet("__LoadingNamespaceInfo__", stop("not loading a namespace"))
 }
 
 topenv <- function(envir = parent.frame(),
@@ -595,7 +595,7 @@ unloadNamespace <- function(ns)
     if (! is.na(pos)) detach(pos = pos)
     users <- getNamespaceUsers(ns)
     if (length(users))
-        stop(gettextf("name space %s is imported by %s so cannot be unloaded",
+        stop(gettextf("namespace %s is imported by %s so cannot be unloaded",
                       sQuote(getNamespaceName(ns)),
                       paste(sQuote(users), collapse = ", ")),
              domain = NA)
@@ -632,9 +632,9 @@ asNamespace <- function(ns, base.OK = TRUE) {
     if (is.character(ns) || is.name(ns))
         ns <- getNamespace(ns)
     if (! isNamespace(ns))
-        stop("not a name space")
+        stop("not a namespace")
     else if (! base.OK && isBaseNamespace(ns))
-        stop("operation not allowed on base name space")
+        stop("operation not allowed on base namespace")
     else ns
 }
 
@@ -682,7 +682,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
     }
     else if (isNamespace(self)) {
         if (namespaceIsSealed(self))
-            stop("cannot import into a sealed name space")
+            stop("cannot import into a sealed namespace")
         impenv <- parent.env(self)
         msg <- gettext("replacing previous import %s when loading %s")
         register <- TRUE
@@ -817,7 +817,7 @@ namespaceExport <- function(ns, vars) {
     namespaceIsSealed <- function(ns)
        environmentIsLocked(ns)
     if (namespaceIsSealed(ns))
-        stop("cannot add to exports of a sealed name space")
+        stop("cannot add to exports of a sealed namespace")
     ns <- asNamespace(ns, base.OK = FALSE)
     if (length(vars)) {
         addExports <- function(ns, new) {
