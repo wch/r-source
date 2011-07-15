@@ -310,10 +310,6 @@ getVignetteEncoding <-  function(file, ...)
                "hebrew" = "ISO-8859-8",
                "ansinew" = "CP1252",
                "applemac" = "macroman",
-               ## assume these only get used on Windows
-               "cp1250" = "CP1250",
-               "cp1252" = "CP1252",
-               "cp1257" = "CP1257",
                "unknown")
     } else res
 }
