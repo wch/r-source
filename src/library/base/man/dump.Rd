@@ -72,7 +72,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   which were dumped.
 }
 \note{
-  As \code{dump} is defined in the base name space, the \pkg{base}
+  As \code{dump} is defined in the base namespace, the \pkg{base}
   package will be searched \emph{before} the global environment unless
   \code{dump} is called from the top level prompt or the \code{envir}
   argument is given explicitly.

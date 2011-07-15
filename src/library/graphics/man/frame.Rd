@@ -30,7 +30,7 @@ frame()
   before and after advancing the frame. The latter is used
   in the testing code to annotate the new page. The hook function(s) are
   called with no argument.  (If the value is a character string,
-  \code{get} is called on it from within the \pkg{graphics} name space.)
+  \code{get} is called on it from within the \pkg{graphics} namespace.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

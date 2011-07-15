@@ -33,7 +33,7 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
 %%FIXME:  the following paragraph should be somewhere it's likely to be seen
   In order for the code being evaluated to use the correct environment
   (for example, in global assignments), source code in packages should
-  call \code{\link{topenv}()}, which will return the name space, if any,
+  call \code{\link{topenv}()}, which will return the namespace, if any,
   the environment set up by \code{sys.source}, or the global environment
   if a saved image is being used.
 }

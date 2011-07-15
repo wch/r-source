@@ -110,7 +110,7 @@ env.profile(env)
   be accessed by \code{globalenv()}.  On the search path, each item's
   enclosure is the next item.
 
-  The object \code{.BaseNamespaceEnv} is the name space environment for
+  The object \code{.BaseNamespaceEnv} is the namespace environment for
   the base package.  The environment of the base package itself is
   available as \code{baseenv()}.
 

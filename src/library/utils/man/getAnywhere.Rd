@@ -8,11 +8,11 @@
 \alias{argsAnywhere}
 \alias{[.getAnywhere}
 \alias{print.getAnywhere}
-\title{Retrieve an R Object, Including from a Name Space}
+\title{Retrieve an R Object, Including from a Namespace}
 \description{
   These functions locate all objects with name matching their argument,
   whether visible on the search path, registered as an S3 method or in a
-  name space but not exported. \code{getAnywhere()} returns the objects
+  namespace but not exported. \code{getAnywhere()} returns the objects
   and \code{argsAnywhere()} returns the arguments of any objects that
   are functions.
 }
@@ -24,7 +24,7 @@ argsAnywhere(x)
   \item{x}{a character string or name.}
 }
 \details{
-  The functions look at all loaded name spaces, whether or not they are
+  The functions look at all loaded namespaces, whether or not they are
   associated with a package on the search list.  
   
   The functions do not search literally \dQuote{anywhere}: for
@@ -32,8 +32,8 @@ argsAnywhere(x)
   will not be searched.
 
   Where functions are found as an S3 method, an attempt is made to find
-  which name space registered them.  This may not be correct, especially
-  if a name space is unloaded.
+  which namespace registered them.  This may not be correct, especially
+  if a namespace is unloaded.
 }
 \value{
   For \code{getAnywhere()} an object of class \code{"getAnywhere"}.  This is a list with components

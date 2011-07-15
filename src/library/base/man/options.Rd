@@ -356,7 +356,7 @@ getOption(x, default = NULL)
   Others are set from environment variables or are platform-dependent.
 }
 \section{Options set in package grDevices}{
-  These will be set when package \pkg{grDevices} (or its name space)
+  These will be set when package \pkg{grDevices} (or its namespace)
   is loaded if not already set.
   \describe{
     \item{\code{device}:}{a character string giving
@@ -401,7 +401,7 @@ getOption(x, default = NULL)
   }
 }
 \section{Options set in package stats}{
-  These will be set when package \pkg{stats} (or its name space)
+  These will be set when package \pkg{stats} (or its namespace)
   is loaded if not already set.
   \describe{
     \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
@@ -433,7 +433,7 @@ getOption(x, default = NULL)
   }
 }
 \section{Options set in package utils}{
-  These will be set when package \pkg{utils} (or its name space)
+  These will be set when package \pkg{utils} (or its namespace)
   is loaded if not already set.
   \describe{
     \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror

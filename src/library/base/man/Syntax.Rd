@@ -13,7 +13,7 @@
   The following unary and binary operators are defined.  They are listed
   in precedence groups, from highest to lowest.
   \tabular{ll}{
-    \code{:: :::}\tab access variables in a name space\cr
+    \code{:: :::}\tab access variables in a namespace\cr
     \code{$ @}\tab component / slot extraction\cr
     \code{[ [[}\tab indexing\cr
     \code{^}\tab exponentiation (right to left)\cr

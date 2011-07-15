@@ -72,11 +72,11 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \link{InternalGenerics}).  In particular it will not work inside
   anonymous calling functions (e.g. \code{get("print.ts")(AirPassengers)}).
 
-  Name spaces can register methods for generic functions.  To support
+  Namespaces can register methods for generic functions.  To support
   this, \code{UseMethod} and \code{NextMethod} search for methods in
   two places: first in the environment in which the generic function
   is called, and then in the registration data base for the
-  environment in which the generic is defined (typically a name space).
+  environment in which the generic is defined (typically a namespace).
   So methods for a generic function need to be available in the
   environment of the call to the generic, or they must be registered.
   (It does not matter whether they are visible in the environment in

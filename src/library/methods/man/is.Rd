@@ -106,7 +106,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     relationship.  Default is the global environment for calls from the
     top level of the session or a source file evaluated there.  When the
     call occurs in the top level of a file in the source of a package,
-    the default will be the name space or environment of the package.
+    the default will be the namespace or environment of the package.
     Other uses are tricky and not usually a good idea, unless you really
     know what you are doing.}
   \item{classDef}{

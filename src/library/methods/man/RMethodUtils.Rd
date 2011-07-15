@@ -249,7 +249,7 @@ addNextMethod(method, f, mlist, optional, envir)
 
     \item{\code{.saveImage}:}{
       Flag, used in dynamically initializing the methods package from
-      \code{.First.lib}
+      \code{.onLoad}.
     }
 
     \item{\code{rematchDefinition},

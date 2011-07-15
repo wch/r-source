@@ -8,7 +8,7 @@
 \alias{::}
 \alias{:::}
 \description{
-  Accessing exported and internal variables in a name space, or
+  Accessing exported and internal variables in a namespace, or
   variables in an attached package.
 }
 \usage{
@@ -20,20 +20,20 @@ pkg:::name
   \item{name}{variable name: symbol or literal character string.}
 }
 \details{
-  For a package with a name space, \code{pkg::name} returns the value of
-  the exported variable \code{name} in name space \code{pkg}, whereas
+  For a package with a namespace, \code{pkg::name} returns the value of
+  the exported variable \code{name} in namespace \code{pkg}, whereas
   \code{pkg:::name} returns the value of the internal variable
-  \code{name}. The name space will be loaded if it was not loaded
+  \code{name}. The namespace will be loaded if it was not loaded
   before the call, but the package will not be attached to the
   search path.
 
-  If the package \code{pkg} does not have a name space but is on the
+  If the package \code{pkg} does not have a namespace but is on the
   search path then \code{pkg::name} returns the value of \code{name} in
   the package environment.  Thus \code{pkg::name} has the same effect
-  for attached packages whether or not they have a name space.
+  for attached packages whether or not they have a namespace.
 
   Specifying a variable that does not exist is an error, as is
-  specifying a package that does not exist or does not have a name space
+  specifying a package that does not exist or does not have a namespace
   and is not on the search path.
 
   Note that it is typically a design mistake to use \code{:::}

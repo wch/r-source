@@ -64,7 +64,7 @@ local(expr, envir = new.env())
   \code{local} evaluates an expression in a local environment.  It is
   equivalent to \code{evalq} except that its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive
-  functions and as a kind of limited name space feature since variables
+  functions and as a kind of limited namespace feature since variables
   defined in the environment are not visible from the outside.
 }
 \value{

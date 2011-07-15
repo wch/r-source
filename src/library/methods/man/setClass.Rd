@@ -34,7 +34,7 @@ elements for superclasses, but the recommended style is to use the
     environment in which to store or remove the
     definition.  Defaults to the top-level environment of the calling function
     (the global environment for ordinary computations, and the
-    environment or name space of a package in the source code for that package).
+    environment or namespace of a package in the source code for that package).
   }
   \item{validity}{ if supplied, should be a validity-checking method
     for objects from this class (a function that returns \code{TRUE} if
@@ -191,13 +191,13 @@ different packages, for most purposes.
 
 When a class name is supplied for a slot or a superclass, a
 corresponding class definition will be found, looking from the
-name space or environment of the current package, assuming the call to
+namespace or environment of the current package, assuming the call to
 \code{setClass} in question appears directly in the source for the
 package.  That's where it should appear, to avoid ambiguity.
 
-In particular, if the current package has a name space then the  class
+In particular, if the current package has a namespace then the  class
 must be found in the current package itself, in the imports defined by that
-name space, or in the base package.
+namespace, or in the base package.
 
 When this rule does not identify a class uniquely (because it appears
 in more than one imported package) then the \code{\link{packageSlot}}

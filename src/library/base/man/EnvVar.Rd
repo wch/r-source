@@ -136,7 +136,7 @@
     }
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
       initial value for \code{\link{options}("unzip")} on a Unix-alike
-      when name space \pkg{utils} is loaded.}
+      when namespace \pkg{utils} is loaded.}
     \item{\env{R_ZIPCMD}:}{The path to \command{zip}. Used by
       \code{\link{zip}} and by \command{R CMD INSTALL --build} on Windows.}
     \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
@@ -159,7 +159,7 @@
     \item{\env{DISPLAY}:}{Optional: used by \code{\link{X11}}, Tk (in
       package \pkg{tcltk}), the data editor and various packages.}
     \item{\env{EDITOR}:}{The path to the default editor: sets the
-      default for \code{\link{options}("editor")} when name space
+      default for \code{\link{options}("editor")} when namespace
       \pkg{utils} is loaded.}
     \item{\env{PAGER}:}{The path to the pager with the default setting of
       \code{\link{options}("pager")}. The default value is chosen at

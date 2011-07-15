@@ -1896,7 +1896,7 @@ using the option @option{--byte-compile} with @command{R CMD INSTALL} or
 with @code{install.packages(type = "source")}.
 
 Not all contributed packages work correctly when byte-compiled (for
-example because they interfere with the sealing of name spaces).  For
+example because they interfere with the sealing of namespaces).  For
 most packages (especially those which make extensive use of compiled
 code) the speed-up is small.  Unless a package is used frequently the
 time spent in byte-compilation can outweigh the time saved in execution:

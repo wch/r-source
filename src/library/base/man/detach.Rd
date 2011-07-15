@@ -50,8 +50,8 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
   detaching will not in general unload any dynamically loaded compiled
   code (DLLs).  Further, registered S3 methods from the namespace will
   not be removed.  If you use \code{\link{library}} on a package whose
-  name space is loaded, it attaches the exports of the already loaded
-  name space.  So detaching and re-attaching a package may not refresh
+  namespace is loaded, it attaches the exports of the already loaded
+  namespace.  So detaching and re-attaching a package may not refresh
   some or all components of the package, and is inadvisable.
 }
 \note{
@@ -59,7 +59,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
   package (the last item in the search list), and attempting to do so
   will throw an error.
   
-  Unloading some name spaces has undesirable side effects:
+  Unloading some namespaces has undesirable side effects:
   e.g. unloading \pkg{grid} closes all graphics devices, and on most
   systems \pkg{tcltk} cannot be reloaded once it has been unloaded and
   may crash \R if this is attempted.

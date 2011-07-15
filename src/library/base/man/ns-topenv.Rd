@@ -25,7 +25,7 @@ topenv(envir = parent.frame(),
 \details{
   \code{topenv} returns the first top level environment found when
   searching \code{envir} and its enclosing environments.  An environment is
-  considered top level if it is the internal environment of a name space,
+  considered top level if it is the internal environment of a namespace,
   a package environment in the search path, or \code{.GlobalEnv}.
 }
 \examples{

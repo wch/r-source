@@ -57,7 +57,7 @@ mauchly.test(object, ...)
 
   Notice that the defaults involve \code{p}, which is calculated
   internally as the dimension of the SSD matrix, and a couple of hidden
-  functions in the \pkg{stats} name space, namely \code{proj} which
+  functions in the \pkg{stats} namespace, namely \code{proj} which
   calculates projection matrices from design matrices or model formulas
   and \code{Thin.row} which removes linearly dependent rows from a
   matrix until it has full row rank. 

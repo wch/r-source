@@ -52,7 +52,7 @@ rc.options(\dots)
       \item{\code{ops}:}{activates completion after the \code{$} and
         \code{@} operators}
 
-      \item{\code{ns}:}{controls name space related completions}
+      \item{\code{ns}:}{controls namespace related completions}
 
       \item{\code{args}:}{enables completion of function arguments}
 
@@ -153,20 +153,20 @@ rc.options(\dots)
       provided, and more can be written for custom classes.
     }
 
-    \item{\bold{Completion inside name spaces}:}{
+    \item{\bold{Completion inside namespaces}:}{
       When the \code{ns} setting is turned on, completion inside
-      name spaces is attempted when a token is preceded by the \code{::}
+      namespaces is attempted when a token is preceded by the \code{::}
       or \code{:::} operators.  Additionally, the basic completion
-      mechanism is extended to include attached name spaces, or more
+      mechanism is extended to include attached namespaces, or more
       precisely, \code{foopkg::} becomes a valid completion of
       \code{foo} if the return value of \code{\link{search}()} includes
       the string \code{"package:foopkg"}.
 
-      The completion of package name spaces applies only to attached
+      The completion of package namespaces applies only to attached
       packages, i.e. if \code{MASS} is not attached (whether or not it
       is loaded), \code{MAS} will not complete to \code{MASS::}.
-      However, attempted completion \emph{inside} an apparent name space
-      will attempt to load the name space if it is not already loaded,
+      However, attempted completion \emph{inside} an apparent namespace
+      will attempt to load the namespace if it is not already loaded,
       e.g. trying to complete on \code{MASS::fr} will load \code{MASS}
       (but not necessarily attach it) even if it is not already loaded.
     }

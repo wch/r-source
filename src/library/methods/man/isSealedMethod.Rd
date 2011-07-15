@@ -27,7 +27,7 @@ isSealedClass(Class, where)
   \item{where}{where to search for the method or class definition.  By
     default, searches from the top environment of the call to
     \code{isSealedMethod} or \code{isSealedClass}, typically the
-    global environment or the name space of a package containing a call
+    global environment or the namespace of a package containing a call
     to one of the functions.}
 }
 \details{

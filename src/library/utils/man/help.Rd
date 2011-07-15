@@ -112,7 +112,7 @@ help(topic, package = NULL, lib.loc = NULL,
 
   If there is a function \code{offline_help_helper} in the workspace or
   further down the search path it is used to do the typesetting,
-  otherwise the function of that name in the \code{utils} name space (to
+  otherwise the function of that name in the \code{utils} namespace (to
   which the first paragraph applies).  It should accept at least two
   arguments, the name of the LaTeX file to be typeset and the type.  As
   from \R 2.14.0 it should accept a third argument, \code{texinputs},

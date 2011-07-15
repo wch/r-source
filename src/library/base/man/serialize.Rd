@@ -43,7 +43,7 @@ unserialize(connection, refhook = NULL)
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
-  references, and all environments other than name space and package
+  references, and all environments other than namespace and package
   environments and \code{.GlobalEnv}).  The hook function for
   \code{serialize} should return a character vector for references it
   wants to handle; otherwise it should return \code{NULL}.  The hook for

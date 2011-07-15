@@ -37,7 +37,7 @@ searchpaths()
 \seealso{
   \code{\link{.packages}} to list just the packages on search path.
 
-  \code{\link{loadedNamespaces}} to list loaded name spaces.
+  \code{\link{loadedNamespaces}} to list loaded namespaces.
 
   \code{\link{attach}} and \code{\link{detach}} to change the
   search path, \code{\link{objects}} to find \R objects in there.

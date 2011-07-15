@@ -49,7 +49,7 @@ rm    (\dots, list = character(), pos = -1,
   environment, but is primarily there for back compatibility.
 
   It is not allowed to remove variables from the base environment and
-  base name space, nor from any environment which is locked (see
+  base namespace, nor from any environment which is locked (see
   \code{\link{lockEnvironment}}).
 
   Earlier versions of \R incorrectly claimed that supplying a character
