@@ -8,6 +8,10 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
+      \item All packages must have a namespace, and one is created on
+      installation if not supplied in the sources.  This means that any
+      such package must be re-installed.
+      
       \item The \code{yLineBias} of the \code{X11()} and
       \code{windows()} families of devices has been changed from 0.1 to
       0.2: this changes slightly the vertical positioning of text in the
