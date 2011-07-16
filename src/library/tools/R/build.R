@@ -95,8 +95,8 @@ writeDefaultNamespace <- function(filename)
 {
     writeLines(c("# Default NAMESPACE created by R",
     		 "",
-    		 "# Export all names that start with a letter",
-		 "exportPattern(\"^[[:alpha:]]+\")"), 
+    		 "# Export all names unless they start with a dot",
+		 "exportPattern(\"^[^.]\")"), 
     	       filename)
 }
 
