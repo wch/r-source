@@ -392,8 +392,10 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(inherits(res, "try-error"))
                 stop(gettextf("unable to load R code in package %s",
                               sQuote(package)), call. = FALSE, domain = NA)
-        } else warning(gettextf("package %s contains no R code",
-                                sQuote(package)), call. = FALSE, domain = NA)
+        }
+        # a package without R code currently is required to have a namespace
+        # else warning(gettextf("package %s contains no R code",
+        #                        sQuote(package)), call. = FALSE, domain = NA)
 
         ## partial loading stops at this point
         ## -- used in preparing for lazy-loading
