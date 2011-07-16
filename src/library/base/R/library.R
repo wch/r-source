@@ -330,7 +330,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             }
 
             ## non-namespace branch
-            stop("All packages should have a NAMESPACE")
+            stop(gettextf("package %s does not have a NAMESPACE and should be re-installed",
+                          sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",
