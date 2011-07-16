@@ -33,7 +33,7 @@ code2LazyLoadDB <-
         ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
         makeLazyLoadDB(ns, dbbase, compress = compress)
     }
-    else 
+    else
         stop("all packages should have a NAMESPACE")
 }
 
@@ -268,10 +268,8 @@ makeLazyLoading <-
 
     if (package == "base")
         stop("this cannot be used for package 'base'")
-    else if (packageHasNamespace(package, dirname(pkgpath)))
-        loaderFile <- file.path(R.home("share"), "R", "nspackloader.R")
-    else
-        loaderFile <- file.path(R.home("share"), "R", "packloader.R")
+
+    loaderFile <- file.path(R.home("share"), "R", "nspackloader.R")
     codeFile <- file.path(pkgpath, "R", barepackage)
 
     if (!file.exists(codeFile)) {

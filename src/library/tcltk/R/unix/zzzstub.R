@@ -14,5 +14,5 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.First.lib <- function(lib, pkg)
+.onLoad <- function(libname, pkgname)
     stop("Tcl/Tk support is not available on this system", domain = "R-tcltk")

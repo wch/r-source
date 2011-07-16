@@ -710,13 +710,11 @@ escapes should not be used unless the package depends on @code{R (>=
 usable in some locales and may display incorrectly in others.
 
 
-@findex .First.lib
-@findex .Last.lib
 @findex library.dynam
 Various @R{} functions in a package can be used to initialize and
-clean up.  @xref{Load hooks}.@footnote{Up to R
+clean up.  @xref{Load hooks}.@footnote{Up to @R{}
 version 2.14.0, the @code{.First.lib} and @code{.Last.lib} functions
-handled these tasks in packages without namespaces.  (In current R
+handled these tasks in packages without namespaces.  (In current @R{}
 versions, @emph{all} packages have namespaces.)  To help with
 conversion of old packages, here is how they were handled: It was
 conventional to define these functions in a file called @file{zzz.R}.

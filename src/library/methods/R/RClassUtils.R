@@ -1610,7 +1610,7 @@ newClassRepresentation <- function(...) {
     value
 }
 
-## the real version of newClassRepresentation, assigned in .First.lib
+## the real version of newClassRepresentation, assigned in ..First.lib
 .newClassRepresentation <- function(...)
     new("classRepresentation", ...)
 

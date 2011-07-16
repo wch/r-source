@@ -56,6 +56,7 @@
 \alias{.ImportFrom}
 \alias{.Export}
 \alias{.S3method}
+\alias{.First.lib}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -145,6 +146,9 @@ manglePackageName(pkgName, pkgVersion)
 .Export(...)
 .S3method(generic, class, method)
 % </Removed 2.13.0>
+% Removed in 2.14.0
+.First.lib(lib, pkg)
+% </Removed 2.14.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -241,6 +245,9 @@ manglePackageName(pkgName, pkgVersion)
   \code{.Import}, \code{.ImportFrom}, \code{.Export} and
   \code{.S3method} were part of an experimental alternative way to
   specify namespaces.
+
+  \code{.First.lib} was the load/attach hook for packages without
+  namespaces: use \code{\link{.onLoad}} or \code{\link{.onAttach}} instead.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}

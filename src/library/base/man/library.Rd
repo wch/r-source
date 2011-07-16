@@ -7,7 +7,6 @@
 \title{Loading and Listing of Packages}
 \alias{library}
 \alias{require}
-\alias{.First.lib}
 
 \alias{.noGenerics}
 \alias{print.libraryIQR}
@@ -33,9 +32,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
     whether \code{character.only} is \code{FALSE} (default) or
     \code{TRUE}).}
   \item{pos}{the position on the search list at which to attach the
-    loaded package.  Note that \code{.First.lib} may attach other
-    packages, and \code{pos} is computed \emph{after} \code{.First.lib}
-    has been run.  Can also be the name of a position on the current
+    loaded package.  Can also be the name of a position on the current
     search list as given by \code{\link{search}()}.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
@@ -202,11 +199,6 @@ detach(pos = match(paste("package", pkg, sep=":"), search()))
 
 require(nonexistent)        # FALSE
 \dontrun{
-## Suppose a package needs to call a DLL named 'fooEXT',
-## where 'EXT' is the system-specific extension.  Then you should use
-.First.lib <- function(lib, pkg)
-  library.dynam("foo", pkg, lib)
-
 ## if you want to mask as little as possible, use
 library(mypkg, pos = "package:base")
 }}

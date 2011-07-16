@@ -2493,8 +2493,8 @@ passes control to @code{loadNamespace}.  Then @code{library} or
 is not found and otherwise sources the code (using @code{sys.source})
 into the package's environment, then lazy-loads a database
 @file{R/sysdata} if present.  So how @R{} code gets loaded depends on
-the contents of  @file{R/@var{pkgname}}: standard templates to load
-lazy-load databases are provided in @file{share/R/[ns]packloader.R}.
+the contents of  @file{R/@var{pkgname}}: a standard template to load
+lazy-load databases are provided in @file{share/R/nspackloader.R}.
 
 How (and if) compiled code is loaded is down to the package's startup
 code such as @code{.First.lib} or @code{.onLoad}, although a
