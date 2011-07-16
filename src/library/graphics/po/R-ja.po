@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2011-03-25 11:51+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -135,6 +135,9 @@ msgstr " 行が欠けています "
 #, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr " 'expr' は 'x' を含む関数、呼び出しまたは表現式でなければなりません "
+
+msgid "'add' will be ignored as there is no existing plot"
+msgstr ""
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr " log=\"x\" ならば 'from' と 'to' は正値でなければなりません "

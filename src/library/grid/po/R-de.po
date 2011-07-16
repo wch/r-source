@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-03-25 10:14\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2011-03-23 15:47+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -508,7 +508,8 @@ msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
 
-msgid "shutting down all devices when unloading 'grid' name space"
+#, fuzzy
+msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "schließe alle Geräte, wenn der 'grid' Namensraum entfernt wird "
 
 #~ msgid "at least one of 'width' and 'height' must be specified"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -494,6 +494,9 @@ msgstr " 現在の作業ディレクトリを確認することができませ�
 msgid "no inputs"
 msgstr " 入力がありません "
 
+msgid "DVI output from Rd2dvi is depreccated"
+msgstr ""
+
 msgid "Error in running tools::texi2dvi"
 msgstr " tools::texi2dvi を実行中にエラーがありました "
 
@@ -739,6 +742,14 @@ msgstr " にインストールしています "
 msgid "generating debug symbols (dSYM)"
 msgstr " デバッグシンボル (dSYM) を生成中 "
 
+#, fuzzy
+msgid ""
+"installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
+"Extensions' manual'"
+msgstr ""
+" マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
+"ファイルにある情報を参照してください． "
+
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
@@ -754,6 +765,9 @@ msgstr " ソースファイルが見つかりません "
 
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
+
+msgid "only LazyLoad = TRUE is supported"
+msgstr ""
 
 msgid "--merge-multiarch is Windows-only"
 msgstr " --merge-multiarch は Windows 専用です "
@@ -805,8 +819,12 @@ msgstr " level-2 HTML リンクを検索... "
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
 
-msgid "name space must not be loaded."
+#, fuzzy
+msgid "namespace must not be loaded."
 msgstr " 名前空間はロードされてはいけません。 "
+
+msgid "all packages should have a NAMESPACE"
+msgstr ""
 
 msgid "package seems to be using lazy loading for data already"
 msgstr ""

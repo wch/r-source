@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1754,6 +1754,15 @@ msgstr ""
 #, fuzzy
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
 
 #, fuzzy
 msgid "Not a reference class:"

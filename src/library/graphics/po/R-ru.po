@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2011-03-30 02:32+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -145,6 +145,9 @@ msgstr "Пропущенные строки"
 #, fuzzy
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr "'expr' должен быть функцией, вызовом или выражением содержащим 'x'"
+
+msgid "'add' will be ignored as there is no existing plot"
+msgstr ""
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' и 'to' должны быть > 0 и log=\"x\""

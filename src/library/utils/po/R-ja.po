@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -70,6 +70,9 @@ msgstr ""
 " %s "
 
 msgid "Warning: unknown option"
+msgstr ""
+
+msgid "Created PDF document"
 msgstr ""
 
 #, fuzzy
@@ -384,6 +387,10 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr " 'topic'は名前、長さ１の文字列、または予約語でなければなりません "
 
 #, fuzzy
+msgid "Postscript offline help is deprecated"
+msgstr " 引数 'help.db' は廃止されました  "
+
+#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
 " 指定されたパッケージやライブラリ中には '%s' に対するドキュメントはありませ"
@@ -437,6 +444,21 @@ msgid ""
 msgstr ""
 " パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないためヘルプ"
 "ファイルにアクセスできません "
+
+#, fuzzy
+msgid "running %s failed"
+msgstr " '%s'の実行に失敗しました "
+
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
+msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr " '%s'の作成に失敗しました "
+
+msgid "Saving help page to"
+msgstr " ヘルプページを保存中: "
 
 #, fuzzy
 msgid "argument %s must be a single character string"
@@ -1160,21 +1182,6 @@ msgstr " ダウンロードの方法が見付かりません "
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
-
-#, fuzzy
-msgid "running %s failed"
-msgstr " '%s'の実行に失敗しました "
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
-
-#, fuzzy
-msgid "creation of %s failed"
-msgstr " '%s'の作成に失敗しました "
-
-msgid "Saving help page to"
-msgstr " ヘルプページを保存中: "
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr " 'tar' がゼロでない終了コード %d を返しました "

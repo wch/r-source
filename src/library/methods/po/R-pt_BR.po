@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1602,6 +1602,14 @@ msgstr ""
 #, fuzzy
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr "'%s' não é uma das funções básicas"
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+"argumento \"f\" deve ser uma função genérica ou um único caractere, mas foi "
+"obtido um objeto de classe  \"%s\""
 
 msgid "Not a reference class:"
 msgstr ""

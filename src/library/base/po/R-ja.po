@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2011-03-28 11:02+0900 \n"
 "Last-Translator: funao nobuo <n-funao@mail.goo.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -132,7 +132,8 @@ msgstr ""
 " call: %s \n"
 " error: %s "
 
-msgid "name space cannot be unloaded:"
+#, fuzzy
+msgid "namespace cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません "
 
 msgid "converted to character string"
@@ -693,6 +694,14 @@ msgstr " 'package' は長さ 1 でなければなりません "
 msgid "no file found"
 msgstr " ファイルが見つかりません "
 
+#, fuzzy
+msgid "invalid 'path' argument"
+msgstr " 無効な 'name' 引数です "
+
+#, fuzzy
+msgid "invalid 'time' argument"
+msgstr " 無効な 'name' 引数です "
+
 msgid "'vec' contains NAs"
 msgstr " 'vec' は NA 値を含んでいます "
 
@@ -850,16 +859,8 @@ msgid "package/namespace load failed for %s"
 msgstr " '%s' に対するパッケージもしくは名前空間のロードが失敗しました "
 
 #, fuzzy
-msgid "unable to load R code in package %s"
-msgstr " パッケージ '%s' 中の R コードをロードできません "
-
-#, fuzzy
-msgid "package %s contains no R code"
-msgstr " パッケージ '%s' は R コードを含んでいません "
-
-#, fuzzy
-msgid ".First.lib failed for %s"
-msgstr " .First.lib は '%s' に対して失敗しました "
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr " パッケージ '%s' は名前空間を持っていません "
 
 #, fuzzy
 msgid "package %s already present in search()"
@@ -1111,10 +1112,15 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 " '%s' は 'namespace:%s' からエクスポートされたオブジェクトではありません "
 
-msgid "package %s has no name space and is not on the search path"
+#, fuzzy
+msgid "package %s has no namespace and is not on the search path"
 msgstr " パッケージ '%s' は名前空間を持っていませんしサーチパス上にありません "
 
-msgid "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+
+#, fuzzy
+msgid "namespace is already attached"
 msgstr " 名前空間は既に付加されています "
 
 msgid "%s not found"
@@ -1143,8 +1149,12 @@ msgid "failed to assign NativeSymbolInfo for"
 msgstr " 以下に対する NativeSymbolInfo を代入できません "
 
 #, fuzzy
-msgid "package %s does not have a name space"
+msgid "package %s does not have a namespace"
 msgstr " パッケージ '%s' は名前空間を持っていません "
+
+#, fuzzy
+msgid "unable to load R code in package %s"
+msgstr " パッケージ '%s' 中の R コードをロードできません "
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1176,17 +1186,21 @@ msgstr ""
 msgid "not found"
 msgstr " 見つかりません "
 
-msgid "not loading a name space"
+#, fuzzy
+msgid "not loading a namespace"
 msgstr " 名前空間をロードしません "
 
-msgid "name space %s is imported by %s so cannot be unloaded"
+#, fuzzy
+msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr ""
 " 名前空間 %s は %s によってインポートされているのでアンロード出来ません "
 
-msgid "not a name space"
+#, fuzzy
+msgid "not a namespace"
 msgstr " 名前空間ではありません "
 
-msgid "operation not allowed on base name space"
+#, fuzzy
+msgid "operation not allowed on base namespace"
 msgstr " ベース名前空間では許可されない操作です "
 
 msgid "duplicate import names"
@@ -1195,7 +1209,8 @@ msgstr " 重複したインポート名です "
 msgid "replacing local value with import %s when loading %s"
 msgstr " ローカル変数をインポート %s で置き換えています（%sのロード中） "
 
-msgid "cannot import into a sealed name space"
+#, fuzzy
+msgid "cannot import into a sealed namespace"
 msgstr " 封印された名前空間にはインポートできません "
 
 msgid "replacing previous import %s when loading %s"
@@ -1214,7 +1229,8 @@ msgstr ""
 " 要求された 'methods' オブジェクトは環境もしくはパッケージ '%s'中に見付かりま"
 "せん： %s "
 
-msgid "cannot add to exports of a sealed name space"
+#, fuzzy
+msgid "cannot add to exports of a sealed namespace"
 msgstr " 封印された名前空間のエクスポートへ加えることができません "
 
 msgid "undefined exports:"
@@ -1667,9 +1683,6 @@ msgstr " 検索パスから抹消されています "
 msgid "cannot find name space environment"
 msgstr " 名前空間環境を見つけられません "
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr " パッケージ '%s' は関数でない '.First.lib' を持ちます "
-
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] " 逆構文解析オプション %s は認識できません "
@@ -1711,6 +1724,17 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid "package %s contains no R code"
+#~ msgstr " パッケージ '%s' は R コードを含んでいません "
+
+#, fuzzy
+#~ msgid ".First.lib failed for %s"
+#~ msgstr " .First.lib は '%s' に対して失敗しました "
+
+#~ msgid "package '%s' has a non-function '.First.lib'"
+#~ msgstr " パッケージ '%s' は関数でない '.First.lib' を持ちます "
 
 #~ msgid "no files to copy from"
 #~ msgstr " コピーすべきファイルがありません "

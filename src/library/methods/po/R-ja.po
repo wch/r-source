@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1735,6 +1735,14 @@ msgstr ""
 
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr " \"%s\" は定義されていますが，参照クラスではありません "
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+" クラス \"%s\" のオブジェクトを得ましたが、引数 'f' は総称的関数か単一の文字"
+"列でなければなりません; "
 
 msgid "Not a reference class:"
 msgstr " 参照クラスではありません： "

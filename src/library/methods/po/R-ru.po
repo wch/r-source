@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-30 02:24+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1723,6 +1723,14 @@ msgstr ""
 
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr "Класс \"%s\" не  определен как ссылочный класс"
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+"аргумент \"f\" должен быть общей функцией или одной текстовой строкой; "
+"получен объект класса \"%s\""
 
 msgid "Not a reference class:"
 msgstr "Не ссылочный класс:"

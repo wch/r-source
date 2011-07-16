@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -134,7 +134,8 @@ msgstr ""
 "  调用: %s\n"
 "  错误: %s"
 
-msgid "name space cannot be unloaded:"
+#, fuzzy
+msgid "namespace cannot be unloaded:"
 msgstr "无法载入名字空间："
 
 msgid "converted to character string"
@@ -682,6 +683,14 @@ msgstr "'package'的长度必需为一"
 msgid "no file found"
 msgstr "不存在"
 
+#, fuzzy
+msgid "invalid 'path' argument"
+msgstr "'name'参数不对"
+
+#, fuzzy
+msgid "invalid 'time' argument"
+msgstr "'name'参数不对"
+
 msgid "'vec' contains NAs"
 msgstr "'vec'内有NA值"
 
@@ -834,16 +843,8 @@ msgid "package/namespace load failed for %s"
 msgstr "'%s'程辑包/名字空间载入失败，"
 
 #, fuzzy
-msgid "unable to load R code in package %s"
-msgstr "程辑包'%s'里的R写碼载入失败"
-
-#, fuzzy
-msgid "package %s contains no R code"
-msgstr "程辑包'%s'里没有R写码"
-
-#, fuzzy
-msgid ".First.lib failed for %s"
-msgstr ".First.lib载入失败，原因为'%s'"
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr "程辑包'%s'没有名字空间"
 
 #, fuzzy
 msgid "package %s already present in search()"
@@ -1087,10 +1088,15 @@ msgstr "不能改变因子的存储状态"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
-msgid "package %s has no name space and is not on the search path"
+#, fuzzy
+msgid "package %s has no namespace and is not on the search path"
 msgstr "程辑包'%s'没有名字空间，也不存在搜索路径上"
 
-msgid "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+
+#, fuzzy
+msgid "namespace is already attached"
 msgstr "已经连接上名字空间了"
 
 msgid "%s not found"
@@ -1119,8 +1125,12 @@ msgid "failed to assign NativeSymbolInfo for"
 msgstr "不能分配NativeSymbolInfo给"
 
 #, fuzzy
-msgid "package %s does not have a name space"
+msgid "package %s does not have a namespace"
 msgstr "程辑包'%s'没有名字空间"
+
+#, fuzzy
+msgid "unable to load R code in package %s"
+msgstr "程辑包'%s'里的R写碼载入失败"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1146,16 +1156,20 @@ msgstr "在%s程辑包中%s方法指定被用于出口，但它的定义并不�
 msgid "not found"
 msgstr "不存在"
 
-msgid "not loading a name space"
+#, fuzzy
+msgid "not loading a namespace"
 msgstr "不载入名字空间"
 
-msgid "name space %s is imported by %s so cannot be unloaded"
+#, fuzzy
+msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr "名字空间%s是由%s引进的，因此无法将之卸下"
 
-msgid "not a name space"
+#, fuzzy
+msgid "not a namespace"
 msgstr "不是名字空间"
 
-msgid "operation not allowed on base name space"
+#, fuzzy
+msgid "operation not allowed on base namespace"
 msgstr "命令不能在基本名字空间上使用"
 
 msgid "duplicate import names"
@@ -1164,7 +1178,8 @@ msgstr "重复进口名字"
 msgid "replacing local value with import %s when loading %s"
 msgstr "在输入%2$s时局部值将被引进值%1$s代替"
 
-msgid "cannot import into a sealed name space"
+#, fuzzy
+msgid "cannot import into a sealed namespace"
 msgstr "不能进口到已经封闭了的名字空间"
 
 msgid "replacing previous import %s when loading %s"
@@ -1179,7 +1194,8 @@ msgstr "%s函数有可进口的方法，但找不到它的同属方法"
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "环境/程辑包%s里找不到所要求的方法：%s"
 
-msgid "cannot add to exports of a sealed name space"
+#, fuzzy
+msgid "cannot add to exports of a sealed namespace"
 msgstr "不能在封闭名字空间里的出口加入"
 
 msgid "undefined exports:"
@@ -1623,9 +1639,6 @@ msgstr "在搜索路径上被删除"
 msgid "cannot find name space environment"
 msgstr "找不到名字空间环境"
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "程辑包'%s'有一个非函数的'.First.lib'"
-
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] "没有%s反向分析这个选项"
@@ -1665,6 +1678,17 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "package %s contains no R code"
+#~ msgstr "程辑包'%s'里没有R写码"
+
+#, fuzzy
+#~ msgid ".First.lib failed for %s"
+#~ msgstr ".First.lib载入失败，原因为'%s'"
+
+#~ msgid "package '%s' has a non-function '.First.lib'"
+#~ msgstr "程辑包'%s'有一个非函数的'.First.lib'"
 
 #~ msgid "no files to copy from"
 #~ msgstr "拷贝时没有可以读的文件"

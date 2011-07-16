@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1504,6 +1504,14 @@ msgstr ""
 #, fuzzy
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr "\"%s\"不是引用类别"
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+"参数\"f\"要么是泛型函数要么是单一字符串；现在得到的却是类别为\"%s\"的目标对象"
+"对象"
 
 msgid "Not a reference class:"
 msgstr "非引用类别"

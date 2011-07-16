@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -136,7 +136,8 @@ msgstr ""
 "  Aufruf: %s\n"
 "  Fehler: %s"
 
-msgid "name space cannot be unloaded:"
+#, fuzzy
+msgid "namespace cannot be unloaded:"
 msgstr "Namensraum kann nicht entladen werden:"
 
 msgid "converted to character string"
@@ -695,6 +696,14 @@ msgstr "'package' muss Länge 1 haben"
 msgid "no file found"
 msgstr "keine Datei gefunden"
 
+#, fuzzy
+msgid "invalid 'path' argument"
+msgstr "ungültiges 'name'Argument"
+
+#, fuzzy
+msgid "invalid 'time' argument"
+msgstr "ungültiges 'name'Argument"
+
 msgid "'vec' contains NAs"
 msgstr "'vec' enthält NAs"
 
@@ -852,16 +861,8 @@ msgid "package/namespace load failed for %s"
 msgstr "Laden von Paket/Namensraum für '%s' fehlgeschlagen"
 
 #, fuzzy
-msgid "unable to load R code in package %s"
-msgstr "kann R Kode in Paket '%s' nicht laden"
-
-#, fuzzy
-msgid "package %s contains no R code"
-msgstr "Paket '%s' enthält keinen R Kode"
-
-#, fuzzy
-msgid ".First.lib failed for %s"
-msgstr ".First.lib fehlgeschlagen für '%s'"
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr "Paket '%s' hat keinen Namensraum"
 
 #, fuzzy
 msgid "package %s already present in search()"
@@ -1113,10 +1114,15 @@ msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
 
-msgid "package %s has no name space and is not on the search path"
+#, fuzzy
+msgid "package %s has no namespace and is not on the search path"
 msgstr "Paket '%s' hat keinen Namensraum und ist nicht im Suchpfad"
 
-msgid "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+
+#, fuzzy
+msgid "namespace is already attached"
 msgstr "Namensraum ist bereits angehängt"
 
 msgid "%s not found"
@@ -1145,8 +1151,12 @@ msgid "failed to assign NativeSymbolInfo for"
 msgstr "Zuweisung von nativeSymbolInfo gescheitert für"
 
 #, fuzzy
-msgid "package %s does not have a name space"
+msgid "package %s does not have a namespace"
 msgstr "Paket '%s' hat keinen Namensraum"
+
+#, fuzzy
+msgid "unable to load R code in package %s"
+msgstr "kann R Kode in Paket '%s' nicht laden"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1177,17 +1187,21 @@ msgstr ""
 msgid "not found"
 msgstr "nicht gefunden"
 
-msgid "not loading a name space"
+#, fuzzy
+msgid "not loading a namespace"
 msgstr "lade keinen Namensraum"
 
-msgid "name space %s is imported by %s so cannot be unloaded"
+#, fuzzy
+msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr ""
 "Namensraum %s ist importiert von %s und kann deshalb nicht entladen werden"
 
-msgid "not a name space"
+#, fuzzy
+msgid "not a namespace"
 msgstr "kein Namensraum"
 
-msgid "operation not allowed on base name space"
+#, fuzzy
+msgid "operation not allowed on base namespace"
 msgstr "Operation im Basisnamensraum nicht erlaubt"
 
 msgid "duplicate import names"
@@ -1196,7 +1210,8 @@ msgstr "doppelte Importnamen"
 msgid "replacing local value with import %s when loading %s"
 msgstr "lokaler Wert durch import %s ersetzt, während %s geladen wurde"
 
-msgid "cannot import into a sealed name space"
+#, fuzzy
+msgid "cannot import into a sealed namespace"
 msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
 msgid "replacing previous import %s when loading %s"
@@ -1213,7 +1228,8 @@ msgstr ""
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "verlangte Methoden nicht gefunden in Umgebung/Paket %s: %s"
 
-msgid "cannot add to exports of a sealed name space"
+#, fuzzy
+msgid "cannot add to exports of a sealed namespace"
 msgstr "kann keine Exporte von versiegeltem Namensraum hinzufügen"
 
 msgid "undefined exports:"
@@ -1659,9 +1675,6 @@ msgstr "sind aus dem  Suchpfad entfernt worden"
 msgid "cannot find name space environment"
 msgstr "kann keine Namensraum-Umgebung finden"
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "Paket '%s' enthält eine nicht-Funktion '.First.lib'"
-
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] "Deparseoption %s nicht erkannt"
@@ -1711,6 +1724,17 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#, fuzzy
+#~ msgid "package %s contains no R code"
+#~ msgstr "Paket '%s' enthält keinen R Kode"
+
+#, fuzzy
+#~ msgid ".First.lib failed for %s"
+#~ msgstr ".First.lib fehlgeschlagen für '%s'"
+
+#~ msgid "package '%s' has a non-function '.First.lib'"
+#~ msgstr "Paket '%s' enthält eine nicht-Funktion '.First.lib'"
 
 #~ msgid "no files to copy from"
 #~ msgstr "keine Dateien, um daraus zu kopieren"

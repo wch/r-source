@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -72,6 +72,9 @@ msgstr ""
 "%s里有空白的选项"
 
 msgid "Warning: unknown option"
+msgstr ""
+
+msgid "Created PDF document"
 msgstr ""
 
 #, fuzzy
@@ -376,6 +379,10 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 
 #, fuzzy
+msgid "Postscript offline help is deprecated"
+msgstr "参数'help.db'已经不再用了"
+
+#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
 
@@ -424,6 +431,21 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
 msgstr "有%s这样一个程序包但没有在R >= 2.10.0下安装，因此不能用它的帮助文件"
+
+#, fuzzy
+msgid "running %s failed"
+msgstr "执行'%s'失败"
+
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
+msgstr "'%s'没有产生文件：是不是还要送到打印机？"
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr "制造'%s'时出了问题"
+
+msgid "Saving help page to"
+msgstr "保存帮助页到"
 
 #, fuzzy
 msgid "argument %s must be a single character string"
@@ -1116,21 +1138,6 @@ msgstr "没有下载方法"
 
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
-
-#, fuzzy
-msgid "running %s failed"
-msgstr "执行'%s'失败"
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr "'%s'没有产生文件：是不是还要送到打印机？"
-
-#, fuzzy
-msgid "creation of %s failed"
-msgstr "制造'%s'时出了问题"
-
-msgid "Saving help page to"
-msgstr "保存帮助页到"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"

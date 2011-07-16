@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1098,6 +1098,9 @@ msgid "Argument fields must be a list of the field classes or definitions, or el
 msgstr ""
 
 msgid "Class \"%s\" is defined but is not a reference class"
+msgstr ""
+
+msgid "Class must be a reference class representation or a character string; got an object of class \"%s\""
 msgstr ""
 
 msgid "Not a reference class:"

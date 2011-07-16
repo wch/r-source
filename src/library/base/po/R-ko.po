@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -134,7 +134,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "name space cannot be unloaded:"
+msgid "namespace cannot be unloaded:"
 msgstr "name space '%s'가 적재 되었습니다"
 
 #, fuzzy
@@ -708,6 +708,14 @@ msgstr "'package'는 길이 1이 나오지 않으면 되지 않습니다"
 msgid "no file found"
 msgstr "검색되지 않습니다"
 
+#, fuzzy
+msgid "invalid 'path' argument"
+msgstr "무효인 'category' 인수입니다"
+
+#, fuzzy
+msgid "invalid 'time' argument"
+msgstr "무효인 'category' 인수입니다"
+
 msgid "'vec' contains NAs"
 msgstr "'vec'는 NA값을 포함하고 있습니다"
 
@@ -867,16 +875,8 @@ msgid "package/namespace load failed for %s"
 msgstr "'%s'에 대한 패키지 또는 이름 공간의 적재가 실패했습니다"
 
 #, fuzzy
-msgid "unable to load R code in package %s"
-msgstr "패키지 '%s'에서의 R 코드를 적재할수가 없습니다"
-
-#, fuzzy
-msgid "package %s contains no R code"
-msgstr "패키지 '%s'는 R코드를 포함하고 있지 않습니다"
-
-#, fuzzy
-msgid ".First.lib failed for %s"
-msgstr "First.lib는 '%s'에 대해서 실패했습니다"
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
 #, fuzzy
 msgid "package %s already present in search()"
@@ -1132,10 +1132,14 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
 
 #, fuzzy
-msgid "package %s has no name space and is not on the search path"
+msgid "package %s has no namespace and is not on the search path"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
-msgid "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+
+#, fuzzy
+msgid "namespace is already attached"
 msgstr "name space는 이미 부가되어 있습니다"
 
 msgid "%s not found"
@@ -1165,8 +1169,12 @@ msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
 
 #, fuzzy
-msgid "package %s does not have a name space"
+msgid "package %s does not have a namespace"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "unable to load R code in package %s"
+msgstr "패키지 '%s'에서의 R 코드를 적재할수가 없습니다"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1196,17 +1204,20 @@ msgstr ""
 msgid "not found"
 msgstr "검색되지 않습니다"
 
-msgid "not loading a name space"
+#, fuzzy
+msgid "not loading a namespace"
 msgstr "이름 공간을 적재하지 않습니다"
 
 #, fuzzy
-msgid "name space %s is imported by %s so cannot be unloaded"
+msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr "name space '%s'가 적재 되었습니다"
 
-msgid "not a name space"
+#, fuzzy
+msgid "not a namespace"
 msgstr "이름 공간이 아닙니다"
 
-msgid "operation not allowed on base name space"
+#, fuzzy
+msgid "operation not allowed on base namespace"
 msgstr "base 이름 공간에서 허용되지 않는 operation입니다"
 
 msgid "duplicate import names"
@@ -1215,7 +1226,8 @@ msgstr "중복한 import명입니다"
 msgid "replacing local value with import %s when loading %s"
 msgstr ""
 
-msgid "cannot import into a sealed name space"
+#, fuzzy
+msgid "cannot import into a sealed namespace"
 msgstr "밀폐된 name 공간에는 import할수가 없지 않습니다"
 
 msgid "replacing previous import %s when loading %s"
@@ -1231,7 +1243,8 @@ msgstr ""
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "요구된 'methods' 오브젝트는 환경/패키지 '%s'에 검색되지 않습니다 :%s"
 
-msgid "cannot add to exports of a sealed name space"
+#, fuzzy
+msgid "cannot add to exports of a sealed namespace"
 msgstr "밀폐된 이름 공간의 export에 추가할수가 없습니다"
 
 #, fuzzy
@@ -1702,10 +1715,6 @@ msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 
 msgid "cannot find name space environment"
 msgstr "이름 공간이 아닙니다"
 
-#, fuzzy
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "패케지'%s'는 '%s'에 병합되었습니다"
-
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] ""
@@ -1766,6 +1775,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "package %s contains no R code"
+#~ msgstr "패키지 '%s'는 R코드를 포함하고 있지 않습니다"
+
+#, fuzzy
+#~ msgid ".First.lib failed for %s"
+#~ msgstr "First.lib는 '%s'에 대해서 실패했습니다"
+
+#, fuzzy
+#~ msgid "package '%s' has a non-function '.First.lib'"
+#~ msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 
 #~ msgid "no files to copy from"
 #~ msgstr "복사한부터 파일이 없습니다"

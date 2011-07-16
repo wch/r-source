@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
-"PO-Revision-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
+"PO-Revision-Date: 2011-07-16 22:48\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -86,6 +86,9 @@ msgstr ""
 
 msgid "Warning: unknown option"
 msgstr "Warning: unknown option"
+
+msgid "Created PDF document"
+msgstr "Created PDF document"
 
 msgid "path to %s contains spaces,"
 msgstr "path to %s contains spaces,"
@@ -377,6 +380,9 @@ msgstr "‘form’ must be a two-sided formula with one term on each side"
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "‘topic’ should be a name, length-one character vector or reserved word"
 
+msgid "Postscript offline help is deprecated"
+msgstr "Postscript offline help is deprecated"
+
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "No documentation for %s in specified packages and libraries:"
 
@@ -423,6 +429,18 @@ msgid ""
 msgstr ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
+
+msgid "running %s failed"
+msgstr "running %s failed"
+
+msgid "%s produced no output file: sent to printer?"
+msgstr "%s produced no output file: sent to printer?"
+
+msgid "creation of %s failed"
+msgstr "creation of %s failed"
+
+msgid "Saving help page to"
+msgstr "Saving help page to"
 
 msgid "argument %s must be a single character string"
 msgstr "argument %s must be a single character string"
@@ -1096,18 +1114,6 @@ msgstr "no download method found"
 
 msgid "download had nonzero exit status"
 msgstr "download had nonzero exit status"
-
-msgid "running %s failed"
-msgstr "running %s failed"
-
-msgid "%s produced no output file: sent to printer?"
-msgstr "%s produced no output file: sent to printer?"
-
-msgid "creation of %s failed"
-msgstr "creation of %s failed"
-
-msgid "Saving help page to"
-msgstr "Saving help page to"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "‘tar’ returned non-zero exit code %d"

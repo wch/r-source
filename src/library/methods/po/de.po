@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2011-07-16 22:46+0100\n"
 "PO-Revision-Date: 2011-03-23 15:51+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -81,7 +81,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "keine direkte oder vererbte Methode für Funktion '%s' für diesen Aufruf"
 
-#: methods_list_dispatch.c:508 methods_list_dispatch.c:996
+#: methods_list_dispatch.c:508 methods_list_dispatch.c:1006
 msgid "invalid object (non-function) used as method"
 msgstr "unzulässiges Objekt (keine Funktion) als Methode benutzt"
 
@@ -140,7 +140,7 @@ msgstr ""
 "für den Dispatch muss eine R Umgebung sein; bekam Objekt der Klasse \"%s\""
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
-#: methods_list_dispatch.c:953
+#: methods_list_dispatch.c:963
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -204,17 +204,17 @@ msgstr ""
 "'%s' muss eine einzelne Zeichenkette sein (bekam ein Objekt der Klasse \"%s"
 "\")"
 
-#: methods_list_dispatch.c:834
+#: methods_list_dispatch.c:844
 msgid "Class should be either a character-string name or a class definition"
 msgstr ""
 "Class sollte entweder ein Zeichenkettenname oder eine Klassendefinition sein"
 
-#: methods_list_dispatch.c:913
+#: methods_list_dispatch.c:923
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr "Bekam keine Generische für die Primitive \"%s\""
 
-#: methods_list_dispatch.c:919
+#: methods_list_dispatch.c:929
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -223,7 +223,7 @@ msgstr ""
 "Erwartete eine generische Funktion oder eine Primitive für den Dispatch, "
 "bekam Objekt der Klasse \"%s\""
 
-#: methods_list_dispatch.c:931
+#: methods_list_dispatch.c:941
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

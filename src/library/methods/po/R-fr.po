@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-27 22:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1830,6 +1830,14 @@ msgstr ""
 
 msgid "Class \"%s\" is defined but is not a reference class"
 msgstr "La classe \"%s\" est définie mais n'est pas une classe de référence"
+
+#, fuzzy
+msgid ""
+"Class must be a reference class representation or a character string; got an "
+"object of class \"%s\""
+msgstr ""
+"l'argument \"f\" doit être une fonction générique ou une chaîne de "
+"caractères ; un objet de classe \"%s\" est obtenu"
 
 msgid "Not a reference class:"
 msgstr "Ceci n'est pas une référence de classe :"

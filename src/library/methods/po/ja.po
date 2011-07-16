@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-03-29 21:50+0100\n"
+"POT-Creation-Date: 2011-07-16 22:46+0100\n"
 "PO-Revision-Date: 2011-03-25 14:54+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr " この呼び出しでは '%s' に対する直接的または継承メソッドはありません  "
 
-#: methods_list_dispatch.c:508 methods_list_dispatch.c:996
+#: methods_list_dispatch.c:508 methods_list_dispatch.c:1006
 msgid "invalid object (non-function) used as method"
 msgstr " 不正なオブジェクト(非関数)がメソッドとして使われました "
 
@@ -136,7 +136,7 @@ msgstr ""
 "境でなければなりません； クラス \"%s\" のオブジェクトでした  "
 
 #: methods_list_dispatch.c:598 methods_list_dispatch.c:610
-#: methods_list_dispatch.c:953
+#: methods_list_dispatch.c:963
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -196,16 +196,16 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 " '%s' は単一の文字列でなければなりません(クラス \"%s\" のオブジェクトでした) "
 
-#: methods_list_dispatch.c:834
+#: methods_list_dispatch.c:844
 msgid "Class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 
-#: methods_list_dispatch.c:913
+#: methods_list_dispatch.c:923
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr " プリミティブな \"%s\" に対する総称(generic)を得るのに失敗しました "
 
-#: methods_list_dispatch.c:919
+#: methods_list_dispatch.c:929
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -214,7 +214,7 @@ msgstr ""
 " メソッド割り当てに対する総称的もしくはプリミティブな関数を期待しましたが、得"
 "られたのはクラス \"%s\" のオブジェクトでした "
 
-#: methods_list_dispatch.c:931
+#: methods_list_dispatch.c:941
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

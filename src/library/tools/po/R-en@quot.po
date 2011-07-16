@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
-"PO-Revision-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
+"PO-Revision-Date: 2011-07-16 22:47\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -489,6 +489,9 @@ msgstr "current working directory cannot be ascertained"
 msgid "no inputs"
 msgstr "no inputs"
 
+msgid "DVI output from Rd2dvi is depreccated"
+msgstr "DVI output from Rd2dvi is depreccated"
+
 msgid "Error in running tools::texi2dvi"
 msgstr "Error in running tools::texi2dvi"
 
@@ -730,6 +733,13 @@ msgid "generating debug symbols (dSYM)"
 msgstr "generating debug symbols (dSYM)"
 
 msgid ""
+"installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
+"Extensions' manual'"
+msgstr ""
+"installing a top-level ‘COPYING’ file is deprecated -- see the ‘Writing R "
+"Extensions’ manual'"
+
+msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
 msgstr ""
@@ -744,6 +754,9 @@ msgstr "no source files found"
 
 msgid "empty 'data' directory"
 msgstr "empty ‘data’ directory"
+
+msgid "only LazyLoad = TRUE is supported"
+msgstr "only LazyLoad = TRUE is supported"
 
 msgid "--merge-multiarch is Windows-only"
 msgstr "--merge-multiarch is Windows-only"
@@ -794,8 +807,11 @@ msgstr "finding level-2 HTML links ..."
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
 
-msgid "name space must not be loaded."
-msgstr "name space must not be loaded."
+msgid "namespace must not be loaded."
+msgstr "namespace must not be loaded."
+
+msgid "all packages should have a NAMESPACE"
+msgstr "all packages should have a NAMESPACE"
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "package seems to be using lazy loading for data already"

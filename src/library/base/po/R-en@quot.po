@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
-"PO-Revision-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
+"PO-Revision-Date: 2011-07-16 22:46\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -151,8 +151,8 @@ msgstr ""
 "  call: %s\n"
 "  error: %s"
 
-msgid "name space cannot be unloaded:"
-msgstr "name space cannot be unloaded:"
+msgid "namespace cannot be unloaded:"
+msgstr "namespace cannot be unloaded:"
 
 msgid "converted to character string"
 msgstr "converted to character string"
@@ -699,6 +699,12 @@ msgstr "‘package’ must be of length 1"
 msgid "no file found"
 msgstr "no file found"
 
+msgid "invalid 'path' argument"
+msgstr "invalid ‘path’ argument"
+
+msgid "invalid 'time' argument"
+msgstr "invalid ‘time’ argument"
+
 msgid "'vec' contains NAs"
 msgstr "‘vec’ contains NAs"
 
@@ -834,14 +840,8 @@ msgstr "%s not found on search path, using pos = 2"
 msgid "package/namespace load failed for %s"
 msgstr "package/namespace load failed for %s"
 
-msgid "unable to load R code in package %s"
-msgstr "unable to load R code in package %s"
-
-msgid "package %s contains no R code"
-msgstr "package %s contains no R code"
-
-msgid ".First.lib failed for %s"
-msgstr ".First.lib failed for %s"
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr "package %s does not have a NAMESPACE and should be re-installed"
 
 msgid "package %s already present in search()"
 msgstr "package %s already present in search()"
@@ -1070,11 +1070,15 @@ msgstr "invalid to change the storage mode of a factor"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
 
-msgid "package %s has no name space and is not on the search path"
-msgstr "package %s has no name space and is not on the search path"
+msgid "package %s has no namespace and is not on the search path"
+msgstr "package %s has no namespace and is not on the search path"
 
-msgid "name space is already attached"
-msgstr "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+"running .First.lib() for package %s as .onLoad/.onAssign were not found"
+
+msgid "namespace is already attached"
+msgstr "namespace is already attached"
 
 msgid "%s not found"
 msgstr "%s not found"
@@ -1100,8 +1104,11 @@ msgstr "namespace"
 msgid "failed to assign NativeSymbolInfo for"
 msgstr "failed to assign NativeSymbolInfo for"
 
-msgid "package %s does not have a name space"
-msgstr "package %s does not have a name space"
+msgid "package %s does not have a namespace"
+msgstr "package %s does not have a namespace"
+
+msgid "unable to load R code in package %s"
+msgstr "unable to load R code in package %s"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1128,17 +1135,17 @@ msgstr "in package %s methods %s were specified for export but not defined"
 msgid "not found"
 msgstr "not found"
 
-msgid "not loading a name space"
-msgstr "not loading a name space"
+msgid "not loading a namespace"
+msgstr "not loading a namespace"
 
-msgid "name space %s is imported by %s so cannot be unloaded"
-msgstr "name space %s is imported by %s so cannot be unloaded"
+msgid "namespace %s is imported by %s so cannot be unloaded"
+msgstr "namespace %s is imported by %s so cannot be unloaded"
 
-msgid "not a name space"
-msgstr "not a name space"
+msgid "not a namespace"
+msgstr "not a namespace"
 
-msgid "operation not allowed on base name space"
-msgstr "operation not allowed on base name space"
+msgid "operation not allowed on base namespace"
+msgstr "operation not allowed on base namespace"
 
 msgid "duplicate import names"
 msgstr "duplicate import names"
@@ -1146,8 +1153,8 @@ msgstr "duplicate import names"
 msgid "replacing local value with import %s when loading %s"
 msgstr "replacing local value with import %s when loading %s"
 
-msgid "cannot import into a sealed name space"
-msgstr "cannot import into a sealed name space"
+msgid "cannot import into a sealed namespace"
+msgstr "cannot import into a sealed namespace"
 
 msgid "replacing previous import %s when loading %s"
 msgstr "replacing previous import %s when loading %s"
@@ -1161,8 +1168,8 @@ msgstr "found methods to import for function %s but not the generic itself"
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "requested methods not found in environment/package %s: %s"
 
-msgid "cannot add to exports of a sealed name space"
-msgstr "cannot add to exports of a sealed name space"
+msgid "cannot add to exports of a sealed namespace"
+msgstr "cannot add to exports of a sealed namespace"
 
 msgid "undefined exports:"
 msgstr "undefined exports:"
@@ -1604,9 +1611,6 @@ msgstr "have been removed from the search path"
 
 msgid "cannot find name space environment"
 msgstr "cannot find name space environment"
-
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr "package ‘%s’ has a non-function ‘.First.lib’"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"

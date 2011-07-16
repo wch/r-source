@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -80,6 +80,9 @@ msgstr ""
 "%s"
 
 msgid "Warning: unknown option"
+msgstr ""
+
+msgid "Created PDF document"
 msgstr ""
 
 #, fuzzy
@@ -388,6 +391,10 @@ msgstr ""
 "зарезервированным словом"
 
 #, fuzzy
+msgid "Postscript offline help is deprecated"
+msgstr "аргумент 'help.db' устарел"
+
+#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
 
@@ -439,6 +446,21 @@ msgid ""
 msgstr ""
 "пакет %s существует, но не установлен под R >= 2.10.0, поэтому помощь "
 "недоступна"
+
+#, fuzzy
+msgid "running %s failed"
+msgstr "запуск '%s' не удался"
+
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
+msgstr "'%s' не дал выходного файла: послать на принтер?"
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr "создание '%s' не удалось"
+
+msgid "Saving help page to"
+msgstr "Сохраняю страницу помощи в"
 
 #, fuzzy
 msgid "argument %s must be a single character string"
@@ -1143,21 +1165,6 @@ msgstr "не найдено метода скачивания"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
-
-#, fuzzy
-msgid "running %s failed"
-msgstr "запуск '%s' не удался"
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr "'%s' не дал выходного файла: послать на принтер?"
-
-#, fuzzy
-msgid "creation of %s failed"
-msgstr "создание '%s' не удалось"
-
-msgid "Saving help page to"
-msgstr "Сохраняю страницу помощи в"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' вернул ненулевой код выхода %d"

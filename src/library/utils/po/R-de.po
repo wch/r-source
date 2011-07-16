@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
 "PO-Revision-Date: 2011-03-24 11:19+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -74,6 +74,9 @@ msgstr ""
 "%s"
 
 msgid "Warning: unknown option"
+msgstr ""
+
+msgid "Created PDF document"
 msgstr ""
 
 #, fuzzy
@@ -385,6 +388,10 @@ msgstr ""
 "reserviertes Word sein"
 
 #, fuzzy
+msgid "Postscript offline help is deprecated"
+msgstr "Argument 'help.db' ist veraltet"
+
+#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr "Keine Dokumentation für '%s' in angegebenen Paketen und Bibliotheken:"
 
@@ -436,6 +443,21 @@ msgid ""
 msgstr ""
 "Paket %s exisitiert, wurde aber nicht unter R >= 2.10.0 installiert, weshalb "
 "die Hilfe nicht genutzt werden kann"
+
+#, fuzzy
+msgid "running %s failed"
+msgstr "Ausführen von '%s' fehlgeschlagen"
+
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
+msgstr "'%s' hat keine Datei erzeugt: an den Drucker geschickt?"
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr "Erzeugung von '%s' fehlgeschlagen"
+
+msgid "Saving help page to"
+msgstr "Sichere Hilfeseiten nach"
 
 #, fuzzy
 msgid "argument %s must be a single character string"
@@ -1138,21 +1160,6 @@ msgstr "keine Downloadmethode gefunden"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
-
-#, fuzzy
-msgid "running %s failed"
-msgstr "Ausführen von '%s' fehlgeschlagen"
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr "'%s' hat keine Datei erzeugt: an den Drucker geschickt?"
-
-#, fuzzy
-msgid "creation of %s failed"
-msgstr "Erzeugung von '%s' fehlgeschlagen"
-
-msgid "Saving help page to"
-msgstr "Sichere Hilfeseiten nach"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' hatte Exit-Status ungleich 0"

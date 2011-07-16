@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:46\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -143,7 +143,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "name space cannot be unloaded:"
+msgid "namespace cannot be unloaded:"
 msgstr "namespace '%s' caricato"
 
 #, fuzzy
@@ -725,6 +725,14 @@ msgstr "'package' deve avere lunghezza 1"
 msgid "no file found"
 msgstr "non trovato"
 
+#, fuzzy
+msgid "invalid 'path' argument"
+msgstr "argomento 'category' non valido"
+
+#, fuzzy
+msgid "invalid 'time' argument"
+msgstr "argomento 'category' non valido"
+
 msgid "'vec' contains NAs"
 msgstr "'vec' contiene NA"
 
@@ -877,16 +885,8 @@ msgid "package/namespace load failed for %s"
 msgstr "caricamento pacchetto/namespace fallito per '%s'"
 
 #, fuzzy
-msgid "unable to load R code in package %s"
-msgstr "impossibile caricare il codice R del pacchetto '%s'"
-
-#, fuzzy
-msgid "package %s contains no R code"
-msgstr "il pacchetto '%s' non contiene codice R"
-
-#, fuzzy
-msgid ".First.lib failed for %s"
-msgstr ".First.lib fallita per '%s'"
+msgid "package %s does not have a NAMESPACE and should be re-installed"
+msgstr "il pacchetto '%s' non ha un namespace"
 
 #, fuzzy
 msgid "package %s already present in search()"
@@ -1141,10 +1141,14 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
 
 #, fuzzy
-msgid "package %s has no name space and is not on the search path"
+msgid "package %s has no namespace and is not on the search path"
 msgstr "il pacchetto '%s' non ha un namespace"
 
-msgid "name space is already attached"
+msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgstr ""
+
+#, fuzzy
+msgid "namespace is already attached"
 msgstr "il namespace è già agganciato"
 
 msgid "%s not found"
@@ -1174,8 +1178,12 @@ msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
 
 #, fuzzy
-msgid "package %s does not have a name space"
+msgid "package %s does not have a namespace"
 msgstr "il pacchetto '%s' non ha un namespace"
+
+#, fuzzy
+msgid "unable to load R code in package %s"
+msgstr "impossibile caricare il codice R del pacchetto '%s'"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
@@ -1203,17 +1211,20 @@ msgstr "in '%s', metodi da esportare specificati, ma nessuno definito: %s"
 msgid "not found"
 msgstr "non trovato"
 
-msgid "not loading a name space"
+#, fuzzy
+msgid "not loading a namespace"
 msgstr "non sto caricando un namespace"
 
 #, fuzzy
-msgid "name space %s is imported by %s so cannot be unloaded"
+msgid "namespace %s is imported by %s so cannot be unloaded"
 msgstr "namespace '%s' caricato"
 
-msgid "not a name space"
+#, fuzzy
+msgid "not a namespace"
 msgstr "non è un namespace"
 
-msgid "operation not allowed on base name space"
+#, fuzzy
+msgid "operation not allowed on base namespace"
 msgstr "operazione non permessa sul namespace base"
 
 msgid "duplicate import names"
@@ -1222,7 +1233,8 @@ msgstr "nomi importati doppi"
 msgid "replacing local value with import %s when loading %s"
 msgstr ""
 
-msgid "cannot import into a sealed name space"
+#, fuzzy
+msgid "cannot import into a sealed namespace"
 msgstr "non posso importare in un namespace sigillato"
 
 msgid "replacing previous import %s when loading %s"
@@ -1239,7 +1251,8 @@ msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 "oggetti  'methods' richiesti non trovati nel environment/pacchetto '%s': %s"
 
-msgid "cannot add to exports of a sealed name space"
+#, fuzzy
+msgid "cannot add to exports of a sealed namespace"
 msgstr "non è possibile aggiungere esportazioni ad un namespace sigillato"
 
 #, fuzzy
@@ -1706,9 +1719,6 @@ msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
 msgid "cannot find name space environment"
 msgstr ""
 
-msgid "package '%s' has a non-function '.First.lib'"
-msgstr ""
-
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] "opzione di deparse %s non riconosciuta"
@@ -1763,6 +1773,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "package %s contains no R code"
+#~ msgstr "il pacchetto '%s' non contiene codice R"
+
+#, fuzzy
+#~ msgid ".First.lib failed for %s"
+#~ msgstr ".First.lib fallita per '%s'"
 
 #~ msgid "no files to copy from"
 #~ msgstr "nessun file da cui copiare"

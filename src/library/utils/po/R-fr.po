@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:48\n"
 "PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -77,6 +77,9 @@ msgstr ""
 "%s"
 
 msgid "Warning: unknown option"
+msgstr ""
+
+msgid "Created PDF document"
 msgstr ""
 
 #, fuzzy
@@ -398,6 +401,10 @@ msgstr ""
 "un mot réservé"
 
 #, fuzzy
+msgid "Postscript offline help is deprecated"
+msgstr "l'argument 'help.db' est obsolète"
+
+#, fuzzy
 msgid "No documentation for %s in specified packages and libraries:"
 msgstr ""
 "Aucune documentation pour '%s' n'a été trouvée dans les packages et les "
@@ -451,6 +458,21 @@ msgid ""
 msgstr ""
 "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc "
 "l'aide n'est pas accessible"
+
+#, fuzzy
+msgid "running %s failed"
+msgstr "l'exécution de '%s' a échoué"
+
+#, fuzzy
+msgid "%s produced no output file: sent to printer?"
+msgstr "'%s' n'a produit aucun fichier en sortie : envoyer vers l'imprimante ?"
+
+#, fuzzy
+msgid "creation of %s failed"
+msgstr "la création de '%s' a échoué"
+
+msgid "Saving help page to"
+msgstr "Sauvegarde de la page d'aide dans"
 
 #, fuzzy
 msgid "argument %s must be a single character string"
@@ -1171,21 +1193,6 @@ msgstr "impossible de trouver une méthode de téléchargement"
 
 msgid "download had nonzero exit status"
 msgstr "le téléchargement a a eu un statut de sortie non nul"
-
-#, fuzzy
-msgid "running %s failed"
-msgstr "l'exécution de '%s' a échoué"
-
-#, fuzzy
-msgid "%s produced no output file: sent to printer?"
-msgstr "'%s' n'a produit aucun fichier en sortie : envoyer vers l'imprimante ?"
-
-#, fuzzy
-msgid "creation of %s failed"
-msgstr "la création de '%s' a échoué"
-
-msgid "Saving help page to"
-msgstr "Sauvegarde de la page d'aide dans"
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' a renvoyé un code de sortie non nul %d"

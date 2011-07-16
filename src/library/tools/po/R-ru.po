@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-07-16 22:47\n"
 "PO-Revision-Date: 2011-03-30 02:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -483,6 +483,9 @@ msgstr "невозможно перейти в текущий рабочий каталог"
 msgid "no inputs"
 msgstr "нет вводов"
 
+msgid "DVI output from Rd2dvi is depreccated"
+msgstr ""
+
 msgid "Error in running tools::texi2dvi"
 msgstr "Ошибка запуска tools::texi2dvi"
 
@@ -727,6 +730,14 @@ msgstr "устанавливаю в"
 msgid "generating debug symbols (dSYM)"
 msgstr "создаю символы отладки (dSYM)"
 
+#, fuzzy
+msgid ""
+"installing a top-level 'COPYING' file is deprecated -- see the 'Writing R "
+"Extensions' manual'"
+msgstr ""
+"См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
+"руководства 'Writing R Extensions'."
+
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
@@ -741,6 +752,9 @@ msgstr "не найдено файлов исходников"
 
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
+
+msgid "only LazyLoad = TRUE is supported"
+msgstr ""
 
 msgid "--merge-multiarch is Windows-only"
 msgstr "--merge-multiarch -- это только для Windows"
@@ -792,8 +806,12 @@ msgstr "нахожу ссылки HTML второго уровня..."
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
 
-msgid "name space must not be loaded."
+#, fuzzy
+msgid "namespace must not be loaded."
 msgstr "должно быть загружено пространство имен."
+
+msgid "all packages should have a NAMESPACE"
+msgstr ""
 
 msgid "package seems to be using lazy loading for data already"
 msgstr "кажется, пакет уже использует ленивую загрузку данных"
