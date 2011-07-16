@@ -183,8 +183,17 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
-            hook <- getHook(packageEvent(pkgname, "onLoad")) # might be list()
-            for(fun in hook) try(fun(pkgname, pkgpath))
+            hooks <- getHook(packageEvent(pkgname, "onLoad")) # might be list()
+            for(fun in hooks) try(fun(pkgname, pkgpath))
+            ## Remove in R 2.15.0
+            if (!length(hooks) &&
+                exists(".First.lib", asNamespace(pkgname), inherits = FALSE)) {
+                warning(gettextf("running .First.lib() for package %s as .onLoad() was not found", sQuote(pkgname)),
+                        call. = FALSE, immediate. = TRUE, domain = NA)
+                fn <- get(".First.lib", asNamespace(pkgname), inherits = FALSE)
+                fn(dirname(pkgpath), pkgname)
+            }
+
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)

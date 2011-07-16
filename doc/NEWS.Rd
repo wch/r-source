@@ -385,8 +385,10 @@
       \item Packages without explicit \file{NAMESPACE} files will have
       a default one created at build or INSTALL time, so all packages
       will have namespaces.  A consequence of this is that
-      \code{.First.lib} functions need to be renamed, usually as
-      \code{.onLoad} but sometimes as \code{.onAttach}.      
+      \code{.First.lib} functions need to be copied to
+      \code{.onLoad} (usually) or \code{.onAttach}. For the time
+      being, if no \code{.onLoad} function is found but
+      \code{.First.lib} is, it will be run as the load hook.
     }
   }
 
