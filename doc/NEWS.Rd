@@ -382,13 +382,13 @@
       be controlled on a per-package basis by the optional field
       \samp{ByteCompile} in the \file{DESCRIPTION} file.
 
-      \item Packages without explicit \file{NAMESPACE} files will have
-      a default one created at build or INSTALL time, so all packages
-      will have namespaces.  A consequence of this is that
-      \code{.First.lib} functions need to be copied to
-      \code{.onLoad} (usually) or \code{.onAttach}. For the time
-      being, if no \code{.onLoad} function is found but
-      \code{.First.lib} is, it will be run as the load hook.
+      \item Packages without explicit \file{NAMESPACE} files will have a
+      default one created at \command{R CMD build} or \command{R CMD
+      INSTALL} time, so all packages will have namespaces.  A
+      consequence of this is that \code{.First.lib} functions need to be
+      copied to \code{.onLoad} (usually) or \code{.onAttach}.  For the
+      time being, if no \code{.onLoad} nor \code{.onAttach} function is
+      found but \code{.First.lib} is, it will be run as the attach hook.
     }
   }
 
