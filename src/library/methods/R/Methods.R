@@ -113,7 +113,7 @@ setGeneric <-
         ## either no previous def'n or failed to find its package name
         package <- thisPackage
     if(is.null(fdef))
-        stop("must supply a function skeleton, explicitly or via an existing function")
+        stop(gettextf("must supply a function skeleton for %s, explicitly or via an existing function", sQuote(name)), domain = NA)
     ensureGeneric.fdef <- function(sig = signature) {
         if(!(is.object(fdef) && is(fdef, "genericFunction"))) {
             fdeflt <-
