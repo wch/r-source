@@ -369,9 +369,14 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 
 
 ## For R CMD xxxx
-.Sweave <- function(arg)
+.Sweave <- function(arg = NULL)
 {
     options(warn = 1)
+    if (is.null(arg)) {
+        arg <- commandArgs(TRUE)
+        arg <- paste(arg, collapse=" ")
+        arg <- strsplit(arg,'nextArg', fixed = TRUE)[[1L]][-1L]
+    }
 
     Usage <- function() {
         cat("Usage: R CMD Sweave file",
@@ -395,7 +400,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             R.version[["major"]], ".",  R.version[["minor"]],
             " (r", R.version[["svn rev"]], ")\n", sep = "")
         cat("",
-            "Copyright (C) 2006-2010 The R Core Development Team.",
+            "Copyright (C) 2006-2011 The R Core Development Team.",
             "This is free software; see the GNU General Public License version 2",
             "or later for copying conditions.  There is NO warranty.",
             sep = "\n")
@@ -405,9 +410,14 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     do_exit()
 }
 
-.Stangle <- function(arg)
+.Stangle <- function(arg = NULL)
 {
     options(warn = 1)
+    if (is.null(arg)) {
+        arg <- commandArgs(TRUE)
+        arg <- paste(arg, collapse=" ")
+        arg <- strsplit(arg,'nextArg', fixed = TRUE)[[1L]][-1L]
+    }
 
     Usage <- function() {
         cat("Usage: R CMD Stangle file",
@@ -431,7 +441,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             R.version[["major"]], ".",  R.version[["minor"]],
             " (r", R.version[["svn rev"]], ")\n", sep = "")
         cat("",
-            "Copyright (C) 2006-2010 The R Core Development Team.",
+            "Copyright (C) 2006-2011 The R Core Development Team.",
             "This is free software; see the GNU General Public License version 2",
             "or later for copying conditions.  There is NO warranty.",
             sep = "\n")

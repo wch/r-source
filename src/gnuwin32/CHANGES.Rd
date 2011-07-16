@@ -4,6 +4,14 @@
 \title{Windows-specific changes to R}
 \encoding{UTF-8}
 
+\section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \command{R CMD Sweave} and \command{R CMD Stangle} did not run.
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
