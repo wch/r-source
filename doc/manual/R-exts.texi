@@ -2487,9 +2487,8 @@ package namespace first, then the imports, then the base namespace
 and then the normal search path.
 
 If a @file{NAMESPACE} file is not present, then one is generated
-automatically when the package is built or installed.  Objects with
-names starting with a dot (@code{"."}) are not exported, but all other
-objects are.  By default nothing is imported.
+automatically when the package is built or installed.  All 
+objects are exported.  By default nothing is imported.
 
 Prior to version 2.14.0, namespaces were optional in packages. In
 such packages searches for non-local variables started with the search
