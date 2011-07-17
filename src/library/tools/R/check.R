@@ -2196,6 +2196,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     lines <- grep("Warning: .drectve .* unrecognized",
                                   lines, invert = TRUE, value = TRUE)
                 }
+
+                ## Skip warnings about .First.lib
+                ## Maybe should retain any that refers to this package?
+                lines <- grep("Warning: running .First.lib() for package",
+                              lines, invert = TRUE, value = TRUE, fixed = TRUE)
+
                 if (length(lines)) {
                     warnLog("Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
