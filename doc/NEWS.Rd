@@ -210,9 +210,9 @@
       original error condition object at the \code{"condition"}
       attribute.
 
-      \item All packages are lazy-loaded irrespective of the
-      \samp{LazyLoad} field in the \file{DESCRIPTION} file.
-      (Experimental: documentation is not yet updated.)
+      \item All packages with \R code are lazy-loaded irrespective of
+      the \samp{LazyLoad} field in the \file{DESCRIPTION} file.  A
+      warning is given if the \samp{LazyLoad} field is overridden.
       
       \item Added new \samp{\figure} tag to Rd markup, so
       that figures can be included in help pages when displayed

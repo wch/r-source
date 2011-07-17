@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-dblcolon.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-dblcolon}
@@ -8,8 +8,7 @@
 \alias{::}
 \alias{:::}
 \description{
-  Accessing exported and internal variables in a namespace, or
-  variables in an attached package.
+  Accessing exported and internal variables in a namespace.
 }
 \usage{
 pkg::name
@@ -20,23 +19,26 @@ pkg:::name
   \item{name}{variable name: symbol or literal character string.}
 }
 \details{
-  For a package with a namespace, \code{pkg::name} returns the value of
+  For a package \pkg{pkg}, \code{pkg::name} returns the value of
   the exported variable \code{name} in namespace \code{pkg}, whereas
   \code{pkg:::name} returns the value of the internal variable
   \code{name}. The namespace will be loaded if it was not loaded
   before the call, but the package will not be attached to the
   search path.
 
-  If the package \code{pkg} does not have a namespace but is on the
-  search path then \code{pkg::name} returns the value of \code{name} in
-  the package environment.  Thus \code{pkg::name} has the same effect
-  for attached packages whether or not they have a namespace.
+  Specifying a variable or package that does not exist is an error.
 
-  Specifying a variable that does not exist is an error, as is
-  specifying a package that does not exist or does not have a namespace
-  and is not on the search path.
+  Note that \code{pkg::name} does \strong{not} access the objects in the
+  environment \code{package:pkg} (which does not exist until the
+  package's namespace is attached): the latter may contain objects not
+  exported from the namespace, including the datasets made available by
+  the \sQuote{lazydata} mechanism.  (Datasets made available by the
+  \file{sysdata.rda} mechanism are loaded into the namespace, and may or
+  may not be exported.)
+}
 
-  Note that it is typically a design mistake to use \code{:::}
+\note{
+  It is typically a design mistake to use \code{:::}
   in your code since the corresponding object has probably been kept
   internal for a good reason.  Consider contacting the package
   maintainer if you feel the need to access the object for anything but
