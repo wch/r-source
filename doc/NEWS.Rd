@@ -10,7 +10,8 @@
     \itemize{
       \item All packages must have a namespace, and one is created on
       installation if not supplied in the sources.  This means that any
-      such package must be re-installed.
+      package without a namespace must be re-installed under this
+      version of \R.
       
       \item The \code{yLineBias} of the \code{X11()} and
       \code{windows()} families of devices has been changed from 0.1 to
