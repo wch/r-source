@@ -8,6 +8,10 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD Sweave} and \command{R CMD Stangle} did not run.
+
+      \item The fix for \PR{14583} caused inconsistent behaviour in other
+      areas, e.g. \PR{14628}, extra lines appearing in image displays,
+      and uneven bases on histograms \PR{14632}.
     }
   }
 }

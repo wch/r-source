@@ -2318,7 +2318,16 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	y0 = y1;
 	y1 = tmp;
     }
-    r = rect((int) x0, (int) y0, nearbyint(x1 - x0), nearbyint(y1 - y0));
+    /* zero width or height disappears, so handle that case specially in case it's just rounding */
+    if ((int)x0 == (int)x1 && x1-x0 >= 0.5) {
+    	x1 = (int)x1;
+    	x0 = x1 - 1.0;
+    }
+    if ((int)y0 == (int)y1 && y1-y0 >= 0.5) {
+    	y1 = (int)y1;
+    	y0 = y1 - 1.0;
+    }
+    r = rect((int) x0, (int) y0, (int)x1 - (int)x0, (int)y1 - (int)y0);
 
     SetColor(gc->fill, gc->gamma, xd);
     if (R_OPAQUE(gc->fill)) {

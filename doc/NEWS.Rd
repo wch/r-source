@@ -26,6 +26,9 @@
       \item In a \file{.Rd} file, \samp{\\code{''}} was mis-converted
       to latex and rendered in e.g. PDF as a double quote (a single
       character).
+      
+      \item Plotting \code{pch='.'} now guarantees at least a one-pixel
+      dot if \code{cex > 0}.
     }  
   }
 }
