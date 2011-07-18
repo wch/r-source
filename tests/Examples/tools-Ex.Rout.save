@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-07-05 r56287)
+R Under development (unstable) (2011-07-18 r56407)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -602,26 +602,6 @@ attr(,"class")
 > pDL <- pkgDepends("tools",local=FALSE)
 > installFoundDepends(pDL$Found, destdir=tmp)
 NULL
-> 
-> 
-> 
-> cleanEx()
-> nameEx("makeLazyLoading")
-> ### * makeLazyLoading
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: makeLazyLoading
-> ### Title: Lazy Loading of Packages
-> ### Aliases: makeLazyLoading
-> ### Keywords: utilities
-> 
-> ### ** Examples
-> 
-> ## set up package "splines" for lazy loading -- already done
-> ## Not run: 
-> ##D tools:::makeLazyLoading("splines")
-> ## End(Not run)
 > 
 > 
 > 

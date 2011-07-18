@@ -11,5 +11,3 @@ Description: Example package with a namespace and imports of S4 ....
  used for regression testing the correct working of tools::codoc(), undoc()
  etc, but also S4 in connection with other packages.
 License: GPL (>= 2)
-LazyLoad: yes
-

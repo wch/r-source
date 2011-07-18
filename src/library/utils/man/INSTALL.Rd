@@ -116,6 +116,11 @@
   By default a package is installed with static HTML help pages if and
   only if \R was: use options \option{--html} and \option{--no-html} to
   override this.
+
+  Packages are not by default installed keeping the source formatting
+  (see the \code{keep.source} argument to \code{\link{source}}): this
+  can be enabled by the option \option{--with-keep.source} or by setting
+  environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
   
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.
@@ -125,7 +130,7 @@
   The options do not have to precede \samp{pkgs} on the command line,
   although it will be more legible if they do.  All the options are
   processed before any packages, and where options have conflicting
-  effects the last  one will win.
+  effects the last one will win.
 #ifdef unix
   
   Some parts of the operation of \code{INSTALL} depend on the \R
@@ -135,13 +140,6 @@
   mounted as \code{noexec}, environment variable \env{TMPDIR} may need
   to be set to a directory from which execution is allowed.
 #endif
-}
-
-\section{Packages using the methods package}{
-  Packages that require the methods package and make use functions such
-  as \code{\link{setMethod}} or \code{\link{setClass}}, should be
-  installed using lazy-loading: use the field \code{LazyLoad} in the
-  \file{DESCRIPTION} file to ensure this.
 }
 
 \seealso{

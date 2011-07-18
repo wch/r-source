@@ -6,5 +6,4 @@ Author: R Development Core Team and contributors worldwide
 Description: Statistical Functions using S4 classes
 Maintainer: R Core Team <R-core@r-project.org>
 Depends: methods, graphics, stats
-LazyLoad: yes
 License: Part of R @VERSION@

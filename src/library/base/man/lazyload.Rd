@@ -1,6 +1,6 @@
 % File src/library/base/man/lazyload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{lazyLoad}
@@ -39,7 +39,4 @@ lazyLoadDBexec(filebase, fun, filter)
   data.
 }
 \author{Luke Tierney}
-\seealso{
-  \code{\link{makeLazyLoading}}
-}
 \keyword{internal}

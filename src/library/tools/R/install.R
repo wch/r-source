@@ -968,7 +968,7 @@
 	    starsmsg(stars, "tests")
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
-	
+
 	if (!file.exists(namespace <- file.path(instdir, "NAMESPACE"))) {
 	    starsmsg(stars, "Creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
@@ -978,7 +978,8 @@
 	value <- parse_description_field(desc, "LazyLoad", default = TRUE)
         if(!value) {
             value <- TRUE
-            warning("only LazyLoad = TRUE is supported", call. = FALSE)
+            warning("only LazyLoad = TRUE is supported",
+                    call. = FALSE, domain = NA)
         }
 	if (install_R && dir.exists("R") && length(dir("R")) && value) {
             BC <- parse_description_field(desc, "ByteCompile",

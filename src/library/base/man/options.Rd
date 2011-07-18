@@ -146,15 +146,11 @@ getOption(x, default = NULL)
       The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
       interactive use.}
 
-    \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, for
-      functions in packages loaded by \code{\link{library}} or
-      \code{\link{require}}.  Defaults to \code{FALSE} unless the
-      environment variable \env{R_KEEP_PKG_SOURCE} is set to
-      \code{yes}.
-
-      Note this does not apply to packages using lazy-loading.  Whether
-      they have kept source is determined when they are
-      installed (and is almost certainly false).}
+    \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, when
+      packages are installed, and for packages not using lazy-loading
+      (and necessarily installed prior to \R 2.14.0).  Defaults to
+      \code{FALSE} unless the environment variable
+      \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
 
     \item{\code{max.contour.segments}:}{positive integer, defaulting to
       \code{250000} and usually not set.  A limit on the number of

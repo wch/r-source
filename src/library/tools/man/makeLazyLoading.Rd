@@ -1,6 +1,6 @@
 % File src/library/tools/man/makeLazyLoading.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{makeLazyLoading}
@@ -23,12 +23,10 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
   A tool to set up packages for lazy loading from a database.  For
   packages other than \pkg{base} you can use
   \code{makeLazyLoading(package)} to convert them to use lazy loading.
-}
-\examples{
-## set up package "splines" for lazy loading -- already done
-\dontrun{
-tools:::makeLazyLoading("splines")
-}
+
+  Note that as from \R 2.14.0 this is done when all packages are installed.
 }
 \keyword{utilities}
 \author{Luke Tierney and Brian Ripley}
+\keyword{internal}
+

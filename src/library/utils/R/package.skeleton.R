@@ -99,7 +99,6 @@ package.skeleton <-
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
 	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
-	"LazyLoad: yes\n",
 	if(usingS4) "Depends: methods\n",
 	file = description, sep = "")
     close(description)
