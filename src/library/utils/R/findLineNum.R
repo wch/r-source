@@ -1,7 +1,7 @@
 #  File src/library/utils/R/fineLineNum.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright 2009 Duncan Murdoch and the R Core Development Team
+#  Copyright 2009-2011 Duncan Murdoch and the R Core Development Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
     lineNumInExpr <- function(expr, haveSrcrefs = FALSE) {
 	if (typeof(expr) == "language") {
 	    srcrefs <- attr(expr, "srcref")
-	    for (i in 1:length(expr)) {
+	    for (i in seq_along(expr)) {
 		srcref <- srcrefs[[i]]
 		# Check for non-matching range
 		if (!is.null(srcref) && (srcref[1] > line || line > srcref[3]))  next
@@ -74,7 +74,6 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
 	    timediff <- fnsrc$timestamp - srcfile$timestamp
 	else
 	    timediff <- 0
-	source <- attr(f, "source")
 	at <- lineNumInExpr(body(f))
 	if (!is.null(at))
 	  return(list(at=at, filename=.normalizePath(fnsrc$filename, fnsrc$wd), line=line,
