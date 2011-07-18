@@ -96,7 +96,7 @@ writeDefaultNamespace <- function(filename)
     writeLines(c("# Default NAMESPACE created by R",
     		 "",
     		 "# Export all names",
-		 "exportPattern(\".\")"), 
+		 "exportPattern(\".\")"),
     	       filename)
 }
 
@@ -689,7 +689,7 @@ get_exclude_patterns <- function()
             }
         }
     }
-    
+
     force <- FALSE
     vignettes <- TRUE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
@@ -925,11 +925,12 @@ get_exclude_patterns <- function()
         }
 
 	## add NAMESPACE if the author didn't write one
-	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE"))) {
+	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE")) &&
+           dir.exists(file.path(pkgname, "R"))) {
 	    messageLog(Log, "creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
 	}
-	
+
         ## Finalize
         filename <- paste(pkgname, "_", desc["Version"], ".tar.gz", sep="")
         filepath <- file.path(startdir, filename)
