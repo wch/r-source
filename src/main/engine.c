@@ -1996,14 +1996,14 @@ void GESymbol(double x, double y, int pch, double size,
 	       pixels are not square, but only on low resolution
 	       devices where we can do nothing better.
 
-	       For this option only, size is cex (see engine.c).
+	       For this symbol only, size is cex (see engine.c).
 
 	       Prior to 2.1.0 the offsets were always 0.5.
 	    */
 	    xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
 	    yc = size * fabs(toDeviceHeight(0.005, GE_INCHES, dd));
-	    if(size == 1 && xc < 0.5) xc = 0.5;
-	    if(size == 1 && yc < 0.5) yc = 0.5;
+	    if(size > 0 && xc < 0.5) xc = 0.5;
+	    if(size > 0 && yc < 0.5) yc = 0.5;
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	} else {
 	    char str[2];

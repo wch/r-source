@@ -562,6 +562,9 @@
       \item Because \code{quote()} did not mark its result as being in
       use, modification of the result could in some circumstances
       modify the original call.
+      
+      \item Plotting \code{pch='.'} now guarantees at least a one-pixel
+      dot if \code{cex > 0}.
     }  
   }
 }

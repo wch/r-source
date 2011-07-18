@@ -92,7 +92,17 @@
     }
   }
 }
-  
+
+\section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The fix for \PR{14583} caused inconsistent behaviour in other
+      areas, e.g. \PR{14628}, extra lines appearing in image displays,
+      and uneven bases on histograms \PR{14632}.
+    }
+  }
+}
+
 \section{CHANGES IN R VERSION 2.13.1}{
   \subsection{NEW FEATURES}{
     \itemize{
