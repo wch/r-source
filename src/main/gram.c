@@ -2660,7 +2660,7 @@ static SEXP attachSrcrefs(SEXP val)
 
     PROTECT(val);
     t = CDR(SrcRefs);
-    srval = allocVector(VECSXP, length(t));
+    PROTECT(srval = allocVector(VECSXP, length(t)));
     for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(srval, n, CAR(t));
     setAttrib(val, R_SrcrefSymbol, srval);
@@ -2677,7 +2677,7 @@ static SEXP attachSrcrefs(SEXP val)
 	wholeFile.last_parsed = ParseState.xxparseno;
 	setAttrib(val, R_WholeSrcrefSymbol, makeSrcref(&wholeFile, ParseState.SrcFile));
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     SrcRefs = NULL;
     ParseState.didAttach = TRUE;
     return val;
