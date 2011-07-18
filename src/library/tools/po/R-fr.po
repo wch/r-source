@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:47\n"
+"POT-Creation-Date: 2011-07-18 17:02\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -771,9 +771,6 @@ msgstr "aucun fichier source n'est trouvé"
 
 msgid "empty 'data' directory"
 msgstr "répertoire 'data' vide"
-
-msgid "only LazyLoad = TRUE is supported"
-msgstr ""
 
 msgid "--merge-multiarch is Windows-only"
 msgstr "'--merge-multiarch est pour Windows seulement"

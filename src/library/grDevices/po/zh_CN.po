@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48+0100\n"
+"POT-Creation-Date: 2011-07-18 17:02+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -454,14 +454,14 @@ msgstr "%s里的'system'参数不对"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:8100 devPS.c:8260 devPS.c:8266 devWindows.c:3552 devWindows.c:3556
-#: devWindows.c:3564 devWindows.c:3575 devWindows.c:3581 devWindows.c:3588
-#: devWindows.c:3595 devWindows.c:3599
+#: devPS.c:8100 devPS.c:8260 devPS.c:8266 devWindows.c:3561 devWindows.c:3565
+#: devWindows.c:3573 devWindows.c:3584 devWindows.c:3590 devWindows.c:3597
+#: devWindows.c:3604 devWindows.c:3608
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "'%s'的值不对"
 
-#: devPS.c:8113 devPS.c:8180 devPS.c:8280 devPicTeX.c:800 devWindows.c:3632
+#: devPS.c:8113 devPS.c:8180 devPS.c:8280 devPicTeX.c:800 devWindows.c:3641
 #, c-format
 msgid "unable to start %s() device"
 msgstr "无法启动%s()装置"
@@ -596,56 +596,56 @@ msgstr "剪輯板元文本只能保存一个图片."
 msgid "metafile '%s' could not be created"
 msgstr "无法建立元文本'%s'"
 
-#: devWindows.c:3033 devWindows.c:3656
+#: devWindows.c:3042 devWindows.c:3665
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3047
+#: devWindows.c:3056
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3296
+#: devWindows.c:3305
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "'windowsTimeouts'选择项必需是整数"
 
-#: devWindows.c:3317
+#: devWindows.c:3326
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'里的装置数目出了错"
 
-#: devWindows.c:3319
+#: devWindows.c:3328
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
-#: devWindows.c:3322
+#: devWindows.c:3331
 msgid "invalid filename argument in savePlot"
 msgstr "savePlot文本名字参数不对"
 
-#: devWindows.c:3327
+#: devWindows.c:3336
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'类别参数不对"
 
-#: devWindows.c:3354
+#: devWindows.c:3363
 msgid "unknown type in savePlot"
 msgstr "savePlot里没有类别"
 
-#: devWindows.c:3399 devWindows.c:3432 devWindows.c:3461 devWindows.c:3493
-#: devWindows.c:3518
+#: devWindows.c:3408 devWindows.c:3441 devWindows.c:3470 devWindows.c:3502
+#: devWindows.c:3527
 msgid "processing of the plot ran out of memory"
 msgstr "处理图象时内存用完了"
 
-#: devWindows.c:3478
+#: devWindows.c:3487
 msgid "Impossible to open "
 msgstr "无法打开"
 
-#: devWindows.c:3505
+#: devWindows.c:3514
 msgid "Impossible to load Rbitmap.dll"
 msgstr "无法载入Rbitmap.dll"
 
-#: devWindows.c:3547
+#: devWindows.c:3556
 msgid "invalid 'width' or 'height'"
 msgstr "'width'或'height'的值不对"
 
-#: devWindows.c:3750
+#: devWindows.c:3759
 #, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "无法载入Rbitmap.dll"

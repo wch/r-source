@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:47\n"
+"POT-Creation-Date: 2011-07-18 17:02\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -765,9 +765,6 @@ msgstr " ソースファイルが見つかりません "
 
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
-
-msgid "only LazyLoad = TRUE is supported"
-msgstr ""
 
 msgid "--merge-multiarch is Windows-only"
 msgstr " --merge-multiarch は Windows 専用です "

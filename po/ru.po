@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:47+0100\n"
+"POT-Creation-Date: 2011-07-18 17:02+0100\n"
 "PO-Revision-Date: 2011-03-30 01:56+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -118,66 +118,67 @@ msgstr "проблема при отображении '%ls'"
 #: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:290 src/gnuwin32/extra.c:327
 #: src/gnuwin32/extra.c:338 src/gnuwin32/extra.c:362 src/gnuwin32/extra.c:370
 #: src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:545 src/gnuwin32/extra.c:585
-#: src/gnuwin32/extra.c:770 src/gnuwin32/extra.c:854 src/gnuwin32/extra.c:857
-#: src/gnuwin32/extra.c:862 src/gnuwin32/extra.c:1654
-#: src/gnuwin32/extra.c:1679 src/main/agrep.c:67 src/main/agrep.c:70
+#: src/gnuwin32/extra.c:772 src/gnuwin32/extra.c:856 src/gnuwin32/extra.c:859
+#: src/gnuwin32/extra.c:864 src/gnuwin32/extra.c:1656
+#: src/gnuwin32/extra.c:1681 src/main/agrep.c:67 src/main/agrep.c:70
 #: src/main/apply.c:278 src/main/apply.c:280 src/main/apply.c:283
 #: src/main/array.c:86 src/main/array.c:1100 src/main/array.c:1232
 #: src/main/array.c:1234 src/main/array.c:1235 src/main/attrib.c:192
-#: src/main/builtin.c:77 src/main/builtin.c:86 src/main/builtin.c:105
-#: src/main/builtin.c:107 src/main/builtin.c:136 src/main/builtin.c:524
-#: src/main/builtin.c:540 src/main/builtin.c:724 src/main/character.c:131
-#: src/main/character.c:134 src/main/character.c:195 src/main/character.c:1022
+#: src/main/builtin.c:74 src/main/builtin.c:83 src/main/builtin.c:102
+#: src/main/builtin.c:104 src/main/builtin.c:133 src/main/builtin.c:521
+#: src/main/builtin.c:537 src/main/builtin.c:720 src/main/builtin.c:722
+#: src/main/builtin.c:724 src/main/character.c:131 src/main/character.c:134
+#: src/main/character.c:195 src/main/character.c:1022
 #: src/main/character.c:1026 src/main/character.c:1259
 #: src/main/character.c:1263 src/main/character.c:1320
-#: src/main/character.c:1323 src/main/connections.c:958
-#: src/main/connections.c:964 src/main/connections.c:967
-#: src/main/connections.c:971 src/main/connections.c:1110
-#: src/main/connections.c:1126 src/main/connections.c:1131
-#: src/main/connections.c:1730 src/main/connections.c:1736
-#: src/main/connections.c:1740 src/main/connections.c:1744
-#: src/main/connections.c:1749 src/main/connections.c:2399
-#: src/main/connections.c:2404 src/main/connections.c:2407
-#: src/main/connections.c:2410 src/main/connections.c:2776
-#: src/main/connections.c:2781 src/main/connections.c:2787
-#: src/main/connections.c:2790 src/main/connections.c:2794
-#: src/main/connections.c:2809 src/main/connections.c:2860
-#: src/main/connections.c:2865 src/main/connections.c:2869
-#: src/main/connections.c:2873 src/main/connections.c:2877
-#: src/main/connections.c:2883 src/main/connections.c:2929
-#: src/main/connections.c:2935 src/main/connections.c:2939
-#: src/main/connections.c:2990 src/main/connections.c:2993
-#: src/main/connections.c:3259 src/main/connections.c:3262
-#: src/main/connections.c:3265 src/main/connections.c:3363
-#: src/main/connections.c:3369 src/main/connections.c:3372
-#: src/main/connections.c:3522 src/main/connections.c:3525
-#: src/main/connections.c:3529 src/main/connections.c:3532
-#: src/main/connections.c:3639 src/main/connections.c:3742
-#: src/main/connections.c:3745 src/main/connections.c:4081
-#: src/main/connections.c:4106 src/main/connections.c:4139
-#: src/main/connections.c:4153 src/main/connections.c:4161
-#: src/main/connections.c:4187 src/main/connections.c:4328
-#: src/main/connections.c:4332 src/main/connections.c:4458
-#: src/main/connections.c:4460 src/main/connections.c:4462
-#: src/main/connections.c:4490 src/main/connections.c:4620
-#: src/main/connections.c:4646 src/main/connections.c:4650
-#: src/main/connections.c:4654 src/main/connections.c:4658
+#: src/main/character.c:1323 src/main/connections.c:961
+#: src/main/connections.c:967 src/main/connections.c:970
+#: src/main/connections.c:974 src/main/connections.c:1113
+#: src/main/connections.c:1129 src/main/connections.c:1134
+#: src/main/connections.c:1736 src/main/connections.c:1742
+#: src/main/connections.c:1746 src/main/connections.c:1750
+#: src/main/connections.c:1755 src/main/connections.c:2405
+#: src/main/connections.c:2410 src/main/connections.c:2413
+#: src/main/connections.c:2416 src/main/connections.c:2782
+#: src/main/connections.c:2787 src/main/connections.c:2793
+#: src/main/connections.c:2796 src/main/connections.c:2800
+#: src/main/connections.c:2815 src/main/connections.c:2866
+#: src/main/connections.c:2871 src/main/connections.c:2875
+#: src/main/connections.c:2879 src/main/connections.c:2883
+#: src/main/connections.c:2889 src/main/connections.c:2935
+#: src/main/connections.c:2941 src/main/connections.c:2945
+#: src/main/connections.c:2996 src/main/connections.c:2999
+#: src/main/connections.c:3265 src/main/connections.c:3268
+#: src/main/connections.c:3271 src/main/connections.c:3369
+#: src/main/connections.c:3375 src/main/connections.c:3378
+#: src/main/connections.c:3528 src/main/connections.c:3531
+#: src/main/connections.c:3535 src/main/connections.c:3538
+#: src/main/connections.c:3645 src/main/connections.c:3748
+#: src/main/connections.c:3751 src/main/connections.c:4087
+#: src/main/connections.c:4112 src/main/connections.c:4145
+#: src/main/connections.c:4159 src/main/connections.c:4167
+#: src/main/connections.c:4193 src/main/connections.c:4334
+#: src/main/connections.c:4338 src/main/connections.c:4464
+#: src/main/connections.c:4466 src/main/connections.c:4468
+#: src/main/connections.c:4496 src/main/connections.c:4626
+#: src/main/connections.c:4652 src/main/connections.c:4656
+#: src/main/connections.c:4660 src/main/connections.c:4664
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
 #: src/main/datetime.c:710 src/main/datetime.c:790 src/main/datetime.c:792
 #: src/main/datetime.c:796 src/main/datetime.c:955 src/main/datetime.c:957
-#: src/main/datetime.c:1121 src/main/debug.c:223 src/main/deparse.c:359
-#: src/main/devices.c:583 src/main/dotcode.c:736 src/main/dotcode.c:740
-#: src/main/dotcode.c:745 src/main/dounzip.c:319 src/main/dounzip.c:326
-#: src/main/dounzip.c:336 src/main/dounzip.c:341 src/main/dounzip.c:345
-#: src/main/dounzip.c:349 src/main/envir.c:1543 src/main/envir.c:1546
+#: src/main/datetime.c:1121 src/main/debug.c:223 src/main/deparse.c:360
+#: src/main/devices.c:583 src/main/dotcode.c:738 src/main/dotcode.c:742
+#: src/main/dotcode.c:747 src/main/dounzip.c:320 src/main/dounzip.c:327
+#: src/main/dounzip.c:337 src/main/dounzip.c:342 src/main/dounzip.c:346
+#: src/main/dounzip.c:350 src/main/envir.c:1543 src/main/envir.c:1546
 #: src/main/envir.c:1663 src/main/envir.c:1668 src/main/envir.c:1734
 #: src/main/envir.c:1750 src/main/envir.c:1756 src/main/envir.c:1856
 #: src/main/envir.c:1864 src/main/envir.c:1871 src/main/envir.c:1885
 #: src/main/envir.c:1891 src/main/envir.c:1895 src/main/envir.c:2112
-#: src/main/envir.c:2233 src/main/envir.c:2492 src/main/envir.c:2750
-#: src/main/envir.c:2764 src/main/envir.c:2771 src/main/envir.c:2787
-#: src/main/envir.c:3350 src/main/errors.c:937 src/main/eval.c:268
-#: src/main/eval.c:2026 src/main/eval.c:2055 src/main/eval.c:2059
+#: src/main/envir.c:2233 src/main/envir.c:2492 src/main/envir.c:2699
+#: src/main/envir.c:2713 src/main/envir.c:2720 src/main/envir.c:2736
+#: src/main/envir.c:3299 src/main/errors.c:937 src/main/eval.c:268
+#: src/main/eval.c:2028 src/main/eval.c:2057 src/main/eval.c:2061
 #: src/main/grep.c:758 src/main/grep.c:763 src/main/grep.c:1037
 #: src/main/grep.c:1039 src/main/grep.c:1041 src/main/grep.c:1485
 #: src/main/grep.c:1489 src/main/grep.c:1494 src/main/grep.c:2273
@@ -188,26 +189,26 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/paste.c:400 src/main/paste.c:408 src/main/paste.c:574
 #: src/main/paste.c:579 src/main/platform.c:296 src/main/platform.c:298
 #: src/main/platform.c:300 src/main/platform.c:316 src/main/platform.c:327
-#: src/main/platform.c:452 src/main/platform.c:454 src/main/platform.c:729
-#: src/main/platform.c:731 src/main/platform.c:1063 src/main/platform.c:1069
-#: src/main/platform.c:1072 src/main/platform.c:1075 src/main/platform.c:1078
-#: src/main/platform.c:1081 src/main/platform.c:1084 src/main/platform.c:1171
-#: src/main/platform.c:1210 src/main/platform.c:1267 src/main/platform.c:1270
-#: src/main/platform.c:1432 src/main/platform.c:1435 src/main/platform.c:1438
-#: src/main/platform.c:1474 src/main/platform.c:1477 src/main/platform.c:1480
-#: src/main/platform.c:1563 src/main/platform.c:1578 src/main/platform.c:1615
-#: src/main/platform.c:1617 src/main/platform.c:1682 src/main/platform.c:1766
-#: src/main/platform.c:2035 src/main/platform.c:2078 src/main/platform.c:2205
-#: src/main/platform.c:2208 src/main/platform.c:2211 src/main/platform.c:2214
-#: src/main/platform.c:2217 src/main/platform.c:2350 src/main/platform.c:2353
-#: src/main/platform.c:2356 src/main/platform.c:2359 src/main/platform.c:2362
-#: src/main/platform.c:2431 src/main/platform.c:2439 src/main/platform.c:2475
-#: src/main/platform.c:2525 src/main/plot.c:3104 src/main/plot.c:4241
+#: src/main/platform.c:449 src/main/platform.c:451 src/main/platform.c:726
+#: src/main/platform.c:728 src/main/platform.c:1092 src/main/platform.c:1098
+#: src/main/platform.c:1101 src/main/platform.c:1104 src/main/platform.c:1107
+#: src/main/platform.c:1110 src/main/platform.c:1113 src/main/platform.c:1200
+#: src/main/platform.c:1239 src/main/platform.c:1296 src/main/platform.c:1299
+#: src/main/platform.c:1461 src/main/platform.c:1464 src/main/platform.c:1467
+#: src/main/platform.c:1503 src/main/platform.c:1506 src/main/platform.c:1509
+#: src/main/platform.c:1592 src/main/platform.c:1607 src/main/platform.c:1644
+#: src/main/platform.c:1646 src/main/platform.c:1711 src/main/platform.c:1795
+#: src/main/platform.c:2070 src/main/platform.c:2116 src/main/platform.c:2246
+#: src/main/platform.c:2249 src/main/platform.c:2252 src/main/platform.c:2255
+#: src/main/platform.c:2258 src/main/platform.c:2391 src/main/platform.c:2394
+#: src/main/platform.c:2397 src/main/platform.c:2400 src/main/platform.c:2403
+#: src/main/platform.c:2472 src/main/platform.c:2480 src/main/platform.c:2516
+#: src/main/platform.c:2566 src/main/plot.c:3104 src/main/plot.c:4241
 #: src/main/plot.c:4245 src/main/plot.c:4248 src/main/plot3d.c:2434
 #: src/main/plot3d.c:2438 src/main/plot3d.c:2443 src/main/plot3d.c:2447
-#: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:231
-#: src/main/print.c:237 src/main/print.c:259 src/main/print.c:265
-#: src/main/print.c:271 src/main/random.c:468 src/main/random.c:472
+#: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:236
+#: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
+#: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
 #: src/main/random.c:476 src/main/saveload.c:1938 src/main/saveload.c:1941
 #: src/main/saveload.c:1944 src/main/saveload.c:2060 src/main/saveload.c:2240
 #: src/main/saveload.c:2245 src/main/saveload.c:2248 src/main/saveload.c:2351
@@ -284,10 +285,10 @@ msgstr "'loadhistory' можно использовать только в Rgui �
 msgid "invalid timestamp"
 msgstr "неправильная временная метка"
 
-#: src/gnuwin32/extra.c:687 src/gnuwin32/extra.c:1870
-#: src/gnuwin32/extra.c:2051 src/gnuwin32/extra.c:2054
-#: src/gnuwin32/extra.c:2057 src/main/character.c:581 src/main/colors.c:358
-#: src/main/connections.c:3267 src/main/context.c:643 src/main/context.c:662
+#: src/gnuwin32/extra.c:689 src/gnuwin32/extra.c:1872
+#: src/gnuwin32/extra.c:2053 src/gnuwin32/extra.c:2056
+#: src/gnuwin32/extra.c:2059 src/main/character.c:581 src/main/colors.c:358
+#: src/main/connections.c:3273 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:642 src/main/datetime.c:712 src/main/datetime.c:959
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
@@ -310,113 +311,113 @@ msgstr "неправильная временная метка"
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
 
-#: src/gnuwin32/extra.c:729 src/gnuwin32/extra.c:742
+#: src/gnuwin32/extra.c:731 src/gnuwin32/extra.c:744
 msgid "incorrect argument"
 msgstr "неправильный аргумент"
 
-#: src/gnuwin32/extra.c:733
+#: src/gnuwin32/extra.c:735
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "не делайте глупости: у Вашей машины лимит адресов 4Gb!"
 
-#: src/gnuwin32/extra.c:737
+#: src/gnuwin32/extra.c:739
 msgid "cannot decrease memory limit: ignored"
 msgstr "не могу уменьшить предел памяти: пропущено"
 
-#: src/gnuwin32/extra.c:884
+#: src/gnuwin32/extra.c:886
 msgid "Select one or more"
 msgstr "Выберите один или более "
 
-#: src/gnuwin32/extra.c:884
+#: src/gnuwin32/extra.c:886
 msgid "Select one"
 msgstr "Выберите один"
 
-#: src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1073
 msgid "argument must be a character vector or a raw vector"
 msgstr "аргумент должен быть текстовым вектором или простым вектором"
 
-#: src/gnuwin32/extra.c:1108 src/main/connections.c:1908
+#: src/gnuwin32/extra.c:1110 src/main/connections.c:1914
 msgid "Unable to open the clipboard"
 msgstr "Не могу открыть буфер обмена"
 
-#: src/gnuwin32/extra.c:1113 src/main/connections.c:1912
+#: src/gnuwin32/extra.c:1115 src/main/connections.c:1918
 msgid "Unable to write to the clipboard"
 msgstr "Не могу записать в буфер обмена"
 
-#: src/gnuwin32/extra.c:1137 src/gnuwin32/extra.c:1238 src/main/util.c:885
+#: src/gnuwin32/extra.c:1139 src/gnuwin32/extra.c:1240 src/main/util.c:885
 msgid "'path' must be a character vector"
 msgstr "'path' должен быть текстовым вектором"
 
-#: src/gnuwin32/extra.c:1298 src/gnuwin32/extra.c:1371
+#: src/gnuwin32/extra.c:1300 src/gnuwin32/extra.c:1373
 msgid "'default' must be a character string"
 msgstr "'default' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1300 src/gnuwin32/extra.c:1373
+#: src/gnuwin32/extra.c:1302 src/gnuwin32/extra.c:1375
 msgid "'default' is overlong"
 msgstr "'default' слишком длинный"
 
-#: src/gnuwin32/extra.c:1304 src/gnuwin32/extra.c:1377
+#: src/gnuwin32/extra.c:1306 src/gnuwin32/extra.c:1379
 msgid "'caption' must be a character string"
 msgstr "'caption' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1306
+#: src/gnuwin32/extra.c:1308
 msgid "'multi' must be a logical value"
 msgstr "'multi' должен быть логическим значением"
 
-#: src/gnuwin32/extra.c:1308
+#: src/gnuwin32/extra.c:1310
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' должен быть целым числом"
 
-#: src/gnuwin32/extra.c:1459
+#: src/gnuwin32/extra.c:1461
 msgid "'title' must be a character string"
 msgstr "'title' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1476
+#: src/gnuwin32/extra.c:1478
 msgid "'text' must be a character string"
 msgstr "'text' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1506
+#: src/gnuwin32/extra.c:1508
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s' должен быть единичной длины"
 
-#: src/gnuwin32/extra.c:1620
+#: src/gnuwin32/extra.c:1622
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' должен быть списком"
 
-#: src/gnuwin32/extra.c:1624
+#: src/gnuwin32/extra.c:1626
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "элемент '%s' %d не является правильным вызовом окна"
 
-#: src/gnuwin32/extra.c:1656 src/gnuwin32/extra.c:1658
-#: src/gnuwin32/extra.c:1681 src/gnuwin32/extra.c:1683
-#: src/gnuwin32/extra.c:1730 src/main/gevents.c:59 src/main/gevents.c:96
+#: src/gnuwin32/extra.c:1658 src/gnuwin32/extra.c:1660
+#: src/gnuwin32/extra.c:1683 src/gnuwin32/extra.c:1685
+#: src/gnuwin32/extra.c:1732 src/main/gevents.c:59 src/main/gevents.c:96
 msgid "invalid device"
 msgstr "неправильное устройство"
 
-#: src/gnuwin32/extra.c:1659
+#: src/gnuwin32/extra.c:1661
 msgid "requires SDI mode"
 msgstr "требует SDI-вида"
 
-#: src/gnuwin32/extra.c:1724 src/main/gevents.c:56 src/main/gevents.c:93
+#: src/gnuwin32/extra.c:1726 src/main/gevents.c:56 src/main/gevents.c:93
 msgid "invalid graphical device number"
 msgstr "неправильный номер графического устройства"
 
-#: src/gnuwin32/extra.c:1734
+#: src/gnuwin32/extra.c:1736
 msgid "bad device"
 msgstr "плохое устройство"
 
-#: src/gnuwin32/extra.c:2069
+#: src/gnuwin32/extra.c:2071
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Ключ реестра '%ls' не найден"
 
-#: src/gnuwin32/extra.c:2133 src/gnuwin32/extra.c:2141
+#: src/gnuwin32/extra.c:2135 src/gnuwin32/extra.c:2143
 msgid "invalid input in Rmbstowcs"
 msgstr "неправильный ввод в Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2163 src/main/platform.c:1242
+#: src/gnuwin32/extra.c:2165 src/main/platform.c:1271
 msgid "file choice cancelled"
 msgstr "выбор файла отменен"
 
@@ -438,7 +439,7 @@ msgstr "Код выхода был %d"
 msgid "Insufficient memory (rpipeOpen)"
 msgstr "Недостаточно памяти (rpipeOpen)"
 
-#: src/gnuwin32/run.c:634 src/main/dounzip.c:478
+#: src/gnuwin32/run.c:634 src/main/dounzip.c:479
 msgid "seek not enabled for this connection"
 msgstr "поиск для этого соединения не разрешен"
 
@@ -447,9 +448,9 @@ msgid "truncate not enabled for this connection"
 msgstr "укорочение для этого соединения не разрешено"
 
 #: src/gnuwin32/run.c:720 src/gnuwin32/run.c:724 src/gnuwin32/run.c:737
-#: src/gnuwin32/run.c:765 src/main/connections.c:1065
-#: src/main/connections.c:1069 src/main/connections.c:1075
-#: src/main/connections.c:1089
+#: src/gnuwin32/run.c:765 src/main/connections.c:1068
+#: src/main/connections.c:1072 src/main/connections.c:1078
+#: src/main/connections.c:1092
 msgid "allocation of pipe connection failed"
 msgstr "выделение соединения по каналу не удалось"
 
@@ -470,19 +471,19 @@ msgstr "третий аргумент должен быть текстовой �
 msgid "running command '%s' had status %d"
 msgstr "работающая команда '%s' имеет статус %d"
 
-#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:397
+#: src/gnuwin32/system.c:120 src/unix/sys-unix.c:407
 msgid "reached session elapsed time limit"
 msgstr "достигнуто сессионное ограничение времени операции"
 
-#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:399
+#: src/gnuwin32/system.c:122 src/unix/sys-unix.c:409
 msgid "reached elapsed time limit"
 msgstr "достигнуто ограничение времени операции"
 
-#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:405
+#: src/gnuwin32/system.c:128 src/unix/sys-unix.c:415
 msgid "reached session CPU time limit"
 msgstr "достигнуто сессионное ограничение времени ЦПУ"
 
-#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:407
+#: src/gnuwin32/system.c:130 src/unix/sys-unix.c:417
 msgid "reached CPU time limit"
 msgstr "достигнуто ограничение времени ЦПУ"
 
@@ -502,8 +503,8 @@ msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ОШИБКА: неудачная перекодировка из '%s'>\n"
 
 #: src/gnuwin32/system.c:546 src/gnuwin32/system.c:1023
-#: src/gnuwin32/system.c:1035 src/main/connections.c:560
-#: src/main/connections.c:565 src/main/dounzip.c:176 src/main/saveload.c:1949
+#: src/gnuwin32/system.c:1035 src/main/connections.c:562
+#: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1949
 #: src/main/serialize.c:2202 src/main/serialize.c:2207
 #: src/main/serialize.c:2288 src/main/serialize.c:2333 src/unix/system.c:315
 #: src/unix/system.c:335
@@ -1161,7 +1162,7 @@ msgstr "неправильный (%s) тип 'dimnames' (должен быть �
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
-#: src/main/attrib.c:1035 src/main/builtin.c:64 src/main/builtin.c:101
+#: src/main/attrib.c:1035 src/main/builtin.c:61 src/main/builtin.c:98
 #: src/main/envir.c:1531 src/main/envir.c:1655 src/main/envir.c:1717
 #: src/main/envir.c:1840 src/main/paste.c:68 src/main/paste.c:277
 #: src/main/plot.c:1726 src/main/random.c:474
@@ -1290,7 +1291,7 @@ msgstr "повторный формальный аргумент 'use.names'"
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:1038 src/main/eval.c:2395 src/main/eval.c:2404
+#: src/main/bind.c:1038 src/main/eval.c:2397 src/main/eval.c:2406
 #: src/main/objects.c:310 src/main/objects.c:345 src/main/objects.c:720
 #: src/main/objects.c:737 src/main/objects.c:744
 #, c-format
@@ -1311,130 +1312,126 @@ msgstr "количества строк матриц должны соответ
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "количества колонок матриц должны соответствовать (см. аргумент %d)"
 
-#: src/main/builtin.c:40 src/main/builtin.c:44
+#: src/main/builtin.c:38
 msgid "vector size cannot be NA"
 msgstr "размер вектора не может быть NA"
 
-#: src/main/builtin.c:48
+#: src/main/builtin.c:44
 msgid "vector size cannot be NA/NaN"
 msgstr "размер вектора не может быть NA/NaN"
 
-#: src/main/builtin.c:49
+#: src/main/builtin.c:45
 msgid "vector size cannot be infinite"
 msgstr "размер вектора не может быть неопределенным"
 
-#: src/main/builtin.c:50
+#: src/main/builtin.c:46
 msgid "vector size cannot be negative"
 msgstr "размер вектора не может быть отрицательным"
 
-#: src/main/builtin.c:51
+#: src/main/builtin.c:47
 msgid "vector size specified is too large"
 msgstr "указанный размер вектора слишком велик"
 
-#: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:282
-#: src/main/builtin.c:317 src/main/builtin.c:356 src/main/builtin.c:366
-#: src/main/coerce.c:1448 src/main/connections.c:2785 src/main/engine.c:2859
+#: src/main/builtin.c:70 src/main/builtin.c:79 src/main/builtin.c:279
+#: src/main/builtin.c:314 src/main/builtin.c:353 src/main/builtin.c:363
+#: src/main/coerce.c:1448 src/main/connections.c:2791 src/main/engine.c:2859
 #: src/main/envir.c:940 src/main/envir.c:993 src/main/envir.c:1083
 #: src/main/envir.c:1540 src/main/envir.c:1660 src/main/envir.c:1728
 #: src/main/envir.c:1849 src/main/envir.c:2522 src/main/envir.c:2582
-#: src/main/envir.c:2905 src/main/envir.c:2934 src/main/envir.c:2955
-#: src/main/envir.c:2978 src/main/envir.c:3013 src/main/envir.c:3034
-#: src/main/envir.c:3340 src/main/envir.c:3345 src/main/eval.c:4955
+#: src/main/envir.c:2854 src/main/envir.c:2883 src/main/envir.c:2904
+#: src/main/envir.c:2927 src/main/envir.c:2962 src/main/envir.c:2983
+#: src/main/envir.c:3289 src/main/envir.c:3294 src/main/eval.c:4957
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2058
 #: src/main/saveload.c:2349 src/main/serialize.c:2355
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL не одобряется"
 
-#: src/main/builtin.c:297
+#: src/main/builtin.c:294
 msgid "replacement object is not an environment"
 msgstr "замещающий объект не является окружением"
 
-#: src/main/builtin.c:322
+#: src/main/builtin.c:319
 msgid "'enclos' must be an environment"
 msgstr "'enclos' должен быть окружением"
 
-#: src/main/builtin.c:343 src/main/builtin.c:361
+#: src/main/builtin.c:340 src/main/builtin.c:358
 msgid "argument is not an environment"
 msgstr "аргумент не является окружением"
 
-#: src/main/builtin.c:345
+#: src/main/builtin.c:342
 msgid "the empty environment has no parent"
 msgstr "пустое окружение не имеет родительского"
 
-#: src/main/builtin.c:363
+#: src/main/builtin.c:360
 msgid "can not set parent of the empty environment"
 msgstr "не могу установить родителя для пустого окружения"
 
-#: src/main/builtin.c:371
+#: src/main/builtin.c:368
 msgid "'parent' is not an environment"
 msgstr "'parent' не является окружением"
 
-#: src/main/builtin.c:511 src/main/connections.c:3388
-#: src/main/connections.c:3736 src/main/connections.c:3770
-#: src/main/connections.c:4145 src/main/connections.c:4210
-#: src/main/connections.c:4416 src/main/connections.c:4420
-#: src/main/connections.c:4781 src/main/deparse.c:322 src/main/deparse.c:408
+#: src/main/builtin.c:508 src/main/connections.c:3394
+#: src/main/connections.c:3742 src/main/connections.c:3776
+#: src/main/connections.c:4151 src/main/connections.c:4216
+#: src/main/connections.c:4422 src/main/connections.c:4426
+#: src/main/connections.c:4787 src/main/deparse.c:323 src/main/deparse.c:409
 #: src/main/scan.c:1705 src/main/serialize.c:1670
 msgid "cannot write to this connection"
 msgstr "не могу записать в это соединение"
 
-#: src/main/builtin.c:516 src/main/builtin.c:546 src/main/platform.c:356
+#: src/main/builtin.c:513 src/main/builtin.c:543 src/main/platform.c:356
 #: src/main/platform.c:359 src/main/plot3d.c:2526 src/main/plot3d.c:2530
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "неправильное определение '%s'"
 
-#: src/main/builtin.c:533
+#: src/main/builtin.c:530
 msgid "non-positive 'fill' argument will be ignored"
 msgstr "неположительный аргумент 'fill' будет проигнорирован"
 
-#: src/main/builtin.c:608
+#: src/main/builtin.c:605
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
 msgstr "'cat' не может работать с аргументом %d (тип '%s')"
 
-#: src/main/builtin.c:727
-msgid "vector: zero-length 'type' argument"
-msgstr "вектор: нулевой аргумент 'тип'"
-
-#: src/main/builtin.c:746
+#: src/main/builtin.c:743
 #, c-format
 msgid "vector: cannot make a vector of mode '%s'."
 msgstr "вектор: не могу сделать вектор типа '%s'."
 
-#: src/main/builtin.c:771
+#: src/main/builtin.c:768
 msgid "cannot set length of non-vector"
 msgstr "установить длину для не-вектора"
 
-#: src/main/builtin.c:872 src/main/devices.c:367 src/main/options.c:578
+#: src/main/builtin.c:869 src/main/devices.c:367 src/main/options.c:578
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
-#: src/main/builtin.c:874 src/main/builtin.c:878 src/main/character.c:356
-#: src/main/coerce.c:2571
+#: src/main/builtin.c:871 src/main/builtin.c:875 src/main/character.c:356
+#: src/main/coerce.c:2575
 msgid "invalid value"
 msgstr "неправильное значение"
 
-#: src/main/builtin.c:877
+#: src/main/builtin.c:874
 msgid "missing value for 'length'"
 msgstr "пропущено значение 'length'"
 
-#: src/main/builtin.c:901 src/main/eval.c:404 src/main/eval.c:521
-#: src/main/eval.c:1814 src/main/eval.c:1880 src/main/eval.c:1940
-#: src/main/eval.c:2275 src/main/eval.c:4369 src/main/eval.c:4478
+#: src/main/builtin.c:898 src/main/eval.c:404 src/main/eval.c:521
+#: src/main/eval.c:1816 src/main/eval.c:1882 src/main/eval.c:1942
+#: src/main/eval.c:2277 src/main/eval.c:4371 src/main/eval.c:4480
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
-#: src/main/builtin.c:922
+#: src/main/builtin.c:919
 #, c-format
 msgid "duplicate switch defaults: '%s' and '%s'"
 msgstr "повторяющиеся значения по-молучанию в переключателе: '%s' и '%s'"
 
-#: src/main/builtin.c:955
+#: src/main/builtin.c:952
 msgid "'EXPR' is missing"
 msgstr "'EXPR' отсутствует"
 
-#: src/main/builtin.c:959 src/main/eval.c:4792
+#: src/main/builtin.c:956 src/main/eval.c:4794
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
 
@@ -1587,7 +1584,7 @@ msgstr "попытка конверсии не-фактора"
 msgid "list argument expected"
 msgstr "ожидается аргумент-список"
 
-#: src/main/coerce.c:1452 src/main/eval.c:4952 src/main/eval.c:4959
+#: src/main/coerce.c:1452 src/main/eval.c:4954 src/main/eval.c:4961
 msgid "invalid environment"
 msgstr "неправильное окружение"
 
@@ -1625,8 +1622,8 @@ msgstr "%s() применен к не-списку/вектору типа '%s'"
 msgid "default method not implemented for type '%s'"
 msgstr "нереализованный тип '%s' в '%s'\n"
 
-#: src/main/coerce.c:2193 src/main/dotcode.c:770 src/main/dotcode.c:813
-#: src/main/dotcode.c:1636
+#: src/main/coerce.c:2193 src/main/dotcode.c:772 src/main/dotcode.c:815
+#: src/main/dotcode.c:1638
 msgid "'name' is missing"
 msgstr "'name' отсутствует"
 
@@ -1654,12 +1651,12 @@ msgstr "... использовано в неправильном контекс�
 msgid "invalid environment specified"
 msgstr "задано неправильное окружение"
 
-#: src/main/coerce.c:2444
+#: src/main/coerce.c:2448
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr ""
 "Выставляю атрибут class(x) в NULL;   результат не будет являться объектом S4"
 
-#: src/main/coerce.c:2447
+#: src/main/coerce.c:2451
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1668,7 +1665,7 @@ msgstr ""
 "Выставляю class(x) в набор строк (\"%s\", \"%s\", ...);  результат не будет "
 "являться объектом S4"
 
-#: src/main/coerce.c:2449
+#: src/main/coerce.c:2453
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1677,11 +1674,11 @@ msgstr ""
 "Установка class(x) в \"%s\" выставляет атрибут в NULL; результат не будет "
 "больше объектом S4"
 
-#: src/main/coerce.c:2479
+#: src/main/coerce.c:2483
 msgid "invalid replacement object to be a class string"
 msgstr "неправильный замещающий объект, для того чтобы быть классовой строкой"
 
-#: src/main/coerce.c:2500
+#: src/main/coerce.c:2504
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1689,7 +1686,7 @@ msgstr ""
 "\"%s\" может быть установлен как класс если объект имеет этот тип; найден "
 "\"%s\""
 
-#: src/main/coerce.c:2518
+#: src/main/coerce.c:2522
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1698,18 +1695,18 @@ msgstr ""
 "не способен правильно установить класс для матрицы покуда атрибут "
 "'dimension' не станет длиной 2 (был %d)"
 
-#: src/main/coerce.c:2526
+#: src/main/coerce.c:2530
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "не могу установить класс для \"array\" до тех пор, пока атрибут \"dimension"
 "\" не станет > 0"
 
-#: src/main/coerce.c:2562
+#: src/main/coerce.c:2566
 msgid "'value' must be non-null character string"
 msgstr "'value' должно быть непустой строкой"
 
-#: src/main/coerce.c:2575
+#: src/main/coerce.c:2579
 msgid "invalid to change the storage mode of a factor"
 msgstr "не могу поменять тип хранения фактора"
 
@@ -1844,516 +1841,516 @@ msgid "unsupported conversion from '%s' to '%s'"
 msgstr "неподдерживаемая конвертация из '%s' в '%s'"
 
 #: src/main/connections.c:276 src/main/connections.c:292
-#: src/main/connections.c:431 src/main/connections.c:437
-#: src/main/connections.c:443 src/main/connections.c:454
-#: src/main/connections.c:461
+#: src/main/connections.c:433 src/main/connections.c:439
+#: src/main/connections.c:445 src/main/connections.c:456
+#: src/main/connections.c:463
 #, c-format
 msgid "%s not enabled for this connection"
 msgstr "%s не допущен для этого соединения"
 
 #: src/main/connections.c:322 src/main/connections.c:339
-#: src/main/connections.c:2643
+#: src/main/connections.c:2649
 msgid "printing of extremely long output is truncated"
 msgstr "печать слишком длинного вывода обрезана"
 
-#: src/main/connections.c:361
+#: src/main/connections.c:362
 msgid "invalid char string in output conversion"
 msgstr "неправильная строка при конвертации вывода"
 
-#: src/main/connections.c:414
+#: src/main/connections.c:416
 #, c-format
 msgid "invalid input found on input connection '%s'"
 msgstr "неправильный ввод найден во входном соединении '%s'"
 
-#: src/main/connections.c:660
+#: src/main/connections.c:662
 msgid "connection is not open for reading"
 msgstr "соединение не открыто для чтения"
 
-#: src/main/connections.c:665
+#: src/main/connections.c:667
 msgid "connection is not open for writing"
 msgstr "соединение не открыто для записи"
 
-#: src/main/connections.c:703 src/main/connections.c:1963
+#: src/main/connections.c:705 src/main/connections.c:1969
 msgid "can only truncate connections open for writing"
 msgstr "могу укоротить только открытые для записи соединения"
 
-#: src/main/connections.c:707 src/main/connections.c:709
+#: src/main/connections.c:709 src/main/connections.c:711
 msgid "file truncation failed"
 msgstr "укорочение файла не удалось"
 
-#: src/main/connections.c:711
+#: src/main/connections.c:713
 msgid "file truncation unavailable on this platform"
 msgstr "укорочение файла недоступно для этой платформы"
 
-#: src/main/connections.c:757 src/main/connections.c:761
-#: src/main/connections.c:767 src/main/connections.c:784
+#: src/main/connections.c:759 src/main/connections.c:763
+#: src/main/connections.c:769 src/main/connections.c:786
 msgid "allocation of file connection failed"
 msgstr "выделение файлового соединения не удалось"
 
-#: src/main/connections.c:834
+#: src/main/connections.c:836
 #, c-format
 msgid "cannot create fifo '%s', reason '%s'"
 msgstr "не могу создать fifo-канал '%s' по причине '%s'"
 
-#: src/main/connections.c:840
+#: src/main/connections.c:842
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "'%s' существует, но это не fifo-канал"
 
-#: src/main/connections.c:853
+#: src/main/connections.c:856
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "fifo-канал '%s' не готов"
 
-#: src/main/connections.c:854
+#: src/main/connections.c:857
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "не могу открыть fifo-канал '%s'"
 
-#: src/main/connections.c:895 src/main/connections.c:906
-#: src/main/connections.c:1266 src/main/connections.c:1276
-#: src/main/connections.c:1394 src/main/connections.c:1455
-#: src/main/connections.c:1980 src/main/connections.c:1997
-#: src/main/connections.c:2306 src/main/connections.c:4954
-#: src/main/connections.c:5018
+#: src/main/connections.c:898 src/main/connections.c:909
+#: src/main/connections.c:1270 src/main/connections.c:1280
+#: src/main/connections.c:1399 src/main/connections.c:1460
+#: src/main/connections.c:1986 src/main/connections.c:2003
+#: src/main/connections.c:2312 src/main/connections.c:4960
+#: src/main/connections.c:5024
 msgid "too large a block specified"
 msgstr "определен слишком большой блок"
 
-#: src/main/connections.c:915 src/main/connections.c:919
-#: src/main/connections.c:925 src/main/connections.c:941
+#: src/main/connections.c:918 src/main/connections.c:922
+#: src/main/connections.c:928 src/main/connections.c:944
 msgid "allocation of fifo connection failed"
 msgstr "размещение fifo соединения не удалось"
 
-#: src/main/connections.c:960 src/main/connections.c:1112
-#: src/main/connections.c:1732 src/main/connections.c:2931
-#: src/main/connections.c:4622
+#: src/main/connections.c:963 src/main/connections.c:1115
+#: src/main/connections.c:1738 src/main/connections.c:2937
+#: src/main/connections.c:4628
 msgid "only first element of 'description' argument used"
 msgstr "использован только первый элемент аргумента 'description'"
 
-#: src/main/connections.c:977
+#: src/main/connections.c:980
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "fifo(\"\") поддерживает только open = \"w+\" и open = \"w+b\": использую "
 "второе"
 
-#: src/main/connections.c:990 src/main/connections.c:1148
-#: src/main/connections.c:1797 src/main/connections.c:2896
-#: src/main/connections.c:2950 src/main/connections.c:3000
-#: src/main/connections.c:3275 src/main/connections.c:3380
-#: src/main/connections.c:3540 src/main/connections.c:3763
-#: src/main/connections.c:4090 src/main/connections.c:4203
-#: src/main/connections.c:4412 src/main/connections.c:4756 src/main/dcf.c:57
-#: src/main/deparse.c:314 src/main/deparse.c:400 src/main/saveload.c:2255
+#: src/main/connections.c:993 src/main/connections.c:1151
+#: src/main/connections.c:1803 src/main/connections.c:2902
+#: src/main/connections.c:2956 src/main/connections.c:3006
+#: src/main/connections.c:3281 src/main/connections.c:3386
+#: src/main/connections.c:3546 src/main/connections.c:3769
+#: src/main/connections.c:4096 src/main/connections.c:4209
+#: src/main/connections.c:4418 src/main/connections.c:4762 src/main/dcf.c:57
+#: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2255
 #: src/main/saveload.c:2335 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
 #: src/main/serialize.c:1890 src/main/source.c:260
 msgid "cannot open the connection"
 msgstr "не могу открыть соединение"
 
-#: src/main/connections.c:1007
+#: src/main/connections.c:1010
 msgid "fifo connections are not available on this system"
 msgstr "fifo соединения недоступны в этой системе"
 
-#: src/main/connections.c:1039
+#: src/main/connections.c:1042
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
 msgstr "не могу открыть pipe() командой '%s': %s"
 
-#: src/main/connections.c:1206 src/main/connections.c:1525
+#: src/main/connections.c:1210 src/main/connections.c:1531
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
 msgstr "не могу открыть сжатый файл '%s', возможная причина -- '%s'"
 
-#: src/main/connections.c:1246
+#: src/main/connections.c:1250
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = \"end\" не разработан для gzfile-соединений"
 
-#: src/main/connections.c:1251
+#: src/main/connections.c:1255
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "поиск gzfile-соединения вернул внутреннюю ошибку"
 
-#: src/main/connections.c:1285 src/main/connections.c:1289
-#: src/main/connections.c:1295 src/main/connections.c:1312
+#: src/main/connections.c:1289 src/main/connections.c:1293
+#: src/main/connections.c:1299 src/main/connections.c:1316
 msgid "allocation of gzfile connection failed"
 msgstr "выделение gzfile-соединения не удалось"
 
-#: src/main/connections.c:1340
+#: src/main/connections.c:1345
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
 msgstr "не могу открыть bzip2-файл '%s', возможная причина -- '%s'"
 
-#: src/main/connections.c:1349
+#: src/main/connections.c:1354
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "файл '%s', по-видимому, сжат не bzip2"
 
-#: src/main/connections.c:1358
+#: src/main/connections.c:1363
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr "включить архивирование bzip2 для файла '%s' не удалось"
 
-#: src/main/connections.c:1413
+#: src/main/connections.c:1418
 msgid "allocation of overflow buffer for bzfile failed"
 msgstr "выделение буфера переполнения для bzfile закончилось неуспешно"
 
-#: src/main/connections.c:1420
+#: src/main/connections.c:1425
 #, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr "файл '%s', по-видимому, сжат не bzip2"
 
-#: src/main/connections.c:1466 src/main/connections.c:1470
-#: src/main/connections.c:1476 src/main/connections.c:1493
+#: src/main/connections.c:1471 src/main/connections.c:1475
+#: src/main/connections.c:1481 src/main/connections.c:1498
 msgid "allocation of bzfile connection failed"
 msgstr "выделение bzfile-соединения не удалось"
 
-#: src/main/connections.c:1538 src/main/connections.c:5557
+#: src/main/connections.c:1544 src/main/connections.c:5563
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "не могу включить декодер lzma, ошибка %d"
 
-#: src/main/connections.c:1554
+#: src/main/connections.c:1560
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
 msgstr "не могу включить кодер lzma, ошибка %d"
 
-#: src/main/connections.c:1682 src/main/connections.c:1686
-#: src/main/connections.c:1692 src/main/connections.c:1710
+#: src/main/connections.c:1688 src/main/connections.c:1692
+#: src/main/connections.c:1698 src/main/connections.c:1716
 msgid "allocation of xzfile connection failed"
 msgstr "выделение xzfile-соединения не удалось"
 
-#: src/main/connections.c:1769
+#: src/main/connections.c:1775
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "это %s-архивированный файл, который не поддерживает данная сборка R"
 
-#: src/main/connections.c:1864 src/modules/X11/devX11.c:3272
+#: src/main/connections.c:1870 src/modules/X11/devX11.c:3272
 msgid "memory allocation to copy clipboard failed"
 msgstr "выделение памяти для копирования буфера обмена не удалось"
 
-#: src/main/connections.c:1869 src/modules/X11/devX11.c:3251
+#: src/main/connections.c:1875 src/modules/X11/devX11.c:3251
 #: src/modules/X11/devX11.c:3256
 msgid "clipboard cannot be opened or contains no text"
 msgstr "буфер обмена не может быть открыт или не содержит текста"
 
-#: src/main/connections.c:1880
+#: src/main/connections.c:1886
 msgid "memory allocation to open clipboard failed"
 msgstr "выделение памяти для открытия буфера обмена не удалось"
 
-#: src/main/connections.c:1952
+#: src/main/connections.c:1958
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "попытка поиска вне области буфера обмена"
 
-#: src/main/connections.c:1995
+#: src/main/connections.c:2001
 msgid "clipboard connection is open for reading only"
 msgstr "соединение с буфером обмена открыто только для чтения"
 
-#: src/main/connections.c:2015
+#: src/main/connections.c:2021
 msgid "clipboard buffer is full and output lost"
 msgstr "буфер обмена полон, вывод потерян"
 
-#: src/main/connections.c:2036
+#: src/main/connections.c:2042
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "'mode' для буфера обмена должна быть 'r' или 'w'"
 
-#: src/main/connections.c:2039
+#: src/main/connections.c:2045
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "'mode' для буфера обмена должна быть 'r' в  Unix"
 
-#: src/main/connections.c:2042 src/main/connections.c:2048
-#: src/main/connections.c:2054 src/main/connections.c:2071
+#: src/main/connections.c:2048 src/main/connections.c:2054
+#: src/main/connections.c:2060 src/main/connections.c:2077
 msgid "allocation of clipboard connection failed"
 msgstr "выделение соединения с буфером обмена не удалось"
 
-#: src/main/connections.c:2140 src/main/connections.c:2144
-#: src/main/connections.c:2150
+#: src/main/connections.c:2146 src/main/connections.c:2150
+#: src/main/connections.c:2156
 msgid "allocation of terminal connection failed"
 msgstr "выделение соединения с терминалом не удалось"
 
-#: src/main/connections.c:2283
+#: src/main/connections.c:2289
 msgid "attempting to add too many elements to raw vector"
 msgstr ""
 "попытка добавления слишком большого количества элементов в простой вектор"
 
-#: src/main/connections.c:2335
+#: src/main/connections.c:2341
 msgid "attempt to seek outside the range of the raw connection"
 msgstr "попытка поиска вне области простого соединения"
 
-#: src/main/connections.c:2346 src/main/connections.c:2350
-#: src/main/connections.c:2356 src/main/connections.c:2382
+#: src/main/connections.c:2352 src/main/connections.c:2356
+#: src/main/connections.c:2362 src/main/connections.c:2388
 msgid "allocation of raw connection failed"
 msgstr "размещение простого соединения не удалось"
 
-#: src/main/connections.c:2436
+#: src/main/connections.c:2442
 msgid "'con' is not a rawConnection"
 msgstr "'con' не является rawConnection"
 
-#: src/main/connections.c:2439
+#: src/main/connections.c:2445
 msgid "'con' is not an output rawConnection"
 msgstr "'con' не является выходным rawConnection"
 
-#: src/main/connections.c:2475
+#: src/main/connections.c:2481
 msgid "cannot allocate memory for text connection"
 msgstr "не могу выделить память для текстового соединения"
 
-#: src/main/connections.c:2523
+#: src/main/connections.c:2529
 msgid "seek is not relevant for text connection"
 msgstr "поиск для текстового соединения неуместен"
 
-#: src/main/connections.c:2531 src/main/connections.c:2535
-#: src/main/connections.c:2541 src/main/connections.c:2554
-#: src/main/connections.c:2731 src/main/connections.c:2735
-#: src/main/connections.c:2741 src/main/connections.c:2754
-#: src/main/connections.c:2760
+#: src/main/connections.c:2537 src/main/connections.c:2541
+#: src/main/connections.c:2547 src/main/connections.c:2560
+#: src/main/connections.c:2737 src/main/connections.c:2741
+#: src/main/connections.c:2747 src/main/connections.c:2760
+#: src/main/connections.c:2766
 msgid "allocation of text connection failed"
 msgstr "выделение текстового соединения не удалось"
 
-#: src/main/connections.c:2708
+#: src/main/connections.c:2714
 msgid "text connection: appending to a non-existent char vector"
 msgstr "текстовое соединение: добавление к несуществующему текстовому вектору"
 
-#: src/main/connections.c:2812
+#: src/main/connections.c:2818
 msgid "unsupported mode"
 msgstr "неподдерживаемый тип"
 
-#: src/main/connections.c:2835
+#: src/main/connections.c:2841
 msgid "'con' is not a textConnection"
 msgstr "'con' не является текстовым соединением"
 
-#: src/main/connections.c:2838
+#: src/main/connections.c:2844
 msgid "'con' is not an output textConnection"
 msgstr "'con' не является выходным текстовым соединением"
 
-#: src/main/connections.c:2911
+#: src/main/connections.c:2917
 msgid "sockets are not available on this system"
 msgstr "для этой системы сокеты недоступны"
 
-#: src/main/connections.c:2980 src/main/connections.c:3029
-#: src/main/connections.c:3040 src/main/connections.c:3087
-#: src/main/connections.c:3108 src/main/connections.c:3131
-#: src/main/connections.c:3143 src/main/connections.c:3255
-#: src/main/connections.c:3365 src/main/connections.c:5057
+#: src/main/connections.c:2986 src/main/connections.c:3035
+#: src/main/connections.c:3046 src/main/connections.c:3093
+#: src/main/connections.c:3114 src/main/connections.c:3137
+#: src/main/connections.c:3149 src/main/connections.c:3261
+#: src/main/connections.c:3371 src/main/connections.c:5063
 msgid "'con' is not a connection"
 msgstr "'con' не является соединением"
 
-#: src/main/connections.c:2983
+#: src/main/connections.c:2989
 msgid "cannot open standard connections"
 msgstr "не могу открыть стандартные соединения"
 
-#: src/main/connections.c:2985
+#: src/main/connections.c:2991
 msgid "connection is already open"
 msgstr "соединение уже открыто"
 
-#: src/main/connections.c:3018
+#: src/main/connections.c:3024
 msgid "unknown 'rw' value"
 msgstr "неизвестное 'rw' значение"
 
-#: src/main/connections.c:3089
+#: src/main/connections.c:3095
 msgid "cannot close standard connections"
 msgstr "не могу закрыть стандартные соединения"
 
-#: src/main/connections.c:3092
+#: src/main/connections.c:3098
 msgid "cannot close output sink connection"
 msgstr "не могу закрыть выходное sink-соединение"
 
-#: src/main/connections.c:3094
+#: src/main/connections.c:3100
 msgid "cannot close messages sink connection"
 msgstr "не могу закрыть sink-соединение для сообщений"
 
-#: src/main/connections.c:3110 src/main/connections.c:4780
+#: src/main/connections.c:3116 src/main/connections.c:4786
 #: src/main/serialize.c:1660 src/main/serialize.c:1668
 msgid "connection is not open"
 msgstr "соединение не открыто"
 
-#: src/main/connections.c:3203 src/main/connections.c:3215
+#: src/main/connections.c:3209 src/main/connections.c:3221
 msgid "Line longer than buffer size"
 msgstr "Строка длиннее чем размер буфера"
 
-#: src/main/connections.c:3282 src/main/connections.c:3284
-#: src/main/connections.c:3548 src/main/connections.c:4074
-#: src/main/connections.c:4098 src/main/dcf.c:64 src/main/scan.c:907
+#: src/main/connections.c:3288 src/main/connections.c:3290
+#: src/main/connections.c:3554 src/main/connections.c:4080
+#: src/main/connections.c:4104 src/main/dcf.c:64 src/main/scan.c:907
 #: src/main/scan.c:911 src/main/scan.c:1018 src/main/scan.c:1022
 #: src/main/serialize.c:1662 src/main/source.c:267
 msgid "cannot read from this connection"
 msgstr "не могу читать из этого соединения"
 
-#: src/main/connections.c:3296 src/main/connections.c:3315
+#: src/main/connections.c:3302 src/main/connections.c:3321
 msgid "cannot allocate buffer in readLines"
 msgstr "не могу разместить буфер в readLines"
 
-#: src/main/connections.c:3337
+#: src/main/connections.c:3343
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr "неполная последняя строка найдена в '%s'"
 
-#: src/main/connections.c:3343
+#: src/main/connections.c:3349
 msgid "too few lines read in readLines"
 msgstr "слишком мало строк прочитано readLines"
 
-#: src/main/connections.c:3446
+#: src/main/connections.c:3452
 msgid "incomplete string at end of file has been discarded"
 msgstr "неполная строка в конце файла пропущена"
 
-#: src/main/connections.c:3452
+#: src/main/connections.c:3458
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "ограничитель 'null' не найден: разбиваю строку по 10000 байтов"
 
-#: src/main/connections.c:3516
+#: src/main/connections.c:3522
 msgid "can only read from a binary connection"
 msgstr "могу только читать из бинарного соединения"
 
-#: src/main/connections.c:3565 src/main/connections.c:3844
+#: src/main/connections.c:3571 src/main/connections.c:3850
 msgid "size changing is not supported for complex vectors"
 msgstr "изменение размера не поддерживается для комплексных векторов"
 
-#: src/main/connections.c:3590 src/main/connections.c:3608
-#: src/main/connections.c:3634 src/main/connections.c:3678
-#: src/main/connections.c:3698 src/main/connections.c:3825
-#: src/main/connections.c:3838 src/main/connections.c:3897
-#: src/main/connections.c:3929
+#: src/main/connections.c:3596 src/main/connections.c:3614
+#: src/main/connections.c:3640 src/main/connections.c:3684
+#: src/main/connections.c:3704 src/main/connections.c:3831
+#: src/main/connections.c:3844 src/main/connections.c:3903
+#: src/main/connections.c:3935
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "размер %d неизвестен для этой машины"
 
-#: src/main/connections.c:3619
+#: src/main/connections.c:3625
 msgid "raw is always of size 1"
 msgstr "'raw' всегда единичного размера"
 
-#: src/main/connections.c:3728
+#: src/main/connections.c:3734
 msgid "'x' is not an atomic vector type"
 msgstr "'x' не является элементарным вектором"
 
-#: src/main/connections.c:3734
+#: src/main/connections.c:3740
 msgid "can only write to a binary connection"
 msgstr "могу только писать в бинарное соединение"
 
-#: src/main/connections.c:3753
+#: src/main/connections.c:3759
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "только 2^31-1 байтов можно записать в простой вектор"
 
-#: src/main/connections.c:3755
+#: src/main/connections.c:3761
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
 msgstr "только 2^31-1 байта можно записать в один вызов readBin()"
 
-#: src/main/connections.c:3804 src/main/connections.c:3957
-#: src/main/connections.c:4230 src/main/connections.c:4270
+#: src/main/connections.c:3810 src/main/connections.c:3963
+#: src/main/connections.c:4236 src/main/connections.c:4276
 msgid "problem writing to connection"
 msgstr "проблема записи в соединение"
 
-#: src/main/connections.c:3849
+#: src/main/connections.c:3855
 msgid "size changing is not supported for raw vectors"
 msgstr "изменение размера не поддерживается для простых векторов"
 
-#: src/main/connections.c:3992 src/main/connections.c:3996
-#: src/main/connections.c:4035
+#: src/main/connections.c:3998 src/main/connections.c:4002
+#: src/main/connections.c:4041
 msgid "invalid UTF-8 input in readChar()"
 msgstr "неправильный UTF-8 ввод в readChar()"
 
-#: src/main/connections.c:4101
+#: src/main/connections.c:4107
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "могу читать только побайтно на не-UTF-8 MBCS локали"
 
-#: src/main/connections.c:4170
+#: src/main/connections.c:4176
 msgid "'object' is too short"
 msgstr "'object' слишком короткий"
 
-#: src/main/connections.c:4219
+#: src/main/connections.c:4225
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr "writeChar: запрошено больше байтов, чем есть в строке -- буду обнулять"
 
-#: src/main/connections.c:4244
+#: src/main/connections.c:4250
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: запрошено больше символов, чем есть в строке -- буду обнулять"
 
-#: src/main/connections.c:4304 src/main/connections.c:4307
-#: src/main/connections.c:4345 src/main/connections.c:4350
+#: src/main/connections.c:4310 src/main/connections.c:4313
+#: src/main/connections.c:4351 src/main/connections.c:4356
 msgid "could not allocate space for pushBack"
 msgstr "не могу разместить место для pushBack"
 
-#: src/main/connections.c:4334
+#: src/main/connections.c:4340
 msgid "can only push back on open readable connections"
 msgstr ""
 "могу только выталкивать назад из открытых доступных для чтения соединений"
 
-#: src/main/connections.c:4336
+#: src/main/connections.c:4342
 msgid "can only push back on text-mode connections"
 msgstr "могу только выталкивать назад из текстовых соединений"
 
-#: src/main/connections.c:4397 src/main/connections.c:4467
+#: src/main/connections.c:4403 src/main/connections.c:4473
 msgid "sink stack is full"
 msgstr "стек 'sink' полон"
 
-#: src/main/connections.c:4400
+#: src/main/connections.c:4406
 msgid "cannot switch output to stdin"
 msgstr "не могу переключить вывод на stdin"
 
-#: src/main/connections.c:4427
+#: src/main/connections.c:4433
 msgid "no sink to remove"
 msgstr "нет 'sink' для удаления"
 
-#: src/main/connections.c:4549
+#: src/main/connections.c:4555
 #, c-format
 msgid "there is no connection %d"
 msgstr "соединение %d не существует"
 
-#: src/main/connections.c:4684
+#: src/main/connections.c:4690
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "файл(\"\") поддерживает только open = \"w+\" and open = \"w+b\": использую "
 "второе"
 
-#: src/main/connections.c:4738 src/modules/internet/internet.c:113
+#: src/main/connections.c:4744 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:568
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
-#: src/main/connections.c:4822
+#: src/main/connections.c:4828
 msgid "file stream does not have gzip magic number"
 msgstr "файловый поток не имеет магического числа gzip"
 
-#: src/main/connections.c:4833
+#: src/main/connections.c:4839
 msgid "file stream does not have valid gzip header"
 msgstr "файловый поток не имеет правильного заголовка gzip"
 
-#: src/main/connections.c:4898
+#: src/main/connections.c:4904
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "ошибка записи во время gzcon-соединения"
 
-#: src/main/connections.c:5000
+#: src/main/connections.c:5006
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "ошибка crc %x %x\n"
 
-#: src/main/connections.c:5027
+#: src/main/connections.c:5033
 msgid "write error on 'gzcon' connection"
 msgstr "ошибка записи в gzcon-соединение"
 
-#: src/main/connections.c:5061
+#: src/main/connections.c:5067
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' должен быть один из 0 ... 9"
 
-#: src/main/connections.c:5064
+#: src/main/connections.c:5070
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' должно быть TRUE или FALSE"
 
-#: src/main/connections.c:5067
+#: src/main/connections.c:5073
 msgid "this is already a gzcon connection"
 msgstr "это уже gzcon-соединение"
 
-#: src/main/connections.c:5073
+#: src/main/connections.c:5079
 msgid "can only use read- or write- binary connections"
 msgstr "могу только использовать read- или write- бинарные соединения"
 
-#: src/main/connections.c:5076
+#: src/main/connections.c:5082
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "использование текстового соединения 'file' может не работать как положено"
 
-#: src/main/connections.c:5079
+#: src/main/connections.c:5085
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2361,24 +2358,24 @@ msgstr ""
 "не могу создать соединение gzcon из textConnection, открытого для записи; "
 "возможно, поможет rawConnection"
 
-#: src/main/connections.c:5082 src/main/connections.c:5086
-#: src/main/connections.c:5093 src/main/connections.c:5107
+#: src/main/connections.c:5088 src/main/connections.c:5092
+#: src/main/connections.c:5099 src/main/connections.c:5113
 msgid "allocation of 'gzcon' connection failed"
 msgstr "выделить gzcon-соединение не удалось"
 
-#: src/main/connections.c:5265
+#: src/main/connections.c:5271
 msgid "not a list of sockets"
 msgstr "не является списком сокетов"
 
-#: src/main/connections.c:5270
+#: src/main/connections.c:5276
 msgid "bad write indicators"
 msgstr "плохие индикаторы записи"
 
-#: src/main/connections.c:5281
+#: src/main/connections.c:5287
 msgid "not a socket connection"
 msgstr "не сокет-соединение"
 
-#: src/main/connections.c:5502
+#: src/main/connections.c:5508
 msgid "unknown compression, assuming none"
 msgstr "неизвестный архиватор, предполагаю, что архивации не было"
 
@@ -2537,7 +2534,7 @@ msgstr "'tracemem' бесполезна для слабых ссылок и вн
 msgid "R was not compiled with support for memory profiling"
 msgstr "R не был скомпилирован с поддержкой профилирования памяти"
 
-#: src/main/deparse.c:149 src/main/plot.c:912 src/main/plot.c:1448
+#: src/main/deparse.c:150 src/main/plot.c:912 src/main/plot.c:1448
 #: src/main/plot.c:1771 src/main/plot.c:1839 src/main/plot.c:1917
 #: src/main/plot.c:1986 src/main/plot.c:2062 src/main/plot.c:2160
 #: src/main/plot.c:2238 src/main/plot.c:2519 src/main/plot.c:2697
@@ -2547,46 +2544,46 @@ msgstr "R не был скомпилирован с поддержкой про�
 msgid "too few arguments"
 msgstr "слишком мало аргументов"
 
-#: src/main/deparse.c:156
+#: src/main/deparse.c:157
 msgid "invalid 'cutoff' for deparse, using default"
 msgstr "неправильный 'cutoff' для 'deparse', использую умолчание"
 
-#: src/main/deparse.c:235
+#: src/main/deparse.c:236
 msgid "deparse of an S4 object will not be source()able"
 msgstr "'deparse' S4-объекта не будет доступен для source()"
 
-#: src/main/deparse.c:237
+#: src/main/deparse.c:238
 msgid "deparse may be incomplete"
 msgstr "'deparse' может быть неполным"
 
-#: src/main/deparse.c:239
+#: src/main/deparse.c:240
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr "'deparse' может быть недоступным для source() в R < 2.7.0"
 
-#: src/main/deparse.c:331 src/main/deparse.c:423 src/main/deparse.c:429
+#: src/main/deparse.c:332 src/main/deparse.c:424 src/main/deparse.c:430
 msgid "wrote too few characters"
 msgstr "записано слишком мало символов"
 
-#: src/main/deparse.c:353
+#: src/main/deparse.c:354
 msgid "character arguments expected"
 msgstr "требуются текстовые аргументы"
 
-#: src/main/deparse.c:356
+#: src/main/deparse.c:357
 msgid "zero length argument"
 msgstr "нулевой аргумент"
 
-#: src/main/deparse.c:363
+#: src/main/deparse.c:364
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts' должен быть малым положительным целым числом"
 
-#: src/main/deparse.c:373 src/main/envir.c:1685 src/main/envir.c:1767
-#: src/main/eval.c:410 src/main/eval.c:1035 src/main/eval.c:3333
+#: src/main/deparse.c:374 src/main/envir.c:1685 src/main/envir.c:1767
+#: src/main/eval.c:410 src/main/eval.c:1035 src/main/eval.c:3335
 #: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2373
 #, c-format
 msgid "object '%s' not found"
 msgstr "объект '%s' не найден"
 
-#: src/main/deparse.c:1432
+#: src/main/deparse.c:1436
 msgid "badly formed function expression"
 msgstr "плохо сформированное выражение для функции"
 
@@ -2655,7 +2652,7 @@ msgstr ""
 "'имя' должно быть строкой (единичной длины) или естественной символьной "
 "ссылкой"
 
-#: src/main/dotcode.c:199 src/main/dotcode.c:822
+#: src/main/dotcode.c:199 src/main/dotcode.c:824
 msgid "too many arguments in foreign function call"
 msgstr "слишком много аргументов при вызове внешней функции"
 
@@ -2701,110 +2698,110 @@ msgstr "текстовые переменные должны быть дубли
 msgid "only first string in char vector used in .Fortran"
 msgstr "только первая строка текстового вектора использована в .Fortran"
 
-#: src/main/dotcode.c:397 src/main/dotcode.c:523
+#: src/main/dotcode.c:397 src/main/dotcode.c:524
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "не поддерживаемая кодировка '%s'"
 
-#: src/main/dotcode.c:412
+#: src/main/dotcode.c:413
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "проблема конвертации при перекодировке '%s'"
 
-#: src/main/dotcode.c:430
+#: src/main/dotcode.c:431
 msgid "lists must be duplicated in .C"
 msgstr "списки должны быть дублированы в .C"
 
-#: src/main/dotcode.c:440 src/main/dotcode.c:452
+#: src/main/dotcode.c:441 src/main/dotcode.c:453
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "неправильный режим для передачи в Fortran (аргумент %d)"
 
-#: src/main/dotcode.c:537
+#: src/main/dotcode.c:539
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "проблема конвертации при перекодировке из '%s'"
 
-#: src/main/dotcode.c:603
+#: src/main/dotcode.c:605
 msgid "NAOK used more than once"
 msgstr "NAOK использован более одного раза"
 
-#: src/main/dotcode.c:607
+#: src/main/dotcode.c:609
 msgid "DUP used more than once"
 msgstr "DUP использован более одного раза"
 
-#: src/main/dotcode.c:613
+#: src/main/dotcode.c:615
 msgid "DLL name is too long"
 msgstr "имя DLL слишком длинное"
 
-#: src/main/dotcode.c:616 src/main/dotcode.c:676 src/main/dotcode.c:682
+#: src/main/dotcode.c:618 src/main/dotcode.c:678 src/main/dotcode.c:684
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE использован более одного раза"
 
-#: src/main/dotcode.c:655
+#: src/main/dotcode.c:657
 msgid "PACKAGE argument must be a single character string"
 msgstr "аргумент PACKAGE должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:661
+#: src/main/dotcode.c:663
 msgid "PACKAGE argument is too long"
 msgstr "аргумент PACKAGE слишком длинный"
 
-#: src/main/dotcode.c:705 src/main/dotcode.c:713
+#: src/main/dotcode.c:707 src/main/dotcode.c:715
 msgid "ENCODING used more than once"
 msgstr "ENCODING использована больше одного раза"
 
-#: src/main/dotcode.c:707 src/main/dotcode.c:715
+#: src/main/dotcode.c:709 src/main/dotcode.c:717
 msgid "ENCODING argument must be a single character string"
 msgstr "аргумент ENCODING должен быть простой текстовой строкой"
 
-#: src/main/dotcode.c:732
+#: src/main/dotcode.c:734
 msgid "no arguments supplied"
 msgstr "не заданы аргументы"
 
-#: src/main/dotcode.c:733 src/main/seq.c:642
+#: src/main/dotcode.c:735 src/main/seq.c:642
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: src/main/dotcode.c:786 src/main/dotcode.c:829 src/main/dotcode.c:1657
+#: src/main/dotcode.c:788 src/main/dotcode.c:831 src/main/dotcode.c:1659
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for '%s'"
 msgstr "Неправильное количество аргументов (%d), ожидается %d для '%s' "
 
-#: src/main/dotcode.c:1486 src/main/dotcode.c:2289
+#: src/main/dotcode.c:1488 src/main/dotcode.c:2291
 msgid "too many arguments, sorry"
 msgstr "слишком много аргументов, извините"
 
-#: src/main/dotcode.c:1518 src/main/dotcode.c:1535
+#: src/main/dotcode.c:1520 src/main/dotcode.c:1537
 msgid "Invalid graphics state"
 msgstr "Неправильное графическое состояние"
 
-#: src/main/dotcode.c:1608
+#: src/main/dotcode.c:1610
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "значение NULL для DLLInfoReference во время поиска DLL"
 
-#: src/main/dotcode.c:1682
+#: src/main/dotcode.c:1684
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Неправильный тип аргумента %d при вызове %s"
 
-#: src/main/dotcode.c:2383
+#: src/main/dotcode.c:2385
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "тип \"%s\" не поддерживается при межязыковых вызовах"
 
-#: src/main/dotcode.c:2395
+#: src/main/dotcode.c:2397
 msgid "invalid function in call_R"
 msgstr "неправильная функция в call_R"
 
-#: src/main/dotcode.c:2397
+#: src/main/dotcode.c:2399
 msgid "invalid argument count in call_R"
 msgstr "неправильный счет аргументов в call_R"
 
-#: src/main/dotcode.c:2399
+#: src/main/dotcode.c:2401
 msgid "invalid return value count in call_R"
 msgstr "неправильный счет возвращаемого значения в call_R"
 
-#: src/main/dotcode.c:2433
+#: src/main/dotcode.c:2435
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "режим '%s' не поддерживается в call_R"
@@ -2814,80 +2811,80 @@ msgstr "режим '%s' не поддерживается в call_R"
 msgid " not overwriting file '%s"
 msgstr "перезапись файла '%s' не выполнена"
 
-#: src/main/dounzip.c:255
+#: src/main/dounzip.c:256
 #, c-format
 msgid "zip file '%s' cannot be opened"
 msgstr "zip файл '%s' не может быть открыт"
 
-#: src/main/dounzip.c:309
+#: src/main/dounzip.c:310
 msgid "invalid zip name argument"
 msgstr "неправильный аргумент имени zip"
 
-#: src/main/dounzip.c:312 src/main/dounzip.c:405
+#: src/main/dounzip.c:313 src/main/dounzip.c:406
 msgid "zip path is too long"
 msgstr "путь zip слишком длинный"
 
-#: src/main/dounzip.c:329
+#: src/main/dounzip.c:330
 msgid "'exdir' is too long"
 msgstr "'exdir' слишком длинное"
 
-#: src/main/dounzip.c:332
+#: src/main/dounzip.c:333
 msgid "'exdir' does not exist"
 msgstr "'exdir' не существует"
 
-#: src/main/dounzip.c:360
+#: src/main/dounzip.c:361
 msgid "requested file not found in the zip file"
 msgstr "запрошенный файл не найден в zip-файле"
 
-#: src/main/dounzip.c:363
+#: src/main/dounzip.c:364
 msgid "zip file is corrupt"
 msgstr "zip-файл поврежден"
 
-#: src/main/dounzip.c:366
+#: src/main/dounzip.c:367
 msgid "CRC error in zip file"
 msgstr "ошибка CRC в zip-файле"
 
-#: src/main/dounzip.c:370
+#: src/main/dounzip.c:371
 msgid "internal error in unz code"
 msgstr "внутренняя ошибка в коде unz"
 
-#: src/main/dounzip.c:373
+#: src/main/dounzip.c:374
 msgid "write error in extracting from zip file"
 msgstr "ошибка записи при распаковке zip-файла"
 
-#: src/main/dounzip.c:376
+#: src/main/dounzip.c:377
 #, c-format
 msgid "error %d in extracting from zip file"
 msgstr "ошибка %d при распаковке zip-файла"
 
-#: src/main/dounzip.c:400
+#: src/main/dounzip.c:401
 msgid "unz connections can only be opened for reading"
 msgstr "unz-соединение может быть открыто только для чтения"
 
-#: src/main/dounzip.c:411
+#: src/main/dounzip.c:412
 msgid "invalid description of unz connection"
 msgstr "неправильное задание unz-соединения"
 
-#: src/main/dounzip.c:417
+#: src/main/dounzip.c:418
 #, c-format
 msgid "cannot open zip file '%s'"
 msgstr "не могу открыть zip-файл '%s'"
 
-#: src/main/dounzip.c:421
+#: src/main/dounzip.c:422
 #, c-format
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr "не могу найти файл '%s' в zip-файле '%s'"
 
-#: src/main/dounzip.c:465
+#: src/main/dounzip.c:466
 msgid "printing not enabled for this connection"
 msgstr "печать для этого соединения невозможна"
 
-#: src/main/dounzip.c:472
+#: src/main/dounzip.c:473
 msgid "write not enabled for this connection"
 msgstr "запись для этого соединения невозможна"
 
-#: src/main/dounzip.c:492 src/main/dounzip.c:496 src/main/dounzip.c:502
-#: src/main/dounzip.c:519
+#: src/main/dounzip.c:493 src/main/dounzip.c:497 src/main/dounzip.c:503
+#: src/main/dounzip.c:520
 msgid "allocation of unz connection failed"
 msgstr "размещение unz-соединения не удалось"
 
@@ -3053,7 +3050,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d использовано в неправильном контексте, нет ... чтобы найти"
 
 #: src/main/envir.c:1319 src/main/envir.c:1763 src/main/eval.c:414
-#: src/main/eval.c:3324
+#: src/main/eval.c:3326
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "аргумент \"%s\" пропущен, умолчаний нет"
@@ -3151,108 +3148,107 @@ msgstr "аргумент должен быть окружением"
 msgid "arguments must be symbolic"
 msgstr "аргументы должны быть символическими"
 
-#: src/main/envir.c:2702 src/main/random.c:34 src/main/random.c:568
-msgid "invalid arguments"
-msgstr "неправильные аргументы"
-
-#: src/main/envir.c:2760
+#: src/main/envir.c:2709
 msgid "no enclosing environment"
 msgstr "нет вложенного окружения"
 
-#: src/main/envir.c:2810
+#: src/main/envir.c:2759
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "в списке поиска нет пункта по имени \"%s\""
 
-#: src/main/envir.c:2833
+#: src/main/envir.c:2782
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "использование 'as.environment(NULL)' не одобряется"
 
-#: src/main/envir.c:2839
+#: src/main/envir.c:2788
 msgid "S4 object does not extend class \"environment\""
 msgstr "объект S4 не расширяет класс \"environment\""
 
-#: src/main/envir.c:2854
+#: src/main/envir.c:2803
 msgid "invalid object for 'as.environment'"
 msgstr "неправильный объект для 'as.environment'"
 
-#: src/main/envir.c:2880 src/main/envir.c:2908 src/main/envir.c:2937
-#: src/main/envir.c:2958 src/main/envir.c:2981 src/main/envir.c:3016
-#: src/main/envir.c:3037
+#: src/main/envir.c:2829 src/main/envir.c:2857 src/main/envir.c:2886
+#: src/main/envir.c:2907 src/main/envir.c:2930 src/main/envir.c:2965
+#: src/main/envir.c:2986
 msgid "not an environment"
 msgstr "не окружение"
 
-#: src/main/envir.c:2932 src/main/envir.c:2953 src/main/envir.c:2974
-#: src/main/envir.c:3011 src/main/envir.c:3032 src/main/envir.c:3131
+#: src/main/envir.c:2881 src/main/envir.c:2902 src/main/envir.c:2923
+#: src/main/envir.c:2960 src/main/envir.c:2981 src/main/envir.c:3080
 msgid "not a symbol"
 msgstr "не символ"
 
-#: src/main/envir.c:2945 src/main/envir.c:2966 src/main/envir.c:3024
-#: src/main/envir.c:3045
+#: src/main/envir.c:2894 src/main/envir.c:2915 src/main/envir.c:2973
+#: src/main/envir.c:2994
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "нет связи для \"%s\""
 
-#: src/main/envir.c:2976
+#: src/main/envir.c:2925
 msgid "not a function"
 msgstr "не функция"
 
-#: src/main/envir.c:2984 src/main/envir.c:3000
+#: src/main/envir.c:2933 src/main/envir.c:2949
 msgid "symbol already has a regular binding"
 msgstr "символ уже имеет правильную связь"
 
-#: src/main/envir.c:2986 src/main/envir.c:3002
+#: src/main/envir.c:2935 src/main/envir.c:2951
 msgid "cannot change active binding if binding is locked"
 msgstr "не могу изменить активную связь когда связь блокирована"
 
-#: src/main/envir.c:3090
+#: src/main/envir.c:3039
 msgid "unknown op"
 msgstr "неизвестный op"
 
-#: src/main/envir.c:3135
+#: src/main/envir.c:3084
 msgid "cannot unbind a locked binding"
 msgstr "не могу освободить блокированную связь"
 
-#: src/main/envir.c:3137
+#: src/main/envir.c:3086
 msgid "cannot unbind an active binding"
 msgstr "не могу освободить активную связь"
 
-#: src/main/envir.c:3272
-msgid "bad name space name"
+#: src/main/envir.c:3221
+#, fuzzy
+msgid "bad namespace name"
 msgstr "неправильное имя пространства имен"
 
-#: src/main/envir.c:3284
-msgid "name space already registered"
+#: src/main/envir.c:3233
+#, fuzzy
+msgid "namespace already registered"
 msgstr "пространство имен уже зарегистрировано"
 
-#: src/main/envir.c:3296
-msgid "name space not registered"
+#: src/main/envir.c:3245
+#, fuzzy
+msgid "namespace not registered"
 msgstr "пространство имен не регистрировано"
 
-#: src/main/envir.c:3343
+#: src/main/envir.c:3292
 msgid "bad import environment argument"
 msgstr "неправильный аргумент импорта окружения"
 
-#: src/main/envir.c:3348
+#: src/main/envir.c:3297
 msgid "bad export environment argument"
 msgstr "неправильный аргумент экспорта окружения"
 
-#: src/main/envir.c:3352
+#: src/main/envir.c:3301
 msgid "length of import and export names must match"
 msgstr "длины экспортируемых и импортируемых имен должны совпадать"
 
-#: src/main/envir.c:3375
+#: src/main/envir.c:3324
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "экспортируемый символ '%s' не имеет значения"
 
 # fuzzy, c-format
-#: src/main/envir.c:3558
+#: src/main/envir.c:3507
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "неизвестная кодировка: %d"
 
-#: src/main/envir.c:3575
+#: src/main/envir.c:3524
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "внутреннее nul в строке: '%s'"
@@ -3457,11 +3453,11 @@ msgstr ""
 "исполнение расположено слишком глубоко: неопределенная рекурсия / options"
 "(expressions=)?"
 
-#: src/main/eval.c:416 src/main/eval.c:3325
+#: src/main/eval.c:416 src/main/eval.c:3327
 msgid "argument is missing, with no default"
 msgstr "аргумент пропущен, умолчаний нет"
 
-#: src/main/eval.c:517 src/main/eval.c:4317
+#: src/main/eval.c:517 src/main/eval.c:4319
 msgid "attempt to apply non-function"
 msgstr "попытка применить не-функцию"
 
@@ -3500,7 +3496,7 @@ msgstr "аргумент нулевой длины"
 msgid "non-symbol loop variable"
 msgstr "несимвольная переменная цикла"
 
-#: src/main/eval.c:1276 src/main/eval.c:4086
+#: src/main/eval.c:1276 src/main/eval.c:4088
 msgid "invalid for() loop sequence"
 msgstr "неправильная циклическая последовательность for()"
 
@@ -3508,217 +3504,217 @@ msgstr "неправильная циклическая последовател
 msgid "multi-argument returns are not permitted"
 msgstr "многоаргументные возвраты не разрешены"
 
-#: src/main/eval.c:1476
+#: src/main/eval.c:1478
 msgid "invalid (NULL) left side of assignment"
 msgstr "неправильная (NULL) левая сторона присваивания"
 
-#: src/main/eval.c:1498
+#: src/main/eval.c:1500
 msgid "target of assignment expands to non-language object"
 msgstr "цель присваивания раскрывается в неязыковой объект"
 
-#: src/main/eval.c:1534
+#: src/main/eval.c:1536
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
-#: src/main/eval.c:1594
+#: src/main/eval.c:1596
 msgid "cannot do complex assignments in base namespace"
 msgstr "не могу делать комплексные присваивания в базовом пространстве имен"
 
-#: src/main/eval.c:1596
+#: src/main/eval.c:1598
 msgid "cannot do complex assignments in base environment"
 msgstr "не могу делать комплексные присваивания в базовом окружении"
 
-#: src/main/eval.c:1633 src/main/eval.c:1660
+#: src/main/eval.c:1635 src/main/eval.c:1662
 msgid "invalid function in complex assignment"
 msgstr "неправильная функция в комплексном присвоении"
 
-#: src/main/eval.c:1738
+#: src/main/eval.c:1740
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "неправильная (do_set) левая сторона в присвоении"
 
-#: src/main/eval.c:1753
+#: src/main/eval.c:1755
 msgid "invalid assignment left-hand side"
 msgstr "неправильная левая сторона присвоения"
 
-#: src/main/eval.c:1818
+#: src/main/eval.c:1820
 #, c-format
 msgid "argument %d is empty"
 msgstr "аргумент %d пуст"
 
-#: src/main/eval.c:1821
+#: src/main/eval.c:1823
 #, c-format
 msgid "'%s' is missing"
 msgstr "'%s' отсутствует"
 
-#: src/main/eval.c:1971
+#: src/main/eval.c:1973
 msgid "invalid formal argument list for \"function\""
 msgstr "неправильный список формальных аргументов для \"функция\""
 
-#: src/main/eval.c:2052
+#: src/main/eval.c:2054
 msgid "numeric 'envir' arg not of length one"
 msgstr "числовой аргумент 'envir' не единичной длины"
 
-#: src/main/eval.c:2074 src/main/eval.c:2093
+#: src/main/eval.c:2076 src/main/eval.c:2095
 msgid "restarts not supported in 'eval'"
 msgstr "перезапуск не поддерживается в 'eval'"
 
-#: src/main/eval.c:2162 src/main/eval.c:2175
+#: src/main/eval.c:2164 src/main/eval.c:2177
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' вызвано снаружи вложения"
 
-#: src/main/eval.c:2268
+#: src/main/eval.c:2270
 msgid "value in '...' is not a promise"
 msgstr "значение в '...' не является перспективным"
 
-#: src/main/eval.c:2457 src/main/objects.c:711
+#: src/main/eval.c:2459 src/main/objects.c:711
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "слишком длинное имя вызова в '%s'"
 
-#: src/main/eval.c:2478
+#: src/main/eval.c:2480
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "у %s слишком длинное общее имя"
 
-#: src/main/eval.c:2541
+#: src/main/eval.c:2543
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Несовместимые методы (\"%s\", \"%s\") для \"%s\""
 
-#: src/main/eval.c:2605
+#: src/main/eval.c:2607
 msgid "dispatch error in group dispatch"
 msgstr "ошибка отправки в групповой отправке"
 
-#: src/main/eval.c:2918
+#: src/main/eval.c:2920
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "'%s' не является %s функцией"
 
-#: src/main/eval.c:3111
+#: src/main/eval.c:3113
 msgid "node stack overflow"
 msgstr "переполнение стека узла"
 
-#: src/main/eval.c:3117
+#: src/main/eval.c:3119
 msgid "integer stack overflow"
 msgstr "переполнение стека целых чисел"
 
-#: src/main/eval.c:3171
+#: src/main/eval.c:3173
 msgid "Bad opcode"
 msgstr "Неправильный 'opcode'"
 
-#: src/main/eval.c:3913
+#: src/main/eval.c:3915
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "неправильный тип %s в 'x %s y'"
 
-#: src/main/eval.c:4017
+#: src/main/eval.c:4019
 msgid "bytecode version mismatch; using eval"
 msgstr "несоответствие версии байтового кода; использую eval"
 
-#: src/main/eval.c:4022
+#: src/main/eval.c:4024
 msgid "bytecode version is too old"
 msgstr "версия байтового кода слишком старая"
 
-#: src/main/eval.c:4023
+#: src/main/eval.c:4025
 msgid "bytecode version is too new"
 msgstr "версия байтового кода слишком новая"
 
-#: src/main/eval.c:4028
+#: src/main/eval.c:4030
 msgid "byte code version mismatch"
 msgstr "несоответствие версии байтового кода"
 
-#: src/main/eval.c:4154
+#: src/main/eval.c:4156
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:4300 src/main/eval.c:4421
+#: src/main/eval.c:4302 src/main/eval.c:4423
 msgid "not a BUILTIN function"
 msgstr "не BUILTIN-функция"
 
-#: src/main/eval.c:4406 src/main/eval.c:4729 src/main/eval.c:4771
+#: src/main/eval.c:4408 src/main/eval.c:4731 src/main/eval.c:4773
 msgid "bad function"
 msgstr "неправильная функция"
 
-#: src/main/eval.c:4796
+#: src/main/eval.c:4798
 msgid "numeric EXPR required for switch() without named alternatives"
 msgstr ""
 "числовое выражение (EXPR) требуется для switch() без именованных альтернатив"
 
-#: src/main/eval.c:4799
+#: src/main/eval.c:4801
 msgid "bad character switch offsets"
 msgstr "неверное смещение строковых переключателей"
 
-#: src/main/eval.c:4801
+#: src/main/eval.c:4803
 msgid "bad switch names"
 msgstr "неправильное имя переключателя"
 
-#: src/main/eval.c:4815
+#: src/main/eval.c:4817
 msgid "bad numeric switch offsets"
 msgstr "неверное смещение числовых переключателей"
 
-#: src/main/eval.c:4892
+#: src/main/eval.c:4894
 msgid "cannot find index for threaded code address"
 msgstr "не могу найти индекс для нитевого адреса кода"
 
-#: src/main/eval.c:4972
+#: src/main/eval.c:4974
 msgid "invalid symbol"
 msgstr "неправильный символ"
 
-#: src/main/eval.c:5016
+#: src/main/eval.c:5018
 msgid "argument is not a byte code object"
 msgstr "аргумент не является объектом байтового кода"
 
-#: src/main/eval.c:5037
+#: src/main/eval.c:5039
 msgid "bad file name"
 msgstr "неправильное имя файла"
 
-#: src/main/eval.c:5041 src/main/eval.c:5062
+#: src/main/eval.c:5043 src/main/eval.c:5064
 msgid "unable to open 'file'"
 msgstr "не могу открыть 'file'"
 
-#: src/main/eval.c:5056 src/main/saveload.c:1930
+#: src/main/eval.c:5058 src/main/saveload.c:1930
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#: src/main/eval.c:5058 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:5060 src/main/saveload.c:1932 src/main/saveload.c:2232
 #: src/main/serialize.c:1813
 msgid "'ascii' must be logical"
 msgstr "'ascii' должно быть логическим"
 
-#: src/main/eval.c:5087 src/main/eval.c:5094
+#: src/main/eval.c:5089 src/main/eval.c:5096
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: буфер слишком мал"
 
-#: src/main/eval.c:5127 src/main/eval.c:5176
+#: src/main/eval.c:5129 src/main/eval.c:5178
 msgid "constant buffer must be a generic vector"
 msgstr "константный буфер должен быть общим вектором"
 
-#: src/main/eval.c:5146
+#: src/main/eval.c:5148
 msgid "constBuf must be a generic vector"
 msgstr "constBuf должен быть общим вектором"
 
-#: src/main/eval.c:5150
+#: src/main/eval.c:5152
 msgid "bad constCount value"
 msgstr "неверное значение constCount"
 
-#: src/main/eval.c:5178
+#: src/main/eval.c:5180
 msgid "bad constant count"
 msgstr "неверное число констант"
 
-#: src/main/eval.c:5214
+#: src/main/eval.c:5216
 msgid "profile timer in use"
 msgstr "используется профильный таймер"
 
-#: src/main/eval.c:5216
+#: src/main/eval.c:5218
 msgid "already byte code profiling"
 msgstr "уже есть побайтное профилирование"
 
-#: src/main/eval.c:5234
+#: src/main/eval.c:5236
 msgid "setting profile timer failed"
 msgstr "установить профильный таймер не удалось"
 
-#: src/main/eval.c:5251
+#: src/main/eval.c:5253
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
@@ -3767,148 +3763,143 @@ msgstr "рекурсивное использование getGraphicsEvent не 
 msgid "no graphics event handlers set"
 msgstr "нет графических обработчиков событий"
 
-#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2026
-#: src/main/gram.y:2040
+#: src/main/gram.y:144 src/main/gram.y:159 src/main/gram.y:2000
+#: src/main/gram.y:2014
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF во время чтения символа MBCS на строке %d"
 
-#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2030
-#: src/main/gram.y:2037
+#: src/main/gram.y:148 src/main/gram.y:156 src/main/gram.y:2004
+#: src/main/gram.y:2011
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "неправильный многобайтный символ при обработке на строке %d"
 
-#: src/main/gram.y:437
-#, c-format
-msgid "function is too long to keep source (at line %d)"
-msgstr "функция слишком длинна, чтобы сохранить исходник (на строке %d)"
-
-#: src/main/gram.y:1006
+#: src/main/gram.y:946
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "некорректный тип тега на строке %d"
 
-#: src/main/gram.y:1500
+#: src/main/gram.y:1474
 msgid "contextstack overflow"
 msgstr "переполнение стека контекста"
 
-#: src/main/gram.y:1736
+#: src/main/gram.y:1710
 msgid "input"
 msgstr "ввод"
 
-#: src/main/gram.y:1737
+#: src/main/gram.y:1711
 msgid "end of input"
 msgstr "конец ввода"
 
-#: src/main/gram.y:1738
+#: src/main/gram.y:1712
 msgid "string constant"
 msgstr "строковая константа"
 
-#: src/main/gram.y:1739
+#: src/main/gram.y:1713
 msgid "numeric constant"
 msgstr "числовая константа"
 
-#: src/main/gram.y:1740
+#: src/main/gram.y:1714
 msgid "symbol"
 msgstr "символ"
 
-#: src/main/gram.y:1741
+#: src/main/gram.y:1715
 msgid "assignment"
 msgstr "присвоение"
 
-#: src/main/gram.y:1742
+#: src/main/gram.y:1716
 msgid "end of line"
 msgstr "конец строки"
 
-#: src/main/gram.y:1756 src/main/gram.y:1762
+#: src/main/gram.y:1730 src/main/gram.y:1736
 #, c-format
 msgid "unexpected %s"
 msgstr "неожиданный %s"
 
-#: src/main/gram.y:1772
+#: src/main/gram.y:1746
 #, c-format
 msgid "Repeated formal argument '%s' on line %d"
 msgstr "Повторный формальный аргумент '%s' на строке %d"
 
-#: src/main/gram.y:1790
+#: src/main/gram.y:1764
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "переполнение буфера ввода на строке %d"
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1915
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr "целочисленная константа %sL содержит доли; использую числовое значение"
 
-#: src/main/gram.y:1943
+#: src/main/gram.y:1917
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "нечисловое значение %s ограничено L; использую числовое значение"
 
-#: src/main/gram.y:1954
+#: src/main/gram.y:1928
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
 msgstr "целочисленная константа %sL имеет ненужный десятичный разделитель"
 
-#: src/main/gram.y:1986
+#: src/main/gram.y:1960
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
-#: src/main/gram.y:2141
+#: src/main/gram.y:2115
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2155
+#: src/main/gram.y:2129
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "последовательности \\uxxxx не поддерживаются внутри обратных кавычек (строка "
 "%d)"
 
-#: src/main/gram.y:2170
+#: src/main/gram.y:2144
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2178
+#: src/main/gram.y:2152
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "неправильная \\u{xxxx} последовательность (строка %d)"
 
-#: src/main/gram.y:2190
+#: src/main/gram.y:2164
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "последовательности \\Uxxxxxxxx не поддерживаются внутри обратных кавычек "
 "(строка %d)"
 
-#: src/main/gram.y:2205
+#: src/main/gram.y:2179
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2213
+#: src/main/gram.y:2187
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "неправильная \\U{xxxxxxxx} последовательность (строка %d)"
 
-#: src/main/gram.y:2253
+#: src/main/gram.y:2227
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' -- нераспознаваемый префикс в строке в строке начинающейся с \"%s\""
 
-#: src/main/gram.y:2301
+#: src/main/gram.y:2275
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "смешивание Юникода и octal/hex escapes в строке не позволяется"
 
-#: src/main/gram.y:2305
+#: src/main/gram.y:2279
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3917,13 +3908,8 @@ msgstr ""
 "подстрока на строке %d, содержащая Unicode-escapes не из этой локали\n"
 "слишком длинная (максимум 10000 символов)"
 
-#: src/main/gram.y:2404
-#, c-format
-msgid "functions nested too deeply in source code at line %d"
-msgstr "функция в исходном тексте расположена слишком глубоко на строке %d"
-
-#: src/main/gram.y:2837 src/main/gram.y:2844 src/main/gram.y:2850
-#: src/main/gram.y:2857
+#: src/main/gram.y:2808 src/main/gram.y:2815 src/main/gram.y:2821
+#: src/main/gram.y:2828
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "переполнение стека целых чисел на строке %d"
@@ -4529,32 +4515,32 @@ msgstr "комплексные переменные в модельных мат
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "переменные типа '%s' в модельных матрицах не разрешены"
 
-#: src/main/names.c:1046
+#: src/main/names.c:1045
 msgid "string argument required"
 msgstr "нужен текстовый аргумент"
 
-#: src/main/names.c:1049
+#: src/main/names.c:1048
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1185
+#: src/main/names.c:1184
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1187
+#: src/main/names.c:1186
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "имена переменных ограничены %d байтами"
 
-#: src/main/names.c:1214
+#: src/main/names.c:1213
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
-#: src/main/names.c:1217
+#: src/main/names.c:1216
 msgid "invalid internal function"
 msgstr "неправильная внутренняя функция"
 
-#: src/main/names.c:1219
+#: src/main/names.c:1218
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "нет внутренней функции \"%s\""
@@ -5182,192 +5168,192 @@ msgstr "аргументы являются только элементарны�
 msgid "invalid filename specification"
 msgstr "неправильный указание имени файла"
 
-#: src/main/platform.c:438 src/main/platform.c:491
+#: src/main/platform.c:435 src/main/platform.c:488
 msgid "write error during file append"
 msgstr "ошибка записи во время добавки файла"
 
-#: src/main/platform.c:456
+#: src/main/platform.c:453
 msgid "nothing to append to"
 msgstr "нечего добавить к"
 
-#: src/main/platform.c:458
+#: src/main/platform.c:455
 msgid "'outFile' must be a single file"
 msgstr "'outFile' должен быть одиночным файлом"
 
-#: src/main/platform.c:520 src/main/platform.c:814
+#: src/main/platform.c:517 src/main/platform.c:825
 msgid "invalid filename argument"
 msgstr "неправильный аргумент имени файла"
 
-#: src/main/platform.c:532
+#: src/main/platform.c:529
 #, c-format
 msgid "cannot create file '%s', reason '%s'"
 msgstr "не могу создать файл '%s' по причине '%s'"
 
-#: src/main/platform.c:547 src/main/platform.c:585 src/main/platform.c:651
+#: src/main/platform.c:544 src/main/platform.c:582 src/main/platform.c:648
 msgid "invalid first filename"
 msgstr "неправильное первое имя файла"
 
-#: src/main/platform.c:559
+#: src/main/platform.c:556
 #, c-format
 msgid "cannot remove file '%s', reason '%s'"
 msgstr "не могу удалить файл '%s' по причине '%s'"
 
-#: src/main/platform.c:587 src/main/platform.c:653
+#: src/main/platform.c:584 src/main/platform.c:650
 msgid "invalid second filename"
 msgstr "неправильное второе имя файла"
 
-#: src/main/platform.c:589 src/main/platform.c:655
+#: src/main/platform.c:586 src/main/platform.c:652
 msgid "nothing to link"
 msgstr "нечего связать"
 
-#: src/main/platform.c:615
+#: src/main/platform.c:612
 #, c-format
 msgid "cannot symlink '%s' to '%s', reason '%s'"
 msgstr "не могу создать символическую ссылку '%s' на '%s' по причине '%s'"
 
-#: src/main/platform.c:623
+#: src/main/platform.c:620
 msgid "symlinks are not supported on this platform"
 msgstr "символические ссылки на этой платформе не поддерживаются"
 
-#: src/main/platform.c:673
+#: src/main/platform.c:670
 #, c-format
 msgid "cannot link '%ls' to '%ls', reason '%s'"
 msgstr "не могу создать ссылку '%ls' на '%ls' по причине '%s'"
 
-#: src/main/platform.c:693
+#: src/main/platform.c:690
 #, c-format
 msgid "cannot link '%s' to '%s', reason '%s'"
 msgstr "не могу создать ссылку '%s' на '%s' по причине '%s'"
 
-#: src/main/platform.c:702
+#: src/main/platform.c:699
 msgid "(hard) links are not supported on this platform"
 msgstr "жесткие ссылки на этой платформе не поддерживаются"
 
-#: src/main/platform.c:733
+#: src/main/platform.c:730
 msgid "'from' and 'to' are of different lengths"
 msgstr "'from' и 'to' имеют разную длину"
 
-#: src/main/platform.c:744 src/main/platform.c:754
+#: src/main/platform.c:741 src/main/platform.c:751
 msgid "expanded 'from' name too long"
 msgstr "раскрытое имя 'from' слишком длинное"
 
-#: src/main/platform.c:748 src/main/platform.c:758
+#: src/main/platform.c:745 src/main/platform.c:755
 msgid "expanded 'to' name too long"
 msgstr "раскрытое имя 'to' слишком длинное"
 
-#: src/main/platform.c:762
+#: src/main/platform.c:759
 #, c-format
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr "не могу переименовать '%s' в '%s' по причине '%s'"
 
-#: src/main/platform.c:1089
+#: src/main/platform.c:1118
 msgid "invalid 'pattern' regular expression"
 msgstr "неправильный шаблон регулярного выражения"
 
-#: src/main/platform.c:1192
+#: src/main/platform.c:1221
 msgid "unable to determine R home location"
 msgstr "не могу определить домашнюю папку R"
 
-#: src/main/platform.c:1244
+#: src/main/platform.c:1273
 msgid "file name too long"
 msgstr "имя файла слишком длинное"
 
-#: src/main/platform.c:1445 src/main/platform.c:1492 src/main/sysutils.c:1631
+#: src/main/platform.c:1474 src/main/platform.c:1521 src/main/sysutils.c:1631
 #: src/main/sysutils.c:1645
 msgid "internal out-of-memory condition"
 msgstr "внутренняя нехватка памяти"
 
-#: src/main/platform.c:1488 src/main/sysutils.c:1641
+#: src/main/platform.c:1517 src/main/sysutils.c:1641
 #, c-format
 msgid "read error on '%s'"
 msgstr "ошибка чтения в '%s'"
 
-#: src/main/platform.c:1649
+#: src/main/platform.c:1678
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1661
+#: src/main/platform.c:1690
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr ""
 
-#: src/main/platform.c:1688
+#: src/main/platform.c:1717
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "ОС сообщает, что запрос установки локали в \"%s\" не может быть выполнен"
 
-#: src/main/platform.c:1990
+#: src/main/platform.c:2019
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:1996
+#: src/main/platform.c:2025
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:2003
+#: src/main/platform.c:2032
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:2012
+#: src/main/platform.c:2041
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:2061
+#: src/main/platform.c:2098
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
 
-#: src/main/platform.c:2064
+#: src/main/platform.c:2101
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "не могу создать директорию '%s' по причине '%s'"
 
-#: src/main/platform.c:2107
+#: src/main/platform.c:2147
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' уже существует"
 
-#: src/main/platform.c:2110
+#: src/main/platform.c:2151
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "не могу создать каталог '%ls' по причине '%s'"
 
-#: src/main/platform.c:2140
+#: src/main/platform.c:2181
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "проблема с созданием каталога %ls: %s "
 
-#: src/main/platform.c:2155
+#: src/main/platform.c:2196
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "проблема с чтением каталога %ls: %s"
 
-#: src/main/platform.c:2168
+#: src/main/platform.c:2209
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "проблема с копированием %ls в %ls: %s"
 
-#: src/main/platform.c:2284
+#: src/main/platform.c:2325
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "проблема с созданием каталога %s: %s"
 
-#: src/main/platform.c:2298
+#: src/main/platform.c:2339
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "проблема с чтением каталога %s: %s"
 
-#: src/main/platform.c:2314
+#: src/main/platform.c:2355
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "проблема с копированием %s в %s: %s"
 
-#: src/main/platform.c:2436
+#: src/main/platform.c:2477
 msgid "'mode' must be of length at least one"
 msgstr "длина 'mode' должна быть не меньше единицы"
 
-#: src/main/platform.c:2503
+#: src/main/platform.c:2544
 msgid "insufficient OS support on this platform"
 msgstr "недостаточная поддержка OS на этой платформе"
 
@@ -5800,7 +5786,7 @@ msgstr "группа неполна"
 msgid "Metric information not available for this family/device"
 msgstr "Метрическая информация для этого семейства/устройства недоступна"
 
-#: src/main/print.c:143 src/main/print.c:243
+#: src/main/print.c:143 src/main/print.c:248
 msgid "invalid 'na.print' specification"
 msgstr "неправильное указание 'na.print'"
 
@@ -5816,31 +5802,31 @@ msgstr "неправильные метки колонки"
 msgid "non-function argument to .Internal(print.function(.))"
 msgstr "нефункциональный аргумент для .Internal(print.function(.))"
 
-#: src/main/print.c:253
+#: src/main/print.c:258
 msgid "'gap' must be non-negative integer"
 msgstr "'gap' должен быть положительным целым числом"
 
-#: src/main/print.c:277
+#: src/main/print.c:282
 msgid "invalid 'tryS4' internal argument"
 msgstr "неправильный внутренний аргумент 'tryS4' "
 
-#: src/main/print.c:1009
+#: src/main/print.c:1014
 msgid "invalid character length in dblepr"
 msgstr "неправильная длина текста в 'dblepr'"
 
-#: src/main/print.c:1027
+#: src/main/print.c:1032
 msgid "invalid character length in intpr"
 msgstr "неправильная длина текста в 'intpr'"
 
-#: src/main/print.c:1046
+#: src/main/print.c:1051
 msgid "invalid character length in realpr"
 msgstr "неправильная длина текста 'realpr'"
 
-#: src/main/print.c:1056
+#: src/main/print.c:1061
 msgid "memory allocation error in realpr"
 msgstr "ошибка размещения памяти в 'realpr'"
 
-#: src/main/print.c:1072
+#: src/main/print.c:1077
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "процедура BLAS/LAPACK '%6s' вернуло ошибку с кодом %d"
@@ -5865,6 +5851,10 @@ msgstr[2] " [ достигнута getOption(\"max.print\") -- пропущен�
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
 msgstr "аргумент не является числовым вектором"
+
+#: src/main/random.c:34 src/main/random.c:568
+msgid "invalid arguments"
+msgstr "неправильные аргументы"
 
 #: src/main/random.c:82 src/main/random.c:99 src/main/random.c:156
 #: src/main/random.c:182 src/main/random.c:246 src/main/random.c:260
@@ -7463,27 +7453,27 @@ msgstr "использую HTTP-прокси '%s'"
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoHTTPScanProxy: чересчур длинные (неправильные?) URL"
 
-#: src/modules/internet/nanohttp.c:1095
+#: src/modules/internet/nanohttp.c:1099
 #, c-format
 msgid "unable to resolve '%s'"
 msgstr "не могу разрешить '%s'"
 
-#: src/modules/internet/nanohttp.c:1122
+#: src/modules/internet/nanohttp.c:1126
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "соединение с '%s' через порт %d."
 
-#: src/modules/internet/nanohttp.c:1127
+#: src/modules/internet/nanohttp.c:1131
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "не могу соединиться с '%s' через порт %d."
 
-#: src/modules/internet/nanohttp.c:1430
+#: src/modules/internet/nanohttp.c:1434
 #, c-format
 msgid "redirect to: '%s'"
 msgstr "перенаправление в: '%s'"
 
-#: src/modules/internet/nanohttp.c:1440
+#: src/modules/internet/nanohttp.c:1444
 msgid "too many redirects, aborting ..."
 msgstr "слишком много перенаправлений, отключаюсь ..."
 
@@ -8193,7 +8183,7 @@ msgstr "ошибка запуска команды"
 msgid "running command '%s' had status %d and error message '%s'"
 msgstr "запуск команды '%s' вывел статус %d и сообщение об ошибке '%s'"
 
-#: src/unix/sys-unix.c:376
+#: src/unix/sys-unix.c:386
 msgid "Sys.info() is not implemented on this system"
 msgstr "'Sys.info()' в этой системе не разработан"
 
@@ -8237,6 +8227,15 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "vector: zero-length 'type' argument"
+#~ msgstr "вектор: нулевой аргумент 'тип'"
+
+#~ msgid "function is too long to keep source (at line %d)"
+#~ msgstr "функция слишком длинна, чтобы сохранить исходник (на строке %d)"
+
+#~ msgid "functions nested too deeply in source code at line %d"
+#~ msgstr "функция в исходном тексте расположена слишком глубоко на строке %d"
 
 #~ msgid "not a vector object"
 #~ msgstr "не векторный объект"

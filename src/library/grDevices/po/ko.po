@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48+0100\n"
+"POT-Creation-Date: 2011-07-18 17:02+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -479,14 +479,14 @@ msgstr "%s 에서 무효의 'family' 파라미터 입니다"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에서 무효의 'fonts' 파라미터 입니다"
 
-#: devPS.c:8100 devPS.c:8260 devPS.c:8266 devWindows.c:3552 devWindows.c:3556
-#: devWindows.c:3564 devWindows.c:3575 devWindows.c:3581 devWindows.c:3588
-#: devWindows.c:3595 devWindows.c:3599
+#: devPS.c:8100 devPS.c:8260 devPS.c:8266 devWindows.c:3561 devWindows.c:3565
+#: devWindows.c:3573 devWindows.c:3584 devWindows.c:3590 devWindows.c:3597
+#: devWindows.c:3604 devWindows.c:3608
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "devWindows에서 'bg'의 무효인 값입니다"
 
-#: devPS.c:8113 devPS.c:8180 devPS.c:8280 devPicTeX.c:800 devWindows.c:3632
+#: devPS.c:8113 devPS.c:8180 devPS.c:8280 devPicTeX.c:800 devWindows.c:3641
 #, fuzzy, c-format
 msgid "unable to start %s() device"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
@@ -628,60 +628,60 @@ msgstr "clipboard metafile은 단지 하나의 figure만을 저장할수가 있�
 msgid "metafile '%s' could not be created"
 msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 
-#: devWindows.c:3033 devWindows.c:3656
+#: devWindows.c:3042 devWindows.c:3665
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3047
+#: devWindows.c:3056
 msgid "attempt to use the locator after dev.hold()"
 msgstr ""
 
-#: devWindows.c:3296
+#: devWindows.c:3305
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "옵션 'windowsTimeouts'는 정수가 아니면 되지 않습니다"
 
-#: devWindows.c:3317
+#: devWindows.c:3326
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "savePlot의 무효인 디바이스번호입니다"
 
-#: devWindows.c:3319
+#: devWindows.c:3328
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "savePlot의 무효인 디비이스입니다"
 
-#: devWindows.c:3322
+#: devWindows.c:3331
 msgid "invalid filename argument in savePlot"
 msgstr "savaPlot에서 무효인 파일명 인수입니다"
 
-#: devWindows.c:3327
+#: devWindows.c:3336
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "savePlot에서 무효인 유형 인수입니다"
 
-#: devWindows.c:3354
+#: devWindows.c:3363
 msgid "unknown type in savePlot"
 msgstr "savePlot의 의미없는 유형입니다"
 
-#: devWindows.c:3399 devWindows.c:3432 devWindows.c:3461 devWindows.c:3493
-#: devWindows.c:3518
+#: devWindows.c:3408 devWindows.c:3441 devWindows.c:3470 devWindows.c:3502
+#: devWindows.c:3527
 msgid "processing of the plot ran out of memory"
 msgstr "plot 처리는 메모리를 전부 소모 했습니다"
 
-#: devWindows.c:3478
+#: devWindows.c:3487
 msgid "Impossible to open "
 msgstr "여는 것이 불가능합니다"
 
-#: devWindows.c:3505
+#: devWindows.c:3514
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Rbitmap.dll를 적재하는데 가능하지 않습니다"
 
-#: devWindows.c:3547
+#: devWindows.c:3556
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "devWindow에서 무효인 폭 또는 높이 입니다"
 
-#: devWindows.c:3750
+#: devWindows.c:3759
 #, fuzzy
 msgid "Unable to load winCairo.dll: was it built?"
 msgstr "Rbitmap.dll를 적재 할수가 없습니다"
