@@ -340,6 +340,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 attr(env, "path") <- file.path(which.lib.loc, package)
                 assign(".packageName", package, envir = env)
                 if(length(deps)) assign(".Depends", deps, envir = env)
+                ## lazy-load data sets if required
+                dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
+                if(file.exists(paste0(dbbase, ".rdb"))) lazyLoad(dbbase, env)
+                ## lazy-load a sysdata database if present
+                dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
+                if(file.exists(paste0(dbbase, ".rdb"))) lazyLoad(dbbase, env)
             }
 	}
 	if (verbose && !newpackage)
