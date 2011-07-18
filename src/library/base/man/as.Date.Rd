@@ -1,6 +1,6 @@
 % File src/library/base/man/as.Date.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{as.Date}
@@ -104,7 +104,7 @@ as.Date(x, \dots)
   }
   The only safe procedure is to check the other systems values for known
   dates: reports on the Internet (including R-help) are more often wrong
-  that right.
+  than right.
 }
 \references{
   International Organization for Standardization (2004, 1988, 1997,
