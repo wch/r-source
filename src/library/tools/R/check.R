@@ -1153,6 +1153,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
             out <- grep("Loading required package", out,
                         invert = TRUE, value = TRUE)
+            out <- grep("Warning: running .First.lib()", out,
+                        invert = TRUE, value = TRUE, fixed = TRUE)
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
