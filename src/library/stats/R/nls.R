@@ -284,7 +284,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
                     gradSetArgs[[3L]], drop = FALSE),
                call("[", gradSetArgs[[1L]], gradSetArgs[[2L]], gradSetArgs[[2L]],
-                    gradSetArgs[[3L]], gradSetArgs[[4L]]), drop = FALSE)
+                    gradSetArgs[[3L]], gradSetArgs[[4L]], drop = FALSE))
     getRHS.varying <- function()
     {
         ans <- getRHS.noVarying()
