@@ -109,14 +109,15 @@ as.POSIXlt(x, tz = "", \dots)
 }
 
 \note{
-  Some of the concepts used have to be extended backwards in time.  For
-  example, the origin of time for the \code{"POSIXct"} class,
-  \sQuote{1970-01-01 00:00.00 UTC} is before UTC was defined.  For
-  importantly, conversion is done assuming the Gregorian calendar which
-  was introduced in 1582 and not used universally until the 20th
-  century.  One of the re-interpretations assumed by ISO 8601:2004 is
-  that there was a year zero, even though current year numbering (and
-  zero) is a much later concept (525 AD for year numbers from 1 AD).
+  Some of the concepts used have to be extended backwards in time (the
+  usage is \emph{proleptic}).  For example, the origin of time for the
+  \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC}, is before UTC
+  was defined.  For importantly, conversion is done assuming the
+  Gregorian calendar which was introduced in 1582 and not used
+  universally until the 20th century.  One of the re-interpretations
+  assumed by ISO 8601:2004 is that there was a year zero, even though
+  current year numbering (and zero) is a much later concept (525 AD for
+  year numbers from 1 AD).
   
   If you want to extract specific aspects of a time (such as the day of
   the week) just convert it to class \code{"POSIXlt"} and extract the
