@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-DEFS=-DWIN32 -D_X86_ -DHAVE_CONFIG_H
+DEFS=-DWIN32 -DHAVE_CONFIG_H
 ifdef LEA_MALLOC
 DEFS+=-DLEA_MALLOC
 endif
