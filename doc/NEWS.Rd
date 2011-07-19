@@ -267,6 +267,9 @@
       
       \item Documentation and messages have been standardized to 
       use \dQuote{namespace} rather than \dQuote{name space}.
+      
+      \item Sweave now knows about a few more Windows' encodings,
+      including \code{cp1250} and \code{cp1257}.  (Belated user request.)
     }
   }
 
@@ -540,10 +543,10 @@
 }
 
 \section{CHANGES IN R VERSION 2.13.1 patched}{
-  \subsection{NEW FEATURES}{
+  \subsection{INSTALLATION}{
     \itemize{
-      \item Sweave now knows about a few more Windows' encodings,
-      including \code{cp1250} and \code{cp1257}.  (Belated user request.)
+      \item It is possible to build in \file{src/extra/xdr} on more
+      platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
     }
   }
   
