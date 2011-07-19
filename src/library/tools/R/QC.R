@@ -1643,9 +1643,11 @@ function(package, dir, lib.loc = NULL)
     ## package has a namespace and the method is exported (even though
     ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
     ## cases).
-    if(has_namespace)
-        all_methods_in_package <-
-            all_methods_in_package %w/o% functions_in_code
+    ## Disable for now (2.14.0) as it gives inconsistent results for
+    ## automatically generated namespaces.
+    ##     if(has_namespace)
+    ##         all_methods_in_package <-
+    ##             all_methods_in_package %w/o% functions_in_code
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -4434,6 +4436,8 @@ function(package, dir, lib.loc = NULL)
 ##   this is evaluated in the global envionment by examples().
 ## * There is no problem with package code using T and F as local
 ##   variables.
+## * Functions in a namespace will always find the T or F in the
+##   namespace, imports or base, never in the global environment.
 ##
 ## Our current idea is the following.  Function findGlobals() in
 ## codetools already provides a way to (approximately) determine the

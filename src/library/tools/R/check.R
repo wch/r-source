@@ -878,7 +878,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
-        if (R_check_use_codetools) {
+        ## This check is no use now all packages have a namespace.
+        if (FALSE && R_check_use_codetools) {
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
                           sprintf("tools:::.check_T_and_F(package = \"%s\")\n", pkgname)
