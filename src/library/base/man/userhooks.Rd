@@ -32,17 +32,18 @@ packageEvent(pkgname,
 \details{
   \code{setHook} provides a general mechanism for users to register
   hooks, a list of functions to be called from system (or user)
-  functions.  The initial set of hooks is associated with events on
-  packages/namespaces: these hooks are named via calls to \code{packageEvent}.
+  functions.  The initial set of hooks was associated with events on
+  packages/namespaces: these hooks are named via calls to
+  \code{packageEvent}.
 
   To remove a hook completely, call \code{setHook(hookName, NULL, "replace")}.
   
   When an \R package is attached by \code{\link{library}} or loaded by
   other means, it can call initialization code.  See
   \code{\link{.onLoad}} for a description of the package hook functions
-  called during initialization. Users can add their own initialization
-  code via the hooks provided by \code{setHook()}, functions which
-  will be called as \code{funname(pkgname, pkgpath)} inside a
+  called during initialization.  Users can add their own initialization
+  code via the hooks provided by \code{setHook()}, functions which will
+  be called as \code{funname(pkgname, pkgpath)} inside a
   \code{\link{try}} call.
   
   The sequence of events depends on which hooks are defined, and whether
@@ -56,10 +57,12 @@ packageEvent(pkgname,
   \item The user's \code{"onLoad"} hook is run.  
   \item The package is added to the search path.
   \item The package's \code{\link{.onAttach}} function is run.
+  \item The package environment is sealed.
   \item The user's \code{"attach"} hook is run.
   }
   
-  A similar sequence (but in reverse) is run when a package is detached and unloaded:
+  A similar sequence (but in reverse) is run when a package is detached
+  and its namespace unloaded:
   \enumerate{
   \item The user's \code{"detach"} hook is run.
   \item The package's \code{\link{.Last.lib}} function is run. 
@@ -77,10 +80,10 @@ packageEvent(pkgname,
   need to be referred to using the double (or triple) colon operator,
   as in the example.
   
-  If multiple hooks are added, they are normally run in the order shown by \code{getHook},
-  but the \code{"detach"} and \code{"onUnload"} hooks are run
-  in reverse order so the default for package events is to add hooks
-  \sQuote{inside} existing ones.
+  If multiple hooks are added, they are normally run in the order shown
+  by \code{getHook}, but the \code{"detach"} and \code{"onUnload"} hooks
+  are run in reverse order so the default for package events is to add
+  hooks \sQuote{inside} existing ones.
 
   The hooks are stored in the environment \code{.userHooksEnv} in the
   base package, with \sQuote{mangled} names.
@@ -96,7 +99,7 @@ packageEvent(pkgname,
   See \code{\link{::}}
   for a discussion of the double and triple colon operators. 
 
-  Other hooks may be added later: \code{\link{plot.new}} and
+  Other hooks may be added later: functions \code{\link{plot.new}} and
   \code{\link{persp}} already have them.
 }
 \examples{

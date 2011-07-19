@@ -210,11 +210,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
-    runUserHook <- function(pkgname, pkgpath) {
-        hook <- getHook(packageEvent(pkgname, "attach")) # might be list()
-        for(fun in hook) try(fun(pkgname, pkgpath))
-    }
-
     bindTranslations <- function(pkgname, pkgpath)
     {
         popath <- file.path(pkgpath, "po")
@@ -324,7 +319,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                            !exists(".conflicts.OK", envir = env, inherits = FALSE))
                             checkConflicts(package, pkgname, pkgpath,
                                            nogenerics, ns)
-                        runUserHook(package, pkgpath)
                         on.exit()
                         if (logical.return)
                             return(TRUE)

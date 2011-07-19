@@ -85,6 +85,7 @@ getExportedValue <- function(ns, name) {
     name <- as.character(substitute(name))
     ns <- tryCatch(asNamespace(pkg), hasNoNamespaceError = function(e) NULL)
     if (is.null(ns)) {
+        ## FIXME: clean up
         pos <- match(paste("package", pkg, sep=":"), search(), 0L)
         if (pos == 0L)
             stop(gettextf("package %s has no namespace and is not on the search path", sQuote(pkg)), domain = NA)
@@ -121,6 +122,10 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
             fn(...)                 # dirname(nspath), nsname
         }
     }
+    runUserHook <- function(pkgname, pkgpath) {
+        hook <- getHook(packageEvent(pkgname, "attach")) # might be list()
+        for(fun in hook) try(fun(pkgname, pkgpath))
+    }
 
     ns <- asNamespace(ns, base.OK = FALSE)
     nsname <- getNamespaceName(ns)
@@ -140,7 +145,9 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     }
     if(length(depends)) assign(".Depends", depends, env)
     runHook(".onAttach", ns, dirname(nspath), nsname)
+    runUserHook(nsname, nspath)
     lockEnvironment(env, TRUE)
+    ## The attach user hook is run in library().
     on.exit()
     invisible(env)
 }
@@ -545,8 +552,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
-        ## run user hooks here
-        runUserHook(package, file.path(package.lib, package))
+        runUserHook(package, pkgpath)
         on.exit()
         ns
     }

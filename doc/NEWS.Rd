@@ -407,6 +407,11 @@
 	INSTALL}, including making use of the environment variable
       \env{R_INSTALL_TAR} to override the default behaviour.
 
+      \item \command{R CMD check} now reports what look like methods
+      documented with their full names even if there is a namespace and
+      they are exported (as this happens a lot with automatically
+      constructed namespaces).
+
       \item The default for the environment variable
       \env{_R_CHECK_COMPACT_DATA2_} is now true, so if using the newer
       forms of compression introduced in \R 2.10.0 would be beneficial
@@ -532,12 +537,12 @@
       package's namespace or given the package slot.  Methods for the
       same generic function may still be selected incorrectly.
 
-      \item Work around an issue in Linux (\code{select()} resetting
-      \code{tv}) which prevents internet operations from timing out
-      properly.
+      \item Work around an issue in Linux (a system \code{select} call
+      resetting \code{tv}) which prevented internet operations from
+      timing out properly.
 
-      Several stack trampling and overflow issues have been fixed in
-      TRE, triggered by \code{agrep} and friends with long patterns.
+      \item Several stack trampling and overflow issues have been fixed
+      in TRE, triggered by \code{agrep} and friends with long patterns.
       (\PR{14627}.)
     }
   }
@@ -559,7 +564,7 @@
       inconsistently with pre-tabulated data.  (Reported by Michael Fay).
 
       \item \code{package.skeleton()} will no longer dump S4 objects
-      supplied directly, rather than in a code file.  These cannot be
+      supplied directly rather than in a code file.  These cannot be
       restored correctly from the dumped version.
       
       \item Build-time expressions in help files did not have access
@@ -569,7 +574,7 @@
       use, modification of the result could in some circumstances
       modify the original call.
       
-      \item Plotting \code{pch='.'} now guarantees at least a one-pixel
+      \item Plotting \code{pch = '.'} now guarantees at least a one-pixel
       dot if \code{cex > 0}.
     }  
   }
