@@ -52,6 +52,15 @@ static char sccsid[] = "@(#)xdr_float.c 1.12 87/08/11 Copyr 1984 Sun Micro";
  * xdr.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#if SIZEOF_LONG > 4
+#error This XDR implementation assumes 4-byte longs
+#endif
+
+
 #include <stdio.h>
 
 #include <rpc/types.h>
@@ -99,23 +108,11 @@ xdr_float(xdrs, fp)
 	register float *fp;
 {
 
-#ifdef WIN64
+#ifndef WORDS_BIGENDIAN
 #define _X86_
 #endif
 
-#ifdef WIN32
-#ifdef _PPC_
-/*Motorola PowerPC is same endian for NT as Intel so...*/
-#define _X86_
-#endif
-
-#ifdef _ALPHA_
-/*also DEC ALPHA is same endian for NT as Intel so...*/
-#define _X86_
-#endif
-#endif
-
-#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh)
+#ifdef vax
 	struct ieee_single is;
 	struct vax_single vs, *vsp;
 	struct sgl_limits *lim;
@@ -124,7 +121,7 @@ xdr_float(xdrs, fp)
 	switch (xdrs->x_op) {
 
 	case XDR_ENCODE:
-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
+#ifndef vax
 		return (XDR_PUTLONG(xdrs, (long *)fp));
 #else
 		vs = *((struct vax_single *)fp);
@@ -146,7 +143,7 @@ xdr_float(xdrs, fp)
 #endif
 
 	case XDR_DECODE:
-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
+#ifndef vax
 		return (XDR_GETLONG(xdrs, (long *)fp));
 #else
 		vsp = (struct vax_single *)fp;
@@ -221,7 +218,7 @@ xdr_double(xdrs, dp)
 	double *dp;
 {
 	register long *lp;
-#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh)
+#ifdef vax
 	struct	ieee_double id;
 	struct	vax_double vd;
 	register struct dbl_limits *lim;
@@ -231,7 +228,7 @@ xdr_double(xdrs, dp)
 	switch (xdrs->x_op) {
 
 	case XDR_ENCODE:
-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
+#ifndef vax
 		lp = (long *)dp;
 #else
 		vd = *((struct vax_double *)dp);
@@ -262,7 +259,7 @@ xdr_double(xdrs, dp)
 		return (XDR_PUTLONG(xdrs, lp++) && XDR_PUTLONG(xdrs, lp));
 #endif
 	case XDR_DECODE:
-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
+#ifndef vax
 		lp = (long *)dp;
 #if defined(_X86_)
 		return (XDR_GETLONG(xdrs, lp+1) && XDR_GETLONG(xdrs, lp));
