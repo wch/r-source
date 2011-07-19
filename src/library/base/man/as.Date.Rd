@@ -98,9 +98,11 @@ as.Date(x, \dots)
     ignorance of calendar systems.  For example, Excel's designer
     thought 1900 was a leap year (claiming to copy the error from
     earlier DOS spreadsheets), and Matlab's designer chose the
-    non-existent date of \sQuote{January 0, 0000} (there is no such day
-    and no such year), not specifying if this was the Julian calendar or some
-    variant of the Gregorian calendar.
+    non-existent date of \sQuote{January 0, 0000} (there is no such day),
+    not specifying the calendar.  (There is such a year in the
+    \sQuote{Gregorian} calendar as used in ISO 8601:2004, but that does say
+    that it is only to be used for years before 1582 with the agreement
+    of the parties in information exchange.)
   }
   The only safe procedure is to check the other systems values for known
   dates: reports on the Internet (including R-help) are more often wrong
@@ -155,11 +157,9 @@ as.Date(35981, origin="1899-12-30") # 1998-07-05
 as.Date(34519, origin="1904-01-01") # 1998-07-05
 ## (these values come from http://support.microsoft.com/kb/214330)
 
-## Experiment shows that Matlab's origin is 719528 days before ours,
-## so Matlab day 734372 can be imported as
-as.Date(734372, origin = "1970-01-01") - 719528
-## or perhaps
-as.Date(734372, origin = "0000-01-01")
+## Experiment shows that Matlab's origin is 719529 days before ours,
+## so Matlab day 734373 can be imported as
+as.Date(734373, origin = "1970-01-01") - 719529
 ## (value from http://www.mathworks.com/help/techdoc/matlab_prog/bspgcx2-1.html)
 
 ## Timezone effect
