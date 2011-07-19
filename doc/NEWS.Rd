@@ -5,6 +5,13 @@
 \encoding{UTF-8}
 
 \section{CHANGES IN R VERSION 2.13.1 patched}{
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item It is possible to build in \file{src/extra/xdr} on more
+      platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
      \item \code{fisher.test()} had a buglet: If arguments were

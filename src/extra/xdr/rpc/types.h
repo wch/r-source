@@ -60,7 +60,7 @@
 #endif
 
 #if !defined(WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
-extern char *malloc();
+#include <stdlib.h> // for malloc
 #endif
 #if defined(WIN32) && defined(LEA_MALLOC)
 #include <stddef.h>
