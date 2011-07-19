@@ -34,7 +34,7 @@ ntohl(unsigned long int x)
 #ifndef WORDS_BIGENDIAN
 /* #ifdef LITTLE_ENDIAN */
 static unsigned long int 
-htonl (unsigned long int x)
+ntohl (unsigned long int x)
 {
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
 }
