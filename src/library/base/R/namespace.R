@@ -145,9 +145,8 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     }
     if(length(depends)) assign(".Depends", depends, env)
     runHook(".onAttach", ns, dirname(nspath), nsname)
-    runUserHook(nsname, nspath)
     lockEnvironment(env, TRUE)
-    ## The attach user hook is run in library().
+    runUserHook(nsname, nspath)
     on.exit()
     invisible(env)
 }
