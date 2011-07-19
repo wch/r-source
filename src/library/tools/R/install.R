@@ -969,8 +969,7 @@
 	    file.copy("tests", instdir, recursive = TRUE)
 	}
 
-	if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) &&
-            dir.exists("R")) {
+	if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
 	    starsmsg(stars, "Creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
 	}

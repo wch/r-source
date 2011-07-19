@@ -925,8 +925,7 @@ get_exclude_patterns <- function()
         }
 
 	## add NAMESPACE if the author didn't write one
-	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE")) &&
-           dir.exists(file.path(pkgname, "R"))) {
+	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE")) ) {
 	    messageLog(Log, "creating default NAMESPACE file")
 	    writeDefaultNamespace(namespace)
 	}

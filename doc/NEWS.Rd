@@ -11,7 +11,8 @@
       \item All packages must have a namespace, and one is created on
       installation if not supplied in the sources.  This means that any
       package without a namespace must be re-installed under this
-      version of \R.
+      version of \R (but data-only packages without \R code can still be
+      used).
       
       \item The \code{yLineBias} of the \code{X11()} and
       \code{windows()} families of devices has been changed from 0.1 to
@@ -388,7 +389,7 @@
 
       \item A package \R code but without a \file{NAMESPACE} file will
       have a default one created at \command{R CMD build} or \command{R
-      CMD INSTALL} time, so all packages with \R code will have
+      CMD INSTALL} time, so all packages will be installed with
       namespaces.  A consequence of this is that \code{.First.lib}
       functions need to be copied to \code{.onLoad} (usually) or
       \code{.onAttach}.  For the time being, if no \code{.onLoad} nor
