@@ -26,7 +26,7 @@ ntohl(unsigned long int x)
 #ifndef WORDS_BIGENDIAN
 /* #ifdef LITTLE_ENDIAN */
 static unsigned long int 
-htonl (unsigned long int x)
+ntohl (unsigned long int x)
 {
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
 }
@@ -107,8 +107,8 @@ static void	xdrstdio_destroy();
  * Ops vector for stdio type XDR
  */
 static struct xdr_ops	xdrstdio_ops = {
-	xdrstdio_getlong,	/* deseraialize a long int */
-	xdrstdio_putlong,	/* seraialize a long int */
+	xdrstdio_getlong,	/* deserialize a long int */
+	xdrstdio_putlong,	/* serialize a long int */
 	xdrstdio_getbytes,	/* deserialize counted bytes */
 	xdrstdio_putbytes,	/* serialize counted bytes */
 	xdrstdio_getpos,	/* get offset in the stream */
@@ -153,12 +153,9 @@ xdrstdio_getlong(xdrs, lp)
 	XDR *xdrs;
 	register long *lp;
 {
-
-	if (fread((caddr_t)lp, sizeof(long), 1, (FILE *)xdrs->x_private) != 1)
+	if (fread((caddr_t)lp, 4, 1, (FILE *)xdrs->x_private) != 1)
 		return (FALSE);
-#ifndef mc68000
 	*lp = ntohl(*lp);
-#endif
 	return (TRUE);
 }
 
@@ -167,12 +164,9 @@ xdrstdio_putlong(xdrs, lp)
 	XDR *xdrs;
 	long *lp;
 {
-
-#ifndef mc68000
 	long mycopy = htonl(*lp);
 	lp = &mycopy;
-#endif
-	if (fwrite((caddr_t)lp, sizeof(long), 1, (FILE *)xdrs->x_private) != 1)
+	if (fwrite((caddr_t)lp, 4, 1, (FILE *)xdrs->x_private) != 1)
 		return (FALSE);
 	return (TRUE);
 }

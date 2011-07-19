@@ -109,7 +109,9 @@ xdr_float(xdrs, fp)
 {
 
 #ifndef WORDS_BIGENDIAN
-#define _X86_
+# ifndef _X86_
+#  define _X86_
+# endif
 #endif
 
 #ifdef vax
