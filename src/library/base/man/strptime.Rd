@@ -113,7 +113,12 @@ strptime(x, format, tz = "")
       by the 2004 POSIX standard, but it does also say \sQuote{it is
   expected that in a future version the default century inferred from a
   2-digit year will change}.}
-    \item{\code{\%Y}}{Year with century.}
+    \item{\code{\%Y}}{Year with century.  Note that whereas there was no
+      zero in the original Gregorian calendar, ISO 8601:2004 defines it
+      to be valid (interpreted as 1BC): see
+      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standard
+      also says that years before 1582 in its calendar should only be used
+      with agreement of the parties involved.} 
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
@@ -207,7 +212,7 @@ strptime(x, format, tz = "")
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
 
-  OS facilities will probably not print years before 1CE (aka 1AD)
+  OS facilities will probably not print years before 1 CE (aka 1 AD)
   correctly.
 
   Remember that in most timezones some times do not occur and some occur
