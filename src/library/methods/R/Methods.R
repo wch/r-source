@@ -72,8 +72,12 @@ setGeneric <-
         if(is(fdef, "genericFunction"))
           return(.GenericAssign(name, fdef, where))
     }
-    if(is.null(fdef) && !isNamespace(where))
-        fdef <- getFunction(name, mustFind = FALSE)
+    if(is.null(fdef)) {
+        if(isNamespace(where))
+            fdef <- .getFromStandardPackages(name)
+        else
+            fdef <- getFunction(name, mustFind = FALSE)
+    }
     if(is.null(fdef) && is.function(useAsDefault))
         fdef <- useAsDefault
     ## Use the previous function definition to get the default
@@ -207,6 +211,34 @@ setGeneric <-
     .assignMethodsTableMetaData(name, fdef, where)
     name
 }
+
+## Mimic the search for a function in the standard search() list for packages
+## with namespace, to be consistent with the evaluator's search for objects
+.standardPackageNamespaces <- new.env()
+.standardPackages <- c("stats", "graphics", "grDevices", "utils", "datasets", "methods")
+.getFromStandardPackages <- function(name) {
+    where <- objects(.standardPackageNamespaces)
+    if(!length(where)) { # initialize the table of namespaces
+        for(pkg in .standardPackages) {
+            ## the tryCatch nonsense is needed because this code gets called
+            ## while installing methods (why?) and throws an error on that namespace
+            ns <- tryCatch(loadNamespace(pkg), error = function(e) new.env())
+            assign(pkg, ns, envir = .standardPackageNamespaces)
+        }
+        where <- .standardPackages
+    }
+    ## search
+    for(pkg in where) {
+        ns <- get(pkg, envir = .standardPackageNamespaces)
+        if(exists(name, envir = ns, inherits = FALSE)) {
+            obj <- get(name, envir = ns)
+            if(is.function(obj))
+                return(obj)
+        }
+    }
+    return(NULL)
+}
+
 ##
 ## make a generic function object corresponding to the given function name.
 ##
