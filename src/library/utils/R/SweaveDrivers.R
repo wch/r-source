@@ -382,7 +382,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             cat("\\input{", chunkprefix, "}\n", sep = "",
                 file = object$output)
             linesout[thisline + 1L] <- srcline
-            filenumout[thisline + 1L] <- srcfileout
+            filenumout[thisline + 1L] <- srcfilenum
             thisline <- thisline + 1L
         }
 
@@ -406,7 +406,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 cat("\\includegraphics{", chunkprefix, "}\n", sep = "",
                     file = object$output)
                 linesout[thisline + 1L] <- srcline
-                filenumout[thisline + 1L] <- srcfileout
+                filenumout[thisline + 1L] <- srcfilenum
                 thisline <- thisline + 1L
             }
         }
@@ -714,7 +714,7 @@ RtangleRuncode <-  function(object, chunk, options)
         lnos <- grep("^#line ", chunk, value = TRUE)
         if(length(lnos)) {
             srclines <- attr(chunk, "srclines")
-            srcfileout <- attr(chunk, "srcFilenum")
+            srcfilenum <- attr(chunk, "srcFilenum")
             ## this currently includes the chunk header
             lno <- if (length(srclines)) paste(min(srclines), max(srclines), sep="-") else srclines
             fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
