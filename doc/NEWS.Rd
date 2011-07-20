@@ -558,6 +558,11 @@
     \itemize{
       \item It is possible to build in \file{src/extra/xdr} on more
       platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
+      
+      \item \command{configure} will find the Sun TI-RPC implementation
+      of xdr (in \file{libtirpc}) provided its header files are in the
+      search path: see the \sQuote{R Installation and Administration
+      Manual}.
     }
   }
   
