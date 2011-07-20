@@ -4951,7 +4951,7 @@ SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
     CheckFormals(forms);
 
     if (! isByteCode(body))
-	errorcall(call, _("invalid environment"));
+	errorcall(call, _("invalid body"));
 
     if (isNull(env)) {
 	error(_("use of NULL environment is defunct"));
