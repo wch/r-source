@@ -275,7 +275,10 @@
       \item \code{setGeneric()} now looks in the default packages for
       a non-generic version of a function if called from a package with a
       namespace.  (It always did for packages without a namespace.)
-
+      
+      \item Setting the environment variable
+      \env{_R_WARN_ON_LOCKED_BINDINGS_} will give a warning if an
+      attempt is made to change a locked binding.
     }
   }
 
@@ -400,6 +403,10 @@
       \code{.onAttach}.  For the time being, if no \code{.onLoad} nor
       \code{.onAttach} function is found but \code{.First.lib} is, it
       will be run as the attach hook.
+      
+      \item A warning is given if test-loading a package changes a
+      locked binding in a package other than itself.  It is likely that
+      this will be disallowed in future releases.
     }
   }
 

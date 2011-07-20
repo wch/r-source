@@ -260,12 +260,17 @@ assignInNamespace <-
     }
     if(bindingIsLocked(x, ns)) {
         in_load <- Sys.getenv("_R_NS_LOAD_")
-        if (nzchar(in_load) && !in_load %in% "Matrix") {
+        if (nzchar(in_load)) {
             ns_name <- getNamespaceName(ns)
-            if(in_load != ns_name)
+            if(in_load != "Matrix" && in_load != ns_name)
                 warning(gettextf("changing locked binding for %s in %s whlist loading %s",
                                  sQuote(x), sQuote(ns_name), sQuote(in_load)),
                         call. = FALSE, domain = NA, immediate. = TRUE)
+        } else if (nzchar(Sys.getenv("_R_WARN_ON_LOCKED_BINDINGS_"))) {
+            ns_name <- getNamespaceName(ns)
+            warning(gettextf("changing locked binding for %s in %s",
+                             sQuote(x), sQuote(ns_name)),
+                    call. = FALSE, domain = NA, immediate. = TRUE)
         }
         unlockBinding(x, ns)
         assign(x, value, envir = ns, inherits = FALSE)
