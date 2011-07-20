@@ -262,7 +262,7 @@ document should arrange to create this before use.
 \subsection{Using multiple input files}
 
 \LaTeX{} files can include others via \verb|\input{}| commands.  These
-can also be used in Sweave files, but the included file will not
+can also be used in Sweave files, but the included files will be
 included by \LaTeX{} and are not processed by Sweave.  The equivalent
 if you want the included files to be processed is the
 \verb|\SweaveInput{}| command.

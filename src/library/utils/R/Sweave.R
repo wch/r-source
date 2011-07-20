@@ -1,4 +1,4 @@
-#  File src/library/utils/R/Sweave.R
+#   File src/library/utils/R/Sweave.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -67,6 +67,9 @@ Sweave <- function(file, driver = RweaveLatex(),
 
     text <- SweaveReadFile(file, syntax, encoding = encoding)
     attr(file, "encoding") <- encoding <- attr(text, "encoding")
+    srcFilenames <- attr(text, "files")
+    srcFilenum <- attr(text, "srcFilenum")
+    srcLinenum <- attr(text, "srcLinenum")
 
     ## drobj$options is the current set of options for this file.
     drobj <- driver$setup(file = file, syntax = syntax, ...)
@@ -79,7 +82,6 @@ Sweave <- function(file, driver = RweaveLatex(),
             SweaveParseOptions(envopts, drobj$options, driver$checkopts)
 
     drobj$filename <- file
-    drobj$hasSweaveInput <- attr(text, "hasSweaveInput")
 
     mode <- "doc"
     chunknr <- 0L
@@ -87,8 +89,12 @@ Sweave <- function(file, driver = RweaveLatex(),
     chunkopts <- NULL
 
     namedchunks <- list()
+    prevfilenum <- 0L
+    prevlinediff <- 0L    
     for (linenum in seq_along(text)) {
     	line <- text[linenum]
+    	filenum <- srcFilenum[linenum]
+    	linediff <- srcLinenum[linenum] - linenum
         if (length(grep(syntax$doc, line))) { # start new documentation chunk
             if (mode == "doc") {
                 if (!is.null(chunk)) drobj <- driver$writedoc(drobj, chunk)
@@ -115,9 +121,10 @@ Sweave <- function(file, driver = RweaveLatex(),
                                             drobj$options,
                                             driver$checkopts)
             ## these #line directives are used for error messages when parsing
-            chunk <- paste("#line ", linenum+1L, ' "',
-                           basename(file), '"', sep="")
-            attr(chunk, "srclines") <- linenum
+            file <- srcFilenames[filenum]
+            chunk <- paste("#line ", linenum+linediff+1L, ' "', basename(file), '"', sep="")
+            attr(chunk, "srclines") <- linenum + linediff
+            attr(chunk, "srcFilenum") <- filenum
             chunknr <- chunknr + 1L  # this is really 'code chunk number'
             chunkopts$chunknr <- chunknr
         } else {  # continuation of current chunk
@@ -132,15 +139,27 @@ Sweave <- function(file, driver = RweaveLatex(),
                 } else {
                     ## these #line directives are used for error messages
                     ## when parsing
+                    file <- srcFilenames[filenum]
                     line <- c(namedchunks[[chunkref]],
-                              paste("#line ", linenum+1L, ' "',
+                              paste("#line ", linenum+linediff+1L, ' "',
                                     basename(file), '"', sep=""))
                 }
             }
-            srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
+            if (mode == "code" && 
+                (prevfilenum != filenum ||
+                 prevlinediff != linediff)) {
+                file <- srcFilenames[filenum]
+                line <- c(paste("#line ", linenum+linediff, ' "', basename(file), '"', sep=""),
+                          line)
+            }             
+            srclines <- c(attr(chunk, "srclines"), rep(linenum+linediff, length(line)))
+            srcfilenum <- c(attr(chunk, "srcFilenum"), rep(filenum, length(line)))
 	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
+            attr(chunk, "srcFilenum") <- srcfilenum
 	}
+	prevfilenum <- filenum
+	prevlinediff <- linediff
     }
     if (!is.null(chunk)) { # write out final chunk
 	drobj <-
@@ -149,6 +168,7 @@ Sweave <- function(file, driver = RweaveLatex(),
     }
 
     on.exit() # clear action to finish with error = TRUE
+    drobj$srcFilenames <- srcFilenames
     driver$finish(drobj)
 }
 
@@ -178,6 +198,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
     ## An incomplete last line is not a real problem.
     text <- readLines(f[1L], warn = FALSE)
+    srcLinenum <- seq_along(text)
 
     if (encoding != "bytes")  {
         ## now sort out an encoding, if needed.
@@ -211,7 +232,9 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             stop(gettextf("object %s does not have class \"SweaveSyntax\"",
                           sQuote(sname)), domain = NA)
         text <- text[-pos]
+        srcLinenum <- srcLinenum[-pos]       
     }
+    srcFilenum <- rep(1, length(srcLinenum))
 
     if (!is.null(syntax$input)) {
         while(length(pos <- grep(syntax$input, text))) {
@@ -226,18 +249,23 @@ SweaveReadFile <- function(file, syntax, encoding = "")
             }
             itext <- SweaveReadFile(c(ifile, file), syntax, encoding = encoding)
 
-	    text <-
-		if (pos == 1L) c(itext, text[-pos])
-		else if (pos == length(text)) c(text[-pos], itext)
-		else
-		    c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
-            attr(text, "hasSweaveInput") <- TRUE
+	    pre <- seq_len(pos-1L)
+	    post <- seq_len(length(text) - pos) + pos
+	    text <- c(text[pre], itext, text[post])
+	    
+	    srcLinenum <- c(srcLinenum[pre], attr(itext, "srcLinenum"),
+	    		    srcLinenum[post])
+	    srcFilenum <- c(srcFilenum[pre], attr(itext, "srcFilenum")+length(f),
+	    		    srcFilenum[post])
+	    f <- c(f, attr(itext, "files"))
         }
     }
 
     attr(text, "syntax") <- syntax
-    attr(text, "file") <- f[1L]
+    attr(text, "files") <- f
     attr(text, "encoding") <- enc
+    attr(text, "srcLinenum") <- srcLinenum
+    attr(text, "srcFilenum") <- srcFilenum    
     text
 }
 

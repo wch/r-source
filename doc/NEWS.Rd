@@ -279,6 +279,9 @@
       \item Setting the environment variable
       \env{_R_WARN_ON_LOCKED_BINDINGS_} will give a warning if an
       attempt is made to change a locked binding.
+      
+      \item \code{\\SweaveInput} is now supported when generating
+      concordances in \code{Sweave()}.
     }
   }
 
