@@ -238,7 +238,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## Check for the methods package before attaching this
             ## package.
             ## Only if it is _already_ here do we do cacheMetaData.
-            ## The methods package caches all other libs when it is
+            ## The methods package caches all other pkgs when it is
             ## attached.
 
             pkgpath <- find.package(package, lib.loc, quiet = TRUE,

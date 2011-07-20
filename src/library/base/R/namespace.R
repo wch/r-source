@@ -144,6 +144,8 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
         if(file.exists(paste(dbbase, ".rdb", sep = ""))) lazyLoad(dbbase, env)
     }
     if(length(depends)) assign(".Depends", depends, env)
+    Sys.setenv("_R_NS_LOAD_" = nsname)
+    on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
     runHook(".onAttach", ns, dirname(nspath), nsname)
     lockEnvironment(env, TRUE)
     runUserHook(nsname, nspath)
@@ -332,7 +334,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## 'package.rds'?
         ## No, not during builds of standard packages
         ## stats4 depends on methods, but exports do not matter
-        ## whilst it is being built on
+        ## whilst it is being built
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
@@ -436,6 +438,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         addNamespaceDynLibs(env, nsInfo$dynlibs)
 
 
+        Sys.setenv("_R_NS_LOAD_" = package)
+        on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
         ## run the load hook
         runHook(".onLoad", package, env, package.lib, package)
 
@@ -553,6 +557,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         sealNamespace(ns)
         runUserHook(package, pkgpath)
         on.exit()
+        Sys.unsetenv("_R_NS_LOAD_")
         ns
     }
 }

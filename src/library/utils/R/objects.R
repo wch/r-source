@@ -252,7 +252,21 @@ assignInNamespace <-
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
+    protected <- "as.Date.numeric"
+    if (x %in% protected && getNamespaceName(ns) == "base") {
+        warning("locked binding of ", sQuote(x), " will not be changed",
+                call. = FALSE, domain = NA, immediate. = TRUE)
+        return(invisible(NULL))
+    }
     if(bindingIsLocked(x, ns)) {
+        in_load <- Sys.getenv("_R_NS_LOAD_")
+        if (nzchar(in_load) && !in_load %in% "Matrix") {
+            ns_name <- getNamespaceName(ns)
+            if(in_load != ns_name)
+                warning(gettextf("changing locked binding for %s in %s whlist loading %s",
+                                 sQuote(x), sQuote(ns_name), sQuote(in_load)),
+                        call. = FALSE, domain = NA, immediate. = TRUE)
+        }
         unlockBinding(x, ns)
         assign(x, value, envir = ns, inherits = FALSE)
         w <- options("warn")
