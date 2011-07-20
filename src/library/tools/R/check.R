@@ -2207,7 +2207,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                 lines <- grep("Warning: running .First.lib() for package",
                               lines, invert = TRUE, value = TRUE, fixed = TRUE)
 
-                if (pkgname != "zoo")
+                if (!pkgname %in% c("memisc", "zoo"))
                     lines <- grep("Warning: locked binding of .* will not be changed",
                                   lines, invert = TRUE, value = TRUE)
 

@@ -252,7 +252,7 @@ assignInNamespace <-
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
-    protected <- "as.Date.numeric"
+    protected <- c("as.Date.numeric", "sample")
     if (x %in% protected && getNamespaceName(ns) == "base") {
         warning("locked binding of ", sQuote(x), " will not be changed",
                 call. = FALSE, domain = NA, immediate. = TRUE)
