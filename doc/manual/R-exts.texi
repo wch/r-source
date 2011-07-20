@@ -8731,7 +8731,7 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
                    dimnames=list(NULL, theta))
     for (i in seq_along(theta)) @{
         old <- get(theta[i], envir=rho)
-        delta <- eps * min(1, abs(old))
+        delta <- eps * max(1, abs(old))
         assign(theta[i], old+delta, envir=rho)
         ans1 <- eval(substitute(expr), rho)
         assign(theta[i], old, envir=rho)
