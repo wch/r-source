@@ -406,7 +406,8 @@
       
       \item A warning is given if test-loading a package changes a
       locked binding in a package other than itself.  It is likely that
-      this will be disallowed in future releases.
+      this will be disallowed in future releases.  (There are \emph{pro
+      tem} some exceptions to the warning.)
     }
   }
 
