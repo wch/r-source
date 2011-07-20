@@ -2659,6 +2659,17 @@ for @code{glibc} but not of most commercial Unixes.  However, you can
 make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
 replacement: see @uref{http://www.gnu.org/@/software/@/libiconv/}).
 
+An implementation of @acronym{XDR} is required.  This is part of
+@acronym{RPC} and historically has been part of @file{libc} on a
+Unix-alike: however @code{glibc 2.14} hides it.  The intention is that
+the @acronym{TI-RPC} library be used instead, in which case
+@code{libtirpc} (and its development version) needs to be installed, and
+its headers need to be on the C include path (which on systems using
+@command{gcc} can often be achieved by setting the environment variable
+@env{C_INCLUDE_PATH} to @samp{/usr/include/tirpc}).  The @R{} sources
+contain a simple implementation of @acronym{XDR} which can only be used
+on platforms with 32-bit @code{long}.
+
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{wctans_t} and @code{mbstate_t} and functions @code{mbrtowc},

@@ -1844,7 +1844,7 @@ AC_CHECK_DECLS([mkdtemp, snprintf, strdup, strncasecmp, vsnprintf])
 
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
-AC_SEARCH_LIBS(xdr_string, [nsl])
+AC_SEARCH_LIBS(xdr_string, [nsl tirpc])
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then

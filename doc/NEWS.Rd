@@ -9,6 +9,11 @@
     \itemize{
       \item It is possible to build in \file{src/extra/xdr} on more
       platforms.  (Needed since glibc 2.14 hides its RPC implementation.)
+      
+      \item \command{configure} will find the Sun TI-RPC implementation
+      of xdr (in \file{libtirpc}) provided its header files are in the
+      search path: see the \sQuote{R Installation and Administration
+      Manual}.
     }
   }
   
@@ -20,7 +25,7 @@
       inconsistently with pre-tabulated data.  (Reported by Michael Fay).
 
       \item \code{package.skeleton()} will no longer dump S4 objects
-      supplied directly, rather than in a code file.  These cannot be
+      supplied directly rather than in a code file.  These cannot be
       restored correctly from the dumped version.
       
       \item Build-time expressions in help files did not have access
@@ -30,11 +35,7 @@
       use, modification of the result could in some circumstances
       modify the original call.
       
-      \item In a \file{.Rd} file, \samp{\\code{''}} was mis-converted
-      to latex and rendered in e.g. PDF as a double quote (a single
-      character).
-      
-      \item Plotting \code{pch='.'} now guarantees at least a one-pixel
+      \item Plotting \code{pch = '.'} now guarantees at least a one-pixel
       dot if \code{cex > 0}.
     }  
   }
@@ -581,7 +582,7 @@
 
       \item \code{findClasses}, \code{getGeneric}, \code{findMethods}
       and \code{hasMethods} are revised to deal consistently with
-      the \code{package=} argument and be consistent with soft name space
+      the \code{package=} argument and be consistent with soft namespace
       policy for finding objects.
 
       \item \code{tools::Rdiff()} now has the option to return not only
@@ -961,7 +962,7 @@
       warning that they should be re-installed will be given.
 
       \item The \sQuote{experimental} alternative specification of a
-      name space via \code{.Export()} etc is now defunct.
+      namespace via \code{.Export()} etc is now defunct.
 
       \item The option \option{--unsafe} to \command{R CMD INSTALL} is
       deprecated: use the identical option \option{--no-lock} instead.
@@ -1209,7 +1210,7 @@
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item The \sQuote{experimental} alternative specification of a
-      name space via \code{.Export()} etc is now deprecated.
+      namespace via \code{.Export()} etc is now deprecated.
 
       \item \code{zip.file.extract()} is now deprecated.
 
@@ -2599,7 +2600,7 @@
       \item The use of \code{.required} by \code{require()} and
        \code{detach()} has been replaced by \code{.Depends} which is set
        from the \code{Depends} field of a package (even in packages with
-       name spaces).  By default \code{detach()} prevents such
+       namespaces).  By default \code{detach()} prevents such
        dependencies from being detached: this can be overridden by the
        argument \code{force}.
 
@@ -3392,7 +3393,7 @@
       \code{x} or \code{y} which deparsed to more than one line.
       (Reported by Laurent Gauthier.)
 
-      \item S4 methods are uncached whenever the name space containing
+      \item S4 methods are uncached whenever the namespace containing
       them is unloaded (by \code{unloadNamespace()} as well as by
       \code{detach(unload = TRUE))}.
 
@@ -3890,7 +3891,7 @@
 
        A function \code{offline_help_helper()} will be used if this exists
        in the workspace or further down the search path, otherwise
-       the function of that name in the \pkg{utils} name space is used.
+       the function of that name in the \pkg{utils} namespace is used.
 
       \item Plain text help is now used as the fallback for HTML help (as
        it always was for Compiled HTML help on Windows).
