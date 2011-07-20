@@ -150,6 +150,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     lockEnvironment(env, TRUE)
     runUserHook(nsname, nspath)
     on.exit()
+    Sys.unsetenv("_R_NS_LOAD_")
     invisible(env)
 }
 

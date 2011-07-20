@@ -128,6 +128,7 @@ bind_activation <- function(on = TRUE) {
     if(was.on <- saved)
         was.on <- !identical(base::cbind, base::.__H__.cbind)
     if(on) {
+        Sys.unsetenv("_R_NS_LOAD_")
         if(!saved) {
             utils::assignInNamespace(".__H__.cbind", base::cbind, ns = base.ns)
             utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
@@ -136,6 +137,7 @@ bind_activation <- function(on = TRUE) {
 	utils::assignInNamespace("rbind", rbind, ns = base.ns)
     }
     else if(!on && was.on) { ## turn it off
+        Sys.unsetenv("_R_NS_LOAD_")
         utils::assignInNamespace("cbind", base::.__H__.cbind, ns = base.ns)
         utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
     }
