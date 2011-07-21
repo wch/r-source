@@ -20,28 +20,7 @@ instdirs:
 	   done; \
 	 fi; done
 
-## used for datasets
-mkR:
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
-	    $(ECHO) > "$${f}"; \
-	    for rsrc in $(RSRC); do \
-	      $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
-	      cat $${rsrc} >> "$${f}"; \
-	    done; \
-	  else \
-	    cat $(RSRC) > "$${f}"; \
-	  fi; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@if test -f $(srcdir)/NAMESPACE;  then \
-	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
-	fi
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-
-## do not install all.R
+## does not install all.R
 mkR1:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -80,6 +59,7 @@ mkR2:
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 
 ## version for base on Unix, substitutes for @which@
+## (and so cannot be in src/library/base/Makefile.in)
 mkRbase:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \

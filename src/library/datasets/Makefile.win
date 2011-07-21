@@ -16,7 +16,8 @@ RSRC = $(srcdir)/R/zzz.R
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR mkdesc
+	@$(MAKE) -f Makefile.win mkR1 mkdesc
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
