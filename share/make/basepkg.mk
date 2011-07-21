@@ -124,7 +124,7 @@ mklazycomp: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
 mkRsimple:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).Rd?
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rd?
 
 mkpo:
 	@if test -d $(srcdir)/inst/po; then \

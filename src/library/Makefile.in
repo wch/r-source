@@ -179,3 +179,26 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
 	done
+
+### ----------- targets for R-core use ----------
+### These do not change datasets (never lazy-loaded)
+
+## methods needs to be dumped, so is omitted here.
+Rsimple:
+	@for pkg in $(R_PKGS_BASE2); do \
+	  (cd $${pkg} && $(MAKE) Rsimple) || exit 1; \
+	done
+
+## This is not parallel-safe
+Rlazy:
+	@for pkg in $(R_PKGS_BASE2) methods; do \
+	  (cd $${pkg} && $(MAKE) Rlazy) || exit 1; \
+	done
+
+## This is not parallel-safe
+Rlazycomp:
+	@for pkg in $(R_PKGS_BASE2) methods; do \
+	  (cd $${pkg} && $(MAKE) Rlazycomp) || exit 1; \
+	done
+
+

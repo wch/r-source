@@ -17,13 +17,15 @@ pkg = methods
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
+EXTRAS = R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR2 mkdesc mkpo
 	@$(MAKE) mksrc
-	@$(MAKE) RfilesLazy
+@BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) RfilesLazy EXTRAS2=$(EXTRAS)
+@BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) RfilesLazy
 
 include $(top_srcdir)/share/make/basepkg.mk
 
@@ -34,13 +36,25 @@ RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 ## NAMESPACE in the library tree.
 ## This depends on many other things, including the list of primitives.
 ## Depending on names.c at least catches the latter.
-EXTRAS = @BYTE_COMPILE_PACKAGES_TRUE@ R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
   $(top_srcdir)/src/main/names.c
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-@BYTE_COMPILE_PACKAGES_TRUE@	@$(ECHO) "byte-compiling '$(pkg)'"
+	@if test -n "$(EXTRAS2)"; then \
+	  $(ECHO) "byte-compiling '$(pkg)'"; \
+	fi
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \
-	  $(EXTRAS) R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
+	  $(EXTRAS2) R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
+
+## not supported
+Rsimple:
+
+Rlazy:
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+	@$(MAKE) RfilesLazy
+
+Rlazycomp:
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+	@$(MAKE) RfilesLazy EXTRAS2=$(EXTRAS)
