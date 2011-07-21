@@ -1,6 +1,6 @@
 % File src/library/base/man/by.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{by}
@@ -39,8 +39,9 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
   This is always a list if \code{simplify} is false, otherwise a list or
   array (see \code{\link{tapply}}).
 }
-\seealso{\code{\link{tapply}}}
-
+\seealso{\code{\link{tapply}}, \code{\link{simplify2array}}.
+  \code{\link{ave}} also applies a function block-wise.
+}
 \examples{
 require(stats)
 by(warpbreaks[, 1:2], warpbreaks[,"tension"], summary)

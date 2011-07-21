@@ -1,6 +1,6 @@
 % File src/library/base/man/apply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{apply}
@@ -33,8 +33,8 @@ apply(X, MARGIN, FUN, \dots)
 
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
   is either a function or a symbol (e.g. a backquoted name) or a
-  character string specifying a function to be searched for from the 
-  environment of the call to \code{apply}. 
+  character string specifying a function to be searched for from the
+  environment of the call to \code{apply}.
 }
 \value{
   If each call to \code{FUN} returns a vector of length \code{n}, then
@@ -59,7 +59,8 @@ apply(X, MARGIN, FUN, \dots)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{lapply}}, \code{\link{tapply}}, and convenience functions
+  \code{\link{lapply}} and there, \code{\link{simplify2array}};
+  \code{\link{tapply}}, and convenience functions
   \code{\link{sweep}} and \code{\link{aggregate}}.
 }
 \examples{
