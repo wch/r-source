@@ -25,6 +25,7 @@ update:
 	@$(MAKE) mklazycomp
 
 ## This is deliberately conservative: -nt seems to work differently in some shells
+## We first use mkdesc2 (with date) to install the DESCRIPTION, then re-install
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)

@@ -54,7 +54,6 @@ mkR1:
 	    cat $(RSRC) > "$${f}"; \
 	  fi; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@if test -f $(srcdir)/NAMESPACE;  then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
 	fi
@@ -142,6 +141,10 @@ mklazy:
 	  R_DEFAULT_PACKAGES=$(DEFPKGS) LC_ALL=C $(R_EXE) > /dev/null
 
 mklazycomp: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+
+mkRsimple:
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).Rd?
 
 mkpo:
 	@if test -d $(srcdir)/inst/po; then \

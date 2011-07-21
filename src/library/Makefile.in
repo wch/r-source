@@ -25,11 +25,13 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R_PKGS_CMP = @BYTE_COMPILE_PACKAGES_TRUE@ base tools
+
 ## FIXME: do some of this in parallel?
-## beware there is a bootstrapping problem here: tools uses tools to
+## Beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
-## When base is made we need to use 'date' to set the timestamp,
-## so we remake it before dumping the DESCRIPTION files.
+## When base is made we need to use 'date' to set the timestamp in
+## its DESCRIPTION , so we remake it before dumping the DESCRIPTION files.
+
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in profile base tools compiler; do \
