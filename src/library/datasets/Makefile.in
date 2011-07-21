@@ -36,5 +36,7 @@ all: Makefile DESCRIPTION
 
 include $(top_srcdir)/share/make/basepkg.mk
 
+mkR: mkR1
+
 # dummy targets
 Rsimple Rlazy Rlazycomp:

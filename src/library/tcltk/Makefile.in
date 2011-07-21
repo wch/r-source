@@ -44,5 +44,16 @@ all: Makefile DESCRIPTION
 	  $(MAKE) $(MKLAZY); \
 	fi
 
+mkR:
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  if test @use_tcltk@ = yes; then \
+	    cat $(RSRC) > $${f}; \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R ; \
+	  else \
+	    $(SHELL) $(top_srcdir)/tools/copy-if-change \
+	      $(srcdir)/R/unix/zzzstub.R \
+	      $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
+	  fi)
+
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk

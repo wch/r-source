@@ -40,12 +40,14 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@$(INSTALL_DATA) $(srcdir)/baseloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
-Rsimple: mkRsimple
+mkR: mkRbase
 
-Rlazy: mkRsimple
+Rsimple: mkR mkRsimple
+
+Rlazy: mkR mkRsimple
 	@cat $(srcdir)/makebasedb.R | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/baseloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
-Rlazycomp: mkRsimple mklazycomp
+Rlazycomp: mkR mkRsimple mklazycomp

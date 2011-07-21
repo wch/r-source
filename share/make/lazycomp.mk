@@ -8,8 +8,8 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=$(DEFPKGS) LC_ALL=C $(R_EXE) > /dev/null
 
-Rsimple: mkRsimple
-Rlazy: mkRsimple mklazy
-Rlazycomp: mkRsimple mklazycomp
+Rsimple: mkR mkRsimple
+Rlazy: mkR mkRsimple mklazy
+Rlazycomp: mkR mkRsimple mklazycomp
 
 

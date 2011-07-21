@@ -33,5 +33,7 @@ $(srcdir)/R/cmp.R: $(srcdir)/noweb/compiler.nw
 	@echo "re-making 'R/cmp.R'"
 	@$(NOTANGLE) -Rcmp.R $(srcdir)/noweb/compiler.nw > $(srcdir)/R/cmp.R
 
+mkR: mkR1
+
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk

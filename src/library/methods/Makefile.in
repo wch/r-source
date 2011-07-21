@@ -27,6 +27,8 @@ all: Makefile DESCRIPTION
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) RfilesLazy EXTRAS2=$(EXTRAS)
 @BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) RfilesLazy
 
+mkR: mkR2
+
 include $(top_srcdir)/share/make/basepkg.mk
 
 RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
@@ -51,10 +53,10 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
 ## not supported
 Rsimple:
 
-Rlazy:
+Rlazy: mkR
 	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 	@$(MAKE) RfilesLazy
 
-Rlazycomp:
+Rlazycomp: mkR
 	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 	@$(MAKE) RfilesLazy EXTRAS2=$(EXTRAS)

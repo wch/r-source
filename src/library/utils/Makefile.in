@@ -31,6 +31,8 @@ all: Makefile DESCRIPTION
 @BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) mklazy
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
 
+mkR: mkR1
+
 iconvlist: $(top_builddir)/library/$(pkg)/iconvlist
 
 $(top_builddir)/library/$(pkg)/iconvlist:

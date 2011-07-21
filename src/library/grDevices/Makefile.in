@@ -30,5 +30,7 @@ all: Makefile DESCRIPTION
 @BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) mklazycomp
 	@$(R_GZIPCMD) -9f $(top_builddir)/library/grDevices/afm/*.afm
 
+mkR: mkR1
+
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk
