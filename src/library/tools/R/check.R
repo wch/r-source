@@ -1171,6 +1171,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             out <- R_runR(paste("tools:::.check_package_compact_datasets('.',",
                                 R_check_compact_data2, ")"),
                           R_opts2)
+            out <- grep("Warning: changing locked binding", out,
+                        invert = TRUE, value = TRUE, fixed = TRUE)
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
