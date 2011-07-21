@@ -25,6 +25,8 @@
 #define _(String) (String)
 #endif
 
+#define DUPLICATE_CLASS_CASE(method) TYPEOF(method) == ENVSXP
+
 
 SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist);

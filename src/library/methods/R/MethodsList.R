@@ -448,14 +448,47 @@ matchSignature <-
     if(!is(fun, "genericFunction"))
         stop(gettextf("trying to match a method signature to an object (of class \"%s\") that is not a generic function", class(fun)), domain = NA)
     anames <- fun@signature
-    if(!is(signature, "list") && !is(signature, "character"))
-        stop(gettextf("trying to match a method signature of class \"%s\"; expects a list or a character vector", class(signature)), domain = NA)
     if(length(signature) == 0)
         return(character())
-    sigClasses <- as.character(signature)
+    if(is(signature,"character")) {
+        pkgs <- packageSlot(signature) # includes case of  "ObjectsWithPackage"
+        if(is.null(pkgs))
+            pkgs <- character(length(signature))
+        else if(length(pkgs) != length(signature))
+            stop("invalid \"package\" slot or attribute, wrong length")
+        sigClasses <- as.character(signature)
+    }
+    else if(is(signature, "list")) {
+        sigClasses <- pkgs <- character(length(signature))
+        for(i in seq_along(signature)) {
+            cli <- signature[[i]]
+            if(is(cli, "classRepresentation")) {
+                sigClasses[[i]] <- cli@className
+                pkgs[[i]] <- cli@package
+            }
+            else if(is(cli, "character") && length(cli) == 1) {
+                sigClasses[[i]] <- cli
+                pkgi <- packageSlot(cli)
+                if(is.character(pkgi))
+                    pkgs[[i]] <- pkgi
+            }
+            else
+                stop(gettextf("invalid element in a list for \"signature\" argument; element %d is neither a class definition nor a class name",
+                     i), domain = NA)
+        }
+    }
+    else
+        stop(gettextf("trying to match a method signature of class \"%s\"; expects a list or a character vector", class(signature)), domain = NA)
     if(!identical(where, baseenv())) {
-        unknown <- !sapply(sigClasses, function(x, where)
-			   isClass(x, where=where), where = where)
+        ## fill in package information, warn about undefined classes
+        unknown <- !nzchar(pkgs)
+        for(i in seq_along(sigClasses)[unknown]) {
+            cli <- getClassDef(sigClasses[[i]], where)
+            if(!is.null(cli)) {
+                pkgs[[i]] <- cli@package
+                unknown[[i]] <- FALSE
+            }
+        }
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
             ## coerce(), i.e., setAs() may use *one* unknown class
@@ -509,13 +542,19 @@ matchSignature <-
 }
     n <- length(anames)
     value <- rep("ANY", n)
+    valueP <- rep("methods", n)
     names(value) <- anames
     value[which] <- sigClasses
+    valueP[which] <- pkgs
     unspec <- value == "ANY"
     ## remove the trailing unspecified classes
     while(n > 1 && unspec[[n]])
         n <- n-1
-    length(value) <- n
+    length(value) <- length(valueP) <- n
+    attr(value, "package") <- valueP
+    ## <FIXME> Is there a reason (bootstrapping?) why this
+    ## is not an actual object from class "signature"?
+    ## See .MakeSignature() </FIXME>
     value
 }
 
@@ -650,7 +689,7 @@ promptMethods <- function(f, filename = NULL, methods)
              ## Title and description are ok as auto-generated: should
              ## they be flagged as such (via '~~' which are quite often
              ## left in by authors)?
-             title = 
+             title =
              sprintf("\\title{ ~~ Methods for Function \\code{%s} %s ~~}",
                      f, packageString),
              description =
@@ -816,7 +855,7 @@ asMethodDefinition <- function(def, signature = list(), sealed = FALSE, fdef = d
         else
             assign(this, TRUE, envir = .MlistDepTable)
     }
-    if(missing(this)) 
+    if(missing(this))
         msg <-"Use of the \"MethodsList\" meta data objects is deprecated."
     else if(is.character(this))
         msg <- gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is deprecated.", dQuote(this))

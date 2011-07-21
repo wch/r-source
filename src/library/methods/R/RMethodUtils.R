@@ -820,6 +820,21 @@ cacheMetaData <-
 {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
+    pkg <- getPackageName(where)
+    classes <- getClasses(where)
+    for(cl in classes) {
+        cldef <- (if(attach) get(classMetaName(cl), where) # NOT getClassDef, it will use cache
+                  else  getClassDef(cl, searchWhere))
+        if(is(cldef, "classRepresentation")) {
+            if(attach) {
+                .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"), where)
+            }
+            else if(identical(cldef@package, pkg)) {
+                .uncacheClass(cl, cldef)
+                .removeSuperclassBackRefs(cl, cldef, searchWhere)
+            }
+        }
+    }
     generics <- .getGenerics(where)
     packages <- attr(generics, "package")
     if(length(packages) <  length(generics))
@@ -832,7 +847,6 @@ cacheMetaData <-
     ## check for duplicates
     dups <- duplicated(generics) & duplicated(packages)
     generics <- generics[!dups]
-    pkg <- getPackageName(where)
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
@@ -870,20 +884,6 @@ cacheMetaData <-
             .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
-    }
-    classes <- getClasses(where)
-    for(cl in classes) {
-        cldef <- (if(attach) get(classMetaName(cl), where) # NOT getClassDef, it will use cache
-                  else  getClassDef(cl, searchWhere))
-        if(is(cldef, "classRepresentation")) {
-            if(attach) {
-                .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"), where)
-            }
-            else if(identical(cldef@package, pkg)) {
-                .uncacheClass(cl, cldef)
-                .removeSuperclassBackRefs(cl, cldef, searchWhere)
-            }
-        }
     }
     invisible(NULL) ## as some people call this at the end of functions
 }

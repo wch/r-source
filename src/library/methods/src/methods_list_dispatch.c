@@ -43,6 +43,7 @@ extern int snprintf (char *s, size_t n, const char *format, ...);
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs);
 static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
+static SEXP R_selectByPackage(SEXP f, SEXP classes, int nargs);
 
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
@@ -50,7 +51,7 @@ static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
     s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
     s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
     s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
-    s_argument, s_allMethods;
+    s_argument, s_allMethods, s_base;
 static SEXP R_FALSE, R_TRUE;
 static Rboolean table_dispatch_on = 1;
 
@@ -114,7 +115,10 @@ SEXP R_initMethodDispatch(SEXP envir)
 
     /* some strings (NOT symbols) */
     s_missing = mkString("missing");
+    setAttrib(s_missing, R_PackageSymbol, mkString("methods"));
     R_PreserveObject(s_missing);
+    s_base = mkString("base");
+    R_PreserveObject(s_base);
     /*  Initialize method dispatch, using the static */
     R_set_standardGeneric_ptr(
 	(table_dispatch_on ? R_dispatchGeneric : R_standardGeneric)
@@ -756,6 +760,34 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
     else return def;
 }
 
+static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
+    int lwidth, i; SEXP thisPkg;
+    char *buf, *bufptr;
+    lwidth = 0;
+    for(i = 0; i<nargs; i++) {
+	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
+	if(thisPkg == R_NilValue)
+	    thisPkg = s_base;
+	lwidth += strlen(STRING_VALUE(thisPkg)) + 1;
+    }	
+    /* make the label */
+    buf = (char *) R_alloc(lwidth + 1, sizeof(char));
+    bufptr = buf;
+    for(i = 0; i<nargs; i++) {
+	if(i > 0)
+	    *bufptr++ = '#';
+	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
+	if(thisPkg == R_NilValue)
+	    thisPkg = s_base;
+	strcpy(bufptr, STRING_VALUE(thisPkg));
+	while(*bufptr)
+	    bufptr++;
+    }
+    /* look up the method by package -- if R_unboundValue, will go on
+     to do inherited calculation */
+    return findVarInFrame(table, install(buf));
+}
+
 static const char *
 check_single_string(SEXP obj, Rboolean nonEmpty, const char *what)
 {
@@ -979,6 +1011,8 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	    bufptr++;
     }
     method = findVarInFrame(mtable, install(buf));
+    if(DUPLICATE_CLASS_CASE(method))
+	method = R_selectByPackage(method, classes, nargs);
     if(method == R_UnboundValue) {
 	method = do_inherited_table(classes, fdef, mtable, ev);
     }

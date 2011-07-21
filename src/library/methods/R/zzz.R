@@ -85,6 +85,7 @@
         assign("implicitGeneric", .implicitGeneric, envir = where)
         cacheMetaData(where, TRUE, searchWhere = .GlobalEnv, FALSE)
         assign(".checkRequiredGenerics", ..checkRequiredGenerics,envir = where)
+        assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
         ## unlock some bindings that must be modifiable
         unlockBinding(".BasicFunsList", where)
          assign(".saveImage", TRUE, envir = where)

@@ -25,18 +25,3 @@ stopifnot(identical(getClass("Cholesky"), clG))
 ## Second:  tests of methods defined for the same generic
 ## (NOT YET!)
 
-## setAs("Cholesky", "matrix",
-##       function(from) {
-##           p <- from@size
-##           value <- matrix(0, p, p)
-##           start <- 0
-##           for(i in seq(length = p)) {
-##               ii <- seq(length = i)
-##               value[i, ii] <- from[start + ii]
-##               start <- start + i
-##           }
-##           value
-##       },
-##       replace = function(from, value) stop("Sorry, not implemented")
-##       )
-

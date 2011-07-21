@@ -163,6 +163,8 @@
                              what, paste(signature, collapse = ", ")))
             return(def)
         }
+        ## pick up signature with package slot from selectMethod
+        signature <- def@target
     }
     if(untrace) {
         if(.traceTraceState) {

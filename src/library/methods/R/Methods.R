@@ -592,14 +592,14 @@ setMethod <-
                                      signature, margs, definition)
     else
         whereMethods <- NULL
-    allMethods <- getMethodsForDispatch(fdef)
+    mtable <- getMethodsForDispatch(fdef)
     if(cacheOnAssign(where)) { # will be FALSE for sourceEnvironment's
         ## cache in both direct and inherited tables
-        .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
+        .cacheMethodInTable(fdef, signature, definition, mtable) #direct
         .cacheMethodInTable(fdef, signature, definition) # inherited, by default
         if(is.not.base)
             .addToMetaTable(fdef, signature, definition, where, nSig)
-        resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
+        resetGeneric(f, fdef, mtable, gwhere, deflt) # Note: gwhere not used by resetGeneric
     }
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members

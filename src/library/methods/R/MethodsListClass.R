@@ -38,7 +38,7 @@
     setIs("MethodsList", "optionalMethod", where = envir) #only until MethodsList class is defunct
 
     ## signatures -- used mainly as named character vectors
-    setClass("signature", representation("character", names = "character"), where = envir); clList <- c(clList, "signature")
+    setClass("signature", representation("character", names = "character", package = "character"), where = envir); clList <- c(clList, "signature")
 
     ## formal method definition for all but primitives
     setClass("MethodDefinition", contains = "function",
@@ -359,10 +359,17 @@
 
 
 .MakeSignature <- function(object, def = NULL, signature, fdef = def) {
+    ## fill in the signature information in object
+    ## In effect, object must come from class "signature" or a subclass
+    ## but the only explicit requirement is that it has compatible
+    ## .Data and "package" slots
     signature <- unlist(signature)
     if(length(signature)>0) {
         classes <- as.character(signature)
         sigArgs <- names(signature)
+        pkgs <- attr(signature, "package")
+        if(is.null(pkgs))
+            pkgs <- character(length(signature))
         if(is(fdef, "genericFunction"))
             formalNames <- fdef@signature
         else if(is.function(def)) {
@@ -383,10 +390,8 @@
                             paste(formalNames, collapse = ", ")),
                    domain = NA)
         }
-        ## the named classes become the signature object
-        class(signature) <- class(object)
-        signature
+        object@.Data <- signature
+        object@package <- pkgs
     }
-    else
-        object
+    object
 }

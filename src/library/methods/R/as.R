@@ -36,7 +36,7 @@ as <-
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
-        packageSlot(sig) <- where
+        ## packageSlot(sig) <- where
         ## try first for an explicit (not inherited) method
         ## ?? Can this ever succeed if .quickCoerceSelect failed?
         asMethod <- selectMethod("coerce", sig, optional = TRUE,

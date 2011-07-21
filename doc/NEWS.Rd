@@ -552,10 +552,10 @@
       search path.
 
       \item In principle, S4 classes from different packages could
-      have the same name.  This has never worked, but a first step has
-      been taken:  Classes should now be found correctly from each
-      package's namespace or given the package slot.  Methods for the
-      same generic function may still be selected incorrectly.
+      have the same name.  This has not previously worked. Changes
+      have now been installed that should allow such classes and
+      permit methods to use them.  There are many possible cases and it's
+      unlikely they all have been covered yet.
 
       \item Work around an issue in Linux (a system \code{select} call
       resetting \code{tv}) which prevented internet operations from

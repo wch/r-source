@@ -1852,6 +1852,13 @@ substituteFunctionArgs <-
 ## packages a list of  classes will be cached
 ## See .cacheGeneric, etc. for analogous computations for generics
 .classTable <- new.env(TRUE, baseenv())
+assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
+.duplicateClassesExist <- function(on) {
+    value <- get("#HAS_DUPLICATE_CLASS_NAMES", envir = .classTable)
+    if(nargs())
+        assign("#HAS_DUPLICATE_CLASS_NAMES", on, envir = .classTable)
+    value
+}
 
 .cacheClass <- function(name, def, doSubclasses = FALSE, env) {
     if(!identical(doSubclasses, FALSE))
@@ -1880,6 +1887,7 @@ substituteFunctionArgs <-
         else
             prev[[i]] <- def
         def <- prev
+        .duplicateClassesExist(TRUE)
     }
     assign(name, def, envir = .classTable)
 }
