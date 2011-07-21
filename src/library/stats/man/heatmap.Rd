@@ -1,6 +1,6 @@
 % File src/library/stats/man/heatmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{heatmap}
@@ -94,7 +94,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   If either is missing, as by default, then the ordering of the
   corresponding dendrogram is by the mean value of the rows/columns,
   i.e., in the case of rows, \code{Rowv <- rowMeans(x, na.rm=na.rm)}.
-  If either is \code{\link{NULL}}, \emph{no reordering} will be done for
+  If either is \code{\link{NA}}, \emph{no reordering} will be done for
   the corresponding side.
 
   By default (\code{scale = "row"}) the rows are scaled to have mean
