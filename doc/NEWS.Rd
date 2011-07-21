@@ -282,6 +282,10 @@
       
       \item \code{\\SweaveInput} is now supported when generating
       concordances in \code{Sweave()}.
+      
+      \item \code{findLineNum()} and \code{setBreakpoint()} now allow
+      the environment to be specified indirectly; the latter gains
+      a \code{clear} argument to allow it to call \code{untrace()}.
     }
   }
 

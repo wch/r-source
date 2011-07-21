@@ -170,7 +170,7 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(),
     return(structure(result, class="findLineNumResult"))
 }
 
-print.findLineNumResult <- function(x, ...) {
+print.findLineNumResult <- function(x, steps=TRUE, ...) {
     if (!length(x)) cat("No source refs found.\n")
     filename <- NULL
     line <- 0
@@ -181,7 +181,7 @@ print.findLineNumResult <- function(x, ...) {
     	    line <- x[[i]]$line
     	    cat(filename, "#", line, ":\n", sep="")
     	}
-        cat(" ", x[[i]]$name, " step ", paste(x[[i]]$at, collapse=","), sep="")
+        cat(" ", x[[i]]$name, if (steps) paste(" step ", paste(x[[i]]$at, collapse=",")) else "", sep="")
         if (!is.null(x[[i]]$signature))
             cat(" signature ", paste(x[[i]]$signature, collapse=","), sep="")
         cat(" in ", format(x[[i]]$env), "\n", sep="")
@@ -190,7 +190,7 @@ print.findLineNumResult <- function(x, ...) {
 
 
 setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), lastenv,
-                          verbose = TRUE, tracer, print=FALSE,
+                          verbose = TRUE, tracer, print=FALSE, clear=FALSE,
                          ...) {
 
     if (missing(lastenv)) {
@@ -198,7 +198,7 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	else lastenv <- emptyenv()
     }
     locations <- findLineNum(srcfile, line, nameonly, envir, lastenv)
-    if (verbose) print(locations)
+    if (verbose) print(locations, steps=!clear)
     breakpoint <- missing(tracer)
     while (length(locations)) {
     	what <- locations[[1]]$name
@@ -222,7 +222,12 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	    } else
     	    	i <- i+1
     	}
-    	if (is.null(signature))
+    	if (clear) {
+    	    if (is.null(signature)) 
+  		untrace(what, where=where)
+    	    else
+    	    	untrace(what, signature=signature, where=where)
+    	} else if (is.null(signature))
     	    trace(what, tracer, at=at, where=where, print=print, ...)
     	else
     	    trace(what, signature=signature, tracer, at=at, where=where, ...)
