@@ -20,7 +20,7 @@ instdirs:
 	   done; \
 	 fi; done
 
-## does not install all.R
+## used for base on Windows.  Every package except base has a namespace
 mkR1:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -53,9 +53,7 @@ mkR2:
 	  fi; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
-	@if test -f $(srcdir)/NAMESPACE;  then \
-	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
-	fi
+	@$(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 
 ## version for base on Unix, substitutes for @which@

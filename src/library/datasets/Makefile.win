@@ -11,13 +11,10 @@ include $(top_builddir)/Makeconf
 
 pkg = datasets
 
-RSRC = $(srcdir)/R/zzz.R
-
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@$(MAKE) -f Makefile.win mkR mkdesc
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in $(srcdir)/data/*; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
@@ -30,7 +27,9 @@ all:
 
 include $(top_srcdir)/share/make/basepkg.mk
 
-mkR: mkR1
+mkR:
+	@$(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg)
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 
 # dummy targets
 Rsimple Rlazy Rlazycomp:
