@@ -32,4 +32,6 @@ assumes that a pointer can be stored in a long.
 These functions are only used in saveload.c, which uses xdr_bytes,
 xdr_double, xdr_int, xdr_string, xdrmem_create and xdrstdio_create.
 
-There was some furthe tidying up in July 2011.
+There was some further tidying up in July 2011 to enable this to be
+used on other systems with 32-bit longs (which is checked).  It would
+be straightforward to change this to use int32_t rather than long.
