@@ -32,11 +32,19 @@ R:
 	    R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
 	    all install-tests || exit 1; \
 	done
-	@for pkg in base tools; do \
-	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
-	    R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
-	    mklazycomp || exit 1; \
-	done
+	@if test -z "$(R_NO_BASE_COMPILE)"; then \
+	  for pkg in base tools; do \
+	    $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
+	      R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
+	      mklazycomp || exit 1; \
+	  done; \
+	else \
+	  for pkg in base tools; do \
+	    $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
+	      R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
+	      Rlazy || exit 1; \
+	  done; \
+	fi
 	@for pkg in $(R_PKGS_BASE1); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
 		R_OSTYPE=windows VERSION=$(RVER) BINDIR=$(BINDIR) \
