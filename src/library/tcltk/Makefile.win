@@ -11,6 +11,7 @@ include $(top_builddir)/Makeconf
 
 pkg = tcltk
 
+R_OSTYPE = windows
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/zzz.R`
 DEFPKGS = NULL
 BUILD_TCLTK = yes

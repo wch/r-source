@@ -12,6 +12,7 @@ include $(top_builddir)/Makeconf
 
 pkg = base
 
+R_OSTYPE = windows
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 
 all:
