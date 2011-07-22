@@ -182,8 +182,11 @@
         current
     }
     else if(is(current, "MethodDefinition")) {
+        curPkg <- packageSlot(current@defined)
         if(is(obj, "MethodDefinition")) {
-            if(identical(obj@defined@packages, current@defined@packages))
+            objPkg <- packageSlot(obj@defined)
+            if(is.null(curPkg) || is.null(objPkg) ||
+               identical(curPkg, objPkg))
                 return(obj)
             else {
                 merge <- new.env()
