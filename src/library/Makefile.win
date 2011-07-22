@@ -22,6 +22,9 @@ all: R
 
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
+## When base is made we need to use 'date' to set the timestamp in
+## its DESCRIPTION , so we remake it before dumping the DESCRIPTION files.
+
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in base tools compiler; do \
@@ -110,21 +113,27 @@ clean:
 
 
 ### ----------- targets for R-core use ----------
+### These are intended to be run on an already-built R, possibly after
+### editing the code in a standard package.
+### Targets of the same name can be run in individual package directories.
 ### These do not change datasets (never lazy-loaded)
 
+### They are not current safe for a parallel make.
+
 ## methods needs to be dumped, so is omitted here.
+## This installs all.R as the R directory in a package
 Rsimple:
 	@for pkg in $(R_PKGS_BASE2); do \
 	  (cd $${pkg} && $(MAKE) -f Makefile.win Rsimple) || exit 1; \
 	done
 
-## This is not parallel-safe
+## Lazy-loaded, not compiled
 Rlazy:
 	@for pkg in $(R_PKGS_BASE2) methods; do \
 	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazy) || exit 1; \
 	done
 
-## This is not parallel-safe
+## Lazy-loaded, not compiled
 Rlazycomp:
 	@for pkg in $(R_PKGS_BASE2) methods; do \
 	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazycomp) || exit 1; \
