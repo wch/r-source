@@ -53,12 +53,8 @@
 #include <config.h>
 #endif
 
-#if SIZEOF_LONG > 4
-#error This XDR implementation assumes 4-byte longs
-#endif
-
-
 #include <stdio.h>
+#include <stdint.h>
 
 #include <rpc/types.h>
 #include <rpc/xdr.h>
@@ -66,18 +62,18 @@
 bool_t
 xdr_double(XDR *xdrs, double *dp)
 {
-    long *lp;
+    int32_t *lp;
 
     switch (xdrs->x_op) {
     case XDR_ENCODE:
-	lp = (long *)dp;
+	lp = (int32_t *)dp;
 #ifdef WORDS_BIGENDIAN
 	return (XDR_PUTLONG(xdrs, lp++) && XDR_PUTLONG(xdrs, lp));
 #else
 	return (XDR_PUTLONG(xdrs, lp+1) && XDR_PUTLONG(xdrs, lp));
 #endif
     case XDR_DECODE:
-	lp = (long *)dp;
+	lp = (int32_t *)dp;
 #ifdef WORDS_BIGENDIAN
 	return (XDR_GETLONG(xdrs, lp++) && XDR_GETLONG(xdrs, lp));
 #else

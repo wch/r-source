@@ -2,14 +2,11 @@
 #include <config.h>
 #endif
 
-#if SIZEOF_LONG > 4
-#error This XDR implementation assumes 4-byte longs
-#endif
+#include <stdint.h>
 
 /* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
 #if defined(WIN32) || defined(__CYGWIN__)
-static unsigned long int
-ntohl(unsigned long int x)
+static uint32_t ntohl(uint32_t x)
 { /* could write VC++ inline assembler, but not worth it for now */
 #ifdef _MSC_VER
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
@@ -25,8 +22,7 @@ ntohl(unsigned long int x)
 #else /* net is big-endian: little-endian hosts need byte-swap code */
 #ifndef WORDS_BIGENDIAN
 /* #ifdef LITTLE_ENDIAN */
-static unsigned long int 
-ntohl (unsigned long int x)
+static uint32_t ntohl (uint32_t x)
 {
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
 }
@@ -149,9 +145,7 @@ xdrstdio_destroy(xdrs)
 }
 
 static bool_t
-xdrstdio_getlong(xdrs, lp)
-	XDR *xdrs;
-	register long *lp;
+xdrstdio_getlong(XDR *xdrs, int32_t *lp)
 {
 	if (fread((caddr_t)lp, 4, 1, (FILE *)xdrs->x_private) != 1)
 		return (FALSE);
@@ -160,11 +154,9 @@ xdrstdio_getlong(xdrs, lp)
 }
 
 static bool_t
-xdrstdio_putlong(xdrs, lp)
-	XDR *xdrs;
-	long *lp;
+xdrstdio_putlong(XDR *xdrs, int32_t *lp)
 {
-	long mycopy = htonl(*lp);
+	int32_t mycopy = htonl(*lp);
 	lp = &mycopy;
 	if (fwrite((caddr_t)lp, 4, 1, (FILE *)xdrs->x_private) != 1)
 		return (FALSE);

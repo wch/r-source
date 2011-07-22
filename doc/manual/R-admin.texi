@@ -2653,7 +2653,9 @@ be that the @acronym{TI-RPC} library be used instead, in which case
 its headers need to be on the C include path (for example by including
 @samp{-I/usr/include/tirpc} in the @code{CPPFLAGS} configure variable).
 The @R{} sources contain a simple implementation of @acronym{XDR} which
-can only be used on platforms with 32-bit @code{long}.
+in recent versions can be used on platforms with 32-bit or 64-bit
+@code{long} (and earlier ones will fail to compile unless @code{long} is
+32-bit.
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
