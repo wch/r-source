@@ -23,6 +23,7 @@ all:
 	@$(MAKE) -f Makefile.win mklazycomp
 	@gzip -9f $(top_builddir)/library/grDevices/afm/*.afm
 
+mkR: mkR1
 
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk

@@ -12,13 +12,14 @@ include $(top_builddir)/Makeconf
 pkg = methods
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+EXTRAS = R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkpo
 	@$(MAKE) -f Makefile.win mksrc-win2
-	@$(MAKE) -f Makefile.win RfilesLazy
+	@$(MAKE) -f Makefile.win RfilesLazy EXTRAS2=$(EXTRAS)
 
 include $(top_srcdir)/share/make/basepkg.mk
 
@@ -33,9 +34,21 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
   $(top_srcdir)/src/main/names.c
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@$(ECHO) "byte-compiling '$(pkg)'"
+	@if test -n "$(EXTRAS2)"; then \
+	  $(ECHO) "byte-compiling '$(pkg)'"; \
+	fi
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \
-	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
-	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
+	  $(EXTRAS2) R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nspackloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
+
+## not supported
+Rsimple:
+
+Rlazy: mkR
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+	@$(MAKE) -f Makefile.win RfilesLazy
+
+Rlazycomp: mkR
+	@rm -f $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
+	@$(MAKE) -f Makefile.win RfilesLazy EXTRAS2=$(EXTRAS)

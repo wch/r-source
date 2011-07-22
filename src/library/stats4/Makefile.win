@@ -19,6 +19,7 @@ all:
 	@$(MAKE) -f Makefile.win mkR2 mkdesc mkpo
 	@$(MAKE) -f Makefile.win mklazycomp
 
+mkR: mkR2
 
 include $(top_srcdir)/share/make/basepkg.mk
 include $(top_srcdir)/share/make/lazycomp.mk

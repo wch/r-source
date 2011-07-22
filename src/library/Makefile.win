@@ -108,3 +108,25 @@ clean:
 	done
 	-@rm -f stamp-*
 
+
+### ----------- targets for R-core use ----------
+### These do not change datasets (never lazy-loaded)
+
+## methods needs to be dumped, so is omitted here.
+Rsimple:
+	@for pkg in $(R_PKGS_BASE2); do \
+	  (cd $${pkg} && $(MAKE) -f Makefile.win Rsimple) || exit 1; \
+	done
+
+## This is not parallel-safe
+Rlazy:
+	@for pkg in $(R_PKGS_BASE2) methods; do \
+	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazy) || exit 1; \
+	done
+
+## This is not parallel-safe
+Rlazycomp:
+	@for pkg in $(R_PKGS_BASE2) methods; do \
+	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazycomp) || exit 1; \
+	done
+
