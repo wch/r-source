@@ -2,22 +2,15 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_INTTYPES_H
-# include <inttypes.h>
-#endif
+#include <stdint.h>
 
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
 #endif
 
-#if SIZEOF_LONG > 4
-#error This XDR implementation assumes 4-byte longs
-#endif
-
 /* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
 #if defined(WIN32) || defined(__CYGWIN__)
-static unsigned long int
-ntohl(unsigned long int x)
+static uint32_t ntohl(uint32_t x)
 { /* could write VC++ inline assembler, but not worth it for now */
 #ifdef _MSC_VER
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
@@ -32,9 +25,7 @@ ntohl(unsigned long int x)
 }
 #else /* net is big-endian: little-endian hosts need byte-swap code */
 #ifndef WORDS_BIGENDIAN
-/* #ifdef LITTLE_ENDIAN */
-static unsigned long int 
-ntohl (unsigned long int x)
+static uint32_t ntohl (uint32_t x)
 {
   return((x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24));
 }
@@ -151,28 +142,24 @@ xdrmem_destroy(/*xdrs*/)
 }
 
 static bool_t
-xdrmem_getlong(xdrs, lp)
-	register XDR *xdrs;
-	long *lp;
+xdrmem_getlong(XDR *xdrs, int32_t *lp)
 {
 
-	if ((xdrs->x_handy -= sizeof(long)) < 0)
+	if ((xdrs->x_handy -= 4) < 0)
 		return (FALSE);
-	*lp = (long)ntohl((u_long)(*((long *)(xdrs->x_private))));
-	xdrs->x_private += sizeof(long);
+	*lp = (int32_t)ntohl((uint32_t)(*((int32_t *)(xdrs->x_private))));
+	xdrs->x_private += 4; /* This relies on 4 bytes/long */
 	return (TRUE);
 }
 
 static bool_t
-xdrmem_putlong(xdrs, lp)
-	register XDR *xdrs;
-	long *lp;
+xdrmem_putlong(XDR *xdrs, int32_t *lp)
 {
 
-	if ((xdrs->x_handy -= sizeof(long)) < 0)
+	if ((xdrs->x_handy -= 4) < 0)
 		return (FALSE);
-	*(long *)xdrs->x_private = (long)htonl((u_long)(*lp));
-	xdrs->x_private += sizeof(long);
+	*(int32_t *)xdrs->x_private = (int32_t)htonl((uint32_t)(*lp));
+	xdrs->x_private += 4;
 	return (TRUE);
 }
 

@@ -214,6 +214,8 @@ struct xdr_discrim {
  * N.B. and frozen for all time: each data type here uses 4 bytes
  * of external representation.
  */
+
+#ifdef UNUSED
 #define IXDR_GET_LONG(buf)		((long)ntohl((u_long)*(buf)++))
 #define IXDR_PUT_LONG(buf, v)		(*(buf)++ = (long)htonl((u_long)v))
 
@@ -228,6 +230,7 @@ struct xdr_discrim {
 #define IXDR_PUT_U_LONG(buf, v)		IXDR_PUT_LONG((buf), ((long)(v)))
 #define IXDR_PUT_SHORT(buf, v)		IXDR_PUT_LONG((buf), ((long)(v)))
 #define IXDR_PUT_U_SHORT(buf, v)	IXDR_PUT_LONG((buf), ((long)(v)))
+#endif
 
 /*
  * These are the "generic" xdr routines.
