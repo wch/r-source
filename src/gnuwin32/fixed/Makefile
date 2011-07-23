@@ -46,7 +46,7 @@ else
 	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 endif
-	$(CP) -p Makeconf $(R_HOME)
+	$(SED) -e "s+@BINDIR@+$(BINDIR)+" Makeconf > $(R_HOME)/Makeconf
 	@$(ECHO) done > fixetc
 
 fixdoc: $(wildcard ../CHANGES?)

@@ -25,31 +25,27 @@ all: R
 ## When base is made we need to use 'date' to set the timestamp in
 ## its DESCRIPTION, so we remake it before dumping the DESCRIPTION files.
 
-## VERSION is needed to mkdesc2 in packages base and tools.
+## VERSION is needed to use mkdesc2 in packages base and tools.
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in base tools compiler; do \
-	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
-	    VERSION=$(RVER) BINDIR=$(BINDIR) \
+	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) VERSION=$(RVER) \
 	    all install-tests || exit 1; \
 	done
 	@if test -z "$(R_NO_BASE_COMPILE)"; then \
 	  for pkg in base tools; do \
-	    $(MAKE) -C $${pkg} -f Makefile.win BINDIR=$(BINDIR) \
-	      mklazycomp || exit 1; \
+	    $(MAKE) -C $${pkg} -f Makefile.win mklazycomp || exit 1; \
 	  done; \
 	else \
 	  for pkg in base tools; do \
-	    $(MAKE) -C $${pkg} -f Makefile.win BINDIR=$(BINDIR) \
-	      Rlazy || exit 1; \
+	    $(MAKE) -C $${pkg} -f Makefile.win Rlazy || exit 1; \
 	  done; \
 	fi
 	@for pkg in $(R_PKGS_BASE1); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
-		VERSION=$(RVER) BINDIR=$(BINDIR) \
-	        all install-tests || exit 1; \
+	     all install-tests || exit 1; \
 	done
-	@(cd base && $(MAKE) -f Makefile.win BINDIR=$(BINDIR) mkdesc)
+	@(cd base && $(MAKE) -f Makefile.win mkdesc)
 	@$(ECHO) "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 	@$(ECHO) "installing parsed NAMESPACE files"
@@ -125,24 +121,24 @@ clean:
 ### Targets of the same name can be run in individual package directories.
 ### These do not change datasets (never lazy-loaded)
 
-### They are not current safe for a parallel make.
+### They are not currently safe for a parallel make.
 
 ## methods needs to be dumped, so is omitted here.
 ## This installs all.R as the R directory in a package
 Rsimple:
 	@for pkg in $(R_PKGS_BASE2); do \
-	  (cd $${pkg} && $(MAKE) -f Makefile.win Rsimple) || exit 1; \
+	  $(MAKE) -C $${pkg} -f Makefile.win Rsimple || exit 1; \
 	done
 
 ## Lazy-loaded, not compiled
 Rlazy:
 	@for pkg in $(R_PKGS_BASE2) methods; do \
-	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazy BINDIR=$(BINDIR)) || exit 1; \
+	  $(MAKE) -C $${pkg} -f Makefile.win Rlazy || exit 1; \
 	done
 
-## Lazy-loaded, not compiled
+## Lazy-loaded, compiled
 Rlazycomp:
 	@for pkg in $(R_PKGS_BASE2) methods; do \
-	  (cd $${pkg} && $(MAKE) -f Makefile.win Rlazycomp BINDIR=$(BINDIR)) || exit 1; \
+	  $(MAKE) -C $${pkg} -f Makefile.win Rlazycomp || exit 1; \
 	done
 

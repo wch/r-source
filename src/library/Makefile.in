@@ -186,7 +186,7 @@ distdir: $(DISTFILES)
 ### Targets of the same name can be run in individual package directories.
 ### These do not change datasets (never lazy-loaded)
 
-### They are not current safe for a parallel make.
+### They are not currently safe for a parallel make.
 
 ## methods needs to be dumped, so is omitted here.
 Rsimple:
@@ -200,7 +200,7 @@ Rlazy:
 	  (cd $${pkg} && $(MAKE) Rlazy) || exit 1; \
 	done
 
-## Lazy-loaded, not compiled
+## Lazy-loaded, compiled
 Rlazycomp:
 	@for pkg in $(R_PKGS_BASE2) methods; do \
 	  (cd $${pkg} && $(MAKE) Rlazycomp) || exit 1; \

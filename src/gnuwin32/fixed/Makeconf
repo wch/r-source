@@ -9,4 +9,4 @@ INSTALL_DATA = cp
 SHELL = sh
 USE_NLS = yes
 
-R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
+R_EXE = $(top_builddir)/@BINDIR@/Rterm.exe --vanilla --slave
