@@ -162,8 +162,6 @@ envRefSetField <- function(object, field,
     ## assign references to the object and to its class definition
     selfEnv$.self <- .Object
     selfEnv$.refClassDef <- classDef
-    if(is.function(classDef@refMethods$finalize))
-        reg.finalizer(selfEnv, function(x) x$.self$finalize())
     if(is.function(classDef@refMethods$initialize)) {
         .Object$initialize(...)
         ## intialize methods are allowed to change .self
@@ -175,6 +173,8 @@ envRefSetField <- function(object, field,
                 methods::initFieldArgs(.Object, classDef, selfEnv, ...)
         }
     }
+    if(is.function(classDef@refMethods$finalize))
+        reg.finalizer(selfEnv, function(x) x$.self$finalize())
     lockBinding(".self", selfEnv)
     lockBinding(".refClassDef", selfEnv)
     .Object

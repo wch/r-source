@@ -301,6 +301,7 @@
     sig <- def@target
     dups <- FALSE
     if(duplicatesExist) {
+        def <- .fixPackageSlot(def, sig)
         for(cl in sig) {
             if(exists(cl, envir = .classTable, inherits = FALSE) && is.list(get(cl, envir = .classTable))) {
                 dups <- TRUE
@@ -316,7 +317,7 @@
                 if(is(current, "MethodDefinition")) {
                     pkg <- attr(current@target, "package")
                     if(length(pkg) == 0)
-                        return(def) # either empty "ANY" or out-of-date; either way, nothing we can do
+                        current <- .fixPackageSlot(current, current@target)
                     env <- new.env()
                     assign(.pkgMethodLabel(current), current, envir = env)
                 }
@@ -335,7 +336,23 @@
         else # no change
             def
     }
-    else { # no duplicate classes, fill in the package slot if needed
+    else # no duplicate classes
+        def
+}
+
+.fixPackageSlot <- function(def, sig) {
+    ## check the pkg slot
+    pkgs <- attr(sig, "package")
+    if(is.null(pkgs))
+        pkgs <- character(length(sig))
+    fixme <- !nzchar(pkgs)
+    if(any(fixme)) {
+        for(i in seq_along(pkgs)[fixme])
+            pkgs[[i]] <- getClass(sig[[i]], .Force = TRUE)@package
+        attr(sig, "package") <- pkgs
+        def@target <- sig
+        ## check the defined signature as well
+        sig <- def@defined
         pkgs <- attr(sig, "package")
         if(is.null(pkgs))
             pkgs <- character(length(sig))
@@ -344,23 +361,10 @@
             for(i in seq_along(pkgs)[fixme])
                 pkgs[[i]] <- getClass(sig[[i]], .Force = TRUE)@package
             attr(sig, "package") <- pkgs
-            def@target <- sig
-            ## check the defined signature as well (catches methods
-            ## from packages not re-installed)
-            sig <- def@defined
-            pkgs <- attr(sig, "package")
-            if(is.null(pkgs))
-                pkgs <- character(length(sig))
-            fixme <- !nzchar(pkgs)
-            if(any(fixme)) {
-                for(i in seq_along(pkgs)[fixme])
-                    pkgs[[i]] <- getClass(sig[[i]], .Force = TRUE)@package
-                attr(sig, "package") <- pkgs
-                def@defined <- sig
-            }
+            def@defined <- sig
         }
-        def
     }
+    def
 }
 
 .okMethodLabel <- function(method) {
@@ -378,37 +382,45 @@
     pkgs <- packageSlot(sig)
     if( (length(pkgs) == 0) || any(!nzchar(pkgs)))
         stop("package slot missing from signature, cannot use with duplicate class names (the package may be out of date): class(es) ", paste(sig, collapse = ", "))
-    paste(pkgs, sep = "#")
+    paste(pkgs, collapse = "#")
 }
 
 .resetTable <- function(table, n, signames) {
-  ## after updating a methods table, the maximum no. of arguments in
-  ## the signature increased to n.  Reassign any objects whose label
-  ## does not match n classes from the defined slot
-  anyLabel <- rep("ANY", n); seqN <- 1L:n
-  labels <- objects(table, all.names = TRUE)
-  for(what in labels) {
-    method <- get(what, envir = table)
-    if(is.primitive(method)) # stored as default ?
-      label <- anyLabel
-    else if(is(method, "MethodDefinition"))
-      label <- method@defined
-    else
-      stop("Invalid object in methods table (\"", what,
-           "\"), expected a method, got an object of class \"",
-           class(method), "\"")
-    if(length(label) < n) {
-      label@.Data <- ifelse(seqN > length(label), anyLabel, label@.Data)
-      label@names <- signames
-      method@defined <- method@target <- label
+    ## after updating a methods table, the maximum no. of arguments in
+    ## the signature increased to n.  Reassign any objects whose label
+    ## does not match n classes from the defined slot
+    anyLabel <- rep("ANY", n)
+    anyPkg <- rep("methods", n)
+    seqN <- 1L:n
+    labels <- objects(table, all.names = TRUE)
+    for(what in labels) {
+        method <- get(what, envir = table)
+        if(is.primitive(method)) # stored as default ?
+            newSig <- anyLabel
+        else if(is(method, "MethodDefinition"))
+            newSig <- method@defined
+        else if(is(method, "environment")) {
+            newSig <- strsplit(what, "#", fixed = TRUE)[[1]]
+            .resetTable(method, n, signames)
+        }
+        else
+            stop("Invalid object in methods table (\"", what,
+                 "\"), expected a method, got an object of class \"",
+                 class(method), "\"")
+        if(is(method, "MethodDefinition")) {
+            pkgs <- packageSlot(newSig)
+            newSig <- as(ifelse(seqN > length(newSig), anyLabel, newSig), "signature")
+            newSig@names <- signames
+            newSig@package <-  ifelse(seqN > length(pkgs), anyPkg, pkgs)
+            method@defined <- method@target <- newSig
+            newLabel <- .sigLabel(newSig)
+        }
+        else
+            newLabel <- .sigLabel(ifelse(seqN > length(newSig), anyLabel, newSig))
+        remove(list=what, envir = table)
+        assign(newLabel, method, envir = table)
     }
-    newLabel <- .sigLabel(label)
-    if(!identical(what, newLabel)) {
-      assign(newLabel, method, envir = table)
-      remove(list=what, envir = table)
-    }
-  }
-  NULL
+    NULL
 }
 
 ### the tag associated with a method signature.
@@ -416,8 +428,6 @@
 ### however, that code breaks out early in the collapse loop if no match.
 ### This code is not used for quick matching, so efficiency less critical.
 .sigLabel <- function(sig)
-  ## TODO:  should include package; i.e., class:package#class:...
-  ## BUT:  not until defined, target slots have classes with package attribute
   paste(sig, collapse = "#")
 
 ## workhorse of selectMethod() [ -> ../Methods.R ] "
@@ -711,8 +721,18 @@
     label <- .sigLabel(signature)
 ##     allMethods <- objects(table, all.names=TRUE)
 ##     if(match(label, allMethods, nomatch = 0L))
-    if(exists(label, envir = table, inherits = FALSE))
-        get(label, envir = table) ## else NULL
+    if(exists(label, envir = table, inherits = FALSE)) {
+        value <- get(label, envir = table) ## else NULL
+        if(is.environment(value)) {
+            pkgs <- objects(value)
+            if(length(pkgs) == 1)
+                value <- get(pkgs, envir = value)
+            else if(length(pkgs) == 0)
+                value <- NULL
+            ## else, return the environment indicating multiple possibilities
+        }
+        value
+    } # else, NULL
 }
 
 ## inheritance distances:  0 for the class, 1 for immediate contains, 2 for other contains
@@ -987,6 +1007,13 @@
     doFun(f,p)
     for(what in labels) {
 	m <- get(what, envir = table)
+        if(is.environment(m)) {  ## duplicate class case -- compare .findMethodInTable()
+            pkgs <- objects(m)
+            if(length(pkgs) == 1)
+                m <- get(pkgs, envir = m)
+            else if(length(pkgs) > 1)
+                cf("  (", length(pkgs), " methods defined for this signature, with different packages)\n")
+        }
 	if( is(m, "MethodDefinition")) {
 	    t <- m@target
 	    if(length(t) == 0L)

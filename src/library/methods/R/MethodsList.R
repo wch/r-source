@@ -518,7 +518,10 @@ matchSignature <-
     else {
     ## construct a function call with the same naming pattern  &
       ## values as signature
-    fcall <- do.call("call", c("fun", signature))
+    sigList <- signature
+    for(i in seq_along(sigList))
+        sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
+    fcall <- do.call("call", c("fun", sigList))
     ## match the call to the formal signature (usually the formal args)
     if(identical(anames, formalArgs(fun)))
         smatch <- match.call(fun, fcall)
@@ -533,12 +536,17 @@ matchSignature <-
     ## Assertion:  match.call has permuted the args into the order of formal args,
     ## and carried along the values.  Get the supplied classes in that
     ## order, from the matched args in the call object.
-    sigClasses <- as.character(smatch)[-1L]
     if(any(is.na(which)))
         stop(gettextf("in the method signature for function \"%s\" invalid argument names in the signature: %s",
                       fun@generic,
                       paste(snames[is.na(which)], collapse = ", ")),
              domain = NA)
+    smatch <- smatch[-1]
+    for(i in seq_along(smatch)) {
+        eli <- smatch[[i]]
+        sigClasses[[i]] <- eli[[1]]
+        pkgs[[i]] <- eli[[2]]
+    }
 }
     n <- length(anames)
     value <- rep("ANY", n)
