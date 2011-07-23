@@ -1,7 +1,9 @@
 ## ${R_HOME}/share/make/basepkg.mk
 
 
-.PHONY: front instdirs mkR mkR2 mkdesc mkdemos mkexec mklazy mkman mkpo mksrc mksrc-win
+.PHONY: front instdirs mkR mkR1 mkR2 mkRbase mkdesc mkdesc2 mkdemos mkdemos2 \
+  mkexec mkman mkpo mksrc mksrc-win mksrc-win2 mkRsimple mklazy mklazycomp \
+  mkfigs
 
 front:
 	@for f in $(FRONTFILES); do \

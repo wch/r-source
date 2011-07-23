@@ -26,6 +26,7 @@ all: R
 ## its DESCRIPTION, so we remake it before dumping the DESCRIPTION files.
 
 ## VERSION is needed to use mkdesc2 in packages base and tools.
+## R_ARCH is needed for etc$(R_ARCH)/Makecomf in */src/Makefile.win
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in base tools compiler; do \
