@@ -107,7 +107,7 @@ Sys.which <- function(names)
     res <- character(length(names)); names(res) <- names
     ## hopefully configure found [/usr]/bin/which
     which <- "@WHICH@"
-    if (nzchar(which)) {
+    if (!nzchar(which)) {
         warning("'which' was not found on this platform")
         return(res)
     }
