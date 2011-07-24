@@ -42,12 +42,15 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 
 mkR: mkRbase
 
-Rsimple: mkR mkRsimple
+Rsimple:
+	@WHICH="@WHICH@" $(MAKE) mkRbase mkRsimple
 
-Rlazy: mkR mkRsimple
+Rlazy:
+	@WHICH="@WHICH@" $(MAKE) mkRbase
 	@cat $(srcdir)/makebasedb.R | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/baseloader.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
-Rlazycomp: mkR mkRsimple mklazycomp
+Rlazycomp:
+	@WHICH="@WHICH@" $(MAKE) mkRbase mklazycomp
