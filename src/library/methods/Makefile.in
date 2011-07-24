@@ -17,15 +17,18 @@ pkg = methods
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
-EXTRAS = R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
+EXTRAS = @BYTE_COMPILE_PACKAGES_TRUE@ R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
 
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) mkR2 mkdesc mkpo
 	@$(MAKE) mksrc
-@BYTE_COMPILE_PACKAGES_TRUE@	@$(MAKE) RfilesLazy EXTRAS2=$(EXTRAS)
-@BYTE_COMPILE_PACKAGES_FALSE@	@$(MAKE) RfilesLazy
+	@if test -n "$(R_NO_BASE_COMPILE)"; then \
+	  $(MAKE) RfilesLazy; \
+	else \
+	  $(MAKE) RfilesLazy EXTRAS2=$(EXTRAS); \
+	fi
 
 mkR: mkR2
 

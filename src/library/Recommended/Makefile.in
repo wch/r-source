@@ -40,20 +40,20 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs
-INSTALL_OPTS=--pkglock --data-compress=xz@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
+INSTALL_OPTS = --pkglock --data-compress=xz
+INSTALL_OPTS2 =@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
 
 .tgz.ts:
 	@$(ECHO) "begin installing recommended package" `basename $< .tgz`
 	@rm -f $@.out
-## <FIXME>
-## RG says that with FreeBSD Make calling INSTALL does not work without
-## explicitly passing down MAKE ('unrecognized option -w ...').  But
-## what is really going on?
-##
-## Also, avoid any copies installed in user/site libraries
-	@MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
-	  $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1)
-## </FIXME>
+## Avoid user/site libraries
+	@if test -n "$(R_NO_BASE_COMPILE)"; then \
+	  R_LIBS_USER= R_LIBS_SITE= \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
+	else \
+	  R_LIBS_USER= R_LIBS_SITE= \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) $(INSTALL_OPTS2) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
+	fi
 	@cat $@.out; rm $@.out
 	@touch $@
 

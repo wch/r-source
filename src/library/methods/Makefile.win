@@ -20,9 +20,9 @@ all:
 	@$(MAKE) -f Makefile.win mkR2 front mkdesc mkpo
 	@$(MAKE) -f Makefile.win mksrc-win2
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
-	 $(MAKE) -f Makefile.win RfilesLazy; \
+	  $(MAKE) -f Makefile.win RfilesLazy; \
 	else \
-	 $(MAKE) -f Makefile.win RfilesLazy EXTRAS2=$(EXTRAS); \
+	  $(MAKE) -f Makefile.win RfilesLazy EXTRAS2=$(EXTRAS); \
 	fi
 
 include $(top_srcdir)/share/make/basepkg.mk
