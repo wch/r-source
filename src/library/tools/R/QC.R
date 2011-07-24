@@ -4799,6 +4799,14 @@ function(dir)
         out$bad_package <- list(package, existing)
     ## Could there be more than one?
 
+    ## Is this duplicated from another repository?
+    ## This assumes the CRAN URL comes first.
+    repositories <- db[(packages == package) &
+                       (db[, "Repository"] != urls[1L]),
+                       "Repository"]
+    if(length(repositories))
+        out$repositories <- repositories
+    
     ## Is this an update for package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == urls[1L]) &
@@ -4849,6 +4857,8 @@ function(x, ...)
       if(length(y <- x$bad_package))
           sprintf("Conflicting package names (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
+      if(length(y <- x$repositories))
+          sprintf("Package duplicated from %s", y),
       if(length(y <- x$bad_version))
           sprintf("Insufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
