@@ -260,6 +260,7 @@ the rest of this chapter we consider only building from the sources.
 * Installation::                
 * Uninstallation::              
 * Sub-architectures::           
+* Other Options::               
 * Testing a Unix-alike Installation::  
 @end menu
 
@@ -695,7 +696,7 @@ well as removing the directory @file{tests} containing the test results.
 
 
 
-@node Sub-architectures, Testing a Unix-alike Installation, Uninstallation, Installing R under Unix-alikes
+@node Sub-architectures, Other Options, Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
 
 Some platforms can support closely related builds of @R{} which can
@@ -825,7 +826,22 @@ e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
 will run on the platform so the architecture of @command{Rscript} does
 not matter.
 
-@node Testing a Unix-alike Installation,  , Sub-architectures, Installing R under Unix-alikes
+@node Other Options, Testing a Unix-alike Installation, Sub-architectures, Installing R under Unix-alikes
+@section Other Options
+
+There are many other installation options, most of which are listed by
+@command{configure --help}.  Almost all of those not listed elsewhere in
+this manual are either standard @command{autoconf} options not relevant
+to @R{} or intended for specialist uses by the @R{} developers.
+
+One that may be useful when working on @R{} itself is the option
+@option{--disable-byte-compilation}, which ensures that the base and
+recommended packages are lazyloaded but not byte-compiled.
+(Alternatively the (make or environment) variable
+@env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
+of the build.)
+
+@node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
 
 Full testing is possible only if the test files have been installed with
@@ -1122,6 +1138,12 @@ make -j4 recommended
 @noindent
 but this is only likely to be worthwhile on a multi-core machine with
 ample memory, and is not 100% reliable.
+
+@item 
+It is possible (mainly for those working on @R{} itself) to set the
+(make or environment) variable @env{R_NO_BASE_COMPILE} to a non-empty
+value, which inhibits the byte-compilation of the base and recommended
+packages.
 
 @end itemize
 
@@ -2650,12 +2672,12 @@ An implementation of @acronym{XDR} is required.  This is part of
 Unix-alike: however @code{glibc 2.14} hides it.  The intention seems to
 be that the @acronym{TI-RPC} library be used instead, in which case
 @code{libtirpc} (and its development version) needs to be installed, and
-its headers need to be on the C include path (for example by including
-@samp{-I/usr/include/tirpc} in the @code{CPPFLAGS} configure variable).
-The @R{} sources contain a simple implementation of @acronym{XDR} which
-in recent versions can be used on platforms with 32-bit or 64-bit
-@code{long} (and earlier ones will fail to compile unless @code{long} is
-32-bit.
+its headers need to be on the C include path (and @command{configure}
+tries @file{/usr/include/tirpc} if the headers are not found on the
+standard include path).  The @R{} sources contain a simple
+implementation of @acronym{XDR} which in recent versions can be used on
+platforms with 32-bit or 64-bit @code{long} (and earlier ones will fail
+to compile unless @code{long} is 32-bit).
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
