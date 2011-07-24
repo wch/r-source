@@ -242,7 +242,9 @@
       used the named font for mononspaced output. They are intended to
       be used in combination with \samp{times}, and
       \samp{times,inconsolata,hyper} is now the default for the
-      reference manual and package manuals.
+      reference manual and package manuals.  If you do not have that
+      font installed, you can set \env{R_RD4PF} to one of the other
+      options: see the \sQuote{R Installation and Administration Manual}.
 
       \item Automatic printing for reference classes is now done by
       the \code{$show()} method.  A method is defined for class % $

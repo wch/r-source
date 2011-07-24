@@ -2629,7 +2629,7 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package required and available but unsuitable version: %s", bad),
+          c(gettextf("Package required and available but unsuitable version: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$required_but_stub) > 1L) {
@@ -2637,7 +2637,7 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package required but not available: %s", bad),
+          c(gettextf("Package required but not available: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$suggests_but_not_installed) > 1L) {
@@ -2645,7 +2645,8 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package suggested but not available for checking: %s", bad),
+          c(gettextf("Package suggested but not available for checking: %s",
+                     sQuote(bad)),
             "")
       },
       if(length(bad <- x$enhances_but_not_installed) > 1L) {
@@ -2653,7 +2654,7 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Package which this enhances but not available for checking: %s", bad),
+          c(gettextf("Package which this enhances but not available for checking: %s", sQuote(bad)),
             "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
@@ -2661,7 +2662,7 @@ function(x, ...)
                 c(gettext("Vignette dependencies not required:"),
                   .pretty_format(bad))
             } else {
-                gettextf("Vignette dependencies not required: %s", bad)
+                gettextf("Vignette dependencies not required: %s", sQuote(bad))
             },
             strwrap(gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")),
             "")
@@ -2671,7 +2672,7 @@ function(x, ...)
             .pretty_format(bad),
             "")
       } else if(length(bad)) {
-          c(gettextf("Namespace dependency not required: %s", bad),
+          c(gettextf("Namespace dependency not required: %s", sQuote(bad)),
             "")
       }
       )

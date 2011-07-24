@@ -30,7 +30,7 @@ R_PKGS_CMP = @BYTE_COMPILE_PACKAGES_TRUE@ base tools
 ## Beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
 ## When base is made we need to use 'date' to set the timestamp in
-## its DESCRIPTION , so we remake it before dumping the DESCRIPTION files.
+## its DESCRIPTION, so we remake it before dumping the DESCRIPTION files.
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
@@ -184,7 +184,8 @@ distdir: $(DISTFILES)
 ### These are intended to be run on an already-built R, possibly after
 ### editing the code in a standard package.
 ### Targets of the same name can be run in individual package directories.
-### These do not change datasets (never lazy-loaded)
+### These do not change datasets (no R code)
+### R_PKGS_BASE2 is all except datasets and methods.
 
 ### They are not currently safe for a parallel make.
 

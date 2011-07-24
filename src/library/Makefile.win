@@ -120,12 +120,12 @@ clean:
 ### These are intended to be run on an already-built R, possibly after
 ### editing the code in a standard package.
 ### Targets of the same name can be run in individual package directories.
-### These do not change datasets (never lazy-loaded)
+### These do not change datasets (no R code)
+### R_PKGS_BASE2 is all except datasets and methods.
 
 ### They are not currently safe for a parallel make.
 
 ## methods needs to be dumped, so is omitted here.
-## This installs all.R as the R directory in a package
 Rsimple:
 	@for pkg in $(R_PKGS_BASE2); do \
 	  $(MAKE) -C $${pkg} -f Makefile.win Rsimple || exit 1; \
