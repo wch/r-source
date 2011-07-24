@@ -811,3 +811,14 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
     classDef@prototype <- proto
     classDef
   }
+
+findDuplicateClasses <- function(details = FALSE) {
+    ctable <- .classTable
+    cnames <- objects(ctable, all=TRUE)
+    dups <- sapply(cnames, function(x)
+           is.list(get(x, envir = ctable)))
+    if(details)
+        lapply(cnames[dups], function(x) get(x, envir = ctable))
+    else
+        cnames[dups]
+}

@@ -1876,6 +1876,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 ##                base:::.cache_class(name, extends(def))
                 return(assign(name, def, envir = .classTable))
             }
+            else if(.simpleDuplicateClass(def, prev))
+                return()
             prev <- list(prev)
             names(prev) <- pkg
         }
@@ -1890,6 +1892,59 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         .duplicateClassesExist(TRUE)
     }
     assign(name, def, envir = .classTable)
+}
+
+## test for identical def, prev class definitions
+## An exhaustive test would be very complicated, having to test
+## superclasses in detail, prototypes for the slots, etc.
+.simpleDuplicateClass <- function(def, prev) {
+    supers <- names(def@contains)
+    prevSupers <- names(prev@contains)
+    if(length(supers) != length(prevSupers) ||
+       any(is.na(match(supers, prevSupers))))
+        return(FALSE)
+    warnLevel <- getOption("warn")
+    S3 <- "oldClass" %in% supers
+    if(S3) {
+        ## it is possible one  of these is inconsistent, but unlikely
+        ## and we will get here often from multiple setOldClass(...)'s
+        if(warnLevel)
+            warning(gettextf("A specification for S3 class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class", def@className, def@package, prev@package),
+                    domain = NA)
+        return(TRUE)
+    }
+    ## if there are already duplicate classes, we check duplicates
+    ## for the superclasses
+    dupsExist <- .duplicateClassesExist()
+    if(dupsExist) {
+        dups <- match(supers, findDuplicateClasses(), 0) > 0
+        if(any(dups)) {
+            if(warnLevel)
+                warning(gettextf("Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from pacakge \"%s\"", def@className, def@package, prev@package),
+                    domain = NA)
+            return(FALSE)
+        }
+    }
+    ## now check the slots
+    slots <- names(def@slots)
+    prevSlots <- names(prev@slots)
+    if(length(slots) != length(prevSlots) ||
+       any(is.na(match(slots, prevSlots))))
+        return(FALSE)
+    for(what in slots) {
+        slotClasses <- def@slots
+        prevClasses <- prev@slots
+        clWhat <- slotClasses[[what]]
+        prevWhat <- prevClasses[[what]]
+        if(!identical(as.character(clWhat), as.character(prevWhat)) ||
+           (dupsExist && !identical(as.character(packageSlot(clWhat)),
+              as.character(packageSlot(prevWhat)))))
+            return(FALSE)
+    }
+    if(warnLevel)
+        warning(gettextf("A specification for class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class", def@className, def@package, prev@package),
+                    domain = NA)
+    TRUE
 }
 
 .uncacheClass <- function(name, def) {
