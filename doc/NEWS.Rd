@@ -13,7 +13,12 @@
       \item \command{configure} will find the Sun TI-RPC implementation
       of xdr (in \file{libtirpc}) provided its header files are in the
       search path: see the \sQuote{R Installation and Administration
-      Manual}.
+	Manual}.
+    
+      \item \code{mem.limits()} now reports values larger than the
+      maximum integer (previously documented to be reported as
+      \code{NA}), and allows larger values to be set, including
+      \code{Inf} to remove the limit.
     }
   }
   
@@ -37,6 +42,11 @@
       
       \item Plotting \code{pch = '.'} now guarantees at least a one-pixel
       dot if \code{cex > 0}.
+      
+      \item The very-rarely-used command-line option
+      \option{--max-vsize} was incorrectly interpreted as a number of
+      Vcells and not in bytes as documented.  (Spotted by Christophe
+      Rhodes.) 
     }  
   }
 }

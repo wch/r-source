@@ -1873,10 +1873,11 @@ void attribute_hidden InitMemory()
 	R_Suicide("couldn't allocate memory for pointer stack");
     R_PPStackTop = 0;
 #if VALGRIND_LEVEL > 1
-    VALGRIND_MAKE_NOACCESS(R_PPStack+R_PPStackSize,PP_REDZONE_SIZE);
+    VALGRIND_MAKE_NOACCESS(R_PPStack+R_PPStackSize, PP_REDZONE_SIZE);
 #endif
     vsfac = sizeof(VECREC);
-    R_VSize = (((R_VSize + 1)/ vsfac));
+    R_VSize = (R_VSize + 1)/vsfac;
+    if (R_MaxVSize < R_SIZE_T_MAX) R_MaxVSize = (R_MaxVSize + 1)/vsfac;
 
     UNMARK_NODE(&UnmarkedNodeTemplate);
 
@@ -2618,19 +2619,26 @@ static void R_gc_internal(R_size_t size_needed)
 SEXP attribute_hidden do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    int nsize, vsize;
+    double nsize, vsize;
     R_size_t tmp;
 
     checkArity(op, args);
-    nsize = asInteger(CAR(args));
-    vsize = asInteger(CADR(args));
-    if(nsize != NA_INTEGER) R_SetMaxNSize((R_size_t) nsize);
-    if(vsize != NA_INTEGER) R_SetMaxVSize((R_size_t) vsize);
-    PROTECT(ans = allocVector(INTSXP, 2));
+    nsize = asReal(CAR(args));
+    vsize = asReal(CADR(args));
+
+    if (ISNAN(nsize) || nsize <= 0) ;
+    else if (nsize >= R_SIZE_T_MAX) R_MaxNSize = R_SIZE_T_MAX;
+    else if (R_FINITE(nsize)) R_SetMaxNSize((R_size_t) nsize);
+
+    if (ISNAN(vsize) || vsize <= 0) ;
+    else if (vsize >= R_SIZE_T_MAX) R_MaxVSize = R_SIZE_T_MAX;
+    else if (R_FINITE(vsize)) R_SetMaxVSize((R_size_t) vsize);
+
+    PROTECT(ans = allocVector(REALSXP, 2));
     tmp = R_GetMaxNSize();
-    INTEGER(ans)[0] = (tmp < INT_MAX) ? tmp : NA_INTEGER;
+    REAL(ans)[0] = (tmp < R_SIZE_T_MAX) ? tmp : NA_REAL;
     tmp = R_GetMaxVSize();
-    INTEGER(ans)[1] = (tmp < INT_MAX) ? tmp : NA_INTEGER;
+    REAL(ans)[1] = (tmp < R_SIZE_T_MAX) ? tmp : NA_REAL;
     UNPROTECT(1);
     return ans;
 }
