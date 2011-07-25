@@ -288,6 +288,9 @@
       \item \code{findLineNum()} and \code{setBreakpoint()} now allow
       the environment to be specified indirectly; the latter gains
       a \code{clear} argument to allow it to call \code{untrace()}.
+      
+      \item The body of a closure can be one of more types of \R
+      objects, including enviroments and external pointers.
     }
   }
 

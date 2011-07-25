@@ -1628,4 +1628,13 @@ stopifnot(identical(res, 101:104))
 ## read the same value repeatedly in 2.13.0
 
 
+## Types of closure bodies
+fun <- eval(substitute(function() x, list(x = environment())))
+body(fun)
+# an external pointer
+y <- file(""); z <- attr(y, "conn_id"); close(y)
+fun <- eval(substitute(function() x, list(x = z)))
+body(fun)
+## not allowed in R < 2.14.0.
+
 proc.time()
