@@ -162,8 +162,7 @@ is.unsorted <- function(x, na.rm = FALSE, strictly = FALSE)
 }
 
 mem.limits <- function(nsize=NA, vsize=NA)
-    structure(.Internal(mem.limits(as.integer(nsize), as.integer(vsize))),
-              names=c("nsize", "vsize"))
+    structure(.Internal(mem.limits(nsize, vsize)), names = c("nsize", "vsize"))
 
 nchar <- function(x, type = "chars", allowNA = FALSE)
     .Internal(nchar(x, type, allowNA))

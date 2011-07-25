@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -77,10 +77,10 @@ mem.limits(nsize = NA, vsize = NA)
 
   The default values are currently minima of 350k cons cells, 6Mb of
   vector heap and no maxima (other than machine resources).  The maxima
-  can be changed during an \R session by calling
+  can be increased during an \R session by calling
   \code{\link{mem.limits}}. (If this is called with the default values,
-  it reports the current settings.)
-
+  it reports the current settings.)  Setting values larger than the
+  maximum allowed value (e.g. \code{Inf}) removes the corresponding limit.
 
   You can find out the current memory consumption (the heap and cons
   cells used as numbers and megabytes) by typing \code{\link{gc}()} at the
@@ -99,8 +99,8 @@ mem.limits(nsize = NA, vsize = NA)
 }
 
 \value{
-  \code{mem.limits()} returns an integer vector giving the current
-  settings of the maxima, possibly \code{NA}.
+  \code{mem.limits()} returns a numeric vector giving the current
+  settings of the maxima, possibly \code{NA} (for unlimited).
 }
 
 \seealso{
