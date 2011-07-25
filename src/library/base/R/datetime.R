@@ -211,13 +211,23 @@ format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 
 print.POSIXct <- function(x, ...)
 {
-    print(format(x, usetz=TRUE, ...), ...)
+    max.print <- getOption("max.print", 9999L)
+    if(max.print < length(x)) {
+        print(format(x[seq_len(max.print)], usetz=TRUE), ...)
+        cat(' [ reached getOption("max.print") -- omitted',
+            length(x) - max.print, 'entries ]\n')
+    } else print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
 
 print.POSIXlt <- function(x, ...)
 {
-    print(format(x, usetz=TRUE), ...)
+    max.print <- getOption("max.print", 9999L)
+    if(max.print < length(x)) {
+        print(format(x[seq_len(max.print)], usetz=TRUE), ...)
+        cat(' [ reached getOption("max.print") -- omitted',
+            length(x) - max.print, 'entries ]\n')
+   } else print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
 

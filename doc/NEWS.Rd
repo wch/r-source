@@ -588,6 +588,11 @@
       maximum integer (previously documented to be reported as
       \code{NA}), and allows larger values to be set, including
       \code{Inf} to remove the limit.
+      
+      \item The \code{print()} methods for classes \code{"Date"},
+      \code{"POSIXct"} and \code{"POSIXlt"} respect the option
+      \code{"max.print"} and so are much faster to very long datetime
+      vectors.  (Suggestion of Yohan Chalabi.)
     }
   }
   

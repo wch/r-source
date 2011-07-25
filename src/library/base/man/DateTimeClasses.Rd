@@ -181,6 +181,8 @@
   tz = "UTC")} will give \code{"1969-12-31 23:59:00"}.  Other OSes
   (including the code used by \R on Windows) report errors separately
   and so are able to handle that time as valid.
+  
+  The print methods respect \code{\link{options}("max.print")}.
 }
 \section{Sub-second Accuracy}{
   Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express

@@ -43,6 +43,8 @@
   ignored when printing.  It is possible to produce fractional days via
   the \code{mean} method or by adding or subtracting (see
   \code{\link{Ops.Date}}).
+  
+  The print methods respect \code{\link{options}("max.print")}.
 }
 \seealso{
   \code{\link{Sys.Date}} for the current date.
