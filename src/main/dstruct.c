@@ -98,8 +98,7 @@ SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
        )
 	SET_BODY(c, body);
     else
-	error(_("invalid body argument for \"function\"\n\
-Should NEVER happen; please bug.report() [mkCLOSXP]"));
+	error(_("invalid body argument for 'function'"));
 
     if(rho == R_NilValue)
 	SET_CLOENV(c, R_GlobalEnv);
