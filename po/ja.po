@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02+0100\n"
+"POT-Creation-Date: 2011-07-25 14:39+0100\n"
 "PO-Revision-Date: 2011-03-28 15:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -205,9 +205,9 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:236
 #: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
 #: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
-#: src/main/random.c:476 src/main/saveload.c:1938 src/main/saveload.c:1941
-#: src/main/saveload.c:1944 src/main/saveload.c:2060 src/main/saveload.c:2240
-#: src/main/saveload.c:2245 src/main/saveload.c:2248 src/main/saveload.c:2351
+#: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
+#: src/main/saveload.c:1943 src/main/saveload.c:2059 src/main/saveload.c:2239
+#: src/main/saveload.c:2244 src/main/saveload.c:2247 src/main/saveload.c:2350
 #: src/main/scan.c:663 src/main/scan.c:830 src/main/scan.c:843
 #: src/main/scan.c:847 src/main/scan.c:849 src/main/scan.c:860
 #: src/main/scan.c:887 src/main/scan.c:890 src/main/scan.c:943
@@ -501,7 +501,7 @@ msgstr ""
 
 #: src/gnuwin32/system.c:546 src/gnuwin32/system.c:1023
 #: src/gnuwin32/system.c:1035 src/main/connections.c:562
-#: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1949
+#: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1948
 #: src/main/serialize.c:2202 src/main/serialize.c:2207
 #: src/main/serialize.c:2288 src/main/serialize.c:2333 src/unix/system.c:315
 #: src/unix/system.c:335
@@ -1352,8 +1352,8 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 #: src/main/envir.c:2854 src/main/envir.c:2883 src/main/envir.c:2904
 #: src/main/envir.c:2927 src/main/envir.c:2962 src/main/envir.c:2983
 #: src/main/envir.c:3289 src/main/envir.c:3294 src/main/eval.c:4957
-#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2355
+#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2057
+#: src/main/saveload.c:2348 src/main/serialize.c:2355
 msgid "use of NULL environment is defunct"
 msgstr " NULL環境の使用は廃要素です "
 
@@ -1595,7 +1595,7 @@ msgstr " 非因子へ強制変換しようとしています "
 msgid "list argument expected"
 msgstr " リスト引数が期待されています "
 
-#: src/main/coerce.c:1452 src/main/eval.c:4954 src/main/eval.c:4961
+#: src/main/coerce.c:1452 src/main/eval.c:4961
 msgid "invalid environment"
 msgstr " 不正な環境です "
 
@@ -1951,8 +1951,8 @@ msgstr ""
 #: src/main/connections.c:3546 src/main/connections.c:3769
 #: src/main/connections.c:4096 src/main/connections.c:4209
 #: src/main/connections.c:4418 src/main/connections.c:4762 src/main/dcf.c:57
-#: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2255
-#: src/main/saveload.c:2335 src/main/scan.c:904 src/main/scan.c:1015
+#: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2254
+#: src/main/saveload.c:2334 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
 #: src/main/serialize.c:1890 src/main/source.c:260
 msgid "cannot open the connection"
@@ -2594,7 +2594,7 @@ msgstr " 'opts' は，小さな非負の整数でなくてはなりません "
 
 #: src/main/deparse.c:374 src/main/envir.c:1685 src/main/envir.c:1767
 #: src/main/eval.c:410 src/main/eval.c:1035 src/main/eval.c:3335
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2373
+#: src/main/saveload.c:1965 src/main/saveload.c:2296 src/main/serialize.c:2373
 #, c-format
 msgid "object '%s' not found"
 msgstr " オブジェクト '%s' がありません "
@@ -2905,16 +2905,14 @@ msgid "allocation of unz connection failed"
 msgstr " unz 接続の割り当てに失敗しました "
 
 #: src/main/dstruct.c:89
-msgid "invalid formal arguments for \"function\""
+#, fuzzy
+msgid "invalid formal arguments for 'function'"
 msgstr " \"function\" の仮引数(複数)が不正です "
 
-#: src/main/dstruct.c:101
-msgid ""
-"invalid body argument for \"function\"\n"
-"Should NEVER happen; please bug.report() [mkCLOSXP]"
-msgstr ""
-" \"function\" に対する不正な本体引数です。 \n"
-" これはあり得ません。bug.report をお願いします [mkCLOSXP]  "
+#: src/main/dstruct.c:99
+#, fuzzy
+msgid "invalid body argument for 'function'"
+msgstr " \"function\" の仮引数(複数)が不正です "
 
 #: src/main/engine.c:39
 msgid "Graphics API version mismatch"
@@ -3672,6 +3670,11 @@ msgstr ""
 " スレッデッド・コード・アドレス（threaded code address）のインデックスを見つ"
 "けることができません "
 
+#: src/main/eval.c:4954
+#, fuzzy
+msgid "invalid body"
+msgstr " シンボル記号が不正です "
+
 #: src/main/eval.c:4974
 msgid "invalid symbol"
 msgstr " シンボル記号が不正です "
@@ -3688,11 +3691,11 @@ msgstr " 不正なファイル名です "
 msgid "unable to open 'file'"
 msgstr " 'file' を開くことができません "
 
-#: src/main/eval.c:5058 src/main/saveload.c:1930
+#: src/main/eval.c:5058 src/main/saveload.c:1929
 msgid "'file' must be non-empty string"
 msgstr " 'file' は空でない文字列でなければいけません "
 
-#: src/main/eval.c:5060 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:5060 src/main/saveload.c:1931 src/main/saveload.c:2231
 #: src/main/serialize.c:1813
 msgid "'ascii' must be logical"
 msgstr " 'ascii' は論理値でなければなりません "
@@ -5931,70 +5934,70 @@ msgstr " これらの型の比較は未実装です "
 msgid "invalid comparison with complex values"
 msgstr " 不正な複素値との比較です "
 
-#: src/main/saveload.c:199 src/main/saveload.c:204 src/main/saveload.c:213
-#: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
-#: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
-#: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
-#: src/main/saveload.c:1496 src/main/serialize.c:330 src/main/serialize.c:337
+#: src/main/saveload.c:198 src/main/saveload.c:203 src/main/saveload.c:212
+#: src/main/saveload.c:221 src/main/saveload.c:230 src/main/saveload.c:239
+#: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1369
+#: src/main/saveload.c:1374 src/main/saveload.c:1418 src/main/saveload.c:1486
+#: src/main/saveload.c:1495 src/main/serialize.c:330 src/main/serialize.c:337
 #: src/main/serialize.c:2043 src/main/serialize.c:2051
 msgid "read error"
 msgstr " 読み込みエラーです "
 
-#: src/main/saveload.c:331
+#: src/main/saveload.c:330
 msgid "a I read error occurred"
 msgstr " 整数値の入力エラーが起きました "
 
-#: src/main/saveload.c:341
+#: src/main/saveload.c:340
 msgid "a R read error occurred"
 msgstr " 実数値の入力エラーが起きました "
 
-#: src/main/saveload.c:351
+#: src/main/saveload.c:350
 msgid "a C read error occurred"
 msgstr " 文字の入力エラーが起きました "
 
-#: src/main/saveload.c:361
+#: src/main/saveload.c:360
 msgid "a S read error occurred"
 msgstr " 文字列の入力エラーが起きました "
 
-#: src/main/saveload.c:386 src/main/saveload.c:394 src/main/saveload.c:402
-#: src/main/saveload.c:1583 src/main/saveload.c:1591
+#: src/main/saveload.c:385 src/main/saveload.c:393 src/main/saveload.c:401
+#: src/main/saveload.c:1582 src/main/saveload.c:1590
 msgid "a read error occurred"
 msgstr " 入力エラーが起きました "
 
-#: src/main/saveload.c:466
+#: src/main/saveload.c:465
 msgid "unresolved node during restore"
 msgstr " リストア中に解決できないノードがありました "
 
-#: src/main/saveload.c:487
+#: src/main/saveload.c:486
 #, c-format
 msgid "restore compatibility error - no version %d compatibility"
 msgstr " リストア互換性エラー、バージョン %d とは互換性がありません "
 
-#: src/main/saveload.c:571 src/main/saveload.c:639
+#: src/main/saveload.c:570 src/main/saveload.c:638
 msgid "bad SEXP type in data file"
 msgstr " データファイル中に不正な SEXP 型がありました "
 
-#: src/main/saveload.c:585
+#: src/main/saveload.c:584
 msgid "mismatch on types"
 msgstr " 型が一致しません "
 
-#: src/main/saveload.c:703
+#: src/main/saveload.c:702
 msgid "cannot save file position while restoring data"
 msgstr " データ restore 中はファイル位置をセーブすることはできません "
 
-#: src/main/saveload.c:716
+#: src/main/saveload.c:715
 msgid "cannot restore file position while restoring data"
 msgstr " データ restore 中は，ファイル位置を restore することはできません "
 
-#: src/main/saveload.c:909
+#: src/main/saveload.c:908
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr " 基本の namespaceは，version 1 のワークスペースに保存されません "
 
-#: src/main/saveload.c:911
+#: src/main/saveload.c:910
 msgid "cannot save namespace in version 1 workspaces"
 msgstr " バージョン 1 の作業スペースには namespace を保存できません "
 
-#: src/main/saveload.c:913
+#: src/main/saveload.c:912
 #, fuzzy
 msgid ""
 "cannot save environment with locked/active bindings in version 1 workspaces"
@@ -6002,177 +6005,177 @@ msgstr ""
 " バージョン 1 の作業スペースにはロックされていたり使用中のbindingを含んだ作業"
 "環境を保存できません "
 
-#: src/main/saveload.c:937
+#: src/main/saveload.c:936
 msgid "cannot save weak references in version 1 workspaces"
 msgstr " バージョン 1 の作業スペースには weak reference を保存できません "
 
-#: src/main/saveload.c:1015
+#: src/main/saveload.c:1014
 msgid "NewWriteVec called with non-vector type"
 msgstr " ベクトル型でないものを用いて NewWriteVec が呼ばれました "
 
-#: src/main/saveload.c:1078
+#: src/main/saveload.c:1077
 msgid "cannot save byte code objects in version 1 workspaces"
 msgstr ""
 " バージョン 1 の作業スペースにはバイトコードのオブジェクトは保存できません "
 
-#: src/main/saveload.c:1080
+#: src/main/saveload.c:1079
 #, c-format
 msgid "NewWriteItem: unknown type %i"
 msgstr " NewWriteItem ：未知の型 %i です "
 
-#: src/main/saveload.c:1210
+#: src/main/saveload.c:1209
 msgid "NewReadVec called with non-vector type"
 msgstr " ベクトル型でないものを用いて NewReadVec が呼ばれました "
 
-#: src/main/saveload.c:1275
+#: src/main/saveload.c:1274
 msgid "cannot read byte code objects from version 1 workspaces"
 msgstr ""
 " varsion 1 のワークスペースからはバイトコードオブジェクトを読み込むことはでき"
 "ません "
 
-#: src/main/saveload.c:1277
+#: src/main/saveload.c:1276
 #, c-format
 msgid "NewReadItem: unknown type %i"
 msgstr " NewReadItem： 未知の型 %i です "
 
-#: src/main/saveload.c:1429
+#: src/main/saveload.c:1428
 msgid "out of memory reading ascii string"
 msgstr " ascii 文字列を読んでいる途中でメモリが尽きました "
 
-#: src/main/saveload.c:1554
+#: src/main/saveload.c:1553
 msgid "a binary read error occurred"
 msgstr " バイナリ値の入力エラーが起きました "
 
-#: src/main/saveload.c:1569 src/main/saveload.c:1670
+#: src/main/saveload.c:1568 src/main/saveload.c:1669
 msgid "out of memory reading binary string"
 msgstr " バイナリ文字列を読んでいる途中でメモリが尽きました "
 
-#: src/main/saveload.c:1574
+#: src/main/saveload.c:1573
 msgid "a binary string read error occurred"
 msgstr " バイナリ文字列の入力エラーが起きました "
 
-#: src/main/saveload.c:1634
+#: src/main/saveload.c:1633
 msgid "an xdr integer data write error occurred"
 msgstr " xdr 整数データの出力エラーが起きました "
 
-#: src/main/saveload.c:1641
+#: src/main/saveload.c:1640
 msgid "an xdr integer data read error occurred"
 msgstr " xdr 整数データの入力エラーが起きました "
 
-#: src/main/saveload.c:1656 src/main/saveload.c:1675
+#: src/main/saveload.c:1655 src/main/saveload.c:1674
 msgid "an xdr string data write error occurred"
 msgstr " xdr 文字列データの出力エラーが起きました "
 
-#: src/main/saveload.c:1683
+#: src/main/saveload.c:1682
 msgid "an xdr real data write error occurred"
 msgstr " xdr 実数データの出力エラーが起きました "
 
-#: src/main/saveload.c:1690
+#: src/main/saveload.c:1689
 msgid "an xdr real data read error occurred"
 msgstr " xdr 実数データの入力エラーが起きました "
 
-#: src/main/saveload.c:1697
+#: src/main/saveload.c:1696
 msgid "an xdr complex data write error occurred"
 msgstr " xdr 複素数データの出力エラーが起きました "
 
-#: src/main/saveload.c:1704
+#: src/main/saveload.c:1703
 msgid "an xdr complex data read error occurred"
 msgstr " xdr 複素数データの入力エラーが起きました "
 
-#: src/main/saveload.c:1772 src/main/serialize.c:1622
+#: src/main/saveload.c:1771 src/main/serialize.c:1622
 #: src/main/serialize.c:2218 src/modules/internet/internet.c:350
 #: src/modules/internet/internet.c:408 src/modules/internet/internet.c:513
 msgid "write failed"
 msgstr " 書き込みに失敗しました "
 
-#: src/main/saveload.c:1898
+#: src/main/saveload.c:1897
 msgid "restore file may be empty -- no data loaded"
 msgstr ""
 " リストアしようとしたファイルは空の可能性、データは読み込まれませんでした "
 
-#: src/main/saveload.c:1900
+#: src/main/saveload.c:1899
 msgid "restore file may be from a newer version of R -- no data loaded"
 msgstr ""
 " リストアしようとしたファイルはRの新しいバージョンのものと思われます‐データは"
 "読み込まれません "
 
-#: src/main/saveload.c:1902
+#: src/main/saveload.c:1901
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
 " ファイルのマジック・ナンバーが不正です（ファイルが壊れているかもしれません）"
 "データはロードされませんでした "
 
-#: src/main/saveload.c:1928 src/main/saveload.c:2226
+#: src/main/saveload.c:1927 src/main/saveload.c:2225
 msgid "first argument must be a character vector"
 msgstr " 最初の引数は文字列ベクトルでなくてはなりません "
 
-#: src/main/saveload.c:2000
+#: src/main/saveload.c:1999
 msgid "not a valid named list"
 msgstr " 適切な名前付きリストではありません "
 
-#: src/main/saveload.c:2007 src/main/saveload.c:2028
+#: src/main/saveload.c:2006 src/main/saveload.c:2027
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
 msgstr ""
 " '%s' は前バージョン2.4.0のS4オブジェクトのようですので作り直してください "
 
-#: src/main/saveload.c:2015
+#: src/main/saveload.c:2014
 msgid "loaded data is not in pair list form"
 msgstr " ロードされたデータはペアリストの形式ではありません "
 
-#: src/main/saveload.c:2051
+#: src/main/saveload.c:2050
 msgid "first argument must be a file name"
 msgstr " 最初の引数はファイル名でなくてはなりません "
 
-#: src/main/saveload.c:2064 src/unix/edit.c:124
+#: src/main/saveload.c:2063 src/unix/edit.c:124
 msgid "unable to open file"
 msgstr " ファイルを開くことができません "
 
-#: src/main/saveload.c:2096 src/main/saveload.c:2122
+#: src/main/saveload.c:2095 src/main/saveload.c:2121
 msgid "XDR write failed"
 msgstr " XDR 書式での書き出しに失敗しました "
 
-#: src/main/saveload.c:2109 src/main/saveload.c:2134
+#: src/main/saveload.c:2108 src/main/saveload.c:2133
 msgid "XDR read failed"
 msgstr " XDR 書式での読み込みに失敗しました "
 
-#: src/main/saveload.c:2145
+#: src/main/saveload.c:2144
 #, c-format
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr " データをセーブできません -- %s を開けません : %s "
 
-#: src/main/saveload.c:2242 src/main/serialize.c:1825
+#: src/main/saveload.c:2241 src/main/serialize.c:1825
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr " バージョン %d 書式ではコネクションに保存できません "
 
-#: src/main/saveload.c:2265 src/main/serialize.c:1850
+#: src/main/saveload.c:2264 src/main/serialize.c:1850
 msgid "connection not open for writing"
 msgstr " コネクションは書き出しのために開かれていません "
 
-#: src/main/saveload.c:2273
+#: src/main/saveload.c:2272
 msgid "cannot save XDR format to a text-mode connection"
 msgstr " テキストモードのコネクションには XDR 書式では保存できません "
 
-#: src/main/saveload.c:2283 src/main/serialize.c:1730
+#: src/main/saveload.c:2282 src/main/serialize.c:1730
 #: src/main/serialize.c:1744 src/main/serialize.c:1926
 #: src/main/serialize.c:1948
 msgid "error writing to connection"
 msgstr " コネクションへの書き込みエラーが発生しました "
 
-#: src/main/saveload.c:2344 src/main/serialize.c:1898
+#: src/main/saveload.c:2343 src/main/serialize.c:1898
 msgid "connection not open for reading"
 msgstr " コネクションは読み込みのために開かれていません "
 
-#: src/main/saveload.c:2345
+#: src/main/saveload.c:2344
 msgid "can only load() from a binary connection"
 msgstr " バイナリコネクションからのみ load() できます "
 
-#: src/main/saveload.c:2356
+#: src/main/saveload.c:2355
 msgid "no input is available"
 msgstr " 入力は利用できません "
 
-#: src/main/saveload.c:2366
+#: src/main/saveload.c:2365
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -8252,6 +8255,13 @@ msgstr " X11 モジュールをロードできません "
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr " X11 が利用できません "
+
+#~ msgid ""
+#~ "invalid body argument for \"function\"\n"
+#~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
+#~ msgstr ""
+#~ " \"function\" に対する不正な本体引数です。 \n"
+#~ " これはあり得ません。bug.report をお願いします [mkCLOSXP]  "
 
 #~ msgid "vector: zero-length 'type' argument"
 #~ msgstr " vector：'type' 引数の長さが0です "

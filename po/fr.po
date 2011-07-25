@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02+0100\n"
+"POT-Creation-Date: 2011-07-25 14:39+0100\n"
 "PO-Revision-Date: 2011-03-31 22:26-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -206,9 +206,9 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/plot3d.c:2451 src/main/plot3d.c:2455 src/main/print.c:236
 #: src/main/print.c:242 src/main/print.c:264 src/main/print.c:270
 #: src/main/print.c:276 src/main/random.c:468 src/main/random.c:472
-#: src/main/random.c:476 src/main/saveload.c:1938 src/main/saveload.c:1941
-#: src/main/saveload.c:1944 src/main/saveload.c:2060 src/main/saveload.c:2240
-#: src/main/saveload.c:2245 src/main/saveload.c:2248 src/main/saveload.c:2351
+#: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
+#: src/main/saveload.c:1943 src/main/saveload.c:2059 src/main/saveload.c:2239
+#: src/main/saveload.c:2244 src/main/saveload.c:2247 src/main/saveload.c:2350
 #: src/main/scan.c:663 src/main/scan.c:830 src/main/scan.c:843
 #: src/main/scan.c:847 src/main/scan.c:849 src/main/scan.c:860
 #: src/main/scan.c:887 src/main/scan.c:890 src/main/scan.c:943
@@ -505,7 +505,7 @@ msgstr "<ERREUR : réencodage erroné pour l'encodage '%s'>\n"
 
 #: src/gnuwin32/system.c:546 src/gnuwin32/system.c:1023
 #: src/gnuwin32/system.c:1035 src/main/connections.c:562
-#: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1949
+#: src/main/connections.c:567 src/main/dounzip.c:177 src/main/saveload.c:1948
 #: src/main/serialize.c:2202 src/main/serialize.c:2207
 #: src/main/serialize.c:2288 src/main/serialize.c:2333 src/unix/system.c:315
 #: src/unix/system.c:335
@@ -1377,8 +1377,8 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 #: src/main/envir.c:2854 src/main/envir.c:2883 src/main/envir.c:2904
 #: src/main/envir.c:2927 src/main/envir.c:2962 src/main/envir.c:2983
 #: src/main/envir.c:3289 src/main/envir.c:3294 src/main/eval.c:4957
-#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2058
-#: src/main/saveload.c:2349 src/main/serialize.c:2355
+#: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2057
+#: src/main/saveload.c:2348 src/main/serialize.c:2355
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
@@ -1627,7 +1627,7 @@ msgstr "tentative de conversion automatique d'autre chose qu'un facteur"
 msgid "list argument expected"
 msgstr "liste d'arguments attendue"
 
-#: src/main/coerce.c:1452 src/main/eval.c:4954 src/main/eval.c:4961
+#: src/main/coerce.c:1452 src/main/eval.c:4961
 msgid "invalid environment"
 msgstr "environnement incorrect"
 
@@ -1988,8 +1988,8 @@ msgstr ""
 #: src/main/connections.c:3546 src/main/connections.c:3769
 #: src/main/connections.c:4096 src/main/connections.c:4209
 #: src/main/connections.c:4418 src/main/connections.c:4762 src/main/dcf.c:57
-#: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2255
-#: src/main/saveload.c:2335 src/main/scan.c:904 src/main/scan.c:1015
+#: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2254
+#: src/main/saveload.c:2334 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
 #: src/main/serialize.c:1890 src/main/source.c:260
 msgid "cannot open the connection"
@@ -2653,7 +2653,7 @@ msgstr "'opts' doit être un petit entier positif ou nul"
 
 #: src/main/deparse.c:374 src/main/envir.c:1685 src/main/envir.c:1767
 #: src/main/eval.c:410 src/main/eval.c:1035 src/main/eval.c:3335
-#: src/main/saveload.c:1966 src/main/saveload.c:2297 src/main/serialize.c:2373
+#: src/main/saveload.c:1965 src/main/saveload.c:2296 src/main/serialize.c:2373
 #, c-format
 msgid "object '%s' not found"
 msgstr "objet '%s' introuvable"
@@ -2970,17 +2970,14 @@ msgid "allocation of unz connection failed"
 msgstr "l'allocation d'une connexion unz a échoué"
 
 #: src/main/dstruct.c:89
-msgid "invalid formal arguments for \"function\""
+#, fuzzy
+msgid "invalid formal arguments for 'function'"
 msgstr "argument formel invalide pour \"function\""
 
-#: src/main/dstruct.c:101
-msgid ""
-"invalid body argument for \"function\"\n"
-"Should NEVER happen; please bug.report() [mkCLOSXP]"
-msgstr ""
-"argument incorrect pour le corps de \"function\"\n"
-"Ne devrait JAMAIS arriver ; veuillez signaler l'anomalie à l'aide de bug."
-"report() [mkCLOSXP]"
+#: src/main/dstruct.c:99
+#, fuzzy
+msgid "invalid body argument for 'function'"
+msgstr "argument formel invalide pour \"function\""
 
 #: src/main/engine.c:39
 msgid "Graphics API version mismatch"
@@ -3745,6 +3742,11 @@ msgstr "valeur de décalage numérique erronée"
 msgid "cannot find index for threaded code address"
 msgstr "impossible de trouver l'indice pour l'adresse de code traitée"
 
+#: src/main/eval.c:4954
+#, fuzzy
+msgid "invalid body"
+msgstr "symbole non valide"
+
 #: src/main/eval.c:4974
 msgid "invalid symbol"
 msgstr "symbole non valide"
@@ -3761,11 +3763,11 @@ msgstr "mauvais nom de fichier"
 msgid "unable to open 'file'"
 msgstr "impossible d'ouvrir 'file'"
 
-#: src/main/eval.c:5058 src/main/saveload.c:1930
+#: src/main/eval.c:5058 src/main/saveload.c:1929
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
 
-#: src/main/eval.c:5060 src/main/saveload.c:1932 src/main/saveload.c:2232
+#: src/main/eval.c:5060 src/main/saveload.c:1931 src/main/saveload.c:2231
 #: src/main/serialize.c:1813
 msgid "'ascii' must be logical"
 msgstr "'ascii' doit être une valeur logique"
@@ -6054,259 +6056,259 @@ msgstr "comparaison de ces types non implémentée"
 msgid "invalid comparison with complex values"
 msgstr "comparaison incorrecte pour des valeurs complexes"
 
-#: src/main/saveload.c:199 src/main/saveload.c:204 src/main/saveload.c:213
-#: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
-#: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1370
-#: src/main/saveload.c:1375 src/main/saveload.c:1419 src/main/saveload.c:1487
-#: src/main/saveload.c:1496 src/main/serialize.c:330 src/main/serialize.c:337
+#: src/main/saveload.c:198 src/main/saveload.c:203 src/main/saveload.c:212
+#: src/main/saveload.c:221 src/main/saveload.c:230 src/main/saveload.c:239
+#: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1369
+#: src/main/saveload.c:1374 src/main/saveload.c:1418 src/main/saveload.c:1486
+#: src/main/saveload.c:1495 src/main/serialize.c:330 src/main/serialize.c:337
 #: src/main/serialize.c:2043 src/main/serialize.c:2051
 msgid "read error"
 msgstr "erreur de lecture"
 
-#: src/main/saveload.c:331
+#: src/main/saveload.c:330
 msgid "a I read error occurred"
 msgstr "erreur de lecture I"
 
-#: src/main/saveload.c:341
+#: src/main/saveload.c:340
 msgid "a R read error occurred"
 msgstr "erreur de lecture R"
 
-#: src/main/saveload.c:351
+#: src/main/saveload.c:350
 msgid "a C read error occurred"
 msgstr "erreur de lecture C"
 
-#: src/main/saveload.c:361
+#: src/main/saveload.c:360
 msgid "a S read error occurred"
 msgstr "erreur de lecture S"
 
-#: src/main/saveload.c:386 src/main/saveload.c:394 src/main/saveload.c:402
-#: src/main/saveload.c:1583 src/main/saveload.c:1591
+#: src/main/saveload.c:385 src/main/saveload.c:393 src/main/saveload.c:401
+#: src/main/saveload.c:1582 src/main/saveload.c:1590
 msgid "a read error occurred"
 msgstr "erreur de lecture"
 
-#: src/main/saveload.c:466
+#: src/main/saveload.c:465
 msgid "unresolved node during restore"
 msgstr "noeud non résolu pendant la restauration"
 
-#: src/main/saveload.c:487
+#: src/main/saveload.c:486
 #, c-format
 msgid "restore compatibility error - no version %d compatibility"
 msgstr ""
 "erreur de compatibilité de restauration - absence de compatibilité avec la "
 "version %d"
 
-#: src/main/saveload.c:571 src/main/saveload.c:639
+#: src/main/saveload.c:570 src/main/saveload.c:638
 msgid "bad SEXP type in data file"
 msgstr "mauvais type SEXP dans le fichier de données"
 
-#: src/main/saveload.c:585
+#: src/main/saveload.c:584
 msgid "mismatch on types"
 msgstr "incohérence de types"
 
-#: src/main/saveload.c:703
+#: src/main/saveload.c:702
 msgid "cannot save file position while restoring data"
 msgstr ""
 "impossible de sauvegarder la position dans le fichier lors de la "
 "restauration des données"
 
-#: src/main/saveload.c:716
+#: src/main/saveload.c:715
 msgid "cannot restore file position while restoring data"
 msgstr ""
 "impossible de restaurer la position dans le fichier lors de la restauration "
 "des données"
 
-#: src/main/saveload.c:909
+#: src/main/saveload.c:908
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr ""
 "espace de noms de base perdu dans la version 1 des environnements de travail"
 
-#: src/main/saveload.c:911
+#: src/main/saveload.c:910
 msgid "cannot save namespace in version 1 workspaces"
 msgstr ""
 "sauvegarde impossible des espaces de nom dans la version 1 des "
 "environnements de travail"
 
-#: src/main/saveload.c:913
+#: src/main/saveload.c:912
 msgid ""
 "cannot save environment with locked/active bindings in version 1 workspaces"
 msgstr ""
 "sauvegarde impossible de l'environnement avec des liens verrouillés / actifs "
 "dans la version 1 des environnements de travail"
 
-#: src/main/saveload.c:937
+#: src/main/saveload.c:936
 msgid "cannot save weak references in version 1 workspaces"
 msgstr ""
 "sauvegarde impossible des références légères dans la version 1 des "
 "environnements de travail"
 
-#: src/main/saveload.c:1015
+#: src/main/saveload.c:1014
 msgid "NewWriteVec called with non-vector type"
 msgstr "NewWriteVec appelé avec un type non vectoriel"
 
-#: src/main/saveload.c:1078
+#: src/main/saveload.c:1077
 msgid "cannot save byte code objects in version 1 workspaces"
 msgstr ""
 "impossible de sauvegarder les objets en pseudo-code dans la version 1 des "
 "environnements de travail"
 
-#: src/main/saveload.c:1080
+#: src/main/saveload.c:1079
 #, c-format
 msgid "NewWriteItem: unknown type %i"
 msgstr "NewWriteItem : type %i inconnu"
 
-#: src/main/saveload.c:1210
+#: src/main/saveload.c:1209
 msgid "NewReadVec called with non-vector type"
 msgstr "NewReadVec appelé avec un type non vectoriel"
 
-#: src/main/saveload.c:1275
+#: src/main/saveload.c:1274
 msgid "cannot read byte code objects from version 1 workspaces"
 msgstr ""
 "lecture d'objets en pseudo-code impossible depuis la version 1 des "
 "environnements de travail"
 
-#: src/main/saveload.c:1277
+#: src/main/saveload.c:1276
 #, c-format
 msgid "NewReadItem: unknown type %i"
 msgstr "NewReadItem : type %i inconnu"
 
-#: src/main/saveload.c:1429
+#: src/main/saveload.c:1428
 msgid "out of memory reading ascii string"
 msgstr "mémoire saturée en lisant une chaîne ascii"
 
-#: src/main/saveload.c:1554
+#: src/main/saveload.c:1553
 msgid "a binary read error occurred"
 msgstr "erreur de lecture binaire"
 
-#: src/main/saveload.c:1569 src/main/saveload.c:1670
+#: src/main/saveload.c:1568 src/main/saveload.c:1669
 msgid "out of memory reading binary string"
 msgstr "mémoire saturée en lisant une chaîne binaire"
 
-#: src/main/saveload.c:1574
+#: src/main/saveload.c:1573
 msgid "a binary string read error occurred"
 msgstr "erreur de lecture d'une chaîne binaire"
 
-#: src/main/saveload.c:1634
+#: src/main/saveload.c:1633
 msgid "an xdr integer data write error occurred"
 msgstr "erreur xdr d'écriture de données d'entiers"
 
-#: src/main/saveload.c:1641
+#: src/main/saveload.c:1640
 msgid "an xdr integer data read error occurred"
 msgstr "erreur xdr de lecture de données d'entiers"
 
-#: src/main/saveload.c:1656 src/main/saveload.c:1675
+#: src/main/saveload.c:1655 src/main/saveload.c:1674
 msgid "an xdr string data write error occurred"
 msgstr "erreur xdr d'écriture de données chaînes de caractères"
 
-#: src/main/saveload.c:1683
+#: src/main/saveload.c:1682
 msgid "an xdr real data write error occurred"
 msgstr "erreur xdr d'écriture de données de réels"
 
-#: src/main/saveload.c:1690
+#: src/main/saveload.c:1689
 msgid "an xdr real data read error occurred"
 msgstr "erreur xdr de lecture de données de réels"
 
-#: src/main/saveload.c:1697
+#: src/main/saveload.c:1696
 msgid "an xdr complex data write error occurred"
 msgstr "erreur xdr d'écriture de données de complexes"
 
-#: src/main/saveload.c:1704
+#: src/main/saveload.c:1703
 msgid "an xdr complex data read error occurred"
 msgstr "erreur xdr de lecture de données de complexes"
 
-#: src/main/saveload.c:1772 src/main/serialize.c:1622
+#: src/main/saveload.c:1771 src/main/serialize.c:1622
 #: src/main/serialize.c:2218 src/modules/internet/internet.c:350
 #: src/modules/internet/internet.c:408 src/modules/internet/internet.c:513
 msgid "write failed"
 msgstr "échec d'écriture"
 
-#: src/main/saveload.c:1898
+#: src/main/saveload.c:1897
 msgid "restore file may be empty -- no data loaded"
 msgstr "fichier de restauration peut-être vide -- aucune donnée chargée"
 
-#: src/main/saveload.c:1900
+#: src/main/saveload.c:1899
 msgid "restore file may be from a newer version of R -- no data loaded"
 msgstr ""
 "fichier de restauration peut-être d'une version plus récente de R -- aucune "
 "donnée chargée"
 
-#: src/main/saveload.c:1902
+#: src/main/saveload.c:1901
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
 "mauvais numéro magique de restauration de fichier (le fichier est peut être "
 "corrompu) -- aucune donnée chargée"
 
-#: src/main/saveload.c:1928 src/main/saveload.c:2226
+#: src/main/saveload.c:1927 src/main/saveload.c:2225
 msgid "first argument must be a character vector"
 msgstr "le premier argument doit être un vecteur de caractères"
 
-#: src/main/saveload.c:2000
+#: src/main/saveload.c:1999
 msgid "not a valid named list"
 msgstr "liste nommée incorrecte"
 
-#: src/main/saveload.c:2007 src/main/saveload.c:2028
+#: src/main/saveload.c:2006 src/main/saveload.c:2027
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
 msgstr ""
 "'%s' semble être un objet S4 antérieur à la version 2.4.0 : veuillez le "
 "recréer"
 
-#: src/main/saveload.c:2015
+#: src/main/saveload.c:2014
 msgid "loaded data is not in pair list form"
 msgstr "les données chargées ne sont pas sous forme de listes appariées"
 
-#: src/main/saveload.c:2051
+#: src/main/saveload.c:2050
 msgid "first argument must be a file name"
 msgstr "le premier argument doit être un nom de fichier"
 
-#: src/main/saveload.c:2064 src/unix/edit.c:124
+#: src/main/saveload.c:2063 src/unix/edit.c:124
 msgid "unable to open file"
 msgstr "ouverture de fichier impossible"
 
-#: src/main/saveload.c:2096 src/main/saveload.c:2122
+#: src/main/saveload.c:2095 src/main/saveload.c:2121
 msgid "XDR write failed"
 msgstr "échec d'écriture XDR"
 
-#: src/main/saveload.c:2109 src/main/saveload.c:2134
+#: src/main/saveload.c:2108 src/main/saveload.c:2133
 msgid "XDR read failed"
 msgstr "échec de lecture XDR"
 
-#: src/main/saveload.c:2145
+#: src/main/saveload.c:2144
 #, c-format
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "impossible de sauvegarder les données -- impossible d'ouvrir %s : %s"
 
-#: src/main/saveload.c:2242 src/main/serialize.c:1825
+#: src/main/saveload.c:2241 src/main/serialize.c:1825
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "sauvegarde impossible vers des connexions de version de format %d"
 
-#: src/main/saveload.c:2265 src/main/serialize.c:1850
+#: src/main/saveload.c:2264 src/main/serialize.c:1850
 msgid "connection not open for writing"
 msgstr "connexion non ouverte en écriture"
 
-#: src/main/saveload.c:2273
+#: src/main/saveload.c:2272
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "sauvegarde impossible en format XDR vers une connexion en mode texte"
 
-#: src/main/saveload.c:2283 src/main/serialize.c:1730
+#: src/main/saveload.c:2282 src/main/serialize.c:1730
 #: src/main/serialize.c:1744 src/main/serialize.c:1926
 #: src/main/serialize.c:1948
 msgid "error writing to connection"
 msgstr "erreur d'écriture vers la connexion"
 
-#: src/main/saveload.c:2344 src/main/serialize.c:1898
+#: src/main/saveload.c:2343 src/main/serialize.c:1898
 msgid "connection not open for reading"
 msgstr "connexion non ouverte en lecture"
 
-#: src/main/saveload.c:2345
+#: src/main/saveload.c:2344
 msgid "can only load() from a binary connection"
 msgstr "lecture seulement possible pour une connexion binaire"
 
-#: src/main/saveload.c:2356
+#: src/main/saveload.c:2355
 msgid "no input is available"
 msgstr "pas d'entrée disponible"
 
-#: src/main/saveload.c:2366
+#: src/main/saveload.c:2365
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -8413,6 +8415,14 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:177 src/unix/X11.c:183 src/unix/X11.c:189
 msgid "X11 is not available"
 msgstr "X11 indisponible"
+
+#~ msgid ""
+#~ "invalid body argument for \"function\"\n"
+#~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
+#~ msgstr ""
+#~ "argument incorrect pour le corps de \"function\"\n"
+#~ "Ne devrait JAMAIS arriver ; veuillez signaler l'anomalie à l'aide de bug."
+#~ "report() [mkCLOSXP]"
 
 #~ msgid "vector: zero-length 'type' argument"
 #~ msgstr "vector : argument 'type' de longueur nulle"
