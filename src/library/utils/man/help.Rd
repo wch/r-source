@@ -119,7 +119,7 @@ help(topic, package = NULL, lib.loc = NULL,
   which will give the graphics path when the help document contains
   figures, and will otherwise not be supplied.
   
-  Postsccript rendering of help pages containing figures will often not
+  PostScript rendering of help pages containing figures will often not
   include the figures (which is one reason it is deprecated).
 }
 
