@@ -282,7 +282,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
             dir.exists <- function(x)
                 !is.na(isdir <- file.info(x)$isdir) & isdir
-            if (dir.exists(file.path(pkgpath, "R"))) {
+            if (package != "datasets" &&
+                dir.exists(file.path(pkgpath, "R"))) {
                 ## Check is package specified keep.source: only
                 ## relevant if not lazy-loaded (and hence installed < R 2.14.0)
                 if (!is.na(value <- pkgInfo$DESCRIPTION["KeepSource"]))

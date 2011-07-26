@@ -69,15 +69,21 @@ getNamespaceUsers <- function(ns) {
 getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
-        if (! exists(name, envir = exports, inherits = FALSE))
-            stop(gettextf("'%s' is not an exported object from 'namespace:%s'",
-                          name, getNamespaceName(ns)),
-                 call. = FALSE, domain = NA)
-        get(name, envir = exports, inherits = FALSE)
+        if (exists(name, envir = exports, inherits = FALSE))
+            get(get(name, envir = exports, inherits = FALSE), envir = ns)
+        else {
+            ld <- getNamespaceInfo(ns, "lazydata")
+            if (exists(name, envir = ld, inherits = FALSE))
+                get(name, envir = ld, inherits = FALSE)
+            else
+                stop(gettextf("'%s' is not an exported object from 'namespace:%s'",
+                              name, getNamespaceName(ns)),
+                     call. = FALSE, domain = NA)
+        }
     }
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) get(name, envir = ns, inherits = FALSE)
-    else get(getInternalExportName(name, ns), envir = ns)
+    else getInternalExportName(name, ns)
 }
 
 `::` <- function(pkg, name) {
@@ -139,10 +145,10 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
     attr(env, "path") <- nspath
     exports <- getNamespaceExports(ns)
     importIntoEnv(env, exports, ns, exports)
-    if(!is.null(dataPath)) {
-        dbbase <- file.path(dataPath, "Rdata")
-        if(file.exists(paste(dbbase, ".rdb", sep = ""))) lazyLoad(dbbase, env)
-    }
+    ## always exists, might be empty
+    dimpenv <- getNamespaceInfo(ns, "lazydata")
+    dnames <- ls(dimpenv, all = TRUE)
+    .Internal(importIntoEnv(env, dnames, dimpenv, dnames))
     if(length(depends)) assign(".Depends", depends, env)
     Sys.setenv("_R_NS_LOAD_" = nsname)
     on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
@@ -214,6 +220,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             assign(".__NAMESPACE__.", info, envir = env)
             assign("spec", c(name = name,version = version), envir = info)
             setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
+            dimpenv <- new.env(parent = baseenv(), hash = TRUE)
+            attr(dimpenv, "name") <- paste("lazydata", name, sep=":")
+            setNamespaceInfo(env, "lazydata", dimpenv)
             setNamespaceInfo(env, "imports", list("base" = TRUE))
             ## this should be an absolute path
             setNamespaceInfo(env, "path",
@@ -413,6 +422,11 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## lazy-load any sysdata
         dbbase <- file.path(pkgpath, "R", "sysdata")
         if (file.exists(paste(dbbase, ".rdb", sep = ""))) lazyLoad(dbbase, env)
+
+        ## load any lazydata into a separate environment
+        dbbase <- file.path(pkgpath, "data", "Rdata")
+        if(file.exists(paste(dbbase, ".rdb", sep = "")))
+            lazyLoad(dbbase, getNamespaceInfo(ns, "lazydata"))
 
         ## register any S3 methods
         registerS3methods(nsInfo$S3methods, package, env)

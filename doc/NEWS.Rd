@@ -30,6 +30,11 @@
       (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
       variants have been eliminated).  Code which extracts the p value
       \emph{via} indexing by name may need adjustment.
+      
+      \item \code{::} can now be used for datasets made available for
+      lazy-loading in packages with namespaces (which makes it consistent
+      with its use for data-only packages without namespaces in earlier
+      versions of \R).
     }
   }
 
