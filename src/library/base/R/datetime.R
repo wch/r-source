@@ -209,6 +209,7 @@ format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
               names=names(x))
 }
 
+## could handle arrays for max.print
 print.POSIXct <- function(x, ...)
 {
     max.print <- getOption("max.print", 9999L)
