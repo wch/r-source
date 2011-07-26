@@ -489,6 +489,10 @@
       \item A top-level \file{COPYING} file in a package is now
       deprecated (file names \file{LICENSE} or \file{LICENCE} have long
       been preferred), and will not be installed as from \R 2.15.0.
+      
+      \item \code{mem.limits()} is now deprecated: these limits are
+      nowadays almost never used, and are reported by \code{gc()} when
+      they are in use.
     }
   }
 

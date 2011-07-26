@@ -6952,18 +6952,9 @@ tilde-expansion: see the help for @code{path.expand}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}
-Specify the minimum or maximum amount of memory used for variable size
-objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{G},
-@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
-(computer) `Kilo' (2^10), or regular `kilo' (1000).
-
-@item --min-nsize=@var{N}
+@itemx --min-nsize=@var{N}
 @itemx --max-nsize=@var{N}
-Specify the amount of memory used for fixed size objects by setting the
-number of ``cons cells'' to @var{N}.  See the previous option for
-details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
-usually 56 bytes on a 64-bit machine.
+Almost entirely of historical interest: see @code{?Memory} in @R{}.
 
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}
