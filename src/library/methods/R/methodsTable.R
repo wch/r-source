@@ -386,6 +386,10 @@
 }
 
 .resetTable <- function(table, n, signames) {
+    ## protect this computation, in case it's resetting
+    ## something used in the computation
+    primMethods <- .allowPrimitiveMethods(FALSE)
+    on.exit(.allowPrimitiveMethods(primMethods))
     ## after updating a methods table, the maximum no. of arguments in
     ## the signature increased to n.  Reassign any objects whose label
     ## does not match n classes from the defined slot
@@ -1196,10 +1200,6 @@ outerLabels <- function(labels, new) {
 }
 
 .resetSigLength <- function(fdef, n) {
-    ## protect this computation, in case it's resetting
-    ## something used in the computation
-    primMethods <- .allowPrimitiveMethods(FALSE)
-    on.exit(.allowPrimitiveMethods(primMethods))
     fenv <- environment(fdef)
     assign(".SigLength", n, envir = fenv)
     mtable <- .getMethodsTable(fdef, fenv, check = FALSE)
