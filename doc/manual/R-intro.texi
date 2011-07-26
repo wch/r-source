@@ -6554,13 +6554,11 @@ disappear.
 
 @table @code
 @item
-Login, start your windowing system.
-@item $ R
-Start @R{} as appropriate for your platform.
+Start @R{} appropriately for your platform (@pxref{Invoking R}).
 
 The @R{} program begins, with a banner.
 
-(Within @R{}, the prompt on the left hand side will not be shown to
+(Within @R{} code, the prompt on the left hand side will not be shown to
 avoid confusion.)
 
 @item help.start()
