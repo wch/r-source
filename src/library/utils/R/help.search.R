@@ -119,17 +119,7 @@ help.search <-
             flush.console()
         }
 	## Check whether we can save the hsearch db later on.
-	if(all(is.na(mem.limits()))) {
-	    save_db <- save_db_to_memory <- TRUE
-	} else {
-	    save_db <- save_db_to_memory <- FALSE
-	    dir <- file.path(tempdir(), ".R")
-	    db_file <- file.path(dir, "hsearch.rds")
-	    if( (file_test("-d", dir)
-                 || ((unlink(dir) == 0L) && dir.create(dir)) )
-	       && (unlink(db_file) == 0L) )
-		save_db <- TRUE
-	}
+        save_db <- save_db_to_memory <- TRUE
 
 	if(!is.null(package)) {
 	    packages_in_hsearch_db <- package
