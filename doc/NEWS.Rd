@@ -498,6 +498,9 @@
       \item \code{mem.limits()} is now deprecated: these limits are
       nowadays almost never used, and are reported by \code{gc()} when
       they are in use.
+      
+      \item Forms like \code{binomial(link=link)} for GLM families
+      deprecated since \R 2.4.0 are now defunct.
     }
   }
 

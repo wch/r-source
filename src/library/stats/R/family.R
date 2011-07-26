@@ -132,19 +132,10 @@ make.link <- function (link)
 poisson <- function (link = "log")
 {
     linktemp <- substitute(link)
-    ## idea is that we can specify a character string or a name for
-    ## the standard links, and if the name is not one of those, look
-    ## for an object of the appropiate class.
     if (!is.character(linktemp)) {
 	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link (undocumented).  Deprecate in 2.4.0.
-	if (linktemp == "link") {
-            warning("use of poisson(link=link) is deprecated\n", domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+	if (linktemp == "link")
+            stop("use of poisson(link=link) is defunct\n", domain = NA)
     }
     okLinks <- c("log", "identity", "sqrt")
     if (linktemp %in% okLinks)
@@ -202,18 +193,10 @@ quasipoisson <- function (link = "log")
 {
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of quasipoisson(link=link) is deprecated\n",
-                    domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+        linktemp <- deparse(linktemp)
+        if (linktemp == "link")
+            stop("use of quasipoisson(link=link) is defunct", domain = NA)
     }
-
     okLinks <- c("log", "identity", "sqrt")
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
@@ -261,14 +244,8 @@ gaussian <- function (link = "identity")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
 	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of gaussian(link=link) is deprecated\n", domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+	if (linktemp == "link")
+            stop("use of gaussian(link=link) is defunct", domain = NA)
     }
     okLinks <- c("inverse", "log", "identity")
     if (linktemp %in% okLinks)
@@ -318,14 +295,8 @@ binomial <- function (link = "logit")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
 	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of binomial(link=link) is deprecated\n", domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+	if (linktemp == "link")
+            stop("use of binomial(link=link) is defunct", domain = NA)
     }
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
     if (linktemp %in% okLinks)
@@ -427,15 +398,9 @@ quasibinomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of quasibinomial(link=link) is deprecated\n", domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+        linktemp <- deparse(linktemp)
+	if (linktemp == "link")
+            stop("use of quasibinomial(link=link) is defunct", domain = NA)
     }
 
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
@@ -497,14 +462,8 @@ Gamma <- function (link = "inverse")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
 	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of Gamma(link=link) is deprecated\n", domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+	if (linktemp == "link")
+            stop("use of Gamma(link=link) is defunct", domain = NA)
     }
     okLinks <- c("inverse", "log", "identity")
     if (linktemp %in% okLinks)
@@ -563,15 +522,8 @@ inverse.gaussian <- function(link = "1/mu^2")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) {
 	linktemp <- deparse(linktemp)
-        ## the idea here seems to be that we can have a character variable
-        ## 'link' naming the link.
-	if (linktemp == "link") {
-            warning("use of inverse.gaussian(link=link) is deprecated\n",
-                    domain = NA)
-	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1L)
-                stop("'link' is invalid", domain=NA)
-        }
+	if (linktemp == "link")
+            stop("use of inverse.gaussian(link=link) is defunct", domain = NA)
     }
     okLinks <- c("inverse", "log", "identity", "1/mu^2")
     if (linktemp %in% okLinks)
