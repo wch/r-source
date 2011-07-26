@@ -1196,13 +1196,17 @@ outerLabels <- function(labels, new) {
 }
 
 .resetSigLength <- function(fdef, n) {
-      fenv <- environment(fdef)
-      assign(".SigLength", n, envir = fenv)
-      mtable <- .getMethodsTable(fdef, fenv, check = FALSE)
-      signames <- fdef@signature
-      length(signames) <- n
-      .resetTable(mtable, n, signames)
-      .resetInheritedMethods(fenv, mtable)
+    ## protect this computation, in case it's resetting
+    ## something used in the computation
+    primMethods <- .allowPrimitiveMethods(FALSE)
+    on.exit(.allowPrimitiveMethods(primMethods))
+    fenv <- environment(fdef)
+    assign(".SigLength", n, envir = fenv)
+    mtable <- .getMethodsTable(fdef, fenv, check = FALSE)
+    signames <- fdef@signature
+    length(signames) <- n
+    .resetTable(mtable, n, signames)
+    .resetInheritedMethods(fenv, mtable)
 }
 
 .TableMetaName <- function(name, package)
