@@ -6952,7 +6952,8 @@ tilde-expansion: see the help for @code{path.expand}.
 @itemx --max-vsize=@var{N}
 @itemx --min-nsize=@var{N}
 @itemx --max-nsize=@var{N}
-Almost entirely of historical interest: see @code{?Memory} in @R{}.
+Deprecated, and lmost entirely of historical interest: see
+@code{?Memory} in @R{}.
 
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}

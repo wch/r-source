@@ -9,6 +9,8 @@
 \title{Memory Available for Data Storage}
 \description{
   Use command line options to control the memory available for \R.
+  
+  These are all deprecated as of \R 2.14.0.
 }
 \usage{
 #ifdef unix

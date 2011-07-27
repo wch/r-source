@@ -495,9 +495,10 @@
       deprecated (file names \file{LICENSE} or \file{LICENCE} have long
       been preferred), and will not be installed as from \R 2.15.0.
       
-      \item \code{mem.limits()} is now deprecated: these limits are
-      nowadays almost never used, and are reported by \code{gc()} when
-      they are in use.
+      \item Options such as \code{--max-nsize} and the function
+      \code{mem.limits()} are now deprecated: these limits are nowadays
+      almost never used, and are reported by \code{gc()} when they are
+      in use.
       
       \item Forms like \code{binomial(link=link)} for GLM families
       deprecated since \R 2.4.0 are now defunct.
