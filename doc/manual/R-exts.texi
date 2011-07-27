@@ -247,13 +247,12 @@ are @file{configure.win} and @file{cleanup.win}
 
 The optional file @file{LICENSE}/@file{LICENCE} or @file{COPYING} (where
 the former names are preferred, and @file{COPYING} is now deprecated)
-contains a copy of the license to the package, e.g.@: a copy of the
-@acronym{GNU} public license.  Whereas you should feel free to include a
-license file in your @emph{source} distribution, please do not arrange
-to @emph{install} yet another copy of the @acronym{GNU} @file{COPYING}
-or @file{COPYING.LIB} files but refer to the copies on
-@uref{http://www.r-project.org/@/Licenses/} and included in the @R{}
-distribution (in directory @file{share/licenses}).
+contains a copy of the license to the package.  Whereas you should feel
+free to include a license file in your @emph{source} distribution,
+please do not arrange to @emph{install} yet another copy of the
+@acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but refer to
+the copies on @uref{http://www.r-project.org/@/Licenses/} and included
+in the @R{} distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
