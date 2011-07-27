@@ -132,11 +132,7 @@ make.link <- function (link)
 poisson <- function (link = "log")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of poisson(link=link) is defunct\n", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("log", "identity", "sqrt")
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
@@ -192,11 +188,7 @@ poisson <- function (link = "log")
 quasipoisson <- function (link = "log")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-        linktemp <- deparse(linktemp)
-        if (linktemp == "link")
-            stop("use of quasipoisson(link=link) is defunct", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("log", "identity", "sqrt")
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
@@ -242,11 +234,7 @@ quasipoisson <- function (link = "log")
 gaussian <- function (link = "identity")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of gaussian(link=link) is defunct", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("inverse", "log", "identity")
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
@@ -293,11 +281,7 @@ gaussian <- function (link = "identity")
 binomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of binomial(link=link) is defunct", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
@@ -397,12 +381,7 @@ binomial <- function (link = "logit")
 quasibinomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-        linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of quasibinomial(link=link) is defunct", domain = NA)
-    }
-
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
@@ -460,11 +439,7 @@ quasibinomial <- function (link = "logit")
 Gamma <- function (link = "inverse")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of Gamma(link=link) is defunct", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("inverse", "log", "identity")
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
@@ -520,11 +495,7 @@ Gamma <- function (link = "inverse")
 inverse.gaussian <- function(link = "1/mu^2")
 {
     linktemp <- substitute(link)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-            stop("use of inverse.gaussian(link=link) is defunct", domain = NA)
-    }
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("inverse", "log", "identity", "1/mu^2")
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
