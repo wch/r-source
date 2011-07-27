@@ -61,7 +61,7 @@
       \item \code{sunflowerplot()} now has a formula interface.
       (Wish of \PR{14541}.)
 
-      \item \code{iconv} has a new argument \code{toRaw} to handle (as
+      \item \code{iconv()} has a new argument \code{toRaw} to handle (as
       was possible before the \code{CHARSXP} cache was introduced)
       encodings such as \code{UTF-16} with embedded nuls.
 
@@ -145,11 +145,6 @@
       package \pkg{stats} on the search path (it loads the namespace
       instead).
 
-      \item \code{source()} tried hard to retain source formatting, and
-      might do so even if argument \code{keep.source} is false if the
-      \code{"keep.source"} option is true.  Now \code{keep.source =
-	FALSE} temporarily sets \code{options(keep.source = FALSE)}.
-
       \item There now is a genuine \code{"function"} method for
       \code{plot()} rather than the generic dispatching internally to
       \code{graphics::plot.function()}.  It is now exported, so can be
@@ -161,7 +156,7 @@
       makes assumptions known to be invalid in the presence of ties).
 
       \item The behaviour of \code{curve(add = FALSE)} has changed: it
-      now no longer takes the defaults x limits from the previous plot
+      now no longer takes the default x limits from the previous plot
       (if any): rather they default to \code{c(0, 1)} just as the
       \code{"function"} method for \code{plot()}.  To get the previous
       behaviour use \code{curve(add = NA)}, which also takes the default for
@@ -401,13 +396,13 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Package \file{DESCRIPTION} file field \samp{KeepSource}
-      forces the package to be installed/loaded with \code{keep.source =
-	TRUE} (or \code{FALSE}).   This applies at package installation
-      time for packages using lazy-loading.  (Suggestion of Greg Snow.)
+      forces the package to be installed with \code{keep.source =
+	TRUE} (or \code{FALSE}).  (Suggestion of Greg Snow.  Note that
+      as all packages are lazy-loaded, this is now only relevant at
+      installation.)
 
       There are corresponding options \option{--with-keep.source} and
-      \option{--without-keep.source} for \command{R CMD INSTALL} for
-      packages using lazy-loading.
+      \option{--without-keep.source} for \command{R CMD INSTALL}.
 
       \item \command{R CMD INSTALL} has a new option
       \option{--byte-compile} to byte-compile the packages during
@@ -418,11 +413,11 @@
       \item A package \R code but without a \file{NAMESPACE} file will
       have a default one created at \command{R CMD build} or \command{R
       CMD INSTALL} time, so all packages will be installed with
-      namespaces.  A consequence of this is that \code{.First.lib}
-      functions need to be copied to \code{.onLoad} (usually) or
-      \code{.onAttach}.  For the time being, if no \code{.onLoad} nor
-      \code{.onAttach} function is found but \code{.First.lib} is, it
-      will be run as the attach hook.
+      namespaces.  A consequence of this is that \code{.First.lib()}
+      functions need to be copied to \code{.onLoad()} (usually) or
+      \code{.onAttach()}.  For the time being, if no \code{.onLoad()}
+      nor \code{.onAttach()} function is found but \code{.First.lib()}
+      is, it will be run as the attach hook.
       
       \item A warning is given if test-loading a package changes a
       locked binding in a package other than itself.  It is likely that
@@ -446,9 +441,9 @@
       constructed namespaces).
 
       \item The default for the environment variable
-      \env{_R_CHECK_COMPACT_DATA2_} is now true, so if using the newer
+      \env{_R_CHECK_COMPACT_DATA2_} is now true: thus if using the newer
       forms of compression introduced in \R 2.10.0 would be beneficial
-      is checked by default.
+      is now checked (by default).
 
       \item \command{R CMD Rd2dvi} allows the use of LaTeX package
       \samp{inputenx} rather than \samp{inputenc}: the value of the
@@ -503,7 +498,7 @@
       almost never used, and are reported by \code{gc()} when they are
       in use.
       
-      \item Forms like \code{binomial(link=link)} for GLM families
+      \item Forms like \code{binomial(link = "link")} for GLM families
       deprecated since \R 2.4.0 are now defunct.
       
       \item The \code{declarativeOnly} argument to
@@ -515,10 +510,7 @@
   \subsection{INSTALLATION}{
     \itemize{
       \item The base and recommended packages are now byte-compiled
-      (equivalent to \command{make bytecode} in \R 2.13.x).  On a
-      Unix-alike this can be disabled by configuring with
-      \option{--disable-byte-compiled-packages} (although this is intended
-      only for expert use and is not supported).
+      (equivalent to \command{make bytecode} in \R 2.13.x).
       
       \item Configure option \option{--with-system-zlib} now only makes
       use of the basic interface of \code{zlib} and not the
@@ -611,7 +603,7 @@
       
       \item The \code{print()} methods for classes \code{"Date"},
       \code{"POSIXct"} and \code{"POSIXlt"} respect the option
-      \code{"max.print"} and so are much faster to very long datetime
+      \code{"max.print"} and so are much faster for very long datetime
       vectors.  (Suggestion of Yohan Chalabi.)
     }
   }
