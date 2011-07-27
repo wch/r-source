@@ -296,6 +296,9 @@
       
       \item The body of a closure can be one of more types of \R
       objects, including enviroments and external pointers.
+      
+      \item The \code{Rd2HTML()} function now has a \code{stylesheet}
+      argument, allowing pages to be displayed in alternate formats.
     }
   }
 

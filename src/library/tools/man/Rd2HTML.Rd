@@ -18,7 +18,8 @@
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8", 
-        dynamic = FALSE, no_links = FALSE, fragment = FALSE, ...)
+        dynamic = FALSE, no_links = FALSE, fragment = FALSE,
+        stylesheet = "R.css", ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "",
@@ -46,6 +47,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       Used by \command{R CMD \link{Rdconv}}.}
   \item{fragment}{logical:  should fragments of Rd files be accepted?  See the
       notes below.}
+  \item{stylesheet}{character: a URL for a stylesheet to be used in the header
+      of the HTML output page.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to

@@ -1,3 +1,4 @@
+
 #  File src/library/tools/R/Rd2HTML.R
 #  Part of the R package, http://www.R-project.org
 #
@@ -140,7 +141,8 @@ Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
-             dynamic = FALSE, no_links = FALSE, fragment=FALSE, ...)
+             dynamic = FALSE, no_links = FALSE, fragment=FALSE, 
+             stylesheet = "R.css", ...)
 {
     if (missing(no_links) && is.null(Links) && !dynamic) no_links <- TRUE
     version <- ""
@@ -702,7 +704,9 @@ Rd2HTML <-
 	    mime_canonical_encoding(outputEncoding),
 	    '">\n')
 
-	of0('<link rel="stylesheet" type="text/css" href="R.css">\n',
+	of0('<link rel="stylesheet" type="text/css" href="',
+	    stylesheet,
+	    '">\n',
 	    '</head><body>\n\n',
 	    '<table width="100%" summary="page for ', name)
 	if (nchar(package))
