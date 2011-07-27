@@ -23,14 +23,13 @@ code2LazyLoadDB <-
     if(!length(pkgpath))
         stop(gettextf("there is no package called '%s'", package),
              domain = NA)
-    barepackage <- sub("([^-]+)_.*", "\\1", package)
     loadenv <- new.env(hash=TRUE)
-    codeFile <- file.path(pkgpath, "R", barepackage)
-    dbbase <- file.path(pkgpath, "R", barepackage)
+    codeFile <- file.path(pkgpath, "R", package)
+    dbbase <- file.path(pkgpath, "R", package)
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
-            stop("namespace must not be loaded.")
-        ns <- loadNamespace(package, lib.loc, keep.source, partial = TRUE)
+            stop("namespace must not be already loaded")
+        ns <- suppressPackageStartupMessages(loadNamespace(package, lib.loc, keep.source, partial = TRUE))
         makeLazyLoadDB(ns, dbbase, compress = compress)
     }
     else
@@ -254,7 +253,7 @@ makeLazyLoading <-
 {
     if(!is.logical(compress) && ! compress %in% c(2,3))
         stop("invalid value for 'compress': should be FALSE, TRUE, 2 or 3")
-    options(warn=1)
+    options(warn = 1L)
     findpack <- function(package, lib.loc) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))
@@ -263,14 +262,12 @@ makeLazyLoading <-
         pkgpath
     }
 
-    pkgpath <- findpack(package, lib.loc)
-    barepackage <- sub("([^-]+)_.*", "\\1", package)
-
     if (package == "base")
         stop("this cannot be used for package 'base'")
 
     loaderFile <- file.path(R.home("share"), "R", "nspackloader.R")
-    codeFile <- file.path(pkgpath, "R", barepackage)
+    pkgpath <- findpack(package, lib.loc)
+    codeFile <- file.path(pkgpath, "R", package)
 
     if (!file.exists(codeFile)) {
         warning("package contains no R code")
