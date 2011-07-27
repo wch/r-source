@@ -501,6 +501,10 @@
       
       \item Forms like \code{binomial(link=link)} for GLM families
       deprecated since \R 2.4.0 are now defunct.
+      
+      \item The \code{declarativeOnly} argument to
+      \code{loadNamespace()} (not relevant since \R 2.13.0) has been
+      removed.
     }
   }
 

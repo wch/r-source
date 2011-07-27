@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -18,7 +18,7 @@
 attachNamespace(ns, pos = 2, dataPath = NULL, depends = NULL)
 loadNamespace(package, lib.loc = NULL,
               keep.source = getOption("keep.source.pkgs"),
-              partial = FALSE, declarativeOnly = FALSE)
+              partial = FALSE)
 loadedNamespaces()
 unloadNamespace(ns)
 }
@@ -39,7 +39,6 @@ unloadNamespace(ns)
     For more details see this argument to \code{\link{library}}.
   }
   \item{partial}{logical; if true, stop just after loading code.}
-  \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
 }
 \details{
   The functions \code{loadNamespace} and \code{attachNamespace} are

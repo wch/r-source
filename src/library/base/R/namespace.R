@@ -163,7 +163,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 
 loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
-                           partial = FALSE, declarativeOnly = FALSE)
+                           partial = FALSE)
 {
     package <- as.character(package)[[1L]]
 
@@ -389,11 +389,6 @@ loadNamespace <- function (package, lib.loc = NULL,
             namespaceImportMethods(ns, loadNamespace(imp[[1L]],
                                                      c(lib.loc, .libPaths())),
                                    imp[[2L]])
-
-
-
-        ## dynamic variable to allow/disable .Import and friends
-        "__NamespaceDeclarativeOnly__" <- declarativeOnly
 
         ## store info for loading namespace for loadingNamespaceInfo to read
         "__LoadingNamespaceInfo__" <- list(libname = package.lib,

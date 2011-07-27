@@ -30,7 +30,7 @@ code2LazyLoadDB <-
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
             stop("namespace must not be loaded.")
-        ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
+        ns <- loadNamespace(package, lib.loc, keep.source, partial = TRUE)
         makeLazyLoadDB(ns, dbbase, compress = compress)
     }
     else
