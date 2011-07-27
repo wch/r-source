@@ -2480,10 +2480,10 @@ strategy for the namespace mechanism.  Sealing also allows code
 analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
 
-The namespace changes the search strategy for variables used by
+The namespace controls the search strategy for variables used by
 functions in the package.  If not found locally, @R{} searches the
-package namespace first, then the imports, then the base namespace
-and then the normal search path.
+package namespace first, then the imports, then the base namespace and
+then the normal search path.
 
 If a @file{NAMESPACE} file is not present, then one is generated
 automatically when the package is built or installed.  All 
@@ -2530,9 +2530,7 @@ exportPattern("^[^\\.]")
 @end example
 
 @noindent
-exports all variables that do not start with a period, and 
-this is the default in packages with no @file{NAMESPACE} file.
-However, such
+exports all variables that do not start with a period.  However, such
 broad patterns are not recommended for production code: it is better to
 list all exports or use narrowly-defined groups.  (As from @R{} 2.13.0
 this pattern applies to S4 classes, but did not in earlier versions of
@@ -2945,10 +2943,10 @@ export(AIC, BIC, nobs)
 @noindent
 All S4 classes to be used outside the package need to be listed in an
 @code{exportClasses} directive. Alternatively, they can be specified
-using @code{exportClassPattern}@footnote{As from @R{} 2.13.0 this
+using @code{exportClassPattern}.@footnote{As from @R{} 2.13.0 this
 defaults to the same pattern as @code{exportPattern}: use something like
 @code{exportClassPattern("^$")} to override this.} in the same style as
-for @code{exportPattern}. Generics for which S4 methods are defined need
+for @code{exportPattern} Generics for which S4 methods are defined need
 to be declared in an @code{exportMethods} directive, and where the
 generics are formed by taking over existing functions, those functions
 need to be imported (explicitly unless they are defined in the
