@@ -122,8 +122,9 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
             }
         } else if (!exists(".onLoad", envir = ns, inherits = FALSE) &&
                    exists(".First.lib", envir = env, inherits = FALSE)) {
-            warning(gettextf("running .First.lib() for package %s as .onLoad/.onAssign were not found", sQuote(nsname)),
-                    call. = FALSE, immediate. = TRUE, domain = NA)
+            if (nsname == Sys.getenv("R_INSTALL_PKG"))
+                warning(gettextf("running .First.lib() for package %s as .onLoad/.onAssign were not found", sQuote(nsname)),
+                        call. = FALSE, immediate. = TRUE, domain = NA)
             fn <- get(".First.lib", envir = env, inherits = FALSE)
             fn(...)                 # dirname(nspath), nsname
         }

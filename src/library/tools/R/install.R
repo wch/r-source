@@ -409,6 +409,8 @@
 
     do_install_source <- function(pkg_name, instdir, pkg_dir, desc)
     {
+        Sys.setenv("R_INSTALL_PKG" = pkg_name)
+        on.exit(Sys.unsetenv("R_INSTALL_PKG"))
         shlib_install <- function(instdir, arch)
         {
             ## install.lib.R allows customization of the libs installation process

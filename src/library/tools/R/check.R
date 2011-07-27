@@ -2206,12 +2206,12 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
                 ## Skip warnings about .First.lib
                 ## Maybe should retain any that refers to this package?
-                lines <- grep("Warning: running .First.lib() for package",
-                              lines, invert = TRUE, value = TRUE, fixed = TRUE)
+##                lines <- grep("Warning: running .First.lib() for package",
+##                              lines, invert = TRUE, value = TRUE, fixed = TRUE)
 
-                if (!pkgname %in% c("memisc", "zoo"))
-                    lines <- grep("Warning: locked binding of .* will not be changed",
-                                  lines, invert = TRUE, value = TRUE)
+                 if (!pkgname %in% c("memisc"))
+                     lines <- grep("Warning: locked binding of .* will not be changed",
+                                   lines, invert = TRUE, value = TRUE)
 
                 if (length(lines)) {
                     warnLog("Found the following significant warnings:")
