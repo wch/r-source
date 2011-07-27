@@ -561,6 +561,8 @@ static void loadCompilerNamespace(void)
     UNPROTECT(3);
 }
 
+static int R_disable_bytecode = 0;
+
 void attribute_hidden R_init_jit_enabled(void)
 {
     if (R_jit_enabled <= 0) {
@@ -581,6 +583,17 @@ void attribute_hidden R_init_jit_enabled(void)
 		R_compile_pkgs = TRUE;
 	    else
 		R_compile_pkgs = FALSE;
+	}
+    }
+
+    if (R_disable_bytecode <= 0) {
+	char *disable = getenv("R_DISABLE_BYTECODE");
+	if (disable != NULL) {
+	    int val = atoi(disable);
+	    if (val > 0)
+		R_disable_bytecode = TRUE;
+	    else
+		R_disable_bytecode = FALSE;
 	}
     }
 }
@@ -3979,6 +3992,28 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   codebase = pc = BCCODE(body);
   constants = BCCONSTS(body);
 
+  /* allow bytecode to be disabled for testing */
+  if (R_disable_bytecode)
+      return eval(bytecodeExpr(body), rho);
+
+  /* check version */
+  {
+      int version = GETOP();
+      if (version < R_bcMinVersion || version > R_bcVersion) {
+	  if (version >= 2) {
+	      static Rboolean warned = FALSE;
+	      if (! warned) {
+		  warned = TRUE;
+		  warning(_("bytecode version mismatch; using eval"));
+	      }
+	      return eval(bytecodeExpr(body), rho);
+	  }
+	  else if (version < R_bcMinVersion)
+	      error(_("bytecode version is too old"));
+	  else error(_("bytecode version is too new"));
+      }
+  }
+
   R_binding_cache_t vcache = NULL;
   Rboolean smallcache = TRUE;
 #ifdef USE_BINDING_CACHE
@@ -4007,24 +4042,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 # endif
   }
 #endif
-
-  /* check version */
-  {
-      int version = GETOP();
-      if (version < R_bcMinVersion || version > R_bcVersion) {
-	  if (version >= 2) {
-	      static Rboolean warned = FALSE;
-	      if (! warned) {
-		  warned = TRUE;
-		  warning(_("bytecode version mismatch; using eval"));
-	      }
-	      return eval(bytecodeExpr(body), rho);
-	  }
-	  else if (version < R_bcMinVersion)
-	      error(_("bytecode version is too old"));
-	  else error(_("bytecode version is too new"));
-      }
-  }
 
   BEGIN_MACHINE {
     OP(BCMISMATCH, 0): error(_("byte code version mismatch"));
