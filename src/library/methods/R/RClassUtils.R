@@ -1917,7 +1917,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     ## for the superclasses
     dupsExist <- .duplicateClassesExist()
     if(dupsExist) {
-        dups <- match(supers, findDuplicateClasses(), 0) > 0
+        dups <- match(supers, multipleClasses(), 0) > 0
         if(any(dups)) {
             if(warnLevel)
                 warning(gettextf("Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from package \"%s\"", def@className, def@package, prev@package),

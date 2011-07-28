@@ -37,8 +37,12 @@
     ## prior to 2.11.0, the default slot in generic function objects was a MethodsList or NULL
     setIs("MethodsList", "optionalMethod", where = envir) #only until MethodsList class is defunct
 
-    ## signatures -- used mainly as named character vectors
+    ## signatures -- multiple class names w. package slot in ||
     setClass("signature", representation("character", names = "character", package = "character"), where = envir); clList <- c(clList, "signature")
+
+    ## className -- a single class name with package
+    setClass("className", contains = "character",
+             representation(package = "character"))
 
     ## formal method definition for all but primitives
     setClass("MethodDefinition", contains = "function",

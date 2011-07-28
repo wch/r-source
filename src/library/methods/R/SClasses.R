@@ -812,13 +812,54 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
     classDef
   }
 
-findDuplicateClasses <- function(details = FALSE) {
+multipleClasses <- function(details = FALSE) {
     ctable <- .classTable
     cnames <- objects(ctable, all=TRUE)
     dups <- sapply(cnames, function(x)
            is.list(get(x, envir = ctable)))
-    if(details)
-        lapply(cnames[dups], function(x) get(x, envir = ctable))
+    if(details) {
+        value <- lapply(cnames[dups], function(x) get(x, envir = ctable))
+        names(value) <- cnames[dups]
+        value
+    }
     else
         cnames[dups]
+}
+
+className <- function(class, package) {
+    if(is(class, "character")) {
+        className <- as.character(class)
+        if(missing(package))
+            package <- packageSlot(class)
+        if(is.null(package)) {
+            if(exists(className, envir = .classTable, inherits = FALSE))
+                classDef <- get(className, envir = .classTable)
+            else {
+                classDef <- findClass(className, topenv(parent.frame()))
+                if(length(classDef) == 1)
+                    classDef <- classDef[[1]]
+            }
+            ## at this point, classDef is the definition if
+            ## unique, otherwise a list of 0 or >1 definitions
+            if(is(classDef, "classRepresentation"))
+                package <- classDef@package
+            else if(length(classDef) > 1) {
+                pkgs <- sapply(classDef, function(cl)cl@package)
+                warning(gettextf("Multiple class definitions for %s from packages: %s; picking the first",
+                                 dQuote(className), paste(dQuote(pkgs), collapse = ", ")),
+                        domain = NA)
+                package <- pkgs[[1]]
+            }
+            else
+                stop(gettextf("No package name supplied and no class definition found for %s",
+                              dQuote(className)),
+                     domain = NA)
+        }
+    }
+    else if(is(class, classDef)) {
+        className <- class@className
+        if(missing(package))
+            package <- class@package
+    }
+    new("className", .Data = className, package = package)
 }

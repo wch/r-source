@@ -575,8 +575,8 @@
       \item In principle, S4 classes from different packages could
       have the same name.  This has not previously worked. Changes
       have now been installed that should allow such classes and
-      permit methods to use them.  There are many possible cases and it's
-      unlikely they all have been covered yet.
+      permit methods to use them.  New functions \code{className()}
+      and \code{multipleClasses()} are related tools for programming.
 
       \item Work around an issue in Linux (a system \code{select} call
       resetting \code{tv}) which prevented internet operations from
