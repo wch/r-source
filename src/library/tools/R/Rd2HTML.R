@@ -89,6 +89,7 @@ htmlify <- function(x) {
     x <- fsub("<", "&lt;", x)
     x <- fsub(">", "&gt;", x)
     x <- fsub('"\\{"', '"{"', x)
+    x <- fsub('"', '&quot;', x)
     x
 }
 
@@ -782,7 +783,7 @@ Rd2HTML <-
 	    stylesheet,
 	    '">\n',
 	    '</head><body>\n\n',
-	    '<table width="100%" summary="page for ', name)
+	    '<table width="100%" summary="page for ', htmlify(name))
 	if (nchar(package))
 	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
 	else
