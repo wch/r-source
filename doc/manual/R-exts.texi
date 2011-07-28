@@ -7332,8 +7332,8 @@ some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
 the @command{ld.so} cache (see @command{man ldconfig}).  On platforms
 that support it, the path to the dynamic library can be hardcoded at
 install time (which assumes that the location of package @pkg{packB}
-will not be changed) nor the package updated to a changed API, as
-@pkg{Rcpp} has done all too often).  On systems with the @acronym{GNU}
+will not be changed) nor the package updated to a changed API).  On 
+systems with the @acronym{GNU}
 linker (e.g.@: Linux) and some others (e.g.@: Mac OS X) this can be done
 by
 
