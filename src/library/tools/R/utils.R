@@ -972,31 +972,6 @@ function(fname, envir, mustMatch = TRUE)
     if(mustMatch) res == fname else nzchar(res)
 }
 
-### ** .list_dirs
-
-## Should have base::list.dirs eventually ...
-
-.list_dirs <-
-function(path = ".", full.names = FALSE, recursive = FALSE)
-{
-    ## Always find all directories for now.
-
-    ## Note that list.files(recursive = TRUE) excludes directories.
-    files <- list.files(path, all.files = TRUE)
-    dirs <- files[file_test("-d", file.path(path, files))]
-    if(recursive) # this misses empty dirs
-        dirs <- unique(c(dirs,
-                         dirname(list.files(path, all.files = TRUE,
-                                            recursive = TRUE))))
-    ## <FIXME>
-    ## What should we do about "." and ".."?
-    dirs <- dirs %w/o% c(".", "..")
-    ## </FIXME>
-    if(full.names)
-        dirs <- file.path(path, dirs)
-    dirs
-}
-
 ### ** .load_package_quietly
 
 .load_package_quietly <-
