@@ -1351,7 +1351,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         ## and if it has a namespace, that we can load/unload just
         ## the namespace
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
-            checkingLog(Log, "whether the name space can be loaded with stated dependencies")
+            checkingLog(Log, "whether the namespace can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
             out <- R_runR(Rcmd, opts, c(env, env0), arch = arch)
             if (any(grepl("^Error", out))) {
@@ -1367,7 +1367,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             } else resultLog(Log, "OK")
 
             checkingLog(Log,
-                        "whether the name space can be unloaded cleanly")
+                        "whether the namespace can be unloaded cleanly")
             Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
@@ -2305,7 +2305,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
         if (!extra_arch &&
             file.exists(file.path(pkgdir, "NAMESPACE"))) {
-            checkingLog(Log, "package name space information")
+            checkingLog(Log, "package namespace information")
             msg_NAMESPACE <-
                 c("See section 'Package name spaces'",
                   " of the 'Writing R Extensions' manual.\n")

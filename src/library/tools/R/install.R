@@ -955,8 +955,10 @@
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
-	    res <- try({.getRequiredPackages(quietly = TRUE)
-			makeLazyLoading(pkg_name, lib)})
+	    res <- try({
+                suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))
+                makeLazyLoading(pkg_name, lib)
+            })
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("lazy loading failed", pkg_name)
 	}
