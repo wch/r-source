@@ -29,7 +29,7 @@ mem.limits(nsize = NA, vsize = NA)
 \arguments{
   \item{vl, vu, vsize}{Heap memory in bytes.}
   \item{nl, nu, nsize}{Number of cons cells.}
-  \item{N}{Number of nested \code{PROTECT} calls.}.
+  \item{N}{Number of nested \code{PROTECT} calls.}
 }
 \details{
   \R has a variable-sized workspace.  These limits are mainly
