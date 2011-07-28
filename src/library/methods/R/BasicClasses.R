@@ -14,6 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## a few class name definitions needed elsewhere
+.anyClassName <- structure("ANY", package = "methods")
+.signatureClassName <- structure("signature", package = "methods")
+
+
+
 .InitBasicClasses <- function(envir)
 {
     ## setClass won't allow redefining basic classes,

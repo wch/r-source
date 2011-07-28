@@ -1368,13 +1368,12 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 }
 
 ## Mark the method as derived from a non-generic.
-## FIXME:  This can't work for primitives, which cannot have slots
-## However, primitives are not to be restored locally in any case.
 .derivedDefaultMethod <- function(fdef)
 {
     if(is.function(fdef) && !is.primitive(fdef)) {
         value <- new("derivedDefaultMethod")
         value@.Data <- fdef
+        value@target <- value@defined <- .newSignature(.anyClassName, formalArgs(fdef))
         value
     }
     else

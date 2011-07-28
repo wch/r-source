@@ -80,7 +80,7 @@
 ## some initializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
     assign("asMethodDefinition",
-           function(def, signature = list(), sealed = FALSE, fdef = def) {
+           function(def, signature = list(.anyClassName), sealed = FALSE, fdef = def) {
         ## primitives can't take slots, but they are only legal as default methods
         ## and the code will just have to accomodate them in that role, w/o the
         ## MethodDefinition information.
@@ -91,17 +91,20 @@
                stop(gettextf("invalid object for formal method definition: type \"%s\"",
                              typeof(def)), domain = NA)
                )
-        if(is(def, "MethodDefinition"))
+        if(is(def, "MethodDefinition")) {
             value <- def
+            if(missing(signature))
+                signature <- value@defined
+        }
         else
             value <- new("MethodDefinition", def)
 
         if(sealed)
             value <- new("SealedMethodDefinition", value)
-        ## this is really new("signature",  def, signature)
-        ## but bootstrapping problems force us to make
-        ## the initialize method explicit here
-        classes <- .MakeSignature(new("signature"),  def, signature, fdef)
+        if(is(signature, "signature"))
+            classes <- signature
+        else
+            classes <- .MakeSignature(new("signature"),  def, signature, fdef)
         value@target <- classes
         value@defined <- classes
         value

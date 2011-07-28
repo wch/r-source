@@ -380,7 +380,7 @@
 .pkgMethodLabel <- function(method) {
     sig <- method@target
     pkgs <- packageSlot(sig)
-    if( (length(pkgs) == 0) || any(!nzchar(pkgs)))
+    if( (length(pkgs) < length(as.character(sig))) || any(!nzchar(pkgs)))
         stop("package slot missing from signature, cannot use with duplicate class names (the package may be out of date): class(es) ", paste(sig, collapse = ", "))
     paste(pkgs, collapse = "#")
 }
@@ -663,19 +663,19 @@
 
 .newSignature <- function(classes, names) {
   ## a simple version to deal with boostrapping stage, used in new() etc
-  i <- seq_len(min(length(classes), length(names)))
+    n <- min(length(classes), length(names))
+  i <- seq_len(n)
+    ## a corresponding set of package names
+    ## <FIXME> There should be a "<unknown>" package name instead of "methods"
+    ## but this requires a way to deal with that generally </FIXME>
+    pkgs <- c(packageSlot(classes), rep("methods", n))[i]
 
   ## Simplified version ...
   structure(as.character(classes)[i],
-            class = getClass("signature")@className,
-            names = as.character(names)[i])
-  ## ... of the following (which uses `@<-` in non-standard way):
-  ## value <- as.character(classes)[i]
-  ## class(value) <- getClass("signature")@className
-  ## attr(value,"names") <- as.character(names)[i]
-  ## value@names <- as.character(names)[i]
-  ## value
-}
+            class = .signatureClassName,
+            names = as.character(names)[i],
+            package = pkgs )
+ }
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character()) {
   fdef <- getGeneric(f)
