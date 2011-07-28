@@ -504,6 +504,10 @@
       \item The \code{declarativeOnly} argument to
       \code{loadNamespace()} (not relevant since \R 2.13.0) has been
       removed.
+      
+      \item Use of \code{library.dynam()} without specifying all the
+      first three arguments is deprecated.  (It is often called from a
+      namespace, and the defaults are only appropriate to a package.)
     }
   }
 

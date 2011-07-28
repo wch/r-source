@@ -504,6 +504,8 @@ function(chname, package = NULL, lib.loc = NULL,
     if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0L)
         return(dll_list)
 
+    if(missing(package) || missing(lib.loc))
+        warning("use of library.dynam() without specifying 'package' and 'lib.loc' is deprecated", immediate. = TRUE, domain = NA)
     ## Be defensive about possible system-specific extension for shared
     ## objects, although the docs clearly say they should not be
     ## added.

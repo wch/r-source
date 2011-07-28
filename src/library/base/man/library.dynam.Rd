@@ -74,6 +74,9 @@ library.dynam.unload(chname, libpath,
   
   \code{lib.loc} should contain absolute paths: versions of \R prior to
   2.12.0 may get confused by relative paths.
+  
+  Using the defaults for \code{package} or \code{lib.loc} is deprecated,
+  not least because they will not give work as intended from \code{.onLoad}.
 }
 \value{
    If \code{chname} is not specified, \code{library.dynam} returns an
