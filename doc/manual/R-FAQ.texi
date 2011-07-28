@@ -162,12 +162,12 @@ The latest version of this document is always available from
 From there, you can obtain versions converted to
 @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
 @acronym{ASCII} text},
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
+@c @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
 @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
 info}, @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
 @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript} as
-well as the @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
+@c @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
+as well as the @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
 @url{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
@@ -277,10 +277,11 @@ by sending code and bug reports.
 
 Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code archive.  The group currently consists of Doug
-Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
-Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
-Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
-Duncan Temple Lang, Luke Tierney, and Simon Urbanek.
+Bates, John Chambers, Peter Dalgaard, Seth Falcon, Robert Gentleman,
+Kurt Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Uwe Ligges,
+Thomas Lumley, Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn
+Plummer, Brian Ripley, Deepayan Sarkar, Duncan Temple Lang, Luke
+Tierney, and Simon Urbanek.
 
 R has a home page at @url{http://www.R-project.org/}.  It is
 @url{http://www.gnu.org/philosophy/free-sw.html, free software}
