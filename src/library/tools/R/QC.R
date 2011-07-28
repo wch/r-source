@@ -4788,33 +4788,74 @@ function(dir)
     if(inherits(db, "error")) return(out)
     db <- do.call(rbind, db)
 
+    ## Assume the CRAN URL comes first.
+    ## Note that .get_standard_repository_URLs() currently [2011-07-26]
+    ## does not provide repository names.
+    CRAN <- urls[1L]
+
+    ## If CRAN is available locally, also use information about packages
+    ## in the archive.
+    ## (There should really be a ls-R file in src/contrib eventually.)
+    packages_in_CRAN_archive <-
+        if(substring(CRAN, 1L, 7L) == "file://") {
+            dir <- file.path(substring(CRAN, 8L),
+                             "src", "contrib", "Archive")
+            ## How can we actually determine all packages which have
+            ## archived versions?
+            ## The cleanest would be
+            ##    unique(basename(dirname(Sys.glob(file.path(dir, "*/*.tar.gz")))))
+            ## but that takes rather long ...
+            ## Using
+            files <- list.files(dir, full.names = TRUE)
+            basename(files[file_test("-d", files)])
+            ## is much faster, but does not make sure that archive
+            ## subdirectories are actually non-empty.
+            ## (Seems that there is no way to list *only* the
+            ## subdirectories of a directory [non-recursively].)
+        } else character()
+
     ## Package names must be unique within standard repositories when
     ## ignoring case.
     package <- meta["Package"]
     packages <- db[, "Package"]
-    existing <-
-        packages[(tolower(packages) == tolower(package)) &
-                 (packages != package)]
-    if(length(existing))
-        out$bad_package <- list(package, existing)
-    ## Could there be more than one?
+    clashes <- character()
+    pos <- which((tolower(packages) == tolower(package)) &
+                 (packages != package))
+    if(length(pos))
+        clashes <-
+            sprintf("%s [%s]", packages[pos], db[pos, "Repository"])
+    ## If possible, also catch clashes with archived CRAN packages
+    ## (which might get un-archived eventually).
+    if(length(packages_in_CRAN_archive)) {
+        pos <- which((tolower(packages_in_CRAN_archive) ==
+                      tolower(package)) &
+                     (packages_in_CRAN_archive != package))
+        if(length(pos)) {
+            clashes <-
+                c(clashes,
+                  sprintf("%s [CRAN archive]",
+                          packages_in_CRAN_archive[pos]))
+        }
+    }
+    if(length(clashes))
+        out$bad_package <- list(package, clashes)
 
     ## Is this duplicated from another repository?
-    ## This assumes the CRAN URL comes first.
     repositories <- db[(packages == package) &
-                       (db[, "Repository"] != urls[1L]),
+                       (db[, "Repository"] != CRAN),
                        "Repository"]
     if(length(repositories))
         out$repositories <- repositories
     
     ## Is this an update for package already on CRAN?
     db <- db[(packages == package) &
-             (db[, "Repository"] == urls[1L]) &
+             (db[, "Repository"] == CRAN) &
              is.na(db[, "Path"]), , drop = FALSE]
-    ## This assumes the CRAN URL comes first, and drops packages in
-    ## version-specific subdirectories.  It also does not know about
-    ## archived versions.
+    ## This drops packages in version-specific subdirectories.
+    ## It also does not know about archived versions.
     if(!NROW(db)) {
+        if(package %in% packages_in_CRAN_archive)
+            out$CRAN_archive <- TRUE
         if(!foss)
             out$bad_license <- meta["License"]
         return(out)
@@ -4859,6 +4900,8 @@ function(x, ...)
                   y[[1L]], y[[2L]]),
       if(length(y <- x$repositories))
           sprintf("Package duplicated from %s", y),
+      if(length(y <- x$CRAN_archive))
+          sprintf("Package was archived on CRAN"),
       if(length(y <- x$bad_version))
           sprintf("Insufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
