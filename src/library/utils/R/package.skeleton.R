@@ -16,7 +16,7 @@
 
 package.skeleton <-
     function(name = "anRpackage", list = character(), environment = .GlobalEnv,
-	     path = ".", force = FALSE, namespace = FALSE,
+	     path = ".", force = FALSE, namespace = TRUE,
              code_files = character())
 {
     safe.dir.create <- function(path)
@@ -26,8 +26,6 @@ package.skeleton <-
 	    stop(gettextf("cannot create directory '%s'", path), domain = NA)
     }
 
-    if(!is.logical(namespace) || length(namespace) != 1L)
-        stop("'namespace' must be a single logical")
     if(!is.character(code_files))
         stop("'code_files' must be a character vector")
     use_code_files <- length(code_files) > 0L
@@ -109,27 +107,24 @@ package.skeleton <-
     ## of names beginning with alpha.  All S4 methods and classes are exported.
     ## S3 methods will be exported if the function's name would be exported.
     ## </NOTE>
-    if(namespace) {
-        message("Creating NAMESPACE ...")
-        out <- file(file.path(dir, "NAMESPACE"), "wt")
-        writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
-        if(length(methodsList)) {
-            cat("exportMethods(\n    ", file = out)
-            cat(paste('"', methodsList, '"', sep="", collapse = ",\n    "), "\n)\n", file = out)
-        }
-        if(length(classesList)) {
-            cat("exportClasses(\n    ", file = out)
-            cat(paste('"', classesList, '"', sep="", collapse = ",\n     "), "\n)\n", file = out)
-        }
-        close(out)
+    message("Creating NAMESPACE ...")
+    out <- file(file.path(dir, "NAMESPACE"), "wt")
+    writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
+    if(length(methodsList)) {
+	cat("exportMethods(\n    ", file = out)
+	cat(paste('"', methodsList, '"', sep="", collapse = ",\n    "), "\n)\n", file = out)
     }
+    if(length(classesList)) {
+	cat("exportClasses(\n    ", file = out)
+	cat(paste('"', classesList, '"', sep="", collapse = ",\n     "), "\n)\n", file = out)
+    }
+    close(out)
 
     ## Read-and-delete-me
     message("Creating Read-and-delete-me ...")
     out <- file(file.path(dir, "Read-and-delete-me"), "wt")
     msg <-
         c("* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.",
-          if(namespace)
           "* Edit the exports in 'NAMESPACE', and add necessary imports.",
           "* Put any C/C++/Fortran code in 'src'.",
           "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'.",
@@ -188,27 +183,6 @@ package.skeleton <-
 
     ## Make help file skeletons in 'man'
     message("Making help files ...")
-    if(!namespace && length(internalObjInds)) {
-        notNeeded <- grep(methods:::.methodsPackageMetaNamePattern, internalObjs)
-        notNeeded <- c(notNeeded, match(".packageName", internalObjs, 0L))
-        if(length(notNeeded) < length(internalObjs)) {
-            internalObjs <- internalObjs[-notNeeded]
-            Rdfile <- file(file.path(docs_dir,
-                                     sprintf("%s-internal.Rd", name)),
-                           "wt")
-            cat("\\name{", name, "-internal}\n",
-                "\\title{Internal ", name, " objects}\n",
-                file = Rdfile, sep = "")
-            for(item in internalObjs) {
-                cat("\\alias{", item, "}\n", file = Rdfile, sep = "")
-            }
-            cat("\\description{Internal ", name, " objects.}\n",
-                "\\details{These are not to be called by the user.}\n",
-                "\\keyword{internal}",
-                file = Rdfile, sep = "")
-            close(Rdfile)
-        }
-    }
     ## Suppress partially inappropriate messages from prompt().
     yy <- try(suppressMessages({
 	promptPackage(name,
