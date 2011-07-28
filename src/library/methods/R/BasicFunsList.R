@@ -99,7 +99,7 @@ list(
 
 ## utilities to get and set the primitive generics.
 ## Version below uses the environment, not the list
-## in order to work with namespace for methods pacakge
+## in order to work with namespace for methods package
 # genericForPrimitive <- function(f, where = topenv(parent.frame())) {
 #     what <- methodsPackageMetaName("G", f)
 #     if(exists(what, where))

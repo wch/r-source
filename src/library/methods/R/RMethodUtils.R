@@ -1317,7 +1317,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 ## to .methodsNamespace.  But that is currently initialized to .GlobalEnv.
 ##
 ## The logic will fail if a function in a package with a namespace calls a (non-methods)
-## function in a pacakge with no namespace, and that function then calls a methods package
+## function in a package with no namespace, and that function then calls a methods package
 ## function.  The right answer then is .GlobalEnv, but we will instead get the package
 ## namespace.
 .externalCallerEnv <- function(n = 2, nmax = sys.nframe() - n + 1)

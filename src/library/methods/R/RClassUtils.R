@@ -1920,7 +1920,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         dups <- match(supers, findDuplicateClasses(), 0) > 0
         if(any(dups)) {
             if(warnLevel)
-                warning(gettextf("Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from pacakge \"%s\"", def@className, def@package, prev@package),
+                warning(gettextf("Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from package \"%s\"", def@className, def@package, prev@package),
                     domain = NA)
             return(FALSE)
         }
