@@ -585,6 +585,29 @@ loadNamespace <- function (package, lib.loc = NULL,
     }
 }
 
+## A version which returns TRUE/FALSE
+requireNamespace <- function (package, ..., quietly = FALSE)
+{
+    package <- as.character(package)[[1L]] # like loadNamespace
+    ns <- .Internal(getRegisteredNamespace(as.name(package)))
+    res <- TRUE
+    if (is.null(ns)) {
+        packageStartupMessage(gettextf("Loading required namespace: %s",
+                                       package), domain = NA)
+        value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
+        if (inherits(value, "error")) {
+            if (!quietly) {
+                msg <- conditionMessage(value)
+                cat("Failed with error:  ",
+                    sQuote(msg), "\n", file = stderr(), sep = "")
+                .Internal(printDeferredWarnings())
+            }
+            res <- FALSE
+        }
+    }
+    invisible(res)
+}
+
 loadingNamespaceInfo <- function() {
     dynGet <- function(name, notFound = stop(name, " not found")) {
         n <- sys.nframe()
