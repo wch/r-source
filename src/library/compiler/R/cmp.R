@@ -2580,6 +2580,9 @@ cmpfun <- function(f, options = NULL) {
     else stop("cannot compile a non-function")
 }
 
+tryCmpfun <- function(f)
+    tryCatch(cmpfun(f), error = function(e) f)
+
 cmpframe <- function(inpos, file) {
     expr.needed <- 1000
     expr.old <- options()$expressions

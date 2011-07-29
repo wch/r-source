@@ -4507,6 +4507,14 @@ cmpfun <- function(f, options = NULL) {
 }
 @ %def cmpfun
 
+For use in compiling packages and in JIT compilation it is useful to
+have a variant that returns the uncompiled function if there is an
+error during compilation.
+<<[[tryCmpfun]] function>>=
+tryCmpfun <- function(f)
+    tryCatch(cmpfun(f), error = function(e) f)
+@ %def tryCmpfun
+
 
 \subsection{Compiling and loading files}
 A file can be compiled with [[cmpfile]] and loaded with [[loadcmp]].
@@ -5809,6 +5817,8 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[compile]] function>>
 
 <<[[cmpfun]] function>>
+
+<<[[tryCmpfun]] function>>
 
 <<[[cmpframe]] function>>
 

@@ -603,9 +603,9 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
     SEXP packsym, funsym, call, fcall, val;
 
     packsym = install("compiler");
-    funsym = install("cmpfun");
+    funsym = install("tryCmpfun");
 
-    PROTECT(fcall = lang3(R_DoubleColonSymbol, packsym, funsym));
+    PROTECT(fcall = lang3(R_TripleColonSymbol, packsym, funsym));
     PROTECT(call = lang2(fcall, fun));
     val = eval(call, R_GlobalEnv);
     UNPROTECT(2);
