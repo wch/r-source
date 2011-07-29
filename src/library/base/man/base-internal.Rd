@@ -32,6 +32,7 @@
 % These were introduced in R 1.7.0, post version 2
 \alias{.readRDS}
 \alias{.saveRDS}
+\alias{.Firstlib_as_onLoad}
 
 
 \title{Internal Functions in Package \pkg{base}}
