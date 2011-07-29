@@ -150,7 +150,8 @@
                         package = c(pkgw, rep("methods", nadd)))
                 objw@defined <- objw@target <- sigw
                 remove(list = what, envir = obj)
-                assign(.pkgMethodLabel(objw), objw, envir = obj)
+                var <- .pkgMethodLabel(objw)
+                if(nzchar(var)) assign(var, objw, envir = obj)
             }
         }
     }
@@ -177,8 +178,10 @@
             for(whatObj in objects(obj, all.names = TRUE))
                 assign(whatObj, get(whatObj, envir = obj),
                        envir = current)
-        else if(is(obj, "MethdodDefinition"))
-            assign(.pkgMethodLabel(obj), obj, envir = current)
+        else if(is(obj, "MethdodDefinition")) {
+            var <- .pkgMethodLabel(obj)
+            if(nzchar(var)) assign(var, obj, envir = current)
+        }
         current
     }
     else if(is(current, "MethodDefinition")) {
@@ -319,7 +322,9 @@
                     if(length(pkg) == 0)
                         current <- .fixPackageSlot(current, current@target)
                     env <- new.env()
-                    assign(.pkgMethodLabel(current), current, envir = env)
+                    ## zero-length seem 2011-07-29
+                    var <- .pkgMethodLabel(current)
+                    if(nzchar(var)) assign(var, current, envir = env)
                 }
                 else if(is.environment(current))
                     env <- current
