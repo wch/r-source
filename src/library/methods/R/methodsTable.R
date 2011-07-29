@@ -193,8 +193,10 @@
                 return(obj)
             else {
                 merge <- new.env()
-                assign(.pkgMethodLabel(obj), obj, envir = merge)
-                assign(.pkgMethodLabel(current), current, envir = merge)
+                var <- .pkgMethodLabel(obj)
+                if(nzchar(var)) assign(var, obj, envir = merge)
+                var <- .pkgMethodLabel(current)
+                if(nzchar(var)) assign(var, current, envir = merge)
                 return(merge)
             }
         }
@@ -322,7 +324,7 @@
                     if(length(pkg) == 0)
                         current <- .fixPackageSlot(current, current@target)
                     env <- new.env()
-                    ## zero-length seem 2011-07-29
+                    ## zero-length seen 2011-07-29
                     var <- .pkgMethodLabel(current)
                     if(nzchar(var)) assign(var, current, envir = env)
                 }
