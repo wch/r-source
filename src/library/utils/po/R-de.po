@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:48\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-24 11:19+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -85,9 +85,6 @@ msgstr "Pfad zu '%s' enthält Leerstellen."
 
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
-
-msgid "\\SweaveInput is not compatible with concordances."
-msgstr ""
 
 #, fuzzy
 msgid "invalid value for %s : %s"
@@ -611,6 +608,12 @@ msgstr "S3 Methode '%s' nicht gefunden"
 msgid "environment specified is not a package"
 msgstr "angegebenen Umgebung ist kein Paket"
 
+msgid "changing locked binding for %s in %s whlist loading %s"
+msgstr ""
+
+msgid "changing locked binding for %s in %s"
+msgstr ""
+
 msgid "'fixInNamespace' requires a name"
 msgstr "'fixInNamespace' benötigt einen Namen"
 
@@ -619,9 +622,6 @@ msgstr "nur numerische Indizes können benutzt werden"
 
 msgid "cannot create directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
-
-msgid "'namespace' must be a single logical"
-msgstr "'namespace' muss einzelner logischer Wert sein"
 
 msgid "'code_files' must be a character vector"
 msgstr "'code_files' muss ein Charaktervektor sein"
@@ -1268,6 +1268,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "'namespace' must be a single logical"
+#~ msgstr "'namespace' muss einzelner logischer Wert sein"
 
 #~ msgid "Package '"
 #~ msgstr "Paket '"

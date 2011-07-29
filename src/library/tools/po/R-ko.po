@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -798,7 +798,7 @@ msgid "there is no package called '%s'"
 msgstr "'%s'라고 불리는 패키지는 없습니다"
 
 #, fuzzy
-msgid "namespace must not be loaded."
+msgid "namespace must not be already loaded"
 msgstr "name space를 적재해서는 안됩니다"
 
 msgid "all packages should have a NAMESPACE"

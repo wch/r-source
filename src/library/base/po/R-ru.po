@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1107,7 +1107,7 @@ msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 msgid "package %s has no namespace and is not on the search path"
 msgstr "пакет '%s' не имеет пространства имен и не находится в пути поиска"
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 #, fuzzy
@@ -1116,6 +1116,9 @@ msgstr "пространство имен уже присоединено"
 
 msgid "%s not found"
 msgstr "%s не найден"
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
+msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1615,6 +1618,9 @@ msgstr "'stdout' должен быть длиной 1"
 
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' должен быть длиной 1"
+
+msgid "'which' was not found on this platform"
+msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' должен быть TRUE или FALSE"

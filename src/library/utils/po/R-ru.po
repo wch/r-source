@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:48\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-30 02:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -91,9 +91,6 @@ msgstr "путь у '%s' содержит пробелов,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
-
-msgid "\\SweaveInput is not compatible with concordances."
-msgstr ""
 
 #, fuzzy
 msgid "invalid value for %s : %s"
@@ -613,6 +610,12 @@ msgstr "метод S3 '%s' не найден"
 msgid "environment specified is not a package"
 msgstr "указанное окружение не является пакетом"
 
+msgid "changing locked binding for %s in %s whlist loading %s"
+msgstr ""
+
+msgid "changing locked binding for %s in %s"
+msgstr ""
+
 msgid "'fixInNamespace' requires a name"
 msgstr "'fixInNamespace' требует имя"
 
@@ -621,9 +624,6 @@ msgstr "можно использовать только числовые индексы"
 
 msgid "cannot create directory '%s'"
 msgstr "не могу создать папку '%s'"
-
-msgid "'namespace' must be a single logical"
-msgstr "'namepace' должно быть простым логическим значением"
 
 msgid "'code_files' must be a character vector"
 msgstr "'code_files' должны быть текстовым вектором"
@@ -1282,6 +1282,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "'namespace' must be a single logical"
+#~ msgstr "'namepace' должно быть простым логическим значением"
 
 #~ msgid "Package '"
 #~ msgstr "Пакет '"

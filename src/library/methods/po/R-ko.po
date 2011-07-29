@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -532,6 +532,14 @@ msgstr ""
 "generic 함수가 아닌 오브젝트(클래스 \"%s\"의 것)에 메소드 기호를 match시키려"
 "고 합니다"
 
+msgid "invalid \"package\" slot or attribute, wrong length"
+msgstr ""
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
@@ -817,6 +825,24 @@ msgstr "필수의 패키지 '%s'를 검색해낼 수가 없습니다"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+
+msgid ""
+"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
+"one from package \"%s\" and is not turning on duplicate class definitions "
+"for this class"
+msgstr ""
+
+msgid ""
+"Some super classes of class \"%s\" in package \"%s\" have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package \"%s\""
+msgstr ""
+
+msgid ""
+"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
+"from package \"%s\" and is not turning on duplicate class definitions for "
+"this class"
+msgstr ""
 
 #, fuzzy
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -1214,6 +1240,14 @@ msgid ""
 "definition"
 msgstr ""
 
+#, fuzzy
+msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgstr "'%s'으로 '%s'를 위해서 새로운 generic 함수를 작성합니다"
+
+#, fuzzy
+msgid "No package name supplied and no class definition found for %s"
+msgstr "검색되는 '%s' 때문에 함수 정의가 아닙니다"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1409,6 +1443,15 @@ msgid "( should be methods list or method, had class \""
 msgstr ""
 
 msgid "\")"
+msgstr ""
+
+#, fuzzy
+msgid "bad method object stored in method table, class \"%s\""
+msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 오브젝트 입니다"
+
+msgid ""
+"package slot missing from signature, cannot use with duplicate class names "
+"(the package may be out of date): class(es)"
 msgstr ""
 
 #, fuzzy

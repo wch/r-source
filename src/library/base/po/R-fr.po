@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
 "PO-Revision-Date: 2011-03-29 20:10+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1155,7 +1155,7 @@ msgstr ""
 "le package %s n'a pas d'espace de noms et n'est pas repris dans le chemin de "
 "recherche"
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 #, fuzzy
@@ -1164,6 +1164,9 @@ msgstr "l'espace de noms est déjà attaché"
 
 msgid "%s not found"
 msgstr "%s introuvable"
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
+msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1674,6 +1677,9 @@ msgstr "'stdout' doit être de longeur 1"
 
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' doit être de longeur 1"
+
+msgid "'which' was not found on this platform"
+msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' doit être TRUE ou FALSE"

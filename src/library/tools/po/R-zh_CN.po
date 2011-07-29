@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -779,7 +779,7 @@ msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
 
 #, fuzzy
-msgid "namespace must not be loaded."
+msgid "namespace must not be already loaded"
 msgstr "绝不能载入名字空间."
 
 msgid "all packages should have a NAMESPACE"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:48\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -74,9 +74,6 @@ msgid "path to %s contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
-msgstr ""
-
-msgid "\\SweaveInput is not compatible with concordances."
 msgstr ""
 
 msgid "invalid value for %s : %s"
@@ -552,6 +549,12 @@ msgstr ""
 msgid "environment specified is not a package"
 msgstr ""
 
+msgid "changing locked binding for %s in %s whlist loading %s"
+msgstr ""
+
+msgid "changing locked binding for %s in %s"
+msgstr ""
+
 msgid "'fixInNamespace' requires a name"
 msgstr ""
 
@@ -559,9 +562,6 @@ msgid "only numeric indices can be used"
 msgstr ""
 
 msgid "cannot create directory '%s'"
-msgstr ""
-
-msgid "'namespace' must be a single logical"
 msgstr ""
 
 msgid "'code_files' must be a character vector"

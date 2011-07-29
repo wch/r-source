@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-24 10:38+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -543,6 +543,14 @@ msgstr ""
 "Versuch eine Methodensignatur auf ein Objekt (der Klasse \"%s\") zu passen, "
 "das keine generische Funktion ist"
 
+msgid "invalid \"package\" slot or attribute, wrong length"
+msgstr ""
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
@@ -822,6 +830,24 @@ msgstr "kann benötigtes Paket \"%s\" nicht finden"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "kann keine Umgebung mit einer Klasse \"%s\" finden"
+
+msgid ""
+"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
+"one from package \"%s\" and is not turning on duplicate class definitions "
+"for this class"
+msgstr ""
+
+msgid ""
+"Some super classes of class \"%s\" in package \"%s\" have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package \"%s\""
+msgstr ""
+
+msgid ""
+"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
+"from package \"%s\" and is not turning on duplicate class definitions for "
+"this class"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
@@ -1219,6 +1245,14 @@ msgstr ""
 "Sorry, der unnormaler Typ \"%s\" wird als  Superklasse der Klassendefinition "
 "nicht unterstützt"
 
+#, fuzzy
+msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgstr "Erzeuge neue generische Funktion für \"%s\" in \"%s\""
+
+#, fuzzy
+msgid "No package name supplied and no class definition found for %s"
+msgstr "Keine Funktionsdefinition für \"%s\" gefunden"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1410,6 +1444,15 @@ msgstr "( sollte Methodenliste oder Methode sein, hatte Klasse \""
 
 msgid "\")"
 msgstr "\")"
+
+#, fuzzy
+msgid "bad method object stored in method table, class \"%s\""
+msgstr "ungültiges Objekt als Methode (Klasse \"%s\") gefunden"
+
+msgid ""
+"package slot missing from signature, cannot use with duplicate class names "
+"(the package may be out of date): class(es)"
+msgstr ""
 
 msgid "Invalid object in methods table (\""
 msgstr "Unzulässiges Ohjekt in Methodentabelle (\""

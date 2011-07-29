@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:48\n"
-"PO-Revision-Date: 2011-07-16 22:48\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
+"PO-Revision-Date: 2011-07-29 08:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -95,9 +95,6 @@ msgstr "path to %s contains spaces,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "this may cause problems when running LaTeX"
-
-msgid "\\SweaveInput is not compatible with concordances."
-msgstr "\\SweaveInput is not compatible with concordances."
 
 msgid "invalid value for %s : %s"
 msgstr "invalid value for %s : %s"
@@ -589,6 +586,12 @@ msgstr "S3 method ‘%s’ not found"
 msgid "environment specified is not a package"
 msgstr "environment specified is not a package"
 
+msgid "changing locked binding for %s in %s whlist loading %s"
+msgstr "changing locked binding for %s in %s whlist loading %s"
+
+msgid "changing locked binding for %s in %s"
+msgstr "changing locked binding for %s in %s"
+
 msgid "'fixInNamespace' requires a name"
 msgstr "‘fixInNamespace’ requires a name"
 
@@ -597,9 +600,6 @@ msgstr "only numeric indices can be used"
 
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
-
-msgid "'namespace' must be a single logical"
-msgstr "‘namespace’ must be a single logical"
 
 msgid "'code_files' must be a character vector"
 msgstr "‘code_files’ must be a character vector"

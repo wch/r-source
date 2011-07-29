@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -532,6 +532,14 @@ msgstr ""
 " メソッドシグナチャを総称的関数でない(クラス \"%s”の)オブジェクトにマッチしよ"
 "うとしています "
 
+msgid "invalid \"package\" slot or attribute, wrong length"
+msgstr ""
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
@@ -802,6 +810,24 @@ msgstr " 必要とされるパッケージ \"%s\" を見付けることが出来
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr " クラス \"%s\" を含む環境を見付けることが出来ません "
+
+msgid ""
+"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
+"one from package \"%s\" and is not turning on duplicate class definitions "
+"for this class"
+msgstr ""
+
+msgid ""
+"Some super classes of class \"%s\" in package \"%s\" have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package \"%s\""
+msgstr ""
+
+msgid ""
+"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
+"from package \"%s\" and is not turning on duplicate class definitions for "
+"this class"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr " 未定義のサブクラス %s (クラスは %s)です； 定義は更新されません "
@@ -1185,6 +1211,14 @@ msgstr ""
 " すいませんが, 異常なタイプ \"%s\" はクラス定義のスーパークラスとして支持され"
 "ません. "
 
+#, fuzzy
+msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgstr " 新しい総称関数 \"%s\" を \"%s\" 中に生成します "
+
+#, fuzzy
+msgid "No package name supplied and no class definition found for %s"
+msgstr " \"%s\" に対する関数定義はありません "
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1377,6 +1411,15 @@ msgstr ""
 
 msgid "\")"
 msgstr " \") "
+
+#, fuzzy
+msgid "bad method object stored in method table, class \"%s\""
+msgstr " 間違ったオブジェクトがメソッド(クラス \"%s\")として見付かりました "
+
+msgid ""
+"package slot missing from signature, cannot use with duplicate class names "
+"(the package may be out of date): class(es)"
+msgstr ""
 
 msgid "Invalid object in methods table (\""
 msgstr " 不正なオブジェクトが以下のメソッドテーブル中にありました (\" "

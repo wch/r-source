@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-30 02:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -804,7 +804,7 @@ msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
 
 #, fuzzy
-msgid "namespace must not be loaded."
+msgid "namespace must not be already loaded"
 msgstr "должно быть загружено пространство имен."
 
 msgid "all packages should have a NAMESPACE"

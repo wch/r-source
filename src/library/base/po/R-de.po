@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
 "PO-Revision-Date: 2011-03-23 14:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1118,7 +1118,7 @@ msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
 msgid "package %s has no namespace and is not on the search path"
 msgstr "Paket '%s' hat keinen Namensraum und ist nicht im Suchpfad"
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 #, fuzzy
@@ -1127,6 +1127,9 @@ msgstr "Namensraum ist bereits angehängt"
 
 msgid "%s not found"
 msgstr "%s nicht gefunden"
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
+msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1629,6 +1632,9 @@ msgstr "'stdout' muss Länge 1 haben"
 
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' muss Länge 1 haben"
+
+msgid "'which' was not found on this platform"
+msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console' muss TRUE oder FALSE sein"

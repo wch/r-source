@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-30 02:24+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -524,6 +524,14 @@ msgstr ""
 "попытка сопоставить идентификатор метода с объектом (класса \"%s\") который "
 "не является общей функцией"
 
+msgid "invalid \"package\" slot or attribute, wrong length"
+msgstr ""
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
@@ -798,6 +806,24 @@ msgstr "не могу найти необходимый пакет \"%s\""
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "не могу найти окружение, содержащее класс \"%s\""
+
+msgid ""
+"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
+"one from package \"%s\" and is not turning on duplicate class definitions "
+"for this class"
+msgstr ""
+
+msgid ""
+"Some super classes of class \"%s\" in package \"%s\" have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package \"%s\""
+msgstr ""
+
+msgid ""
+"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
+"from package \"%s\" and is not turning on duplicate class definitions for "
+"this class"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "неопределенный подкласс %s класса \"%s\"; определение не обновлено"
@@ -1182,6 +1208,14 @@ msgstr ""
 "Простите, ненормальный тип \"%s\" не боддерживается как суперкласс или "
 "определение класса"
 
+#, fuzzy
+msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgstr "Создание новой общей функции для \"%s\" в \"%s\""
+
+#, fuzzy
+msgid "No package name supplied and no class definition found for %s"
+msgstr "Не найдено определение функции для \"%s\""
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1371,6 +1405,15 @@ msgstr "( должен быть списком методов либо методом, имеет класс \""
 
 msgid "\")"
 msgstr "\")"
+
+#, fuzzy
+msgid "bad method object stored in method table, class \"%s\""
+msgstr "плохой объект найден в качестве метода (класс \"%s\")"
+
+msgid ""
+"package slot missing from signature, cannot use with duplicate class names "
+"(the package may be out of date): class(es)"
+msgstr ""
 
 msgid "Invalid object in methods table (\""
 msgstr "неверный объект в таблице методов (\""

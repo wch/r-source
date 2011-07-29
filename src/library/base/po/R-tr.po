@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1040,13 +1040,16 @@ msgstr ""
 msgid "package %s has no namespace and is not on the search path"
 msgstr ""
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 msgid "namespace is already attached"
 msgstr ""
 
 msgid "%s not found"
+msgstr ""
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
 msgstr ""
 
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1524,6 +1527,9 @@ msgid "'stdout' must be of length 1"
 msgstr ""
 
 msgid "'stderr' must be of length 1"
+msgstr ""
+
+msgid "'which' was not found on this platform"
 msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"

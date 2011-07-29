@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1092,7 +1092,7 @@ msgstr "'%s'不是'namespace:%s'内的出口对象："
 msgid "package %s has no namespace and is not on the search path"
 msgstr "程辑包'%s'没有名字空间，也不存在搜索路径上"
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
 #, fuzzy
@@ -1101,6 +1101,9 @@ msgstr "已经连接上名字空间了"
 
 msgid "%s not found"
 msgstr "%s不存在"
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
+msgstr ""
 
 #, fuzzy
 msgid "namespace %s is already sealed in loadNamespace"
@@ -1593,6 +1596,9 @@ msgstr "'stdout'的长度必需为一"
 
 msgid "'stderr' must be of length 1"
 msgstr "'stderr'的长度必需为一"
+
+msgid "'which' was not found on this platform"
+msgstr ""
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "'show.output.on.console'的值必需是'TRUE'或'FALSE'值"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-18 17:02\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -464,6 +464,14 @@ msgid ""
 "not a generic function"
 msgstr "无法将方法标记同一个不是泛型函数的对象(类别是\"%s\")相对应起来"
 
+msgid "invalid \"package\" slot or attribute, wrong length"
+msgstr ""
+
+msgid ""
+"invalid element in a list for \"signature\" argument; element %d is neither "
+"a class definition nor a class name"
+msgstr ""
+
 msgid ""
 "trying to match a method signature of class \"%s\"; expects a list or a "
 "character vector"
@@ -694,6 +702,24 @@ msgstr "找不到所需要的程輯包'%s'"
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"
+
+msgid ""
+"A specification for S3 class \"%s\" in package \"%s\" seems equivalent to "
+"one from package \"%s\" and is not turning on duplicate class definitions "
+"for this class"
+msgstr ""
+
+msgid ""
+"Some super classes of class \"%s\" in package \"%s\" have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package \"%s\""
+msgstr ""
+
+msgid ""
+"A specification for class \"%s\" in package \"%s\" seems equivalent to one "
+"from package \"%s\" and is not turning on duplicate class definitions for "
+"this class"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "%2$s类别的子类别%1$s没有定义；因此没有更新"
@@ -1029,6 +1055,14 @@ msgid ""
 "definition"
 msgstr "对不起，不支持作为一个类别定义的超类\"%s\""
 
+#, fuzzy
+msgid "Multiple class definitions for %s from packages: %s; picking the first"
+msgstr "为'%1$s'里的'%2$s'建立新的泛型函数"
+
+#, fuzzy
+msgid "No package name supplied and no class definition found for %s"
+msgstr "没有\"%s\"这样一个函数定义"
+
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1192,6 +1226,15 @@ msgstr "(应该是list或method方法，但其类别却是\""
 
 msgid "\")"
 msgstr "\")"
+
+#, fuzzy
+msgid "bad method object stored in method table, class \"%s\""
+msgstr "作为方法的对象(类别是\"%s\")出错"
+
+msgid ""
+"package slot missing from signature, cannot use with duplicate class names "
+"(the package may be out of date): class(es)"
+msgstr ""
 
 msgid "Invalid object in methods table (\""
 msgstr "列表方法的对象出错"

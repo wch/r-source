@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:46\n"
-"PO-Revision-Date: 2011-07-16 22:46\n"
+"POT-Creation-Date: 2011-07-29 08:51\n"
+"PO-Revision-Date: 2011-07-29 08:51\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1073,15 +1073,18 @@ msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
 msgid "package %s has no namespace and is not on the search path"
 msgstr "package %s has no namespace and is not on the search path"
 
-msgid "running .First.lib() for package %s as .onLoad/.onAssign were not found"
+msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
-"running .First.lib() for package %s as .onLoad/.onAssign were not found"
+"running .First.lib() for package %s as .onLoad/.onAttach were not found"
 
 msgid "namespace is already attached"
 msgstr "namespace is already attached"
 
 msgid "%s not found"
 msgstr "%s not found"
+
+msgid "using .First.lib() as .onLoad() for namespace %s"
+msgstr "using .First.lib() as .onLoad() for namespace %s"
 
 msgid "namespace %s is already sealed in loadNamespace"
 msgstr "namespace %s is already sealed in loadNamespace"
@@ -1566,6 +1569,9 @@ msgstr "‘stdout’ must be of length 1"
 
 msgid "'stderr' must be of length 1"
 msgstr "‘stderr’ must be of length 1"
+
+msgid "'which' was not found on this platform"
+msgstr "‘which’ was not found on this platform"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "‘show.output.on.console’ must be TRUE or FALSE"

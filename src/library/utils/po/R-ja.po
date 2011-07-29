@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-16 22:48\n"
+"POT-Creation-Date: 2011-07-29 08:52\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -81,9 +81,6 @@ msgstr " '%s' へのパスは空白を含みます、 "
 
 msgid "this may cause problems when running LaTeX"
 msgstr " これは LaTeX を実行するとき問題を引き起こすかも知れません "
-
-msgid "\\SweaveInput is not compatible with concordances."
-msgstr ""
 
 #, fuzzy
 msgid "invalid value for %s : %s"
@@ -613,6 +610,12 @@ msgstr " S3 メソッド '%s' は見付かりません  "
 msgid "environment specified is not a package"
 msgstr " 指定された環境はパッケージではありません "
 
+msgid "changing locked binding for %s in %s whlist loading %s"
+msgstr ""
+
+msgid "changing locked binding for %s in %s"
+msgstr ""
+
 msgid "'fixInNamespace' requires a name"
 msgstr " 'fixInNamespace' は名前を必要とします "
 
@@ -621,9 +624,6 @@ msgstr " 数値的添字だけが使えます "
 
 msgid "cannot create directory '%s'"
 msgstr " ディレクトリ '%s' を作成できません "
-
-msgid "'namespace' must be a single logical"
-msgstr " 'namespace' は単一の論理値でなければなりません "
 
 msgid "'code_files' must be a character vector"
 msgstr " 'code_files' は文字ベクトルでなければなりません "
@@ -1283,6 +1283,9 @@ msgstr[0] " 'lib' の要素 '%s' は書き込み可能なディレクトリで�
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "'namespace' must be a single logical"
+#~ msgstr " 'namespace' は単一の論理値でなければなりません "
 
 #~ msgid "Package '"
 #~ msgstr " パッケージ ' "
