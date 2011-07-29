@@ -106,6 +106,9 @@ getExportedValue <- function(ns, name) {
     get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
 
+.Firstlib_as_onLoad <-
+    c("AnalyzeFMRI", "BAS", "BMA", "Bmix") # more to come
+
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
     ## only used to run .onAttach
@@ -120,7 +123,9 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
                               conditionMessage(res)),
                      call. = FALSE, domain = NA)
             }
-        } else if (!exists(".onLoad", envir = ns, inherits = FALSE) &&
+        } else if (!nsname %in% .Firstlib_as_onLoad &&
+                   !exists(".onLoad", envir = ns, inherits = FALSE) &&
+                   !exists(".onAttach", envir = ns, inherits = FALSE) &&
                    exists(".First.lib", envir = env, inherits = FALSE)) {
             if (nsname == Sys.getenv("R_INSTALL_PKG"))
                 message(gettextf("running .First.lib() for package %s as .onLoad/.onAttach were not found", sQuote(nsname)),
@@ -205,6 +210,13 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   conditionMessage(res)),
                          call. = FALSE, domain = NA)
                 }
+            } else if (pkgname %in% .Firstlib_as_onLoad &&
+                       !exists(".onLoad", envir = env, inherits = FALSE) &&
+                       exists(".First.lib", envir = env, inherits = FALSE)) {
+                message(gettextf("using .First.lib() as .onLoad() for namespace %s", sQuote(pkgname)),
+                        domain = NA)
+                fn <- get(".First.lib", envir = env, inherits = FALSE)
+                fn(...)
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
