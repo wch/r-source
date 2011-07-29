@@ -6,9 +6,9 @@
 Class names including the corresponding package
 }
 \description{
-The function \sQuote{className} and the corresponding class generate
+The function \code{className()} generates a
 valid references to a class, including the name of the package
-containing the class definition.  The object returned is the
+containing the class definition.  The object returned, from class \code{"className"}, is the
 unambiguous way to refer to a class, for example when calling
 \code{\link{setMethod}}, just in case multiple definitions of the
 class exist.
@@ -46,6 +46,10 @@ character vector of those classes currently known with multiple
 definitions.
 
 If \code{TRUE}, a named list of those class definitions is returned.
+Each element of the list is itself a list of the corresponding class
+definitions, with the package names as the names of the list.  Note
+that identical class definitions will not be considered
+\dQuote{multiple} definitions (see the discussion of the details below).
 }
 }
 \details{
@@ -54,11 +58,11 @@ definitions for classes with the same name but coming from different
 packages.
 If identical class definitions are encountered, only one class
 definition is kept; this occurs most often with S3 classes that have
-been specified in calls to \\code{\link{setOldClass}}.  For true
+been specified in calls to \code{\link{setOldClass}}.  For true
 classes, multiple class definitions are unavoidable in general if two
 packages happen to have used the same name, independently.
 
-Re-defining a class with the same name deliberately is usually a bad
+Overriding a class definition in another package with the same name deliberately is usually a bad
 idea.
 Although \R attempts to keep and use the two definitions (as of
 version 2.14.0), ambiguities are always possible.  It is more
