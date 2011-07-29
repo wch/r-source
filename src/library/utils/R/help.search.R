@@ -118,18 +118,6 @@ help.search <-
                     if(verbose > 1L) "...")
             flush.console()
         }
-	## Check whether we can save the hsearch db later on.
-	if(all(is.na(mem.limits()))) {
-	    save_db <- save_db_to_memory <- TRUE
-	} else {
-	    save_db <- save_db_to_memory <- FALSE
-	    dir <- file.path(tempdir(), ".R")
-	    db_file <- file.path(dir, "hsearch.rds")
-	    if( (file_test("-d", dir)
-                 || ((unlink(dir) == 0L) && dir.create(dir)) )
-	       && (unlink(db_file) == 0L) )
-		save_db <- TRUE
-	}
 
 	if(!is.null(package)) {
 	    packages_in_hsearch_db <- package
@@ -314,28 +302,18 @@ help.search <-
 	    }
 	}
 
-	if(save_db) {
-	    if(verbose >= 2L) {
-                message("saving the database ...", appendLF=FALSE)
-                flush.console()
-            }
-	    attr(db, "LibPaths") <- lib.loc
-	    attr(db, "mtime") <- Sys.time()
-	    attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
-	    if(save_db_to_memory)
-		.hsearch_db(db)
-	    else {
-		## If we cannot save to memory, serialize to a file ...
-		saveRDS(db, file = db_file, compress = TRUE)
-		## and store a promise to unserialize from this file.
-		.hsearch_db(substitute(readRDS(con),
-				       list(con = db_file)))
-	    }
-	    if(verbose >= 2L) {
-                message(" ", "done")
-                flush.console()
-            }
-	}
+        if(verbose >= 2L) {
+            message("saving the database ...", appendLF=FALSE)
+            flush.console()
+        }
+        attr(db, "LibPaths") <- lib.loc
+        attr(db, "mtime") <- Sys.time()
+        attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
+        .hsearch_db(db)
+        if(verbose >= 2L) {
+            message(" ", "done")
+            flush.console()
+        }
         if(verbose > 0L) {
             message("... database rebuilt")
             if(WINDOWS) {
