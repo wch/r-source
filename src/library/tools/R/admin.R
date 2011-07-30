@@ -129,15 +129,6 @@ function(db, verbose = FALSE)
     if("R" %in% names(Depends)) {
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
-        if(verbose && !all(sapply(Rdeps2[-1L], function(x)
-            		   x$op %in% c("<", "<=")
-            		&& x$version >= package_version("2.7.0")))) {
-            entries <- lapply(Rdeps2, function(x)
-                paste(lapply(x, as.character), collapse=""))
-            message("WARNING: 'Depends' entry has multiple dependencies on R: ",
-                    paste(unlist(entries), collapse=", "),
-                    "\n\tonly the first will be used in R < 2.7.0")
-        }
         Rdeps <- Depends[["R", exact = TRUE]] # the first one
         Depends <- Depends[names(Depends) != "R"]
         ## several packages have 'Depends: R', which is a noop.
@@ -915,7 +906,7 @@ compactPDF <-
                       gs_extras,
                       p), FALSE, FALSE)
         else
-            system2(qpdf, c("--stream-data=compress", 
+            system2(qpdf, c("--stream-data=compress",
 			    "--object-streams=generate", p, tf), FALSE, FALSE)
         if(!res && file.exists(tf)) {
             old <- file.info(p)$size; new <-  file.info(tf)$size
