@@ -140,8 +140,11 @@ getExportedValue <- function(ns, name) {
     "speedRlibs", "spgwr", "splancs", "stab", "stepwise",
     "surv2sample", "survPresmooth", "survivalROC", "svmpath", "tdm",
     "tdthap", "tnet", "tweedie", "twopartqtl", "twslm", "ucminf",
-    "uncompress", "vegan", "wavelets", "waveslim", "wccsom",
-    "wombsoft")
+    "uncompress", "vegan", "wavelets", "waveslim", "wccsom", "wombsoft",
+    "CarbonEL", "JavaGD", "LogConcDEAD", "Rmpi", "Rniftilib", "akima",
+    "amei", "distory", "dynaTree", "ecodist", "ftnonpar", "glpk",
+    "iSubpathwayMiner", "ifultools", "mnormT", "monomvn", "rlecuyer",
+    "rngwell19937", "sound", "textir", "trex", "tripack", "udunits2", "wgaim")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
