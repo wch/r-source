@@ -54,8 +54,16 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(length(Rdeps <- pkgInfo$Rdepends2)) {
             for(dep in Rdeps)
                 if(length(dep) > 1L) {
-                    target <- as.numeric_version(dep$version)
-                    res <- eval(parse(text=paste("current", dep$op, "target")))
+                    res <- if(is.character(target <- dep$version)) {
+                        ver <- R.version
+                        # if (ver$status %in% c("", "Patched")) FALSE else
+                        do.call(dep$op,
+                                list(ver[["svn rev"]],
+                                     as.numeric(sub("^r", "", dep$version))))
+                    } else {
+                        target <- as.numeric_version(dep$version)
+                        eval(parse(text=paste("current", dep$op, "target")))
+                    }
                     if(!res)
                         stop(gettextf("This is R %s, package %s needs %s %s",
                                       current, sQuote(pkgname), dep$op, target),

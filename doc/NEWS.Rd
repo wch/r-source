@@ -422,12 +422,19 @@
       functions need to be copied to \code{.onLoad()} (usually) or
       \code{.onAttach()}.  For the time being, if no \code{.onLoad()}
       nor \code{.onAttach()} function is found but \code{.First.lib()}
-      is, it will be run as the attach hook.
+      is, it will be run as the attach hook (unless one of a list of
+      known exceptions, when it will be run as the load hook).
       
       \item A warning is given if test-loading a package changes a
       locked binding in a package other than itself.  It is likely that
       this will be disallowed in future releases.  (There are \emph{pro
-      tem} some exceptions to the warning.)
+	tem} some exceptions to the warning.)
+    
+      \item A dependency on SVN revision is allowed for \code{R}, e.g.
+      \code{R (>= r56550)}.  This should be used in conjunction with a
+      version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
+      distinguish beteen R-patched and R-devel versions with the same
+      SVN revision.
     }
   }
 

@@ -129,15 +129,6 @@ function(db, verbose = FALSE)
     if("R" %in% names(Depends)) {
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
-        if(verbose && !all(sapply(Rdeps2[-1L], function(x)
-            		   x$op %in% c("<", "<=")
-            		&& x$version >= package_version("2.7.0")))) {
-            entries <- lapply(Rdeps2, function(x)
-                paste(lapply(x, as.character), collapse=""))
-            message("WARNING: 'Depends' entry has multiple dependencies on R: ",
-                    paste(unlist(entries), collapse=", "),
-                    "\n\tonly the first will be used in R < 2.7.0")
-        }
         Rdeps <- Depends[["R", exact = TRUE]] # the first one
         Depends <- Depends[names(Depends) != "R"]
         ## several packages have 'Depends: R', which is a noop.
@@ -779,9 +770,17 @@ function(dir)
             ## .check_package_description will insist on these operators
             if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!="))
                 message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
-            else
-                status <- !do.call(depends$op,
-                                   list(current, depends$version))
+            else {
+                status <- if(inherits(depends$version, "numeric_version"))
+                    !do.call(depends$op, list(current, depends$version))
+                else {
+                    ver <- R.version
+                    if (ver$status %in% c("", "Patched")) FALSE
+                    else !do.call(depends$op,
+                                 list(ver[["svn rev"]],
+                                      as.numeric(sub("^r", "", depends$version))))
+                }
+            }
             if(status != 0) {
                 package <- Sys.getenv("R_PACKAGE_NAME")
                 if(!nzchar(package))

@@ -1373,8 +1373,9 @@ function(x)
     x2 <- sub(pat, "\\2", x)
     if(x2 != x1) {
         pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+(.*)"
-        list(name = x1, op = sub(pat, "\\1", x2),
-             version = package_version(sub(pat, "\\2", x2)))
+        version <- sub(pat, "\\2", x2)
+        if (!grepl("^r", version)) version <- package_version(version)
+        list(name = x1, op = sub(pat, "\\1", x2), version = version)
     } else list(name = x1)
 }
 

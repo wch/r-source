@@ -2800,9 +2800,14 @@ function(dfile)
                 if(!sub(dep_regexp, "\\3", dep) %in%
                    c("<=", ">=", "<", ">", "==", "!="))
                     bad_dep_op <- c(bad_dep_op, dep)
-                else if(!grepl(sprintf("^%s$",
-                                       valid_package_version_regexp),
-                               sub(dep_regexp, "\\4", dep)))
+                else if(grepl("^[[:space:]]*R", dep)) {
+                    if(!grepl(sprintf("^(r[0-9]+|%s)$",
+                                      valid_package_version_regexp),
+                              sub(dep_regexp, "\\4", dep)))
+                    bad_dep_version <- c(bad_dep_version, dep)
+                } else if(!grepl(sprintf("^%s$",
+                                         valid_package_version_regexp),
+                                 sub(dep_regexp, "\\4", dep)))
                     bad_dep_version <- c(bad_dep_version, dep)
             }
         }
@@ -3355,19 +3360,6 @@ function(package, dir, lib.loc = NULL)
     try_Rd_aliases <- function(...) tryCatch(Rd_aliases(...), error = identity)
     aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
     aliases[sapply(aliases, class) == "error"] <- NULL
-
-    ## See testRversion in library()
-    new_only <- FALSE
-    if(length(Rdeps <- pkgInfo$Rdepends2)) {
-        ## has this if installed in > 2.7.0
-        current <- as.numeric_version("2.9.2")
-        for(dep in Rdeps)
-            if(length(dep) > 1L) {
-                target <- as.numeric_version(dep$version)
-                res <- eval(parse(text=paste("current", dep$op, "target")))
-                if(!res) new_only <- TRUE
-            }
-    }
 
     ## Add the aliases from the package itself, and build a db with all
     ## (if any) \link xrefs in the package Rd objects.
@@ -4846,7 +4838,7 @@ function(dir)
                        "Repository"]
     if(length(repositories))
         out$repositories <- repositories
-    
+
     ## Is this an update for package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &

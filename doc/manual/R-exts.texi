@@ -467,17 +467,20 @@ versions by @code{install.packages}.}, whitespace and a valid version
 number.  You can also use the special package name @samp{R} if your
 package depends on a certain version of @R{} --- e.g., if the package
 works only with @R{} version 2.11.0 or later, include @samp{R (>=
-2.11.0)} in the @samp{Depends} field.  Both @code{library} and the @R{}
-package checking facilities use this field, hence it is an error to use
-improper syntax or misuse the @samp{Depends} field for comments on other
-software that might be needed.  Other dependencies (external to the @R{}
-system) should be listed in the @samp{SystemRequirements} field,
-possibly amplified in a separate @file{README} file.  The @R{}
-@command{INSTALL} facilities check if the version of @R{} used is recent
-enough for the package being installed, and the list of packages which
-is specified will be attached (after checking version requirements)
-before the current package, both when @code{library} is called and when
-preparing for lazy-loading.
+2.11.0)} in the @samp{Depends} field.  You can also require a certain
+SVN revision for R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>=
+r56550)} requires a version later than R-devel of late July 2011.  Both
+@code{library} and the @R{} package checking facilities use this field:
+hence it is an error to use improper syntax or misuse the @samp{Depends}
+field for comments on other software that might be needed.  Other
+dependencies (external to the @R{} system) should be listed in the
+@samp{SystemRequirements} field, possibly amplified in a separate
+@file{README} file.  The @R{} @command{INSTALL} facilities check if the
+version of @R{} used is recent enough for the package being installed,
+and the list of packages which is specified will be attached (after
+checking version requirements) before the current package, both when
+@code{library} is called and when preparing for lazy-loading during
+installation.
 
 A package (or @samp{R}) can appear more than once in the @samp{Depends},
 but only the first occurrence will be used in versions of @R{} prior to
