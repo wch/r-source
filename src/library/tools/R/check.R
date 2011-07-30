@@ -1156,6 +1156,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                         invert = TRUE, value = TRUE)
             out <- grep("Warning: running .First.lib()", out,
                         invert = TRUE, value = TRUE, fixed = TRUE)
+            out <- grep("using .First.lib()", out,
+                        invert = TRUE, value = TRUE, fixed = TRUE)
             out <- grep("Warning: changing locked binding", out,
                         invert = TRUE, value = TRUE, fixed = TRUE)
            if (length(out)) {
@@ -2203,11 +2205,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                     lines <- grep("Warning: .drectve .* unrecognized",
                                   lines, invert = TRUE, value = TRUE)
                 }
-
-                ## Skip warnings about .First.lib
-                ## Maybe should retain any that refers to this package?
-##                lines <- grep("Warning: running .First.lib() for package",
-##                              lines, invert = TRUE, value = TRUE, fixed = TRUE)
 
                  if (!pkgname %in% c("memisc"))
                      lines <- grep("Warning: locked binding of .* will not be changed",

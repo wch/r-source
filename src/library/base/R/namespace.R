@@ -89,15 +89,7 @@ getExportedValue <- function(ns, name) {
 `::` <- function(pkg, name) {
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
-    ns <- tryCatch(asNamespace(pkg), hasNoNamespaceError = function(e) NULL)
-    if (is.null(ns)) {
-        ## FIXME: clean up
-        pos <- match(paste("package", pkg, sep=":"), search(), 0L)
-        if (pos == 0L)
-            stop(gettextf("package %s has no namespace and is not on the search path", sQuote(pkg)), domain = NA)
-        get(name, pos = pos, inherits = FALSE)
-    }
-    else getExportedValue(pkg, name)
+    getExportedValue(pkg, name)
 }
 
 `:::` <- function(pkg, name) {
@@ -106,8 +98,50 @@ getExportedValue <- function(ns, name) {
     get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
 
-.Firstlib_as_onLoad <-
-    c("AnalyzeFMRI", "BAS", "BMA", "Bmix") # more to come
+.Firstlib_as_onLoad <- c("AnalyzeFMRI", "BAS", "BBMM", "BMA", "BPHO",
+    "BTSPAS", "BiasedUrn", "BioPhysConnectoR", "Bmix", "BradleyTerry",
+    "CHsharp", "CPE", "CompQuadForm", "CompRandFld", "CorrBin",
+    "Covpath", "DAAGbio", "DAAGxtras", "DCluster", "DDHFm", "DIME",
+    "EMD", "ExPD2D", "FAmle", "FactoClass", "FracSim", "GEOmap",
+    "GWASExactHW", "GenKern", "Geneland", "HH", "HiddenMarkov", "ICE",
+    "IFP", "LogicReg", "LowRankQP", "MAMSE", "MHadaptive", "MISA",
+    "NORMT3", "OPE", "ORMDR", "OSACC", "PKfit", "POT", "PSCN", "PSM",
+    "Peaks", "QRMlib", "RANN", "RArcInfo", "RFA", "RSEIS",
+    "RSVGTipsDevice", "RSvgDevice", "ReadImages", "RiDMC", "Rmpfr",
+    "Rsundials", "Rwave", "SigWinR", "SpatialEpi", "SpatialExtremes",
+    "SpherWave", "TAHMMAnnot", "WINRPACK", "WMTregions",
+    "acepack", "adaptivetau", "ade4", "adephylo", "alphahull",
+    "analogue", "aod", "aqp", "bclust", "bdoc", "bear", "bild",
+    "binomSamSize", "bise", "biseVec", "bisoreg", "bitops", "boolfun",
+    "bootstrap", "bqtl", "brainwaver", "caTools", "cat", "cclust",
+    "changeLOS", "cheb", "clusterSim", "codep", "coenoflex",
+    "crosshybDetector", "crrSC", "date", "dblcens", "depth", "devEMF",
+    "diptest", "dixon", "dynCorr", "dynamo", "ebdbNet", "ecespa",
+    "energy", "envelope", "epinet", "evd", "evdbayes",
+    "exactLoglinTest", "fEcofin", "fImport", "fMultivar", "fdim",
+    "fdrtool", "fields", "forensim", "fork", "fpow", "gRc", "gafit",
+    "gdsfmt", "geepack", "gibbs.met", "gld", "gllm", "glmmAK", "gss",
+    "haplo.stats", "hapsim", "hbmem", "hddplot", "hier.part", "hot",
+    "ifs", "imputeMDR", "infotheo", "intcox",
+    "integrOmics", "interactivity", "ivivc", "kknn", "knncat",
+    "kohonen", "labeltodendro", "lago", "lasso2", "lazy", "ljr",
+    "locpol", "logspline", "lokern", "lpridge",
+    "magnets", "maxLinear", "mcga", "mclust", "mhsmm", "mixAK",
+    "mixstock", "mlbench", "mlegp", "moc", "mpa", "mra", "mspath",
+    "mvgraph", "mvnmle", "mvpart", "mvtnormpcs", "nbpMatching",
+    "ncdf", "ncomplete", "negenes", "nlstools", "norm", "noverlap",
+    "npde", "npst", "nsRFA", "onemap", "opefimor", "pamctdp", "panel",
+    "pbivnorm", "permax", "phybase", "pi0", "picante", "plugdensity",
+    "poibin", "polspline", "popgen", "ppMeasures", "predbayescor",
+    "predmixcor", "princurve", "proptest", "ptw", "qp", "qtl",
+    "ref", "rich", "rimage", "ringscale", "rioja", "rjson",
+    "robust", "rpvm", "rqmcmb2", "rsdepth", "rvmbinary", "rworldmap",
+    "sampfling", "sampling", "seqCBS", "simba", "spc", "speedRlibTF",
+    "speedRlibs", "spgwr", "splancs", "stab", "stepwise",
+    "surv2sample", "survPresmooth", "survivalROC", "svmpath", "tdm",
+    "tdthap", "tnet", "tweedie", "twopartqtl", "twslm", "ucminf",
+    "uncompress", "vegan", "wavelets", "waveslim", "wccsom",
+    "wombsoft")
 
 attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
