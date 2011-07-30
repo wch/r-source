@@ -276,7 +276,7 @@ testInstalledPackage <-
                 }
             }
         } else
-            warning(getttextf("no examples found for package %s", sQuote(pkg)),
+            warning(gettextf("no examples found for package %s", sQuote(pkg)),
                     call. = FALSE, domain = NA)
     }
 
