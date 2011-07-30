@@ -124,7 +124,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE, nullPointers=TRUE, L
         ## remove BATCH footer
         nl <- length(txt)
         if(grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
-        if (nullPointers) 
+        if (nullPointers)
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
         ## regularize fancy quotes.  First UTF-8 ones:
@@ -275,7 +275,9 @@ testInstalledPackage <-
                     if (!res) message(" OK")
                 }
             }
-        } else warning("no examples found")
+        } else
+            warning(getttextf("no examples found for package %s", sQuote(pkg)),
+                    call. = FALSE, domain = NA)
     }
 
     ## FIXME merge with code in .runPackageTests
