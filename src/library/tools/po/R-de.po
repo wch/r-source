@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -520,12 +520,6 @@ msgstr "*** jemand hat das 'Built' Feld im Paket '%s' beschädigt ***"
 
 msgid "cannot open directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht öffnen"
-
-msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten von R:"
-
-msgid "only the first will be used in R < 2.7.0"
-msgstr "nur die Erste wird genutzt in R < 2.7.0"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
@@ -1117,6 +1111,12 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
+#~ msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten von R:"
+
+#~ msgid "only the first will be used in R < 2.7.0"
+#~ msgstr "nur die Erste wird genutzt in R < 2.7.0"
 
 #~ msgid "'"
 #~ msgstr "'"

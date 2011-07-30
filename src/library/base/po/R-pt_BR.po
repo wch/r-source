@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1110,11 +1110,6 @@ msgstr "Inválido mudar o modo de armazenamento de um fator"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' não é um objeto exportado de 'namespace:%s'"
 
-#, fuzzy
-msgid "package %s has no namespace and is not on the search path"
-msgstr ""
-"pacote '%s' não tem um espaço de nomes e não está no caminho de procura"
-
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
@@ -1184,6 +1179,10 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "no pacote %s métodos %s foram especificados para exportação mas não foram "
 "definidos"
+
+#, fuzzy
+msgid "Loading required namespace: %s"
+msgstr "Carregando pacotes exigidos: %s"
 
 msgid "not found"
 msgstr "não encontrado"
@@ -1728,6 +1727,11 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "package %s has no namespace and is not on the search path"
+#~ msgstr ""
+#~ "pacote '%s' não tem um espaço de nomes e não está no caminho de procura"
 
 #, fuzzy
 #~ msgid "package %s contains no R code"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -501,12 +501,6 @@ msgstr "***程辑包'%s'里的Built域坏了***"
 
 msgid "cannot open directory '%s'"
 msgstr "无法打开目录'%s'"
-
-msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr "警告：'Depends'有多个于R相关的项"
-
-msgid "only the first will be used in R < 2.7.0"
-msgstr "R < 2.7.0版本只能用第一个"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"
@@ -1076,6 +1070,12 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
+#~ msgstr "警告：'Depends'有多个于R相关的项"
+
+#~ msgid "only the first will be used in R < 2.7.0"
+#~ msgstr "R < 2.7.0版本只能用第一个"
 
 #~ msgid "'"
 #~ msgstr "'"

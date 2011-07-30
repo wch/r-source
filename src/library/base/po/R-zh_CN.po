@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1088,10 +1088,6 @@ msgstr "不能改变因子的存储状态"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
-#, fuzzy
-msgid "package %s has no namespace and is not on the search path"
-msgstr "程辑包'%s'没有名字空间，也不存在搜索路径上"
-
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
@@ -1155,6 +1151,10 @@ msgstr "找不到关于%s的隐喻数据对象"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "在%s程辑包中%s方法指定被用于出口，但它的定义并不存在"
+
+#, fuzzy
+msgid "Loading required namespace: %s"
+msgstr "载入需要的程辑包：%s"
 
 msgid "not found"
 msgstr "不存在"
@@ -1684,6 +1684,10 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "package %s has no namespace and is not on the search path"
+#~ msgstr "程辑包'%s'没有名字空间，也不存在搜索路径上"
 
 #, fuzzy
 #~ msgid "package %s contains no R code"

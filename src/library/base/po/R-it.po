@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1140,10 +1140,6 @@ msgstr ""
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' non è un oggetto esportato dal 'namespace:%s'"
 
-#, fuzzy
-msgid "package %s has no namespace and is not on the search path"
-msgstr "il pacchetto '%s' non ha un namespace"
-
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
@@ -1210,6 +1206,10 @@ msgstr ""
 #, fuzzy
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "in '%s', metodi da esportare specificati, ma nessuno definito: %s"
+
+#, fuzzy
+msgid "Loading required namespace: %s"
+msgstr "Carico il pacchetto richiesto: %s"
 
 msgid "not found"
 msgstr "non trovato"
@@ -1779,6 +1779,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "package %s has no namespace and is not on the search path"
+#~ msgstr "il pacchetto '%s' non ha un namespace"
 
 #, fuzzy
 #~ msgid "package %s contains no R code"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
-"PO-Revision-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
+"PO-Revision-Date: 2011-07-30 15:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -528,12 +528,6 @@ msgstr "*** someone has corrupted the Built field in package ‘%s’ ***"
 
 msgid "cannot open directory '%s'"
 msgstr "cannot open directory ‘%s’"
-
-msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
-msgstr "WARNING: ‘Depends’ entry has multiple dependencies on R:"
-
-msgid "only the first will be used in R < 2.7.0"
-msgstr "only the first will be used in R < 2.7.0"
 
 msgid ""
 "WARNING: omitting pointless dependence on 'R' without a version requirement"

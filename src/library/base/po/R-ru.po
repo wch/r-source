@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2011-03-30 02:18+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1103,10 +1103,6 @@ msgstr "неправильно менять тип хранения фактора"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
-#, fuzzy
-msgid "package %s has no namespace and is not on the search path"
-msgstr "пакет '%s' не имеет пространства имен и не находится в пути поиска"
-
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
@@ -1172,6 +1168,10 @@ msgstr "не удалось найти объект метаданных для %s"
 
 msgid "in package %s methods %s were specified for export but not defined"
 msgstr "в пакете '%s' указаны методы %s для экспорта, но не определены"
+
+#, fuzzy
+msgid "Loading required namespace: %s"
+msgstr "Загрузка требуемого пакета: %s"
 
 msgid "not found"
 msgstr "не найден"
@@ -1726,6 +1726,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "package %s has no namespace and is not on the search path"
+#~ msgstr "пакет '%s' не имеет пространства имен и не находится в пути поиска"
 
 #, fuzzy
 #~ msgid "package %s contains no R code"

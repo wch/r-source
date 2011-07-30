@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51\n"
+"POT-Creation-Date: 2011-07-30 15:43\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1131,10 +1131,6 @@ msgstr ""
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
 
-#, fuzzy
-msgid "package %s has no namespace and is not on the search path"
-msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
-
 msgid "running .First.lib() for package %s as .onLoad/.onAttach were not found"
 msgstr ""
 
@@ -1203,6 +1199,10 @@ msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "'%s'에 export를 위한 메소드가 지정되어 있습니다만, 어느것도 정의되지 않았습니"
 "다:%s"
+
+#, fuzzy
+msgid "Loading required namespace: %s"
+msgstr "요구된 패키지 %s를 로드중입니다"
 
 msgid "not found"
 msgstr "검색되지 않습니다"
@@ -1781,6 +1781,10 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "package %s has no namespace and is not on the search path"
+#~ msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
 #, fuzzy
 #~ msgid "package %s contains no R code"
