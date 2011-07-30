@@ -2540,6 +2540,9 @@ AC_CONFIG_FILES(
   src/library/methods/DESCRIPTION
   src/library/methods/Makefile
   src/library/methods/src/Makefile
+  src/library/parallel/DESCRIPTION
+  src/library/parallel/Makefile
+  src/library/parallel/src/Makefile
   src/library/profile/Makefile
   src/library/stats/DESCRIPTION
   src/library/stats/Makefile

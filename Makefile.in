@@ -197,10 +197,10 @@ distdir: $(DISTFILES) vignettes
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-	@mkdir -p $(distdir)/src/library/grid/inst/doc \
-	  $(distdir)/src/library/utils/inst/doc
-	@cp library/grid/doc/*.pdf $(distdir)/src/library/grid/inst/doc
-	@cp library/utils/doc/*.pdf $(distdir)/src/library/utils/inst/doc
+	@for d in grid parallel utils; do \
+	  mkdir -p $(distdir)/src/library/$${d}/inst/doc; \
+	  cp library/$${d}/doc/*.pdf $(distdir)/src/library/$${d}/inst/doc; \
+	done
 	@(cd $(distdir); tools/link-recommended)
 
 info pdf:

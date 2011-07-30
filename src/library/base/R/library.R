@@ -711,8 +711,8 @@ find.package <-
     ## time with 1000+ packages installed.
     if(length(package) == 1L  &&
        package %in% c("base", "tools", "utils", "grDevices", "graphics",
-                      "stats", "datasets", "methods", "grid", "splines",
-                      "stats4", "tcltk"))
+                      "stats", "datasets", "methods", "grid", "parallel",
+                      "splines", "stats4", "tcltk"))
         return(file.path(.Library, package))
 
     use_attached <- FALSE

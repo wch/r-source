@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+
+\usepackage{Rd}
+
+%\VignetteIndexEntry{Package 'parallel'}
+%\VignettePackage{parallel}
+
+
+\title{Package `parallel'}
+\author{R-core}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+It is planned to added a package \pkg{parallel} in \R{} 2.14.0.
+
+<<>>=
+library(parallel)
+@
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

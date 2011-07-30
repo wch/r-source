@@ -1,0 +1,8 @@
+Package: parallel
+Version: @VERSION@
+Priority: base
+Title: Support for Parallel computation in R
+Author: R Core Team
+Maintainer: R Core Team <R-core@r-project.org>
+Description: Support for parallel computation on multicore computer systems.
+License: Part of R @VERSION@

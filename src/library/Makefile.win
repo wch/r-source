@@ -94,7 +94,7 @@ Rdfiles:
 	done
 
 vignettes:
-	@for pkg in grid utils; do \
+	@for pkg in grid parallel utils; do \
 	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
 	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
 	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \

@@ -25,7 +25,7 @@
       allows the y-line bias of the graphics device to be tweaked,
       including to reproduce output from earlier versions of \R.
 
-      \item Labeling of p-values in various anova tables has been
+      \item Labeling of the p-values in various anova tables has been
       rationalized to be either \code{"Pr(>F)"} or \code{"Pr(>Chi)"}
       (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
       variants have been eliminated).  Code which extracts the p value
@@ -35,6 +35,9 @@
       lazy-loading in packages with namespaces (which makes it consistent
       with its use for data-only packages without namespaces in earlier
       versions of \R).
+
+      \item There is a new package \pkg{parallel}.\cr
+      [Currently a stub.]
     }
   }
 
