@@ -13,7 +13,7 @@ R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
-SOURCES_C = RngStream.c
+SOURCES_C = rngstream.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o)
@@ -22,7 +22,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 
 all: Makefile Makedeps
 	@$(MAKE) Makedeps
-#	@$(MAKE) shlib
+	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

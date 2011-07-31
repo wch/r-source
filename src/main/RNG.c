@@ -141,35 +141,34 @@ double unif_rand(void)
     {
 	/* Based loosely on the GPL-ed version of
 	   http://www.iro.umontreal.ca/~lecuyer/myftp/streams00/c2010/RngStream.c
+	   but using int_least64_t, which C99 guarantees.
 	*/
 	int k;
-	double p1, p2;
+	int_least64_t p1, p2;
 
 #define II(i) (RNG_Table[RNG_kind].i_seed[i])
-#define m1    4294967087.0
-#define m2    4294944443.0
+#define m1    4294967087
+#define m2    4294944443
 #define normc  2.328306549295727688e-10
-#define a12     1403580.0
-#define a13n     810728.0
-#define a21      527612.0
-#define a23n    1370589.0
+#define a12     (int_least64_t)1403580
+#define a13n    (int_least64_t)810728
+#define a21     (int_least64_t)527612
+#define a23n    (int_least64_t)1370589
 
-	/* Component 1 */
 	p1 = a12 * (unsigned int)II(1) - a13n * (unsigned int)II(0);
+	/* p1 % m1 would surely do */
 	k = p1 / m1;
 	p1 -= k * m1;
 	if (p1 < 0.0) p1 += m1;
 	II(0) = II(1); II(1) = II(2); II(2) = p1;
 
-	/* Component 2 */
 	p2 = a21 * (unsigned int)II(5) - a23n * (unsigned int)II(3);
 	k = p2 / m2;
 	p2 -= k * m2;
 	if (p2 < 0.0) p2 += m2;
 	II(3) = II(4); II(4) = II(5); II(5) = p2;
 
-	/* Combination */
-	return ((p1 > p2) ? (p1 - p2) * normc : (p1 - p2 + m1) * normc);
+	return ((p1 > p2) ? (p1 - p2) : (p1 - p2 + m1)) * normc;
     }
     default:
 	error(_("unif_rand: unimplemented RNG kind %d"), RNG_kind);

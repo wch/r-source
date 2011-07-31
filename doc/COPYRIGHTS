@@ -460,10 +460,3 @@ From GNU coreutils 8.12
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
-
-
-src/library/parallel/src/RngStream.[ch]
-
- * Copyright:      Pierre L'Ecuyer, Université de Montréal
-
-with no date given, but the latest revision is 2010.

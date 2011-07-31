@@ -16,8 +16,9 @@ nextRNGStream(seed)
 nextRNGSubStream(seed)
 }
 \arguments{
-  \item{seed}{An integer vector of length 7: see \code{\link{RNG}} for
-    the valid values.}
+  \item{seed}{An integer vector of length 7 as given by
+    \code{.Random.seed} when the \samp{"L'Ecuyer-CMRG"} RNG is in use.
+    See \code{\link{RNG}} for the valid values.}
 }
 \details{
   The \sQuote{RngStream} interface works with (potentially) multiple
@@ -26,10 +27,19 @@ nextRNGSubStream(seed)
   separate RNG stream.
 
   This uses as its underlying generator \code{RNGkind("L'Ecuyer-CMRG")},
-  of L'Ecuyer (1999) which has a seed vector of 6 (signed) integers and a
+  of L'Ecuyer (1999), which has a seed vector of 6 (signed) integers and a
   period of around \eqn{2^{191}}{2^191}.  Each \sQuote{stream} is a
   subsequence of the period of length \eqn{2^{127}}{2^127} which is in
   turn divided into \sQuote{substreams} of length \eqn{2^{76}}{2^76}.
+
+  The idea of L'Ecuyer \emph{et al} (2002) is to use a separate stream
+  for each of the parallel computations (which ensures that the random
+  numbers generated never get into to sync) and the parallel
+  computations can themselves use substreams if required.  The original
+  interface stores the original seed of the first stream, the original
+  seed of the current stream and the current seed: this could be
+  implemented in \R, but it is as easy to work by saving the relevant
+  values of \code{.Random.seed}: see the examples.
 }
 \value{
   A value which can be assigned to \code{.Random.seed}.
