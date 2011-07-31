@@ -23,7 +23,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
                "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
-               "Knuth-TAOCP-2002", "default")
+               "Knuth-TAOCP-2002", "L'Ecuyer-CMRG", "default")
     n.kinds <- c("Buggy Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
                  "user-supplied", "Inversion", "Kinderman-Ramage",
 		 "default")
@@ -57,7 +57,7 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
                "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
-               "Knuth-TAOCP-2002", "default")
+               "Knuth-TAOCP-2002", "L'Ecuyer-CMRG", "default")
     n.kinds <- c("Buggy Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
                  "user-supplied", "Inversion", "Kinderman-Ramage",
 		 "default")

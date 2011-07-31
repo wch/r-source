@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2009    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2011    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,8 @@ typedef enum {
     MERSENNE_TWISTER,
     KNUTH_TAOCP,
     USER_UNIF,
-    KNUTH_TAOCP2
+    KNUTH_TAOCP2,
+    LECUYER_CMRG
 } RNGtype;
 
 /* Different kinds of "N(0,1)" generators :*/

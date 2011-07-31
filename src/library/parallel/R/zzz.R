@@ -16,5 +16,5 @@
 
 .noGenerics <- TRUE
 
-.onAttach <- function(...)
-    packageStartupMessage("Package 'parallel' does nothing as yet")
+##.onAttach <- function(...)
+##    packageStartupMessage("Package 'parallel' does nothing as yet")

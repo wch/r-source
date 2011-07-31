@@ -112,6 +112,22 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
       Initialization of this generator is done in interpreted \R code
       and so takes a short but noticeable time.
     }
+    \item{\code{"L'Ecuyer-CMRG":}}{
+      A \sQuote{combined multiple-recursive generator} from L'Ecuyer
+      (1999), each element of which is a feedback multiplicative
+      generator with three integer elements: thus the seed is a (signed)
+      integer vector of length 6. The period is around
+      \eqn{2^{191}}{2^191}.
+
+      The 6 elements of the seed are internally regarded as 32-bit
+      unsigned integers.  Neither the first three nor the last three
+      should be all zero, and they are limited to less than
+      \code{4294967087} and \code{4294944443} respectively.
+      
+      This is not particularly interesting of itself, but provides the
+      basis for the multiple streams used in package \pkg{parallel}.
+      % See \code{\link{RngStream}}.
+    }
 
     \item{\code{"user-supplied":}}{
       Use a user-supplied generator.  See \code{\link{Random.user}} for
@@ -220,6 +236,10 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
   printing.\cr
   See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
+  
+  L’Ecuyer, P. (1999) Good parameters and implementations for combined
+  multiple recursive random number generators. \emph{Operations
+  Research} \bold{47}, 159--164.
 
   Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion
   paper, posting on Usenet newsgroup \code{sci.stat.math} on

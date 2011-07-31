@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  The R Development Core Team
+ *  Copyright (C) 1997--2011  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,6 +72,7 @@ RNGTAB RNG_Table[] =
     { KNUTH_TAOCP,          BUGGY_KINDERMAN_RAMAGE, "Knuth-TAOCP",       1+100,	dummy},
     { USER_UNIF,            BUGGY_KINDERMAN_RAMAGE, "User-supplied",         0,	dummy},
     { KNUTH_TAOCP2,         BUGGY_KINDERMAN_RAMAGE, "Knuth-TAOCP-2002",  1+100,	dummy},
+    { LECUYER_CMRG,         BUGGY_KINDERMAN_RAMAGE, "L'Ecuyer-CMRG",         6,	dummy},
 };
 
 
@@ -136,6 +137,40 @@ double unif_rand(void)
     case USER_UNIF:
 	return *((double *) User_unif_fun());
 
+    case LECUYER_CMRG:
+    {
+	/* Based loosely on the GPL-ed version of
+	   http://www.iro.umontreal.ca/~lecuyer/myftp/streams00/c2010/RngStream.c
+	*/
+	int k;
+	double p1, p2;
+
+#define II(i) (RNG_Table[RNG_kind].i_seed[i])
+#define m1    4294967087.0
+#define m2    4294944443.0
+#define normc  2.328306549295727688e-10
+#define a12     1403580.0
+#define a13n     810728.0
+#define a21      527612.0
+#define a23n    1370589.0
+
+	/* Component 1 */
+	p1 = a12 * (unsigned int)II(1) - a13n * (unsigned int)II(0);
+	k = p1 / m1;
+	p1 -= k * m1;
+	if (p1 < 0.0) p1 += m1;
+	II(0) = II(1); II(1) = II(2); II(2) = p1;
+
+	/* Component 2 */
+	p2 = a21 * (unsigned int)II(5) - a23n * (unsigned int)II(3);
+	k = p2 / m2;
+	p2 -= k * m2;
+	if (p2 < 0.0) p2 += m2;
+	II(3) = II(4); II(4) = II(5); II(5) = p2;
+
+	/* Combination */
+	return ((p1 > p2) ? (p1 - p2) * normc : (p1 - p2 + m1) * normc);
+    }
     default:
 	error(_("unif_rand: unimplemented RNG kind %d"), RNG_kind);
 	return -1.;
@@ -201,6 +236,26 @@ static void FixupSeeds(RNGtype RNG_kind, int initial)
 	break;
     case USER_UNIF:
 	break;
+    case LECUYER_CMRG:
+	/* first set: not all zero, in [0, m1)
+	   second set: not all zero, in [0, m2) */
+    {
+	unsigned int tmp;
+	int allOK = 1;
+	for (j = 0; j < 3; j++) {
+	    tmp = RNG_Table[RNG_kind].i_seed[j];
+	    if(tmp != 0) notallzero = 1;
+	    if (tmp >= m1) allOK = 0;
+	}
+	if(!notallzero || !allOK) Randomize(RNG_kind);
+	for (j = 3; j < 6; j++) {
+	    tmp = RNG_Table[RNG_kind].i_seed[j];
+	    if(tmp != 0) notallzero = 1;
+	    if (tmp >= m2) allOK = 0;
+	}
+	if(!notallzero || !allOK) Randomize(RNG_kind);
+    }
+    break;
     default:
 	error(_("FixupSeeds: unimplemented RNG kind %d"), RNG_kind);
     }
@@ -234,6 +289,13 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	break;
     case KNUTH_TAOCP2:
 	RNG_Init_KT2(seed);
+	break;
+    case LECUYER_CMRG:
+	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
+	    seed = (69069 * seed + 1);
+	    while(seed >= m2) seed = (69069 * seed + 1);
+	    RNG_Table[kind].i_seed[j] = seed;
+	}
 	break;
     case USER_UNIF:
 	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
@@ -300,6 +362,7 @@ static void GetRNGkind(SEXP seeds)
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
     case KNUTH_TAOCP2:
+    case LECUYER_CMRG:
 	break;
     case USER_UNIF:
 	if(!User_unif_fun)
@@ -346,7 +409,7 @@ void PutRNGstate()
     int len_seed, j;
     SEXP seeds;
 
-    if (RNG_kind < 0 || RNG_kind > KNUTH_TAOCP2 ||
+    if (RNG_kind < 0 || RNG_kind > LECUYER_CMRG ||
 	N01_kind < 0 || N01_kind > KINDERMAN_RAMAGE) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
@@ -377,8 +440,9 @@ static void RNGkind(RNGtype newkind)
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
-    case KNUTH_TAOCP2:
     case USER_UNIF:
+    case KNUTH_TAOCP2:
+    case LECUYER_CMRG:
 	break;
     default:
 	error(_("RNGkind: unimplemented RNG kind %d"), newkind);

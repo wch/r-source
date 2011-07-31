@@ -1,1 +1,3 @@
 ## Namespace for package 'parallel'
+
+export(nextRNGStream, nextRNGSubStream)

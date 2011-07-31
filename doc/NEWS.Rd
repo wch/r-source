@@ -302,6 +302,10 @@
       \item New function \code{requireNamespace()} analogous to
       \code{require()}, returning a logical value after attempting to
       load a namespace.
+
+      \item There is a new type of RNG, \code{"L'Ecuyer-CMRG"}
+      implementing L'Ecuyer (1999)'s \sQuote{combined multiple-recursive
+      generator} \samp{MRG32k3a}.  See the comments on \code{?RNG}.
     }
   }
 
