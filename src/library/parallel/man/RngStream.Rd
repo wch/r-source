@@ -57,7 +57,7 @@ nextRNGSubStream(seed)
   \code{\link{RNG}} for \R's built-in random number generators.
 }
 \note{
-  An interface to L'Ecuyer's C cade is available in CRAN
+  An interface to L'Ecuyer's C code is available in CRAN
   package \pkg{rlecuyer}.
 }
 
