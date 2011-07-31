@@ -67,7 +67,6 @@ SEXP nextStream(SEXP x)
 	}
 	nseed[i+3] = tmp;
     }
-    for (int i = 0;  i < 6; i++) printf("%llu\n", nseed[i]);
     SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
     for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = nseed[i];
@@ -94,7 +93,6 @@ SEXP nextSubStream(SEXP x)
 	}
 	nseed[i+3] = tmp;
     }
-    for (int i = 0;  i < 6; i++) printf("%llu\n", nseed[i]);
     SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
     for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = nseed[i];
