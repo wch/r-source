@@ -43,15 +43,18 @@ stamp-recommended: $(OBJECTS)
 INSTALL_OPTS = --pkglock --data-compress=xz
 INSTALL_OPTS2 =@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
 
+## On e.g. Solaris/FreeBSD if the top-level make is GNU make it will
+## pass flags such as -j and -w down: so need to ensure that INSTALL
+## uses the same make.
 .tgz.ts:
 	@$(ECHO) "begin installing recommended package" `basename $< .tgz`
 	@rm -f $@.out
-## Avoid user/site libraries
+## Avoid user/site libraries, pass down MAKE
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \
-	  R_LIBS_USER= R_LIBS_SITE= \
+	  MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
 	  $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	else \
-	  R_LIBS_USER= R_LIBS_SITE= \
+	  MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
 	  $(R) CMD INSTALL $(INSTALL_OPTS) $(INSTALL_OPTS2) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	fi
 	@cat $@.out; rm $@.out
