@@ -38,7 +38,8 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) $(cairo_la)
-	@cp $(cairo_la) $(R_HOME)/library/grDevices/libs$(R_ARCH)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs@R_ARCH@
+	@cp $(cairo_la) $(top_builddir)/library/$(pkg)/libs@R_ARCH@
 
 $(top_builddir)/src/modules/X11/rbitmap.o:
 	(cd $(top_builddir)/src/modules/X11; $(MAKE) rbitmap.o)
