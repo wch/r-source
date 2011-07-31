@@ -49,41 +49,55 @@ static Uint64 A2p127[3][3] = {
 
 SEXP nextStream(SEXP x)
 {
-    Uint64 seed[6];
+    Uint64 seed[6], nseed[6], tmp;
     for (int i = 0; i < 6; i++) seed[i] = (unsigned int)INTEGER(x)[i+1];
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
+	tmp = 0;
 	for(int j = 0; j < 3; j++) {
-	    seed[i] += A1p127[i][j] * seed[j];
-	    seed[i] %= 4294967087;
+	    tmp += A1p127[i][j] * seed[j];
+	    tmp %= 4294967087;
 	}
-    for (int i = 0; i < 3; i++)
+	nseed[i] = tmp;
+    }
+    for (int i = 0; i < 3; i++) {
+	tmp = 0;
 	for(int j = 0; j < 3; j++) {
-	    seed[i+3] += A2p127[i][j] * seed[j+3];
-	    seed[i+3] %= 4294944443;
+	    tmp += A2p127[i][j] * seed[j+3];
+	    tmp %= 4294944443;
 	}
+	nseed[i+3] = tmp;
+    }
+    for (int i = 0;  i < 6; i++) printf("%llu\n", nseed[i]);
     SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
-    for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = seed[i];
+    for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = nseed[i];
     return ans;
 }
 
 SEXP nextSubStream(SEXP x)
 {
-    Uint64 seed[6];
+    Uint64 seed[6], nseed[6], tmp;
     for (int i = 0; i < 6; i++) seed[i] = (unsigned int)INTEGER(x)[i+1];
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
+	tmp = 0;
 	for(int j = 0; j < 3; j++) {
-	    seed[i] += A1p76[i][j] * seed[j];
-	    seed[i] %= 4294967087;
+	    tmp += A1p76[i][j] * seed[j];
+	    tmp %= 4294967087;
 	}
-    for (int i = 0; i < 3; i++)
+	nseed[i] = tmp;
+    }
+    for (int i = 0; i < 3; i++) {
+	tmp = 0;
 	for(int j = 0; j < 3; j++) {
-	    seed[i+3] += A2p76[i][j] * seed[j+3];
-	    seed[i+3] %= 4294944443;
+	    tmp += A2p76[i][j] * seed[j+3];
+	    tmp %= 4294944443;
 	}
+	nseed[i+3] = tmp;
+    }
+    for (int i = 0;  i < 6; i++) printf("%llu\n", nseed[i]);
     SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
-    for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = seed[i];
+    for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = nseed[i];
     return ans;
 }
 
