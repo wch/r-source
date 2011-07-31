@@ -45,14 +45,12 @@ INSTALL_OPTS=--no-lock --data-compress=xz
 .tgz.ts:
 	@$(ECHO) "begin installing recommended package" `basename $< .tgz`
 	@rm -f $@.out
-## <FIXME>
-## RG says that with FreeBSD Make calling INSTALL does not work without
-## explicitly passing down MAKE ('unrecognized option -w ...').  But
-## what is really going on?
+## On e.g. Solaris/FreeBSD if the top-level make is GNU make it will
+## pass flags such as -j and -w down: so need to ensure that INSTALL
+## uses the same make.
 ##
 ## Also, avoid any copies installed in user/site libraries
 	@MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1)
-## </FIXME>
 	@cat $@.out; rm $@.out
 	@touch $@
 
