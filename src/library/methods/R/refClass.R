@@ -667,11 +667,16 @@ accessors = function(...) {
             if(missing(value))
                 dummyField
             else {
-                value <- as(value, dummyClass)
+                if(is(value, dummyClass))
+                    value <- as(value, dummyClass, strict = FALSE)
+                else
+                    stop(gettextf("invalid replacement for field %s, should be from class %s or a subclass (was class %s)",
+                       sQuote(thisField), dQuote(dummyClass), dQuote(class(value))))
                 dummyField <<- value
                 value
             }
-        }, list(dummyField = as.name(metaName), dummyClass = fieldClass)))
+        }, list(dummyField = as.name(metaName), dummyClass = fieldClass,
+                thisField = fieldName)))
     environment(f) <- where ## <note> Does this matter? </note>
     f <- new("defaultBindingFunction", f,
              field = fieldName, className = fieldClass)

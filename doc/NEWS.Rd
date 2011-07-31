@@ -604,6 +604,11 @@
       \item Several stack trampling and overflow issues have been fixed
       in TRE, triggered by \code{agrep} and friends with long patterns.
       (\PR{14627}.)
+
+      \item (\dQuote{design infelicity}) Field assignments in reference
+      classes are now consistent with slots in S4 classes:  the
+      assigned value must come from the declared class (if any) for the field
+      or from a subclass.
     }
   }
 }

@@ -398,12 +398,12 @@ TestClass2 <- setRefClass("TestClass2",
         contains = "TestClass",
         fields = list( version = "integer"),
         methods = list(
-          initialize = function(..., version = 1)
-              callSuper(..., version = version+1))
+          initialize = function(..., version = 0L)
+              callSuper(..., version = version+1L))
   )
-tt <- TestClass2$new("test", version = 1)
+tt <- TestClass2$new("test", version = 1L)
 stopifnot(identical(tt$text, "test:"), identical(tt$version, as.integer(2)))
-tt <- TestClass2$new(version=3) # default text
+tt <- TestClass2$new(version=3L) # default text
 stopifnot(identical(tt$text, ":"), identical(tt$version, as.integer(4)))
 
 
