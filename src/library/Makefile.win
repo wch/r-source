@@ -65,7 +65,7 @@ endif
 	@touch stamp-docs
 
 # fix the order to make best use of parallel builds
-RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdts datasets.Rdts grid.Rdts tools.Rdts tcltk.Rdts splines.Rdts stats4.Rdts compiler.Rdts
+RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdts datasets.Rdts grid.Rdts tools.Rdts tcltk.Rdts splines.Rdts stats4.Rdts compiler.Rdts parallel.Rdts
 # RD-TS = $(R_PKGS_BASE:=.Rdts)
 Rd-ts: $(RD-TS)
 

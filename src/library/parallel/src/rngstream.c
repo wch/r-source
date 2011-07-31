@@ -54,12 +54,12 @@ SEXP nextStream(SEXP x)
     for (int i = 0; i < 3; i++)
 	for(int j = 0; j < 3; j++) {
 	    seed[i] += A1p127[i][j] * seed[j];
-	    seed[j] %= 4294967087;
+	    seed[i] %= 4294967087;
 	}
-    for (int i = 3; i < 6; i++)
-	for(int j = 3; j < 6; j++) {
-	    seed[i] += A2p127[i][j] * seed[j];
-	    seed[j] %= 4294944443;
+    for (int i = 0; i < 3; i++)
+	for(int j = 0; j < 3; j++) {
+	    seed[i+3] += A2p127[i][j] * seed[j+3];
+	    seed[i+3] %= 4294944443;
 	}
     SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
@@ -74,14 +74,14 @@ SEXP nextSubStream(SEXP x)
     for (int i = 0; i < 3; i++)
 	for(int j = 0; j < 3; j++) {
 	    seed[i] += A1p76[i][j] * seed[j];
-	    seed[j] %= 4294967087;
+	    seed[i] %= 4294967087;
 	}
-    for (int i = 3; i < 6; i++)
-	for(int j = 3; j < 6; j++) {
-	    seed[i] += A2p76[i][j] * seed[j];
-	    seed[j] %= 4294944443;
+    for (int i = 0; i < 3; i++)
+	for(int j = 0; j < 3; j++) {
+	    seed[i+3] += A2p76[i][j] * seed[j+3];
+	    seed[i+3] %= 4294944443;
 	}
-    SEXP ans = allocVector(INTSXP, 6);
+    SEXP ans = allocVector(INTSXP, 7);
     INTEGER(ans)[0] = INTEGER(x)[0];
     for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = seed[i];
     return ans;
