@@ -1949,7 +1949,10 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 
 .uncacheClass <- function(name, def) {
     if(exists(name, envir = .classTable, inherits = FALSE)) {
-        newpkg <- def@package
+        if(is(def, "classRepresentation")) # paranoia: should only be called this way
+            newpkg <- def@package
+        else
+            newpkg <- ""
         prev <- get(name, envir = .classTable)
         if(is(prev, "classRepresentation") &&
            identical(prev@package, newpkg) )
@@ -2096,7 +2099,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
           .removeCachedMethod("coerce", sig)
         if(existsMethod("coerce<-", sig))
           .removeCachedMethod("coerce<-", sig)
-        .uncacheClass(class, cdef)
+        if(is(cdef, "classRepresentation"))
+            .uncacheClass(class, cdef)
     }
     else
       warning(gettextf("no class %s found as expected in removing subclass %s",
@@ -2106,8 +2110,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 .deleteSubClass <- function(cdef, subclass) {
         subclasses <- cdef@subclasses
         ii <- match(subclass, names(subclasses), 0)
-        ## the subclass may not be there, e.g., if an error occured in
-        ## setClass, or (in 2.4.0) if class is sealed
+        ## the subclass may not be there, e.g., if that class has been
+        ## unloaded.
         if(ii > 0) {
             cdef@subclasses <- subclasses[-ii]
             cdef
