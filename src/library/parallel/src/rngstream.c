@@ -17,8 +17,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <R.h>
-#include <Rinternals.h>
+#include "parallel.h"
 #include <stdint.h>
 
 typedef uint_least64_t Uint64;
@@ -97,23 +96,4 @@ SEXP nextSubStream(SEXP x)
     INTEGER(ans)[0] = INTEGER(x)[0];
     for (int i = 0;  i < 6; i++) INTEGER(ans)[i+1] = nseed[i];
     return ans;
-}
-
-
-#include <R_ext/Rdynload.h>
-
-static const R_CallMethodDef callMethods[] = {
-    {"nextStream", (DL_FUNC) &nextStream, 1},
-    {"nextSubStream", (DL_FUNC) &nextSubStream, 1},
-    {NULL, NULL, 0}
-};
-
-void
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-__attribute__ ((visibility ("default")))
-#endif
-R_init_tools(DllInfo *dll)
-{
-    R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
 }

@@ -2,3 +2,4 @@
 useDynLib("parallel")
 
 export(nextRNGStream, nextRNGSubStream)
+

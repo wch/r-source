@@ -74,16 +74,25 @@ processes.  They can be created in one of three ways:
   platforms except Windows.  This creates a new \R{} process by taking
   a complete copy of the master process, including the workspace and
   state of the random-number stream.  However, the copy will usually
-  share pages with the master so forking is very fast.
+  share pages with the master until modified so forking is very fast.
 
   The use of forking was pioneered by package \pkg{multicore}.
 
-  % There needs to be a way to communicate between master and worker.
+  Note that as it does share the complete process, it also shares any
+  GUI elements, for example an \R{} console and on-screen devices.
+  This can cause havoc.
+
+  There needs to be a way to communicate between master and worker.
+  Once again there are several possibilities since master and workers
+  share memory. In this package (and \pkg{multicore}) the initial fork
+  sends an \R{} expression to be evaluated to the worker, and the
+  master package opens a pipe for reading that is used by the worker
+  to return the results.
 
 \item \emph{Via} \code{system2("Rscript")} or similar to launch a new
   process on the current machine.  This then needs a way to
-  communicate between master and worker, which is usually done
-  \emph{via} sockets.
+  communicate between master and worker processes, which is usually
+  done \emph{via} sockets.
 
   This should be available on all \R{} platforms, although it is
   conceivable that zealous security measures could block the
