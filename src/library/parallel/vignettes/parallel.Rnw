@@ -1,6 +1,7 @@
 \documentclass[a4paper]{article}
 
-\usepackage{Rd}
+\usepackage{Rd, parskip, amsmath}
+\usepackage[round]{natbib}
 
 %\VignetteIndexEntry{Package 'parallel'}
 %\VignettePackage{parallel}
@@ -16,12 +17,82 @@
 
 \section{Introduction}
 
-It is planned to added a package \pkg{parallel} in \R{} 2.14.0.
+A package \pkg{parallel} is being developed for release in \R{} 2.14.0.
+It will build on the work done for CRAN packages \pkg{multicore}
+\citep{multicore} and \pkg{snow} \citep{snow}.
 
 <<>>=
 library(parallel)
 @
 
+\section{Random-number generation}
+
+Some care is needed with parallel computation using (pseudo-)random
+numbers: the processes/trheads which run separate parts of the
+computation need to run independent (and preferably reproducible)
+random-number streams.  One way to avoid any difficulties is (where
+possible) to do all the randomization in the master process: this is
+done in package \pkg{boot} (version 1.3-1 and later).
+
+When an \R process is started up it takes the random-number seed from
+the object \code{.Random.seed} in a saved workspace or constructs one from
+the clock time (see the help on \code{RNG}).  Thus worker processes
+might get the same seed, either because a workspace was restored or
+because the workers were started at the same time: otherwise these get
+a non-reproducible seed.
+
+The alternative is to set separate seeds for each worker process in
+some reproducible way from the seed in the master process.  This is
+generally perfectly safe, but there have been worries that the
+random-number streams in the workers might somehow get into step.  One
+approach is to take the seeds a long way apart in the random-number
+stream: note that random-numbers a long (fixed) distance apart in a
+single stream are not necessarily (and often are not) as independent
+as those a short distance apart.  Yet another idea (as used by e.g.{}
+\pkg{JAGS}) is to use different random-number generators for each
+separate run.
+
+Package \pkg{parallel} contains an implementation of the ideas of
+\citet{lecuyer.2002}: this uses a single RNG and takes seeds $2^{127}$
+apart in the random number stream (which has period approximately
+$2^{191}$.  This is based on the generator of \citet{lecuyer.1999};
+the reason for choosing that generator\footnote{apart from the commonality of
+authors!} is that it has a fairly long period, and unlike \R{}'s default
+\code{"Mersenne-Twister"} RNG, it is simple to advance the seed by a
+fixed number of steps.  The generator is the combination of two:
+\begin{eqnarray*}
+  x_n &=& 1403580 \times x_{n-1} - 810728 \times x_{n-3} \mod{2^{32} - 209}\\
+  y_n &=& 527612 \times y_{n-1} - 1370589 \times y_{n-3} \mod{2^{32} - 22853}\\
+  z_n &=& (x_n - y_n) \mod{4294967087}\\
+  u_n &=& z_n/4294967088\ \mbox{unless $z_n = 0$}
+\end{eqnarray*}
+The `seed' then consists of $(x_n, x_{n-1}, x_{n-2}, y_n, y_{n-1},
+y_{n-2})$, and the recursion for each of $x_n$ and $y_n$ can have
+pre-computed coefficients for $k$ steps ahead.  For $k = 2^{127}$, the
+seed is advanced by $k$ steps by \R{} function \code{nextRNGStream(seed)}.
+
+The \citet{lecuyer.1999} generator is available in \R{} as from
+version 2.14.0 \emph{via} \code{RNGkind("L'Ecuyer-CMRG")}.  Thus using
+the ideas of \citet{lecuyer.2002} is as simple as
+\begin{verbatim}
+RNGkind("L'Ecuyer-CMRG")
+set.seed(<something>)
+## start M workers
+s <- .Random.seed
+for (i in 1:M) {
+    s <- nextRNGStream(s)
+    # send s to worker i as .Random.seed
+}
+\end{verbatim}
+
+Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
+\emph{sub-streams} starting from seeds $2^{76}$ apart.
+
+A direct \R{} interface to the (clunkier) original C implementation is
+available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.
+
+\bibliographystyle{plainnat}
+\bibliography{parallel}
 
 \end{document}
 
