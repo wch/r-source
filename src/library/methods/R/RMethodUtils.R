@@ -1674,3 +1674,24 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 ## loading of the methods package
 .methodsIsLoaded <- function()
     identical(.saveImage, TRUE)
+
+## FIXME:  write this
+## validMethod <- function(f, sig, inherited = FALSE, where = topenv(parent.frame())) {
+##     if(is(f, "genericFunction")) {
+##         fdef <- f
+##         f <- fdef@generic
+##     }
+##     else if(is.character(f))
+##         fdef <- getGeneric(f, TRUE, where = where)
+##     else stop(gettextf("f must be a generic function or a string, got an object of class %s", dquote(class(f))))
+##     pkg <- fdef@package
+##     method <- if(inherited)
+##         selectMethod(f, sig, where = where, fdef = fdef)
+##     else
+##         getMethod(f, sig, where = where, fdef = fdef)
+##     problems <- character()
+##     if(is(method, "MethodDefinition")) {
+##     }
+##     else 
+    
+    

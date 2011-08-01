@@ -617,6 +617,11 @@
       classes are now consistent with slots in S4 classes:  the
       assigned value must come from the declared class (if any) for the field
       or from a subclass.
+
+      \item The methods objects constructed for \code{"coerce"} and
+      \code{"coerce<-"} were lacking some essential information in the
+      \code{generic}, \code{defined} and \code{target} slots;
+      \code{as()} did not handle duplicate class definitions correctly.
     }
   }
 }

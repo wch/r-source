@@ -26,14 +26,14 @@ as <-
 {
     ## prior to 2.7.0 there was a pseudo-class "double"
     if(.identC(Class, "double")) Class <- "numeric"
-    thisClass <- .class1(object) ## always one string
+    thisClass <- .class1(object)
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
     where <- .classEnv(thisClass, mustFind = FALSE)
     coerceFun <- getGeneric("coerce", where = where)
     ## get the methods table, use inherited table
     coerceMethods <- .getMethodsTable(coerceFun,environment(coerceFun),inherited= TRUE)
-    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
+    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods, where)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
         ## packageSlot(sig) <- where
@@ -72,7 +72,7 @@ as <-
                 inherited <- TRUE
             }
             else if(canCache)  # make into method definition
-                asMethod <- .asCoerceMethod(asMethod, sig, FALSE)
+                asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, FALSE, where)
 	    if(is.null(asMethod))
 		stop(gettextf("no method or default for coercing \"%s\" to \"%s\"",
 			      thisClass, Class), domain = NA)
@@ -89,18 +89,15 @@ as <-
         asMethod(object, strict = FALSE)
 }
 
-.quickCoerceSelect <- function(from, to, fdef, methods) {
+.quickCoerceSelect <- function(from, to, fdef, methods, where) {
     if(is.null(methods))
         return(NULL)
     else if(is.environment(methods)) {
-      ##FIXME:  this may fail if sig's need package informatiion as
-      ##well.  Problem is that we would like new("signature.",...)
-      ##here but that fails when methods package is booting
-        label <- .sigLabel(c(from, to))
-        if(exists(label, envir = methods, inherits = FALSE))
-          get(label, envir = methods)
+        method <- .findMethodInTable(c(from, to), methods)
+        if(is.environment(method))
+            NULL # FIXME:  should resolve by checking package
         else
-          NULL
+            method
     }
     else {
         allMethods <- methods@allMethods
@@ -151,7 +148,7 @@ as <-
     where <- .classEnv(class(object))
     coerceFun <- getGeneric("coerce<-", where = where)
     coerceMethods <- getMethodsForDispatch(coerceFun)
-    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
+    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods, where)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
         canCache <- TRUE
@@ -170,7 +167,8 @@ as <-
                     asMethod <- asMethod@replace
                     canCache <- (!is(test, "function")) || identical(body(test), TRUE)
                     if(canCache) { ##the replace code is a bare function
-                        asMethod <- .asCoerceMethod(asMethod, sig, TRUE)
+                        ClassDef <- getClassDef(Class, where)
+                        asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, TRUE, where)
                     }
                 }
             }
@@ -397,22 +395,28 @@ canCoerce <- function(object, Class) {
 }
 
 ## turn raw function into method for coerce() or coerce<-()
-## Very primitive to survive bootstrap stage, so includes knowledge of
-## the classes and does no checking.
-.asCoerceMethod <- function(def, sig, replace) {
+## Cheats a little to get past booting the methods package
+## (mainly in knowing the slots of the "signature" class).
+.asCoerceMethod <- function(def, thisClass, ClassDef, replace, where) {
     fdef <-
 	if(replace) quote(function(from, to = TO, value) NULL)
 	else	    quote(function(from, to = TO, strict = TRUE) NULL)
-    fdef[[2L]]$to <- sig[[2L]]
+    fdef[[2L]]$to <- ClassDef@className
     fdef <- eval(fdef)
     body(fdef, environment(def)) <- body(def)
     attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()
+    sig <- new("signature")
+    sig@.Data <- c(thisClass, ClassDef@className)
+    sig@names <- c("from", "to")
+    thisPackage <- packageSlot(thisClass)
+    sig@package <- if(is.null(thisPackage))
+        c(getPackageName(where, FALSE), ClassDef@package) else
+        c(thisPackage, ClassDef@package)
     value <- new("MethodDefinition")
     value@.Data <- fdef
-    classes <- new("signature")
-    classes@.Data <- sig
-    classes@names <- c("from", "to")
-    value@target <- classes
-    value@defined <- classes
+    value@target <- sig
+    value@defined <- sig
+    value@generic <- structure( #FIXME: there should be a genericName()
+                if(replace) "coerce<-" else "coerce", package = "methods")
     value
 }
