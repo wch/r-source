@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-07-11 r56352)
+R Under development (unstable) (2011-07-31 r56578)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -1734,7 +1734,7 @@ armed.forces
 > plot(cars)
 > lines(lowess(cars))
 > 
-> plot(sin, -pi, 2*pi)
+> plot(sin, -pi, 2*pi) # see ?plot.function
 > 
 > ## Discrete Distribution Plot:
 > plot(table(rpois(100,5)), type = "h", col = "red", lwd=10,
@@ -1989,7 +1989,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x363db48>
+<bytecode: 0x1f08a00>
 <environment: namespace:graphics>
 > 
 > 
@@ -2893,7 +2893,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x4fdfbf8>
+<bytecode: 0x2e92e00>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2973,7 +2973,7 @@ function (xy = 1, warn.log = TRUE)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.301 0.087 4.412 0 0 
+Time elapsed:  4.237 0.094 4.354 0 0 
 > grDevices::dev.off()
 null device 
           1 
