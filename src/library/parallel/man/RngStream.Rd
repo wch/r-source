@@ -45,7 +45,7 @@ nextRNGSubStream(seed)
   A value which can be assigned to \code{.Random.seed}.
 }
 \references{
-  L’Ecuyer, P. (1999) Good parameters and implementations for combined
+  L'Ecuyer, P. (1999) Good parameters and implementations for combined
   multiple recursive random number generators. \emph{Operations
   Research} \bold{47}, 159--164.
   
