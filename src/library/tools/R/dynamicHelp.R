@@ -19,6 +19,8 @@
 ##  R.css, favicon.ico
 ##  searches with path = "/doc/html/Search"
 ##  documentation with path = "/doc/....", possibly updated under tempdir()/.R
+##  demos with path "/demo/*"
+##  Running demos, using path "/Demo/*"
 ##  html help, either by topic, /library/<pkg>/help/<topic> (pkg=NULL means any)
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
@@ -52,26 +54,9 @@ httpd <- function(path, query, ...)
             			    package=pkg)
      	    if (file.exists(filename)) {
      	    	vignettes <- readRDS(filename)
-     	    	out <- c(out, paste('<h2>Manuals in package', sQuote(pkg),'</h2>'),
-     	    	              '<ul>')
-     	    	for (i in seq_len(nrow(vignettes))) {
-     	    	    manual <- vignettes$Title[i]
-     	    	    if (nchar(vignettes$PDF[i]))
-     	    	    	manual <- c(manual, 
-     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$PDF[i],
-     	    	    	    	  '">PDF</a>', sep=''))
-     	    	    if (nchar(vignettes$File[i]))
-     	    	    	manual <- c(manual,
-     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$File[i],
-     	    	    	    	  '">source</a>', sep=''))
-     	    	    if (nchar(vignettes$R[i]))
-     	    	    	manual <- c(manual,
-     	    	    	    paste(' <a href="../../library/', pkg, '/doc/', vignettes$R[i],
-     	    	    	    	  '">R code</a>', sep=''))     	    	    	    	  
-     	    	    out <- c(out, paste('<li>', paste(manual, collapse=''), '</li>', sep=''))
-     	    	 }
-     	    	 out <- c(out, '</ul>')
-     	    }
+         	out <- c(out, paste('<h2>Manuals in package', sQuote(pkg),'</h2>', sep=""),
+         		 makeVignetteTable(cbind(Package=pkg, as.matrix(vignettes[,c("File", "Title", "PDF", "R")]))))
+            }
      	}
         out <- c(out, "<hr>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
@@ -79,29 +64,81 @@ httpd <- function(path, query, ...)
 
     .HTMLsearch <- function(query)
     {
+    	bool <- function(x) as.logical(as.numeric(x))
         res <- if(identical(names(query), "category"))
             help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)$matches
         else {
-            nm <- names(query)
-            m <- match("exact", nm)
-            if(is.na(m)) help.search(query[1L], nm, verbose = 1L, use_UTF8 = TRUE)$matches
-            else help.search(query[1L], nm[-m], agrep = FALSE, use_UTF8 = TRUE)$matches
+            fields = c("alias", "concept", "title")
+            args <- list(pattern = ".")
+            for (i in seq_along(query)) 
+            	switch(names(query)[i],
+            		pattern = args$pattern <- query[i],
+            		title = if (!bool(query[i])) fields <- setdiff(fields, "title"),
+            		keyword = if (bool(query[i])) fields <- union(fields, "keyword"),
+            		alias = if (!bool(query[i])) fields <- setdiff(fields, "alias"),
+            		concept = if (!bool(query[i])) fields <- setdiff(fields, "concept"),
+            		name = if (bool(query[i])) fields <- union(fields, "name"),
+            		agrep = { 
+            		    args$agrep <- as.logical(query[i])
+            		    if (is.na(args$agrep))
+            		    	args$agrep <- as.numeric(query[i])
+            		    if (is.na(args$agrep))
+            		     	args$agrep <- query[i]
+            		},
+            		ignore.case = args$ignore.case <- bool(query[i]),
+            		types = args$types <- strsplit(query[i], ";")[[1L]],
+            		package = args$package <- strsplit(query[i], ";")[[1L]],
+            		lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
+            		warning("Unrecognized search field: ", names(query)[i]))
+            args$fields <- fields
+            args$use_UTF8 <- TRUE
+            do.call(help.search, args)
         }
+        types <- res$types
+        res <- res$matches
         title <- "Search Results"
         out <- c(HTMLheader(title),
-                 paste('The search string was <b>"', query[1L], '"</b><hr>\n',
-                       sep=""))
-        if(nrow(res)) {
-            paths <- paste("/library/", res[, "Package"], "/html/",
-                           res[, "name"], ".html", sep = "")
-            urls <- paste('<a href="', paths, '">',
-                          res[, "Package"], "::", res[, "topic"],
-                          '</a>', sep = "")
-            out <- c(out, "<dl>",
-                     paste("<dt>", urls, "</dt>\n",
-                           "<dd>", res[, "title"], "</dd>", sep = ""),
-                     "</dl>")
-        } else out <- c(out, gettext("No results found"))
+                 if ("pattern" %in% names(query)) 
+                     paste('The search string was <b>"', query["pattern"], '"</b>',sep=""),
+                 '<hr>\n')
+                       
+        if(!NROW(res)) 
+            out <- c(out, gettext("No results found"))
+        else {
+            vigfile0 <- ""
+            vigDB <- NULL
+            for (type in types) {
+		if(NROW(temp <- res[res[,"Type"] == type,,drop=FALSE]) > 0) 
+		    switch(type,
+		    vignette = {
+			out <- c(out, paste("<h3>", gettext("Vignettes:"), "</h3>", sep=""), "<dl>")
+			n <- NROW(temp)
+			vignettes <- matrix("", n, 5)
+			colnames(vignettes) <- c("Package", "File",
+			                         "Title", "PDF","R")
+			for (i in seq_len(NROW(temp))) {
+			    topic <- temp[i, "topic"]
+			    pkg <- temp[i, "Package"]
+			    vigfile <- file.path(temp[i, "LibPath"], "Meta", "vignette.rds")
+			    if (!identical(vigfile, vigfile0)) {
+			    	vigDB <- readRDS(vigfile)
+			    	vigfile0 <- vigfile
+			    }
+			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$File),]
+			    vignettes[i,] <- c(pkg, unlist(vignette[,c("File", "Title", "PDF", "R")]))
+			 }
+			 out <- c(out, makeVignetteTable(vignettes))
+		    },
+		    demo = {
+			out <- c(out, paste("<h3>", gettext("Code demonstrations:"), "</h3>", sep=""))
+			out <- c(out, makeDemoTable(temp))
+		    },
+		    help = {
+			out <- c(out, paste("<h3>", gettext("Help pages:"), "</h3>", sep=""))
+			out <- c(out, makeHelpTable(temp))
+		    })
+	    }
+        }
         out <- c(out, "<hr>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
     }
@@ -177,6 +214,8 @@ httpd <- function(path, query, ...)
     topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
+    demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
+    DemoRegexp <- "^/library/([^/]*)/Demo/([^/]*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     sessionRegexp <- "^/session/"
@@ -324,7 +363,7 @@ httpd <- function(path, query, ...)
                                              sep = ""),
                                        up))
             else
-                return(list(file = file, "content-type" = mime_type(path)))
+                return(list(file = file, "content-type" = mime_type(rest)))
         } else {
             ## request to list <pkg>/doc
             return(.HTMLdirListing(docdir,
@@ -333,9 +372,30 @@ httpd <- function(path, query, ...)
         }
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
-    	demos <- demo(package=pkg)
-    	return( list(payload = paste(toHTML(demos, title=paste("Demos in package", sQuote(pkg)),
-    	                                    up="html/00Index.html"), collapse="\n")) )
+    	
+    	url <- paste("http://127.0.0.1:", httpdPort,
+                      "/doc/html/Search?package=", 
+                      pkg, "&agrep=FALSE&types=demo", sep="")
+    	return(list(payload = paste('Redirect to <a href="', url, 
+    				'">help.search()</a>', sep=''),
+		    		"content-type" = 'text/html',
+		    		header = paste('Location: ', url, sep=''),
+	    		"status code" = 302L)) # temporary redirect
+    } else if (grepl(demosRegexp, path)) {
+	    pkg <- sub(demosRegexp, "\\1", path)
+	    demo <- sub(demosRegexp, "\\2", path)
+	    file <- system.file(file.path("demo", demo), package=pkg) 
+	    return(list(file = file, "content-type" = mime_type(demo)))
+
+    } else if (grepl(DemoRegexp, path)) {
+    	pkg <- sub(DemoRegexp, "\\1", path)
+    	demo <- sub(DemoRegexp, "\\2", path)
+    	demo(demo, package=pkg, character.only=TRUE, ask=FALSE)
+	return( list(payload = paste("Demo '", pkg, "::", demo, 
+				"' was run in the console.",
+				" To repeat, type 'demo(",
+				pkg, "::", demo, 
+				")' in the console.", sep="")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
     	formatted <- toHTML(news(package = pkg),
@@ -350,11 +410,11 @@ httpd <- function(path, query, ...)
         pkg <- sub(figureRegexp, "\\1", path)
         fig <- sub(figureRegexp, "\\3", path)
         file <- system.file("help", "figures", fig, package=pkg)
-        return( list(file=file, "content-type" = mime_type(path)) )
+        return( list(file=file, "content-type" = mime_type(fig)) )
     } else if (grepl(sessionRegexp, path)) {
         tail <- sub(sessionRegexp, "", path)
     	file <- file.path(tempdir(), tail)
-    	return( list(file=file, "content-type" = mime_type(path)) )
+    	return( list(file=file, "content-type" = mime_type(tail)) )
     } else if (grepl(cssRegexp, path)) {
     	pkg <- sub(cssRegexp, "\\1", path)
         return( list(file = system.file("html", "R.css", package = pkg),
@@ -366,8 +426,8 @@ httpd <- function(path, query, ...)
             file <- system.file("DESCRIPTION", package = pkg)
             return(list(file = file, "content-type" = "text/plain"))
         } else
-            return(error_page(gettextf("Only help files, %s, %s and files under %s in a package can be viewed", mono("NEWS"),
-                              mono("DESCRIPTION"), mono("doc/"))))
+            return(error_page(gettextf("Only help files, %s, %s and files under %s and %s in a package can be viewed", mono("NEWS"),
+                              mono("DESCRIPTION"), mono("doc/"), mono("demo/"))))
     }
 
     ## ----------------------- R docs ---------------------

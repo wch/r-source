@@ -2163,7 +2163,8 @@ Others you may see are @code{\VignettePackage} (currently ignored),
 @code{\VignetteDepends} and @code{\VignetteKeyword} (which replaced
 @code{\VignetteKeywords}).  These are processed at package installation
 time to create the saved data frame @file{Meta/vignette.rds}, but only
-the @code{\VignetteIndexEntry} statements are currently used.
+the @code{\VignetteIndexEntry} and @code{\VignetteKeyword} statements 
+are currently used.
 
 At install time an @HTML{} index for all vignettes in the package is
 automatically created from the @code{\VignetteIndexEntry} statements

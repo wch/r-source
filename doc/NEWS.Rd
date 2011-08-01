@@ -306,6 +306,11 @@
       \item There is a new type of RNG, \code{"L'Ecuyer-CMRG"}
       implementing L'Ecuyer (1999)'s \sQuote{combined multiple-recursive
       generator} \samp{MRG32k3a}.  See the comments on \code{?RNG}.
+      
+      \item \code{help.search()} and \code{??} will now display
+      vignettes and demos as well as help pages.  The new option
+      \code{help.search.types} controls the types of documentation
+      and the order of the display.
     }
   }
 

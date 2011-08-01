@@ -439,10 +439,7 @@ function(x, ...)
 function(pkg, con, vignetteIndex = NULL)
 {
     ## FIXME: in principle we could need to set an encoding here
-    html <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
-              paste("<html><head><title>R:", pkg, "vignettes</title>"),
-              '<link rel="stylesheet" type="text/css" href="../html/R.css">',
-              "</head><body>",
+    html <- c(HTMLheader("Vignettes"),
               paste("<h2>Vignettes from package '", pkg,"'</h2>", sep = ""))
 
     if(is.null(vignetteIndex) || nrow(vignetteIndex) == 0L) {
@@ -451,19 +448,8 @@ function(pkg, con, vignetteIndex = NULL)
               "Sorry, the package contains no vignette meta-information nor an index.",
               'Please browse the <a href=".">directory</a>.')
     } else {
-        ## We must not assume that there are PDFs: by default the
-        ## grid vignettes are installed without PDFs.
-        oneLink <- function(s) {
-            ## Format as used in utils::browseVignettes()
-            sprintf("  <li>%s  -  \n    %s  \n    %s  \n    %s \n  </li>\n",
-                    s[, "Title"],
-                    ifelse(nzchar(pdf<- s[, "PDF"]),
-                           sprintf("<a href='%s'>PDF</a>&nbsp;", pdf), ""),
-                    ifelse(nzchar(rcode <- s[, "R"]),
-                           sprintf("<a href='%s'>R</a>&nbsp;", rcode), ""),
-                    sprintf("<a href='%s'>LaTeX/noweb</a>&nbsp;", s[, "File"]))
-        }
-        html <- c(html, oneLink(vignetteIndex))
+    	vignetteIndex <- cbind(Package=pkg, as.matrix(vignetteIndex[,c("File", "Title", "PDF", "R")]))
+        html <- c(html, makeVignetteTable(vignetteIndex, depth=3))
     }
     html <- c(html, "</body></html>")
     writeLines(html, con=con)

@@ -60,8 +60,15 @@ function(topic, package = NULL, lib.loc = NULL,
 	return(y)
     }
 
-    if(!character.only)
-	topic <- as.character(substitute(topic))
+    if(!character.only) {
+    	topic <- substitute(topic)
+    	if (is.call(topic) && (topic[[1L]] == "::" || topic[[1L]] == ":::")) {
+	    package <- as.character(topic[[2L]])
+	    topic <- as.character(topic[[3L]])
+	} else 
+	    topic <- as.character(topic)
+    }
+    
     available <- character()
     paths <- file.path(paths, "demo")
     for(p in paths) {

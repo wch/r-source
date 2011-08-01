@@ -467,6 +467,9 @@ getOption(x, default = NULL)
 
     \item{\code{help.ports}:}{optional integer vector for setting ports
       of the internal HTTP server, see \code{\link{startDynamicHelp}}.}
+      
+    \item{\code{help.search.types}:}{default types of documentation
+      to be searched by \code{\link{help.search}} and \code{\link{??}}.}
 
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}

@@ -1,8 +1,8 @@
 
-R Under development (unstable) (2011-07-18 r56407)
+R Under development (unstable) (2011-07-31 r56576)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -44,7 +44,7 @@ Type 'q()' to quit R.
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css">
 </head><body>
 <h1> This is a sample header
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]"></h1>
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]">
 </h1>
 <hr>
 <div align="center">
@@ -101,7 +101,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x22016e8>
+<environment: 0x020f19a8>
 
 $showURLs
 [1] FALSE
@@ -135,7 +135,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x22016e8>
+<environment: 0x020f19a8>
 
 $showURLs
 [1] FALSE
@@ -169,7 +169,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x22016e8>
+<environment: 0x020f19a8>
 
 $showURLs
 [1] FALSE
@@ -232,7 +232,7 @@ $underline_titles
 +     pages = "211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +        .init = TRUE)
-<environment: 0x1861e18>
+<environment: 0x01788254>
 > print(refs, .bibstyle = "unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
@@ -706,7 +706,7 @@ NULL
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css">
 </head><body>
 <h1> R
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]"></h1>
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]">
 </h1>
 <hr>
 <div align="center">
@@ -851,7 +851,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.547 0.022 0.836 0 0 
+Time elapsed:  0.37 0.14 0.58 NA NA 
 > grDevices::dev.off()
 null device 
           1 

@@ -19,7 +19,7 @@ function(title="R", logo=TRUE,
 	paste('<h1>', title))
     if (logo)
     	result <- c(result, paste('<img class="toplogo" src="',
-	      file.path(Rhome, 'doc/html/logo.jpg'), '" alt="[R logo]"></h1>', sep=''))
+	      file.path(Rhome, 'doc/html/logo.jpg'), '" alt="[R logo]">', sep=''))
     result <- c(result, '</h1>', '<hr>')
     if (!is.null(up) || !is.null(top)) {
     	result <- c(result, '<div align="center">')
@@ -142,4 +142,95 @@ function(x, ...)
                     })
              ),
       "</body></html>")
+}
+
+# To support static linking, URLs should be relative.
+# Argument "depth" below says how far down in the hierarchy
+# we are starting from, e.g. /library/stats/html/mean.html
+# is depth 3
+
+makeVignetteTable <- function(vignettes, depth=2) {
+    out <- c('<table width="100%">',
+	      '<col width="22%">',
+	      '<col width="2%">',
+	      '<col width="50%">',
+	      '<col width="8%">',
+	      '<col width="8%">',
+	      '<col width="8%">')
+    for (i in seq_len(nrow(vignettes))) {
+	topic <- file_path_sans_ext(vignettes[i, "File"])
+	Title <- vignettes[i, "Title"]
+	PDF   <- vignettes[i, "PDF"]
+	File  <- vignettes[i, "File"]
+	R     <- vignettes[i, "R"]
+	pkg   <- vignettes[i, "Package"]
+        root <- c(rep("../", depth), "library/", pkg, "/doc/")
+	link  <- c('<a href="', root, 
+		  if (nchar(PDF)) PDF else File, '">', 
+		  pkg, "::", topic, '</a>')
+	line <- c('<tr><td align="right" valign="top">', link, 
+		    '</td>\n<td></td><td valign="top">', Title, 
+		    '</td>\n<td valign="top">', 
+		    if (nchar(PDF))
+			c('<a href="', root, PDF,'">PDF</a>'),
+		    '</td>\n<td valign="top">',
+		    '<a href="', root, File,'">source</a>',
+		    '</td>\n<td valign="top" nowrap>',
+		    if (nchar(R))
+		    	c('<a href="', root, R,'">R code</a>'),
+		    '</td></tr>')      
+	out <- c(out, paste(line, collapse=''))
+     }
+     c(out, '</table>')
+}
+
+makeDemoTable <- function(demos, depth=2) {
+    out <- c('<table width="100%">',
+	      '<col width="22%">',
+	      '<col width="2%">',
+	      '<col width="54%">',
+	      '<col width="20%">')
+    for (i in seq_len(nrow(demos))) {
+	topic <- demos[i, "topic"]
+	pkg <- demos[i, "Package"]
+        root <- c(rep("../", depth), "library/", pkg, "/")	      
+	Title <- demos[i, "title"]
+	path <- file.path(demos[i, "LibPath"], "demo")
+	files <- basename(list_files_with_type(path, "demo", full.names=FALSE))
+	file <- files[topic == file_path_sans_ext(files)]
+	if (length(file) == 1) { 
+	    link <- c('<a href="', root, 'demo/', file, '">', 
+			  pkg, "::", topic, '</a>')
+	    runlink <- c(' <a href="', root, 'Demo/', topic, 
+	                 '">(Run demo in console)</a>')					  	
+	} else {
+	    link <- c(pkg, "::", topic)
+	    runlink <- ""
+	}
+	line <- c('<tr><td align="right" valign="top">', link, 
+		    '</td>\n<td></td><td valign="top">', Title, 
+		    '</td>\n<td valign="top" nowrap>', runlink, 
+		    '</td></tr>')      
+	out <- c(out, paste(line, collapse=''))
+     }
+     c(out, '</table>')
+}
+
+makeHelpTable <- function(help, depth=2) {
+    out <- c('<table width="100%">',
+	      '<col width="22%">',
+	      '<col width="2%">',
+	      '<col width="74%">')
+    pkg <- help[,"Package"]
+    root <- paste(paste(rep("../", depth), collapse=""),
+                  "library/", pkg, "/html/", sep="")	      
+    topic <- help[, "topic"]
+    Title <- help[, "title"]
+    links <- paste('<a href="', root, topic, '.html">',
+		   ifelse(nchar(pkg), paste(pkg, "::", sep=""), ""),
+		   topic, '</a>', sep = "")
+    lines <- paste('<tr><td align="right" valign="top">', links, 
+		   '</td>\n<td></td><td valign="top">', Title, 
+		   '</td></tr>', sep="")  
+    c(out, lines, '</table>')
 }
