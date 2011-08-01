@@ -2856,7 +2856,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     const char *host, *open;
-    int ncon, port, server, blocking;
+    int ncon, port, server, blocking, timeout;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -2887,9 +2887,11 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
+    args = CDR(args);
+    timeout = asInteger(CAR(args));
 
     ncon = NextConnection();
-    con = R_newsock(host, port, server, open);
+    con = R_newsock(host, port, server, open, timeout);
     Connections[ncon] = con;
     con->blocking = blocking;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */

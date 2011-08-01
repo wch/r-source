@@ -41,7 +41,7 @@ readChild <- function (child)
 
 children <- function (select)
 {
-    p <- .Call("mc_children", PACKAGE = "multicore")
+    p <- .Call("mc_children", PACKAGE = "parallel")
     if (!missing(select))
         p <- p[p %in% processID(select)]
     lapply(p, function(x) structure(list(pid = x),

@@ -33,7 +33,7 @@ static R_InternetRoutines routines, *ptr = &routines;
 /*
 SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env);
 Rconnection R_newurl(char *description, char *mode);
-Rconnection R_newsock(char *host, int port, int server, char *mode);
+Rconnection R_newsock(char *host, int port, int server, char *mode, int timeout);
 
 
 Next 6 are for use by libxml, only
@@ -143,11 +143,12 @@ Rconnection attribute_hidden R_newurl(const char *description,
 }
 
 Rconnection attribute_hidden
-R_newsock(const char *host, int port, int server, const char * const mode)
+R_newsock(const char *host, int port, int server, const char * const mode,
+	  int timeout)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
-	return (*ptr->newsock)(host, port, server, mode);
+	return (*ptr->newsock)(host, port, server, mode, timeout);
     else {
 	error(_("internet routines cannot be loaded"));
 	return (Rconnection)0;

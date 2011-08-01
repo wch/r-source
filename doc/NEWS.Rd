@@ -312,6 +312,8 @@
       vignettes and demos as well as help pages.  The new option
       \code{help.search.types} controls the types of documentation
       and the order of the display.
+      
+      \item \code{socketConnection()} now has a \code{timeout} argument.
     }
   }
 

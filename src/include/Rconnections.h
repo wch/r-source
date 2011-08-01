@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2008   The R Development Core Team.
+ *  Copyright (C) 2000-2011   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,6 +81,7 @@ typedef struct sockconn {
     int port;
     int server;
     int fd;
+    int timeout;
     char *host;
     char inbuf[4096], *pstart, *pend;
 } *Rsockconn;
@@ -105,8 +106,8 @@ Rboolean switch_stdout(int icon, int closeOnExit);
 void init_con(Rconnection new, const char *description, int enc,
 	      const char * const mode);
 Rconnection R_newurl(const char *description, const char * const mode);
-Rconnection R_newsock(const char *host, int port, int server, const char * const mode);
-Rconnection in_R_newsock(const char *host, int port, int server, const char *const mode);
+Rconnection R_newsock(const char *host, int port, int server, const char * const mode, int timeout);
+Rconnection in_R_newsock(const char *host, int port, int server, const char *const mode, int timeout);
 Rconnection R_newunz(const char *description, const char * const mode);
 int dummy_fgetc(Rconnection con);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);

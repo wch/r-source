@@ -974,7 +974,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"rawConnectionValue",do_rawconvalue,0, 11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnection",do_textconnection,0,	11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"textConnectionValue",do_textconvalue,0,11,    1,      {PP_FUNCALL, PREC_FN,	0}},
-{"socketConnection",do_sockconn,0,	11,     6,      {PP_FUNCALL, PREC_FN,	0}},
+{"socketConnection",do_sockconn,0,	11,     7,      {PP_FUNCALL, PREC_FN,	0}},
 {"sockSelect",do_sockselect,	0,	11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"getConnection",do_getconnection,0,	11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getAllConnections",do_getallconnections,0,11, 0,      {PP_FUNCALL, PREC_FN,	0}},

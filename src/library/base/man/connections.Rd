@@ -63,7 +63,8 @@ fifo(description, open = "", blocking = FALSE,
 
 socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
-                 encoding = getOption("encoding"))
+                 encoding = getOption("encoding"),
+                 timeout = getOption("timeout"))
 
 open(con, \dots)
 \method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
@@ -94,6 +95,7 @@ isIncomplete(con)
     applied when writing, from none to maximal available.  For
     \code{xzfile} can also be negative: see the \sQuote{Compression}
     section.}
+  \item{timeout}{numeric: the timeout to be used for this connection.} 
   \item{filename}{a filename within a zip file.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
