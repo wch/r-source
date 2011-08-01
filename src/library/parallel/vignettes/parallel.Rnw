@@ -1,7 +1,21 @@
 \documentclass[a4paper]{article}
 
-\usepackage{Rd, parskip, amsmath}
+\usepackage{Rd, parskip, amsmath, enumerate}
 \usepackage[round]{natbib}
+\usepackage{hyperref}
+\usepackage{color}
+\definecolor{Blue}{rgb}{0,0,0.8}
+\hypersetup{%
+colorlinks,%
+plainpages=true,%
+linkcolor=black,%
+citecolor=black,%
+urlcolor=Blue,%
+pdfstartview=FitH,% or Fit
+pdfview={XYZ null null null},%
+pdfpagemode=UseNone,% for no outline
+pdfauthor={R-core}%
+}
 
 %\VignetteIndexEntry{Package 'parallel'}
 %\VignettePackage{parallel}
@@ -21,20 +35,93 @@ A package \pkg{parallel} is being developed for release in \R{} 2.14.0.
 It will build on the work done for CRAN packages \pkg{multicore}
 \citep{multicore} and \pkg{snow} \citep{snow}.
 
-<<>>=
-library(parallel)
-@
+Parallelism can be done in computation at many different levels: this
+package is principally concerned with `coarse-grained
+parallelization'.  At the lowest level, modern CPUs can do several
+basic operations in parallel (e.g.{} integer and floating-point
+arithmetic), and several implementations of external BLAS libraries
+use multiple threads to do parts of basic vector/matrix operations in
+parallel.
+
+This package is about running much larger chunks of computations in
+parallel.  A typical example is to evaluate the same \R{} function on
+many different sets of data: often simulated data as in bootstrap
+computations.  The crucial point is that these chunks are unrelated
+and do not need to communicate in any way.  It is also important
+that the chunks take approximately the same length of time.  The basic
+computational model is
+\begin{enumerate}[(a)]
+\item Start up $M$ `worker' processes, and do any initialization
+  needed on the workers.
+\item Send any data required to the workers.
+\item Split the task into $M$ roughly equally-sized chunks, and send
+  the chunks (including the \R{} code needed) to the workers.
+\item Wait for all the workers to complete their tasks, and ask them
+  for their results.
+\item Repeat steps (b--d) for any further tasks.
+\item Shut down the worker processes.
+\end{enumerate}
+Amongst the initializations which may be needed are to load packages
+and initialize the random-number stream.
+
+In principle the workers could be implemented by threads or
+lightweight processes, but in the current implementation they are full
+processes.  They can be created in one of three ways:
+\begin{enumerate}
+\item \emph{Via} forking.  \emph{Fork} is a
+  concept\footnote{\url{http://en.wikipedia.org/wiki/Fork_(operating_system)}}
+  from POSIX operating systems, and should be available on all \R{}
+  platforms except Windows.  This creates a new \R{} process by taking
+  a complete copy of the master process, including the workspace and
+  state of the random-number stream.  However, the copy will usually
+  share pages with the master so forking is very fast.
+
+  The use of forking was pioneered by package \pkg{multicore}.
+
+  % There needs to be a way to communicate between master and worker.
+
+\item \emph{Via} \code{system2("Rscript")} or similar to launch a new
+  process on the current machine.  This then needs a way to
+  communicate between master and worker, which is usually done
+  \emph{via} sockets.
+
+  This should be available on all \R{} platforms, although it is
+  conceivable that zealous security measures could block the
+  inter-process communication \emph{via} sockets.
+
+\item Using OS-level facilities to set up a means to send tasks to
+  other members of a group of machines.  There are several ways to do
+  that, and for example package \pkg{snow} can make use of PVM
+  (`parallel virtual machine') and MPI (`message passing interface')
+  using \R{} packages \pkg{rpvm} and \pkg{Rmpi} respectively.
+  Communication overheads can dominate computation times in this
+  approach, so it is most often used on tightly-coupled clusters of
+  computers with high-speed interconnects.  It will not be considered
+  further in this package.
+\end{enumerate}
+
+The landscape of parallel computing has changed with the advent of
+shared-memory computers with multiple (and often many) CPU cores.
+Until the late 2000's parallel computing was mainly done on clusters
+of large numbers of single or dual CPU computers: nowadays even
+laptops have two or four cores, and servers with 8, 12 or more are
+commonplace.  It is such hardware that package \pkg{parallel} is
+designed to exploit.
+
+%<<>>=
+%library(parallel)
+%@
 
 \section{Random-number generation}
 
 Some care is needed with parallel computation using (pseudo-)random
-numbers: the processes/trheads which run separate parts of the
+numbers: the processes/threads which run separate parts of the
 computation need to run independent (and preferably reproducible)
 random-number streams.  One way to avoid any difficulties is (where
 possible) to do all the randomization in the master process: this is
 done in package \pkg{boot} (version 1.3-1 and later).
 
-When an \R process is started up it takes the random-number seed from
+When an \R{} process is started up it takes the random-number seed from
 the object \code{.Random.seed} in a saved workspace or constructs one from
 the clock time (see the help on \code{RNG}).  Thus worker processes
 might get the same seed, either because a workspace was restored or
@@ -46,23 +133,24 @@ some reproducible way from the seed in the master process.  This is
 generally perfectly safe, but there have been worries that the
 random-number streams in the workers might somehow get into step.  One
 approach is to take the seeds a long way apart in the random-number
-stream: note that random-numbers a long (fixed) distance apart in a
-single stream are not necessarily (and often are not) as independent
-as those a short distance apart.  Yet another idea (as used by e.g.{}
-\pkg{JAGS}) is to use different random-number generators for each
-separate run.
+stream: note that random numbers taken a long (fixed) distance apart
+in a single stream are not necessarily (and often are not) as
+independent as those a short distance apart.  Yet another idea (as
+used by e.g.{} \pkg{JAGS}) is to use different random-number
+generators for each separate run/process.
 
 Package \pkg{parallel} contains an implementation of the ideas of
 \citet{lecuyer.2002}: this uses a single RNG and takes seeds $2^{127}$
 apart in the random number stream (which has period approximately
-$2^{191}$.  This is based on the generator of \citet{lecuyer.1999};
-the reason for choosing that generator\footnote{apart from the commonality of
-authors!} is that it has a fairly long period, and unlike \R{}'s default
+$2^{191}$).  This is based on the generator of \citet{lecuyer.1999};
+the reason for choosing that generator\footnote{apart from the
+  commonality of authors!} is that it has a fairly long period with a
+small seed (6 integers), and unlike \R{}'s default
 \code{"Mersenne-Twister"} RNG, it is simple to advance the seed by a
 fixed number of steps.  The generator is the combination of two:
 \begin{eqnarray*}
-  x_n &=& 1403580 \times x_{n-1} - 810728 \times x_{n-3} \mod{2^{32} - 209}\\
-  y_n &=& 527612 \times y_{n-1} - 1370589 \times y_{n-3} \mod{2^{32} - 22853}\\
+  x_n &=& 1403580 \times x_{n-1} - 810728 \times x_{n-3} \mod{(2^{32} - 209)}\\
+  y_n &=& 527612 \times y_{n-1} - 1370589 \times y_{n-3} \mod{(2^{32} - 22853)}\\
   z_n &=& (x_n - y_n) \mod{4294967087}\\
   u_n &=& z_n/4294967088\ \mbox{unless $z_n = 0$}
 \end{eqnarray*}
@@ -86,12 +174,17 @@ for (i in 1:M) {
 \end{verbatim}
 
 Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
-\emph{sub-streams} starting from seeds $2^{76}$ apart.
+\emph{sub-streams} starting from seeds $2^{76}$ steps apart.
 
 A direct \R{} interface to the (clunkier) original C implementation is
-available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.
+available in CRAN package \pkg{rlecuyer} \citep{rlecuyer}.  That works
+with named streams, each of which have three 6-elements seeds
+associated with them, the original seed set for the package, the
+initial seed set for the stream and the current seed for the stream.
+This can easily be emulated in \R{} by storing \code{.Random.seed} at
+suitable times.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{abbrvnat}
 \bibliography{parallel}
 
 \end{document}

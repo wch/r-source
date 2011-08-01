@@ -37,7 +37,8 @@
       versions of \R).
 
       \item There is a new package \pkg{parallel}.\cr
-      [Currently a stub.]
+      Currently it contains support for multiple RNG streams following
+      L'Ecuyer \emph{et al} (2002).
     }
   }
 
