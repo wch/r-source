@@ -628,17 +628,6 @@ function(con, n = 4L)
            pos, pmin(pos + n, c(pos[-1L], length(lines))))
 }
 
-### ** .get_contains_from_package_db
-
-.get_contains_from_package_db <-
-function(db)
-{
-    if("Contains" %in% names(db))
-        unlist(strsplit(db["Contains"], "[[:space:]]+"))
-    else
-        character()
-}
-
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
