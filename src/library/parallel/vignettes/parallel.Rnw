@@ -89,10 +89,11 @@ processes.  They can be created in one of three ways:
   master package opens a pipe for reading that is used by the worker
   to return the results.
 
-\item \emph{Via} \code{system2("Rscript")} or similar to launch a new
-  process on the current machine.  This then needs a way to
-  communicate between master and worker processes, which is usually
-  done \emph{via} sockets.
+\item \emph{Via} \code{system("Rscript")} or similar to launch a new
+  process on the current machine or a similar machine with an idential
+  \R installation.  This then needs a way to communicate between
+  master and worker processes, which is usually done \emph{via}
+  sockets.
 
   This should be available on all \R{} platforms, although it is
   conceivable that zealous security measures could block the
@@ -120,6 +121,16 @@ designed to exploit.
 %<<>>=
 %library(parallel)
 %@
+
+\section{Socket Clusters}
+
+Currently the package contains a copy of much of \pkg{snow}, and the
+functions it contains can also be used with SNOW clusters.
+
+The implementation is limited to socket clusters created by function
+\code{makePSOCKcluster}, which in this package is identical to
+\code{makeCluster}.  The only current differences are in the fine
+details in how new \R{} processes are created.
 
 \section{Random-number generation}
 

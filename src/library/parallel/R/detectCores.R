@@ -1,0 +1,37 @@
+#  File src/library/parallel/R/detectCores.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+## taken from multicore
+
+detectCores <- function(all.tests = FALSE)
+{
+    systems <-
+        list(darwin  = "/usr/sbin/sysctl -n hw.ncpu 2>/dev/null",
+             freebsd = "/sbin/sysctl -n hw.ncpu 2>/dev/null",
+             linux   = "grep processor /proc/cpuinfo 2>/dev/null | wc -l",
+             irix    = c("hinv | grep Processors | sed 's: .*::'",
+                         "hinv | grep '^Processor '| wc -l"),
+#             solaris = "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l"
+             solaris = "/usr/sbin/psrinfo -p")
+    for (i in seq(systems))
+        if(all.tests ||
+           length(grep(paste("^", names(systems)[i], sep=''), R.version$os)))
+            for (cmd in systems[i]) {
+                a <- gsub("^ +","", system(cmd, TRUE)[1])
+                if (length(grep("^[1-9]", a))) return(as.integer(a))
+            }
+    NA_integer_
+}

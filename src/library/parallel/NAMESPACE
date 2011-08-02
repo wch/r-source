@@ -1,4 +1,4 @@
 ## Namespace for package 'parallel'
 useDynLib("parallel")
 
-export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream)
+export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)

@@ -18,3 +18,9 @@
 
 ##.onAttach <- function(...)
 ##    packageStartupMessage("Package 'parallel' does nothing as yet")
+
+.onLoad <- function(libname, pkgname)
+{
+    initDefaultClusterOptions(libname)
+    setDefaultClusterOptions(type = "SOCK")
+}
