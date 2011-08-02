@@ -252,7 +252,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     if (clean) {
         file.create(".timestamp")
-        on.exit(file.remove(".timestamp"))
+        on.exit(file.remove(".timestamp"), add = TRUE)
         Sys.sleep(0.1) # wait long enough for files to be after the timestamp
     }
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
