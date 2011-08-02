@@ -17,6 +17,7 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#include <R.h>
 #include "parallel.h"
 #include <R_ext/Rdynload.h>
 
