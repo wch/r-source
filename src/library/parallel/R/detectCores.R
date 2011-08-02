@@ -16,6 +16,10 @@
 
 ## taken from multicore
 
+if(.Platform$OS.type == "windows") {
+detectCores <- function(all.tests = FALSE)
+    .Call("ncpus", FALSE, package = "parallel")
+} else {
 detectCores <- function(all.tests = FALSE)
 {
     systems <-
@@ -34,4 +38,5 @@ detectCores <- function(all.tests = FALSE)
                 if (length(grep("^[1-9]", a))) return(as.integer(a))
             }
     NA_integer_
+}
 }

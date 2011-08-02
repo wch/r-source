@@ -19,29 +19,16 @@
 
 #include <R.h>
 #include "parallel.h"
-#include <R_ext/Rdynload.h>
 
-static const R_CallMethodDef callMethods[] = {
-    {"nextStream", (DL_FUNC) &nextStream, 1},
-    {"nextSubStream", (DL_FUNC) &nextSubStream, 1},
-#ifndef WIN32
-    {"mc_fork", (DL_FUNC) &mc_fork, 0},
-    {"mc_send_master", (DL_FUNC) &mc_send_master, 1},
-    {"mc_select_children", (DL_FUNC) &mc_select_children, 2},
-    {"mc_read_child", (DL_FUNC) &mc_read_child, 1},
-    {"mc_exit", (DL_FUNC) &mc_exit, 1},
-#else
-    {"ncpus", (DL_FUNC) &npus, 1},
-#endif
-    {NULL, NULL, 0}
-};
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
-void
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-__attribute__ ((visibility ("default")))
-#endif
-R_init_parallel(DllInfo *dll)
+
+SEXP ncpus(SEXP virtual)
 {
-    R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
+    int virt = asLogical(virtual);
+    SYSTEM_INFO info;
+    GetSystemInfo(&info);
+    int nc = info.dwNumberOfProcessors;
+    return ScalarInteger(nc);
 }

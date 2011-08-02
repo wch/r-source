@@ -16,17 +16,24 @@ detectCores(all.tests = FALSE)
   \item{all.tests}{Logical: if true apply all known tests.}
 }
 \details{
-  This attempts to detect the number of CPU cores on the current
+  This attempts to detect the number of CPU cores in the current
   machine.
 
-  It has methods to do so for Linux, Darwin (Mac OS X), FreeBSD, Solaris
-  and Irix.  \code{detectCores(TRUE)} could be tried on other Unix-alike
-  systems.
+  It has methods to do so for Linux, Darwin (Mac OS X), FreeBSD, Solaris,
+  Irix and Windows.  \code{detectCores(TRUE)} could be tried on other
+  Unix-alike systems.
 }
 \value{
-  An integer.  Exactly what this represents is OS-dependent: where
-  possible it represents physical cores and not virtual
-  (e.g. hyperthreaded) CPUs.
+  An integer, \code{NA} if the answer is unknown.
+  
+  Exactly what this represents is OS-dependent: where
+  possible it represents physical cores and not logical
+  (e.g. hyperthreaded) CPUs.  Unfortunately on Windows only the number
+  of logical CPUS seems to be available on desktop versions.
+
+  Where virtual machines are in use, one would hope that the result
+  represents the number of CPUs available (or potentially available) to
+  that particular VM.
 }
 \examples{
 detectCores()

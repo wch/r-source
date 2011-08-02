@@ -31,9 +31,14 @@
 SEXP nextStream(SEXP);
 SEXP nextSubStream(SEXP);
 
+#ifndef WIN32
 SEXP mc_fork(void);
 SEXP mc_send_master(SEXP);
 SEXP mc_select_children(SEXP, SEXP);
 SEXP mc_read_child(SEXP);
 SEXP mc_exit(SEXP);
+#else
+SEXP ncpus(SEXP);
+#endif
+
 #endif
