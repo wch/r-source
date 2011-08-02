@@ -263,7 +263,7 @@ assignInNamespace <-
         if (nzchar(in_load)) {
             ns_name <- getNamespaceName(ns)
             if(!in_load %in% c("Matrix", "SparseM") && in_load != ns_name)
-                warning(gettextf("changing locked binding for %s in %s whlist loading %s",
+                warning(gettextf("changing locked binding for %s in %s whilst loading %s",
                                  sQuote(x), sQuote(ns_name), sQuote(in_load)),
                         call. = FALSE, domain = NA, immediate. = TRUE)
         } else if (nzchar(Sys.getenv("_R_WARN_ON_LOCKED_BINDINGS_"))) {

@@ -71,7 +71,7 @@ ks.test <-
         METHOD <- "One-sample Kolmogorov-Smirnov test"
         TIES <- FALSE
         if(length(unique(x)) < n) {
-            warning("ties should not be present for the Kolomogorov-Smirnov test")
+            warning("ties should not be present for the Kolmogorov-Smirnov test")
             TIES <- TRUE
         }
         if(is.null(exact)) exact <- (n < 100) && !TIES

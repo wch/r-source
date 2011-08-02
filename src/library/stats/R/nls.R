@@ -500,7 +500,7 @@ nls <-
                 ## Provide some starting values instead of erroring out later;
                 ## '1' seems slightly better than 0 (which is often invalid):
                 warning("No starting values specified for some parameters.\n",
-                        "Intializing ", paste(sQuote(nnn), collapse=", "),
+                        "Initializing ", paste(sQuote(nnn), collapse=", "),
                         " to '1.'.\n",
                         "Consider specifying 'start' or using a selfStart model")
                 start <- as.list(rep(1., length(nnn)))

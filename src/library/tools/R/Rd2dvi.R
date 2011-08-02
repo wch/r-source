@@ -747,7 +747,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     if (out_ext != "pdf")
-        warning("DVI output from Rd2dvi is depreccated", call. = FALSE)
+        warning("DVI output from Rd2dvi is deprecated", call. = FALSE)
 
     ## Windows does not allow .../man/, say, for a directory
     if(WINDOWS) files[1L] <- sub("[\\/]$", "", files[1L])

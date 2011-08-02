@@ -279,7 +279,7 @@ install.packages <-
     } else {
         if(substr(type, 1L, 10L) == "mac.binary") {
             if(!length(grep("darwin", R.version$platform)))
-                stop("cannot install MacOS X binary packages on this plaform")
+                stop("cannot install MacOS X binary packages on this platform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
                                destdir = destdir,
@@ -288,7 +288,7 @@ install.packages <-
         }
 
         if(type %in% "win.binary")
-            stop("cannot install Windows binary packages on this plaform")
+            stop("cannot install Windows binary packages on this platform")
 
         if(!file.exists(file.path(R.home("bin"), "INSTALL")))
             stop("This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM")
