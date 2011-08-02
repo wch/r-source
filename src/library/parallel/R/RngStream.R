@@ -27,3 +27,26 @@ nextRNGSubStream <- function(seed)
         stop("invalid value of 'seed'")
     .Call("nextSubStream", seed, PACKAGE = "parallel")
 }
+
+## Different from snow's
+clusterSetRNGStream <- function(cl, iseed = NULL)
+{
+    oldseed <-
+        if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+            get(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+        else NULL
+    RNGkind("L'Ecuyer-CMRG")
+    if(!is.null(iseed)) set.seed(iseed)
+    nc <- length(cl)
+    seeds <- vector("list", nc)
+    seeds[[1L]] <- .Random.seed
+    for(i in seq_len(nc-1L)) seeds[[i+1L]] <- nextRNGStream(seeds[[i]])
+    if(!is.null(oldseed)) .Random.seed <- oldseed else rm(.Random.seed, envir = .GlobalEnv)
+    for (i in seq_along(cl)) {
+        expr <- substitute(assign(".Random.seed", seed, envir = .GlobalEnv),
+                           list(seed = seeds[[i]]))
+        sendCall(cl[[i]], eval, list(expr))
+    }
+    checkForRemoteErrors(lapply(cl, recvResult))
+    invisible()
+}
