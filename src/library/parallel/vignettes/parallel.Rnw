@@ -11,7 +11,8 @@ plainpages=true,%
 linkcolor=black,%
 citecolor=black,%
 urlcolor=Blue,%
-pdfstartview=FitH,% or Fit
+%pdfstartview=FitH,% or Fit
+pdfstartview={XYZ null null 1},%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
 pdfauthor={R-core}%
@@ -84,13 +85,13 @@ processes.  They can be created in one of three ways:
 
   There needs to be a way to communicate between master and worker.
   Once again there are several possibilities since master and workers
-  share memory. In this package (and \pkg{multicore}) the initial fork
-  sends an \R{} expression to be evaluated to the worker, and the
-  master package opens a pipe for reading that is used by the worker
-  to return the results.
+  share memory. In \pkg{multicore} the initial fork sends an \R{}
+  expression to be evaluated to the worker, and the master process
+  opens a pipe for reading that is used by the worker to return the
+  results.
 
 \item \emph{Via} \code{system("Rscript")} or similar to launch a new
-  process on the current machine or a similar machine with an idential
+  process on the current machine or a similar machine with an identical
   \R installation.  This then needs a way to communicate between
   master and worker processes, which is usually done \emph{via}
   sockets.
@@ -113,7 +114,7 @@ processes.  They can be created in one of three ways:
 The landscape of parallel computing has changed with the advent of
 shared-memory computers with multiple (and often many) CPU cores.
 Until the late 2000's parallel computing was mainly done on clusters
-of large numbers of single or dual CPU computers: nowadays even
+of large numbers of single- or dual-CPU computers: nowadays even
 laptops have two or four cores, and servers with 8, 12 or more are
 commonplace.  It is such hardware that package \pkg{parallel} is
 designed to exploit.
@@ -121,6 +122,38 @@ designed to exploit.
 %<<>>=
 %library(parallel)
 %@
+
+\section{Numbers of CPUs}
+
+In setting up parallel computations it can be helpful to have some
+idea of the number of CPUs available, but this is a rather slippery
+concept.
+
+Note that all a program can possibly determine is the total number of
+CPUs available.  This is not the same as the number of CPUs available
+\emph{to the current user} which may well be restricted by system
+policies on multi-user systems.  Nor does it give much idea of a
+reasonable number of CPUs to use for the current task: the user may be
+running many \R{} processes simultaneously, and those processes may
+themselves by using multiple threads through multi-threaded BLAS,
+compiled code using OpenMP or other low-level forms of parallelism.
+We have even seen instances of \pkg{multicore}'s \code{mclapply} being
+called recursively, generating $2n + n^2$ processes on a machine
+estimated to have $n = 16$ CPUs.
+
+But in so far as it is a helpful guideline, function
+\code{detectCores()} try to determine the number of CPU cores in the
+machine on which \R{} is running: it has ways to do so on all known
+current \R{} platforms.  What exactly it measures is OS-specific: we
+try where possible to report the number of physical cores available.
+One case where this is not the case is Windows, where only the number
+of logical CPUs is readily available.  On modern hardware (e.g.{}
+Intel \emph{Core i7}) the latter may not be unreasonable as
+hyper-threading does give a significant extra throughput: on what are
+now rather old Pentium 4's it will simply over-estimate by a factor of
+two.  Note that we said `available': in most cases when virtual
+machines are in use what is reported is the maximum number of virtual
+CPUs which can be used simultaneously by that VM.
 
 \section{Socket Clusters}
 
@@ -204,7 +237,7 @@ initial seed set for the stream and the current seed for the stream.
 This can easily be emulated in \R{} by storing \code{.Random.seed} at
 suitable times.
 
-\bibliographystyle{abbrvnat}
+\bibliographystyle{jss}
 \bibliography{parallel}
 
 \end{document}

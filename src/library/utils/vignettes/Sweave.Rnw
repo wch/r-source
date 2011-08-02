@@ -14,6 +14,21 @@
 \usepackage{listings}
 
 \lstset{frame=trbl,basicstyle=\small\tt}
+\usepackage{hyperref}
+\usepackage{color}
+\definecolor{Blue}{rgb}{0,0,0.8}
+\hypersetup{%
+colorlinks,%
+plainpages=true,%
+linkcolor=black,%
+citecolor=black,%
+urlcolor=Blue,%
+%pdfstartview=FitH,% or Fit
+pdfstartview={XYZ null null 1},%
+pdfview={XYZ null null null},%
+pdfpagemode=UseNone,% for no outline
+pdfauthor={Friedrich Leisch and R-core}%
+}
 
 \sloppy
 
@@ -615,7 +630,7 @@ argument.  It will be passed additional arguments from a
 options and pass them on the setup function: one such may be the
 encoding used for the text to be processed.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{jss}
 \bibliography{Sweave}
 
 \newpage
