@@ -2,3 +2,36 @@
 useDynLib("parallel")
 
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
+
+#export(children, collect, forkR, mclapply, parallel, processID,
+#       readChild, selectChildren, sendRmaster)
+
+export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+       clusterExport, clusterMap, clusterSplit, makeCluster,
+       makePSOCKcluster, parApply, parCapply, parLapply, parRapply,
+       parSapply, parlapply, stopCluster)
+
+# export(setDefaultClusterOptions)
+
+S3method("[", cluster)
+S3method(closeNode, SOCKnode)
+S3method(closeNode, default)
+S3method(recvData, SOCKnode)
+S3method(recvOneData, SOCKcluster)
+S3method(sendData, SOCKnode)
+S3method(stopCluster, default)
+
+## To support snow clusters
+S3method(closeNode, NWSnode)
+S3method(recvData, MPInode)
+S3method(recvData, NWSnode)
+S3method(recvData, PVMnode)
+S3method(recvOneData, MPIcluster)
+S3method(recvOneData, NWScluster)
+S3method(recvOneData, PVMcluster)
+S3method(sendData, MPInode)
+S3method(sendData, NWSnode)
+S3method(sendData, PVMnode)
+S3method(stopCluster, MPIcluster)
+S3method(stopCluster, NWScluster)
+S3method(stopCluster, spawnedMPIcluster)

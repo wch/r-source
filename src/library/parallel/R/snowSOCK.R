@@ -1,0 +1,140 @@
+#  File src/library/parallel/R/snowSOCK.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+## Extracted from snow 0.3-6.
+## Uses solely Rscript, and a function in the package rather than scripts.
+
+newPSOCKnode <- function(machine = "localhost", ...,
+                         options = defaultClusterOptions, rank)
+{
+    options <- addClusterOptions(options, list(...))
+    if (is.list(machine)) {
+        options <- addClusterOptions(options, machine)
+        machine <- machine$host
+    }
+    outfile <- getClusterOption("outfile", options)
+    master <- if (machine == "localhost") "localhost"
+    else getClusterOption("master", options)
+    port <- getClusterOption("port", options)
+    manual <- getClusterOption("manual", options)
+    timeout <- getClusterOption("timeout", options)
+
+    ## build the local command for starting the worker
+    env <- paste("MASTER=", master,
+                 " PORT=", port,
+                 " OUT=", outfile,
+                 " TIMEOUT=", timeout,
+                 sep="")
+    arg <- "parallel:::.slaveRSOCK()"
+    rscript <- if (getClusterOption("homogeneous", options)) {
+        shQuote(getClusterOption("rscript", options))
+    } else "Rscript"
+    cmd <- paste(rscript, "-e", shQuote(arg), env)
+
+    if (manual) {
+        cat("Manually start worker on", machine, "with\n    ", cmd, "\n")
+        flush.console()
+    } else {
+        ## add the remote shell command if needed
+        if (machine != "localhost") {
+            ## This assumes an ssh-like command
+            rshcmd <- getClusterOption("rshcmd", options)
+            user <- getClusterOption("user", options)
+            cmd <- paste(rshcmd, "-l", user, machine, cmd)
+        }
+
+        if (.Platform$OS.type == "windows") {
+            ## On windows using input = something seems needed to
+            ## disconnect standard input of an ssh process when run
+            ## from Rterm (at least using putty's plink).  In
+            ## principle this could also be used for supplying a
+            ## password, but that is probably a bad idea. So, for now
+            ## at least, on windows password-less authentication is
+            ## necessary.
+            system(cmd, wait = FALSE, input = "")
+        }
+        else system(cmd, wait = FALSE)
+    }
+
+    con <- socketConnection("localhost", port = port, server = TRUE,
+                            blocking = TRUE, open = "a+b", timeout = timeout)
+    structure(list(con = con, host = machine, rank = rank), class = "SOCKnode")
+}
+
+closeNode.SOCKnode <- function(node) close(node$con)
+
+sendData.SOCKnode <- function(node, data) serialize(data, node$con)
+
+recvData.SOCKnode <- function(node) unserialize(node$con)
+
+recvOneData.SOCKcluster <- function(cl)
+{
+    socklist <- lapply(cl, function(x) x$con)
+    repeat {
+        ready <- socketSelect(socklist)
+        if (length(ready) > 0) break;
+    }
+    n <- which(ready)[1L]  # may need rotation or some such for fairness
+    list(node = n, value = unserialize(socklist[[n]]))
+}
+
+makeCluster <- makePSOCKcluster <- function(names, ...)
+{
+    if (is.numeric(names)) names <- rep('localhost', names[1])
+    options <- addClusterOptions(defaultClusterOptions, list(...))
+    cl <- vector("list", length(names))
+    for (i in seq_along(cl))
+        cl[[i]] <- newPSOCKnode(names[[i]], options = options, rank = i)
+    class(cl) <- c("SOCKcluster", "cluster")
+    cl
+}
+
+## formerly in RSOCKnode.R
+.slaveRSOCK <- function()
+{
+    makeSOCKmaster <- function(master, port, timeout)
+    {
+        port <- as.integer(port)
+        ## maybe use `try' and sleep/retry if first time fails?
+        con <- socketConnection(master, port = port, blocking = TRUE,
+                                open = "a+b", timeout = timeout)
+        structure(list(con = con), class = "SOCKnode")
+    }
+
+    ## set defaults in case run manually without args.
+    master <- "localhost"
+    port <- 10187 # no point in getting option on worker.
+    outfile <- Sys.getenv("R_SNOW_OUTFILE") # defaults to ""
+
+    for (a in commandArgs(TRUE)) {
+        ## Or use strsplit?
+        pos <- regexpr("=", a)
+        name <- substr(a, 1L, pos - 1L)
+        value <- substr(a, pos + 1L, nchar(a))
+        switch(name,
+               MASTER = {master <- value},
+               PORT = {port <- value},
+               OUT = {outfile <- value},
+               TIMEOUT = {timeout <- value})
+    }
+
+    library("methods") ## because Rscript does not load methods
+    ## We should not need to attach parallel, as running in the namespace.
+
+    sinkWorkerOutput(outfile)
+    cat("starting worker for", paste(master, port, sep = ":"), "\n")
+    slaveLoop(makeSOCKmaster(master, port, timeout))
+}
