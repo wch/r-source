@@ -329,10 +329,9 @@ function(f, out = "") {
  }
 
 Rd2HTML_NEWS_in_Rd <-
-function(f, out) {
+function(f, out, ...) {
     if (grepl("[.]rds$", f)) f <- readRDS(f)
-    Rd2HTML(f, out,
-            stages = c("install", "render"))
+    Rd2HTML(f, out, stages = c("install", "render"), ...)
 }
 
 Rd2pdf_NEWS_in_Rd <-
