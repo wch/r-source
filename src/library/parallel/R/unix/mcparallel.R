@@ -18,10 +18,11 @@ mcparallel <- function(expr, name, mc.set.seed = FALSE, silent = FALSE)
 {
     f <- mcfork()
     env <- parent.frame()
+    if (isTRUE(mc.set.seed)) mc.advance.seed()
     if (inherits(f, "masterProcess")) {
         on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
-        if (isTRUE(mc.set.seed)) set.seed(Sys.getpid())
+        if (isTRUE(mc.set.seed)) mc.reset.seed()
         if (isTRUE(silent)) closeStdout()
         sendMaster(try(eval(expr, env), silent = TRUE))
         mcexit(0L)

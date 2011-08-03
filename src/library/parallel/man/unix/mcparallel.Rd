@@ -83,11 +83,15 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   has been used (or \code{.Random.seed} was restored from a saved
   workspace), the child will start drawing random numbers at the same
   point as the current session.  If the RNG has not yet been used, the
-  child will set a seed based on the time it first uses the RNG.
+  child will set a seed based on the time and process ID when it first
+  uses the RNG.
   
-  The default behaviour is to set the seed in the child process from its
-  process ID: this will produce a different stream from the current
-  session and any other recently used child process.
+  The default behaviour is to set the seed in the child process at the
+  time it is first used: this is pretty much guaranteed to give a
+  different random-number stream from the current session and any other
+  child process.  For an absolute guarantee, use
+  \code{\link{RNGkind}("L'Ecuyer-CMRG")}: then each time a child is
+  forked it is given the next stream (see \code{\link{nextRNGStream}}.
 }
 \seealso{
   \code{\link{sendMaster}}

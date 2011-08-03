@@ -188,12 +188,13 @@ random-number streams.  One way to avoid any difficulties is (where
 possible) to do all the randomization in the master process: this is
 done in package \pkg{boot} (version 1.3-1 and later).
 
-When an \R{} process is started up it takes the random-number seed from
-the object \code{.Random.seed} in a saved workspace or constructs one from
-the clock time (see the help on \code{RNG}).  Thus worker processes
-might get the same seed, either because a workspace was restored or
-because the workers were started at the same time: otherwise these get
-a non-reproducible seed.
+When an \R{} process is started up it takes the random-number seed
+from the object \code{.Random.seed} in a saved workspace or constructs
+one from the clock time (see the help on \code{RNG}: as from \R{}
+2.14.0 it also uses the process ID).  Thus worker processes might get
+the same seed, either because a workspace was restored or because the
+workers were started at the same time: otherwise these get a
+non-reproducible seed.
 
 The alternative is to set separate seeds for each worker process in
 some reproducible way from the seed in the master process.  This is
@@ -240,7 +241,8 @@ for (i in 1:M) {
 }
 \end{verbatim}
 and this is is implemented for SNOW clusters in function
-\code{clusterSetRNGStream}.
+\code{clusterSetRNGStream}, and as part of \code{mcparallel} and
+\code{mclapply}.
 
 Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
 \emph{sub-streams} starting from seeds $2^{76}$ steps apart.
@@ -251,7 +253,8 @@ with named streams, each of which have three 6-elements seeds
 associated with them, the original seed set for the package, the
 initial seed set for the stream and the current seed for the stream.
 This can easily be emulated in \R{} by storing \code{.Random.seed} at
-suitable times.
+suitable times.  There is another interface using S4 classes in
+package \pkg{rstream}.
 
 \bibliographystyle{jss}
 \bibliography{parallel}

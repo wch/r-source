@@ -50,3 +50,36 @@ clusterSetRNGStream <- function(cl, iseed = NULL)
     checkForRemoteErrors(lapply(cl, recvResult))
     invisible()
 }
+
+RNGenv <- new.env()
+
+## For use in the master before forking
+mc.advance.seed <- function()
+{
+    if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
+        if (!exists("LEcuyer.seed", envir = RNGenv, inherits = FALSE)) {
+            if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+                runif(1)
+            assign("LEcuyer.seed",
+                   get(".Random.seed", envir = .GlobalEnv, inherits = FALSE),
+                   envir = RNGenv)
+        } else {
+            assign("LEcuyer.seed",
+                   nextRNGStream(get("LEcuyer.seed", envir = RNGenv)),
+                   envir = RNGenv)
+        }
+    }
+}
+
+## For use in the child
+mc.reset.seed <- function()
+{
+    if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
+            assign(".Random.seed", get("LEcuyer.seed", envir = RNGenv),
+                   envir = .GlobalEnv)
+    } else {
+        ## It is random to simply unset the seed
+        if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+            rm(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+    }
+}

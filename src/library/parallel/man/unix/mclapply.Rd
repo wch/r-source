@@ -76,12 +76,15 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}}
+  
+  \code{\link{simplify2array}} for results like \code{\link{sarray}}.
 }
-\examples{
-  mclapply(1:30, rnorm)
-  # use the same random numbers for all values
-  set.seed(1)
-  mclapply(1:30, rnorm, mc.preschedule=FALSE, mc.set.seed=FALSE)
-}
+\examples{\donttest{
+simplify2array(mclapply(rep(4, 5), rnorm))
+# use the same random numbers for all values
+set.seed(1)
+simplify2array(mclapply(rep(4, 5), rnorm, mc.preschedule = FALSE,
+                mc.set.seed = FALSE))
+}}
 \author{Simon Urbanek}
 \keyword{interface}
