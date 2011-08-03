@@ -334,7 +334,7 @@ function(file)
     lines <- readLines(file, warn = FALSE)
 
     ## <FIXME>
-    ## Can only proceed with lines with are valid in the current locale.
+    ## Can only proceed with lines which are valid in the current locale.
     ## Unfortunately, vignette encodings are a mess: package encodings
     ## might apply, but be overridden by \inputencoding commands.
     ## For now, assume that vignette metadata occur in all ASCII lines.
@@ -400,6 +400,15 @@ function(vignetteDir)
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
+                      
+    if (any(dups <- duplicated(names <- file_path_sans_ext(out$File)))) {
+    	dup <- out$File[dups][1]
+    	dupname <- names[dups][1]
+    	orig <- out$File[ names == dupname ][1]
+    	stop(gettextf("In '%s' vignettes '%s' and '%s' have the same vignette name",
+    		      basename(dirname(vignetteDir)), orig, dup),
+             domain = NA)
+    }         
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
     out

@@ -410,6 +410,10 @@
 
       \item \command{R CMD Sweave} now has a \option{--pdf} option to
       produce a PDF version of the processed Sweave document.
+      
+      \item It is no longer allowed to have two vignettes with the
+      same vignette name (e.g. vig.Rnw and vig.Snw).  (Previously one
+      vignette hid the other from the \code{vignette()} function.)
     }
   }
 
