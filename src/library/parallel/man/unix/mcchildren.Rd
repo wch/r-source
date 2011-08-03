@@ -34,20 +34,23 @@ mckill(process, signal = SIGINT)
   \item{child}{child process (object of the class \code{"childProcess"}) or a
     process ID (pid)}
   \item{timeout}{timeout (in seconds, fractions supported) to wait
-    before giving up..}
+    for a response before giving up.}
   \item{children}{list of child processes or a single child process
     object or a vector of process IDs or \code{NULL}.  If \code{NULL}
     behaves as if all currently known children were supplied.}
-  \item{what}{character or raw vector.  In the former case elements are
+  \item{what}{For \code{sendChildStdin}:\cr
+    Character or raw vector.  In the former case elements are
     collapsed using the newline chracter.  (But no trailing newline is
-    added at the end!)}
+    added at the end!)
+
+    For \code{sendMaster}:\cr
+    Data to send to the master process.  If \code{what} is not
+    a raw vector, it will be serialized into a raw vector.  Do NOT
+    send an empty raw vector -- that is reserved for internal use.}
   \item{process}{process (object of the class \code{process}) or a
     process ID (pid)}
   \item{signal}{signal to send: one of \code{SIG...} constants -- 
     or a valid integer signal number}
-  \item{what}{data to send to the master process.  If \code{what} is not
-    a raw vector, it will be serialized into a raw vector.  Do NOT
-    send an empty raw vector -- that is reserved for internal use.}
 }
 \details{
   \code{children} returns currently active children.
@@ -70,7 +73,8 @@ mckill(process, signal = SIGINT)
   \code{mckill} sends a signal to a child process.
 }
 \value{
-  \code{children} returns a list of child processes (or an empty list).
+  \code{children} returns a (possibly empty) list of objects of class
+  \code{"process"}, the process ID.
 
   \code{readChild} and \code{readChildren} return a raw vector with a
   \code{"pid"} attribute if data were available, an integer vector of
@@ -84,7 +88,7 @@ mckill(process, signal = SIGINT)
   have data available.
 
   \code{sendChildStdin} returns a vector of \code{TRUE} values or throws
-  an error.
+  an error. (??)
   
   \code{sendMaster} returns \code{TRUE} or throws an error.
   

@@ -175,6 +175,10 @@ names with the added prefix \code{mc}, e.g.{} \code{mccollect},
 Most of the functions provided are not intended to be used by end
 users, and they may not in future be exported from the namespace.
 
+There are also copies of the higher-level functions \code{mclapply}
+and \code{pvec}: unlike the versions in \pkg{multicore} these default
+to 2 cores.
+
 \section{Random-number generation}
 
 Some care is needed with parallel computation using (pseudo-)random

@@ -57,7 +57,11 @@ mcexit(exit.code = 0L, send = NULL)
 }
 \value{
   \code{mcfork} returns an object of the class \code{"childProcess"} to
-  the master and of class \code{"masterProcess"} to the child.
+  the master and of class \code{"masterProcess"} to the child: both the
+  classes inherit from class \code{"process"}.  These are lists with
+  components \code{pid} (the process id of the \emph{other} process) and
+  a vector \code{fd} of the two file descriptor numbers for ends in the
+  current process of the inter-process pipes.
 
   \code{mcexit} never returns.
 }

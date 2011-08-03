@@ -1,16 +1,32 @@
+#  File src/library/parallel/R/unix/mcparallel.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
 mcparallel <- function(expr, name, mc.set.seed = FALSE, silent = FALSE)
 {
     f <- mcfork()
     env <- parent.frame()
     if (inherits(f, "masterProcess")) {
-        on.exit(exit(1, structure("fatal error in wrapper code",
+        on.exit(mcexit(1L, structure("fatal error in wrapper code",
                                   class = "try-error")))
         if (isTRUE(mc.set.seed)) set.seed(Sys.getpid())
         if (isTRUE(silent)) closeStdout()
-        sendMaster(try(eval(expr, env), silent=TRUE))
+        sendMaster(try(eval(expr, env), silent = TRUE))
         mcexit(0L)
     }
-    if (!missing(name) && !is.null(name)) f$name <- as.character(name)[1]
+    if (!missing(name) && !is.null(name)) f$name <- as.character(name)[1L]
     class(f) <- c("parallelJob", class(f))
     f
 }
@@ -28,9 +44,10 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
             if (is.raw(r)) unserialize(r) else NULL
         })
     } else {
-        pids <- if (inherits(jobs, "process") || is.list(jobs)) processID(jobs) else jobs
+        pids <- if (inherits(jobs, "process") || is.list(jobs))
+            processID(jobs) else jobs
         if (!length(pids)) return(NULL)
-        if (!is.numeric(pids)) stop("invalid jobs argument")
+        if (!is.numeric(pids)) stop("invalid 'jobs' argument")
         pids <- as.integer(pids)
         pnames <- as.character(pids)
         if (!inherits(jobs, "process") && is.list(jobs))

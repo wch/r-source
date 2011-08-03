@@ -1,4 +1,20 @@
-# --- multicore --- low-level functions ---
+#  File src/library/parallel/R/unix/mcfork.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+### --- multicore --- low-level functions ---
 
 # selected signals
 SIGHUP <- 1L
@@ -25,7 +41,7 @@ readChildren <- function(timeout = 0)
 readChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
-    if (!is.numeric(child)) stop("invalid child argument")
+    if (!is.numeric(child)) stop("invalid 'child' argument")
     .Call("mc_read_child", as.integer(child), PACKAGE = "parallel")
 }
 
@@ -35,16 +51,16 @@ selectChildren <- function(children = NULL, timeout = 0)
     if (inherits(children, "process")) children <- processID(children)
     if (is.list(children))
         children <- unlist(lapply(children, function(x) if (inherits(x, "process")) x$pid
-        else stop("children must be a list of processes or a single process")))
+        else stop("'children' must be a list of processes or a single process")))
     if (!is.numeric(children))
-        stop("children must be a list of processes or a single process")
+        stop("'children' must be a list of processes or a single process")
     .Call("mc_select_children", as.double(timeout), as.integer(children))
 }
 
 rmChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
-    if (!is.numeric(child)) stop("invalid child argument")
+    if (!is.numeric(child)) stop("invalid 'child' argument")
     .Call("mc_rm_child", as.integer(child), PACKAGE = "parallel")
 }
 
@@ -64,17 +80,17 @@ sendMaster <- function(what)
 processID <- function(process) {
     if (inherits(process, "process")) process$pid
     else if (is.list(process)) unlist(lapply(process, processID))
-    else stop("process must be of the class \"`process\"")
+    else stop("'process' must be of the class \"`process\"")
 }
 
 sendChildStdin <- function(child, what)
 {
     if (inherits(child, "process") || is.list(child)) child <- processID(child)
     if (!is.numeric(child) || !length(child))
-        stop("child must be a valid child process")
+        stop("'child' must be a valid child process")
     child <- as.integer(child)
     if (is.character(what)) what <- charToRaw(paste(what, collapse='\n'))
-    if (!is.raw(what)) stop("what must be a character or raw vector")
+    if (!is.raw(what)) stop("'what' must be a character or raw vector")
     unlist(lapply(child, function(p)
                   .Call("mc_send_child_stdin", p, what, PACKAGE = "parallel")))
 }
@@ -89,6 +105,7 @@ children <- function(select)
 {
     p <- .Call("mc_children", PACKAGE = "parallel")
     if (!missing(select)) p <- p[p %in% processID(select)]
+    ## FIXME: this is not the meaning of this class as returned by mcfork
     lapply(p, function(x)
            structure(list(pid = x), class = c("childProcess", "process")))
 }

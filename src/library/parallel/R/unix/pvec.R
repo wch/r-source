@@ -1,0 +1,63 @@
+#  File src/library/parallel/R/unix/pvec.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
+                 mc.cores = getOption("mc.cores", 2L), mc.cleanup = TRUE)
+{
+    if (!is.vector(v)) stop("v must be a vector")
+
+    env <- parent.frame()
+    cores <- as.integer(mc.cores)
+
+    n <- length(v)
+    l <- if (n < cores) as.list(v) else {
+        ## compute the scheduling, making it as fair as possible
+        il <- as.integer(n / cores)
+        xc <- n - il * cores
+        sl <- rep(il, cores)
+        if (xc) sl[1:xc] <- il + 1L
+        si <- cumsum(c(1L, sl))
+        se <- si + c(sl, 0L) - 1L
+        lapply(seq_len(cores), function(ix) v[si[ix]:se[ix]])
+    }
+    jobs <- NULL
+    cleanup <- function() {
+        ## kill children if cleanup is requested
+        if (length(jobs) && mc.cleanup) {
+            ## first take care of uncollected children
+            mccollect(children(jobs), FALSE)
+            mckill(children(jobs),
+                   if (is.integer(mc.cleanup)) mc.cleanup else SIGTERM)
+            mccollect(children(jobs))
+        }
+        if (length(jobs)) {
+            ## just in case there are zombies
+            mccollect(children(jobs), FALSE)
+        }
+    }
+    on.exit(cleanup())
+    FUN <- match.fun(FUN)
+    jobs <- lapply(seq_len(cores),
+                   function(i) mcparallel(FUN(l[[i]], ...), name = i,
+                                          mc.set.seed = mc.set.seed,
+                                          silent = mc.silent))
+    res <- mccollect(jobs)
+    names(res) <- NULL
+    res <- do.call(c, res)
+    if (length(res) != n)
+        warning("some results may be missing, folded or caused an error")
+    res
+}

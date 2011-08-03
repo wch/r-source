@@ -25,9 +25,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
     devices or GUI elements in this code).}
   \item{name}{an optional name (character vector of length one) that can
     be associated with the job.}
-  \item{mc.set.seed}{if set to \code{TRUE} then the random number
-    generator is seeded such that it is different from any other
-    process.  Otherwise it will be the same as in the current\ R session.}
+  \item{mc.set.seed}{logical: see section \sQuote{Random numbers}.}
   \item{silent}{if set to \code{TRUE} then all output on stdout will be
     suppressed (stderr is not affected).}
   \item{jobs}{list of jobs (or a single job) to collect results
@@ -45,7 +43,10 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
 \value{
   \code{mcparallel} returns an object of the class \code{"parallelJob"}
-  which inherits from \code{"childProcess"}.
+  which inherits from \code{"childProcess"} (see the \sQuote{Value}
+  section of the help for \code{\link{mcfork}}).  If argument
+  \code{name} was supplied this will have an additional component
+  \code{name}.
 
   \code{mccollect} returns any results that are available in a list.  The
   results will have the same order as the specified jobs.  If there are
@@ -76,6 +77,18 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   terminating job that has sent its results already after which the
   job is no longer available.
 }
+\section{Random numbers}{
+  If \code{mc.set.seed} is false, the child process has the same random
+  number generator (RNG) state as the current \R session.  If the RNG
+  has been used (or \code{.Random.seed} was restored from a saved
+  workspace), the child will start drawing random numbers at the same
+  point as the current session.  If the RNG has not yet been used, the
+  child will set a seed based on the time it first uses the RNG.
+  
+  The default behaviour is to set the seed in the child process from its
+  process ID: this will produce a different stream from the current
+  session and any other recently used child process.
+}
 \seealso{
   \code{\link{sendMaster}}
 }
@@ -90,7 +103,7 @@ mccollect(p, wait=FALSE) # will signal the job as terminating
 mccollect(p, wait=FALSE) # there is no such job
 
 # a naive mcparallelized lapply can be created using parallel alone:
-jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name=x))
+jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))
 mccollect(jobs)
 }
 \author{Simon Urbanek}

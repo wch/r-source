@@ -38,7 +38,8 @@
 
       \item There is a new package \pkg{parallel}.\cr
       Currently it contains support for multiple RNG streams following
-      L'Ecuyer \emph{et al} (2002).
+      L'Ecuyer \emph{et al} (2002).\cr
+      (Anything else there is still incomplete.)
     }
   }
 

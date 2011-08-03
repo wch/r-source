@@ -3,7 +3,7 @@ useDynLib("parallel")
 
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 
-export(mccollect, mcparallel)
+export(mccollect, mclapply, mcparallel, pvec)
 
 export(children, mcexit, mcfork, mckill, readChild, readChildren,
        selectChildren, sendChildStdin, sendMaster)
