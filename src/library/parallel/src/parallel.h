@@ -32,11 +32,21 @@ SEXP nextStream(SEXP);
 SEXP nextSubStream(SEXP);
 
 #ifndef WIN32
+SEXP mc_children(void);
+SEXP mc_close_fds(SEXP);
+SEXP mc_close_stderr(void);
+SEXP mc_close_stdout(void);
+SEXP mc_exit(SEXP);
 SEXP mc_fork(void);
+SEXP mc_is_child(void);
+SEXP mc_kill(SEXP, SEXP);
+SEXP mc_master_fd(void);
+SEXP mc_read_child(SEXP);
+SEXP mc_read_children(SEXP);
+SEXP mc_rm_child(SEXP);
 SEXP mc_send_master(SEXP);
 SEXP mc_select_children(SEXP, SEXP);
-SEXP mc_read_child(SEXP);
-SEXP mc_exit(SEXP);
+SEXP mc_send_child_stdin(SEXP, SEXP);
 #else
 SEXP ncpus(SEXP);
 #endif

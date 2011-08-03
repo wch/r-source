@@ -11,7 +11,7 @@ include $(top_builddir)/Makeconf
 
 pkg = parallel
 
-RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 INSTDIRS = doc
 DEFPKGS = NULL
 

@@ -165,6 +165,16 @@ The implementation is limited to socket clusters created by function
 \code{makeCluster}.  The only current differences are in the fine
 details in how new \R{} processes are created.
 
+\section{Forking}
+
+Except on Windows, the package currently contains a copy of the low-
+and intermediate-level interfaces from \pkg{multicore}: there a few
+names with the added prefix \code{mc}, e.g.{} \code{mccollect},
+\code{mcexit}, \code{mcfork}, \code{mckill} and \code{mcparallel}.
+
+Most of the functions provided are not intended to be used by end
+users, and they may not in future be exported from the namespace.
+
 \section{Random-number generation}
 
 Some care is needed with parallel computation using (pseudo-)random
@@ -225,6 +235,8 @@ for (i in 1:M) {
     # send s to worker i as .Random.seed
 }
 \end{verbatim}
+and this is is implemented for SNOW clusters in function
+\code{clusterSetRNGStream}.
 
 Apart from \emph{streams} ($2^{127}$ apart), there is the concept of
 \emph{sub-streams} starting from seeds $2^{76}$ steps apart.

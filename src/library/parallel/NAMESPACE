@@ -3,13 +3,15 @@ useDynLib("parallel")
 
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 
-#export(children, collect, forkR, mclapply, parallel, processID,
-#       readChild, selectChildren, sendRmaster)
+export(mccollect, mcparallel)
+
+export(children, mcexit, mcfork, mckill, readChild, readChildren,
+       selectChildren, sendChildStdin, sendMaster)
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, makeCluster,
        makePSOCKcluster, parApply, parCapply, parLapply, parRapply,
-       parSapply, parlapply, stopCluster)
+       parSapply, stopCluster)
 
 # export(setDefaultClusterOptions)
 
