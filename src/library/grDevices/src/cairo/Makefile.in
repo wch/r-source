@@ -9,6 +9,8 @@ top_builddir = ../../../../..
 subdir = src/library/grDevices/src/cairo
 R_HOME = $(top_builddir)
 
+pkg = grDevices
+
 include $(top_builddir)/Makeconf
 
 ## need to find bitmap.h
