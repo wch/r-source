@@ -38,7 +38,7 @@ merge.vignette.index <- function(hDB, path, pkg) {
 	base[,"LibPath"] <- path
 	id <- as.character(1:nrow(vDB) + NROW(hDB[[1]]))
 	base[,"ID"] <- id
-	base[,"name"] <- sub("\\.[^.]*$", "", vDB$File)
+	base[,"name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
 	base[,"topic"] <- base[,"name"]
 	base[,"title"] <- vDB$Title
 	base[,"Type"] <- "vignette"
