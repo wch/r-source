@@ -315,6 +315,12 @@
       and the order of the display.
       
       \item \code{socketConnection()} now has a \code{timeout} argument.
+      
+      \item The initialization of the random-number generator now uses
+      the process ID as well as the current time, just in case two \R
+      processes are launched very rapidly on a machine with
+      low-resolution wall clock (some have a resolution of a second;
+      modern systems have microseconds).
     }
   }
 

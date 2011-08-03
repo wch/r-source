@@ -516,11 +516,15 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarReal(currentTime());
 }
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> /* for getpid */
+#endif
+
 /* For RNG.c, main.c, mkdtemp.c */
 attribute_hidden
 unsigned int TimeToSeed(void)
 {
-    unsigned int seed;
+    unsigned int seed, pid = getpid();
 #if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
     {
 	struct timespec tp;
@@ -537,6 +541,7 @@ unsigned int TimeToSeed(void)
     /* C89, so must work */
     seed = (Int32) time(NULL);
 #endif
+    seed ^= (pid <<16);
     return seed;
 }
 

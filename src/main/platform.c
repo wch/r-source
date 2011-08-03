@@ -562,7 +562,7 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> /* for symlink */
+#include <unistd.h> /* for symlink, getpid */
 #endif
 
 SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
