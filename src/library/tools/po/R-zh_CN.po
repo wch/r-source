@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -462,7 +462,7 @@ msgstr ""
 msgid "no inputs"
 msgstr "没有输入"
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -601,8 +601,20 @@ msgstr "不存在"
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
 msgstr "找不到任何结果"
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
+msgstr ""
 
 msgid "No help found for topic %s in any package."
 msgstr "没有在任何程序包里找到关于%s的主题"
@@ -625,7 +637,9 @@ msgstr "程序包%s里的链结%s不存在"
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+#, fuzzy
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能够查看的文件限制于帮助文件，%s, %s 和程序包里%s下面的文件"
 
 msgid "NEWS"
@@ -636,6 +650,9 @@ msgstr "DESCRIPTION"
 
 msgid "doc/"
 msgstr "doc/"
+
+msgid "demo/"
+msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "不支持URL %s"
@@ -914,8 +931,9 @@ msgstr "好"
 msgid "results differ from reference results"
 msgstr ""
 
-msgid "no examples found"
-msgstr "没有范例"
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "%s的程序包没有帮助文件"
 
 msgid "Running specific tests for package"
 msgstr "执行特定的检验程序"
@@ -1070,6 +1088,9 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "no examples found"
+#~ msgstr "没有范例"
 
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "警告：'Depends'有多个于R相关的项"

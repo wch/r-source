@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-29 19:56+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -481,6 +481,10 @@ msgstr "spécification de champ incorrecte"
 msgid "do not know what to search"
 msgstr "je ne sais pas quoi rechercher"
 
+#, fuzzy
+msgid "incorrect type specification"
+msgstr "spécification de champ incorrecte"
+
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
 
@@ -628,7 +632,7 @@ msgstr "méthode S3 '%s' introuvable"
 msgid "environment specified is not a package"
 msgstr "l'environnement spécifié n'est pas un package"
 
-msgid "changing locked binding for %s in %s whlist loading %s"
+msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr ""
 
 msgid "changing locked binding for %s in %s"
@@ -820,11 +824,13 @@ msgstr "supposition de 'repos = NULL' à partir du nom de fichier"
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
-msgid "cannot install MacOS X binary packages on this plaform"
+#, fuzzy
+msgid "cannot install MacOS X binary packages on this platform"
 msgstr ""
 "impossible d'installer les packages MacOS X binaire sur cette architecture"
 
-msgid "cannot install Windows binary packages on this plaform"
+#, fuzzy
+msgid "cannot install Windows binary packages on this platform"
 msgstr ""
 "impossible d'installer les packages Windows binaire sur cette architecture"
 

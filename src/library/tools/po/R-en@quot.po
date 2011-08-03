@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
-"PO-Revision-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
+"PO-Revision-Date: 2011-08-03 15:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -489,8 +489,8 @@ msgstr "current working directory cannot be ascertained"
 msgid "no inputs"
 msgstr "no inputs"
 
-msgid "DVI output from Rd2dvi is depreccated"
-msgstr "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
+msgstr "DVI output from Rd2dvi is deprecated"
 
 msgid "Error in running tools::texi2dvi"
 msgstr "Error in running tools::texi2dvi"
@@ -626,8 +626,20 @@ msgstr "does not exist"
 msgid "No files in this directory"
 msgstr "No files in this directory"
 
+msgid "Unrecognized search field:"
+msgstr "Unrecognized search field:"
+
 msgid "No results found"
 msgstr "No results found"
+
+msgid "Vignettes:"
+msgstr "Vignettes:"
+
+msgid "Code demonstrations:"
+msgstr "Code demonstrations:"
+
+msgid "Help pages:"
+msgstr "Help pages:"
 
 msgid "No help found for topic %s in any package."
 msgstr "No help found for topic %s in any package."
@@ -650,8 +662,10 @@ msgstr "Link %s in package %s could not be located"
 msgid "No docs found for package %s"
 msgstr "No docs found for package %s"
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr "Only help files, %s, %s and files under %s in a package can be viewed"
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
+msgstr ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 
 msgid "NEWS"
 msgstr "NEWS"
@@ -661,6 +675,9 @@ msgstr "DESCRIPTION"
 
 msgid "doc/"
 msgstr "doc/"
+
+msgid "demo/"
+msgstr "demo/"
 
 msgid "unsupported URL %s"
 msgstr "unsupported URL %s"
@@ -938,8 +955,8 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "results differ from reference results"
 
-msgid "no examples found"
-msgstr "no examples found"
+msgid "no examples found for package %s"
+msgstr "no examples found for package %s"
 
 msgid "Running specific tests for package"
 msgstr "Running specific tests for package"

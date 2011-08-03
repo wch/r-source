@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:51+0100\n"
+"POT-Creation-Date: 2011-08-03 15:43+0100\n"
 "PO-Revision-Date: 2011-03-28 15:56+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -141,28 +141,28 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/connections.c:2815 src/main/connections.c:2866
 #: src/main/connections.c:2871 src/main/connections.c:2875
 #: src/main/connections.c:2879 src/main/connections.c:2883
-#: src/main/connections.c:2889 src/main/connections.c:2935
-#: src/main/connections.c:2941 src/main/connections.c:2945
-#: src/main/connections.c:2996 src/main/connections.c:2999
-#: src/main/connections.c:3265 src/main/connections.c:3268
-#: src/main/connections.c:3271 src/main/connections.c:3369
-#: src/main/connections.c:3375 src/main/connections.c:3378
-#: src/main/connections.c:3528 src/main/connections.c:3531
-#: src/main/connections.c:3535 src/main/connections.c:3538
-#: src/main/connections.c:3645 src/main/connections.c:3748
-#: src/main/connections.c:3751 src/main/connections.c:4087
-#: src/main/connections.c:4112 src/main/connections.c:4145
-#: src/main/connections.c:4159 src/main/connections.c:4167
-#: src/main/connections.c:4193 src/main/connections.c:4334
-#: src/main/connections.c:4338 src/main/connections.c:4464
-#: src/main/connections.c:4466 src/main/connections.c:4468
-#: src/main/connections.c:4496 src/main/connections.c:4626
-#: src/main/connections.c:4652 src/main/connections.c:4656
-#: src/main/connections.c:4660 src/main/connections.c:4664
+#: src/main/connections.c:2889 src/main/connections.c:2937
+#: src/main/connections.c:2943 src/main/connections.c:2947
+#: src/main/connections.c:2998 src/main/connections.c:3001
+#: src/main/connections.c:3267 src/main/connections.c:3270
+#: src/main/connections.c:3273 src/main/connections.c:3371
+#: src/main/connections.c:3377 src/main/connections.c:3380
+#: src/main/connections.c:3530 src/main/connections.c:3533
+#: src/main/connections.c:3537 src/main/connections.c:3540
+#: src/main/connections.c:3647 src/main/connections.c:3750
+#: src/main/connections.c:3753 src/main/connections.c:4089
+#: src/main/connections.c:4114 src/main/connections.c:4147
+#: src/main/connections.c:4161 src/main/connections.c:4169
+#: src/main/connections.c:4195 src/main/connections.c:4336
+#: src/main/connections.c:4340 src/main/connections.c:4466
+#: src/main/connections.c:4468 src/main/connections.c:4470
+#: src/main/connections.c:4498 src/main/connections.c:4628
+#: src/main/connections.c:4654 src/main/connections.c:4658
+#: src/main/connections.c:4662 src/main/connections.c:4666
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:710 src/main/datetime.c:790 src/main/datetime.c:792
-#: src/main/datetime.c:796 src/main/datetime.c:955 src/main/datetime.c:957
-#: src/main/datetime.c:1121 src/main/debug.c:223 src/main/deparse.c:360
+#: src/main/datetime.c:715 src/main/datetime.c:795 src/main/datetime.c:797
+#: src/main/datetime.c:801 src/main/datetime.c:960 src/main/datetime.c:962
+#: src/main/datetime.c:1126 src/main/debug.c:223 src/main/deparse.c:360
 #: src/main/devices.c:583 src/main/dotcode.c:738 src/main/dotcode.c:742
 #: src/main/dotcode.c:747 src/main/dounzip.c:320 src/main/dounzip.c:327
 #: src/main/dounzip.c:337 src/main/dounzip.c:342 src/main/dounzip.c:346
@@ -284,8 +284,8 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:689 src/gnuwin32/extra.c:1872
 #: src/gnuwin32/extra.c:2053 src/gnuwin32/extra.c:2056
 #: src/gnuwin32/extra.c:2059 src/main/character.c:581 src/main/colors.c:358
-#: src/main/connections.c:3273 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:642 src/main/datetime.c:712 src/main/datetime.c:959
+#: src/main/connections.c:3275 src/main/context.c:643 src/main/context.c:662
+#: src/main/datetime.c:647 src/main/datetime.c:717 src/main/datetime.c:964
 #: src/main/dotcode.c:197 src/main/errors.c:838 src/main/errors.c:869
 #: src/main/errors.c:970 src/main/errors.c:995 src/main/errors.c:1000
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
@@ -631,79 +631,79 @@ msgstr " 警告: '--max-ppsize' 値が小さすぎるので無視されました
 msgid "WARNING: '--max-ppsize' value is too large: ignored"
 msgstr " 警告: '--max-ppsize' 値が大きすぎるので無視されました \n"
 
-#: src/main/RNG.c:140
+#: src/main/RNG.c:174
 #, c-format
 msgid "unif_rand: unimplemented RNG kind %d"
 msgstr " unif_rand：種類 %d の RNG は実装されていません "
 
-#: src/main/RNG.c:205
+#: src/main/RNG.c:259
 #, c-format
 msgid "FixupSeeds: unimplemented RNG kind %d"
 msgstr " FixupSeeds：種類  %d の RNG は未実装です "
 
-#: src/main/RNG.c:240
+#: src/main/RNG.c:301
 msgid "'user_unif_rand' not in load table"
 msgstr " 'user_unif_rand' がロードテーブルにありません "
 
-#: src/main/RNG.c:248
+#: src/main/RNG.c:309
 msgid "cannot read seeds unless 'user_unif_nseed' is supplied"
 msgstr ""
 " 'user_unif_nseed' が供給されていないかぎり乱数のシードを読み取ることはできま"
 "せん "
 
-#: src/main/RNG.c:253
+#: src/main/RNG.c:314
 msgid "seed length must be in 0...625; ignored"
 msgstr " 乱数シード長は0から625の範囲でなくてはなりません（無視されました） "
 
-#: src/main/RNG.c:261
+#: src/main/RNG.c:322
 #, c-format
 msgid "RNG_Init: unimplemented RNG kind %d"
 msgstr " RNG_Init: RNG kind %d は未実装です "
 
-#: src/main/RNG.c:284
+#: src/main/RNG.c:345
 msgid ".Random.seed is a missing argument with no default"
 msgstr ""
 " .Random.seed で，デフォルトが設定されていない引数が省略されてしまいました "
 
-#: src/main/RNG.c:285
+#: src/main/RNG.c:346
 #, c-format
 msgid ".Random.seed is not an integer vector but of type '%s'"
 msgstr " .Random.seed は整数ベクトルではなくタイプ '%s' です "
 
-#: src/main/RNG.c:291
+#: src/main/RNG.c:352
 msgid ".Random.seed[1] is not a valid integer"
 msgstr " .Random.seed[1] が有効な整数値ではありません "
 
-#: src/main/RNG.c:295
+#: src/main/RNG.c:356
 msgid ".Random.seed[0] is not a valid Normal type"
 msgstr " .Random.seed[0] は有効な標準形ではありません "
 
-#: src/main/RNG.c:306
+#: src/main/RNG.c:368
 msgid ".Random.seed[1] = 5 but no user-supplied generator"
 msgstr " .Random.seed[1] = 5 ですが，ユーザ定義の乱数発生器がありません "
 
-#: src/main/RNG.c:309
+#: src/main/RNG.c:371
 msgid ".Random.seed[1] is not a valid RNG kind (code)"
 msgstr " .Random.seed[1] が有効な種類の RNG (コード)ではありません "
 
-#: src/main/RNG.c:331
+#: src/main/RNG.c:393
 msgid ".Random.seed has wrong length"
 msgstr " .Random.seed の長さが不正です "
 
-#: src/main/RNG.c:384
+#: src/main/RNG.c:447
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
 msgstr " RNGkind: RNG kind %d は未実装です "
 
-#: src/main/RNG.c:396
+#: src/main/RNG.c:459
 msgid "invalid Normal type in RNGkind"
 msgstr " RNGkind 中の正規乱数発生法が不正です "
 
-#: src/main/RNG.c:399
+#: src/main/RNG.c:462
 msgid "'user_norm_rand' not in load table"
 msgstr " 'user_norm_rand' がロードテーブルにありません "
 
-#: src/main/RNG.c:442
+#: src/main/RNG.c:505
 msgid "supplied seed is not a valid integer"
 msgstr " 与えられた seed は適切な整数ではありません "
 
@@ -1386,11 +1386,11 @@ msgstr " 空の環境の親は配置できません "
 msgid "'parent' is not an environment"
 msgstr " 'parent' は環境ではありません "
 
-#: src/main/builtin.c:508 src/main/connections.c:3394
-#: src/main/connections.c:3742 src/main/connections.c:3776
-#: src/main/connections.c:4151 src/main/connections.c:4216
-#: src/main/connections.c:4422 src/main/connections.c:4426
-#: src/main/connections.c:4787 src/main/deparse.c:323 src/main/deparse.c:409
+#: src/main/builtin.c:508 src/main/connections.c:3396
+#: src/main/connections.c:3744 src/main/connections.c:3778
+#: src/main/connections.c:4153 src/main/connections.c:4218
+#: src/main/connections.c:4424 src/main/connections.c:4428
+#: src/main/connections.c:4789 src/main/deparse.c:323 src/main/deparse.c:409
 #: src/main/scan.c:1705 src/main/serialize.c:1670
 msgid "cannot write to this connection"
 msgstr " このコネクションには書き出せません "
@@ -1926,8 +1926,8 @@ msgstr " fifo ’%s’ を開くことができません "
 #: src/main/connections.c:1270 src/main/connections.c:1280
 #: src/main/connections.c:1399 src/main/connections.c:1460
 #: src/main/connections.c:1986 src/main/connections.c:2003
-#: src/main/connections.c:2312 src/main/connections.c:4960
-#: src/main/connections.c:5024
+#: src/main/connections.c:2312 src/main/connections.c:4962
+#: src/main/connections.c:5026
 msgid "too large a block specified"
 msgstr " 指定されたブロックが大きすぎます "
 
@@ -1937,8 +1937,8 @@ msgid "allocation of fifo connection failed"
 msgstr " fifo 接続の割り当てに失敗しました "
 
 #: src/main/connections.c:963 src/main/connections.c:1115
-#: src/main/connections.c:1738 src/main/connections.c:2937
-#: src/main/connections.c:4628
+#: src/main/connections.c:1738 src/main/connections.c:2939
+#: src/main/connections.c:4630
 msgid "only first element of 'description' argument used"
 msgstr " 'description' 引数の最初の要素だけが使われました "
 
@@ -1950,12 +1950,12 @@ msgstr ""
 "使います "
 
 #: src/main/connections.c:993 src/main/connections.c:1151
-#: src/main/connections.c:1803 src/main/connections.c:2902
-#: src/main/connections.c:2956 src/main/connections.c:3006
-#: src/main/connections.c:3281 src/main/connections.c:3386
-#: src/main/connections.c:3546 src/main/connections.c:3769
-#: src/main/connections.c:4096 src/main/connections.c:4209
-#: src/main/connections.c:4418 src/main/connections.c:4762 src/main/dcf.c:57
+#: src/main/connections.c:1803 src/main/connections.c:2904
+#: src/main/connections.c:2958 src/main/connections.c:3008
+#: src/main/connections.c:3283 src/main/connections.c:3388
+#: src/main/connections.c:3548 src/main/connections.c:3771
+#: src/main/connections.c:4098 src/main/connections.c:4211
+#: src/main/connections.c:4420 src/main/connections.c:4764 src/main/dcf.c:57
 #: src/main/deparse.c:315 src/main/deparse.c:401 src/main/saveload.c:2254
 #: src/main/saveload.c:2334 src/main/scan.c:904 src/main/scan.c:1015
 #: src/main/scan.c:1515 src/main/scan.c:1709 src/main/serialize.c:1839
@@ -2021,7 +2021,7 @@ msgstr " ファイル '%s' は bzip2 で圧縮されていないようです "
 msgid "allocation of bzfile connection failed"
 msgstr " bzfile 接続の割り当てに失敗しました "
 
-#: src/main/connections.c:1544 src/main/connections.c:5563
+#: src/main/connections.c:1544 src/main/connections.c:5565
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr " lzma デコーダーを初期化できません、エラー %d "
@@ -2139,235 +2139,235 @@ msgstr " 'con' はテキストコネクションではありません "
 msgid "'con' is not an output textConnection"
 msgstr " 'con' は出力テキストコネクションではありません "
 
-#: src/main/connections.c:2917
+#: src/main/connections.c:2919
 msgid "sockets are not available on this system"
 msgstr " このシステムではソケットは使えません "
 
-#: src/main/connections.c:2986 src/main/connections.c:3035
-#: src/main/connections.c:3046 src/main/connections.c:3093
-#: src/main/connections.c:3114 src/main/connections.c:3137
-#: src/main/connections.c:3149 src/main/connections.c:3261
-#: src/main/connections.c:3371 src/main/connections.c:5063
+#: src/main/connections.c:2988 src/main/connections.c:3037
+#: src/main/connections.c:3048 src/main/connections.c:3095
+#: src/main/connections.c:3116 src/main/connections.c:3139
+#: src/main/connections.c:3151 src/main/connections.c:3263
+#: src/main/connections.c:3373 src/main/connections.c:5065
 msgid "'con' is not a connection"
 msgstr " 'con' はコネクションではありません "
 
-#: src/main/connections.c:2989
+#: src/main/connections.c:2991
 msgid "cannot open standard connections"
 msgstr " 標準コネクションを開くことができません "
 
-#: src/main/connections.c:2991
+#: src/main/connections.c:2993
 msgid "connection is already open"
 msgstr " コネクションはすでに開かれています "
 
-#: src/main/connections.c:3024
+#: src/main/connections.c:3026
 msgid "unknown 'rw' value"
 msgstr " 未知の 'rw' 値です "
 
-#: src/main/connections.c:3095
+#: src/main/connections.c:3097
 msgid "cannot close standard connections"
 msgstr " 標準コネクションを閉じることができません "
 
-#: src/main/connections.c:3098
+#: src/main/connections.c:3100
 msgid "cannot close output sink connection"
 msgstr " 出力 sink コネクションを閉じることができません "
 
-#: src/main/connections.c:3100
+#: src/main/connections.c:3102
 msgid "cannot close messages sink connection"
 msgstr " メッセージ sink コネクションを閉じることができません "
 
-#: src/main/connections.c:3116 src/main/connections.c:4786
+#: src/main/connections.c:3118 src/main/connections.c:4788
 #: src/main/serialize.c:1660 src/main/serialize.c:1668
 msgid "connection is not open"
 msgstr " コネクションは開かれていません "
 
-#: src/main/connections.c:3209 src/main/connections.c:3221
+#: src/main/connections.c:3211 src/main/connections.c:3223
 msgid "Line longer than buffer size"
 msgstr " 行がバッファーサイズより長くなっています "
 
-#: src/main/connections.c:3288 src/main/connections.c:3290
-#: src/main/connections.c:3554 src/main/connections.c:4080
-#: src/main/connections.c:4104 src/main/dcf.c:64 src/main/scan.c:907
+#: src/main/connections.c:3290 src/main/connections.c:3292
+#: src/main/connections.c:3556 src/main/connections.c:4082
+#: src/main/connections.c:4106 src/main/dcf.c:64 src/main/scan.c:907
 #: src/main/scan.c:911 src/main/scan.c:1018 src/main/scan.c:1022
 #: src/main/serialize.c:1662 src/main/source.c:267
 msgid "cannot read from this connection"
 msgstr " このコネクションから読み込みできません "
 
-#: src/main/connections.c:3302 src/main/connections.c:3321
+#: src/main/connections.c:3304 src/main/connections.c:3323
 msgid "cannot allocate buffer in readLines"
 msgstr " readLines にバッファを割り当てることができません "
 
-#: src/main/connections.c:3343
+#: src/main/connections.c:3345
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr " '%s' で不完全な最終行が見つかりました "
 
-#: src/main/connections.c:3349
+#: src/main/connections.c:3351
 msgid "too few lines read in readLines"
 msgstr " readLines で読み込む行が少なすぎます "
 
-#: src/main/connections.c:3452
+#: src/main/connections.c:3454
 msgid "incomplete string at end of file has been discarded"
 msgstr " ファイルの末尾の不完全な文字列は無視されています "
 
-#: src/main/connections.c:3458
+#: src/main/connections.c:3460
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr " 終端（null）がありません、10000byteに切りつめました "
 
-#: src/main/connections.c:3522
+#: src/main/connections.c:3524
 msgid "can only read from a binary connection"
 msgstr " バイナリコネクションからのみ入力できます "
 
-#: src/main/connections.c:3571 src/main/connections.c:3850
+#: src/main/connections.c:3573 src/main/connections.c:3852
 msgid "size changing is not supported for complex vectors"
 msgstr " 複素ベクトルのサイズの変更はサポートされていません "
 
-#: src/main/connections.c:3596 src/main/connections.c:3614
-#: src/main/connections.c:3640 src/main/connections.c:3684
-#: src/main/connections.c:3704 src/main/connections.c:3831
-#: src/main/connections.c:3844 src/main/connections.c:3903
-#: src/main/connections.c:3935
+#: src/main/connections.c:3598 src/main/connections.c:3616
+#: src/main/connections.c:3642 src/main/connections.c:3686
+#: src/main/connections.c:3706 src/main/connections.c:3833
+#: src/main/connections.c:3846 src/main/connections.c:3905
+#: src/main/connections.c:3937
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr " このマシンでは %d というサイズは使われていません "
 
-#: src/main/connections.c:3625
+#: src/main/connections.c:3627
 msgid "raw is always of size 1"
 msgstr " raw 型オブジェクトのサイズはいつも1です "
 
-#: src/main/connections.c:3734
+#: src/main/connections.c:3736
 msgid "'x' is not an atomic vector type"
 msgstr " 'x' がアトミックベクトルタイプではありません "
 
-#: src/main/connections.c:3740
+#: src/main/connections.c:3742
 msgid "can only write to a binary connection"
 msgstr " バイナリコネクションにだけ書き込みできます "
 
-#: src/main/connections.c:3759
+#: src/main/connections.c:3761
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr " raw ベクトルには 2^31-1 バイトしか書き込みできません "
 
-#: src/main/connections.c:3761
+#: src/main/connections.c:3763
 msgid "only 2^31-1 bytes can be written in a single readBin() call"
 msgstr " 一つの readBin() 呼び出しには 2^31-1 バイトしか書き込みできません "
 
-#: src/main/connections.c:3810 src/main/connections.c:3963
-#: src/main/connections.c:4236 src/main/connections.c:4276
+#: src/main/connections.c:3812 src/main/connections.c:3965
+#: src/main/connections.c:4238 src/main/connections.c:4278
 msgid "problem writing to connection"
 msgstr " コネクションへの書き込みに問題があります "
 
-#: src/main/connections.c:3855
+#: src/main/connections.c:3857
 msgid "size changing is not supported for raw vectors"
 msgstr " raw ベクトルのサイズの変更はサポートされていません "
 
-#: src/main/connections.c:3998 src/main/connections.c:4002
-#: src/main/connections.c:4041
+#: src/main/connections.c:4000 src/main/connections.c:4004
+#: src/main/connections.c:4043
 msgid "invalid UTF-8 input in readChar()"
 msgstr " readChart 関数への不正な UTF-8 入力です "
 
-#: src/main/connections.c:4107
+#: src/main/connections.c:4109
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "UTF-8以外のマルチバイトロケールではバイト型でのみ読み込み可能です "
 
-#: src/main/connections.c:4176
+#: src/main/connections.c:4178
 msgid "'object' is too short"
 msgstr " 'object' が短すぎます "
 
-#: src/main/connections.c:4225
+#: src/main/connections.c:4227
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr ""
 " writeChar: 文字列中に今ある以上のバイト数が要求されています－ゼロで埋めます "
 
-#: src/main/connections.c:4250
+#: src/main/connections.c:4252
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 " writeChar: 文字列中に今ある以上の文字が要求されています－ゼロで埋めます "
 
-#: src/main/connections.c:4310 src/main/connections.c:4313
-#: src/main/connections.c:4351 src/main/connections.c:4356
+#: src/main/connections.c:4312 src/main/connections.c:4315
+#: src/main/connections.c:4353 src/main/connections.c:4358
 msgid "could not allocate space for pushBack"
 msgstr " pushBack のための領域を割り当てられませんでした "
 
-#: src/main/connections.c:4340
+#: src/main/connections.c:4342
 msgid "can only push back on open readable connections"
 msgstr " 開いている読み込み可能コネクションへのみプッシュバックできます "
 
-#: src/main/connections.c:4342
+#: src/main/connections.c:4344
 msgid "can only push back on text-mode connections"
 msgstr " テキストモードのコネクションへのみプッシュバックできます "
 
-#: src/main/connections.c:4403 src/main/connections.c:4473
+#: src/main/connections.c:4405 src/main/connections.c:4475
 msgid "sink stack is full"
 msgstr " sink のスタックが溢れました "
 
-#: src/main/connections.c:4406
+#: src/main/connections.c:4408
 msgid "cannot switch output to stdin"
 msgstr " 出力を stdin へ切り替えることができません "
 
-#: src/main/connections.c:4433
+#: src/main/connections.c:4435
 msgid "no sink to remove"
 msgstr " 取り除くべき sink がありません "
 
-#: src/main/connections.c:4555
+#: src/main/connections.c:4557
 #, c-format
 msgid "there is no connection %d"
 msgstr " %d というコネクションはありません "
 
-#: src/main/connections.c:4690
+#: src/main/connections.c:4692
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 " file(\"\")は、open = \"w+\" と open = \"w+b\" だけをサポートします：前者を使"
 "います "
 
-#: src/main/connections.c:4744 src/modules/internet/internet.c:113
+#: src/main/connections.c:4746 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:568
 msgid "unsupported URL scheme"
 msgstr " サポートされていないURLスキームです "
 
-#: src/main/connections.c:4828
+#: src/main/connections.c:4830
 msgid "file stream does not have gzip magic number"
 msgstr " ファイルストリームは gzip マジックナンバーを持っていません "
 
-#: src/main/connections.c:4839
+#: src/main/connections.c:4841
 msgid "file stream does not have valid gzip header"
 msgstr " ファイルストリームは適正な gzip ヘッダを持っていません "
 
-#: src/main/connections.c:4904
+#: src/main/connections.c:4906
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr " 'gzcon' コネクションのフラッシュ時に書き込みエラーが生じました "
 
-#: src/main/connections.c:5006
+#: src/main/connections.c:5008
 #, c-format
 msgid "crc error %x %x\n"
 msgstr " crc エラー %x %x \n"
 
-#: src/main/connections.c:5033
+#: src/main/connections.c:5035
 msgid "write error on 'gzcon' connection"
 msgstr " 'gzcon' コネクションに書き込みエラーが生じました "
 
-#: src/main/connections.c:5067
+#: src/main/connections.c:5069
 msgid "'level' must be one of 0 ... 9"
 msgstr " 'level' は0～9のいずれかでなくてはなりません "
 
-#: src/main/connections.c:5070
+#: src/main/connections.c:5072
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr " 'allowNonCompression' は TRUEまたは FALSEでなければなりません "
 
-#: src/main/connections.c:5073
+#: src/main/connections.c:5075
 msgid "this is already a gzcon connection"
 msgstr " これはすでに gzcon コネクションです "
 
-#: src/main/connections.c:5079
+#: src/main/connections.c:5081
 msgid "can only use read- or write- binary connections"
 msgstr " 読み込み，または書き出しのためのバイナリコネクションのみが使えます "
 
-#: src/main/connections.c:5082
+#: src/main/connections.c:5084
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 " テキストモード 'file' コネクションの使用はは正しく機能しないかもしれません "
 
-#: src/main/connections.c:5085
+#: src/main/connections.c:5087
 msgid ""
 "cannot create a gzcon connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2375,24 +2375,24 @@ msgstr ""
 " 書き込み可能な textConnection からの gzcon コネクションを作れません；もしか"
 "すると rawConnection を使うべきかも "
 
-#: src/main/connections.c:5088 src/main/connections.c:5092
-#: src/main/connections.c:5099 src/main/connections.c:5113
+#: src/main/connections.c:5090 src/main/connections.c:5094
+#: src/main/connections.c:5101 src/main/connections.c:5115
 msgid "allocation of 'gzcon' connection failed"
 msgstr " 'gzcon' コネクションで割り当てに失敗しました "
 
-#: src/main/connections.c:5271
+#: src/main/connections.c:5273
 msgid "not a list of sockets"
 msgstr " ソケットのリストではありません "
 
-#: src/main/connections.c:5276
+#: src/main/connections.c:5278
 msgid "bad write indicators"
 msgstr " 不適切な書き込み指示子です "
 
-#: src/main/connections.c:5287
+#: src/main/connections.c:5289
 msgid "not a socket connection"
 msgstr " ソケットコネクションではありません "
 
-#: src/main/connections.c:5508
+#: src/main/connections.c:5510
 msgid "unknown compression, assuming none"
 msgstr " 　未知の圧縮法です、何も仮定しません "
 
@@ -2492,21 +2492,21 @@ msgstr " 複素数に対しては min/max は定義されていません "
 msgid "unknown cumxxx function"
 msgstr " 未知の cumxxx 関数です "
 
-#: src/main/datetime.c:564 src/main/datetime.c:570 src/main/datetime.c:584
-#: src/main/datetime.c:589
+#: src/main/datetime.c:569 src/main/datetime.c:575 src/main/datetime.c:589
+#: src/main/datetime.c:594
 msgid "problem with setting timezone"
 msgstr " タイムゾーンの設定に問題があります "
 
-#: src/main/datetime.c:574
+#: src/main/datetime.c:579
 msgid "cannot set timezones on this system"
 msgstr " このシステムではタイムゾーンは設定できません "
 
-#: src/main/datetime.c:596 src/main/datetime.c:598
+#: src/main/datetime.c:601 src/main/datetime.c:603
 msgid "problem with unsetting timezone"
 msgstr " タイムゾーンが未設定による問題です "
 
-#: src/main/datetime.c:734 src/main/datetime.c:736 src/main/datetime.c:1129
-#: src/main/datetime.c:1131
+#: src/main/datetime.c:739 src/main/datetime.c:741 src/main/datetime.c:1134
+#: src/main/datetime.c:1136
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr " 空ではない POSIXlt 構造の中に長さゼロの成分があります "
 
@@ -4113,10 +4113,10 @@ msgstr ""
 msgid "internet routines cannot be accessed in module"
 msgstr " モジュール中でインターネットルーチンがアクセスできません "
 
-#: src/main/internet.c:102 src/main/internet.c:140 src/main/internet.c:152
-#: src/main/internet.c:163 src/main/internet.c:174 src/main/internet.c:185
-#: src/main/internet.c:194 src/main/internet.c:205 src/main/internet.c:216
-#: src/main/internet.c:226 src/main/internet.c:237
+#: src/main/internet.c:102 src/main/internet.c:140 src/main/internet.c:153
+#: src/main/internet.c:164 src/main/internet.c:175 src/main/internet.c:186
+#: src/main/internet.c:195 src/main/internet.c:206 src/main/internet.c:217
+#: src/main/internet.c:227 src/main/internet.c:238
 msgid "internet routines cannot be loaded"
 msgstr " インターネットルーチンがロードできません "
 
@@ -4130,13 +4130,13 @@ msgstr " 不適切な値です "
 msgid "internet routines were already initialized"
 msgstr " インターネットルーチンは既に初期化されています "
 
-#: src/main/internet.c:248
+#: src/main/internet.c:249
 msgid "invalid bind address specification"
 msgstr " 不正なバインドアドレスです "
 
-#: src/main/internet.c:268 src/main/internet.c:278 src/main/internet.c:288
-#: src/main/internet.c:298 src/main/internet.c:308 src/main/internet.c:318
-#: src/main/internet.c:329
+#: src/main/internet.c:269 src/main/internet.c:279 src/main/internet.c:289
+#: src/main/internet.c:299 src/main/internet.c:309 src/main/internet.c:319
+#: src/main/internet.c:330
 msgid "socket routines cannot be loaded"
 msgstr " ソケットルーチンがロードできません "
 

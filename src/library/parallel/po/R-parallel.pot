@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:45\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,8 +11,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "package parallel is just a stub"
+msgid "invalid value of 'seed'"
 msgstr ""
 
-msgid "Package 'parallel' does nothing as yet"
+msgid "not a valid cluster"
+msgstr ""
+
+msgid "one node produced an error:"
+msgstr ""
+
+msgid "nodes produced errors; first error:"
+msgstr ""
+
+msgid "need at least one argument"
+msgstr ""
+
+msgid "dim(X) must have a positive length"
+msgstr ""
+
+msgid "'X' must have named dimnames"
+msgstr ""
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
+
+msgid "invalid 'child' argument"
+msgstr ""
+
+msgid "'children' must be a list of processes or a single process"
+msgstr ""
+
+msgid "'process' must be of the class \"`process\""
+msgstr ""
+
+msgid "'child' must be a valid child process"
+msgstr ""
+
+msgid "'what' must be a character or raw vector"
+msgstr ""
+
+msgid "closeAll() is a no-op in the master process"
+msgstr ""
+
+msgid "invalid 'jobs' argument"
+msgstr ""
+
+msgid "v must be a vector"
+msgstr ""
+
+msgid "some results may be missing, folded or caused an error"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1324,11 +1324,6 @@ msgstr "\""
 msgid "bad method object stored in method table, class \"%s\""
 msgstr "objeto inválido encontrado como método (classe \"%s\")"
 
-msgid ""
-"package slot missing from signature, cannot use with duplicate class names "
-"(the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr "Objeto inválido na tabela de métodos(\""
 
@@ -1603,6 +1598,14 @@ msgstr ""
 
 msgid "\" is read-only"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"invalid replacement for field %s, should be from class %s or a subclass (was "
+"class %s)"
+msgstr ""
+"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
+"objeto de classe  \"%s\""
 
 #, fuzzy
 msgid ""
@@ -1884,14 +1887,6 @@ msgstr[1] "nenhuma definição existente para função '%s'"
 #~ "Criando um genérico para %s no pacote %s\n"
 #~ " (a definição fornecida difere e substitui a da implícita e genérica\n"
 #~ " no pacote %s: %s)"
-
-#, fuzzy
-#~ msgid ""
-#~ "replacement for field \"%s\" must be an accessor function: got an object "
-#~ "of class \"%s\""
-#~ msgstr ""
-#~ "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido "
-#~ "um objeto de classe  \"%s\""
 
 #, fuzzy
 #~ msgid ""

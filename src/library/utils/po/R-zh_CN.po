@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -454,6 +454,10 @@ msgstr "域设定得不对"
 msgid "do not know what to search"
 msgstr "不知道要搜查什么"
 
+#, fuzzy
+msgid "incorrect type specification"
+msgstr "域设定得不对"
+
 msgid "argument 'help.db' is deprecated"
 msgstr "参数'help.db'已经不再用了"
 
@@ -593,7 +597,7 @@ msgstr "找不到S3方法'%s'"
 msgid "environment specified is not a package"
 msgstr "指定的环境不是程序包"
 
-msgid "changing locked binding for %s in %s whlist loading %s"
+msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr ""
 
 msgid "changing locked binding for %s in %s"
@@ -783,10 +787,12 @@ msgstr "从文件名字推断'repos = NULL'"
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
 
-msgid "cannot install MacOS X binary packages on this plaform"
+#, fuzzy
+msgid "cannot install MacOS X binary packages on this platform"
 msgstr "无法在此平台下安装MacOS X二元程序包"
 
-msgid "cannot install Windows binary packages on this plaform"
+#, fuzzy
+msgid "cannot install Windows binary packages on this platform"
 msgstr "无法在此平台下安装Windows二元程序包"
 
 msgid ""

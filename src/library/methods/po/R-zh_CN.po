@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1231,11 +1231,6 @@ msgstr "\")"
 msgid "bad method object stored in method table, class \"%s\""
 msgstr "作为方法的对象(类别是\"%s\")出错"
 
-msgid ""
-"package slot missing from signature, cannot use with duplicate class names "
-"(the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr "列表方法的对象出错"
 
@@ -1511,6 +1506,12 @@ msgstr ""
 
 #, fuzzy
 msgid ""
+"invalid replacement for field %s, should be from class %s or a subclass (was "
+"class %s)"
+msgstr "参数S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
+
+#, fuzzy
+msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
 "of class \"%s\""
 msgstr "第一个参数应当为泛型函数的名称(现在却是类别为\"%s\"的对象)"
@@ -1770,12 +1771,6 @@ msgstr[0] "类别%s的定义不存在"
 #~ "\" is not a known action (warn, stop, once, ignore); no action recorded "
 #~ "for function \""
 #~ msgstr "\"没有这样的作用(警告，停止，一次，忽视) ；函数没有记录作用"
-
-#, fuzzy
-#~ msgid ""
-#~ "replacement for field \"%s\" must be an accessor function: got an object "
-#~ "of class \"%s\""
-#~ msgstr "参数S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
 
 #~ msgid ""
 #~ "Value supplied for field \"%s\" (with class \"%s\") is not a subclass of "

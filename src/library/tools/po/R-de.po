@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-24 11:04+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -481,7 +481,7 @@ msgstr "das aktuelle ARbeitsverzeichnis kann nicht bestimmt werden"
 msgid "no inputs"
 msgstr "keine Eingaben"
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -621,8 +621,20 @@ msgstr "existiert nicht"
 msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
 msgstr "keine Ergebnisse gefunden"
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
+msgstr ""
 
 msgid "No help found for topic %s in any package."
 msgstr "Keine Hilfe zum Stichwort %s in irgendeinem Paket gefunden"
@@ -645,7 +657,9 @@ msgstr "Link %s konnte im Paket %s nicht gefunden werden"
 msgid "No docs found for package %s"
 msgstr "Keine Dokumente zu Paket %s gefunden"
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+#, fuzzy
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 "Nur Hilfeseiten, %s, %s und Dateien unter %s in einem Paket können "
 "angeschaut werden"
@@ -658,6 +672,9 @@ msgstr "DESCRIPTION"
 
 msgid "doc/"
 msgstr "doc/"
+
+msgid "demo/"
+msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "nicht unterstützte URL %s"
@@ -944,8 +961,9 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "Ergebnisse unterscheiden sich von den Referenzergebnissen"
 
-msgid "no examples found"
-msgstr "keine Beispiele gefunden"
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "Keine Hilfe zum Paket %s gefunden"
 
 msgid "Running specific tests for package"
 msgstr "Ausführen spezifischer Tests für das Paket"
@@ -1111,6 +1129,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "no examples found"
+#~ msgstr "keine Beispiele gefunden"
 
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "Warnung: 'Depends' Eintrag hat mehrfache Abhängigkeiten von R:"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -392,6 +392,9 @@ msgstr ""
 msgid "do not know what to search"
 msgstr ""
 
+msgid "incorrect type specification"
+msgstr ""
+
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
@@ -521,7 +524,7 @@ msgstr ""
 msgid "environment specified is not a package"
 msgstr ""
 
-msgid "changing locked binding for %s in %s whlist loading %s"
+msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr ""
 
 msgid "changing locked binding for %s in %s"
@@ -683,10 +686,10 @@ msgstr ""
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
-msgid "cannot install MacOS X binary packages on this plaform"
+msgid "cannot install MacOS X binary packages on this platform"
 msgstr ""
 
-msgid "cannot install Windows binary packages on this plaform"
+msgid "cannot install Windows binary packages on this platform"
 msgstr ""
 
 msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"

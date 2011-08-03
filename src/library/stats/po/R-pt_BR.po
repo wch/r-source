@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1266,7 +1266,7 @@ msgstr ""
 msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y' deve ser numérico ou uma cadeia nomeando uma função válida"
 
-msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgid "ties should not be present for the Kolmogorov-Smirnov test"
 msgstr ""
 
 msgid ""
@@ -1708,7 +1708,8 @@ msgstr "Nenhum valor inicial fornecido"
 msgid "No starting values specified for some parameters."
 msgstr "Sem valores iniciais especificados para alguns parâmetros."
 
-msgid "Intializing"
+#, fuzzy
+msgid "Initializing"
 msgstr "Inicializando"
 
 msgid "to '1.'."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-28 14:58+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1416,11 +1416,6 @@ msgstr " \") "
 msgid "bad method object stored in method table, class \"%s\""
 msgstr " 間違ったオブジェクトがメソッド(クラス \"%s\")として見付かりました "
 
-msgid ""
-"package slot missing from signature, cannot use with duplicate class names "
-"(the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr " 不正なオブジェクトが以下のメソッドテーブル中にありました (\" "
 
@@ -1734,6 +1729,14 @@ msgstr " 欄 \" "
 
 msgid "\" is read-only"
 msgstr " \" は読み取り専用です "
+
+#, fuzzy
+msgid ""
+"invalid replacement for field %s, should be from class %s or a subclass (was "
+"class %s)"
+msgstr ""
+" 欄 \"%s\" は accessor 関数によってしか置き換えられません： クラス \"%s\" の"
+"オブジェクトが与えられました "
 
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
@@ -2051,13 +2054,6 @@ msgstr[0] " クラス %s に対する定義はありません "
 #~ msgid "Only accessor fields can be replaced:  field \"%s\" has class \"%s\""
 #~ msgstr ""
 #~ " accessor 欄だけが置き換えられます： 欄 \"%s\" はクラス \"%s\" を持ちます "
-
-#~ msgid ""
-#~ "replacement for field \"%s\" must be an accessor function: got an object "
-#~ "of class \"%s\""
-#~ msgstr ""
-#~ " 欄 \"%s\" は accessor 関数によってしか置き換えられません： クラス \"%s\" "
-#~ "のオブジェクトが与えられました "
 
 #, fuzzy
 #~ msgid ""

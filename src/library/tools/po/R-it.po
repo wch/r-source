@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -475,7 +475,7 @@ msgstr ""
 msgid "no inputs"
 msgstr ""
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -613,7 +613,19 @@ msgstr "il file '%s' non esiste"
 msgid "No files in this directory"
 msgstr ""
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
+msgstr ""
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
 msgstr ""
 
 #, fuzzy
@@ -642,7 +654,8 @@ msgstr "il name space non deve essere caricato."
 msgid "No docs found for package %s"
 msgstr ""
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 
 msgid "NEWS"
@@ -653,6 +666,9 @@ msgid "DESCRIPTION"
 msgstr "file DESCRIPTION non valido"
 
 msgid "doc/"
+msgstr ""
+
+msgid "demo/"
 msgstr ""
 
 msgid "unsupported URL %s"
@@ -933,8 +949,9 @@ msgstr ""
 msgid "results differ from reference results"
 msgstr ""
 
-msgid "no examples found"
-msgstr ""
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "non può essere usato per il pacchetto 'base'"
 
 msgid "Running specific tests for package"
 msgstr ""

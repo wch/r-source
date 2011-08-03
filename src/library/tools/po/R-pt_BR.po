@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -456,7 +456,7 @@ msgstr ""
 msgid "no inputs"
 msgstr ""
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -587,7 +587,19 @@ msgstr ""
 msgid "No files in this directory"
 msgstr ""
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
+msgstr ""
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
 msgstr ""
 
 msgid "No help found for topic %s in any package."
@@ -611,7 +623,8 @@ msgstr ""
 msgid "No docs found for package %s"
 msgstr ""
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 
 msgid "NEWS"
@@ -621,6 +634,9 @@ msgid "DESCRIPTION"
 msgstr ""
 
 msgid "doc/"
+msgstr ""
+
+msgid "demo/"
 msgstr ""
 
 msgid "unsupported URL %s"
@@ -888,7 +904,7 @@ msgstr ""
 msgid "results differ from reference results"
 msgstr ""
 
-msgid "no examples found"
+msgid "no examples found for package %s"
 msgstr ""
 
 msgid "Running specific tests for package"

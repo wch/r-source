@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-25 12:48+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -467,6 +467,10 @@ msgstr " 不正確な欄指定です "
 msgid "do not know what to search"
 msgstr " 何を検索すべきか分かりません "
 
+#, fuzzy
+msgid "incorrect type specification"
+msgstr " 不正確な欄指定です "
+
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました  "
 
@@ -610,7 +614,7 @@ msgstr " S3 メソッド '%s' は見付かりません  "
 msgid "environment specified is not a package"
 msgstr " 指定された環境はパッケージではありません "
 
-msgid "changing locked binding for %s in %s whlist loading %s"
+msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr ""
 
 msgid "changing locked binding for %s in %s"
@@ -805,12 +809,14 @@ msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 " MacOS X バイナリのパッケージをWindows 上にインストールすることはできません "
 
-msgid "cannot install MacOS X binary packages on this plaform"
+#, fuzzy
+msgid "cannot install MacOS X binary packages on this platform"
 msgstr ""
 " MacOS X バイナリのパッケージをこのプラットフォームにインストールすることはで"
 "きません "
 
-msgid "cannot install Windows binary packages on this plaform"
+#, fuzzy
+msgid "cannot install Windows binary packages on this platform"
 msgstr ""
 " Windows バイナリのパッケージをこのプラットフォームにインストールすることはで"
 "きません "

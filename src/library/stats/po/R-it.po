@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1303,7 +1303,7 @@ msgstr ""
 msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y' deve essere numerico o una stringa contente un nome di funzione"
 
-msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgid "ties should not be present for the Kolmogorov-Smirnov test"
 msgstr ""
 
 #, fuzzy
@@ -1753,7 +1753,7 @@ msgstr "valori iniziali non specificati"
 msgid "No starting values specified for some parameters."
 msgstr "valori iniziali non specificati"
 
-msgid "Intializing"
+msgid "Initializing"
 msgstr ""
 
 msgid "to '1.'."

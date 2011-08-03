@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -423,6 +423,9 @@ msgstr ""
 msgid "do not know what to search"
 msgstr ""
 
+msgid "incorrect type specification"
+msgstr ""
+
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
@@ -556,7 +559,7 @@ msgstr ""
 msgid "environment specified is not a package"
 msgstr ""
 
-msgid "changing locked binding for %s in %s whlist loading %s"
+msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr ""
 
 msgid "changing locked binding for %s in %s"
@@ -730,10 +733,10 @@ msgstr ""
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr ""
 
-msgid "cannot install MacOS X binary packages on this plaform"
+msgid "cannot install MacOS X binary packages on this platform"
 msgstr ""
 
-msgid "cannot install Windows binary packages on this plaform"
+msgid "cannot install Windows binary packages on this platform"
 msgstr ""
 
 msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-27 22:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1494,11 +1494,6 @@ msgstr "\")"
 msgid "bad method object stored in method table, class \"%s\""
 msgstr "mauvais objet trouvé comme méthode (calss \"%s\")"
 
-msgid ""
-"package slot missing from signature, cannot use with duplicate class names "
-"(the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr "Mauvais objet trouvé comme méthode (\""
 
@@ -1827,6 +1822,14 @@ msgstr "Champ \""
 
 msgid "\" is read-only"
 msgstr "\" en lecture seule"
+
+#, fuzzy
+msgid ""
+"invalid replacement for field %s, should be from class %s or a subclass (was "
+"class %s)"
+msgstr ""
+"lle remplaçant pour le champ \"%s\" doit être une fonction d'accession : un "
+"objet de classe \"%s\" est obtenu à la place"
 
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
@@ -2162,13 +2165,6 @@ msgstr[1] "aucune définition des classes %s n'est trouvée"
 #~ msgstr ""
 #~ "Seuls les champs d'accès peuvent être remplacés : le champ \"%s\" a la "
 #~ "classe \"%s\""
-
-#~ msgid ""
-#~ "replacement for field \"%s\" must be an accessor function: got an object "
-#~ "of class \"%s\""
-#~ msgstr ""
-#~ "lle remplaçant pour le champ \"%s\" doit être une fonction d'accession : "
-#~ "un objet de classe \"%s\" est obtenu à la place"
 
 #, fuzzy
 #~ msgid ""

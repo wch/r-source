@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -473,7 +473,7 @@ msgstr ""
 msgid "no inputs"
 msgstr ""
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -613,7 +613,19 @@ msgstr "파일 '%s'는 존재하지 않습니다"
 msgid "No files in this directory"
 msgstr ""
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
+msgstr ""
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
 msgstr ""
 
 #, fuzzy
@@ -642,7 +654,8 @@ msgstr "name space를 적재해서는 안됩니다"
 msgid "No docs found for package %s"
 msgstr ""
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 
 msgid "NEWS"
@@ -653,6 +666,9 @@ msgid "DESCRIPTION"
 msgstr "무효의 DESCRIPTION 파일입니다"
 
 msgid "doc/"
+msgstr ""
+
+msgid "demo/"
 msgstr ""
 
 msgid "unsupported URL %s"
@@ -933,8 +949,9 @@ msgstr ""
 msgid "results differ from reference results"
 msgstr ""
 
-msgid "no examples found"
-msgstr ""
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
 msgid "Running specific tests for package"
 msgstr ""

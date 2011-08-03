@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-25 14:21+0900 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -494,7 +494,7 @@ msgstr " 現在の作業ディレクトリを確認することができませ�
 msgid "no inputs"
 msgstr " 入力がありません "
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -635,8 +635,20 @@ msgstr " は存在しません "
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
 msgstr " いかなる結果も見つかりません "
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
+msgstr ""
 
 msgid "No help found for topic %s in any package."
 msgstr " トピック %s に対するヘルプはどんなパッケージにも見つかりません。 "
@@ -659,7 +671,9 @@ msgstr " リンク %s （パッケージ %s 中の）は所在不明です "
 msgid "No docs found for package %s"
 msgstr " package %s にドキュメントは見つけられませんでした "
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+#, fuzzy
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr " ヘルプファイル%s, %s, パッケージの%s以下のファイルだけが閲覧できます "
 
 msgid "NEWS"
@@ -670,6 +684,9 @@ msgstr "DESCRIPTION "
 
 msgid "doc/"
 msgstr " doc/ "
+
+msgid "demo/"
+msgstr ""
 
 msgid "unsupported URL %s"
 msgstr " 未サポートのURL %s "
@@ -957,8 +974,9 @@ msgstr "OK "
 msgid "results differ from reference results"
 msgstr " 結果が参照結果と異なります "
 
-msgid "no examples found"
-msgstr " 例がが見つかりません "
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr " パッケージ %s に対するヘルプが見つかりません "
 
 msgid "Running specific tests for package"
 msgstr " 指定されたテストをパッケージに対して実行中 "
@@ -1115,6 +1133,9 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "no examples found"
+#~ msgstr " 例がが見つかりません "
 
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr " 警告：'Depends' 項目は多重依存性を持ちます "

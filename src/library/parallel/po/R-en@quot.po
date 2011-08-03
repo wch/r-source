@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:45\n"
-"PO-Revision-Date: 2011-07-30 15:45\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
+"PO-Revision-Date: 2011-08-03 15:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -34,8 +34,53 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "package parallel is just a stub"
-msgstr "package parallel is just a stub"
+msgid "invalid value of 'seed'"
+msgstr "invalid value of ‘seed’"
 
-msgid "Package 'parallel' does nothing as yet"
-msgstr "Package ‘parallel’ does nothing as yet"
+msgid "not a valid cluster"
+msgstr "not a valid cluster"
+
+msgid "one node produced an error:"
+msgstr "one node produced an error:"
+
+msgid "nodes produced errors; first error:"
+msgstr "nodes produced errors; first error:"
+
+msgid "need at least one argument"
+msgstr "need at least one argument"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) must have a positive length"
+
+msgid "'X' must have named dimnames"
+msgstr "‘X’ must have named dimnames"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "not all elements of ‘MARGIN’ are names of dimensions"
+
+msgid "invalid 'child' argument"
+msgstr "invalid ‘child’ argument"
+
+msgid "'children' must be a list of processes or a single process"
+msgstr "‘children’ must be a list of processes or a single process"
+
+msgid "'process' must be of the class \"`process\""
+msgstr "‘process’ must be of the class “`process”"
+
+msgid "'child' must be a valid child process"
+msgstr "‘child’ must be a valid child process"
+
+msgid "'what' must be a character or raw vector"
+msgstr "‘what’ must be a character or raw vector"
+
+msgid "closeAll() is a no-op in the master process"
+msgstr "closeAll() is a no-op in the master process"
+
+msgid "invalid 'jobs' argument"
+msgstr "invalid ‘jobs’ argument"
+
+msgid "v must be a vector"
+msgstr "v must be a vector"
+
+msgid "some results may be missing, folded or caused an error"
+msgstr "some results may be missing, folded or caused an error"

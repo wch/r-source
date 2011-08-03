@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -890,9 +890,6 @@ msgstr ""
 msgid "bad method object stored in method table, class \"%s\""
 msgstr ""
 
-msgid "package slot missing from signature, cannot use with duplicate class names (the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr ""
 
@@ -1098,6 +1095,9 @@ msgid "Field \""
 msgstr ""
 
 msgid "\" is read-only"
+msgstr ""
+
+msgid "invalid replacement for field %s, should be from class %s or a subclass (was class %s)"
 msgstr ""
 
 msgid "The contains= argument should be the names of superclasses:  got an element of class \"%s\""

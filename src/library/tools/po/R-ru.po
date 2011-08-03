@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-30 02:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -483,7 +483,7 @@ msgstr "невозможно перейти в текущий рабочий каталог"
 msgid "no inputs"
 msgstr "нет вводов"
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -623,8 +623,20 @@ msgstr "не существует"
 msgid "No files in this directory"
 msgstr "В этой папке нет файлов"
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
 msgstr "Не найдено результатов"
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
+msgstr ""
 
 msgid "No help found for topic %s in any package."
 msgstr "Не найдено помощи по теме %s ни в одном из пакетов."
@@ -647,7 +659,9 @@ msgstr "Ссылка %s в пакете %s не найдена"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+#, fuzzy
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 "Только файлы помощи, %s, %s и файлы внутри %s могут быть просмотрены в пакете"
 
@@ -659,6 +673,9 @@ msgstr "ОПИСАНИЕ"
 
 msgid "doc/"
 msgstr "doc/"
+
+msgid "demo/"
+msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "неподдерживаемые URL %s"
@@ -940,8 +957,9 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "результаты отличаются от эталонных"
 
-msgid "no examples found"
-msgstr "не найдено примеров"
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "Не найдено помощи для пакета %s"
 
 msgid "Running specific tests for package"
 msgstr "Запускаю специфические тесты для пакета"
@@ -1113,6 +1131,9 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "no examples found"
+#~ msgstr "не найдено примеров"
 
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "ПРЕДУПРЕЖДЕНИЕ: У 'Depends' множественные зависимости в R:"

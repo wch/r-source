@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-30 15:43\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-29 19:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -496,7 +496,7 @@ msgstr "le répertoire de travail actuel ne peut être déterminé"
 msgid "no inputs"
 msgstr "pas d'entrées"
 
-msgid "DVI output from Rd2dvi is depreccated"
+msgid "DVI output from Rd2dvi is deprecated"
 msgstr ""
 
 msgid "Error in running tools::texi2dvi"
@@ -640,8 +640,20 @@ msgstr "n'existe pas"
 msgid "No files in this directory"
 msgstr "Pas de fichiers dans ce répertoire"
 
+msgid "Unrecognized search field:"
+msgstr ""
+
 msgid "No results found"
 msgstr "aucun résultat trouvé"
+
+msgid "Vignettes:"
+msgstr ""
+
+msgid "Code demonstrations:"
+msgstr ""
+
+msgid "Help pages:"
+msgstr ""
 
 msgid "No help found for topic %s in any package."
 msgstr "Aucune entrée d'aide pour le mot %s dans aucun package"
@@ -664,7 +676,9 @@ msgstr "Le lien %s dans le package %s ne peut être localisé"
 msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
 
-msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+#, fuzzy
+msgid ""
+"Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 "Visualisation possible seulement pour les fichiers d'aide, %s, %s et les "
 "fichiers dans %s"
@@ -677,6 +691,9 @@ msgstr "DESCRIPTION"
 
 msgid "doc/"
 msgstr "doc/"
+
+msgid "demo/"
+msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "URL %s non supportée"
@@ -961,8 +978,9 @@ msgstr "OK"
 msgid "results differ from reference results"
 msgstr "les résultats ne sont pas identiques aux résultats de référence"
 
-msgid "no examples found"
-msgstr "aucun exemple n'est trouvé"
+#, fuzzy
+msgid "no examples found for package %s"
+msgstr "Pas d'aide trouvée pour le package %s"
 
 msgid "Running specific tests for package"
 msgstr "Exécution des tests spécifiques au package"
@@ -1136,6 +1154,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "no examples found"
+#~ msgstr "aucun exemple n'est trouvé"
 
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "AVIS : l'entrée 'Depends' a des dépendances multiples sur R :"

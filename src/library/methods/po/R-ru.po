@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-07-29 08:52\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2011-03-30 02:24+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1410,11 +1410,6 @@ msgstr "\")"
 msgid "bad method object stored in method table, class \"%s\""
 msgstr "плохой объект найден в качестве метода (класс \"%s\")"
 
-msgid ""
-"package slot missing from signature, cannot use with duplicate class names "
-"(the package may be out of date): class(es)"
-msgstr ""
-
 msgid "Invalid object in methods table (\""
 msgstr "неверный объект в таблице методов (\""
 
@@ -1724,6 +1719,14 @@ msgstr "Поле \""
 
 msgid "\" is read-only"
 msgstr "\" только для чтения"
+
+#, fuzzy
+msgid ""
+"invalid replacement for field %s, should be from class %s or a subclass (was "
+"class %s)"
+msgstr ""
+"замена для поля \"%s\" должна быть сопровождающей функцией, а получил объект "
+"класса \"%s\""
 
 msgid ""
 "The contains= argument should be the names of superclasses:  got an element "
@@ -2036,13 +2039,6 @@ msgstr[2] "нет определений классов \"%s\""
 #~ msgstr ""
 #~ "Только сопроводительные поля могут быть заменены:  поле \"%s\" имеет "
 #~ "класс \"%s\""
-
-#~ msgid ""
-#~ "replacement for field \"%s\" must be an accessor function: got an object "
-#~ "of class \"%s\""
-#~ msgstr ""
-#~ "замена для поля \"%s\" должна быть сопровождающей функцией, а получил "
-#~ "объект класса \"%s\""
 
 #, fuzzy
 #~ msgid ""

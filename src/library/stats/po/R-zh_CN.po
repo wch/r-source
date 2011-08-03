@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-06-09 13:48\n"
+"POT-Creation-Date: 2011-08-03 15:44\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "'y' must be numeric or a function of a string naming a valid function"
 msgstr "'y'必需是数值，否则的话请用字符串指定适当的函数"
 
-msgid "ties should not be present for the Kolomogorov-Smirnov test"
+msgid "ties should not be present for the Kolmogorov-Smirnov test"
 msgstr ""
 
 msgid ""
@@ -1645,7 +1645,8 @@ msgstr "没有设定初始值"
 msgid "No starting values specified for some parameters."
 msgstr "有些参数没有设定初始值"
 
-msgid "Intializing"
+#, fuzzy
+msgid "Initializing"
 msgstr "初始"
 
 msgid "to '1.'."
