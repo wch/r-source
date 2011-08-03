@@ -125,7 +125,9 @@ httpd <- function(path, query, ...)
 			    	vigfile0 <- vigfile
 			    }
 			    vignette <- vigDB[topic == file_path_sans_ext(vigDB$File),]
-			    vignettes[i,] <- c(pkg, unlist(vignette[,c("File", "Title", "PDF", "R")]))
+			    # There should be exactly one row in the result, but 
+			    # bad packages might have more, e.g. vig.Snw and vig.Rnw
+			    vignettes[i,] <- c(pkg, unlist(vignette[1,c("File", "Title", "PDF", "R")]))
 			 }
 			 out <- c(out, makeVignetteTable(vignettes))
 		    },
