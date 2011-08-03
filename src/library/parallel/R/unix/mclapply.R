@@ -38,7 +38,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     on.exit(cleanup())
     if (!mc.preschedule) {              # sequential (non-scheduled)
         FUN <- match.fun(FUN)
-        if (length(X) <= cores) { # all-out, we can use one-shot parallel
+        if (length(X) <= cores) { # we can use one-shot parallel
             jobs <- lapply(seq(X),
                            function(i) mcparallel(FUN(X[[i]], ...),
                                                   name = names(X)[i],
@@ -53,7 +53,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             names(res) <- names(X)
             ent <- rep(FALSE, length(X)) # values entered (scheduled)
             fin <- rep(FALSE, length(X)) # values finished
-            jobid <- 1:cores
+            jobid <- seq_len(cores)
             jobs <- lapply(jobid,
                            function(i) mcparallel(FUN(X[[i]], ...),
                                                   mc.set.seed = mc.set.seed,
@@ -63,29 +63,30 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             while (!all(fin)) {
                 s <- selectChildren(jobs, 0.5)
                 if (is.null(s)) break   # no children -> no hope
-                if (is.integer(s)) for (ch in s) {
-                    ji <- which(jobsp == ch)[1]
-                    ci <- jobid[ji]
-                    r <- readChild(ch)
-                    if (is.raw(r)) {
-                        child.res <- unserialize(r)
-                        ## we can't just assign it since a NULL
-                        ## assignment would remove it from the list
-                        if (!is.null(child.res)) res[[ci]] <- child.res
-                    } else {
-                        fin[ci] <- TRUE
-                        if (!all(ent)) { # still something to do,
-                                         # spawn a new job
-                            nexti <- which(!ent)[1]
-                            jobid[ji] <- nexti
-                            jobs[[ji]] <- mcparallel(FUN(X[[nexti]], ...),
-                                                     mc.set.seed = mc.set.seed,
-                                                     silent = mc.silent)
-                            jobsp[ji] <- processID(jobs[[ji]])
-                            ent[nexti] <- TRUE
+                if (is.integer(s))
+                    for (ch in s) {
+                        ji <- which(jobsp == ch)[1]
+                        ci <- jobid[ji]
+                        r <- readChild(ch)
+                        if (is.raw(r)) {
+                            child.res <- unserialize(r)
+                            ## we can't just assign it since a NULL
+                            ## assignment would remove it from the list
+                            if (!is.null(child.res)) res[[ci]] <- child.res
+                        } else {
+                            fin[ci] <- TRUE
+                            if (!all(ent)) { # still something to do,
+                                             # spawn a new job
+                                nexti <- which(!ent)[1]
+                                jobid[ji] <- nexti
+                                jobs[[ji]] <- mcparallel(FUN(X[[nexti]], ...),
+                                                         mc.set.seed = mc.set.seed,
+                                                         silent = mc.silent)
+                                jobsp[ji] <- processID(jobs[[ji]])
+                                ent[nexti] <- TRUE
+                            }
                         }
                     }
-                }
             }
             return(res)
         }

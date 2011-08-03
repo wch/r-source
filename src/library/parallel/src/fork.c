@@ -103,7 +103,7 @@ SEXP mc_fork()
     if (pid == -1) {
 	close(pipefd[0]); close(pipefd[1]);
 	close(sipfd[0]); close(sipfd[1]);
-	error(_("unable to fork: possible reason %s"), strerror(errno));
+	error(_("unable to fork, possible reason: %s"), strerror(errno));
     }
     res_i[0] = (int) pid;
     if (pid == 0) { /* child */
@@ -215,7 +215,7 @@ SEXP mc_send_child_stdin(SEXP sPid, SEXP what)
     fd = ci -> sifd;
     while (i < len) {
 	int n = write(fd, b + i, len - i);
-	if (n < 1) error("write error");
+	if (n < 1) error(_("write error"));
 	i += n;
     }
     return ScalarLogical(1);
@@ -295,7 +295,7 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
     Dprintf("  sr = %d\n", sr);
 #endif
     if (sr < 0) {
-	warning(_("error %s in select"), strerror(errno));
+	warning(_("error '%s' in select"), strerror(errno));
 	return ScalarLogical(0); /* FALSE on select error */
     }
     if (sr < 1) return ScalarLogical(1); /* TRUE on timeout */
@@ -417,7 +417,7 @@ SEXP mc_read_children(SEXP sTimeout)
     Dprintf("sr = %d\n", sr);
 #endif
     if (sr < 0) {
-	perror("select");
+	warning(_("error '%s' in select"), strerror(errno));
 	return ScalarLogical(0); /* FALSE on select error */
     }
     if (sr < 1) return ScalarLogical(1); /* TRUE on timeout */
@@ -503,7 +503,7 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
     int pid = asInteger(sPid);
     int sig = asInteger(sSig);
     if (kill((pid_t) pid, sig))
-	error("Kill failed.");
+	error(_("mckill failed"));
     return ScalarLogical(1);
 }
 
@@ -511,9 +511,9 @@ SEXP mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG
-    Dprintf("child %d: exit called\n", getpid());
+    Dprintf("child %d: mcexit called\n", getpid());
 #endif
-    if (is_master) error(_("exit can only be used in a child process"));
+    if (is_master) error(_("mcexit can only be used in a child process"));
     if (master_fd != -1) { /* send 0 to signify that we're leaving */
 	unsigned int len = 0;
 	write(master_fd, &len, sizeof(len));
@@ -532,6 +532,6 @@ SEXP mc_exit(SEXP sRes)
     Dprintf("child %d: exiting\n", getpid());
 #endif
     exit(res);
-    error(_("exit failed"));
+    error(_("mcexit failed"));
     return R_NilValue;
 }
