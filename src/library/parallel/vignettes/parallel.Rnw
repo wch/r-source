@@ -192,9 +192,9 @@ When an \R{} process is started up it takes the random-number seed
 from the object \code{.Random.seed} in a saved workspace or constructs
 one from the clock time (see the help on \code{RNG}: as from \R{}
 2.14.0 it also uses the process ID).  Thus worker processes might get
-the same seed, either because a workspace was restored or because the
-workers were started at the same time: otherwise these get a
-non-reproducible seed.
+the same seed, either because a workspace was restored or (in \R{} <
+2.14.0) because the workers were started at the same time: otherwise
+these get a non-reproducible seed.
 
 The alternative is to set separate seeds for each worker process in
 some reproducible way from the seed in the master process.  This is
@@ -225,7 +225,8 @@ fixed number of steps.  The generator is the combination of two:
 The `seed' then consists of $(x_n, x_{n-1}, x_{n-2}, y_n, y_{n-1},
 y_{n-2})$, and the recursion for each of $x_n$ and $y_n$ can have
 pre-computed coefficients for $k$ steps ahead.  For $k = 2^{127}$, the
-seed is advanced by $k$ steps by \R{} function \code{nextRNGStream(seed)}.
+seed is advanced by $k$ steps by \R{} function
+\code{nextRNGStream(.Random.seed)}.
 
 The \citet{lecuyer.1999} generator is available in \R{} as from
 version 2.14.0 \emph{via} \code{RNGkind("L'Ecuyer-CMRG")}.  Thus using

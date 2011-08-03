@@ -5,13 +5,15 @@
 
 \name{pvec}
 \alias{pvec}
-\title{Parallelize a Vector Map Function}
+\title{Parallelize a Vector Map Function using Forking}
 \description{
   \code{pvec} parellelizes the execution of a function on vector elements
   by splitting the vector and submitting each part to one core. The
   function must be a vectorized map, i.e. it takes a vector input and
   creates a vector output of exactly the same length as the input which
   doesn't depend on the partition of the vector.
+
+  It relies on forking and hence is not available on Windows.
 }
 \usage{
 pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
@@ -47,11 +49,11 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   whereas \code{pvec} assumes that \code{c(FUN(x[1]), FUN(x[2]))} is
   equivalent to \code{FUN(x[1:2])} and thus will split into as many
   calls to \code{FUN} as there are cores, each handling a subset
-  vector. This makes it much more efficient than \code{mclapply} but
+  vector.  This makes it more efficient than \code{mclapply} but
   requires the above assumption on \code{FUN}.
 }
 \value{
-  The result of the computation - in a successful case it should be of
+  The result of the computation -- in a successful case it should be of
   the same length as \code{v}.  If an error ocurred or the function was
   not a map the result may be shorter and a warning is given.
 }

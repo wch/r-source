@@ -92,6 +92,10 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   child process.  For an absolute guarantee, use
   \code{\link{RNGkind}("L'Ecuyer-CMRG")}: then each time a child is
   forked it is given the next stream (see \code{\link{nextRNGStream}}.
+  So if you select that generator and set a seed just before the first
+  use of \code{mcparallel} (including \emph{via} \code{\link{mclapply}})
+  the results of simulations will be reproducible provided the same
+  tasks are given to the first, second, \ldots{} forked process.
 }
 \seealso{
   \code{\link{sendMaster}}

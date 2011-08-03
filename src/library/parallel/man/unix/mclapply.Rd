@@ -5,12 +5,14 @@
 
 \name{mclapply}
 \alias{mclapply}
-\title{Parallel Version of \code{lapply}}
+\title{Parallel Version of \code{lapply} using Forking}
 \description{
   \code{mclapply} is a parallelized version of \code{\link{lapply}},
   it returns a list of the same length as \code{X}, each element of
   which is the result of applying \code{FUN} to the corresponding
   element of \code{X}.
+
+  It relies on forking and hence is not available on Windows.
 }
 \usage{
 mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
@@ -26,53 +28,58 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   \item{mc.preschedule}{if set to \code{TRUE} then the computation is
     first divided to (at most) as many jobs are there are cores and then
     the jobs are started, each job possibly covering more than one
-    value. If set to \code{FALSE} then one job is forked for each value
-    of \code{X} sequentially (if used with \code{mc.set.seed=FALSE} then
-    random number sequences will be identical for all values). The former
-    is better for short computations or large number of values in
-    \code{X}, the latter is better for jobs that have high variance of
-    completion time and not too many values of \code{X}.}
+    value.  If set to \code{FALSE} then one job is forked for each value
+    of \code{X}. The former is better for short computations or large
+    number of values in \code{X}, the latter is better for jobs that
+    have high variance of completion time and not too many values of
+    \code{X}.}
   \item{mc.set.seed}{See \code{\link{mcparallel}}.}
   \item{mc.silent}{if set to \code{TRUE} then all output on stdout will be
     suppressed for all parallel processes forked (stderr is not affected).}
-  \item{mc.cores}{The number of cores to use, i.e. how many processes
-    will be forked (at most)}
-  \item{mc.cleanup}{if set to \code{TRUE} then all children that have been
-    forked by this function will be killed (by sending \code{SIGTERM})
-    before this function returns. Under normal circumstances
-    \code{mclapply} waits for the children to deliver results, so this
-    option usually has only effect when \code{mclapply} is interrupted.
-    If set to \code{FALSE} then child processes are collected, but not
-    forcefully terminated. As a special case this argument can be set to
-    the signal value that should be used to kill the children instead of
-    \code{SIGTERM}.}
+  \item{mc.cores}{The number of cores to use, i.e. at most how many
+    child processes will be run simultaneously.}
+  \item{mc.cleanup}{if set to \code{TRUE} then all children that have
+    been forked by this function will be killed (by sending
+    \code{SIGTERM}) before this function returns.  Under normal
+    circumstances \code{mclapply} waits for the children to deliver
+    results, so this option usually has only effect when \code{mclapply}
+    is interrupted. If set to \code{FALSE} then child processes are
+    collected, but not forcefully terminated.  As a special case this
+    argument can be set to the number of the signal that should be used
+    to kill the children instead of \code{SIGTERM}.}
 }
 \details{
   \code{mclapply} is a parallelized version of \code{lapply}.  By
-  default (\code{mc.preschedule = TRUE}) the input vector/list \code{X}
-  is split into as many parts as there are cores (currently the values
-  are spread across the cores sequentially, i.e. first value to core
-  1, second to core 2, ... (core + 1)-th value to core 1 etc.) and
-  then one process is forked to each core and the results are
-  collected.
+  default (\code{mc.preschedule = TRUE}) the input \code{X} is split
+  into as many parts as there are cores (currently the values are spread
+  across the cores sequentially, i.e. first value to core 1, second to
+  core 2, ... (core + 1)-th value to core 1 etc.) and then one process
+  is forked to each core and the results are collected.
+
+  Without prescheduling, one job is forked for each value of \code{X}.
+  To ensure that no more than \code{mc.cores} jobs are running at once,
+  once that number has been forked the master process waits for a child
+  to complete before the next fork.
 
   Due to the parallel nature of the execution random numbers are not
-  sequential (in the random number sequence) as they would be in
-  \code{lapply}.  They are sequential for each forked process, but not
-  all jobs as a whole.
+  sequential (in the random number sequence) as they would be when using
+  \code{\code{lapply}}.  They are sequential for each forked process,
+  but not all jobs as a whole.  See \code{\link{mcparallel}} or the
+  package's vignette for ways to make the results reproducible.
 
-  In addition, each process is running the job inside
-  \code{try(..., silent=TRUE)} so if errors occur they will be stored as
-  class \code{"try-error"} objects in the list.
+  In addition, each process is running the job inside \code{try(...,
+    silent = TRUE)} so if errors occur they will be stored as class
+  \code{"try-error"} objects in the list.
   
-  Note: the number of file descriptors is usually limited by the
-  operating system, so you may have trouble using more than 100 cores
-  or so (see \code{ulimit -n} or similar in your OS documentation)
-  unless you raise the limit of permissible open file descriptors
-  (fork will fail with error \code{"unable to create a pipe"}).
+  Note: the number of file descriptors (and prcoesses) is usually
+  limited by the operating system, so you may have trouble using more
+  than 100 cores or so (see \code{ulimit -n} or similar in your OS
+  documentation) unless you raise the limit of permissible open file
+  descriptors (fork will fail with error \code{"unable to create a
+  pipe"}).
 }
 \value{
-  A list.
+  A list of the same length as \code{X} and named by \code{X}.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}}
