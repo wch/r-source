@@ -1242,7 +1242,8 @@ function(file)
 }
 
 .expand_BioC_repository_URLs <-
-function(x) {
+function(x)
+{
     x <- sub("%bm",
              as.character(getOption("BioC_mirror",
                                     "http://www.bioconductor.org")),
@@ -1250,6 +1251,22 @@ function(x) {
     sub("%v",
         as.character(.BioC_version_associated_with_R_version),
         x, fixed = TRUE)
+}
+
+.expand_package_description_db_R_fields <-
+function(x)
+{
+    y <- character()
+    if(!is.na(aar <- x["Authors@R"])) {
+        aar <- utils:::.read_authors_at_R_field(aar)
+        if(is.na(x["Author"]))
+            y["Author"] <-
+                utils:::.format_authors_at_R_field_for_author(aar)
+        if(is.na(x["Maintainer"]))
+            y["Maintainer"] <-
+                utils:::.format_authors_at_R_field_for_maintainer(aar)
+    }
+    y
 }
 
 ### ** .shell_with_capture

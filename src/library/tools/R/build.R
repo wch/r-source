@@ -208,7 +208,6 @@ get_exclude_patterns <- function()
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
 
-
     add_build_stamp_to_description_file <- function(ldpath)
     {
         lines <- readLines(ldpath, warn = FALSE)
@@ -224,6 +223,21 @@ get_exclude_patterns <- function()
                          ";", " ", user, sep = ""))
         writeLinesNL(lines, ldpath)
     }
+
+    ## <FIXME>
+    ## This should really be combined with
+    ## add_build_stamp_to_description_file().
+    ## Also, the build code reads DESCRIPTION files too often ...
+    add_expanded_R_fields_to_description_file <- function(dfile) {
+        db <- .read_description(dfile)
+        fields <- .expand_package_description_db_R_fields(db)
+        if(length(fields)) {
+            lines <- c(readLines(dfile, warn = FALSE),
+                       paste(names(fields), fields, sep = ": "))
+            writeLinesNL(lines, dfile)
+        }
+    }
+    ## </FIXME>
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755", showWarnings = FALSE)
@@ -885,7 +899,11 @@ get_exclude_patterns <- function()
         ## Not restricted by umask.
         if (!WINDOWS) .Internal(dirchmod(pkgname))
         ## Add build stamp to the DESCRIPTION file.
-        add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"))
+        add_build_stamp_to_description_file(file.path(pkgname,
+                                                      "DESCRIPTION"))
+        ## Add expanded R fields to the DESCRIPTION file.
+        add_expanded_R_fields_to_description_file(file.path(pkgname,
+                                                            "DESCRIPTION"))
         messageLog(Log,
                    "checking for LF line-endings in source and make files")
         fix_nonLF_in_source_files(pkgname, Log)

@@ -752,9 +752,9 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         }
     }
 
-    author <- meta$`Author@R`
-    if(has_enhanced_author_spec <- !is.null(author)) {
-        author <- .read_enhanced_author_spec(author)
+    author <- meta$`Authors@R`
+    if(has_authors_at_R_field <- !is.null(author)) {
+        author <- .read_authors_at_R_field(author)
         ## We only want those with author roles.
         author <- Filter(.person_has_author_role, author)
     } else {
@@ -781,7 +781,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
-    footer <- if(!("recommended" %in% meta$Priority) && !has_enhanced_author_spec)
+    footer <- if(!("recommended" %in% meta$Priority) && !has_authors_at_R_field)
             paste("ATTENTION: This citation information has been auto-generated",
                   "from the package DESCRIPTION file and may need manual editing,",
                   "see ", sQuote("help(\"citation\")"), ".")
@@ -809,7 +809,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     x
 }
 
-.read_enhanced_author_spec <-
+.read_authors_at_R_field <-  
 function(x)
 {
     out <- eval(parse(text = x))
@@ -820,7 +820,7 @@ function(x)
         out <- do.call("c", lapply(x, as.person))
     ## Barf if we got no authors at all.
     if(!any(sapply(out, .person_has_author_role)))
-        stop("Enhanced author specification provides no authors.")
+        stop("Enhanced authors specification provides no authors.")
 
     out
 }
@@ -854,3 +854,51 @@ function(x)
 .listify <-
 function(x)
     if(inherits(x, "list")) x else list(x)
+
+.format_person_for_plain_author_spec <-
+function(x) {
+    ## Names first.
+    out <- format(x, include = c("given", "family"))
+    ## In case there are roles and/or comments:
+    if(!is.null(role <- x$role)) {
+        ## Only show roles recommended for usage with R.
+        role <- role[role %in% MARC_relator_db_codes_used_with_R]
+        ## If this leaves nothing:
+        if(!length(role)) return("")
+        out <- sprintf("%s [%s]", out,
+                       paste(role, collapse = ", "))
+    }
+    ## (Do not indicate implied 'aut' roles.)
+    if(!is.null(comment <- x$comment))
+        out <- sprintf("%s (%s)", out, 
+                       paste(comment, collapse = "\n"))
+    out
+}
+
+.format_authors_at_R_field_for_author <-
+function(x)
+{
+    if(is.character(x))
+        x <- .read_authors_at_R_field(x)
+    x <- sapply(x, .format_person_for_plain_author_spec)
+    ## Drop persons with irrelevant roles.
+    x <- x[x != ""]
+    ## And format.
+    if(!length(x)) return("")
+    paste(strwrap(x, indent = 0L, exdent = 4L), collapse = ",\n  ")
+}
+
+.format_authors_at_R_field_for_maintainer <-
+function(x)
+{
+    if(is.character(x))
+        x <- .read_authors_at_R_field(x)
+    ## Maintainers need cre roles and email addresses.
+    x <- Filter(function(e)
+                !is.null(e$email) && ("cre" %in% e$role),
+                x)
+    ## If this leaves nothing ...
+    if(!length(x)) return("")
+    paste(format(x, include = c("given", "family", "email")),
+          collapse = ",\n  ")
+}

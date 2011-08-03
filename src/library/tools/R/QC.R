@@ -2737,6 +2737,32 @@ function(dfile)
         db <- iconv(db, "latin1")
     }
 
+    ## Check Authors@R and expansion if needed.
+    if(!is.na(aar <- db["Authors@R"]) &&
+       (is.na(db["Author"]) || is.na(db["Maintainer"]))) {
+        aar <- tryCatch(utils:::.read_authors_at_R_field(aar),
+                        error = identity)
+        if(inherits(aar, "error")) {
+            out$bad_authors_at_R_field <- conditionMessage(aar)
+        } else {
+            ## Check only whether we can expand here.
+            s <- tryCatch(utils:::.format_authors_at_R_field_for_author(aar),
+                          error = identity)
+            if(inherits(s, "error"))
+                out$bad_authors_at_R_field_for_author <-
+                    conditionMessage(s)
+            if(is.na(db["Author"]))
+                db["Author"] <- s
+            s <- tryCatch(utils:::.format_authors_at_R_field_for_maintainer(aar),
+                          error = identity)
+            if(inherits(s, "error"))
+                out$bad_authors_at_R_field_for_maintainer <-
+                    conditionMessage(s)
+            if(is.na(db["Maintainer"]))
+                db["Maintainer"] <- s
+        }
+    }
+
     ## Mandatory entries in DESCRIPTION:
     ##   Package, Version, License, Description, Title, Author,
     ##   Maintainer.
