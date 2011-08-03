@@ -77,7 +77,7 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}}
   
-  \code{\link{simplify2array}} for results like \code{\link{sarray}}.
+  \code{\link{simplify2array}} for results like \code{\link{sapply}}.
 }
 \examples{\donttest{
 simplify2array(mclapply(rep(4, 5), rnorm))
