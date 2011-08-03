@@ -71,20 +71,24 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 x <- pvec(1:1000, sqrt)
 stopifnot(all(x == sqrt(1:1000)))
 
-# a use is to convert dates to unix time in large datasets
+# A use is to convert date strings to unix time in large datasets
 # as that is an awfully slow operation
-# so let's get some random dates first (a small test only)
-N <- 1e4; nc <- 2L
+# So let's get some random dates first
+# (A small test only with 2 cores: set options("mc.cores")
+# for a larger-scale test)
+N <- 1e4
 dates <- sprintf('\%04d-\%02d-\%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
 
 system.time(a <- as.POSIXct(dates))
-system.time(b <- pvec(dates, as.POSIXct, cores = nc))
+system.time(b <- pvec(dates, as.POSIXct))
 
 stopifnot(all(a == b))
 
-# using mclapply for this is much slower because each value
-# will require a separate call to as.POSIXct(), like lapply(dates, as.POSIXct)
-system.time(c <- unlist(mclapply(dates, as.POSIXct, cores = nc)))
-}
+\dontrun{
+# using mclapply for this would much slower because each value
+# will require a separate call to as.POSIXct()
+# as like lapply(dates, as.POSIXct) does
+system.time(c <- unlist(mclapply(dates, as.POSIXct))
+}}
 \keyword{interface}
