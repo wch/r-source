@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2011-08-03 16:02+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: fork.c:96 fork.c:99
+msgid "unable to create a pipe"
+msgstr ""
+
+#: fork.c:106
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr ""
+
+#: fork.c:134
+msgid "memory allocation error"
+msgstr ""
+
+#: fork.c:172
+msgid "only children can send data to the master process"
+msgstr ""
+
+#: fork.c:174
+msgid "there is no pipe to the master process"
+msgstr ""
+
+#: fork.c:176
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr ""
+
+#: fork.c:185 fork.c:192
+msgid "write error, closing pipe to the master"
+msgstr ""
+
+#: fork.c:205
+msgid "only the master process can send data to a child process"
+msgstr ""
+
+#: fork.c:212
+#, c-format
+msgid "child %d does not exist"
+msgstr ""
+
+#: fork.c:218
+msgid "write error"
+msgstr ""
+
+#: fork.c:298 fork.c:420
+#, c-format
+msgid "error '%s' in select"
+msgstr ""
+
+#: fork.c:506
+msgid "mckill failed"
+msgstr ""
+
+#: fork.c:516
+msgid "mcexit can only be used in a child process"
+msgstr ""
+
+#: fork.c:535
+msgid "mcexit failed"
+msgstr ""

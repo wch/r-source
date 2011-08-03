@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2011-08-03 15:44\n"
+"POT-Creation-Date: 2011-08-03 16:02\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,9 +48,6 @@ msgid "'child' must be a valid child process"
 msgstr ""
 
 msgid "'what' must be a character or raw vector"
-msgstr ""
-
-msgid "closeAll() is a no-op in the master process"
 msgstr ""
 
 msgid "invalid 'jobs' argument"
