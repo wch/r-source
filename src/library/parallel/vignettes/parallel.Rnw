@@ -36,6 +36,9 @@ A package \pkg{parallel} is being developed for release in \R{} 2.14.0.
 It will build on the work done for CRAN packages \pkg{multicore}
 \citep{multicore} and \pkg{snow} \citep{snow}.
 
+Until October 2011 anything in this package is strictly experimental
+and may be changed or removed without notice.
+
 Parallelism can be done in computation at many different levels: this
 package is principally concerned with `coarse-grained
 parallelization'.  At the lowest level, modern CPUs can do several
@@ -47,9 +50,10 @@ parallel.
 This package is about running much larger chunks of computations in
 parallel.  A typical example is to evaluate the same \R{} function on
 many different sets of data: often simulated data as in bootstrap
-computations.  The crucial point is that these chunks are unrelated
-and do not need to communicate in any way.  It is also important
-that the chunks take approximately the same length of time.  The basic
+computations (or with `data' being the random-number stream).  The
+crucial point is that these chunks of computation are unrelated and do
+not need to communicate in any way.  It is often important that the
+chunks take approximately the same length of time.  The basic
 computational model is
 \begin{enumerate}[(a)]
 \item Start up $M$ `worker' processes, and do any initialization
@@ -64,6 +68,11 @@ computational model is
 \end{enumerate}
 Amongst the initializations which may be needed are to load packages
 and initialize the random-number stream.
+
+A slightly different model is to split the task into $M_1 > M$ chunks,
+send the first $M$ chunks to the workers, then repeatedly wait for any
+worker to complete and send it the next remaining task: this is done
+in \code{mclapply(mc.preschedule = FALSE)} and \code{clusterApplyLB}.
 
 In principle the workers could be implemented by threads or
 lightweight processes, but in the current implementation they are full
@@ -146,7 +155,7 @@ But in so far as it is a helpful guideline, function
 machine on which \R{} is running: it has ways to do so on all known
 current \R{} platforms.  What exactly it measures is OS-specific: we
 try where possible to report the number of physical cores available.
-One case where this is not the case is Windows, where only the number
+One OS where this is not the case is Windows, where only the number
 of logical CPUs is readily available.  On modern hardware (e.g.{}
 Intel \emph{Core i7}) the latter may not be unreasonable as
 hyper-threading does give a significant extra throughput: on what are
@@ -177,7 +186,9 @@ users, and they may not in future be exported from the namespace.
 
 There are also copies of the higher-level functions \code{mclapply}
 and \code{pvec}: unlike the versions in \pkg{multicore} these default
-to 2 cores.
+to 2 cores, but this can be controlled by setting
+\code{options("mc.cores")}, and that takes its default from
+environment variable \code{MC\_CORES} when the package is loaded.
 
 \section{Random-number generation}
 
@@ -255,7 +266,7 @@ associated with them, the original seed set for the package, the
 initial seed set for the stream and the current seed for the stream.
 This can easily be emulated in \R{} by storing \code{.Random.seed} at
 suitable times.  There is another interface using S4 classes in
-package \pkg{rstream}.
+package \pkg{rstream} \citep{rstream}.
 
 \bibliographystyle{jss}
 \bibliography{parallel}

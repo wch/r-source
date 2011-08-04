@@ -16,11 +16,10 @@
 
 .noGenerics <- TRUE
 
-##.onAttach <- function(...)
-##    packageStartupMessage("Package 'parallel' does nothing as yet")
-
 .onLoad <- function(libname, pkgname)
 {
     initDefaultClusterOptions(libname)
-    setDefaultClusterOptions(type = "SOCK")
+    cores <- getOption("mc.cores", NULL)
+    if(is.null(cores) && !is.na(nc <- as.integer(Sys.getenv("MC_CORES"))))
+        options("mc.cores" = nc)
 }

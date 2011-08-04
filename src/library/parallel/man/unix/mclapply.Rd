@@ -37,7 +37,8 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   \item{mc.silent}{if set to \code{TRUE} then all output on stdout will be
     suppressed for all parallel processes forked (stderr is not affected).}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
-    child processes will be run simultaneously.}
+    child processes will be run simultaneously.   The option is
+    initiallized from environment variable \env{MC_CORES} if set.}
   \item{mc.cleanup}{if set to \code{TRUE} then all children that have
     been forked by this function will be killed (by sending
     \code{SIGTERM}) before this function returns.  Under normal

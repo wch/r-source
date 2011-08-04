@@ -27,11 +27,11 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{mc.silent}{if set to \code{TRUE} then all output on stdout will
     be suppressed for all parallel processes forked (stderr is not
     affected).}
-  \item{mc.cores}{The number of cores to use, i.e. how many processes
-    will be forked (at most)}
-  \item{mc.cleanup}{flag specifying whether pvec should be
-    terminated when the master is aborted (see description of this
-    argument in \code{\link{mclapply}} for details)}
+  \item{mc.cores}{The number of cores to use, i.e. at most how many
+    child processes will be run simultaneously.   The option is
+    initiallized from environment variable \env{MC_CORES} if set.}
+  \item{mc.cleanup}{See the description of this
+    argument in \code{\link{mclapply}}.}
 }
 \details{
   \code{pvec} parallelizes \code{FUN(x, ...)} where \code{FUN} is a
