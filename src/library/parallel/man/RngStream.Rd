@@ -7,6 +7,7 @@
 \alias{nextRNGStream}
 \alias{nextRNGSubStream}
 \alias{clusterSetRNGStream}
+\alias{mc.reset.stream}
 
 \title{Implementation of Pierre L'Ecuyer's RngStreams}
 \description{
@@ -18,6 +19,7 @@ nextRNGStream(seed)
 nextRNGSubStream(seed)
 
 clusterSetRNGStream(cl, iseed)
+mc.reset.stream()
 }
 \arguments{
   \item{seed}{An integer vector of length 7 as given by
@@ -51,18 +53,25 @@ clusterSetRNGStream(cl, iseed)
   \code{clusterSetRNGStream} distributes streams to the members of a
   \pkg{snow} cluster, optionally setting the seed of the first stream
   by the value of \code{set.seed(iseed)}.
+#ifdef unix
+  
+  Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
+  number generator and seed makes runs from \code{\link{mcparallel}},
+  \code{\link{mclapply}(mc.preschedule = TRUE)}
+  and \code{\link{pvec}} reproducible.
+#endif  
 }
 \value{
   A value which can be assigned to \code{.Random.seed}.
 }
 \references{
   L'Ecuyer, P. (1999) Good parameters and implementations for combined
-  multiple recursive random number generators. \emph{Operations
+  multiple recursive random number generators.  \emph{Operations
   Research} \bold{47}, 159--164.
   
   L'Ecuyer, P., Simard, R.,  Chen, E. J. and Kelton, W. D. (2002)
   An object-oriented random-number package with many long streams
-  and substreams. \emph{Operations Research} \bold{50} 1073--5.
+  and substreams.  \emph{Operations Research} \bold{50} 1073--5.
 }
 \seealso{
   \code{\link{RNG}} for \R's built-in random number generators.

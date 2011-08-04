@@ -106,10 +106,10 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     inner.do <- function(core) {
         S <- schedule[[core]]
         f <- mcfork()
-        if (isTRUE(mc.set.seed)) mc.advance.seed()
+        if (isTRUE(mc.set.seed)) mc.advance.stream()
         if (inherits(f, "masterProcess")) { # this is the child process
             on.exit(mcexit(1L, structure("fatal error in wrapper code", class="try-error")))
-            if (isTRUE(mc.set.seed)) mc.reset.seed()
+            if (isTRUE(mc.set.seed)) mc.set.stream()
             if (isTRUE(mc.silent)) closeStdout()
             sendMaster(try(lapply(X = S, FUN = FUN, ...), silent = TRUE))
             mcexit(0L)

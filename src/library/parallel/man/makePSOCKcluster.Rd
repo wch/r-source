@@ -37,7 +37,8 @@ makePSOCKcluster(names, ...)
   \describe{
     \item{\code{master}}{The host name of the master.}
     \item{\code{port}}{The port number for the socket connection,
-      default \code{10187}.}
+      default taken from the environment variable \env{R_PARALLEL_PORT},
+      then \code{10187}.}
     \item{\code{timeout}}{The timeout in seconds for that port.  Default
       1 year.}
     \item{\code{outfile}}{Where to send the stdout from the workers.
@@ -46,7 +47,7 @@ makePSOCKcluster(names, ...)
       identical setups, so \command{Rscript} can be launched using its
       full path on the master?  Otherwise it has to be in the default
       path on the other hosts.}
-    \item{\code{rscript}}{The path to \command{Rscript} on the slaves.
+    \item{\code{rscript}}{The path to \command{Rscript} on the workers.
       Defaults to the full path on the master.}
     \item{\code{rshcmd}}{The command to be run on the master to launch a
       process on another host.  Defaults to \command{ssh}.}

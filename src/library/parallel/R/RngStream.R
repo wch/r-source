@@ -53,11 +53,22 @@ clusterSetRNGStream <- function(cl, iseed = NULL)
 
 RNGenv <- new.env()
 
+mc.reset.stream <- function() {
+    if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
+        if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+            runif(1)
+        assign("LEcuyer.seed",
+               get(".Random.seed", envir = .GlobalEnv, inherits = FALSE),
+               envir = RNGenv)
+    }
+}
+
 ## For use in the master before forking
-mc.advance.seed <- function()
+mc.advance.stream <- function(reset = FALSE)
 {
     if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
-        if (!exists("LEcuyer.seed", envir = RNGenv, inherits = FALSE)) {
+        if (reset ||
+            !exists("LEcuyer.seed", envir = RNGenv, inherits = FALSE)) {
             if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
                 runif(1)
             assign("LEcuyer.seed",
@@ -72,7 +83,7 @@ mc.advance.seed <- function()
 }
 
 ## For use in the child
-mc.reset.seed <- function()
+mc.set.stream <- function()
 {
     if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
             assign(".Random.seed", get("LEcuyer.seed", envir = RNGenv),

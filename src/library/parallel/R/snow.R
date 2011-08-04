@@ -32,7 +32,7 @@ checkCluster <- function(cl)
 
 
 #
-# Slave Loop Functions, used in .slaveRSOCK
+# Worker Loop Functions, used in .slaveRSOCK
 #
 
 slaveLoop <- function(master)
@@ -112,7 +112,9 @@ defaultClusterOptions <- NULL
 initDefaultClusterOptions <- function(libname)
 {
     rscript <- file.path(R.home("bin"), "Rscript")
-    options <- list(port = 10187,
+    port <- as.integer(Sys.getenv("R_PARALLEL_PORT"))
+    if (is.na(port)) port <- 10187
+    options <- list(port = port,
                     timeout = 60 * 60 * 24 * 365, # one year
                     master =  Sys.info()["nodename"],
                     homogeneous = TRUE,
@@ -237,7 +239,7 @@ clusterEvalQ <- function(cl, expr)
 clusterExport <- local({
     gets <- function(n, v) { assign(n, v, envir = .GlobalEnv); NULL }
     function(cl, list) {
-        ## do this with only one clusterCall--loop on slaves?
+        ## do this with only one clusterCall--loop on workers?
         for (name in list) {
             clusterCall(cl, gets, name, get(name, envir = .GlobalEnv))
         }

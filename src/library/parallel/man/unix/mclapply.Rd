@@ -93,6 +93,20 @@ simplify2array(mclapply(rep(4, 5), rnorm))
 set.seed(1)
 simplify2array(mclapply(rep(4, 5), rnorm, mc.preschedule = FALSE,
                 mc.set.seed = FALSE))
+
+## Contrast this with the examples for clusterCall
+library(boot)
+cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+cd4.mle <- list(m = mean(cd4), v = var(cd4))
+mc <- getOption("mc.cores", 2)
+run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
+                           ran.gen = cd4.rg, mle = cd4.mle)
+## To make this reproducible:
+set.seed(123, "L'Ecuyer"); mc.reset.stream()
+res <- mclapply(seq_len(mc), run1)
+cd4.boot <- do.call(c, res)
+boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+        conf = 0.9, h = atanh, hinv = tanh)
 }}
 \author{Simon Urbanek}
 \keyword{interface}

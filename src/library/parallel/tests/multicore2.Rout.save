@@ -1,0 +1,49 @@
+
+R Under development (unstable) (2011-08-04 r56618)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(parallel)
+> 
+> library(boot)
+> cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+> cd4.mle <- list(m = mean(cd4), v = var(cd4))
+> mc <- getOption("mc.cores", 2)
+> run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
++                            ran.gen = cd4.rg, mle = cd4.mle)
+> ## To make this reproducible:
+> set.seed(123, "L'Ecuyer"); mc.reset.stream()
+> res <- mclapply(seq_len(mc), run1)
+> cd4.boot <- do.call(c, res)
+> boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
++         conf = 0.9, h = atanh, hinv = tanh)
+BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = cd4.boot, conf = 0.9, type = c("norm", "basic", 
+    "perc"), h = atanh, hinv = tanh)
+
+Intervals : 
+Level      Normal              Basic              Percentile     
+90%   ( 0.4610,  0.8577 )   ( 0.4617,  0.8577 )   ( 0.4959,  0.8690 )  
+Calculations on Transformed Scale;  Intervals on Original Scale
+> 
+> proc.time()
+   user  system elapsed 
+  1.838   0.278   9.055 
