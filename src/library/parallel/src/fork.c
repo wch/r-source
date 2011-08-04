@@ -19,6 +19,10 @@
 
 #include <R.h>
 #include <Rinternals.h>
+#include <Rconfig.h> /* for AQUA */
+#if HAVE_AQUA
+# include <R_ext/Rdynload.h>
+#endif
 
 #define Dprintf printf
 
@@ -85,6 +89,67 @@ static void child_sig_handler(int sig)
     }
 }
 
+#if HAVE_AQUA
+/* from aqua.c */
+extern void (*ptr_R_ProcessEvents)(void);
+
+static int find_quartz_symbols = 1;
+void (*QuartzCocoa_InhibitEventLoop)(int);
+typedef void (*QuartzCocoa_InhibitEventLoop_t)(int);
+
+/* unfortunately Rdynload.h forgets to declare it so the API is broken - we need to fix it */
+struct Rf_RegisteredNativeSymbol {
+  NativeSymbolType type;
+  void *fn, *dll;
+};
+
+/* check whether Quartz is loaded (if not, returns -1) and if so
+  returns 1 is QuartzCocoa_InhibitEventLoop has been found 0
+  otherwise */
+static int getQuartzSymbols() 
+{
+    if (find_quartz_symbols) {
+	R_RegisteredNativeSymbol symbol = {R_ANY_SYM, NULL, NULL};
+	if (R_FindSymbol("getQuartzAPI", "", &symbol)) { 
+	    /* is Quartz loaded? if not, we have nothing to worry about */
+	    /* unfortunately R disables dynamic lookup in grDevices so
+	       we need to get at it manually this means that we need
+	       to get the corresponding DllInfo to enable it, then
+	       look up the symbol and disable it again */
+	    SEXP getNativeSymbolInfo = install("getNativeSymbolInfo");
+	    SEXP nsi = eval(lang2(getNativeSymbolInfo, 
+				  mkString("getQuartzAPI")), R_GlobalEnv);
+	    /* get nsi[[3]][[2]] which should be the path (we verify every step) */
+	    if (TYPEOF(nsi) == VECSXP && LENGTH(nsi) > 2) {
+		SEXP pkg = VECTOR_ELT(nsi, 2);
+		if (TYPEOF(pkg) == VECSXP && LENGTH(pkg) > 1) {
+		    SEXP dpath = VECTOR_ELT(pkg, 1);
+		    if (TYPEOF(dpath) == STRSXP && LENGTH(dpath) > 0) {
+			/* this is technically unnecessary since nsi
+			   actually contains the EXTPTR holding the
+			   DllInfo, but we'll play it safe here */
+			DllInfo *dll = R_getDllInfo(CHAR(STRING_ELT(dpath, 0)));
+			if (dll) {
+			    struct Rf_RegisteredNativeSymbol {
+				NativeSymbolType type; void *fn, *dll; 
+			    } symbol = { R_ANY_SYM, NULL, NULL };
+			    R_useDynamicSymbols(dll, TRUE); /* turn on dynamic symbols */
+			    /* it would be faster to use R_dlsym since we already have DllInfo but that is hidden so let's waste more cycles.. */
+			    QuartzCocoa_InhibitEventLoop = (QuartzCocoa_InhibitEventLoop_t) R_FindSymbol("QuartzCocoa_InhibitEventLoop", "grDevices", (R_RegisteredNativeSymbol*) &symbol);
+			    R_useDynamicSymbols(dll, FALSE); /* turn them off - we got what we want */
+			}
+		    }
+		}
+	    }
+	    /* do not try again since we did all the work */
+	    find_quartz_symbols = 0;
+	}
+    }
+    return find_quartz_symbols ? -1 : ((QuartzCocoa_InhibitEventLoop) ? 1 : 0);
+}
+#else
+static int getQuartzSymbols() { return -1; }
+#endif
 
 SEXP mc_fork() 
 {
@@ -99,6 +164,8 @@ SEXP mc_fork()
 	error(_("unable to create a pipe"));
     }
 
+    getQuartzSymbols(); /* initialize Quartz symbols if needed (no-op
+			   on non-Aqua systems) */
     pid = fork();
     if (pid == -1) {
 	close(pipefd[0]); close(pipefd[1]);
@@ -302,8 +369,8 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
     ci = children;
     maxfd = 0;
     while (ci && ci->pid) { /* pass 1 - count the FDs (in theory not
-			     * necessary since that's what select
-			     * should have returned)  */
+			       necessary since that's what select
+			       should have returned)  */
 	if (ci->pfd > 0 && FD_ISSET(ci->pfd, &fs)) maxfd++;
 	ci = ci -> next;
     }
@@ -534,4 +601,18 @@ SEXP mc_exit(SEXP sRes)
     exit(res);
     error(_("mcexit failed"));
     return R_NilValue;
+}
+
+SEXP mc_create_list(SEXP sLength) {
+    int len = Rf_asInteger(sLength);
+    if (len < 1) len = 0;
+    return Rf_allocVector(VECSXP, len);
+}
+
+/* this is not really necessary, since from R you can simply use
+   is.loaded("QuartzCocoa_InhibitEventLoop") and it will be TRUE if we
+   got to it. */
+
+SEXP mc_can_disable_quartz() {
+    return Rf_ScalarLogical(getQuartzSymbols());
 }

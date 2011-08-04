@@ -1,5 +1,5 @@
 ## Namespace for package 'parallel'
-useDynLib("parallel")
+useDynLib("parallel", .registration = TRUE, .fixes = "C_")
 
 export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 

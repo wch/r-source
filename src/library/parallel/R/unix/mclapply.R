@@ -46,10 +46,13 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                                                   silent = mc.silent))
             res <- mccollect(jobs)
             if (length(res) == length(X)) names(res) <- names(X)
+            has.errors <- sum(sapply(res), inherits, "try-error")
+            if (has.errors)
+                warning(gettextf("%d of all function calls resulted in an error", has.errors), domain = NA)
             return(res)
         } else { # more complicated, we have to wait for jobs selectively
             sx <- seq(X)
-            res <- lapply(sx, function(x) NULL)
+            res <- .Call(C_mc_create_list, length(sx))
             names(res) <- names(X)
             ent <- rep(FALSE, length(X)) # values entered (scheduled)
             fin <- rep(FALSE, length(X)) # values finished
@@ -60,6 +63,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                                                   silent = mc.silent))
             jobsp <- processID(jobs)
             ent[jobid] <- TRUE
+            has.errors <- 0L
             while (!all(fin)) {
                 s <- selectChildren(jobs, 0.5)
                 if (is.null(s)) break   # no children -> no hope
@@ -70,6 +74,8 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                         r <- readChild(ch)
                         if (is.raw(r)) {
                             child.res <- unserialize(r)
+                            if (inherits(child.res, "try-error"))
+                                has.errors <- has.errors + 1L
                             ## we can't just assign it since a NULL
                             ## assignment would remove it from the list
                             if (!is.null(child.res)) res[[ci]] <- child.res
@@ -88,6 +94,8 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                         }
                     }
             }
+            if (has.errors)
+                warning(gettextf("%d of all function calls resulted in an error", has.errors), domain = NA)
             return(res)
         }
     }
@@ -98,7 +106,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     schedule <- lapply(seq_len(cores),
                        function(i) X[seq(i, length(X), by = cores)])
     ch <- list()
-    res <- lapply(seq(X), function(x) NULL)
+    res <- .Call(C_mc_create_list, length(X))
     names(res) <- names(X)
     cp <- rep(0L, cores)
     fin <- rep(FALSE, cores)
@@ -118,25 +126,37 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         cp[core] <<- f$pid
         NULL
     }
-    lapply(seq_len(cores), inner.do)
+    job.res <- lapply(seq_len(cores), inner.do)
     ac <- cp[cp > 0]
+    has.errors <- integer(0)
     while (!all(fin)) {
         s <- selectChildren(ac, 1)
         if (is.null(s)) break # no children -> no hope we get anything
-        if (is.integer(s)) for (ch in s) {
-            a <- readChild(ch)
-            if (is.integer(a)) {
-                core <- which(cp == a)
-                fin[core] <- TRUE
-            } else if (is.raw(a)) {
-                core <- which(cp == attr(a, "pid"))
-                res[[core]] <- unserialize(a)
-                dr[core] <- TRUE
+        if (is.integer(s))
+            for (ch in s) {
+                a <- readChild(ch)
+                if (is.integer(a)) {
+                    core <- which(cp == a)
+                    fin[core] <- TRUE
+                } else if (is.raw(a)) {
+                    core <- which(cp == attr(a, "pid"))
+                    job.res[[core]] <- ijr <- unserialize(a)
+                    if (inherits(ijr, "try-error"))
+                        has.errors <- c(has.errors, core)
+                    dr[core] <- TRUE
+                }
             }
-        }
     }
-    ores <- list()
-    for (i in seq_len(cores)) ores[sindex[[i]]] <- res[[i]]
-    if (length(names(X)) == length(ores)) names(ores) <- names(X)
-    ores
+    for (i in seq_len(cores)) res[sindex[[i]]] <- job.res[[i]]
+    if (length(has.errors)) {
+        if (length(has.errors) == cores)
+            warning("all scheduled cores encountered errors in user code")
+        else
+            warning(sprintf(ngettext(has.errors,
+                                     "scheduled core %d encountered error in user code, all values of the job will be affected",
+                                     "scheduled cores %s encountered errors in user code, all values of the jobs will be affected")
+                            ), paste(has.errors, collapse = ", "),
+                    domain = NA)
+    }
+    res
 }
