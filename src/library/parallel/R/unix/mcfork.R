@@ -16,22 +16,6 @@
 
 ### --- multicore --- low-level functions ---
 
-## selected signals
-## FIXME: are these standardized?  BDR doesn't believe so, especially
-## those over 15.  And C99 only requires SIGABRT, SIGFPE, SIGILL,
-## SIGINT, SIGSEGV, and SIGTERM
-SIGHUP <- 1L
-SIGINT <- 2L
-SIGQUIT <- 3L
-SIGKILL <- 9L
-SIGALRM <- 14L
-SIGTERM <- 15L
-SIGSTOP <- 17L
-SIGCHLD <- 20L
-SIGINFO <- 29L
-SIGUSR1 <- 30L
-SIGUSR2 <- 31L
-
 mcfork <- function() {
     r <- .Call("mc_fork", PACKAGE = "parallel")
     structure(list(pid = r[1L], fd = r[2:3]),
@@ -68,7 +52,7 @@ rmChild <- function(child)
     .Call("mc_rm_child", as.integer(child), PACKAGE = "parallel")
 }
 
-mckill <- function(process, signal = SIGINT)
+mckill <- function(process, signal = 2L)
 {
     process <- processID(process)
     unlist(lapply(process, function(p)

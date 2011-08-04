@@ -103,7 +103,8 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 \examples{
 p <- mcparallel(1:10)
 q <- mcparallel(1:20)
-mccollect(list(p, q)) # wait for jobs to finish and collect all results
+# wait for jobs to finish and collect all results
+res <- mccollect(list(p, q))
 
 p <- mcparallel(1:10)
 mccollect(p, wait=FALSE, 10) # will retrieve the result (since it's fast)

@@ -25,7 +25,7 @@ selectChildren(children = NULL, timeout = 0)
 sendChildStdin(child, what)
 sendMaster(what)
 
-mckill(process, signal = SIGINT)
+mckill(process, signal = 2L)
 }
 \arguments{
   \item{select}{if omitted, all active children are returned, otherwise
@@ -49,8 +49,8 @@ mckill(process, signal = SIGINT)
     send an empty raw vector -- that is reserved for internal use.}
   \item{process}{process (object of the class \code{process}) or a
     process ID (pid)}
-  \item{signal}{signal to send: one of \code{SIG...} constants -- 
-    or a valid integer signal number}
+  \item{signal}{integer: signal to send.  Values of 2 (SIGINT), 9
+    (SIGKILL) and 15 (SIGTERM) are pretty much portable.}
 }
 \details{
   \code{children} returns currently active children.

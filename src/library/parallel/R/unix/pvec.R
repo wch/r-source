@@ -40,7 +40,7 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
             ## first take care of uncollected children
             mccollect(children(jobs), FALSE)
             mckill(children(jobs),
-                   if (is.integer(mc.cleanup)) mc.cleanup else SIGTERM)
+                   if (is.integer(mc.cleanup)) mc.cleanup else 15L)
             mccollect(children(jobs))
         }
         if (length(jobs)) {
