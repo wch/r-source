@@ -17,14 +17,6 @@
 ## Extracted from snow 0.3-6.
 
 
-## is this not do.call(quote = TRUE)?
-docall <- function(fun, args) {
-    if ((is.character(fun) && length(fun) == 1L) || is.name(fun))
-        fun <- get(as.character(fun), envir = .GlobalEnv, mode = "function")
-    do.call(fun, args, quote = TRUE)
-}
-
-
 #
 # Checking and subsetting
 #
@@ -40,7 +32,7 @@ checkCluster <- function(cl)
 
 
 #
-# Slave Loop Functions: called from RSOCKnode.R
+# Slave Loop Functions, used in .slaveRSOCK
 #
 
 slaveLoop <- function(master)
@@ -64,7 +56,6 @@ slaveLoop <- function(master)
                     structure(conditionMessage(e),
                               class=c("snow-try-error","try-error"))
                 }
-                ## FIXME: so we need this timing?
                 t1 <- proc.time()
                 value <- tryCatch(do.call(msg$data$fun, msg$data$args, quote = TRUE),
                                   error = handler)
@@ -172,12 +163,25 @@ stopCluster.default <- function(cl) for (n in cl) stopNode(n)
 
 sendCall <- function (con, fun, args, return = TRUE, tag = NULL)
 {
+    timing <-  .snowTimingData$running()
     postNode(con, "EXEC",
              list(fun = fun, args = args, return = return, tag = tag))
+    if (timing)
+        .snowTimingData$enterSend(con$rank, start, proc.time()[3L])
     NULL
 }
 
-recvResult <- function (con) recvData(con)$value
+recvResult <- function(con)
+{
+    if (.snowTimingData$running()) {
+        start <- proc.time()[3L]
+        r <- recvData(con)
+        end <- proc.time()[3L]
+        .snowTimingData$enterRecv(con$rank, start, end, r$time[3L])
+    }
+    else r <- recvData(con)
+    r$value
+}
 
 checkForRemoteErrors <- function(val)
 {
@@ -189,10 +193,11 @@ checkForRemoteErrors <- function(val)
             if (count == 1) firstmsg <- v
         }
     }
+    ## These will not translate
     if (count == 1)
-        stop("one node produced an error: ", firstmsg)
+        stop("one node produced an error: ", firstmsg, domain = NA)
     else if (count > 1)
-        stop(count, " nodes produced errors; first error: ", firstmsg)
+        stop(count, " nodes produced errors; first error: ", firstmsg, domain = NA)
     val
 }
 
@@ -240,7 +245,13 @@ clusterExport <- local({
 })
 
 recvOneResult <- function (cl) {
-    v <- recvOneData(cl)
+    if (.snowTimingData$running()) {
+        start <- proc.time()[3]
+        v <- recvOneData(cl)
+        end <- proc.time()[3]
+        .snowTimingData$enterRecv(v$node, start, end, v$value$time[3])
+    }
+    else v <- recvOneData(cl)
     list(value = v$value$value, node = v$node, tag = v$value$tag)
 }
 
@@ -327,7 +338,7 @@ splitList <- function(x, ncl)
     lapply(splitIndices(length(x), ncl), function(i) x[i])
 
 splitRows <- function(x, ncl)
-    lapply(splitIndices(nrow(x), ncl), function(i) x[ i, , drop=FALSE])
+    lapply(splitIndices(nrow(x), ncl), function(i) x[i, , drop=FALSE])
 
 splitCols <- function(x, ncl)
     lapply(splitIndices(ncol(x), ncl), function(i) x[, i, drop=FALSE])
@@ -350,7 +361,7 @@ parCapply <- function(cl, x, fun, ...)
 
 parSapply <- function (cl, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 {
-    FUN <- match.fun(FUN) # should this be done on slave?
+    FUN <- match.fun(FUN) # should this be done on worker?
     answer <- parLapply(cl,as.list(X), FUN, ...)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
@@ -361,7 +372,7 @@ parSapply <- function (cl, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 
 parApply <- function(cl, X, MARGIN, FUN, ...)
 {
-    FUN <- match.fun(FUN) # should this be done on slave?
+    FUN <- match.fun(FUN) # should this be done on worker?
 
     ## Ensure that X is an array object
     dl <- length(dim(X))
@@ -449,6 +460,13 @@ parApply <- function(cl, X, MARGIN, FUN, ...)
 }
 
 ### ========== snow support ===========
+
+## place holder for now.
+.snowTimingData <-
+    list(running = function() FALSE,
+         enterSend = function(...) {},
+         enterRecv = function(...) {})
+
 
 closeNode.NWSnode <- function(node) snow::closeNode.NWSnode(node)
 

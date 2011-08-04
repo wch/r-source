@@ -17,12 +17,6 @@ msgstr ""
 msgid "not a valid cluster"
 msgstr ""
 
-msgid "one node produced an error:"
-msgstr ""
-
-msgid "nodes produced errors; first error:"
-msgstr ""
-
 msgid "need at least one argument"
 msgstr ""
 
@@ -53,7 +47,7 @@ msgstr ""
 msgid "invalid 'jobs' argument"
 msgstr ""
 
-msgid "v must be a vector"
+msgid "'v' must be a vector"
 msgstr ""
 
 msgid "some results may be missing, folded or caused an error"

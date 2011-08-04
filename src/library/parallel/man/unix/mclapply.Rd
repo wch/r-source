@@ -64,7 +64,7 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 
   Due to the parallel nature of the execution random numbers are not
   sequential (in the random number sequence) as they would be when using
-  \code{\code{lapply}}.  They are sequential for each forked process,
+  \code{\link{lapply}}.  They are sequential for each forked process,
   but not all jobs as a whole.  See \code{\link{mcparallel}} or the
   package's vignette for ways to make the results reproducible.
 

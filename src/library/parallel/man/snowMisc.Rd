@@ -43,16 +43,15 @@ stopCluster(cl)
 }
 \arguments{
   \item{cl}{cluster object.}
-  \item{fun}{function or character string naming a function.}
+  \item{fun, FUN}{function or character string naming a function.}
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
   \item{list}{character vector of variables to export.}
-  \item{x}{array.}
+  \item{x}{a matrix or array.}
   \item{...}{additional arguments to pass to standard function.}
   \item{MoreArgs}{additional arguments for \code{fun}.}
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
   \item{X}{A vector (atomic or list).}
-  \item{FUN}{function or character string naming a function}
   \item{MARGIN}{vector specifying the dimensions to use.}
   \item{simplify}{logical; see \code{\link{sapply}}.}
   \item{USE.NAMES}{logical; see \code{\link{sapply}}.}
@@ -66,4 +65,8 @@ stopCluster(cl)
   
   \code{cl} should be a cluster created by this package or by package
   \pkg{snow}.
+}
+\seealso{
+  The snow help pages \link[snow]{snow-cluster} and
+  \link[snow]{snow-parallel}.
 }

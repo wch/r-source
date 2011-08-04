@@ -17,7 +17,7 @@
 pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
                  mc.cores = getOption("mc.cores", 2L), mc.cleanup = TRUE)
 {
-    if (!is.vector(v)) stop("v must be a vector")
+    if (!is.vector(v)) stop("'v' must be a vector")
 
     env <- parent.frame()
     cores <- as.integer(mc.cores)
