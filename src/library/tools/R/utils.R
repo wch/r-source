@@ -1140,7 +1140,8 @@ function(package)
              sac = "cumsum.test",
              sm = "print.graph",
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
-             "influence.measures", "t.test"),
+             "influence.measures", "t.test",
+             "plot.spec.phase", "plot.spec.coherency"),
              supclust = c("sign.change", "sign.flip"),
 	     tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")

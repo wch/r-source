@@ -8,7 +8,7 @@ core.pkgs <-
 {x <- installed.packages(file.path(R.home(), "library"));
     x[x[,"Priority"] %in% "base", "Package"]}
 core.pkgs <-
-    core.pkgs[- match(c("methods", "tcltk", "stats4"), core.pkgs, 0)]
+    core.pkgs[- match(c("methods", "parallel", "tcltk", "stats4"), core.pkgs, 0)]
 ## move methods to the end because it has side effects (overrides primitives)
 ## stats4 requires methods
 core.pkgs <- c(core.pkgs, "methods", "stats4")
