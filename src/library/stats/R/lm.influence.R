@@ -60,7 +60,7 @@ lm.influence <- function (model, do.coef = TRUE)
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
-        res <- .Fortran("lminfl",
+        res <- .Fortran(R_lminfl,
                         mqr$qr,
                         n,
                         n,

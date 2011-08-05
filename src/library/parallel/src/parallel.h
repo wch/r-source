@@ -32,6 +32,7 @@ SEXP nextStream(SEXP);
 SEXP nextSubStream(SEXP);
 
 #ifndef WIN32
+SEXP mc_can_disable_quartz(void);
 SEXP mc_children(void);
 SEXP mc_close_fds(SEXP);
 SEXP mc_close_stderr(void);

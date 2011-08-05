@@ -37,7 +37,7 @@ cutree <- function(tree, k=NULL, h=NULL)
                  domain = NA)
     }
 
-    ans <- .Call("R_cutree", tree$merge, k, PACKAGE = "stats")
+    ans <- .Call(R_R_cutree, tree$merge, k, PACKAGE = "stats")
 
     if(length(k) == 1L) {
         ans <- as.vector(ans)

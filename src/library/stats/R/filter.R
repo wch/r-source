@@ -31,7 +31,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
         if(sides != 1 && sides != 2)
             stop("argument 'sides' must be 1 or 2")
         for (i in 1L:nser)
-            y[, i] <- .C("filter1",
+            y[, i] <- .C(R_filter1,
                          as.double(x[,i]),
                          as.integer(n),
                          as.double(filter),
@@ -53,7 +53,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
         for (i in 1L:nser)
-            y[, i] <- .C("filter2",
+            y[, i] <- .C(R_filter2,
                          as.double(x[,i]),
                          as.integer(n),
                          as.double(filter),

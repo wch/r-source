@@ -52,7 +52,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             return(res)
         } else { # more complicated, we have to wait for jobs selectively
             sx <- seq(X)
-            res <- .Call(C_mc_create_list, length(sx))
+            res <- vector("list", length(sx))
             names(res) <- names(X)
             ent <- rep(FALSE, length(X)) # values entered (scheduled)
             fin <- rep(FALSE, length(X)) # values finished
@@ -106,7 +106,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     schedule <- lapply(seq_len(cores),
                        function(i) X[seq(i, length(X), by = cores)])
     ch <- list()
-    res <- .Call(C_mc_create_list, length(X))
+    res <- vector("list", length(X))
     names(res) <- names(X)
     cp <- rep(0L, cores)
     fin <- rep(FALSE, cores)

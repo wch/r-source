@@ -20,7 +20,7 @@ line <- function(x, y=NULL)
     ok <- complete.cases(xy$x,xy$y)
     n <- length(ok)
     if(n <= 1) stop("insufficient observations")
-    z <- .C("tukeyline",
+    z <- .C(R_tukeyline,
 	    as.double(xy$x[ok]),
 	    as.double(xy$y[ok]),
 	    double(n),

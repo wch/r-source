@@ -94,7 +94,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             sc <- colSums(x)
             n <- sum(sc)
             STATISTIC <- -sum(lfactorial(x))
-	    tmp <- .C("fisher_sim",
+	    tmp <- .C(R_fisher_sim,
 		      as.integer(nr),
 		      as.integer(nc),
 		      as.integer(sr),
@@ -111,7 +111,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             ## PR#10558: STATISTIC is negative
 	    PVAL <- (1 + sum(tmp <= STATISTIC/almost.1)) / (B + 1)
         } else if(hybrid) {
-            PVAL <- .C("fexact",
+            PVAL <- .C(R_fexact,
                        nr,
                        nc,
                        x,
@@ -126,7 +126,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        mult = as.integer(mult),
                        PACKAGE = "stats")$p
         } else
-            PVAL <- .C("fexact",
+            PVAL <- .C(R_fexact,
                        nr,
                        nc,
                        x,

@@ -58,7 +58,7 @@ ks.test <-
                                  "less" = "the CDF of x lies below that of y",
                                  "greater" = "the CDF of x lies above that of y")
         if(exact && (alternative == "two.sided") && !TIES)
-            PVAL <- 1 - .C("psmirnov2x",
+            PVAL <- 1 - .C(R_psmirnov2x,
                            p = as.double(STATISTIC),
                            as.integer(n.x),
                            as.integer(n.y),
@@ -82,7 +82,7 @@ ks.test <-
                             "less" = max(x))
         if(exact) {
             PVAL <- 1 - if(alternative == "two.sided")
-                .C("pkolmogorov2x", p = as.double(STATISTIC),
+                .C(R_pkolmogorov2x, p = as.double(STATISTIC),
                    as.integer(n), PACKAGE = "stats")$p
             else {
                 pkolmogorov1x <- function(x, n) {
@@ -122,7 +122,7 @@ ks.test <-
             p[is.na(x)] <- NA
             IND <- which(!is.na(x) & (x > 0))
             if(length(IND))
-                p[IND] <- .C("pkstwo", length(x[IND]), p = x[IND],
+                p[IND] <- .C(R_pkstwo, length(x[IND]), p = x[IND],
                              as.double(tol), PACKAGE = "stats")$p
             p
         }

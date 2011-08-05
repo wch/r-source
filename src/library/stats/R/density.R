@@ -126,7 +126,7 @@ density.default <-
     if (!is.finite(to)) stop("non-finite 'to'")
     lo <- from - 4 * bw
     up <- to + 4 * bw
-    y <- .C("massdist",
+    y <- .C(R_massdist,
 	    x = as.double(x),
             xmass = as.double(weights),
 	    nx = nx,

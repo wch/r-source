@@ -18,7 +18,7 @@
 KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
 {
     ## next call changes objects a, P, Pn if fast==TRUE: beware!
-    x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+    x <- .Call(R_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
                mod$Pn, as.integer(nit), FALSE, fast=fast, PACKAGE = "stats")
     names(x) <- c("ssq", "sumlog")
     s2 <- x[1L]/length(y)
@@ -28,7 +28,7 @@ KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
 KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
 {
     ## next call changes objects a, P, Pn if fast==TRUE: beware!
-    z <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+    z <- .Call(R_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
                mod$Pn, as.integer(nit), TRUE, fast=fast, PACKAGE = "stats")
     names(z) <- c("values", "resid", "states")
     x <- z$values
@@ -44,7 +44,7 @@ KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
     a[] <- mod$a
     P[] <- mod$P
     ## next call changes objects a, P if fast==TRUE
-    x <- .Call("KalmanFore", as.integer(n.ahead), mod$Z, a, P,
+    x <- .Call(R_KalmanFore, as.integer(n.ahead), mod$Z, a, P,
                mod$T, mod$V, mod$h, fast=fast, PACKAGE = "stats")
     names(x) <- c("pred", "var")
     x
@@ -52,7 +52,7 @@ KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
 
 KalmanSmooth <- function(y, mod, nit = 0)
 {
-    z <- .Call("KalmanSmooth", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+    z <- .Call(R_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
                mod$Pn, as.integer(nit), PACKAGE = "stats")
     names(z) <- c("smooth", "var")
     dn <- dim(z$smooth)

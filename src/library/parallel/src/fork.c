@@ -603,12 +603,6 @@ SEXP mc_exit(SEXP sRes)
     return R_NilValue;
 }
 
-SEXP mc_create_list(SEXP sLength) {
-    int len = Rf_asInteger(sLength);
-    if (len < 1) len = 0;
-    return Rf_allocVector(VECSXP, len);
-}
-
 /* this is not really necessary, since from R you can simply use
    is.loaded("QuartzCocoa_InhibitEventLoop") and it will be TRUE if we
    got to it. */

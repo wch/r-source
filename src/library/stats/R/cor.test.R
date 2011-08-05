@@ -89,7 +89,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 if(exact && !TIES) {
                     q <- round((r + 1) * n * (n - 1) / 4)
                     pkendall <- function(q, n) {
-                        .C("pkendall",
+                        .C(R_pkendall,
                            length(q),
                            p = as.double(q),
                            as.integer(n),
@@ -151,7 +151,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 ## In the case of no ties, S = (1-rho) * (n^3-n)/6.
                 pspearman <- function(q, n, lower.tail = TRUE) {
                     if(n <= 1290 && exact) # n*(n^2 - 1) does not overflow
-                        .C("prho",
+                        .C(R_prho,
                            as.integer(n),
                            as.double(round(q) + 2*lower.tail),
                            p = double(1L),

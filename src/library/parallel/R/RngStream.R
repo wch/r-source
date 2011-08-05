@@ -18,14 +18,14 @@ nextRNGStream <- function(seed)
 {
     if(!is.integer(seed) || seed[1L] %% 100L != 7L)
         stop("invalid value of 'seed'")
-    .Call("nextStream", seed, PACKAGE = "parallel")
+    .Call(C_nextStream, seed, PACKAGE = "parallel")
 }
 
 nextRNGSubStream <- function(seed)
 {
     if(!is.integer(seed) || seed[1L] %% 100L != 7L)
         stop("invalid value of 'seed'")
-    .Call("nextSubStream", seed, PACKAGE = "parallel")
+    .Call(C_nextSubStream, seed, PACKAGE = "parallel")
 }
 
 ## Different from snow's

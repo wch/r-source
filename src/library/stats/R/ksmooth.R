@@ -31,7 +31,7 @@ ksmooth <-
 	    sort(x.points)
 	}
     ord <- order(x)
-    z <- .C("BDRksmooth",
+    z <- .C(R_BDRksmooth,
 	    as.double(x[ord]),
 	    as.double(y[ord]),
 	    as.integer(length(x)),

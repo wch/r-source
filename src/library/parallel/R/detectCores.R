@@ -18,7 +18,7 @@
 
 if(.Platform$OS.type == "windows") {
 detectCores <- function(all.tests = FALSE)
-    .Call("ncpus", FALSE, package = "parallel")
+    .Call(C_ncpus, FALSE, package = "parallel")
 } else {
 detectCores <- function(all.tests = FALSE)
 {

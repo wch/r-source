@@ -25,18 +25,18 @@ spline <-
     method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("invalid interpolation method")
-	
+
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     nx <- length(x)
-	
+
     if(nx == 0) stop("zero non-NA points")
     if(method == 1 && y[1L] != y[nx]) { # periodic
         warning("spline: first and last y values differ - using y[1] for both")
         y[nx] <- y[1L]
     }
-    z <- .C("spline_coef",
+    z <- .C(R_spline_coef,
 	    method=as.integer(method),
 	    n=as.integer(nx),
 	    x=x,
@@ -51,7 +51,7 @@ spline <-
     else n <- length(xout)
     if (n <= 0)
         stop("'spline' requires n >= 1")
-    .C("spline_eval",
+    .C(R_spline_eval,
        z$method,
        nu=as.integer(n),
        x =as.double(xout),
