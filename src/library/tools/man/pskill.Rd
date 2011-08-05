@@ -6,11 +6,13 @@
 \name{pskill}
 \alias{pskill}
 
+\alias{SIGHUP}
 \alias{SIGINT}
 \alias{SIGQUIT}
 \alias{SIGKILL}
 \alias{SIGTERM}
 \alias{SIGSTOP}
+\alias{SIGTSTP}
 \alias{SIGCHLD}
 \alias{SIGUSR1}
 \alias{SIGUSR2}
@@ -22,11 +24,13 @@
 \usage{
 pskill(pid, signal = SIGTERM)
 
+SIGHUP
 SIGINT
 SIGQUIT
 SIGKILL
 SIGTERM
 SIGSTOP
+SIGTSTP
 SIGCHLD
 SIGUSR1
 SIGUSR2
@@ -42,7 +46,10 @@ SIGUSR2
   which also support a \code{kill} system call to send a signal to a
   process, most often to terminate it.  Function \code{pskill} provides
   a wrapper.  It silently ignores invalid values of its arguments.
-
+  
+  In normal use on a Unix-alike, \kbd{Ctrl-C} sends \code{SIGINT},
+  \kbd{Ctrl-\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends \code{SIGTSTP}.
+  
   The signals are small integers, but the actual numeric values are not
   standardized.  The \code{SIG*} objects contain the approriate integer
   values for the current platform (or \code{NA_INTEGER_} if the signal

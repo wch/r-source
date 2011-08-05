@@ -57,6 +57,9 @@ SEXP ps_sigs(SEXP signo)
     int res = NA_INTEGER;
     switch(asInteger(signo)) {
 	/* only SIGINT and SIGTERM are in C99 */
+#ifdef SIGHUP
+    case 1: res = SIGHUP; break;
+#endif
 #ifdef SIGINT
     case 2: res = SIGINT; break;
 #endif
@@ -71,6 +74,9 @@ SEXP ps_sigs(SEXP signo)
 #endif
 #ifdef SIGSTOP
     case 17: res = SIGSTOP; break;
+#endif
+#ifdef SIGTSTP
+    case 18: res = SIGTSTP; break;
 #endif
 #ifdef SIGCHLD
     case 20: res = SIGCHLD; break;

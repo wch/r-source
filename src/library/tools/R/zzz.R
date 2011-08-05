@@ -20,13 +20,16 @@
 function(libpath)
     library.dynam.unload("tools", libpath)
 
-## These are created at install time.
+## These are created at install time: the numbers are hard-coded in signals.c
+## They happen to be the BSD ones as this started in multicore
 library.dynam("tools", "tools", .Library)
+SIGHUP <- .Call("ps_sigs", 1L, PACKAGE = "tools")
 SIGINT <- .Call("ps_sigs", 2L, PACKAGE = "tools")
 SIGQUIT <- .Call("ps_sigs", 3L, PACKAGE = "tools")
 SIGKILL <- .Call("ps_sigs", 9L, PACKAGE = "tools")
 SIGTERM <- .Call("ps_sigs", 15L, PACKAGE = "tools")
 SIGSTOP <- .Call("ps_sigs", 17L, PACKAGE = "tools")
+SIGTSTP <- .Call("ps_sigs", 18L, PACKAGE = "tools")
 SIGCHLD <- .Call("ps_sigs", 20L, PACKAGE = "tools")
 SIGUSR1 <- .Call("ps_sigs", 30L, PACKAGE = "tools")
 SIGUSR2 <- .Call("ps_sigs", 31L, PACKAGE = "tools")
