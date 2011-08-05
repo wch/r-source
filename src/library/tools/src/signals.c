@@ -21,6 +21,11 @@
 #include "tools.h"
 #include <signal.h> // C99
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+
 SEXP ps_kill(SEXP spid, SEXP ssignal)
 {
     SEXP sspid, sres;
@@ -33,14 +38,18 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
     if(signal != NA_INTEGER) {
 	for (int i = 0; i < ns; i++) {
 #ifdef WIN32
-	    /* use TerminateProcess */
+	    HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, pid[i]);
+	    if (hProc) {
+                TerminateProcess(hProc, 1);
+                CloseHandle(hProc);
+	    }
 #else
 	    if (pid[i] != NA_INTEGER) res[i] = kill(pid[i], signal);
 #endif
 	}
     }
     UNPROTECT(2);
-    return res;
+    return sres;
 }
 
 SEXP ps_sigs(SEXP signo)

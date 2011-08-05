@@ -43,7 +43,7 @@ static const R_CallMethodDef callMethods[] = {
     {"mc_select_children", (DL_FUNC) &mc_select_children, 2},
     {"mc_send_child_stdin", (DL_FUNC) &mc_read_child, 2},
 #else
-    {"ncpus", (DL_FUNC) &npus, 1},
+    {"ncpus", (DL_FUNC) &ncpus, 1},
 #endif
     {NULL, NULL, 0}
 };

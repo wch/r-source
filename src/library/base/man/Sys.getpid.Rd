@@ -17,8 +17,9 @@
 Sys.getpid()
 }
 \value{
-  An integer, usually an integer between 1 and 32767 under
-  Unix-alikes and a small positive integer under Windows.
+  An integer, often between 1 and 32767 under Unix-alikes (but for
+  example FreeBSD and Mac OS >= 10.5 uses IDs up to 99999) and a
+  positive integer up tp 32767) under Windows.
 }
 \examples{\donttest{
 Sys.getpid()

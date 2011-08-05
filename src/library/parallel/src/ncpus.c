@@ -26,7 +26,7 @@
 
 SEXP ncpus(SEXP virtual)
 {
-    int virt = asLogical(virtual);
+    // int virt = asLogical(virtual);
     SYSTEM_INFO info;
     GetSystemInfo(&info);
     int nc = info.dwNumberOfProcessors;

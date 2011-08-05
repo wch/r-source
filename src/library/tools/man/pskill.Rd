@@ -32,7 +32,8 @@ SIGUSR1
 SIGUSR2
 }
 \arguments{
-  \item{pid}{integer: the process IDs.}
+  \item{pid}{integer: one or more process IDs as returned by
+    \code{\link{Sys.getpid}}.}
   \item{signal}{integer, most often one of the symbolic constants.}
 }
 \details{
@@ -46,6 +47,10 @@ SIGUSR2
   standardized.  The \code{SIG*} objects contain the approriate integer
   values for the current platform (or \code{NA_INTEGER_} if the signal
   is not defined).
+
+  Only \code{SIGINT} and \code{SIGKILL} will be defined on Windows, and
+  \code{pskill} will always use the Windows system call
+  \code{TerminateProcess}.
 }
 \value{
   A logical vector of the same length as \code{pid},

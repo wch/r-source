@@ -14,14 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## taken from multicore
-
-if(.Platform$OS.type == "windows") {
-detectCores <- function(all.tests = FALSE)
-    .Call(C_ncpus, FALSE, package = "parallel")
+detectCores <-
+    if(.Platform$OS.type == "windows") {
+        function(all.tests = FALSE)
+            .Call(C_ncpus, FALSE, PACKAGE = "parallel")
 } else {
-detectCores <- function(all.tests = FALSE)
+function(all.tests = FALSE)
 {
+    ## taken from multicore
     systems <-
         list(darwin  = "/usr/sbin/sysctl -n hw.ncpu 2>/dev/null",
              freebsd = "/sbin/sysctl -n hw.ncpu 2>/dev/null",

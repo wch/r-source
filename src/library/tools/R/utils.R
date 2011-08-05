@@ -1458,7 +1458,7 @@ function(args, msg)
 
 ### ** pskill
 
-pskill <- function(pid, signal)
+pskill <- function(pid, signal = SIGTERM)
     invisible(.Call(ps_kill, pid, signal, PACKAGE = "tools"))
 
 ### Local variables: ***
