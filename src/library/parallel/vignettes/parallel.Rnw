@@ -101,7 +101,7 @@ processes.  They can be created in one of three ways:
 
 \item \emph{Via} \code{system("Rscript")} or similar to launch a new
   process on the current machine or a similar machine with an identical
-  \R installation.  This then needs a way to communicate between
+  \R{} installation.  This then needs a way to communicate between
   master and worker processes, which is usually done \emph{via}
   sockets.
 
@@ -139,12 +139,12 @@ idea of the number of CPUs available, but this is a rather slippery
 concept.
 
 Note that all a program can possibly determine is the total number of
-CPUs available.  This is not the same as the number of CPUs available
-\emph{to the current user} which may well be restricted by system
-policies on multi-user systems.  Nor does it give much idea of a
-reasonable number of CPUs to use for the current task: the user may be
-running many \R{} processes simultaneously, and those processes may
-themselves by using multiple threads through multi-threaded BLAS,
+CPUs available.  This is not necessarily the same as the number of
+CPUs available \emph{to the current user} which may well be restricted
+by system policies on multi-user systems.  Nor does it give much idea
+of a reasonable number of CPUs to use for the current task: the user
+may be running many \R{} processes simultaneously, and those processes
+may themselves by using multiple threads through multi-threaded BLAS,
 compiled code using OpenMP or other low-level forms of parallelism.
 We have even seen instances of \pkg{multicore}'s \code{mclapply} being
 called recursively, generating $2n + n^2$ processes on a machine
@@ -172,7 +172,8 @@ functions it contains can also be used with SNOW clusters.
 The implementation is limited to socket clusters created by function
 \code{makePSOCKcluster}, which in this package is identical to
 \code{makeCluster}.  The only current differences are in the fine
-details in how new \R{} processes are created.
+details in how new \R{} processes are created and in the provision of
+\code{print} methods.
 
 \section{Forking}
 
@@ -209,7 +210,7 @@ these get a non-reproducible seed.
 
 The alternative is to set separate seeds for each worker process in
 some reproducible way from the seed in the master process.  This is
-generally perfectly safe, but there have been worries that the
+generally plenty safe enough, but there have been worries that the
 random-number streams in the workers might somehow get into step.  One
 approach is to take the seeds a long way apart in the random-number
 stream: note that random numbers taken a long (fixed) distance apart
