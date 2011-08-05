@@ -163,5 +163,5 @@ print.SOCKnode <- function(x, ...)
                    Sys.getpid(), paste(master, port, sep = ":"),
                    format(Sys.time(), "%H:%M:%OS3"))
     cat(msg)
-    slaveloop(makeSOCKmaster(master, port, timeout))
+    slaveLoop(makeSOCKmaster(master, port, timeout))
 }

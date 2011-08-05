@@ -50,7 +50,8 @@ mckill(process, signal = 2L)
   \item{process}{process (object of the class \code{process}) or a
     process ID (pid)}
   \item{signal}{integer: signal to send.  Values of 2 (SIGINT), 9
-    (SIGKILL) and 15 (SIGTERM) are pretty much portable.}
+    (SIGKILL) and 15 (SIGTERM) are pretty much portable, but for maximal
+    portability use \code{tools::\link{SIGTERM}} and so on.}
 }
 \details{
   \code{children} returns currently active children.
@@ -100,5 +101,10 @@ mckill(process, signal = 2L)
 \seealso{
   \code{\link{mcfork}}, \code{\link{sendMaster}}, \code{\link{mcparallel}}
 }
+\examples{\dontrun{
+p  <- mcparallel(scan(n = 1, quiet = TRUE))
+sendChildStdin(p, "17.4\n")
+mccollect(p)[[1]]
+}}
 \author{Simon Urbanek}
 \keyword{interface}

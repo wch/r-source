@@ -79,8 +79,9 @@ sendChildStdin <- function(child, what)
     child <- as.integer(child)
     if (is.character(what)) what <- charToRaw(paste(what, collapse='\n'))
     if (!is.raw(what)) stop("'what' must be a character or raw vector")
-    unlist(lapply(child, function(p)
-                  .Call(C_mc_send_child_stdin, p, what, PACKAGE = "parallel")))
+    invisible(unlist(lapply(child, function(p)
+                            .Call(C_mc_send_child_stdin, p, what,
+                                  PACKAGE = "parallel"))))
 }
 
 mcexit <- function(exit.code = 0L, send = NULL)
