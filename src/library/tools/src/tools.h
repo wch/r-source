@@ -33,5 +33,7 @@ SEXP Rmd5(SEXP files);
 SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
 SEXP check_nonASCII2(SEXP text);
 SEXP doTabExpand(SEXP strings, SEXP starts);
+SEXP ps_kill(SEXP pid, SEXP signal);
+SEXP ps_sigs(SEXP);
 
 #endif

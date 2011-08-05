@@ -1456,6 +1456,11 @@ function(args, msg)
 }
 
 
+### ** pskill
+
+pskill <- function(pid, signal)
+    invisible(.Call(ps_kill, pid, signal, PACKAGE = "tools"))
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

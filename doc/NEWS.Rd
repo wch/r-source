@@ -320,7 +320,12 @@
       the process ID as well as the current time, just in case two \R
       processes are launched very rapidly on a machine with
       low-resolution wall clock (some have a resolution of a second;
-      modern systems have microseconds).
+      modern systems have microsecond-level resolutions).
+
+      \item New function \code{pskill()} in the \pkg{tools} package to
+      send a terminate signal to one or more processes, plus constants
+      such as \code{SIGTERM} to provide a portable way to refer to
+      signals (since the numeric values are OS-dependent).
     }
   }
 
@@ -589,7 +594,7 @@
 
       \item The \file{configure} arguments used during configuration of
       \R are included as a commment in \file{Makeconf} for informative
-      purposes on unix in a form suitable for shell execution. Note that
+      purposes on unix in a form suitable for shell execution.  Note that
       those are merely command-line arguments, they do not include
       environment variables (one more reason to use configure variables
       instead) or site configuration settings.

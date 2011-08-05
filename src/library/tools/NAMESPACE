@@ -14,12 +14,14 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "getDepList", "installFoundDepends", "latexToUtf8",
        "list_files_with_exts", "list_files_with_type", "md5sum",
        "package.dependencies", "parseLatex", "parse_Rd", "pkgDepends",
-       "pkgVignettes", "read.00Index", "readNEWS", "resaveRdaFiles",
-       "showNonASCII", "showNonASCIIfile", "startDynamicHelp",
-       "testInstalledBasic", "testInstalledPackage",
-       "testInstalledPackages", "texi2dvi", "texi2pdf", "toHTML",
-       "toRd", "undoc", "vignetteDepends", "write_PACKAGES",
-       "xgettext", "xgettext2pot", "xngettext")
+       "pkgVignettes", "pskill", "read.00Index", "readNEWS",
+       "resaveRdaFiles", "showNonASCII", "showNonASCIIfile",
+       "startDynamicHelp", "testInstalledBasic",
+       "testInstalledPackage", "testInstalledPackages", "texi2dvi",
+       "texi2pdf", "toHTML", "toRd", "undoc", "vignetteDepends",
+       "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
+
+exportPattern("^SIG.+")
 
 S3method("as.character", "Rd")
 
