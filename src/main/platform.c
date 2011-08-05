@@ -1090,7 +1090,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d)) error(_("invalid '%s' argument"), "directory");
-    p = CAR(args);  args = CDR(args);
+    p = CAR(args); args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != NA_STRING)
 	pattern = 1;
@@ -1132,7 +1132,8 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 static void list_dirs(const char *dnp, const char *stem, int *count, 
-		      SEXP *pans, int *countmax, PROTECT_INDEX idx)
+		      SEXP *pans, int *countmax, PROTECT_INDEX idx,
+		      Rboolean recursive)
 {
     DIR *dir;
     struct dirent *de;
@@ -1145,11 +1146,13 @@ static void list_dirs(const char *dnp, const char *stem, int *count,
 #endif
     R_CheckUserInterrupt();
     if ((dir = opendir(dnp)) != NULL) {
-	if (*count == *countmax - 1) {
-	    *countmax *= 2;
-	    REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
+	if (recursive) {
+	    if (*count == *countmax - 1) {
+		*countmax *= 2;
+		REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
+	    }
+	    SET_STRING_ELT(*pans, (*count)++, mkChar(dnp));
 	}
-	SET_STRING_ELT(*pans, (*count)++, mkChar(dnp));
 	while ((de = readdir(dir))) {
 #ifdef Win32
 	    if (strlen(dnp) == 2 && dnp[1] == ':')
@@ -1166,20 +1169,29 @@ static void list_dirs(const char *dnp, const char *stem, int *count,
 #endif
 	    if ((sb.st_mode & S_IFDIR) > 0) {
 		if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
-		    if (stem) {
+		    if(recursive) {
+			if (stem) {
 #ifdef Win32
-			if(strlen(stem) == 2 && stem[1] == ':')
-			    snprintf(stem2, PATH_MAX, "%s%s", stem,
-				     de->d_name);
-			else
+			    if(strlen(stem) == 2 && stem[1] == ':')
+				snprintf(stem2, PATH_MAX, "%s%s", stem,
+					 de->d_name);
+			    else
+				snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+					 R_FileSep, de->d_name);
+#else
 			    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 				     R_FileSep, de->d_name);
-#else
-			snprintf(stem2, PATH_MAX, "%s%s%s", stem,
-				 R_FileSep, de->d_name);
 #endif
-		    } else strcpy(stem2, de->d_name);
-		    list_dirs(p, stem2, count, pans, countmax, idx);
+			} else strcpy(stem2, de->d_name);
+			list_dirs(p, stem2, count, pans, countmax, idx, recursive);
+			
+		    } else {
+			if (*count == *countmax - 1) {
+			    *countmax *= 2;
+			    REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
+			}
+			SET_STRING_ELT(*pans, (*count)++, mkChar(p));
+		    }
 		}
 	    }
 	}
@@ -1191,21 +1203,27 @@ SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     PROTECT_INDEX idx;
     SEXP d, ans;
-    int fullnames, count, i;
+    int fullnames, count, i, recursive;
     const char *dnp;
     int countmax = 128;
 
     checkArity(op, args);
-    d = CAR(args);
+    d = CAR(args); args = CDR(args);    
     if (!isString(d)) error(_("invalid '%s' argument"), "directory");
-    fullnames = asLogical(CADR(args));
-
+    fullnames = asLogical(CAR(args)); args = CDR(args);
+    if (fullnames == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "full.names");
+    recursive = asLogical(CAR(args)); args = CDR(args);
+    if (recursive == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "recursive");
+    
     PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
     count = 0;
     for (i = 0; i < LENGTH(d) ; i++) {
 	if (STRING_ELT(d, i) == NA_STRING) continue;
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
-	list_dirs(dnp, fullnames ? dnp : NULL, &count, &ans, &countmax, idx);
+	list_dirs(dnp, fullnames ? dnp : NULL, &count, &ans, &countmax,
+		  idx, recursive);
     }
     REPROTECT(ans = lengthgets(ans, count), idx);
     ssort(STRING_PTR(ans), count);

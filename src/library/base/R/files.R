@@ -80,8 +80,8 @@ list.files <- function(path = ".", pattern = NULL, all.files = FALSE,
 
 dir <- list.files
 
-list.dirs <- function(path = ".", full.names = TRUE)
-    .Internal(list.dirs(path, full.names))
+list.dirs <- function(path = ".", full.names = TRUE, recursive = TRUE)
+    .Internal(list.dirs(path, full.names, recursive))
 
 
 file.path <-

@@ -17,7 +17,7 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
            ignore.case = FALSE, include.dirs = FALSE)
 
-list.dirs(path = ".", full.names = TRUE)
+list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
@@ -50,9 +50,9 @@ list.dirs(path = ".", full.names = TRUE)
   The files are sorted in alphabetical order, on the full path
   if \code{full.names = TRUE}.
 
-  \code{list.dirs} implicitly has \code{all.files = TRUE, recursive =
-    TRUE}, and the answer includes \code{path} itself (provided it is a
-  readable directory). 
+  \code{list.dirs} implicitly has \code{all.files = TRUE}, and if
+  \code{recursive = TRUE}, the answer includes \code{path} itself
+  (provided it is a readable directory). 
 }
 \author{Ross Ihaka, Brian Ripley}
 \note{
