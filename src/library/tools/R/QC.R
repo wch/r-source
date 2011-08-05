@@ -2745,21 +2745,29 @@ function(dfile)
         if(inherits(aar, "error")) {
             out$bad_authors_at_R_field <- conditionMessage(aar)
         } else {
-            ## Check only whether we can expand here.
+            ## Check whether we can expand to something non-empty.
             s <- tryCatch(utils:::.format_authors_at_R_field_for_author(aar),
                           error = identity)
-            if(inherits(s, "error"))
+            if(inherits(s, "error")) {
                 out$bad_authors_at_R_field_for_author <-
                     conditionMessage(s)
-            if(is.na(db["Author"]))
-                db["Author"] <- s
+            } else {
+                if(s == "")
+                    out$bad_authors_at_R_field_has_no_author <- TRUE
+                else if(is.na(db["Author"]))
+                    db["Author"] <- s
+            }
             s <- tryCatch(utils:::.format_authors_at_R_field_for_maintainer(aar),
                           error = identity)
-            if(inherits(s, "error"))
+            if(inherits(s, "error")) {
                 out$bad_authors_at_R_field_for_maintainer <-
                     conditionMessage(s)
-            if(is.na(db["Maintainer"]))
-                db["Maintainer"] <- s
+            } else {
+                if(s == "")
+                    out$bad_authors_at_R_field_has_no_maintainer <- TRUE
+                else if(is.na(db["Maintainer"]))
+                    db["Maintainer"] <- s
+            }
         }
     }
 
@@ -2863,25 +2871,50 @@ function(x, ...)
 {
     if(length(x$missing_encoding))
         writeLines(c(gettext("Unknown encoding"), ""))
+
     if(length(x$fields_with_non_ASCII_tags)) {
         writeLines(gettext("Fields with non-ASCII tags:"))
         .pretty_print(x$fields_with_non_ASCII_tags)
         writeLines(c(gettext("All field tags must be ASCII."), ""))
     }
+
     if(length(x$fields_with_non_ASCII_values)) {
         writeLines(gettext("Fields with non-ASCII values:"))
         .pretty_print(x$fields_with_non_ASCII_values)
         writeLines(c(gettext("These fields must have ASCII values."), ""))
     }
+
+    if(length(bad <- x[["bad_authors_at_R_field"]]))
+        writeLines(c(gettext("Malformed Authors@R field:"),
+                     paste(" ", bad),
+                     ""))
+    if(length(bad <- x[["bad_authors_at_R_field_for_author"]]))
+        writeLines(c(gettext("Cannot extract Author field from Authors@R field:"),
+                     paste(" ", bad),
+                     ""))
+    if(length(x[["bad_authors_at_R_field_has_no_author"]]))
+        writeLines(c(gettext("Authors@R field gives no person with author role."),
+                     ""))
+    if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]]))
+        writeLines(c(gettext("Cannot extract Maintainer field from Authors@R field:"),
+                     paste(" ", bad),
+                     ""))
+    if(length(x[["bad_authors_at_R_field_has_no_maintainer"]]))
+        writeLines(c(gettext("Authors@R field gives no person with maintainer role and email address."),
+                     ""))
+              
     if(length(x$missing_required_fields)) {
         writeLines(gettext("Required fields missing:"))
         .pretty_print(x$missing_required_fields)
         writeLines("")
     }
+
     if(length(x$bad_package))
         writeLines(c(strwrap(x$bad_package), ""))
+    
     if(length(x$bad_version))
         writeLines(c(gettext("Malformed package version."), ""))
+    
     if(length(x$bad_maintainer))
         writeLines(c(gettext("Malformed maintainer field."), ""))
 
@@ -2909,8 +2942,10 @@ function(x, ...)
         }
         writeLines("")
     }
+    
     if(length(x$bad_namespace))
         writeLines(c(gettext("Package name and namespace differ."), ""))
+    
     if(length(x$bad_priority))
         writeLines(c(gettext("Invalid Priority field."),
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
@@ -4811,26 +4846,12 @@ function(dir)
     ## does not provide repository names.
     CRAN <- urls[1L]
 
-    ## If CRAN is available locally, also use information about packages
-    ## in the archive.
-    ## (There should really be a ls-R file in src/contrib eventually.)
+    ## For now, information about the CRAN package archive is provided
+    ## in CRAN's src/contrib/Archive.rds.
     packages_in_CRAN_archive <-
-        if(substring(CRAN, 1L, 7L) == "file://") {
-            dir <- file.path(substring(CRAN, 8L),
-                             "src", "contrib", "Archive")
-            ## How can we actually determine all packages which have
-            ## archived versions?
-            ## The cleanest would be
-            ##    unique(basename(dirname(Sys.glob(file.path(dir, "*/*.tar.gz")))))
-            ## but that takes rather long ...
-            ## Using
-            files <- list.files(dir, full.names = TRUE)
-            basename(files[file_test("-d", files)])
-            ## is much faster, but does not make sure that archive
-            ## subdirectories are actually non-empty.
-            ## (Seems that there is no way to list *only* the
-            ## subdirectories of a directory [non-recursively].)
-        } else character()
+        names(readRDS(gzcon(url(sprintf("%s/src/contrib/Archive.rds",
+                                        CRAN),
+                                "rb"))))
 
     ## Package names must be unique within standard repositories when
     ## ignoring case.
