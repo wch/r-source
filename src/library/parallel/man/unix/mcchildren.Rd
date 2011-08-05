@@ -32,7 +32,7 @@ mckill(process, signal = 2L)
     \code{select} should be a list of processes and only those form the
     list that are active will be returned.}
   \item{child}{child process (object of the class \code{"childProcess"}) or a
-    process ID (pid)}
+    process ID (pid).  See also \sQuote{Details}.}
   \item{timeout}{timeout (in seconds, fractions supported) to wait
     for a response before giving up.}
   \item{children}{list of child processes or a single child process
@@ -62,11 +62,11 @@ mckill(process, signal = 2L)
   \code{readChildren} checks children for available data and reads
   from the first child that has available data.
 
-  \code{sendChildStdin} sends a string (or data) to child's standard
-  input.  Note that if the master session was interactive, it will also
-  be echoed on the standard output of the master process (unless
-  disabled).  The function is vector-compatible, so you can specify more
-  than one child as a list or a vector of process IDs.
+  \code{sendChildStdin} sends a string (or data) to one or more child's
+  standard input.  Note that if the master session was interactive, it
+  will also be echoed on the standard output of the master process
+  (unless disabled).  The function is vector-compatible, so you can
+  specify \code{child} as a list or a vector of process IDs.
   
   \code{sendMaster} sends data from the child to the master process.
   
@@ -87,8 +87,8 @@ mckill(process, signal = 2L)
   interrupted) or an integer vector of process IDs with children that
   have data available.
 
-  \code{sendChildStdin} returns a vector of \code{TRUE} values or throws
-  an error. (??)
+  \code{sendChildStdin} returns a vector of \code{TRUE} values (one for
+  each member of \code{child}) or throws an error.
   
   \code{sendMaster} returns \code{TRUE} or throws an error.
   

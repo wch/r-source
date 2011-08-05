@@ -102,6 +102,30 @@ makeCluster <- makePSOCKcluster <- function(names, ...)
     cl
 }
 
+print.SOCKcluster <- function(x, ...)
+{
+    nc <- length(x)
+    hosts <- unique(sapply(x, "[[", "host"))
+    msg <- if (length(hosts) > 1L)
+        gettextf("socket cluster with %d nodes on hosts %s", nc,
+                 paste(sQuote(hosts), collapse = ", "))
+    else
+        gettextf("socket cluster with %d nodes on host %s", nc, sQuote(hosts))
+    cat(msg, "\n", sep = "")
+    invisible(x)
+}
+
+print.SOCKnode <- function(x, ...)
+{
+    sendCall(x, eval, list(quote(Sys.getpid())))
+    pid <- recvResult(x)
+
+    msg <- gettextf("node of a socket cluster on host %s with pid %d",
+                    sQuote(x[["host"]]), pid)
+    cat(msg, "\n", sep = "")
+    invisible(x)
+}
+
 ## formerly in RSOCKnode.R
 .slaveRSOCK <- function()
 {
@@ -135,6 +159,9 @@ makeCluster <- makePSOCKcluster <- function(names, ...)
     ## We should not need to attach parallel, as running in the namespace.
 
     sinkWorkerOutput(outfile)
-    cat("starting worker for", paste(master, port, sep = ":"), "\n")
-    slaveLoop(makeSOCKmaster(master, port, timeout))
+    msg <- sprintf("starting worker pid=%d on %s at %s\n",
+                   Sys.getpid(), paste(master, port, sep = ":"),
+                   format(Sys.time(), "%H:%M:%OS3"))
+    cat(msg)
+    slaveloop(makeSOCKmaster(master, port, timeout))
 }

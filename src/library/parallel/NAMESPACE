@@ -17,6 +17,8 @@ export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
 
 # export(setDefaultClusterOptions)
 
+S3method(print, SOCKcluster)
+S3method(print, SOCKnode)
 S3method("[", cluster)
 S3method(closeNode, SOCKnode)
 S3method(closeNode, default)

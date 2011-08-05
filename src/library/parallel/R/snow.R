@@ -54,7 +54,7 @@ slaveLoop <- function(master)
                 handler <- function(e) {
                     success <<- FALSE
                     structure(conditionMessage(e),
-                              class=c("snow-try-error","try-error"))
+                              class = c("snow-try-error","try-error"))
                 }
                 t1 <- proc.time()
                 value <- tryCatch(do.call(msg$data$fun, msg$data$args, quote = TRUE),
@@ -72,7 +72,8 @@ sinkWorkerOutput <- function(outfile)
     if (nzchar(outfile)) {
         if (.Platform$OS.type == "windows" && outfile == "/dev/null")
             outfile <- "nul:"
-        outcon <- file(outfile, open = "w")
+        ## all the workers log to the same file.
+        outcon <- file(outfile, open = "a")
         sink(outcon)
         sink(outcon, type = "message")
     }

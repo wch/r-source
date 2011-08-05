@@ -41,8 +41,12 @@ makePSOCKcluster(names, ...)
       then \code{10187}.}
     \item{\code{timeout}}{The timeout in seconds for that port.  Default
       1 year.}
-    \item{\code{outfile}}{Where to send the stdout from the workers.
-      Defaults to \file{/dev/null} (\file{nul:} on Windows).}
+    \item{\code{outfile}}{Where to send the stdout and stderr from the
+      workers. \code{""} indicates no redirection (which may only be
+      useful for local workers).
+      Defaults to \file{/dev/null} (\file{nul:} on Windows).
+      Other files will be opened in append mode, as all workers log to the
+      same file.} 
     \item{\code{homogeneous}}{Logical.  Are all the hosts running
       identical setups, so \command{Rscript} can be launched using its
       full path on the master?  Otherwise it has to be in the default
@@ -56,11 +60,19 @@ makePSOCKcluster(names, ...)
     \item{\code{manual}}{Logical.  If true the workers will need to be
     run manually.}
   }
+  
+  It is good practice to shutdown the workers by calling
+  \code{\link{stopCluster}}: however the workers will terminate
+  themselves once the socket on which they are listening for commands
+  becomes unavailable, which it should if the master \R session is
+  completed (or its process dies).
 }
 \value{
   An object of class \code{c("SOCKcluster", "cluster")}.
 }
 
 \seealso{
+  \code{\link{stopCluster}}.
+
   \code{makeCluster} in package \pkg{snow}.
 }
