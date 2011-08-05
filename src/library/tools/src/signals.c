@@ -78,6 +78,9 @@ SEXP ps_sigs(SEXP signo)
 #ifdef SIGTSTP
     case 18: res = SIGTSTP; break;
 #endif
+#ifdef SIGCONT
+    case 19: res = SIGCONT; break;
+#endif
 #ifdef SIGCHLD
     case 20: res = SIGCHLD; break;
 #endif

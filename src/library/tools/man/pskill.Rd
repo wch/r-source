@@ -13,6 +13,7 @@
 \alias{SIGTERM}
 \alias{SIGSTOP}
 \alias{SIGTSTP}
+\alias{SIGCONT}
 \alias{SIGCHLD}
 \alias{SIGUSR1}
 \alias{SIGUSR2}
@@ -42,13 +43,17 @@ SIGUSR2
 }
 \details{
   Signals are a C99 concept, but only a small number are required to be
-  supported.  They are much more widely used on POSIX operating systems,
-  which also support a \code{kill} system call to send a signal to a
-  process, most often to terminate it.  Function \code{pskill} provides
-  a wrapper.  It silently ignores invalid values of its arguments.
+  supported (of those listed, only \code{SIGINT} and \code{SIGTERM}).
+  They are much more widely used on POSIX operating systems (which
+  should define all of those listed here), which also support a
+  \code{kill} system call to send a signal to a process, most often to
+  terminate it.  Function \code{pskill} provides a wrapper: it silently
+  ignores invalid values of its arguments.
   
   In normal use on a Unix-alike, \kbd{Ctrl-C} sends \code{SIGINT},
-  \kbd{Ctrl-\\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends \code{SIGTSTP}.
+  \kbd{Ctrl-\\} sends \code{SIGQUIT} and \kbd{Ctrl-Z} sends
+  \code{SIGTSTP}: that and \code{SIGSTOP} suspend a process which can be
+  resumed by \code{SIGCONT}.
   
   The signals are small integers, but the actual numeric values are not
   standardized (and most do differ between OSes).  The \code{SIG*}
