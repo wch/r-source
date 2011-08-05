@@ -1675,23 +1675,95 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 .methodsIsLoaded <- function()
     identical(.saveImage, TRUE)
 
-## FIXME:  write this
-## validMethod <- function(f, sig, inherited = FALSE, where = topenv(parent.frame())) {
-##     if(is(f, "genericFunction")) {
-##         fdef <- f
-##         f <- fdef@generic
-##     }
-##     else if(is.character(f))
-##         fdef <- getGeneric(f, TRUE, where = where)
-##     else stop(gettextf("f must be a generic function or a string, got an object of class %s", dquote(class(f))))
-##     pkg <- fdef@package
-##     method <- if(inherited)
-##         selectMethod(f, sig, where = where, fdef = fdef)
-##     else
-##         getMethod(f, sig, where = where, fdef = fdef)
-##     problems <- character()
-##     if(is(method, "MethodDefinition")) {
-##     }
-##     else 
-    
-    
+## Defined but not currently used:
+## utilitity to test well-defined classes in signature,
+## for setMethod(), setAs() [etc.?], the result to be
+## assigned in package where=
+## Returns a list of signature, messages and level of error
+.validSignature <- function(signature, generic, where) {
+    thisPkg <- getPackageName(where, FALSE)
+    checkDups <- .duplicateClassesExist()
+    if(is(signature, "character")) { # including class "signature"
+        classes <- as.character(signature)
+        names <- allNames(signature)
+        pkgs <- attr(signature, "package")
+    }
+    else if(is(signature, "list")) {
+        classes <- sapply(signature, as.character)
+        names <- names(signature)
+        pkgs <- character(length(signature))
+        for(i in seq_along(pkgs)) {
+            pkgi <- attr(signature[[i]], "package")
+            pkgs[[i]] <- if(is.null(pkgi)) "" else pkgi
+        }
+    }
+    msgs <- character(); level <- integer()
+    for(i in seq_along(classes)) {
+        ## classes must be defined
+        ## if duplicates exist check for them
+        ## An ambiguous duplicate is a warning if it can match thisPkg
+        ## else, an error
+        classi <- classes[[i]]
+        pkgi <- pkgs[[i]]
+        classDefi <- getClass(classi, where = where)
+        if(checkDups &&
+           classi %in% mulipleClasses()) { # hardly ever, we hope
+            clDefsi <- get(classi, envir = .classTable)
+            if(nzchar(pkgi) && pkgi %in% names(clDefsi))
+                ## use the chosen class, no message
+                classDefi <- clDefsi[[pkgi]]
+            else if(nzchar(pkgi)){
+                ## this is only a warning because it just might
+                ## be the result of identical class defs (e.g., from setOldClass()
+                msgs <- c(msgs,
+                          gettextf("Multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)",
+                                   dQuote(classi), dQuote(pkgi),
+                                   paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
+                level <- c(level, 2) #warn
+            }
+            else {
+                msgs <- c(msgs,
+                          gettextf("Multiple defintions exist for class %s; should specify one of them (%s), e.g. by className()",
+                                   dQuote(classi),
+                                   paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
+            }
+        }
+        else {
+            ## just possibly the first reference to an available
+            ## package not yet loaded.  It's an error to specify
+            ## a non-loadable package
+            if(nzchar(pkgi)) {
+                loadNamespace(pkgi, character.only = TRUE)
+                classDefi <- getClass(classi, where = ns)
+            }
+            if(is.null(classDefi)) {
+                classDefi <- getClassDef
+                msgi <- gettextf("No definition found for class %s",
+                                 dQuote(classi))
+                ## ensure only one error message
+                if(length(level) && any(level == 3))
+                    msgs[level == 3] <- paste(msgs[level == 3], msgi, sep = "; ")
+                else
+                    msgs <- c(msgs, msgi)
+                level <- c(level, 3)
+            }
+            ## note that we do not flag a pkgi different from
+            ## the package of the def., mainly because of setOldClass()
+            ## which currently generates potentially multiple versions
+            ## of the same S3 class.
+        }
+        ## except for the obscure multiple identical class case
+        ## we should not get here w/o a valid class def.
+        if(is.null(classDefi)) {}
+        else
+            pkgs[[i]] <- classDefi@package
+    }
+    signature <- .MakeSignature(new("signature"), generic,
+                                structure(classes, names = names, package = package))
+    if(length(msgs) > 1) {
+        ## sort by severity, to get all messages before errror
+        ii <- sort.list(level)
+        msgs <- msgs[ii]; level <- level[ii]
+    }
+    list(signature = signature, message = msgs, level = level)
+}
