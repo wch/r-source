@@ -739,7 +739,7 @@
     if(exists(label, envir = table, inherits = FALSE)) {
         value <- get(label, envir = table) ## else NULL
         if(is.environment(value)) {
-            pkgs <- objects(value)
+            pkgs <- objects(value, all.names = TRUE)
             if(length(pkgs) == 1)
                 value <- get(pkgs, envir = value)
             else if(length(pkgs) == 0)
