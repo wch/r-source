@@ -401,11 +401,14 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
            || (capabilities("tcltk") && capabilities("X11")))
             graphics <- TRUE
     }
-    if(isTRUE(ask))
-        update <- res[match(select.list(res, multiple = TRUE,
-                                        title = "New packages to be installed",
-                                        graphics = graphics)
-                            , res)]
+    if(isTRUE(ask)) {
+        if(length(res))
+            update <- res[match(select.list(res, multiple = TRUE,
+                                            title = "New packages to be installed",
+                                            graphics = graphics)
+                                , res)]
+        else message("no new packages are available")
+    }
     if(length(update)) {
         install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
                          method = method, available = available,
