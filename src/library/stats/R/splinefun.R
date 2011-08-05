@@ -41,14 +41,14 @@ splinefun <- function(x, y=NULL,
         m <- c(Sx[1L], (Sx[-1L] + Sx[-n1])/2, Sx[n1]) ## 1.
 
         ## use C, as we need to "serially" progress from left to right:
-        m <- .Call(R_R_monoFC_m, m, Sx, PACKAGE="stats")
+        m <- .Call(C_R_monoFC_m, m, Sx, PACKAGE="stats")
 
         ## Hermite spline with (x,y,m) :
         return(splinefunH0(x = x, y = y, m = m, dx = dx))
     }
     ## else
     iMeth <- match(method, c("periodic", "natural", "fmm", "monoH.FC"))
-    z <- .C(R_spline_coef,
+    z <- .C(C_spline_coef,
 	    method=as.integer(iMeth),
 	    n=as.integer(nx),
 	    x=x,
@@ -79,7 +79,7 @@ splinefun <- function(x, y=NULL,
         ##           where dx := (u[j]-x[i]); i such that x[i] <= u[j] <= x[i+1},
         ##                u[j]:= xout[j] (unless sometimes for periodic spl.)
         ##           and  d_i := d[i] unless for natural splines at left
-	res <- .C(R_spline_eval,
+	res <- .C(C_spline_eval,
                   z$method,
                   as.integer(length(x)),
                   x=as.double(x),

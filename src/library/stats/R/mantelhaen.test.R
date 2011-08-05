@@ -143,7 +143,7 @@ function(x, y = NULL, z = NULL,
             ## Density of the *central* product hypergeometric
             ## distribution on its support: store for once as this is
             ## needed quite a bit.
-            dc <- .C(R_d2x2xk,
+            dc <- .C(C_d2x2xk,
                      as.integer(K),
                      as.double(m),
                      as.double(n),

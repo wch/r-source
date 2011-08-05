@@ -28,7 +28,7 @@ shapiro.test <- function(x) {
 	x <- x/rng # rescale to avoid ifault=6
     n2 <- n %/% 2L # integer, too
     ## C Code: Use the first n1 observations as uncensored
-    sw <- .C(R_swilk,
+    sw <- .C(C_swilk,
 	     init = FALSE,
 	     as.single(x),
 	     n,#      integer

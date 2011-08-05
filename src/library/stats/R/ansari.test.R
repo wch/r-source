@@ -49,7 +49,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 
     if(exact && !TIES) {
         pansari <- function(q, m, n) {
-            .C(R_pansari,
+            .C(C_pansari,
                as.integer(length(q)),
                p = as.double(q),
                as.integer(m),
@@ -69,7 +69,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                    greater = pansari(STATISTIC, m, n))
         if (conf.int) {
             qansari <- function(p, m, n) {
-                .C(R_qansari,
+                .C(C_qansari,
                    as.integer(length(p)),
                    q = as.double(p),
                    as.integer(m),

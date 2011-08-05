@@ -22,7 +22,7 @@ arima <- function(x, order = c(0, 0, 0),
                   optim.method = "BFGS",
                   optim.control = list(), kappa = 1e6)
 {
-    "%+%" <- function(a, b) .Call(R_TSconv, a, b)
+    "%+%" <- function(a, b) .Call(C_TSconv, a, b)
 
     upARIMA <- function(mod, phi, theta)
     {
@@ -31,7 +31,7 @@ arima <- function(x, order = c(0, 0, 0),
         r <- max(p, q + 1L)
         if(p > 0) mod$T[1L:p, 1L] <- phi
         if(r > 1L)
-            mod$Pn[1L:r, 1L:r] <- .Call(R_getQ0, phi, theta)
+            mod$Pn[1L:r, 1L:r] <- .Call(C_getQ0, phi, theta)
         else if (p > 0)
             mod$Pn[1L, 1L] <- 1/(1 - phi^2)
         else
@@ -44,7 +44,7 @@ arima <- function(x, order = c(0, 0, 0),
     arimaSS <- function(y, mod)
     {
         ## next call changes objects a, P, Pn so beware!
-        .Call(R_ARIMA_Like, y, mod$phi, mod$theta, mod$Delta,
+        .Call(C_ARIMA_Like, y, mod$phi, mod$theta, mod$Delta,
               mod$a, mod$P, mod$Pn, 0L, TRUE)
     }
 
@@ -52,11 +52,11 @@ arima <- function(x, order = c(0, 0, 0),
     {
         par <- coef
         par[mask] <- p
-        trarma <- .Call(R_ARIMA_transPars, par, arma, trans)
+        trarma <- .Call(C_ARIMA_transPars, par, arma, trans)
         Z <- upARIMA(mod, trarma[[1L]], trarma[[2L]])
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
         ## next call changes objects a, P, Pn so beware!
-        res <- .Call(R_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
+        res <- .Call(C_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
                      Z$a, Z$P, Z$Pn, 0L, FALSE)
         s2 <- res[1L]/res[3L]
         0.5*(log(s2) + res[2L]/res[3L])
@@ -66,9 +66,9 @@ arima <- function(x, order = c(0, 0, 0),
     {
         par <- as.double(fixed)
         par[mask] <- p
-        trarma <- .Call(R_ARIMA_transPars, par, arma, FALSE)
+        trarma <- .Call(C_ARIMA_transPars, par, arma, FALSE)
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
-        res <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
+        res <- .Call(C_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), FALSE)
         0.5 * log(res)
     }
@@ -211,7 +211,7 @@ arima <- function(x, order = c(0, 0, 0),
                 if(!arCheck(init[sum(arma[1L:2L]) + 1L:arma[3L]]))
                     stop("non-stationary seasonal AR part")
             if(transform.pars)
-                init <- .Call(R_ARIMA_Invtrans, as.double(init), arma)
+                init <- .Call(C_ARIMA_Invtrans, as.double(init), arma)
         }
     } else init <- init0
 
@@ -230,11 +230,11 @@ arima <- function(x, order = c(0, 0, 0),
                           res$convergence)
         coef[mask] <- res$par
         ## set model for predictions
-        trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
+        trarma <- .Call(C_ARIMA_transPars, coef, arma, FALSE)
         mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         if(ncxreg > 0) x <- x - xreg %*% coef[narma + (1L:ncxreg)]
         arimaSS(x, mod)
-        val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
+        val <- .Call(C_ARIMA_CSS, x, arma, trarma[[1L]], trarma[[2L]],
                      as.integer(ncond), TRUE)
         sigma2 <- val[[1L]]
         var <- if(no.optim) numeric() else solve(res$hessian * n.used)
@@ -256,7 +256,7 @@ arima <- function(x, order = c(0, 0, 0),
             ncond <- 0L
         }
         if(transform.pars) {
-            init <- .Call(R_ARIMA_Invtrans, init, arma)
+            init <- .Call(C_ARIMA_Invtrans, init, arma)
             ## enforce invertibility
             if(arma[2L] > 0) {
                 ind <- arma[1L] + 1L:arma[2L]
@@ -267,7 +267,7 @@ arima <- function(x, order = c(0, 0, 0),
                 init[ind] <- maInvert(init[ind])
             }
         }
-        trarma <- .Call(R_ARIMA_transPars, init, arma, transform.pars)
+        trarma <- .Call(C_ARIMA_transPars, init, arma, transform.pars)
         mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         res <- if(no.optim)
             list(convergence = 0, par = numeric(),
@@ -304,12 +304,12 @@ arima <- function(x, order = c(0, 0, 0),
             }
             ## do it this way to ensure hessian was computed inside
             ## stationarity region
-            A <- .Call(R_ARIMA_Gradtrans, as.double(coef), arma)
+            A <- .Call(C_ARIMA_Gradtrans, as.double(coef), arma)
             A <- A[mask, mask]
             var <- t(A) %*% solve(res$hessian * n.used) %*% A
-            coef <- .Call(R_ARIMA_undoPars, coef, arma)
+            coef <- .Call(C_ARIMA_undoPars, coef, arma)
         } else var <- if(no.optim) numeric() else solve(res$hessian * n.used)
-        trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
+        trarma <- .Call(C_ARIMA_transPars, coef, arma, FALSE)
         mod <- makeARIMA(trarma[[1L]], trarma[[2L]], Delta, kappa)
         val <- if(ncxreg > 0L)
             arimaSS(x - xreg %*% coef[narma + (1L:ncxreg)], mod)
@@ -451,7 +451,7 @@ makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
     h <- 0.
     a <- rep(0., rd)
     Pn <- P <- matrix(0., rd, rd)
-    if(r > 1L) Pn[1L:r, 1L:r] <- .Call(R_getQ0, phi, theta)
+    if(r > 1L) Pn[1L:r, 1L:r] <- .Call(C_getQ0, phi, theta)
     else Pn[1L, 1L] <- if(p > 0) 1/(1 - phi^2) else 1
     if(d > 0L) Pn[cbind(r+1L:d, r+1L:d)] <- kappa
     return(list(phi=phi, theta=theta, Delta=Delta, Z=Z, a=a, P=P, T=T, V=V,

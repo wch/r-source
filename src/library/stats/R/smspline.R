@@ -142,7 +142,7 @@ smooth.spline <-
     ## This uses DUP = FALSE which is dangerous since it does change
     ## its argument w.  We don't assume that as.double will
     ## always duplicate, although it does in R 2.3.1.
-    fit <- .Fortran(R_qsbart,		# code in ../src/qsbart.f
+    fit <- .Fortran(C_qsbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
 		    x = as.double(xbar),
@@ -288,7 +288,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
     n <- sum(interp) # number of xs in [0,1]
     y <- xs
     if(any(interp))
-	y[interp] <- .Fortran(R_bvalus,
+	y[interp] <- .Fortran(C_bvalus,
 			      n	  = as.integer(n),
 			      knot= as.double(object$knot),
 			      coef= as.double(object$coef),
@@ -345,8 +345,8 @@ supsmu <-
         stop("no finite observations")
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
-    .Fortran(R_setsmu)
-    smo <- .Fortran(R_supsmu,
+    .Fortran(C_setsmu)
+    smo <- .Fortran(C_supsmu,
 		    as.integer(leno),
 		    as.double(xo),
 		    as.double(y[ord]),

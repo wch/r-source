@@ -22,7 +22,7 @@ function(x, centers, iter.max = 10, nstart = 1,
         Z <-
             switch(nmeth,
                    { # 1
-                       Z <- .Fortran(R_kmns, as.double(x), as.integer(m),
+                       Z <- .Fortran(C_kmns, as.double(x), as.integer(m),
                                 as.integer(ncol(x)),
                                 centers = as.double(centers),
                                 as.integer(k), c1 = integer(m), integer(m),
@@ -41,7 +41,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                        Z
                    },
                    { # 2
-                       Z <- .C(R_kmeans_Lloyd, as.double(x), as.integer(m),
+                       Z <- .C(C_kmeans_Lloyd, as.double(x), as.integer(m),
                                as.integer(ncol(x)),
                                centers = as.double(centers), as.integer(k),
                                c1 = integer(m), iter = as.integer(iter.max),
@@ -54,7 +54,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                        Z
                    },
                    { # 3
-                       Z <- .C(R_kmeans_MacQueen, as.double(x), as.integer(m),
+                       Z <- .C(C_kmeans_MacQueen, as.double(x), as.integer(m),
                                as.integer(ncol(x)),
                                centers = as.double(centers), as.integer(k),
                                c1 = integer(m), iter = as.integer(iter.max),

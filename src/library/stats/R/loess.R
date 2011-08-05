@@ -129,7 +129,7 @@ simpleLoess <-
 	    statistics <- if(trace.hat == "exact") "1.approx"
             else "2.approx" # trace.hat == "approximate"
 	surf.stat <- paste(surface, statistics, sep="/")
-	z <- .C(R_loess_raw, # ../src/loessc.c
+	z <- .C(C_loess_raw, # ../src/loessc.c
 		as.double(y),
 		as.double(x),
 		as.double(weights),
@@ -161,7 +161,7 @@ simpleLoess <-
 	}
 	fitted.residuals <- y - z$fitted.values
 	if(j < iterations)
-	    robust <- .Fortran(R_lowesw,
+	    robust <- .Fortran(C_lowesw,
 			       as.double(fitted.residuals),
 			       as.integer(N),
 			       robust = double(N),
@@ -176,7 +176,7 @@ simpleLoess <-
 		       vert=z$vert, vval=z$vval[1L:enough])
     }
     if(iterations > 1) {
-	pseudovalues <- .Fortran(R_lowesp,
+	pseudovalues <- .Fortran(C_lowesp,
 				 as.integer(N),
 				 as.double(y),
 				 as.double(z$fitted.values),
@@ -184,7 +184,7 @@ simpleLoess <-
 				 as.double(robust),
 				 integer(N),
 				 pseudovalues = double(N))$pseudovalues
-	zz <- .C(R_loess_raw,
+	zz <- .C(C_loess_raw,
 		as.double(pseudovalues),
 		as.double(x),
 		as.double(weights),
@@ -282,7 +282,7 @@ predLoess <-
         M <- nrow(x.evaluate)
 	if(se) {
             se.fit <- fit
-	    z <- .C(R_loess_dfitse,
+	    z <- .C(C_loess_dfitse,
 		    as.double(y),
 		    as.double(x),
 		    as.double(x.evaluate),
@@ -303,7 +303,7 @@ predLoess <-
 	    ses <- (matrix(z$L^2, M, N)/rep(weights, rep(M,N))) %*% rep(1,N)
 	    se.fit[!nas] <- drop(s * sqrt(ses))
 	} else {
-	    fit[!nas] <- .C(R_loess_dfit,
+	    fit[!nas] <- .C(C_loess_dfit,
                             as.double(y),
                             as.double(x),
                             as.double(x.evaluate),
@@ -330,7 +330,7 @@ predLoess <-
 	M1 <- sum(inside)
 	fit <- rep(NA_real_, M)
 	if(any(inside))
-	    fit[inside] <- .C(R_loess_ifit,
+	    fit[inside] <- .C(C_loess_ifit,
 			      as.integer(kd$parameter),
 			      as.integer(kd$a), as.double(kd$xi),
 			      as.double(kd$vert), as.double(kd$vval),
@@ -340,7 +340,7 @@ predLoess <-
 	if(se) {
 	    se.fit <- rep(NA_real_, M)
 	    if(any(inside)) {
-		L <- .C(R_loess_ise,
+		L <- .C(C_loess_ise,
 			as.double(y),
 			as.double(x),
 			as.double(x.evaluate[inside, ]),
@@ -463,7 +463,7 @@ loess.smooth <-
 		       normalize=FALSE, "none", "interpolate",
 		       control$cell, iterations, control$trace.hat)
     kd <- fit$kd
-    z <- .C(R_loess_ifit,
+    z <- .C(C_loess_ifit,
 	    as.integer(kd$parameter),
 	    as.integer(kd$a), as.double(kd$xi),
 	    as.double(kd$vert), as.double(kd$vval),

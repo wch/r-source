@@ -74,11 +74,11 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     msmod <- ml*(p+q+2*n)+q+7+ml+1	# for asr
     nsp <- n*(q+15)+q+3*p
     ndp <- p*(p+1)/2+6*p
-    .Fortran(R_setppr,
+    .Fortran(C_setppr,
 	     as.double(span), as.double(bass), as.integer(optlevel),
 	     as.integer(ism), as.double(df), as.double(gcvpen)
 	     )
-    Z <- .Fortran(R_smart,
+    Z <- .Fortran(C_smart,
 		  as.integer(ml), as.integer(mu),
 		  as.integer(p), as.integer(q), as.integer(n),
 		  as.double(weights),
@@ -97,7 +97,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		    dimnames=list(xnames, tnames))
     beta <- matrix(smod[q+6L+p*ml + 1L:(q*mu)], q, mu,
 		   dimnames=list(ynames, tnames))
-    fitted <- drop(matrix(.Fortran(R_pppred,
+    fitted <- drop(matrix(.Fortran(C_pppred,
 				   as.integer(nrow(x)),
 				   as.double(x),
 				   as.double(smod),
@@ -206,7 +206,7 @@ predict.ppr <- function(object, newdata, ...)
     if(ncol(x) != object$p) stop("wrong number of columns in 'x'")
     res <- matrix(NA, length(keep), object$q,
                   dimnames = list(rn, object$ynames))
-    res[keep, ] <- matrix(.Fortran(R_pppred,
+    res[keep, ] <- matrix(.Fortran(C_pppred,
                                    as.integer(nrow(x)),
                                    as.double(x),
                                    as.double(object$smod),

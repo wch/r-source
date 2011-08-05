@@ -26,7 +26,7 @@
 numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1.0)
 {
     dir <- rep(dir, length.out = length(theta))
-    val <- .Call(R_numeric_deriv, expr, theta, rho, dir)
+    val <- .Call(C_numeric_deriv, expr, theta, rho, dir)
     valDim <- dim(val)
     if (!is.null(valDim)) {
         if (valDim[length(valDim)] == 1)
@@ -389,7 +389,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     p <- length(par <- as.double(unlist(start)))
     iv <- integer(4L*p + 82L)
     v <- double(105L + (p * (2L * p + 20L)))
-    .Call(R_port_ivset, 1, iv, v)
+    .Call(C_port_ivset, 1, iv, v)
     if (length(control)) {
 	if (!is.list(control) || is.null(nms <- names(control)))
 	    stop("control argument must be a named list")
@@ -425,7 +425,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     }
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
-        .Call(R_port_nlsb, m,
+        .Call(C_port_nlsb, m,
               d = rep(as.double(scale), length.out = length(par)),
               df = m$gradient(), iv, v, low, upp)
     } else iv[1L] <- 6
@@ -594,7 +594,7 @@ nls <-
     if (algorithm != "port") {
 	if (!missing(lower) || !missing(upper))
 	    warning('Upper or lower bounds ignored unless algorithm = "port"')
-        convInfo <- .Call(R_nls_iter, m, ctrl, trace)
+        convInfo <- .Call(C_nls_iter, m, ctrl, trace)
 	nls.out <- list(m = m, convInfo = convInfo,
 			data = substitute(data), call = match.call())
     }

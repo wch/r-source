@@ -76,7 +76,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    stop("'approx' requires n >= 1")
 	xout <- seq.int(x[1L], x[nx], length.out = n)
     }
-    y <- .C(R_R_approx, as.double(x), as.double(y), as.integer(nx),
+    y <- .C(C_R_approx, as.double(x), as.double(y), as.integer(nx),
 	    xout = as.double(xout), as.integer(length(xout)),
 	    as.integer(method), as.double(yleft), as.double(yright),
 	    as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
@@ -110,12 +110,12 @@ approxfun <- function(x, y = NULL, method = "linear",
     rm(rule, ties, lenR)
 
     ## 1. Test input consistency once
-    .C(R_R_approxtest,as.double(x), as.double(y), as.integer(n),
+    .C(C_R_approxtest,as.double(x), as.double(y), as.integer(n),
         as.integer(method), as.double(f), NAOK = TRUE,
         PACKAGE = "stats")
 
     ## 2. Create and return function that does not test input validity...
-    function(v) .C(R_R_approxfun, as.double(x), as.double(y), as.integer(n),
+    function(v) .C(C_R_approxfun, as.double(x), as.double(y), as.integer(n),
         xout = as.double(v), as.integer(length(v)), as.integer(method),
         as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE,
         PACKAGE = "stats")$xout

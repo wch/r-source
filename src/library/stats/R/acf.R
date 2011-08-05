@@ -42,7 +42,7 @@ acf <-
 	x <- sweep(x, 2, colMeans(x, na.rm = TRUE), check.margin=FALSE)
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(.C(R_acf,
+    acf <- array(.C(C_acf,
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
                     acf=double((lag.max+1L) * nser * nser), NAOK = TRUE
@@ -86,7 +86,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         x <- scale(x, TRUE, FALSE)
         acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
                         na.action = na.action)$acf)
-        pacf <- array(.C(R_uni_pacf,
+        pacf <- array(.C(C_uni_pacf,
                          as.double(acf),
                          pacf = double(lag.max),
                          as.integer(lag.max))$pacf,

@@ -42,7 +42,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (order.max < 1)
         stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "cov", plot = FALSE, lag.max = order.max)$acf
-    z <- .C(R_multi_yw,
+    z <- .C(C_multi_yw,
             aperm(xacf, c(3, 2, 1)),
             as.integer(n.used),
             as.integer(order.max),

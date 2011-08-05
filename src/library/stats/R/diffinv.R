@@ -32,7 +32,7 @@ diffinv.vector <- function (x, lag = 1, differences = 1, xi, ...)
         xi <- as.double(xi)
         n <- length(x)
         y <- c(xi[1L:lag], double(n))
-        .C(R_R_intgrt_vec,
+        .C(C_R_intgrt_vec,
            x, y=y, as.integer(lag), n, PACKAGE="stats")$y
     }
     else

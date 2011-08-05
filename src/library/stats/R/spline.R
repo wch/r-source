@@ -36,7 +36,7 @@ spline <-
         warning("spline: first and last y values differ - using y[1] for both")
         y[nx] <- y[1L]
     }
-    z <- .C(R_spline_coef,
+    z <- .C(C_spline_coef,
 	    method=as.integer(method),
 	    n=as.integer(nx),
 	    x=x,
@@ -51,7 +51,7 @@ spline <-
     else n <- length(xout)
     if (n <= 0)
         stop("'spline' requires n >= 1")
-    .C(R_spline_eval,
+    .C(C_spline_eval,
        z$method,
        nu=as.integer(n),
        x =as.double(xout),

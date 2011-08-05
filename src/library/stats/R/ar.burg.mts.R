@@ -40,7 +40,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         floor(10 * log10(n.used))
     else floor(order.max)
     xaic <- numeric(order.max + 1L)
-    z <- .C(R_multi_burg,
+    z <- .C(C_multi_burg,
             as.integer(n.used),
             resid = as.double(x),
             as.integer(order.max),

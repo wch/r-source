@@ -129,7 +129,7 @@ ar.yw.default <-
     } else {
         ## univariate case
         r <- as.double(drop(xacf))
-        z <- .Fortran(R_eureka,
+        z <- .Fortran(C_eureka,
                       as.integer(order.max),
                       r, r,
                       coefs = double(order.max^2),
@@ -240,7 +240,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit = TRUE, ...)
             pred <- x[n + seq_len(n.ahead)]
             if(se.fit) {
                 npsi <- n.ahead - 1L
-                psi <- .C(R_artoma,
+                psi <- .C(C_artoma,
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1L),
                         as.integer(npsi+object$order+1L))$psi[seq_len(npsi)]

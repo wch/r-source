@@ -44,7 +44,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     ## NOTE: We make no use of the arguments locmar, nmar, marg, nu, and
     ## u.  It might make sense to eliminate them and simplify the underlying C
     ## code accordingly.
-    z <- .C(R_loglin,
+    z <- .C(C_loglin,
             as.integer(nvar),
             as.integer(dtab),
             as.integer(ncon),

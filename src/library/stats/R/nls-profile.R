@@ -104,7 +104,7 @@ profiler.nls <- function(fitted, ...)
                  fittedModel$setPars(startPars[vary])
                  ## change fittedModel into profiledModel
 		 if(algorithm != "port") {
-		     if(sum(vary)) .Call(R_nls_iter, fittedModel, ctrl, trace)
+		     if(sum(vary)) .Call(C_nls_iter, fittedModel, ctrl, trace)
 		     dev <- fittedModel$deviance()
 		 } else {
 		     iv <- nls_port_fit(fittedModel, startPars[vary],
