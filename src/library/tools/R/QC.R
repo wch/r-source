@@ -4848,10 +4848,9 @@ function(dir)
 
     ## For now, information about the CRAN package archive is provided
     ## in CRAN's src/contrib/Archive.rds.
-    packages_in_CRAN_archive <-
-        names(readRDS(gzcon(url(sprintf("%s/src/contrib/Archive.rds",
-                                        CRAN),
-                                "rb"))))
+    con <- gzcon(url(sprintf("%s/src/contrib/Archive.rds", CRAN), "rb"))
+    packages_in_CRAN_archive <- names(readRDS(con))
+    close(con)
 
     ## Package names must be unique within standard repositories when
     ## ignoring case.
