@@ -16,8 +16,8 @@
 
 ### --- multicore --- low-level functions ---
 
-childrenDescriptors, closeAll, closeFS, closeStderr, closeStdout,
-isChild, masterDescriptor, processID, rmChild are not exported.
+## childrenDescriptors, closeAll, closeFS, closeStderr, closeStdout,
+## isChild, masterDescriptor, processID, rmChild are not exported.
 
 mcfork <- function() {
     r <- .Call(C_mc_fork, PACKAGE = "parallel")

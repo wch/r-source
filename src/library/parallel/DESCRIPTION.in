@@ -4,6 +4,8 @@ Priority: base
 Title: Support for Parallel computation in R
 Author: R Core Team
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Support for parallel computation on multicore computer systems.
+Description: Support for parallel computation, including by forking
+   (taken from package multicore), by sockets (taken from package snow)
+   and random-number generation.
 License: Part of R @VERSION@
 Enhances: snow
