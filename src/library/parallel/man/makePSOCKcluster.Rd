@@ -6,6 +6,7 @@
 \name{makePSOCKcluster}
 \alias{makePSOCKcluster}
 \alias{makeCluster}
+\alias{stopCluster}
 \title{
   Create a Parallel Socket Cluster
 }
@@ -16,6 +17,8 @@
 \usage{
 makeCluster(names, ...)
 makePSOCKcluster(names, ...)
+
+stopCluster(cl)
 }
 \arguments{
   \item{names}{Either a character vector of host names on whch to run
@@ -23,6 +26,7 @@ makePSOCKcluster(names, ...)
     that number of copies is run on \samp{localhost}).}
   \item{\dots}{Options to be passed to the function spawning the workers.
     See \sQuote{details}.}
+  \item{cl}{an object of class \code{"cluster"}.
 }
 \details{
   This function is very similar to \code{makeSOCKcluster} in package

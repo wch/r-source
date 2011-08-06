@@ -1,6 +1,6 @@
-% File src/library/parallel/man/snowMisc.Rd
+% File src/library/parallel/man/clusterApply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2011 R Core Development Team
+% Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{snowMisc}
@@ -18,11 +18,11 @@
 \alias{parRapply}
 \alias{parSapply}
 \alias{parlapply}
-\alias{stopCluster}
 
-\title{Functions Borrowed from Package SNOW}
+\title{Apply Operations using Clusters}
 \description{
-  Functions borrowed \emph{pro tem} from package \pkg{snow}.
+  These functions provide several ways to parallelize computations using
+  a cluster.
 }
 \usage{
 clusterSplit(cl, seq)
@@ -30,25 +30,24 @@ clusterCall(cl, fun, ...)
 clusterApply(cl, x, fun, ...)
 clusterApplyLB(cl, x, fun, ...)
 clusterEvalQ(cl, expr)
-clusterExport(cl, list)
+clusterExport(cl, varlist)
 clusterMap(cl, fun, ..., MoreArgs = NULL, RECYCLE = TRUE)
 
 parLapply(cl, X, fun, ...)
 parSapply(cl, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) 
 parApply(cl, X, MARGIN, FUN, ...)
-parRapply(cl, x, fun, ...)
-parCapply(cl, x, fun, ...)
-
-stopCluster(cl)
+parRapply(cl, x, FUN, ...)
+parCapply(cl, x, FUN, ...)
 }
 \arguments{
-  \item{cl}{cluster object.}
+  \item{cl}{a cluster object, created by this package or by pacakge \pkg{snow}.}
   \item{fun, FUN}{function or character string naming a function.}
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
-  \item{list}{character vector of names of objects to export.}
+  \item{varlist}{character vector of names of objects to export.}
   \item{x}{a matrix or array.}
-  \item{...}{additional arguments to pass to standard function.}
+  \item{...}{additional arguments to pass to \code{fun} or \code{FUN}:
+    beware of partial matching to earlier arguments.}
   \item{MoreArgs}{additional arguments for \code{fun}.}
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
   \item{X}{A vector (atomic or list).}
@@ -57,18 +56,75 @@ stopCluster(cl)
   \item{USE.NAMES}{logical; see \code{\link{sapply}}.}
 }
 \details{
-  These functions are identical to those in package \pkg{snow}: they are
-  copied here to avoid namespace scoping issues.
+  \code{clusterCall} calls a function \code{fun} with identical
+  arguments \code{...} on each cluster node.
 
-  There is one small exception: \code{parLapply} has argument \code{X}
-  not \code{x} for consistency with \code{\link{apply}}.
+  \code{clusterEvalQ} evaluates a literal expression on each cluster
+  node.  It a parallel version of \code{\link{evalq}}, and is a convenience
+  function defined in terms of \code{clusterCall}.
+
+  \code{clusterApply} calls \code{fun} on the first cluster node with
+  arguments \code{seq[[1]]} and \code{...}, on the second node with
+  \code{seq[[2]]} and \code{...}, and so on, recycling nodes as needed.
+
+  \code{clusterApplyLB} is a load balancing version of \code{clusterApply}.
+  if the length \code{p} of \code{seq} is greater than the number of
+  cluster nodes \code{n}, then the first \code{n} jobs are placed in
+  order on the \code{n} nodes.  When the first job completes, the next
+  job is placed on the available node; this continues until all jobs
+  are complete.  Using \code{clusterApplyLB} can result in better
+  cluster utilization than using \code{clusterApply}.  However,
+  increased communication can reduce performance.  Furthermore, the
+  node that executes a particular job is nondeterministic, which can
+  complicate ensuring reproducibility in simulations.
+
+  \code{clusterMap} is a multi-argument version of \code{clusterApply},
+  analogous to \code{mapply}.  If \code{RECYCLE} is true shorter
+  arguments are recycled; otherwise, the result length is the length of
+  the shortest argument.  Cluster nodes are recycled if the length of
+  the result is greater than the number of nodes.
   
-  \code{cl} should be a cluster created by this package or by package
-  \pkg{snow}.
+  \code{clusterExport} assigns the global values on the master of the
+  variables named in \code{list} to variables of the same names in the
+  global environments of each node.
+
+  \code{clusterSplit} splits \code{seq} into one consecutive piece for
+  each cluster and returns the result as a list with length equal to the
+  number of nodes.  Currently the pieces are chosen to be close
+  to equal in length.
+  
+  \code{parLapply}, \code{parSapply}, and \code{parApply} are parallel
+  versions of \code{lapply}, \code{sapply}, and \code{apply}.
+
+  \code{parRapply} and \code{parCapply} are parallel row and column
+  \code{apply} functions for a matrix \code{x}; they may be slightly
+  more efficient than \code{parApply}.
+  
+  An error is signalled on the master if any of the workers produces an
+  error.
 }
-\seealso{
-  The snow help pages \link[snow]{snow-cluster} and
-  \link[snow]{snow-parallel}.
+\value{
+  For \code{clusterCall}, code{clusterEvalQ} and \code{clusterSplit}, a
+  list with one element per node.
+
+  For \code{clusterApply} and \code{clusterApplyLB}, a list the same
+  length as \code{seq}.
+
+  \code{clusterMap} follows \code{\link{mapply}}.
+  
+  \code{clusterExport} returns nothing.
+
+  \code{parLapply} returns a list the length of \code{X}.
+
+  \code{parSapply} and \code{parApply} follow \code{\link{sapply}} and
+  \code{\link{apply}} respectively.
+}
+\note{
+  These functions are almost identical to those in package \pkg{snow}:
+  they are copied here to avoid namespace scoping issues.
+
+  One exception: \code{parLapply} has argument \code{X}
+  not \code{x} for consistency with \code{\link{lapply}}.
 }
 \examples{\donttest{ ## access to ports might be denied
 cl <- makeCluster(getOption("mc.cores", 2))
@@ -77,6 +133,8 @@ clusterApply(cl, 1:2, get("+"), 3)
 xx <- 1
 clusterExport(cl, "xx")
 clusterCall(cl, function(y) xx + y, 2)
+
+##FIXME: need example for clusterMap
 
 parSapply(cl, 1:20, get("+"), 3)
 stopCluster(cl)

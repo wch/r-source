@@ -73,11 +73,11 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 x <- pvec(1:1000, sqrt)
 stopifnot(all(x == sqrt(1:1000)))
 
-# A use is to convert date strings to unix time in large datasets
-# as that is an awfully slow operation
+# One use is to convert date strings to unix time in large datasets
+# as that is a relatively slow operation.
 # So let's get some random dates first
 # (A small test only with 2 cores: set options("mc.cores")
-# for a larger-scale test)
+# and increase N for a larger-scale test.)
 N <- 1e4
 dates <- sprintf('\%04d-\%02d-\%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
