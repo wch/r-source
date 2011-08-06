@@ -11,7 +11,7 @@
 \alias{sendChildStdin}
 \alias{sendMaster}
 \alias{mckill}
-\title{Functions for Management of Forked Processes}
+\title{Low-level Functions for Management of Forked Processes}
 \description{
   These are low-level support functions for the forking approach.
 
@@ -29,7 +29,7 @@ mckill(process, signal = 2L)
 }
 \arguments{
   \item{select}{if omitted, all active children are returned, otherwise
-    \code{select} should be a list of processes and only those form the
+    \code{select} should be a list of processes and only those from the
     list that are active will be returned.}
   \item{child}{child process (object of the class \code{"childProcess"}) or a
     process ID (pid).  See also \sQuote{Details}.}
@@ -60,7 +60,7 @@ mckill(process, signal = 2L)
 
   \code{selectChildren} checks children for available data.
 
-  \code{readChildren} checks children for available data and reads
+  \code{readChildren} checks all children for available data and reads
   from the first child that has available data.
 
   \code{sendChildStdin} sends a string (or data) to one or more child's
@@ -71,7 +71,8 @@ mckill(process, signal = 2L)
   
   \code{sendMaster} sends data from the child to the master process.
   
-  \code{mckill} sends a signal to a child process.
+  \code{mckill} sends a signal to a child process: it is equivalent to
+  \code{\link{pskill}} in package \pkg{tools}.
 }
 \value{
   \code{children} returns a (possibly empty) list of objects of class
@@ -86,7 +87,7 @@ mckill(process, signal = 2L)
   \code{selectChildren} returns \code{TRUE} is the timeout was reached,
   \code{FALSE} if an error occurred (e.g. if the master process was
   interrupted) or an integer vector of process IDs with children that
-  have data available.
+  have data available, or \code{NULL} if there are no children.
 
   \code{sendChildStdin} returns a vector of \code{TRUE} values (one for
   each member of \code{child}) or throws an error.

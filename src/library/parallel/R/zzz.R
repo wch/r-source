@@ -23,3 +23,7 @@
     if(is.null(cores) && !is.na(nc <- as.integer(Sys.getenv("MC_CORES"))))
         options("mc.cores" = nc)
 }
+
+.onUnload <-
+function(libpath)
+    library.dynam.unload("parallel", libpath)

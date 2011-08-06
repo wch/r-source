@@ -16,6 +16,9 @@
 
 ### --- multicore --- low-level functions ---
 
+childrenDescriptors, closeAll, closeFS, closeStderr, closeStdout,
+isChild, masterDescriptor, processID, rmChild are not exported.
+
 mcfork <- function() {
     r <- .Call(C_mc_fork, PACKAGE = "parallel")
     structure(list(pid = r[1L], fd = r[2:3]),
@@ -23,9 +26,11 @@ mcfork <- function() {
                         else "masterProcess", "process"))
 }
 
+## not used
 readChildren <- function(timeout = 0)
     .Call(C_mc_read_children, as.double(timeout), PACKAGE="parallel")
 
+## used by mccollect, mclapply
 readChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
@@ -33,6 +38,7 @@ readChild <- function(child)
     .Call(C_mc_read_child, as.integer(child), PACKAGE = "parallel")
 }
 
+## used by mccollect, mclapply
 selectChildren <- function(children = NULL, timeout = 0)
 {
     if (!length(children)) children <- integer()
@@ -52,13 +58,16 @@ rmChild <- function(child)
     .Call(C_mc_rm_child, as.integer(child), PACKAGE = "parallel")
 }
 
+## used in pvec, mclapply
 mckill <- function(process, signal = 2L)
 {
     process <- processID(process)
+    ## or simply parallel::pskill(process, signal)
     unlist(lapply(process, function(p)
                   .Call(C_mc_kill, as.integer(p), as.integer(signal))))
 }
 
+## used by mcparallel, mclapply
 sendMaster <- function(what)
 {
     if (!is.raw(what)) what <- serialize(what, NULL, FALSE)
@@ -71,6 +80,7 @@ processID <- function(process) {
     else stop("'process' must be of the class \"`process\"")
 }
 
+# unused
 sendChildStdin <- function(child, what)
 {
     if (inherits(child, "process") || is.list(child)) child <- processID(child)
@@ -84,12 +94,14 @@ sendChildStdin <- function(child, what)
                                   PACKAGE = "parallel"))))
 }
 
+## used by mcparallel, mclapply
 mcexit <- function(exit.code = 0L, send = NULL)
 {
     if (!is.null(send)) try(sendMaster(send), silent = TRUE)
     .Call(C_mc_exit, as.integer(exit.code), PACKAGE = "parallel")
 }
 
+## used by mccollect, mclapply
 children <- function(select)
 {
     p <- .Call(C_mc_children, PACKAGE = "parallel")

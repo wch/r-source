@@ -41,18 +41,6 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
     \code{collect} waits for results.  The function will be called with one
     parameter which is the list of results received so far.}
 }
-\value{
-  \code{mcparallel} returns an object of the class \code{"parallelJob"}
-  which inherits from \code{"childProcess"} (see the \sQuote{Value}
-  section of the help for \code{\link{mcfork}}).  If argument
-  \code{name} was supplied this will have an additional component
-  \code{name}.
-
-  \code{mccollect} returns any results that are available in a list.  The
-  results will have the same order as the specified jobs.  If there are
-  multiple jobs and a job has a name it will be used to name the
-  result, otherwise its process ID will be used.
-}
 \details{
   \code{mcparallel} evaluates the \code{expr} expression in parallel to
   the current \R process.  Everything is shared read-only (or in fact
@@ -77,6 +65,19 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   terminating job that has sent its results already after which the
   job is no longer available.
 }
+\value{
+  \code{mcparallel} returns an object of the class \code{"parallelJob"}
+  which inherits from \code{"childProcess"} (see the \sQuote{Value}
+  section of the help for \code{\link{mcfork}}).  If argument
+  \code{name} was supplied this will have an additional component
+  \code{name}.
+
+  \code{mccollect} returns any results that are available in a list.  The
+  results will have the same order as the specified jobs.  If there are
+  multiple jobs and a job has a name it will be used to name the
+  result, otherwise its process ID will be used.  If none of the
+  specified children are still running, it returns \code{NULL}.
+}
 \section{Random numbers}{
   If \code{mc.set.seed} is false, the child process has the same random
   number generator (RNG) state as the current \R session.  If the RNG
@@ -98,18 +99,18 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   tasks are given to the first, second, \ldots{} forked process.
 }
 \seealso{
-  \code{\link{sendMaster}}
+  \code{\link{sendMaster}}, \code{\link{pvec}}, \code{\link{mclapply}}
 }
 \examples{
 p <- mcparallel(1:10)
 q <- mcparallel(1:20)
-# wait for jobs to finish and collect all results
+# wait for both jobs to finish and collect all results
 res <- mccollect(list(p, q))
 
 p <- mcparallel(1:10)
 mccollect(p, wait=FALSE, 10) # will retrieve the result (since it's fast)
-mccollect(p, wait=FALSE) # will signal the job as terminating
-mccollect(p, wait=FALSE) # there is no such job
+mccollect(p, wait=FALSE)     # will signal the job as terminating
+mccollect(p, wait=FALSE)     # there is no such job
 
 # a naive mcparallelized lapply can be created using parallel alone:
 jobs <- lapply(1:10, function(x) mcparallel(rnorm(x), name = x))

@@ -97,14 +97,15 @@ static int find_quartz_symbols = 1;
 void (*QuartzCocoa_InhibitEventLoop)(int);
 typedef void (*QuartzCocoa_InhibitEventLoop_t)(int);
 
-/* unfortunately Rdynload.h forgets to declare it so the API is broken - we need to fix it */
+/* unfortunately Rdynload.h forgets to declare it so the API is broken
+   - we need to fix it */
 struct Rf_RegisteredNativeSymbol {
   NativeSymbolType type;
   void *fn, *dll;
 };
 
 /* check whether Quartz is loaded (if not, returns -1) and if so
-  returns 1 is QuartzCocoa_InhibitEventLoop has been found 0
+  returns 1 is QuartzCocoa_InhibitEventLoop has been found, 0
   otherwise */
 static int getQuartzSymbols() 
 {
@@ -177,6 +178,9 @@ SEXP mc_fork()
 	close(pipefd[0]); /* close read end */
 	master_fd = res_i[1] = pipefd[1];
 	is_master = 0;
+#if HAVE_AQUA
+	ptr_R_ProcessEvents = NULL; /* disable ProcessEvent since we can't call CF from now on */
+#endif
 	/* re-map stdin */
 	dup2(sipfd[0], STDIN_FILENO);
 	close(sipfd[0]);
@@ -184,6 +188,11 @@ SEXP mc_fork()
 	child_exit_status = -1;
 	child_can_exit = 0;
 	signal(SIGUSR1, child_sig_handler);
+#if HAVE_AQUA
+	/* Quartz runs the event loop so we need to stop it if we can */
+	if (QuartzCocoa_InhibitEventLoop)
+	    QuartzCocoa_InhibitEventLoop(1);
+#endif
 #ifdef MC_DEBUG
 	Dprintf("child process %d started\n", getpid());
 #endif

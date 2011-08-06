@@ -54,6 +54,12 @@ mcexit(exit.code = 0L, send = NULL)
   the same GUI which will likely cause chaos (and possibly
   crashes).  Child processes should never use on-screen graphics
   devices.
+
+  \code{mcexit} is to be run in the child process.  It sends \code{send}
+  to the master (unless \code{NULL}) and then shuts down the child
+  process.  The child can also be shut down by sending it the signal
+  \code{SIGUSR1}, as is done by the unexported function
+  \code{parallle:::rmChild}.
 }
 \value{
   \code{mcfork} returns an object of the class \code{"childProcess"} to
@@ -69,7 +75,7 @@ mcexit(exit.code = 0L, send = NULL)
   This is a very low-level API for expert use only. 
 }
 \seealso{
-  \code{\link{parallel}}, \code{\link{sendMaster}}
+  \code{\link{mcparallel}}, \code{\link{sendMaster}}
 }
 % The results here involve a random PID.
 \examples{\donttest{
