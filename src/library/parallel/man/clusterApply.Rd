@@ -3,7 +3,7 @@
 % Copyright 2003-11 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{snowMisc}
+\name{clusterApply}
 
 \alias{clusterApply}
 \alias{clusterApplyLB}

@@ -26,7 +26,7 @@ stopCluster(cl)
     that number of copies is run on \samp{localhost}).}
   \item{\dots}{Options to be passed to the function spawning the workers.
     See \sQuote{details}.}
-  \item{cl}{an object of class \code{"cluster"}.
+  \item{cl}{an object of class \code{"cluster"}.}
 }
 \details{
   This function is very similar to \code{makeSOCKcluster} in package

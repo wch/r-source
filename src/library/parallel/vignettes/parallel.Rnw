@@ -15,7 +15,7 @@ urlcolor=Blue,%
 pdfstartview={XYZ null null 1},%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
-pdfauthor={R-core}%
+pdfauthor={R Core}%
 }
 
 %\VignetteIndexEntry{Package 'parallel'}
@@ -68,6 +68,10 @@ computational model is
 \end{enumerate}
 Amongst the initializations which may be needed are to load packages
 and initialize the random-number stream.
+
+There are implementations of this model in the functions
+\code{parLapply} and \code{mclapply} as drop-in replacements for
+\code{lapply}.
 
 A slightly different model is to split the task into $M_1 > M$ chunks,
 send the first $M$ chunks to the workers, then repeatedly wait for any
