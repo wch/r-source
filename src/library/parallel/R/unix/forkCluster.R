@@ -1,0 +1,63 @@
+#  File src/library/parallel/R/forkCluster.R
+#  Part of the R package, http://www.R-project.org
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  http://www.r-project.org/Licenses/
+
+makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
+{
+    cl <- vector("list", length(nnodes))
+    for (i in seq_along(cl))
+        cl[[i]] <- newForkNode(..., options = options, rank = i)
+    class(cl) <- c("SOCKcluster", "cluster")
+    cl
+}
+
+
+newForkNode <- function(..., options = defaultClusterOptions, rank)
+{
+    options <- addClusterOptions(options, list(...))
+    outfile <- getClusterOption("outfile", options)
+    port <- getClusterOption("port", options)
+    timeout <- getClusterOption("timeout", options)
+
+    f <- mcfork()
+    if (inherits(f, "masterProcess")) { # the slave
+        on.exit(mcexit(1L, structure("fatal error in wrapper code",
+                                  class = "try-error")))
+        # closeStdout()
+        master <- "localhost"
+        makeSOCKmaster <- function(master, port, timeout)
+        {
+            port <- as.integer(port)
+            ## maybe use `try' and sleep/retry if first time fails?
+            con <- socketConnection(master, port = port, blocking = TRUE,
+                                    open = "a+b", timeout = timeout)
+            structure(list(con = con), class = "SOCKnode")
+        }
+        sinkWorkerOutput(outfile)
+        msg <- sprintf("starting worker pid=%d on %s at %s\n",
+                       Sys.getpid(), paste(master, port, sep = ":"),
+                       format(Sys.time(), "%H:%M:%OS3"))
+        cat(msg)
+        ## allow this to quit when the loop is done.
+        tools::pskill(Sys.getpid(), tools::SIGUSR1)
+        slaveLoop(makeSOCKmaster(master, port, timeout))
+        mcexit(0L)
+    }
+
+    con <- socketConnection("localhost", port = port, server = TRUE,
+                            blocking = TRUE, open = "a+b", timeout = timeout)
+    structure(list(con = con, host = "localhost", rank = rank),
+              class = c("forknode", "SOCKnode"))
+}

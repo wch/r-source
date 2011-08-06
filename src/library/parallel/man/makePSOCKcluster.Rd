@@ -3,9 +3,10 @@
 % Copyright 2011 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{makePSOCKcluster}
-\alias{makePSOCKcluster}
+\name{makeCluster}
 \alias{makeCluster}
+\alias{makePSOCKcluster}
+\alias{makeForkCluster}
 \alias{stopCluster}
 \title{
   Create a Parallel Socket Cluster
@@ -15,24 +16,34 @@
   over sockets.
 }
 \usage{
-makeCluster(names, ...)
+makeCluster(spec, type, ...)
 makePSOCKcluster(names, ...)
+makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
 
 stopCluster(cl)
 }
 \arguments{
+  \item{spec}{A specification appropriate to the type of cluster.}
   \item{names}{Either a character vector of host names on whch to run
     the worker copies on \R, or a non-negative integer (in which case
     that number of copies is run on \samp{localhost}).}
+  \item{nnodes}{The number of nodes.}
+  \item{type}{One of the supported types: see \sQuote{Details}.}
   \item{\dots}{Options to be passed to the function spawning the workers.
     See \sQuote{details}.}
   \item{cl}{an object of class \code{"cluster"}.}
 }
 \details{
-  This function is very similar to \code{makeSOCKcluster} in package
-  \pkg{snow}).  It runs \command{Rscript} on the specified host(s) to set
-  up a worker process which listens on a socket for expressions to
-  evaluate, and returns the results (as serialized objects).
+  \code{makeCluster} creates a cluster of one of the supported types.
+  The default type, \code{"PSOCK"}, calls \code{makePSOCKcluster}.  Type
+  \code{"FORK"} (not available on Windows) calls
+  \code{makeForkCluster}.  Other types are passed to package \pkg{snow}.
+  
+  \code{makePSOCKcluster} is very similar to \code{makeSOCKcluster} in
+  package \pkg{snow}.  It runs \command{Rscript} on the specified
+  host(s) to set up a worker process which listens on a socket for
+  expressions to evaluate, and returns the results (as serialized
+  objects).
 
   The workers are most often running on the same host as the master,
   when no options need be set.
@@ -62,8 +73,12 @@ stopCluster(cl)
     \item{\code{user}}{The user name to be used when communicating with
       another host.}
     \item{\code{manual}}{Logical.  If true the workers will need to be
-    run manually.}
+      run manually.}
   }
+
+  Function \code{makeForkCluster} creates a socket cluster by forking
+  (and hence is not available on Windows).  It supports options
+  \code{port}, \code{timeout} and \code{outfile}.
   
   It is good practice to shutdown the workers by calling
   \code{\link{stopCluster}}: however the workers will terminate
@@ -77,6 +92,4 @@ stopCluster(cl)
 
 \seealso{
   \code{\link{stopCluster}}.
-
-  \code{makeCluster} in package \pkg{snow}.
 }

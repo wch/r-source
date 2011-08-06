@@ -8,6 +8,8 @@ export(mccollect, mclapply, mcparallel, pvec, mc.reset.stream)
 
 export(children, mcexit, mcfork, mckill, readChild, readChildren,
        selectChildren, sendChildStdin, sendMaster)
+
+export(makeForkCluster)
 }
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,

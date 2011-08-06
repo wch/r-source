@@ -91,7 +91,7 @@ recvOneData.SOCKcluster <- function(cl)
     list(node = n, value = unserialize(socklist[[n]]))
 }
 
-makeCluster <- makePSOCKcluster <- function(names, ...)
+makePSOCKcluster <- function(names, ...)
 {
     if (is.numeric(names)) names <- rep('localhost', names[1])
     options <- addClusterOptions(defaultClusterOptions, list(...))

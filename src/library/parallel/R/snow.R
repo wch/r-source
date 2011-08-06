@@ -81,7 +81,7 @@ initDefaultClusterOptions <- function(libname)
                     rlibs = Sys.getenv("R_LIBS"),
                     scriptdir = file.path(libname, "parallel"),
                     rprog = file.path(R.home("bin"), "R"),
-                    snowlib = .libPaths()[1], # unused in parallel
+                    snowlib = .libPaths()[1],
                     useRscript = TRUE)
     defaultClusterOptions <<- addClusterOptions(emptyenv(), options)
 }
@@ -105,6 +105,21 @@ setDefaultClusterOptions <- function(...) {
     for (i in seq_along(list))
         assign(names[i], list[[i]], envir = defaultClusterOptions)
 }
+
+
+makeCluster <-
+    function (spec, type = getClusterOption("type"), ...)
+{
+    switch(type,
+           PSOCK = makePSOCKcluster(spec, ...),
+           FORK = makeForkCluster(spec, ...),
+           SOCK = snow::makeSOCKcluster(spec, ...),
+           PVM = snow::makePVMcluster(spec, ...),
+           MPI = snow::makeMPIcluster(spec, ...),
+           NWS = snow::makeNWScluster(spec, ...),
+           stop("unknown cluster type"))
+}
+
 
 stopCluster <- function(cl) UseMethod("stopCluster")
 
