@@ -147,7 +147,7 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 
        This would be less of an issue, but would not entirely
        disappear as an issue. if the R interface separated the
-       `socket'/`bind'/`listen' part of setting up a server socked,
+       `socket'/`bind'/`listen' part of setting up a server socket,
        which is only needed once per server instance, from the
        `accept' part, which is needed for each connection.  LT */
     {
