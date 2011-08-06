@@ -18,7 +18,9 @@
 \usage{
 makeCluster(spec, type, ...)
 makePSOCKcluster(names, ...)
+#ifdef unix
 makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
+#endif
 
 stopCluster(cl)
 }
@@ -27,7 +29,9 @@ stopCluster(cl)
   \item{names}{Either a character vector of host names on whch to run
     the worker copies on \R, or a non-negative integer (in which case
     that number of copies is run on \samp{localhost}).}
+#ifdef unix
   \item{nnodes}{The number of nodes.}
+#endif
   \item{type}{One of the supported types: see \sQuote{Details}.}
   \item{\dots}{Options to be passed to the function spawning the workers.
     See \sQuote{details}.}

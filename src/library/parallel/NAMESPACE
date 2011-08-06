@@ -6,18 +6,17 @@ export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 if(tools:::.OStype() == "unix") {
 export(mccollect, mclapply, mcparallel, pvec, mc.reset.stream)
 
+## unclear if we should export these.
 export(children, mcexit, mcfork, mckill, readChild, readChildren,
        selectChildren, sendChildStdin, sendMaster)
-
-export(makeForkCluster)
 }
 
 export(clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
        clusterExport, clusterMap, clusterSplit, makeCluster,
        makePSOCKcluster, parApply, parCapply, parLapply, parRapply,
        parSapply, stopCluster)
+export(makeForkCluster)
 
-# export(setDefaultClusterOptions)
 
 S3method(print, SOCKcluster)
 S3method(print, SOCKnode)
