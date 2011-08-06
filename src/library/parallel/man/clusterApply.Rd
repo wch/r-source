@@ -40,17 +40,18 @@ parRapply(cl, x, FUN, ...)
 parCapply(cl, x, FUN, ...)
 }
 \arguments{
-  \item{cl}{a cluster object, created by this package or by pacakge \pkg{snow}.}
+  \item{cl}{a cluster object, created by this package or by package \pkg{snow}.}
   \item{fun, FUN}{function or character string naming a function.}
   \item{expr}{expression to evaluate.}
   \item{seq}{vector to split.}
   \item{varlist}{character vector of names of objects to export.}
-  \item{x}{a matrix or array.}
+  \item{x}{a vector for \code{clusterApply} and \code{clusterApplyLB}, a
+    matrix for \code{parRapply} and \code{parCapply}.}
   \item{...}{additional arguments to pass to \code{fun} or \code{FUN}:
     beware of partial matching to earlier arguments.}
   \item{MoreArgs}{additional arguments for \code{fun}.}
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
-  \item{X}{A vector (atomic or list).}
+  \item{X}{A vector (atomic or list), an array for \code{parApply}.}
   \item{MARGIN}{vector specifying the dimensions to use.}
   \item{simplify}{logical; see \code{\link{sapply}}.}
   \item{USE.NAMES}{logical; see \code{\link{sapply}}.}

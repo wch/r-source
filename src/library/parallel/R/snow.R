@@ -76,6 +76,7 @@ initDefaultClusterOptions <- function(libname)
                     user = Sys.info()["user"],
                     rshcmd = "ssh",
                     manual = FALSE,
+                    methods = TRUE,
                     ## rest are unused in parallel
                     rhome = R.home(),
                     rlibs = Sys.getenv("R_LIBS"),

@@ -31,12 +31,14 @@ newPSOCKnode <- function(machine = "localhost", ...,
     port <- getClusterOption("port", options)
     manual <- getClusterOption("manual", options)
     timeout <- getClusterOption("timeout", options)
+    methods <- getClusterOption("methods", options)
 
     ## build the local command for starting the worker
     env <- paste("MASTER=", master,
                  " PORT=", port,
                  " OUT=", outfile,
                  " TIMEOUT=", timeout,
+                 " METHODS=", methods,
                  sep="")
     arg <- "parallel:::.slaveRSOCK()"
     rscript <- if (getClusterOption("homogeneous", options)) {
@@ -142,6 +144,7 @@ print.SOCKnode <- function(x, ...)
     master <- "localhost"
     port <- 10187 # no point in getting option on worker.
     outfile <- Sys.getenv("R_SNOW_OUTFILE") # defaults to ""
+    methods <- TRUE
 
     for (a in commandArgs(TRUE)) {
         ## Or use strsplit?
@@ -152,11 +155,12 @@ print.SOCKnode <- function(x, ...)
                MASTER = {master <- value},
                PORT = {port <- value},
                OUT = {outfile <- value},
-               TIMEOUT = {timeout <- value})
+               TIMEOUT = {timeout <- value},
+               METHODS = {methods <- value})
     }
 
-    library("methods") ## because Rscript does not load methods
-    ## We should not need to attach parallel, as running in the namespace.
+    if(as.logical(methods)) library("methods") ## because Rscript does not load methods by default
+    ## We should not need to attach parallel, as we are running in the namespace.
 
     sinkWorkerOutput(outfile)
     msg <- sprintf("starting worker pid=%d on %s at %s\n",

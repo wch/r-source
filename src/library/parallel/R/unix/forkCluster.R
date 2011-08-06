@@ -16,9 +16,8 @@
 
 makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
 {
-    cl <- vector("list", length(nnodes))
-    for (i in seq_along(cl))
-        cl[[i]] <- newForkNode(..., options = options, rank = i)
+    cl <- vector("list", nnodes)
+    for (i in seq_along(cl)) cl[[i]] <- newForkNode(..., rank = i)
     class(cl) <- c("SOCKcluster", "cluster")
     cl
 }

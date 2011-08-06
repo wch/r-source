@@ -5,6 +5,8 @@ export(nextRNGStream, nextRNGSubStream, clusterSetRNGStream, detectCores)
 
 if(tools:::.OStype() == "unix") {
 export(mccollect, mclapply, mcparallel, pvec, mc.reset.stream)
+## multicore interface, used in Modalclust, cMonkey, ddepn, multiPIM
+export(parallel, collect)
 
 ## unclear if we should export these.
 export(children, mcexit, mcfork, mckill, readChild, readChildren,

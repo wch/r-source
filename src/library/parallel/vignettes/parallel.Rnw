@@ -11,8 +11,7 @@ plainpages=true,%
 linkcolor=black,%
 citecolor=black,%
 urlcolor=Blue,%
-%pdfstartview=FitH,% or Fit
-pdfstartview={XYZ null null 1},%
+pdfstartview={XYZ null null 1},% 100%
 pdfview={XYZ null null null},%
 pdfpagemode=UseNone,% for no outline
 pdfauthor={R Core}%
@@ -32,8 +31,8 @@ pdfauthor={R Core}%
 
 \section{Introduction}
 
-A package \pkg{parallel} is being developed for release in \R{} 2.14.0.
-It will build on the work done for CRAN packages \pkg{multicore}
+A package \pkg{parallel} is being developed for release in \R{}
+2.14.0.  It builds on the work done for CRAN packages \pkg{multicore}
 \citep{multicore} and \pkg{snow} \citep{snow}.
 
 Until October 2011 anything in this package is strictly experimental
@@ -70,7 +69,7 @@ Amongst the initializations which may be needed are to load packages
 and initialize the random-number stream.
 
 There are implementations of this model in the functions
-\code{parLapply} and \code{mclapply} as drop-in replacements for
+\code{parLapply} and \code{mclapply} as near-drop-in replacements for
 \code{lapply}.
 
 A slightly different model is to split the task into $M_1 > M$ chunks,
@@ -101,7 +100,8 @@ processes.  They can be created in one of three ways:
   share memory. In \pkg{multicore} the initial fork sends an \R{}
   expression to be evaluated to the worker, and the master process
   opens a pipe for reading that is used by the worker to return the
-  results.
+  results.  Both that and communication \emph{via} sockets is
+  supported in package \pkg{parallel}.
 
 \item \emph{Via} \code{system("Rscript")} or similar to launch a new
   process on the current machine or a similar machine with an identical
@@ -168,30 +168,73 @@ two.  Note that we said `available': in most cases when virtual
 machines are in use what is reported is the maximum number of virtual
 CPUs which can be used simultaneously by that VM.
 
-\section{Socket Clusters}
+\section{Analogues of apply functions}
+
+By far the most common (direct) applications of packages
+\pkg{multicore} and \pkg{snow} have been to provide parallelized
+replacements of \code{lapply}, \code{sapply}, \code{apply} and related
+functions.
+
+As analogues of \code{lapply} there are
+\begin{verbatim}
+parLapply(cl, x, FUN, ...)
+mclapply(X, FUN, ..., mc.cores)
+\end{verbatim}
+where \code{mclapply} is not available on Windows and has further
+arguments discussed on its help page.  They differ slightly in
+philosophy: \code{mclapply} sets up a pool of \code{mc.cores} workers
+just for this computation, whereas \code{parLapply} uses a less
+ephemeral pool specified by the object \code{cl} created by a call to
+\code{makeCluster} (which \emph{inter alia} specifies the size of the
+pool).  So the workflow is
+\begin{verbatim}
+cl <- makeCluster(<size of pool>)
+# one or more parLapply calls
+stopCluster(cl)
+\end{verbatim}
+% we could arrange to stop a cluster when cl is gc-ed
+% we could arrange to create a default cluster if cl = NULL
+
+For matrices there are the rarely used \code{parApply} and
+\code{parCapply} functions, and the more commonly used
+\code{parRapply}, a parallel row \code{apply} for a matrix.
+
+\section{SNOW Clusters}
 
 Currently the package contains a copy of much of \pkg{snow}, and the
-functions it contains can also be used with SNOW clusters.
+functions it contains can also be used with clusters created by
+\pkg{snow}.
 
-The implementation is limited to socket clusters created by function
-\code{makePSOCKcluster}, which in this package is identical to
-\code{makeCluster}.  The only current differences are in the fine
-details in how new \R{} processes are created and in the provision of
-\code{print} methods.
+Two functions are provided to create SNOW clusters,
+\code{makePSOCKcluster} (a streamlined version of
+\code{snow::makeSOCKcluster}) and (except on Windows)
+\code{makeForkCluster}.  They differ only in the way they spawn worker
+processes: \code{makePSOCKcluster} uses \code{Rscript} to launch
+further copies of \R{} (on the same host or optionally elsewhere)
+whereas \code{makeForkCluster} forks the workers (which thus inherit
+the environment of the current session).
+
+These functions would normally be called \emph{via} \code{makeCluster}.
+
+Both \file{stdout} and \file{stdout} of the workers are redirected,
+by default being discarded but they can be logged using the
+\code{outfile} option.
 
 \section{Forking}
 
-Except on Windows, the package currently contains a copy of the low-
-and intermediate-level interfaces from \pkg{multicore}: there a few
-names with the added prefix \code{mc}, e.g.{} \code{mccollect},
-\code{mcexit}, \code{mcfork}, \code{mckill} and \code{mcparallel}.
+Except on Windows, the package currently contains a copy of
+\pkg{multicore}: there a few names with the added prefix \code{mc},
+e.g.{} \code{mccollect}, \code{mcexit}, \code{mcfork}, \code{mckill}
+and \code{mcparallel}.  (For back-compatibility, functions
+\code{parallel} and \code{collect} are also exported: these names are
+easily masked.)
 
 Most of the functions provided are not intended to be used by end
 users, and they may not in future be exported from the namespace.
 
-There are also copies of the higher-level functions \code{mclapply}
-and \code{pvec}: unlike the versions in \pkg{multicore} these default
-to 2 cores, but this can be controlled by setting
+There are copies of the higher-level functions \code{mclapply} and
+\code{pvec}: unlike the versions in \pkg{multicore} these default to 2
+cores, but this can be controlled by setting
 \code{options("mc.cores")}, and that takes its default from
 environment variable \code{MC\_CORES} when the package is loaded.
 
@@ -272,6 +315,197 @@ initial seed set for the stream and the current seed for the stream.
 This can easily be emulated in \R{} by storing \code{.Random.seed} at
 suitable times.  There is another interface using S4 classes in
 package \pkg{rstream} \citep{rstream}.
+
+
+\section{Extended examples}
+
+\SweaveOpts{eval=FALSE}
+
+Probably the most common use of coarse-grained paralllelization in
+statistics is to do multiple simulation runs, for example to do large
+numbers of bootstrap replicates or several runs of an MCMC simulation.
+We show an example of each.
+
+Note that some of the examples are not available on Windows and some
+actually are computer-intensive.
+
+\subsection{Bootstrapping}
+
+Package \pkg{boot} \citep{boot} is support software for the monograph
+by \citet{Davison.Hinkley.97}.  Bootstrapping is often used as an
+example of easy parallelization, and some methods of producing
+confidence intervals require many thousands of bootstrap samples.
+As from version \code{1.3-1} the package itself has parallel support
+within its main functions, but we illustrate how use the original
+(serial) functions in parallel computations.
+
+We consider two examples using the \code{cd4} dataset from package
+\pkg{boot} where the interest is in the correlation between before and
+after measurements.  The first is a straight simulation, often called
+a \emph{parametric bootstrap}.  The non-parallel form is
+<<>>=
+library(boot)
+cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+cd4.mle <- list(m = mean(cd4), v = var(cd4))
+cd4.boot <- boot(cd4, corr, R = 999, sim = "parametric",
+                 ran.gen = cd4.rg, mle = cd4.mle)
+boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+        conf = 0.9, h = atanh, hinv = tanh)
+@
+
+To do this with \code{mclapply} we need to break this into separate
+runs, and we will illustrate two runs of 500 simulations each:
+<<>>=
+library(boot)
+cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+cd4.mle <- list(m = mean(cd4), v = var(cd4))
+mc <- 2
+run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
+                           ran.gen = cd4.rg, mle = cd4.mle)
+library(parallel)
+## To make this reproducible:
+set.seed(123, "L'Ecuyer"); mc.reset.stream()
+cd4.boot <- do.call(c, mclapply(seq_len(mc), run1) )
+boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+        conf = 0.9, h = atanh, hinv = tanh)
+@
+There are many ways to program things like this: often the neatest is
+to encapsulate the computation on a function, so this is the parallel
+form of
+<<eval=FALSE>>=
+do.call(c, lapply(seq_len(mc), run1))
+@
+
+To run this with \code{parLapply} we could take a similar approach by
+<<>>=
+run1 <- function(...) {
+   library(boot)
+   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+   cd4.mle <- list(m = mean(cd4), v = var(cd4))
+   boot(cd4, corr, R = 500, sim = "parametric",
+        ran.gen = cd4.rg, mle = cd4.mle)
+}
+library(parallel)
+mc <- 2
+cl <- makeCluster(mc)
+## make this reproducible
+clusterSetRNGStream(cl, 123)
+library(boot) # needed for c() method on master
+cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1) )
+boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+        conf = 0.9, h = atanh, hinv = tanh)
+stopCluster(cl)
+@
+Note that whereas with \code{mclapply} all the packages and objects
+we use are automatically set in the workers, this is not in
+general\footnote{it is with clusters set up with
+  \code{makeForkCluster}.} the case with the \code{parLapply}
+approach.  There is often a delicate choice of where to do the
+computations: for example we could compute \code{cd4.mle} on the
+master and send the value to the workers, or (as here) compute it on
+the workers. We illustrate that by the following code
+<<>>=
+library(parallel)
+mc <- 2
+cl <- makeCluster(mc)
+cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+cd4.mle <- list(m = mean(cd4), v = var(cd4))
+clusterExport(cl, c("cd4.rg", "cd4.mle"))
+junk <- clusterEvalQ(cl, library(boot)) # discard result
+clusterSetRNGStream(cl, 123)
+res <- clusterEvalQ(cl, boot(cd4, corr, R = 500,
+                    sim = "parametric", ran.gen = cd4.rg, mle = cd4.mle))
+library(boot) # needed for c() method on master
+cd4.boot <- do.call(c, res)
+boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+        conf = 0.9, h = atanh, hinv = tanh)
+stopCluster(cl)
+@
+
+Running the double bootstrap on the same problem is far more
+computer-intensive.  The standard version is
+<<<fig=TRUE>>=
+library(boot)
+R <- 999; M <- 999 ## we would like at least 999 each
+cd4.nest <- boot(cd4, nested.corr, R=R, stype="w", t0=corr(cd4), M=M)
+op <- par(pty = "s", xaxs = "i", yaxs = "i")
+qqplot((1:R)/(R+1), cd4.nest$t[, 2], pch = ".", asp = 1,
+        xlab = "nominal", ylab = "estimated")
+abline(a = 0, b = 1, col = "grey")
+par(op)
+abline(h=0.05, col = "grey")
+abline(h=0.95, col = "grey")
+
+nominal <- (1:R)/(R+1)
+actual <- cd4.nest$t[, 2]
+100*nominal[c(sum(actual <= 0.05), sum(actual < 0.95))]
+@
+which took about 55 secs on one core of an 8-core Linux server.
+
+Using \code{mclapply} we could use
+<<<>>=
+library(parallel)
+library(boot)
+mc <- 9
+R <- 999; M <- 999; RR <- floor(R/mc)
+run2 <- function(...)
+    cd4.nest <- boot(cd4, nested.corr, R=RR, stype="w", t0=corr(cd4), M=M)
+cd4.nest <- do.call(c, mclapply(seq_len(mc), run2, mc.cores = 9) )
+nominal <- (1:R)/(R+1)
+actual <- cd4.nest$t[, 2]
+100*nominal[c(sum(actual <= 0.05), sum(actual < 0.95))]
+@
+which ran in 11 secs (elapsed).
+
+\subsection{MCMC runs}
+
+\citet{Ripley.88} discusses the maximum-likelihood estimation of the
+Straus process, which is done by solving a moment equation
+\[
+E_c T = t
+\]
+where $T$ is the number of $R$-close pairs and $t$ is the observed
+value, $30$ in the following example.  A serial approach to the
+initial exploration might be
+<<>>=
+library(spatial)
+towns <- ppinit("towns.dat")
+tget <- function(x, r=3.5) sum(dist(cbind(x$x, x$y)) < r)
+t0 <- tget(towns)
+R <- 1000
+c <- seq(0, 1, 0.1)
+## res[1] = 0
+res <- c(0, sapply(c[-1], function(c)
+    mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))))
+plot(c, res, type="l", ylab="E t")
+abline(h=t0, col="grey")
+@
+which takes about 20 seconds today, but several hours when first done
+in 1985.  A parallel version might be
+<<>>=
+run3 <- function(c) {
+    library(spatial)
+    towns <- ppinit("towns.dat") # has side effects
+    mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
+}
+cl <- makeCluster(10, methods = FALSE)
+clusterExport(cl, c("R", "towns", "tget"))
+res <- c(0, parSapply(cl, c[-1], run3))
+stopCluster(cl)
+@
+which took about 4.5 secs, plus 2 secs to set up the cluster.  Using a
+fork cluster (not on Windows) makes the startup much faster and setup easier:
+<<>>=
+cl <- makeForkCluster(10)  # after the variables have been setup
+run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
+res <- c(0, parSapply(cl, c[-1], run3))
+stopCluster(cl)
+@
+As one might expect, the \code{mclapply} version is slightly simpler:
+<<>>=
+run4 <- function(c)  mean(replicate(R, tget(Strauss(69, c=c, r=3.5))))
+res <- c(0, unlist(mclapply(c[-1], run3, mc.cores = 10)))
+@
 
 \bibliographystyle{jss}
 \bibliography{parallel}
