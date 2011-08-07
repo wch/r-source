@@ -6327,7 +6327,6 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {

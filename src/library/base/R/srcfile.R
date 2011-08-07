@@ -112,9 +112,10 @@ srcfilecopy <- function(filename, lines) {
     # Remove embedded newlines
     if (any(grepl("\n", lines, fixed=TRUE)))
 	lines <- unlist(strsplit(sub("$", "\n", as.character(lines)), "\n"))
-
+  
     e$filename <- filename
     e$lines <- as.character(lines)
+    e$fixedNewlines <- TRUE  	# we have removed the newlines already
     e$timestamp <- Sys.time()
     e$Enc <- "unknown"
 
@@ -174,6 +175,13 @@ getSrcLines <- function(srcfile, first, last) {
     if (inherits(srcfile, "srcfilealias")) 
     	srcfile <- srcfile$original
     if (inherits(srcfile, "srcfilecopy")) {
+	# Remove embedded newlines if we haven't done this already
+	if (is.null(srcfile$fixedNewlines)) {
+	    lines <- srcfile$lines
+    	    if (any(grepl("\n", lines, fixed=TRUE))) 
+		srcfile$lines <- unlist(strsplit(sub("$", "\n", as.character(lines)), "\n"))
+	    srcfile$fixedNewlines <- TRUE
+	}
         last <- min(last, length(srcfile$lines))
         if (first > last) return(character())
         else return(srcfile$lines[first:last])
