@@ -38,7 +38,7 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     suppressed for all parallel processes forked (stderr is not affected).}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
     child processes will be run simultaneously.   The option is
-    initiallized from environment variable \env{MC_CORES} if set.}
+    initialized from environment variable \env{MC_CORES} if set.}
   \item{mc.cleanup}{if set to \code{TRUE} then all children that have
     been forked by this function will be killed (by sending
     \code{SIGTERM}) before this function returns.  Under normal
@@ -72,7 +72,7 @@ mclapply(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     silent = TRUE)} so if errors occur they will be stored as class
   \code{"try-error"} objects in the list.
   
-  Note: the number of file descriptors (and prcoesses) is usually
+  Note: the number of file descriptors (and processes) is usually
   limited by the operating system, so you may have trouble using more
   than 100 cores or so (see \code{ulimit -n} or similar in your OS
   documentation) unless you raise the limit of permissible open file

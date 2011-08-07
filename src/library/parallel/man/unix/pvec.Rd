@@ -29,7 +29,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
     affected).}
   \item{mc.cores}{The number of cores to use, i.e. at most how many
     child processes will be run simultaneously.   The option is
-    initiallized from environment variable \env{MC_CORES} if set.}
+    initialized from environment variable \env{MC_CORES} if set.}
   \item{mc.cleanup}{See the description of this
     argument in \code{\link{mclapply}}.}
 }
@@ -54,14 +54,14 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 }
 \value{
   The result of the computation -- in a successful case it should be of
-  the same length as \code{v}.  If an error ocurred or the function was
+  the same length as \code{v}.  If an error occurred or the function was
   not a map the result may be shorter and a warning is given.
 }
 \note{
   Due to the nature of the parallelization, error handling does not
   follow the usual rules since errors will be returned as strings and
   killed child processes will show up simply as non-existent
-  data.  Therefore it is the responsibiliy of the user to check the
+  data.  Therefore it is the responsibility of the user to check the
   length of the result to make sure it is of the correct
   size.  \code{pvec} raises a warning if that is the case since it does
   not know whether such outcome is intentional or not.

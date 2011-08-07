@@ -26,7 +26,7 @@ stopCluster(cl)
 }
 \arguments{
   \item{spec}{A specification appropriate to the type of cluster.}
-  \item{names}{Either a character vector of host names on whch to run
+  \item{names}{Either a character vector of host names on which to run
     the worker copies on \R, or a non-negative integer (in which case
     that number of copies is run on \samp{localhost}).}
 #ifdef unix

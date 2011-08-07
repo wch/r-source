@@ -40,7 +40,7 @@ mckill(process, signal = 2L)
     behaves as if all currently known children were supplied.}
   \item{what}{For \code{sendChildStdin}:\cr
     Character or raw vector.  In the former case elements are
-    collapsed using the newline chracter.  (But no trailing newline is
+    collapsed using the newline character.  (But no trailing newline is
     added at the end!)
 
     For \code{sendMaster}:\cr

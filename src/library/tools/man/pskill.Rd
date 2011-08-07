@@ -57,7 +57,7 @@ SIGUSR2
   
   The signals are small integers, but the actual numeric values are not
   standardized (and most do differ between OSes).  The \code{SIG*}
-  objects contain the approriate integer values for the current platform
+  objects contain the appropriate integer values for the current platform
   (or \code{NA_INTEGER_} if the signal is not defined).
 
   Only \code{SIGINT} and \code{SIGKILL} will be defined on Windows, and
