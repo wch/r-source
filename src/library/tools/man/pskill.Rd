@@ -72,7 +72,7 @@ SIGUSR2
   Package \pkg{parallel} has several means to launch child processes
   which record the process IDs.
 
-  \code{\link{pspriority}}
+  \code{\link{psnice}}
 }
 
 \examples{\dontrun{
