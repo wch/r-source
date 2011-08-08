@@ -53,6 +53,12 @@
       
       \item \code{filter(x, recursive = TRUE)} gave incorrect results on a
       series containing \code{NA}s.  (Spotted by Bill Dunlap.)
+
+      \item Profiling \code{stats::mle()} fits with a \code{fixed}
+      parameter was not supported.  (\PR{14646})
+
+      \item \code{retracemem()} was still using positional matching.
+      (\PR{14650})
     }  
   }
 }

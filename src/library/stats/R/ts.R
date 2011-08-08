@@ -785,7 +785,10 @@ arima.sim <- function(model, n, rand.gen = rnorm,
         stop(gettextf("'start.innov' is too short: need %d points", n.start),
              domain = NA)
     x <- ts(c(start.innov[1L:n.start], innov[1L:n]), start = 1 - n.start)
-    if(length(model$ma)) x <- filter(x, c(1, model$ma), sides = 1)
+    if(length(model$ma)) {
+        x <- filter(x, c(1, model$ma), sides = 1L)
+        x[seq_along(model$ma)] <- 0 # rather than NA
+    }
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
     if(n.start > 0) x <- x[-(1L:n.start)]
     if(d > 0) x <- diffinv(x, differences = d)
