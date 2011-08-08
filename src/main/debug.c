@@ -212,17 +212,17 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
     if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), R_NilValue);
 
-    object = CAR(args);
+    object = CAR(ap);
     if (TYPEOF(object) == CLOSXP ||
 	TYPEOF(object) == BUILTINSXP ||
 	TYPEOF(object) == SPECIALSXP)
 	errorcall(call, _("argument must not be a function"));
 
-    previous = CADR(args);
+    previous = CADR(ap);
     if(!isNull(previous) && !isString(previous))
 	    errorcall(call, _("invalid '%s' argument"), "previous");
 
-    if (RTRACE(object)){
+    if (RTRACE(object)) {
 	snprintf(buffer, 20, "<%p>", (void *) object);
 	ans = mkString(buffer);
     } else {

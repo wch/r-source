@@ -108,7 +108,7 @@ setMethod("profile", "mle",
         bi <- B0[i] + sgn * step * del * std.err[i]
         fix <- list(bi)
         names(fix) <- pi
-        call$fixed <- fix
+        call$fixed <- c(fix, fix0)
         pfit <- tryCatch(eval.parent(call, 2L), error = identity)
         if(inherits(pfit, "error")) return(NA)
         else {
@@ -140,6 +140,7 @@ setMethod("profile", "mle",
     call$minuslogl <- fitted@minuslogl
     ndeps <- eval.parent(call$control$ndeps)
     parscale <- eval.parent(call$control$parscale)
+    fix0 <- eval.parent(call$fixed)
     for (i in which) {
         zi <- 0
         pvi <- pv0
