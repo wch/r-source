@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-07-07 r56315)
+R Under development (unstable) (2011-08-08 r56659)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -5810,7 +5810,7 @@ structure(list(X1.4 = 1:4), .Names = "X1.4", row.names = c("1",
 > ## tests of deparsing
 > # if we run this from stdin, we will have no source, so fake it
 > f <- function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-> attr(f, "srcref") <- srcref(srcfilecopy("", 
+> attr(f, "srcref") <- srcref(srcfilecopy("",
 +     "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"),
 +     c(1L, 1L, 1L, 56L))
 > f # uses the source
@@ -6783,4 +6783,27 @@ Error in double(FALSE) : invalid 'length' argument
 > try(length(x) <- TRUE)
 Error in length(x) <- TRUE : invalid value
 > ## coerced to integer in 2.13.x
+> 
+> 
+> ## filter(recursive = TRUE) on input with NAs
+> # https://stat.ethz.ch/pipermail/r-devel/2011-July/061547.html
+> x <- c(1:4, NA, 6:9)
+> cbind(x, "1"=filter(x, 0.5, method="recursive"),
++          "2"=filter(x, c(0.5, 0.0), method="recursive"),
++          "3"=filter(x, c(0.5, 0.0, 0.0), method="recursive"))
+Time Series:
+Start = 1 
+End = 9 
+Frequency = 1 
+   x     1     2     3
+1  1 1.000 1.000 1.000
+2  2 2.500 2.500 2.500
+3  3 4.250 4.250 4.250
+4  4 6.125 6.125 6.125
+5 NA    NA    NA    NA
+6  6    NA    NA    NA
+7  7    NA    NA    NA
+8  8    NA    NA    NA
+9  9    NA    NA    NA
+> ## NAs in wrong place in R <= 2.13.1.
 > 

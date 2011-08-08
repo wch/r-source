@@ -2105,7 +2105,7 @@ all.equal(as.raw(1:3), as.raw(3:1))
 ## tests of deparsing
 # if we run this from stdin, we will have no source, so fake it
 f <- function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
-attr(f, "srcref") <- srcref(srcfilecopy("", 
+attr(f, "srcref") <- srcref(srcfilecopy("",
     "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"),
     c(1L, 1L, 1L, 56L))
 f # uses the source
@@ -2586,3 +2586,12 @@ try(double(FALSE))
 x <- 1:3
 try(length(x) <- TRUE)
 ## coerced to integer in 2.13.x
+
+
+## filter(recursive = TRUE) on input with NAs
+# https://stat.ethz.ch/pipermail/r-devel/2011-July/061547.html
+x <- c(1:4, NA, 6:9)
+cbind(x, "1"=filter(x, 0.5, method="recursive"),
+         "2"=filter(x, c(0.5, 0.0), method="recursive"),
+         "3"=filter(x, c(0.5, 0.0, 0.0), method="recursive"))
+## NAs in wrong place in R <= 2.13.1.
