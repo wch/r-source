@@ -17,6 +17,10 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <R.h>
 #include "tools.h"
 #include <signal.h> // C99
@@ -35,6 +39,9 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
     PROTECT(sres = allocVector(LGLSXP, ns));
     pid = INTEGER(sspid);
     res = INTEGER(sres);
+#if !defined(WIN32) && !defined(HAVE_KILL)
+    warning(_("pskill() is not supported on this platform"));
+#endif
     if(signal != NA_INTEGER) {
 	for (int i = 0; i < ns; i++) {
 #ifdef WIN32
@@ -43,7 +50,7 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
                 TerminateProcess(hProc, 1);
                 CloseHandle(hProc);
 	    }
-#else
+#elif defined(HAVE_KILL)
 	    if (pid[i] != NA_INTEGER) res[i] = kill(pid[i], signal);
 #endif
 	}
@@ -52,8 +59,8 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
     return sres;
 }
 
-#ifndef WIN32
-/* on MacOS X it seems sys/resource.h needed sys/time.h first */
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETPRIORITY)
+/* on MacOS X it seems sys/resource.h needed sys/time.h first at one time */
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <errno.h>
@@ -81,9 +88,10 @@ SEXP ps_priority(SEXP spid, SEXP svalue)
     return sres;
 }
 #else
-SEXP ps_setpriority(SEXP spid, SEXP svalue)
+SEXP ps_priority(SEXP spid, SEXP svalue)
 {
-    error(_("setting process priorities is not supported on Windows"));
+    error(_("setting process priorities is not supported on this platform"));
+    return R_NilValue; /* -Wall */
 }
 #endif
 

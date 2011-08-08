@@ -38,7 +38,8 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
 
   % not yet anyway.  Apparently WinNT proirities are 0-31, normal is 8,
   % and high values = high priority. Use [GS]etPriorityClass
-  This function is not implemented on \code{Windows}.
+  This function is not implemented on \code{Windows}, and may not be on
+  other platforms.
 }
 \value{
   An integer vector of \emph{previous} niceness values,

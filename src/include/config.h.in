@@ -294,6 +294,9 @@
 /* Define to 1 if you have the `getpagesize' function. */
 #undef HAVE_GETPAGESIZE
 
+/* Define to 1 if you have the `getpriority' function. */
+#undef HAVE_GETPRIORITY
+
 /* Define to 1 if you have the `getpwuid' function. */
 #undef HAVE_GETPWUID
 
@@ -377,6 +380,9 @@
 
 /* Define if you have KeySym defined in X11. */
 #undef HAVE_KEYSYM
+
+/* Define to 1 if you have the `kill' function. */
+#undef HAVE_KILL
 
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
 #undef HAVE_LANGINFO_CODESET

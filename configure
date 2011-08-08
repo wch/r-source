@@ -21205,8 +21205,8 @@ fi
 ## includes.
 ##
 ## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
-## sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
+## pwd.h strings.h sys/resource.h sys/select.h sys/socket.h
+## sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 ## dl.h seems to be for HP-UX
 ## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.
 ## (It is probably only used for fpsetmask on FreeBSD).
@@ -21214,8 +21214,8 @@ fi
 ## sys/param.h is one way to get PATH_MAX.
 for ac_header in arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h strings.h \
-  sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
+  sys/param.h sys/resource.h sys/select.h sys/socket.h \
+  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -26829,7 +26829,7 @@ _ACEOF
 fi
 done
 
-for ac_func in sigaction sigaltstack sigemptyset
+for ac_func in kill sigaction sigaltstack sigemptyset
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -26983,7 +26983,7 @@ _ACEOF
 fi
 done
 
-for ac_func in getrlimit getrusage
+for ac_func in getrlimit getrusage getpriority
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
