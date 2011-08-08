@@ -1171,26 +1171,14 @@ DLL @file{winCairo.dll} which is loaded when one of these devices is
 first used.  It is not built by default, and needs to be built after
 @file{Rbitmap.dll}, by @command{make cairodevices}.
 
-To enable the building of these devices you need to do one of
-@enumerate
-
-@item
-Install Gtk+ for the appropriate architecture from
-@uref{http://www.gtk.org/download/win32.php} or
-@uref{http://www.gtk.org/download/win64.php} (we tested 2.22.1,
-but versions from 2.16 on should suffice), and set macros
-@samp{CAIRO_HOME} and @samp{CAIRO_TYPE} in @file{MkRules.local}.  To
-actually use them you need the distribution's @file{bin} directory in
-your path.
-
-@item
-Use the static cairographics libraries built by Simon Urbanek at
+To enable the building of these devices you need to install
+the static cairographics libraries built by Simon Urbanek at
 @uref{http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.
 Set the macros @samp{CAIRO_HOME} and @samp{CAIRO_TYPE} in
 @file{MkRules.local}.  (Note that this tarball unpacks with a top-level
 directory @file{src/}: @samp{CAIRO_HOME} needs to include that
 directory in its path.)
-@end enumerate
+
 
 @node Checking the build, Building the manuals, Building the cairo devices files, Building from source
 @subsection Checking the build
