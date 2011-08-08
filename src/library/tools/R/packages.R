@@ -145,8 +145,10 @@ function(dir, fields = NULL,
             if(!inherits(temp, "try-error")) {
                 temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
                                  error = identity)
-                if(!inherits(temp, "error"))
+                if(!inherits(temp, "error")) {
+                    temp["MD5sum"] <- md5sum(files[i])
                     db[[i]] <- temp
+                }
             }
             unlink(packages[i], recursive = TRUE)
         }
