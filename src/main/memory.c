@@ -2015,14 +2015,14 @@ char *S_alloc(long nelem, int eltsize)
 
 char *S_realloc(char *p, long new, long old, int size)
 {
-    int nold;
+    size_t nold;
     char *q;
     /* shrinking is a no-op */
     if(new <= old) return p;
-    q = R_alloc(new, size);
-    nold = old * size;
+    q = R_alloc((size_t)new, size);
+    nold = (size_t)old * size;
     memcpy(q, p, nold);
-    memset(q + nold, 0, new*size - nold);
+    memset(q + nold, 0, (size_t)new*size - nold);
     return q;
 }
 
