@@ -36,10 +36,12 @@ psnice(pid = Sys.getpid(), value = NA_integer_)
   
   Only privileged users (usually super-users) can lower the niceness.
 
-  % not yet anyway.  Apparently WinNT proirities are 0-31, normal is 8,
-  % and high values = high priority. Use [GS]etPriorityClass
-  This function is not implemented on \code{Windows}, and may not be on
-  other platforms.
+  Windows has a slightly different concept of \sQuote{priority
+    classes}.  We have mapped the idle priority to niceness \code{19},
+  \sQuote{below normal} to \code{15}, normal to \code{0}, \sQuote{above
+    normal} to \code{5} and \sQuote{realtime} to \code{-10}.  Unlike
+  Unix-alikes, you can increase the priority class on Windows (but using
+  \sQuote{realtime} is inadvisable).
 }
 \value{
   An integer vector of \emph{previous} niceness values,

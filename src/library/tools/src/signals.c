@@ -87,10 +87,52 @@ SEXP ps_priority(SEXP spid, SEXP svalue)
     UNPROTECT(2);
     return sres;
 }
+#elif defined(WIN32)
+SEXP ps_priority(SEXP spid, SEXP svalue)
+{
+    SEXP sspid, sres;
+    int *pid, *res, val;
+    val = asInteger(svalue);
+    PROTECT(sspid = coerceVector(spid, INTSXP));
+    unsigned int ns = LENGTH(spid);
+    PROTECT(sres = allocVector(INTSXP, ns));
+    pid = INTEGER(sspid);
+    res = INTEGER(sres);
+    for (int i = 0; i < ns; i++) {
+	HANDLE hProc = OpenProcess(val != NA_INTEGER ?
+				   PROCESS_SET_INFORMATION
+				   : PROCESS_QUERY_INFORMATION, 
+				   FALSE, pid[i]);
+	if (hProc && pid[i] != NA_INTEGER) {
+	    DWORD tmp = GetPriorityClass(hProc);
+	    switch(tmp) {
+	    case ABOVE_NORMAL_PRIORITY_CLASS: res[i] = -5; break;
+	    case BELOW_NORMAL_PRIORITY_CLASS: res[i] = 15; break;
+	    case HIGH_PRIORITY_CLASS: res[i] = -10; break;
+	    case IDLE_PRIORITY_CLASS: res[i] = 19; break;
+	    case NORMAL_PRIORITY_CLASS: res[i] = 0; break;
+	    case REALTIME_PRIORITY_CLASS: res[i] = -20; break;
+	    }
+	    if(val != NA_INTEGER) {
+		switch(val) {
+		case 19: tmp = IDLE_PRIORITY_CLASS; break;
+		case 15: tmp = BELOW_NORMAL_PRIORITY_CLASS; break;
+		case 0: tmp = NORMAL_PRIORITY_CLASS; break;
+		case -5: tmp = ABOVE_NORMAL_PRIORITY_CLASS; break;
+		case -10: tmp = HIGH_PRIORITY_CLASS; break;
+		}
+		SetPriorityClass(hProc, tmp);
+	    }
+	    CloseHandle(hProc);
+	} else res[i] = NA_INTEGER;
+    }
+    UNPROTECT(2);
+    return sres;
+}
 #else
 SEXP ps_priority(SEXP spid, SEXP svalue)
 {
-    error(_("setting process priorities is not supported on this platform"));
+    error(_("psnice() is not supported on this platform"));
     return R_NilValue; /* -Wall */
 }
 #endif

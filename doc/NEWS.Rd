@@ -328,8 +328,8 @@
       signals (since the numeric values are OS-dependent).
 
       \item New function \code{psnice()} in the \pkg{tools} package to
-      return or change the \sQuote{niceness} of a process.  Supported on
-      POSIX OSes only (and hence not on Windows).
+      return or change the \sQuote{niceness} of a process.  (Refers to
+      the \sQuote{priority class} on Windows.)
     }
   }
 
