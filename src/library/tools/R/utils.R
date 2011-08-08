@@ -841,21 +841,24 @@ local({
 ### ** .get_standard_repository_URLs
 
 .get_standard_repository_URLs <-
-function() {
+function()
+{
     repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
-    repos <- if(nzchar(repos)) {
-        .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
+    if(nzchar(repos)) {
+        repos <-
+            .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
     } else {
+        nms <- c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp")
         p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-        if(file_test("-f", p)) {
+        repos <- if(file_test("-f", p)) {
             a <- .read_repositories(p)
-            a[c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp"),
-              "URL"]
+            a[nms, "URL"]
         } else {
             a <- .read_repositories(file.path(R.home("etc"),
                                               "repositories"))
-            c("http://cran.r-project.org", a[3:6, "URL"])
+            c("http://cran.r-project.org", a[nms[-1L], "URL"])
         }
+        names(repos) <- nms
     }
     repos
 }
