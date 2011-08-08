@@ -6,6 +6,8 @@
 \name{mcparallel}
 \alias{mccollect}
 \alias{mcparallel}
+\alias{collect}
+
 \title{Evaluate an \R Expression Asynchronously in a Separate Process}
 \description{
   These functions are based on forking and so are not available on Windows.

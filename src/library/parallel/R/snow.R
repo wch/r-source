@@ -1,4 +1,5 @@
-#  File src/library/parallel/R/snow.R
+
+                                        #  File src/library/parallel/R/snow.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -77,6 +78,7 @@ initDefaultClusterOptions <- function(libname)
                     rshcmd = "ssh",
                     manual = FALSE,
                     methods = TRUE,
+                    renice = NA_integer_,
                     ## rest are unused in parallel
                     rhome = R.home(),
                     rlibs = Sys.getenv("R_LIBS"),

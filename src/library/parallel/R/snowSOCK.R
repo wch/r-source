@@ -46,7 +46,7 @@ newPSOCKnode <- function(machine = "localhost", ...,
     } else "Rscript"
     cmd <- paste(rscript, "-e", shQuote(arg), env)
     renice <- getClusterOption("renice", options)
-    if(!is.na(renice) && renice)
+    if(!is.na(renice) && renice) ## ignore 0
         cmd <- sprintf("nice +%d %s", as.integer(renice), cmd)
 
     if (manual) {

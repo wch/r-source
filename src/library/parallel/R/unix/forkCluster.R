@@ -29,6 +29,7 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
     outfile <- getClusterOption("outfile", options)
     port <- getClusterOption("port", options)
     timeout <- getClusterOption("timeout", options)
+    renice <- getClusterOption("renice", options)
 
     f <- mcfork()
     if (inherits(f, "masterProcess")) { # the slave
@@ -51,6 +52,8 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
         cat(msg)
         ## allow this to quit when the loop is done.
         tools::pskill(Sys.getpid(), tools::SIGUSR1)
+        if(!is.na(renice) && renice) ## ignore 0
+            tools::psnice(Sys.getpid(), renice)
         slaveLoop(makeSOCKmaster(master, port, timeout))
         mcexit(0L)
     }
