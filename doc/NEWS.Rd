@@ -326,6 +326,10 @@
       send a terminate signal to one or more processes, plus constants
       such as \code{SIGTERM} to provide a portable way to refer to
       signals (since the numeric values are OS-dependent).
+
+      \item New function \code{psnice()} in the \pkg{tools} package to
+      return or change the \sQuote{niceness} of a process.  Supported on
+      POSIX OSes only (and hence not on Windows).
     }
   }
 

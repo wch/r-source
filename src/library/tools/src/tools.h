@@ -35,5 +35,5 @@ SEXP check_nonASCII2(SEXP text);
 SEXP doTabExpand(SEXP strings, SEXP starts);
 SEXP ps_kill(SEXP pid, SEXP signal);
 SEXP ps_sigs(SEXP);
-
+SEXP ps_priority(SEXP pid, SEXP value);
 #endif

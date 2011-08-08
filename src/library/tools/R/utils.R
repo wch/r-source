@@ -1461,6 +1461,13 @@ function(args, msg)
 pskill <- function(pid, signal = SIGTERM)
     invisible(.Call(ps_kill, pid, signal, PACKAGE = "tools"))
 
+### ** psnice
+
+psnice <- function(pid = Sys.getpid(), value = NA_integer_)
+{
+    res <- .Call(ps_priority, pid, value,  PACKAGE = "tools")
+    if(is.na(value)) res else invisible(res)
+}
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

@@ -52,6 +52,41 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
     return sres;
 }
 
+#ifndef WIN32
+/* on MacOS X it seems sys/resource.h needed sys/time.h first */
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <errno.h>
+SEXP ps_priority(SEXP spid, SEXP svalue)
+{
+    SEXP sspid, sres;
+    int *pid, *res, val;
+    val = asInteger(svalue);
+    PROTECT(sspid = coerceVector(spid, INTSXP));
+    unsigned int ns = LENGTH(spid);
+    PROTECT(sres = allocVector(INTSXP, ns));
+    pid = INTEGER(sspid);
+    res = INTEGER(sres);
+    for (int i = 0; i < ns; i++) {
+	if (pid[i] != NA_INTEGER) {
+	    /* return value -1 is both an error value 
+	       and a legitimate niceness */
+	    errno = 0;
+	    res[i] = getpriority(PRIO_PROCESS, pid[i]);
+	    if(errno) res[i] = NA_INTEGER;
+	    if(val != NA_INTEGER) setpriority(PRIO_PROCESS, pid[i], val);
+	} else res[i] = NA_INTEGER;
+    }
+    UNPROTECT(2);
+    return sres;
+}
+#else
+SEXP ps_setpriority(SEXP spid, SEXP svalue)
+{
+    error(_("setting process priorities is not supported on Windows"));
+}
+#endif
+
 SEXP ps_sigs(SEXP signo)
 {
     int res = NA_INTEGER;
