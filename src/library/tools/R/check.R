@@ -866,6 +866,16 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             }
         }
 
+        Rcmd <- paste("options(warn=1)\n",
+                      sprintf("tools:::.check_package_code_startup_functions(dir = \"%s\")\n",
+                              pkgdir))
+        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        if(length(out)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog0(Log, paste(c(out, ""), collapse = "\n"))
+        }
+
         if (R_check_use_codetools && do_install) {
             Rcmd <-
                 paste("options(warn=1)\n",

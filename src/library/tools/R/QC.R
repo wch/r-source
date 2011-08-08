@@ -29,6 +29,7 @@
 ## .checkReplaceFuns
 ## .checkFF
 ## .check_package_code_shlib
+## .check_package_code_startup_functions
 ## .check_code_usage_in_package
 ## .check_T_and_F
 ## .check_dotInternal
@@ -4086,6 +4087,175 @@ function(dir)
     invisible(x)
 }
 
+### * .check_package_code_startup_functions
+
+.check_package_code_startup_functions <-
+function(dir)
+{
+    ## Similar to .check_package_code_shlib():
+    dfile <- file.path(dir, "DESCRIPTION")
+    enc <- if(file.exists(dfile))
+        tools:::.read_description(dfile)["Encoding"] else NA
+
+    .check_startup_function <- function(fcode, fname) {
+        out <- list()
+        if((fname %in% c(".onLoad", ".onAttach")) &&
+           !identical(names(fcode[[2L]]), c("libname", "pkgname")))
+            out$bad_arg_names <- names(fcode[[2L]])
+        ## For now, only look at top level calls.
+        calls <- .get_top_level_calls(fcode[[3L]])
+        if(!length(calls)) return(out)
+        cnames <- .call_names(calls)
+        ind <- (cnames %in%
+                c("library", "require", "cat", "message", "print"))
+        if(any(ind))
+            out$bad_calls <-
+                list(calls = calls[ind], names = cnames[ind])
+        out
+    }
+
+    code_files <-
+        list_files_with_type(file.path(dir, "R"), "code",
+                             OS_subdirs = c("unix", "windows"))
+    x <- lapply(code_files, .get_startup_function_calls_in_file, enc)
+    ## Be a little fancy.
+    names(x) <- substring(code_files, nchar(dirname(dir)) + 2L)
+    x <- Filter(length,
+                lapply(x,
+                       function(e)
+                       Filter(length,
+                              Map(.check_startup_function,
+                                  e, names(e)))))
+    class(x) <- "check_package_code_startup_functions"
+    x
+}
+
+format.check_package_code_startup_functions <-
+function(x, ...)
+{
+    if(!length(x)) return(character())
+
+    ## Flatten out doubly recursive list of functions within list of
+    ## files structure for computing summary messages.
+    y <- unlist(x, recursive = FALSE)
+
+    has_bad_wrong_args <-
+        "bad_arg_names" %in% unlist(lapply(y, names))
+    calls <-
+        unique(unlist(lapply(y,
+                             function(e) e[["bad_calls"]][["names"]])))
+    has_bad_calls_for_output <- 
+        any(calls %in% c("cat", "message", "print"))
+    
+
+    .fmt_entries_for_file <- function(e, f) {
+        c(gettextf("File %s:", sQuote(f)),
+          unlist(Map(.fmt_entries_for_function, e, names(e))),
+          "")
+    }
+
+    .fmt_entries_for_function <- function(e, f) {
+        c(if(length(bad <- e[["bad_arg_names"]])) {
+              gettextf("  %s has wrong argument list %s",
+                       f, sQuote(paste(bad, collapse = ", ")))
+          },
+          if(length(bad <- e[["bad_calls"]])) {
+              c(gettextf("  %s calls:", f),
+                paste("    ",
+                      unlist(lapply(bad[["calls"]],
+                                    function(e) paste(deparse(e),
+                                                      collapse = ""))),
+                      sep = ""))
+          })
+    }
+          
+    c(unlist(Map(.fmt_entries_for_file, x, names(x)),
+             use.names = FALSE),
+      if(has_bad_wrong_args)
+      strwrap(gettextf(".onLoad and .onAttach should have arguments %s and %s.",
+                       sQuote("libname"), sQuote("pkgname")),
+              exdent = 2L),
+      if(has_bad_calls_for_output)
+      strwrap(gettextf("Package startup functions should use %s to generate messages.",
+                       sQuote("packageStartupMessage")),
+              exdent = 2L),
+      ""
+      )
+}
+
+print.check_package_code_startup_functions <-
+function(x, ...)
+{
+    writeLines(format(x))
+    invisible(x)
+}
+
+.get_startup_function_calls <-
+function(dir, all = FALSE)
+{
+    dfile <- file.path(dir, "DESCRIPTION")
+    if(is.na(encoding <- tools:::.read_description(dfile)["Encoding"]))
+        encoding <- NA
+    files <- if(all)
+        tools::list_files_with_type(file.path(dir, "R"), "code")
+    else
+        tools::list_files_with_type(file.path(dir, "R"), "code",
+                                    OS_subdirs = c("unix", "windows"))
+    calls <-
+        lapply(files, .get_startup_function_calls_in_file, encoding)
+    as.list(unlist(calls, recursive = FALSE))
+}
+
+.get_startup_function_calls_in_file <-
+function(f, encoding = NA)
+{
+    if(!file.info(f)$size) return()
+    calls <- list()
+    exprs <- if(!is.na(encoding) &&
+                !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+        con <- file(f, encoding = encoding)
+        on.exit(close(con))
+        parse(con)
+    } else parse(f)
+    for(e in exprs) {
+        if((length(e) > 2L) &&
+           (class(x <- e[[1L]]) == "name") &&
+           (as.character(x) %in%
+            c("<-", "=")) &&
+           (as.character(y <- e[[2L]]) %in%
+            c(".First.lib", ".onAttach", ".onLoad")) &&
+           (class(z <- e[[3L]]) == "call") &&
+           (as.character(z[[1L]]) == "function")) {
+            new <- list(z)
+            names(new) <- as.character(y)
+            calls <- c(calls, new)
+        }
+    }
+    calls
+}
+
+.get_top_level_calls <-
+function(e)
+{
+    if(!length(e)) return(list())
+    exprs <- list(e)
+    while((length(exprs) == 1L) &&
+          (length(e <- exprs[[1L]]) >= 1L) &&
+          e[[1L]] == as.name("{"))
+        exprs <- as.list(e)[-1L]
+    exprs
+}
+
+.get_top_level_call_names <-
+function(e)
+{
+    if(!length(e)) return(character())
+    .call_names(.get_top_level_calls(e))
+}
+
+.call_names <-
+function(x)
+    as.character(sapply(x, function(e) deparse(e[[1L]])))
 
 ### * .check_packages_used
 
