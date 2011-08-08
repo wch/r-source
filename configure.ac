@@ -754,8 +754,8 @@ AC_HEADER_SYS_WAIT
 ## includes.
 ##
 ## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## pwd.h strings.h sys/select.h sys/socket.h sys/stat.h
-## sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
+## pwd.h strings.h sys/resource.h sys/select.h sys/socket.h 
+## sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
 ## dl.h seems to be for HP-UX
 ## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.  
 ## (It is probably only used for fpsetmask on FreeBSD).
@@ -763,8 +763,8 @@ AC_HEADER_SYS_WAIT
 ## sys/param.h is one way to get PATH_MAX.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h strings.h \
-  sys/param.h sys/resource.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
+  sys/param.h sys/resource.h sys/select.h sys/socket.h \
+  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
@@ -1749,14 +1749,14 @@ AC_CHECK_FUNCS(fseeko ftello matherr)
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
 R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
-R_CHECK_FUNCS([sigaction sigaltstack sigemptyset], [#include <signal.h>])
+R_CHECK_FUNCS([kill sigaction sigaltstack sigemptyset], [#include <signal.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 if test "${ac_cv_have_decl_popen}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'popen' system call])
 fi
 ## Windows has neither setenv nor unsetenv
 R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
-R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
+R_CHECK_FUNCS([getrlimit getrusage getpriority], [#include <sys/resource.h>])
 R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
 if test "${ac_cv_have_decl_stat}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'stat' system call])

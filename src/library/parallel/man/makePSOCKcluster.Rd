@@ -72,6 +72,9 @@ stopCluster(cl)
       path on the other hosts.}
     \item{\code{rscript}}{The path to \command{Rscript} on the workers.
       Defaults to the full path on the master.}
+    \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
+      worker processes, e.g.{} \code{15} for a low priority.
+      OS-dependent.}
     \item{\code{rshcmd}}{The command to be run on the master to launch a
       process on another host.  Defaults to \command{ssh}.}
     \item{\code{user}}{The user name to be used when communicating with

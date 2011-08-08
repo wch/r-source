@@ -238,6 +238,10 @@ cores, but this can be controlled by setting
 \code{options("mc.cores")}, and that takes its default from
 environment variable \code{MC\_CORES} when the package is loaded.
 
+One unexported function which might be useful is
+\code{parallel:::isChild}, which can be used to prevent
+\code{mclapply} being called recursively.
+
 \section{Random-number generation}
 
 Some care is needed with parallel computation using (pseudo-)random

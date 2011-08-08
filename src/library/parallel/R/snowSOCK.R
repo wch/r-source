@@ -45,6 +45,9 @@ newPSOCKnode <- function(machine = "localhost", ...,
         shQuote(getClusterOption("rscript", options))
     } else "Rscript"
     cmd <- paste(rscript, "-e", shQuote(arg), env)
+    renice <- getClusterOption("renice", options)
+    if(!is.na(renice) && renice)
+        cmd <- sprintf("nice +%d %s", as.integer(renice), cmd)
 
     if (manual) {
         cat("Manually start worker on", machine, "with\n    ", cmd, "\n")
