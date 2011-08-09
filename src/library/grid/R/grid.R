@@ -38,14 +38,14 @@ push.vp.viewport <- function(vp, recording) {
   # being pushed from within a gTree which has enforced gpar
   # settings (i.e., the gTree$gp is enforced between this viewport
   # and the this viewport's parent$gp)
-  pvp$parentgpar <- grid.Call("L_getGPar")
+  pvp$parentgpar <- grid.Call(L_getGPar)
   # Enforce gpar settings
   set.gpar(vp$gp)
   # Store the entire set of gpar settings for this viewport
-  pvp$gpar <- grid.Call("L_getGPar")
+  pvp$gpar <- grid.Call(L_getGPar)
   # Pass in the pushedvp structure which will be used to store
   # things like the viewport transformation, parent-child links, ...
-  grid.Call.graphics("L_setviewport", pvp, TRUE)
+  grid.Call.graphics(L_setviewport, pvp, TRUE)
 }
 
 # For all but the last viewport, push the
@@ -139,17 +139,17 @@ downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
 
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
     if (name$n == 1)
-        result <- grid.Call.graphics("L_downviewport", name$name, strict)
+        result <- grid.Call.graphics(L_downviewport, name$name, strict)
     else
-        result <- grid.Call.graphics("L_downvppath",
+        result <- grid.Call.graphics(L_downvppath,
                                      name$path, name$name, strict)
     # If the downViewport() fails, there is an error in C code
     # so none of the following code will be run
 
     # Enforce the gpar settings for the viewport
-    pvp <- grid.Call("L_currentViewport")
+    pvp <- grid.Call(L_currentViewport)
     # Do not call set.gpar because set.gpar accumulates cex
-    grid.Call.graphics("L_setGPar", pvp$gpar)
+    grid.Call.graphics(L_setGPar, pvp$gpar)
     # Record the viewport operation
     # ... including the depth navigated down
     if (recording) {
@@ -170,7 +170,7 @@ seekViewport <- function(name, recording=TRUE) {
 
 # Depth of the current viewport
 vpDepth <- function() {
-  pvp <- grid.Call("L_currentViewport")
+  pvp <- grid.Call(L_currentViewport)
   count <- 0
   while (!is.null(pvp$parent)) {
     pvp <- pvp$parent
@@ -190,7 +190,7 @@ popViewport <- function(n=1, recording=TRUE) {
   if (n == 0)
     n <- vpDepth()
   if (n > 0) {
-    grid.Call.graphics("L_unsetviewport", as.integer(n))
+    grid.Call.graphics(L_unsetviewport, as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "pop"
@@ -212,7 +212,7 @@ upViewport <- function(n=1, recording=TRUE) {
   if (n > 0) {
     path <- current.vpPath()
     upPath <- path[(depth(path) - n + 1):depth(path)]
-    grid.Call.graphics("L_upviewport", as.integer(n))
+    grid.Call.graphics(L_upviewport, as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "up"
@@ -225,7 +225,7 @@ upViewport <- function(n=1, recording=TRUE) {
 # Return the full vpPath to the current viewport
 current.vpPath <- function() {
   names <- NULL
-  pvp <- grid.Call("L_currentViewport")
+  pvp <- grid.Call(L_currentViewport)
   while (!rootVP(pvp)) {
     names <- c(names, pvp$name)
     pvp <- pvp$parent
@@ -241,7 +241,7 @@ current.viewport <- function(vp=NULL) {
   if (is.null(vp))
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
-    vpFromPushedvp(grid.Call("L_currentViewport"))
+    vpFromPushedvp(grid.Call(L_currentViewport))
   else {
     warning("The vp argument is deprecated")
     vp
@@ -274,12 +274,12 @@ vpTreeFromNode <- function(node) {
 # Either from the current location in the tree down
 # or ALL of the tree
 current.vpTree <- function(all=TRUE) {
-  cpvp <- grid.Call("L_currentViewport")
+  cpvp <- grid.Call(L_currentViewport)
   moving <- all && vpDepth() > 0
   if (moving) {
     savedname <- cpvp$name
     upViewport(0, recording=FALSE)
-    cpvp <- grid.Call("L_currentViewport")
+    cpvp <- grid.Call(L_currentViewport)
   }
   tree <- vpTreeFromNode(cpvp)
   if (moving) {
@@ -289,7 +289,7 @@ current.vpTree <- function(all=TRUE) {
 }
 
 current.transform <- function() {
-  grid.Call("L_currentViewport")$trans
+  grid.Call(L_currentViewport)$trans
 }
 
 # Control whether user is prompted before new page
@@ -334,8 +334,8 @@ grid.newpage <- function(recording=TRUE) {
 # that we can redraw upon edit.
 
 inc.display.list <- function() {
-  display.list <- grid.Call("L_getDisplayList")
-  dl.index <- grid.Call("L_getDLindex")
+  display.list <- grid.Call(L_getDisplayList)
+  dl.index <- grid.Call(L_getDLindex)
   dl.index <- dl.index + 1
   n <- length(display.list)
   # The " - 1" below is because dl.index is now stored internally
@@ -346,25 +346,25 @@ inc.display.list <- function() {
     display.list <- vector("list", n + 100L)
     display.list[1L:n] <- temp
   }
-  grid.Call("L_setDisplayList", display.list)
-  grid.Call("L_setDLindex", as.integer(dl.index))
+  grid.Call(L_setDisplayList, display.list)
+  grid.Call(L_setDLindex, as.integer(dl.index))
 }
 
 # This will either ...
 #   (i) turn on AND INITIALISE the display list or ...
 #   (ii) turn off AND ERASE the display list
 grid.display.list <- function(on=TRUE) {
-  grid.Call("L_setDLon", as.logical(on))
+  grid.Call(L_setDLon, as.logical(on))
   if (on) {
-    grid.Call("L_setDisplayList", vector("list", 100L))
-    grid.Call("L_setDLindex", 0L)
+    grid.Call(L_setDisplayList, vector("list", 100L))
+    grid.Call(L_setDLindex, 0L)
   }
   else
-    grid.Call("L_setDisplayList", NULL)
+    grid.Call(L_setDisplayList, NULL)
 }
 
 record <- function(x) {
-  if (grid.Call("L_getDLon"))
+  if (grid.Call(L_getDLon))
     UseMethod("record")
 }
 
@@ -373,28 +373,28 @@ record <- function(x) {
 record.default <- function(x) {
   if (!is.numeric(x))
     stop("Invalid object inserted on the display list")
-  grid.Call("L_setDLelt", x)
+  grid.Call(L_setDLelt, x)
   inc.display.list()
 }
 
 record.grob <- function(x) {
-  grid.Call("L_setDLelt", x)
+  grid.Call(L_setDLelt, x)
   inc.display.list()
 }
 
 record.viewport <- function(x) {
-  grid.Call("L_setDLelt", x)
+  grid.Call(L_setDLelt, x)
   inc.display.list()
 }
 
 record.vpPath <- function(x) {
-  grid.Call("L_setDLelt", x)
+  grid.Call(L_setDLelt, x)
   inc.display.list()
 }
 
 # This controls whether grid is using the graphics engine's display list
 engine.display.list <- function(on=TRUE) {
-  grid.Call("L_setEngineDLon", as.logical(on))
+  grid.Call(L_setEngineDLon, as.logical(on))
 }
 
 # Rerun the grid DL
@@ -423,7 +423,7 @@ grid.Call.graphics <- function(fnname, ...) {
     # the the first thing on the engine display list is a dirty
     # operation;  this is necessary in case the display list is
     # played on another device (e.g., via replayPlot() or dev.copy())
-    .Call.graphics("L_gridDirty", PACKAGE="grid")
+    .Call.graphics(L_gridDirty, PACKAGE="grid")
     result <- .Call.graphics(fnname, ..., PACKAGE="grid")
   } else {
     .Call(L_gridDirty)

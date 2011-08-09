@@ -185,7 +185,7 @@ validGP <- function(gpars) {
 set.gpar <- function(gp) {
   if (!is.gpar(gp))
     stop("Argument must be a 'gpar' object")
-  temp <- grid.Call("L_getGPar")
+  temp <- grid.Call(L_getGPar)
   # gamma defunct in 2.7.0
   if ("gamma" %in% names(gp)) {
       warning("'gamma' gpar is defunct")
@@ -212,12 +212,12 @@ set.gpar <- function(gp) {
   temp$alpha <- tempalpha
   temp$lex <- templex
   # Do this as a .Call.graphics to get it onto the base display list
-  grid.Call.graphics("L_setGPar", temp)
+  grid.Call.graphics(L_setGPar, temp)
 }
 
 get.gpar <- function(names=NULL) {
   if (is.null(names)) {
-    result <- grid.Call("L_getGPar")
+    result <- grid.Call(L_getGPar)
     # drop gamma
     result$gamma <- NULL
   } else {
@@ -229,7 +229,7 @@ get.gpar <- function(names=NULL) {
       warning("'gamma' gpar is defunct")
       names <- names[-match("gamma", names)]
     }
-    result <- unclass(grid.Call("L_getGPar"))[names]
+    result <- unclass(grid.Call(L_getGPar))[names]
   }
   class(result) <- "gpar"
   result

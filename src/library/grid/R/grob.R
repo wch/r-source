@@ -338,7 +338,7 @@ getName <- function(elt) {
 }
 
 getNames <- function() {
-  dl <- grid.Call("L_getDisplayList")[1L:grid.Call("L_getDLindex")]
+  dl <- grid.Call(L_getDisplayList)[1L:grid.Call(L_getDLindex)]
   names <- sapply(dl, getName)
   names[nzchar(names)]
 }
@@ -408,12 +408,12 @@ grid.set <- function(gPath, newGrob, strict=FALSE, grep=FALSE,
   # result$index will be non-zero if matched the gPath
   if (result$index) {
     # Get the current DL index
-    dl.index <- grid.Call("L_getDLindex")
+    dl.index <- grid.Call(L_getDLindex)
     # Destructively modify the DL elt
-    grid.Call("L_setDLindex", as.integer(result$index))
-    grid.Call("L_setDLelt", result$grob)
+    grid.Call(L_setDLindex, as.integer(result$index))
+    grid.Call(L_setDLelt, result$grob)
     # Reset the DL index
-    grid.Call("L_setDLindex", as.integer(dl.index))
+    grid.Call(L_setDLindex, as.integer(dl.index))
     if (redraw)
       draw.all()
   } else {
@@ -874,12 +874,12 @@ getGrobFromGPath.gTree <- function(grob, pathsofar, gPath, strict,
 }
 
 getDLfromGPath <- function(gPath, strict, grep, global) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   result <- NULL
   index <- 1
   while (index < dl.index &&
          (is.null(result) || global)) {
-    grob <- getGrobFromGPath(grid.Call("L_getDLelt",
+    grob <- getGrobFromGPath(grid.Call(L_getDLelt,
                                        as.integer(index)),
                              NULL, gPath, strict,
                              grep, global)
@@ -1020,12 +1020,12 @@ setGrobFromGPath.gTree <- function(grob, pathsofar, gPath, newGrob,
 }
 
 setDLfromGPath <- function(gPath, newGrob, strict, grep) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   index <- 1
   result <- list(index=0, grob=NULL)
   while (index < dl.index &&
          result$index == 0) {
-    result$grob <- setGrobFromGPath(grid.Call("L_getDLelt",
+    result$grob <- setGrobFromGPath(grid.Call(L_getDLelt,
                                               as.integer(index)),
                                     NULL, gPath, newGrob, strict, grep)
     if (!is.null(result$grob))
@@ -1182,22 +1182,22 @@ editGrobFromGPath.gTree <- function(grob, specs,
 }
 
 editDLfromGPath <- function(gPath, specs, strict, grep, global, redraw) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   index <- 1
   grob <- NULL
   found <- FALSE
   while (index < dl.index &&
          (is.null(grob) || global)) {
-    grob <- editGrobFromGPath(grid.Call("L_getDLelt",
+    grob <- editGrobFromGPath(grid.Call(L_getDLelt,
                                         as.integer(index)),
                               specs,
                               NULL, gPath, strict, grep, global)
     if (!is.null(grob)) {
       # Destructively modify the DL elt
-      grid.Call("L_setDLindex", as.integer(index))
-      grid.Call("L_setDLelt", grob)
+      grid.Call(L_setDLindex, as.integer(index))
+      grid.Call(L_setDLelt, grob)
       # Reset the DL index
-      grid.Call("L_setDLindex", as.integer(dl.index))
+      grid.Call(L_setDLindex, as.integer(dl.index))
       found <- TRUE
     }
     index <- index + 1
@@ -1346,22 +1346,22 @@ addGrobFromGPath.gTree <- function(grob, child,
 }
 
 addDLfromGPath <- function(gPath, child, strict, grep, global, redraw) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   index <- 1
   grob <- NULL
   found <- FALSE
   while (index < dl.index &&
          (is.null(grob) || global)) {
-    grob <- addGrobFromGPath(grid.Call("L_getDLelt",
+    grob <- addGrobFromGPath(grid.Call(L_getDLelt,
                                        as.integer(index)),
                              child,
                              NULL, gPath, strict, grep, global)
     if (!is.null(grob)) {
       # Destructively modify the DL elt
-      grid.Call("L_setDLindex", as.integer(index))
-      grid.Call("L_setDLelt", grob)
+      grid.Call(L_setDLindex, as.integer(index))
+      grid.Call(L_setDLelt, grob)
       # Reset the DL index
-      grid.Call("L_setDLindex", as.integer(dl.index))
+      grid.Call(L_setDLindex, as.integer(dl.index))
       found <- TRUE
     }
     index <- index + 1
@@ -1522,22 +1522,22 @@ removeGrobFromGPath.gTree <- function(grob, name,
 
 removeDLFromGPath <- function(gPath, name, strict, grep, grepname, global,
                               warn, redraw) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   index <- 1
   grob <- NULL
   found <- FALSE
   while (index < dl.index &&
          (is.null(grob) || global)) {
-    grob <- removeGrobFromGPath(grid.Call("L_getDLelt", as.integer(index)),
+    grob <- removeGrobFromGPath(grid.Call(L_getDLelt, as.integer(index)),
                                 name,
                                 NULL, gPath, strict, grep, grepname,
                                 global, warn)
     if (!is.null(grob)) {
       # Destructively modify the DL elt
-      grid.Call("L_setDLindex", as.integer(index))
-      grid.Call("L_setDLelt", grob)
+      grid.Call(L_setDLindex, as.integer(index))
+      grid.Call(L_setDLelt, grob)
       # Reset the DL index
-      grid.Call("L_setDLindex", as.integer(dl.index))
+      grid.Call(L_setDLindex, as.integer(dl.index))
       found <- TRUE
     }
     index <- index + 1
@@ -1602,21 +1602,21 @@ removeName <- function(gTree, name, strict, grep, global, warn) {
 }
 
 removeNameFromDL <- function(name, strict, grep, global, warn, redraw) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   index <- 1
   grob <- NULL
   found <- FALSE
   while (index < dl.index &&
          (is.null(grob) || global)) {
-    grob <- grid.Call("L_getDLelt", as.integer(index))
+    grob <- grid.Call(L_getDLelt, as.integer(index))
     if (inherits(grob, "grob")) {
       # If match top-level grob, remove it from DL
       if (nameMatch(name, grob$name, grep)) {
         # Destructively modify the DL elt
-        grid.Call("L_setDLindex", as.integer(index))
-        grid.Call("L_setDLelt", NULL)
+        grid.Call(L_setDLindex, as.integer(index))
+        grid.Call(L_setDLelt, NULL)
         # Reset the DL index
-        grid.Call("L_setDLindex", as.integer(dl.index))
+        grid.Call(L_setDLindex, as.integer(dl.index))
         found <- TRUE
       # Otherwise search down it for match
       } else {
@@ -1624,10 +1624,10 @@ removeNameFromDL <- function(name, strict, grep, global, warn, redraw) {
           grob <- removeGrobFromName(grob, name, grep, global, warn)
           if (!is.null(grob)) {
             # Destructively modify the DL elt
-            grid.Call("L_setDLindex", as.integer(index))
-            grid.Call("L_setDLelt", grob)
+            grid.Call(L_setDLindex, as.integer(index))
+            grid.Call(L_setDLelt, grob)
             # Reset the DL index
-            grid.Call("L_setDLindex", as.integer(dl.index))
+            grid.Call(L_setDLindex, as.integer(dl.index))
             found <- TRUE
           }
         }
@@ -1663,11 +1663,11 @@ findgrob.grob <- function(x, name) {
 }
 
 findGrobinDL <- function(name) {
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   result <- NULL
   index <- 1
   while (index < dl.index && is.null(result)) {
-    result <- findgrob(grid.Call("L_getDLelt", as.integer(index)), name)
+    result <- findgrob(grid.Call(L_getDLelt, as.integer(index)), name)
     index <- index + 1
   }
   if (is.null(result))
@@ -1776,19 +1776,19 @@ preDraw.gTree <- function(x) {
   # Make this gTree the "current grob" for evaluation of
   # grobwidth/height units via gPath
   # Do this as a .Call.graphics to get it onto the base display list
-  grid.Call.graphics("L_setCurrentGrob", x)
+  grid.Call.graphics(L_setCurrentGrob, x)
   # automatically push/pop the viewport
   pushvpgp(x)
   # Push then "up" childrenvp
   if (!is.null(x$childrenvp)) {
     # Save any x$gp gpar settings
-    tempgp <- grid.Call("L_getGPar")
+    tempgp <- grid.Call(L_getGPar)
     pushViewport(x$childrenvp, recording=FALSE)
     upViewport(depth(x$childrenvp), recording=FALSE)
     # reset the x$gp gpar settings
     # The upViewport above may have overwritten them with
     # the previous vp$gp settings
-    grid.Call.graphics("L_setGPar", tempgp)
+    grid.Call.graphics(L_setGPar, tempgp)
   }
   preDrawDetails(x)
 }
@@ -1806,19 +1806,19 @@ postDraw.grob <- function(x) {
 drawGrob <- function(x) {
   # Temporarily turn off the grid DL so that
   # nested calls to drawing code do not get recorded
-  dlon <- grid.Call("L_setDLon", FALSE)
+  dlon <- grid.Call(L_setDLon, FALSE)
   # If get error or user-interrupt, need to reset state
   # Need to turn grid DL back on (if it was on)
-  on.exit(grid.Call("L_setDLon", dlon))
+  on.exit(grid.Call(L_setDLon, dlon))
   # Save current gpar
-  tempgpar <- grid.Call("L_getGPar")
+  tempgpar <- grid.Call(L_getGPar)
   # If get error or user-interrupt, need to reset state
   # Need to restore current grob (gtree predraw sets current grob)
   # Need to restore gpar settings (set by gtree itself and/or its vp)
   # This does not need to be a grid.Call.graphics() because
   # we are nested within a recordGraphics()
   # Do not call set.gpar because set.gpar accumulates cex
-  on.exit(grid.Call("L_setGPar", tempgpar), add=TRUE)
+  on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
   preDraw(x)
   # Do any class-specific drawing
   drawDetails(x, recording=FALSE)
@@ -1826,7 +1826,7 @@ drawGrob <- function(x) {
 }
 
 grid.draw.grob <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call("L_getEngineDLon")
+  engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon)
     recordGraphics(drawGrob(x),
                    list(x=x),
@@ -1849,7 +1849,7 @@ drawGList <- function(x) {
 }
 
 grid.draw.gList <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call("L_getEngineDLon")
+  engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon)
     recordGraphics(drawGList(x),
                    list(x=x),
@@ -1862,21 +1862,21 @@ grid.draw.gList <- function(x, recording=TRUE) {
 drawGTree <- function(x) {
   # Temporarily turn off the grid DL so that
   # nested calls to drawing code do not get recorded
-  dlon <- grid.Call("L_setDLon", FALSE)
+  dlon <- grid.Call(L_setDLon, FALSE)
   # If get error or user-interrupt, need to reset state
   # Need to turn grid DL back on (if it was on)
-  on.exit(grid.Call("L_setDLon", dlon))
+  on.exit(grid.Call(L_setDLon, dlon))
   # Save current grob and current gpar
-  tempgrob <- grid.Call("L_getCurrentGrob")
-  tempgpar <- grid.Call("L_getGPar")
+  tempgrob <- grid.Call(L_getCurrentGrob)
+  tempgpar <- grid.Call(L_getGPar)
   # If get error or user-interrupt, need to reset state
   # Need to restore current grob (gtree predraw sets current grob)
   # Need to restore gpar settings (set by gtree itself and/or its vp)
   # This does not need to be a grid.Call.graphics() because
   # we are nested within a recordGraphics()
   # Do not call set.gpar because set.gpar accumulates cex
-  on.exit({ grid.Call("L_setGPar", tempgpar)
-            grid.Call("L_setCurrentGrob", tempgrob)
+  on.exit({ grid.Call(L_setGPar, tempgpar)
+            grid.Call(L_setCurrentGrob, tempgrob)
           }, add=TRUE)
   preDraw(x)
   # Do any class-specific drawing
@@ -1888,7 +1888,7 @@ drawGTree <- function(x) {
 }
 
 grid.draw.gTree <- function(x, recording=TRUE) {
-  engineDLon <- grid.Call("L_getEngineDLon")
+  engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon)
     recordGraphics(drawGTree(x),
                    list(x=x),
@@ -1902,11 +1902,11 @@ grid.draw.gTree <- function(x, recording=TRUE) {
 
 draw.all <- function() {
   grid.newpage(recording=FALSE)
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   if (dl.index > 1)
     # Start at 2 because first element is viewport[ROOT]
     for (i in 2:dl.index) {
-      grid.draw(grid.Call("L_getDLelt", as.integer(i - 1)),
+      grid.draw(grid.Call(L_getDLelt, as.integer(i - 1)),
                 recording=FALSE)
     }
 }

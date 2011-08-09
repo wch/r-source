@@ -66,8 +66,8 @@ grid.ls <- function(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
 
 gridListDL <- function(x, grobs=TRUE, viewports=FALSE,
                        fullNames=FALSE, recursive=TRUE) {
-    display.list <- grid.Call("L_getDisplayList")
-    dl.index <- grid.Call("L_getDLindex")
+    display.list <- grid.Call(L_getDisplayList)
+    dl.index <- grid.Call(L_getDLindex)
     result <- lapply(display.list[1L:dl.index], gridList,
                      grobs=grobs, viewports=viewports,
                      fullNames=fullNames, recursive=recursive)

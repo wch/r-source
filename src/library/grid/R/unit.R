@@ -59,7 +59,7 @@ convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
     stop("'x' argument must be a unit object")
   if (is.na(whatfrom) || is.na(whatto))
     stop("Invalid 'axis' or 'type'")
-  value <- grid.Call("L_convert", x, as.integer(whatfrom),
+  value <- grid.Call(L_convert, x, as.integer(whatfrom),
                  as.integer(whatto), valid.units(unitTo))
   if (!valueOnly)
     unit(value, unitTo)

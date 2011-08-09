@@ -114,13 +114,13 @@ rrpoints <- function(x) {
 
 drawDetails.roundrect <- function(x, recording) {
     boundary <- rrpoints(x)
-    grid.Call.graphics("L_polygon", boundary$x, boundary$y,
+    grid.Call.graphics(L_polygon, boundary$x, boundary$y,
                        list(as.integer(seq_along(boundary$x))))
 }
 
 xDetails.roundrect <- function(x, theta) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, theta)
+    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -129,7 +129,7 @@ xDetails.roundrect <- function(x, theta) {
 
 yDetails.roundrect <- function(x, theta) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, theta)
+    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -138,7 +138,7 @@ yDetails.roundrect <- function(x, theta) {
 
 widthDetails.roundrect <- function(x) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, 0)
+    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -147,7 +147,7 @@ widthDetails.roundrect <- function(x) {
 
 heightDetails.roundrect <- function(x) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call("L_locnBounds", boundary$x, boundary$y, 0)
+    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else

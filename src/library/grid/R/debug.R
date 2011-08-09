@@ -105,7 +105,7 @@ showGrob <- function(x=NULL,
         # To remove labels use grid.redraw()
         if (is.null(gPath)) {
             # Show the current scene
-            dl <- grid:::grid.Call("L_getDisplayList")[1L:grid:::grid.Call("L_getDLindex")]
+            dl <- grid.Call(L_getDisplayList)[1L:grid:::grid.Call("L_getDLindex")]
             grid.newpage(recording=FALSE)
             # -1 because first element on DL is ROOT viewport
             lapply(dl[-1],
@@ -133,7 +133,7 @@ showGrob <- function(x=NULL,
         # Assume grob is not current scene so start a new page
         grid.newpage()
         grid.draw(x)
-        showGrob(NULL, gPath, strict, grep, recurse, depth, labelfun, ...) 
+        showGrob(NULL, gPath, strict, grep, recurse, depth, labelfun, ...)
     }
     invisible()
 }

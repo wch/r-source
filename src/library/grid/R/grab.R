@@ -26,7 +26,7 @@ rootVP <- function(pvp) {
 
 # List the children of the current vp (as a vpList)
 current.vpList <- function() {
-  cpvp <- grid.Call("L_currentViewport")
+  cpvp <- grid.Call(L_currentViewport)
   if (length(ls(cpvp$children, all.names=TRUE)) == 0)
     NULL
   else
@@ -34,7 +34,7 @@ current.vpList <- function() {
 }
 
 current.vpNames <-function() {
-  ls(grid.Call("L_currentViewport")$children)
+  ls(grid.Call(L_currentViewport)$children)
 }
 
 # vp might be a viewport, or a vpList, or a vpStack, or a vpTree
@@ -99,7 +99,7 @@ wrap.vpPath <- function(x) {
 #   in a gTree
 grabDL <- function(warn, wrap, ...) {
   gList <- NULL
-  dl.index <- grid.Call("L_getDLindex")
+  dl.index <- grid.Call(L_getDLindex)
   if (dl.index > 1) {
     if (warn > 0) {
       names <- getNames()
@@ -114,7 +114,7 @@ grabDL <- function(warn, wrap, ...) {
       # dispatching to a function call per element because
       # we need to work with whole DL at times, not
       # just individual elements
-      elt <- grid.Call("L_getDLelt", as.integer(i - 1))
+      elt <- grid.Call(L_getDLelt, as.integer(i - 1))
       if (wrap)
         gList <- addToGList(wrap(elt), gList)
       else {
@@ -204,7 +204,7 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Start a new null device
-  .Call("R_GD_nullDevice")
+  .Call(R_GD_nullDevice, PACKAGES = "grDevices")
   # If something goes wrong, want to revert to the current device
   on.exit(dev.off())
   # Run the graphics code in expr
@@ -221,7 +221,7 @@ grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
 
 grid.cap <- function() {
     # This does not need recording on the display list
-    grid.Call("L_cap")
+    grid.Call(L_cap)
 }
 
-    
+
