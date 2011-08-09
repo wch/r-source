@@ -2453,12 +2453,6 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else resultLog(Log, "OK")
     }
 
-    .file_test <- function(op, x)
-        switch(op,
-               "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-               "-x" = (file.access(x, 1L) == 0L),
-               stop(sprintf("test '%s' is not available", op), domain = NA))
-
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
@@ -2856,9 +2850,9 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
             ## configure files are only used if executable, but
             ## -x is always false on Windows.
             if (WINDOWS) {
-                if (.file_test("-f", "configure")) thispkg_src_subdirs <- "no"
+                if (file_test("-f", "configure")) thispkg_src_subdirs <- "no"
             } else {
-                if (.file_test("-x", "configure")) thispkg_src_subdirs <- "no"
+                if (file_test("-x", "configure")) thispkg_src_subdirs <- "no"
             }
         }
         setwd(startdir)

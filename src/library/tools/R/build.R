@@ -158,12 +158,6 @@ get_exclude_patterns <- function()
         system2(command, args, stdout = NULL, stderr = NULL, ...)
 
 
-    .file_test <- function(op, x)
-        switch(op,
-               "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-               "-x" = (file.access(x, 1L) == 0L),
-               stop(sprintf("test '%s' is not available", op), domain = NA))
-
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
@@ -449,7 +443,7 @@ get_exclude_patterns <- function()
                 messageLog(Log, "running 'cleanup.win'")
                 Ssystem("sh", "./cleanup.win")
             }
-        } else if (.file_test("-x", "cleanup")) {
+        } else if (file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
             Sys.setenv(R_PACKAGE_DIR = pkgdir)
             Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
@@ -610,7 +604,13 @@ get_exclude_patterns <- function()
             paste(c(sprintf("R (>= %s)", ver), sapply(deps, flatten)),
                   collapse = ", ")
         } else sprintf("R (>= %s)", ver)
-        write.dcf(t(as.matrix(desc)), file.path(pkgname, "DESCRIPTION"))
+        ## Avoid calling write.dcf which reformats.
+        ##   write.dcf(t(as.matrix(desc)),
+        ##             file.path(pkgname, "DESCRIPTION"))
+        writeLines(sprintf("%s: %s",
+                           names(desc),
+                           gsub("\n", "\n  ", desc, fixed = TRUE)),
+                   file.path(pkgname, "DESCRIPTION"))
         printLog(Log,
                  "  NB: this package now depends on R (>= ", ver, ")\n")
     }

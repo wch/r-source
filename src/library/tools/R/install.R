@@ -32,12 +32,6 @@
     ## calls system() on Windows for
     ## sh (configure.win/cleanup.win) make zip
 
-    ## we don't want to load utils just for this
-    .file_test <- function(op, x)
-        switch(op,
-               "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-               "-x" = (file.access(x, 1L) == 0L),
-               stop(sprintf("test '%s' is not available", op), domain = NA))
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     ## global variables
@@ -401,7 +395,7 @@
         }
         if (WINDOWS) {
             if (file.exists("cleanup.win")) system("sh ./cleanup.win")
-        } else if (.file_test("-x", "cleanup")) system("./cleanup")
+        } else if (file_test("-x", "cleanup")) system("./cleanup")
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'", call. = FALSE)
 
@@ -490,7 +484,7 @@
             starsmsg(stars, "installing *Frontend* package ", sQuote(pkg_name), " ...")
             if (preclean) system(paste(MAKE, "clean"))
             if (use_configure) {
-                if (.file_test("-x", "configure")) {
+                if (file_test("-x", "configure")) {
                     res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
                                         paste(configure_args, collapse = " ")))
@@ -586,7 +580,7 @@
                             "   **********************************************\n\n", domain = NA)
             } else {
                 ## FIXME: should these be quoted?
-                if (.file_test("-x", "configure")) {
+                if (file_test("-x", "configure")) {
                     cmd <- paste(paste(configure_vars, collapse = " "),
                                  "./configure",
                                  paste(configure_args, collapse = " "))
@@ -737,7 +731,7 @@
                         ## if there is a configure script we install only the main
                         ## sub-architecture
                         if (!multiarch || length(archs) <= 1 ||
-                            .file_test("-x", "../configure")) {
+                            file_test("-x", "../configure")) {
                             if (nzchar(rarch))
                                 starsmsg("***", "arch - ",
                                          substr(rarch, 2, 1000))
@@ -1260,7 +1254,7 @@
         stop("cannot create temporary directory")
 
     if (merge) {
-        if (length(pkgs) != 1L || !.file_test("-f", pkgs))
+        if (length(pkgs) != 1L || !file_test("-f", pkgs))
             stop("ERROR: --merge-multiarch applies only to a single tarball",
                  call.=FALSE)
         f  <- dir(file.path(R.home(), "bin"))
@@ -1299,7 +1293,7 @@
     allpkgs <- character()
     for(pkg in pkgs) {
         if (debug) message("processing ", sQuote(pkg), domain = NA)
-        if (.file_test("-f", pkg)) {
+        if (file_test("-f", pkg)) {
             if (WINDOWS && grepl("\\.zip$", pkg)) {
                 if (debug) message("a zip file", domain = NA)
                 pkgname <- basename(pkg)
