@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-hooks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2011 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-hooks}
@@ -27,19 +27,25 @@
   \item{libpath}{a character string giving the complete path to the package.}
 }
 \details{
-  After loading, \code{\link{loadNamespace}} looks for a hook function named
-  \code{.onLoad} and runs it before sealing the namespace and processing
-  exports.
+  After loading, \code{\link{loadNamespace}} looks for a hook function
+  named \code{.onLoad} and calls it (with two unnamed arguments) before
+  sealing the namespace and processing exports.
 
-  If a function \code{\link{.Last.lib}} is visible in the package, it
-  will be called when the package is detached: this does need to be
-  exported.  Beware that it might be called if \code{.onAttach} or
-  \code{.onLoad} has failed, so it should be written defensively.  (It
-  is called within \code{\link{try}}, so errors will not stop the
-  package being detached.)
+  When the package is attached (via \code{\link{library}} or
+  \code{\link{attachNamespace}}), the hook function \code{.onAttach} is
+  looked for and if found is called (with two unnamed arguments) before
+  the package environment is sealed.
+
+  If a function \code{\link{.Last.lib}} is exported in the package, it
+  will be called (with a single argument) when the package is detached.
+  Beware that it might be called if \code{.onAttach} has failed, so it
+  should be written defensively.  (It is called within
+  \code{\link{try}}, so errors will not stop the package being
+  detached.)
   
-  If a namespace is unloaded (via \code{\link{unloadNamespace}}),
-  a hook function \code{.onUnload} is run before final unloading.
+  If a namespace is unloaded (via \code{\link{unloadNamespace}}), a hook
+  function \code{.onUnload} is run (with a single argument) before final
+  unloading.
   
   Note that the code in \code{.onLoad} and \code{.onUnload} is run
   without the package being on the search path, but (unless circumvented)
@@ -47,13 +53,8 @@
   visible.  (Do not use the double colon operator in \code{.onLoad} as
   exports have not been processed at the point it is run.)
 
-  When the package is attached (via \code{\link{library}} or
-  \code{\link{attachNamespace}}), the hook function \code{.onAttach} is
-  looked for and if found is called after the exported functions are
-  attached and before the package environment is sealed.
-
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
-  as internal variables in the namespace and should not be exported
+  as internal objects in the namespace and should not be exported
   (whereas \code{.Last.lib} should be).
   
   Anything needed for the functioning of the namespace should be
@@ -64,6 +65,21 @@
   \code{.onAttach} only for actions that are needed only when the
   package becomes visible to the user (for example a start-up message)
   or need to be run after the package environment has been created.
+}
+\section{Good practice}{
+  Loading a namespace should where possible be silent, with startup
+  messages given by \code{.onAttach}.  These messages (and any essential
+  ones from \code{.onLoad}) should use \code{\link{packageStartupMessage}}
+  so they can be silenced where they would be a distraction.
+
+  There should be no calls to \code{library} nor \code{require} in these
+  hooks.  The way for a package to load other packages is via the
+  \samp{Depends} field in the \file{DESCRIPTION} file: this ensures
+  that the dependence is documented and packages are loaded in the
+  correct order.  Loading a namespace should not change the search path,
+  so rather than attach a package, dependence of a namespace on another
+  package should be achieved by (selectively) importing from the other
+  package's namespace.
 }
 \seealso{
   \code{\link{setHook}} shows how users can set hooks on the same events, and 

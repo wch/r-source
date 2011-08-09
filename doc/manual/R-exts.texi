@@ -2618,23 +2618,24 @@ be.)
 There are a number of hooks called as packages are loaded, attached,
 detached, and unloaded.  See @code{help(".onLoad")} for more details.
 
-Since loading and attaching are distinct operations, 
-separate hooks are provided for each.  These hook functions are
-called @code{.onLoad} and @code{.onAttach}.  They both take arguments
-@code{libname} and @code{pkgname}; they should be defined in the namespace
-but not exported.
+Since loading and attaching are distinct operations, separate hooks are
+provided for each.  These hook functions are called @code{.onLoad} and
+@code{.onAttach}.  They both take arguments@footnote{they will be called
+with two unnamed arguments, in that order.} @code{libname} and
+@code{pkgname}; they should be defined in the namespace but not
+exported.
 
 @findex .Last.lib
 @findex .onUnload
-Packages use the @code{.Last.lib}
-function (provided it is exported from the namespace) when
-@code{detach} is called on the package.  It is called with a single argument,
-the full path to the installed package. There is also a hook
-@code{.onUnload} which is called when the namespace is unloaded
-(@emph{via} a call to @code{unloadNamespace}, perhaps called by
-@code{detach(unload=TRUE)}) with argument the full path to the installed
-package's directory.  @code{.onUnload} should be defined in the name
-space and not exported, but @code{.Last.lib} does need to be exported.
+Packages use the @code{.Last.lib} function (provided it is exported from
+the namespace) when @code{detach} is called on the package.  It is
+called with a single argument, the full path to the installed package.
+There is also a hook @code{.onUnload} which is called when the namespace
+is unloaded (@emph{via} a call to @code{unloadNamespace}, perhaps called
+by @code{detach(unload=TRUE)}) with argument the full path to the
+installed package's directory.  @code{.onUnload} should be defined in
+the name space and not exported, but @code{.Last.lib} does need to be
+exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
