@@ -690,11 +690,15 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
             classDef <- getClassDef(Class) # but won't likely succeed over previous
         if(nzchar(unique)) {
             if(is(classDef, "classRepresentation"))
-                stop(gettextf('Class "%s" is defined, with package "%s", but no corresponding metadata object was found (not exported?)',
-                              Class, classDef@package), domain = NA)
+                stop(gettextf("Class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)",
+                              dQuote(Class),
+                              sQuote(classDef@package)),
+                     domain = NA)
             else
-                stop(gettextf("no definition of \"%s\" to use for %s",
-                              Class, unique), domain = NA)
+                stop(gettextf("no definition of %s to use for %s",
+                              dQuote(Class),
+                              unique),
+                     domain = NA)
         }
     }
     else if(length(where) > 1L) {
@@ -705,8 +709,11 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
                 pkgs <- base::unique(pkgs)
                 where <- where[1L]
                 ## problem: 'unique'x is text passed in, so do not translate
-                warning(gettextf("multiple definitions of class \"%s\" visible (%s); using the definition\n   in package \"%s\" for %s",
-                                 Class, paste(pkgs, collapse = ", "), pkgs[[1]], unique),
+                warning(gettextf("multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s",
+                                 dQuote(Class),
+                                 paste(sQuote(pkgs), collapse = ", "),
+                                 sQuote(pkgs[[1L]]),
+                                 unique),
                         domain = NA)
             }
             ## else returns a list of >1 places, for the caller to sort out (e.g., .findOrCopyClass)
@@ -843,12 +850,13 @@ className <- function(class, package) {
             ## unique, otherwise a list of 0 or >1 definitions
             if(is(classDef, "classRepresentation"))
                 package <- classDef@package
-            else if(length(classDef) > 1) {
+            else if(length(classDef) > 1L) {
                 pkgs <- sapply(classDef, function(cl)cl@package)
                 warning(gettextf("Multiple class definitions for %s from packages: %s; picking the first",
-                                 dQuote(className), paste(dQuote(pkgs), collapse = ", ")),
+                                 dQuote(className),
+                                 paste(sQuote(pkgs), collapse = ", ")),
                         domain = NA)
-                package <- pkgs[[1]]
+                package <- pkgs[[1L]]
             }
             else
                 stop(gettextf("No package name supplied and no class definition found for %s",

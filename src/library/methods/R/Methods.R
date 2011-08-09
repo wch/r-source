@@ -511,13 +511,13 @@ setMethod <-
         fdef <- getGeneric(f, where = where)
         thisPackage <- getPackageName(where)
         thisPName <- if(identical(thisPackage, ".GlobalEnv"))
-            "the global environment" else paste("package", dQuote(thisPackage))
+            "the global environment" else paste("package", sQuote(thisPackage))
         if(identical(as.character(fdef@package), thisPackage))
-          message(gettextf("Creating a generic function from function \"%s\" in %s",
-                           f, thisPName), domain = NA)
+          message(gettextf("Creating a generic function from function %s in %s",
+                           sQuote(f), thisPName), domain = NA)
         else
-          message(gettextf("Creating a generic function for \"%s\" from package \"%s\" in %s",
-                           f, fdef@package, thisPName),
+          message(gettextf("Creating a generic function for %s from package %s in %s",
+                           sQuote(f), sQuote(fdef@package), thisPName),
                   domain = NA)
     }
     else if(identical(gwhere, NA)) {
@@ -1043,8 +1043,9 @@ removeMethods <-
     for(i in seq_along(allWhere)) {
         db <- as.environment(allWhere[[i]])
         if(environmentIsLocked(db)) {
-                warning(gettextf("cannot remove methods for  \"%s\" in locked environment/package \"%s\"",
-                        f, getPackageName(db)), domain = NA)
+                warning(gettextf("cannot remove methods for %s in locked environment/package %s",
+                                 sQuote(f), sQuote(getPackageName(db))),
+                        domain = NA)
                 value[[i]] <- FALSE
                 next
             }

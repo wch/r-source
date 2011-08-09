@@ -1,8 +1,8 @@
 
-R version 2.14.0 Under development (unstable) (2011-05-13 r55883)
+R Under development (unstable) (2011-08-09 r56672)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-apple-darwin10.7.0/x86_64 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -124,7 +124,7 @@ show method
 > ## show(foo)
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-Creating a generic function for "print" from package "base" in the global environment
+Creating a generic function for 'print' from package 'base' in the global environment
 [1] "print"
 > foo
 show method
@@ -559,7 +559,7 @@ An object of class "foo"
 > ## This failed for about one day -- as.vector(x, mode) :
 > setMethod("as.vector", signature(x = "foo", mode = "missing"),
 +           function(x) unclass(x))
-Creating a generic function for "as.vector" from package "base" in the global environment
+Creating a generic function for 'as.vector' from package 'base' in the global environment
 [1] "as.vector"
 > ## whereas this fails in R versions earlier than 2.6.0:
 > setMethod("as.vector", "foo", function(x) unclass(x))
@@ -857,7 +857,7 @@ List of 7
 > ## implicit generics ..
 > setMethod("sample", "C2",
 +           function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
-Creating a generic function for "sample" from package "base" in the global environment
+Creating a generic function for 'sample' from package 'base' in the global environment
 [1] "sample"
 > stopifnot(is(sample,"standardGeneric"),
 + 	  ## the signature must come from the implicit generic:

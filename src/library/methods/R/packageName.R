@@ -63,7 +63,8 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
     }
     if(!nzchar(pkg) && create) {
         pkg <- as.character(Sys.time())
-        warning(gettextf("Created a package name, \"%s\", when none found", pkg),
+        warning(gettextf("Created a package name, %s, when none found",
+                         sQuote(pkg)),
                 domain = NA)
         assign(pkg, env, envir = .PackageEnvironments)
         if(!(hasNameSaved || environmentIsLocked(env)))

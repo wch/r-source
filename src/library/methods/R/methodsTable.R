@@ -1411,8 +1411,10 @@ listFromMethods <- function(generic, where, table) {
     else if(optional)
       NULL
     else
-      stop(gettextf("No methods table for generic \"%s\" from package \"%s\" in package \"%s\"",
-                    generic@generic, generic@package, getPackageName(where)),
+      stop(gettextf("No methods table for generic %s from package %s in package %s",
+                    sQuote(generic@generic),
+                    sQuote(generic@package),
+                    sQuote(getPackageName(where))),
            domain = NA)
 }
 

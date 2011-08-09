@@ -148,7 +148,9 @@
                   ## ignore S3 with multiple classes  or basic classes
                     if(is.na(match(cv, .BasicClasses)) &&
                        length(cv) == 1L) {
-                        warning(gettextf("missing package slot (%s) in object of class \"%s\" (package info added)", packageSlot(co), class(.Object)),
+                        warning(gettextf("missing package slot (%s) in object of class %s (package info added)",
+                                         packageSlot(co),
+                                         dQuote(class(.Object))),
                                 domain = NA)
                         class(value) <- class(.Object)
                     }

@@ -500,8 +500,8 @@ assignClassDef <-
           if(force)
             .assignOverBinding(mname, def, where, FALSE)
           else
-            stop(gettextf("Class \"%s\" has a locked definition in package \"%s\"",
-                          Class, getPackageName(where)))
+            stop(gettextf("Class %s has a locked definition in package %s",
+                          dQuote(Class), sQuote(getPackageName(where))))
       }
       else
           assign(mname, def, where)
@@ -1745,7 +1745,8 @@ substituteFunctionArgs <-
     if(nzchar(package) && require(package, character.only = TRUE)) {}
     else {
         if(mustFind)
-          stop(gettextf("unable to find required package \"%s\"", package),
+          stop(gettextf("unable to find required package %s",
+                        sQuote(package)),
                domain = NA)
         else
           return(NULL)
@@ -1909,7 +1910,10 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         ## it is possible one  of these is inconsistent, but unlikely
         ## and we will get here often from multiple setOldClass(...)'s
         if(warnLevel)
-            warning(gettextf("A specification for S3 class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class", def@className, def@package, prev@package),
+            warning(gettextf("A specification for S3 class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+                             dQuote(def@className),
+                             sQuote(def@package),
+                             sQuote(prev@package)),
                     domain = NA)
         return(TRUE)
     }
@@ -1920,7 +1924,10 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         dups <- match(supers, multipleClasses(), 0) > 0
         if(any(dups)) {
             if(warnLevel)
-                warning(gettextf("Some super classes of class \"%s\" in package \"%s\" have duplicate definitions.  This definition is not being treated as equivalent to that from package \"%s\"", def@className, def@package, prev@package),
+                warning(gettextf("Some super classes of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
+                                 dQuote(def@className),
+                                 sQuote(def@package),
+                                 sQuote(prev@package)),
                     domain = NA)
             return(FALSE)
         }
@@ -1942,7 +1949,10 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             return(FALSE)
     }
     if(warnLevel)
-        warning(gettextf("A specification for class \"%s\" in package \"%s\" seems equivalent to one from package \"%s\" and is not turning on duplicate class definitions for this class", def@className, def@package, prev@package),
+        warning(gettextf("A specification for class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+                         dQuote(def@className),
+                         sQuote(def@package),
+                         sQuote(prev@package)),
                     domain = NA)
     TRUE
 }

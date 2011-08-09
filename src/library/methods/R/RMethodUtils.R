@@ -1717,7 +1717,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
                 ## be the result of identical class defs (e.g., from setOldClass()
                 msgs <- c(msgs,
                           gettextf("Multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)",
-                                   dQuote(classi), dQuote(pkgi),
+                                   dQuote(classi), sQuote(pkgi),
                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", ")))
                 level <- c(level, 2) #warn
             }

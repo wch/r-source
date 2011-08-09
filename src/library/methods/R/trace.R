@@ -471,8 +471,8 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
     if(verbose) {
         pname <- getPackageName(where)
         msg <-
-            gettextf("assigning over the binding of symbol \"%s\" in environment/package \"%s\"",
-                     what, pname)
+            gettextf("assigning over the binding of symbol %s in environment/package %s",
+                     sQuote(what), sQuote(pname))
         message(strwrap(msg), domain = NA)
     }
     warnOpt <- options(warn= -1) # kill the obsolete warning from R_LockBinding
@@ -500,7 +500,10 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
 
 .setMethodOverBinding <- function(what, signature, method, where, verbose = TRUE) {
     if(verbose)
-        warning(gettextf("setting a method over the binding of symbol \"%s\" in environment/package \"%s\"", what, getPackageName(where)), domain = NA)
+        warning(gettextf("setting a method over the binding of symbol %s in environment/package %s",
+                         sQuote(what),
+                         sQuote(getPackageName(where))),
+                domain = NA)
     if(exists(what, envir = where, inherits = FALSE)) {
         fdef <- get(what, envir = where)
         hasFunction <- is(fdef, "genericFunction")
@@ -617,18 +620,19 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
     message <- ""
     if(length(possible) == 0)
         stop("None of the objects in the source code could be found:  need to attach or specify the package")
-    else if(length(possible) > 1) {
+    else if(length(possible) > 1L) {
         global <- match(".GlobalEnv", names(possible), 0)
         if(global > 0) {
             possible <- possible[-global] # even if it's the most common
         }
-        if(length(possible) > 1)
-            warning(gettextf("Objects found in multiple packages: using \"%s\" and ignoring %s",
-                 names(possible[[1]]),
-                 paste('"', names(possible[-1]), '"',sep="", collapse = ", ")),
-                 domain = NA)
+        if(length(possible) > 1L)
+            warning(gettextf("Objects found in multiple packages: using %s and ignoring %s",
+                             sQuote(names(possible[[1L]])),
+                             paste(sQuote(names(possible[-1L])),
+                                   collapse = ", ")),
+                    domain = NA)
     }
-    sub("package:","", names(possible[1])) # the package name, or .GlobalEnv
+    sub("package:","", names(possible[1L])) # the package name, or .GlobalEnv
 }
 
 ## extract the new definitions from the source file
@@ -723,8 +727,8 @@ insertSource <- function(source, package = "",
             envns <- tryCatch(asNamespace(package), error = function(cond)NULL)
     }
     if(nzchar(envPackage) && envPackage != package)
-        warning(gettextf("Supplied package, \"%s\", differs from package inferred from source, \"%s\"",
-                         package, envPackage),
+        warning(gettextf("Supplied package, %s, differs from package inferred from source, %s",
+                         sQuote(package), sQuote(envPackage)),
                 domain = NA)
     packageSlot(env) <- package
     ## at this point, envp is the target environment (package or other)

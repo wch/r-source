@@ -448,7 +448,9 @@ getRefSuperClasses <- function(classes, classDefs) {
     if(nargs() == 0)
         return(objects(methodsEnv, all.names = TRUE))
     if(.classDefIsLocked(def))
-        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, methods may not be redefined", def@className, def@package),
+        stop(gettextf("The definition of class %s in package %s is locked, methods may not be redefined",
+                      dQuote(def@className),
+                      sQuote(def@package)),
              domain = NA)
     methodDefs <- list(...)
     ## allow either name=function, ... or a single list
@@ -528,7 +530,9 @@ lock =  function(...) {
     else
         stop("Arguments must all be character string names of fields")
     if(.classDefIsLocked(def))
-        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified", def@className, def@package),
+        stop(gettextf("The definition of class %s in package %s is locked, fields may not be modified",
+                      dQuote(def@className),
+                      sQuote(def@package)),
              domain = NA)
     env <- def@fieldPrototypes
     className <- def@className
@@ -560,7 +564,9 @@ lock =  function(...) {
 ## of the class definition.
 accessors = function(...) {
     if(.classDefIsLocked(def))
-        stop(gettextf("The definition of class \"%s\" in package \"%s\" is locked, fields may not be modified", def@className, def@package),
+        stop(gettextf("The definition of class %s in package %s is locked, fields may not be modified",
+                      dQuote(def@className),
+                      sQuote(def@package)),
              domain = NA)
     fieldNames <- c(...)
     methodNames <- firstCap(fieldNames)
@@ -821,8 +827,10 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
         returnMethods[[method]] <- def
     }
     if(is.na(check) && .methodsIsLoaded())
-        message(gettextf("Code for methods in class \"%s\" was not checked for suspicious field assignments (recommended package \"codetools\" not available?)",
-                         Class), domain = NA)
+        message(gettextf("Code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)",
+                         dQuote(Class),
+                         sQuote("codetools"))
+                , domain = NA)
     returnMethods
 }
 
