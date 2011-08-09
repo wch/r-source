@@ -2602,8 +2602,9 @@ Packages with namespaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a namespace is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
-arguments as @code{.First.lib}; they should be defined in the namespace
-but not exported.
+arguments@footnote{they will be called with two unnamed arguments.} as
+@code{.First.lib}; they should be defined in the namespace but not
+exported.
 
 @findex .Last.lib
 @findex .onUnload
