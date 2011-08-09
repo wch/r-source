@@ -710,7 +710,7 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
         return(NULL)
     if(.noMlists()) {
         warning(gettextf("Methods list objects are not maintained in this version of R:  request for function %s may return incorrect information",
-                         dQuote(fdef@generic)),
+                         sQuote(fdef@generic)),
                 domain = NA)
     }
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2011-08-09 r56672)
+R Under development (unstable) (2011-08-09 r56687)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -712,12 +712,12 @@ Creating a generic function for 'as.vector' from package 'base' in the global en
 > setGeneric("order", signature="...",
 + 	   function (..., na.last=TRUE, decreasing=FALSE)
 + 	   standardGeneric("order"))
-Creating a new generic function for "order" in the global environment
+Creating a new generic function for 'order' in the global environment
 [1] "order"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > setGeneric("rbind", function(..., deparse.level=1)
 + 	   standardGeneric("rbind"), signature = "...")
-Creating a new generic function for "rbind" in the global environment
+Creating a new generic function for 'rbind' in the global environment
 [1] "rbind"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > ## gave Error in .Method( .... in R 2.8.0
@@ -871,7 +871,7 @@ Creating a generic function for 'sample' from package 'base' in the global envir
 > ## (For test, qqplot must be a "simple" function:)
 > stopifnot(is.function(qqplot) && identical(class(qqplot), "function"))
 > setGeneric("qqplot", function(x, y, ...) standardGeneric("qqplot"))
-Creating a new generic function for "qqplot" in the global environment
+Creating a new generic function for 'qqplot' in the global environment
 [1] "qqplot"
 > stopifnot(is(qqplot, "standardGeneric"),
 + 	  identical(qqplot@signature, c("x","y")))

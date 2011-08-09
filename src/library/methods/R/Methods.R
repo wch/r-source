@@ -159,19 +159,19 @@ setGeneric <-
             }  # go ahead silently
             else if(is.function(implicit)) {
                 thisPName <- if(identical(thisPackage, ".GlobalEnv"))
-                    "the global environment" else paste("package", dQuote(thisPackage))
+                    "the global environment" else paste("package", sQuote(thisPackage))
                 ## choose the implicit unless an explicit def was given
                 if(is.null(def) && is.null(signature)) {
                     message(gettextf(
                        "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)",
-                                     dQuote(name), dQuote(package),
+                                     sQuote(name), sQuote(package),
                                      thisPName), domain = NA)
                     fdef <- implicit
                 }
                 else {
                     message(gettextf(
                          "Creating a new generic function for %s in %s",
-                                     dQuote(name), thisPName),
+                                     sQuote(name), thisPName),
                         domain = NA)
                     fdef@package <- attr(fdef@generic, "package") <- thisPackage
                 }
@@ -179,7 +179,7 @@ setGeneric <-
             else { # generic prohibited
                 warning(gettextf(
 			"No generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s",
-                                 dQuote(name), dQuote(package),
+                                 sQuote(name), sQuote(package),
                                  thisPName),
                         domain = NA)
                 fdef@package <- attr(fdef@generic, "package") <- thisPackage
