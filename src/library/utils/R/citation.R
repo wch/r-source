@@ -787,11 +787,11 @@ function(package = "base", lib.loc = NULL, auto = NULL)
                   "see ", sQuote("help(\"citation\")"), ".")
         else NULL
 
-    author <- as.character(z$author)
+    author <- format(z$author, include = c("given", "family"))
     if(length(author) > 1L)
-        author <- paste(paste(author[1L:(length(author)-1L)], collapse=", "),
-                        author[length(author)], sep=" and ")
-
+        author <- paste(paste(head(author, -1L), collapse = ", "),
+                        tail(author, 1L), sep = " and ")
+    
     rval <- bibentry(
         bibtype = "Manual",
 	textVersion = paste(author, " (", z$year, "). ", z$title, ". ",
