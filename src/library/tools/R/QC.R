@@ -4110,10 +4110,11 @@ function(dir)
            ((length(nms) != 2L) ||
             any(substring(nms, 1L, 3L) != c("lib", "pkg"))))
             out$bad_arg_names <- nms
-        ## For now, only look at top level calls.
-        calls <- .get_top_level_calls(fcode[[3L]])
+        ## Look at all calls (not only at top level).
+        calls <- .find_calls(fcode[[3L]], recursive = TRUE)
         if(!length(calls)) return(out)
         cnames <- .call_names(calls)
+        ## And pick the ones which should not be there ...
         ind <- (cnames %in% bad_call_names)
         if(any(ind))
             out$bad_calls <-
